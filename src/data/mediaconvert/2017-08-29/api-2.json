@@ -2309,7 +2309,16 @@
     "Av1RateControlMode": {
       "type": "string",
       "enum": [
+        "CBR",
         "QVBR"
+      ]
+    },
+    "Av1SceneChangeDetect": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED",
+        "TRANSITION_DETECTION"
       ]
     },
     "Av1Settings": {
@@ -2322,6 +2331,10 @@
         "BitDepth": {
           "shape": "Av1BitDepth",
           "locationName": "bitDepth"
+        },
+        "Bitrate": {
+          "shape": "__integerMin1000Max1152000000",
+          "locationName": "bitrate"
         },
         "FilmGrainSynthesis": {
           "shape": "Av1FilmGrainSynthesis",
@@ -2367,9 +2380,21 @@
           "shape": "Av1RateControlMode",
           "locationName": "rateControlMode"
         },
+        "SceneChangeDetect": {
+          "shape": "Av1SceneChangeDetect",
+          "locationName": "sceneChangeDetect"
+        },
         "Slices": {
           "shape": "__integerMin1Max32",
           "locationName": "slices"
+        },
+        "SlidingWindowMs": {
+          "shape": "__integerMin1000Max3000",
+          "locationName": "slidingWindowMs"
+        },
+        "SlidingWindowPeakBitrate": {
+          "shape": "__integerMin1000Max1152000000",
+          "locationName": "slidingWindowPeakBitrate"
         },
         "SpatialAdaptiveQuantization": {
           "shape": "Av1SpatialAdaptiveQuantization",
@@ -3116,6 +3141,10 @@
         "CodecSpecification": {
           "shape": "CmafCodecSpecification",
           "locationName": "codecSpecification"
+        },
+        "DashAdaptationSetGrouping": {
+          "shape": "__listOfDashAdaptationSetGrouping",
+          "locationName": "dashAdaptationSetGrouping"
         },
         "DashIFrameTrickPlayNameModifier": {
           "shape": "__stringMin1Max256",
@@ -4172,6 +4201,12 @@
       "type": "structure",
       "members": {}
     },
+    "DashAdaptationSetGrouping": {
+      "type": "string",
+      "enum": [
+        "CODEC"
+      ]
+    },
     "DashAdditionalManifest": {
       "type": "structure",
       "members": {
@@ -4219,6 +4254,10 @@
         "BaseUrl": {
           "shape": "__string",
           "locationName": "baseUrl"
+        },
+        "DashAdaptationSetGrouping": {
+          "shape": "__listOfDashAdaptationSetGrouping",
+          "locationName": "dashAdaptationSetGrouping"
         },
         "DashIFrameTrickPlayNameModifier": {
           "shape": "__stringMin1Max256",
@@ -6345,6 +6384,14 @@
           "shape": "__integerMin1Max32",
           "locationName": "slices"
         },
+        "SlidingWindowMs": {
+          "shape": "__integerMin1000Max3000",
+          "locationName": "slidingWindowMs"
+        },
+        "SlidingWindowPeakBitrate": {
+          "shape": "__integerMin1000Max1152000000",
+          "locationName": "slidingWindowPeakBitrate"
+        },
         "SlowPal": {
           "shape": "H264SlowPal",
           "locationName": "slowPal"
@@ -6784,6 +6831,14 @@
         "Slices": {
           "shape": "__integerMin1Max32",
           "locationName": "slices"
+        },
+        "SlidingWindowMs": {
+          "shape": "__integerMin1000Max3000",
+          "locationName": "slidingWindowMs"
+        },
+        "SlidingWindowPeakBitrate": {
+          "shape": "__integerMin1000Max1466400000",
+          "locationName": "slidingWindowPeakBitrate"
         },
         "SlowPal": {
           "shape": "H265SlowPal",
@@ -10077,6 +10132,14 @@
           "shape": "Mpeg2SceneChangeDetect",
           "locationName": "sceneChangeDetect"
         },
+        "SlidingWindowMs": {
+          "shape": "__integerMin1000Max3000",
+          "locationName": "slidingWindowMs"
+        },
+        "SlidingWindowPeakBitrate": {
+          "shape": "__integerMin1000Max300000000",
+          "locationName": "slidingWindowPeakBitrate"
+        },
         "SlowPal": {
           "shape": "Mpeg2SlowPal",
           "locationName": "slowPal"
@@ -10454,7 +10517,9 @@
         "SHARPEN",
         "CONSERVE",
         "SPATIAL",
-        "TEMPORAL"
+        "TEMPORAL",
+        "PERCEPTUAL",
+        "NONE"
       ]
     },
     "NoiseReducerFilterSettings": {
@@ -13785,6 +13850,11 @@
       "min": 1000,
       "max": 288000000
     },
+    "__integerMin1000Max3000": {
+      "type": "integer",
+      "min": 1000,
+      "max": 3000
+    },
     "__integerMin1000Max30000": {
       "type": "integer",
       "min": 1000,
@@ -14197,6 +14267,12 @@
       "type": "list",
       "member": {
         "shape": "ColorConversion3DLUTSetting"
+      }
+    },
+    "__listOfDashAdaptationSetGrouping": {
+      "type": "list",
+      "member": {
+        "shape": "DashAdaptationSetGrouping"
       }
     },
     "__listOfDashAdditionalManifest": {

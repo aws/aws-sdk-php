@@ -6,6 +6,7 @@
     "endpointPrefix":"healthlake",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocolSettings":{"h2":"optional"},
     "protocols":["json"],
     "serviceAbbreviation":"HealthLake",
     "serviceFullName":"Amazon HealthLake",
@@ -434,16 +435,11 @@
       "input":{"shape":"UpdateProfileWithAgentRequest"},
       "output":{"shape":"UpdateProfileWithAgentResponse"},
       "errors":[
-        {"shape":"NotImplementedOperationException"},
-        {"shape":"ConversationNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"AgentMessageOutOfContextException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"UnsupportedMIMETypeException"},
         {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"UnauthorizedException"}
+        {"shape":"InternalServerException"}
       ],
       "endpoint":{"hostPrefix":"datatransformation."}
     }
@@ -455,6 +451,16 @@
         "Message":{"shape":"HealthLakeString"}
       },
       "exception":true
+    },
+    "AgentErrorType":{
+      "type":"string",
+      "enum":[
+        "InternalServerException",
+        "ResourceNotFoundException",
+        "ValidationException",
+        "AccessDeniedException",
+        "ThrottlingException"
+      ]
     },
     "AgentInputMessage":{
       "type":"structure",
@@ -474,43 +480,22 @@
         "confirmation_response"
       ]
     },
-    "AgentMessageOutOfContextException":{
-      "type":"structure",
-      "required":["Message"],
-      "members":{
-        "Message":{"shape":"String"}
-      },
-      "exception":true
-    },
     "AgentMessageString":{
       "type":"string",
       "max":40960,
       "min":1,
       "sensitive":true
     },
-    "AgentOutputMessage":{
+    "AgentOutputMessageStream":{
       "type":"structure",
-      "required":[
-        "Body",
-        "Type"
-      ],
       "members":{
-        "Body":{"shape":"AgentMessageString"},
-        "Type":{"shape":"AgentOutputMessageType"},
-        "OptionsList":{"shape":"DataTransformationChatOptionsList"}
-      }
-    },
-    "AgentOutputMessageType":{
-      "type":"string",
-      "enum":[
-        "INITIAL_GREETING",
-        "normal",
-        "confirmation",
-        "complete",
-        "error",
-        "options",
-        "choices"
-      ]
+        "TextMessageEvent":{"shape":"TextMessageEvent"},
+        "ProgressEvent":{"shape":"ProgressEvent"},
+        "HeartbeatEvent":{"shape":"HeartbeatEvent"},
+        "ErrorEvent":{"shape":"ErrorEvent"},
+        "EndOfOutputEvent":{"shape":"EndOfOutputEvent"}
+      },
+      "eventstream":true
     },
     "AmazonResourceName":{
       "type":"string",
@@ -626,14 +611,6 @@
       "type":"string",
       "max":36,
       "min":1
-    },
-    "ConversationNotFoundException":{
-      "type":"structure",
-      "required":["Message"],
-      "members":{
-        "Message":{"shape":"String"}
-      },
-      "exception":true
     },
     "CreateDataTransformationProfileRequest":{
       "type":"structure",
@@ -1021,6 +998,16 @@
       "min":1,
       "pattern":"(arn:aws((-us-gov)|(-iso)|(-iso-b)|(-cn))?:kms:)?([a-z]{2}-[a-z]+(-[a-z]+)?-\\d:)?(\\d{12}:)?(((key/)?[a-zA-Z0-9-_]+)|(alias/[a-zA-Z0-9:/_-]+))"
     },
+    "EndOfOutputEvent":{
+      "type":"structure",
+      "required":["FinalResponseMessage"],
+      "members":{
+        "FinalResponseMessage":{"shape":"AgentMessageString"},
+        "Options":{"shape":"DataTransformationChatOptionsList"},
+        "ConversationId":{"shape":"ConversationIdString"}
+      },
+      "event":true
+    },
     "ErrorCategory":{
       "type":"string",
       "enum":[
@@ -1034,6 +1021,18 @@
         "ErrorMessage":{"shape":"ErrorMessage"},
         "ErrorCategory":{"shape":"ErrorCategory"}
       }
+    },
+    "ErrorEvent":{
+      "type":"structure",
+      "required":[
+        "Error",
+        "Message"
+      ],
+      "members":{
+        "Error":{"shape":"AgentErrorType"},
+        "Message":{"shape":"AgentMessageString"}
+      },
+      "event":true
     },
     "ErrorMessage":{
       "type":"string",
@@ -1133,6 +1132,11 @@
       "pattern":"[\\P{M}\\p{M}]{0,10000}"
     },
     "HealthLakeTimestamp":{"type":"timestamp"},
+    "HeartbeatEvent":{
+      "type":"structure",
+      "members":{},
+      "event":true
+    },
     "IamRoleArn":{
       "type":"string",
       "max":2048,
@@ -1431,15 +1435,6 @@
         "DISABLING"
       ]
     },
-    "NotImplementedOperationException":{
-      "type":"structure",
-      "required":["Message"],
-      "members":{
-        "Message":{"shape":"String"}
-      },
-      "exception":true,
-      "fault":true
-    },
     "OutputDataConfig":{
       "type":"structure",
       "members":{
@@ -1511,6 +1506,14 @@
       "box":true,
       "max":99,
       "min":0
+    },
+    "ProgressEvent":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"AgentMessageString"}
+      },
+      "event":true
     },
     "PublishDataTransformationProfileRequest":{
       "type":"structure",
@@ -1817,6 +1820,14 @@
       "type":"string",
       "enum":["FHIR_R4"]
     },
+    "TextMessageEvent":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"AgentMessageString"}
+      },
+      "event":true
+    },
     "ThrottlingException":{
       "type":"structure",
       "members":{
@@ -1913,22 +1924,6 @@
         "S3Configuration":{"shape":"DataTransformationS3Configuration"}
       }
     },
-    "UnauthorizedException":{
-      "type":"structure",
-      "required":["Message"],
-      "members":{
-        "Message":{"shape":"String"}
-      },
-      "exception":true
-    },
-    "UnsupportedMIMETypeException":{
-      "type":"structure",
-      "required":["Message"],
-      "members":{
-        "Message":{"shape":"String"}
-      },
-      "exception":true
-    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -1996,25 +1991,19 @@
       "type":"structure",
       "required":[
         "ProfileId",
-        "SourceFormat",
         "InputMessage"
       ],
       "members":{
         "ProfileId":{"shape":"ProfileIdString"},
-        "SourceFormat":{"shape":"SourceFormat"},
         "InputMessage":{"shape":"AgentInputMessage"},
         "ConversationId":{"shape":"ConversationIdString"}
       }
     },
     "UpdateProfileWithAgentResponse":{
       "type":"structure",
-      "required":[
-        "AgentResponse",
-        "ConversationId"
-      ],
+      "required":["AgentResponse"],
       "members":{
-        "AgentResponse":{"shape":"AgentOutputMessage"},
-        "ConversationId":{"shape":"ConversationIdString"}
+        "AgentResponse":{"shape":"AgentOutputMessageStream"}
       }
     },
     "ValidationException":{

@@ -1202,6 +1202,7 @@
     "Guid": {
       "base": "<p>Globally Unique Identifier (GUID) in standard format.</p>",
       "refs": {
+        "MSTeamsConfiguration$teamId": "<p>The identifier of the Microsoft Teams team to connect to the DevOps Agent service.</p>",
         "RegisteredAzureIdentityDetails$tenantId": "<p>The Azure Active Directory tenant ID for the identity.</p>",
         "RegisteredAzureIdentityDetails$clientId": "<p>The client ID of the service principal or managed identity used for authentication.</p>"
       }
@@ -1906,6 +1907,31 @@
       "base": null,
       "refs": {
         "MCPToolsList$member": null
+      }
+    },
+    "MSTeamsChannel": {
+      "base": "<p>Represents a channel in a Microsoft Teams team that the DevOps Agent service can send notifications to.</p>",
+      "refs": {
+        "MSTeamsTransmissionTarget$opsOncallTarget": "<p>The Microsoft Teams channel that receives notifications from the On-call Agent.</p>",
+        "MSTeamsTransmissionTarget$opsSRETarget": "<p>The Microsoft Teams channel that receives notifications from the SRE Agent.</p>"
+      }
+    },
+    "MSTeamsChannelId": {
+      "base": null,
+      "refs": {
+        "MSTeamsChannel$channelId": "<p>The unique identifier of the Microsoft Teams channel, for example 19:abc123def456@thread.tacv2.</p>"
+      }
+    },
+    "MSTeamsConfiguration": {
+      "base": "<p>Configuration for connecting a Microsoft Teams team to the DevOps Agent service. Use this configuration to specify which team to connect and how to route agent notifications to channels within that team.</p>",
+      "refs": {
+        "ServiceConfiguration$msteams": "<p>The configuration for connecting a Microsoft Teams team to the DevOps Agent service.</p>"
+      }
+    },
+    "MSTeamsTransmissionTarget": {
+      "base": "<p>Specifies the Microsoft Teams channels that receive different types of agent notifications.</p>",
+      "refs": {
+        "MSTeamsConfiguration$transmissionTarget": "<p>The Microsoft Teams channels that receive agent notifications.</p>"
       }
     },
     "MaxIpv4AddressesPerEni": {
@@ -3061,6 +3087,8 @@
         "ListJournalRecordsResponse$nextToken": "<p>Token for retrieving the next page of results, if more results are available</p>",
         "ListPendingMessagesResponse$executionId": "<p>The unique identifier for the execution.</p>",
         "ListRecommendationsResponse$nextToken": "<p>Token for retrieving the next page of results, if more results are available</p>",
+        "MSTeamsChannel$channelName": "<p>The name of the Microsoft Teams channel.</p>",
+        "MSTeamsConfiguration$teamName": "<p>The name of the Microsoft Teams team to connect to the DevOps Agent service.</p>",
         "OAuthAdditionalStepDetails$authorizationUrl": "<p>The URL to redirect the user to for OAuth authorization.</p>",
         "PagerDutyScopes$member": null,
         "PagerDutyScopesList$member": null,

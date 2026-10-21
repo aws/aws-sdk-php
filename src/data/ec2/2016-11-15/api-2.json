@@ -8599,6 +8599,39 @@
         "failed"
       ]
     },
+    "AnalysisTransitGatewayPolicyTableEntry":{
+      "type":"structure",
+      "members":{
+        "RuleNumber":{
+          "shape":"Integer",
+          "locationName":"ruleNumber"
+        },
+        "Protocol":{
+          "shape":"String",
+          "locationName":"protocol"
+        },
+        "SourceCidr":{
+          "shape":"String",
+          "locationName":"sourceCidr"
+        },
+        "DestinationCidr":{
+          "shape":"String",
+          "locationName":"destinationCidr"
+        },
+        "SourcePortRange":{
+          "shape":"PortRange",
+          "locationName":"sourcePortRange"
+        },
+        "DestinationPortRange":{
+          "shape":"PortRange",
+          "locationName":"destinationPortRange"
+        },
+        "TargetRouteTableId":{
+          "shape":"String",
+          "locationName":"targetRouteTableId"
+        }
+      }
+    },
     "ApplianceModeSupportValue":{
       "type":"string",
       "enum":[
@@ -29574,6 +29607,14 @@
           "shape":"TransitGatewayRouteTableRoute",
           "locationName":"transitGatewayRouteTableRoute"
         },
+        "TransitGatewayPolicyTable":{
+          "shape":"AnalysisComponent",
+          "locationName":"transitGatewayPolicyTable"
+        },
+        "TransitGatewayPolicyTableEntry":{
+          "shape":"AnalysisTransitGatewayPolicyTableEntry",
+          "locationName":"transitGatewayPolicyTableEntry"
+        },
         "TransitGatewayAttachment":{
           "shape":"AnalysisComponent",
           "locationName":"transitGatewayAttachment"
@@ -37352,6 +37393,10 @@
         "ApplicationStatus":{
           "shape":"ApplicationStatusSummary",
           "locationName":"applicationStatus"
+        },
+        "PerformanceStatus":{
+          "shape":"PerformanceStatusSummary",
+          "locationName":"performanceStatus"
         }
       }
     },
@@ -48916,6 +48961,10 @@
           "shape":"TransitGatewayRouteTableRoute",
           "locationName":"transitGatewayRouteTableRoute"
         },
+        "TransitGatewayPolicyTableEntry":{
+          "shape":"AnalysisTransitGatewayPolicyTableEntry",
+          "locationName":"transitGatewayPolicyTableEntry"
+        },
         "Explanations":{
           "shape":"ExplanationList",
           "locationName":"explanationSet"
@@ -49138,6 +49187,23 @@
       "member":{
         "shape":"PerformanceFactorReferenceRequest",
         "locationName":"item"
+      }
+    },
+    "PerformanceStatusSummary":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"SummaryStatus",
+          "locationName":"status"
+        },
+        "ImpairedSince":{
+          "shape":"MillisecondDateTime",
+          "locationName":"impairedSince"
+        },
+        "Remediation":{
+          "shape":"String",
+          "locationName":"remediation"
+        }
       }
     },
     "Period":{

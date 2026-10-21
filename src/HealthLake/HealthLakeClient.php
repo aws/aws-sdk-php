@@ -430,7 +430,6 @@ use Aws\AwsClient;
  * @method \Aws\Result updateProfileWithAgent(array $args = [])
  * @phpstan-method \Aws\Result updateProfileWithAgent(array{
  *     ProfileId?: string,
- *     SourceFormat?: 'CCDA'|'CSV',
  *     InputMessage?: array{Body?: string, Type?: 'confirmation_response'|'normal', ...},
  *     ConversationId?: string,
  *     ...,
@@ -438,7 +437,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateProfileWithAgentAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateProfileWithAgentAsync(array{
  *     ProfileId?: string,
- *     SourceFormat?: 'CCDA'|'CSV',
  *     InputMessage?: array{Body?: string, Type?: 'confirmation_response'|'normal', ...},
  *     ConversationId?: string,
  *     ...,

@@ -145,7 +145,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerError"},
-        {"shape":"InsufficientCapacityException"}
+        {"shape":"InsufficientCapacityException"},
+        {"shape":"InvalidOperationException"}
       ]
     },
     "CreateProxy":{
@@ -1075,6 +1076,7 @@
       "input":{"shape":"UpdateContainerAssociationRequest"},
       "output":{"shape":"UpdateContainerAssociationResponse"},
       "errors":[
+        {"shape":"LimitExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidRequestException"},
         {"shape":"ThrottlingException"},
@@ -1161,7 +1163,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerError"},
-        {"shape":"InvalidTokenException"}
+        {"shape":"InvalidTokenException"},
+        {"shape":"InvalidOperationException"}
       ]
     },
     "UpdateFirewallPolicyChangeProtection":{
@@ -1559,6 +1562,7 @@
       ]
     },
     "AvailabilityZone":{"type":"string"},
+    "AvailabilityZoneId":{"type":"string"},
     "AvailabilityZoneMapping":{
       "type":"structure",
       "required":["AvailabilityZone"],
@@ -1990,6 +1994,20 @@
       "type":"list",
       "member":{"shape":"CustomAction"}
     },
+    "DNSExpiryExceptionPolicy":{
+      "type":"string",
+      "enum":[
+        "REJECT",
+        "DROP",
+        "CONTINUE"
+      ]
+    },
+    "DNSFirewallRuleGroupId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^rslvr-frg-[0-9a-f]+$"
+    },
     "DeepThreatInspection":{"type":"boolean"},
     "DeleteContainerAssociationRequest":{
       "type":"structure",
@@ -2249,6 +2267,7 @@
       "members":{
         "FirewallArn":{"shape":"ResourceArn"},
         "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "VpcEndpointAssociationArn":{"shape":"ResourceArn"},
         "VpcEndpointId":{"shape":"VpcEndpointId"},
         "FlowOperationId":{"shape":"FlowOperationId"}
@@ -2259,6 +2278,7 @@
       "members":{
         "FirewallArn":{"shape":"ResourceArn"},
         "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "VpcEndpointAssociationArn":{"shape":"ResourceArn"},
         "VpcEndpointId":{"shape":"VpcEndpointId"},
         "FlowOperationId":{"shape":"FlowOperationId"},
@@ -2657,8 +2677,40 @@
         "StatefulEngineOptions":{"shape":"StatefulEngineOptions"},
         "TLSInspectionConfigurationArn":{"shape":"ResourceArn"},
         "PolicyVariables":{"shape":"PolicyVariables"},
-        "EnableTLSSessionHolding":{"shape":"EnableTLSSessionHolding"}
+        "EnableTLSSessionHolding":{"shape":"EnableTLSSessionHolding"},
+        "Route53ResolvedIPValidation":{"shape":"Route53ResolvedIPValidation"}
       }
+    },
+    "FirewallPolicyError":{
+      "type":"structure",
+      "required":[
+        "Code",
+        "Message"
+      ],
+      "members":{
+        "Code":{"shape":"FirewallPolicyErrorCode"},
+        "Message":{"shape":"StatusReason"},
+        "ResourceId":{"shape":"FirewallPolicyErrorResourceId"}
+      }
+    },
+    "FirewallPolicyErrorCode":{
+      "type":"string",
+      "enum":[
+        "DNS_FIREWALL_RULE_GROUP_UNAVAILABLE",
+        "ROUTE53_RESOLVED_IP_VALIDATION_MISSING"
+      ]
+    },
+    "FirewallPolicyErrorResourceId":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9:/_.-]+$"
+    },
+    "FirewallPolicyErrors":{
+      "type":"list",
+      "member":{"shape":"FirewallPolicyError"},
+      "max":10,
+      "min":0
     },
     "FirewallPolicyMetadata":{
       "type":"structure",
@@ -2680,12 +2732,14 @@
         "FirewallPolicyId":{"shape":"ResourceId"},
         "Description":{"shape":"Description"},
         "FirewallPolicyStatus":{"shape":"ResourceStatus"},
+        "StatusMessage":{"shape":"ResourceStatusMessage"},
         "Tags":{"shape":"TagList"},
         "ConsumedStatelessRuleCapacity":{"shape":"RuleCapacity"},
         "ConsumedStatefulRuleCapacity":{"shape":"RuleCapacity"},
         "ConsumedStatefulDomainCapacity":{"shape":"RuleCapacity"},
         "NumberOfAssociations":{"shape":"NumberOfAssociations"},
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "Errors":{"shape":"FirewallPolicyErrors"},
         "LastModifiedTime":{"shape":"LastUpdateTime"}
       }
     },
@@ -3063,6 +3117,7 @@
         "NextToken":{"shape":"PaginationToken"},
         "MaxResults":{"shape":"PaginationMaxResults"},
         "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "VpcEndpointId":{"shape":"VpcEndpointId"},
         "VpcEndpointAssociationArn":{"shape":"ResourceArn"}
       }
@@ -3072,6 +3127,7 @@
       "members":{
         "FirewallArn":{"shape":"ResourceArn"},
         "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "VpcEndpointAssociationArn":{"shape":"ResourceArn"},
         "VpcEndpointId":{"shape":"VpcEndpointId"},
         "FlowOperationId":{"shape":"FlowOperationId"},
@@ -3088,6 +3144,7 @@
       "members":{
         "FirewallArn":{"shape":"ResourceArn"},
         "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "VpcEndpointAssociationArn":{"shape":"ResourceArn"},
         "VpcEndpointId":{"shape":"VpcEndpointId"},
         "FlowOperationType":{"shape":"FlowOperationType"},
@@ -3787,8 +3844,14 @@
       "enum":[
         "ACTIVE",
         "DELETING",
-        "ERROR"
+        "ERROR",
+        "UPDATING"
       ]
+    },
+    "ResourceStatusMessage":{
+      "type":"string",
+      "max":8192,
+      "min":1
     },
     "RevocationCheckAction":{
       "type":"string",
@@ -3797,6 +3860,35 @@
         "DROP",
         "REJECT"
       ]
+    },
+    "Route53ResolvedIPValidation":{
+      "type":"structure",
+      "required":[
+        "Action",
+        "DNSFirewallRuleGroupId",
+        "DNSExpiryExceptionPolicy"
+      ],
+      "members":{
+        "Action":{"shape":"Route53ResolvedIPValidationAction"},
+        "DNSFirewallRuleGroupId":{"shape":"DNSFirewallRuleGroupId"},
+        "DNSExpiryExceptionPolicy":{"shape":"DNSExpiryExceptionPolicy"},
+        "BypassDestinationValidationIPRanges":{"shape":"Route53ResolvedIPValidationAddresses"},
+        "SourceIPRanges":{"shape":"Route53ResolvedIPValidationAddresses"}
+      }
+    },
+    "Route53ResolvedIPValidationAction":{
+      "type":"string",
+      "enum":[
+        "REJECT",
+        "DROP",
+        "ALERT"
+      ]
+    },
+    "Route53ResolvedIPValidationAddresses":{
+      "type":"list",
+      "member":{"shape":"Address"},
+      "max":100,
+      "min":0
     },
     "RuleCapacity":{"type":"integer"},
     "RuleDefinition":{
@@ -4038,6 +4130,7 @@
       "members":{
         "FirewallArn":{"shape":"ResourceArn"},
         "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "VpcEndpointAssociationArn":{"shape":"ResourceArn"},
         "VpcEndpointId":{"shape":"VpcEndpointId"},
         "MinimumFlowAgeInSeconds":{"shape":"Age"},
@@ -4061,6 +4154,7 @@
       "members":{
         "FirewallArn":{"shape":"ResourceArn"},
         "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "VpcEndpointAssociationArn":{"shape":"ResourceArn"},
         "VpcEndpointId":{"shape":"VpcEndpointId"},
         "MinimumFlowAgeInSeconds":{"shape":"Age"},
@@ -4422,7 +4516,8 @@
       "type":"string",
       "enum":[
         "TLS_SNI",
-        "HTTP_HOST"
+        "HTTP_HOST",
+        "AWS_ROUTE_53_RESOLVED_DOMAIN"
       ]
     },
     "TargetTypes":{

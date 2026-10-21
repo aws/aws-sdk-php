@@ -2646,7 +2646,8 @@
       "type":"string",
       "enum":[
         "Primary",
-        "Fallback"
+        "Fallback",
+        "DialogManager"
       ]
     },
     "AssociatedTranscript":{
@@ -6304,7 +6305,6 @@
     },
     "IntentConfirmationSetting":{
       "type":"structure",
-      "required":["promptSpecification"],
       "members":{
         "promptSpecification":{"shape":"PromptSpecification"},
         "declinationResponse":{"shape":"ResponseSpecification"},
@@ -10127,10 +10127,6 @@
     },
     "WaitAndContinueSpecification":{
       "type":"structure",
-      "required":[
-        "waitingResponse",
-        "continueResponse"
-      ],
       "members":{
         "waitingResponse":{"shape":"ResponseSpecification"},
         "continueResponse":{"shape":"ResponseSpecification"},

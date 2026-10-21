@@ -1452,6 +1452,7 @@
         "Explanation$VpnGateway": "<p>The VPN gateway.</p>",
         "Explanation$TransitGateway": "<p>The transit gateway.</p>",
         "Explanation$TransitGatewayRouteTable": "<p>The transit gateway route table.</p>",
+        "Explanation$TransitGatewayPolicyTable": "<p>The transit gateway policy table.</p>",
         "Explanation$TransitGatewayAttachment": "<p>The transit gateway attachment.</p>",
         "PathComponent$AttachedTo": "<p>The resource to which the path component is attached.</p>",
         "PathComponent$Component": "<p>The component.</p>",
@@ -1510,6 +1511,13 @@
         "GetNetworkInsightsAccessScopeAnalysisFindingsResult$AnalysisStatus": "<p>The status of Network Access Scope Analysis.</p>",
         "NetworkInsightsAccessScopeAnalysis$Status": "<p>The status.</p>",
         "NetworkInsightsAnalysis$Status": "<p>The status of the network insights analysis.</p>"
+      }
+    },
+    "AnalysisTransitGatewayPolicyTableEntry": {
+      "base": "<p>Describes an entry in a transit gateway policy table.</p>",
+      "refs": {
+        "Explanation$TransitGatewayPolicyTableEntry": "<p>The transit gateway policy table entry.</p>",
+        "PathComponent$TransitGatewayPolicyTableEntry": "<p>The entry in a transit gateway policy table.</p>"
       }
     },
     "ApplianceModeSupportValue": {
@@ -10848,7 +10856,7 @@
       "base": "<p>Describes the device posture options for a Client VPN endpoint. Device posture options specify the device trust providers that the endpoint uses to evaluate the security posture of connecting devices.</p>",
       "refs": {
         "CreateClientVpnEndpointRequest$DevicePostureOptions": "<p>The device posture options for the Client VPN endpoint. Use this parameter to specify the device trust providers that the endpoint uses to evaluate the security posture of connecting devices.</p>",
-        "ModifyClientVpnEndpointRequest$DevicePostureOptions": "<p>The device posture options for the Client VPN endpoint. Specifying this parameter replaces the entire device posture configuration for the endpoint. To remove all device trust providers, specify an empty list.</p>"
+        "ModifyClientVpnEndpointRequest$DevicePostureOptions": "<p>The device posture options for the Client VPN endpoint. Specifying this parameter replaces the entire device posture configuration for the endpoint. To disable device posture and remove all device trust providers, specify <code>false</code> for <code>Enabled</code>.</p>"
       }
     },
     "DevicePostureResponseOptions": {
@@ -16093,7 +16101,7 @@
       }
     },
     "InstanceStatus": {
-      "base": "<p>Describes the status of an instance, including system status, instance status, attached EBS status, and application status.</p>",
+      "base": "<p>Describes the status of an instance, including system status, instance status, attached EBS status, application status, and performance status.</p>",
       "refs": {
         "InstanceStatusList$member": null
       }
@@ -16320,6 +16328,7 @@
         "AllocateHostsRequest$Quantity": "<p>The number of Dedicated Hosts to allocate to your account with these parameters. If you are allocating the Dedicated Hosts on an Outpost, and you specify <b>AssetIds</b>, you can omit this parameter. In this case, Amazon EC2 allocates a Dedicated Host on each specified hardware asset. If you specify both <b>AssetIds</b> and <b>Quantity</b>, then the value that you specify for <b>Quantity</b> must be equal to the number of asset IDs specified.</p>",
         "AllocateIpamPoolCidrRequest$NetmaskLength": "<p>The netmask length of the CIDR you would like to allocate from the IPAM pool. Note the following:</p> <ul> <li> <p>If there is no DefaultNetmaskLength allocation rule set on the pool, you must specify either the NetmaskLength or the CIDR.</p> </li> <li> <p>If the DefaultNetmaskLength allocation rule is set on the pool, you can specify either the NetmaskLength or the CIDR and the DefaultNetmaskLength allocation rule will be ignored.</p> </li> </ul> <p>Possible netmask lengths for IPv4 addresses are 0 - 32. Possible netmask lengths for IPv6 addresses are 0 - 128.</p>",
         "AnalysisAclRule$RuleNumber": "<p>The rule number.</p>",
+        "AnalysisTransitGatewayPolicyTableEntry$RuleNumber": "<p>The rule number for the policy table entry. Entries are evaluated in ascending order of rule number.</p>",
         "ApplicationStatusCheckResponseObject$Port": "<p>The port used for the health check.</p>",
         "ApplicationStatusCheckResponseObject$DeviceIndex": "<p>The index of the network device used for the health check. The value is greater than or equal to 0.</p>",
         "ApplicationStatusCheckResponseObject$Interval": "<p>The interval, in seconds, between health checks. Valid value: 60.</p>",
@@ -20069,6 +20078,7 @@
         "NetworkInsightsAccessScopeAnalysis$EndDate": "<p>The analysis end date.</p>",
         "NetworkInsightsAnalysis$StartDate": "<p>The time the analysis started.</p>",
         "NetworkInsightsPath$CreatedDate": "<p>The time stamp when the path was created.</p>",
+        "PerformanceStatusSummary$ImpairedSince": "<p>The date and time when the performance status became impaired.</p>",
         "RegisteredInstance$LastUpdatedTime": "<p>The date and time when the instance's SQL Server High Availability status was last updated, in the ISO 8601 format in the UTC time zone (<code>YYYY-MM-DDThh:mm:ss.sssZ</code>).</p>",
         "RestoreSnapshotFromRecycleBinResult$StartTime": "<p>The time stamp when the snapshot was initiated.</p>",
         "RestoreSnapshotTierResult$RestoreStartTime": "<p>The date and time when the snapshot restore process started.</p>",
@@ -22289,6 +22299,12 @@
         "CpuPerformanceFactorRequest$References": "<p>Specify an instance family to use as the baseline reference for CPU performance. All instance types that match your specified attributes will be compared against the CPU performance of the referenced instance family, regardless of CPU manufacturer or architecture differences.</p> <note> <p>Currently, only one instance family can be specified in the list.</p> </note>"
       }
     },
+    "PerformanceStatusSummary": {
+      "base": "<p>Provides a summary of the performance status check results for an instance.</p>",
+      "refs": {
+        "InstanceStatus$PerformanceStatus": "<p>Reports the performance-related health status for the instance. This information is returned only when performance status checks are enabled for the instance.</p>"
+      }
+    },
     "Period": {
       "base": null,
       "refs": {
@@ -22636,6 +22652,8 @@
       "refs": {
         "AnalysisAclRule$PortRange": "<p>The range of ports.</p>",
         "AnalysisSecurityGroupRule$PortRange": "<p>The port range.</p>",
+        "AnalysisTransitGatewayPolicyTableEntry$SourcePortRange": "<p>The source port range. If this value is not present, the entry matches any source port.</p>",
+        "AnalysisTransitGatewayPolicyTableEntry$DestinationPortRange": "<p>The destination port range. If this value is not present, the entry matches any destination port.</p>",
         "CreateNetworkAclEntryRequest$PortRange": "<p>TCP or UDP protocols: The range of ports the rule applies to. Required if specifying protocol 6 (TCP) or 17 (UDP).</p>",
         "NetworkAclEntry$PortRange": "<p>TCP or UDP protocols: The range of ports the rule applies to.</p>",
         "PortRangeList$member": null,
@@ -26321,6 +26339,10 @@
         "AnalysisSecurityGroupRule$SecurityGroupId": "<p>The security group ID.</p>",
         "AnalysisSecurityGroupRule$PrefixListId": "<p>The prefix list ID.</p>",
         "AnalysisSecurityGroupRule$Protocol": "<p>The protocol name.</p>",
+        "AnalysisTransitGatewayPolicyTableEntry$Protocol": "<p>The protocol number. A value of <code>-1</code> means that the entry matches all protocols.</p>",
+        "AnalysisTransitGatewayPolicyTableEntry$SourceCidr": "<p>The source CIDR block. If this value is not present, the entry matches any source address.</p>",
+        "AnalysisTransitGatewayPolicyTableEntry$DestinationCidr": "<p>The destination CIDR block. If this value is not present, the entry matches any destination address.</p>",
+        "AnalysisTransitGatewayPolicyTableEntry$TargetRouteTableId": "<p>The ID of the transit gateway route table to which the entry routes matching traffic.</p>",
         "ApplicationStatusCheckAssociationObject$Key": "<p>The key for the association. This value is present only for tag-based associations, where it contains the tag key. For instance-based associations, this value is absent.</p>",
         "ApplicationStatusCheckAssociationObject$Value": "<p>The value for the association target. For tag-based associations, this is the tag value. For instance-based associations, this is the instance ID (for example, <code>i-0123456789abcdef0</code>).</p>",
         "ApplicationStatusCheckResponseObject$Path": "<p>The URL path used for the health check HTTP request.</p>",
@@ -28149,6 +28171,7 @@
         "PeeringTgwInfo$Region": "<p>The Region of the transit gateway.</p>",
         "PerformanceFactorReference$InstanceFamily": "<p>The instance family to use as a baseline reference.</p> <note> <p>Ensure that you specify the correct value for the instance family. The instance family is everything before the period (<code>.</code>) in the instance type name. For example, in the instance type <code>c6i.large</code>, the instance family is <code>c6i</code>, not <code>c6</code>. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/instancetypes/instance-type-names.html\">Amazon EC2 instance type naming conventions</a> in <i>Amazon EC2 Instance Types</i>.</p> </note> <p>The following instance families are <i>not supported</i> for performance protection:</p> <ul> <li> <p> <code>c1</code> </p> </li> <li> <p> <code>g3</code> | <code>g3s</code> </p> </li> <li> <p> <code>hpc7g</code> </p> </li> <li> <p> <code>m1</code> | <code>m2</code> </p> </li> <li> <p> <code>mac1</code> | <code>mac2</code> | <code>mac2-m1ultra</code> | <code>mac2-m2</code> | <code>mac2-m2pro</code> </p> </li> <li> <p> <code>p3dn</code> | <code>p4d</code> | <code>p5</code> </p> </li> <li> <p> <code>t1</code> </p> </li> <li> <p> <code>u-12tb1</code> | <code>u-18tb1</code> | <code>u-24tb1</code> | <code>u-3tb1</code> | <code>u-6tb1</code> | <code>u-9tb1</code> | <code>u7i-12tb</code> | <code>u7in-16tb</code> | <code>u7in-24tb</code> | <code>u7in-32tb</code> </p> </li> </ul> <p>If you enable performance protection by specifying a supported instance family, the returned instance types will exclude the above unsupported instance families.</p> <p>If you specify an unsupported instance family as a value for baseline performance, the API returns an empty response for <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetInstanceTypesFromInstanceRequirements\">GetInstanceTypesFromInstanceRequirements</a> and an exception for <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFleet\">CreateFleet</a>, <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet\">RequestSpotFleet</a>, <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyFleet\">ModifyFleet</a>, and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifySpotFleetRequest\">ModifySpotFleetRequest</a>.</p>",
         "PerformanceFactorReferenceRequest$InstanceFamily": "<p>The instance family to use as a baseline reference.</p> <note> <p>Ensure that you specify the correct value for the instance family. The instance family is everything before the period (<code>.</code>) in the instance type name. For example, in the instance type <code>c6i.large</code>, the instance family is <code>c6i</code>, not <code>c6</code>. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/instancetypes/instance-type-names.html\">Amazon EC2 instance type naming conventions</a> in <i>Amazon EC2 Instance Types</i>.</p> </note> <p>The following instance families are <i>not supported</i> for performance protection:</p> <ul> <li> <p> <code>c1</code> </p> </li> <li> <p> <code>g3</code> | <code>g3s</code> </p> </li> <li> <p> <code>hpc7g</code> </p> </li> <li> <p> <code>m1</code> | <code>m2</code> </p> </li> <li> <p> <code>mac1</code> | <code>mac2</code> | <code>mac2-m1ultra</code> | <code>mac2-m2</code> | <code>mac2-m2pro</code> </p> </li> <li> <p> <code>p3dn</code> | <code>p4d</code> | <code>p5</code> </p> </li> <li> <p> <code>t1</code> </p> </li> <li> <p> <code>u-12tb1</code> | <code>u-18tb1</code> | <code>u-24tb1</code> | <code>u-3tb1</code> | <code>u-6tb1</code> | <code>u-9tb1</code> | <code>u7i-12tb</code> | <code>u7in-16tb</code> | <code>u7in-24tb</code> | <code>u7in-32tb</code> </p> </li> </ul> <p>If you enable performance protection by specifying a supported instance family, the returned instance types will exclude the above unsupported instance families.</p> <p>If you specify an unsupported instance family as a value for baseline performance, the API returns an empty response for <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetInstanceTypesFromInstanceRequirements\">GetInstanceTypesFromInstanceRequirements</a> and an exception for <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFleet\">CreateFleet</a>, <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet\">RequestSpotFleet</a>, <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyFleet\">ModifyFleet</a>, and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifySpotFleetRequest\">ModifySpotFleetRequest</a>.</p>",
+        "PerformanceStatusSummary$Remediation": "<p>The recommended action to remediate the impaired instance, if one is available. This value is returned only when the instance is impaired.</p>",
         "Phase1EncryptionAlgorithmsListValue$Value": "<p>The value for the encryption algorithm.</p>",
         "Phase1EncryptionAlgorithmsRequestListValue$Value": "<p>The value for the encryption algorithm.</p>",
         "Phase1IntegrityAlgorithmsListValue$Value": "<p>The value for the integrity algorithm.</p>",
@@ -29207,7 +29230,8 @@
       "refs": {
         "ApplicationStatusSummary$Status": "<p>The current status.</p>",
         "EbsStatusSummary$Status": "<p>The current status.</p>",
-        "InstanceStatusSummary$Status": "<p>The status.</p>"
+        "InstanceStatusSummary$Status": "<p>The status.</p>",
+        "PerformanceStatusSummary$Status": "<p>The current status.</p>"
       }
     },
     "SupportedAdditionalProcessorFeature": {

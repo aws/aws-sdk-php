@@ -299,6 +299,21 @@
         {"shape":"ResourceContentionFault"}
       ]
     },
+    "DescribeAccountSettings":{
+      "name":"DescribeAccountSettings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeAccountSettingsType"},
+      "output":{
+        "shape":"DescribeAccountSettingsAnswer",
+        "resultWrapper":"DescribeAccountSettingsResult"
+      },
+      "errors":[
+        {"shape":"InvalidNextToken"}
+      ]
+    },
     "DescribeAdjustmentTypes":{
       "name":"DescribeAdjustmentTypes",
       "http":{
@@ -764,6 +779,18 @@
         {"shape":"IdempotentCallInProgressFault"}
       ]
     },
+    "PutAccountSetting":{
+      "name":"PutAccountSetting",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutAccountSettingType"},
+      "output":{
+        "shape":"PutAccountSettingAnswer",
+        "resultWrapper":"PutAccountSettingResult"
+      }
+    },
     "PutLifecycleHook":{
       "name":"PutLifecycleHook",
       "http":{
@@ -1038,6 +1065,21 @@
     "AcceleratorTypes":{
       "type":"list",
       "member":{"shape":"AcceleratorType"}
+    },
+    "AccountSetting":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"AsciiStringMaxLen255"},
+        "Value":{"shape":"AsciiStringMaxLen255"},
+        "EnforcementType":{"shape":"AsciiStringMaxLen255"},
+        "EnforcementDate":{"shape":"TimestampType"},
+        "DefaultValue":{"shape":"AsciiStringMaxLen255"},
+        "EnforcedValue":{"shape":"AsciiStringMaxLen255"}
+      }
+    },
+    "AccountSettings":{
+      "type":"list",
+      "member":{"shape":"AccountSetting"}
     },
     "ActiveInstanceRefreshNotFoundFault":{
       "type":"structure",
@@ -1793,6 +1835,21 @@
         "MaxNumberOfLaunchConfigurations":{"shape":"MaxNumberOfLaunchConfigurations"},
         "NumberOfAutoScalingGroups":{"shape":"NumberOfAutoScalingGroups"},
         "NumberOfLaunchConfigurations":{"shape":"NumberOfLaunchConfigurations"}
+      }
+    },
+    "DescribeAccountSettingsAnswer":{
+      "type":"structure",
+      "members":{
+        "Settings":{"shape":"AccountSettings"},
+        "NextToken":{"shape":"XmlString"}
+      }
+    },
+    "DescribeAccountSettingsType":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"AsciiStringMaxLen255"},
+        "NextToken":{"shape":"XmlString"},
+        "MaxRecords":{"shape":"MaxRecords"}
       }
     },
     "DescribeAdjustmentTypesAnswer":{
@@ -3252,6 +3309,21 @@
     "Progress":{"type":"integer"},
     "PropagateAtLaunch":{"type":"boolean"},
     "ProtectedFromScaleIn":{"type":"boolean"},
+    "PutAccountSettingAnswer":{
+      "type":"structure",
+      "members":{}
+    },
+    "PutAccountSettingType":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Value"
+      ],
+      "members":{
+        "Name":{"shape":"AsciiStringMaxLen255"},
+        "Value":{"shape":"AsciiStringMaxLen255"}
+      }
+    },
     "PutLifecycleHookAnswer":{
       "type":"structure",
       "members":{}

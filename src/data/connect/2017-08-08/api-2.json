@@ -24760,7 +24760,8 @@
         "LastModifiedRegion":{"shape":"RegionName"},
         "HierarchyRestrictedResources":{"shape":"HierarchyRestrictedResourceList"},
         "AllowedAccessControlHierarchyGroupId":{"shape":"HierarchyGroupId"},
-        "GranularAccessControlConfiguration":{"shape":"GranularAccessControlConfiguration"}
+        "GranularAccessControlConfiguration":{"shape":"GranularAccessControlConfiguration"},
+        "Type":{"shape":"SecurityProfileType"}
       }
     },
     "SecurityProfileDescription":{
@@ -24815,7 +24816,8 @@
         "Arn":{"shape":"ARN"},
         "SecurityProfileName":{"shape":"SecurityProfileName"},
         "Description":{"shape":"SecurityProfileDescription"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "Type":{"shape":"SecurityProfileType"}
       }
     },
     "SecurityProfileSummary":{
@@ -24825,12 +24827,20 @@
         "Arn":{"shape":"ARN"},
         "Name":{"shape":"SecurityProfileName"},
         "LastModifiedTime":{"shape":"Timestamp"},
-        "LastModifiedRegion":{"shape":"RegionName"}
+        "LastModifiedRegion":{"shape":"RegionName"},
+        "Type":{"shape":"SecurityProfileType"}
       }
     },
     "SecurityProfileSummaryList":{
       "type":"list",
       "member":{"shape":"SecurityProfileSummary"}
+    },
+    "SecurityProfileType":{
+      "type":"string",
+      "enum":[
+        "AWS_MANAGED",
+        "CUSTOMER_MANAGED"
+      ]
     },
     "SecurityProfiles":{
       "type":"list",

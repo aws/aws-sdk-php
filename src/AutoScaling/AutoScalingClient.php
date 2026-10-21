@@ -330,6 +330,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeAccountLimits(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeAccountLimitsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeAccountLimitsAsync(array{...} $args = [])
+ * @method \Aws\Result describeAccountSettings(array $args = [])
+ * @phpstan-method \Aws\Result describeAccountSettings(array{Name?: string, NextToken?: string, MaxRecords?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeAccountSettingsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeAccountSettingsAsync(array{Name?: string, NextToken?: string, MaxRecords?: int, ...} $args = [])
  * @method \Aws\Result describeAdjustmentTypes(array $args = [])
  * @phpstan-method \Aws\Result describeAdjustmentTypes(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeAdjustmentTypesAsync(array $args = [])
@@ -588,6 +592,10 @@ use Aws\AwsClient;
  *     RetryStrategy?: 'none'|'retry-with-group-configuration',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result putAccountSetting(array $args = [])
+ * @phpstan-method \Aws\Result putAccountSetting(array{Name?: string, Value?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise putAccountSettingAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putAccountSettingAsync(array{Name?: string, Value?: string, ...} $args = [])
  * @method \Aws\Result putLifecycleHook(array $args = [])
  * @phpstan-method \Aws\Result putLifecycleHook(array{
  *     LifecycleHookName?: string,

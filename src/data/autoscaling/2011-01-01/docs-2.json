@@ -22,6 +22,7 @@
     "DeleteTags": "<p>Deletes the specified tags.</p>",
     "DeleteWarmPool": "<p>Deletes the warm pool for the specified Auto Scaling group.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-warm-pools.html\">Warm pools for Amazon EC2 Auto Scaling</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>",
     "DescribeAccountLimits": "<p>Describes the current Amazon EC2 Auto Scaling resource quotas for your account.</p> <p>When you establish an Amazon Web Services account, the account has initial quotas on the maximum number of Auto Scaling groups and launch configurations that you can create in a given Region. For more information, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-quotas.html\">Quotas for Amazon EC2 Auto Scaling</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>",
+    "DescribeAccountSettings": "<p> Describes the current Amazon EC2 Auto Scaling account settings for your account. Account settings are a framework that allows you to enable or disable features for your account. The framework also gives you visibility into features that will be enforced by a given date, providing a time window to prepare for backwards-incompatible changes. </p>",
     "DescribeAdjustmentTypes": "<p>Describes the available adjustment types for step scaling and simple scaling policies.</p> <p>The following adjustment types are supported:</p> <ul> <li> <p> <code>ChangeInCapacity</code> </p> </li> <li> <p> <code>ExactCapacity</code> </p> </li> <li> <p> <code>PercentChangeInCapacity</code> </p> </li> </ul>",
     "DescribeAutoScalingGroups": "<p>Gets information about the Auto Scaling groups in the account and Region.</p> <p>If you specify Auto Scaling group names, the output includes information for only the specified Auto Scaling groups. If you specify filters, the output includes information for only those Auto Scaling groups that meet the filter criteria. If you do not specify group names or filters, the output includes information for all Auto Scaling groups. </p> <p>This operation also returns information about instances in Auto Scaling groups. To retrieve information about the instances in a warm pool, you must call the <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeWarmPool.html\">DescribeWarmPool</a> API. </p>",
     "DescribeAutoScalingInstances": "<p>Gets information about the Auto Scaling instances in the account and Region.</p>",
@@ -53,6 +54,7 @@
     "ExitStandby": "<p>Moves the specified instances out of the standby state.</p> <p>After you put the instances back in service, the desired capacity is incremented.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-enter-exit-standby.html\">Temporarily removing instances from your Auto Scaling group</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>",
     "GetPredictiveScalingForecast": "<p>Retrieves the forecast data for a predictive scaling policy.</p> <p>Load forecasts are predictions of the hourly load values using historical load data from CloudWatch and an analysis of historical trends. Capacity forecasts are represented as predicted values for the minimum capacity that is needed on an hourly basis, based on the hourly load forecast.</p> <p>A minimum of 24 hours of data is required to create the initial forecasts. However, having a full 14 days of historical data results in more accurate forecasts.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-predictive-scaling.html\">Predictive scaling for Amazon EC2 Auto Scaling</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>",
     "LaunchInstances": "<p> Launches a specified number of instances in an Auto Scaling group. Returns instance IDs and other details if launch is successful or error details if launch is unsuccessful. </p>",
+    "PutAccountSetting": "<p> Modifies an account setting for your account. You can use this operation to opt in or opt out of features provided through account settings when permitted. Account settings give you control over features that might have backwards-incompatible changes. When Amazon EC2 Auto Scaling introduces such changes, account settings allow you to test and adopt new features. Some account settings are enforced after a specified date. This means that after the enforcement date, you can no longer modify the setting. </p>",
     "PutLifecycleHook": "<p>Creates or updates a lifecycle hook for the specified Auto Scaling group.</p> <p>Lifecycle hooks let you create solutions that are aware of events in the Auto Scaling instance lifecycle, and then perform a custom action on instances when the corresponding lifecycle event occurs.</p> <p>This step is a part of the procedure for adding a lifecycle hook to an Auto Scaling group:</p> <ol> <li> <p>(Optional) Create a launch template or launch configuration with a user data script that runs while an instance is in a wait state due to a lifecycle hook.</p> </li> <li> <p>(Optional) Create a Lambda function and a rule that allows Amazon EventBridge to invoke your Lambda function when an instance is put into a wait state due to a lifecycle hook.</p> </li> <li> <p>(Optional) Create a notification target and an IAM role. The target can be either an Amazon SQS queue or an Amazon SNS topic. The role allows Amazon EC2 Auto Scaling to publish lifecycle notifications to the target.</p> </li> <li> <p> <b>Create the lifecycle hook. Specify whether the hook is used when the instances launch or terminate.</b> </p> </li> <li> <p>If you need more time, record the lifecycle action heartbeat to keep the instance in a wait state using the <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_RecordLifecycleActionHeartbeat.html\">RecordLifecycleActionHeartbeat</a> API call.</p> </li> <li> <p>If you finish before the timeout period ends, send a callback by using the <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_CompleteLifecycleAction.html\">CompleteLifecycleAction</a> API call.</p> </li> </ol> <p>For more information, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/lifecycle-hooks.html\">Amazon EC2 Auto Scaling lifecycle hooks</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p> <p>If you exceed your maximum limit of lifecycle hooks, which by default is 50 per Auto Scaling group, the call fails.</p> <p>You can view the lifecycle hooks for an Auto Scaling group using the <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeLifecycleHooks.html\">DescribeLifecycleHooks</a> API call. If you are no longer using a lifecycle hook, you can delete it by calling the <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DeleteLifecycleHook.html\">DeleteLifecycleHook</a> API.</p>",
     "PutNotificationConfiguration": "<p>Configures an Auto Scaling group to send notifications when specified events take place. Subscribers to the specified topic can have messages delivered to an endpoint such as a web server or an email address.</p> <p>This configuration overwrites any existing configuration.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-sns-notifications.html\">Amazon SNS notification options for Amazon EC2 Auto Scaling</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p> <p>If you exceed your maximum limit of SNS topics, which is 10 per Auto Scaling group, the call fails.</p>",
     "PutScalingPolicy": "<p>Creates or updates a scaling policy for an Auto Scaling group. Scaling policies are used to scale an Auto Scaling group based on configurable metrics. If no policies are defined, the dynamic scaling and predictive scaling features are not used. </p> <p>For more information about using dynamic scaling, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-target-tracking.html\">Target tracking scaling policies</a> and <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-simple-step.html\">Step and simple scaling policies</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p> <p>For more information about using predictive scaling, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-predictive-scaling.html\">Predictive scaling for Amazon EC2 Auto Scaling</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p> <p>You can view the scaling policies for an Auto Scaling group using the <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribePolicies.html\">DescribePolicies</a> API call. If you are no longer using a scaling policy, you can delete it by calling the <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DeletePolicy.html\">DeletePolicy</a> API.</p>",
@@ -116,6 +118,18 @@
       "base": null,
       "refs": {
         "InstanceRequirements$AcceleratorTypes": "<p>Lists the accelerator types that must be on an instance type.</p> <ul> <li> <p>For instance types with GPU accelerators, specify <code>gpu</code>.</p> </li> <li> <p>For instance types with FPGA accelerators, specify <code>fpga</code>.</p> </li> <li> <p>For instance types with inference accelerators, specify <code>inference</code>.</p> </li> </ul> <p>Default: Any accelerator type</p>"
+      }
+    },
+    "AccountSetting": {
+      "base": "<p> Describes an account setting for Amazon EC2 Auto Scaling. Account settings control how certain features behave for your account. Some settings can be enforced after a specified date, meaning that after the enforcement date, you can no longer modify the setting. </p>",
+      "refs": {
+        "AccountSettings$member": null
+      }
+    },
+    "AccountSettings": {
+      "base": null,
+      "refs": {
+        "DescribeAccountSettingsAnswer$Settings": "<p> Information about the account settings. </p>"
       }
     },
     "ActiveInstanceRefreshNotFoundFault": {
@@ -217,12 +231,20 @@
     "AsciiStringMaxLen255": {
       "base": null,
       "refs": {
+        "AccountSetting$Name": "<p> The name of the account setting. Each account setting has a unique name that identifies the specific feature it controls. </p>",
+        "AccountSetting$Value": "<p> The current value of the account setting. </p>",
+        "AccountSetting$EnforcementType": "<p> The type of enforcement for the account setting. Valid values include: <code>hard</code> (the setting has a hard enforcement date after which the setting will be enforced and cannot be modified), <code>flexible</code> (the setting has a flexible enforcement where you can always modify the setting value), and <code>none</code> (the setting has no enforcement and can always be modified). </p>",
+        "AccountSetting$DefaultValue": "<p> The default value of the account setting before the enforcement date. Valid values are enabled and disabled. This parameter is only returned for settings with hard or flexible enforcement types. </p>",
+        "AccountSetting$EnforcedValue": "<p> The value that will be enforced after the enforcement date. Valid values are enabled and disabled. This parameter is only returned for settings with hard or flexible enforcement types. </p>",
         "CapacityReservationIds$member": null,
         "CompleteLifecycleActionType$LifecycleHookName": "<p>The name of the lifecycle hook.</p>",
         "DeleteLifecycleHookType$LifecycleHookName": "<p>The name of the lifecycle hook.</p>",
+        "DescribeAccountSettingsType$Name": "<p> The name of the account setting to describe. If you omit this parameter, all account settings are described. </p>",
         "LifecycleHook$LifecycleHookName": "<p>The name of the lifecycle hook.</p>",
         "LifecycleHookNames$member": null,
         "LifecycleHookSpecification$LifecycleHookName": "<p>The name of the lifecycle hook.</p>",
+        "PutAccountSettingType$Name": "<p> The name of the account setting to modify. Each account setting has a unique name that identifies the specific feature it controls. </p>",
+        "PutAccountSettingType$Value": "<p> The value for the account setting. </p>",
         "PutLifecycleHookType$LifecycleHookName": "<p>The name of the lifecycle hook.</p>",
         "RecordLifecycleActionHeartbeatType$LifecycleHookName": "<p>The name of the lifecycle hook.</p>"
       }
@@ -711,6 +733,14 @@
       }
     },
     "DescribeAccountLimitsAnswer": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAccountSettingsAnswer": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAccountSettingsType": {
       "base": null,
       "refs": {}
     },
@@ -1505,6 +1535,7 @@
       "base": null,
       "refs": {
         "AutoScalingGroupNamesType$MaxRecords": "<p>The maximum number of items to return with this call. The default value is <code>50</code> and the maximum value is <code>100</code>.</p>",
+        "DescribeAccountSettingsType$MaxRecords": "<p> The maximum number of items to return with this call. The default value is <code>50</code> and the maximum value is <code>100</code>. </p>",
         "DescribeAutoScalingInstancesType$MaxRecords": "<p>The maximum number of items to return with this call. The default value is <code>50</code> and the maximum value is <code>50</code>.</p>",
         "DescribeInstanceRefreshesType$MaxRecords": "<p>The maximum number of items to return with this call. The default value is <code>50</code> and the maximum value is <code>100</code>.</p>",
         "DescribeLoadBalancerTargetGroupsRequest$MaxRecords": "<p>The maximum number of items to return with this call. The default value is <code>100</code> and the maximum value is <code>100</code>.</p>",
@@ -2020,6 +2051,14 @@
         "SetInstanceProtectionQuery$ProtectedFromScaleIn": "<p>Indicates whether the instance is protected from termination by Amazon EC2 Auto Scaling when scaling in.</p>"
       }
     },
+    "PutAccountSettingAnswer": {
+      "base": null,
+      "refs": {}
+    },
+    "PutAccountSettingType": {
+      "base": null,
+      "refs": {}
+    },
     "PutLifecycleHookAnswer": {
       "base": null,
       "refs": {}
@@ -2462,6 +2501,7 @@
     "TimestampType": {
       "base": null,
       "refs": {
+        "AccountSetting$EnforcementDate": "<p> The date when the account setting will be enforced. After this date, for settings with hard enforcement type, you can no longer modify the setting value. This parameter is only returned for settings with hard or flexible enforcement types. </p>",
         "Activity$StartTime": "<p>The start time of the activity.</p>",
         "Activity$EndTime": "<p>The end time of the activity.</p>",
         "AutoScalingGroup$CreatedTime": "<p>The date and time the Auto Scaling group was created.</p>",
@@ -2584,6 +2624,8 @@
         "AutoScalingGroupNamesType$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "AutoScalingGroupsType$NextToken": "<p>A string that indicates that the response contains more items than can be returned in a single response. To receive additional items, specify this string for the <code>NextToken</code> value when requesting the next set of items. This value is null when there are no more items to return.</p>",
         "AutoScalingInstancesType$NextToken": "<p>A string that indicates that the response contains more items than can be returned in a single response. To receive additional items, specify this string for the <code>NextToken</code> value when requesting the next set of items. This value is null when there are no more items to return.</p>",
+        "DescribeAccountSettingsAnswer$NextToken": "<p> A string that indicates that the response contains more items than can be returned in a single response. To receive additional items, specify this string for the <code>NextToken</code> value when requesting the next set of items. This value is <code>null</code> when there are no more items to return. </p>",
+        "DescribeAccountSettingsType$NextToken": "<p> The token for the next set of items to return. (You received this token from a previous call.) </p>",
         "DescribeAutoScalingInstancesType$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "DescribeInstanceRefreshesAnswer$NextToken": "<p>A string that indicates that the response contains more items than can be returned in a single response. To receive additional items, specify this string for the <code>NextToken</code> value when requesting the next set of items. This value is null when there are no more items to return.</p>",
         "DescribeInstanceRefreshesType$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",

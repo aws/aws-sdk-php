@@ -66,6 +66,7 @@ use Aws\AwsClient;
  *         mcpserversigv4?: array{tools?: list<string>, toolDetails?: list<array>, ...},
  *         remoteagent?: array,
  *         remoteagentsigv4?: array,
+ *         msteams?: array{teamId?: string, teamName?: string, transmissionTarget?: array, ...},
  *         releaseManagement?: array{name?: string, networkAccess?: array, ...},
  *         ...,
  *     },
@@ -133,6 +134,7 @@ use Aws\AwsClient;
  *         mcpserversigv4?: array{tools?: list<string>, toolDetails?: list<array>, ...},
  *         remoteagent?: array,
  *         remoteagentsigv4?: array,
+ *         msteams?: array{teamId?: string, teamName?: string, transmissionTarget?: array, ...},
  *         releaseManagement?: array{name?: string, networkAccess?: array, ...},
  *         ...,
  *     },
@@ -573,14 +575,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listServices(array{
  *     maxResults?: int,
  *     nextToken?: string,
- *     filterServiceType?: 'azure'|'azuredevops'|'azureidentity'|'dynatrace'|'eventChannel'|'github'|'gitlab'|'mcpserver'|'mcpserverdatadog'|'mcpservergrafana'|'mcpservernewrelic'|'mcpserversigv4'|'mcpserversplunk'|'pagerduty'|'remoteagent'|'remoteagentsigv4'|'servicenow'|'slack',
+ *     filterServiceType?: 'azure'|'azuredevops'|'azureidentity'|'dynatrace'|'eventChannel'|'github'|'gitlab'|'mcpserver'|'mcpserverdatadog'|'mcpservergrafana'|'mcpservernewrelic'|'mcpserversigv4'|'mcpserversplunk'|'msteams'|'pagerduty'|'remoteagent'|'remoteagentsigv4'|'servicenow'|'slack',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listServicesAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listServicesAsync(array{
  *     maxResults?: int,
  *     nextToken?: string,
- *     filterServiceType?: 'azure'|'azuredevops'|'azureidentity'|'dynatrace'|'eventChannel'|'github'|'gitlab'|'mcpserver'|'mcpserverdatadog'|'mcpservergrafana'|'mcpservernewrelic'|'mcpserversigv4'|'mcpserversplunk'|'pagerduty'|'remoteagent'|'remoteagentsigv4'|'servicenow'|'slack',
+ *     filterServiceType?: 'azure'|'azuredevops'|'azureidentity'|'dynatrace'|'eventChannel'|'github'|'gitlab'|'mcpserver'|'mcpserverdatadog'|'mcpservergrafana'|'mcpservernewrelic'|'mcpserversigv4'|'mcpserversplunk'|'msteams'|'pagerduty'|'remoteagent'|'remoteagentsigv4'|'servicenow'|'slack',
  *     ...,
  * } $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
@@ -868,6 +870,7 @@ use Aws\AwsClient;
  *         mcpserversigv4?: array{tools?: list<string>, toolDetails?: list<array>, ...},
  *         remoteagent?: array,
  *         remoteagentsigv4?: array,
+ *         msteams?: array{teamId?: string, teamName?: string, transmissionTarget?: array, ...},
  *         releaseManagement?: array{name?: string, networkAccess?: array, ...},
  *         ...,
  *     },
@@ -935,6 +938,7 @@ use Aws\AwsClient;
  *         mcpserversigv4?: array{tools?: list<string>, toolDetails?: list<array>, ...},
  *         remoteagent?: array,
  *         remoteagentsigv4?: array,
+ *         msteams?: array{teamId?: string, teamName?: string, transmissionTarget?: array, ...},
  *         releaseManagement?: array{name?: string, networkAccess?: array, ...},
  *         ...,
  *     },

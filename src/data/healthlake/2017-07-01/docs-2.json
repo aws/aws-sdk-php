@@ -34,6 +34,12 @@
       "base": "<p>Access is denied. Your account is not authorized to perform this operation.</p>",
       "refs": {}
     },
+    "AgentErrorType": {
+      "base": null,
+      "refs": {
+        "ErrorEvent$Error": "<p>The type of the exception.</p>"
+      }
+    },
     "AgentInputMessage": {
       "base": "<p>Represents a message sent to the agent during chat-based profile customization.</p>",
       "refs": {
@@ -46,27 +52,20 @@
         "AgentInputMessage$Type": "<p>The type of input message, which determines how the agent processes your request. Valid values:</p> <ul> <li> <p> <code>normal</code>: A regular message to the agent.</p> </li> <li> <p> <code>confirmation_response</code>: A response to a confirmation request from the agent.</p> </li> </ul>"
       }
     },
-    "AgentMessageOutOfContextException": {
-      "base": "<p>The agent message does not fit within the current conversation context. Start a new conversation or provide a message that relates to the current profile customization session.</p>",
-      "refs": {}
-    },
     "AgentMessageString": {
       "base": null,
       "refs": {
         "AgentInputMessage$Body": "<p>The text of your message to the agent.</p>",
-        "AgentOutputMessage$Body": "<p>The text of the agent's response.</p>"
+        "EndOfOutputEvent$FinalResponseMessage": "<p>The final response message from the agent.</p>",
+        "ErrorEvent$Message": "<p>The exception message.</p>",
+        "ProgressEvent$Message": "<p>An incremental progress update message by the agent</p>",
+        "TextMessageEvent$Message": "<p>An incremental text update from the agent.</p>"
       }
     },
-    "AgentOutputMessage": {
-      "base": "<p>Represents a response message from the agent during chat-based profile customization.</p>",
+    "AgentOutputMessageStream": {
+      "base": "<p>Represents the response stream type from the agent during chat-based profile customization.</p>",
       "refs": {
-        "UpdateProfileWithAgentResponse$AgentResponse": "<p>The response message from the agent.</p>"
-      }
-    },
-    "AgentOutputMessageType": {
-      "base": null,
-      "refs": {
-        "AgentOutputMessage$Type": "<p>The type of output message, which indicates how to interpret the agent's response.</p>"
+        "UpdateProfileWithAgentResponse$AgentResponse": "<p>The streaming response from the agent.</p>"
       }
     },
     "AmazonResourceName": {
@@ -199,13 +198,9 @@
     "ConversationIdString": {
       "base": null,
       "refs": {
-        "UpdateProfileWithAgentRequest$ConversationId": "<p>The conversation identifier for multi-turn interactions. Omit to start a new conversation.</p>",
-        "UpdateProfileWithAgentResponse$ConversationId": "<p>The conversation identifier to use for follow-up messages in this conversation.</p>"
+        "EndOfOutputEvent$ConversationId": "<p>The conversation ID of the request. You can use this ID to continue the profile mapping based on this request's context at a later time.</p>",
+        "UpdateProfileWithAgentRequest$ConversationId": "<p>The conversation identifier for multi-turn interactions. Omit to start a new conversation.</p>"
       }
-    },
-    "ConversationNotFoundException": {
-      "base": "<p>The specified conversation identifier does not exist. Verify the conversation ID or omit it to start a new conversation.</p>",
-      "refs": {}
     },
     "CreateDataTransformationProfileRequest": {
       "base": "<p>The request parameters for the <code>CreateDataTransformationProfile</code> operation.</p>",
@@ -238,7 +233,7 @@
     "DataTransformationChatOptionsList": {
       "base": null,
       "refs": {
-        "AgentOutputMessage$OptionsList": "<p>A list of selectable options presented when the response type is <code>options</code>.</p>"
+        "EndOfOutputEvent$Options": "<p>The response options that you can use to easily answer follow-up questions from the agent.</p>"
       }
     },
     "DataTransformationIamRoleArn": {
@@ -489,6 +484,12 @@
         "S3Configuration$KmsKeyId": "<p>The Key Management Service (KMS) key ID used to access the Amazon S3 bucket. </p>"
       }
     },
+    "EndOfOutputEvent": {
+      "base": "<p>Contains the final response event from the agent, including the response message, response options, and conversation ID.</p>",
+      "refs": {
+        "AgentOutputMessageStream$EndOfOutputEvent": "<p>The final event in the response stream from the agent during chat-based profile customization. The caller can assume that the stream has ended upon receiving this event.</p>"
+      }
+    },
     "ErrorCategory": {
       "base": null,
       "refs": {
@@ -499,6 +500,12 @@
       "base": "<p>The error information for <code>CreateFHIRDatastore</code> and <code>DeleteFHIRDatastore</code> actions.</p>",
       "refs": {
         "DatastoreProperties$ErrorCause": "<p>The error cause for the current data store operation.</p>"
+      }
+    },
+    "ErrorEvent": {
+      "base": "<p>The type of an event that returns an exception encountered while serving the request.</p>",
+      "refs": {
+        "AgentOutputMessageStream$ErrorEvent": "<p>An exception encountered while serving the request.</p>"
       }
     },
     "ErrorMessage": {
@@ -614,6 +621,12 @@
         "ListFHIRExportJobsRequest$SubmittedAfter": "<p>Limits the response to FHIR export jobs submitted after a user-specified date.</p>",
         "ListFHIRImportJobsRequest$SubmittedBefore": "<p>Limits the response to FHIR import jobs submitted before a user- specified date. </p>",
         "ListFHIRImportJobsRequest$SubmittedAfter": "<p>Limits the response to FHIR import jobs submitted after a user-specified date.</p>"
+      }
+    },
+    "HeartbeatEvent": {
+      "base": "<p>The type for a periodically emitted event to keep the connection alive.</p>",
+      "refs": {
+        "AgentOutputMessageStream$HeartbeatEvent": "<p>Periodically emitted event to keep the connection alive.</p>"
       }
     },
     "IamRoleArn": {
@@ -837,10 +850,6 @@
         "NlpConfiguration$Status": "<p>The status of the NLP configuration.</p>"
       }
     },
-    "NotImplementedOperationException": {
-      "base": "<p>The requested operation is not yet available. Check the service documentation for a list of supported operations.</p>",
-      "refs": {}
-    },
     "OutputDataConfig": {
       "base": "<p>The output data configuration supplied when the export job was created.</p>",
       "refs": {
@@ -951,6 +960,12 @@
         "PublishDataTransformationProfileResponse$Version": "<p>The new version number that was created.</p>"
       }
     },
+    "ProgressEvent": {
+      "base": "<p>The type for an incremental progress update from the agent.</p>",
+      "refs": {
+        "AgentOutputMessageStream$ProgressEvent": "<p>An incremental progress update from the agent.</p>"
+      }
+    },
     "PublishDataTransformationProfileRequest": {
       "base": "<p>The request parameters for the <code>PublishDataTransformationProfile</code> operation.</p>",
       "refs": {}
@@ -1019,8 +1034,7 @@
         "PublishDataTransformationProfileResponse$SourceFormat": "<p>The source data format of the profile.</p>",
         "TransformationInputDataConfig$SourceFormat": "<p>The format of the source data files (C-CDA or CSV).</p>",
         "TransformationJobSummary$SourceFormat": "<p>The source data format for this job.</p>",
-        "UpdateDataTransformationProfileResponse$SourceFormat": "<p>The source data format of the profile.</p>",
-        "UpdateProfileWithAgentRequest$SourceFormat": "<p>The source data format for the transformation.</p>"
+        "UpdateDataTransformationProfileResponse$SourceFormat": "<p>The source data format of the profile.</p>"
       }
     },
     "SseConfiguration": {
@@ -1064,15 +1078,10 @@
     "String": {
       "base": null,
       "refs": {
-        "AgentMessageOutOfContextException$Message": null,
-        "ConversationNotFoundException$Message": null,
         "ExistingVersionedProfileSource$ProfileId": "<p>The unique identifier of the existing profile to clone from.</p>",
-        "NotImplementedOperationException$Message": null,
         "StarterProfileSource$StarterProfileName": "<p>The name of the built-in starter profile.</p>",
         "StringMap$key": null,
-        "StringMap$value": null,
-        "UnauthorizedException$Message": null,
-        "UnsupportedMIMETypeException$Message": null
+        "StringMap$value": null
       }
     },
     "StringMap": {
@@ -1140,6 +1149,12 @@
         "UpdateDataTransformationProfileResponse$TargetFormat": "<p>The target output format of the profile.</p>"
       }
     },
+    "TextMessageEvent": {
+      "base": "<p>The type for an incremental text update from the agent.</p>",
+      "refs": {
+        "AgentOutputMessageStream$TextMessageEvent": "<p>An incremental text update from the agent.</p>"
+      }
+    },
     "ThrottlingException": {
       "base": "<p>The user has exceeded their maximum number of allowed calls to the given API. </p>",
       "refs": {}
@@ -1190,14 +1205,6 @@
         "StartDataTransformationJobRequest$OutputDataConfig": "<p>The Amazon S3 output location and Amazon Web Services Key Management Service (Amazon Web Services KMS) encryption configuration.</p>",
         "TransformationJobProperties$OutputDataConfig": "<p>The Amazon S3 location and encryption configuration for the converted output.</p>"
       }
-    },
-    "UnauthorizedException": {
-      "base": "<p>You are not authorized to make this request. Verify that your Amazon Web Services credentials are valid and that you have the required permissions.</p>",
-      "refs": {}
-    },
-    "UnsupportedMIMETypeException": {
-      "base": "<p>The content type in your request is not supported. Use a supported content type for this operation.</p>",
-      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,

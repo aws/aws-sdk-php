@@ -71,7 +71,8 @@ use Aws\AwsClient;
  *         user?: array{userIdentifier?: string, allUsersGrantFilter?: array, ...},
  *         group?: array{groupIdentifier?: string, ...},
  *         project?: array{
- *             projectDesignation?: 'CONTRIBUTOR'|'OWNER'|'PROJECT_CATALOG_STEWARD',
+ *             projectDesignation?: 'CONTRIBUTOR'|'OWNER'|'PROJECT_CATALOG_STEWARD'|'USER_CREATED_DESIGNATION',
+ *             userCreatedDesignationId?: string,
  *             projectIdentifier?: string,
  *             projectGrantFilter?: array,
  *             ...,
@@ -109,7 +110,8 @@ use Aws\AwsClient;
  *         user?: array{userIdentifier?: string, allUsersGrantFilter?: array, ...},
  *         group?: array{groupIdentifier?: string, ...},
  *         project?: array{
- *             projectDesignation?: 'CONTRIBUTOR'|'OWNER'|'PROJECT_CATALOG_STEWARD',
+ *             projectDesignation?: 'CONTRIBUTOR'|'OWNER'|'PROJECT_CATALOG_STEWARD'|'USER_CREATED_DESIGNATION',
+ *             userCreatedDesignationId?: string,
  *             projectIdentifier?: string,
  *             projectGrantFilter?: array,
  *             ...,
@@ -589,6 +591,24 @@ use Aws\AwsClient;
  *     clientToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createDesignation(array $args = [])
+ * @phpstan-method \Aws\Result createDesignation(array{
+ *     domainIdentifier?: string,
+ *     name?: string,
+ *     description?: string,
+ *     policy?: string,
+ *     deletionProtection?: bool,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createDesignationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createDesignationAsync(array{
+ *     domainIdentifier?: string,
+ *     name?: string,
+ *     description?: string,
+ *     policy?: string,
+ *     deletionProtection?: bool,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createDomain(array $args = [])
  * @phpstan-method \Aws\Result createDomain(array{
  *     name?: string,
@@ -893,7 +913,8 @@ use Aws\AwsClient;
  *     projectExecutionRole?: string,
  *     membershipAssignments?: list<array{
  *         member?: array,
- *         designation?: 'PROJECT_CATALOG_CONSUMER'|'PROJECT_CATALOG_STEWARD'|'PROJECT_CATALOG_VIEWER'|'PROJECT_CONTRIBUTOR'|'PROJECT_OWNER',
+ *         designation?: 'PROJECT_CATALOG_CONSUMER'|'PROJECT_CATALOG_STEWARD'|'PROJECT_CATALOG_VIEWER'|'PROJECT_CONTRIBUTOR'|'PROJECT_OWNER'|'USER_CREATED_DESIGNATION',
+ *         userCreatedDesignationId?: string,
  *         ...,
  *     }>,
  *     ...,
@@ -918,7 +939,8 @@ use Aws\AwsClient;
  *     projectExecutionRole?: string,
  *     membershipAssignments?: list<array{
  *         member?: array,
- *         designation?: 'PROJECT_CATALOG_CONSUMER'|'PROJECT_CATALOG_STEWARD'|'PROJECT_CATALOG_VIEWER'|'PROJECT_CONTRIBUTOR'|'PROJECT_OWNER',
+ *         designation?: 'PROJECT_CATALOG_CONSUMER'|'PROJECT_CATALOG_STEWARD'|'PROJECT_CATALOG_VIEWER'|'PROJECT_CONTRIBUTOR'|'PROJECT_OWNER'|'USER_CREATED_DESIGNATION',
+ *         userCreatedDesignationId?: string,
  *         ...,
  *     }>,
  *     ...,
@@ -928,7 +950,8 @@ use Aws\AwsClient;
  *     domainIdentifier?: string,
  *     projectIdentifier?: string,
  *     member?: array{userIdentifier?: string, groupIdentifier?: string, ...},
- *     designation?: 'PROJECT_CATALOG_CONSUMER'|'PROJECT_CATALOG_STEWARD'|'PROJECT_CATALOG_VIEWER'|'PROJECT_CONTRIBUTOR'|'PROJECT_OWNER',
+ *     designation?: 'PROJECT_CATALOG_CONSUMER'|'PROJECT_CATALOG_STEWARD'|'PROJECT_CATALOG_VIEWER'|'PROJECT_CONTRIBUTOR'|'PROJECT_OWNER'|'USER_CREATED_DESIGNATION',
+ *     userCreatedDesignationId?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createProjectMembershipAsync(array $args = [])
@@ -936,7 +959,8 @@ use Aws\AwsClient;
  *     domainIdentifier?: string,
  *     projectIdentifier?: string,
  *     member?: array{userIdentifier?: string, groupIdentifier?: string, ...},
- *     designation?: 'PROJECT_CATALOG_CONSUMER'|'PROJECT_CATALOG_STEWARD'|'PROJECT_CATALOG_VIEWER'|'PROJECT_CONTRIBUTOR'|'PROJECT_OWNER',
+ *     designation?: 'PROJECT_CATALOG_CONSUMER'|'PROJECT_CATALOG_STEWARD'|'PROJECT_CATALOG_VIEWER'|'PROJECT_CONTRIBUTOR'|'PROJECT_OWNER'|'USER_CREATED_DESIGNATION',
+ *     userCreatedDesignationId?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createProjectProfile(array $args = [])
@@ -1167,6 +1191,10 @@ use Aws\AwsClient;
  *     retainPermissionsOnRevokeFailure?: bool,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result deleteDesignation(array $args = [])
+ * @phpstan-method \Aws\Result deleteDesignation(array{domainIdentifier?: string, identifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteDesignationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteDesignationAsync(array{domainIdentifier?: string, identifier?: string, ...} $args = [])
  * @method \Aws\Result deleteDomain(array $args = [])
  * @phpstan-method \Aws\Result deleteDomain(array{identifier?: string, clientToken?: string, skipDeletionCheck?: bool, cascadeDelete?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteDomainAsync(array $args = [])
@@ -1331,6 +1359,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getDataSourceRun(array{domainIdentifier?: string, identifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getDataSourceRunAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getDataSourceRunAsync(array{domainIdentifier?: string, identifier?: string, ...} $args = [])
+ * @method \Aws\Result getDesignation(array $args = [])
+ * @phpstan-method \Aws\Result getDesignation(array{domainIdentifier?: string, identifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getDesignationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getDesignationAsync(array{domainIdentifier?: string, identifier?: string, ...} $args = [])
  * @method \Aws\Result getDomain(array $args = [])
  * @phpstan-method \Aws\Result getDomain(array{identifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getDomainAsync(array $args = [])
@@ -1615,6 +1647,10 @@ use Aws\AwsClient;
  *     maxResults?: int,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listDesignations(array $args = [])
+ * @phpstan-method \Aws\Result listDesignations(array{domainIdentifier?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listDesignationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listDesignationsAsync(array{domainIdentifier?: string, nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \Aws\Result listDomainUnitsForParent(array $args = [])
  * @phpstan-method \Aws\Result listDomainUnitsForParent(array{
  *     domainIdentifier?: string,
@@ -2309,7 +2345,8 @@ use Aws\AwsClient;
  *         user?: array{userIdentifier?: string, allUsersGrantFilter?: array, ...},
  *         group?: array{groupIdentifier?: string, ...},
  *         project?: array{
- *             projectDesignation?: 'CONTRIBUTOR'|'OWNER'|'PROJECT_CATALOG_STEWARD',
+ *             projectDesignation?: 'CONTRIBUTOR'|'OWNER'|'PROJECT_CATALOG_STEWARD'|'USER_CREATED_DESIGNATION',
+ *             userCreatedDesignationId?: string,
  *             projectIdentifier?: string,
  *             projectGrantFilter?: array,
  *             ...,
@@ -2331,7 +2368,8 @@ use Aws\AwsClient;
  *         user?: array{userIdentifier?: string, allUsersGrantFilter?: array, ...},
  *         group?: array{groupIdentifier?: string, ...},
  *         project?: array{
- *             projectDesignation?: 'CONTRIBUTOR'|'OWNER'|'PROJECT_CATALOG_STEWARD',
+ *             projectDesignation?: 'CONTRIBUTOR'|'OWNER'|'PROJECT_CATALOG_STEWARD'|'USER_CREATED_DESIGNATION',
+ *             userCreatedDesignationId?: string,
  *             projectIdentifier?: string,
  *             projectGrantFilter?: array,
  *             ...,
@@ -2901,6 +2939,26 @@ use Aws\AwsClient;
  *     },
  *     recommendation?: array{enableBusinessNameGeneration?: bool, ...},
  *     retainPermissionsOnRevokeFailure?: bool,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateDesignation(array $args = [])
+ * @phpstan-method \Aws\Result updateDesignation(array{
+ *     domainIdentifier?: string,
+ *     identifier?: string,
+ *     name?: string,
+ *     description?: string,
+ *     policy?: string,
+ *     deletionProtection?: bool,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateDesignationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateDesignationAsync(array{
+ *     domainIdentifier?: string,
+ *     identifier?: string,
+ *     name?: string,
+ *     description?: string,
+ *     policy?: string,
+ *     deletionProtection?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateDomain(array $args = [])

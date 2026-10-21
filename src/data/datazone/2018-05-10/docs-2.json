@@ -21,6 +21,7 @@
     "CreateDataProduct": "<p>Creates a data product.</p> <p>A data product is a comprehensive package that combines data assets with their associated metadata, documentation, and access controls. It's designed to serve specific business needs or use cases, making it easier for users to find and consume data appropriately. Data products include important information about data quality, freshness, and usage guidelines, effectively bridging the gap between data producers and consumers while ensuring proper governance.</p> <p>Prerequisites:</p> <ul> <li> <p>The domain must exist and be accessible. </p> </li> <li> <p>The owning project must be valid and active.</p> </li> <li> <p>The name must be unique within the domain (no existing data product with the same name).</p> </li> <li> <p>User must have create permissions for data products in the project.</p> </li> </ul>",
     "CreateDataProductRevision": "<p>Creates a data product revision.</p> <p>Prerequisites:</p> <ul> <li> <p>The original data product must exist in the given domain. </p> </li> <li> <p>User must have permissions on the data product.</p> </li> <li> <p>The domain must be valid and accessible.</p> </li> <li> <p>The new revision name must comply with naming constraints (if required).</p> </li> </ul>",
     "CreateDataSource": "<p>Creates an Amazon DataZone data source.</p>",
+    "CreateDesignation": "<p>Creates a new user-defined designation with a Cedar permit policy. The designation defines a named role that can be assigned to project members.</p>",
     "CreateDomain": "<p>Creates an Amazon DataZone domain.</p>",
     "CreateDomainUnit": "<p>Creates a domain unit in Amazon DataZone.</p>",
     "CreateEnvironment": "<p>Create an Amazon DataZone environment.</p>",
@@ -49,6 +50,7 @@
     "DeleteDataExportConfiguration": "<p>Deletes data export configuration for a domain.</p> <p>This operation does not delete the S3 table created by the PutDataExportConfiguration operation.</p> <p>To temporarily disable export without deleting the configuration, use the PutDataExportConfiguration operation with the <code>--no-enable-export</code> flag instead. This allows you to re-enable export for the same domain using the <code>--enable-export</code> flag without deleting S3 table.</p>",
     "DeleteDataProduct": "<p>Deletes a data product in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The data product must exist and not be deleted or archived. </p> </li> <li> <p>The user must have delete permissions for the data product.</p> </li> <li> <p>Domain and project must be active.</p> </li> </ul>",
     "DeleteDataSource": "<p>Deletes a data source in Amazon DataZone.</p>",
+    "DeleteDesignation": "<p>Deletes a designation. Managed designations cannot be deleted. This operation is idempotent.</p>",
     "DeleteDomain": "<p>Deletes a Amazon DataZone domain.</p>",
     "DeleteDomainUnit": "<p>Deletes a domain unit.</p>",
     "DeleteEnvironment": "<p>Deletes an environment in Amazon DataZone.</p>",
@@ -81,6 +83,7 @@
     "GetDataProduct": "<p>Gets the data product.</p> <p>Prerequisites:</p> <ul> <li> <p>The data product ID must exist. </p> </li> <li> <p>The domain must be valid and accessible.</p> </li> <li> <p>User must have read or discovery permissions for the data product.</p> </li> </ul>",
     "GetDataSource": "<p>Gets an Amazon DataZone data source.</p>",
     "GetDataSourceRun": "<p>Gets an Amazon DataZone data source run.</p>",
+    "GetDesignation": "<p>Gets the details of a designation, including its Cedar policy.</p>",
     "GetDomain": "<p>Gets an Amazon DataZone domain.</p>",
     "GetDomainUnit": "<p>Gets the details of the specified domain unit.</p>",
     "GetEnvironment": "<p>Gets an Amazon DataZone environment.</p>",
@@ -120,6 +123,7 @@
     "ListDataSourceRunActivities": "<p>Lists data source run activities.</p>",
     "ListDataSourceRuns": "<p>Lists data source runs in Amazon DataZone.</p>",
     "ListDataSources": "<p>Lists data sources in Amazon DataZone.</p>",
+    "ListDesignations": "<p>Lists the designations in a domain. Returns system-managed designations first, followed by user-created designations sorted alphabetically by name.</p>",
     "ListDomainUnitsForParent": "<p>Lists child domain units for the specified parent domain unit.</p>",
     "ListDomains": "<p>Lists Amazon DataZone domains.</p>",
     "ListEntityOwners": "<p>Lists the entity (domain units) owners.</p>",
@@ -174,6 +178,7 @@
     "UpdateAssetFilter": "<p>Updates an asset filter.</p> <p>Prerequisites:</p> <ul> <li> <p>The domain, asset, and asset filter identifier must all exist. </p> </li> <li> <p>The asset must contain the columns being referenced in the update.</p> </li> <li> <p>If applying a row filter, ensure the column referenced in the expression exists in the asset schema.</p> </li> </ul>",
     "UpdateConnection": "<p>Updates a connection. In Amazon DataZone, a connection enables you to connect your resources (domains, projects, and environments) to external resources and services.</p>",
     "UpdateDataSource": "<p>Updates the specified data source in Amazon DataZone.</p>",
+    "UpdateDesignation": "<p>Updates an existing designation. Managed designations cannot be modified.</p>",
     "UpdateDomain": "<p>Updates a Amazon DataZone domain.</p>",
     "UpdateDomainUnit": "<p>Updates the domain unit.</p>",
     "UpdateEnvironment": "<p>Updates the specified environment in Amazon DataZone.</p>",
@@ -1100,6 +1105,8 @@
         "CreateConnectionInput$enableTrustedIdentityPropagation": "<p>Specifies whether the trusted identity propagation is enabled.</p>",
         "CreateDataSourceInput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
         "CreateDataSourceOutput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
+        "CreateDesignationInput$deletionProtection": "<p>Whether deletion protection is enabled for this designation. Defaults to true when omitted.</p>",
+        "CreateDesignationOutput$deletionProtection": "<p>Whether deletion protection is enabled for this designation. When true, DeleteDesignation is rejected until protection is disabled via UpdateDesignation.</p>",
         "CreateDomainUnitPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy grant is applied to child domain units.</p>",
         "CreateFormTypePolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy grant is applied to child domain units.</p>",
         "CreateGlossaryPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy grant is applied to child domain units.</p>",
@@ -1117,6 +1124,7 @@
         "DeleteDomainInput$cascadeDelete": "<p>Specifies whether to delete the domain along with all of its associated resources. When you use this parameter, Amazon DataZone deletes the domain and cleanly removes its associated resources without leaving orphaned resources behind. Amazon DataZone reports deletion progress in the <code>deleteProgress</code> field. Amazon DataZone reports any resources that it can't delete in the <code>failureReasons</code> field of the <code>GetDomain</code> response. You can't use this parameter together with <code>skipDeletionCheck</code>. If you don't specify a value, the default is <code>false</code>.</p>",
         "DeleteProjectInput$skipDeletionCheck": "<p>Specifies the optional flag to delete all child entities within the project.</p>",
         "Deployment$isDeploymentComplete": "<p>Specifies whether the last deployment of the environment is complete.</p>",
+        "DesignationSummary$deletionProtection": "<p>Whether deletion protection is enabled for this designation.</p>",
         "DomainUnitFilterForProject$includeChildDomainUnits": "<p>Specifies whether to include child domain units.</p>",
         "DomainUnitTarget$includeChildDomainUnits": "<p>Specifies whether to apply a rule to the child domain units.</p>",
         "EnvironmentBlueprintConfigurationItem$allowUserProvidedConfigurations": "<p>Specifies whether user-provided resource configurations are allowed for the environment blueprint.</p>",
@@ -1126,6 +1134,7 @@
         "GetConnectionInput$withSecret": "<p>Specifies whether a connection has a secret.</p>",
         "GetDataExportConfigurationOutput$isExportEnabled": "<p>Specifies whether the export is enabled.</p>",
         "GetDataSourceOutput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
+        "GetDesignationOutput$deletionProtection": "<p>Whether deletion protection is enabled for this designation. When true, DeleteDesignation is rejected until protection is disabled via UpdateDesignation.</p>",
         "GetEnvironmentBlueprintConfigurationOutput$allowUserProvidedConfigurations": "<p>Specifies whether user-provided resource configurations are allowed for the environment blueprint.</p>",
         "GetProjectProfileOutput$allowCustomProjectResourceTags": "<p>Specifies whether custom project resource tags are supported.</p>",
         "GetSubscriptionOutput$retainPermissions": "<p>The retain permissions of the subscription.</p>",
@@ -1167,6 +1176,8 @@
         "UpdateDataSourceInput$retainPermissionsOnRevokeFailure": "<p>Specifies that the granted permissions are retained in case of a self-subscribe functionality failure for a data source.</p>",
         "UpdateDataSourceOutput$publishOnImport": "<p>The publish on import setting to be updated as part of the <code>UpdateDataSource</code> action.</p>",
         "UpdateDataSourceOutput$retainPermissionsOnRevokeFailure": "<p>Specifies that the granted permissions are retained in case of a self-subscribe functionality failure for a data source.</p>",
+        "UpdateDesignationInput$deletionProtection": "<p>Whether deletion protection is enabled for this designation. Omit to keep the existing value.</p>",
+        "UpdateDesignationOutput$deletionProtection": "<p>Whether deletion protection is enabled for this designation. When true, DeleteDesignation is rejected until protection is disabled via UpdateDesignation.</p>",
         "UpdateProjectProfileInput$allowCustomProjectResourceTags": "<p>Specifies whether custom project resource tags are supported.</p>",
         "UpdateProjectProfileOutput$allowCustomProjectResourceTags": "<p>Specifies whether custom project resource tags are supported.</p>",
         "UpdateRuleInput$includeChildDomainUnits": "<p>Specifies whether to update this rule in the child domain units.</p>"
@@ -1193,6 +1204,16 @@
     "CancelSubscriptionOutput": {
       "base": null,
       "refs": {}
+    },
+    "CedarDesignationPolicy": {
+      "base": "<p>A Cedar permit policy that defines what actions designation holders can perform.</p>",
+      "refs": {
+        "CreateDesignationInput$policy": "<p>The Cedar permit policy that defines what actions holders of this designation are allowed to perform.</p>",
+        "CreateDesignationOutput$policy": "<p>The Cedar permit policy that governs what actions holders of this designation are allowed to perform.</p>",
+        "GetDesignationOutput$policy": "<p>The Cedar permit policy that governs what actions holders of this designation are allowed to perform.</p>",
+        "UpdateDesignationInput$policy": "<p>The updated Cedar permit policy.</p>",
+        "UpdateDesignationOutput$policy": "<p>The Cedar permit policy that governs what actions holders of this designation are allowed to perform.</p>"
+      }
     },
     "CellInformation": {
       "base": "<p>The information about a cell in a notebook run in Amazon SageMaker Unified Studio.</p>",
@@ -1636,6 +1657,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateDesignationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDesignationOutput": {
+      "base": "<p>A designation defines a named role with a Cedar permit policy that controls what actions members holding this designation can perform within a project.</p>",
+      "refs": {}
+    },
     "CreateDomainInput": {
       "base": null,
       "refs": {}
@@ -1967,6 +1996,7 @@
         "CreateDataProductOutput$firstRevisionCreatedBy": "<p>The user who created the first revision of the data product.</p>",
         "CreateDataProductRevisionOutput$createdBy": "<p>The user who created the data product revision.</p>",
         "CreateDataProductRevisionOutput$firstRevisionCreatedBy": "<p>The user who created the first revision of the data product.</p>",
+        "CreateDesignationOutput$createdBy": "<p>The identifier of the Amazon DataZone user who created the designation.</p>",
         "CreateDomainUnitOutput$createdBy": "<p>The user who created the domain unit.</p>",
         "CreateNotebookOutput$createdBy": "<p>The identifier of the user who created the notebook.</p>",
         "CreateProjectOutput$createdBy": "<p>The Amazon DataZone user who created the project.</p>",
@@ -1980,6 +2010,7 @@
         "DataProductResultItem$firstRevisionCreatedBy": "<p>The user who created the first revision of the data product.</p>",
         "DataProductRevision$createdBy": "<p>The user who created the data product revision.</p>",
         "DeleteSubscriptionGrantOutput$createdBy": "<p>The Amazon DataZone user who created the subscription grant that is deleted.</p>",
+        "DesignationSummary$createdBy": "<p>The identifier of the Amazon DataZone user who created the designation.</p>",
         "FormTypeData$createdBy": "<p>The Amazon DataZone user who created teh metadata form type.</p>",
         "GetAccountPoolOutput$createdBy": "<p>The user who created the account pool.</p>",
         "GetAssetOutput$createdBy": "<p>The Amazon DataZone user who created the asset.</p>",
@@ -1987,6 +2018,7 @@
         "GetAssetTypeOutput$createdBy": "<p>The Amazon DataZone user who created the asset type.</p>",
         "GetDataProductOutput$createdBy": "<p>The user who created the data product.</p>",
         "GetDataProductOutput$firstRevisionCreatedBy": "<p>The user who created the first revision of the data product.</p>",
+        "GetDesignationOutput$createdBy": "<p>The identifier of the Amazon DataZone user who created the designation.</p>",
         "GetDomainUnitOutput$createdBy": "<p>The user who created the domain unit.</p>",
         "GetFormTypeOutput$createdBy": "<p>The Amazon DataZone user who created this metadata form type.</p>",
         "GetGlossaryOutput$createdBy": "<p>The Amazon DataZone user who created this business glossary.</p>",
@@ -2029,6 +2061,7 @@
         "SubscriptionSummary$createdBy": "<p>The Amazon DataZone user who created the subscription.</p>",
         "SubscriptionTargetSummary$createdBy": "<p>The Amazon DataZone user who created the subscription target.</p>",
         "UpdateAccountPoolOutput$createdBy": "<p>The user who created the account pool.</p>",
+        "UpdateDesignationOutput$createdBy": "<p>The identifier of the Amazon DataZone user who created the designation.</p>",
         "UpdateDomainUnitOutput$createdBy": "<p>The user who created the domain unit that you want to update.</p>",
         "UpdateNotebookOutput$createdBy": "<p>The identifier of the user who created the notebook.</p>",
         "UpdateProjectOutput$createdBy": "<p>The Amazon DataZone user who created the project.</p>",
@@ -2493,6 +2526,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteDesignationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDesignationOutput": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteDomainInput": {
       "base": null,
       "refs": {}
@@ -2730,6 +2771,8 @@
         "CreateConnectionOutput$description": "<p>The connection description.</p>",
         "CreateDataSourceInput$description": "<p>The description of the data source.</p>",
         "CreateDataSourceOutput$description": "<p>The description of the data source.</p>",
+        "CreateDesignationInput$description": "<p>A human-readable description of the designation and its intended use.</p>",
+        "CreateDesignationOutput$description": "<p>A human-readable description of the designation and its intended use.</p>",
         "CreateEnvironmentBlueprintInput$description": "<p>The description of the Amazon DataZone blueprint.</p>",
         "CreateEnvironmentBlueprintOutput$description": "<p>The description of this Amazon DataZone blueprint.</p>",
         "CreateEnvironmentOutput$description": "<p>The description of this Amazon DataZone environment.</p>",
@@ -2752,6 +2795,7 @@
         "DataSourceRunActivity$technicalDescription": "<p>The technical description included in the data source run activity.</p>",
         "DataSourceSummary$description": "<p>The data source description.</p>",
         "DeleteDataSourceOutput$description": "<p>The description of the data source that is deleted.</p>",
+        "DesignationSummary$description": "<p>A human-readable description of the designation and its intended use.</p>",
         "EnvironmentBlueprintSummary$description": "<p>The description of a blueprint.</p>",
         "EnvironmentConfiguration$description": "<p>The environment description.</p>",
         "EnvironmentProfileSummary$description": "<p>The description of the environment profile.</p>",
@@ -2763,6 +2807,7 @@
         "GetAssetTypeOutput$description": "<p>The description of the asset type.</p>",
         "GetConnectionOutput$description": "<p>Connection description.</p>",
         "GetDataSourceOutput$description": "<p>The description of the data source.</p>",
+        "GetDesignationOutput$description": "<p>A human-readable description of the designation and its intended use.</p>",
         "GetEnvironmentBlueprintOutput$description": "<p>The description of this Amazon DataZone blueprint.</p>",
         "GetEnvironmentOutput$description": "<p>The description of the environment.</p>",
         "GetEnvironmentProfileOutput$description": "<p>The description of the environment profile.</p>",
@@ -2788,6 +2833,8 @@
         "UpdateConnectionOutput$description": "<p>The connection description.</p>",
         "UpdateDataSourceInput$description": "<p>The description to be updated as part of the <code>UpdateDataSource</code> action.</p>",
         "UpdateDataSourceOutput$description": "<p>The description to be updated as part of the <code>UpdateDataSource</code> action.</p>",
+        "UpdateDesignationInput$description": "<p>The updated human-readable description of the designation and its intended use.</p>",
+        "UpdateDesignationOutput$description": "<p>A human-readable description of the designation and its intended use.</p>",
         "UpdateEnvironmentBlueprintOutput$description": "<p>The description to be updated as part of the <code>UpdateEnvironmentBlueprint</code> action.</p>",
         "UpdateEnvironmentOutput$description": "<p>The description to be updated as part of the <code>UpdateEnvironment</code> action.</p>",
         "UpdateEnvironmentProfileOutput$description": "<p>The description to be updated as part of the <code>UpdateEnvironmentProfile</code> action.</p>",
@@ -2801,6 +2848,54 @@
         "UpdateProjectProfileOutput$projectResourceTagsDescription": "<p>Field viewable through the UI that provides a project user with the allowed resource tag specifications.</p>",
         "UpdateRuleInput$description": "<p>The description of the rule.</p>",
         "UpdateRuleOutput$description": "<p>The description of the rule.</p>"
+      }
+    },
+    "DesignationId": {
+      "base": null,
+      "refs": {
+        "CreateDesignationOutput$id": "<p>The unique ID of the designation.</p>",
+        "CreateProjectMembershipInput$userCreatedDesignationId": "<p>The ID of the user-created designation to assign to the project member. Required when <code>designation</code> is <code>USER_CREATED_DESIGNATION</code>; must not be provided otherwise.</p>",
+        "DeleteDesignationInput$identifier": "<p>The unique ID of the designation to delete.</p>",
+        "DesignationSummary$id": "<p>The unique ID of the designation.</p>",
+        "GetDesignationInput$identifier": "<p>The unique ID of the designation to retrieve.</p>",
+        "GetDesignationOutput$id": "<p>The unique ID of the designation.</p>",
+        "ProjectMember$userCreatedDesignationId": "<p>The ID of the user-created designation held by the project member when <code>designation</code> is <code>USER_CREATED_DESIGNATION</code>.</p>",
+        "ProjectMembershipAssignment$userCreatedDesignationId": "<p>The ID of the user-created designation to assign to this member when creating the project. Required when <code>designation</code> is <code>USER_CREATED_DESIGNATION</code>; must not be provided otherwise.</p>",
+        "ProjectPolicyGrantPrincipal$userCreatedDesignationId": "<p>The ID of the user-created designation granted to the project principal. Required when <code>projectDesignation</code> is <code>USER_CREATED_DESIGNATION</code>; must not be provided otherwise.</p>",
+        "UpdateDesignationInput$identifier": "<p>The unique ID of the designation to update.</p>",
+        "UpdateDesignationOutput$id": "<p>The unique ID of the designation.</p>"
+      }
+    },
+    "DesignationName": {
+      "base": null,
+      "refs": {
+        "CreateDesignationInput$name": "<p>The name of the designation. The name must be unique within the domain.</p>",
+        "CreateDesignationOutput$name": "<p>The name of the designation. The name is unique within the domain.</p>",
+        "DesignationSummary$name": "<p>The name of the designation. The name is unique within the domain.</p>",
+        "GetDesignationOutput$name": "<p>The name of the designation. The name is unique within the domain.</p>",
+        "UpdateDesignationInput$name": "<p>The updated name of the designation. The name must be unique within the domain.</p>",
+        "UpdateDesignationOutput$name": "<p>The name of the designation. The name is unique within the domain.</p>"
+      }
+    },
+    "DesignationSummaries": {
+      "base": null,
+      "refs": {
+        "ListDesignationsOutput$items": "<p>The designation summaries that <code>ListDesignations</code> returned. Each item contains summary information about a designation in the domain.</p>"
+      }
+    },
+    "DesignationSummary": {
+      "base": "<p>Summary representation of a designation returned by list operations.</p>",
+      "refs": {
+        "DesignationSummaries$member": null
+      }
+    },
+    "DesignationType": {
+      "base": "<p>The classification of a designation.</p>",
+      "refs": {
+        "CreateDesignationOutput$designationType": "<p>The classification of this designation. MANAGED designations are system-defined and cannot be modified or deleted.</p>",
+        "DesignationSummary$designationType": "<p>The classification of this designation.</p>",
+        "GetDesignationOutput$designationType": "<p>The classification of this designation. MANAGED designations are system-defined and cannot be modified or deleted.</p>",
+        "UpdateDesignationOutput$designationType": "<p>The classification of this designation. MANAGED designations are system-defined and cannot be modified or deleted.</p>"
       }
     },
     "DetailedGlossaryTerm": {
@@ -2894,6 +2989,8 @@
         "CreateDataProductRevisionOutput$domainId": "<p>The ID of the domain where data product revision is created.</p>",
         "CreateDataSourceInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain where the data source is created.</p>",
         "CreateDataSourceOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the data source is created.</p>",
+        "CreateDesignationInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which the designation is created.</p>",
+        "CreateDesignationOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which the designation was created.</p>",
         "CreateDomainOutput$id": "<p>The identifier of the Amazon DataZone domain.</p>",
         "CreateDomainUnitInput$domainIdentifier": "<p>The ID of the domain where you want to crate a domain unit.</p>",
         "CreateDomainUnitOutput$domainId": "<p>The ID of the domain where the domain unit was created.</p>",
@@ -2942,6 +3039,7 @@
         "DeleteDataProductInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the data product is deleted.</p>",
         "DeleteDataSourceInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the data source is deleted.</p>",
         "DeleteDataSourceOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the data source is deleted.</p>",
+        "DeleteDesignationInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain that contains the designation to delete.</p>",
         "DeleteDomainInput$identifier": "<p>The identifier of the Amazon Web Services domain that is to be deleted.</p>",
         "DeleteDomainUnitInput$domainIdentifier": "<p>The ID of the domain where you want to delete a domain unit.</p>",
         "DeleteEnvironmentActionInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which an environment action is deleted.</p>",
@@ -2965,6 +3063,7 @@
         "DeleteSubscriptionRequestInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the subscription request is deleted.</p>",
         "DeleteSubscriptionTargetInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the subscription target is deleted.</p>",
         "DeleteTimeSeriesDataPointsInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain that houses the asset for which you want to delete a time series form.</p>",
+        "DesignationSummary$domainId": "<p>The identifier of the Amazon DataZone domain that contains the designation.</p>",
         "DisassociateEnvironmentRoleInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which an environment role is disassociated.</p>",
         "DisassociateGovernedTermsInput$domainIdentifier": "<p>The ID of the domain where you want to disassociate restricted terms from an asset.</p>",
         "DomainSummary$id": "<p>The ID of the Amazon DataZone domain.</p>",
@@ -2992,6 +3091,8 @@
         "GetDataSourceOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the data source exists.</p>",
         "GetDataSourceRunInput$domainIdentifier": "<p>The ID of the domain in which this data source run was performed.</p>",
         "GetDataSourceRunOutput$domainId": "<p>The ID of the domain in which this data source run was performed.</p>",
+        "GetDesignationInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain that contains the designation.</p>",
+        "GetDesignationOutput$domainId": "<p>The identifier of the Amazon DataZone domain that contains the designation.</p>",
         "GetDomainInput$identifier": "<p>The identifier of the specified Amazon DataZone domain.</p>",
         "GetDomainOutput$id": "<p>The identifier of the specified Amazon DataZone domain.</p>",
         "GetDomainUnitInput$domainIdentifier": "<p>The ID of the domain where you want to get a domain unit.</p>",
@@ -3066,6 +3167,7 @@
         "ListDataSourceRunActivitiesInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which to list data source run activities.</p>",
         "ListDataSourceRunsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which to invoke the <code>ListDataSourceRuns</code> action.</p>",
         "ListDataSourcesInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which to list the data sources.</p>",
+        "ListDesignationsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain that contains the designations to list.</p>",
         "ListDomainUnitsForParentInput$domainIdentifier": "<p>The ID of the domain in which you want to list domain units for a parent domain unit.</p>",
         "ListEntityOwnersInput$domainIdentifier": "<p>The ID of the domain where you want to list entity owners.</p>",
         "ListEnvironmentActionsInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the environment actions are listed.</p>",
@@ -3143,6 +3245,8 @@
         "UpdateConnectionOutput$domainId": "<p>The ID of the domain where a connection is to be updated.</p>",
         "UpdateDataSourceInput$domainIdentifier": "<p>The identifier of the domain in which to update a data source.</p>",
         "UpdateDataSourceOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which a data source is to be updated.</p>",
+        "UpdateDesignationInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain that contains the designation to update.</p>",
+        "UpdateDesignationOutput$domainId": "<p>The identifier of the Amazon DataZone domain that contains the designation.</p>",
         "UpdateDomainInput$identifier": "<p>The ID of the Amazon Web Services domain that is to be updated.</p>",
         "UpdateDomainOutput$id": "<p>The identifier of the Amazon DataZone domain.</p>",
         "UpdateDomainUnitInput$domainIdentifier": "<p>The ID of the domain where you want to update a domain unit.</p>",
@@ -4224,6 +4328,14 @@
     },
     "GetDataSourceRunOutput": {
       "base": null,
+      "refs": {}
+    },
+    "GetDesignationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDesignationOutput": {
+      "base": "<p>A designation defines a named role with a Cedar permit policy that controls what actions members holding this designation can perform within a project.</p>",
       "refs": {}
     },
     "GetDomainInput": {
@@ -5585,6 +5697,20 @@
       "base": null,
       "refs": {}
     },
+    "ListDesignationsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDesignationsMaxResults": {
+      "base": "<p>Maximum number of results for ListDesignations. Minimum 10 ensures built-in designations always fit on the first page.</p>",
+      "refs": {
+        "ListDesignationsInput$maxResults": "<p>The maximum number of designations to return in a single call to <code>ListDesignations</code>. If the number of designations exceeds <code>MaxResults</code>, the response includes a <code>NextToken</code> value. Use that token in a subsequent call to <code>ListDesignations</code> to retrieve the next set of designations. The default value is 20.</p>"
+      }
+    },
+    "ListDesignationsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListDomainUnitsForParentInput": {
       "base": null,
       "refs": {}
@@ -6502,7 +6628,7 @@
     "NotifyOnStates": {
       "base": null,
       "refs": {
-        "NotificationConfig$notifyOn": "<p>Notebook run states that trigger notifications. Ordering is not significant.</p>"
+        "NotificationConfig$notifyOn": "<p>The notebook run states that trigger notifications. You can specify up to 7 states, and the ordering of the states is not significant.</p>"
       }
     },
     "OAuth2ClientApplication": {
@@ -6654,6 +6780,8 @@
         "ListDataSourceRunsOutput$nextToken": "<p>When the number of runs is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of runs, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListDataSourceRuns</code> to list the next set of runs.</p>",
         "ListDataSourcesInput$nextToken": "<p>When the number of data sources is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of data sources, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListDataSources</code> to list the next set of data sources.</p>",
         "ListDataSourcesOutput$nextToken": "<p>When the number of data sources is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of data sources, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListDataSources</code> to list the next set of data sources.</p>",
+        "ListDesignationsInput$nextToken": "<p>If the results exceed the value of <code>MaxResults</code>, the previous call returns a pagination token. Specify this token in a subsequent call to <code>ListDesignations</code> to retrieve the next set of results. If not specified, the operation returns the first page of results.</p>",
+        "ListDesignationsOutput$nextToken": "<p>A pagination token that indicates that more results are available. Pass this token to a subsequent call to <code>ListDesignations</code> to retrieve the next page of results. If there are no more results, this value is null.</p>",
         "ListDomainUnitsForParentInput$nextToken": "<p>When the number of domain units is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of domain units, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListDomainUnitsForParent to list the next set of domain units.</p>",
         "ListDomainUnitsForParentOutput$nextToken": "<p>When the number of domain units is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of domain units, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListDomainUnitsForParent to list the next set of domain units.</p>",
         "ListDomainsInput$nextToken": "<p>When the number of domains is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of domains, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListDomains</code> to list the next set of domains.</p>",
@@ -9382,6 +9510,8 @@
         "ConnectionCredentials$expiration": "<p>The expiration of the connection credentials.</p>",
         "CreateAccountPoolOutput$createdAt": "<p>The timestamp at which the account pool was created.</p>",
         "CreateAccountPoolOutput$lastUpdatedAt": "<p>The timestamp at which the account pool was last updated.</p>",
+        "CreateDesignationOutput$createdAt": "<p>The date and time when the designation was created.</p>",
+        "CreateDesignationOutput$lastUpdatedAt": "<p>The date and time when the designation was last updated.</p>",
         "CreateEnvironmentBlueprintOutput$createdAt": "<p>The timestamp at which the environment blueprint was created.</p>",
         "CreateEnvironmentBlueprintOutput$updatedAt": "<p>The timestamp of when this blueprint was updated.</p>",
         "CreateEnvironmentOutput$createdAt": "<p>The timestamp of when the environment was created.</p>",
@@ -9392,6 +9522,8 @@
         "CreateProjectOutput$lastUpdatedAt": "<p>The timestamp of when the project was last updated.</p>",
         "CreateProjectProfileOutput$createdAt": "<p>A timestamp at which a project profile is created.</p>",
         "CreateProjectProfileOutput$lastUpdatedAt": "<p>A timestamp when a project profile was last updated.</p>",
+        "DesignationSummary$createdAt": "<p>The date and time when the designation was created.</p>",
+        "DesignationSummary$updatedAt": "<p>The date and time when the designation was last updated.</p>",
         "EnvironmentBlueprintConfigurationItem$createdAt": "<p>The timestamp of when an environment blueprint was created.</p>",
         "EnvironmentBlueprintConfigurationItem$updatedAt": "<p>The timestamp of when the environment blueprint was updated.</p>",
         "EnvironmentBlueprintSummary$createdAt": "<p>The timestamp of when an environment blueprint was created.</p>",
@@ -9402,6 +9534,8 @@
         "EnvironmentSummary$updatedAt": "<p>The timestamp of when the environment was updated.</p>",
         "GetAccountPoolOutput$createdAt": "<p>The timestamp at which the account pool was created.</p>",
         "GetAccountPoolOutput$lastUpdatedAt": "<p>The timestamp at which the account pool was last updated.</p>",
+        "GetDesignationOutput$createdAt": "<p>The date and time when the designation was created.</p>",
+        "GetDesignationOutput$lastUpdatedAt": "<p>The date and time when the designation was last updated.</p>",
         "GetEnvironmentBlueprintConfigurationOutput$createdAt": "<p>The timestamp of when this blueprint was created.</p>",
         "GetEnvironmentBlueprintConfigurationOutput$updatedAt": "<p>The timestamp of when this blueprint was upated.</p>",
         "GetEnvironmentBlueprintOutput$createdAt": "<p>A timestamp of when this blueprint was created.</p>",
@@ -9424,6 +9558,8 @@
         "SparkEmrPropertiesOutput$credentialsExpiration": "<p>The credential expiration of the Spark EMR.</p>",
         "UpdateAccountPoolOutput$createdAt": "<p>The timestamp at which the account pool was created.</p>",
         "UpdateAccountPoolOutput$lastUpdatedAt": "<p>The timestamp at which the account pool was last updated.</p>",
+        "UpdateDesignationOutput$createdAt": "<p>The date and time when the designation was created.</p>",
+        "UpdateDesignationOutput$lastUpdatedAt": "<p>The date and time when the designation was last updated.</p>",
         "UpdateEnvironmentBlueprintOutput$createdAt": "<p>The timestamp of when the environment blueprint was created.</p>",
         "UpdateEnvironmentBlueprintOutput$updatedAt": "<p>The timestamp of when the blueprint was updated.</p>",
         "UpdateEnvironmentOutput$createdAt": "<p>The timestamp of when the environment was created.</p>",
@@ -9837,6 +9973,14 @@
     },
     "UpdateDataSourceOutput": {
       "base": null,
+      "refs": {}
+    },
+    "UpdateDesignationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDesignationOutput": {
+      "base": "<p>A designation defines a named role with a Cedar permit policy that controls what actions members holding this designation can perform within a project.</p>",
       "refs": {}
     },
     "UpdateDomainInput": {

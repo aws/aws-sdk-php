@@ -1036,7 +1036,7 @@ use Aws\AwsClient;
  * @method \Aws\Result getInstanceMetricData(array $args = [])
  * @phpstan-method \Aws\Result getInstanceMetricData(array{
  *     instanceName?: string,
- *     metricName?: 'BurstCapacityPercentage'|'BurstCapacityTime'|'CPUUtilization'|'MetadataNoToken'|'NetworkIn'|'NetworkOut'|'StatusCheckFailed'|'StatusCheckFailed_Instance'|'StatusCheckFailed_System',
+ *     metricName?: 'BurstCapacityPercentage'|'BurstCapacityTime'|'CPUUtilization'|'DiskQueueLength'|'DiskReadBytes'|'DiskReadOps'|'DiskTotalReadTime'|'DiskTotalWriteTime'|'DiskWriteBytes'|'DiskWriteOps'|'MetadataNoToken'|'NetworkIn'|'NetworkOut'|'StatusCheckFailed'|'StatusCheckFailed_Instance'|'StatusCheckFailed_System',
  *     period?: int,
  *     startTime?: int|string|\DateTimeInterface,
  *     endTime?: int|string|\DateTimeInterface,
@@ -1047,7 +1047,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getInstanceMetricDataAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getInstanceMetricDataAsync(array{
  *     instanceName?: string,
- *     metricName?: 'BurstCapacityPercentage'|'BurstCapacityTime'|'CPUUtilization'|'MetadataNoToken'|'NetworkIn'|'NetworkOut'|'StatusCheckFailed'|'StatusCheckFailed_Instance'|'StatusCheckFailed_System',
+ *     metricName?: 'BurstCapacityPercentage'|'BurstCapacityTime'|'CPUUtilization'|'DiskQueueLength'|'DiskReadBytes'|'DiskReadOps'|'DiskTotalReadTime'|'DiskTotalWriteTime'|'DiskWriteBytes'|'DiskWriteOps'|'MetadataNoToken'|'NetworkIn'|'NetworkOut'|'StatusCheckFailed'|'StatusCheckFailed_Instance'|'StatusCheckFailed_System',
  *     period?: int,
  *     startTime?: int|string|\DateTimeInterface,
  *     endTime?: int|string|\DateTimeInterface,
@@ -1278,7 +1278,7 @@ use Aws\AwsClient;
  * @method \Aws\Result putAlarm(array $args = [])
  * @phpstan-method \Aws\Result putAlarm(array{
  *     alarmName?: string,
- *     metricName?: 'BurstCapacityPercentage'|'BurstCapacityTime'|'CPUUtilization'|'ClientTLSNegotiationErrorCount'|'DatabaseConnections'|'DiskQueueDepth'|'FreeStorageSpace'|'FreeableMemory'|'HTTPCode_Instance_2XX_Count'|'HTTPCode_Instance_3XX_Count'|'HTTPCode_Instance_4XX_Count'|'HTTPCode_Instance_5XX_Count'|'HTTPCode_LB_4XX_Count'|'HTTPCode_LB_5XX_Count'|'HealthyHostCount'|'InstanceResponseTime'|'NetworkIn'|'NetworkOut'|'NetworkReceiveThroughput'|'NetworkTransmitThroughput'|'RejectedConnectionCount'|'RequestCount'|'StatusCheckFailed'|'StatusCheckFailed_Instance'|'StatusCheckFailed_System'|'SwapUsage'|'UnhealthyHostCount',
+ *     metricName?: 'BurstCapacityPercentage'|'BurstCapacityTime'|'CPUUtilization'|'ClientTLSNegotiationErrorCount'|'DatabaseConnections'|'DiskQueueDepth'|'DiskQueueLength'|'DiskReadBytes'|'DiskReadOps'|'DiskTotalReadTime'|'DiskTotalWriteTime'|'DiskWriteBytes'|'DiskWriteOps'|'FreeStorageSpace'|'FreeableMemory'|'HTTPCode_Instance_2XX_Count'|'HTTPCode_Instance_3XX_Count'|'HTTPCode_Instance_4XX_Count'|'HTTPCode_Instance_5XX_Count'|'HTTPCode_LB_4XX_Count'|'HTTPCode_LB_5XX_Count'|'HealthyHostCount'|'InstanceResponseTime'|'NetworkIn'|'NetworkOut'|'NetworkReceiveThroughput'|'NetworkTransmitThroughput'|'RejectedConnectionCount'|'RequestCount'|'StatusCheckFailed'|'StatusCheckFailed_Instance'|'StatusCheckFailed_System'|'SwapUsage'|'UnhealthyHostCount',
  *     monitoredResourceName?: string,
  *     comparisonOperator?: 'GreaterThanOrEqualToThreshold'|'GreaterThanThreshold'|'LessThanOrEqualToThreshold'|'LessThanThreshold',
  *     threshold?: float,
@@ -1294,7 +1294,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putAlarmAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise putAlarmAsync(array{
  *     alarmName?: string,
- *     metricName?: 'BurstCapacityPercentage'|'BurstCapacityTime'|'CPUUtilization'|'ClientTLSNegotiationErrorCount'|'DatabaseConnections'|'DiskQueueDepth'|'FreeStorageSpace'|'FreeableMemory'|'HTTPCode_Instance_2XX_Count'|'HTTPCode_Instance_3XX_Count'|'HTTPCode_Instance_4XX_Count'|'HTTPCode_Instance_5XX_Count'|'HTTPCode_LB_4XX_Count'|'HTTPCode_LB_5XX_Count'|'HealthyHostCount'|'InstanceResponseTime'|'NetworkIn'|'NetworkOut'|'NetworkReceiveThroughput'|'NetworkTransmitThroughput'|'RejectedConnectionCount'|'RequestCount'|'StatusCheckFailed'|'StatusCheckFailed_Instance'|'StatusCheckFailed_System'|'SwapUsage'|'UnhealthyHostCount',
+ *     metricName?: 'BurstCapacityPercentage'|'BurstCapacityTime'|'CPUUtilization'|'ClientTLSNegotiationErrorCount'|'DatabaseConnections'|'DiskQueueDepth'|'DiskQueueLength'|'DiskReadBytes'|'DiskReadOps'|'DiskTotalReadTime'|'DiskTotalWriteTime'|'DiskWriteBytes'|'DiskWriteOps'|'FreeStorageSpace'|'FreeableMemory'|'HTTPCode_Instance_2XX_Count'|'HTTPCode_Instance_3XX_Count'|'HTTPCode_Instance_4XX_Count'|'HTTPCode_Instance_5XX_Count'|'HTTPCode_LB_4XX_Count'|'HTTPCode_LB_5XX_Count'|'HealthyHostCount'|'InstanceResponseTime'|'NetworkIn'|'NetworkOut'|'NetworkReceiveThroughput'|'NetworkTransmitThroughput'|'RejectedConnectionCount'|'RequestCount'|'StatusCheckFailed'|'StatusCheckFailed_Instance'|'StatusCheckFailed_System'|'SwapUsage'|'UnhealthyHostCount',
  *     monitoredResourceName?: string,
  *     comparisonOperator?: 'GreaterThanOrEqualToThreshold'|'GreaterThanThreshold'|'LessThanOrEqualToThreshold'|'LessThanThreshold',
  *     threshold?: float,

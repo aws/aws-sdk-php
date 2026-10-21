@@ -4340,6 +4340,42 @@
       "type":"string",
       "pattern":"[a-zA-Z0-9_-]+"
     },
+    "MSTeamsChannel":{
+      "type":"structure",
+      "required":[
+        "channelName",
+        "channelId"
+      ],
+      "members":{
+        "channelName":{"shape":"String"},
+        "channelId":{"shape":"MSTeamsChannelId"}
+      }
+    },
+    "MSTeamsChannelId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "MSTeamsConfiguration":{
+      "type":"structure",
+      "required":[
+        "teamId",
+        "teamName",
+        "transmissionTarget"
+      ],
+      "members":{
+        "teamId":{"shape":"Guid"},
+        "teamName":{"shape":"String"},
+        "transmissionTarget":{"shape":"MSTeamsTransmissionTarget"}
+      }
+    },
+    "MSTeamsTransmissionTarget":{
+      "type":"structure",
+      "members":{
+        "opsOncallTarget":{"shape":"MSTeamsChannel"},
+        "opsSRETarget":{"shape":"MSTeamsChannel"}
+      }
+    },
     "MaxIpv4AddressesPerEni":{
       "type":"integer",
       "box":true,
@@ -5507,6 +5543,7 @@
         "slack",
         "azure",
         "azuredevops",
+        "msteams",
         "dynatrace",
         "servicenow",
         "pagerduty",
@@ -5545,6 +5582,7 @@
         "mcpserversigv4":{"shape":"MCPServerSigV4Configuration"},
         "remoteagent":{"shape":"RemoteAgentConfiguration"},
         "remoteagentsigv4":{"shape":"RemoteAgentSigV4Configuration"},
+        "msteams":{"shape":"MSTeamsConfiguration"},
         "releaseManagement":{"shape":"ReleaseManagementConfiguration"}
       },
       "union":true

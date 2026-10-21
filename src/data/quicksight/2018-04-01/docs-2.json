@@ -524,6 +524,12 @@
         "AdditionalNotes$Text": "<p>The additional notes text.</p>"
       }
     },
+    "AdminAccountEmail": {
+      "base": null,
+      "refs": {
+        "ServiceAccountCredentials$AdminAccountEmail": "<p>The email address of the Google Workspace administrator account that the service account impersonates through domain-wide delegation. This field is required.</p>"
+      }
+    },
     "Agent": {
       "base": "<p>An agent resource in Amazon QuickSight that provides AI-powered conversational experiences.</p>",
       "refs": {
@@ -4130,6 +4136,12 @@
         "ReadClientCredentialsGrantMetadata$ClientCredentialsSource": "<p>The source of client credentials for the OAuth2 client credentials grant flow.</p>"
       }
     },
+    "ClientEmail": {
+      "base": null,
+      "refs": {
+        "ServiceAccountCredentials$ClientEmail": "<p>The client email address of the Google service account used for domain-wide delegation. This field is required.</p>"
+      }
+    },
     "ClientId": {
       "base": null,
       "refs": {
@@ -6253,6 +6265,13 @@
         "KnowledgeBaseSummary$DataSourceArn": "<p>The ARN of the data source associated with the knowledge base.</p>"
       }
     },
+    "DataSourceCertThumbprint": {
+      "base": null,
+      "refs": {
+        "OneDriveClientCredentials$CertThumbprint": "<p>The thumbprint of the certificate used for two-legged OAuth (2LO) authentication to OneDrive. This field is required.</p>",
+        "SharePointClientCredentials$CertThumbprint": "<p>The thumbprint of the certificate used for two-legged OAuth (2LO) authentication to SharePoint. This field is required.</p>"
+      }
+    },
     "DataSourceCredentials": {
       "base": "<p>Data source credentials. This is a variant type structure. For this structure to be valid, only one of the attributes can be non-null.</p>",
       "refs": {
@@ -6276,6 +6295,13 @@
       "base": null,
       "refs": {
         "DataSourceSearchFilter$Name": "<p>The name of the value that you want to use as a filter, for example, <code>\"Name\": \"DIRECT_QUICKSIGHT_OWNER\"</code>.</p> <p>Valid values are defined as follows:</p> <ul> <li> <p> <code>DIRECT_QUICKSIGHT_VIEWER_OR_OWNER</code>: Provide an ARN of a user or group, and any data sources with that ARN listed as one of the owners or viewers of the data sources are returned. Implicit permissions from folders or groups are not considered.</p> </li> <li> <p> <code>DIRECT_QUICKSIGHT_OWNER</code>: Provide an ARN of a user or group, and any data sources with that ARN listed as one of the owners if the data source are returned. Implicit permissions from folders or groups are not considered.</p> </li> <li> <p> <code>DIRECT_QUICKSIGHT_SOLE_OWNER</code>: Provide an ARN of a user or group, and any data sources with that ARN listed as the only owner of the data source are returned. Implicit permissions from folders or groups are not considered.</p> </li> <li> <p> <code>DATASOURCE_NAME</code>: Any data sources whose names have a substring match to the provided value are returned.</p> </li> </ul>"
+      }
+    },
+    "DataSourceKmsKeyArn": {
+      "base": null,
+      "refs": {
+        "OneDriveClientCredentials$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the AWS Key Management Service (AWS KMS) key used to encrypt the OneDrive certificate credentials. This field is required.</p>",
+        "SharePointClientCredentials$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the AWS Key Management Service (AWS KMS) key used to encrypt the SharePoint certificate credentials. This field is required.</p>"
       }
     },
     "DataSourceList": {
@@ -12893,6 +12919,12 @@
         "JoinInstruction$OnClause": "<p>The join instructions provided in the <code>ON</code> clause of a join.</p>"
       }
     },
+    "OneDriveClientCredentials": {
+      "base": "<p>The client credentials for connecting to a Microsoft OneDrive data source using two-legged OAuth (2LO) certificate-based authentication. OneDrive connections access files stored in your OneDrive storage. The tenant ID and client ID are supplied through <code>OneDriveParameters</code>.</p>",
+      "refs": {
+        "DataSourceCredentials$OneDriveClientCredentials": "<p>The client credentials for connecting to a Microsoft OneDrive data source using two-legged OAuth (2LO) certificate-based authentication.</p>"
+      }
+    },
     "OneDriveClientId": {
       "base": null,
       "refs": {
@@ -13823,7 +13855,8 @@
     "PrivateKey": {
       "base": null,
       "refs": {
-        "KeyPairCredentials$PrivateKey": "<p>PrivateKey</p>"
+        "KeyPairCredentials$PrivateKey": "<p>PrivateKey</p>",
+        "ServiceAccountCredentials$ServiceAccountPrivateKey": "<p>The private key of the Google service account used for domain-wide delegation. This field is required.</p>"
       }
     },
     "PrivateKeyPassphrase": {
@@ -15642,6 +15675,12 @@
         "LineChartConfiguration$Series": "<p>The series item configuration of a line chart.</p>"
       }
     },
+    "ServiceAccountCredentials": {
+      "base": "<p>The service account credentials used for Google Workspace domain-wide delegation. Use this structure when you authenticate a data source connection using domain-wide delegation across your Google Workspace domain.</p>",
+      "refs": {
+        "DataSourceCredentials$ServiceAccountCredentials": "<p>The service account credentials for connecting to a data source that uses Google Workspace domain-wide delegation.</p>"
+      }
+    },
     "ServiceNowParameters": {
       "base": "<p>The parameters for ServiceNow.</p>",
       "refs": {
@@ -15721,6 +15760,12 @@
       "base": "<p>The shape conditional formatting of a filled map visual.</p>",
       "refs": {
         "FilledMapShapeConditionalFormatting$Format": "<p>The conditional formatting that determines the background color of a filled map's shape.</p>"
+      }
+    },
+    "SharePointClientCredentials": {
+      "base": "<p>The client credentials for connecting to a Microsoft SharePoint data source using two-legged OAuth (2LO) certificate-based authentication. SharePoint connections access documents stored in SharePoint sites and libraries. The tenant ID and client ID are supplied through <code>SharePointParameters</code>.</p>",
+      "refs": {
+        "DataSourceCredentials$SharePointClientCredentials": "<p>The client credentials for connecting to a Microsoft SharePoint data source using two-legged OAuth (2LO) certificate-based authentication.</p>"
       }
     },
     "SharePointClientId": {
