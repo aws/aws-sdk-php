@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.401.5 - 2026-10-21
 
 * `Aws\` - Removes the `FinSpace` and `FinSpaceData` clients, which are no longer in service.
 * `Aws\MediaConvert` - Adds AV1 CBR rate control and scene change detection. New sliding window peak bitrate setting for all codecs. DASH adaptation set grouping update. Option to disable the AV1 perceptual quality filter. Support for vertical (portrait) AV1 encoding.
