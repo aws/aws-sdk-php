@@ -17,10 +17,6 @@ jobs:
       # for each of the following versions of PHP, with and without --prefer-lowest
       matrix:
         include:
-          - php-versions: '8.1'
-            composer-options: ''
-          - php-versions: '8.1'
-            composer-options: '--prefer-lowest'
           - php-versions: '8.2'
             composer-options: ''
           - php-versions: '8.2'
@@ -95,6 +91,6 @@ jobs:
       - if: ${{ matrix.composer-options == '' }}
         name: Package generation
         run: |
-          composer config platform.php 8.1
+          composer config platform.php 8.2.35
           composer update
           make package

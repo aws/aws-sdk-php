@@ -15,8 +15,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - php-versions: '8.1'
-            composer-options: ''
           - php-versions: '8.2'
             composer-options: ''
           - php-versions: '8.3'
@@ -34,6 +32,8 @@ jobs:
     steps:
       - name: Setup PHP with JIT
         uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        env:
+          update: true
         with:
           coverage: none
           php-version: ${{ matrix.php-versions }}

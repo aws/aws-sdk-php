@@ -3,7 +3,7 @@
 This library provides an S3 client that supports client-side encryption.
 `S3EncryptionClientV3` is the v3 of the Amazon S3 Encryption Client for the PHP programming language.
 
-The V3 encryption client requires a minimum version of **PHP >= 8.1**.
+The V3 encryption client requires **PHP 8.2+**.
 The V3 encryption client requires the extension `openssl`.
 
 Jump To:
