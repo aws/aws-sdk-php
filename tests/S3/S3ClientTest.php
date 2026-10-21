@@ -2740,10 +2740,39 @@ EOXML;
             $this->markTestSkipped("Cannot test crc32c without the awscrt");
         }
 
-        $handler = static function (RequestInterface $request) use ($checksumAlgorithm) {
+        $expectedMode = $mode;
+        $shouldDefaultMode = $expectedMode === null
+            && ($clientConfig['response_checksum_validation'] ?? 'when_supported')
+                === 'when_supported';
+        if ($shouldDefaultMode) {
+            $expectedMode = 'ENABLED';
+        }
+
+        $checksumValues = [
+            'CRC32' => 'DIt2Ng==',
+            'CRC32C' => 'k2udew==',
+        ];
+        $handler = function (RequestInterface $request) use (
+            $checksumAlgorithm,
+            $checksumValues,
+            $expectedMode
+        ) {
+            $this->assertSame(
+                $expectedMode ?? '',
+                $request->getHeaderLine('x-amz-checksum-mode')
+            );
+
+            $headers = $checksumAlgorithm === null
+                ? []
+                : [
+                    'x-amz-checksum-' . $checksumAlgorithm
+                        => $checksumValues[$checksumAlgorithm]
+                ];
+
             return Promise\Create::promiseFor(new Response(
                 200,
-                ['x-amz-checksum-' . $checksumAlgorithm => 'AAAAAA==']
+                $headers,
+                'response body'
             ));
         };
         $client = $this->getTestClient('s3', $clientConfig + ['http_handler' => $handler]);
@@ -2756,6 +2785,7 @@ EOXML;
         ]);
 
         $this->assertEquals($checksumAlgorithm, $result['ChecksumValidated']);
+        $this->assertSame('response body', $result['Body']->getContents());
     }
 
     public static function responseChecksumValidationProvider(): array
@@ -2835,6 +2865,26 @@ EOXML;
         $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringNotContainsString('x-amz-checksum-', $url);
         $this->assertStringNotContainsString('x-amz-sdk-checksum-', $url);
+    }
+
+    public function testCreatesPresignedGetRequestsWithoutChecksumModeByDefault()
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', [
+            'region' => 'us-east-1',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar']
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            ['Bucket' => 'foo', 'Key' => 'bar']
+        );
+        $request = $client->createPresignedRequest($command, 1342138769);
+
+        $this->assertFalse($request->hasHeader('x-amz-checksum-mode'));
+        $this->assertStringNotContainsString(
+            'x-amz-checksum-mode',
+            (string) $request->getUri()
+        );
     }
 
     public function testCreatesPresignedRequestsWithRequestedChecksumAlgorithm()
