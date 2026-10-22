@@ -39,4 +39,28 @@ class LambdaClientTest extends TestCase
 
         $client->listFunctions();
     }
+
+    public function testsSkipsDefaultCurlOptionsWhenResponseIsStreamed()
+    {
+        if (!extension_loaded('curl')) {
+            $this->markTestSkipped('Test skipped on no cURL extension');
+        }
+
+        $client = new LambdaClient([
+            'region' => 'us-east-1',
+            'version' => 'latest'
+        ]);
+
+        $list = $client->getHandlerList();
+        $list->setHandler(function ($command, $request) {
+            $this->assertArrayNotHasKey('curl', $command['@http']);
+
+            return Promise\Create::promiseFor(new Result([]));
+        });
+
+        $client->invokeWithResponseStream([
+            'FunctionName' => 'test',
+            'Payload' => '{}'
+        ]);
+    }
 }
