@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.402.0 - 2026-10-22
 
 * `Aws\` - Updates the minimum required PHP version to 8.2, following the disclosure of CVE-2026-109618 and CVE-2026-109619.
 * `Aws\IVSRealTime` - Adds RevokeConnectionToken operation for Amazon IVS Real-Time Streaming.
