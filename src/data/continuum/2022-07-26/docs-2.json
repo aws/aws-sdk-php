@@ -1,0 +1,2155 @@
+{
+  "version": "2.0",
+  "service": "<p>AWS Continuum finds, validates, prioritizes, and remediates code vulnerabilities across the source repositories and AWS resources in your environments.</p>",
+  "operations": {
+    "AssociateCollector": "<p>Associates one Collector with this Environment and configures the customer role Continuum uses to authorize access to associated Collector data. The caller must have permission on the Environment and permission to pass the role. Continuum assumes the supplied role and calls GetCollectorDataAccessAuthorization on the requested Collector; only a successful authorization response permits the association. The caller does not need Collector data-access permission. The Environment retains its other Collector associations. Calling again with an existing association is safe and does not create a duplicate.</p>",
+    "CreateCodeFinding": "<p>Ingests a customer-supplied security finding into an environment. Continuum validates the document synchronously against the required overlay fields for the declared format; invalid documents are rejected with a ValidationException. The maximum accepted document size is 256 KB. The environment must have a source configured, and the finding must identify a code location so Continuum can tie it to a repository in the environment's build. Continuum assigns a findingId and stores the verbatim document. When no successful build yet contains the finding's repository, the finding stays SUBMITTED until the next successful build; if that build does not contain it either, the finding is DISCARDED with discardReason SOURCE_REPO_NOT_FOUND.</p>",
+    "CreateCodeScan": "<p>Creates an explicit scan request for one environment. CP creates durable work before any queue delivery occurs.</p> <p>Retrying a request that succeeded, with the same clientToken on the same environment, returns the original scan instead of starting another one. Token handling is not yet atomic: requests with the same token that run at the same time, or a retry after a request that failed partway through, can leave an additional scan, which may end in the FAILED state with a message that it was superseded. Deleting the environment makes its tokens unusable; a later request with one of them returns ResourceNotFoundException.</p> <p>Each environment can have a limited number of scans in progress at the same time. Once that limit is enforced, a request that would exceed it returns ServiceQuotaExceededException; wait for a scan to finish (ListCodeScans shows each scan's status), then retry.</p>",
+    "CreateCollector": "<p>Creates the Collector for the caller's account. Provisions an AWS Config service-linked recorder using the caller's federated access session and begins recording infrastructure changes.</p>",
+    "CreateEnvironment": "<p>Creates an environment and starts its validation and any requested provisioning. Storage provisioning and dependency checks may continue after the initial 201 response; use GetEnvironment to observe completion.</p>",
+    "CreateIntegration": "<p>Creates a new integration with an external source provider. Repeating an identical request with the same clientToken returns the original integrationId, integrationArn, and createdAt. Token records are retained for eight hours after success or terminal failure, including after the integration is deleted; replaying a deleted integration's token does not recreate it. An identical request with a retained terminal failure returns the recorded error.</p> <p>Reusing a token with different parameters returns ValidationException. A fresh token starts a new create attempt; if the name is already owned by another integration, ConflictException includes that integration's identifier. An attempt still in progress may return ThrottlingException with retryAfterSeconds set to 1; retry with the same token and identical parameters.</p> <p>GitHub authorization codes are single use. Retry an unresolved attempt with its original token and unchanged parameters first. If the service reports a terminal failure, an expired attempt, or a successful token exchange whose integration could not be saved, restart GitHub authorization with a fresh token and authorization code. The service does not checkpoint provider results for recovery by another request.</p>",
+    "DeleteCollector": "<p>Deletes the Collector for the caller's account. The Collector first enters PENDING_DELETION, then the service removes its schedule, AWS Config service-linked recorder, versioned S3 bucket, KMS key, and persisted record.</p>",
+    "DeleteEnvironment": "<p>Deletes an environment and its associated resources.</p>",
+    "DeleteIntegration": "<p>Deletes an integration and releases its name and account quota. Its retained CreateIntegration token receipt can still replay the original result without recreating the integration. Shared provider registrations are retained: deleting one integration does not remove provider access used by another integration. A fresh GitHub CreateIntegration attempt requires a fresh OAuth authorization code and a new clientToken.</p>",
+    "DisassociateCollector": "<p>Removes one Collector association from this Environment, preserving its other associations. The stored Collector data-access role is cleared when no Collector associations remain. The Environment owner must have permission to disassociate. A current Collector access grant is not required, and the Collector does not need to remain active or present, so stale or revoked associations can be cleaned up.</p>",
+    "GetCodeFinding": "<p>Retrieves the current state and details of a finding.</p>",
+    "GetCodeIssue": "<p>Retrieves the current state and details of an issue.</p>",
+    "GetCodeIssueArtifact": "<p>Retrieves one immutable artifact attached to an issue, including its content.</p>",
+    "GetCodeScan": "<p>Retrieves one customer-visible environment scan.</p>",
+    "GetCollector": "<p>Retrieves the current state of the Collector for the caller's account.</p>",
+    "GetCollectorDataAccessAuthorization": "<p>Authorizes an Environment's access to a Collector's data. Continuum calls this operation with the Environment's Collector data-access role before it reads the Collector's inventory, so grant continuum:GetCollectorDataAccessAuthorization to that role and, for a Collector in another account, in the Collector's resource policy. The operation evaluates the action against the exact Collector ARN and the Collector's current resource policy using IAM and the caller's authenticated request context, with environmentArn as the continuum:EnvironmentArn condition key. A successful request returns HTTP 200 with no response members. If access is not granted, the operation returns AccessDeniedException without disclosing Collector existence, ownership, or the policy layer that denied access. The service does not reinterpret the policy using only an account ID.</p>",
+    "GetEnvironment": "<p>Retrieves the current state and configuration of an environment.</p>",
+    "GetIntegration": "<p>Retrieves information about an integration.</p>",
+    "GetResourcePolicy": "<p>Retrieves the resource policy attached to a Continuum resource.</p>",
+    "ListAssociatedCollectors": "<p>Lists the Collectors currently associated with one Environment in ascending collectorId order. Each entry carries the Collector ARN, so a listed association can be passed straight to DisassociateCollector, including when the Collector belongs to another account. An association recorded before Continuum persisted the ARN is omitted from the response, because without the ARN it cannot be acted on.</p>",
+    "ListAssociatedEnvironments": "<p>Lists the Environments currently associated with one Collector in lexicographically ascending environmentArn order. The ARN identifies each Environment across accounts within the Collector's Region.</p>",
+    "ListCodeFindings": "<p>Lists the findings in an environment in descending findingId order.</p>",
+    "ListCodeIssueArtifacts": "<p>Lists the artifacts attached to an issue in descending artifactId order. Content is returned by GetCodeIssueArtifact.</p>",
+    "ListCodeIssues": "<p>Lists the issues in an environment in descending issueId order.</p>",
+    "ListCodeScans": "<p>Lists customer-visible scans for one environment in descending scanRunId order.</p>",
+    "ListCollectors": "<p>Lists the Collectors owned by the authenticated caller's account, including a Collector whose deletion is in progress. A Collector that is still being created is omitted. The account-scoped Collector quota currently permits at most one result, so no result ordering applies.</p>",
+    "ListEnvironments": "<p>Lists all environments in your account in descending environmentId order. This complete-inventory operation intentionally has no response filters; see the input documentation for the API standards justification.</p>",
+    "ListIntegrations": "<p>Lists the integrations in your account in descending integrationId order.</p>",
+    "PutResourcePolicy": "<p>Creates or replaces the resource policy attached to a Continuum resource.</p>",
+    "StartIntegrationAuthorization": "<p>Starts an OAuth authorization for a new integration and returns the values the caller sends to the provider's authorization endpoint. The authorization belongs to the calling AWS account, can be redeemed once by CreateIntegration from that same account, and expires after ten minutes.</p>",
+    "UpdateCollector": "<p>Updates the customer-controlled mutable properties of a Collector. Only the name and Kubernetes cluster IAM role can be changed.</p>",
+    "UpdateEnvironment": "<p>Updates the customer-controlled mutable properties of an environment. Only the name, the environment's S3 integration source and repository selections, its scan frequency, its network policy, and its patch creation policy can be changed.</p>",
+    "UpdateIntegration": "<p>Rotates the credentials used by an Amazon S3 integration. Only S3 integrations can be updated; GitHub integrations cannot be modified. The integration's name, provider type, and bucket remain fixed.</p> <p>The caller must have iam:PassRole permission for the supplied role, including when only the external ID changes. Continuum verifies that the role can be assumed with the requested external ID and can access the existing bucket before saving both credentials atomically. Omitting externalId preserves its current value. Repeating both current credentials leaves updatedAt unchanged, but still requires authorization and access validation.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>The request is not authorized. Verify that your credentials and request signature are valid and that you have permission to perform this action.</p>",
+      "refs": {}
+    },
+    "AffectedPackage": {
+      "base": "<p>A software package implicated by a finding.</p>",
+      "refs": {
+        "AffectedPackageList$member": null
+      }
+    },
+    "AffectedPackageList": {
+      "base": "<p>Software packages implicated by a finding.</p>",
+      "refs": {
+        "FindingVulnerability$affectedPackages": null,
+        "GetCodeFindingOutput$affectedPackages": "<p>Packages implicated by the finding.</p>"
+      }
+    },
+    "ArtifactCitation": {
+      "base": "<p>A citation supporting a claim: file:line, an HTTP response, or a graph node id.</p> <p>1024 rather than 512: validation agents cite a span of reasoning rather than a single location, reaching ~930 characters, and an over-long citation drops its entire <code>ReasoningStep</code> — claim included — rather than just the citation.</p>",
+      "refs": {
+        "ArtifactCitations$member": null,
+        "ArtifactHeaders$key": null,
+        "PrevalidationSignal$subjectRef": "<p>What this signal is about, such as a finding or issue reference.</p>",
+        "PrevalidationSignal$producerVersion": "<p>Version of that producer.</p>",
+        "ReasoningStep$source": "<p>Citation supporting the claim.</p>",
+        "RemediationProposalBody$filename": "<p>Filename the producer suggests for the patch, when it named one.</p>",
+        "ValidationExploitArtifact$targetUrl": "<p>Target the payload was sent to.</p>"
+      }
+    },
+    "ArtifactCitations": {
+      "base": null,
+      "refs": {
+        "FlowVerdict$evidence": "<p>Citations supporting the verdict.</p>",
+        "SignalConfidenceReasoning$factors": "<p>The individual factors behind it.</p>"
+      }
+    },
+    "ArtifactHeaders": {
+      "base": "<p>Headers recorded on an exploit artifact.</p>",
+      "refs": {
+        "ValidationExploitArtifact$headers": "<p>Headers sent with the payload.</p>"
+      }
+    },
+    "ArtifactHttpMethod": {
+      "base": "<p>HTTP method recorded on an exploit artifact.</p> <p>An enum rather than a pattern-constrained string: callers branch on the method, so the full set belongs in the generated SDKs. A producer value outside this set omits the exploit artifact rather than surfacing an unmodeled method.</p>",
+      "refs": {
+        "ValidationExploitArtifact$httpMethod": "<p>HTTP method the payload was sent with.</p>"
+      }
+    },
+    "ArtifactProofBody": {
+      "base": "<p>The body of a proof: executed code, the output it produced, or an annotated source walk.</p> <p>Its own type rather than <code>ArtifactText</code> because these are whole documents, not fields: observed bodies reach 12.8K of code and 16K of captured output. At most one proof is present per artifact, so a large bound here does not multiply the way <code>ArtifactText</code>'s does.</p>",
+      "refs": {
+        "ValidationExploitArtifact$responseSnippet": "<p>Leading portion of the response body, bounded by the producer.</p>"
+      }
+    },
+    "ArtifactSha256": {
+      "base": "<p>A SHA-256 digest in lowercase hexadecimal.</p>",
+      "refs": {
+        "PatchBody$patchSha256": "<p>SHA-256 of the patch's UTF-8 bytes in lowercase hex, computed by Control Plane when it stored the patch.</p> <p>Lets a caller confirm the patch it applies is byte-for-byte the one that was reviewed. Computed over the patch bytes, so it is verifiable against <code>patch</code> without trusting this value.</p>",
+        "RemediationProposalBody$patchSha256": "<p>SHA-256 of the patch bytes in lowercase hex, as recorded by the producer.</p> <p>Lets a caller confirm the patch it applies is byte-for-byte the one that was reviewed. Computed over the patch bytes, so it is verifiable against <code>patch</code> without trusting this value.</p>"
+      }
+    },
+    "ArtifactText": {
+      "base": "<p>A bounded free-text field in a projected artifact body.</p> <p>8192 rather than 4096: a validation agent's reasoning <code>claim</code> runs to ~5.6K in practice, and a claim dropped on length takes its whole <code>ReasoningStep</code> with it. Deliberately NOT raised to the proof-body bound — this type is also the member of a 50-entry <code>ReasoningSteps</code> list and of <code>ArtifactHeaders</code>, so its bound multiplies into the worst-case response size.</p> <p>The product of these bounds is NOT what actually caps a response. Every projected body is read out of one <code>IssueArtifactContent</code>, itself bounded at 5 MiB, so no projection can exceed the size of the content it came from whatever the member bounds permit. Keeping this one modest is about not inflating a typical response, not about the ceiling.</p>",
+      "refs": {
+        "ArtifactHeaders$value": null,
+        "PrevalidationSignal$conclusion": "<p>The producer's conclusion.</p>",
+        "ReasoningStep$claim": "<p>The claim or conclusion reached at this step.</p>",
+        "SignalAccessPrecondition$reason": "<p>The producer's explanation.</p>",
+        "SignalAccessPrecondition$missingInfo": "<p>What the producer could not determine, when anything was missing.</p>",
+        "SignalAttackerGainsDimension$reason": "<p>The producer's explanation.</p>",
+        "SignalAttackerGainsDimension$missingInfo": "<p>What the producer could not determine, when anything was missing.</p>",
+        "SignalBlastRadiusDimension$reason": "<p>The producer's explanation.</p>",
+        "SignalBlastRadiusDimension$missingInfo": "<p>What the producer could not determine, when anything was missing.</p>",
+        "SignalConfidenceReasoning$summary": "<p>One-line rationale.</p>",
+        "SignalPrecondition$reason": "<p>The producer's explanation.</p>",
+        "SignalPrecondition$missingInfo": "<p>What the producer could not determine, when anything was missing.</p>",
+        "SignalTargetValueDimension$reason": "<p>The producer's explanation.</p>",
+        "SignalTargetValueDimension$missingInfo": "<p>What the producer could not determine, when anything was missing.</p>",
+        "ValidationExploitArtifact$payload": "<p>The exact payload sent.</p>"
+      }
+    },
+    "AssociateCollectorInput": {
+      "base": "<p>Specifies the Collector ARN and data-access role to associate with this Environment.</p>",
+      "refs": {}
+    },
+    "AssociateCollectorOutput": {
+      "base": "<p>Contains the Environment and the Collector associated by this request.</p>",
+      "refs": {}
+    },
+    "AssociatedCollector": {
+      "base": "<p>One Collector associated with an Environment.</p>",
+      "refs": {
+        "AssociateCollectorOutput$associatedCollector": "<p>The Collector identifier and ARN validated by this operation.</p>",
+        "AssociatedCollectors$member": null
+      }
+    },
+    "AssociatedCollectors": {
+      "base": "<p>One page of the Collectors associated with an Environment. Unlike CollectorArns and CollectorIds — which describe the non-empty input of an association mutation — a page is empty when the Environment has no associations, and its maximum matches the per-Environment association ceiling.</p>",
+      "refs": {
+        "ListAssociatedCollectorsOutput$associatedCollectors": "<p>The Collectors associated with this Environment, ordered by collectorId ascending. Empty when the Environment has no associations, and also when every association on the page predates Continuum persisting the ARN — the page is still advanced by <code>nextToken</code> in that case.</p>"
+      }
+    },
+    "AssociatedEnvironment": {
+      "base": "<p>A summary of one Environment associated with a Collector. This shape intentionally remains distinct from EnvironmentSummary so the two list operations can evolve independently.</p>",
+      "refs": {
+        "AssociatedEnvironments$member": null
+      }
+    },
+    "AssociatedEnvironments": {
+      "base": "<p>One page of Environment summaries associated with a Collector.</p>",
+      "refs": {
+        "ListAssociatedEnvironmentsOutput$associatedEnvironments": "<p>Summaries of the Environments associated with this Collector, ordered by environmentArn lexicographically ascending. Each summary has the same fields as a ListEnvironments item but uses an independent model shape. Empty when the Collector has no associations.</p>"
+      }
+    },
+    "AssociationClientToken": {
+      "base": "<p>Caller-provided idempotency token for an Environment association request.</p>",
+      "refs": {
+        "AssociateCollectorInput$clientToken": "<p>Caller-provided token that makes retried association requests idempotent. The first successful request binds the token to the complete Collector ARN, supplied role, and result for at least 24 hours. During that retry window, reusing it with a different request fails with ConflictException. A matching replay still requires the supplied role to have current Collector access. Once authorized, a matching replay returns the stored result without changing association state. Revocation can deny a replay; it does not remove the stored association or its original result.</p>"
+      }
+    },
+    "AttackFlowId": {
+      "base": "<p>Identifier of an attack flow within a validation bundle.</p>",
+      "refs": {
+        "AttackFlowIds$member": null,
+        "FlowVerdict$flowId": "<p>Identifier of the attack flow assessed.</p>"
+      }
+    },
+    "AttackFlowIds": {
+      "base": null,
+      "refs": {
+        "ValidationEvidenceBody$attackFlowsConfirmed": "<p>Identifiers of attack flows upgraded to Confirmed provenance.</p>"
+      }
+    },
+    "AuthorizationCode": {
+      "base": "<p>An OAuth authorization code used during the integration authentication flow.</p>",
+      "refs": {
+        "GitHubAuthorizationConfiguration$authorizationCode": "<p>The OAuth authorization code returned by GitHub after the user authorizes the application.</p>"
+      }
+    },
+    "AwsAccountId": {
+      "base": "<p>A 12-digit AWS account ID.</p>",
+      "refs": {
+        "GetCollectorDataAccessAuthorizationInput$accountId": "<p>The AWS account that owns the Collector.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "SignalExploitability$reachedCrownJewels": "<p>Whether validation reached the high-value sink the attack path posited.</p> <p>A Boolean rather than an enum: the sink was either reached or it was not, and how far the walk got when it was not is already carried, with more precision, by <code>highestLayerReached</code>. An unknown is the absent member.</p>",
+        "SignalExploitability$scriptable": "<p>Whether the proven exploit is automatable rather than one-off.</p> <p>A Boolean for the same reason as <code>SignalPrecondition.value</code>: validation records a bool, and an unknown is the absent member.</p>",
+        "SignalPrecondition$value": "<p>The producer's determination.</p> <p>A Boolean rather than an enum, against the Common Terms preference for enums on extensibility grounds. The question each precondition answers is closed — is the code reachable, is configuration required, must a user other than the attacker interact — and the only third state, &quot;not determined&quot;, is already expressed by omitting this member, which the projection does whenever the stored value is not a bool. An enum would give two ways to say the same thing, while <code>basis</code> and <code>missingInfo</code> already qualify how firm the answer is.</p>"
+      }
+    },
+    "BuildRepositoryName": {
+      "base": "<p>Workspace-safe repository name stored in a Build source manifest.</p>",
+      "refs": {
+        "PatchBody$repositoryName": "<p>The repository the patch applies to, as named in the source snapshot it was generated against.</p>"
+      }
+    },
+    "CodeConfigurationDetails": {
+      "base": "<p>Code-specific environment properties. GetEnvironment returns the source and operating policy; UpdateEnvironment returns Collector details and the latest scan.</p>",
+      "refs": {
+        "EnvironmentConfigurationDetails$codeConfiguration": "<p>Configuration and scan state for a code-scanning environment.</p>"
+      }
+    },
+    "CodeFindingSummaries": {
+      "base": "<p>A list of finding summaries returned by public code finding APIs.</p>",
+      "refs": {
+        "ListCodeFindingsOutput$items": "<p>The findings in the environment, ordered by findingId descending.</p>"
+      }
+    },
+    "CodeIssueArtifactItems": {
+      "base": null,
+      "refs": {
+        "ListCodeIssueArtifactsOutput$items": "<p>The artifacts attached to the issue, ordered by artifactId descending.</p>"
+      }
+    },
+    "CodeIssueSummaries": {
+      "base": "<p>A list of issue summaries.</p>",
+      "refs": {
+        "ListCodeIssuesOutput$items": "<p>The issues in the environment, ordered by issueId descending.</p>"
+      }
+    },
+    "CodeScanData": {
+      "base": "<p>Complete customer-visible data for one environment scan.</p> <p>Kept distinct from CodeScanSummary so GetCodeScan can grow independently of ListCodeScans without changing its response contract.</p>",
+      "refs": {
+        "GetCodeScanOutput$scan": "<p>Complete customer-visible scan data.</p>"
+      }
+    },
+    "CodeScanSummaries": {
+      "base": null,
+      "refs": {
+        "ListCodeScansOutput$scans": "<p>Customer-visible scans ordered by scanRunId descending.</p>"
+      }
+    },
+    "CodeScanSummary": {
+      "base": "<p>Customer-visible summary of one environment scan.</p>",
+      "refs": {
+        "CodeConfigurationDetails$latestScan": "<p>The newest scan requested for this environment, if one exists.</p>",
+        "CodeScanSummaries$member": null,
+        "CreateCodeScanOutput$scan": "<p>The scan run this request created, or the scan run a previous request with the same clientToken already accepted.</p>"
+      }
+    },
+    "CollectorArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of the Collector. Format: arn:{partition}:continuum:{region}:{account}:collectors/{collectorId} The resource-id segment is a fresh, randomly generated identifier assigned when the Collector is created — not a fixed or predictable value.</p>",
+      "refs": {
+        "AssociateCollectorInput$collectorArn": "<p>The ARN of the Collector to associate with this Environment.</p>",
+        "AssociatedCollector$collectorArn": "<p>The ARN of the associated Collector. The account and Region encoded in this ARN identify cross-account and cross-Region associations.</p>",
+        "CollectorSummary$collectorArn": "<p>The ARN of the Collector.</p>",
+        "CreateCollectorOutput$collectorArn": "<p>The ARN of the created Collector.</p>",
+        "DisassociateCollectorInput$collectorArn": "<p>The ARN of the Collector to disassociate from this Environment.</p>",
+        "GetCollectorOutput$collectorArn": "<p>The ARN of the Collector.</p>",
+        "UpdateCollectorOutput$collectorArn": "<p>The ARN of the updated Collector.</p>"
+      }
+    },
+    "CollectorClientToken": {
+      "base": "<p>Caller-provided idempotency token for a Collector creation request.</p>",
+      "refs": {
+        "CreateCollectorInput$clientToken": "<p>Caller-provided token that makes retried create requests return the original Collector rather than creating a duplicate.</p>"
+      }
+    },
+    "CollectorDetails": {
+      "base": "<p>Collector data access configuration returned for an environment.</p>",
+      "refs": {
+        "CodeConfigurationDetails$collectorDetails": "<p>Collector data access configuration. Omitted when no Collector data access role is configured.</p>"
+      }
+    },
+    "CollectorId": {
+      "base": "<p>The unique identifier for a Collector resource. This is a fresh, randomly generated identifier assigned when the Collector is created — the same value embedded as the resource-id segment of the CollectorArn.</p>",
+      "refs": {
+        "AssociatedCollector$collectorId": "<p>The unique identifier of the associated Collector.</p>",
+        "CollectorSummary$collectorId": "<p>The unique identifier of the Collector.</p>",
+        "CreateCollectorOutput$collectorId": "<p>The unique identifier assigned to the Collector.</p>",
+        "DeleteCollectorInput$collectorId": "<p>The unique identifier of the Collector to delete.</p>",
+        "GetCollectorDataAccessAuthorizationInput$collectorId": "<p>The unique identifier of the Collector.</p>",
+        "GetCollectorInput$collectorId": "<p>The unique identifier of the Collector to retrieve.</p>",
+        "GetCollectorOutput$collectorId": "<p>The unique identifier of the Collector.</p>",
+        "ListAssociatedEnvironmentsInput$collectorId": "<p>The unique identifier of the Collector whose associations to list.</p>",
+        "UpdateCollectorInput$collectorId": "<p>The unique identifier of the Collector to update.</p>",
+        "UpdateCollectorOutput$collectorId": "<p>The unique identifier of the updated Collector.</p>"
+      }
+    },
+    "CollectorName": {
+      "base": "<p>The name for a Collector.</p>",
+      "refs": {
+        "UpdateCollectorInput$name": "<p>The new customer-visible name.</p>"
+      }
+    },
+    "CollectorStatus": {
+      "base": "<p>The lifecycle status of a Collector.</p>",
+      "refs": {
+        "CollectorSummary$status": "<p>The current lifecycle status.</p>",
+        "CreateCollectorOutput$status": "<p>The current lifecycle status.</p>",
+        "GetCollectorOutput$status": "<p>The current lifecycle status.</p>",
+        "UpdateCollectorOutput$status": "<p>The current lifecycle status.</p>"
+      }
+    },
+    "CollectorSummaries": {
+      "base": "<p>Collector summaries returned for an authenticated account. The account-scoped Collector quota currently permits at most one result.</p>",
+      "refs": {
+        "ListCollectorsOutput$items": "<p>The Collectors owned by the authenticated caller's account. At most one result is currently returned, so no result ordering applies.</p>"
+      }
+    },
+    "CollectorSummary": {
+      "base": "<p>A summary of a Collector returned in list responses.</p>",
+      "refs": {
+        "CollectorSummaries$member": null
+      }
+    },
+    "CollectorType": {
+      "base": "<p>The source collected by a Collector. Additional kinds can be added as they become supported; recorder provisioning remains a service detail.</p>",
+      "refs": {
+        "CollectorSummary$type": "<p>The source collected by this Collector.</p>",
+        "CreateCollectorInput$type": "<p>Source to collect. Defaults to AWS_COLLECTOR when omitted.</p>",
+        "CreateCollectorOutput$type": "<p>The source collected by this Collector.</p>",
+        "GetCollectorOutput$type": "<p>The source collected by this Collector.</p>",
+        "UpdateCollectorOutput$type": "<p>The source collected by this Collector.</p>"
+      }
+    },
+    "ConfigRecorderArn": {
+      "base": "<p>ARN of the AWS Config Recorder provisioned by this Collector. Accepts both recorder shapes:</p> <ul> <li>Customer-Managed: ...:config-recorder/{name}</li> <li>Service-Linked: ...:configuration-recorder/{name}/{id} (a service-linked recorder ARN from PutServiceLinkedConfigurationRecorder uses the <code>configuration-recorder</code> resource type and carries a trailing id segment).</li> </ul>",
+      "refs": {
+        "GetCollectorOutput$configRecorderArn": "<p>The ARN of the provisioned AWS Config Recorder.</p>",
+        "UpdateCollectorOutput$configRecorderArn": "<p>The ARN of the provisioned AWS Config Recorder.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request could not be completed due to a conflict with the current state of the resource.</p>",
+      "refs": {}
+    },
+    "CreateCodeConfiguration": {
+      "base": "<p>Source and operating-policy settings for a new code environment.</p>",
+      "refs": {
+        "CreateEnvironmentConfiguration$codeConfiguration": "<p>Configuration for a code-scanning environment.</p>"
+      }
+    },
+    "CreateCodeFindingInput": {
+      "base": "<p>Specifies the environment and the finding document to ingest.</p>",
+      "refs": {}
+    },
+    "CreateCodeFindingOutput": {
+      "base": "<p>Contains the identifier, ARN, title, and initial status of the newly ingested finding.</p>",
+      "refs": {}
+    },
+    "CreateCodeScanInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCodeScanOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCollectorInput": {
+      "base": "<p>Creates a Collector for the authenticated caller.</p>",
+      "refs": {}
+    },
+    "CreateCollectorOutput": {
+      "base": "<p>Contains the identifier and ARN of the newly created Collector.</p>",
+      "refs": {}
+    },
+    "CreateEnvironmentConfiguration": {
+      "base": "<p>Type-specific configuration for a new environment. Omission creates a code environment with the default operating policy and no sources.</p>",
+      "refs": {
+        "CreateEnvironmentInput$configuration": "<p>Type-specific configuration. Omission creates a code environment with the default operating policy and no sources.</p>"
+      }
+    },
+    "CreateEnvironmentInput": {
+      "base": "<p>Specifies the name and type-specific configuration of the new environment. Source and operating-policy settings belong to configuration.codeConfiguration.</p>",
+      "refs": {}
+    },
+    "CreateEnvironmentOutput": {
+      "base": "<p>Contains the identifier and ARN of the newly created environment.</p>",
+      "refs": {}
+    },
+    "CreateIntegrationInput": {
+      "base": "<p>Specifies the provider configuration and name for the new integration.</p>",
+      "refs": {}
+    },
+    "CreateIntegrationOutput": {
+      "base": "<p>Contains the original identifier, ARN, and creation time of the new or replayed integration. A replay can refer to an integration that has since been deleted.</p>",
+      "refs": {}
+    },
+    "CveId": {
+      "base": "<p>A CVE identifier, e.g. &quot;CVE-2020-8203&quot;.</p>",
+      "refs": {
+        "FindingVulnerability$cveId": null,
+        "GetCodeFindingOutput$cveId": "<p>The CVE this finding reports, for software-composition findings. Both code types can carry one: a customer document supplies it under vulnerabilities[].cve, and Continuum's scanner reports CVEs for dependency-manifest findings.</p>"
+      }
+    },
+    "CweId": {
+      "base": "<p>A CWE identifier, e.g. &quot;CWE-532&quot;.</p>",
+      "refs": {
+        "CweIdList$member": null,
+        "FindingVulnerability$cweId": "<p>Primary CWE for this vulnerability, e.g. &quot;CWE-89&quot;.</p>"
+      }
+    },
+    "CweIdList": {
+      "base": "<p>CWE identifiers classifying a finding.</p>",
+      "refs": {
+        "FindingVulnerability$additionalCweIds": "<p>Further CWEs the producer attributed to this same vulnerability.</p>",
+        "GetCodeFindingOutput$cweIds": "<p>CWE identifiers classifying the finding.</p>"
+      }
+    },
+    "DeleteCollectorInput": {
+      "base": "<p>Specifies the Collector to delete.</p>",
+      "refs": {}
+    },
+    "DeleteEnvironmentInput": {
+      "base": "<p>Specifies the environment to delete.</p>",
+      "refs": {}
+    },
+    "DeleteIntegrationInput": {
+      "base": "<p>Specifies the integration to delete.</p>",
+      "refs": {}
+    },
+    "DeliveryGitCommitSha": {
+      "base": null,
+      "refs": {
+        "GitHubTarget$headSha": "<p>The head commit SHA of the pull request. Absent until the pull request is opened.</p>"
+      }
+    },
+    "DeliveryGitHubName": {
+      "base": null,
+      "refs": {
+        "GitHubTarget$owner": "<p>The GitHub user or organization that owns the repository.</p>",
+        "GitHubTarget$repository": "<p>The repository name.</p>"
+      }
+    },
+    "DeliveryObjectKey": {
+      "base": null,
+      "refs": {
+        "S3Target$key": "<p>The object key of the delivered patch.</p>"
+      }
+    },
+    "DeliveryPullRequestNumber": {
+      "base": null,
+      "refs": {
+        "GitHubTarget$pullRequestNumber": "<p>Repository-scoped pull request number assigned by GitHub.</p>"
+      }
+    },
+    "DeliveryReason": {
+      "base": "<p>Cause of a PATCH delivery's current state; used only by DeliveryState.reason. These are outcomes of one delivery lifecycle, not shared operation error enums. The two existing skip-code wire values are retained for compatibility.</p>",
+      "refs": {
+        "IssuePatchDeliveryFailureReasons$member": null
+      }
+    },
+    "DeliveryStatus": {
+      "base": null,
+      "refs": {
+        "PatchDelivery$status": "<p>How far delivery to the destination has progressed.</p>"
+      }
+    },
+    "DeliveryVersionId": {
+      "base": null,
+      "refs": {
+        "S3Target$version": "<p>The S3 version ID of the delivered object, when the bucket is versioned.</p>"
+      }
+    },
+    "DestinationTarget": {
+      "base": "<p>Identity only. Future providers may add union members without duplicating state.</p>",
+      "refs": {
+        "PatchDelivery$target": "<p>Where the patch was or will be delivered. Absent while the destination is still being resolved, or when delivery was skipped before a destination was known.</p>"
+      }
+    },
+    "DisassociateCollectorInput": {
+      "base": "<p>Specifies the Collector to disassociate from this Environment.</p>",
+      "refs": {}
+    },
+    "Document": {
+      "base": null,
+      "refs": {
+        "CreateCodeFindingInput$ocsfDocument": "<p>The OCSF finding document to ingest, verbatim. Must declare a class_uid Continuum supports (2002 Vulnerability Finding, or 2007 Application Security Posture Finding) and validate against the vendored OCSF JSON Schema for that class, including the Continuum overlay requirements that finding_info.uid be present and that vulnerabilities[0].affected_code[0].file identify the code location. With several repositories in the environment, the file path must begin with the repository name. Maximum size 256 KB. Stored verbatim and normalized into the typed Finding members returned by GetCodeFinding. GetCodeFinding does not return the document itself.</p>",
+        "GetCodeIssueArtifactOutput$metadata": "<p>Producer-defined structured metadata, when the producer supplied any.</p> <p>Returned only for an artifactType whose content has no defined shape, so that the artifact stays inspectable. For an artifactType with a defined shape, <code>body</code> carries the content and this member is omitted.</p>"
+      }
+    },
+    "DomainName": {
+      "base": "<p>A domain name permitted for build-time dependency resolution.</p>",
+      "refs": {
+        "DomainNames$member": null
+      }
+    },
+    "DomainNames": {
+      "base": "<p>A list of permitted dependency domains. Maximum 50 entries.</p>",
+      "refs": {
+        "EnvironmentNetworkConfiguration$allowedDomains": "<p>Domains that an environment's agent execution may contact.</p>"
+      }
+    },
+    "Double": {
+      "base": null,
+      "refs": {
+        "FindingValidation$confidence": "<p>The validator's confidence, from 0.0 to 1.0 inclusive. Advisory: it does not drive Continuum's own routing decisions. The range is enforced server-side, not by a @range trait -- the smithy-rs server SDK does not support range constraints on double shapes (smithy-rs#2007).</p>",
+        "FindingVulnerability$cvssBaseScore": "<p>The CVSS base score for <code>cveId</code>, when the producer supplies one, from 0.0 to 10.0.</p>",
+        "GetCodeFindingOutput$cvssBaseScore": "<p>The CVSS base score accompanying <code>cveId</code>, when the producer supplies one, from 0.0 to 10.0. Not computed by Continuum. The range is enforced server-side, not by a @range trait -- the smithy-rs server SDK does not support range constraints on double shapes (smithy-rs#2007).</p>"
+      }
+    },
+    "EnvironmentArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of an Environment resource, of the form arn:{partition}:continuum:{region}:{account}:environments/{environmentId}.</p>",
+      "refs": {
+        "AssociateCollectorOutput$environmentArn": "<p>The ARN of the Environment making the association.</p>",
+        "AssociatedEnvironment$environmentArn": "<p>The ARN of the associated Environment. The account encoded in this ARN identifies cross-account associations; association mutations require its Region to match the Collector's Region.</p>",
+        "CreateEnvironmentOutput$environmentArn": "<p>The ARN of the created environment.</p>",
+        "EnvironmentListEntry$environmentArn": "<p>The ARN of the environment.</p>",
+        "GetCollectorDataAccessAuthorizationInput$environmentArn": "<p>The full ARN of the Environment requesting the Collector's data. The Environment must be in the caller's account. Continuum supplies this value as the continuum:EnvironmentArn condition key.</p>",
+        "GetEnvironmentOutput$environmentArn": "<p>The ARN of the environment.</p>",
+        "UpdateEnvironmentOutput$environmentArn": "<p>The ARN of the updated environment.</p>"
+      }
+    },
+    "EnvironmentConfiguration": {
+      "base": "<p>Environment-level operating policy.</p>",
+      "refs": {
+        "CodeConfigurationDetails$environmentConfiguration": "<p>Operating policy in the shape accepted by CreateEnvironment and UpdateEnvironment.</p>",
+        "CreateCodeConfiguration$environmentConfiguration": "<p>Environment-level operating policy.</p>",
+        "UpdateCodeConfiguration$environmentConfiguration": "<p>Operating-policy changes. network replaces the environment's network policy; a network without allowedDomains allows no domains. Builds accepted before the change keep the domains they were accepted with. patchCreationPolicy replaces the patch creation policy. scanFrequency updates scan cadence. Omitted members preserve their stored values.</p>"
+      }
+    },
+    "EnvironmentConfigurationDetails": {
+      "base": "<p>Type-specific configuration and state returned by GetEnvironment and UpdateEnvironment.</p>",
+      "refs": {
+        "GetEnvironmentOutput$configuration": "<p>Type-specific configuration and state, including code sources, operating policy, Collector details, and the latest scan.</p>",
+        "UpdateEnvironmentOutput$configuration": "<p>Type-specific state, including Collector details and the latest scan. Read source and operating-policy settings through GetEnvironment.</p>"
+      }
+    },
+    "EnvironmentId": {
+      "base": "<p>The unique identifier for an Environment resource.</p>",
+      "refs": {
+        "AssociateCollectorInput$environmentId": "<p>The unique identifier of the Environment making the association.</p>",
+        "AssociateCollectorOutput$environmentId": "<p>The unique identifier of the Environment making the association.</p>",
+        "AssociatedEnvironment$environmentId": "<p>The unique identifier of the associated Environment.</p>",
+        "CreateCodeFindingInput$environmentId": "<p>The environment to ingest the finding into.</p>",
+        "CreateCodeScanInput$environmentId": "<p>Environment to scan.</p>",
+        "CreateEnvironmentOutput$environmentId": "<p>The unique identifier assigned to the environment.</p>",
+        "DeleteEnvironmentInput$environmentId": "<p>The unique identifier of the environment to delete.</p>",
+        "DisassociateCollectorInput$environmentId": "<p>The unique identifier of the Environment whose associations are updated.</p>",
+        "EnvironmentListEntry$environmentId": "<p>The unique identifier of the environment.</p>",
+        "FindingSummary$environmentId": "<p>The environment that owns the finding.</p>",
+        "GetCodeFindingInput$environmentId": "<p>The environment that owns the finding.</p>",
+        "GetCodeFindingOutput$environmentId": "<p>The environment that owns the finding.</p>",
+        "GetCodeIssueArtifactInput$environmentId": "<p>The environment that owns the issue.</p>",
+        "GetCodeIssueInput$environmentId": "<p>The environment that owns the issue.</p>",
+        "GetCodeScanInput$environmentId": "<p>Environment that owns the scan.</p>",
+        "GetEnvironmentInput$environmentId": "<p>The unique identifier of the environment to retrieve.</p>",
+        "GetEnvironmentOutput$environmentId": "<p>The unique identifier of the environment.</p>",
+        "ListAssociatedCollectorsInput$environmentId": "<p>The unique identifier of the Environment whose associations to list.</p>",
+        "ListCodeFindingsInput$environmentId": "<p>The environment whose findings to list.</p>",
+        "ListCodeIssueArtifactsInput$environmentId": "<p>The environment that owns the issue.</p>",
+        "ListCodeIssuesInput$environmentId": "<p>The environment whose issues to list.</p>",
+        "ListCodeScansInput$environmentId": "<p>Environment whose scans to list.</p>",
+        "UpdateEnvironmentInput$environmentId": "<p>The unique identifier of the environment to update.</p>",
+        "UpdateEnvironmentOutput$environmentId": "<p>The unique identifier of the updated environment.</p>"
+      }
+    },
+    "EnvironmentListEntries": {
+      "base": "<p>A list of external environment entries.</p>",
+      "refs": {
+        "ListEnvironmentsOutput$items": "<p>Common metadata for the environments in the account, ordered by environmentId descending.</p>"
+      }
+    },
+    "EnvironmentListEntry": {
+      "base": "<p>Summary of an environment returned in list responses.</p>",
+      "refs": {
+        "EnvironmentListEntries$member": null
+      }
+    },
+    "EnvironmentName": {
+      "base": "<p>The customer-visible name for an environment.</p>",
+      "refs": {
+        "AssociatedEnvironment$name": "<p>The customer-visible name of the associated Environment.</p>",
+        "CreateEnvironmentInput$name": "<p>The customer-visible name of the environment.</p>",
+        "EnvironmentListEntry$name": "<p>The customer-visible name of the environment.</p>",
+        "GetEnvironmentOutput$name": "<p>The customer-visible name of the environment.</p>",
+        "UpdateEnvironmentInput$name": "<p>The new customer-visible name.</p>",
+        "UpdateEnvironmentOutput$name": "<p>The current customer-visible name of the environment.</p>"
+      }
+    },
+    "EnvironmentNetworkConfiguration": {
+      "base": "<p>Network policy for agent execution.</p>",
+      "refs": {
+        "EnvironmentConfiguration$network": "<p>Network policy for agent execution.</p>"
+      }
+    },
+    "EnvironmentRepositorySource": {
+      "base": "<p>One repository selected from a previously-created integration.</p>",
+      "refs": {
+        "EnvironmentRepositorySources$member": null
+      }
+    },
+    "EnvironmentRepositorySources": {
+      "base": "<p>Explicit repository selections for an environment.</p> <p>The number of repositories is governed by an account-level service quota rather than this shape maximum. The quota defaults to 10 so scans maintain useful quality and coverage, and can be higher for some accounts, up to 100.</p> <p>An environment that already has more selections than the account's current quota remains readable, and an UpdateEnvironment request that leaves repositorySources unchanged keeps those selections without checking them against the quota. Creating or replacing repository selections, and starting a new scan, must satisfy the account's current quota.</p>",
+      "refs": {
+        "EnvironmentSourceConfiguration$repositorySources": "<p>Explicit repository selections from previously-created integrations.</p>"
+      }
+    },
+    "EnvironmentS3IntegrationSource": {
+      "base": "<p>An S3 source for one environment, backed by a previously-created S3 integration.</p>",
+      "refs": {
+        "EnvironmentS3Sources$member": null
+      }
+    },
+    "EnvironmentS3Sources": {
+      "base": "<p>A list of S3 integration sources. Only one S3 source is supported today; modeled as a list to allow more sources to be supported without a breaking change in the future.</p>",
+      "refs": {
+        "EnvironmentSourceConfiguration$s3Sources": "<p>S3 sources backed by previously-created S3 integrations.</p>"
+      }
+    },
+    "EnvironmentSourceBucketName": {
+      "base": "<p>Customer-managed S3 bucket name.</p>",
+      "refs": {
+        "S3Target$bucket": null
+      }
+    },
+    "EnvironmentSourceConfiguration": {
+      "base": "<p>GA source configuration for code and customer-authored context.</p>",
+      "refs": {
+        "CodeConfigurationDetails$sourceConfiguration": "<p>Sources in the shape accepted by CreateEnvironment and UpdateEnvironment.</p>",
+        "CreateCodeConfiguration$sourceConfiguration": "<p>Source configuration for the environment.</p>",
+        "UpdateCodeConfiguration$sourceConfiguration": "<p>Source changes. s3Sources replaces the environment's S3 source, and repositorySources replaces its repository selections.</p>"
+      }
+    },
+    "EnvironmentSourcePrefix": {
+      "base": "<p>A source prefix. The service normalizes an omitted value to its documented default.</p>",
+      "refs": {
+        "EnvironmentS3IntegrationSource$codePrefix": "<p>Prefix containing source code. Defaults to code/ when omitted.</p>",
+        "EnvironmentS3IntegrationSource$contextPrefix": "<p>Prefix containing customer-authored context. Defaults to context/ when omitted.</p>"
+      }
+    },
+    "EnvironmentSourceRoleArn": {
+      "base": "<p>IAM role assumed by Continuum for environment-level or source-specific access.</p>",
+      "refs": {
+        "AssociateCollectorInput$collectorDataAccessRoleArn": "<p>IAM role in the Environment account that Continuum assumes before authorizing access to associated Collector inventory. Every association, including a same-account association, requires this role. The supplied ARN replaces the Environment's previously stored role. The customer is responsible for granting the role access to every Collector that should contribute data.</p>",
+        "CollectorDetails$collectorDataAccessRoleArn": "<p>IAM role that Continuum assumes to authorize its access to associated Collector inventory. Required for nonempty Collector inventory resolution, in the same account or across accounts. This is independent from any S3 source role.</p>"
+      }
+    },
+    "EnvironmentStatus": {
+      "base": "<p>The operational status of an environment.</p>",
+      "refs": {
+        "AssociatedEnvironment$status": "<p>The current operational status of the associated Environment.</p>",
+        "CreateEnvironmentOutput$status": "<p>The initial status of the environment. Always ACTIVE on successful creation.</p>",
+        "EnvironmentListEntry$status": "<p>The current operational status of the environment.</p>",
+        "GetEnvironmentOutput$status": "<p>The current operational status of the environment.</p>",
+        "UpdateEnvironmentOutput$status": "<p>The current operational status of the environment.</p>"
+      }
+    },
+    "EnvironmentStatusMessage": {
+      "base": "<p>A human-readable message providing additional context about the current environment status.</p>",
+      "refs": {
+        "GetEnvironmentOutput$statusMessage": "<p>Human-readable details about the current status. Present when the status requires additional context (e.g., failure reason).</p>",
+        "UpdateEnvironmentOutput$statusMessage": "<p>Human-readable details about the current status.</p>"
+      }
+    },
+    "ExploitEffect": {
+      "base": "<p>The effect validation observed from an exploit payload.</p>",
+      "refs": {
+        "ValidationExecutedProof$observedEffect": "<p>Effect the execution actually produced. <code>observedEffect</code> rather than <code>effect</code>: this one was witnessed, and the name has to stay distinguishable from <code>ValidationSourceAnalysis.inferredEffect</code>, which was not.</p>",
+        "ValidationExploitArtifact$effect": "<p>Effect observed from sending the payload.</p>",
+        "ValidationSourceAnalysis$inferredEffect": "<p>Effect the agent concluded WOULD occur. Deliberately not <code>effect</code>: nothing was executed, so this is reasoned from the source and must not be read as an observation. See <code>ValidationExecutedProof.observedEffect</code>.</p>"
+      }
+    },
+    "ExploitabilityVerdict": {
+      "base": "<p>Whether validation confirmed the vulnerability is exploitable.</p>",
+      "refs": {
+        "PerFindingResult$exploitable": "<p>Exploitability verdict for this finding.</p>",
+        "SignalExploitability$verdict": "<p>Validation's verdict. <code>UNCERTAIN</code> covers a run that was inconclusive — out of budget, an ambiguous failure, or no decisive layer reached — and is never a refutation.</p>",
+        "ValidationEvidenceBody$exploitable": "<p>Exploitability verdict. Explicit UNCERTAIN replaces the producer's tri-state <code>exploitable: true | false | null</code>, so an absent verdict is never confused with a negative one.</p>"
+      }
+    },
+    "FindingArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of a Finding resource, of the form arn:{partition}:continuum:{region}:{account}:environments/{environmentId}/code-findings/{findingId}.</p>",
+      "refs": {
+        "CreateCodeFindingOutput$findingArn": "<p>The ARN of the ingested finding.</p>",
+        "FindingSummary$findingArn": "<p>The ARN of the finding.</p>",
+        "GetCodeFindingOutput$findingArn": "<p>The ARN of the finding.</p>"
+      }
+    },
+    "FindingBlockingReason": {
+      "base": "<p>Why a validator rejected a finding. NONE accompanies a true positive.</p>",
+      "refs": {
+        "FindingValidation$blockingReason": "<p>Why the validator reached that verdict.</p>"
+      }
+    },
+    "FindingCategory": {
+      "base": "<p>A vulnerability-taxonomy label: the producer's category, sub-category, or OWASP category. Deliberately unconstrained beyond length -- producers do not share a taxonomy, so this is NOT a stable filter key across finding types. Use <code>cweIds</code> when a stable classification is needed.</p>",
+      "refs": {
+        "FindingComplianceCheck$uid": null,
+        "FindingComplianceCheck$name": null,
+        "FindingPosture$application": "<p>The application the posture was assessed against.</p>",
+        "FindingPosture$applicationUid": null,
+        "FindingPosture$applicationVersion": null,
+        "FindingPosture$control": "<p>The control assessed, and the producer's description of it.</p>",
+        "FindingPosture$status": "<p>The producer's compliance status, and the enum value behind it.</p>",
+        "FindingResource$name": null,
+        "FindingResource$type": null,
+        "FindingResource$region": null,
+        "FindingSummary$category": "<p>The producer's vulnerability category.</p>",
+        "FindingVulnerability$cweCaption": "<p>The producer's human-readable caption for <code>cweId</code>.</p>",
+        "FindingVulnerability$fixCoverage": "<p>The producer's description of how completely a fix is available.</p>",
+        "GetCodeFindingOutput$category": "<p>The producer's vulnerability category. Not a stable filter key across finding types -- see FindingCategory.</p>",
+        "GetCodeFindingOutput$subCategory": "<p>A more specific classification within <code>category</code>.</p>",
+        "GetCodeFindingOutput$owaspCategory": "<p>The OWASP Top 10 category, when the producer supplies one.</p>",
+        "GetCodeFindingOutput$ocsfSchemaVersion": "<p>The OCSF schema version the producer wrote against (metadata.version).</p>",
+        "GetCodeFindingOutput$productName": "<p>The producing product and vendor (metadata.product).</p>",
+        "GetCodeFindingOutput$productVendorName": null,
+        "GetCodeFindingOutput$productVersion": null,
+        "GetCodeFindingOutput$sourceStatus": "<p>The producer's own status for the finding, and the enum value behind it. Distinct from <code>status</code>, which is Continuum's lifecycle state -- a producer may call a finding &quot;New&quot; while Continuum has it SUBMITTED.</p>"
+      }
+    },
+    "FindingClientToken": {
+      "base": "<p>A unique, case-sensitive token that you provide to make a finding-creation request idempotent.</p>",
+      "refs": {
+        "CreateCodeFindingInput$clientToken": "<p>Caller-provided idempotency token. A retry with the same token and an identical finding document replays the original result; the same token with different content is rejected.</p>"
+      }
+    },
+    "FindingCodeSnippet": {
+      "base": "<p>A code excerpt: the vulnerable fragment, or a validation-evidence snippet.</p>",
+      "refs": {
+        "FindingEvidence$snippet": "<p>The cited excerpt.</p>",
+        "FindingVulnerability$code": "<p>The vulnerable fragment, when the producer supplied one.</p>",
+        "GetCodeFindingOutput$vulnerableCode": "<p>The vulnerable code fragment.</p>"
+      }
+    },
+    "FindingComplianceCheck": {
+      "base": "<p>One compliance check behind a posture finding.</p>",
+      "refs": {
+        "FindingComplianceCheckList$member": null
+      }
+    },
+    "FindingComplianceCheckList": {
+      "base": "<p>Matches AffectedPackageList.</p>",
+      "refs": {
+        "FindingPosture$checks": "<p>The individual checks performed.</p>"
+      }
+    },
+    "FindingDescription": {
+      "base": "<p>Free-form prose about a finding (summary, detailed analysis, rationale, remediation guidance). Capped well below the finding document's own 256 KB limit, since several of these can appear on one finding.</p>",
+      "refs": {
+        "FindingComplianceCheck$description": null,
+        "FindingPosture$description": null,
+        "FindingPosture$remediation": null,
+        "FindingValidation$rationale": "<p>The validator's reasoning.</p>",
+        "FindingVulnerability$description": null,
+        "FindingVulnerability$remediation": null,
+        "FindingVulnerability$details": "<p>The producer's extended analysis for this vulnerability.</p>",
+        "GetCodeFindingOutput$summary": "<p>A one-paragraph description.</p>",
+        "GetCodeFindingOutput$detailedDescription": "<p>The full analysis.</p>",
+        "GetCodeFindingOutput$mitigation": "<p>How to fix the finding.</p>"
+      }
+    },
+    "FindingDiscardReason": {
+      "base": "<p>Why a finding was not escalated into an issue. Present only when status is DISCARDED.</p>",
+      "refs": {
+        "FindingSummary$discardReason": "<p>Why the finding was not escalated. Present only when status is DISCARDED.</p>",
+        "GetCodeFindingOutput$discardReason": "<p>Why the finding was not escalated. Present only when status is DISCARDED.</p>"
+      }
+    },
+    "FindingEvidence": {
+      "base": "<p>A code citation supporting a validation verdict.</p>",
+      "refs": {
+        "FindingEvidenceList$member": null
+      }
+    },
+    "FindingEvidenceList": {
+      "base": "<p>Code citations supporting a validation verdict.</p>",
+      "refs": {
+        "FindingValidation$evidence": "<p>Code citations supporting the verdict.</p>"
+      }
+    },
+    "FindingFilePath": {
+      "base": "<p>A repository-relative path to the file a finding is about.</p>",
+      "refs": {
+        "FindingEvidence$file": "<p>The file the evidence was found in.</p>",
+        "FindingLocation$filePath": "<p>Repository-relative path.</p>",
+        "FindingSummary$filePath": "<p>The file the finding is about, when it has a code location.</p>",
+        "GetCodeFindingOutput$filePath": "<p>The file the finding is about.</p>"
+      }
+    },
+    "FindingId": {
+      "base": "<p>The unique identifier for a Finding resource.</p>",
+      "refs": {
+        "CreateCodeFindingOutput$findingId": "<p>The unique identifier assigned to the finding.</p>",
+        "FindingSummary$findingId": "<p>The unique identifier of the finding.</p>",
+        "GetCodeFindingInput$findingId": "<p>The unique identifier of the finding to retrieve.</p>",
+        "GetCodeFindingOutput$findingId": "<p>The unique identifier of the finding.</p>",
+        "IssueFindingIds$member": null,
+        "PerFindingResult$findingId": "<p>The finding assessed.</p>"
+      }
+    },
+    "FindingListEntry": {
+      "base": "<p>One entry in a free-form list carried verbatim from a producer (relevant inputs, reproduction steps, mitigating controls, preconditions, references).</p>",
+      "refs": {
+        "FindingStringList$member": null
+      }
+    },
+    "FindingLocation": {
+      "base": "<p>A code location a finding points at.</p>",
+      "refs": {
+        "FindingLocationList$member": null
+      }
+    },
+    "FindingLocationList": {
+      "base": "<p>One vulnerability rarely spans more than a handful of locations.</p>",
+      "refs": {
+        "FindingVulnerability$locations": "<p>Every location this vulnerability was reported at.</p>"
+      }
+    },
+    "FindingOcsfClass": {
+      "base": "<p>The OCSF Finding class a submitted document declared. Continuum validates against, and accepts, only these classes; a document declaring any other class_uid is rejected at CreateCodeFinding, so this is a closed set rather than a pass-through of OCSF's full class registry.</p>",
+      "refs": {
+        "GetCodeFindingOutput$ocsfClass": "<p>The OCSF class the document declared. Determines whether <code>posture</code> is populated.</p>"
+      }
+    },
+    "FindingPosture": {
+      "base": "<p>The compliance posture a finding reports, for the Application Security Posture Finding class. Absent for a vulnerability finding.</p>",
+      "refs": {
+        "GetCodeFindingOutput$posture": "<p>The compliance posture, for an Application Security Posture Finding. Absent for a vulnerability finding.</p>"
+      }
+    },
+    "FindingResource": {
+      "base": "<p>A cloud or application resource a finding concerns.</p>",
+      "refs": {
+        "FindingResourceList$member": null
+      }
+    },
+    "FindingResourceList": {
+      "base": "<p>Matches AffectedPackageList.</p>",
+      "refs": {
+        "GetCodeFindingOutput$resources": "<p>Resources the document named (resources[]).</p>"
+      }
+    },
+    "FindingResourceUid": {
+      "base": "<p>A resource identifier -- a cloud ARN, a context-graph node id, or whatever identifier scheme the producer uses.</p>",
+      "refs": {
+        "FindingResource$uid": null
+      }
+    },
+    "FindingSeverityAdjustment": {
+      "base": "<p>A validator's severity conclusion. UNCHANGED means the producer's reported severity stands.</p>",
+      "refs": {
+        "FindingValidation$severityAdjustment": "<p>The validator's severity conclusion.</p>"
+      }
+    },
+    "FindingSeverityId": {
+      "base": "<p>A finding's severity, on the canonical numeric scale OCSF defines (UNKNOWN=0, INFORMATIONAL=1, LOW=2, MEDIUM=3, HIGH=4, CRITICAL=5, FATAL=6, OTHER=99). Named rather than numeric so callers never map the scale themselves, and identical across producers.</p>",
+      "refs": {
+        "FindingSummary$severity": "<p>The finding's severity.</p>",
+        "GetCodeFindingOutput$severity": "<p>The finding's severity.</p>"
+      }
+    },
+    "FindingSource": {
+      "base": "<p>The system that produced a finding -- Continuum's own scanner, or the product name (falling back to the vendor name) from a customer document's OCSF metadata.product. Distinguishes two customer integrations that share a <code>type</code>.</p>",
+      "refs": {
+        "FindingSummary$source": "<p>The system that produced the finding.</p>",
+        "GetCodeFindingOutput$source": "<p>The system that produced the finding.</p>"
+      }
+    },
+    "FindingStatus": {
+      "base": "<p>The lifecycle status of a finding as it moves through Continuum's processing pipeline. CONFIRMED and DISCARDED are terminal states -- a CONFIRMED finding is promoted into a separate Issue (not yet implemented), which owns the subsequent remediation lifecycle; the finding's own status does not change after that.</p>",
+      "refs": {
+        "CreateCodeFindingOutput$status": "<p>The finding's current lifecycle status -- SUBMITTED for a newly ingested finding, or the finding's present status when an idempotent retry replays an already-processed finding.</p>",
+        "FindingSummary$status": "<p>The current lifecycle status of the finding.</p>",
+        "GetCodeFindingOutput$status": "<p>The current lifecycle status of the finding.</p>"
+      }
+    },
+    "FindingStatusMessage": {
+      "base": "<p>A human-readable message providing additional context about the current finding status.</p>",
+      "refs": {
+        "FindingSummary$statusMessage": "<p>Human-readable context about the current status.</p>",
+        "FindingSummary$discardReasoning": "<p>Customer-facing explanation accompanying <code>discardReason</code>.</p>",
+        "GetCodeFindingOutput$statusMessage": "<p>Human-readable context about the current status.</p>",
+        "GetCodeFindingOutput$discardReasoning": "<p>Customer-facing explanation accompanying <code>discardReason</code>.</p>"
+      }
+    },
+    "FindingStringList": {
+      "base": "<p>A free-form list of strings carried verbatim from a producer.</p>",
+      "refs": {
+        "FindingPosture$standards": "<p>Standards and requirements the control maps to.</p>",
+        "FindingPosture$requirements": null,
+        "FindingPosture$remediationReferences": null,
+        "FindingValidation$mitigatingControls": "<p>Controls the validator found that reduce exploitability.</p>",
+        "FindingValidation$preconditions": "<p>Conditions exploitation depends on, which bound the severity.</p>",
+        "FindingVulnerability$remediationReferences": null,
+        "GetCodeFindingOutput$relevantInputs": "<p>User-controlled inputs that reach the vulnerability.</p>",
+        "GetCodeFindingOutput$stepsToReproduce": "<p>Steps to reproduce or exploit the finding.</p>",
+        "GetCodeFindingOutput$mitreTechniques": "<p>MITRE ATT&amp;CK technique identifiers, from the document's finding_info.attacks[].technique.uid.</p>",
+        "GetCodeFindingOutput$remediationReferences": "<p>Remediation references, from the document's vulnerabilities[].remediation.references.</p>",
+        "GetCodeFindingOutput$findingTypes": "<p>The producer's own classification of the finding (finding_info.types).</p>"
+      }
+    },
+    "FindingSummary": {
+      "base": "<p>A summary of a finding returned in list responses. Shares FindingLifecycleFields with the read operations so the list and get projections cannot drift. Carries a lean content subset -- fetch the finding for its full contents.</p>",
+      "refs": {
+        "CodeFindingSummaries$member": null
+      }
+    },
+    "FindingTitle": {
+      "base": "<p>The title of a finding, from the producer's own title -- OCSF finding_info.title, or the scanner's finding title. Length matches the OCSF title constraint.</p>",
+      "refs": {
+        "CreateCodeFindingOutput$title": "<p>The title extracted from the submitted document. Always populated at ingestion.</p>",
+        "FindingSummary$title": "<p>The producer's title for the finding.</p>",
+        "FindingVulnerability$title": null,
+        "GetCodeFindingOutput$title": "<p>The producer's title for the finding.</p>"
+      }
+    },
+    "FindingType": {
+      "base": "<p>What kind of finding this is, and who produced it.</p>",
+      "refs": {
+        "FindingSummary$type": "<p>What kind of finding this is.</p>",
+        "GetCodeFindingOutput$type": "<p>What kind of finding this is. Determines which of the type-specific members below are populated.</p>"
+      }
+    },
+    "FindingValidation": {
+      "base": "<p>A validator's assessment of a finding. Present only when validation actually ran -- absent for finding types that are ingested untested, rather than reporting a verdict Continuum did not reach.</p>",
+      "refs": {
+        "GetCodeFindingOutput$validation": "<p>The validator's assessment. Absent when no validation ran.</p>"
+      }
+    },
+    "FindingVerdict": {
+      "base": "<p>A validator's conclusion about whether a finding is real.</p>",
+      "refs": {
+        "FindingValidation$verdict": "<p>The validator's conclusion.</p>"
+      }
+    },
+    "FindingVulnerability": {
+      "base": "<p>One vulnerability reported by a finding. A customer document may report several; each carries its own identity, locations and remediation.</p>",
+      "refs": {
+        "FindingVulnerabilityList$member": null
+      }
+    },
+    "FindingVulnerabilityList": {
+      "base": "<p>Matches AffectedPackageList: a document reporting more than this is reporting a scan, not a finding.</p>",
+      "refs": {
+        "GetCodeFindingOutput$vulnerabilities": "<p>Every vulnerability the document reported. A document may report several; the flat <code>cveId</code>/<code>cvssBaseScore</code>/<code>filePath</code>/<code>lineNumber</code> members above carry the first one's identity so a caller that only needs &quot;what and where&quot; does not have to walk this list.</p>"
+      }
+    },
+    "FlowVerdict": {
+      "base": "<p>Validation's verdict for one attack flow.</p>",
+      "refs": {
+        "FlowVerdicts$member": null
+      }
+    },
+    "FlowVerdictValue": {
+      "base": "<p>Outcome recorded for one attack flow.</p>",
+      "refs": {
+        "FlowVerdict$verdict": "<p>Outcome for this flow.</p>"
+      }
+    },
+    "FlowVerdicts": {
+      "base": null,
+      "refs": {
+        "PerFindingResult$flowVerdicts": "<p>Per-flow verdicts recorded for this finding.</p>",
+        "ValidationEvidenceBody$flowVerdicts": "<p>One verdict per attack flow assessed in the bundle.</p>"
+      }
+    },
+    "GetCodeFindingInput": {
+      "base": "<p>Specifies the finding to retrieve.</p>",
+      "refs": {}
+    },
+    "GetCodeFindingOutput": {
+      "base": "<p>Contains the current state and details of the requested finding. Which type-specific members are populated depends on <code>type</code>.</p>",
+      "refs": {}
+    },
+    "GetCodeIssueArtifactInput": {
+      "base": "<p>Specifies the artifact to retrieve.</p>",
+      "refs": {}
+    },
+    "GetCodeIssueArtifactOutput": {
+      "base": "<p>Contains the requested artifact and its content.</p>",
+      "refs": {}
+    },
+    "GetCodeIssueInput": {
+      "base": "<p>Specifies the issue to retrieve.</p>",
+      "refs": {}
+    },
+    "GetCodeIssueOutput": {
+      "base": "<p>Contains the current state and details of the requested issue.</p>",
+      "refs": {}
+    },
+    "GetCodeScanInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCodeScanOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCollectorDataAccessAuthorizationInput": {
+      "base": "<p>Identifies the Collector whose inventory is requested.</p>",
+      "refs": {}
+    },
+    "GetCollectorDataAccessAuthorizationOutput": {
+      "base": "<p>Empty response returned when the authenticated caller is authorized to access the Collector's data.</p>",
+      "refs": {}
+    },
+    "GetCollectorInput": {
+      "base": "<p>Specifies the Collector to retrieve.</p>",
+      "refs": {}
+    },
+    "GetCollectorOutput": {
+      "base": "<p>Contains the current state of the Collector.</p>",
+      "refs": {}
+    },
+    "GetEnvironmentInput": {
+      "base": "<p>Specifies the environment to retrieve.</p>",
+      "refs": {}
+    },
+    "GetEnvironmentOutput": {
+      "base": "<p>Contains the current state and configuration of the requested environment.</p>",
+      "refs": {}
+    },
+    "GetIntegrationInput": {
+      "base": "<p>Specifies the integration to retrieve.</p>",
+      "refs": {}
+    },
+    "GetIntegrationOutput": {
+      "base": "<p>Contains metadata for the requested integration.</p>",
+      "refs": {}
+    },
+    "GetResourcePolicyInput": {
+      "base": "<p>Specifies the resource.</p>",
+      "refs": {}
+    },
+    "GetResourcePolicyOutput": {
+      "base": "<p>Contains the resource policy.</p>",
+      "refs": {}
+    },
+    "GitHubAuthorizationConfiguration": {
+      "base": "<p>Write-only OAuth credentials used to authorize a GitHub.com integration. Not stored or returned after creation.</p>",
+      "refs": {
+        "GitHubConfiguration$authorization": "<p>OAuth authorization used to establish the integration. Required on create; not returned on read operations.</p>"
+      }
+    },
+    "GitHubConfiguration": {
+      "base": "<p>Configuration for a GitHub.com integration using the OAuth authorization code flow.</p>",
+      "refs": {
+        "ProviderConfiguration$github": "<p>Configuration for a GitHub.com integration.</p>"
+      }
+    },
+    "GitHubDetails": {
+      "base": "<p>Details for a GitHub.com integration.</p>",
+      "refs": {
+        "ProviderDetails$github": "<p>Details for a GitHub.com integration.</p>"
+      }
+    },
+    "GitHubOrganizationName": {
+      "base": "<p>The name of a GitHub organization.</p>",
+      "refs": {
+        "GitHubConfiguration$organizationName": "<p>The name of the GitHub organization to associate with the integration. If not specified, the integration is associated with the authenticated user's personal account.</p>",
+        "GitHubDetails$organizationName": "<p>The name of the GitHub organization associated with the integration.</p>"
+      }
+    },
+    "GitHubTarget": {
+      "base": "<p>The GitHub repository a patch is delivered to, and the pull request that carries it once opened.</p>",
+      "refs": {
+        "DestinationTarget$github": "<p>The GitHub repository the patch is delivered to, including the pull request once it is opened.</p>"
+      }
+    },
+    "GitLabAccessToken": {
+      "base": "<p>A write-only GitLab access token (personal, group or project access token). A type-agnostic bearer token; not stored or returned after creation.</p>",
+      "refs": {
+        "GitLabConfiguration$accessToken": "<p>The GitLab access token (personal, group or project). Write-only; not stored or returned after creation. If the token carries the self-rotate scope, rotation is opted in and Continuum manages the token thereafter.</p>"
+      }
+    },
+    "GitLabConfiguration": {
+      "base": "<p>Configuration for a GitLab integration using a pasted access token.</p>",
+      "refs": {
+        "ProviderConfiguration$gitlab": "<p>Configuration for a GitLab integration.</p>"
+      }
+    },
+    "GitLabDetails": {
+      "base": "<p>Details for a GitLab integration.</p>",
+      "refs": {
+        "ProviderDetails$gitlab": "<p>Details for a GitLab integration.</p>"
+      }
+    },
+    "GitLabInstanceUrl": {
+      "base": "<p>The HTTPS base URL of the GitLab instance (gitlab.com or a self-managed instance).</p>",
+      "refs": {
+        "GitLabConfiguration$instanceUrl": "<p>The HTTPS base URL of the GitLab instance (gitlab.com or self-managed).</p>",
+        "GitLabDetails$instanceUrl": "<p>The HTTPS base URL of the GitLab instance.</p>"
+      }
+    },
+    "GitLabTargetPath": {
+      "base": "<p>The GitLab group or project path (nested, slash-separated), e.g. &quot;my-org/platform/widgets&quot;. Each slash-delimited segment must start with an alphanumeric, so <code>..</code> segments and empty, leading or trailing slashes are rejected.</p>",
+      "refs": {
+        "GitLabConfiguration$targetPath": "<p>The group or project path the integration targets.</p>",
+        "GitLabDetails$targetPath": "<p>The group or project path the integration targets.</p>"
+      }
+    },
+    "GitLabTargetType": {
+      "base": "<p>Whether the GitLab integration targets an entire group or a single project.</p>",
+      "refs": {
+        "GitLabConfiguration$targetType": "<p>Whether the integration targets a group or a single project.</p>",
+        "GitLabDetails$targetType": "<p>Whether the integration targets a group or a single project.</p>"
+      }
+    },
+    "GitLabTokenRotation": {
+      "base": "<p>How a GitLab integration's access token is rotated.</p>",
+      "refs": {
+        "GitLabDetails$tokenRotation": "<p>How the integration's access token is rotated. AUTOMATIC only when the pasted token had the self-rotate scope and rotation was opted in at installation time.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "FindingEvidence$line": "<p>The 1-indexed line, when known.</p>",
+        "FindingLocation$startLine": "<p>1-indexed first line of the affected range.</p>",
+        "FindingLocation$endLine": "<p>1-indexed last line, when the producer reported a range.</p>",
+        "FindingPosture$statusId": "<p>The producer's numeric enum value for <code>status</code>.</p>",
+        "FindingVulnerability$fixCoverageId": "<p>The producer's enum value behind <code>fixCoverage</code>.</p>",
+        "GetCodeFindingOutput$lineNumber": "<p>The 1-indexed line the finding is about. Bounds are enforced server-side rather than by a constraint trait: a numeric constraint generates a distinct newtype per enclosing structure, so the same concept would not share a type across the create input and the read output.</p>",
+        "GetCodeFindingOutput$endLine": "<p>The last line of the affected range, from the document's affected_code[].end_line.</p>",
+        "GetCodeFindingOutput$sourceStatusId": "<p>The producer's numeric enum value for <code>sourceStatus</code>.</p>",
+        "ReasoningStep$step": "<p>Position of this step in the chain.</p>",
+        "SignalComputation$barriers": "<p>How many of the four exploit preconditions act as barriers (0-4).</p>",
+        "SignalExploitability$highestLayerReached": "<p>The highest impact layer validation reached, 1-5, as a measure of how far the attack path was walked.</p>",
+        "ValidationExploitArtifact$responseStatus": "<p>HTTP status observed in the response.</p>"
+      }
+    },
+    "IntegrationArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of an Integration resource, of the form arn:{partition}:continuum:{region}:{account}:integrations/{integrationId}.</p>",
+      "refs": {
+        "CreateIntegrationOutput$integrationArn": "<p>The ARN of the created integration.</p>",
+        "GetIntegrationOutput$integrationArn": "<p>The ARN of the integration.</p>",
+        "IntegrationSummary$integrationArn": "<p>The ARN of the integration.</p>",
+        "UpdateIntegrationOutput$integrationArn": null
+      }
+    },
+    "IntegrationAuthorizationProviderType": {
+      "base": "<p>A provider whose OAuth authorization can be started with StartIntegrationAuthorization.</p>",
+      "refs": {
+        "StartIntegrationAuthorizationInput$providerType": "<p>The provider to authorize. Only GITHUB is supported.</p>"
+      }
+    },
+    "IntegrationClientToken": {
+      "base": "<p>Caller-provided token identifying one Integration creation attempt. Accepts ASCII characters 33 through 126.</p>",
+      "refs": {
+        "CreateIntegrationInput$clientToken": "<p>An optional token identifying one create attempt within the caller's account, Region, and operation. SDKs generate a token when omitted. If a request reaches the service without a token, the service generates one for that request. Each request without a token starts a new attempt. To replay an attempt, supply the same token and identical input. Authorized users and roles in the same account can retry an attempt this way. Token records are retained for eight hours after success or terminal failure, including after deletion of a successfully created integration. Different input with the same token returns ValidationException.</p>"
+      }
+    },
+    "IntegrationId": {
+      "base": "<p>The unique identifier for an Integration resource.</p>",
+      "refs": {
+        "CreateIntegrationOutput$integrationId": "<p>The unique identifier of the created integration.</p>",
+        "DeleteIntegrationInput$integrationId": "<p>The unique identifier of the integration to delete.</p>",
+        "EnvironmentRepositorySource$integrationId": "<p>Integration that provides the selected repository.</p>",
+        "EnvironmentS3IntegrationSource$integrationId": "<p>Identifier of an S3 integration in the caller's account. The integration supplies the bucket, the read role, and the external ID Continuum uses to read the prefixes.</p>",
+        "GetIntegrationInput$integrationId": "<p>The unique identifier of the integration to retrieve.</p>",
+        "GetIntegrationOutput$integrationId": "<p>The unique identifier of the integration.</p>",
+        "IntegrationSummary$integrationId": "<p>The unique identifier of the integration.</p>",
+        "UpdateIntegrationInput$integrationId": "<p>The unique identifier of the S3 integration to update.</p>",
+        "UpdateIntegrationOutput$integrationId": null
+      }
+    },
+    "IntegrationName": {
+      "base": "<p>The name for an integration.</p>",
+      "refs": {
+        "CreateIntegrationInput$name": "<p>The name for the integration.</p>",
+        "GetIntegrationOutput$name": "<p>The name of the integration.</p>",
+        "IntegrationSummary$name": "<p>The name of the integration.</p>",
+        "StartIntegrationAuthorizationInput$name": "<p>The name the integration will be created with. When specified, the request fails with ConflictException if an integration with this name already exists in the account, before the caller leaves for the provider. The name is only checked: it is not reserved, stored, or authorized. CreateIntegration requires its own name, checks it again, and may use a different one.</p>",
+        "UpdateIntegrationOutput$name": null
+      }
+    },
+    "IntegrationS3BucketName": {
+      "base": "<p>Customer-managed S3 bucket name.</p>",
+      "refs": {
+        "S3Configuration$bucket": "<p>Customer-managed source bucket name.</p>",
+        "S3Details$bucket": null
+      }
+    },
+    "IntegrationS3ExternalId": {
+      "base": "<p>Caller-provided external ID used when Continuum assumes the S3 integration role.</p>",
+      "refs": {
+        "S3Configuration$externalId": "<p>Caller-provided external ID required by the role trust policy.</p>",
+        "UpdateS3Configuration$externalId": "<p>The replacement external ID used when assuming the supplied role. If omitted, the existing external ID is preserved. This value is sensitive and is never included in the public integration response.</p>"
+      }
+    },
+    "IntegrationS3RoleArn": {
+      "base": "<p>IAM role assumed by Continuum to read a customer-managed S3 integration.</p>",
+      "refs": {
+        "S3Configuration$roleArn": "<p>Role Continuum will assume to read from the source bucket.</p>",
+        "S3Details$roleArn": null,
+        "UpdateS3Configuration$roleArn": "<p>The role to use. Supply the current role when rotating only the external ID. The caller must be allowed to pass this exact role to Continuum.</p>"
+      }
+    },
+    "IntegrationSummaries": {
+      "base": "<p>A list of integration summaries.</p>",
+      "refs": {
+        "ListIntegrationsOutput$items": "<p>The integrations in the account, ordered by integrationId descending.</p>"
+      }
+    },
+    "IntegrationSummary": {
+      "base": "<p>A summary of an integration returned in list responses.</p>",
+      "refs": {
+        "IntegrationSummaries$member": null
+      }
+    },
+    "IntegrationType": {
+      "base": "<p>The immutable provider type for an integration.</p>",
+      "refs": {
+        "GetIntegrationOutput$integrationType": "<p>The immutable provider type for the integration.</p>",
+        "IntegrationSummary$integrationType": "<p>The immutable provider type for the integration.</p>",
+        "UpdateIntegrationOutput$integrationType": null
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>The request couldn't be processed because of an internal server issue. Try again later. If the problem persists, contact AWS Support.</p>",
+      "refs": {}
+    },
+    "IssueArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of an Issue resource, of the form arn:{partition}:continuum:{region}:{account}:environments/{environmentId}/code-issues/{issueId}.</p>",
+      "refs": {
+        "GetCodeIssueOutput$issueArn": "<p>The ARN of the issue.</p>",
+        "IssueSummary$issueArn": "<p>The ARN of the issue.</p>"
+      }
+    },
+    "IssueArtifactBody": {
+      "base": "<p>The projected body of an artifact. The active member is selected by the artifact's artifactType, and for a type that carries more than one payload kind by the stored content's own discriminator; <code>raw</code> carries content for types with no defined shape yet and for content that did not match its shape.</p>",
+      "refs": {
+        "GetCodeIssueArtifactOutput$body": "<p>The artifact body, projected against the shape defined for its artifactType. A type with a defined shape is returned as that structure, and anything else through <code>IssueArtifactBody.raw</code>.</p>"
+      }
+    },
+    "IssueArtifactContent": {
+      "base": "<p>Inline artifact content. One shared shape keeps the existing content member and generated SDK type stable across artifact kinds instead of adding a PATCH-only member or changing the wire contract to a kind-specific union. The shared model bound accommodates PATCH; kind-specific limits are enforced by the service after deserialization: PATCH accepts up to 5,242,880 UTF-8 bytes (5 MiB), while non-PATCH kinds, including initial Issue artifacts, are limited to 1,048,576 characters (1 MiB of characters). The wider shared model bound is not the non-PATCH limit. PATCH reads return the raw content from the immutable service copy; storage receipts remain private implementation data.</p>",
+      "refs": {
+        "IssueArtifactBody$raw": "<p>The producer's content verbatim, for an artifactType with no defined shape or content that failed to parse against its shape.</p>",
+        "PatchBody$patch": "<p>The patch exactly as stored, unmodified. Control Plane accepted it only as a text unified diff, so <code>git apply</code> applies it.</p>",
+        "RemediationProposalBody$patch": "<p>The patch exactly as the remediation agent produced it, unmodified.</p>"
+      }
+    },
+    "IssueArtifactId": {
+      "base": "<p>Shared identifier for any issue artifact, regardless of kind.</p>",
+      "refs": {
+        "GetCodeIssueArtifactInput$artifactId": "<p>The unique identifier of the artifact to retrieve.</p>",
+        "GetCodeIssueArtifactOutput$artifactId": "<p>The unique identifier of the artifact.</p>",
+        "IssueArtifactItem$artifactId": "<p>The unique identifier of the artifact.</p>",
+        "SignalExploitability$sourceValidationArtifactId": "<p>The VALIDATION_EVIDENCE artifact on this same issue holding the proof this verdict summarizes. Fetch it with GetCodeIssueArtifact for the full reasoning chain and exploit artifact.</p>"
+      }
+    },
+    "IssueArtifactItem": {
+      "base": "<p>A summary of an artifact returned in list responses.</p>",
+      "refs": {
+        "CodeIssueArtifactItems$member": null
+      }
+    },
+    "IssueArtifactMediaType": {
+      "base": "<p>MIME type describing an artifact's inline content, for example text/markdown, application/json, or text/plain.</p>",
+      "refs": {
+        "GetCodeIssueArtifactOutput$mediaType": "<p>MIME type the producer declared for its content.</p>",
+        "IssueArtifactItem$mediaType": "<p>MIME type of the artifact content.</p>"
+      }
+    },
+    "IssueArtifactProducerName": {
+      "base": "<p>Stable name of the agent that produced an artifact.</p>",
+      "refs": {
+        "IssueArtifactProducerSummary$agent": "<p>Stable producer name, such as ContinuumValidation.</p>",
+        "PrevalidationSignal$producerId": "<p>Stable name of the producer that emitted this signal.</p>",
+        "PrevalidationSignalsBody$producedBy": "<p>The agent that produced this signal set.</p>"
+      }
+    },
+    "IssueArtifactProducerSummary": {
+      "base": "<p>The agent that produced an artifact.</p>",
+      "refs": {
+        "GetCodeIssueArtifactOutput$producer": "<p>The agent that produced the artifact.</p>",
+        "IssueArtifactItem$producer": "<p>The agent that produced the artifact.</p>"
+      }
+    },
+    "IssueArtifactType": {
+      "base": "<p>The category of an artifact attached to an issue, such as evidence, validation evidence, a remediation proposal, a decision, or a patch.</p>",
+      "refs": {
+        "GetCodeIssueArtifactOutput$artifactType": "<p>Semantic category of the artifact.</p>",
+        "IssueArtifactItem$artifactType": "<p>Semantic category of the artifact.</p>",
+        "ListCodeIssueArtifactsInput$artifactType": "<p>Optional filter for a semantic artifact category. Omit to list all artifacts attached to the issue.</p>"
+      }
+    },
+    "IssueConfidence": {
+      "base": "<p>The likelihood that this issue is a true positive, expressed as a percentage (0-100). Distinct from severity, which measures impact rather than likelihood. Continuum sets this value; callers can't set it.</p>",
+      "refs": {
+        "GetCodeIssueOutput$confidence": "<p>The likelihood that this issue is a true positive, expressed as a percentage (0-100).</p>",
+        "IssueSummary$confidence": "<p>The likelihood that this issue is a true positive, expressed as a percentage (0-100).</p>"
+      }
+    },
+    "IssueEvidenceAvailability": {
+      "base": "<p>Whether this issue has any evidence (formerly 'artifacts') attached. NONE = no evidence; AVAILABLE = at least one evidence item exists -- call ListCodeIssueArtifacts to retrieve.</p>",
+      "refs": {
+        "GetCodeIssueOutput$evidenceAvailability": "<p>Whether the issue has any attached evidence (formerly 'artifacts': tool output, remediation proposals, patches). NONE = no evidence; AVAILABLE = at least one evidence item exists. Computed at read time.</p>"
+      }
+    },
+    "IssueFindingIds": {
+      "base": "<p>A non-empty list of finding IDs referenced by an issue. Maximum 50 entries. The first entry is the primary finding; later entries are related findings added after it.</p>",
+      "refs": {
+        "GetCodeIssueOutput$findingIds": "<p>The findings that motivated this issue. Bare identifiers only -- a caller authorized for GetCodeIssue is not necessarily authorized to read finding detail; call GetCodeFinding for that. Every referenced finding is included regardless of origin (both CustomerUploaded and ContinuumScanner).</p>"
+      }
+    },
+    "IssueId": {
+      "base": "<p>The unique identifier for an Issue resource.</p>",
+      "refs": {
+        "FindingSummary$duplicateOfIssueId": "<p>The existing issue this finding duplicates. Present only for the DUPLICATE_OF_* discard reasons.</p>",
+        "FindingSummary$createdIssueId": "<p>The issue Continuum created from this finding.</p>",
+        "GetCodeFindingOutput$duplicateOfIssueId": "<p>The existing issue this finding duplicates. Present only for the DUPLICATE_OF_* discard reasons.</p>",
+        "GetCodeFindingOutput$createdIssueId": "<p>The issue Continuum created from this finding.</p>",
+        "GetCodeIssueArtifactInput$issueId": "<p>The issue the artifact is attached to.</p>",
+        "GetCodeIssueInput$issueId": "<p>The unique identifier of the issue to retrieve.</p>",
+        "GetCodeIssueOutput$issueId": "<p>The unique identifier of the issue.</p>",
+        "IssueSummary$issueId": "<p>The unique identifier of the issue.</p>",
+        "ListCodeIssueArtifactsInput$issueId": "<p>The issue whose artifacts to list.</p>"
+      }
+    },
+    "IssueName": {
+      "base": "<p>The name for an issue.</p>",
+      "refs": {
+        "GetCodeIssueOutput$name": "<p>The name of the issue.</p>",
+        "IssueSummary$name": "<p>The name of the issue.</p>"
+      }
+    },
+    "IssuePatchDelivery": {
+      "base": "<p>Customer delivery of the patches Continuum produced for an issue, summarized across the issue's PATCH artifacts when the issue is read. Each artifact keeps its own <code>delivery.destination</code> with the full detail; this summary lets a caller see a failed delivery without listing artifacts.</p>",
+      "refs": {
+        "GetCodeIssueOutput$patchDelivery": "<p>Customer delivery of the issue's patches, summarized from its PATCH artifacts at read time. Absent when no patch has a destination delivery.</p>"
+      }
+    },
+    "IssuePatchDeliveryCount": {
+      "base": null,
+      "refs": {
+        "IssuePatchDelivery$patchCount": "<p>Number of the issue's patches that have a destination delivery.</p>",
+        "IssuePatchDelivery$succeededCount": "<p>Number of those patches delivered to their destination.</p>",
+        "IssuePatchDelivery$failedCount": "<p>Number of those patches whose delivery failed or exhausted its retries.</p>"
+      }
+    },
+    "IssuePatchDeliveryFailureReasons": {
+      "base": null,
+      "refs": {
+        "IssuePatchDelivery$failureReasons": "<p>Distinct reasons of the failed deliveries, in ascending order. Present only when failedCount is greater than zero.</p>"
+      }
+    },
+    "IssuePatchDeliveryStatus": {
+      "base": "<p>Overall customer delivery result of an issue's patches.</p>",
+      "refs": {
+        "IssuePatchDelivery$status": "<p>The overall result, in priority order: FAILED when any patch's destination delivery failed or exhausted its retries; otherwise PENDING while any is still in progress; otherwise SUCCEEDED when at least one was delivered; otherwise SKIPPED.</p>"
+      }
+    },
+    "IssuePhase": {
+      "base": "<p>The part of Continuum's workflow an issue is in (IN_PROGRESS) or failed in (FAILED, when known).</p>",
+      "refs": {
+        "GetCodeIssueOutput$phase": "<p>The part of the workflow the issue is in. Present when status is IN_PROGRESS, and when status is FAILED and the failing phase is known.</p>",
+        "IssueSummary$phase": "<p>The part of the workflow the issue is in. Present when status is IN_PROGRESS, and when status is FAILED and the failing phase is known.</p>"
+      }
+    },
+    "IssueRemediationSummary": {
+      "base": "<p>A bounded (&lt;=2048) free-form remediation summary distinct from the shorter per-status IssueStatusMessage; carries the green stage's completion synopsis.</p>",
+      "refs": {
+        "GetCodeIssueOutput$summary": "<p>The remediation completion summary, when the green stage has run.</p>"
+      }
+    },
+    "IssueSeverity": {
+      "base": "<p>Scanner-derived severity assigned to an issue.</p>",
+      "refs": {
+        "GetCodeIssueOutput$severity": "<p>Current severity: the FindingSeverity seed at create, overwritten by the authoritative severity that prioritization assigns after validation.</p>",
+        "IssueSummary$severity": "<p>Scanner-derived severity assigned to the issue.</p>"
+      }
+    },
+    "IssueSeverityReasoning": {
+      "base": "<p>The human-readable justification for the severity prioritization assigned.</p>",
+      "refs": {
+        "GetCodeIssueOutput$severityReasoning": "<p>The justification for the current severity. Always leads with a customer-facing basis clause synthesized from how the severity was determined (e.g. &quot;Severity from finding.&quot;, &quot;Severity from Continuum system.&quot;); when prioritization has run, its own reasoning follows. Issues created before the basis clause was introduced return their original reasoning without it.</p>"
+      }
+    },
+    "IssueStatus": {
+      "base": "<p>The customer-facing lifecycle status of an issue. Coarse by design: <code>phase</code> says which part of Continuum's workflow an IN_PROGRESS (or FAILED) issue is in, and <code>statusReason</code> says why a FAILED issue failed. Distinct from FindingStatus.</p> <p>Continuum sets this value; callers can't set it.</p>",
+      "refs": {
+        "GetCodeIssueOutput$status": "<p>The current lifecycle status of the issue.</p>",
+        "IssueSummary$status": "<p>The current lifecycle status of the issue.</p>"
+      }
+    },
+    "IssueStatusMessage": {
+      "base": "<p>A human-readable message providing additional context about the current issue status.</p>",
+      "refs": {
+        "GetCodeIssueOutput$statusMessage": "<p>Customer-facing explanation of statusReason. Present only when status is FAILED.</p>",
+        "IssueSummary$statusMessage": "<p>Customer-facing explanation of statusReason. Present only when status is FAILED.</p>"
+      }
+    },
+    "IssueStatusReason": {
+      "base": "<p>Why an issue is FAILED. Present only when <code>status</code> is FAILED.</p>",
+      "refs": {
+        "GetCodeIssueOutput$statusReason": "<p>Why the issue failed. Present only when status is FAILED.</p>",
+        "IssueSummary$statusReason": "<p>Why the issue failed. Present only when status is FAILED.</p>"
+      }
+    },
+    "IssueSummary": {
+      "base": "<p>A summary of an issue returned in list responses.</p>",
+      "refs": {
+        "CodeIssueSummaries$member": null
+      }
+    },
+    "IssueSynopsis": {
+      "base": "<p>A free-form synopsis of the issue: reasoning, evidence references, and completion criteria. Supplementary evidence and provenance belong in issue artifacts (added via a separate operation) rather than duplicated here.</p>",
+      "refs": {
+        "GetCodeIssueOutput$synopsis": "<p>A free-form synopsis of the issue.</p>"
+      }
+    },
+    "KubernetesClusterExternalId": {
+      "base": "<p>Optional external ID supplied when Continuum assumes the Kubernetes cluster role. This is STS trust-policy context, not a substitute for iam:PassRole.</p>",
+      "refs": {
+        "KubernetesClusterRoleConfiguration$externalId": "<p>Optional external ID Continuum supplies when assuming roleArn. This must match the role trust policy when configured and does not replace the caller's iam:PassRole permission.</p>"
+      }
+    },
+    "KubernetesClusterRoleArn": {
+      "base": "<p>ARN of the IAM role used for Kubernetes cluster collection. The role must be in the authenticated caller's account and cannot be a service-linked role.</p>",
+      "refs": {
+        "GetCollectorOutput$kubernetesClusterRoleArn": "<p>IAM role used to collect Kubernetes cluster metadata.</p>",
+        "KubernetesClusterRoleConfiguration$roleArn": "<p>IAM role the authenticated caller passes to Continuum.</p>",
+        "UpdateCollectorOutput$kubernetesClusterRoleArn": "<p>IAM role used to collect Kubernetes cluster metadata.</p>"
+      }
+    },
+    "KubernetesClusterRoleConfiguration": {
+      "base": "<p>Complete configuration for the IAM role Continuum assumes to collect Kubernetes cluster metadata.</p>",
+      "refs": {
+        "CreateCollectorInput$kubernetesClusterRole": "<p>IAM role configuration used to collect Kubernetes cluster metadata. The authenticated caller must be allowed to pass its exact roleArn to Continuum.</p>",
+        "KubernetesClusterRoleUpdate$set": "<p>Replace the complete role configuration.</p>"
+      }
+    },
+    "KubernetesClusterRoleUpdate": {
+      "base": "<p>One complete mutation of the Collector's Kubernetes IAM role configuration.</p>",
+      "refs": {
+        "UpdateCollectorInput$kubernetesClusterRole": "<p>Atomic update to the IAM role configuration used to collect Kubernetes cluster metadata. The set variant requires a complete configuration; the authenticated caller must be allowed to pass its exact roleArn to Continuum. The remove variant clears both the role and external ID.</p>"
+      }
+    },
+    "ListAssociatedCollectorsInput": {
+      "base": "<p>Specifies the Environment whose Collector associations to list.</p>",
+      "refs": {}
+    },
+    "ListAssociatedCollectorsOutput": {
+      "base": "<p>Contains one page of the Collectors associated with the requested Environment.</p>",
+      "refs": {}
+    },
+    "ListAssociatedEnvironmentsInput": {
+      "base": "<p>Specifies the Collector whose Environment associations to list.</p>",
+      "refs": {}
+    },
+    "ListAssociatedEnvironmentsOutput": {
+      "base": "<p>Contains one page of Environment summaries associated with the requested Collector.</p>",
+      "refs": {}
+    },
+    "ListCodeFindingsInput": {
+      "base": "<p>Specifies the environment and pagination parameters for listing findings.</p>",
+      "refs": {}
+    },
+    "ListCodeFindingsOutput": {
+      "base": "<p>Contains the list of finding summaries and an optional pagination token.</p>",
+      "refs": {}
+    },
+    "ListCodeIssueArtifactsInput": {
+      "base": "<p>Specifies the issue, optional filter, and pagination parameters for listing artifacts.</p>",
+      "refs": {}
+    },
+    "ListCodeIssueArtifactsOutput": {
+      "base": "<p>Contains the list of artifact summaries and an optional pagination token.</p>",
+      "refs": {}
+    },
+    "ListCodeIssuesInput": {
+      "base": "<p>Specifies the environment and pagination parameters for listing issues.</p>",
+      "refs": {}
+    },
+    "ListCodeIssuesOutput": {
+      "base": "<p>Contains the list of issue summaries and an optional pagination token.</p>",
+      "refs": {}
+    },
+    "ListCodeScansInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCodeScansOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCollectorsInput": {
+      "base": "<p>Specifies no request parameters. The target account is derived exclusively from the authenticated calling context.</p>",
+      "refs": {}
+    },
+    "ListCollectorsOutput": {
+      "base": "<p>Contains summaries of the caller account's Collectors.</p>",
+      "refs": {}
+    },
+    "ListEnvironmentsInput": {
+      "base": "<p>Specifies pagination parameters for listing environments.</p> <p>Response-filtering justification: filtering is intentionally omitted because every current consumer needs the canonical complete, account-scoped environment inventory, and no useful selective server-side query use case is defined. Environment ID already has the GetEnvironment lookup operation, and status, name, or timestamp filtering is not needed by any current workflow. Adding speculative filters would require unsupported access patterns and ambiguous semantics without reducing data returned for existing consumers. If a concrete indexed query use case is introduced later, its filter values must be bound to pagination tokens so a token cannot be replayed against a different query. The formal API standards decision is recorded in the package-root BR_EXCEPTIONS.md file.</p>",
+      "refs": {}
+    },
+    "ListEnvironmentsOutput": {
+      "base": "<p>Contains environment metadata and an optional pagination token.</p>",
+      "refs": {}
+    },
+    "ListIntegrationsInput": {
+      "base": "<p>Specifies pagination parameters for listing integrations.</p>",
+      "refs": {}
+    },
+    "ListIntegrationsOutput": {
+      "base": "<p>Contains the list of integration summaries and an optional pagination token.</p>",
+      "refs": {}
+    },
+    "Long": {
+      "base": null,
+      "refs": {
+        "IssueArtifactItem$contentSizeBytes": "<p>Size of the artifact content in bytes. The content itself is returned by GetCodeIssueArtifact.</p>",
+        "PatchBody$sizeBytes": "<p>Size of the patch in UTF-8 bytes, the unit the digest is computed over.</p>"
+      }
+    },
+    "MaxResults": {
+      "base": "<p>The maximum number of results to return in a single call. Must be between 1 and 100.</p>",
+      "refs": {
+        "ListAssociatedCollectorsInput$maxResults": "<p>Maximum number of associated Collectors to return.</p>",
+        "ListAssociatedEnvironmentsInput$maxResults": "<p>Maximum number of Environment associations to return.</p>",
+        "ListCodeFindingsInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListCodeIssueArtifactsInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListCodeIssuesInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListCodeScansInput$maxResults": "<p>Maximum number of scans to return.</p>",
+        "ListEnvironmentsInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListIntegrationsInput$maxResults": "<p>The maximum number of results to return in a single call.</p>"
+      }
+    },
+    "NextToken": {
+      "base": "<p>A pagination token returned by a previous call, used to retrieve the next page of results.</p>",
+      "refs": {
+        "ListAssociatedCollectorsInput$nextToken": "<p>Pagination token returned by a prior request.</p>",
+        "ListAssociatedCollectorsOutput$nextToken": "<p>Pagination token for the next page, if present.</p>",
+        "ListAssociatedEnvironmentsInput$nextToken": "<p>Pagination token returned by a prior request.</p>",
+        "ListAssociatedEnvironmentsOutput$nextToken": "<p>Pagination token for the next page, if present.</p>",
+        "ListCodeFindingsInput$nextToken": "<p>A pagination token returned by a previous call. Set to null for the first request; use the returned token for subsequent calls.</p>",
+        "ListCodeFindingsOutput$nextToken": "<p>A pagination token to retrieve the next page of results. Absent when there are no more results.</p>",
+        "ListCodeIssueArtifactsInput$nextToken": "<p>A pagination token returned by a previous call. Set to null for the first request; use the returned token for subsequent calls.</p>",
+        "ListCodeIssueArtifactsOutput$nextToken": "<p>A pagination token to retrieve the next page of results. Absent when there are no more results.</p>",
+        "ListCodeIssuesInput$nextToken": "<p>A pagination token returned by a previous call. Set to null for the first request; use the returned token for subsequent calls.</p>",
+        "ListCodeIssuesOutput$nextToken": "<p>A pagination token to retrieve the next page of results. Absent when there are no more results.</p>",
+        "ListCodeScansInput$nextToken": "<p>Pagination token returned by a prior request.</p>",
+        "ListCodeScansOutput$nextToken": "<p>Pagination token for the next page, if present.</p>",
+        "ListEnvironmentsInput$nextToken": "<p>A pagination token returned by a previous call. Set to null for the first request; use the returned token for subsequent calls.</p>",
+        "ListEnvironmentsOutput$nextToken": "<p>A pagination token to retrieve the next page of results. Absent when there are no more results.</p>",
+        "ListIntegrationsInput$nextToken": "<p>A pagination token returned by a previous call. Set to null for the first request; use the returned token for subsequent calls.</p>",
+        "ListIntegrationsOutput$nextToken": "<p>A pagination token to retrieve the next page of results. Absent when there are no more results.</p>"
+      }
+    },
+    "OAuthCodeChallenge": {
+      "base": "<p>A PKCE code challenge (RFC 7636): the base64url encoding, without padding, of the SHA-256 digest of the code verifier the service keeps.</p>",
+      "refs": {
+        "StartIntegrationAuthorizationOutput$codeChallenge": "<p>The PKCE code challenge to send as the OAuth <code>code_challenge</code> parameter.</p>"
+      }
+    },
+    "OAuthCodeChallengeMethod": {
+      "base": "<p>The PKCE code challenge method (RFC 7636).</p>",
+      "refs": {
+        "StartIntegrationAuthorizationOutput$codeChallengeMethod": "<p>The PKCE challenge method to send as the OAuth <code>code_challenge_method</code> parameter.</p>"
+      }
+    },
+    "OAuthState": {
+      "base": "<p>An opaque OAuth <code>state</code> value. StartIntegrationAuthorization returns one, and CreateIntegration redeems it, together with the authorization code, for the same AWS account. Sensitive so clients and the service never log it.</p>",
+      "refs": {
+        "GitHubAuthorizationConfiguration$state": "<p>The <code>state</code> returned by GitHub in the OAuth callback. It must be the state that StartIntegrationAuthorization returned to the same AWS account, and the authorization request must have sent that call's codeChallenge. The state can be redeemed once. A stage that enforces authorization sessions rejects a missing, expired, already used, or other-account state with ValidationException; restart the authorization with StartIntegrationAuthorization.</p>",
+        "StartIntegrationAuthorizationOutput$state": "<p>An opaque value to send as the OAuth <code>state</code> parameter. Pass the value the provider returns in its callback to CreateIntegration as <code>authorization.state</code>.</p>"
+      }
+    },
+    "PackageManager": {
+      "base": "<p>The ecosystem that supplies a package, e.g. &quot;npm&quot;, &quot;pip&quot;, &quot;maven&quot;.</p>",
+      "refs": {
+        "AffectedPackage$packageManager": "<p>The ecosystem supplying the package.</p>"
+      }
+    },
+    "PackageName": {
+      "base": "<p>The name of a software package implicated by a finding.</p>",
+      "refs": {
+        "AffectedPackage$name": "<p>The package name.</p>"
+      }
+    },
+    "PackageVersion": {
+      "base": "<p>A package version string. Not parsed or compared by Continuum -- version syntax is ecosystem-specific.</p>",
+      "refs": {
+        "AffectedPackage$version": "<p>The affected version.</p>",
+        "AffectedPackage$fixedInVersion": "<p>The earliest version that resolves the issue, when one is known.</p>"
+      }
+    },
+    "PatchBody": {
+      "base": "<p>Projected content for a PATCH artifact: the remediation patch for one repository, with the descriptors needed to verify and apply it and the state of its delivery to the customer's own bucket or repository.</p>",
+      "refs": {
+        "IssueArtifactBody$patch": "<p>Projected PATCH content: the remediation patch for one repository, with the descriptors needed to verify and apply it and the state of its delivery to the customer's own bucket or repository.</p> <p>Every PATCH projects here. The descriptors come from members Control Plane computes or owns when it stores the patch, not from producer metadata, so this member is the whole PATCH contract and <code>metadata</code> is omitted for it.</p>"
+      }
+    },
+    "PatchCreationPolicy": {
+      "base": "<p>Policy governing whether Continuum creates a patch for a proposed remediation.</p>",
+      "refs": {
+        "EnvironmentConfiguration$patchCreationPolicy": "<p>Whether Continuum creates a patch for a proposed remediation. Defaults to DISABLED.</p>"
+      }
+    },
+    "PatchDelivery": {
+      "base": "<p>Delivery of a patch to a destination the customer owns: an object in the environment's source bucket or a pull request in the source repository.</p>",
+      "refs": {
+        "PatchBody$delivery": "<p>Delivery of the patch to the customer's bucket or repository. Absent when the artifact has no delivery destination.</p>"
+      }
+    },
+    "PatchFormat": {
+      "base": "<p>How a patch is encoded, which determines the command that applies it.</p>",
+      "refs": {
+        "PatchBody$format": "<p>The patch's wire format, read from the patch itself, which determines how to apply it. Absent when the patch starts with neither a git mailbox header nor a <code>diff --git</code> header.</p>",
+        "RemediationProposalBody$format": "<p>The patch's wire format, which determines how to apply it. Absent when the producer recorded a format with no mapping yet.</p>"
+      }
+    },
+    "PerFindingResult": {
+      "base": "<p>Validation's result for one finding within a multi-finding bundle.</p>",
+      "refs": {
+        "PerFindingResults$member": null
+      }
+    },
+    "PerFindingResults": {
+      "base": null,
+      "refs": {
+        "ValidationEvidenceBody$perFindingResults": "<p>Per-finding breakdown for a multi-finding bundle. Absent for a single-finding bundle.</p>"
+      }
+    },
+    "PrevalidationSignal": {
+      "base": "<p>One producer's conclusion about one subject on one scoring dimension.</p>",
+      "refs": {
+        "PrevalidationSignals$member": null
+      }
+    },
+    "PrevalidationSignals": {
+      "base": null,
+      "refs": {
+        "PrevalidationSignalsBody$signals": "<p>The signals backing the Issue's proposed severity.</p>"
+      }
+    },
+    "PrevalidationSignalsBody": {
+      "base": "<p>Projected content for an EVIDENCE artifact carrying prioritization's prevalidation signals.</p>",
+      "refs": {
+        "IssueArtifactBody$prevalidationSignals": "<p>Projected EVIDENCE content whose stored envelope declares <code>artifact_kind: prevalidation_signals</code> — the severity signals prioritization uses.</p> <p>One artifactType can select different members here: EVIDENCE also carries the prioritization markdown narrative, which is not JSON and so returns through <code>raw</code>. The member is therefore chosen by artifactType AND, for a type that carries more than one payload kind, the content's own discriminator.</p>"
+      }
+    },
+    "ProviderConfiguration": {
+      "base": "<p>Provider-specific configuration for creating an integration. Only one member may be specified.</p>",
+      "refs": {
+        "CreateIntegrationInput$providerConfiguration": "<p>The provider-specific configuration required to create the integration. Only one member may be specified.</p>"
+      }
+    },
+    "ProviderDetails": {
+      "base": "<p>Provider-specific details for an integration. Only one member will be present.</p>",
+      "refs": {
+        "GetIntegrationOutput$providerDetails": "<p>Provider-specific details for the integration.</p>",
+        "IntegrationSummary$providerDetails": "<p>Provider-specific details for the integration.</p>",
+        "UpdateIntegrationOutput$providerDetails": null
+      }
+    },
+    "PutResourcePolicyInput": {
+      "base": "<p>Specifies the resource and its new policy.</p>",
+      "refs": {}
+    },
+    "PutResourcePolicyOutput": {
+      "base": "<p>Contains the stored resource policy.</p>",
+      "refs": {}
+    },
+    "ReasoningStep": {
+      "base": "<p>One step in the validation agent's reasoning chain.</p>",
+      "refs": {
+        "ReasoningSteps$member": null
+      }
+    },
+    "ReasoningSteps": {
+      "base": null,
+      "refs": {
+        "PerFindingResult$reasoningChain": "<p>Reasoning chain recorded for this finding.</p>"
+      }
+    },
+    "RedirectUrl": {
+      "base": "<p>An HTTPS redirect/callback URL used during the OAuth authorization flow. Must be one of the redirect URLs registered on the underlying GitHub App.</p>",
+      "refs": {
+        "GitHubAuthorizationConfiguration$redirectUrl": "<p>The redirect URL used to obtain the authorization code. Must match one of the redirect URLs registered on the GitHub App. If omitted, the App's default redirect URL is used. Not stored or returned after creation.</p>"
+      }
+    },
+    "RemediationProposalBody": {
+      "base": "<p>Projected content for a REMEDIATION_PROPOSAL artifact: the patch the remediation agent produced, with the descriptors needed to apply and verify it.</p>",
+      "refs": {
+        "IssueArtifactBody$remediationProposal": "<p>Projected REMEDIATION_PROPOSAL content: a patch the remediation agent produced, with the descriptors needed to apply and verify it.</p> <p>REMEDIATION_PROPOSAL content that does not match this shape is returned through <code>raw</code>.</p>"
+      }
+    },
+    "RemoveKubernetesClusterRole": {
+      "base": "<p>Empty marker selecting removal in KubernetesClusterRoleUpdate.</p>",
+      "refs": {
+        "KubernetesClusterRoleUpdate$remove": "<p>Remove the configured role and external ID.</p>"
+      }
+    },
+    "RepositoryBranch": {
+      "base": "<p>A repository branch name.</p>",
+      "refs": {
+        "EnvironmentRepositorySource$defaultBranch": "<p>Branch used when a scan does not choose a more specific revision.</p>"
+      }
+    },
+    "RepositoryName": {
+      "base": "<p>The name of a repository in owner/repository format (e.g. acme/payments-api). For an organization-scoped integration, the owner segment must match the integration's GitHub organization (validated at environment creation time). For a personal-account integration, the owner segment is the personal GitHub username and is not validated.</p>",
+      "refs": {
+        "EnvironmentRepositorySource$repository": "<p>Repository selected from that integration in owner/repository form.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The specified resource was not found. Verify that the resource identifier is correct and that the resource exists.</p>",
+      "refs": {}
+    },
+    "ResourcePolicyDocument": {
+      "base": "<p>A resource policy in displayable JSON form.</p>",
+      "refs": {
+        "GetResourcePolicyOutput$policy": null,
+        "PutResourcePolicyOutput$policy": null
+      }
+    },
+    "ResourcePolicyInputDocument": {
+      "base": "<p>A non-empty resource policy document supplied on writes.</p>",
+      "refs": {
+        "PutResourcePolicyInput$policy": "<p>Omit or supply an empty Statement array to clear resource-policy grants and store the canonical empty-statement policy. Cross-account access is denied; same-account access remains subject to identity policies. Use an explicit Deny statement to deny same-account principals too.</p>"
+      }
+    },
+    "ResourcePolicyRevisionId": {
+      "base": "<p>Opaque optimistic-concurrency token for a resource policy.</p>",
+      "refs": {
+        "GetResourcePolicyOutput$revisionId": null,
+        "PutResourcePolicyInput$expectedRevisionId": "<p>Optional optimistic-concurrency token for the currently observed policy.</p>",
+        "PutResourcePolicyOutput$revisionId": null
+      }
+    },
+    "ResourcePolicyTargetArn": {
+      "base": "<p>The ARN of a Continuum resource that supports a resource policy. Collectors are the only supported resource type; other well-formed Continuum ARNs are rejected with ValidationException.</p>",
+      "refs": {
+        "GetResourcePolicyInput$arn": "<p>The ARN of a resource in the caller's account.</p>",
+        "GetResourcePolicyOutput$arn": null,
+        "PutResourcePolicyInput$arn": "<p>The ARN of a resource in the caller's account.</p>",
+        "PutResourcePolicyOutput$arn": null
+      }
+    },
+    "S3Configuration": {
+      "base": "<p>Configuration for a customer-managed S3 integration.</p>",
+      "refs": {
+        "ProviderConfiguration$s3": "<p>Configuration for a customer-managed S3 integration.</p>"
+      }
+    },
+    "S3Details": {
+      "base": "<p>Public details for a customer-managed S3 integration. The sensitive external ID is intentionally omitted.</p>",
+      "refs": {
+        "ProviderDetails$s3": "<p>Public details for a customer-managed S3 integration.</p>"
+      }
+    },
+    "S3Target": {
+      "base": "<p>The S3 object a patch is delivered to.</p>",
+      "refs": {
+        "DestinationTarget$s3": "<p>The S3 object the patch is delivered to.</p>"
+      }
+    },
+    "ScanClientToken": {
+      "base": "<p>Caller-provided idempotency token for an environment scan request.</p>",
+      "refs": {
+        "CreateCodeScanInput$clientToken": "<p>An optional token identifying one scan request for this environment. SDKs generate a token when omitted. If a request reaches the service without a token, the service generates one for that request, so each request without a token starts a new scan. To retry a request after a lost response, supply the same token on the same environment; once a request with that token has succeeded, a retry returns the original scan. Concurrent requests with the same token, or a retry after a request that failed partway through, can leave an additional scan, which may end FAILED as superseded. A token is bound to its scan for as long as the service retains the scan's build record, with no shorter expiry. Deleting the environment makes the binding inaccessible: a later request with the token returns ResourceNotFoundException.</p>"
+      }
+    },
+    "ScanFailureStage": {
+      "base": "<p>The phase a failed scan was in when it failed.</p> <p>Present only on a FAILED scan, and absent on one that failed before this field existed. Shares its vocabulary with the non-terminal ScanStatus values so a failure reads directly against the phase sequence, with no mapping.</p>",
+      "refs": {
+        "CodeScanData$failureStage": "<p>Phase this scan failed in. Present only when <code>status</code> is FAILED, and absent for a scan that failed before this field existed.</p>",
+        "CodeScanSummary$failureStage": "<p>Phase this scan failed in. Present only when <code>status</code> is FAILED, and absent for a scan that failed before this field existed.</p>"
+      }
+    },
+    "ScanFrequency": {
+      "base": "<p>ISO-8601 duration requested for recurring scans. Supported values are P1D (1 day), P2D (2 days), P7D (7 days), and PT0H (manual scans only). Existing environments with no cadence or a legacy PT6H, PT12H, or PT24H cadence use P1D. Legacy PT48H uses P2D. New requests must use a supported value.</p>",
+      "refs": {
+        "EnvironmentConfiguration$scanFrequency": "<p>Recurring scan interval: P1D (1 day), P2D (2 days), or P7D (7 days). PT0H disables recurring scans. Defaults to P1D when creating an environment.</p>"
+      }
+    },
+    "ScanOrigin": {
+      "base": "<p>Identifies why a scan run was created.</p>",
+      "refs": {
+        "CodeScanData$origin": "<p>Why the scan was created. Always present.</p>",
+        "CodeScanSummary$origin": "<p>Why the scan was created. Always present.</p>"
+      }
+    },
+    "ScanRunFailureMessage": {
+      "base": "<p>Customer-safe failure detail for a scan run.</p>",
+      "refs": {
+        "CodeScanData$failureMessage": "<p>Failure detail present for unsuccessful scans.</p>",
+        "CodeScanSummary$failureMessage": "<p>Failure detail present for unsuccessful scans.</p>"
+      }
+    },
+    "ScanRunId": {
+      "base": "<p>Opaque identifier for a Continuum scan run.</p>",
+      "refs": {
+        "CodeScanData$scanRunId": "<p>The unique scan identifier.</p>",
+        "CodeScanSummary$scanRunId": "<p>The unique scan identifier.</p>",
+        "FindingSummary$scanRunId": "<p>The scan that produced the finding, when it came from one. For a finding Continuum's scanner produced, this is the Continuum scan run (see GetCodeScan). For a finding submitted with CreateCodeFinding, it is the OCSF document's <code>metadata.correlation_uid</code>, when that value is a valid ScanRunId. Absent when the finding did not come from a scan.</p>",
+        "GetCodeFindingOutput$scanRunId": "<p>The scan that produced the finding, when it came from one. For a finding Continuum's scanner produced, this is the Continuum scan run (see GetCodeScan). For a finding submitted with CreateCodeFinding, it is the OCSF document's <code>metadata.correlation_uid</code>, when that value is a valid ScanRunId. Absent when the finding did not come from a scan.</p>",
+        "GetCodeScanInput$scanRunId": "<p>Scan to retrieve.</p>"
+      }
+    },
+    "ScanStatus": {
+      "base": "<p>The phase of a scan.</p> <p>A scan always builds the selected source first and then analyzes the verified result, so the phases below span both halves of the work.</p> <p>These values are labels, not an ordered sequence for clients to compare. A scan does not necessarily observe every phase — phases are short-lived and a poll can miss one entirely.</p>",
+      "refs": {
+        "CodeScanData$status": "<p>Current customer-visible status.</p>",
+        "CodeScanSummary$status": "<p>Current customer-visible status.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request would exceed a service quota. Review your quota and request an increase if needed.</p>",
+      "refs": {}
+    },
+    "SignalAccessLevel": {
+      "base": "<p>The level of access exploitation requires.</p>",
+      "refs": {
+        "SignalAccessPrecondition$value": "<p>The level of access exploitation requires. Absent when the producer reported a level with no mapping yet.</p>"
+      }
+    },
+    "SignalAccessPrecondition": {
+      "base": "<p>The assessed access-level precondition with the basis behind it.</p>",
+      "refs": {
+        "SignalPreconditions$accessLevel": "<p>What level of access exploitation requires.</p>"
+      }
+    },
+    "SignalAttackerGains": {
+      "base": "<p>What an attacker gains from exploitation, strongest capability first.</p>",
+      "refs": {
+        "SignalAttackerGainsDimension$value": "<p>The capability exploitation grants. Absent when the producer reported a value with no mapping yet.</p>"
+      }
+    },
+    "SignalAttackerGainsDimension": {
+      "base": "<p>The assessed attacker-gains dimension with the basis behind it.</p>",
+      "refs": {
+        "SignalImpactDimensions$attackerGains": "<p>What the attacker gains from exploitation.</p>"
+      }
+    },
+    "SignalBand": {
+      "base": "<p>A likelihood or impact band on prioritization's shared four-value scale.</p>",
+      "refs": {
+        "SignalComputation$likelihoodBand": "<p>Computed likelihood band, on a likelihood signal.</p>",
+        "SignalComputation$impactBand": "<p>Computed impact band, on an impact signal.</p>"
+      }
+    },
+    "SignalBasis": {
+      "base": "<p>Where an assessed value came from, strongest evidence first. A customer weighing an assessment reads this to tell a fact read out of their own code from the producer's inference.</p> <p>The first three values name a source that states the value directly. The last two do not: INFERRED means the producer reasoned its way to the value, and NO_EVIDENCE_DEFAULT means it had nothing to reason from and used a default.</p>",
+      "refs": {
+        "SignalAccessPrecondition$basis": "<p>Where the producer's determination came from.</p>",
+        "SignalAttackerGainsDimension$basis": "<p>Where the producer's determination came from.</p>",
+        "SignalBlastRadiusDimension$basis": "<p>Where the producer's determination came from.</p>",
+        "SignalPrecondition$basis": "<p>Where the producer's determination came from.</p>",
+        "SignalTargetValueDimension$basis": "<p>Where the producer's determination came from.</p>"
+      }
+    },
+    "SignalBlastRadius": {
+      "base": "<p>How far the consequences of exploitation reach, widest first.</p>",
+      "refs": {
+        "SignalBlastRadiusDimension$value": "<p>How far the consequences reach. Absent when the producer reported a value with no mapping yet.</p>"
+      }
+    },
+    "SignalBlastRadiusDimension": {
+      "base": "<p>The assessed blast-radius dimension with the basis behind it.</p>",
+      "refs": {
+        "SignalImpactDimensions$blastRadius": "<p>How far the consequences reach.</p>"
+      }
+    },
+    "SignalComputation": {
+      "base": "<p>Deterministic values the producer computed from its assessment, as distinct from the assessment itself.</p>",
+      "refs": {
+        "PrevalidationSignal$computed": "<p>The deterministic values the producer computed from its assessment.</p>"
+      }
+    },
+    "SignalConfidenceReasoning": {
+      "base": "<p>A producer's structured rationale for a signal's confidence.</p>",
+      "refs": {
+        "PrevalidationSignal$confidenceReasoning": "<p>Why the producer is or is not sure, kept structured rather than prose.</p>"
+      }
+    },
+    "SignalDimension": {
+      "base": "<p>The scoring axis a signal speaks to.</p>",
+      "refs": {
+        "PrevalidationSignal$dimension": "<p>The axis this signal speaks to. Absent when the producer reported a dimension with no mapping yet.</p>"
+      }
+    },
+    "SignalExploitability": {
+      "base": "<p>What validation established about exploitability, as summarized onto the scoring signal derived from it.</p>",
+      "refs": {
+        "PrevalidationSignal$exploitability": "<p>What validation established about exploitability, on an exploitability signal. This summarizes the verdict the signal was derived from; the proof itself is the VALIDATION_EVIDENCE artifact it cites.</p>"
+      }
+    },
+    "SignalImpactDimensions": {
+      "base": "<p>The three impact dimensions an impact signal assessed. The computed impact band is derived from attackerGains and blastRadius, then shifted by targetValue.</p>",
+      "refs": {
+        "PrevalidationSignal$impactDimensions": "<p>The three impact dimensions an impact signal assessed, each with the basis the producer had for it. These are what the computed impact band is derived from.</p>"
+      }
+    },
+    "SignalPrecondition": {
+      "base": "<p>One assessed precondition with the basis behind it.</p>",
+      "refs": {
+        "SignalPreconditions$reachableFromAttacker": "<p>Whether the vulnerable code path is reachable by an attacker.</p>",
+        "SignalPreconditions$configurationNeeded": "<p>Whether exploitation depends on a non-default configuration.</p>",
+        "SignalPreconditions$userInteractionRequired": "<p>Whether exploitation requires a user other than the attacker to take part, for example by opening a link or a file (CVSS User Interaction).</p>"
+      }
+    },
+    "SignalPreconditions": {
+      "base": "<p>The four preconditions a likelihood signal assessed.</p>",
+      "refs": {
+        "PrevalidationSignal$preconditions": "<p>The four exploit preconditions a likelihood signal assessed, each with the basis the producer had for it.</p>"
+      }
+    },
+    "SignalStrength": {
+      "base": "<p>A signal's own rating, an input to scoring rather than a finding severity.</p>",
+      "refs": {
+        "PrevalidationSignal$signalStrength": "<p>The signal's own rating. This is an input to scoring and is NOT the finding's severity.</p>"
+      }
+    },
+    "SignalTargetValue": {
+      "base": "<p>How valuable the exploited target is.</p>",
+      "refs": {
+        "SignalTargetValueDimension$value": "<p>How valuable the target is. Absent when the producer reported a value with no mapping yet.</p>"
+      }
+    },
+    "SignalTargetValueDimension": {
+      "base": "<p>The assessed target-value dimension with the basis behind it.</p>",
+      "refs": {
+        "SignalImpactDimensions$targetValue": "<p>How valuable the target is, which can shift the band off its base value.</p>"
+      }
+    },
+    "SourceFindingId": {
+      "base": "<p>The producer's stable identifier for the finding, extracted from the submitted document. Useful for cross-referencing with the originating system.</p>",
+      "refs": {
+        "FindingSummary$sourceFindingId": "<p>The producer's own identifier for the finding.</p>",
+        "GetCodeFindingOutput$sourceFindingId": "<p>The producer's own identifier for the finding.</p>"
+      }
+    },
+    "StartIntegrationAuthorizationInput": {
+      "base": "<p>Specifies the provider to authorize and, optionally, the name the new integration will use.</p>",
+      "refs": {}
+    },
+    "StartIntegrationAuthorizationOutput": {
+      "base": "<p>Contains the values to send to the provider's authorization endpoint.</p>",
+      "refs": {}
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": "<p>Error description.</p>",
+        "ConflictException$message": "<p>Description of the conflict.</p>",
+        "InternalServerException$message": "<p>Error description.</p>",
+        "ResourceNotFoundException$message": "<p>Description of the resource that was not found.</p>",
+        "ServiceQuotaExceededException$message": "<p>Description of the quota that was exceeded.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>The quota code for the exceeded limit.</p>",
+        "ServiceQuotaExceededException$serviceCode": "<p>The service code for the exceeded limit.</p>",
+        "ThrottlingException$message": "<p>Description of the throttling error.</p>",
+        "ValidationException$message": null,
+        "ValidationExceptionField$path": null,
+        "ValidationExceptionField$message": null
+      }
+    },
+    "SyntheticTimestamp_date_time": {
+      "base": null,
+      "refs": {
+        "AssociatedEnvironment$createdAt": "<p>The timestamp when the associated Environment was created.</p>",
+        "CodeScanData$createdAt": "<p>Time at which Continuum accepted the scan request.</p>",
+        "CodeScanData$completedAt": "<p>Time at which a terminal result was recorded.</p>",
+        "CodeScanSummary$createdAt": "<p>Time at which Continuum accepted the scan request.</p>",
+        "CodeScanSummary$completedAt": "<p>Time at which a terminal result was recorded.</p>",
+        "CollectorSummary$createdAt": "<p>The timestamp when the Collector was created.</p>",
+        "CreateCodeFindingOutput$createdAt": "<p>The timestamp when the finding was ingested.</p>",
+        "CreateCollectorOutput$createdAt": "<p>The timestamp when the Collector was created.</p>",
+        "CreateEnvironmentOutput$createdAt": "<p>The timestamp when the environment was created.</p>",
+        "CreateIntegrationOutput$createdAt": "<p>The timestamp when the integration was created.</p>",
+        "EnvironmentListEntry$createdAt": "<p>The timestamp when the environment was created. Preserve the existing EnvironmentSummary.createdAt date-time wire format.</p>",
+        "FindingSummary$reportedAt": "<p>When the producer reported the finding -- its own clock, which is not Continuum's ingestion time. <code>createdAt</code> is when Continuum accepted it; these are genuinely different instants and a reader usually wants this one.</p> <p>For CreateCodeFinding, this is the submitted OCSF document's own top-level <code>time</code>. For findings Continuum's scanner produces, it is the finding's own creation time.</p> <p>Continuum does not validate it for plausibility: a producer's value is echoed as given, so a <code>timestamp</code> here asserts the unit and format, not that the instant is genuine.</p>",
+        "FindingSummary$statusUpdatedAt": "<p>The timestamp when the status last transitioned.</p>",
+        "FindingSummary$createdAt": "<p>The timestamp when the finding was ingested.</p>",
+        "FindingSummary$completedAt": "<p>When processing finished, whether by creating an issue or discarding. Absent while the finding is still in flight.</p>",
+        "GetCodeFindingOutput$firstSeenAt": "<p>When the producer first observed the finding (finding_info.first_seen_time). The producer's own clock, not Continuum's.</p>",
+        "GetCodeFindingOutput$reportedAt": "<p>When the producer reported the finding -- its own clock, which is not Continuum's ingestion time. <code>createdAt</code> is when Continuum accepted it; these are genuinely different instants and a reader usually wants this one.</p> <p>For CreateCodeFinding, this is the submitted OCSF document's own top-level <code>time</code>. For findings Continuum's scanner produces, it is the finding's own creation time.</p> <p>Continuum does not validate it for plausibility: a producer's value is echoed as given, so a <code>timestamp</code> here asserts the unit and format, not that the instant is genuine.</p>",
+        "GetCodeFindingOutput$statusUpdatedAt": "<p>The timestamp when the status last transitioned.</p>",
+        "GetCodeFindingOutput$createdAt": "<p>The timestamp when the finding was ingested.</p>",
+        "GetCodeFindingOutput$completedAt": "<p>When processing finished, whether by creating an issue or discarding. Absent while the finding is still in flight.</p>",
+        "GetCodeIssueArtifactOutput$createdAt": "<p>The timestamp when the artifact was created.</p>",
+        "GetCodeIssueOutput$statusUpdatedAt": "<p>The timestamp when the status or phase last changed.</p>",
+        "GetCodeIssueOutput$createdAt": "<p>The timestamp when the issue was created.</p>",
+        "GetCodeIssueOutput$updatedAt": "<p>The timestamp when any field of the issue last changed. Advances on every mutation (including score-only updates that do not transition status), so it is greater than or equal to statusUpdatedAt.</p>",
+        "GetCollectorOutput$createdAt": "<p>The timestamp when the Collector was created.</p>",
+        "GetCollectorOutput$updatedAt": "<p>The time of the last successful UpdateCollector call, returned at whole-second precision in the same date-time format as createdAt.</p>",
+        "GetEnvironmentOutput$statusUpdatedAt": "<p>The timestamp when the status last transitioned.</p>",
+        "GetEnvironmentOutput$createdAt": "<p>The timestamp when the environment was created.</p>",
+        "GetEnvironmentOutput$updatedAt": "<p>The timestamp when the environment's properties were last updated.</p>",
+        "GetIntegrationOutput$createdAt": "<p>The timestamp when the integration was created.</p>",
+        "GetIntegrationOutput$updatedAt": "<p>The timestamp when the integration was last updated.</p>",
+        "GitLabDetails$expiresAt": "<p>The expiry of the stored access token, for non-rotating tokens only. A rotated token's original expiry is stale, so this is omitted when tokenRotation is AUTOMATIC.</p>",
+        "IntegrationSummary$createdAt": "<p>The timestamp when the integration was created.</p>",
+        "IntegrationSummary$updatedAt": "<p>The timestamp when the integration was last updated.</p>",
+        "IssueArtifactItem$createdAt": "<p>The timestamp when the artifact was created.</p>",
+        "IssueSummary$statusUpdatedAt": "<p>The timestamp when the status or phase last changed.</p>",
+        "IssueSummary$createdAt": "<p>The timestamp when the issue was created.</p>",
+        "IssueSummary$updatedAt": "<p>The timestamp when any field of the issue last changed. Advances on every mutation (including score-only updates that do not transition status), so it is greater than or equal to statusUpdatedAt.</p>",
+        "PatchDelivery$updatedAt": "<p>When the delivery status last changed.</p>",
+        "StartIntegrationAuthorizationOutput$expiresAt": "<p>The time after which CreateIntegration no longer accepts this authorization.</p>",
+        "UpdateCollectorOutput$createdAt": "<p>The timestamp when the Collector was created.</p>",
+        "UpdateCollectorOutput$updatedAt": "<p>The time of the last successful UpdateCollector call, returned at whole-second precision in the same date-time format as createdAt.</p>",
+        "UpdateEnvironmentOutput$statusUpdatedAt": "<p>The timestamp when the status last transitioned. Uses the existing GetEnvironment/ListEnvironments ISO-8601 wire format for this field.</p>",
+        "UpdateEnvironmentOutput$createdAt": "<p>The timestamp when the environment was created. Uses the existing GetEnvironment/ListEnvironments ISO-8601 wire format for this field.</p>",
+        "UpdateIntegrationOutput$createdAt": "<p>When the integration was created.</p>",
+        "UpdateIntegrationOutput$updatedAt": "<p>When the integration was last updated.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling.</p>",
+      "refs": {}
+    },
+    "UpdateCodeConfiguration": {
+      "base": "<p>Mutable source and operating-policy settings for a code environment.</p>",
+      "refs": {
+        "UpdateEnvironmentConfiguration$codeConfiguration": "<p>Changes to a code-scanning environment.</p>"
+      }
+    },
+    "UpdateCollectorInput": {
+      "base": "<p>Specifies the mutable Collector properties. At least one property must be supplied. k8ClusterRole models an atomic set-or-remove mutation, so roleArn and externalId are replaced or removed together.</p>",
+      "refs": {}
+    },
+    "UpdateCollectorOutput": {
+      "base": "<p>Contains the current state of the updated Collector.</p>",
+      "refs": {}
+    },
+    "UpdateEnvironmentConfiguration": {
+      "base": "<p>Type-specific changes to an environment. Omitted members preserve stored values.</p>",
+      "refs": {
+        "UpdateEnvironmentInput$configuration": "<p>Type-specific configuration changes. Omission preserves the configuration.</p>"
+      }
+    },
+    "UpdateEnvironmentInput": {
+      "base": "<p>Specifies the mutable environment properties. Supply a name or a change under configuration.codeConfiguration. Its sourceConfiguration.s3Sources and sourceConfiguration.repositorySources replace the S3 source and repository selections. Its environmentConfiguration has patch semantics: omitted members preserve stored values, scanFrequency updates scan cadence, and network and patchCreationPolicy replace the corresponding policies.</p>",
+      "refs": {}
+    },
+    "UpdateEnvironmentOutput": {
+      "base": "<p>Contains the current state of the updated environment. Use GetEnvironment to read its source and environment configuration.</p>",
+      "refs": {}
+    },
+    "UpdateIntegrationInput": {
+      "base": "<p>Specifies the S3 integration and the credentials to validate and save.</p>",
+      "refs": {}
+    },
+    "UpdateIntegrationOutput": {
+      "base": "<p>Contains the current state of the updated S3 integration. The sensitive external ID is omitted.</p>",
+      "refs": {}
+    },
+    "UpdateProviderConfiguration": {
+      "base": "<p>Provider-specific changes for updating an integration. Only S3 integrations can be updated, so S3 is the only member.</p>",
+      "refs": {
+        "UpdateIntegrationInput$providerConfiguration": "<p>The provider-specific changes to apply. The member must match the integration's provider type, and only S3 integrations can be updated.</p>"
+      }
+    },
+    "UpdateS3Configuration": {
+      "base": "<p>Replacement credentials for a customer-managed S3 integration. The bucket cannot be changed.</p>",
+      "refs": {
+        "UpdateProviderConfiguration$s3": "<p>Replacement credentials for a customer-managed S3 integration.</p>"
+      }
+    },
+    "ValidationConfidence": {
+      "base": "<p>Confidence in a validation verdict, on the producer's native 0-1 scale.</p> <p>Deliberately unconstrained in the model: the smithy-rs server SDK rejects <code>@range</code> on a double (smithy-rs#2007). The bound is enforced where the value is produced instead — Control Plane projects this from stored content and omits the member when the stored value falls outside 0-1, so an out-of-range producer value never surfaces here as a valid confidence. The rest of the body still projects; only the confidence is dropped.</p>",
+      "refs": {
+        "FlowVerdict$confidence": "<p>Confidence in this flow's verdict. Absent when out of range.</p>",
+        "PerFindingResult$confidence": "<p>Confidence in this finding's verdict. Absent when out of range.</p>",
+        "PrevalidationSignal$confidence": "<p>The producer's confidence in this conclusion, on its native 0-1 scale. Absent when the stored value falls outside 0-1.</p>",
+        "ReasoningStep$confidence": "<p>Confidence in this individual claim, on the producer's native 0-1 scale.</p>"
+      }
+    },
+    "ValidationConfidenceTier": {
+      "base": "<p>How strong the evidence behind an exploitability verdict is, weakest first.</p> <p>Modeled as named tiers rather than the producer's 1-4 ordinal: the number alone carries no meaning outside Continuum's own table, and a customer branching on &quot;was this actually run&quot; needs the distinction by name. The declaration order is the ordering.</p>",
+      "refs": {
+        "SignalExploitability$confidenceTier": "<p>How strong the evidence behind the verdict is.</p>"
+      }
+    },
+    "ValidationEvidenceBody": {
+      "base": "<p>Projected content for a VALIDATION_EVIDENCE artifact: the validation agent's durable proof of exploitability.</p>",
+      "refs": {
+        "IssueArtifactBody$validationEvidence": "<p>Projected VALIDATION_EVIDENCE content.</p>"
+      }
+    },
+    "ValidationException": {
+      "base": null,
+      "refs": {}
+    },
+    "ValidationExceptionField": {
+      "base": null,
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": null
+      }
+    },
+    "ValidationExecutedProof": {
+      "base": "<p>Proof of exploitability the validation agent produced by executing code against the repository under test, with the output that execution produced.</p>",
+      "refs": {
+        "ValidationEvidenceBody$executedProof": "<p>Proof the agent produced by executing code against the repository under test, with the output that execution produced.</p>"
+      }
+    },
+    "ValidationExploitArtifact": {
+      "base": "<p>A concrete exploit payload and the effect validation observed from it.</p>",
+      "refs": {
+        "PerFindingResult$exploitArtifact": "<p>Exploit artifact produced for this finding, when there was one.</p>",
+        "ValidationEvidenceBody$exploitArtifact": "<p>Concrete payload and its observed effect, when validation produced one by sending an HTTP request.</p> <p>Only an HTTP proof projects here. A validation agent that proves exploitability by RUNNING code against the repository projects <code>executedProof</code>, and one that proves it by reading the source projects <code>sourceAnalysis</code>. All three are mutually exclusive: at most one is present.</p>"
+      }
+    },
+    "ValidationProofCode": {
+      "base": "<p>The executed proof's program. Further members, such as command, workingDirectory and supportingInputs, can be added later as optional details.</p>",
+      "refs": {
+        "ValidationExecutedProof$code": "<p>The code that was run. Not a request payload: it imports the repository's own modules and drives the vulnerable code path directly.</p>"
+      }
+    },
+    "ValidationProofConsoleOutput": {
+      "base": "<p>The retained merged console output; its structure allows optional additions.</p>",
+      "refs": {
+        "ValidationProofOutput$consoleOutput": "<p>What the run printed: standard output and standard error merged, as retained. The text may be empty.</p>"
+      }
+    },
+    "ValidationProofMaterial": {
+      "base": "<p>One proof program file. Further members, such as path and purpose, can be added later as optional details.</p>",
+      "refs": {
+        "ValidationProofMaterials$member": null
+      }
+    },
+    "ValidationProofMaterialText": {
+      "base": "<p>The retained proof file text; its structure allows optional additions.</p>",
+      "refs": {
+        "ValidationProofMaterial$content": "<p>The file's non-blank text, exactly as retained.</p>"
+      }
+    },
+    "ValidationProofMaterials": {
+      "base": "<p>The proof program's files, bounded so later optional details can be added.</p>",
+      "refs": {
+        "ValidationProofCode$proofCode": "<p>Proof program files, main file first, in their retained order.</p>"
+      }
+    },
+    "ValidationProofOutput": {
+      "base": "<p>Retained run output. Further members, such as completion and outputCompleteness, can be added later as optional details.</p>",
+      "refs": {
+        "ValidationExecutedProof$output": "<p>What the execution printed, including the agent's own PASS/FAIL assertions. Absent when the run printed nothing retained.</p>"
+      }
+    },
+    "ValidationProofSummary": {
+      "base": "<p>The Markdown analysis summary; its structure allows optional additions.</p>",
+      "refs": {
+        "ValidationSourceAnalysis$summary": "<p>The non-blank analysis as Markdown: the annotated entry-to-sink walk, its citations, and why the checked guards are absent or bypassed.</p>"
+      }
+    },
+    "ValidationSourceAnalysis": {
+      "base": "<p>Proof of exploitability the validation agent produced by reading the repository's source, with nothing built or run. Further members, such as diagram and references, can be added later as optional details.</p>",
+      "refs": {
+        "ValidationEvidenceBody$sourceAnalysis": "<p>Proof the agent produced by reading the repository's source, with nothing built or run.</p>"
+      }
+    },
+    "ValidationTerminalStatus": {
+      "base": "<p>How a validation run ended. Producer statuses map onto these; an unmapped status omits <code>terminalStatus</code> while the rest of the body still projects.</p>",
+      "refs": {
+        "ValidationEvidenceBody$terminalStatus": "<p>How the validation run ended. Absent when the producer reported a status with no mapping yet: the rest of the body still projects, so one unmapped enum never costs a customer the whole artifact.</p>"
+      }
+    }
+  }
+}

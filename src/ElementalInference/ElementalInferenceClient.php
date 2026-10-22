@@ -53,6 +53,32 @@ use Aws\AwsClient;
  *     tags?: array<string, string>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createScheduleAction(array $args = [])
+ * @phpstan-method \Aws\Result createScheduleAction(array{
+ *     id?: string,
+ *     actionName?: string,
+ *     startConfiguration?: array{fixedModeScheduleActionStartSettings?: array{scheduledAt?: int|string|\DateTimeInterface, ...}, ...},
+ *     operations?: list<array{
+ *         updateOutputStatus?: array,
+ *         updateClippingDataSourceConfiguration?: array,
+ *         removeClippingDataSourceConfiguration?: array,
+ *         ...,
+ *     }>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createScheduleActionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createScheduleActionAsync(array{
+ *     id?: string,
+ *     actionName?: string,
+ *     startConfiguration?: array{fixedModeScheduleActionStartSettings?: array{scheduledAt?: int|string|\DateTimeInterface, ...}, ...},
+ *     operations?: list<array{
+ *         updateOutputStatus?: array,
+ *         updateClippingDataSourceConfiguration?: array,
+ *         removeClippingDataSourceConfiguration?: array,
+ *         ...,
+ *     }>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result deleteDictionary(array $args = [])
  * @phpstan-method \Aws\Result deleteDictionary(array{id?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteDictionaryAsync(array $args = [])
@@ -65,6 +91,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteFeedPolicy(array{id?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteFeedPolicyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteFeedPolicyAsync(array{id?: string, ...} $args = [])
+ * @method \Aws\Result deleteScheduleAction(array $args = [])
+ * @phpstan-method \Aws\Result deleteScheduleAction(array{id?: string, actionName?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteScheduleActionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteScheduleActionAsync(array{id?: string, actionName?: string, ...} $args = [])
  * @method \Aws\Result disassociateFeed(array $args = [])
  * @phpstan-method \Aws\Result disassociateFeed(array{id?: string, associatedResourceName?: string, dryRun?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateFeedAsync(array $args = [])
@@ -97,6 +127,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listFeeds(array{maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listFeedsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listFeedsAsync(array{maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listScheduleActions(array $args = [])
+ * @phpstan-method \Aws\Result listScheduleActions(array{id?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listScheduleActionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listScheduleActionsAsync(array{id?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @phpstan-method \Aws\Result listTagsForResource(array{resourceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])

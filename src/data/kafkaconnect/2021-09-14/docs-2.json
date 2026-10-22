@@ -17,7 +17,9 @@
     "ListCustomPlugins": "<p>Returns a list of all of the custom plugins in this account and Region.</p>",
     "ListTagsForResource": "<p>Lists all the tags attached to the specified resource.</p>",
     "ListWorkerConfigurations": "<p>Returns a list of all of the worker configurations in this account and Region.</p>",
+    "PauseConnector": "<p>Pauses the specified connector. The operation runs asynchronously. To track the pause, pass the connector operation ARN from the response to <code>DescribeConnectorOperation</code>.</p>",
     "RestartConnector": "<p>Restarts the specified connector. By default, this operation restarts the connector and all of its tasks. This operation is asynchronous and returns a connector operation ARN that you can pass to <code>DescribeConnectorOperation</code> to track the state of the restart.</p>",
+    "ResumeConnector": "<p>Resumes the specified paused connector. The operation runs asynchronously. To track the resume, pass the connector operation ARN from the response to <code>DescribeConnectorOperation</code>.</p>",
     "TagResource": "<p>Attaches tags to the specified resource.</p>",
     "UntagResource": "<p>Removes tags from the specified resource.</p>",
     "UpdateConnector": "<p>Updates the specified connector. For request body, specify only one parameter: either <code>capacity</code> or <code>connectorConfiguration</code>.</p>"
@@ -448,6 +450,14 @@
       "base": "<p>HTTP Status Code 404: Resource not found due to incorrect input. Correct your request and then retry it.</p>",
       "refs": {}
     },
+    "PauseConnectorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PauseConnectorResponse": {
+      "base": null,
+      "refs": {}
+    },
     "Plugin": {
       "base": "<p>A plugin is an Amazon Web Services resource that contains the code that defines your connector logic. </p>",
       "refs": {
@@ -483,6 +493,14 @@
       "refs": {}
     },
     "RestartConnectorResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ResumeConnectorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ResumeConnectorResponse": {
       "base": null,
       "refs": {}
     },
@@ -700,7 +718,8 @@
         "FirehoseLogDeliveryDescription$enabled": "<p>Specifies whether connector logs get delivered to Amazon Kinesis Data Firehose.</p>",
         "RestartConnectorRequest$onlyFailedTasks": "<p>Specifies whether to restart only the connector's failed tasks. If <code>true</code>, the operation restarts only the tasks that are currently in a failed state, and healthy tasks continue running. If <code>false</code> or not specified, the operation restarts the connector and all of its tasks.</p>",
         "S3LogDelivery$enabled": "<p>Specifies whether connector logs get sent to the specified Amazon S3 destination.</p>",
-        "S3LogDeliveryDescription$enabled": "<p>Specifies whether connector logs get sent to the specified Amazon S3 destination.</p>"
+        "S3LogDeliveryDescription$enabled": "<p>Specifies whether connector logs get sent to the specified Amazon S3 destination.</p>",
+        "UpdateConnectorRequest$skipHealthValidation": "<p>Specifies whether the update bypasses connector-level and task-level health checks. If <code>true</code>, the update skips the health checks. The update stays in effect even if the connector or its tasks are unhealthy, and Amazon MSK Connect doesn't roll it back. If <code>false</code> or not specified, the health checks run. If they fail, MSK Connect automatically rolls the connector back to its previous configuration, and the update doesn't take effect. To update a connector that is in the <code>PAUSED</code> state, you must set this parameter to <code>true</code>.</p>"
       }
     },
     "__integer": {
@@ -898,9 +917,15 @@
         "ListWorkerConfigurationsRequest$namePrefix": "<p>Lists worker configuration names that start with the specified text string.</p>",
         "ListWorkerConfigurationsResponse$nextToken": "<p>If the response of a ListWorkerConfigurations operation is truncated, it will include a NextToken. Send this NextToken in a subsequent request to continue listing from where the previous operation left off.</p>",
         "NotFoundException$message": null,
+        "PauseConnectorRequest$connectorArn": "<p>The Amazon Resource Name (ARN) of the connector that you want to pause.</p>",
+        "PauseConnectorResponse$connectorArn": "<p>The Amazon Resource Name (ARN) of the connector.</p>",
+        "PauseConnectorResponse$connectorOperationArn": "<p>The Amazon Resource Name (ARN) of the connector operation created to perform the pause.</p>",
         "RestartConnectorRequest$connectorArn": "<p>The Amazon Resource Name (ARN) of the connector that you want to restart.</p>",
         "RestartConnectorResponse$connectorArn": "<p>The Amazon Resource Name (ARN) of the connector.</p>",
         "RestartConnectorResponse$connectorOperationArn": "<p>The Amazon Resource Name (ARN) of the connector operation created to perform the restart.</p>",
+        "ResumeConnectorRequest$connectorArn": "<p>The Amazon Resource Name (ARN) of the connector that you want to resume.</p>",
+        "ResumeConnectorResponse$connectorArn": "<p>The Amazon Resource Name (ARN) of the connector.</p>",
+        "ResumeConnectorResponse$connectorOperationArn": "<p>The Amazon Resource Name (ARN) of the connector operation created to perform the resume.</p>",
         "S3Location$bucketArn": "<p>The Amazon Resource Name (ARN) of an S3 bucket.</p>",
         "S3Location$fileKey": "<p>The file key for an object in an S3 bucket.</p>",
         "S3Location$objectVersion": "<p>The version of an object in an S3 bucket.</p>",

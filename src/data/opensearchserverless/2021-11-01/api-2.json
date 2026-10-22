@@ -85,6 +85,22 @@
       ],
       "readonly":true
     },
+    "CancelIngestionJob":{
+      "name":"CancelIngestionJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CancelIngestionJobRequest"},
+      "output":{"shape":"CancelIngestionJobResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "CreateAccessPolicy":{
       "name":"CreateAccessPolicy",
       "http":{
@@ -147,6 +163,40 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
+    "CreateIngestionJob":{
+      "name":"CreateIngestionJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateIngestionJobRequest"},
+      "output":{"shape":"CreateIngestionJobResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
+    "CreateIngestionStream":{
+      "name":"CreateIngestionStream",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateIngestionStreamRequest"},
+      "output":{"shape":"CreateIngestionStreamResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
     },
@@ -277,6 +327,22 @@
       ],
       "idempotent":true
     },
+    "DeleteIngestionStream":{
+      "name":"DeleteIngestionStream",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIngestionStreamRequest"},
+      "output":{"shape":"DeleteIngestionStreamResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "DeleteLifecyclePolicy":{
       "name":"DeleteLifecyclePolicy",
       "http":{
@@ -385,6 +451,36 @@
       ],
       "readonly":true
     },
+    "GetIngestionJob":{
+      "name":"GetIngestionJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIngestionJobRequest"},
+      "output":{"shape":"GetIngestionJobResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "GetIngestionStream":{
+      "name":"GetIngestionStream",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIngestionStreamRequest"},
+      "output":{"shape":"GetIngestionStreamResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
     "GetPoliciesStats":{
       "name":"GetPoliciesStats",
       "http":{
@@ -466,6 +562,36 @@
       "output":{"shape":"ListCollectionsResponse"},
       "errors":[
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListIngestionJobs":{
+      "name":"ListIngestionJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListIngestionJobsRequest"},
+      "output":{"shape":"ListIngestionJobsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListIngestionStreams":{
+      "name":"ListIngestionStreams",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListIngestionStreamsRequest"},
+      "output":{"shape":"ListIngestionStreamsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ],
       "readonly":true
@@ -844,6 +970,36 @@
       "type":"boolean",
       "box":true
     },
+    "BucketOwnerAccountId":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"[0-9]{12}"
+    },
+    "CancelIngestionJobRequest":{
+      "type":"structure",
+      "required":[
+        "collectionId",
+        "ingestionJobId"
+      ],
+      "members":{
+        "collectionId":{"shape":"CollectionId"},
+        "ingestionJobId":{"shape":"IngestionJobId"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CancelIngestionJobResponse":{
+      "type":"structure",
+      "members":{
+        "ingestionJobId":{"shape":"IngestionJobId"},
+        "collectionId":{"shape":"CollectionId"},
+        "ingestionJobName":{"shape":"IngestionJobName"},
+        "status":{"shape":"IngestionJobStatus"}
+      }
+    },
     "CapacityDetails":{
       "type":"structure",
       "members":{
@@ -1029,7 +1185,7 @@
       "type":"string",
       "max":64,
       "min":3,
-      "pattern":"[a-z][a-z0-9-]+"
+      "pattern":"[a-z][a-z0-9_-]+"
     },
     "CollectionNames":{
       "type":"list",
@@ -1230,6 +1386,62 @@
       "type":"structure",
       "members":{}
     },
+    "CreateIngestionJobRequest":{
+      "type":"structure",
+      "required":[
+        "collectionId",
+        "ingestionJobName",
+        "indexName",
+        "source"
+      ],
+      "members":{
+        "collectionId":{"shape":"CollectionId"},
+        "ingestionJobName":{"shape":"IngestionJobName"},
+        "indexName":{"shape":"IngestionIndexName"},
+        "failureIndexName":{"shape":"IngestionIndexName"},
+        "source":{"shape":"IngestionJobSource"},
+        "tags":{"shape":"Tags"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateIngestionJobResponse":{
+      "type":"structure",
+      "members":{
+        "ingestionJobDetail":{"shape":"IngestionJobDetail"}
+      }
+    },
+    "CreateIngestionStreamRequest":{
+      "type":"structure",
+      "required":[
+        "collectionId",
+        "ingestionStreamName",
+        "indexName",
+        "source",
+        "roleArn"
+      ],
+      "members":{
+        "collectionId":{"shape":"CollectionId"},
+        "ingestionStreamName":{"shape":"IngestionStreamName"},
+        "indexName":{"shape":"IngestionIndexName"},
+        "failureIndexName":{"shape":"IngestionIndexName"},
+        "source":{"shape":"IngestionStreamSource"},
+        "roleArn":{"shape":"RoleArn"},
+        "tags":{"shape":"Tags"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateIngestionStreamResponse":{
+      "type":"structure",
+      "members":{
+        "ingestionStreamDetail":{"shape":"IngestionStreamDetail"}
+      }
+    },
     "CreateLifecyclePolicyRequest":{
       "type":"structure",
       "required":[
@@ -1417,6 +1629,30 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteIngestionStreamRequest":{
+      "type":"structure",
+      "required":[
+        "collectionId",
+        "ingestionStreamId"
+      ],
+      "members":{
+        "collectionId":{"shape":"CollectionId"},
+        "ingestionStreamId":{"shape":"IngestionStreamId"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "DeleteIngestionStreamResponse":{
+      "type":"structure",
+      "members":{
+        "ingestionStreamId":{"shape":"IngestionStreamId"},
+        "collectionId":{"shape":"CollectionId"},
+        "ingestionStreamName":{"shape":"IngestionStreamName"},
+        "status":{"shape":"IngestionStreamStatus"}
+      }
+    },
     "DeleteLifecyclePolicyRequest":{
       "type":"structure",
       "required":[
@@ -1544,9 +1780,9 @@
     },
     "EncryptionConfigKmsKeyArnString":{
       "type":"string",
-      "max":100,
+      "max":2048,
       "min":10,
-      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):kms:[a-z0-9-]+:[0-9]{12}:key/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b|aws-iso-c|aws-iso-d|aws-iso-e):(kms):[a-zA-Z-]+\\d{1}:\\d{12}:(key)\\/.{1,2048}.*"
     },
     "FipsEndpoints":{
       "type":"structure",
@@ -1601,6 +1837,40 @@
       "type":"structure",
       "members":{
         "indexSchema":{"shape":"IndexSchema"}
+      }
+    },
+    "GetIngestionJobRequest":{
+      "type":"structure",
+      "required":[
+        "collectionId",
+        "ingestionJobId"
+      ],
+      "members":{
+        "collectionId":{"shape":"CollectionId"},
+        "ingestionJobId":{"shape":"IngestionJobId"}
+      }
+    },
+    "GetIngestionJobResponse":{
+      "type":"structure",
+      "members":{
+        "ingestionJobDetail":{"shape":"IngestionJobDetail"}
+      }
+    },
+    "GetIngestionStreamRequest":{
+      "type":"structure",
+      "required":[
+        "collectionId",
+        "ingestionStreamId"
+      ],
+      "members":{
+        "collectionId":{"shape":"CollectionId"},
+        "ingestionStreamId":{"shape":"IngestionStreamId"}
+      }
+    },
+    "GetIngestionStreamResponse":{
+      "type":"structure",
+      "members":{
+        "ingestionStreamDetail":{"shape":"IngestionStreamDetail"}
       }
     },
     "GetPoliciesStatsRequest":{
@@ -1702,6 +1972,250 @@
       "type":"integer",
       "box":true,
       "min":2
+    },
+    "IngestionAlert":{
+      "type":"structure",
+      "members":{
+        "code":{"shape":"IngestionAlertCode"},
+        "message":{"shape":"String"}
+      }
+    },
+    "IngestionAlertCode":{
+      "type":"string",
+      "enum":[
+        "SOURCE_ACCESS_DENIED",
+        "SOURCE_RESOURCE_NOT_FOUND",
+        "DESTINATION_ACCESS_DENIED",
+        "DESTINATION_RESOURCE_NOT_FOUND",
+        "INTERNAL_SERVER_ERROR"
+      ]
+    },
+    "IngestionAlerts":{
+      "type":"list",
+      "member":{"shape":"IngestionAlert"},
+      "max":10,
+      "min":0
+    },
+    "IngestionFailureCode":{
+      "type":"string",
+      "enum":[
+        "SOURCE_ACCESS_DENIED",
+        "SOURCE_RESOURCE_NOT_FOUND",
+        "DESTINATION_ACCESS_DENIED",
+        "DESTINATION_RESOURCE_NOT_FOUND",
+        "INTERNAL_SERVER_ERROR"
+      ]
+    },
+    "IngestionFailureReason":{
+      "type":"structure",
+      "members":{
+        "code":{"shape":"IngestionFailureCode"},
+        "message":{"shape":"String"}
+      }
+    },
+    "IngestionFailureReasons":{
+      "type":"list",
+      "member":{"shape":"IngestionFailureReason"},
+      "max":10,
+      "min":0
+    },
+    "IngestionIndexName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[a-z0-9.][a-z0-9._-]*"
+    },
+    "IngestionJobDetail":{
+      "type":"structure",
+      "members":{
+        "ingestionJobId":{"shape":"IngestionJobId"},
+        "arn":{"shape":"IngestionJobResourceArn"},
+        "collectionId":{"shape":"CollectionId"},
+        "ingestionJobName":{"shape":"IngestionJobName"},
+        "indexName":{"shape":"IngestionIndexName"},
+        "failureIndexName":{"shape":"IngestionIndexName"},
+        "source":{"shape":"IngestionJobSource"},
+        "status":{"shape":"IngestionJobStatus"},
+        "state":{"shape":"IngestionState"},
+        "statistics":{"shape":"IngestionStatistics"},
+        "revision":{"shape":"Long"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "failureReasons":{"shape":"IngestionFailureReasons"},
+        "activeAlerts":{"shape":"IngestionAlerts"}
+      }
+    },
+    "IngestionJobId":{
+      "type":"string",
+      "max":64,
+      "min":20,
+      "pattern":"[a-z0-9]+"
+    },
+    "IngestionJobName":{
+      "type":"string",
+      "max":32,
+      "min":3,
+      "pattern":"[a-z][a-z0-9-]*"
+    },
+    "IngestionJobResourceArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b|aws-iso-c|aws-iso-d|aws-iso-e):aoss:[a-z0-9-]+:\\d{12}:collection/[a-z0-9]{3,40}/ingestion-job/[a-z0-9]{20,64}"
+    },
+    "IngestionJobS3Source":{
+      "type":"structure",
+      "members":{
+        "bucket":{"shape":"S3BucketNameOrArn"},
+        "bucketOwnerAccountId":{"shape":"BucketOwnerAccountId"},
+        "keyPrefix":{"shape":"IngestionJobS3SourceKeyPrefixString"}
+      }
+    },
+    "IngestionJobS3SourceKeyPrefixString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "IngestionJobSource":{
+      "type":"structure",
+      "required":["s3"],
+      "members":{
+        "s3":{"shape":"IngestionJobS3Source"}
+      }
+    },
+    "IngestionJobStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "COMPLETED",
+        "CANCELLING",
+        "CANCELLED",
+        "FAILED",
+        "CREATE_FAILED",
+        "CANCEL_FAILED"
+      ]
+    },
+    "IngestionJobSummaries":{
+      "type":"list",
+      "member":{"shape":"IngestionJobSummary"}
+    },
+    "IngestionJobSummary":{
+      "type":"structure",
+      "members":{
+        "ingestionJobId":{"shape":"IngestionJobId"},
+        "arn":{"shape":"IngestionJobResourceArn"},
+        "ingestionJobName":{"shape":"IngestionJobName"},
+        "indexName":{"shape":"IngestionIndexName"},
+        "status":{"shape":"IngestionJobStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "IngestionState":{
+      "type":"string",
+      "enum":[
+        "STARTING",
+        "SCANNING",
+        "INGESTION_IN_PROGRESS",
+        "INGESTION_COMPLETE",
+        "STOPPED",
+        "FAILED"
+      ]
+    },
+    "IngestionStatistics":{
+      "type":"structure",
+      "members":{
+        "s3":{"shape":"S3Statistics"}
+      }
+    },
+    "IngestionStreamDetail":{
+      "type":"structure",
+      "members":{
+        "ingestionStreamId":{"shape":"IngestionStreamId"},
+        "arn":{"shape":"IngestionStreamResourceArn"},
+        "collectionId":{"shape":"CollectionId"},
+        "ingestionStreamName":{"shape":"IngestionStreamName"},
+        "indexName":{"shape":"IngestionIndexName"},
+        "failureIndexName":{"shape":"IngestionIndexName"},
+        "source":{"shape":"IngestionStreamSource"},
+        "roleArn":{"shape":"RoleArn"},
+        "status":{"shape":"IngestionStreamStatus"},
+        "state":{"shape":"IngestionState"},
+        "statistics":{"shape":"IngestionStatistics"},
+        "revision":{"shape":"Long"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "failureReasons":{"shape":"IngestionFailureReasons"},
+        "activeAlerts":{"shape":"IngestionAlerts"}
+      }
+    },
+    "IngestionStreamId":{
+      "type":"string",
+      "max":64,
+      "min":20,
+      "pattern":"[a-z0-9]+"
+    },
+    "IngestionStreamName":{
+      "type":"string",
+      "max":32,
+      "min":3,
+      "pattern":"[a-z][a-z0-9-]*"
+    },
+    "IngestionStreamResourceArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b|aws-iso-c|aws-iso-d|aws-iso-e):aoss:[a-z0-9-]+:\\d{12}:collection/[a-z0-9]{3,40}/ingestion-stream/[a-z0-9]{20,64}"
+    },
+    "IngestionStreamS3Source":{
+      "type":"structure",
+      "required":["sqsArn"],
+      "members":{
+        "sqsArn":{"shape":"SqsArn"},
+        "buckets":{"shape":"StreamBucketConfigs"}
+      }
+    },
+    "IngestionStreamSource":{
+      "type":"structure",
+      "required":["s3"],
+      "members":{
+        "s3":{"shape":"IngestionStreamS3Source"}
+      }
+    },
+    "IngestionStreamStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "DELETING",
+        "DELETED",
+        "CREATE_FAILED",
+        "DELETE_FAILED"
+      ]
+    },
+    "IngestionStreamSummaries":{
+      "type":"list",
+      "member":{"shape":"IngestionStreamSummary"}
+    },
+    "IngestionStreamSummary":{
+      "type":"structure",
+      "members":{
+        "ingestionStreamId":{"shape":"IngestionStreamId"},
+        "arn":{"shape":"IngestionStreamResourceArn"},
+        "ingestionStreamName":{"shape":"IngestionStreamName"},
+        "indexName":{"shape":"IngestionIndexName"},
+        "status":{"shape":"IngestionStreamStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "InitialScan":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "Integer":{
       "type":"integer",
@@ -1874,6 +2388,50 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListIngestionJobsRequest":{
+      "type":"structure",
+      "required":["collectionId"],
+      "members":{
+        "collectionId":{"shape":"CollectionId"},
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"ListIngestionJobsRequestMaxResultsInteger"}
+      }
+    },
+    "ListIngestionJobsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListIngestionJobsResponse":{
+      "type":"structure",
+      "members":{
+        "ingestionJobSummaries":{"shape":"IngestionJobSummaries"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListIngestionStreamsRequest":{
+      "type":"structure",
+      "required":["collectionId"],
+      "members":{
+        "collectionId":{"shape":"CollectionId"},
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"ListIngestionStreamsRequestMaxResultsInteger"}
+      }
+    },
+    "ListIngestionStreamsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListIngestionStreamsResponse":{
+      "type":"structure",
+      "members":{
+        "ingestionStreamSummaries":{"shape":"IngestionStreamSummaries"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListLifecyclePoliciesRequest":{
       "type":"structure",
       "required":["type"],
@@ -2039,6 +2597,26 @@
       "type":"string",
       "enum":["index"]
     },
+    "RoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b|aws-iso-c|aws-iso-d|aws-iso-e):iam::\\d{12}:role/.+"
+    },
+    "S3BucketNameOrArn":{
+      "type":"string",
+      "max":2048,
+      "min":3,
+      "pattern":"(arn:[a-z0-9\\-]+:s3:::[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]|[a-z0-9][a-z0-9.-]{1,61}[a-z0-9])"
+    },
+    "S3Statistics":{
+      "type":"structure",
+      "members":{
+        "objectsDiscovered":{"shape":"Long"},
+        "objectsIngested":{"shape":"Long"},
+        "objectsFailed":{"shape":"Long"}
+      }
+    },
     "SamlConfigOptions":{
       "type":"structure",
       "required":["metadata"],
@@ -2192,12 +2770,33 @@
       },
       "exception":true
     },
+    "SqsArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b|aws-iso-c|aws-iso-d|aws-iso-e):sqs:[a-z0-9-]+:\\d{12}:.+"
+    },
     "StandbyReplicas":{
       "type":"string",
       "enum":[
         "ENABLED",
         "DISABLED"
       ]
+    },
+    "StreamBucketConfig":{
+      "type":"structure",
+      "required":["bucket"],
+      "members":{
+        "bucket":{"shape":"S3BucketNameOrArn"},
+        "bucketOwnerAccountId":{"shape":"BucketOwnerAccountId"},
+        "initialScan":{"shape":"InitialScan"}
+      }
+    },
+    "StreamBucketConfigs":{
+      "type":"list",
+      "member":{"shape":"StreamBucketConfig"},
+      "max":5,
+      "min":0
     },
     "String":{"type":"string"},
     "SubnetId":{
@@ -2259,6 +2858,7 @@
       "max":50,
       "min":0
     },
+    "Timestamp":{"type":"timestamp"},
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -2320,6 +2920,7 @@
         "type":{"shape":"CollectionType"},
         "description":{"shape":"String"},
         "vectorOptions":{"shape":"VectorOptions"},
+        "kmsKeyArn":{"shape":"String"},
         "arn":{"shape":"String"},
         "createdDate":{"shape":"Long"},
         "lastModifiedDate":{"shape":"Long"},
@@ -2371,6 +2972,7 @@
         "description":{"shape":"UpdateCollectionRequestDescriptionString"},
         "vectorOptions":{"shape":"VectorOptions"},
         "deletionProtection":{"shape":"DeletionProtection"},
+        "encryptionConfig":{"shape":"EncryptionConfig"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true

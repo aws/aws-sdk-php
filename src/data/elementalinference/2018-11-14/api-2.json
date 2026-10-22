@@ -71,6 +71,26 @@
       ],
       "idempotent":true
     },
+    "CreateScheduleAction":{
+      "name":"CreateScheduleAction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/feed/{id}/schedule-actions",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateScheduleActionRequest"},
+      "output":{"shape":"CreateScheduleActionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
     "DeleteDictionary":{
       "name":"DeleteDictionary",
       "http":{
@@ -123,6 +143,25 @@
         {"shape":"InternalServerErrorException"},
         {"shape":"AccessDeniedException"},
         {"shape":"TooManyRequestException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteScheduleAction":{
+      "name":"DeleteScheduleAction",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/feed/{id}/schedule-actions",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteScheduleActionRequest"},
+      "output":{"shape":"DeleteScheduleActionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -262,6 +301,24 @@
       },
       "input":{"shape":"ListFeedsRequest"},
       "output":{"shape":"ListFeedsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"}
+      ],
+      "readonly":true
+    },
+    "ListScheduleActions":{
+      "name":"ListScheduleActions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/feed/{id}/schedule-actions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListScheduleActionsRequest"},
+      "output":{"shape":"ListScheduleActionsResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
@@ -593,6 +650,41 @@
       "type":"list",
       "member":{"shape":"CreateOutput"}
     },
+    "CreateScheduleActionRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "actionName",
+        "startConfiguration",
+        "operations"
+      ],
+      "members":{
+        "id":{
+          "shape":"FeedId",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "actionName":{"shape":"ResourceName"},
+        "startConfiguration":{"shape":"ScheduleActionStartConfiguration"},
+        "operations":{"shape":"ScheduleActionOperations"}
+      }
+    },
+    "CreateScheduleActionResponse":{
+      "type":"structure",
+      "required":[
+        "actionName",
+        "startConfiguration",
+        "operations",
+        "status"
+      ],
+      "members":{
+        "actionName":{"shape":"ResourceName"},
+        "startConfiguration":{"shape":"ScheduleActionStartConfiguration"},
+        "operations":{"shape":"ScheduleActionOperations"},
+        "status":{"shape":"ScheduleActionStatus"},
+        "error":{"shape":"ScheduleActionError"}
+      }
+    },
     "CroppingConfig":{
       "type":"structure",
       "members":{
@@ -670,6 +762,32 @@
         "arn":{"shape":"FeedArn"},
         "id":{"shape":"FeedId"},
         "status":{"shape":"FeedStatus"}
+      }
+    },
+    "DeleteScheduleActionRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "actionName"
+      ],
+      "members":{
+        "id":{
+          "shape":"FeedId",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "actionName":{
+          "shape":"ResourceName",
+          "location":"querystring",
+          "locationName":"actionName"
+        }
+      }
+    },
+    "DeleteScheduleActionResponse":{
+      "type":"structure",
+      "required":["actionName"],
+      "members":{
+        "actionName":{"shape":"ResourceName"}
       }
     },
     "DictionaryArn":{"type":"string"},
@@ -842,6 +960,13 @@
       "member":{"shape":"FilterValue"},
       "max":10,
       "min":0
+    },
+    "FixedModeScheduleActionStartSettings":{
+      "type":"structure",
+      "required":["scheduledAt"],
+      "members":{
+        "scheduledAt":{"shape":"Timestamp"}
+      }
     },
     "FixtureDate":{
       "type":"string",
@@ -1091,6 +1216,41 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListScheduleActionsRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"FeedId",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "maxResults":{
+          "shape":"ListScheduleActionsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListScheduleActionsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListScheduleActionsResponse":{
+      "type":"structure",
+      "required":["scheduleActions"],
+      "members":{
+        "scheduleActions":{"shape":"ScheduleActionList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -1157,9 +1317,16 @@
       "type":"structure",
       "members":{}
     },
+    "RemoveClippingDataSourceConfiguration":{
+      "type":"structure",
+      "required":["outputName"],
+      "members":{
+        "outputName":{"shape":"ResourceName"}
+      }
+    },
     "ResourceArn":{
       "type":"string",
-      "pattern":"arn:aws[a-z\\-]*:elemental-inference[a-z\\-]*:[a-z0-9\\-]+:[0-9]{12}:(feed|dictionary)/[a-zA-Z0-9]{1,19}"
+      "pattern":"arn:aws[a-z\\-]*:elemental-inference[a-z\\-]*:[a-z0-9\\-]+:[0-9]{12}:[a-z]+/[a-zA-Z0-9]{1,19}"
     },
     "ResourceDescription":{
       "type":"string",
@@ -1188,6 +1355,76 @@
       "max":255,
       "min":10,
       "pattern":"s3://[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]/.+"
+    },
+    "ScheduleAction":{
+      "type":"structure",
+      "required":[
+        "actionName",
+        "startConfiguration",
+        "operations",
+        "status"
+      ],
+      "members":{
+        "actionName":{"shape":"ResourceName"},
+        "startConfiguration":{"shape":"ScheduleActionStartConfiguration"},
+        "operations":{"shape":"ScheduleActionOperations"},
+        "status":{"shape":"ScheduleActionStatus"},
+        "error":{"shape":"ScheduleActionError"}
+      }
+    },
+    "ScheduleActionError":{
+      "type":"structure",
+      "required":[
+        "errorCode",
+        "errorMessage"
+      ],
+      "members":{
+        "errorCode":{"shape":"ScheduleActionErrorCode"},
+        "errorMessage":{"shape":"String"}
+      }
+    },
+    "ScheduleActionErrorCode":{
+      "type":"string",
+      "enum":[
+        "INVALID_ACTION_TARGET",
+        "INTERNAL_ERROR"
+      ]
+    },
+    "ScheduleActionList":{
+      "type":"list",
+      "member":{"shape":"ScheduleAction"},
+      "max":100,
+      "min":0
+    },
+    "ScheduleActionOperation":{
+      "type":"structure",
+      "members":{
+        "updateOutputStatus":{"shape":"UpdateOutputStatus"},
+        "updateClippingDataSourceConfiguration":{"shape":"UpdateClippingDataSourceConfiguration"},
+        "removeClippingDataSourceConfiguration":{"shape":"RemoveClippingDataSourceConfiguration"}
+      },
+      "union":true
+    },
+    "ScheduleActionOperations":{
+      "type":"list",
+      "member":{"shape":"ScheduleActionOperation"},
+      "max":10,
+      "min":1
+    },
+    "ScheduleActionStartConfiguration":{
+      "type":"structure",
+      "members":{
+        "fixedModeScheduleActionStartSettings":{"shape":"FixedModeScheduleActionStartSettings"}
+      },
+      "union":true
+    },
+    "ScheduleActionStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "COMPLETED",
+        "FAILED"
+      ]
     },
     "SearchFilter":{
       "type":"structure",
@@ -1341,6 +1578,7 @@
       "max":2,
       "min":1
     },
+    "Timestamp":{"type":"timestamp"},
     "TooManyRequestException":{
       "type":"structure",
       "required":["message"],
@@ -1385,6 +1623,17 @@
           "location":"querystring",
           "locationName":"tagKeys"
         }
+      }
+    },
+    "UpdateClippingDataSourceConfiguration":{
+      "type":"structure",
+      "required":[
+        "outputName",
+        "dataSourceConfiguration"
+      ],
+      "members":{
+        "outputName":{"shape":"ResourceName"},
+        "dataSourceConfiguration":{"shape":"DataSourceConfiguration"}
       }
     },
     "UpdateDictionaryRequest":{
@@ -1478,6 +1727,17 @@
     "UpdateOutputList":{
       "type":"list",
       "member":{"shape":"UpdateOutput"}
+    },
+    "UpdateOutputStatus":{
+      "type":"structure",
+      "required":[
+        "outputName",
+        "status"
+      ],
+      "members":{
+        "outputName":{"shape":"ResourceName"},
+        "status":{"shape":"OutputStatus"}
+      }
     },
     "ValidationException":{
       "type":"structure",

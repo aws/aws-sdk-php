@@ -240,6 +240,7 @@
     "ListQueues": "<p>Provides information about the queues for the specified Connect Customer instance.</p> <p>If you do not specify a <code>QueueTypes</code> parameter, both standard and agent queues are returned. This might cause an unexpected truncation of results if you have more than 1000 agents and you limit the number of results of the API call in code.</p> <p>For more information about queues, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/concepts-queues-standard-and-agent.html\">Queues: Standard and Agent</a> in the <i>Connect Customer Administrator Guide</i>.</p>",
     "ListQuickConnects": "<p>Provides information about the quick connects for the specified Connect Customer instance. </p>",
     "ListRealtimeContactAnalysisSegmentsV2": "<p>Provides a list of analysis segments for a real-time chat analysis session. This API supports CHAT channels only. </p> <important> <p>This API does not support VOICE. If you attempt to use it for VOICE, an <code>InvalidRequestException</code> occurs.</p> </important>",
+    "ListReplicationFindings": "<p>Lists replication findings for resources of a specified resource type in a specified Connect Customer instance. A replication finding describes a single resource whose replication to one or more Regions is incomplete or has encountered an error. Results are returned in pages. This operation is available only for instances that are set up for Global Resiliency.</p>",
     "ListRoutingProfileManualAssignmentQueues": "<p>Lists the manual assignment queues associated with a routing profile.</p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>This API returns list of queues where contacts can be manually assigned or picked by an agent who has access to the Worklist app. The user can additionally filter on queues, if they have access to those queues (otherwise a invalid request exception will be thrown).</p> <p>For information about how manual contact assignment works in the agent workspace, see the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/worklist-app.html\">Access the Worklist app in the Connect Customer agent workspace</a> in the <i>Connect Customer Administrator Guide</i>. </p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>This API only returns the manual assignment queues associated with a routing profile. Use the ListRoutingProfileQueues API to list the auto assignment queues for the routing profile.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Connect Customer endpoints and quotas</a>.</p>",
     "ListRoutingProfileQueues": "<p>Lists the queues associated with a routing profile.</p>",
     "ListRoutingProfiles": "<p>Provides summary information about the routing profiles for the specified Connect Customer instance.</p> <p>For more information about routing profiles, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/concepts-routing.html\">Routing Profiles</a> and <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/routing-profiles.html\">Create a Routing Profile</a> in the <i>Connect Customer Administrator Guide</i>.</p>",
@@ -628,6 +629,7 @@
         "QuickConnectSummary$Arn": "<p>The Amazon Resource Name (ARN) of the quick connect.</p>",
         "RecipientList$member": null,
         "ReplicateInstanceResponse$Arn": "<p>The Amazon Resource Name (ARN) of the replicated instance.</p>",
+        "ReplicationFinding$Arn": "<p>The Amazon Resource Name (ARN) of the resource that the finding is for.</p>",
         "ResourceInUseException$ResourceId": "<p>The identifier for the resource.</p>",
         "RoutingProfile$RoutingProfileArn": "<p>The Amazon Resource Name (ARN) of the routing profile.</p>",
         "RoutingProfileManualAssignmentQueueConfigSummary$QueueArn": "<p>The Amazon Resource Name (ARN) of the queue.</p>",
@@ -1280,9 +1282,22 @@
         "UpdateSecurityProfileRequest$Applications": "<p>A list of the third-party application's metadata.</p>"
       }
     },
+    "ApproximateDriftedResourceCount": {
+      "base": "<p>Contains an approximate count of the resources of a given type that are not yet in sync in a Region, along with the time the count was last calculated.</p>",
+      "refs": {
+        "ApproximateDriftedResourceCounts$member": null
+      }
+    },
+    "ApproximateDriftedResourceCounts": {
+      "base": null,
+      "refs": {
+        "ListReplicationFindingsResponse$ApproximateDriftedResourceCounts": "<p>The approximate number of resources of the requested type that are not yet in sync, reported per Amazon Web Services Region. This count is independent of <code>ReplicationFindingsList</code> and can be higher than the number of findings returned. It is eventually consistent and can lag the current state of the instance. Each entry is the <code>ApproximateDriftedResourceCount</code> for one Region; a Region appears only when its count has been computed.</p>"
+      }
+    },
     "ApproximateTotalCount": {
       "base": null,
       "refs": {
+        "ApproximateDriftedResourceCount$Count": "<p>The approximate number of resources of the requested type that are not yet in sync in the Region. A value of zero means the resources are in sync.</p>",
         "GetCurrentMetricDataResponse$ApproximateTotalCount": "<p>The total count of the result, regardless of the current page size. </p>",
         "GetCurrentUserDataResponse$ApproximateTotalCount": "<p>The total count of the result, regardless of the current page size.</p>",
         "SearchAgentStatusesResponse$ApproximateTotalCount": "<p>The total number of agent statuses which matched your search query.</p>",
@@ -1834,11 +1849,14 @@
     "AwsRegion": {
       "base": null,
       "refs": {
+        "ApproximateDriftedResourceCount$Region": "<p>The Amazon Web Services Region that the count applies to.</p>",
         "Distribution$Region": "<p>The Amazon Web Services Region where the traffic is distributed.</p>",
         "IsolatedRegionsList$member": null,
         "ReplicateInstanceRequest$ReplicaRegion": "<p>The Amazon Web Services Region where to replicate the Connect Customer instance.</p>",
         "ReplicationConfiguration$SourceRegion": "<p>The Amazon Web Services Region where the source Connect Customer instance was created. This is the Region where the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ReplicateInstance.html\">ReplicateInstance</a> API was called to start the replication process.</p>",
+        "ReplicationFinding$Region": "<p>The Amazon Web Services Region that the finding was detected in.</p>",
         "ReplicationStatusSummary$Region": "<p>The Amazon Web Services Region. This can be either the source or the replica Region, depending where it appears in the summary list.</p>",
+        "ResourceReplicationStatus$Region": "<p>The Amazon Web Services Region that the replication status applies to.</p>",
         "SignInDistribution$Region": "<p>The Amazon Web Services Region of the sign in distribution.</p>"
       }
     },
@@ -8022,6 +8040,7 @@
         "GetContactMetricsRequest$ContactId": "<p>The identifier of the contact in this instance of Connect Customer. </p>",
         "ListContactFlowAliasesRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListContactFlowModuleAliasesRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "ListReplicationFindingsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can provide either the instance ID or the full instance ARN. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchResourceTagsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can find the instanceId in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchTestCasesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchViewsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -8285,6 +8304,8 @@
         "ListPhoneNumbersV2Response$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListRealtimeContactAnalysisSegmentsV2Request$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListRealtimeContactAnalysisSegmentsV2Response$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "ListReplicationFindingsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListReplicationFindingsResponse$NextToken": "<p>If there are additional results, this is the token for retrieving the next page of <code>ReplicationFindingsList</code>.</p>",
         "ListTestCaseExecutionRecordsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "SearchAvailablePhoneNumbersRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "SearchAvailablePhoneNumbersResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
@@ -8760,6 +8781,14 @@
       "base": null,
       "refs": {}
     },
+    "ListReplicationFindingsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListReplicationFindingsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListRoutingProfileManualAssignmentQueuesRequest": {
       "base": null,
       "refs": {}
@@ -9041,6 +9070,7 @@
         "ListQueueEmailAddressesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListQueueQuickConnectsRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
         "ListRealtimeContactAnalysisSegmentsV2Request$MaxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListReplicationFindingsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListRoutingProfileManualAssignmentQueuesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListRoutingProfileQueuesRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
         "ListTaskTemplatesRequest$MaxResults": "<p>The maximum number of results to return per page.</p> <important> <p>It is not expected that you set this.</p> </important>",
@@ -12111,6 +12141,49 @@
         "DescribeInstanceResponse$ReplicationConfiguration": "<p>Status information about the replication process. This field is included only when you are using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ReplicateInstance.html\">ReplicateInstance</a> API to replicate an Connect Customer instance across Amazon Web Services Regions. For information about replicating Connect Customer instances, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-replica-connect-instance.html\">Create a replica of your existing Connect Customer instance</a> in the <i>Connect Customer Administrator Guide</i>.</p>"
       }
     },
+    "ReplicationFinding": {
+      "base": "<p>Contains information about a resource that could not be replicated across the Regions of a Global Resiliency deployment, including the reason and any action required to resolve it.</p>",
+      "refs": {
+        "ReplicationFindingsList$member": null
+      }
+    },
+    "ReplicationFindingMessage": {
+      "base": null,
+      "refs": {
+        "ReplicationFinding$Message": "<p>A human-readable description of the finding and the action, if any, required to resolve it.</p>"
+      }
+    },
+    "ReplicationFindingOperation": {
+      "base": null,
+      "refs": {
+        "ReplicationFinding$Operation": "<p>The replication operation that produced the finding, such as a create, update, or delete of the resource.</p>"
+      }
+    },
+    "ReplicationFindingReferenceCode": {
+      "base": null,
+      "refs": {
+        "ReplicationFinding$ReferenceCode": "<p>A stable code that identifies the class of the finding. Use this code to look up the recommended steps to resolve the finding.</p>"
+      }
+    },
+    "ReplicationFindingResourceName": {
+      "base": null,
+      "refs": {
+        "ReplicationFinding$Name": "<p>The name of the resource that the finding is for.</p>"
+      }
+    },
+    "ReplicationFindingResourceType": {
+      "base": null,
+      "refs": {
+        "ListReplicationFindingsRequest$ResourceType": "<p>The type of resource to list replication findings for. The following values are currently supported: <code>AGENT</code>, <code>AGENT_GROUP</code>, <code>AGENT_GROUP_LEVEL</code>, <code>AGENT_STATE</code>, <code>ATTRIBUTE</code>, <code>CONTACT_FLOW</code>, <code>DATA_TABLE</code>, <code>DATA_TABLE_ATTRIBUTE</code>, <code>DATA_TABLE_RECORD</code>, <code>DATA_TABLE_VALUE</code>, <code>FLOW_MODULE</code>, <code>FLOW_MODULE_ALIAS</code>, <code>FLOW_MODULE_VERSION</code>, <code>METRIC</code>, <code>NOTIFICATION</code>, <code>OPERATING_HOURS</code>, <code>PHONE_NUMBER</code>, <code>PROMPT</code>, <code>QUEUE</code>, <code>REPORT</code>, <code>ROUTING_PROFILE</code>, <code>SECURITY_PROFILE</code>, <code>TASK_TEMPLATE</code>, <code>TEST_CASE</code>, <code>TRANSFER_DESTINATION</code>, <code>VIEW</code>, and <code>WORKSPACE</code>. Additional resource types can be supported over time. Specifying a value that is not currently supported returns an <code>InvalidRequestException</code>.</p>",
+        "ReplicationFinding$ResourceType": "<p>The type of resource that the finding is for, such as <code>QUEUE</code> or <code>ROUTING_PROFILE</code>.</p>"
+      }
+    },
+    "ReplicationFindingsList": {
+      "base": null,
+      "refs": {
+        "ListReplicationFindingsResponse$ReplicationFindingsList": "<p>A list of replication findings for the requested resource type. Only findings that require your action are returned, so this list can be empty even when a drift count is nonzero. Results are paginated.</p>"
+      }
+    },
     "ReplicationStatusReason": {
       "base": null,
       "refs": {
@@ -12214,6 +12287,7 @@
         "GetEvaluationFormValidationRequest$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "GetEvaluationFormValidationResponse$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "ListEvaluationFormVersionsRequest$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
+        "ReplicationFinding$Id": "<p>The identifier of the resource that the finding is for.</p>",
         "StartContactEvaluationRequest$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "StartContactEvaluationResponse$EvaluationId": "<p>A unique identifier for the contact evaluation.</p>",
         "StartEvaluationFormValidationRequest$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
@@ -12239,6 +12313,24 @@
     "ResourceNotReadyException": {
       "base": "<p>The resource is not ready.</p>",
       "refs": {}
+    },
+    "ResourceReplicationStatus": {
+      "base": "<p>Indicates whether a resource type is being replicated and kept in sync in a specific Amazon Web Services Region of a Global Resiliency deployment.</p>",
+      "refs": {
+        "ResourceReplicationStatuses$member": null
+      }
+    },
+    "ResourceReplicationStatusValue": {
+      "base": null,
+      "refs": {
+        "ResourceReplicationStatus$Status": "<p>The replication status of the resource type in the Region, such as <code>ENABLED</code>, <code>BLOCKED</code>, or <code>DISABLED</code>.</p>"
+      }
+    },
+    "ResourceReplicationStatuses": {
+      "base": null,
+      "refs": {
+        "ListReplicationFindingsResponse$ResourceReplicationStatuses": "<p>The replication status of the requested resource type in each Amazon Web Services Region across which the Connect Customer instance is deployed for Global Resiliency, with one entry per Region. This set describes the overall replication state for the request and is returned in full on every page of results, so it does not change as you paginate.</p>"
+      }
     },
     "ResourceTagsSearchCriteria": {
       "base": "<p>The search criteria to be used to search tags.</p>",
@@ -14635,6 +14727,7 @@
         "AgentStatus$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "AgentStatusReference$StatusStartTimestamp": "<p>The start timestamp of the agent's status.</p>",
         "AgentStatusSummary$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
+        "ApproximateDriftedResourceCount$Timestamp": "<p>The time, in Unix epoch time, when the count was last calculated.</p>",
         "AssociatedContactSummary$InitiationTimestamp": "<p>The date and time this contact was initiated, in UTC time.</p>",
         "AssociatedContactSummary$DisconnectTimestamp": "<p>The date and time that the customer endpoint disconnected from the current contact, in UTC time. In transfer scenarios, the DisconnectTimestamp of the previous contact indicates the date and time when that contact ended.</p>",
         "AuthenticationProfile$CreatedTime": "<p>The timestamp when the authentication profile was created.</p>",
@@ -14694,6 +14787,7 @@
         "GetPromptFileResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "GetTestCaseExecutionSummaryResponse$StartTime": "<p>The timestamp when the test case execution started.</p>",
         "GetTestCaseExecutionSummaryResponse$EndTime": "<p>The timestamp when the test case execution ended.</p>",
+        "GetTrafficDistributionResponse$LastFailoverTime": "<p>The timestamp of the most recent failover for the traffic distribution group. This value is updated each time <code>UpdateTrafficDistribution</code> is called to change the traffic distribution.</p>",
         "HierarchyGroup$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "HierarchyGroupSummary$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "HierarchyLevel$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",

@@ -135,10 +135,18 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listWorkerConfigurations(array{maxResults?: int, nextToken?: string, namePrefix?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listWorkerConfigurationsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listWorkerConfigurationsAsync(array{maxResults?: int, nextToken?: string, namePrefix?: string, ...} $args = [])
+ * @method \Aws\Result pauseConnector(array $args = [])
+ * @phpstan-method \Aws\Result pauseConnector(array{connectorArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise pauseConnectorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise pauseConnectorAsync(array{connectorArn?: string, ...} $args = [])
  * @method \Aws\Result restartConnector(array $args = [])
  * @phpstan-method \Aws\Result restartConnector(array{connectorArn?: string, onlyFailedTasks?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise restartConnectorAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise restartConnectorAsync(array{connectorArn?: string, onlyFailedTasks?: bool, ...} $args = [])
+ * @method \Aws\Result resumeConnector(array $args = [])
+ * @phpstan-method \Aws\Result resumeConnector(array{connectorArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise resumeConnectorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise resumeConnectorAsync(array{connectorArn?: string, ...} $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @phpstan-method \Aws\Result tagResource(array{resourceArn?: string, tags?: array<string, string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
@@ -163,6 +171,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     connectorConfiguration?: array<string, string>,
+ *     skipHealthValidation?: bool,
  *     connectorArn?: string,
  *     currentVersion?: string,
  *     ...,
@@ -183,6 +192,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     connectorConfiguration?: array<string, string>,
+ *     skipHealthValidation?: bool,
  *     connectorArn?: string,
  *     currentVersion?: string,
  *     ...,

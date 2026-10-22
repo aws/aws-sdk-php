@@ -25,6 +25,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result batchGetVpcEndpoint(array{ids?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetVpcEndpointAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise batchGetVpcEndpointAsync(array{ids?: list<string>, ...} $args = [])
+ * @method \Aws\Result cancelIngestionJob(array $args = [])
+ * @phpstan-method \Aws\Result cancelIngestionJob(array{collectionId?: string, ingestionJobId?: string, clientToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelIngestionJobAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise cancelIngestionJobAsync(array{collectionId?: string, ingestionJobId?: string, clientToken?: string, ...} $args = [])
  * @method \Aws\Result createAccessPolicy(array $args = [])
  * @phpstan-method \Aws\Result createAccessPolicy(array{type?: 'data', name?: string, description?: string, policy?: string, clientToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise createAccessPolicyAsync(array $args = [])
@@ -95,6 +99,52 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result createIndex(array{id?: string, indexName?: string, indexSchema?: array, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise createIndexAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createIndexAsync(array{id?: string, indexName?: string, indexSchema?: array, ...} $args = [])
+ * @method \Aws\Result createIngestionJob(array $args = [])
+ * @phpstan-method \Aws\Result createIngestionJob(array{
+ *     collectionId?: string,
+ *     ingestionJobName?: string,
+ *     indexName?: string,
+ *     failureIndexName?: string,
+ *     source?: array{s3?: array{bucket?: string, bucketOwnerAccountId?: string, keyPrefix?: string, ...}, ...},
+ *     tags?: list<array{key?: string, value?: string, ...}>,
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createIngestionJobAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createIngestionJobAsync(array{
+ *     collectionId?: string,
+ *     ingestionJobName?: string,
+ *     indexName?: string,
+ *     failureIndexName?: string,
+ *     source?: array{s3?: array{bucket?: string, bucketOwnerAccountId?: string, keyPrefix?: string, ...}, ...},
+ *     tags?: list<array{key?: string, value?: string, ...}>,
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createIngestionStream(array $args = [])
+ * @phpstan-method \Aws\Result createIngestionStream(array{
+ *     collectionId?: string,
+ *     ingestionStreamName?: string,
+ *     indexName?: string,
+ *     failureIndexName?: string,
+ *     source?: array{s3?: array{sqsArn?: string, buckets?: list<array>, ...}, ...},
+ *     roleArn?: string,
+ *     tags?: list<array{key?: string, value?: string, ...}>,
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createIngestionStreamAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createIngestionStreamAsync(array{
+ *     collectionId?: string,
+ *     ingestionStreamName?: string,
+ *     indexName?: string,
+ *     failureIndexName?: string,
+ *     source?: array{s3?: array{sqsArn?: string, buckets?: list<array>, ...}, ...},
+ *     roleArn?: string,
+ *     tags?: list<array{key?: string, value?: string, ...}>,
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createLifecyclePolicy(array $args = [])
  * @phpstan-method \Aws\Result createLifecyclePolicy(array{type?: 'retention', name?: string, description?: string, policy?: string, clientToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise createLifecyclePolicyAsync(array $args = [])
@@ -197,6 +247,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteIndex(array{id?: string, indexName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteIndexAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteIndexAsync(array{id?: string, indexName?: string, ...} $args = [])
+ * @method \Aws\Result deleteIngestionStream(array $args = [])
+ * @phpstan-method \Aws\Result deleteIngestionStream(array{collectionId?: string, ingestionStreamId?: string, clientToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteIngestionStreamAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteIngestionStreamAsync(array{collectionId?: string, ingestionStreamId?: string, clientToken?: string, ...} $args = [])
  * @method \Aws\Result deleteLifecyclePolicy(array $args = [])
  * @phpstan-method \Aws\Result deleteLifecyclePolicy(array{type?: 'retention', name?: string, clientToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteLifecyclePolicyAsync(array $args = [])
@@ -225,6 +279,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getIndex(array{id?: string, indexName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getIndexAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getIndexAsync(array{id?: string, indexName?: string, ...} $args = [])
+ * @method \Aws\Result getIngestionJob(array $args = [])
+ * @phpstan-method \Aws\Result getIngestionJob(array{collectionId?: string, ingestionJobId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getIngestionJobAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getIngestionJobAsync(array{collectionId?: string, ingestionJobId?: string, ...} $args = [])
+ * @method \Aws\Result getIngestionStream(array $args = [])
+ * @phpstan-method \Aws\Result getIngestionStream(array{collectionId?: string, ingestionStreamId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getIngestionStreamAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getIngestionStreamAsync(array{collectionId?: string, ingestionStreamId?: string, ...} $args = [])
  * @method \Aws\Result getPoliciesStats(array $args = [])
  * @phpstan-method \Aws\Result getPoliciesStats(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getPoliciesStatsAsync(array $args = [])
@@ -269,6 +331,14 @@ use Aws\AwsClient;
  *     maxResults?: int,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listIngestionJobs(array $args = [])
+ * @phpstan-method \Aws\Result listIngestionJobs(array{collectionId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listIngestionJobsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listIngestionJobsAsync(array{collectionId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \Aws\Result listIngestionStreams(array $args = [])
+ * @phpstan-method \Aws\Result listIngestionStreams(array{collectionId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listIngestionStreamsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listIngestionStreamsAsync(array{collectionId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \Aws\Result listLifecyclePolicies(array $args = [])
  * @phpstan-method \Aws\Result listLifecyclePolicies(array{type?: 'retention', resources?: list<string>, nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listLifecyclePoliciesAsync(array $args = [])
@@ -337,6 +407,7 @@ use Aws\AwsClient;
  *     description?: string,
  *     vectorOptions?: array{ServerlessVectorAcceleration?: 'ALLOWED'|'DISABLED'|'ENABLED', ...},
  *     deletionProtection?: 'DISABLED'|'ENABLED',
+ *     encryptionConfig?: array{aWSOwnedKey?: bool, kmsKeyArn?: string, ...},
  *     clientToken?: string,
  *     ...,
  * } $args = [])
@@ -346,6 +417,7 @@ use Aws\AwsClient;
  *     description?: string,
  *     vectorOptions?: array{ServerlessVectorAcceleration?: 'ALLOWED'|'DISABLED'|'ENABLED', ...},
  *     deletionProtection?: 'DISABLED'|'ENABLED',
+ *     encryptionConfig?: array{aWSOwnedKey?: bool, kmsKeyArn?: string, ...},
  *     clientToken?: string,
  *     ...,
  * } $args = [])

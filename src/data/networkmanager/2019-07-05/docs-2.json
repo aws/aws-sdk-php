@@ -67,6 +67,7 @@
     "GetTransitGatewayRegistrations": "<p>Gets information about the transit gateway registrations in a specified global network.</p>",
     "GetTransitGatewayRouteTableAttachment": "<p>Returns information about a transit gateway route table attachment.</p>",
     "GetVpcAttachment": "<p>Returns information about a VPC attachment.</p>",
+    "ListAttachmentNatConfigurations": "<p>Returns the NAT configurations of core network attachments. You must specify either a core network ID or an attachment ID. Only the core network owner can list NAT configurations.</p>",
     "ListAttachmentRoutingPolicyAssociations": "<p>Lists the routing policy associations for attachments in a core network.</p>",
     "ListAttachments": "<p>Returns a list of core network attachments.</p>",
     "ListConnectPeers": "<p>Returns a list of core network Connect peers.</p>",
@@ -88,6 +89,7 @@
     "StartRouteAnalysis": "<p>Starts analyzing the routing path between the specified source and destination. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/tgw/route-analyzer.html\">Route Analyzer</a>.</p>",
     "TagResource": "<p>Tags a specified resource.</p>",
     "UntagResource": "<p>Removes tags from a specified resource.</p>",
+    "UpdateAttachmentNatConfiguration": "<p>Updates the NAT configuration of a core network attachment. You can enable or disable NAT gateway support, specify whether the core network installs system routes for the NAT CIDR blocks, and replace the NAT rules of the attachment. Specify at least one of <code>NatGatewaySupport</code>, <code>NatSystemRouteSupport</code>, or <code>NatGatewayRules</code>.</p> <p>Only the core network owner can update the NAT configuration of an attachment. The attachment must be in the <code>AVAILABLE</code>, <code>PENDING_ATTACHMENT_ACCEPTANCE</code>, or <code>PENDING_TAG_ACCEPTANCE</code> state. Changes are applied asynchronously, and the attachment is in the <code>UPDATING</code> state while they are applied. If the attachment is pending acceptance, the NAT configuration is stored and is applied after the attachment is accepted.</p>",
     "UpdateConnection": "<p>Updates the information for an existing connection. To remove information for any of the parameters, specify an empty string.</p>",
     "UpdateCoreNetwork": "<p>Updates the description of a core network.</p>",
     "UpdateDevice": "<p>Updates the details for an existing device. To remove information for any of the parameters, specify an empty string.</p>",
@@ -226,6 +228,7 @@
       "refs": {
         "AcceptAttachmentRequest$AttachmentId": "<p>The ID of the attachment. </p>",
         "Attachment$AttachmentId": "<p>The ID of the attachment.</p>",
+        "AttachmentNatConfiguration$AttachmentId": "<p>The ID of the attachment.</p>",
         "AttachmentRoutingPolicyAssociationSummary$AttachmentId": "<p>The ID of the attachment associated with the routing policy.</p>",
         "ConnectAttachment$TransportAttachmentId": "<p>The ID of the transport attachment.</p>",
         "ConnectPeer$ConnectAttachmentId": "<p>The ID of the attachment to connect.</p>",
@@ -239,6 +242,7 @@
         "GetSiteToSiteVpnAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>",
         "GetTransitGatewayRouteTableAttachmentRequest$AttachmentId": "<p>The ID of the transit gateway route table attachment.</p>",
         "GetVpcAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>",
+        "ListAttachmentNatConfigurationsRequest$AttachmentId": "<p>The ID of an attachment. Returns the NAT configuration of the specified attachment. If you specify both an attachment ID and a core network ID, the attachment ID is used.</p>",
         "ListAttachmentRoutingPolicyAssociationsRequest$AttachmentId": "<p>The ID of a specific attachment to filter the routing policy associations.</p>",
         "ListConnectPeersRequest$ConnectAttachmentId": "<p>The ID of the attachment.</p>",
         "NetworkRouteDestination$CoreNetworkAttachmentId": "<p>The ID of a core network attachment.</p>",
@@ -247,6 +251,8 @@
         "RejectAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>",
         "RemoveAttachmentRoutingPolicyLabelRequest$AttachmentId": "<p>The ID of the attachment to remove the routing policy label from.</p>",
         "RemoveAttachmentRoutingPolicyLabelResponse$AttachmentId": "<p>The ID of the attachment from which the routing policy label was removed.</p>",
+        "UpdateAttachmentNatConfigurationRequest$AttachmentId": "<p>The ID of the attachment to update the NAT configuration for.</p>",
+        "UpdateAttachmentNatConfigurationResponse$AttachmentId": "<p>The ID of the attachment.</p>",
         "UpdateDirectConnectGatewayAttachmentRequest$AttachmentId": "<p>The ID of the Direct Connect gateway attachment for the updated edge locations. </p>",
         "UpdateVpcAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>"
       }
@@ -255,6 +261,18 @@
       "base": null,
       "refs": {
         "ListAttachmentsResponse$Attachments": "<p>Describes the list of attachments.</p>"
+      }
+    },
+    "AttachmentNatConfiguration": {
+      "base": "<p>Describes the NAT configuration of a core network attachment.</p>",
+      "refs": {
+        "AttachmentNatConfigurationList$member": null
+      }
+    },
+    "AttachmentNatConfigurationList": {
+      "base": null,
+      "refs": {
+        "ListAttachmentNatConfigurationsResponse$AttachmentNatConfigurations": "<p>The NAT configurations of the attachments.</p>"
       }
     },
     "AttachmentRoutingPolicyAssociationSummary": {
@@ -314,6 +332,17 @@
         "VpcOptions$SecurityGroupReferencingSupport": "<p>Indicates whether security group referencing is enabled for this VPC attachment. The default is <code>true</code>. However, at the core network policy-level the default is set to <code>false</code>.</p>"
       }
     },
+    "BoxedBoolean": {
+      "base": null,
+      "refs": {
+        "Attachment$NatSystemRouteSupport": "<p>Indicates whether the core network installs system routes for the NAT CIDR blocks of the attachment's NAT rules. This is returned only to the core network owner for attachment types that support NAT.</p>",
+        "AttachmentNatConfiguration$NatSystemRouteSupport": "<p>Indicates whether the core network installs system routes for the NAT CIDR blocks of the attachment's NAT rules.</p>",
+        "CreateDirectConnectGatewayAttachmentRequest$NatSystemRouteSupport": "<p>Specifies whether the core network installs system routes for the NAT CIDR blocks of the attachment's NAT rules. System routes have a route type of <code>SYSTEM</code>. NAT is applied to traffic whether or not this option is enabled. The default is <code>true</code>.</p>",
+        "CreateSiteToSiteVpnAttachmentRequest$NatSystemRouteSupport": "<p>Specifies whether the core network installs system routes for the NAT CIDR blocks of the attachment's NAT rules. System routes have a route type of <code>SYSTEM</code>. NAT is applied to traffic whether or not this option is enabled. The default is <code>true</code> for VPN connections that use BGP and <code>false</code> for VPN connections that use static routing. If the VPN connection uses static routing, you must specify <code>false</code> or omit this parameter.</p>",
+        "UpdateAttachmentNatConfigurationRequest$NatSystemRouteSupport": "<p>Specifies whether the core network installs system routes for the NAT CIDR blocks of the attachment's NAT rules. System routes have a route type of <code>SYSTEM</code>. NAT is applied to traffic whether or not this option is enabled. If you omit this parameter, the current value is unchanged.</p>",
+        "UpdateAttachmentNatConfigurationResponse$NatSystemRouteSupport": "<p>Indicates whether the core network installs system routes for the NAT CIDR blocks of the attachment's NAT rules.</p>"
+      }
+    },
     "ChangeAction": {
       "base": null,
       "refs": {
@@ -354,7 +383,8 @@
         "CreateTransitGatewayRouteTableAttachmentRequest$ClientToken": "<p>The client token associated with the request.</p>",
         "CreateVpcAttachmentRequest$ClientToken": "<p>The client token associated with the request.</p>",
         "PutAttachmentRoutingPolicyLabelRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
-        "PutCoreNetworkPolicyRequest$ClientToken": "<p>The client token associated with the request.</p>"
+        "PutCoreNetworkPolicyRequest$ClientToken": "<p>The client token associated with the request.</p>",
+        "UpdateAttachmentNatConfigurationRequest$ClientToken": "<p>The client token associated with the request.</p>"
       }
     },
     "ConflictException": {
@@ -677,6 +707,10 @@
         "GetNetworkRoutesRequest$SubnetOfMatches": "<p>The routes with a subnet that match the specified CIDR filter.</p>",
         "GetNetworkRoutesRequest$SupernetOfMatches": "<p>The routes with a CIDR that encompasses the CIDR filter. Example: If you specify 10.0.1.0/30, then the result returns 10.0.1.0/29.</p>",
         "GetNetworkRoutesRequest$PrefixListIds": "<p>The IDs of the prefix lists.</p>",
+        "ListCoreNetworkRoutingInformationRequest$ExactPrefixMatches": "<p>Exact prefix values to match when filtering routing information.</p>",
+        "ListCoreNetworkRoutingInformationRequest$LongestPrefixMatches": "<p>Filters routing information based on the longest prefix that matches each provided IP address.</p>",
+        "ListCoreNetworkRoutingInformationRequest$SubnetOfMatches": "<p>Prefix values to filter routing information whose prefix is a subnet of the prefixes provided.</p>",
+        "ListCoreNetworkRoutingInformationRequest$SupernetOfMatches": "<p>Prefix values to filter routing information whose prefix is a supernet of the prefixes provided.</p>",
         "ListCoreNetworkRoutingInformationRequest$LocalPreferenceMatches": "<p>Local preference values to match when filtering routing information.</p>",
         "ListCoreNetworkRoutingInformationRequest$ExactAsPathMatches": "<p>Exact AS path values to match when filtering routing information.</p>",
         "ListCoreNetworkRoutingInformationRequest$MedMatches": "<p>Multi-Exit Discriminator (MED) values to match when filtering routing information.</p>",
@@ -785,6 +819,7 @@
         "GetNetworkResourceRelationshipsRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
         "GetNetworkResourcesRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
         "GetNetworkTelemetryRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
+        "ListAttachmentNatConfigurationsRequest$CoreNetworkId": "<p>The ID of a core network. Returns the NAT configurations of attachments in the core network that support NAT.</p>",
         "ListAttachmentRoutingPolicyAssociationsRequest$CoreNetworkId": "<p>The ID of the core network to list attachment routing policy associations for.</p>",
         "ListAttachmentsRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
         "ListConnectPeersRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
@@ -795,7 +830,7 @@
         "NetworkResource$CoreNetworkId": "<p>The ID of a core network.</p>",
         "NetworkTelemetry$CoreNetworkId": "<p>The ID of a core network.</p>",
         "Peering$CoreNetworkId": "<p>The ID of the core network for the peering request.</p>",
-        "PrefixListAssociation$CoreNetworkId": "<p>The core network id in the association.</p>",
+        "PrefixListAssociation$CoreNetworkId": "<p>The ID of the core network in the association.</p>",
         "PutAttachmentRoutingPolicyLabelRequest$CoreNetworkId": "<p>The ID of the core network containing the attachment.</p>",
         "PutAttachmentRoutingPolicyLabelResponse$CoreNetworkId": "<p>The ID of the core network containing the attachment.</p>",
         "PutCoreNetworkPolicyRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
@@ -814,6 +849,7 @@
     "CoreNetworkNetworkFunctionGroupIdentifier": {
       "base": "<p>Describes a core network </p>",
       "refs": {
+        "GetNetworkRoutesResponse$CoreNetworkNetworkFunctionGroup": "<p>Describes the network function group route table that the routes are from. This field is present only when you specify <code>CoreNetworkNetworkFunctionGroup</code> in <code>RouteTableIdentifier</code>.</p>",
         "RouteTableIdentifier$CoreNetworkNetworkFunctionGroup": "<p>The route table identifier associated with the network function group.</p>"
       }
     },
@@ -1400,7 +1436,8 @@
       "base": null,
       "refs": {
         "GetNetworkRoutesRequest$DestinationFilters": "<p>Filter by route table destination. Possible Values: TRANSIT_GATEWAY_ATTACHMENT_ID, RESOURCE_ID, or RESOURCE_TYPE.</p>",
-        "ListCoreNetworkRoutingInformationRequest$NextHopFilters": "<p>Filters to apply based on next hop information.</p>"
+        "ListAttachmentNatConfigurationsRequest$Filters": "<p>The filters to apply to the results. Values for the same filter are joined with OR, and different filters are joined with AND. You can specify up to 10 filter values in total. The following filters are supported:</p> <ul> <li> <p> <code>nat-gateway-support</code>: The state of NAT gateway support on the attachment, for example <code>ENABLED</code>.</p> </li> <li> <p> <code>nat-system-route-support</code>: Whether system routes are installed for the attachment, <code>true</code> or <code>false</code>.</p> </li> <li> <p> <code>rule-number</code>: The rule number of a NAT rule.</p> </li> <li> <p> <code>match-source-cidr</code>: The source CIDR block of a NAT rule. The value must exactly match the CIDR block of the rule.</p> </li> <li> <p> <code>nat-cidr</code>: The NAT CIDR block of a NAT rule. The value must exactly match the CIDR block of the rule.</p> </li> <li> <p> <code>nat-rule-state</code>: The state of a NAT rule, for example <code>ACTIVATED</code>.</p> </li> </ul>",
+        "ListCoreNetworkRoutingInformationRequest$NextHopFilters": "<p>Filters to apply based on next hop information. Each filter value must exactly match the corresponding next hop value. Values for the same filter are joined with OR, and different filters are joined with AND. The following filters are supported:</p> <ul> <li> <p> <code>core-network-attachment-id</code>: The ID of the core network attachment for the next hop, for example <code>attachment-0123456789abcdef0</code>.</p> </li> <li> <p> <code>segment-name</code>: The name of the segment for the next hop.</p> </li> <li> <p> <code>edge-location</code>: The edge location for the next hop, for example <code>us-east-1</code>.</p> </li> <li> <p> <code>resource-id</code>: The ID of the resource for the next hop.</p> </li> <li> <p> <code>resource-type</code>: The type of resource for the next hop. The possible values are <code>vpc</code>, <code>vpn</code>, <code>connect-peer</code>, <code>direct-connect-gateway</code>, <code>transit-gateway-route-table</code>, <code>attachment</code>, and <code>blackhole</code>.</p> </li> <li> <p> <code>ip-address</code>: The IP address of the next hop. For a Site-to-Site VPN next hop, this is the outside IP address of the AWS side of the VPN tunnel. For a Connect peer next hop, this is the core network BGP address of the Connect peer. The value must be a single IPv4 or IPv6 address.</p> </li> </ul> <p>You can specify up to 10 filter values in total across <code>NextHopFilters</code> and the other match parameters in the request. Each filter value can be up to 256 characters.</p>"
       }
     },
     "FilterName": {
@@ -1740,6 +1777,10 @@
         "ConnectPeerConfiguration$PeerAddress": "<p>The IP address of the Connect peer.</p>",
         "CreateConnectPeerRequest$CoreNetworkAddress": "<p>A Connect peer core network address. This only applies only when the protocol is <code>GRE</code>.</p>",
         "CreateConnectPeerRequest$PeerAddress": "<p>The Connect peer address.</p>",
+        "NatRule$MatchSourceCidr": "<p>The source CIDR block that the rule matches for traffic from the attachment.</p>",
+        "NatRule$NatCidr": "<p>The CIDR block that matching source addresses are translated to.</p>",
+        "NatRuleRequest$MatchSourceCidr": "<p>The IPv4 CIDR block to match against the source address of traffic from the attachment. The CIDR block can't overlap with the multicast range (224.0.0.0/4).</p>",
+        "NatRuleRequest$NatCidr": "<p>The IPv4 CIDR block to translate matching source addresses to. The prefix length must be the same as the prefix length of <code>MatchSourceCidr</code>. The CIDR block must be within a private (RFC 1918) or shared address space (RFC 6598) range. The CIDR blocks of the NAT rules of an attachment can't overlap with each other.</p>",
         "RouteAnalysisEndpointOptions$IpAddress": "<p>The IP address.</p>",
         "RouteAnalysisEndpointOptionsSpecification$IpAddress": "<p>The IP address.</p>",
         "RoutingInformationNextHop$IpAddress": "<p>The IP address of the next hop.</p>"
@@ -1847,6 +1888,14 @@
       "refs": {
         "Link$State": "<p>The state of the link.</p>"
       }
+    },
+    "ListAttachmentNatConfigurationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAttachmentNatConfigurationsResponse": {
+      "base": null,
+      "refs": {}
     },
     "ListAttachmentRoutingPolicyAssociationsRequest": {
       "base": null,
@@ -1964,10 +2013,12 @@
         "GetNetworkResourceCountsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "GetNetworkResourceRelationshipsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "GetNetworkResourcesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "GetNetworkRoutesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "GetNetworkTelemetryRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "GetSitesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "GetTransitGatewayConnectPeerAssociationsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "GetTransitGatewayRegistrationsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "ListAttachmentNatConfigurationsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListAttachmentRoutingPolicyAssociationsRequest$MaxResults": "<p>The maximum number of results to return in a single page.</p>",
         "ListAttachmentsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListConnectPeersRequest$MaxResults": "<p>The maximum number of results to return.</p>",
@@ -1977,6 +2028,66 @@
         "ListCoreNetworksRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListOrganizationServiceAccessStatusRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListPeeringsRequest$MaxResults": "<p>The maximum number of results to return.</p>"
+      }
+    },
+    "NatGatewaySupportState": {
+      "base": null,
+      "refs": {
+        "Attachment$NatGatewaySupport": "<p>The state of NAT gateway support on the attachment. This is returned only to the core network owner for attachment types that support NAT.</p>",
+        "AttachmentNatConfiguration$NatGatewaySupport": "<p>The state of NAT gateway support on the attachment.</p>",
+        "UpdateAttachmentNatConfigurationResponse$NatGatewaySupport": "<p>The state of NAT gateway support on the attachment. The transitional states <code>ENABLING</code> and <code>DISABLING</code> change to <code>ENABLED</code> or <code>DISABLED</code> after the update is applied. The state is <code>PENDING_ATTACHMENT_ACCEPTANCE</code> when NAT gateway support is enabled on an attachment that is pending acceptance.</p>"
+      }
+    },
+    "NatGatewaySupportValue": {
+      "base": null,
+      "refs": {
+        "CreateConnectAttachmentRequest$NatGatewaySupport": "<p>Specifies whether to enable NAT gateway support on the Connect attachment. NAT is supported only on Connect attachments that use the GRE tunnel protocol. Tunnel-less Connect attachments aren't supported. To enable NAT gateway support, you must also specify at least one NAT rule. If you don't specify a value, NAT gateway support is disabled. Only the core network owner can configure NAT on an attachment.</p>",
+        "CreateDirectConnectGatewayAttachmentRequest$NatGatewaySupport": "<p>Specifies whether to enable NAT gateway support on the Direct Connect gateway attachment. To enable NAT gateway support, you must also specify at least one NAT rule. If you don't specify a value, NAT gateway support is disabled. Only the core network owner can configure NAT on an attachment.</p>",
+        "CreateSiteToSiteVpnAttachmentRequest$NatGatewaySupport": "<p>Specifies whether to enable NAT gateway support on the Site-to-Site VPN attachment. To enable NAT gateway support, you must also specify at least one NAT rule. If you don't specify a value, NAT gateway support is disabled. Only the core network owner can configure NAT on an attachment.</p>",
+        "CreateVpcAttachmentRequest$NatGatewaySupport": "<p>Specifies whether to enable NAT gateway support on the VPC attachment. To enable NAT gateway support, you must also specify at least one NAT rule. If you don't specify a value, NAT gateway support is disabled. Only the core network owner can configure NAT on an attachment.</p>",
+        "UpdateAttachmentNatConfigurationRequest$NatGatewaySupport": "<p>Specifies whether to enable or disable NAT gateway support on the attachment. When you disable NAT gateway support, the attachment keeps its NAT rules but doesn't apply them. To enable NAT gateway support, the attachment must have at least one NAT rule, either specified in this request or already configured on the attachment. If you omit this parameter, NAT gateway support is unchanged.</p>"
+      }
+    },
+    "NatRule": {
+      "base": "<p>Describes a NAT rule of an attachment.</p>",
+      "refs": {
+        "NatRuleList$member": null
+      }
+    },
+    "NatRuleList": {
+      "base": null,
+      "refs": {
+        "AttachmentNatConfiguration$NatGatewayRules": "<p>The NAT rules of the attachment.</p>",
+        "UpdateAttachmentNatConfigurationResponse$NatGatewayRules": "<p>The NAT rules of the attachment, including rules that are being deleted.</p>"
+      }
+    },
+    "NatRuleNumber": {
+      "base": null,
+      "refs": {
+        "NatRule$RuleNumber": "<p>The rule number. Rule numbers identify the rules of an attachment and don't set the order in which rules are evaluated.</p>",
+        "NatRuleRequest$RuleNumber": "<p>The rule number, from 1 to 32766. Each rule number must be unique for the attachment.</p>"
+      }
+    },
+    "NatRuleRequest": {
+      "base": "<p>Describes a NAT rule to configure on an attachment. Source addresses in the source CIDR block of traffic from the attachment are translated to the same host addresses in the NAT CIDR block. Traffic to an address in the NAT CIDR block is translated back to the matching address in the source CIDR block.</p>",
+      "refs": {
+        "NatRuleRequestList$member": null
+      }
+    },
+    "NatRuleRequestList": {
+      "base": null,
+      "refs": {
+        "CreateConnectAttachmentRequest$NatGatewayRules": "<p>The NAT rules for the Connect attachment, up to 50 rules.</p>",
+        "CreateDirectConnectGatewayAttachmentRequest$NatGatewayRules": "<p>The NAT rules for the Direct Connect gateway attachment, up to 50 rules.</p>",
+        "CreateSiteToSiteVpnAttachmentRequest$NatGatewayRules": "<p>The NAT rules for the Site-to-Site VPN attachment, up to 50 rules.</p>",
+        "CreateVpcAttachmentRequest$NatGatewayRules": "<p>The NAT rules for the VPC attachment, up to 50 rules.</p>",
+        "UpdateAttachmentNatConfigurationRequest$NatGatewayRules": "<p>The complete set of NAT rules for the attachment, up to 50 rules. The rules that you specify replace the existing rules of the attachment, matched by rule number. Existing rules that aren't included in the request are deleted. To delete all NAT rules, specify an empty list. You can delete all NAT rules only when NAT gateway support is disabled, or when you disable it in the same request. If you omit this parameter, the existing rules are unchanged.</p>"
+      }
+    },
+    "NatRuleState": {
+      "base": null,
+      "refs": {
+        "NatRule$State": "<p>The state of the NAT rule. The possible values are the following:</p> <ul> <li> <p> <code>CREATING</code>: The rule is being created.</p> </li> <li> <p> <code>MODIFYING</code>: The rule is being modified.</p> </li> <li> <p> <code>DELETING</code>: The rule is being deleted.</p> </li> <li> <p> <code>ACTIVATING</code>: NAT gateway support is being enabled, and the rule is being applied.</p> </li> <li> <p> <code>ACTIVATED</code>: NAT gateway support is enabled, and the rule is applied.</p> </li> <li> <p> <code>DEACTIVATING</code>: NAT gateway support is being disabled, and the rule is being removed from use.</p> </li> <li> <p> <code>DEACTIVATED</code>: NAT gateway support is disabled, and the rule isn't applied.</p> </li> <li> <p> <code>FAILED</code>: The attachment failed to be created, and the rule isn't applied.</p> </li> <li> <p> <code>PENDING_ATTACHMENT_ACCEPTANCE</code>: The attachment is pending acceptance. The rule is applied after the attachment is accepted.</p> </li> </ul>"
       }
     },
     "NetworkFunctionGroup": {
@@ -2098,6 +2209,8 @@
         "GetNetworkResourceRelationshipsResponse$NextToken": "<p>The token for the next page of results.</p>",
         "GetNetworkResourcesRequest$NextToken": "<p>The token for the next page of results.</p>",
         "GetNetworkResourcesResponse$NextToken": "<p>The token for the next page of results.</p>",
+        "GetNetworkRoutesRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "GetNetworkRoutesResponse$NextToken": "<p>The token for the next page of results.</p>",
         "GetNetworkTelemetryRequest$NextToken": "<p>The token for the next page of results.</p>",
         "GetNetworkTelemetryResponse$NextToken": "<p>The token for the next page of results.</p>",
         "GetSitesRequest$NextToken": "<p>The token for the next page of results.</p>",
@@ -2106,6 +2219,8 @@
         "GetTransitGatewayConnectPeerAssociationsResponse$NextToken": "<p>The token to use for the next page of results.</p>",
         "GetTransitGatewayRegistrationsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "GetTransitGatewayRegistrationsResponse$NextToken": "<p>The token for the next page of results.</p>",
+        "ListAttachmentNatConfigurationsRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "ListAttachmentNatConfigurationsResponse$NextToken": "<p>The token for the next page of results.</p>",
         "ListAttachmentRoutingPolicyAssociationsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "ListAttachmentRoutingPolicyAssociationsResponse$NextToken": "<p>The token for the next page of results.</p>",
         "ListAttachmentsRequest$NextToken": "<p>The token for the next page of results.</p>",
@@ -2180,7 +2295,7 @@
     "PeeringErrorList": {
       "base": null,
       "refs": {
-        "Peering$LastModificationErrors": "<p>Describes the error associated with the Connect peer request.</p>"
+        "Peering$LastModificationErrors": "<p>Describes the error associated with the peering request.</p>"
       }
     },
     "PeeringId": {
@@ -2469,7 +2584,7 @@
     "RouteType": {
       "base": null,
       "refs": {
-        "NetworkRoute$Type": "<p>The route type. The possible values are <code>propagated</code> and <code>static</code>.</p>",
+        "NetworkRoute$Type": "<p>The route type. The possible values are <code>PROPAGATED</code>, <code>STATIC</code>, and <code>SYSTEM</code>. A <code>SYSTEM</code> route is installed by the core network for the NAT CIDR block of an attachment's NAT rule.</p>",
         "RouteTypeList$member": null
       }
     },
@@ -2494,7 +2609,7 @@
     "RoutingPolicyAssociationDetailsList": {
       "base": null,
       "refs": {
-        "CoreNetworkChangeEventValues$RoutingPolicyAssociationDetails": "<p>The names of the routing policies and other association details in the core network change values.</p>",
+        "CoreNetworkChangeEventValues$RoutingPolicyAssociationDetails": "<p>The names of the routing policies and other association details in a core network change event.</p>",
         "CoreNetworkChangeValues$RoutingPolicyAssociationDetails": "<p>The names of the routing policies and other association details in the core network change values.</p>"
       }
     },
@@ -2502,7 +2617,7 @@
       "base": null,
       "refs": {
         "CoreNetworkChangeEventValues$RoutingPolicyDirection": "<p>The routing policy direction (inbound/outbound) in a core network change event.</p>",
-        "CoreNetworkChangeValues$RoutingPolicyDirection": "<p>The routing policy direction (inbound/outbound) in a core network change event.</p>"
+        "CoreNetworkChangeValues$RoutingPolicyDirection": "<p>The routing policy direction (inbound/outbound) in the core network change values.</p>"
       }
     },
     "SLRDeploymentStatus": {
@@ -2873,6 +2988,14 @@
       "refs": {}
     },
     "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAttachmentNatConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAttachmentNatConfigurationResponse": {
       "base": null,
       "refs": {}
     },

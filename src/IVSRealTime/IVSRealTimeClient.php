@@ -281,6 +281,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listTagsForResource(array{resourceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array{resourceArn?: string, ...} $args = [])
+ * @method \Aws\Result revokeConnectionToken(array $args = [])
+ * @phpstan-method \Aws\Result revokeConnectionToken(array{tokenId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise revokeConnectionTokenAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise revokeConnectionTokenAsync(array{tokenId?: string, ...} $args = [])
  * @method \Aws\Result startComposition(array $args = [])
  * @phpstan-method \Aws\Result startComposition(array{
  *     stageArn?: string,

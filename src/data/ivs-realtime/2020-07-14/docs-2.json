@@ -33,6 +33,7 @@
     "ListStages": "<p>Gets summary information about all stages in your account, in the AWS region where the API request is processed.</p>",
     "ListStorageConfigurations": "<p>Gets summary information about all storage configurations in your account, in the AWS region where the API request is processed.</p>",
     "ListTagsForResource": "<p>Gets information about AWS tags for the specified ARN.</p>",
+    "RevokeConnectionToken": "<p>Revokes the specified connection token so that it can no longer connect to a stage. This operation disconnects any participant currently connected with the revoked token.</p>",
     "StartComposition": "<p>Starts a Composition from a stage based on the configuration provided in the request.</p> <p>A Composition is an ephemeral resource that exists after this operation returns successfully. Composition stops and the resource is deleted:</p> <ul> <li> <p>When <a>StopComposition</a> is called.</p> </li> <li> <p>After a 1-minute timeout, when all participants are disconnected from the stage.</p> </li> <li> <p>After a 1-minute timeout, if there are no participants in the stage when StartComposition is called.</p> </li> <li> <p>When broadcasting to the IVS channel fails and all retries are exhausted.</p> </li> <li> <p>When broadcasting is disconnected and all attempts to reconnect are exhausted.</p> </li> </ul>",
     "StartParticipantReplication": "<p>Starts replicating a publishing participant from a source stage to a destination stage.</p>",
     "StopComposition": "<p>Stops and deletes a Composition resource. Any broadcast from the Composition resource is stopped.</p>",
@@ -163,6 +164,12 @@
     "ConflictException": {
       "base": "<p>Updating or deleting a resource can cause an inconsistent state.</p>",
       "refs": {}
+    },
+    "ConnectionTokenId": {
+      "base": null,
+      "refs": {
+        "RevokeConnectionTokenRequest$tokenId": "<p>The ID of the connection token to revoke.</p>"
+      }
     },
     "CreateEncoderConfigurationRequest": {
       "base": null,
@@ -1153,6 +1160,14 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>Request references a resource which does not exist.</p>",
+      "refs": {}
+    },
+    "RevokeConnectionTokenRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RevokeConnectionTokenResponse": {
+      "base": null,
       "refs": {}
     },
     "S3BucketName": {

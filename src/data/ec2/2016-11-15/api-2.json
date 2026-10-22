@@ -5516,6 +5516,15 @@
       "input":{"shape":"GetSubnetCidrReservationsRequest"},
       "output":{"shape":"GetSubnetCidrReservationsResult"}
     },
+    "GetTransitGatewayAttachmentNatConfiguration":{
+      "name":"GetTransitGatewayAttachmentNatConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetTransitGatewayAttachmentNatConfigurationRequest"},
+      "output":{"shape":"GetTransitGatewayAttachmentNatConfigurationResult"}
+    },
     "GetTransitGatewayAttachmentPropagations":{
       "name":"GetTransitGatewayAttachmentPropagations",
       "http":{
@@ -6237,6 +6246,15 @@
       },
       "input":{"shape":"ModifyTransitGatewayRequest"},
       "output":{"shape":"ModifyTransitGatewayResult"}
+    },
+    "ModifyTransitGatewayAttachmentNatConfiguration":{
+      "name":"ModifyTransitGatewayAttachmentNatConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyTransitGatewayAttachmentNatConfigurationRequest"},
+      "output":{"shape":"ModifyTransitGatewayAttachmentNatConfigurationResult"}
     },
     "ModifyTransitGatewayMeteringPolicy":{
       "name":"ModifyTransitGatewayMeteringPolicy",
@@ -32847,6 +32865,35 @@
         }
       }
     },
+    "GetTransitGatewayAttachmentNatConfigurationRequest":{
+      "type":"structure",
+      "required":["TransitGatewayAttachmentId"],
+      "members":{
+        "TransitGatewayAttachmentId":{"shape":"TransitGatewayAttachmentId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetTransitGatewayAttachmentNatConfigurationResult":{
+      "type":"structure",
+      "members":{
+        "TransitGatewayAttachmentId":{
+          "shape":"TransitGatewayAttachmentId",
+          "locationName":"transitGatewayAttachmentId"
+        },
+        "NatGatewaySupport":{
+          "shape":"TransitGatewayAttachmentNatGatewaySupportState",
+          "locationName":"natGatewaySupport"
+        },
+        "NatSystemRouteSupport":{
+          "shape":"TransitGatewayAttachmentNatSystemRouteSupportValue",
+          "locationName":"natSystemRouteSupport"
+        },
+        "NatGatewayRules":{
+          "shape":"TransitGatewayNatRuleList",
+          "locationName":"natGatewayRuleSet"
+        }
+      }
+    },
     "GetTransitGatewayAttachmentPropagationsRequest":{
       "type":"structure",
       "required":["TransitGatewayAttachmentId"],
@@ -46107,6 +46154,42 @@
         }
       }
     },
+    "ModifyTransitGatewayAttachmentNatConfigurationRequest":{
+      "type":"structure",
+      "required":["TransitGatewayAttachmentId"],
+      "members":{
+        "TransitGatewayAttachmentId":{"shape":"TransitGatewayAttachmentId"},
+        "NatGatewaySupport":{"shape":"TransitGatewayAttachmentNatGatewaySupportValue"},
+        "NatSystemRouteSupport":{"shape":"TransitGatewayAttachmentNatSystemRouteSupportValue"},
+        "NatGatewayRules":{
+          "shape":"TransitGatewayNatRuleRequestList",
+          "locationName":"NatGatewayRule"
+        },
+        "ResetNatGatewayRules":{"shape":"Boolean"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "ModifyTransitGatewayAttachmentNatConfigurationResult":{
+      "type":"structure",
+      "members":{
+        "TransitGatewayAttachmentId":{
+          "shape":"TransitGatewayAttachmentId",
+          "locationName":"transitGatewayAttachmentId"
+        },
+        "NatGatewaySupport":{
+          "shape":"TransitGatewayAttachmentNatGatewaySupportState",
+          "locationName":"natGatewaySupport"
+        },
+        "NatSystemRouteSupport":{
+          "shape":"TransitGatewayAttachmentNatSystemRouteSupportValue",
+          "locationName":"natSystemRouteSupport"
+        },
+        "NatGatewayRules":{
+          "shape":"TransitGatewayNatRuleList",
+          "locationName":"natGatewayRuleSet"
+        }
+      }
+    },
     "ModifyTransitGatewayMeteringPolicyRequest":{
       "type":"structure",
       "required":["TransitGatewayMeteringPolicyId"],
@@ -58578,6 +58661,10 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "NatGatewaySupport":{
+          "shape":"TransitGatewayAttachmentNatGatewaySupportState",
+          "locationName":"natGatewaySupport"
         }
       }
     },
@@ -58641,6 +58728,29 @@
         "shape":"TransitGatewayAttachment",
         "locationName":"item"
       }
+    },
+    "TransitGatewayAttachmentNatGatewaySupportState":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled",
+        "enabling",
+        "disabling"
+      ]
+    },
+    "TransitGatewayAttachmentNatGatewaySupportValue":{
+      "type":"string",
+      "enum":[
+        "enable",
+        "disable"
+      ]
+    },
+    "TransitGatewayAttachmentNatSystemRouteSupportValue":{
+      "type":"string",
+      "enum":[
+        "enable",
+        "disable"
+      ]
     },
     "TransitGatewayAttachmentPropagation":{
       "type":"structure",
@@ -59349,6 +59459,62 @@
           "locationName":"groupIpAddress"
         }
       }
+    },
+    "TransitGatewayNatRule":{
+      "type":"structure",
+      "members":{
+        "RuleNumber":{
+          "shape":"Integer",
+          "locationName":"ruleNumber"
+        },
+        "MatchSourceCidr":{
+          "shape":"String",
+          "locationName":"matchSourceCidr"
+        },
+        "NatCidr":{
+          "shape":"String",
+          "locationName":"natCidr"
+        },
+        "State":{
+          "shape":"TransitGatewayNatRuleState",
+          "locationName":"state"
+        }
+      }
+    },
+    "TransitGatewayNatRuleList":{
+      "type":"list",
+      "member":{
+        "shape":"TransitGatewayNatRule",
+        "locationName":"item"
+      },
+      "max":50,
+      "min":0
+    },
+    "TransitGatewayNatRuleRequest":{
+      "type":"structure",
+      "members":{
+        "RuleNumber":{"shape":"Integer"},
+        "MatchSourceCidr":{"shape":"String"},
+        "NatCidr":{"shape":"String"}
+      }
+    },
+    "TransitGatewayNatRuleRequestList":{
+      "type":"list",
+      "member":{
+        "shape":"TransitGatewayNatRuleRequest",
+        "locationName":"item"
+      },
+      "max":50,
+      "min":0
+    },
+    "TransitGatewayNatRuleState":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "activated",
+        "deactivated",
+        "deleting"
+      ]
     },
     "TransitGatewayNetworkInterfaceIdList":{
       "type":"list",
@@ -60063,7 +60229,8 @@
       "type":"string",
       "enum":[
         "static",
-        "propagated"
+        "propagated",
+        "system"
       ]
     },
     "TransitGatewayState":{

@@ -2825,6 +2825,10 @@ use Aws\AwsClient;
  *     SegmentTypes?: list<'Attachments'|'Categories'|'Event'|'ExtractedInformation'|'Issues'|'PostContactSummary'|'Transcript'>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listReplicationFindings(array $args = [])
+ * @phpstan-method \Aws\Result listReplicationFindings(array{InstanceId?: string, ResourceType?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listReplicationFindingsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listReplicationFindingsAsync(array{InstanceId?: string, ResourceType?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \Aws\Result listRoutingProfileManualAssignmentQueues(array $args = [])
  * @phpstan-method \Aws\Result listRoutingProfileManualAssignmentQueues(array{InstanceId?: string, RoutingProfileId?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listRoutingProfileManualAssignmentQueuesAsync(array $args = [])

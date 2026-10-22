@@ -155,7 +155,7 @@
     "UpdateDataset": "<p> Updates a dataset's metadata. Synchronous operation. Only provided fields are updated; omitted fields remain unchanged. To modify dataset content, use <code>AddDatasetExamples</code>, <code>UpdateDatasetExamples</code>, or <code>DeleteDatasetExamples</code>. </p>",
     "UpdateDatasetExamples": "<p> Updates multiple existing examples in-place on DRAFT. All examples are validated against the dataset's schema type before any writes occur. If any example fails validation, the entire batch is rejected (all-or-nothing semantics). </p>",
     "UpdateEvaluator": "<p> Updates a custom evaluator's configuration, description, or evaluation level. Built-in evaluators cannot be updated. The evaluator must not be locked for modification. </p>",
-    "UpdateGateway": "<p>Updates an existing gateway.</p>",
+    "UpdateGateway": "<p>Updates an existing gateway.</p> <p>Replaces the entire gateway configuration. Any optional field that you omit, including fields in <code>protocolConfiguration</code>, is reset. For information about retrieving the current configuration, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore-control/latest/APIReference/API_GetGateway.html\">GetGateway</a>.</p>",
     "UpdateGatewayRateLimit": "<p>Updates the entries of a gateway rate limit. The dimension keys are immutable after creation.</p>",
     "UpdateGatewayRule": "<p>Updates a gateway rule's priority, conditions, actions, or description.</p>",
     "UpdateGatewayTarget": "<p>Updates an existing gateway target.</p> <p>You cannot update a target that is in a pending authorization state (<code>CREATE_PENDING_AUTH</code>, <code>UPDATE_PENDING_AUTH</code>, or <code>SYNCHRONIZE_PENDING_AUTH</code>). Wait for the authorization to complete or fail before updating the target.</p>",
@@ -773,7 +773,7 @@
         "FilterValue$booleanValue": "<p> The boolean value for true/false filtering conditions. </p>",
         "GetEvaluatorResponse$lockedForModification": "<p> Whether the evaluator is locked for modification due to being referenced by active online evaluation configurations. </p>",
         "InterceptorInputConfiguration$passRequestHeaders": "<p>Indicates whether to pass request headers as input into the interceptor. When set to true, request headers will be passed.</p>",
-        "MCPGatewayConfiguration$disableMcpListToolsPagination": "<p>Specifies whether pagination is disabled for the Model Context Protocol (MCP) <code>tools/list</code> operation. When set to <code>true</code>, the gateway returns the complete list of tools in a single response without a pagination cursor. When set to <code>false</code> or omitted, the gateway returns tools in paginated responses.</p>",
+        "MCPGatewayConfiguration$disableMcpListToolsPagination": "<p>Specifies whether the gateway disables pagination for the Model Context Protocol (MCP) <code>tools/list</code> operation. When set to <code>true</code>, the gateway returns the complete list of tools in a single response without a pagination cursor. When set to <code>false</code> or omitted, the gateway returns tools in paginated responses. For information about changing this value on an existing gateway, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore-control/latest/APIReference/API_UpdateGateway.html\">UpdateGateway</a>.</p>",
         "ProviderPrefix$strip": "<p>Whether clients can omit the provider prefix from model IDs. If <code>true</code>, the gateway accepts model IDs without the prefix and restores the full prefixed form before forwarding to the provider. The default is <code>false</code>.</p>",
         "RecordingConfig$enabled": "<p>Indicates whether recording is enabled for the browser. When set to true, browser sessions are recorded.</p>",
         "RootVolumeConfiguration$encrypted": "<p>Specifies whether to encrypt the volume. Encrypted volumes can be attached only to instances that support Amazon EBS encryption. If you create a volume from a snapshot, you cannot specify an encryption value.</p>",
@@ -1064,6 +1064,7 @@
     "CategoricalScaleDefinitions": {
       "base": null,
       "refs": {
+        "DimensionRatingScale$categorical": "<p> The categorical rating scale with named categories and definitions for qualitative evaluation of the dimension. </p>",
         "RatingScale$categorical": "<p> The categorical rating scale with named categories and definitions for qualitative evaluation. </p>"
       }
     },
@@ -1127,6 +1128,18 @@
         "CreateCodeInterpreterRequest$certificates": "<p>A list of certificates to install in the code interpreter.</p>",
         "GetBrowserResponse$certificates": "<p>The list of certificates configured for the browser.</p>",
         "GetCodeInterpreterResponse$certificates": "<p>The list of certificates configured for the code interpreter.</p>"
+      }
+    },
+    "CircuitBreakerConfiguration": {
+      "base": "<p>Specifies whether the circuit breaker monitors failures for the targets in a fallback chain.</p>",
+      "refs": {
+        "Fallback$circuitBreaker": "<p>Specifies whether the gateway temporarily stops sending your requests to a failing target. The circuit breaker tracks each combination of target and model separately. With the circuit breaker enabled, the gateway skips one or more targets and models that fail repeatedly, and your requests go to the next target in the chain. The gateway always tries the last remaining target in the chain. The gateway enables the circuit breaker by default.</p>"
+      }
+    },
+    "CircuitBreakerMode": {
+      "base": null,
+      "refs": {
+        "CircuitBreakerConfiguration$mode": "<p>Specifies whether you want the circuit breaker turned on. To turn it off, set this value to <code>DISABLED</code>. The default is <code>ENABLED</code>.</p>"
       }
     },
     "ClaimMatchOperatorType": {
@@ -1430,12 +1443,20 @@
         "GetCapacityProviderOutput$computeConfiguration": "<p>The compute configuration for the capacity provider.</p>"
       }
     },
+    "ConcreteModelId": {
+      "base": null,
+      "refs": {
+        "FallbackTarget$model": "<p>The model ID to send to this fallback target. If you don't specify a model, the gateway sends the model from the original request.</p>",
+        "StaticRoute$model": "<p>The model ID to send to the target. Supported only for inference targets. If you don't specify a model, the gateway sends the model from the original request.</p>",
+        "TargetTrafficSplitEntry$model": "<p>The model ID to send to the target for this variant. Supported only for inference targets. If you don't specify a model, the gateway sends the model from the original request.</p>"
+      }
+    },
     "ConcurrentModificationException": {
       "base": "<p>Exception thrown when a resource is modified concurrently by multiple requests.</p>",
       "refs": {}
     },
     "Condition": {
-      "base": "<p>A condition that determines when a gateway rule applies. Conditions can match on principals or request paths.</p>",
+      "base": "<p>A condition that determines when a gateway rule applies. Conditions can match on principals, request paths, or the requested model.</p>",
       "refs": {
         "Conditions$member": null
       }
@@ -2965,6 +2986,12 @@
         "UpdateGatewayRateLimitResponse$dimensionKeys": "<p>The ordered list of dimension key names that define the scope of this rate limit.</p>"
       }
     },
+    "DimensionRatingScale": {
+      "base": "<p> The rating scale for one dimension of an LLM-as-a-judge evaluator, supporting either a numerical or a categorical scale. </p>",
+      "refs": {
+        "EvaluationDimension$dimensionRatingScale": "<p> The rating scale for this dimension, which can be numerical or categorical. A dimension's rating scale cannot itself be multi-dimensional. </p>"
+      }
+    },
     "DimensionValue": {
       "base": "<p>A dimension value in a rule entry (exact value or <code>*</code> wildcard).</p>",
       "refs": {
@@ -3245,6 +3272,12 @@
         "CustomReflectionConfiguration$episodicReflectionOverride": "<p>The configuration for a reflection strategy to override the default one.</p>"
       }
     },
+    "ErrorStatusCodePattern": {
+      "base": null,
+      "refs": {
+        "FallbackTriggersStatusCodesList$member": null
+      }
+    },
     "EvaluationConfigDescription": {
       "base": null,
       "refs": {
@@ -3260,6 +3293,30 @@
         "CreateOnlineEvaluationConfigRequest$onlineEvaluationConfigName": "<p> The name of the online evaluation configuration. Must be unique within your account. </p>",
         "GetOnlineEvaluationConfigResponse$onlineEvaluationConfigName": "<p> The name of the online evaluation configuration. </p>",
         "OnlineEvaluationConfigSummary$onlineEvaluationConfigName": "<p> The name of the online evaluation configuration. </p>"
+      }
+    },
+    "EvaluationDimension": {
+      "base": "<p> A single dimension of an LLM-as-a-judge evaluator, defining what the evaluator model should judge for that dimension and how it should be scored. </p>",
+      "refs": {
+        "EvaluationDimensions$member": null
+      }
+    },
+    "EvaluationDimensionInstruction": {
+      "base": "<p> The instruction to the evaluator model for one dimension of an LLM-as-a-judge evaluator, describing what the model should judge for that dimension. </p>",
+      "refs": {
+        "EvaluationDimension$dimensionInstruction": "<p> The instruction to the evaluator model for this dimension, describing what the model should judge when scoring the dimension. </p>"
+      }
+    },
+    "EvaluationDimensionName": {
+      "base": "<p> The name of a dimension in an LLM-as-a-judge evaluator. </p>",
+      "refs": {
+        "EvaluationDimension$dimensionName": "<p> The name of the dimension. This name is unique within the evaluator and identifies the dimension's results. </p>"
+      }
+    },
+    "EvaluationDimensions": {
+      "base": "<p> The list of dimensions for an LLM-as-a-judge evaluator that uses a multi-dimensional rating scale. The service enforces a lower limit than the model's maximum; see the AgentCore Evaluation quotas for the current effective limit. </p>",
+      "refs": {
+        "RatingScale$multiDimensional": "<p> A list of dimensions that lets an LLM-as-a-judge evaluator score several dimensions of the same target in a single evaluation. Each dimension has its own instruction and rating scale, and produces its own result. </p>"
       }
     },
     "EvaluatorArn": {
@@ -3424,6 +3481,62 @@
       "base": "<p>The extraction type for a metadata field, determining how the value is obtained during memory processing.</p>",
       "refs": {
         "MetadataSchemaEntry$extractionType": "<p>Specifies whether the metadata value is extracted by the LLM or passed through deterministically from the event.</p>"
+      }
+    },
+    "Fallback": {
+      "base": "<p>The fallback configuration for a route to an inference target. Defines an ordered list of fallback targets to try when a request to the route's target fails, and the conditions that trigger a fallback. A fallback can occur only before the gateway sends the first byte of the response to the caller. After a streaming response starts, the gateway doesn't fall back.</p>",
+      "refs": {
+        "StaticRoute$fallback": "<p>The fallback configuration for this route. Supported only for inference targets.</p>",
+        "TargetTrafficSplitEntry$fallback": "<p>The fallback configuration for this variant. Supported only for inference targets.</p>"
+      }
+    },
+    "FallbackError": {
+      "base": null,
+      "refs": {
+        "FallbackTriggersErrorsList$member": null
+      }
+    },
+    "FallbackFirstByteTimeoutMillisecondsInteger": {
+      "base": null,
+      "refs": {
+        "Fallback$firstByteTimeoutMilliseconds": "<p>The maximum time, in milliseconds, from sending the request to the route's target until the first byte of the response body arrives. If the time expires, the gateway abandons the request and treats it as a <code>FIRST_BYTE_TIMEOUT</code> error. If you don't specify a value, no timeout is enforced.</p>"
+      }
+    },
+    "FallbackTarget": {
+      "base": "<p>Specifies a target to send the request to when the previous target in the fallback chain fails. Includes the target name, the model to send, and the conditions that trigger a fallback from this target to the next one.</p>",
+      "refs": {
+        "FallbackTargetFallbackList$member": null
+      }
+    },
+    "FallbackTargetFallbackList": {
+      "base": null,
+      "refs": {
+        "Fallback$targetFallback": "<p>The ordered list of fallback targets. The gateway tries each target in order until a response doesn't match that target's triggers, and returns that response to the caller. If every target fails, the gateway returns the last response. You can specify up to two fallback targets. Each combination of target and model, including the route's target, can appear only once.</p>"
+      }
+    },
+    "FallbackTargetFirstByteTimeoutMillisecondsInteger": {
+      "base": null,
+      "refs": {
+        "FallbackTarget$firstByteTimeoutMilliseconds": "<p>The maximum time, in milliseconds, from sending the request to this target until the first byte of the response body arrives. This setting isn't inherited from the route. If you don't specify a value, no timeout is enforced.</p>"
+      }
+    },
+    "FallbackTriggers": {
+      "base": "<p>The conditions that trigger a fallback to the next target. A fallback occurs if the response matches any of the specified status codes or errors.</p>",
+      "refs": {
+        "Fallback$triggerOn": "<p>The status codes and errors from the route's target that cause the gateway to send the request to the first fallback target. If you omit <code>triggerOn</code>, the gateway falls back on <code>5XX</code> status codes and on the <code>CONNECTION_ERROR</code>, <code>FIRST_BYTE_TIMEOUT</code>, and <code>UNROUTABLE</code> errors. If you specify <code>triggerOn</code>, only the status codes and errors that you list trigger a fallback.</p>",
+        "FallbackTarget$triggerOn": "<p>The status codes and errors from this target that cause the gateway to send the request to the next fallback target. This setting isn't inherited from the route. If you omit it, the gateway uses the default triggers: <code>5XX</code> status codes and the <code>CONNECTION_ERROR</code>, <code>FIRST_BYTE_TIMEOUT</code>, and <code>UNROUTABLE</code> errors.</p>"
+      }
+    },
+    "FallbackTriggersErrorsList": {
+      "base": null,
+      "refs": {
+        "FallbackTriggers$errors": "<p>The errors that trigger a fallback. You can specify the following:</p> <ul> <li> <p> <code>CONNECTION_ERROR</code> – The gateway couldn't connect to the target because the connection was refused, reset, or timed out. The request didn't reach the target.</p> </li> <li> <p> <code>FIRST_BYTE_TIMEOUT</code> – The target accepted the connection but didn't return the first byte of the response within <code>firstByteTimeoutMilliseconds</code>. The gateway abandons the request before any of the response reaches you.</p> </li> <li> <p> <code>UNROUTABLE</code> – The gateway couldn't route the request to the target, for example because the target doesn't exist or doesn't support the request path. These errors don't count toward the circuit breaker.</p> </li> </ul>"
+      }
+    },
+    "FallbackTriggersStatusCodesList": {
+      "base": null,
+      "refs": {
+        "FallbackTriggers$statusCodes": "<p>The HTTP status codes returned by the target that trigger a fallback. You can specify the following:</p> <ul> <li> <p>An exact status code – A three-digit code, such as <code>429</code>.</p> </li> <li> <p>A class of status codes – The first digit followed by <code>XX</code>, such as <code>5XX</code>, which matches every code from 500 to 599.</p> </li> </ul> <p>Only 4XX and 5XX codes are supported. Throttling by the gateway itself doesn't trigger a fallback.</p>"
       }
     },
     "FilesystemConfiguration": {
@@ -5867,6 +5980,30 @@
         "PrivateEndpoint$managedVpcResource": "<p>Configuration for connecting to a private resource using a managed VPC Lattice resource. The gateway creates and manages the VPC Lattice resources on your behalf.</p>"
       }
     },
+    "MatchModelEntry": {
+      "base": "<p>A model ID or pattern to match against the requested model, and the operator to use for the comparison.</p>",
+      "refs": {
+        "MatchModelsAnyOfList$member": null
+      }
+    },
+    "MatchModels": {
+      "base": "<p>A condition that matches inference requests based on the requested model.</p>",
+      "refs": {
+        "Condition$matchModels": "<p>A condition that matches on the model requested in an inference request.</p>"
+      }
+    },
+    "MatchModelsAnyOfList": {
+      "base": null,
+      "refs": {
+        "MatchModels$anyOf": "<p>A list of model entries. The condition is met if the requested model matches any of the entries.</p>"
+      }
+    },
+    "MatchOperator": {
+      "base": null,
+      "refs": {
+        "MatchModelEntry$operator": "<p>The operator to use when comparing the requested model to the value:</p> <ul> <li> <p> <code>StringEquals</code> – Requires an exact match.</p> </li> <li> <p> <code>StringLike</code> – Supports wildcard patterns using <code>*</code> and <code>?</code>. This is the default.</p> </li> </ul>"
+      }
+    },
     "MatchPathPattern": {
       "base": null,
       "refs": {
@@ -6237,6 +6374,7 @@
     "ModelPattern": {
       "base": null,
       "refs": {
+        "MatchModelEntry$value": "<p>The model ID or pattern to match. With the <code>StringLike</code> operator, you can use <code>*</code> and <code>?</code> as wildcards, for example <code>anthropic.claude-*</code>.</p>",
         "ModelEntry$model": "<p>The model ID or glob pattern that identifies the model (for example, <code>anthropic.claude-opus-*</code> or <code>openai.gpt-oss-*</code>).</p>"
       }
     },
@@ -6529,6 +6667,7 @@
     "NumericalScaleDefinitions": {
       "base": null,
       "refs": {
+        "DimensionRatingScale$numerical": "<p> The numerical rating scale with defined score values and descriptions for quantitative evaluation of the dimension. </p>",
         "RatingScale$numerical": "<p> The numerical rating scale with defined score values and descriptions for quantitative evaluation. </p>"
       }
     },
@@ -8989,6 +9128,7 @@
       "refs": {
         "CreateGatewayTargetRequest$name": "<p>The name of the gateway target. The name must be unique within the gateway.</p>",
         "CreateGatewayTargetResponse$name": "<p>The name of the target.</p>",
+        "FallbackTarget$targetName": "<p>The name of the gateway target to fall back to. The target must be an inference target.</p>",
         "GatewayTarget$name": "<p>The name of the gateway target.</p>",
         "GetGatewayTargetResponse$name": "<p>The name of the gateway target.</p>",
         "StaticRoute$targetName": "<p>The name of the target to route requests to.</p>",

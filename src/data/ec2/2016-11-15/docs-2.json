@@ -256,7 +256,7 @@
     "DeleteTransitGatewayPolicyTableEntry": "<p>Deletes the specified transit gateway policy table entry.</p>",
     "DeleteTransitGatewayPrefixListReference": "<p>Deletes a reference (route) to a prefix list in a specified transit gateway route table.</p>",
     "DeleteTransitGatewayRoute": "<p>Deletes the specified route from the specified transit gateway route table.</p>",
-    "DeleteTransitGatewayRouteTable": "<p>Deletes the specified transit gateway route table. If there are any route tables associated with the transit gateway route table, you must first run <a>DisassociateRouteTable</a> before you can delete the transit gateway route table. This removes any route tables associated with the transit gateway route table.</p>",
+    "DeleteTransitGatewayRouteTable": "<p>Deletes the specified transit gateway route table. Before you can delete a transit gateway route table, you must disassociate all attachments from it by using <a>DisassociateTransitGatewayRouteTable</a> and wait for the disassociations to complete. You can't delete a transit gateway route table that is the default association route table or default propagation route table for the transit gateway. To change the default route tables, use <a>ModifyTransitGateway</a>.</p>",
     "DeleteTransitGatewayRouteTableAnnouncement": "<p>Advertises to the transit gateway that a transit gateway route table is deleted.</p>",
     "DeleteTransitGatewayVpcAttachment": "<p>Deletes the specified VPC attachment.</p>",
     "DeleteVerifiedAccessEndpoint": "<p>Delete an Amazon Web Services Verified Access endpoint.</p>",
@@ -617,6 +617,7 @@
     "GetSnapshotBlockPublicAccessState": "<p>Gets the current state of <i>block public access for snapshots</i> setting for the account and Region.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/block-public-access-snapshots.html\"> Block public access for snapshots</a> in the <i>Amazon EBS User Guide</i>.</p>",
     "GetSpotPlacementScores": "<p>Calculates the Spot placement score for a Region or Availability Zone based on the specified target capacity and compute requirements.</p> <p>You can specify your compute requirements either by using <code>InstanceRequirementsWithMetadata</code> and letting Amazon EC2 choose the optimal instance types to fulfill your Spot request, or you can specify the instance types by using <code>InstanceTypes</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-placement-score.html\">Spot placement score</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "GetSubnetCidrReservations": "<p>Gets information about the subnet CIDR reservations.</p>",
+    "GetTransitGatewayAttachmentNatConfiguration": "<p>Describes the NAT configuration for the specified transit gateway attachment. Only the owner of the transit gateway can describe the NAT configuration.</p>",
     "GetTransitGatewayAttachmentPropagations": "<p>Lists the route tables to which the specified resource attachment propagates routes.</p>",
     "GetTransitGatewayMeteringPolicyEntries": "<p>Retrieves the entries for a transit gateway metering policy.</p>",
     "GetTransitGatewayMulticastDomainAssociations": "<p>Gets information about the associations for the transit gateway multicast domain.</p>",
@@ -698,6 +699,7 @@
     "ModifyTrafficMirrorFilterRule": "<p>Modifies the specified Traffic Mirror rule.</p> <p> <code>DestinationCidrBlock</code> and <code>SourceCidrBlock</code> must both be an IPv4 range or an IPv6 range.</p>",
     "ModifyTrafficMirrorSession": "<p>Modifies a Traffic Mirror session.</p>",
     "ModifyTransitGateway": "<p>Modifies the specified transit gateway. When you modify a transit gateway, the modified options are applied to new transit gateway attachments only. Your existing transit gateway attachments are not modified.</p>",
+    "ModifyTransitGatewayAttachmentNatConfiguration": "<p>Modifies the NAT configuration for the specified transit gateway attachment. Use this operation to do the following:</p> <ul> <li> <p>Enable or disable NAT gateway support for the attachment.</p> </li> <li> <p>Specify whether the transit gateway installs routes for the NAT CIDRs.</p> </li> <li> <p>Replace the NAT gateway rules for the attachment.</p> </li> </ul> <p>Only the owner of the transit gateway can modify the NAT configuration.</p> <p>With NAT gateway support enabled, the transit gateway translates addresses in each rule's <code>MatchSourceCidr</code> range to the corresponding addresses in its <code>NatCidr</code> range.</p> <p>The transit gateway applies changes asynchronously. To check the result, use <code>GetTransitGatewayAttachmentNatConfiguration</code>.</p>",
     "ModifyTransitGatewayMeteringPolicy": "<p>Modifies a transit gateway metering policy.</p>",
     "ModifyTransitGatewayPolicyTableEntry": "<p>Modifies the specified transit gateway policy table entry.</p>",
     "ModifyTransitGatewayPrefixListReference": "<p>Modifies a reference (route) to a prefix list in a specified transit gateway route table.</p>",
@@ -3395,6 +3397,7 @@
         "GetSpotPlacementScoresRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetSpotPlacementScoresRequest$IncludeLocalZones": "<p>Specify <code>true</code> so that the response returns scores that include Local Zones. Otherwise, the response ignores Local Zones.</p> <p>When you request regional scores, Local Zone capacity counts toward its parent Region.</p>",
         "GetSubnetCidrReservationsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "GetTransitGatewayAttachmentNatConfigurationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetTransitGatewayAttachmentPropagationsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetTransitGatewayMeteringPolicyEntriesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetTransitGatewayMulticastDomainAssociationsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3576,6 +3579,8 @@
         "ModifyTrafficMirrorFilterNetworkServicesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyTrafficMirrorFilterRuleRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyTrafficMirrorSessionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "ModifyTransitGatewayAttachmentNatConfigurationRequest$ResetNatGatewayRules": "<p>Specifies whether to remove all NAT gateway rules from the attachment. If you omit this parameter, the transit gateway doesn't remove any rules. You can't specify this parameter together with <code>NatGatewayRules</code>. Because you can't enable NAT gateway support without rules, also set <code>NatGatewaySupport</code> to <code>disable</code> in the same request if NAT gateway support is currently enabled.</p>",
+        "ModifyTransitGatewayAttachmentNatConfigurationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyTransitGatewayMeteringPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyTransitGatewayPolicyTableEntryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyTransitGatewayPrefixListReferenceRequest$Blackhole": "<p>Indicates whether to drop traffic that matches this route.</p>",
@@ -13950,6 +13955,16 @@
       "refs": {
       }
     },
+    "GetTransitGatewayAttachmentNatConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetTransitGatewayAttachmentNatConfigurationResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetTransitGatewayAttachmentPropagationsRequest": {
       "base": null,
       "refs": {
@@ -16756,6 +16771,8 @@
         "TrafficMirrorSession$PacketLength": "<p>The number of bytes in each packet to mirror. These are the bytes after the VXLAN header. To mirror a subset, set this to the length (in bytes) to mirror. For example, if you set this value to 100, then the first 100 bytes that meet the filter criteria are copied to the target. Do not specify this parameter when you want to mirror the entire packet</p>",
         "TrafficMirrorSession$SessionNumber": "<p>The session number determines the order in which sessions are evaluated when an interface is used by multiple sessions. The first session with a matching filter is the one that mirrors the packets.</p> <p>Valid values are 1-32766.</p>",
         "TrafficMirrorSession$VirtualNetworkId": "<p>The virtual network ID associated with the Traffic Mirror session.</p>",
+        "TransitGatewayNatRule$RuleNumber": "<p>The rule number.</p>",
+        "TransitGatewayNatRuleRequest$RuleNumber": "<p>The rule number. Valid values are 1 to 32766. Each rule number must be unique within the request.</p>",
         "TrunkInterfaceAssociation$VlanId": "<p>The ID of the VLAN when you use the VLAN protocol.</p>",
         "TrunkInterfaceAssociation$GreKey": "<p>The application key when you use the GRE protocol.</p>",
         "TunnelOption$Phase1LifetimeSeconds": "<p>The lifetime for phase 1 of the IKE negotiation, in seconds.</p>",
@@ -20659,6 +20676,16 @@
       }
     },
     "ModifyTrafficMirrorSessionResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyTransitGatewayAttachmentNatConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyTransitGatewayAttachmentNatConfigurationResult": {
       "base": null,
       "refs": {
       }
@@ -28702,6 +28729,10 @@
         "TransitGatewayMulticastRegisteredGroupMembers$GroupIpAddress": "<p>The IP address assigned to the transit gateway multicast group.</p>",
         "TransitGatewayMulticastRegisteredGroupSources$TransitGatewayMulticastDomainId": "<p>The ID of the transit gateway multicast domain.</p>",
         "TransitGatewayMulticastRegisteredGroupSources$GroupIpAddress": "<p>The IP address assigned to the transit gateway multicast group.</p>",
+        "TransitGatewayNatRule$MatchSourceCidr": "<p>The IPv4 CIDR block of the source addresses to translate.</p>",
+        "TransitGatewayNatRule$NatCidr": "<p>The IPv4 CIDR block that the transit gateway translates the source addresses to.</p>",
+        "TransitGatewayNatRuleRequest$MatchSourceCidr": "<p>The IPv4 CIDR block of the source addresses to translate. The CIDR block can't overlap the multicast range (<code>224.0.0.0/4</code>) or the link-local range (<code>169.254.0.0/16</code>).</p>",
+        "TransitGatewayNatRuleRequest$NatCidr": "<p>The IPv4 CIDR block to translate the source addresses to. The CIDR block must be in a private (RFC 1918) or shared address space (RFC 6598) range, and must have the same prefix length as <code>MatchSourceCidr</code>. The CIDR blocks in the rules for an attachment can't overlap each other.</p>",
         "TransitGatewayOptions$AssociationDefaultRouteTableId": "<p>The ID of the default association route table.</p>",
         "TransitGatewayOptions$PropagationDefaultRouteTableId": "<p>The ID of the default propagation route table.</p>",
         "TransitGatewayPeeringAttachment$TransitGatewayAttachmentId": "<p>The ID of the transit gateway peering attachment.</p>",
@@ -30155,7 +30186,11 @@
         "DisassociateTransitGatewayPolicyTableRequest$TransitGatewayAttachmentId": "<p>The ID of the transit gateway attachment to disassociate from the policy table.</p>",
         "DisassociateTransitGatewayRouteTableRequest$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
         "EnableTransitGatewayRouteTablePropagationRequest$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
+        "GetTransitGatewayAttachmentNatConfigurationRequest$TransitGatewayAttachmentId": "<p>The ID of the transit gateway attachment.</p>",
+        "GetTransitGatewayAttachmentNatConfigurationResult$TransitGatewayAttachmentId": "<p>The ID of the transit gateway attachment.</p>",
         "GetTransitGatewayAttachmentPropagationsRequest$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
+        "ModifyTransitGatewayAttachmentNatConfigurationRequest$TransitGatewayAttachmentId": "<p>The ID of the transit gateway attachment.</p>",
+        "ModifyTransitGatewayAttachmentNatConfigurationResult$TransitGatewayAttachmentId": "<p>The ID of the transit gateway attachment.</p>",
         "ModifyTransitGatewayPrefixListReferenceRequest$TransitGatewayAttachmentId": "<p>The ID of the attachment to which traffic is routed.</p>",
         "ModifyTransitGatewayVpcAttachmentRequest$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
         "RejectTransitGatewayClientVpnAttachmentRequest$TransitGatewayAttachmentId": "<p>The ID of the Transit Gateway attachment.</p>",
@@ -30195,6 +30230,28 @@
       "base": null,
       "refs": {
         "DescribeTransitGatewayAttachmentsResult$TransitGatewayAttachments": "<p>Information about the attachments.</p>"
+      }
+    },
+    "TransitGatewayAttachmentNatGatewaySupportState": {
+      "base": null,
+      "refs": {
+        "GetTransitGatewayAttachmentNatConfigurationResult$NatGatewaySupport": "<p>The state of NAT gateway support for the attachment.</p>",
+        "ModifyTransitGatewayAttachmentNatConfigurationResult$NatGatewaySupport": "<p>The state of NAT gateway support for the attachment.</p>",
+        "TransitGatewayAttachment$NatGatewaySupport": "<p>The state of NAT gateway support for the attachment. Only the owner of the transit gateway receives this parameter.</p>"
+      }
+    },
+    "TransitGatewayAttachmentNatGatewaySupportValue": {
+      "base": null,
+      "refs": {
+        "ModifyTransitGatewayAttachmentNatConfigurationRequest$NatGatewaySupport": "<p>Specifies whether to enable or disable NAT gateway support for the attachment. To enable NAT gateway support, the attachment must have at least one NAT gateway rule. You can't modify the NAT configuration while NAT gateway support is <code>enabling</code> or <code>disabling</code>. If you omit this parameter, the current value doesn't change.</p>"
+      }
+    },
+    "TransitGatewayAttachmentNatSystemRouteSupportValue": {
+      "base": null,
+      "refs": {
+        "GetTransitGatewayAttachmentNatConfigurationResult$NatSystemRouteSupport": "<p>Specifies whether the transit gateway installs routes for the NAT CIDRs in the route tables to which the attachment propagates.</p>",
+        "ModifyTransitGatewayAttachmentNatConfigurationRequest$NatSystemRouteSupport": "<p>Specifies whether the transit gateway installs routes for the NAT CIDRs in the route tables to which the attachment propagates. For VPC attachments, the transit gateway always installs these routes. You can enable or disable this option only for Amazon Web Services Direct Connect gateway attachments and Site-to-Site VPN attachments that use dynamic routing. For these attachments, the default is <code>enable</code>. If you omit this parameter, the current value doesn't change.</p>",
+        "ModifyTransitGatewayAttachmentNatConfigurationResult$NatSystemRouteSupport": "<p>Specifies whether the transit gateway installs routes for the NAT CIDRs in the route tables to which the attachment propagates.</p>"
       }
     },
     "TransitGatewayAttachmentPropagation": {
@@ -30587,6 +30644,37 @@
       "base": "<p>Describes the members registered with the transit gateway multicast group.</p>",
       "refs": {
         "RegisterTransitGatewayMulticastGroupSourcesResult$RegisteredMulticastGroupSources": "<p>Information about the transit gateway multicast group sources.</p>"
+      }
+    },
+    "TransitGatewayNatRule": {
+      "base": "<p>Contains information about a NAT gateway rule for a transit gateway attachment, including the rule number, the source CIDR block, the translated CIDR block, and the state of the rule.</p>",
+      "refs": {
+        "TransitGatewayNatRuleList$member": null
+      }
+    },
+    "TransitGatewayNatRuleList": {
+      "base": null,
+      "refs": {
+        "GetTransitGatewayAttachmentNatConfigurationResult$NatGatewayRules": "<p>The NAT gateway rules for the attachment.</p>",
+        "ModifyTransitGatewayAttachmentNatConfigurationResult$NatGatewayRules": "<p>The NAT gateway rules for the attachment.</p>"
+      }
+    },
+    "TransitGatewayNatRuleRequest": {
+      "base": "<p>Describes a NAT gateway rule to apply to a transit gateway attachment. A NAT gateway rule translates source addresses in the <code>MatchSourceCidr</code> range to the corresponding addresses in the <code>NatCidr</code> range.</p>",
+      "refs": {
+        "TransitGatewayNatRuleRequestList$member": null
+      }
+    },
+    "TransitGatewayNatRuleRequestList": {
+      "base": null,
+      "refs": {
+        "ModifyTransitGatewayAttachmentNatConfigurationRequest$NatGatewayRules": "<p>The NAT gateway rules for the attachment. The rules that you specify replace all existing NAT gateway rules for the attachment. You can specify up to 50 rules for an attachment. If you omit this parameter, the existing rules don't change. To remove all rules, use <code>ResetNatGatewayRules</code>.</p>"
+      }
+    },
+    "TransitGatewayNatRuleState": {
+      "base": null,
+      "refs": {
+        "TransitGatewayNatRule$State": "<p>The state of the NAT gateway rule. The possible values are:</p> <ul> <li> <p> <code>pending</code> - The transit gateway is applying a change to the rule.</p> </li> <li> <p> <code>activated</code> - The rule is in effect because NAT gateway support is enabled for the attachment.</p> </li> <li> <p> <code>deactivated</code> - The rule isn't in effect because NAT gateway support is disabled for the attachment.</p> </li> </ul>"
       }
     },
     "TransitGatewayNetworkInterfaceIdList": {

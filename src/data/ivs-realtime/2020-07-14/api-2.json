@@ -534,6 +534,21 @@
       ],
       "readonly":true
     },
+    "RevokeConnectionToken":{
+      "name":"RevokeConnectionToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/RevokeConnectionToken",
+        "responseCode":200
+      },
+      "input":{"shape":"RevokeConnectionTokenRequest"},
+      "output":{"shape":"RevokeConnectionTokenResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "StartComposition":{
       "name":"StartComposition",
       "http":{
@@ -909,6 +924,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ConnectionTokenId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-_]+"
     },
     "CreateEncoderConfigurationRequest":{
       "type":"structure",
@@ -2335,6 +2356,17 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "RevokeConnectionTokenRequest":{
+      "type":"structure",
+      "required":["tokenId"],
+      "members":{
+        "tokenId":{"shape":"ConnectionTokenId"}
+      }
+    },
+    "RevokeConnectionTokenResponse":{
+      "type":"structure",
+      "members":{}
     },
     "S3BucketName":{
       "type":"string",

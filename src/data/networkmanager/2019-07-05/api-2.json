@@ -1102,6 +1102,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListAttachmentNatConfigurations":{
+      "name":"ListAttachmentNatConfigurations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/nat-configurations"
+      },
+      "input":{"shape":"ListAttachmentNatConfigurationsRequest"},
+      "output":{"shape":"ListAttachmentNatConfigurationsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListAttachmentRoutingPolicyAssociations":{
       "name":"ListAttachmentRoutingPolicyAssociations",
       "http":{
@@ -1442,6 +1458,24 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "UpdateAttachmentNatConfiguration":{
+      "name":"UpdateAttachmentNatConfiguration",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/attachments/{attachmentId}/nat-configuration"
+      },
+      "input":{"shape":"UpdateAttachmentNatConfigurationRequest"},
+      "output":{"shape":"UpdateAttachmentNatConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "UpdateConnection":{
       "name":"UpdateConnection",
       "http":{
@@ -1768,6 +1802,8 @@
         "AttachmentPolicyRuleNumber":{"shape":"Integer"},
         "SegmentName":{"shape":"ConstrainedString"},
         "NetworkFunctionGroupName":{"shape":"NetworkFunctionGroupName"},
+        "NatGatewaySupport":{"shape":"NatGatewaySupportState"},
+        "NatSystemRouteSupport":{"shape":"BoxedBoolean"},
         "Tags":{"shape":"TagList"},
         "ProposedSegmentChange":{"shape":"ProposedSegmentChange"},
         "ProposedNetworkFunctionGroupChange":{"shape":"ProposedNetworkFunctionGroupChange"},
@@ -1794,13 +1830,19 @@
         "SUBNET_NO_FREE_ADDRESSES",
         "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE",
         "SUBNET_NO_IPV6_CIDRS",
+        "SECURITY_GROUP_REFERENCING_UNSUPPORTED_AVAILABILITY_ZONE",
         "VPN_CONNECTION_NOT_FOUND",
         "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED",
         "DIRECT_CONNECT_GATEWAY_NOT_FOUND",
         "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS",
         "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF",
         "VPN_EXISTING_ASSOCIATIONS",
-        "VPC_UNSUPPORTED_FEATURES"
+        "VPN_STATIC_ROUTES_NAT_UNSUPPORTED",
+        "VPC_UNSUPPORTED_FEATURES",
+        "DIRECT_CONNECT_GATEWAY_TOPOLOGY_RESTRICTIONS",
+        "CREATION_FAILED",
+        "UPDATE_FAILED",
+        "DELETION_FAILED"
       ]
     },
     "AttachmentErrorList":{
@@ -1818,6 +1860,21 @@
     "AttachmentList":{
       "type":"list",
       "member":{"shape":"Attachment"}
+    },
+    "AttachmentNatConfiguration":{
+      "type":"structure",
+      "members":{
+        "AttachmentId":{"shape":"AttachmentId"},
+        "NatGatewaySupport":{"shape":"NatGatewaySupportState"},
+        "NatSystemRouteSupport":{"shape":"BoxedBoolean"},
+        "NatGatewayRules":{"shape":"NatRuleList"}
+      }
+    },
+    "AttachmentNatConfigurationList":{
+      "type":"list",
+      "member":{"shape":"AttachmentNatConfiguration"},
+      "max":500,
+      "min":0
     },
     "AttachmentRoutingPolicyAssociationSummary":{
       "type":"structure",
@@ -1870,6 +1927,7 @@
       }
     },
     "Boolean":{"type":"boolean"},
+    "BoxedBoolean":{"type":"boolean"},
     "ChangeAction":{
       "type":"string",
       "enum":[
@@ -2030,7 +2088,9 @@
         "SUBNET_NOT_FOUND",
         "IP_OUTSIDE_SUBNET_CIDR_RANGE",
         "INVALID_INSIDE_CIDR_BLOCK",
-        "NO_ASSOCIATED_CIDR_BLOCK"
+        "NO_ASSOCIATED_CIDR_BLOCK",
+        "CREATION_FAILED",
+        "DELETION_FAILED"
       ]
     },
     "ConnectPeerErrorList":{
@@ -2443,6 +2503,8 @@
         "EdgeLocation":{"shape":"ExternalRegionCode"},
         "TransportAttachmentId":{"shape":"AttachmentId"},
         "RoutingPolicyLabel":{"shape":"ConstrainedString"},
+        "NatGatewaySupport":{"shape":"NatGatewaySupportValue"},
+        "NatGatewayRules":{"shape":"NatRuleRequestList"},
         "Options":{"shape":"ConnectAttachmentOptions"},
         "Tags":{"shape":"TagList"},
         "ClientToken":{
@@ -2593,6 +2655,9 @@
         "DirectConnectGatewayArn":{"shape":"DirectConnectGatewayArn"},
         "RoutingPolicyLabel":{"shape":"ConstrainedString"},
         "EdgeLocations":{"shape":"ExternalRegionCodeList"},
+        "NatGatewaySupport":{"shape":"NatGatewaySupportValue"},
+        "NatSystemRouteSupport":{"shape":"BoxedBoolean"},
+        "NatGatewayRules":{"shape":"NatRuleRequestList"},
         "Tags":{"shape":"TagList"},
         "ClientToken":{
           "shape":"ClientToken",
@@ -2676,6 +2741,9 @@
         "CoreNetworkId":{"shape":"CoreNetworkId"},
         "VpnConnectionArn":{"shape":"VpnConnectionArn"},
         "RoutingPolicyLabel":{"shape":"ConstrainedString"},
+        "NatGatewaySupport":{"shape":"NatGatewaySupportValue"},
+        "NatSystemRouteSupport":{"shape":"BoxedBoolean"},
+        "NatGatewayRules":{"shape":"NatRuleRequestList"},
         "Tags":{"shape":"TagList"},
         "ClientToken":{
           "shape":"ClientToken",
@@ -2747,6 +2815,8 @@
         "SubnetArns":{"shape":"SubnetArnList"},
         "Options":{"shape":"VpcOptions"},
         "RoutingPolicyLabel":{"shape":"ConstrainedString"},
+        "NatGatewaySupport":{"shape":"NatGatewaySupportValue"},
+        "NatGatewayRules":{"shape":"NatRuleRequestList"},
         "Tags":{"shape":"TagList"},
         "ClientToken":{
           "shape":"ClientToken",
@@ -3902,7 +3972,9 @@
         "PrefixListIds":{"shape":"ConstrainedStringList"},
         "States":{"shape":"RouteStateList"},
         "Types":{"shape":"RouteTypeList"},
-        "DestinationFilters":{"shape":"FilterMap"}
+        "DestinationFilters":{"shape":"FilterMap"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "GetNetworkRoutesResponse":{
@@ -3910,9 +3982,11 @@
       "members":{
         "RouteTableArn":{"shape":"ResourceArn"},
         "CoreNetworkSegmentEdge":{"shape":"CoreNetworkSegmentEdgeIdentifier"},
+        "CoreNetworkNetworkFunctionGroup":{"shape":"CoreNetworkNetworkFunctionGroupIdentifier"},
         "RouteTableType":{"shape":"RouteTableType"},
         "RouteTableTimestamp":{"shape":"DateTime"},
-        "NetworkRoutes":{"shape":"NetworkRouteList"}
+        "NetworkRoutes":{"shape":"NetworkRouteList"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "GetNetworkTelemetryRequest":{
@@ -4314,6 +4388,24 @@
         "UPDATING"
       ]
     },
+    "ListAttachmentNatConfigurationsRequest":{
+      "type":"structure",
+      "members":{
+        "CoreNetworkId":{"shape":"CoreNetworkId"},
+        "AttachmentId":{"shape":"AttachmentId"},
+        "Filters":{"shape":"FilterMap"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAttachmentNatConfigurationsResponse":{
+      "type":"structure",
+      "required":["AttachmentNatConfigurations"],
+      "members":{
+        "AttachmentNatConfigurations":{"shape":"AttachmentNatConfigurationList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListAttachmentRoutingPolicyAssociationsRequest":{
       "type":"structure",
       "required":["CoreNetworkId"],
@@ -4498,6 +4590,10 @@
         "SegmentName":{"shape":"ConstrainedString"},
         "EdgeLocation":{"shape":"ExternalRegionCode"},
         "NextHopFilters":{"shape":"FilterMap"},
+        "ExactPrefixMatches":{"shape":"ConstrainedStringList"},
+        "LongestPrefixMatches":{"shape":"ConstrainedStringList"},
+        "SubnetOfMatches":{"shape":"ConstrainedStringList"},
+        "SupernetOfMatches":{"shape":"ConstrainedStringList"},
         "LocalPreferenceMatches":{"shape":"ConstrainedStringList"},
         "ExactAsPathMatches":{"shape":"ConstrainedStringList"},
         "MedMatches":{"shape":"ConstrainedStringList"},
@@ -4638,6 +4734,76 @@
       "type":"integer",
       "max":500,
       "min":1
+    },
+    "NatGatewaySupportState":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "ENABLING",
+        "DISABLED",
+        "DISABLING",
+        "PENDING_ATTACHMENT_ACCEPTANCE"
+      ]
+    },
+    "NatGatewaySupportValue":{
+      "type":"string",
+      "enum":[
+        "ENABLE",
+        "DISABLE"
+      ]
+    },
+    "NatRule":{
+      "type":"structure",
+      "members":{
+        "RuleNumber":{"shape":"NatRuleNumber"},
+        "MatchSourceCidr":{"shape":"IPAddress"},
+        "NatCidr":{"shape":"IPAddress"},
+        "State":{"shape":"NatRuleState"}
+      }
+    },
+    "NatRuleList":{
+      "type":"list",
+      "member":{"shape":"NatRule"},
+      "max":50,
+      "min":0
+    },
+    "NatRuleNumber":{
+      "type":"integer",
+      "max":32766,
+      "min":1
+    },
+    "NatRuleRequest":{
+      "type":"structure",
+      "required":[
+        "RuleNumber",
+        "MatchSourceCidr",
+        "NatCidr"
+      ],
+      "members":{
+        "RuleNumber":{"shape":"NatRuleNumber"},
+        "MatchSourceCidr":{"shape":"IPAddress"},
+        "NatCidr":{"shape":"IPAddress"}
+      }
+    },
+    "NatRuleRequestList":{
+      "type":"list",
+      "member":{"shape":"NatRuleRequest"},
+      "max":50,
+      "min":0
+    },
+    "NatRuleState":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "MODIFYING",
+        "DELETING",
+        "ACTIVATED",
+        "ACTIVATING",
+        "DEACTIVATED",
+        "DEACTIVATING",
+        "FAILED",
+        "PENDING_ATTACHMENT_ACCEPTANCE"
+      ]
     },
     "NetworkFunctionGroup":{
       "type":"structure",
@@ -4820,7 +4986,10 @@
         "MISSING_PERMISSIONS",
         "INTERNAL_ERROR",
         "EDGE_LOCATION_PEER_DUPLICATE",
-        "INVALID_TRANSIT_GATEWAY_STATE"
+        "INVALID_TRANSIT_GATEWAY_STATE",
+        "TRANSIT_GATEWAY_ENCRYPTION_NOT_SUPPORTED",
+        "CREATION_FAILED",
+        "DELETION_FAILED"
       ]
     },
     "PeeringErrorList":{
@@ -5224,7 +5393,8 @@
       "type":"string",
       "enum":[
         "PROPAGATED",
-        "STATIC"
+        "STATIC",
+        "SYSTEM"
       ]
     },
     "RouteTypeList":{
@@ -5623,6 +5793,33 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{}
+    },
+    "UpdateAttachmentNatConfigurationRequest":{
+      "type":"structure",
+      "required":["AttachmentId"],
+      "members":{
+        "AttachmentId":{
+          "shape":"AttachmentId",
+          "location":"uri",
+          "locationName":"attachmentId"
+        },
+        "NatGatewaySupport":{"shape":"NatGatewaySupportValue"},
+        "NatSystemRouteSupport":{"shape":"BoxedBoolean"},
+        "NatGatewayRules":{"shape":"NatRuleRequestList"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateAttachmentNatConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "AttachmentId":{"shape":"AttachmentId"},
+        "NatGatewaySupport":{"shape":"NatGatewaySupportState"},
+        "NatSystemRouteSupport":{"shape":"BoxedBoolean"},
+        "NatGatewayRules":{"shape":"NatRuleList"}
+      }
     },
     "UpdateConnectionRequest":{
       "type":"structure",

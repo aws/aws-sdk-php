@@ -43,6 +43,8 @@ use Aws\AwsClient;
  *     EdgeLocation?: string,
  *     TransportAttachmentId?: string,
  *     RoutingPolicyLabel?: string,
+ *     NatGatewaySupport?: 'DISABLE'|'ENABLE',
+ *     NatGatewayRules?: list<array{RuleNumber?: int, MatchSourceCidr?: string, NatCidr?: string, ...}>,
  *     Options?: array{Protocol?: 'GRE'|'NO_ENCAP', ...},
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ClientToken?: string,
@@ -54,6 +56,8 @@ use Aws\AwsClient;
  *     EdgeLocation?: string,
  *     TransportAttachmentId?: string,
  *     RoutingPolicyLabel?: string,
+ *     NatGatewaySupport?: 'DISABLE'|'ENABLE',
+ *     NatGatewayRules?: list<array{RuleNumber?: int, MatchSourceCidr?: string, NatCidr?: string, ...}>,
  *     Options?: array{Protocol?: 'GRE'|'NO_ENCAP', ...},
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ClientToken?: string,
@@ -161,6 +165,9 @@ use Aws\AwsClient;
  *     DirectConnectGatewayArn?: string,
  *     RoutingPolicyLabel?: string,
  *     EdgeLocations?: list<string>,
+ *     NatGatewaySupport?: 'DISABLE'|'ENABLE',
+ *     NatSystemRouteSupport?: bool,
+ *     NatGatewayRules?: list<array{RuleNumber?: int, MatchSourceCidr?: string, NatCidr?: string, ...}>,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ClientToken?: string,
  *     ...,
@@ -171,6 +178,9 @@ use Aws\AwsClient;
  *     DirectConnectGatewayArn?: string,
  *     RoutingPolicyLabel?: string,
  *     EdgeLocations?: list<string>,
+ *     NatGatewaySupport?: 'DISABLE'|'ENABLE',
+ *     NatSystemRouteSupport?: bool,
+ *     NatGatewayRules?: list<array{RuleNumber?: int, MatchSourceCidr?: string, NatCidr?: string, ...}>,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ClientToken?: string,
  *     ...,
@@ -222,6 +232,9 @@ use Aws\AwsClient;
  *     CoreNetworkId?: string,
  *     VpnConnectionArn?: string,
  *     RoutingPolicyLabel?: string,
+ *     NatGatewaySupport?: 'DISABLE'|'ENABLE',
+ *     NatSystemRouteSupport?: bool,
+ *     NatGatewayRules?: list<array{RuleNumber?: int, MatchSourceCidr?: string, NatCidr?: string, ...}>,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ClientToken?: string,
  *     ...,
@@ -231,6 +244,9 @@ use Aws\AwsClient;
  *     CoreNetworkId?: string,
  *     VpnConnectionArn?: string,
  *     RoutingPolicyLabel?: string,
+ *     NatGatewaySupport?: 'DISABLE'|'ENABLE',
+ *     NatSystemRouteSupport?: bool,
+ *     NatGatewayRules?: list<array{RuleNumber?: int, MatchSourceCidr?: string, NatCidr?: string, ...}>,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ClientToken?: string,
  *     ...,
@@ -282,6 +298,8 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     RoutingPolicyLabel?: string,
+ *     NatGatewaySupport?: 'DISABLE'|'ENABLE',
+ *     NatGatewayRules?: list<array{RuleNumber?: int, MatchSourceCidr?: string, NatCidr?: string, ...}>,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ClientToken?: string,
  *     ...,
@@ -299,6 +317,8 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     RoutingPolicyLabel?: string,
+ *     NatGatewaySupport?: 'DISABLE'|'ENABLE',
+ *     NatGatewayRules?: list<array{RuleNumber?: int, MatchSourceCidr?: string, NatCidr?: string, ...}>,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ClientToken?: string,
  *     ...,
@@ -548,8 +568,10 @@ use Aws\AwsClient;
  *     SupernetOfMatches?: list<string>,
  *     PrefixListIds?: list<string>,
  *     States?: list<'ACTIVE'|'BLACKHOLE'>,
- *     Types?: list<'PROPAGATED'|'STATIC'>,
+ *     Types?: list<'PROPAGATED'|'STATIC'|'SYSTEM'>,
  *     DestinationFilters?: array<string, list<string>>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise getNetworkRoutesAsync(array $args = [])
@@ -567,8 +589,10 @@ use Aws\AwsClient;
  *     SupernetOfMatches?: list<string>,
  *     PrefixListIds?: list<string>,
  *     States?: list<'ACTIVE'|'BLACKHOLE'>,
- *     Types?: list<'PROPAGATED'|'STATIC'>,
+ *     Types?: list<'PROPAGATED'|'STATIC'|'SYSTEM'>,
  *     DestinationFilters?: array<string, list<string>>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result getNetworkTelemetry(array $args = [])
@@ -645,6 +669,24 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getVpcAttachment(array{AttachmentId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getVpcAttachmentAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getVpcAttachmentAsync(array{AttachmentId?: string, ...} $args = [])
+ * @method \Aws\Result listAttachmentNatConfigurations(array $args = [])
+ * @phpstan-method \Aws\Result listAttachmentNatConfigurations(array{
+ *     CoreNetworkId?: string,
+ *     AttachmentId?: string,
+ *     Filters?: array<string, list<string>>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAttachmentNatConfigurationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listAttachmentNatConfigurationsAsync(array{
+ *     CoreNetworkId?: string,
+ *     AttachmentId?: string,
+ *     Filters?: array<string, list<string>>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listAttachmentRoutingPolicyAssociations(array $args = [])
  * @phpstan-method \Aws\Result listAttachmentRoutingPolicyAssociations(array{CoreNetworkId?: string, AttachmentId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listAttachmentRoutingPolicyAssociationsAsync(array $args = [])
@@ -687,6 +729,10 @@ use Aws\AwsClient;
  *     SegmentName?: string,
  *     EdgeLocation?: string,
  *     NextHopFilters?: array<string, list<string>>,
+ *     ExactPrefixMatches?: list<string>,
+ *     LongestPrefixMatches?: list<string>,
+ *     SubnetOfMatches?: list<string>,
+ *     SupernetOfMatches?: list<string>,
  *     LocalPreferenceMatches?: list<string>,
  *     ExactAsPathMatches?: list<string>,
  *     MedMatches?: list<string>,
@@ -701,6 +747,10 @@ use Aws\AwsClient;
  *     SegmentName?: string,
  *     EdgeLocation?: string,
  *     NextHopFilters?: array<string, list<string>>,
+ *     ExactPrefixMatches?: list<string>,
+ *     LongestPrefixMatches?: list<string>,
+ *     SubnetOfMatches?: list<string>,
+ *     SupernetOfMatches?: list<string>,
  *     LocalPreferenceMatches?: list<string>,
  *     ExactAsPathMatches?: list<string>,
  *     MedMatches?: list<string>,
@@ -813,6 +863,24 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result untagResource(array{ResourceArn?: string, TagKeys?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise untagResourceAsync(array{ResourceArn?: string, TagKeys?: list<string>, ...} $args = [])
+ * @method \Aws\Result updateAttachmentNatConfiguration(array $args = [])
+ * @phpstan-method \Aws\Result updateAttachmentNatConfiguration(array{
+ *     AttachmentId?: string,
+ *     NatGatewaySupport?: 'DISABLE'|'ENABLE',
+ *     NatSystemRouteSupport?: bool,
+ *     NatGatewayRules?: list<array{RuleNumber?: int, MatchSourceCidr?: string, NatCidr?: string, ...}>,
+ *     ClientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateAttachmentNatConfigurationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateAttachmentNatConfigurationAsync(array{
+ *     AttachmentId?: string,
+ *     NatGatewaySupport?: 'DISABLE'|'ENABLE',
+ *     NatSystemRouteSupport?: bool,
+ *     NatGatewayRules?: list<array{RuleNumber?: int, MatchSourceCidr?: string, NatCidr?: string, ...}>,
+ *     ClientToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateConnection(array $args = [])
  * @phpstan-method \Aws\Result updateConnection(array{
  *     GlobalNetworkId?: string,

@@ -2899,6 +2899,10 @@
       "max":100000,
       "min":1
     },
+    "EvaluationDimensionName":{
+      "type":"string",
+      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,47}"
+    },
     "EvaluationErrorCode":{
       "type":"string",
       "max":1024,
@@ -2975,6 +2979,7 @@
         "evaluatorArn":{"shape":"EvaluatorArn"},
         "evaluatorId":{"shape":"EvaluatorId"},
         "evaluatorName":{"shape":"EvaluatorName"},
+        "evaluationDimensionName":{"shape":"EvaluationDimensionName"},
         "explanation":{"shape":"EvaluationExplanation"},
         "context":{"shape":"Context"},
         "value":{"shape":"Double"},
@@ -3062,6 +3067,7 @@
       "type":"structure",
       "members":{
         "evaluatorId":{"shape":"String"},
+        "evaluationDimensionName":{"shape":"String"},
         "statistics":{"shape":"EvaluatorStatistics"},
         "totalEvaluated":{"shape":"Integer"},
         "totalFailed":{"shape":"Integer"}

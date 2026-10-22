@@ -7,10 +7,13 @@
     "BatchGetEffectiveLifecyclePolicy": "<p>Returns a list of successful and failed retrievals for the OpenSearch Serverless indexes. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-list\">Viewing data lifecycle policies</a>.</p>",
     "BatchGetLifecyclePolicy": "<p>Returns one or more configured OpenSearch Serverless lifecycle policies. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-list\">Viewing data lifecycle policies</a>.</p>",
     "BatchGetVpcEndpoint": "<p>Returns attributes for one or more VPC endpoints associated with the current account. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-vpc.html\">Access Amazon OpenSearch Serverless using an interface endpoint</a>.</p>",
+    "CancelIngestionJob": "<p>Cancels an in-progress ingestion job. Documents that were already indexed before the cancellation remain in the index.</p>",
     "CreateAccessPolicy": "<p>Creates a data access policy for OpenSearch Serverless. Access policies limit access to collections and the resources within them, and allow a user to access that data irrespective of the access mechanism or network source. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-data-access.html\">Data access control for Amazon OpenSearch Serverless</a>.</p>",
     "CreateCollection": "<p>Creates a new OpenSearch Serverless collection. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
     "CreateCollectionGroup": "<p>Creates a collection group within OpenSearch Serverless. Collection groups let you manage OpenSearch Compute Units (OCUs) at a group level, with multiple collections sharing the group's capacity limits.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-collection-groups.html\">Managing collection groups</a>.</p>",
     "CreateIndex": "<p>Creates an index within an OpenSearch Serverless collection. Unlike other OpenSearch indexes, indexes created by this API are automatically configured to conduct automatic semantic enrichment ingestion and search. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment\">About automatic semantic enrichment</a> in the <i>OpenSearch User Guide</i>.</p>",
+    "CreateIngestionJob": "<p>Creates an ingestion job that performs a one-time bulk ingestion of data from an Amazon S3 bucket into an index in an OpenSearch Serverless collection. An ingestion job scans the source bucket, indexes the documents it finds, and then completes. To continuously ingest new data as it arrives, use <code>CreateIngestionStream</code> instead.</p>",
+    "CreateIngestionStream": "<p>Creates an ingestion stream that continuously ingests data from an Amazon S3 bucket into an index in an OpenSearch Serverless collection. An ingestion stream processes Amazon S3 event notifications delivered to an Amazon SQS queue and ingests new objects as they arrive. The stream continues to ingest data until you delete it. To perform a one-time bulk ingestion instead, use <code>CreateIngestionJob</code>.</p>",
     "CreateLifecyclePolicy": "<p>Creates a lifecyle policy to be applied to OpenSearch Serverless indexes. Lifecycle policies define the number of days or hours to retain the data on an OpenSearch Serverless index. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-create\">Creating data lifecycle policies</a>.</p>",
     "CreateSecurityConfig": "<p>Specifies a security configuration for OpenSearch Serverless. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>.</p>",
     "CreateSecurityPolicy": "<p>Creates a security policy to be used by one or more OpenSearch Serverless collections. Security policies provide access to a collection and its OpenSearch Dashboards endpoint from public networks or specific VPC endpoints. They also allow you to secure a collection with a KMS encryption key. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-network.html\">Network access for Amazon OpenSearch Serverless</a> and <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-encryption.html\">Encryption at rest for Amazon OpenSearch Serverless</a>.</p>",
@@ -19,6 +22,7 @@
     "DeleteCollection": "<p>Deletes an OpenSearch Serverless collection. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
     "DeleteCollectionGroup": "<p>Deletes a collection group. You can only delete empty collection groups that contain no collections. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
     "DeleteIndex": "<p>Deletes an index from an OpenSearch Serverless collection. Be aware that the index might be configured to conduct automatic semantic enrichment ingestion and search. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment\">About automatic semantic enrichment</a>.</p>",
+    "DeleteIngestionStream": "<p>Deletes an ingestion stream. Documents that were already indexed by the stream remain in the index.</p>",
     "DeleteLifecyclePolicy": "<p>Deletes an OpenSearch Serverless lifecycle policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-delete\">Deleting data lifecycle policies</a>.</p>",
     "DeleteSecurityConfig": "<p>Deletes a security configuration for OpenSearch Serverless. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>.</p>",
     "DeleteSecurityPolicy": "<p>Deletes an OpenSearch Serverless security policy.</p>",
@@ -26,12 +30,16 @@
     "GetAccessPolicy": "<p>Returns an OpenSearch Serverless access policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-data-access.html\">Data access control for Amazon OpenSearch Serverless</a>.</p>",
     "GetAccountSettings": "<p>Returns account-level settings related to OpenSearch Serverless.</p>",
     "GetIndex": "<p>Retrieves information about an index in an OpenSearch Serverless collection, including its schema definition. The index might be configured to conduct automatic semantic enrichment ingestion and search. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment\">About automatic semantic enrichment</a>.</p>",
+    "GetIngestionJob": "<p>Returns information about an ingestion job, including its configuration, status, and processing state.</p>",
+    "GetIngestionStream": "<p>Returns information about an ingestion stream, including its configuration, status, and processing state.</p>",
     "GetPoliciesStats": "<p>Returns statistical information about your OpenSearch Serverless access policies, security configurations, and security policies.</p>",
     "GetSecurityConfig": "<p>Returns information about an OpenSearch Serverless security configuration. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>.</p>",
     "GetSecurityPolicy": "<p>Returns information about a configured OpenSearch Serverless security policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-network.html\">Network access for Amazon OpenSearch Serverless</a> and <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-encryption.html\">Encryption at rest for Amazon OpenSearch Serverless</a>.</p>",
     "ListAccessPolicies": "<p>Returns information about a list of OpenSearch Serverless access policies.</p>",
     "ListCollectionGroups": "<p>Returns a list of collection groups. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
     "ListCollections": "<p>Lists all OpenSearch Serverless collections. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p> <note> <p>Make sure to include an empty request body {} if you don't include any collection filters in the request.</p> </note>",
+    "ListIngestionJobs": "<p>Returns a list of ingestion jobs in a collection.</p>",
+    "ListIngestionStreams": "<p>Returns a list of ingestion streams in a collection.</p>",
     "ListLifecyclePolicies": "<p>Returns a list of OpenSearch Serverless lifecycle policies. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-list\">Viewing data lifecycle policies</a>.</p>",
     "ListSecurityConfigs": "<p>Returns information about configured OpenSearch Serverless security configurations. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>.</p>",
     "ListSecurityPolicies": "<p>Returns information about configured OpenSearch Serverless security policies.</p>",
@@ -156,6 +164,21 @@
         "EncryptionConfig$aWSOwnedKey": "<p>Indicates whether to use an Amazon Web Services-owned key for encryption.</p>"
       }
     },
+    "BucketOwnerAccountId": {
+      "base": null,
+      "refs": {
+        "IngestionJobS3Source$bucketOwnerAccountId": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket.</p>",
+        "StreamBucketConfig$bucketOwnerAccountId": "<p>The AWS account ID that owns the S3 bucket. Optional. If omitted, the control plane derives it from the account segment of sqsArn.</p>"
+      }
+    },
+    "CancelIngestionJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelIngestionJobResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CapacityDetails": {
       "base": "<p>Capacity details for an OpenSearch Serverless collection group, including the current capacity and autoscaling status.</p>",
       "refs": {
@@ -173,9 +196,12 @@
     "ClientToken": {
       "base": null,
       "refs": {
+        "CancelIngestionJobRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateAccessPolicyRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateCollectionGroupRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateCollectionRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "CreateIngestionJobRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "CreateIngestionStreamRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateLifecyclePolicyRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateSecurityConfigRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateSecurityPolicyRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
@@ -183,6 +209,7 @@
         "DeleteAccessPolicyRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteCollectionGroupRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteCollectionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "DeleteIngestionStreamRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteLifecyclePolicyRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteSecurityConfigRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteSecurityPolicyRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
@@ -234,7 +261,7 @@
         "CreateCollectionGroupDetail$capacityLimits": "<p>The capacity limits for the collection group, in OpenSearch Compute Units (OCUs).</p>",
         "CreateCollectionGroupRequest$capacityLimits": "<p>The capacity limits for the collection group, in OpenSearch Compute Units (OCUs). These limits control the maximum and minimum capacity for collections within the group.</p>",
         "UpdateCollectionGroupDetail$capacityLimits": "<p>The capacity limits for the collection group, in OpenSearch Compute Units (OCUs).</p>",
-        "UpdateCollectionGroupRequest$capacityLimits": "<p>Updated capacity limits for the collection group, in OpenSearch Compute Units (OCUs).</p>"
+        "UpdateCollectionGroupRequest$capacityLimits": "<p>The updated capacity limits for the collection group, in OpenSearch Compute Units (OCUs). Updates to capacity limits are not incremental. Any field not specified resets to its default value.</p>"
       }
     },
     "CollectionGroupDetail": {
@@ -342,16 +369,28 @@
     "CollectionId": {
       "base": null,
       "refs": {
+        "CancelIngestionJobRequest$collectionId": "<p>The unique identifier of the collection that the ingestion job belongs to.</p>",
+        "CancelIngestionJobResponse$collectionId": "<p>The unique identifier of the collection that the ingestion job belongs to.</p>",
         "CollectionDetail$id": "<p>A unique identifier for the collection.</p>",
         "CollectionErrorDetail$id": "<p>If the request contains collection IDs, the response includes the IDs provided in the request.</p>",
         "CollectionIds$member": null,
         "CollectionSummary$id": "<p>The unique identifier of the collection.</p>",
         "CreateCollectionDetail$id": "<p>The unique identifier of the collection.</p>",
         "CreateIndexRequest$id": "<p>The unique identifier of the collection in which to create the index.</p>",
+        "CreateIngestionJobRequest$collectionId": "<p>The unique identifier of the collection to ingest data into.</p>",
+        "CreateIngestionStreamRequest$collectionId": "<p>The unique identifier of the collection to ingest data into.</p>",
         "DeleteCollectionDetail$id": "<p>The unique identifier of the collection.</p>",
         "DeleteCollectionRequest$id": "<p>The unique identifier of the collection. For example, <code>1iu5usc406kd</code>. The ID is part of the collection endpoint. You can also retrieve it using the <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/ServerlessAPIReference/API_ListCollections.html\">ListCollections</a> API.</p>",
         "DeleteIndexRequest$id": "<p>The unique identifier of the collection containing the index to delete.</p>",
+        "DeleteIngestionStreamRequest$collectionId": "<p>The unique identifier of the collection that the ingestion stream belongs to.</p>",
+        "DeleteIngestionStreamResponse$collectionId": "<p>The unique identifier of the collection that the ingestion stream belonged to.</p>",
         "GetIndexRequest$id": "<p>The unique identifier of the collection containing the index.</p>",
+        "GetIngestionJobRequest$collectionId": "<p>The unique identifier of the collection that the ingestion job belongs to.</p>",
+        "GetIngestionStreamRequest$collectionId": "<p>The unique identifier of the collection that the ingestion stream belongs to.</p>",
+        "IngestionJobDetail$collectionId": "<p>The unique identifier of the collection that the ingestion job belongs to.</p>",
+        "IngestionStreamDetail$collectionId": "<p>The unique identifier of the collection that the ingestion stream belongs to.</p>",
+        "ListIngestionJobsRequest$collectionId": "<p>The unique identifier of the collection to list ingestion jobs for.</p>",
+        "ListIngestionStreamsRequest$collectionId": "<p>The unique identifier of the collection to list ingestion streams for.</p>",
         "UpdateCollectionDetail$id": "<p>The unique identifier of the collection.</p>",
         "UpdateCollectionRequest$id": "<p>The unique identifier of the collection.</p>",
         "UpdateIndexRequest$id": "<p>The unique identifier of the collection containing the index to update.</p>"
@@ -496,6 +535,22 @@
       "base": null,
       "refs": {}
     },
+    "CreateIngestionJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateIngestionJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateIngestionStreamRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateIngestionStreamResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateLifecyclePolicyRequest": {
       "base": null,
       "refs": {}
@@ -575,6 +630,14 @@
       "refs": {}
     },
     "DeleteIndexResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteIngestionStreamRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteIngestionStreamResponse": {
       "base": null,
       "refs": {}
     },
@@ -662,7 +725,8 @@
     "EncryptionConfig": {
       "base": "<p>Encryption settings for a collection.</p>",
       "refs": {
-        "CreateCollectionRequest$encryptionConfig": "<p>Encryption settings for the collection.</p>"
+        "CreateCollectionRequest$encryptionConfig": "<p>Encryption settings for the collection.</p>",
+        "UpdateCollectionRequest$encryptionConfig": null
       }
     },
     "EncryptionConfigKmsKeyArnString": {
@@ -704,6 +768,22 @@
       "refs": {}
     },
     "GetIndexResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIngestionJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIngestionJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIngestionStreamRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIngestionStreamResponse": {
       "base": null,
       "refs": {}
     },
@@ -795,6 +875,217 @@
       "base": null,
       "refs": {
         "CapacityLimits$maxIndexingCapacityInOCU": "<p>The maximum indexing capacity for collections.</p>"
+      }
+    },
+    "IngestionAlert": {
+      "base": "<p>An active alert about a running ingestion — operational issues or updates to processing state. Cleared when the issue resolves.</p>",
+      "refs": {
+        "IngestionAlerts$member": null
+      }
+    },
+    "IngestionAlertCode": {
+      "base": "<p>Codes for active operational issues affecting a running ingestion.</p>",
+      "refs": {
+        "IngestionAlert$code": "<p>The code that identifies the alert.</p>"
+      }
+    },
+    "IngestionAlerts": {
+      "base": null,
+      "refs": {
+        "IngestionJobDetail$activeAlerts": "<p>Active alerts about operational issues that currently affect the ingestion job. Alerts are cleared when the issue is resolved.</p>",
+        "IngestionStreamDetail$activeAlerts": "<p>Active alerts about operational issues that currently affect the ingestion stream. Alerts are cleared when the issue is resolved.</p>"
+      }
+    },
+    "IngestionFailureCode": {
+      "base": "<p>Codes explaining why an ingestion reached a terminal failure state.</p>",
+      "refs": {
+        "IngestionFailureReason$code": "<p>The code that identifies the reason for the failure.</p>"
+      }
+    },
+    "IngestionFailureReason": {
+      "base": "<p>A terminal failure reason explaining why an ingestion stopped.</p>",
+      "refs": {
+        "IngestionFailureReasons$member": null
+      }
+    },
+    "IngestionFailureReasons": {
+      "base": null,
+      "refs": {
+        "IngestionJobDetail$failureReasons": "<p>The reasons that the ingestion job reached a terminal failure state, if applicable.</p>",
+        "IngestionStreamDetail$failureReasons": "<p>The reasons that the ingestion stream reached a terminal failure state, if applicable.</p>"
+      }
+    },
+    "IngestionIndexName": {
+      "base": null,
+      "refs": {
+        "CreateIngestionJobRequest$indexName": "<p>The name of the index to ingest documents into.</p>",
+        "CreateIngestionJobRequest$failureIndexName": "<p>The name of the index where documents that fail to be ingested are recorded.</p>",
+        "CreateIngestionStreamRequest$indexName": "<p>The name of the index to ingest documents into.</p>",
+        "CreateIngestionStreamRequest$failureIndexName": "<p>The name of the index where documents that fail to be ingested are recorded.</p>",
+        "IngestionJobDetail$indexName": "<p>The name of the index that documents are ingested into.</p>",
+        "IngestionJobDetail$failureIndexName": "<p>The name of the index where documents that fail to be ingested are recorded.</p>",
+        "IngestionJobSummary$indexName": "<p>The name of the index that documents are ingested into.</p>",
+        "IngestionStreamDetail$indexName": "<p>The name of the index that documents are ingested into.</p>",
+        "IngestionStreamDetail$failureIndexName": "<p>The name of the index where documents that fail to be ingested are recorded.</p>",
+        "IngestionStreamSummary$indexName": "<p>The name of the index that documents are ingested into.</p>"
+      }
+    },
+    "IngestionJobDetail": {
+      "base": "<p>Details about an ingestion job.</p>",
+      "refs": {
+        "CreateIngestionJobResponse$ingestionJobDetail": "<p>Details about the created ingestion job.</p>",
+        "GetIngestionJobResponse$ingestionJobDetail": "<p>Details about the requested ingestion job.</p>"
+      }
+    },
+    "IngestionJobId": {
+      "base": null,
+      "refs": {
+        "CancelIngestionJobRequest$ingestionJobId": "<p>The unique identifier of the ingestion job to cancel.</p>",
+        "CancelIngestionJobResponse$ingestionJobId": "<p>The unique identifier of the cancelled ingestion job.</p>",
+        "GetIngestionJobRequest$ingestionJobId": "<p>The unique identifier of the ingestion job to retrieve.</p>",
+        "IngestionJobDetail$ingestionJobId": "<p>The unique identifier of the ingestion job.</p>",
+        "IngestionJobSummary$ingestionJobId": "<p>The unique identifier of the ingestion job.</p>"
+      }
+    },
+    "IngestionJobName": {
+      "base": null,
+      "refs": {
+        "CancelIngestionJobResponse$ingestionJobName": "<p>The name of the cancelled ingestion job.</p>",
+        "CreateIngestionJobRequest$ingestionJobName": "<p>The name of the ingestion job. The name must be unique within the collection.</p>",
+        "IngestionJobDetail$ingestionJobName": "<p>The name of the ingestion job.</p>",
+        "IngestionJobSummary$ingestionJobName": "<p>The name of the ingestion job.</p>"
+      }
+    },
+    "IngestionJobResourceArn": {
+      "base": null,
+      "refs": {
+        "IngestionJobDetail$arn": "<p>The Amazon Resource Name (ARN) of the ingestion job.</p>",
+        "IngestionJobSummary$arn": "<p>The Amazon Resource Name (ARN) of the ingestion job.</p>"
+      }
+    },
+    "IngestionJobS3Source": {
+      "base": "<p>The Amazon S3 source configuration for an ingestion job.</p>",
+      "refs": {
+        "IngestionJobSource$s3": "<p>The Amazon S3 source configuration for the ingestion job.</p>"
+      }
+    },
+    "IngestionJobS3SourceKeyPrefixString": {
+      "base": null,
+      "refs": {
+        "IngestionJobS3Source$keyPrefix": "<p>A key prefix that limits ingestion to objects in the Amazon S3 bucket whose keys begin with the prefix.</p>"
+      }
+    },
+    "IngestionJobSource": {
+      "base": "<p>The source that an ingestion job ingests data from.</p>",
+      "refs": {
+        "CreateIngestionJobRequest$source": "<p>The Amazon S3 source to ingest data from.</p>",
+        "IngestionJobDetail$source": "<p>The Amazon S3 source that the ingestion job ingests data from.</p>"
+      }
+    },
+    "IngestionJobStatus": {
+      "base": null,
+      "refs": {
+        "CancelIngestionJobResponse$status": "<p>The current status of the ingestion job.</p>",
+        "IngestionJobDetail$status": "<p>The current lifecycle status of the ingestion job. For example, <code>CREATING</code>, <code>ACTIVE</code>, <code>COMPLETED</code>, or <code>CANCELLED</code>.</p>",
+        "IngestionJobSummary$status": "<p>The current lifecycle status of the ingestion job.</p>"
+      }
+    },
+    "IngestionJobSummaries": {
+      "base": null,
+      "refs": {
+        "ListIngestionJobsResponse$ingestionJobSummaries": "<p>Summary information about each ingestion job.</p>"
+      }
+    },
+    "IngestionJobSummary": {
+      "base": "<p>Summary information about an ingestion job.</p>",
+      "refs": {
+        "IngestionJobSummaries$member": null
+      }
+    },
+    "IngestionState": {
+      "base": null,
+      "refs": {
+        "IngestionJobDetail$state": "<p>The current processing state of the ingestion job. For example, <code>SCANNING</code>, <code>INGESTION_IN_PROGRESS</code>, or <code>INGESTION_COMPLETE</code>.</p>",
+        "IngestionStreamDetail$state": "<p>The current processing state of the ingestion stream. For example, <code>STARTING</code> or <code>INGESTION_IN_PROGRESS</code>.</p>"
+      }
+    },
+    "IngestionStatistics": {
+      "base": "<p>Processing statistics for an ingestion job or ingestion stream.</p>",
+      "refs": {
+        "IngestionJobDetail$statistics": "<p>Processing statistics for the ingestion job, such as the number of Amazon S3 objects discovered, ingested, and failed.</p>",
+        "IngestionStreamDetail$statistics": "<p>Processing statistics for the ingestion stream, such as the number of Amazon S3 objects discovered, ingested, and failed.</p>"
+      }
+    },
+    "IngestionStreamDetail": {
+      "base": "<p>Details about an ingestion stream.</p>",
+      "refs": {
+        "CreateIngestionStreamResponse$ingestionStreamDetail": "<p>Details about the created ingestion stream.</p>",
+        "GetIngestionStreamResponse$ingestionStreamDetail": "<p>Details about the requested ingestion stream.</p>"
+      }
+    },
+    "IngestionStreamId": {
+      "base": null,
+      "refs": {
+        "DeleteIngestionStreamRequest$ingestionStreamId": "<p>The unique identifier of the ingestion stream to delete.</p>",
+        "DeleteIngestionStreamResponse$ingestionStreamId": "<p>The unique identifier of the deleted ingestion stream.</p>",
+        "GetIngestionStreamRequest$ingestionStreamId": "<p>The unique identifier of the ingestion stream to retrieve.</p>",
+        "IngestionStreamDetail$ingestionStreamId": "<p>The unique identifier of the ingestion stream.</p>",
+        "IngestionStreamSummary$ingestionStreamId": "<p>The unique identifier of the ingestion stream.</p>"
+      }
+    },
+    "IngestionStreamName": {
+      "base": null,
+      "refs": {
+        "CreateIngestionStreamRequest$ingestionStreamName": "<p>The name of the ingestion stream. The name must be unique within the collection.</p>",
+        "DeleteIngestionStreamResponse$ingestionStreamName": "<p>The name of the deleted ingestion stream.</p>",
+        "IngestionStreamDetail$ingestionStreamName": "<p>The name of the ingestion stream.</p>",
+        "IngestionStreamSummary$ingestionStreamName": "<p>The name of the ingestion stream.</p>"
+      }
+    },
+    "IngestionStreamResourceArn": {
+      "base": null,
+      "refs": {
+        "IngestionStreamDetail$arn": "<p>The Amazon Resource Name (ARN) of the ingestion stream.</p>",
+        "IngestionStreamSummary$arn": "<p>The Amazon Resource Name (ARN) of the ingestion stream.</p>"
+      }
+    },
+    "IngestionStreamS3Source": {
+      "base": "<p>The Amazon S3 source configuration for an ingestion stream.</p>",
+      "refs": {
+        "IngestionStreamSource$s3": "<p>The Amazon S3 source configuration for the ingestion stream.</p>"
+      }
+    },
+    "IngestionStreamSource": {
+      "base": "<p>The source that an ingestion stream ingests data from.</p>",
+      "refs": {
+        "CreateIngestionStreamRequest$source": "<p>The Amazon S3 source to ingest data from, including the Amazon SQS queue that receives S3 event notifications.</p>",
+        "IngestionStreamDetail$source": "<p>The Amazon S3 source that the ingestion stream ingests data from.</p>"
+      }
+    },
+    "IngestionStreamStatus": {
+      "base": null,
+      "refs": {
+        "DeleteIngestionStreamResponse$status": "<p>The current status of the ingestion stream.</p>",
+        "IngestionStreamDetail$status": "<p>The current lifecycle status of the ingestion stream. For example, <code>CREATING</code>, <code>ACTIVE</code>, or <code>DELETING</code>.</p>",
+        "IngestionStreamSummary$status": "<p>The current lifecycle status of the ingestion stream.</p>"
+      }
+    },
+    "IngestionStreamSummaries": {
+      "base": null,
+      "refs": {
+        "ListIngestionStreamsResponse$ingestionStreamSummaries": "<p>Summary information about each ingestion stream.</p>"
+      }
+    },
+    "IngestionStreamSummary": {
+      "base": "<p>Summary information about an ingestion stream.</p>",
+      "refs": {
+        "IngestionStreamSummaries$member": null
+      }
+    },
+    "InitialScan": {
+      "base": "<p>Controls whether to perform a one-time delta scan of existing S3 objects before continuous ingestion processes SQS notifications.</p>",
+      "refs": {
+        "StreamBucketConfig$initialScan": "<p>Specifies whether to perform a one-time scan of the objects that already exist in the bucket before the stream begins processing Amazon S3 event notifications. If <code>DISABLED</code>, only new objects are ingested.</p>"
       }
     },
     "Integer": {
@@ -946,6 +1237,34 @@
       "base": null,
       "refs": {}
     },
+    "ListIngestionJobsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIngestionJobsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListIngestionJobsRequest$maxResults": "<p>The maximum number of results to return. Valid values are 1–100. If you don't specify a value, the default is 100. You can use <code>nextToken</code> to get the next page of results.</p> <p>A response can contain fewer results than <code>maxResults</code>, or no results, and still include a <code>nextToken</code>. To retrieve all results, continue to make the call with the returned <code>nextToken</code> until no <code>nextToken</code> is returned.</p>"
+      }
+    },
+    "ListIngestionJobsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIngestionStreamsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIngestionStreamsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListIngestionStreamsRequest$maxResults": "<p>The maximum number of results to return. Valid values are 1–100. If you don't specify a value, the default is 100. You can use <code>nextToken</code> to get the next page of results.</p> <p>A response can contain fewer results than <code>maxResults</code>, or no results, and still include a <code>nextToken</code>. To retrieve all results, continue to make the call with the returned <code>nextToken</code> until no <code>nextToken</code> is returned.</p>"
+      }
+    },
+    "ListIngestionStreamsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListLifecyclePoliciesRequest": {
       "base": null,
       "refs": {}
@@ -1038,11 +1357,16 @@
         "CreateCollectionDetail$lastModifiedDate": "<p>The date and time when the collection was last modified.</p>",
         "CreateCollectionGroupDetail$createdDate": "<p>The Epoch time when the collection group was created.</p>",
         "GetPoliciesStatsResponse$TotalPolicyCount": "<p>The total number of OpenSearch Serverless security policies and configurations in your account.</p>",
+        "IngestionJobDetail$revision": "<p>The revision number of the ingestion job.</p>",
+        "IngestionStreamDetail$revision": "<p>The revision number of the ingestion stream.</p>",
         "LifecyclePolicyDetail$createdDate": "<p>The date the lifecycle policy was created.</p>",
         "LifecyclePolicyDetail$lastModifiedDate": "<p>The timestamp of when the lifecycle policy was last modified.</p>",
         "LifecyclePolicyStats$RetentionPolicyCount": "<p>The number of retention lifecycle policies in the current account.</p>",
         "LifecyclePolicySummary$createdDate": "<p>The Epoch time when the lifecycle policy was created.</p>",
         "LifecyclePolicySummary$lastModifiedDate": "<p>The date and time when the lifecycle policy was last modified.</p>",
+        "S3Statistics$objectsDiscovered": "<p>The number of Amazon S3 objects discovered for ingestion.</p>",
+        "S3Statistics$objectsIngested": "<p>The number of Amazon S3 objects successfully ingested.</p>",
+        "S3Statistics$objectsFailed": "<p>The number of Amazon S3 objects that failed to be ingested.</p>",
         "SecurityConfigDetail$createdDate": "<p>The date the configuration was created.</p>",
         "SecurityConfigDetail$lastModifiedDate": "<p>The timestamp of when the configuration was last modified.</p>",
         "SecurityConfigStats$SamlConfigCount": "<p>The number of security configurations in the current account.</p>",
@@ -1159,6 +1483,26 @@
       "base": null,
       "refs": {
         "EffectiveLifecyclePolicyDetail$resourceType": "<p>The type of OpenSearch Serverless resource. Currently, the only supported resource is <code>index</code>.</p>"
+      }
+    },
+    "RoleArn": {
+      "base": null,
+      "refs": {
+        "CreateIngestionStreamRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that OpenSearch Serverless assumes to read data from the source. The role must be in the same account as the collection.</p>",
+        "IngestionStreamDetail$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that OpenSearch Serverless assumes to read data from the source.</p>"
+      }
+    },
+    "S3BucketNameOrArn": {
+      "base": null,
+      "refs": {
+        "IngestionJobS3Source$bucket": "<p>The name or Amazon Resource Name (ARN) of the Amazon S3 bucket to ingest data from.</p>",
+        "StreamBucketConfig$bucket": "<p>The name or Amazon Resource Name (ARN) of the Amazon S3 bucket to ingest data from.</p>"
+      }
+    },
+    "S3Statistics": {
+      "base": "<p>Processing statistics for the Amazon S3 objects in an ingestion source.</p>",
+      "refs": {
+        "IngestionStatistics$s3": "<p>Processing statistics for the Amazon S3 source.</p>"
       }
     },
     "SamlConfigOptions": {
@@ -1300,6 +1644,12 @@
       "base": "<p>Thrown when you attempt to create more resources than the service allows based on service quotas.</p>",
       "refs": {}
     },
+    "SqsArn": {
+      "base": null,
+      "refs": {
+        "IngestionStreamS3Source$sqsArn": "<p>The Amazon Resource Name (ARN) of the Amazon SQS queue that receives Amazon S3 event notifications for the source buckets.</p>"
+      }
+    },
     "StandbyReplicas": {
       "base": null,
       "refs": {
@@ -1309,6 +1659,18 @@
         "CreateCollectionGroupDetail$standbyReplicas": "<p>Indicates whether standby replicas are used for the collection group.</p>",
         "CreateCollectionGroupRequest$standbyReplicas": "<p>Indicates whether standby replicas should be used for a collection group.</p>",
         "CreateCollectionRequest$standbyReplicas": "<p>Indicates whether standby replicas should be used for a collection.</p>"
+      }
+    },
+    "StreamBucketConfig": {
+      "base": "<p>S3 bucket configuration for SQS-driven ingestion. The scan mode controls only the optional one-time delta scan of existing objects in this bucket.</p>",
+      "refs": {
+        "StreamBucketConfigs$member": null
+      }
+    },
+    "StreamBucketConfigs": {
+      "base": null,
+      "refs": {
+        "IngestionStreamS3Source$buckets": "<p>The configuration for each Amazon S3 bucket that the ingestion stream ingests data from.</p>"
       }
     },
     "String": {
@@ -1343,6 +1705,8 @@
         "FipsEndpoints$dashboardEndpoint": "<p>FIPS-compliant endpoint used to access OpenSearch Dashboards. This endpoint uses FIPS 140-3 validated cryptography and is required for federal government workloads that need dashboard visualization capabilities.</p>",
         "IamIdentityCenterConfigOptions$applicationName": "<p>The name of the IAM Identity Center application used to integrate with OpenSearch Serverless.</p>",
         "IamIdentityCenterConfigOptions$applicationDescription": "<p>The description of the IAM Identity Center application used to integrate with OpenSearch Serverless.</p>",
+        "IngestionAlert$message": "<p>A description of the alert.</p>",
+        "IngestionFailureReason$message": "<p>A description of the reason for the failure.</p>",
         "InternalServerException$message": null,
         "LifecyclePolicyErrorDetail$errorMessage": "<p>A description of the error. For example, <code>The specified Lifecycle Policy is not found</code>.</p>",
         "LifecyclePolicyErrorDetail$errorCode": "<p>The error code for the request. For example, <code>NOT_FOUND</code>.</p>",
@@ -1352,6 +1716,10 @@
         "ListCollectionGroupsResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListCollectionsRequest$nextToken": "<p>If your initial <code>ListCollections</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListCollections</code> operations, which returns results in the next page.</p>",
         "ListCollectionsResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
+        "ListIngestionJobsRequest$nextToken": "<p>If your initial <code>ListIngestionJobs</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListIngestionJobs</code> operations, which returns results in the next page.</p>",
+        "ListIngestionJobsResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
+        "ListIngestionStreamsRequest$nextToken": "<p>If your initial <code>ListIngestionStreams</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListIngestionStreams</code> operations, which returns results in the next page.</p>",
+        "ListIngestionStreamsResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListLifecyclePoliciesRequest$nextToken": "<p>If your initial <code>ListLifecyclePolicies</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListLifecyclePolicies</code> operations, which returns results in the next page.</p>",
         "ListLifecyclePoliciesResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListSecurityConfigsRequest$nextToken": "<p>If your initial <code>ListSecurityConfigs</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListSecurityConfigs</code> operations, which returns results in the next page.</p>",
@@ -1368,6 +1736,7 @@
         "ServiceQuotaExceededException$serviceCode": "<p>Service Quotas requirement to identify originating service.</p>",
         "ServiceQuotaExceededException$quotaCode": "<p>Service Quotas requirement to identify originating quota.</p>",
         "UpdateCollectionDetail$description": "<p>The description of the collection.</p>",
+        "UpdateCollectionDetail$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Key Management Service (Amazon Web Services KMS) key used to encrypt the collection.</p>",
         "UpdateCollectionDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
         "UpdateCollectionGroupDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection group.</p>",
         "UpdateCollectionGroupDetail$description": "<p>The description of the collection group.</p>",
@@ -1434,8 +1803,23 @@
         "CreateCollectionGroupDetail$tags": "<p>A map of key-value pairs associated with the collection group.</p>",
         "CreateCollectionGroupRequest$tags": "<p>An arbitrary set of tags (key–value pairs) to associate with the OpenSearch Serverless collection group.</p>",
         "CreateCollectionRequest$tags": "<p>An arbitrary set of tags (key–value pairs) to associate with the OpenSearch Serverless collection.</p>",
+        "CreateIngestionJobRequest$tags": "<p>An arbitrary set of tags (key–value pairs) to associate with the ingestion job.</p>",
+        "CreateIngestionStreamRequest$tags": "<p>An arbitrary set of tags (key–value pairs) to associate with the ingestion stream.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags associated with the resource.</p>",
         "TagResourceRequest$tags": "<p>A list of tags (key-value pairs) to add to the resource. All tag keys in the request must be unique.</p>"
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "IngestionJobDetail$createdAt": "<p>The date and time when the ingestion job was created.</p>",
+        "IngestionJobDetail$updatedAt": "<p>The date and time when the ingestion job was last updated.</p>",
+        "IngestionJobSummary$createdAt": "<p>The date and time when the ingestion job was created.</p>",
+        "IngestionJobSummary$updatedAt": "<p>The date and time when the ingestion job was last updated.</p>",
+        "IngestionStreamDetail$createdAt": "<p>The date and time when the ingestion stream was created.</p>",
+        "IngestionStreamDetail$updatedAt": "<p>The date and time when the ingestion stream was last updated.</p>",
+        "IngestionStreamSummary$createdAt": "<p>The date and time when the ingestion stream was created.</p>",
+        "IngestionStreamSummary$updatedAt": "<p>The date and time when the ingestion stream was last updated.</p>"
       }
     },
     "UntagResourceRequest": {

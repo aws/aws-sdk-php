@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Updates the minimum required PHP version to 8.2, following the disclosure of CVE-2026-109618 and CVE-2026-109619.
+* `Aws\IVSRealTime` - Adds RevokeConnectionToken operation for Amazon IVS Real-Time Streaming.
+* `Aws\Lambda` - AWS Lambda durable functions now supports payloads up to 1 MB for checkpoints, callback completion, and error details.
+* `Aws\KafkaConnect` - Amazon MSK Connect now supports pausing and resuming connectors via the asynchronous PauseConnector and ResumeConnector APIs. Paused connectors keep their configuration and committed offsets and resume where they left off. Each call returns an operation ARN to track with DescribeConnectorOperation.
+* `Aws\Glue` - Add support for large worker types in AWS Glue
+* `Aws\ElementalInference` - Elemental Inference now supports feed scheduling, letting you apply feed configuration changes at a time you choose instead of building your own automation.
+* `Aws\BedrockAgentCoreControl` - Adds model-based routing and fallback to AgentCore Gateway rules. Rules can match the requested model, route to a specific model, and fall back across inference targets with an optional circuit breaker. Adds multi-dimensional rating scales for AgentCore Evaluations LLM-as-a-Judge evaluators.
+* `Aws\NetworkManager` - AWS Cloud WAN now provides managed one-to-one NAT directly on it's core network attachments, through integration with Regional Private NAT Gateway. Use UpdateAttachmentNatConfiguration to enable NAT and configure NAT rules, and ListAttachmentNatConfigurations to view them.
+* `Aws\BedrockAgentCore` - Adds the dimension name to evaluation results and batch evaluation summaries. For multi-dimensional LLM-as-a-Judge evaluators, each result and summary now identifies which dimension it corresponds to.
+* `Aws\EC2` - AWS Transit Gateway now provides managed one-to-one NAT directly on its attachments, through integration with Regional Private NAT Gateway. Use ModifyTransitGatewayAttachmentNatConfiguration to enable NAT and configure NAT rules, and GetTransitGatewayAttachmentNatConfiguration to view them.
+* `Aws\Connect` - Adds support for customer queryable replication errors.
+* `Aws\Continuum` - Releasing Continuum for Code Vulnerabilities APIs for SDKs
+* `Aws\OpenSearchServerless` - Adds APIs to create, get, list, and cancel ingestion jobs, and to create, get, list, and delete ingestion streams, for ingesting data from Amazon S3 into OpenSearch Serverless collections.
+
 ## 3.401.5 - 2026-10-21
 
 * `Aws\` - Removes the `FinSpace` and `FinSpaceData` clients, which are no longer in service.

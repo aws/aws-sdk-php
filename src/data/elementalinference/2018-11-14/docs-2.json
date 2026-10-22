@@ -5,9 +5,11 @@
     "AssociateFeed": "<p>Associates a resource with the feed. The resource provides the input that Elemental Inference needs in order to perform an Elemental Inference feature, such as cropping video. You always provide the resource by associating it with a feed. You can associate only one resource with each feed. With an association, a specific source media is claiming ownership of the feed. </p> <p>AssociateFeed is a PATCH operation, which means that you can include only parameters that you want to change. Parameters that you don't include will not be affected by the operation. </p> <p>Specifically:</p> <ul> <li> <p>You can add more outputs to the existing outputs. New outputs will be appended.</p> </li> <li> <p>You can't modify an existing output (for example to change its name). Instead, use UpdateFeed. </p> </li> <li> <p>You can't delete an existing output. Instead, use UpdateFeed.</p> </li> </ul> <p>Also note that you can't change the feed name with AssociateFeed. Instead, use UpdateFeed. </p>",
     "CreateDictionary": "<p>Creates a custom dictionary for improving transcription accuracy. A dictionary contains custom words and phrases that the ASR engine might not recognize, such as brand names, technical terms, or proper nouns. You can reference a dictionary when configuring a smart subtitles output. </p>",
     "CreateFeed": "<p>Creates a feed. The feed is the target for the live media stream that is being sent by the calling application. An example of a calling application is AWS Elemental MediaLive. </p> <p>The key contents of the feed is an array of outputs. Each output represents an Elemental Inference feature. After you create the feed, you must associate a resource with the feed. At that point, you will have a useable feed: resource - feed - output or outputs. </p>",
+    "CreateScheduleAction": "<p>Creates a schedule action on a feed. A schedule action applies configuration changes to the feed at a time that you specify, in the same way as an UpdateFeed request. </p> <p>Elemental Inference validates the targets of the action when you create it.</p>",
     "DeleteDictionary": "<p>Deletes the specified dictionary. You cannot delete a dictionary that is referenced by a feed. You must first remove the dictionary reference from the feed's subtitling configuration. </p>",
     "DeleteFeed": "<p>Deletes the specified feed. You can delete the feed at any time. Elemental Inference doesn't block you from deleting a feed when the calling application is calling PutMedia or GetMetadata on that feed, although both these calls will start to fail. For more information about managing inactive feeds, see the Elemental Inference User Guide. </p>",
     "DeleteFeedPolicy": "<p>Deletes the resource-based policy attached to the specified feed. After you delete the policy, the operation revokes the cross-account access that the policy granted. </p>",
+    "DeleteScheduleAction": "<p>Deletes a schedule action from a feed. A deleted action never runs.</p> <p>You can delete only an action whose status is PENDING. Deleting an action doesn't reverse changes that the action already made to the feed. When you delete or archive a feed, Elemental Inference deletes all the schedule actions on that feed. </p>",
     "DisassociateFeed": "<p>Releases the resource (the source media) that is associated with this feed. The outputs in the feed become DISABLED. </p>",
     "ExportDictionaryEntries": "<p>Exports the entries from the specified dictionary.</p>",
     "GetDictionary": "<p>Retrieves information about the specified dictionary.</p>",
@@ -16,6 +18,7 @@
     "GetFixture": "<p>Retrieves information about the specified fixture (a sports event, such as a specific basketball game). You obtain a fixtureId from SearchFixtures, or from the clipping output of a feed. </p>",
     "ListDictionaries": "<p>Lists the dictionaries in your account.</p>",
     "ListFeeds": "<p>Displays a list of feeds that belong to this AWS account.</p>",
+    "ListScheduleActions": "<p>Displays a list of the schedule actions on a feed, including the status of each action and, for a failed action, information about why it failed. </p> <p>Elemental Inference keeps an action whose status is COMPLETED or FAILED for about 48 hours after its scheduled time, and then deletes it automatically. </p>",
     "ListTagsForResource": "<p>List all tags that are on an Elemental Inference resource in the current region.</p>",
     "PutFeedPolicy": "<p>Attaches or replaces a resource-based policy on the specified feed. A resource-based policy grants cross-account access to the feed. </p>",
     "SearchFixtures": "<p>Searches for the fixtures (sports events, such as a specific basketball game) that are available for a sport in a date window. Each fixture in the response includes a fixtureId that you specify in the clipping output of a feed, so that Elemental Inference maps the event data for that fixture onto the clipping metadata. This operation is paginated: if there are more fixtures than fit in one page, the response includes a nextToken that you pass in a subsequent request. </p>",
@@ -119,6 +122,14 @@
         "CreateFeedRequest$outputs": "<p>An array of outputs for this feed. Each output represents a specific Elemental Inference feature. For example, there is one output type for the smart crop feature. You must specify at least one output, but you can later add outputs using AssociateFeed, or add, modify, and delete outputs using UpdateFeed. </p>"
       }
     },
+    "CreateScheduleActionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateScheduleActionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CroppingConfig": {
       "base": "<p>A type of OutputConfig, used when the output in a feed is for the crop feature.</p>",
       "refs": {
@@ -128,7 +139,8 @@
     "DataSourceConfiguration": {
       "base": "<p>Contains the data source configuration for a clipping output. It identifies the fixture whose event data Elemental Inference maps onto the clipping metadata. It is used in the dataSourceConfiguration property of a ClippingConfig. </p>",
       "refs": {
-        "ClippingConfig$dataSourceConfiguration": "<p>The data source to map onto this clipping output. This parameter is optional. When you include this parameter, Elemental Inference reads the event data for the fixture that you specify, and includes that data in the event clipping metadata for this output. </p> <p>If you omit this parameter, Elemental Inference doesn't map a data source onto this output. </p>"
+        "ClippingConfig$dataSourceConfiguration": "<p>The data source to map onto this clipping output. This parameter is optional. When you include this parameter, Elemental Inference reads the event data for the fixture that you specify, and includes that data in the event clipping metadata for this output. </p> <p>If you omit this parameter, Elemental Inference doesn't map a data source onto this output. </p>",
+        "UpdateClippingDataSourceConfiguration$dataSourceConfiguration": "<p>The game that you want to attach to the output.</p>"
       }
     },
     "DataSourceSport": {
@@ -154,6 +166,14 @@
       "refs": {}
     },
     "DeleteFeedResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteScheduleActionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteScheduleActionResponse": {
       "base": null,
       "refs": {}
     },
@@ -272,9 +292,11 @@
         "AssociateFeedRequest$id": "<p>The ID of the feed.</p>",
         "AssociateFeedResponse$id": "<p>The ID of the feed.</p>",
         "CreateFeedResponse$id": "<p>A unique ID that Elemental Inference assigns to the feed.</p>",
+        "CreateScheduleActionRequest$id": "<p>Specifies the ID of the feed that you want to add the schedule action to.</p>",
         "DeleteFeedPolicyRequest$id": "<p>The ID of the feed whose policy you want to delete.</p>",
         "DeleteFeedRequest$id": "<p>The ID of the feed.</p>",
         "DeleteFeedResponse$id": "<p>The ID of the deleted feed.</p>",
+        "DeleteScheduleActionRequest$id": "<p>The ID of the feed that holds the schedule action.</p>",
         "DisassociateFeedRequest$id": "<p>The ID of the feed where you want to release the resource.</p>",
         "DisassociateFeedResponse$id": "<p>The ID of the feed.</p>",
         "FeedReferences$member": null,
@@ -282,6 +304,7 @@
         "GetFeedPolicyRequest$id": "<p>The ID of the feed whose policy you want to retrieve.</p>",
         "GetFeedRequest$id": "<p>The ID of the feed to query.</p>",
         "GetFeedResponse$id": "<p>The ID of the feed.</p>",
+        "ListScheduleActionsRequest$id": "<p>The ID of the feed that you want to query.</p>",
         "PutFeedPolicyRequest$id": "<p>The ID of the feed to attach the policy to.</p>",
         "UpdateFeedRequest$id": "<p>The ID of the feed to update.</p>",
         "UpdateFeedResponse$id": "<p>The ID of the feed.</p>"
@@ -333,6 +356,12 @@
       "base": null,
       "refs": {
         "SearchFilter$values": "<p>An array of values to match in the dimension that you specified in name. You can specify up to 10 values. A fixture appears in the results if it matches at least one of these values. </p>"
+      }
+    },
+    "FixedModeScheduleActionStartSettings": {
+      "base": "<p>Sets the time at which a schedule action runs once. This is a type of ScheduleActionStartConfiguration. </p>",
+      "refs": {
+        "ScheduleActionStartConfiguration$fixedModeScheduleActionStartSettings": "<p>The start settings type for an action that runs once, at a fixed time.</p>"
       }
     },
     "FixtureDate": {
@@ -462,6 +491,20 @@
       "base": null,
       "refs": {}
     },
+    "ListScheduleActionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListScheduleActionsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListScheduleActionsRequest$maxResults": "<p>The maximum number of results to return for each API request. If you don't specify MaxResults, Elemental Inference returns a maximum of 10 results for each page. </p>"
+      }
+    },
+    "ListScheduleActionsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {}
@@ -483,7 +526,8 @@
       "refs": {
         "CreateOutput$status": "<p>The status to assign to the output.</p>",
         "GetOutput$status": "<p>The status of the output.</p>",
-        "UpdateOutput$status": "<p>The status of the output.</p>"
+        "UpdateOutput$status": "<p>The status of the output.</p>",
+        "UpdateOutputStatus$status": "<p>Specifies whether the output is enabled or disabled after the action runs.</p>"
       }
     },
     "PolicyDocument": {
@@ -506,6 +550,12 @@
     "PutFeedPolicyResponse": {
       "base": null,
       "refs": {}
+    },
+    "RemoveClippingDataSourceConfiguration": {
+      "base": "<p>Removes the game from an event clipping output at the action's scheduled time. This is a type of ScheduleActionOperation, and the output must be an event clipping output. </p>",
+      "refs": {
+        "ScheduleActionOperation$removeClippingDataSourceConfiguration": "<p>The operation type that removes the game from an event clipping output.</p>"
+      }
     },
     "ResourceArn": {
       "base": null,
@@ -532,17 +582,25 @@
         "CreateFeedRequest$name": "<p>A user-friendly name for this feed.</p>",
         "CreateFeedResponse$name": "<p>The name that you specified in the request.</p>",
         "CreateOutput$name": "<p>A name for the output.</p>",
+        "CreateScheduleActionRequest$actionName": "<p>A name for the schedule action. The name must be unique within the feed. You can reuse the name of an action that you deleted. </p>",
+        "CreateScheduleActionResponse$actionName": "<p>The name that you specified.</p>",
+        "DeleteScheduleActionRequest$actionName": "<p>The name of the schedule action that you want to delete.</p>",
+        "DeleteScheduleActionResponse$actionName": "<p>The name of the schedule action that Elemental Inference deleted.</p>",
         "DictionarySummary$name": "<p>The name of the dictionary.</p>",
         "FeedSummary$name": "<p>The name of the feed</p>",
         "GetDictionaryResponse$name": "<p>The name of the dictionary.</p>",
         "GetFeedResponse$name": "<p>The name of the feed.</p>",
         "GetOutput$name": "<p>The name of the output.</p>",
+        "RemoveClippingDataSourceConfiguration$outputName": "<p>The name of the output that you want to remove the game from.</p>",
+        "ScheduleAction$actionName": "<p>The name of the schedule action. The name is unique within the feed.</p>",
         "TemplateGroup$name": "<p>A name for the template group.</p>",
+        "UpdateClippingDataSourceConfiguration$outputName": "<p>The name of the output that you want to attach the game to.</p>",
         "UpdateDictionaryRequest$name": "<p>A new name for the dictionary. If not specified, the name is not changed.</p>",
         "UpdateDictionaryResponse$name": "<p>The updated or original name of the dictionary.</p>",
         "UpdateFeedRequest$name": "<p>Required. You can specify the existing name (to leave it unchanged) or a new name. </p>",
         "UpdateFeedResponse$name": "<p>The updated or original name of the feed.</p>",
-        "UpdateOutput$name": "<p>The name of the output.</p>"
+        "UpdateOutput$name": "<p>The name of the output.</p>",
+        "UpdateOutputStatus$outputName": "<p>The name of the output that you want to enable or disable. The output must exist in the feed when you create the action. </p>"
       }
     },
     "ResourceNotFoundException": {
@@ -553,6 +611,60 @@
       "base": null,
       "refs": {
         "TemplateUriList$member": null
+      }
+    },
+    "ScheduleAction": {
+      "base": "<p>Describes one schedule action on a feed, including the changes it makes and whether it has run yet. Elemental Inference returns this structure in the ListScheduleActions operation. </p>",
+      "refs": {
+        "ScheduleActionList$member": null
+      }
+    },
+    "ScheduleActionError": {
+      "base": "<p>Describes the cause of a schedule action failure, including the failure type and a description of what went wrong. </p>",
+      "refs": {
+        "CreateScheduleActionResponse$error": "<p>A description of why the action failed. Elemental Inference returns this property only when the status is FAILED. </p>",
+        "ScheduleAction$error": "<p>A description of why the action failed. Elemental Inference returns this property only when the status is FAILED. </p>"
+      }
+    },
+    "ScheduleActionErrorCode": {
+      "base": null,
+      "refs": {
+        "ScheduleActionError$errorCode": "<p>The type of failure. Valid values are the following:</p> <dl> <dt>INVALID_ACTION_TARGET</dt> <dd> <p>The action referred to something that didn't exist or wasn't valid at the scheduled time, for example an output that you deleted. </p> </dd> <dt>INTERNAL_ERROR</dt> <dd> <p>An unexpected error prevented the action from completing.</p> </dd> </dl>"
+      }
+    },
+    "ScheduleActionList": {
+      "base": null,
+      "refs": {
+        "ListScheduleActionsResponse$scheduleActions": "<p>A list of the schedule actions on the feed.</p>"
+      }
+    },
+    "ScheduleActionOperation": {
+      "base": "<p>Holds one typed configuration change that a schedule action makes to a feed. Each operation must contain exactly one property. </p>",
+      "refs": {
+        "ScheduleActionOperations$member": null
+      }
+    },
+    "ScheduleActionOperations": {
+      "base": null,
+      "refs": {
+        "CreateScheduleActionRequest$operations": "<p>Specifies the list of configuration changes that you want to make to the feed. Elemental Inference applies all the operations in an action together, in the order that you specify them. If any operation fails, Elemental Inference doesn't apply any of them. </p>",
+        "CreateScheduleActionResponse$operations": "<p>The configuration changes that the action makes to the feed.</p>",
+        "ScheduleAction$operations": "<p>The configuration changes that the action makes to the feed.</p>"
+      }
+    },
+    "ScheduleActionStartConfiguration": {
+      "base": "<p>Holds the typed start settings that determine when a schedule action runs. Currently, only fixed mode is supported. </p>",
+      "refs": {
+        "CreateScheduleActionRequest$startConfiguration": "<p>Specifies when the action runs.</p>",
+        "CreateScheduleActionResponse$startConfiguration": "<p>Specifies when the action runs.</p>",
+        "ScheduleAction$startConfiguration": "<p>Specifies when the action runs.</p>"
+      }
+    },
+    "ScheduleActionStatus": {
+      "base": null,
+      "refs": {
+        "CreateScheduleActionResponse$status": "<p>The status of the action. After you create the action successfully, Elemental Inference sets the status to PENDING. </p>",
+        "ScheduleAction$status": "<p>The status of the action. Valid values are the following:</p> <dl> <dt>PENDING</dt> <dd> <p>The action is waiting for its scheduled time.</p> </dd> <dt>COMPLETED</dt> <dd> <p>Elemental Inference applied all the action's operations to the feed.</p> </dd> <dt>FAILED</dt> <dd> <p>Elemental Inference couldn't apply the action.</p> </dd> </dl>"
       }
     },
     "SearchFilter": {
@@ -607,7 +719,10 @@
         "ListDictionariesResponse$nextToken": "<p>The token to use to retrieve the next batch of results.</p>",
         "ListFeedsRequest$nextToken": "<p>The token that identifies the batch of results that you want to see.</p> <p>For example, you submit a ListFeeds request with MaxResults set at 5. The service returns the first batch of results (up to 5) and a NextToken value. To see the next batch of results, you can submit the ListFeeds request a second time and specify the NextToken value. </p>",
         "ListFeedsResponse$nextToken": "<p>The token that identifies the batch of results that you want to see. For example, you submit a list request with MaxResults set at 5. The service returns the first batch of results (up to 5) and a NextToken value. To see the next batch of results, you can submit the list request a second time and specify the NextToken value. </p>",
+        "ListScheduleActionsRequest$nextToken": "<p>The token that identifies the batch of results that you want to see. To see the next batch, submit the request a second time and specify the NextToken value that Elemental Inference returned. </p>",
+        "ListScheduleActionsResponse$nextToken": "<p>The token that identifies the next batch of results. Elemental Inference returns it only when more results are available. </p>",
         "ResourceNotFoundException$message": null,
+        "ScheduleActionError$errorMessage": "<p>A description of the failure.</p>",
         "SearchFixturesRequest$nextToken": "<p>The token that identifies the batch of results that you want to see.</p> <p>For example, you submit a SearchFixtures request with maxResults set at 5. The service returns the first batch of results (up to 5) and a nextToken value. To see the next batch of results, you submit the SearchFixtures request a second time, with the same search criteria, and specify the nextToken value. </p>",
         "SearchFixturesResponse$nextToken": "<p>The token that identifies the next batch of results. To see the next batch, submit the SearchFixtures request again, with the same search criteria, and specify this value in nextToken. </p> <p>This parameter is absent when there are no more results to return.</p>",
         "ServiceQuotaExceededException$message": null,
@@ -700,6 +815,12 @@
         "TemplateGroup$templateUris": "<p>An array of Amazon S3 URIs that point to the graphics-compositing templates for this group. You can specify 1 or 2 URIs. Each URI must be in the form <code>s3://bucket-name/key</code>. Elemental Inference reads these templates using the IAM role that you specify in accessRoleArn. </p>"
       }
     },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "FixedModeScheduleActionStartSettings$scheduledAt": "<p>The UTC time at which the action runs. Specify the time in whole seconds. For the range of times that you can specify, see the AWS Elemental Inference User Guide. </p> <p>This time is approximate. The change can take a few minutes to take effect on the media that the feed is processing. </p>"
+      }
+    },
     "TooManyRequestException": {
       "base": "<p>The request was denied due to request throttling. Too many requests have been made within a given time period. Reduce the frequency of requests and use exponential backoff when retrying. </p>",
       "refs": {}
@@ -713,6 +834,12 @@
     "UntagResourceRequest": {
       "base": null,
       "refs": {}
+    },
+    "UpdateClippingDataSourceConfiguration": {
+      "base": "<p>Attaches a game to an event clipping output at the action's scheduled time. This is a type of ScheduleActionOperation, and the output must be an event clipping output. </p>",
+      "refs": {
+        "ScheduleActionOperation$updateClippingDataSourceConfiguration": "<p>The operation type that attaches a game to an event clipping output.</p>"
+      }
     },
     "UpdateDictionaryRequest": {
       "base": null,
@@ -740,6 +867,12 @@
       "base": null,
       "refs": {
         "UpdateFeedRequest$outputs": "<p>Required. You can specify the existing array of outputs (to leave outputs unchanged) or you can specify a new array. </p>"
+      }
+    },
+    "UpdateOutputStatus": {
+      "base": "<p>Enables or disables an output at the action's scheduled time. This is a type of ScheduleActionOperation. </p>",
+      "refs": {
+        "ScheduleActionOperation$updateOutputStatus": "<p>The operation type that enables or disables an output.</p>"
       }
     },
     "ValidationException": {

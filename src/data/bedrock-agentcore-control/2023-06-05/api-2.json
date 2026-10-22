@@ -4155,6 +4155,19 @@
       "max":200,
       "min":1
     },
+    "CircuitBreakerConfiguration":{
+      "type":"structure",
+      "members":{
+        "mode":{"shape":"CircuitBreakerMode"}
+      }
+    },
+    "CircuitBreakerMode":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "ClaimMatchOperatorType":{
       "type":"string",
       "enum":[
@@ -4429,6 +4442,12 @@
       },
       "union":true
     },
+    "ConcreteModelId":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9\\-._/@:]*"
+    },
     "ConcurrentModificationException":{
       "type":"structure",
       "required":["message"],
@@ -4445,14 +4464,15 @@
       "type":"structure",
       "members":{
         "matchPrincipals":{"shape":"MatchPrincipals"},
-        "matchPaths":{"shape":"MatchPaths"}
+        "matchPaths":{"shape":"MatchPaths"},
+        "matchModels":{"shape":"MatchModels"}
       },
       "union":true
     },
     "Conditions":{
       "type":"list",
       "member":{"shape":"Condition"},
-      "max":2,
+      "max":3,
       "min":0
     },
     "ConfigurationBundleAction":{
@@ -7195,6 +7215,15 @@
       "max":10,
       "min":1
     },
+    "DimensionRatingScale":{
+      "type":"structure",
+      "members":{
+        "numerical":{"shape":"NumericalScaleDefinitions"},
+        "categorical":{"shape":"CategoricalScaleDefinitions"}
+      },
+      "sensitive":true,
+      "union":true
+    },
     "DimensionValue":{
       "type":"string",
       "max":256,
@@ -7553,6 +7582,10 @@
         "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
       }
     },
+    "ErrorStatusCodePattern":{
+      "type":"string",
+      "pattern":"[4-5]([0-9]{2}|XX)"
+    },
     "EvaluationConfigDescription":{
       "type":"string",
       "max":200,
@@ -7563,6 +7596,35 @@
     "EvaluationConfigName":{
       "type":"string",
       "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,47}"
+    },
+    "EvaluationDimension":{
+      "type":"structure",
+      "required":[
+        "dimensionName",
+        "dimensionInstruction",
+        "dimensionRatingScale"
+      ],
+      "members":{
+        "dimensionName":{"shape":"EvaluationDimensionName"},
+        "dimensionInstruction":{"shape":"EvaluationDimensionInstruction"},
+        "dimensionRatingScale":{"shape":"DimensionRatingScale"}
+      }
+    },
+    "EvaluationDimensionInstruction":{
+      "type":"string",
+      "max":4000,
+      "min":1,
+      "sensitive":true
+    },
+    "EvaluationDimensionName":{
+      "type":"string",
+      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,47}"
+    },
+    "EvaluationDimensions":{
+      "type":"list",
+      "member":{"shape":"EvaluationDimension"},
+      "max":50,
+      "min":1
     },
     "EvaluatorArn":{
       "type":"string",
@@ -7717,6 +7779,71 @@
         "LLM_INFERRED",
         "STRICTLY_CONSISTENT"
       ]
+    },
+    "Fallback":{
+      "type":"structure",
+      "required":["targetFallback"],
+      "members":{
+        "triggerOn":{"shape":"FallbackTriggers"},
+        "firstByteTimeoutMilliseconds":{"shape":"FallbackFirstByteTimeoutMillisecondsInteger"},
+        "circuitBreaker":{"shape":"CircuitBreakerConfiguration"},
+        "targetFallback":{"shape":"FallbackTargetFallbackList"}
+      }
+    },
+    "FallbackError":{
+      "type":"string",
+      "enum":[
+        "CONNECTION_ERROR",
+        "FIRST_BYTE_TIMEOUT",
+        "UNROUTABLE"
+      ]
+    },
+    "FallbackFirstByteTimeoutMillisecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":900000,
+      "min":50
+    },
+    "FallbackTarget":{
+      "type":"structure",
+      "required":["targetName"],
+      "members":{
+        "targetName":{"shape":"TargetName"},
+        "model":{"shape":"ConcreteModelId"},
+        "triggerOn":{"shape":"FallbackTriggers"},
+        "firstByteTimeoutMilliseconds":{"shape":"FallbackTargetFirstByteTimeoutMillisecondsInteger"}
+      }
+    },
+    "FallbackTargetFallbackList":{
+      "type":"list",
+      "member":{"shape":"FallbackTarget"},
+      "max":2,
+      "min":1
+    },
+    "FallbackTargetFirstByteTimeoutMillisecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":900000,
+      "min":50
+    },
+    "FallbackTriggers":{
+      "type":"structure",
+      "members":{
+        "statusCodes":{"shape":"FallbackTriggersStatusCodesList"},
+        "errors":{"shape":"FallbackTriggersErrorsList"}
+      }
+    },
+    "FallbackTriggersErrorsList":{
+      "type":"list",
+      "member":{"shape":"FallbackError"},
+      "max":3,
+      "min":1
+    },
+    "FallbackTriggersStatusCodesList":{
+      "type":"list",
+      "member":{"shape":"ErrorStatusCodePattern"},
+      "max":10,
+      "min":1
     },
     "FilesystemConfiguration":{
       "type":"structure",
@@ -10482,7 +10609,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"/[a-zA-Z0-9\\-\\._/]+"
+      "pattern":"/[a-zA-Z0-9\\-\\._/{}]+"
     },
     "InferenceProviderTargetConfiguration":{
       "type":"structure",
@@ -12062,6 +12189,34 @@
         "routingDomain":{"shape":"RoutingDomain"}
       }
     },
+    "MatchModelEntry":{
+      "type":"structure",
+      "required":["value"],
+      "members":{
+        "value":{"shape":"ModelPattern"},
+        "operator":{"shape":"MatchOperator"}
+      }
+    },
+    "MatchModels":{
+      "type":"structure",
+      "required":["anyOf"],
+      "members":{
+        "anyOf":{"shape":"MatchModelsAnyOfList"}
+      }
+    },
+    "MatchModelsAnyOfList":{
+      "type":"list",
+      "member":{"shape":"MatchModelEntry"},
+      "max":100,
+      "min":1
+    },
+    "MatchOperator":{
+      "type":"string",
+      "enum":[
+        "StringEquals",
+        "StringLike"
+      ]
+    },
     "MatchPathPattern":{
       "type":"string",
       "max":512,
@@ -12454,9 +12609,9 @@
     },
     "ModelPattern":{
       "type":"string",
-      "max":256,
+      "max":2048,
       "min":1,
-      "pattern":"[a-zA-Z0-9\\-\\._\\*\\?@]+(/[a-zA-Z0-9\\-\\._\\*\\?@]+)*"
+      "pattern":"[a-zA-Z0-9\\-\\._\\*\\?@:]+(/[a-zA-Z0-9\\-\\._\\*\\?@:]+)*"
     },
     "ModifyConsolidationConfiguration":{
       "type":"structure",
@@ -13669,7 +13824,8 @@
       "type":"structure",
       "members":{
         "numerical":{"shape":"NumericalScaleDefinitions"},
-        "categorical":{"shape":"CategoricalScaleDefinitions"}
+        "categorical":{"shape":"CategoricalScaleDefinitions"},
+        "multiDimensional":{"shape":"EvaluationDimensions"}
       },
       "sensitive":true,
       "union":true
@@ -14769,7 +14925,9 @@
       "type":"structure",
       "required":["targetName"],
       "members":{
-        "targetName":{"shape":"TargetName"}
+        "targetName":{"shape":"TargetName"},
+        "model":{"shape":"ConcreteModelId"},
+        "fallback":{"shape":"Fallback"}
       }
     },
     "Status":{
@@ -15229,14 +15387,16 @@
     "TargetTrafficSplitEntry":{
       "type":"structure",
       "required":[
+        "targetName",
         "name",
-        "weight",
-        "targetName"
+        "weight"
       ],
       "members":{
+        "targetName":{"shape":"TargetName"},
+        "model":{"shape":"ConcreteModelId"},
+        "fallback":{"shape":"Fallback"},
         "name":{"shape":"TargetTrafficSplitEntryNameString"},
         "weight":{"shape":"TargetTrafficSplitEntryWeightInteger"},
-        "targetName":{"shape":"TargetName"},
         "description":{"shape":"TargetTrafficSplitEntryDescriptionString"},
         "metadata":{"shape":"TrafficSplitMetadataMap"}
       }
