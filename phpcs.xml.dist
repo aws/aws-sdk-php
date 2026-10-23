@@ -10,7 +10,11 @@
 
     <exclude-pattern>*/src/data/*</exclude-pattern>
 
-    <rule ref="PSR12"/>
+    <rule ref="PSR12">
+        <exclude name="PSR12.ControlStructures.ControlStructureSpacing.FirstExpressionLine"/>
+    </rule>
+
+    <rule ref="./.github/phpcs/AwsSdk/Sniffs/ControlStructures/FirstConditionSameLineSniff.php"/>
 
     <rule ref="PSR12.Files.FileHeader.SpacingAfterBlock">
         <exclude-pattern>*/src/*</exclude-pattern>
