@@ -42,3 +42,15 @@ else
     echo "has_files=false" >> "$GITHUB_OUTPUT"
     echo "No changed source files to check."
 fi
+
+coding_standards_changed=false
+while IFS= read -r file; do
+    case "$file" in
+        phpcs.xml.dist|.github/phpcs/*|.github/scripts/find-changed-source-files.sh|.github/scripts/run-phpcs.sh|.github/scripts/test-phpcs-sniffs.sh|.github/workflows/coding-standards.yml)
+            coding_standards_changed=true
+            break
+            ;;
+    esac
+done < <(git diff --name-only --diff-filter=ACMRT "$DIFF_BASE" "$HEAD_SHA")
+
+echo "coding_standards_changed=$coding_standards_changed" >> "$GITHUB_OUTPUT"
