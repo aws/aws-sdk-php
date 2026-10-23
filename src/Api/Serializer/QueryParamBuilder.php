@@ -214,10 +214,7 @@ class QueryParamBuilder
         $prefix .= '.';
         $i = 0;
 
-        if (
-            $plan->mapKeyType === QueryShapeType::SCALAR
-            && $plan->itemType === QueryShapeType::SCALAR
-        ) {
+        if ($plan->mapKeyType === QueryShapeType::SCALAR && $plan->itemType === QueryShapeType::SCALAR) {
             foreach ($value as $k => $v) {
                 $base = $prefix . ++$i;
                 $query[$base . $keySuffix] = (string) $k;
