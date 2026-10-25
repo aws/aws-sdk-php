@@ -75,6 +75,40 @@ test_sniff \
     "TypedBraceOwnLine" \
     "an invalid multi-line function declaration brace"
 
+comment_fixture=".github/phpcs/tests/fixtures/multiline-function-comment.php"
+actual_comment_fixture="$temporary_directory/$(basename "$comment_fixture")"
+cp "$comment_fixture" "$actual_comment_fixture"
+
+set +e
+comment_output="$(
+    "$PHPCS_BIN" \
+        --standard=phpcs.xml.dist \
+        --no-colors \
+        "$actual_comment_fixture" 2>&1
+)"
+comment_exit=$?
+set -e
+
+if [[ "$comment_exit" -eq 0 ]] || ! grep -q "BraceSameLine" <<< "$comment_output"; then
+    echo "$comment_output"
+    echo "PHPCS did not report the expected declaration comment violation."
+    exit 1
+fi
+
+set +e
+"$PHPCBF_BIN" \
+    --standard=phpcs.xml.dist \
+    --no-colors \
+    "$actual_comment_fixture" >/dev/null
+set -e
+
+if ! cmp -s "$comment_fixture" "$actual_comment_fixture"; then
+    echo "PHPCBF rewrote a declaration containing an intervening comment:"
+    diff -u "$comment_fixture" "$actual_comment_fixture" || true
+    exit 1
+fi
+php -l "$actual_comment_fixture" >/dev/null
+
 "$PHPCS_BIN" \
     --standard=phpcs.xml.dist \
     --no-colors \

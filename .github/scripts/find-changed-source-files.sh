@@ -8,7 +8,7 @@ readonly DIFF_HEAD_FILE="diff-head.txt"
 
 if [[ "${EVENT_NAME:-}" == "pull_request" ]]; then
     BASE_SHA="${PR_BASE_SHA:?PR_BASE_SHA is required for pull_request events}"
-    HEAD_SHA="${PR_HEAD_SHA:?PR_HEAD_SHA is required for pull_request events}"
+    HEAD_SHA="${HEAD_SHA:?HEAD_SHA is required for pull_request events}"
     DIFF_BASE="$(git merge-base "$BASE_SHA" "$HEAD_SHA")"
 else
     DIFF_BASE="${PUSH_BEFORE_SHA:-}"

@@ -32,7 +32,15 @@ final class MultiLineFunctionDeclarationBraceSniff implements Sniff
         $opener = $tokens[$stackPtr]['parenthesis_opener'];
         $closer = $tokens[$stackPtr]['parenthesis_closer'];
         $brace = $tokens[$stackPtr]['scope_opener'];
-        if ($tokens[$opener]['line'] === $tokens[$closer]['line']) {
+        $declarationEnd = $phpcsFile->findPrevious(
+            Tokens::$emptyTokens,
+            $brace - 1,
+            $closer,
+            true
+        );
+        if ($declarationEnd === false
+            || $tokens[$stackPtr]['line'] === $tokens[$declarationEnd]['line']
+        ) {
             return;
         }
 
@@ -45,17 +53,8 @@ final class MultiLineFunctionDeclarationBraceSniff implements Sniff
         $braceOnOwnLine = $tokens[$stackPtr]['code'] === T_FUNCTION
             && $hasReturnType;
 
-        $previous = $phpcsFile->findPrevious(
-            T_WHITESPACE,
-            $brace - 1,
-            $closer,
-            true
-        );
-        if ($previous === false) {
-            return;
-        }
-
-        $braceIsOnOwnLine = $tokens[$previous]['line'] !== $tokens[$brace]['line'];
+        $braceIsOnOwnLine = $tokens[$declarationEnd]['line']
+            !== $tokens[$brace]['line'];
         if ($braceOnOwnLine === $braceIsOnOwnLine) {
             return;
         }
@@ -68,6 +67,16 @@ final class MultiLineFunctionDeclarationBraceSniff implements Sniff
             $code = 'BraceSameLine';
         }
 
+        $comments = $phpcsFile->findNext(
+            Tokens::$commentTokens,
+            $closer + 1,
+            $brace
+        );
+        if ($comments !== false) {
+            $phpcsFile->addError($message, $brace, $code);
+            return;
+        }
+
         $fixable = $phpcsFile->addFixableError(
             $message,
             $brace,
@@ -77,17 +86,8 @@ final class MultiLineFunctionDeclarationBraceSniff implements Sniff
             return;
         }
 
-        $comments = $phpcsFile->findNext(
-            Tokens::$commentTokens,
-            $previous + 1,
-            $brace
-        );
-        if ($comments !== false) {
-            return;
-        }
-
         $phpcsFile->fixer->beginChangeset();
-        for ($i = $previous + 1; $i < $brace; $i++) {
+        for ($i = $declarationEnd + 1; $i < $brace; $i++) {
             $phpcsFile->fixer->replaceToken($i, '');
         }
         if ($braceOnOwnLine) {

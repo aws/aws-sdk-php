@@ -24,3 +24,10 @@ $callback = function (
 {
     return $value;
 };
+
+$capturingCallback = function () use (
+    $callback
+)
+{
+    return $callback;
+};

@@ -24,12 +24,21 @@ cat > "$report" <<'JSON'
           "column": 1
         },
         {
+          "message": "Second changed-line violation",
+          "source": "Example.SecondChanged",
+          "severity": 5,
+          "fixable": true,
+          "type": "ERROR",
+          "line": 10,
+          "column": 1
+        },
+        {
           "message": "Legacy violation",
           "source": "Example.Legacy",
           "severity": 5,
           "fixable": true,
           "type": "ERROR",
-          "line": 10,
+          "line": 20,
           "column": 1
         }
       ]
@@ -44,7 +53,9 @@ diff --git a/src/Example.php b/src/Example.php
 +++ b/src/Example.php
 @@ -1,0 +2,2 @@
 +changed
-+lines
++++ $counter;
+@@ -9,0 +10 @@
++changed again
 DIFF
 
 set +e
@@ -62,13 +73,21 @@ if ! grep -q "Changed-line violation" <<< "$output"; then
     echo "The changed-line violation was not reported."
     exit 1
 fi
+if ! grep -q "Second changed-line violation" <<< "$output"; then
+    echo "$output"
+    echo "A changed-line violation after an added +++ line was not reported."
+    exit 1
+fi
 if grep -q "Legacy violation" <<< "$output"; then
     echo "$output"
     echo "A violation outside the changed lines was reported."
     exit 1
 fi
 
-sed -i.bak 's/"line": 2/"line": 20/' "$report"
+sed -i.bak \
+    -e 's/"line": 2/"line": 30/' \
+    -e 's/"line": 10/"line": 31/' \
+    "$report"
 rm "$report.bak"
 output="$(php "$FILTER" "$report" "$diff_file")"
 if ! grep -q "No PHPCS violations found on changed lines" <<< "$output"; then

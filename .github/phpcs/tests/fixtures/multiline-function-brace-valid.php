@@ -23,3 +23,9 @@ $callback = function (
 ): string {
     return $value;
 };
+
+$capturingCallback = function () use (
+    $callback
+) {
+    return $callback;
+};

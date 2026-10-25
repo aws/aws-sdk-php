@@ -63,7 +63,12 @@ function parseChangedLineRanges(string $diff): array
     $ranges = [];
     $path = null;
     foreach (preg_split('/\r\n|\n|\r/', $diff) as $line) {
-        if (str_starts_with($line, '+++ ')) {
+        if (str_starts_with($line, 'diff --git ')) {
+            $path = null;
+            continue;
+        }
+
+        if ($path === null && str_starts_with($line, '+++ ')) {
             $path = substr($line, 4);
             $path = explode("\t", $path, 2)[0];
             if ($path === '/dev/null') {
