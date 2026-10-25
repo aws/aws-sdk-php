@@ -446,6 +446,54 @@ EOT;
         call_user_func(CredentialProvider::ini('foo'))->wait();
     }
 
+    public function testIniDoesNotAddConfigProfilePrefix(): void
+    {
+        $this->expectExceptionMessage("'foo' not found in");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
+
+        $awsDir = $this->createAwsHome();
+        $ini = <<<EOT
+[profile foo]
+aws_access_key_id = foo
+aws_secret_access_key = baz
+EOT;
+        file_put_contents($awsDir . '/credentials', $ini);
+
+        call_user_func(CredentialProvider::ini('foo'))->wait();
+    }
+
+    public function testIniDoesNotRemoveConfigProfilePrefix(): void
+    {
+        $this->expectExceptionMessage("'profile foo' not found in");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
+
+        $awsDir = $this->createAwsHome();
+        $ini = <<<EOT
+[foo]
+aws_access_key_id = foo
+aws_secret_access_key = baz
+EOT;
+        file_put_contents($awsDir . '/credentials', $ini);
+
+        call_user_func(CredentialProvider::ini('profile foo'))->wait();
+    }
+
+    public function testProcessDoesNotRemoveConfigProfilePrefix(): void
+    {
+        $this->expectExceptionMessage("'profile foo' not found in");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
+
+        $awsDir = $this->createAwsHome();
+        $ini = <<<EOT
+[foo]
+aws_access_key_id = foo
+aws_secret_access_key = baz
+EOT;
+        file_put_contents($awsDir . '/credentials', $ini);
+
+        call_user_func(CredentialProvider::process('profile foo'))->wait();
+    }
+
     public function testCreatesFromProcessCredentialProvider(): void
     {
         $awsDir = $this->createAwsHome();
@@ -1912,23 +1960,78 @@ EOT;
         $this->assertSame('credentialsFoo', $creds->getAccessKeyId());
     }
 
-    public function testProcessCredentialConfigDefaultChain(): void
+    public static function defaultConfigProfileSectionProvider(): array
+    {
+        return [
+            ['default'],
+            ['profile default'],
+        ];
+    }
+
+    #[DataProvider('defaultConfigProfileSectionProvider')]
+    public function testProcessCredentialConfigDefaultChain(string $section): void
     {
         $awsDir = $this->createTempDir('aws_') . '/.aws';
         mkdir($awsDir, 0777, true);
+        $json = '{"AccessKeyId":"configFoo","SecretAccessKey":"baz","Version":1}';
         if (PHP_OS_FAMILY === 'Windows') {
-            $configIni = <<<EOT
-[profile default]
-credential_process = echo {"AccessKeyId":"configFoo","SecretAccessKey":"baz","Version":1}
-
-EOT;
+            $credentialProcess = 'set AWS_TEST_ACCOUNT=123456789&& echo '
+                . $json;
         } else {
-            $configIni = <<<EOT
-[profile default]
-credential_process = echo '{"AccessKeyId":"configFoo","SecretAccessKey":"baz","Version":1}'
+            $credentialProcess = "AWS_TEST_ACCOUNT=123456789 echo '{$json}'";
+        }
+        $configIni = <<<EOT
+[$section]
+credential_process = $credentialProcess
 
 EOT;
-        }
+
+        file_put_contents($awsDir . '/config', $configIni);
+        putenv('HOME=' . dirname($awsDir));
+
+        $provider = CredentialProvider::defaultProvider();
+        $creds = $provider()->wait();
+
+        $this->assertSame('configFoo', $creds->getAccessKeyId());
+    }
+
+    public function testIniCredentialsPrecedeProcessConfigInDefaultChain(): void
+    {
+        $awsDir = $this->createTempDir('aws_') . '/.aws';
+        mkdir($awsDir, 0777, true);
+        file_put_contents(
+            $awsDir . '/credentials',
+            "[default]\n"
+            . "aws_access_key_id = static\n"
+            . "aws_secret_access_key = static-secret\n"
+        );
+
+        $json = '{"AccessKeyId":"process","SecretAccessKey":"process-secret",'
+            . '"Version":1}';
+        $credentialProcess = PHP_OS_FAMILY === 'Windows'
+            ? 'echo ' . $json
+            : "echo '{$json}'";
+        file_put_contents(
+            $awsDir . '/config',
+            "[default]\ncredential_process = {$credentialProcess}\n"
+        );
+        putenv('HOME=' . dirname($awsDir));
+
+        $provider = CredentialProvider::defaultProvider();
+        $creds = $provider()->wait();
+
+        $this->assertSame('static', $creds->getAccessKeyId());
+    }
+
+    public function testIniCredentialConfigDefaultChain(): void
+    {
+        $awsDir = $this->createTempDir('aws_') . '/.aws';
+        mkdir($awsDir, 0777, true);
+        $configIni = <<<EOT
+[default]
+aws_access_key_id = configFoo
+aws_secret_access_key = baz
+EOT;
 
         file_put_contents($awsDir . '/config', $configIni);
         putenv('HOME=' . dirname($awsDir));

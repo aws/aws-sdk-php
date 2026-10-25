@@ -382,6 +382,176 @@ class FunctionsTest extends TestCase
         unlink($tmpFile);
     }
 
+    public static function getIniFileWithEqualsTestCases(): array
+    {
+        $credentialProcess = 'ada credentials print'
+            . ' --account=123456789 --role=Admin';
+        $endpointUrl = 'https://example.com?foo=bar&baz=qux';
+
+        return [
+            [
+                INI_SCANNER_NORMAL,
+                [
+                    'credential_process' => $credentialProcess,
+                    'endpoint_url' => $endpointUrl,
+                    'use_fips_endpoint' => '',
+                    'max_attempts' => '3',
+                    'quoted' => 'a=b',
+                    'commented_bool' => '',
+                ],
+            ],
+            [
+                INI_SCANNER_RAW,
+                [
+                    'credential_process' => $credentialProcess,
+                    'endpoint_url' => $endpointUrl,
+                    'use_fips_endpoint' => 'false',
+                    'max_attempts' => '3',
+                    'quoted' => "'a=b'",
+                    'commented_bool' => 'false',
+                ],
+            ],
+            [
+                INI_SCANNER_TYPED,
+                [
+                    'credential_process' => $credentialProcess,
+                    'endpoint_url' => $endpointUrl,
+                    'use_fips_endpoint' => false,
+                    'max_attempts' => 3,
+                    'quoted' => 'a=b',
+                    'commented_bool' => false,
+                ],
+            ],
+        ];
+    }
+
+    #[DataProvider('getIniFileWithEqualsTestCases')]
+    public function testParsesIniFileValuesContainingEquals(
+        int $scannerMode,
+        array $expected
+    ): void
+    {
+        $tmpFile = sys_get_temp_dir() . '/test.ini';
+        $ini = <<<EOT
+[default]
+credential_process = ada credentials print --account=123456789 --role=Admin
+endpoint_url = https://example.com?foo=bar&baz=qux
+use_fips_endpoint = false
+max_attempts = 3
+quoted = 'a=b'
+commented_bool = false; comment=value
+EOT;
+        file_put_contents($tmpFile, $ini);
+
+        $result = Aws\parse_ini_file($tmpFile, true, $scannerMode);
+
+        $this->assertSame(['default' => $expected], $result);
+        unlink($tmpFile);
+    }
+
+    public static function getQuotedIniFileTestCases(): array
+    {
+        return [
+            [INI_SCANNER_NORMAL],
+            [INI_SCANNER_TYPED],
+        ];
+    }
+
+    #[DataProvider('getQuotedIniFileTestCases')]
+    public function testPreservesQuotedIniValuesContainingEquals(
+        int $scannerMode
+    ): void
+    {
+        $environmentVariable = 'AWS_SDK_PHP_INI_TEST_HOST';
+        $originalValue = getenv($environmentVariable);
+        putenv($environmentVariable . '=example.com');
+        $tmpFile = tempnam(sys_get_temp_dir(), 'test.ini');
+        $ini = <<<'EOT'
+[default]
+paths["a=b"] = /tmp/ca.pem
+unquoted_paths[a=b] = /tmp/unquoted-ca.pem
+ca_bundle = C:\certs\"bundle.pem"
+credential_process = ada credentials print --account=123456789 --role=Admin
+interpolated = "https://${AWS_SDK_PHP_INI_TEST_HOST}/?foo=bar"
+escaped = "a=\"b=c\""
+single_quoted_path = 'C:\certs\'
+    ; note = "not a real value
+multiline = "foo=bar
+x=y=z
+baz"
+prefixed_multiline = prefix "first
+x=y=z
+last"
+escaped_multiline = prefix\"first
+x=y=z
+last"
+quoted_process = "/opt/credential helper" --account=123456789
+escaped_double_quote = helper --label=foo\"bar --account=123456789
+escaped_single_quote = helper --label=O\'Reilly --account=123456789
+escaped_backslashes = helper --label=foo\\"bar" --account=123456789
+windows_command = C:\tools\"credential helper.exe" --account=123456789
+url = https://example.com/?name=O'Reilly
+separate_quoted_arguments = '/opt/credential helper' --account=123 --role='Admin'
+EOT;
+        file_put_contents($tmpFile, $ini);
+
+        try {
+            $result = Aws\parse_ini_file($tmpFile, true, $scannerMode);
+
+            $this->assertSame(
+                [
+                    'default' => [
+                        'paths' => [
+                            'a=b' => '/tmp/ca.pem',
+                        ],
+                        'unquoted_paths' => [
+                            'a=b' => '/tmp/unquoted-ca.pem',
+                        ],
+                        'ca_bundle' => "C:\\certs\\bundle.pem",
+                        'credential_process' => 'ada credentials print'
+                            . ' --account=123456789 --role=Admin',
+                        'interpolated' => 'https://example.com/?foo=bar',
+                        'escaped' => 'a="b=c"',
+                        'single_quoted_path' => "C:\\certs\\",
+                        'multiline' => implode(
+                            PHP_EOL,
+                            ['foo=bar', 'x=y=z', 'baz']
+                        ),
+                        'prefixed_multiline' => implode(
+                            PHP_EOL,
+                            ['prefixfirst', 'x=y=z', 'last']
+                        ),
+                        'escaped_multiline' => implode(
+                            PHP_EOL,
+                            ["prefix\\first", 'x=y=z', 'last']
+                        ),
+                        'quoted_process' => '"/opt/credential helper"'
+                            . ' --account=123456789',
+                        'escaped_double_quote' => "helper --label=foo\\\"bar"
+                            . ' --account=123456789',
+                        'escaped_single_quote' => "helper --label=O\\'Reilly"
+                            . ' --account=123456789',
+                        'escaped_backslashes' => 'helper --label=foo\\\\"bar"'
+                            . ' --account=123456789',
+                        'windows_command' => "C:\\tools\\\"credential helper.exe\""
+                            . ' --account=123456789',
+                        'url' => "https://example.com/?name=O'Reilly",
+                        'separate_quoted_arguments' => "'/opt/credential helper'"
+                            . " --account=123 --role='Admin'",
+                    ],
+                ],
+                $result
+            );
+        } finally {
+            unlink($tmpFile);
+            putenv(
+                $originalValue === false
+                    ? $environmentVariable
+                    : $environmentVariable . '=' . $originalValue
+            );
+        }
+    }
+
     public static function getIniFileTestCases(): array
     {
         return [
