@@ -3,9 +3,53 @@
 set -euo pipefail
 
 readonly CHANGED_FILES="changed-source-files.txt"
+readonly DIFF_BASE_FILE="diff-base.txt"
+readonly DIFF_HEAD_FILE="diff-head.txt"
+readonly CHANGED_LINES_DIFF="changed-source-lines.diff"
+readonly PHPCS_JSON_REPORT="phpcs-report.json"
 readonly PHPCS_REPORT="phpcs-report.txt"
 readonly PHPCS_FILES_WITH_ERRORS="phpcs-files-with-errors.txt"
 readonly PHPCS_AFTER_PHPCBF_REPORT="phpcs-after-phpcbf-report.txt"
+
+if [[ "${EVENT_NAME:-}" == "pull_request" ]]; then
+    changed_files=()
+    while IFS= read -r file; do
+        changed_files+=("$file")
+    done < "$CHANGED_FILES"
+    git -c core.quotePath=false diff \
+        --unified=0 \
+        --no-color \
+        "$(cat "$DIFF_BASE_FILE")" \
+        "$(cat "$DIFF_HEAD_FILE")" \
+        -- "${changed_files[@]}" > "$CHANGED_LINES_DIFF"
+
+    echo "::group::PHPCS violations on changed lines"
+    set +e
+    vendor/bin/phpcs \
+        --standard=phpcs.xml.dist \
+        --basepath="$(pwd)" \
+        --no-colors \
+        --report=json \
+        --file-list="$CHANGED_FILES" > "$PHPCS_JSON_REPORT"
+    phpcs_exit=$?
+    set -e
+
+    if [[ "$phpcs_exit" -eq 0 ]]; then
+        echo "No PHPCS violations found."
+        echo "::endgroup::"
+        exit 0
+    fi
+
+    set +e
+    php .github/scripts/filter-phpcs-report.php \
+        "$PHPCS_JSON_REPORT" \
+        "$CHANGED_LINES_DIFF"
+    filter_exit=$?
+    set -e
+    echo "::endgroup::"
+
+    exit "$filter_exit"
+fi
 
 echo "::group::PHPCS violations"
 set +e

@@ -46,7 +46,7 @@ fi
 coding_standards_changed=false
 while IFS= read -r file; do
     case "$file" in
-        phpcs.xml.dist|.github/phpcs/*|.github/scripts/find-changed-source-files.sh|.github/scripts/run-phpcs.sh|.github/scripts/test-phpcs-sniffs.sh|.github/workflows/coding-standards.yml)
+        phpcs.xml.dist|.github/phpcs/*|.github/scripts/find-changed-source-files.sh|.github/scripts/filter-phpcs-report.php|.github/scripts/run-phpcs.sh|.github/scripts/test-filter-phpcs-report.sh|.github/scripts/test-phpcs-sniffs.sh|.github/workflows/coding-standards.yml)
             coding_standards_changed=true
             break
             ;;
