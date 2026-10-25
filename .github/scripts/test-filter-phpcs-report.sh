@@ -15,8 +15,8 @@ cat > "$report" <<'JSON'
     "src/Example.php": {
       "messages": [
         {
-          "message": "Changed-line violation",
-          "source": "Example.Changed",
+          "message": "Changed-line violation: 100%, first\nsecond",
+          "source": "Example.Changed,Primary",
           "severity": 5,
           "fixable": true,
           "type": "ERROR",
@@ -71,6 +71,12 @@ fi
 if ! grep -q "Changed-line violation" <<< "$output"; then
     echo "$output"
     echo "The changed-line violation was not reported."
+    exit 1
+fi
+expected_annotation="::error file=src/Example.php,line=2,col=1,title=PHPCS%3A Example.Changed%2CPrimary::Changed-line violation: 100%25, first%0Asecond"
+if ! grep -Fq "$expected_annotation" <<< "$output"; then
+    echo "$output"
+    echo "The changed-line violation did not produce the expected annotation."
     exit 1
 fi
 if ! grep -q "Second changed-line violation" <<< "$output"; then

@@ -38,6 +38,19 @@ $count = 0;
 foreach ($violations as $path => $messages) {
     echo "\nFILE: {$path}\n";
     foreach ($messages as $message) {
+        $annotationType = strtolower($message['type']) === 'warning'
+            ? 'warning'
+            : 'error';
+        echo sprintf(
+            "::%s file=%s,line=%d,col=%d,title=%s::%s\n",
+            $annotationType,
+            escapeWorkflowCommand($path, true),
+            $message['line'],
+            $message['column'],
+            escapeWorkflowCommand('PHPCS: ' . $message['source'], true),
+            escapeWorkflowCommand($message['message'])
+        );
+
         $fixable = $message['fixable'] ? ' [x]' : '';
         echo sprintf(
             "%d:%d %s%s %s (%s)\n",
@@ -107,6 +120,21 @@ function normalizePath(string $path, string $workingDirectory): string
     return str_starts_with($path, $prefix)
         ? substr($path, strlen($prefix))
         : $path;
+}
+
+function escapeWorkflowCommand(string $value, bool $property = false): string
+{
+    $replacements = [
+        '%' => '%25',
+        "\r" => '%0D',
+        "\n" => '%0A',
+    ];
+    if ($property) {
+        $replacements[':'] = '%3A';
+        $replacements[','] = '%2C';
+    }
+
+    return strtr($value, $replacements);
 }
 
 /**
