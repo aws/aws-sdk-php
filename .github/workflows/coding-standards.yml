@@ -33,7 +33,6 @@ jobs:
         env:
           EVENT_NAME: ${{ github.event_name }}
           PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           PUSH_BEFORE_SHA: ${{ github.event.before }}
           HEAD_SHA: ${{ github.sha }}
 
@@ -41,12 +40,16 @@ jobs:
         if: steps.changed-source-files.outputs.has_files == 'true' || steps.changed-source-files.outputs.coding_standards_changed == 'true'
         run: composer require --dev squizlabs/php_codesniffer "^3.10" --no-interaction --prefer-dist --no-progress --update-with-all-dependencies
 
-      - name: Test custom PHP_CodeSniffer rules
+      - name: Test coding standards tooling
         if: steps.changed-source-files.outputs.coding_standards_changed == 'true'
         shell: bash
-        run: bash .github/scripts/test-phpcs-sniffs.sh
+        run: |
+          bash .github/scripts/test-phpcs-sniffs.sh
+          bash .github/scripts/test-filter-phpcs-report.sh
 
       - name: Run PHP_CodeSniffer
         if: steps.changed-source-files.outputs.has_files == 'true'
         shell: bash
         run: bash .github/scripts/run-phpcs.sh
+        env:
+          EVENT_NAME: ${{ github.event_name }}

@@ -8,7 +8,7 @@ readonly DIFF_HEAD_FILE="diff-head.txt"
 
 if [[ "${EVENT_NAME:-}" == "pull_request" ]]; then
     BASE_SHA="${PR_BASE_SHA:?PR_BASE_SHA is required for pull_request events}"
-    HEAD_SHA="${PR_HEAD_SHA:?PR_HEAD_SHA is required for pull_request events}"
+    HEAD_SHA="${HEAD_SHA:?HEAD_SHA is required for pull_request events}"
     DIFF_BASE="$(git merge-base "$BASE_SHA" "$HEAD_SHA")"
 else
     DIFF_BASE="${PUSH_BEFORE_SHA:-}"
@@ -46,7 +46,7 @@ fi
 coding_standards_changed=false
 while IFS= read -r file; do
     case "$file" in
-        phpcs.xml.dist|.github/phpcs/*|.github/scripts/find-changed-source-files.sh|.github/scripts/run-phpcs.sh|.github/scripts/test-phpcs-sniffs.sh|.github/workflows/coding-standards.yml)
+        phpcs.xml.dist|.github/phpcs/*|.github/scripts/find-changed-source-files.sh|.github/scripts/filter-phpcs-report.php|.github/scripts/run-phpcs.sh|.github/scripts/test-filter-phpcs-report.sh|.github/scripts/test-phpcs-sniffs.sh|.github/workflows/coding-standards.yml)
             coding_standards_changed=true
             break
             ;;
