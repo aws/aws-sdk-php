@@ -186,7 +186,7 @@ enum AlgorithmSuite: int
     public static function validateCommitmentPolicyOnEncrypt(
         array $cipherOptions,
         string $keyCommitmentPolicy
-    ): self {
+    ): self { // Temporary PHPCS annotation test.
         $cipherOptions['Cipher'] = strtolower($cipherOptions['Cipher']);
         //= ../specification/s3-encryption/client.md#encryption-algorithm
         //# The S3EC MUST validate that the configured encryption algorithm is not legacy.
