@@ -136,6 +136,27 @@
         {"shape":"XksKeyNotFoundException"}
       ]
     },
+    "Decapsulate":{
+      "name":"Decapsulate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DecapsulateRequest"},
+      "output":{"shape":"DecapsulateResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"DisabledException"},
+        {"shape":"KeyUnavailableException"},
+        {"shape":"DependencyTimeoutException"},
+        {"shape":"InvalidGrantTokenException"},
+        {"shape":"InvalidKeyUsageException"},
+        {"shape":"InvalidCiphertextException"},
+        {"shape":"KMSInternalException"},
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"DryRunOperationException"}
+      ]
+    },
     "Decrypt":{
       "name":"Decrypt",
       "http":{
@@ -330,6 +351,26 @@
         {"shape":"KMSInternalException"},
         {"shape":"KMSInvalidStateException"},
         {"shape":"UnsupportedOperationException"}
+      ]
+    },
+    "Encapsulate":{
+      "name":"Encapsulate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EncapsulateRequest"},
+      "output":{"shape":"EncapsulateResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"DisabledException"},
+        {"shape":"KeyUnavailableException"},
+        {"shape":"DependencyTimeoutException"},
+        {"shape":"InvalidGrantTokenException"},
+        {"shape":"InvalidKeyUsageException"},
+        {"shape":"KMSInternalException"},
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "Encrypt":{
@@ -1347,7 +1388,10 @@
         "ECC_NIST_P521",
         "ECC_SECG_P256K1",
         "SM2",
-        "ECC_NIST_EDWARDS25519"
+        "ECC_NIST_EDWARDS25519",
+        "ML_KEM_512",
+        "ML_KEM_768",
+        "ML_KEM_1024"
       ]
     },
     "DataKeySpec":{
@@ -1358,6 +1402,29 @@
       ]
     },
     "DateType":{"type":"timestamp"},
+    "DecapsulateRequest":{
+      "type":"structure",
+      "required":[
+        "KeyId",
+        "SharedSecretCiphertextBlob",
+        "EncapsulationAlgorithm"
+      ],
+      "members":{
+        "KeyId":{"shape":"KeyIdType"},
+        "SharedSecretCiphertextBlob":{"shape":"CiphertextType"},
+        "EncapsulationAlgorithm":{"shape":"EncapsulationAlgorithmSpec"},
+        "GrantTokens":{"shape":"GrantTokenList"},
+        "DryRun":{"shape":"NullableBooleanType"}
+      }
+    },
+    "DecapsulateResponse":{
+      "type":"structure",
+      "members":{
+        "KeyId":{"shape":"KeyIdType"},
+        "SharedSecret":{"shape":"PlaintextType"},
+        "EncapsulationAlgorithm":{"shape":"EncapsulationAlgorithmSpec"}
+      }
+    },
     "DecryptRequest":{
       "type":"structure",
       "members":{
@@ -1545,6 +1612,36 @@
         "KeyId":{"shape":"KeyIdType"},
         "RotationPeriodInDays":{"shape":"RotationPeriodInDaysType"}
       }
+    },
+    "EncapsulateRequest":{
+      "type":"structure",
+      "required":[
+        "KeyId",
+        "EncapsulationAlgorithm"
+      ],
+      "members":{
+        "KeyId":{"shape":"KeyIdType"},
+        "EncapsulationAlgorithm":{"shape":"EncapsulationAlgorithmSpec"},
+        "GrantTokens":{"shape":"GrantTokenList"},
+        "DryRun":{"shape":"NullableBooleanType"}
+      }
+    },
+    "EncapsulateResponse":{
+      "type":"structure",
+      "members":{
+        "KeyId":{"shape":"KeyIdType"},
+        "SharedSecret":{"shape":"PlaintextType"},
+        "SharedSecretCiphertextBlob":{"shape":"CiphertextType"},
+        "EncapsulationAlgorithm":{"shape":"EncapsulationAlgorithmSpec"}
+      }
+    },
+    "EncapsulationAlgorithmSpec":{
+      "type":"string",
+      "enum":["ML_KEM"]
+    },
+    "EncapsulationAlgorithmSpecList":{
+      "type":"list",
+      "member":{"shape":"EncapsulationAlgorithmSpec"}
     },
     "EncryptRequest":{
       "type":"structure",
@@ -1828,7 +1925,8 @@
         "KeyUsage":{"shape":"KeyUsageType"},
         "EncryptionAlgorithms":{"shape":"EncryptionAlgorithmSpecList"},
         "SigningAlgorithms":{"shape":"SigningAlgorithmSpecList"},
-        "KeyAgreementAlgorithms":{"shape":"KeyAgreementAlgorithmSpecList"}
+        "KeyAgreementAlgorithms":{"shape":"KeyAgreementAlgorithmSpecList"},
+        "EncapsulationAlgorithms":{"shape":"EncapsulationAlgorithmSpecList"}
       }
     },
     "GrantConstraintSourceArnType":{
@@ -1895,7 +1993,9 @@
         "GenerateDataKeyPairWithoutPlaintext",
         "GenerateMac",
         "VerifyMac",
-        "DeriveSharedSecret"
+        "DeriveSharedSecret",
+        "Encapsulate",
+        "Decapsulate"
       ]
     },
     "GrantOperationList":{
@@ -2105,7 +2205,9 @@
         "ReEncrypt",
         "Sign",
         "Verify",
-        "VerifyMac"
+        "VerifyMac",
+        "Encapsulate",
+        "Decapsulate"
       ]
     },
     "KeyList":{
@@ -2169,6 +2271,7 @@
         "EncryptionAlgorithms":{"shape":"EncryptionAlgorithmSpecList"},
         "SigningAlgorithms":{"shape":"SigningAlgorithmSpecList"},
         "KeyAgreementAlgorithms":{"shape":"KeyAgreementAlgorithmSpecList"},
+        "EncapsulationAlgorithms":{"shape":"EncapsulationAlgorithmSpecList"},
         "MultiRegion":{"shape":"NullableBooleanType"},
         "MultiRegionConfiguration":{"shape":"MultiRegionConfiguration"},
         "PendingDeletionWindowInDays":{"shape":"PendingWindowInDaysType"},
@@ -2196,7 +2299,10 @@
         "ML_DSA_44",
         "ML_DSA_65",
         "ML_DSA_87",
-        "ECC_NIST_EDWARDS25519"
+        "ECC_NIST_EDWARDS25519",
+        "ML_KEM_512",
+        "ML_KEM_768",
+        "ML_KEM_1024"
       ]
     },
     "KeyState":{
@@ -2232,7 +2338,8 @@
         "SIGN_VERIFY",
         "ENCRYPT_DECRYPT",
         "GENERATE_VERIFY_MAC",
-        "KEY_AGREEMENT"
+        "KEY_AGREEMENT",
+        "ENCAPSULATE_DECAPSULATE"
       ]
     },
     "KmsRequestIdType":{"type":"string"},

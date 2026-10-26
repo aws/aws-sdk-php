@@ -4225,7 +4225,9 @@
         "viewerMinimumTlsProtocolVersion":{"shape":"ViewerMinimumTlsProtocolVersionEnum"},
         "enablePrivateOriginAccess":{"shape":"boolean"},
         "defaultRootObject":{"shape":"string"},
-        "customErrorResponses":{"shape":"DistributionCustomErrorResponseList"}
+        "customErrorResponses":{"shape":"DistributionCustomErrorResponseList"},
+        "enableWaf":{"shape":"boolean"},
+        "wafRules":{"shape":"WafRuleList"}
       }
     },
     "CreateDistributionResult":{
@@ -5014,7 +5016,9 @@
         "BytesUploaded",
         "TotalErrorRate",
         "Http4xxErrorRate",
-        "Http5xxErrorRate"
+        "Http5xxErrorRate",
+        "WafAllowedRequests",
+        "WafBlockedRequests"
       ]
     },
     "DnsRecordCreationState":{
@@ -6654,7 +6658,8 @@
         "tags":{"shape":"TagList"},
         "viewerMinimumTlsProtocolVersion":{"shape":"string"},
         "defaultRootObject":{"shape":"string"},
-        "customErrorResponses":{"shape":"DistributionCustomErrorResponseList"}
+        "customErrorResponses":{"shape":"DistributionCustomErrorResponseList"},
+        "waf":{"shape":"WafConfig"}
       }
     },
     "LoadBalancer":{
@@ -8375,7 +8380,9 @@
         "useDefaultCertificate":{"shape":"boolean"},
         "enablePrivateOriginAccess":{"shape":"boolean"},
         "defaultRootObject":{"shape":"string"},
-        "customErrorResponses":{"shape":"DistributionCustomErrorResponseList"}
+        "customErrorResponses":{"shape":"DistributionCustomErrorResponseList"},
+        "enableWaf":{"shape":"boolean"},
+        "wafRules":{"shape":"WafRuleList"}
       }
     },
     "UpdateDistributionResult":{
@@ -8485,6 +8492,77 @@
         "TLSv1.2_2019",
         "TLSv1.2_2021"
       ]
+    },
+    "WafAcfpConfig":{
+      "type":"structure",
+      "members":{
+        "payloadType":{"shape":"WafPayloadTypeEnum"},
+        "creationPath":{"shape":"string"},
+        "registrationPagePath":{"shape":"string"},
+        "responseInspection":{"shape":"WafResponseInspection"}
+      }
+    },
+    "WafAtpConfig":{
+      "type":"structure",
+      "members":{
+        "loginPath":{"shape":"string"},
+        "payloadType":{"shape":"WafPayloadTypeEnum"},
+        "usernameField":{"shape":"string"},
+        "passwordField":{"shape":"string"},
+        "responseInspection":{"shape":"WafResponseInspection"}
+      }
+    },
+    "WafBotControlConfig":{
+      "type":"structure",
+      "members":{
+        "inspectionLevel":{"shape":"WafInspectionLevelEnum"}
+      }
+    },
+    "WafConfig":{
+      "type":"structure",
+      "members":{
+        "isWafEnabled":{"shape":"boolean"},
+        "wafRules":{"shape":"WafRuleList"}
+      }
+    },
+    "WafInspectionLevelEnum":{
+      "type":"string",
+      "enum":[
+        "COMMON",
+        "TARGETED"
+      ]
+    },
+    "WafPayloadTypeEnum":{
+      "type":"string",
+      "enum":[
+        "JSON",
+        "FORM_ENCODED"
+      ]
+    },
+    "WafResponseInspection":{
+      "type":"structure",
+      "members":{
+        "successCodes":{"shape":"WafStatusCodeList"},
+        "failureCodes":{"shape":"WafStatusCodeList"}
+      }
+    },
+    "WafRule":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"string"},
+        "atpConfig":{"shape":"WafAtpConfig"},
+        "acfpConfig":{"shape":"WafAcfpConfig"},
+        "botControlConfig":{"shape":"WafBotControlConfig"}
+      }
+    },
+    "WafRuleList":{
+      "type":"list",
+      "member":{"shape":"WafRule"}
+    },
+    "WafStatusCodeList":{
+      "type":"list",
+      "member":{"shape":"integer"}
     },
     "boolean":{"type":"boolean"},
     "double":{"type":"double"},

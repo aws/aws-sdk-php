@@ -24,6 +24,7 @@
     "DescribeImages": "<p>Returns metadata about the images in a repository.</p> <note> <p>Starting with Docker version 1.9, the Docker client compresses image layers before pushing them to a V2 Docker registry. The output of the <code>docker images</code> command shows the uncompressed image size. Therefore, Docker might return a larger image than the image shown in the Amazon Web Services Management Console.</p> </note> <important> <p>The new version of Amazon ECR <i>Basic Scanning</i> doesn't use the <a>ImageDetail$imageScanFindingsSummary</a> and <a>ImageDetail$imageScanStatus</a> attributes from the API response to return scan results. Use the <a>DescribeImageScanFindings</a> API instead. For more information about Amazon Web Services native basic scanning, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html\"> Scan images for software vulnerabilities in Amazon ECR</a>.</p> </important>",
     "DescribePullThroughCacheRules": "<p>Returns the pull through cache rules for a registry.</p>",
     "DescribeRegistry": "<p>Describes the settings for a registry. The replication configuration for a repository can be created or updated with the <a>PutReplicationConfiguration</a> API action.</p>",
+    "DescribeReplicationBackfillResults": "<p>Returns the status, progress, and per-image results for a replication backfill. The backfill to describe is identified by the <code>replicationBackfillId</code> returned by the <a>StartReplicationBackfill</a> operation.</p> <note> <p>The per-image results are available only after the replication backfill reaches a terminal status.</p> </note>",
     "DescribeRepositories": "<p>Describes image repositories in a registry.</p>",
     "DescribeRepositoryCreationTemplates": "<p>Returns details about the repository creation templates in a registry. The <code>prefixes</code> request parameter can be used to return the details for a specific repository creation template.</p>",
     "GetAccountSetting": "<p>Retrieves the account setting value for the specified setting name.</p>",
@@ -39,6 +40,7 @@
     "ListImageReferrers": "<p>Lists the artifacts associated with a specified subject image.</p> <note> <p>The IAM principal invoking this operation must have the <code>ecr:BatchGetImage</code> permission.</p> </note>",
     "ListImages": "<p>Lists all the image IDs for the specified repository.</p> <p>You can filter images based on whether or not they are tagged by using the <code>tagStatus</code> filter and specifying either <code>TAGGED</code>, <code>UNTAGGED</code> or <code>ANY</code>. For example, you can filter your results to return only <code>UNTAGGED</code> images and then pipe that result to a <a>BatchDeleteImage</a> operation to delete them. Or, you can filter your results to return only <code>TAGGED</code> images to list all of the tags in your repository.</p>",
     "ListPullTimeUpdateExclusions": "<p>Lists the IAM principals that are excluded from having their image pull times recorded.</p>",
+    "ListReplicationBackfills": "<p>Lists the replication backfills for a registry, including their status and progress.</p> <note> <p>Replication backfills that have reached a terminal status are retained for 90 days after they end, after which they are no longer returned.</p> </note>",
     "ListTagsForResource": "<p>List the tags for an Amazon ECR resource.</p>",
     "PutAccountSetting": "<p>Allows you to change the basic scan type version or registry policy scope.</p>",
     "PutImage": "<p>Creates or updates the image manifest and tags associated with an image.</p> <p>When an image is pushed and all new image layers have been uploaded, the PutImage API is called once to create or update the image manifest and the tags associated with the image.</p> <note> <p>This operation is used by the Amazon ECR proxy and is not generally used by customers for pulling and pushing images. In most cases, you should use the <code>docker</code> CLI to pull, tag, and push images.</p> </note>",
@@ -53,6 +55,8 @@
     "SetRepositoryPolicy": "<p>Applies a repository policy to the specified repository to control access permissions. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-policies.html\">Amazon ECR Repository policies</a> in the <i>Amazon Elastic Container Registry User Guide</i>.</p>",
     "StartImageScan": "<p>Starts a basic image vulnerability scan.</p> <p> A basic image scan can only be started once per 24 hours on an individual image. This limit includes if an image was scanned on initial push. You can start up to 100,000 basic scans per 24 hours. This limit includes both scans on initial push and scans initiated by the StartImageScan API. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning-basic.html\">Basic scanning</a> in the <i>Amazon Elastic Container Registry User Guide</i>.</p>",
     "StartLifecyclePolicyPreview": "<p>Starts a preview of a lifecycle policy for the specified repository. This allows you to see the results before associating the lifecycle policy with the repository.</p>",
+    "StartReplicationBackfill": "<p>Starts a replication backfill for a registry. A replication backfill replicates a registry's existing images that match its replication configuration to the specified destination. Use the <a>DescribeReplicationBackfillResults</a> operation to monitor the progress of a replication backfill, and to retrieve its per-image results after it reaches a terminal status.</p> <note> <p>The destination must already be configured in the registry's replication configuration.</p> </note> <note> <p>Only one replication backfill can be in progress for a given destination Region at a time. Starting a replication backfill for a destination Region that already has one in progress fails with a <code>ReplicationBackfillInProgressException</code>. In addition, a registry can have at most 10 replication backfills in progress at once. Starting a replication backfill that would exceed this limit fails with a <code>LimitExceededException</code>.</p> </note>",
+    "StopReplicationBackfill": "<p>Stops an in progress replication backfill for a registry. The backfill to stop is identified by the <code>replicationBackfillId</code> returned by the <a>StartReplicationBackfill</a> operation.</p> <note> <p>Images that have already been replicated are not affected, and replications that are already in progress continue to completion.</p> </note>",
     "TagResource": "<p>Adds specified tags to a resource with the specified ARN. Existing tags on a resource are not changed if they are not specified in the request parameters.</p>",
     "UntagResource": "<p>Deletes specified tags from a resource.</p>",
     "UpdateImageStorageClass": "<p>Transitions an image between storage classes. You can transition images from Amazon ECR standard storage class to Amazon ECR archival storage class for long-term storage, or restore archived images back to Amazon ECR standard.</p>",
@@ -96,7 +100,7 @@
       "base": null,
       "refs": {
         "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) that identifies the resource for which to list the tags. Currently, the only supported resource is an Amazon ECR repository.</p>",
-        "Repository$repositoryArn": "<p>The Amazon Resource Name (ARN) that identifies the repository. The ARN contains the <code>arn:aws:ecr</code> namespace, followed by the region of the repository, Amazon Web Services account ID of the repository owner, repository namespace, and repository name. For example, <code>arn:aws:ecr:region:012345678910:repository-namespace/repository-name</code>.</p>",
+        "Repository$repositoryArn": "<p>The Amazon Resource Name (ARN) that identifies the repository. The ARN contains the <code>arn:aws:ecr</code> namespace, followed by the region of the repository, Amazon Web Services account ID of the repository owner, and repository name. For example, <code>arn:aws:ecr:region:012345678910:repository/repository-name</code>.</p>",
         "RepositoryScanningConfiguration$repositoryArn": "<p>The ARN of the repository.</p>",
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the the resource to which to add tags. Currently, the only supported resource is an Amazon ECR repository.</p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource from which to remove tags. Currently, the only supported resource is an Amazon ECR repository.</p>"
@@ -340,13 +344,19 @@
       "refs": {
         "AwsEcrContainerImageDetails$pushedAt": "<p>The date and time the Amazon ECR container image was pushed.</p>",
         "AwsEcrContainerImageDetails$lastInUseAt": "<p>The most recent date and time a cluster was running the image.</p>",
+        "DescribeReplicationBackfillResultsResponse$startedAt": "<p>The date and time, in JavaScript date format, when the replication backfill was started.</p>",
+        "DescribeReplicationBackfillResultsResponse$endedAt": "<p>The date and time, in JavaScript date format, when the replication backfill ended. This value is <code>null</code> while the replication backfill is still in progress.</p>",
         "EnhancedImageScanFinding$firstObservedAt": "<p>The date and time that the finding was first observed.</p>",
         "EnhancedImageScanFinding$lastObservedAt": "<p>The date and time that the finding was last observed.</p>",
         "EnhancedImageScanFinding$updatedAt": "<p>The date and time the finding was last updated at.</p>",
         "PackageVulnerabilityDetails$vendorCreatedAt": "<p>The date and time that this vulnerability was first added to the vendor's database.</p>",
         "PackageVulnerabilityDetails$vendorUpdatedAt": "<p>The date and time the vendor last updated this vulnerability in their database.</p>",
+        "ReplicationBackfillSummary$startedAt": "<p>The date and time, in JavaScript date format, when the replication backfill was started.</p>",
+        "ReplicationBackfillSummary$endedAt": "<p>The date and time, in JavaScript date format, when the replication backfill ended. This value is <code>null</code> while the replication backfill is still in progress.</p>",
         "RepositoryCreationTemplate$createdAt": "<p>The date and time, in JavaScript date format, when the repository creation template was created.</p>",
-        "RepositoryCreationTemplate$updatedAt": "<p>The date and time, in JavaScript date format, when the repository creation template was last updated.</p>"
+        "RepositoryCreationTemplate$updatedAt": "<p>The date and time, in JavaScript date format, when the repository creation template was last updated.</p>",
+        "StartReplicationBackfillResponse$startedAt": "<p>The date and time, in JavaScript date format, when the replication backfill was started.</p>",
+        "StopReplicationBackfillResponse$startedAt": "<p>The date and time, in JavaScript date format, when the replication backfill was started.</p>"
       }
     },
     "DeleteLifecyclePolicyRequest": {
@@ -467,6 +477,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeReplicationBackfillResultsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeReplicationBackfillResultsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeRepositoriesRequest": {
       "base": null,
       "refs": {}
@@ -564,6 +582,9 @@
         "PullThroughCacheRuleNotFoundException$message": null,
         "ReferencedImagesNotFoundException$message": null,
         "RegistryPolicyNotFoundException$message": null,
+        "ReplicationBackfillInProgressException$message": "<p>The error message associated with the exception.</p>",
+        "ReplicationBackfillInvalidStatusException$message": "<p>The error message associated with the exception.</p>",
+        "ReplicationBackfillNotFoundException$message": "<p>The error message associated with the exception.</p>",
         "RepositoryAlreadyExistsException$message": "<p>The error message associated with the exception.</p>",
         "RepositoryNotEmptyException$message": "<p>The error message associated with the exception.</p>",
         "RepositoryNotFoundException$message": "<p>The error message associated with the exception.</p>",
@@ -609,7 +630,8 @@
     "FiftyMaxResults": {
       "base": null,
       "refs": {
-        "ListImageReferrersRequest$maxResults": "<p>The maximum number of image referrer results returned by <code>ListImageReferrers</code> in paginated output. When this parameter is used, <code>ListImageReferrers</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>ListImageReferrers</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 50. If this parameter is not used, then <code>ListImageReferrers</code> returns up to 20 results and a <code>nextToken</code> value, if applicable.</p>"
+        "ListImageReferrersRequest$maxResults": "<p>The maximum number of image referrer results returned by <code>ListImageReferrers</code> in paginated output. When this parameter is used, <code>ListImageReferrers</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>ListImageReferrers</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 50. If this parameter is not used, then <code>ListImageReferrers</code> returns up to 20 results and a <code>nextToken</code> value, if applicable.</p>",
+        "ListReplicationBackfillsRequest$maxResults": "<p>The maximum number of replication backfill results returned by <code>ListReplicationBackfills</code> in paginated output. When this parameter is used, <code>ListReplicationBackfills</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>ListReplicationBackfills</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 50. If this parameter is not used, then <code>ListReplicationBackfills</code> returns up to 25 results and a <code>nextToken</code> value, if applicable.</p>"
       }
     },
     "FilePath": {
@@ -842,6 +864,7 @@
         "Image$imageId": "<p>An object containing the image tag and image digest associated with an image.</p>",
         "ImageFailure$imageId": "<p>The image ID associated with the failure.</p>",
         "ImageIdentifierList$member": null,
+        "ReplicationBackfillResult$imageId": "<p>An object with identifying information for the image.</p>",
         "StartImageScanRequest$imageId": null,
         "StartImageScanResponse$imageId": null,
         "UpdateImageStorageClassRequest$imageId": null,
@@ -1336,6 +1359,14 @@
       "base": null,
       "refs": {}
     },
+    "ListReplicationBackfillsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListReplicationBackfillsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {}
@@ -1350,6 +1381,7 @@
         "DescribeImageScanFindingsRequest$maxResults": "<p>The maximum number of image scan results returned by <code>DescribeImageScanFindings</code> in paginated output. When this parameter is used, <code>DescribeImageScanFindings</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>DescribeImageScanFindings</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 1000. If this parameter is not used, then <code>DescribeImageScanFindings</code> returns up to 100 results and a <code>nextToken</code> value, if applicable.</p>",
         "DescribeImagesRequest$maxResults": "<p>The maximum number of repository results returned by <code>DescribeImages</code> in paginated output. When this parameter is used, <code>DescribeImages</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>DescribeImages</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 1000. If this parameter is not used, then <code>DescribeImages</code> returns up to 100 results and a <code>nextToken</code> value, if applicable. This option cannot be used when you specify images with <code>imageIds</code>.</p>",
         "DescribePullThroughCacheRulesRequest$maxResults": "<p>The maximum number of pull through cache rules returned by <code>DescribePullThroughCacheRulesRequest</code> in paginated output. When this parameter is used, <code>DescribePullThroughCacheRulesRequest</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>DescribePullThroughCacheRulesRequest</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 1000. If this parameter is not used, then <code>DescribePullThroughCacheRulesRequest</code> returns up to 100 results and a <code>nextToken</code> value, if applicable.</p>",
+        "DescribeReplicationBackfillResultsRequest$maxResults": "<p>The maximum number of replication backfill results returned by <code>DescribeReplicationBackfillResults</code> in paginated output. When this parameter is used, <code>DescribeReplicationBackfillResults</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>DescribeReplicationBackfillResults</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 1000. If this parameter is not used, then <code>DescribeReplicationBackfillResults</code> returns up to 100 results and a <code>nextToken</code> value, if applicable.</p>",
         "DescribeRepositoriesRequest$maxResults": "<p>The maximum number of repository results returned by <code>DescribeRepositories</code> in paginated output. When this parameter is used, <code>DescribeRepositories</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>DescribeRepositories</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 1000. If this parameter is not used, then <code>DescribeRepositories</code> returns up to 100 results and a <code>nextToken</code> value, if applicable. This option cannot be used when you specify repositories with <code>repositoryNames</code>.</p>",
         "DescribeRepositoryCreationTemplatesRequest$maxResults": "<p>The maximum number of repository results returned by <code>DescribeRepositoryCreationTemplatesRequest</code> in paginated output. When this parameter is used, <code>DescribeRepositoryCreationTemplatesRequest</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>DescribeRepositoryCreationTemplatesRequest</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 1000. If this parameter is not used, then <code>DescribeRepositoryCreationTemplatesRequest</code> returns up to 100 results and a <code>nextToken</code> value, if applicable.</p>",
         "ListImagesRequest$maxResults": "<p>The maximum number of image results returned by <code>ListImages</code> in paginated output. When this parameter is used, <code>ListImages</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>ListImages</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 1000. If this parameter is not used, then <code>ListImages</code> returns up to 100 results and a <code>nextToken</code> value, if applicable.</p>",
@@ -1389,6 +1421,8 @@
         "DescribeImagesResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>DescribeImages</code> request. When the results of a <code>DescribeImages</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribePullThroughCacheRulesRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated <code>DescribePullThroughCacheRulesRequest</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is null when there are no more results to return.</p>",
         "DescribePullThroughCacheRulesResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>DescribePullThroughCacheRulesRequest</code> request. When the results of a <code>DescribePullThroughCacheRulesRequest</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "DescribeReplicationBackfillResultsRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated <code>DescribeReplicationBackfillResults</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is <code>null</code> when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is only used to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
+        "DescribeReplicationBackfillResultsResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>DescribeReplicationBackfillResults</code> request. When the results of a <code>DescribeReplicationBackfillResults</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeRepositoriesRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated <code>DescribeRepositories</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is <code>null</code> when there are no more results to return. This option cannot be used when you specify repositories with <code>repositoryNames</code>.</p> <note> <p>This token should be treated as an opaque identifier that is only used to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
         "DescribeRepositoriesResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>DescribeRepositories</code> request. When the results of a <code>DescribeRepositories</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeRepositoryCreationTemplatesRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated <code>DescribeRepositoryCreationTemplates</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is <code>null</code> when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is only used to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
@@ -1400,7 +1434,17 @@
         "ListImagesRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated <code>ListImages</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is <code>null</code> when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is only used to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
         "ListImagesResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>ListImages</code> request. When the results of a <code>ListImages</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "ListPullTimeUpdateExclusionsRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated <code>ListPullTimeUpdateExclusions</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is <code>null</code> when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is only used to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
-        "ListPullTimeUpdateExclusionsResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>ListPullTimeUpdateExclusions</code> request. When the results of a <code>ListPullTimeUpdateExclusions</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"
+        "ListPullTimeUpdateExclusionsResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>ListPullTimeUpdateExclusions</code> request. When the results of a <code>ListPullTimeUpdateExclusions</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "ListReplicationBackfillsRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated <code>ListReplicationBackfills</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is <code>null</code> when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is only used to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
+        "ListReplicationBackfillsResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>ListReplicationBackfills</code> request. When the results of a <code>ListReplicationBackfills</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"
+      }
+    },
+    "NonNegativeInteger": {
+      "base": null,
+      "refs": {
+        "ReplicationBackfillProgress$totalReplicationCount": "<p>The total number of replications that the backfill will perform. Each image and tag combination is counted as a single replication.</p>",
+        "ReplicationBackfillProgress$completedReplicationCount": "<p>The number of replications that have completed successfully.</p>",
+        "ReplicationBackfillProgress$failedReplicationCount": "<p>The number of replications that have failed.</p>"
       }
     },
     "PTCValidateFailure": {
@@ -1695,6 +1739,8 @@
         "DescribeImagesRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository in which to describe images. If you do not specify a registry, the default registry is assumed.</p>",
         "DescribePullThroughCacheRulesRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry to return the pull through cache rules for. If you do not specify a registry, the default registry is assumed.</p>",
         "DescribeRegistryResponse$registryId": "<p>The registry ID associated with the request.</p>",
+        "DescribeReplicationBackfillResultsRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the replication backfill to describe. If you do not specify a registry, the default registry is assumed.</p>",
+        "DescribeReplicationBackfillResultsResponse$registryId": "<p>The registry ID associated with the request.</p>",
         "DescribeRepositoriesRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repositories to be described. If you do not specify a registry, the default registry is assumed.</p>",
         "DescribeRepositoryCreationTemplatesResponse$registryId": "<p>The registry ID associated with the request.</p>",
         "EnhancedImageScanFinding$awsAccountId": "<p>The Amazon Web Services account ID associated with the image.</p>",
@@ -1716,6 +1762,8 @@
         "InvalidLayerPartException$registryId": "<p>The registry ID associated with the exception.</p>",
         "ListImageReferrersRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository in which to list image referrers. If you do not specify a registry, the default registry is assumed.</p>",
         "ListImagesRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository in which to list images. If you do not specify a registry, the default registry is assumed.</p>",
+        "ListReplicationBackfillsRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry for which to list replication backfills. If you do not specify a registry, the default registry is assumed.</p>",
+        "ListReplicationBackfillsResponse$registryId": "<p>The registry ID associated with the request.</p>",
         "PullThroughCacheRule$registryId": "<p>The Amazon Web Services account ID associated with the registry the pull through cache rule is associated with.</p>",
         "PutImageRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository in which to put the image. If you do not specify a registry, the default registry is assumed.</p>",
         "PutImageScanningConfigurationRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository in which to update the image scanning configuration setting. If you do not specify a registry, the default registry is assumed.</p>",
@@ -1733,6 +1781,10 @@
         "StartImageScanResponse$registryId": "<p>The registry ID associated with the request.</p>",
         "StartLifecyclePolicyPreviewRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository. If you do not specify a registry, the default registry is assumed.</p>",
         "StartLifecyclePolicyPreviewResponse$registryId": "<p>The registry ID associated with the request.</p>",
+        "StartReplicationBackfillRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry from which to start the replication backfill. If you do not specify a registry, the default registry is assumed.</p>",
+        "StartReplicationBackfillResponse$registryId": "<p>The registry ID associated with the request.</p>",
+        "StopReplicationBackfillRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the replication backfill to stop. If you do not specify a registry, the default registry is assumed.</p>",
+        "StopReplicationBackfillResponse$registryId": "<p>The registry ID associated with the request.</p>",
         "UpdateImageStorageClassRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the image to transition. If you do not specify a registry, the default registry is assumed.</p>",
         "UpdateImageStorageClassResponse$registryId": "<p>The registry ID associated with the request.</p>",
         "UpdatePullThroughCacheRuleRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry associated with the pull through cache rule. If you do not specify a registry, the default registry is assumed.</p>",
@@ -1801,6 +1853,83 @@
         "EnhancedImageScanFinding$remediation": "<p>An object that contains the details about how to remediate a finding.</p>"
       }
     },
+    "ReplicationBackfillError": {
+      "base": null,
+      "refs": {
+        "DescribeReplicationBackfillResultsResponse$failureCode": "<p>The failure code for a replication backfill that has failed.</p>",
+        "ReplicationBackfillSummary$failureCode": "<p>The failure code for a replication backfill that has failed.</p>"
+      }
+    },
+    "ReplicationBackfillId": {
+      "base": null,
+      "refs": {
+        "DescribeReplicationBackfillResultsRequest$replicationBackfillId": "<p>The ID of the replication backfill to describe.</p>",
+        "DescribeReplicationBackfillResultsResponse$replicationBackfillId": "<p>The ID of the replication backfill.</p>",
+        "ReplicationBackfillSummary$replicationBackfillId": "<p>The ID of the replication backfill.</p>",
+        "StartReplicationBackfillResponse$replicationBackfillId": "<p>The ID of the replication backfill that was started. Use this value to describe or stop the backfill.</p>",
+        "StopReplicationBackfillRequest$replicationBackfillId": "<p>The ID of the replication backfill to stop.</p>",
+        "StopReplicationBackfillResponse$replicationBackfillId": "<p>The ID of the replication backfill.</p>"
+      }
+    },
+    "ReplicationBackfillInProgressException": {
+      "base": "<p>A replication backfill is already in progress for the specified destination Region. This occurs because only one replication backfill can be in progress for a given destination Region at a time. Wait for the in progress backfill to reach a terminal status, or stop it with the <a>StopReplicationBackfill</a> operation, before starting another one.</p>",
+      "refs": {}
+    },
+    "ReplicationBackfillInvalidStatusException": {
+      "base": "<p>The requested operation can't be performed on the replication backfill because it is not in a valid status for that operation. For example, you can't stop a replication backfill that has already reached a terminal status. Use the <a>DescribeReplicationBackfillResults</a> operation to check the current status before retrying.</p>",
+      "refs": {}
+    },
+    "ReplicationBackfillNotFoundException": {
+      "base": "<p>The specified replication backfill could not be found. Check the specified replication backfill ID and ensure that you are operating on the correct registry.</p>",
+      "refs": {}
+    },
+    "ReplicationBackfillProgress": {
+      "base": "<p>An object representing the progress of a replication backfill, including the total, completed, and failed replication counts.</p>",
+      "refs": {
+        "DescribeReplicationBackfillResultsResponse$progress": "<p>The progress of the replication backfill, including the total, completed, and failed replication counts. This value is <code>null</code> until the replication backfill finishes preparing the set of images to replicate. It is therefore <code>null</code> while the replication backfill is <code>PREPARING</code>, and remains <code>null</code> if the replication backfill is stopped before preparation completes.</p>",
+        "ReplicationBackfillSummary$progress": "<p>The progress of the replication backfill, including the total, completed, and failed replication counts. This value is <code>null</code> until the replication backfill finishes preparing the set of images to replicate. It is therefore <code>null</code> while the replication backfill is <code>PREPARING</code>, and remains <code>null</code> if the replication backfill is stopped before preparation completes.</p>"
+      }
+    },
+    "ReplicationBackfillResult": {
+      "base": "<p>An object representing the result of a single replication during a replication backfill. Each image and tag combination is replicated as a single replication.</p>",
+      "refs": {
+        "ReplicationBackfillResultList$member": null
+      }
+    },
+    "ReplicationBackfillResultList": {
+      "base": null,
+      "refs": {
+        "DescribeReplicationBackfillResultsResponse$results": "<p>The per-image results for the replication backfill. Results are available only after the replication backfill reaches a terminal status.</p>"
+      }
+    },
+    "ReplicationBackfillResultStatus": {
+      "base": null,
+      "refs": {
+        "DescribeReplicationBackfillResultsRequest$resultStatusFilter": "<p>The status used to filter the returned results. Each result has a status of <code>COMPLETE</code> or <code>FAILED</code>. If you omit this parameter, results with both statuses are returned.</p>",
+        "ReplicationBackfillResult$status": "<p>The replication status of the image.</p>"
+      }
+    },
+    "ReplicationBackfillStatus": {
+      "base": null,
+      "refs": {
+        "DescribeReplicationBackfillResultsResponse$status": "<p>The current status of the replication backfill.</p>",
+        "ReplicationBackfillSummary$status": "<p>The current status of the replication backfill.</p>",
+        "StartReplicationBackfillResponse$status": "<p>The current status of the replication backfill. A newly started replication backfill is returned with a status of <code>PREPARING</code>.</p>",
+        "StopReplicationBackfillResponse$status": "<p>The current status of the replication backfill. When you stop a replication backfill, its status is <code>STOPPED</code> if the backfill is stopped immediately, or <code>STOPPING</code> if there are replications still in progress that must complete before the backfill stops.</p>"
+      }
+    },
+    "ReplicationBackfillSummary": {
+      "base": "<p>An object representing a summary of a replication backfill, including its status, destination, progress, and start and end times.</p>",
+      "refs": {
+        "ReplicationBackfillSummaryList$member": null
+      }
+    },
+    "ReplicationBackfillSummaryList": {
+      "base": null,
+      "refs": {
+        "ListReplicationBackfillsResponse$backfills": "<p>A list of the replication backfills for the registry.</p>"
+      }
+    },
     "ReplicationConfiguration": {
       "base": "<p>The replication configuration for a registry.</p>",
       "refs": {
@@ -1812,7 +1941,12 @@
     "ReplicationDestination": {
       "base": "<p>An array of objects representing the destination for a replication rule.</p>",
       "refs": {
-        "ReplicationDestinationList$member": null
+        "DescribeReplicationBackfillResultsResponse$destination": "<p>The destination Region and registry to which the images are replicated.</p>",
+        "ReplicationBackfillSummary$destination": "<p>The destination Region and registry to which the images are replicated.</p>",
+        "ReplicationDestinationList$member": null,
+        "StartReplicationBackfillRequest$destination": "<p>The destination Region and registry to which the images are replicated.</p>",
+        "StartReplicationBackfillResponse$destination": "<p>The destination Region and registry to which the images are replicated.</p>",
+        "StopReplicationBackfillResponse$destination": "<p>The destination Region and registry to which the images are replicated.</p>"
       }
     },
     "ReplicationDestinationList": {
@@ -1824,7 +1958,16 @@
     "ReplicationError": {
       "base": null,
       "refs": {
-        "ImageReplicationStatus$failureCode": "<p>The failure code for a replication that has failed.</p>"
+        "ImageReplicationStatus$failureCode": "<p>The failure code for a replication that has failed.</p>",
+        "ReplicationBackfillResult$failureCode": "<p>The failure code for a replication that has failed.</p>",
+        "ReplicationErrorList$member": null
+      }
+    },
+    "ReplicationErrorList": {
+      "base": null,
+      "refs": {
+        "ReplicationBackfillProgress$failureCodes": "<p>The distinct failure codes for the replications that have failed. Each failure code appears at most once, regardless of how many replications failed with that code.</p>",
+        "ReplicationBackfillResult$subImageFailureCodes": "<p>The distinct failure codes for the images referenced by a manifest list that failed to replicate. Each failure code appears at most once, regardless of how many referenced images failed with that code. This field is present only when the image is a manifest list.</p>"
       }
     },
     "ReplicationRule": {
@@ -1944,6 +2087,7 @@
         "PutImageTagMutabilityResponse$repositoryName": "<p>The repository name associated with the request.</p>",
         "PutLifecyclePolicyRequest$repositoryName": "<p>The name of the repository to receive the policy.</p>",
         "PutLifecyclePolicyResponse$repositoryName": "<p>The repository name associated with the request.</p>",
+        "ReplicationBackfillResult$repositoryName": "<p>The name of the repository that contains the image.</p>",
         "Repository$repositoryName": "<p>The name of the repository.</p>",
         "RepositoryNameList$member": null,
         "RepositoryScanningConfiguration$repositoryName": "<p>The name of the repository.</p>",
@@ -2287,11 +2431,27 @@
       "base": null,
       "refs": {}
     },
+    "StartReplicationBackfillRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartReplicationBackfillResponse": {
+      "base": null,
+      "refs": {}
+    },
     "Status": {
       "base": null,
       "refs": {
         "EnhancedImageScanFinding$status": "<p>The status of the finding.</p>"
       }
+    },
+    "StopReplicationBackfillRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopReplicationBackfillResponse": {
+      "base": null,
+      "refs": {}
     },
     "String": {
       "base": null,

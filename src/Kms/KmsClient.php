@@ -53,7 +53,7 @@ use Aws\AwsClient;
  *     KeyId?: string,
  *     GranteePrincipal?: string,
  *     RetiringPrincipal?: string,
- *     Operations?: list<'CreateGrant'|'Decrypt'|'DeriveSharedSecret'|'DescribeKey'|'Encrypt'|'GenerateDataKey'|'GenerateDataKeyPair'|'GenerateDataKeyPairWithoutPlaintext'|'GenerateDataKeyWithoutPlaintext'|'GenerateMac'|'GetPublicKey'|'ReEncryptFrom'|'ReEncryptTo'|'RetireGrant'|'Sign'|'Verify'|'VerifyMac'>,
+ *     Operations?: list<'CreateGrant'|'Decapsulate'|'Decrypt'|'DeriveSharedSecret'|'DescribeKey'|'Encapsulate'|'Encrypt'|'GenerateDataKey'|'GenerateDataKeyPair'|'GenerateDataKeyPairWithoutPlaintext'|'GenerateDataKeyWithoutPlaintext'|'GenerateMac'|'GetPublicKey'|'ReEncryptFrom'|'ReEncryptTo'|'RetireGrant'|'Sign'|'Verify'|'VerifyMac'>,
  *     Constraints?: array{
  *         EncryptionContextSubset?: array<string, string>,
  *         EncryptionContextEquals?: array<string, string>,
@@ -72,7 +72,7 @@ use Aws\AwsClient;
  *     KeyId?: string,
  *     GranteePrincipal?: string,
  *     RetiringPrincipal?: string,
- *     Operations?: list<'CreateGrant'|'Decrypt'|'DeriveSharedSecret'|'DescribeKey'|'Encrypt'|'GenerateDataKey'|'GenerateDataKeyPair'|'GenerateDataKeyPairWithoutPlaintext'|'GenerateDataKeyWithoutPlaintext'|'GenerateMac'|'GetPublicKey'|'ReEncryptFrom'|'ReEncryptTo'|'RetireGrant'|'Sign'|'Verify'|'VerifyMac'>,
+ *     Operations?: list<'CreateGrant'|'Decapsulate'|'Decrypt'|'DeriveSharedSecret'|'DescribeKey'|'Encapsulate'|'Encrypt'|'GenerateDataKey'|'GenerateDataKeyPair'|'GenerateDataKeyPairWithoutPlaintext'|'GenerateDataKeyWithoutPlaintext'|'GenerateMac'|'GetPublicKey'|'ReEncryptFrom'|'ReEncryptTo'|'RetireGrant'|'Sign'|'Verify'|'VerifyMac'>,
  *     Constraints?: array{
  *         EncryptionContextSubset?: array<string, string>,
  *         EncryptionContextEquals?: array<string, string>,
@@ -90,9 +90,9 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result createKey(array{
  *     Policy?: string,
  *     Description?: string,
- *     KeyUsage?: 'ENCRYPT_DECRYPT'|'GENERATE_VERIFY_MAC'|'KEY_AGREEMENT'|'SIGN_VERIFY',
+ *     KeyUsage?: 'ENCAPSULATE_DECAPSULATE'|'ENCRYPT_DECRYPT'|'GENERATE_VERIFY_MAC'|'KEY_AGREEMENT'|'SIGN_VERIFY',
  *     CustomerMasterKeySpec?: 'ECC_NIST_P256'|'ECC_NIST_P384'|'ECC_NIST_P521'|'ECC_SECG_P256K1'|'HMAC_224'|'HMAC_256'|'HMAC_384'|'HMAC_512'|'RSA_2048'|'RSA_3072'|'RSA_4096'|'SM2'|'SYMMETRIC_DEFAULT',
- *     KeySpec?: 'ECC_NIST_EDWARDS25519'|'ECC_NIST_P256'|'ECC_NIST_P384'|'ECC_NIST_P521'|'ECC_SECG_P256K1'|'HMAC_224'|'HMAC_256'|'HMAC_384'|'HMAC_512'|'ML_DSA_44'|'ML_DSA_65'|'ML_DSA_87'|'RSA_2048'|'RSA_3072'|'RSA_4096'|'SM2'|'SYMMETRIC_DEFAULT',
+ *     KeySpec?: 'ECC_NIST_EDWARDS25519'|'ECC_NIST_P256'|'ECC_NIST_P384'|'ECC_NIST_P521'|'ECC_SECG_P256K1'|'HMAC_224'|'HMAC_256'|'HMAC_384'|'HMAC_512'|'ML_DSA_44'|'ML_DSA_65'|'ML_DSA_87'|'ML_KEM_1024'|'ML_KEM_512'|'ML_KEM_768'|'RSA_2048'|'RSA_3072'|'RSA_4096'|'SM2'|'SYMMETRIC_DEFAULT',
  *     Origin?: 'AWS_CLOUDHSM'|'AWS_KMS'|'EXTERNAL'|'EXTERNAL_KEY_STORE',
  *     CustomKeyStoreId?: string,
  *     BypassPolicyLockoutSafetyCheck?: bool,
@@ -105,15 +105,33 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise createKeyAsync(array{
  *     Policy?: string,
  *     Description?: string,
- *     KeyUsage?: 'ENCRYPT_DECRYPT'|'GENERATE_VERIFY_MAC'|'KEY_AGREEMENT'|'SIGN_VERIFY',
+ *     KeyUsage?: 'ENCAPSULATE_DECAPSULATE'|'ENCRYPT_DECRYPT'|'GENERATE_VERIFY_MAC'|'KEY_AGREEMENT'|'SIGN_VERIFY',
  *     CustomerMasterKeySpec?: 'ECC_NIST_P256'|'ECC_NIST_P384'|'ECC_NIST_P521'|'ECC_SECG_P256K1'|'HMAC_224'|'HMAC_256'|'HMAC_384'|'HMAC_512'|'RSA_2048'|'RSA_3072'|'RSA_4096'|'SM2'|'SYMMETRIC_DEFAULT',
- *     KeySpec?: 'ECC_NIST_EDWARDS25519'|'ECC_NIST_P256'|'ECC_NIST_P384'|'ECC_NIST_P521'|'ECC_SECG_P256K1'|'HMAC_224'|'HMAC_256'|'HMAC_384'|'HMAC_512'|'ML_DSA_44'|'ML_DSA_65'|'ML_DSA_87'|'RSA_2048'|'RSA_3072'|'RSA_4096'|'SM2'|'SYMMETRIC_DEFAULT',
+ *     KeySpec?: 'ECC_NIST_EDWARDS25519'|'ECC_NIST_P256'|'ECC_NIST_P384'|'ECC_NIST_P521'|'ECC_SECG_P256K1'|'HMAC_224'|'HMAC_256'|'HMAC_384'|'HMAC_512'|'ML_DSA_44'|'ML_DSA_65'|'ML_DSA_87'|'ML_KEM_1024'|'ML_KEM_512'|'ML_KEM_768'|'RSA_2048'|'RSA_3072'|'RSA_4096'|'SM2'|'SYMMETRIC_DEFAULT',
  *     Origin?: 'AWS_CLOUDHSM'|'AWS_KMS'|'EXTERNAL'|'EXTERNAL_KEY_STORE',
  *     CustomKeyStoreId?: string,
  *     BypassPolicyLockoutSafetyCheck?: bool,
  *     Tags?: list<array{TagKey?: string, TagValue?: string, ...}>,
  *     MultiRegion?: bool,
  *     XksKeyId?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result decapsulate(array $args = [])
+ * @phpstan-method \Aws\Result decapsulate(array{
+ *     KeyId?: string,
+ *     SharedSecretCiphertextBlob?: string|resource|\Psr\Http\Message\StreamInterface,
+ *     EncapsulationAlgorithm?: 'ML_KEM',
+ *     GrantTokens?: list<string>,
+ *     DryRun?: bool,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise decapsulateAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise decapsulateAsync(array{
+ *     KeyId?: string,
+ *     SharedSecretCiphertextBlob?: string|resource|\Psr\Http\Message\StreamInterface,
+ *     EncapsulationAlgorithm?: 'ML_KEM',
+ *     GrantTokens?: list<string>,
+ *     DryRun?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result decrypt(array $args = [])
@@ -216,6 +234,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result enableKeyRotation(array{KeyId?: string, RotationPeriodInDays?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise enableKeyRotationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise enableKeyRotationAsync(array{KeyId?: string, RotationPeriodInDays?: int, ...} $args = [])
+ * @method \Aws\Result encapsulate(array $args = [])
+ * @phpstan-method \Aws\Result encapsulate(array{KeyId?: string, EncapsulationAlgorithm?: 'ML_KEM', GrantTokens?: list<string>, DryRun?: bool, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise encapsulateAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise encapsulateAsync(array{KeyId?: string, EncapsulationAlgorithm?: 'ML_KEM', GrantTokens?: list<string>, DryRun?: bool, ...} $args = [])
  * @method \Aws\Result encrypt(array $args = [])
  * @phpstan-method \Aws\Result encrypt(array{
  *     KeyId?: string,
@@ -270,7 +292,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result generateDataKeyPair(array{
  *     EncryptionContext?: array<string, string>,
  *     KeyId?: string,
- *     KeyPairSpec?: 'ECC_NIST_EDWARDS25519'|'ECC_NIST_P256'|'ECC_NIST_P384'|'ECC_NIST_P521'|'ECC_SECG_P256K1'|'RSA_2048'|'RSA_3072'|'RSA_4096'|'SM2',
+ *     KeyPairSpec?: 'ECC_NIST_EDWARDS25519'|'ECC_NIST_P256'|'ECC_NIST_P384'|'ECC_NIST_P521'|'ECC_SECG_P256K1'|'ML_KEM_1024'|'ML_KEM_512'|'ML_KEM_768'|'RSA_2048'|'RSA_3072'|'RSA_4096'|'SM2',
  *     GrantTokens?: list<string>,
  *     Recipient?: array{
  *         KeyEncryptionAlgorithm?: 'RSAES_OAEP_SHA_256',
@@ -284,7 +306,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise generateDataKeyPairAsync(array{
  *     EncryptionContext?: array<string, string>,
  *     KeyId?: string,
- *     KeyPairSpec?: 'ECC_NIST_EDWARDS25519'|'ECC_NIST_P256'|'ECC_NIST_P384'|'ECC_NIST_P521'|'ECC_SECG_P256K1'|'RSA_2048'|'RSA_3072'|'RSA_4096'|'SM2',
+ *     KeyPairSpec?: 'ECC_NIST_EDWARDS25519'|'ECC_NIST_P256'|'ECC_NIST_P384'|'ECC_NIST_P521'|'ECC_SECG_P256K1'|'ML_KEM_1024'|'ML_KEM_512'|'ML_KEM_768'|'RSA_2048'|'RSA_3072'|'RSA_4096'|'SM2',
  *     GrantTokens?: list<string>,
  *     Recipient?: array{
  *         KeyEncryptionAlgorithm?: 'RSAES_OAEP_SHA_256',
@@ -298,7 +320,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result generateDataKeyPairWithoutPlaintext(array{
  *     EncryptionContext?: array<string, string>,
  *     KeyId?: string,
- *     KeyPairSpec?: 'ECC_NIST_EDWARDS25519'|'ECC_NIST_P256'|'ECC_NIST_P384'|'ECC_NIST_P521'|'ECC_SECG_P256K1'|'RSA_2048'|'RSA_3072'|'RSA_4096'|'SM2',
+ *     KeyPairSpec?: 'ECC_NIST_EDWARDS25519'|'ECC_NIST_P256'|'ECC_NIST_P384'|'ECC_NIST_P521'|'ECC_SECG_P256K1'|'ML_KEM_1024'|'ML_KEM_512'|'ML_KEM_768'|'RSA_2048'|'RSA_3072'|'RSA_4096'|'SM2',
  *     GrantTokens?: list<string>,
  *     DryRun?: bool,
  *     ...,
@@ -307,7 +329,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise generateDataKeyPairWithoutPlaintextAsync(array{
  *     EncryptionContext?: array<string, string>,
  *     KeyId?: string,
- *     KeyPairSpec?: 'ECC_NIST_EDWARDS25519'|'ECC_NIST_P256'|'ECC_NIST_P384'|'ECC_NIST_P521'|'ECC_SECG_P256K1'|'RSA_2048'|'RSA_3072'|'RSA_4096'|'SM2',
+ *     KeyPairSpec?: 'ECC_NIST_EDWARDS25519'|'ECC_NIST_P256'|'ECC_NIST_P384'|'ECC_NIST_P521'|'ECC_SECG_P256K1'|'ML_KEM_1024'|'ML_KEM_512'|'ML_KEM_768'|'RSA_2048'|'RSA_3072'|'RSA_4096'|'SM2',
  *     GrantTokens?: list<string>,
  *     DryRun?: bool,
  *     ...,

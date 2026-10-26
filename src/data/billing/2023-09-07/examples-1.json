@@ -1,6 +1,17 @@
 {
   "version": "1.0",
   "examples": {
+    "AssociateContract": [
+      {
+        "input": {
+          "contractArn": "arn:aws:billing::123456789012:contract/1a2b3c4d-5e6f-7a8b-9c0d-111122223333",
+          "contractDocumentId": "CC OTH XXXXXXXX XXXX TR"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Invoke AssociateContract"
+      }
+    ],
     "AssociateSourceViews": [
       {
         "input": {
@@ -15,6 +26,18 @@
         },
         "id": "example-1",
         "title": "Invoke AssociateSourceViews"
+      }
+    ],
+    "CancelContractualInvestmentAttestation": [
+      {
+        "input": {
+          "attestationId": "a1b2c3d4-5678-90ab-cdef-111122223333",
+          "contractArn": "arn:aws:billing::123456789012:contract/1a2b3c4d-5e6f-7a8b-9c0d-111122223333",
+          "reason": "Example cancellation reason"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Invoke CancelContractualInvestmentAttestation"
       }
     ],
     "CreateBillingView": [
@@ -42,6 +65,128 @@
         "title": "Invoke CreateBillingView"
       }
     ],
+    "CreateContractualInvestmentAttestation": [
+      {
+        "input": {
+          "additionalRecipients": [
+            {
+              "email": "recipient@example.com"
+            }
+          ],
+          "approverDetails": {
+            "name": "First-Name Last-Name",
+            "email": "first-name.last-name@example.com",
+            "title": "Title"
+          },
+          "attestationDetails": {
+            "attestationValue": {
+              "attestationAmount": {
+                "currencyAmount": "1.00",
+                "currencyCode": "USD"
+              }
+            },
+            "investmentDistributions": [
+              {
+                "accountId": "123456789012",
+                "investmentAmount": {
+                  "currencyAmount": "1.00",
+                  "currencyCode": "USD"
+                }
+              }
+            ]
+          },
+          "clientToken": "c0ffee00-1234-4abc-9def-0123456789ab",
+          "contractArn": "arn:aws:billing::123456789012:contract/1a2b3c4d-5e6f-7a8b-9c0d-111122223333",
+          "contractDocumentId": "CC OTH XXXXXXXX XXXX TR",
+          "investmentDisbursedAt": 1199923200,
+          "investmentId": "Investment-Id",
+          "investmentSummaryId": "Example-Investment-Summary-Id"
+        },
+        "output": {
+          "attestationId": "a1b2c3d4-5678-90ab-cdef-111122223333"
+        },
+        "id": "example-1",
+        "title": "Invoke CreateContractualInvestmentAttestation with a direct amount"
+      },
+      {
+        "input": {
+          "approverDetails": {
+            "name": "First-Name Last-Name",
+            "email": "first-name.last-name@example.com",
+            "title": "Title"
+          },
+          "attestationDetails": {
+            "attestationValue": {
+              "attestationQuantities": [
+                {
+                  "attestationUnit": "Example attestation unit",
+                  "attestationVolume": "3"
+                }
+              ]
+            },
+            "investmentDistributions": [
+              {
+                "accountId": "123456789012",
+                "investmentAmount": {
+                  "currencyAmount": "1500.00",
+                  "currencyCode": "USD"
+                }
+              }
+            ]
+          },
+          "clientToken": "c0ffee00-1234-4abc-9def-0123456789ac",
+          "contractArn": "arn:aws:billing::123456789012:contract/1a2b3c4d-5e6f-7a8b-9c0d-111122223333",
+          "contractDocumentId": "CC OTH XXXXXXXX XXXX TR",
+          "investmentDisbursedAt": 1199923200,
+          "investmentId": "Investment-Id",
+          "investmentSummaryId": "Example-Investment-Summary-Id"
+        },
+        "output": {
+          "attestationId": "b2c3d4e5-6789-01bc-def0-222233334444"
+        },
+        "id": "example-2",
+        "title": "Invoke CreateContractualInvestmentAttestation with a flat rate multiplier"
+      },
+      {
+        "input": {
+          "approverDetails": {
+            "name": "First-Name Last-Name",
+            "email": "first-name.last-name@example.com",
+            "title": "Title"
+          },
+          "attestationDetails": {
+            "attestationValue": {
+              "attestationQuantities": [
+                {
+                  "attestationUnit": "Example attestation unit",
+                  "attestationVolume": "1000"
+                }
+              ]
+            },
+            "investmentDistributions": [
+              {
+                "accountId": "123456789012",
+                "investmentAmount": {
+                  "currencyAmount": "150.00",
+                  "currencyCode": "USD"
+                }
+              }
+            ]
+          },
+          "clientToken": "c0ffee00-1234-4abc-9def-0123456789ad",
+          "contractArn": "arn:aws:billing::123456789012:contract/1a2b3c4d-5e6f-7a8b-9c0d-111122223333",
+          "contractDocumentId": "CC OTH XXXXXXXX XXXX TR",
+          "investmentDisbursedAt": 1199923200,
+          "investmentId": "Investment-Id",
+          "investmentSummaryId": "Example-Investment-Summary-Id"
+        },
+        "output": {
+          "attestationId": "c3d4e5f6-7890-12cd-ef01-333344445555"
+        },
+        "id": "example-3",
+        "title": "Invoke CreateContractualInvestmentAttestation with a percentage multiplier"
+      }
+    ],
     "DeleteBillingView": [
       {
         "input": {
@@ -52,6 +197,16 @@
         },
         "id": "example-1",
         "title": "Invoke DeleteBillingView"
+      }
+    ],
+    "DisassociateContract": [
+      {
+        "input": {
+          "contractArn": "arn:aws:billing::123456789012:contract/1a2b3c4d-5e6f-7a8b-9c0d-111122223333"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Invoke DisassociateContract"
       }
     ],
     "DisassociateSourceViews": [
@@ -94,6 +249,38 @@
         },
         "id": "example-1",
         "title": "Invoke GetBillingView"
+      }
+    ],
+    "GetContractInformation": [
+      {
+        "input": {
+          "contractArn": "arn:aws:billing::123456789012:contract/1a2b3c4d-5e6f-7a8b-9c0d-111122223333"
+        },
+        "output": {
+          "contract": {
+            "privatePricingAddendum": {
+              "contractArn": "arn:aws:billing::123456789012:contract/1a2b3c4d-5e6f-7a8b-9c0d-111122223333",
+              "contractTerm": {
+                "endDateInclusive": 1222222222,
+                "startDateInclusive": 1111111111
+              },
+              "eligiblePayerAccounts": [
+                "123456789012",
+                "210987654321"
+              ],
+              "investmentAccounts": [
+                "123456789012"
+              ],
+              "legalEntities": [
+                {
+                  "legalEntityName": "Example Legal Entity Name"
+                }
+              ]
+            }
+          }
+        },
+        "id": "example-1",
+        "title": "Invoke GetContractInformation"
       }
     ],
     "GetResourcePolicy": [
@@ -175,6 +362,130 @@
         },
         "id": "example-2",
         "title": "Error example for ListBillingViews"
+      }
+    ],
+    "ListContracts": [
+      {
+        "input": {
+          "maxResults": 100
+        },
+        "output": {
+          "items": [
+            {
+              "associationStatus": "ASSOCIATED",
+              "contractArn": "arn:aws:billing::123456789012:contract/1a2b3c4d-5e6f-7a8b-9c0d-111122223333",
+              "contractTerm": {
+                "endDateInclusive": 1222222222,
+                "startDateInclusive": 1111111111
+              },
+              "contractType": "Cross-Service"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Invoke ListContracts"
+      }
+    ],
+    "ListContractualInvestmentAttestations": [
+      {
+        "input": {
+          "contractArn": "arn:aws:billing::123456789012:contract/1a2b3c4d-5e6f-7a8b-9c0d-111122223333",
+          "maxResults": 25
+        },
+        "output": {
+          "items": [
+            {
+              "attestationId": "a1b2c3d4-5678-90ab-cdef-111122223333",
+              "attestationStatus": "PENDING_CANCELLATION",
+              "attestedAt": 1333333333,
+              "attestedValue": {
+                "currencyAmount": "1.00",
+                "currencyCode": "USD"
+              },
+              "investmentId": "Investment-Id",
+              "investmentName": "Example Investment Name",
+              "investmentSummaryId": "Example-Investment-Summary-Id",
+              "outcomeDescription": "Example outcome description",
+              "updatedAt": 1444444444
+            },
+            {
+              "attestationId": "b2c3d4e5-6789-01bc-def0-222233334444",
+              "attestationStatus": "CANCELLED",
+              "attestedAt": 1555555555,
+              "attestedValue": {
+                "currencyAmount": "1.00",
+                "currencyCode": "USD"
+              },
+              "investmentId": "Investment-Id",
+              "investmentName": "Example Investment Name",
+              "investmentSummaryId": "Example-Investment-Summary-Id",
+              "outcomeDescription": "Example outcome description",
+              "updatedAt": 1666666666
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Invoke ListContractualInvestmentAttestations"
+      }
+    ],
+    "ListContractualInvestmentSummaries": [
+      {
+        "input": {
+          "contractArn": "arn:aws:billing::123456789012:contract/1a2b3c4d-5e6f-7a8b-9c0d-111122223333",
+          "maxResults": 100
+        },
+        "output": {
+          "items": [
+            {
+              "investmentName": "Example Investment Name",
+              "investmentSummaryId": "Example-Investment-Summary-Id",
+              "investmentType": "OUTCOME_BASED",
+              "maxAllowedInvestmentDisbursementValue": {
+                "currencyAmount": "100000000.00",
+                "currencyCode": "USD"
+              }
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Invoke ListContractualInvestmentSummaries"
+      }
+    ],
+    "ListContractualInvestments": [
+      {
+        "input": {
+          "contractArn": "arn:aws:billing::123456789012:contract/1a2b3c4d-5e6f-7a8b-9c0d-111122223333",
+          "investmentSummaryId": "Example-Investment-Summary-Id",
+          "maxResults": 100
+        },
+        "output": {
+          "items": [
+            {
+              "outcomeBasedInvestment": {
+                "attestationWindow": {
+                  "endDateInclusive": 1222222222,
+                  "startDateInclusive": 1111111111
+                },
+                "disbursedValue": {
+                  "currencyAmount": "0.00",
+                  "currencyCode": "USD"
+                },
+                "investmentId": "Investment-Id",
+                "investmentRestrictions": [
+                  {
+                    "amount": {
+                      "currencyAmount": "50000.00",
+                      "currencyCode": "USD"
+                    }
+                  }
+                ],
+                "outcomeDescription": "Example outcome description"
+              }
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Invoke ListContractualInvestments"
       }
     ],
     "ListSourceViewsForBillingView": [

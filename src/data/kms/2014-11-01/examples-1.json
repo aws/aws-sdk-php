@@ -570,6 +570,35 @@
         "title": "To create a KMS key in an external key store"
       }
     ],
+    "Decapsulate": [
+      {
+        "input": {
+          "EncapsulationAlgorithm": "ML_KEM",
+          "KeyId": "1234abcd-12ab-34cd-56ef-1234567890ab",
+          "SharedSecretCiphertextBlob": "<binary data>"
+        },
+        "output": {
+          "EncapsulationAlgorithm": "ML_KEM",
+          "KeyId": "arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+          "SharedSecret": "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8="
+        },
+        "comments": {
+          "input": {
+            "EncapsulationAlgorithm": "The requested key encapsulation algorithm. The only valid value is ML_KEM.",
+            "KeyId": "The asymmetric ML-KEM KMS key that recovers the shared secret.",
+            "SharedSecretCiphertextBlob": "The encapsulated shared secret that you received from your peer."
+          },
+          "output": {
+            "EncapsulationAlgorithm": "The key encapsulation algorithm used to recover the shared secret.",
+            "KeyId": "The key ARN of the asymmetric ML-KEM KMS key that recovered the shared secret.",
+            "SharedSecret": "The raw shared secret. It matches the shared secret that Encapsulate returned to your peer."
+          }
+        },
+        "description": "Recovers a shared secret from its encapsulated ciphertext (SharedSecretCiphertextBlob) using the private key in an asymmetric ML-KEM KMS key. Your peer calls Encapsulate to generate the shared secret and ciphertext.",
+        "id": "to-recover-a-shared-secret-1",
+        "title": "To recover a shared secret from its encapsulated ciphertext"
+      }
+    ],
     "Decrypt": [
       {
         "input": {
@@ -1212,6 +1241,35 @@
         "description": "The following example enables automatic rotation with a rotation period of 365 days for the specified KMS key.",
         "id": "to-enable-automatic-rotation-of-key-material-1712499675853",
         "title": "To enable automatic rotation of key material"
+      }
+    ],
+    "Encapsulate": [
+      {
+        "input": {
+          "EncapsulationAlgorithm": "ML_KEM",
+          "KeyId": "1234abcd-12ab-34cd-56ef-1234567890ab"
+        },
+        "output": {
+          "EncapsulationAlgorithm": "ML_KEM",
+          "KeyId": "arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+          "SharedSecret": "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=",
+          "SharedSecretCiphertextBlob": "<binary data>"
+        },
+        "comments": {
+          "input": {
+            "EncapsulationAlgorithm": "The requested key encapsulation algorithm. The only valid value is ML_KEM.",
+            "KeyId": "The asymmetric ML-KEM KMS key that generates the shared secret."
+          },
+          "output": {
+            "EncapsulationAlgorithm": "The key encapsulation algorithm used to generate the shared secret.",
+            "KeyId": "The key ARN of the asymmetric ML-KEM KMS key that generated the shared secret.",
+            "SharedSecret": "The raw shared secret.",
+            "SharedSecretCiphertextBlob": "The encapsulated shared secret. Send this ciphertext to your peer, who calls Decapsulate with the same KMS key to recover the same shared secret."
+          }
+        },
+        "description": "Generates a shared secret and its encapsulated ciphertext (SharedSecretCiphertextBlob) using the public key in an asymmetric ML-KEM KMS key. Send the ciphertext to your peer, who calls Decapsulate to recover the same shared secret.",
+        "id": "to-generate-a-shared-secret-1",
+        "title": "To generate a shared secret and its encapsulated ciphertext"
       }
     ],
     "Encrypt": [

@@ -100,6 +100,24 @@
         {"shape":"ServiceQuotaExceededException"}
       ]
     },
+    "CreateFailoverSlateConfiguration":{
+      "name":"CreateFailoverSlateConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateFailoverSlateConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateFailoverSlateConfigurationRequest"},
+      "output":{"shape":"CreateFailoverSlateConfigurationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "CreatePlaybackRestrictionPolicy":{
       "name":"CreatePlaybackRestrictionPolicy",
       "http":{
@@ -181,6 +199,22 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"PendingVerification"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "DeleteFailoverSlateConfiguration":{
+      "name":"DeleteFailoverSlateConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteFailoverSlateConfiguration",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteFailoverSlateConfigurationRequest"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"ConflictException"}
       ]
     },
@@ -275,6 +309,23 @@
       "output":{"shape":"GetChannelResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "GetFailoverSlateConfiguration":{
+      "name":"GetFailoverSlateConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetFailoverSlateConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"GetFailoverSlateConfigurationRequest"},
+      "output":{"shape":"GetFailoverSlateConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
       ],
@@ -444,6 +495,22 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"}
+      ],
+      "readonly":true
+    },
+    "ListFailoverSlateConfigurations":{
+      "name":"ListFailoverSlateConfigurations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListFailoverSlateConfigurations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListFailoverSlateConfigurationsRequest"},
+      "output":{"shape":"ListFailoverSlateConfigurationsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
       ],
       "readonly":true
     },
@@ -675,7 +742,27 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"PendingVerification"},
+        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "UpdateFailoverSlateConfiguration":{
+      "name":"UpdateFailoverSlateConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateFailoverSlateConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateFailoverSlateConfigurationRequest"},
+      "output":{"shape":"UpdateFailoverSlateConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "UpdatePlaybackRestrictionPolicy":{
@@ -1030,7 +1117,8 @@
         "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
         "multitrackInputConfiguration":{"shape":"MultitrackInputConfiguration"},
         "containerFormat":{"shape":"ContainerFormat"},
-        "adConfigurationArn":{"shape":"ChannelAdConfigurationArn"}
+        "adConfigurationArn":{"shape":"ChannelAdConfigurationArn"},
+        "failoverSlateConfigurationArn":{"shape":"ChannelFailoverSlateConfigurationArn"}
       }
     },
     "ChannelAdConfigurationArn":{
@@ -1050,6 +1138,12 @@
       "member":{"shape":"ChannelArn"},
       "max":50,
       "min":1
+    },
+    "ChannelFailoverSlateConfigurationArn":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"^$|^arn:aws:ivs:[a-z0-9-]+:[0-9]+:failover-slate-configuration/[a-zA-Z0-9-]+$"
     },
     "ChannelLatencyMode":{
       "type":"string",
@@ -1144,7 +1238,8 @@
         "type":{"shape":"ChannelType"},
         "preset":{"shape":"TranscodePreset"},
         "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
-        "adConfigurationArn":{"shape":"ChannelAdConfigurationArn"}
+        "adConfigurationArn":{"shape":"ChannelAdConfigurationArn"},
+        "failoverSlateConfigurationArn":{"shape":"ChannelFailoverSlateConfigurationArn"}
       }
     },
     "ChannelType":{
@@ -1249,7 +1344,8 @@
         "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
         "multitrackInputConfiguration":{"shape":"MultitrackInputConfiguration"},
         "containerFormat":{"shape":"ContainerFormat"},
-        "adConfigurationArn":{"shape":"ChannelAdConfigurationArn"}
+        "adConfigurationArn":{"shape":"ChannelAdConfigurationArn"},
+        "failoverSlateConfigurationArn":{"shape":"ChannelFailoverSlateConfigurationArn"}
       }
     },
     "CreateChannelResponse":{
@@ -1257,6 +1353,23 @@
       "members":{
         "channel":{"shape":"Channel"},
         "streamKey":{"shape":"StreamKey"}
+      }
+    },
+    "CreateFailoverSlateConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"FailoverSlateConfigurationName"},
+        "activationThresholdSeconds":{"shape":"FailoverSlateActivationThresholdSeconds"},
+        "minSlateDisplaySeconds":{"shape":"FailoverSlateMinDisplaySeconds"},
+        "maxSlateDisplaySeconds":{"shape":"FailoverSlateMaxDisplaySeconds"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "CreateFailoverSlateConfigurationResponse":{
+      "type":"structure",
+      "required":["failoverSlateConfiguration"],
+      "members":{
+        "failoverSlateConfiguration":{"shape":"FailoverSlateConfiguration"}
       }
     },
     "CreatePlaybackRestrictionPolicyRequest":{
@@ -1321,6 +1434,13 @@
         "arn":{"shape":"ChannelArn"}
       }
     },
+    "DeleteFailoverSlateConfigurationRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"FailoverSlateConfigurationArn"}
+      }
+    },
     "DeletePlaybackKeyPairRequest":{
       "type":"structure",
       "required":["arn"],
@@ -1359,6 +1479,81 @@
         "s3":{"shape":"S3DestinationConfiguration"}
       }
     },
+    "FailoverSlateActivationThresholdSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":5,
+      "min":3
+    },
+    "FailoverSlateConfiguration":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "state"
+      ],
+      "members":{
+        "arn":{"shape":"FailoverSlateConfigurationArn"},
+        "name":{"shape":"FailoverSlateConfigurationName"},
+        "activationThresholdSeconds":{"shape":"FailoverSlateActivationThresholdSeconds"},
+        "minSlateDisplaySeconds":{"shape":"FailoverSlateMinDisplaySeconds"},
+        "maxSlateDisplaySeconds":{"shape":"FailoverSlateMaxDisplaySeconds"},
+        "state":{"shape":"FailoverSlateConfigurationState"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "FailoverSlateConfigurationArn":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:failover-slate-configuration/[a-zA-Z0-9-]+"
+    },
+    "FailoverSlateConfigurationList":{
+      "type":"list",
+      "member":{"shape":"FailoverSlateConfigurationSummary"}
+    },
+    "FailoverSlateConfigurationName":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"[a-zA-Z0-9-_]*"
+    },
+    "FailoverSlateConfigurationState":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATE_FAILED",
+        "CREATED",
+        "UPDATING"
+      ]
+    },
+    "FailoverSlateConfigurationSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "state"
+      ],
+      "members":{
+        "arn":{"shape":"FailoverSlateConfigurationArn"},
+        "name":{"shape":"FailoverSlateConfigurationName"},
+        "activationThresholdSeconds":{"shape":"FailoverSlateActivationThresholdSeconds"},
+        "minSlateDisplaySeconds":{"shape":"FailoverSlateMinDisplaySeconds"},
+        "maxSlateDisplaySeconds":{"shape":"FailoverSlateMaxDisplaySeconds"},
+        "state":{"shape":"FailoverSlateConfigurationState"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "FailoverSlateMaxDisplaySeconds":{
+      "type":"integer",
+      "box":true,
+      "max":180,
+      "min":60
+    },
+    "FailoverSlateMinDisplaySeconds":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":3
+    },
     "GetAdConfigurationRequest":{
       "type":"structure",
       "required":["arn"],
@@ -1383,6 +1578,20 @@
       "type":"structure",
       "members":{
         "channel":{"shape":"Channel"}
+      }
+    },
+    "GetFailoverSlateConfigurationRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"FailoverSlateConfigurationArn"}
+      }
+    },
+    "GetFailoverSlateConfigurationResponse":{
+      "type":"structure",
+      "required":["failoverSlateConfiguration"],
+      "members":{
+        "failoverSlateConfiguration":{"shape":"FailoverSlateConfiguration"}
       }
     },
     "GetPlaybackKeyPairRequest":{
@@ -1590,6 +1799,7 @@
         "filterByRecordingConfigurationArn":{"shape":"ChannelRecordingConfigurationArn"},
         "filterByPlaybackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
         "filterByAdConfigurationArn":{"shape":"ChannelAdConfigurationArn"},
+        "filterByFailoverSlateConfigurationArn":{"shape":"ChannelFailoverSlateConfigurationArn"},
         "nextToken":{"shape":"PaginationToken"},
         "maxResults":{"shape":"MaxChannelResults"}
       }
@@ -1599,6 +1809,21 @@
       "required":["channels"],
       "members":{
         "channels":{"shape":"ChannelList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListFailoverSlateConfigurationsRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxFailoverSlateConfigurationResults"}
+      }
+    },
+    "ListFailoverSlateConfigurationsResponse":{
+      "type":"structure",
+      "required":["failoverSlateConfigurations"],
+      "members":{
+        "failoverSlateConfigurations":{"shape":"FailoverSlateConfigurationList"},
         "nextToken":{"shape":"PaginationToken"}
       }
     },
@@ -1722,6 +1947,12 @@
       "min":1
     },
     "MaxChannelResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "MaxFailoverSlateConfigurationResults":{
       "type":"integer",
       "box":true,
       "max":100,
@@ -2396,7 +2627,8 @@
         "ingestConfiguration":{"shape":"IngestConfiguration"},
         "ingestConfigurations":{"shape":"IngestConfigurations"},
         "recordingConfiguration":{"shape":"RecordingConfiguration"},
-        "truncatedEvents":{"shape":"StreamEvents"}
+        "truncatedEvents":{"shape":"StreamEvents"},
+        "failoverSlateConfiguration":{"shape":"FailoverSlateConfiguration"}
       }
     },
     "StreamSessionList":{
@@ -2681,13 +2913,32 @@
         "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
         "multitrackInputConfiguration":{"shape":"MultitrackInputConfiguration"},
         "containerFormat":{"shape":"ContainerFormat"},
-        "adConfigurationArn":{"shape":"ChannelAdConfigurationArn"}
+        "adConfigurationArn":{"shape":"ChannelAdConfigurationArn"},
+        "failoverSlateConfigurationArn":{"shape":"ChannelFailoverSlateConfigurationArn"}
       }
     },
     "UpdateChannelResponse":{
       "type":"structure",
       "members":{
         "channel":{"shape":"Channel"}
+      }
+    },
+    "UpdateFailoverSlateConfigurationRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"FailoverSlateConfigurationArn"},
+        "name":{"shape":"FailoverSlateConfigurationName"},
+        "activationThresholdSeconds":{"shape":"FailoverSlateActivationThresholdSeconds"},
+        "minSlateDisplaySeconds":{"shape":"FailoverSlateMinDisplaySeconds"},
+        "maxSlateDisplaySeconds":{"shape":"FailoverSlateMaxDisplaySeconds"}
+      }
+    },
+    "UpdateFailoverSlateConfigurationResponse":{
+      "type":"structure",
+      "required":["failoverSlateConfiguration"],
+      "members":{
+        "failoverSlateConfiguration":{"shape":"FailoverSlateConfiguration"}
       }
     },
     "UpdatePlaybackRestrictionPolicyRequest":{

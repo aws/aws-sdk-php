@@ -53,6 +53,29 @@
         "IsOAuthEndpoint":{"value":true}
       }
     },
+    "CreateOAuth2TokenWithTokenExchange":{
+      "name":"CreateOAuth2TokenWithTokenExchange",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/token?x-amz-oauth-token-method=token-exchange",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateOAuth2TokenWithTokenExchangeRequest"},
+      "output":{"shape":"CreateOAuth2TokenWithTokenExchangeResponse"},
+      "errors":[
+        {"shape":"InvalidGrantException"},
+        {"shape":"InvalidScopeException"},
+        {"shape":"TooManyRequestsError"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "auth":["smithy.api#noAuth"],
+      "staticContextParams":{
+        "IsOAuthEndpoint":{"value":true}
+      },
+      "authtype":"none"
+    },
     "DeleteConsoleAuthorizationConfiguration":{
       "name":"DeleteConsoleAuthorizationConfiguration",
       "http":{
@@ -441,13 +464,8 @@
           "shape":"ClientCredentialsGrantType",
           "locationName":"grant_type"
         },
-        "resource":{"shape":"CreateOAuth2TokenWithIAMRequestResourceString"}
+        "resource":{"shape":"Resource"}
       }
-    },
-    "CreateOAuth2TokenWithIAMRequestResourceString":{
-      "type":"string",
-      "max":2048,
-      "min":1
     },
     "CreateOAuth2TokenWithIAMResponse":{
       "type":"structure",
@@ -460,6 +478,52 @@
         "accessToken":{
           "shape":"OAuthAccessToken",
           "locationName":"access_token"
+        },
+        "tokenType":{
+          "shape":"BearerTokenType",
+          "locationName":"token_type"
+        },
+        "expiresIn":{
+          "shape":"TokenExpiresIn",
+          "locationName":"expires_in"
+        }
+      }
+    },
+    "CreateOAuth2TokenWithTokenExchangeRequest":{
+      "type":"structure",
+      "required":["grantType"],
+      "members":{
+        "grantType":{
+          "shape":"TokenExchangeGrantType",
+          "locationName":"grant_type"
+        },
+        "subjectToken":{
+          "shape":"SubjectToken",
+          "locationName":"subject_token"
+        },
+        "subjectTokenType":{
+          "shape":"SubjectTokenType",
+          "locationName":"subject_token_type"
+        },
+        "resource":{"shape":"Resource"},
+        "scope":{"shape":"Scope"}
+      }
+    },
+    "CreateOAuth2TokenWithTokenExchangeResponse":{
+      "type":"structure",
+      "required":[
+        "accessToken",
+        "tokenType",
+        "expiresIn"
+      ],
+      "members":{
+        "accessToken":{
+          "shape":"OAuthAccessToken",
+          "locationName":"access_token"
+        },
+        "issuedTokenType":{
+          "shape":"IssuedOAuthAccessTokenType",
+          "locationName":"issued_token_type"
         },
         "tokenType":{
           "shape":"BearerTokenType",
@@ -638,7 +702,7 @@
           "locationName":"signin_session"
         },
         "resource":{
-          "shape":"String",
+          "shape":"Resource",
           "locationName":"resource"
         }
       }
@@ -653,6 +717,42 @@
       "min":1,
       "pattern":"ASO[AR][A-Za-z0-9+/=_\\-]+",
       "sensitive":true
+    },
+    "InvalidGrantException":{
+      "type":"structure",
+      "required":[
+        "error",
+        "message"
+      ],
+      "members":{
+        "error":{"shape":"OAuth2ErrorCode"},
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "InvalidScopeException":{
+      "type":"structure",
+      "required":[
+        "error",
+        "message"
+      ],
+      "members":{
+        "error":{"shape":"OAuth2ErrorCode"},
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "IssuedOAuthAccessTokenType":{
+      "type":"string",
+      "pattern":"urn:ietf:params:oauth:token-type:access_token"
     },
     "ListResourcePermissionStatementsInput":{
       "type":"structure",
@@ -690,7 +790,14 @@
         "INVALID_REQUEST",
         "RESOURCE_NOT_FOUND",
         "CONFLICT",
-        "SERVICE_QUOTA_EXCEEDED"
+        "SERVICE_QUOTA_EXCEEDED",
+        "unsupported_grant_type",
+        "invalid_request",
+        "invalid_grant",
+        "invalid_scope",
+        "invalid_target",
+        "rate_exceeded",
+        "service_unavailable"
       ]
     },
     "OAuthAccessToken":{
@@ -806,6 +913,11 @@
       "type":"string",
       "pattern":"[a-z]{2}(-[a-z]+)+-\\d+"
     },
+    "Resource":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "required":[
@@ -843,6 +955,11 @@
       "type":"structure",
       "members":{}
     },
+    "Scope":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
@@ -858,6 +975,21 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ServiceUnavailableException":{
+      "type":"structure",
+      "required":[
+        "error",
+        "message"
+      ],
+      "members":{
+        "error":{"shape":"OAuth2ErrorCode"},
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":503},
+      "exception":true,
+      "fault":true,
+      "retryable":{"throttling":false}
     },
     "SigninResourceBasedPolicy":{
       "type":"structure",
@@ -886,11 +1018,25 @@
       "pattern":"[A-Za-z0-9+/]{64}=?"
     },
     "String":{"type":"string"},
+    "SubjectToken":{
+      "type":"string",
+      "max":20000,
+      "min":4,
+      "sensitive":true
+    },
+    "SubjectTokenType":{
+      "type":"string",
+      "pattern":"urn:ietf:params:oauth:token-type:.+"
+    },
     "TargetId":{
       "type":"string",
       "max":32,
       "min":12,
       "pattern":"(\\d{12}|o-[a-z0-9]{10}|r-[0-9a-z]{4,32})"
+    },
+    "TokenExchangeGrantType":{
+      "type":"string",
+      "pattern":"urn:ietf:params:oauth:grant-type:token-exchange"
     },
     "TokenExpiresIn":{
       "type":"integer",

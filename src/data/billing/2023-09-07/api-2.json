@@ -15,6 +15,24 @@
     "uid":"billing-2023-09-07"
   },
   "operations":{
+    "AssociateContract":{
+      "name":"AssociateContract",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateContractRequest"},
+      "output":{"shape":"AssociateContractResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "AssociateSourceViews":{
       "name":"AssociateSourceViews",
       "http":{
@@ -26,6 +44,24 @@
       "errors":[
         {"shape":"BillingViewHealthStatusException"},
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "CancelContractualInvestmentAttestation":{
+      "name":"CancelContractualInvestmentAttestation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CancelContractualInvestmentAttestationRequest"},
+      "output":{"shape":"CancelContractualInvestmentAttestationResponse"},
+      "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
@@ -55,6 +91,23 @@
       ],
       "idempotent":true
     },
+    "CreateContractualInvestmentAttestation":{
+      "name":"CreateContractualInvestmentAttestation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateContractualInvestmentAttestationRequest"},
+      "output":{"shape":"CreateContractualInvestmentAttestationResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DeleteBillingView":{
       "name":"DeleteBillingView",
       "http":{
@@ -67,6 +120,23 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DisassociateContract":{
+      "name":"DisassociateContract",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateContractRequest"},
+      "output":{"shape":"DisassociateContractResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ],
@@ -114,6 +184,23 @@
       },
       "input":{"shape":"GetBillingViewRequest"},
       "output":{"shape":"GetBillingViewResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetContractInformation":{
+      "name":"GetContractInformation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetContractInformationRequest"},
+      "output":{"shape":"GetContractInformationResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
@@ -272,6 +359,73 @@
       ],
       "readonly":true
     },
+    "ListContracts":{
+      "name":"ListContracts",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListContractsRequest"},
+      "output":{"shape":"ListContractsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListContractualInvestmentAttestations":{
+      "name":"ListContractualInvestmentAttestations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListContractualInvestmentAttestationsRequest"},
+      "output":{"shape":"ListContractualInvestmentAttestationsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListContractualInvestmentSummaries":{
+      "name":"ListContractualInvestmentSummaries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListContractualInvestmentSummariesRequest"},
+      "output":{"shape":"ListContractualInvestmentSummariesResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListContractualInvestments":{
+      "name":"ListContractualInvestments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListContractualInvestmentsRequest"},
+      "output":{"shape":"ListContractualInvestmentsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListEnterpriseSupportLinkedAccountCharges":{
       "name":"ListEnterpriseSupportLinkedAccountCharges",
       "http":{
@@ -419,6 +573,12 @@
       "type":"string",
       "pattern":"[0-9]{12}"
     },
+    "AccountList":{
+      "type":"list",
+      "member":{"shape":"AccountId"},
+      "max":100,
+      "min":0
+    },
     "AccountName":{
       "type":"string",
       "max":50,
@@ -450,6 +610,19 @@
       "max":50,
       "min":0
     },
+    "AdditionalRecipient":{
+      "type":"structure",
+      "required":["email"],
+      "members":{
+        "email":{"shape":"SensitiveEmail"}
+      }
+    },
+    "AdditionalRecipients":{
+      "type":"list",
+      "member":{"shape":"AdditionalRecipient"},
+      "max":10,
+      "min":0
+    },
     "Amount":{
       "type":"structure",
       "required":[
@@ -468,6 +641,40 @@
         "AFTER_DISCOUNTS"
       ]
     },
+    "ApproverDetails":{
+      "type":"structure",
+      "required":[
+        "name",
+        "title",
+        "email"
+      ],
+      "members":{
+        "name":{"shape":"SensitiveString"},
+        "title":{"shape":"SensitiveString"},
+        "email":{"shape":"SensitiveEmail"}
+      }
+    },
+    "ArnString":{
+      "type":"string",
+      "max":500,
+      "min":1,
+      "pattern":"arn:aws[a-z-]*:billing::[0-9]{12}:contract/[a-zA-Z0-9_\\+=\\.\\@-]{0,70}[a-zA-Z0-9]"
+    },
+    "AssociateContractRequest":{
+      "type":"structure",
+      "required":[
+        "contractArn",
+        "contractDocumentId"
+      ],
+      "members":{
+        "contractArn":{"shape":"ArnString"},
+        "contractDocumentId":{"shape":"ContractDocumentId"}
+      }
+    },
+    "AssociateContractResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "AssociateSourceViewsRequest":{
       "type":"structure",
       "required":[
@@ -485,6 +692,63 @@
       "members":{
         "arn":{"shape":"BillingViewArn"}
       }
+    },
+    "AssociationStatus":{
+      "type":"string",
+      "enum":[
+        "ASSOCIATED",
+        "NOT_ASSOCIATED"
+      ]
+    },
+    "AttestationClientToken":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[!-~]+"
+    },
+    "AttestationDetails":{
+      "type":"structure",
+      "required":["attestationValue"],
+      "members":{
+        "attestationValue":{"shape":"AttestationValue"},
+        "investmentDistributions":{"shape":"InvestmentDistributions"}
+      }
+    },
+    "AttestationQuantities":{
+      "type":"list",
+      "member":{"shape":"AttestationQuantity"},
+      "max":50,
+      "min":0
+    },
+    "AttestationQuantity":{
+      "type":"structure",
+      "required":[
+        "attestationVolume",
+        "attestationUnit"
+      ],
+      "members":{
+        "attestationVolume":{"shape":"AttestationQuantityAttestationVolumeString"},
+        "attestationUnit":{"shape":"AttestationQuantityAttestationUnitString"}
+      }
+    },
+    "AttestationQuantityAttestationUnitString":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
+    "AttestationQuantityAttestationVolumeString":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "pattern":"[0-9]+(\\.[0-9]+)?"
+    },
+    "AttestationValue":{
+      "type":"structure",
+      "members":{
+        "attestationAmount":{"shape":"Amount"},
+        "attestationQuantities":{"shape":"AttestationQuantities"}
+      },
+      "union":true
     },
     "BillingDomain":{
       "type":"string",
@@ -839,6 +1103,28 @@
       "max":20,
       "min":0
     },
+    "CancelContractualInvestmentAttestationRequest":{
+      "type":"structure",
+      "required":[
+        "attestationId",
+        "contractArn",
+        "reason"
+      ],
+      "members":{
+        "attestationId":{"shape":"IdentifierString"},
+        "contractArn":{"shape":"ArnString"},
+        "reason":{"shape":"CancellationReason"}
+      }
+    },
+    "CancelContractualInvestmentAttestationResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "CancellationReason":{
+      "type":"string",
+      "max":80,
+      "min":1
+    },
     "ChargeAccount":{
       "type":"structure",
       "required":[
@@ -891,6 +1177,56 @@
       "max":2000,
       "min":0
     },
+    "ContractDetails":{
+      "type":"structure",
+      "members":{
+        "privatePricingAddendum":{"shape":"PrivatePricingAddendum"}
+      },
+      "union":true
+    },
+    "ContractDocumentId":{
+      "type":"string",
+      "max":36,
+      "min":1,
+      "sensitive":true
+    },
+    "ContractRestriction":{
+      "type":"string",
+      "enum":["ATTESTATION_SELF_SERVICE_BLOCKED"]
+    },
+    "ContractRestrictions":{
+      "type":"list",
+      "member":{"shape":"ContractRestriction"},
+      "max":10,
+      "min":0
+    },
+    "ContractSummaries":{
+      "type":"list",
+      "member":{"shape":"ContractSummary"}
+    },
+    "ContractSummary":{
+      "type":"structure",
+      "required":[
+        "contractArn",
+        "contractTerm",
+        "associationStatus"
+      ],
+      "members":{
+        "contractArn":{"shape":"ArnString"},
+        "contractTerm":{"shape":"Interval"},
+        "contractType":{"shape":"ContractType"},
+        "associationStatus":{"shape":"AssociationStatus"},
+        "lastUpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "ContractType":{
+      "type":"string",
+      "enum":[
+        "Cross-Service",
+        "Service-Specific",
+        "Other"
+      ]
+    },
     "CostCategoryName":{
       "type":"string",
       "max":50,
@@ -932,6 +1268,38 @@
       "members":{
         "arn":{"shape":"BillingViewArn"},
         "createdAt":{"shape":"Timestamp"}
+      }
+    },
+    "CreateContractualInvestmentAttestationRequest":{
+      "type":"structure",
+      "required":[
+        "contractArn",
+        "investmentSummaryId",
+        "investmentId",
+        "contractDocumentId",
+        "approverDetails",
+        "attestationDetails"
+      ],
+      "members":{
+        "contractArn":{"shape":"ArnString"},
+        "investmentSummaryId":{"shape":"IdentifierString"},
+        "investmentId":{"shape":"IdentifierString"},
+        "contractDocumentId":{"shape":"ContractDocumentId"},
+        "approverDetails":{"shape":"ApproverDetails"},
+        "investmentDisbursedAt":{"shape":"Timestamp"},
+        "attestationDetails":{"shape":"AttestationDetails"},
+        "additionalRecipients":{"shape":"AdditionalRecipients"},
+        "clientToken":{
+          "shape":"AttestationClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateContractualInvestmentAttestationResponse":{
+      "type":"structure",
+      "required":["attestationId"],
+      "members":{
+        "attestationId":{"shape":"IdentifierString"}
       }
     },
     "CreditAllocationHistoryEntry":{
@@ -1056,6 +1424,17 @@
         "values":{"shape":"Values"}
       }
     },
+    "DisassociateContractRequest":{
+      "type":"structure",
+      "required":["contractArn"],
+      "members":{
+        "contractArn":{"shape":"ArnString"}
+      }
+    },
+    "DisassociateContractResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DisassociateSourceViewsRequest":{
       "type":"structure",
       "required":[
@@ -1157,6 +1536,20 @@
       "required":["billingView"],
       "members":{
         "billingView":{"shape":"BillingViewElement"}
+      }
+    },
+    "GetContractInformationRequest":{
+      "type":"structure",
+      "required":["contractArn"],
+      "members":{
+        "contractArn":{"shape":"ArnString"}
+      }
+    },
+    "GetContractInformationResponse":{
+      "type":"structure",
+      "required":["contract"],
+      "members":{
+        "contract":{"shape":"ContractDetails"}
       }
     },
     "GetCreditAllocationHistoryRequest":{
@@ -1299,6 +1692,12 @@
         "policy":{"shape":"PolicyDocument"}
       }
     },
+    "IdentifierString":{
+      "type":"string",
+      "max":36,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_\\-]+"
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -1311,6 +1710,185 @@
       },
       "exception":true,
       "fault":true
+    },
+    "Interval":{
+      "type":"structure",
+      "required":[
+        "startDateInclusive",
+        "endDateInclusive"
+      ],
+      "members":{
+        "startDateInclusive":{"shape":"Timestamp"},
+        "endDateInclusive":{"shape":"Timestamp"}
+      }
+    },
+    "Investment":{
+      "type":"structure",
+      "members":{
+        "milestoneBasedInvestment":{"shape":"MilestoneBasedInvestment"},
+        "outcomeBasedInvestment":{"shape":"OutcomeBasedInvestment"}
+      },
+      "union":true
+    },
+    "InvestmentAttestation":{
+      "type":"structure",
+      "required":[
+        "attestationId",
+        "investmentName",
+        "outcomeDescription",
+        "investmentSummaryId",
+        "investmentId",
+        "attestedAt",
+        "updatedAt",
+        "attestationStatus"
+      ],
+      "members":{
+        "attestationId":{"shape":"IdentifierString"},
+        "investmentName":{"shape":"InvestmentAttestationInvestmentNameString"},
+        "outcomeDescription":{"shape":"InvestmentAttestationOutcomeDescriptionString"},
+        "investmentSummaryId":{"shape":"IdentifierString"},
+        "investmentId":{"shape":"IdentifierString"},
+        "attestedAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "attestationStatus":{"shape":"InvestmentAttestationStatus"},
+        "investmentDisbursedAt":{"shape":"Timestamp"},
+        "attestedValue":{"shape":"Amount"},
+        "investmentDistributions":{"shape":"InvestmentDistributions"},
+        "rejectionReasons":{"shape":"RejectionReasons"},
+        "isCancellable":{"shape":"Boolean"}
+      }
+    },
+    "InvestmentAttestationInvestmentNameString":{
+      "type":"string",
+      "max":400,
+      "min":1
+    },
+    "InvestmentAttestationOutcomeDescriptionString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "InvestmentAttestationStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING_REVIEW",
+        "PENDING_C_LEVEL_APPROVAL",
+        "PENDING_CANCELLATION",
+        "REJECTED",
+        "CANCELLED",
+        "DISBURSED"
+      ]
+    },
+    "InvestmentAttestations":{
+      "type":"list",
+      "member":{"shape":"InvestmentAttestation"}
+    },
+    "InvestmentDistribution":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "investmentAmount"
+      ],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "investmentAmount":{"shape":"Amount"}
+      }
+    },
+    "InvestmentDistributions":{
+      "type":"list",
+      "member":{"shape":"InvestmentDistribution"},
+      "max":200,
+      "min":0
+    },
+    "InvestmentMultiplier":{
+      "type":"structure",
+      "required":[
+        "value",
+        "investmentAttestationInputUnit",
+        "multiplierType"
+      ],
+      "members":{
+        "value":{"shape":"InvestmentMultiplierValueString"},
+        "investmentAttestationInputUnit":{"shape":"InvestmentMultiplierInvestmentAttestationInputUnitString"},
+        "multiplierType":{"shape":"MultiplierType"}
+      }
+    },
+    "InvestmentMultiplierInvestmentAttestationInputUnitString":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
+    "InvestmentMultiplierValueString":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "pattern":"[0-9]+(\\.[0-9]+)?"
+    },
+    "InvestmentMultipliers":{
+      "type":"list",
+      "member":{"shape":"InvestmentMultiplier"},
+      "max":200,
+      "min":0
+    },
+    "InvestmentRestriction":{
+      "type":"structure",
+      "required":["amount"],
+      "members":{
+        "amount":{"shape":"Amount"}
+      }
+    },
+    "InvestmentRestrictions":{
+      "type":"list",
+      "member":{"shape":"InvestmentRestriction"},
+      "max":10,
+      "min":0
+    },
+    "InvestmentSummaries":{
+      "type":"list",
+      "member":{"shape":"InvestmentSummary"}
+    },
+    "InvestmentSummary":{
+      "type":"structure",
+      "required":[
+        "investmentSummaryId",
+        "investmentName",
+        "investmentType"
+      ],
+      "members":{
+        "investmentSummaryId":{"shape":"IdentifierString"},
+        "investmentName":{"shape":"InvestmentSummaryInvestmentNameString"},
+        "investmentType":{"shape":"InvestmentType"},
+        "maxAllowedInvestmentDisbursementValue":{"shape":"Amount"}
+      }
+    },
+    "InvestmentSummaryInvestmentNameString":{
+      "type":"string",
+      "max":400,
+      "min":1
+    },
+    "InvestmentType":{
+      "type":"string",
+      "enum":[
+        "MILESTONE_BASED",
+        "OUTCOME_BASED"
+      ]
+    },
+    "Investments":{
+      "type":"list",
+      "member":{"shape":"Investment"}
+    },
+    "LegalEntities":{
+      "type":"list",
+      "member":{"shape":"LegalEntity"},
+      "max":10,
+      "min":0
+    },
+    "LegalEntity":{
+      "type":"structure",
+      "required":["legalEntityName"],
+      "members":{
+        "legalEntityName":{"shape":"SensitiveString"}
+      }
     },
     "LinkedAccountCharge":{
       "type":"structure",
@@ -1442,6 +2020,101 @@
         "nextToken":{"shape":"PageToken"}
       }
     },
+    "ListContractsRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PageToken"},
+        "maxResults":{"shape":"ListContractsRequestMaxResultsInteger"}
+      }
+    },
+    "ListContractsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListContractsResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"ContractSummaries"},
+        "nextToken":{"shape":"PageToken"}
+      }
+    },
+    "ListContractualInvestmentAttestationsRequest":{
+      "type":"structure",
+      "required":["contractArn"],
+      "members":{
+        "contractArn":{"shape":"ArnString"},
+        "investmentSummaryId":{"shape":"IdentifierString"},
+        "nextToken":{"shape":"PageToken"},
+        "maxResults":{"shape":"ListContractualInvestmentAttestationsRequestMaxResultsInteger"}
+      }
+    },
+    "ListContractualInvestmentAttestationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListContractualInvestmentAttestationsResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"InvestmentAttestations"},
+        "nextToken":{"shape":"PageToken"}
+      }
+    },
+    "ListContractualInvestmentSummariesRequest":{
+      "type":"structure",
+      "required":["contractArn"],
+      "members":{
+        "contractArn":{"shape":"ArnString"},
+        "nextToken":{"shape":"PageToken"},
+        "maxResults":{"shape":"ListContractualInvestmentSummariesRequestMaxResultsInteger"}
+      }
+    },
+    "ListContractualInvestmentSummariesRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListContractualInvestmentSummariesResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"InvestmentSummaries"},
+        "nextToken":{"shape":"PageToken"}
+      }
+    },
+    "ListContractualInvestmentsRequest":{
+      "type":"structure",
+      "required":[
+        "contractArn",
+        "investmentSummaryId"
+      ],
+      "members":{
+        "contractArn":{"shape":"ArnString"},
+        "investmentSummaryId":{"shape":"IdentifierString"},
+        "nextToken":{"shape":"PageToken"},
+        "maxResults":{"shape":"ListContractualInvestmentsRequestMaxResultsInteger"}
+      }
+    },
+    "ListContractualInvestmentsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListContractualInvestmentsResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"Investments"},
+        "nextToken":{"shape":"PageToken"}
+      }
+    },
     "ListEnterpriseSupportLinkedAccountChargesRequest":{
       "type":"structure",
       "required":["billingMonth"],
@@ -1500,10 +2173,52 @@
       "type":"long",
       "box":true
     },
+    "MilestoneBasedInvestment":{
+      "type":"structure",
+      "required":[
+        "investmentId",
+        "investmentValue",
+        "investmentDisbursedAt"
+      ],
+      "members":{
+        "investmentId":{"shape":"IdentifierString"},
+        "investmentValue":{"shape":"Amount"},
+        "investmentDisbursedAt":{"shape":"Timestamp"}
+      }
+    },
     "Month":{
       "type":"integer",
       "box":true,
       "max":12,
+      "min":1
+    },
+    "MultiplierType":{
+      "type":"string",
+      "enum":[
+        "PERCENTAGE",
+        "CURRENCY_AMOUNT"
+      ]
+    },
+    "OutcomeBasedInvestment":{
+      "type":"structure",
+      "required":[
+        "investmentId",
+        "outcomeDescription",
+        "attestationWindow",
+        "disbursedValue"
+      ],
+      "members":{
+        "investmentId":{"shape":"IdentifierString"},
+        "outcomeDescription":{"shape":"OutcomeBasedInvestmentOutcomeDescriptionString"},
+        "attestationWindow":{"shape":"Interval"},
+        "investmentRestrictions":{"shape":"InvestmentRestrictions"},
+        "investmentMultipliers":{"shape":"InvestmentMultipliers"},
+        "disbursedValue":{"shape":"Amount"}
+      }
+    },
+    "OutcomeBasedInvestmentOutcomeDescriptionString":{
+      "type":"string",
+      "max":2048,
       "min":1
     },
     "PageToken":{
@@ -1574,6 +2289,24 @@
       "max":20,
       "min":0
     },
+    "PrivatePricingAddendum":{
+      "type":"structure",
+      "required":[
+        "contractArn",
+        "contractTerm",
+        "eligiblePayerAccounts",
+        "investmentAccounts",
+        "legalEntities"
+      ],
+      "members":{
+        "contractArn":{"shape":"ArnString"},
+        "contractTerm":{"shape":"Interval"},
+        "eligiblePayerAccounts":{"shape":"AccountList"},
+        "investmentAccounts":{"shape":"AccountList"},
+        "legalEntities":{"shape":"LegalEntities"},
+        "contractRestrictions":{"shape":"ContractRestrictions"}
+      }
+    },
     "ProductName":{
       "type":"string",
       "max":128,
@@ -1617,6 +2350,17 @@
     "RedeemCreditsResponse":{
       "type":"structure",
       "members":{}
+    },
+    "RejectionReason":{
+      "type":"string",
+      "max":300,
+      "min":1
+    },
+    "RejectionReasons":{
+      "type":"list",
+      "member":{"shape":"RejectionReason"},
+      "max":30,
+      "min":0
     },
     "ResourceArn":{
       "type":"string",
@@ -1685,6 +2429,19 @@
       "max":128,
       "min":1,
       "pattern":"[a-zA-Z0-9_\\+=\\.\\-@ ]+"
+    },
+    "SensitiveEmail":{
+      "type":"string",
+      "max":256,
+      "min":3,
+      "pattern":"[A-Za-z0-9._%+\\-]+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,}",
+      "sensitive":true
+    },
+    "SensitiveString":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "sensitive":true
     },
     "ServiceCode":{
       "type":"string",

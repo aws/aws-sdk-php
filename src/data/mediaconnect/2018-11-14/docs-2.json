@@ -8,9 +8,12 @@
     "AddFlowOutputs": "<p> Adds outputs to an existing flow. You can create up to 50 outputs per flow.</p>",
     "AddFlowSources": "<p> Adds sources to a flow.</p>",
     "AddFlowVpcInterfaces": "<p> Adds VPC interfaces to a flow.</p>",
+    "BatchGetDestinationEndpoint": "<p>Retrieves information about multiple destination endpoints in a single request.</p>",
     "BatchGetRouterInput": "<p>Retrieves information about multiple router inputs in AWS Elemental MediaConnect.</p>",
     "BatchGetRouterNetworkInterface": "<p>Retrieves information about multiple router network interfaces in AWS Elemental MediaConnect.</p>",
     "BatchGetRouterOutput": "<p>Retrieves information about multiple router outputs in AWS Elemental MediaConnect.</p>",
+    "BatchGetSourceEndpoint": "<p>Retrieves information about multiple source endpoints in a single request.</p>",
+    "ConnectEndpoints": "<p>Connects a source endpoint to a destination endpoint.</p>",
     "CreateBridge": "<p> Creates a new bridge. The request must include one source.</p>",
     "CreateFlow": "<p> Creates a new flow. The request must include one source. The request optionally can include outputs (up to 50) and entitlements (up to 50).</p>",
     "CreateGateway": "<p> Creates a new gateway. The request must include at least one network (up to four).</p>",
@@ -23,7 +26,9 @@
     "DeleteRouterInput": "<p>Deletes a router input from AWS Elemental MediaConnect.</p>",
     "DeleteRouterNetworkInterface": "<p>Deletes a router network interface from AWS Elemental MediaConnect.</p>",
     "DeleteRouterOutput": "<p>Deletes a router output from AWS Elemental MediaConnect.</p>",
+    "DeregisterDestinationEndpoint": "<p>Deregisters a destination endpoint from MediaConnect.</p>",
     "DeregisterGatewayInstance": "<p> Deregisters an instance. Before you deregister an instance, all bridges running on the instance must be stopped. If you want to deregister an instance without stopping the bridges, you must use the --force option.</p>",
+    "DeregisterSourceEndpoint": "<p>Deregisters a source endpoint from MediaConnect.</p>",
     "DescribeBridge": "<p> Displays the details of a bridge.</p>",
     "DescribeFlow": "<p> Displays the details of a flow. The response includes the flow Amazon Resource Name (ARN), name, and Availability Zone, as well as details about the source, outputs, and entitlements.</p>",
     "DescribeFlowSourceMetadata": "<p> The <code>DescribeFlowSourceMetadata</code> API is used to view information about the flow's source transport stream and programs. This API displays status messages about the flow's source as well as details about the program's video, audio, and other data. </p>",
@@ -32,13 +37,17 @@
     "DescribeGatewayInstance": "<p> Displays the details of an instance. </p>",
     "DescribeOffering": "<p> Displays the details of an offering. The response includes the offering description, duration, outbound bandwidth, price, and Amazon Resource Name (ARN).</p>",
     "DescribeReservation": "<p> Displays the details of a reservation. The response includes the reservation name, state, start date and time, and the details of the offering that make up the rest of the reservation (such as price, duration, and outbound bandwidth).</p>",
+    "DisconnectEndpoints": "<p>Disconnects a source endpoint from a destination endpoint.</p>",
+    "GetDestinationEndpoint": "<p>Retrieves information about a destination endpoint.</p>",
     "GetRouterInput": "<p>Retrieves information about a specific router input in AWS Elemental MediaConnect.</p>",
     "GetRouterInputSourceMetadata": "<p>Retrieves detailed metadata information about a specific router input source, including stream details and connection state.</p>",
     "GetRouterInputThumbnail": "<p>Retrieves the thumbnail for a router input in AWS Elemental MediaConnect.</p>",
     "GetRouterNetworkInterface": "<p>Retrieves information about a specific router network interface in AWS Elemental MediaConnect.</p>",
     "GetRouterOutput": "<p>Retrieves information about a specific router output in AWS Elemental MediaConnect.</p>",
+    "GetSourceEndpoint": "<p>Retrieves information about a source endpoint.</p>",
     "GrantFlowEntitlements": "<p> Grants entitlements to an existing flow.</p>",
     "ListBridges": "<p> Displays a list of bridges that are associated with this account and an optionally specified Amazon Resource Name (ARN). This request returns a paginated result.</p>",
+    "ListDestinationEndpoints": "<p>Retrieves a list of the destination endpoints in your account. The results are paginated. Use the NextToken value that's returned to retrieve additional results.</p>",
     "ListEntitlements": "<p> Displays a list of all entitlements that have been granted to this account. This request returns 20 results per page.</p>",
     "ListFlows": "<p> Displays a list of flows that are associated with this account. This request returns a paginated result.</p>",
     "ListGatewayInstances": "<p> Displays a list of instances associated with the Amazon Web Services account. This request returns a paginated result. You can use the filterArn property to display only the instances associated with the selected Gateway Amazon Resource Name (ARN).</p>",
@@ -48,9 +57,12 @@
     "ListRouterInputs": "<p>Retrieves a list of router inputs in AWS Elemental MediaConnect.</p>",
     "ListRouterNetworkInterfaces": "<p>Retrieves a list of router network interfaces in AWS Elemental MediaConnect.</p>",
     "ListRouterOutputs": "<p>Retrieves a list of router outputs in AWS Elemental MediaConnect.</p>",
+    "ListSourceEndpoints": "<p>Retrieves a list of the source endpoints in your account. The results are paginated. Use the NextToken value that's returned to retrieve additional results.</p>",
     "ListTagsForGlobalResource": "<p>Lists the tags associated with a global resource in AWS Elemental MediaConnect. The API supports the following global resources: router inputs, router outputs and router network interfaces. </p>",
     "ListTagsForResource": "<p> List all tags on a MediaConnect resource in the current region.</p>",
     "PurchaseOffering": "<p> Submits a request to purchase an offering. If you already have an active reservation, you can't purchase another offering.</p>",
+    "RegisterDestinationEndpoint": "<p>Registers a new destination endpoint in MediaConnect.</p>",
+    "RegisterSourceEndpoint": "<p>Registers a new source endpoint in MediaConnect.</p>",
     "RemoveBridgeOutput": "<p> Removes an output from a bridge.</p>",
     "RemoveBridgeSource": "<p> Removes a source from a bridge.</p>",
     "RemoveFlowMediaStream": "<p> Removes a media stream from a flow. This action is only available if the media stream is not associated with a source or output.</p>",
@@ -75,6 +87,7 @@
     "UpdateBridgeOutput": "<p> Updates an existing bridge output.</p>",
     "UpdateBridgeSource": "<p> Updates an existing bridge source.</p>",
     "UpdateBridgeState": "<p> Updates the bridge state. </p>",
+    "UpdateDestinationEndpoint": "<p>Updates the configuration of a destination endpoint.</p>",
     "UpdateFlow": "<p> Updates an existing flow.</p> <note> <p> Because <code>UpdateFlowSources</code> and <code>UpdateFlow</code> are separate operations, you can't change both the source type AND the flow size in a single request. </p> <ul> <li> <p>If you have a <code>MEDIUM</code> flow and you want to change the flow source to NDI®:</p> <ul> <li> <p>First, use the <code>UpdateFlow</code> operation to upgrade the flow size to <code>LARGE</code>. </p> </li> <li> <p>After that, you can then use the <code>UpdateFlowSource</code> operation to configure the NDI source. </p> </li> </ul> </li> <li> <p>If you're switching from an NDI source to a transport stream (TS) source and want to downgrade the flow size: </p> <ul> <li> <p>First, use the <code>UpdateFlowSource</code> operation to change the flow source type. </p> </li> <li> <p>After that, you can then use the <code>UpdateFlow</code> operation to downgrade the flow size to <code>MEDIUM</code>.</p> </li> </ul> </li> </ul> </note>",
     "UpdateFlowEntitlement": "<p> Updates an entitlement. You can change an entitlement's description, subscribers, and encryption. If you change the subscribers, the service will remove the outputs that are are used by the subscribers that are removed.</p>",
     "UpdateFlowMediaStream": "<p> Updates an existing media stream.</p>",
@@ -83,7 +96,8 @@
     "UpdateGatewayInstance": "<p>Updates an existing gateway instance. </p>",
     "UpdateRouterInput": "<p>Updates the configuration of an existing router input in AWS Elemental MediaConnect.</p>",
     "UpdateRouterNetworkInterface": "<p>Updates the configuration of an existing router network interface in AWS Elemental MediaConnect.</p>",
-    "UpdateRouterOutput": "<p>Updates the configuration of an existing router output in AWS Elemental MediaConnect.</p>"
+    "UpdateRouterOutput": "<p>Updates the configuration of an existing router output in AWS Elemental MediaConnect.</p>",
+    "UpdateSourceEndpoint": "<p>Updates the configuration of a source endpoint.</p>"
   },
   "shapes": {
     "AddBridgeFlowSourceRequest": {
@@ -255,8 +269,40 @@
         "RouterInputTransitEncryptionKeyConfiguration$Automatic": null
       }
     },
+    "AutomaticEndpointEncryptionConfiguration": {
+      "base": "<p>The configuration for automatic endpoint encryption. In this mode, MediaConnect determines the encryption key when the endpoint connects. This type does not require any additional settings.</p>",
+      "refs": {
+        "EndpointEncryptionConfiguration$Automatic": "<p>The configuration for automatic encryption, where MediaConnect determines the encryption key when the endpoint connects.</p>"
+      }
+    },
     "BadRequestException": {
       "base": "<p>This exception is thrown if the request contains a semantic error. The precise meaning depends on the API, and is documented in the error message. </p>",
+      "refs": {}
+    },
+    "BatchGetDestinationEndpointError": {
+      "base": "<p>An error for a destination endpoint that MediaConnect couldn't retrieve in a <code>BatchGetDestinationEndpoint</code> request.</p>",
+      "refs": {
+        "BatchGetDestinationEndpointErrorList$member": null
+      }
+    },
+    "BatchGetDestinationEndpointErrorList": {
+      "base": null,
+      "refs": {
+        "BatchGetDestinationEndpointResponse$Errors": "<p>The errors for any destination endpoints that MediaConnect couldn't retrieve.</p>"
+      }
+    },
+    "BatchGetDestinationEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetDestinationEndpointRequestArnsList": {
+      "base": null,
+      "refs": {
+        "BatchGetDestinationEndpointRequest$Arns": "<p>The Amazon Resource Names (ARNs) of one or more destination endpoints to retrieve. You can specify from 1 to 20 ARNs.</p>"
+      }
+    },
+    "BatchGetDestinationEndpointResponse": {
+      "base": null,
       "refs": {}
     },
     "BatchGetRouterInputError": {
@@ -334,6 +380,32 @@
       }
     },
     "BatchGetRouterOutputResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetSourceEndpointError": {
+      "base": "<p>An error for a source endpoint that MediaConnect couldn't retrieve in a <code>BatchGetSourceEndpoint</code> request.</p>",
+      "refs": {
+        "BatchGetSourceEndpointErrorList$member": null
+      }
+    },
+    "BatchGetSourceEndpointErrorList": {
+      "base": null,
+      "refs": {
+        "BatchGetSourceEndpointResponse$Errors": "<p>The errors for any source endpoints that MediaConnect couldn't retrieve.</p>"
+      }
+    },
+    "BatchGetSourceEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetSourceEndpointRequestArnsList": {
+      "base": null,
+      "refs": {
+        "BatchGetSourceEndpointRequest$Arns": "<p>The Amazon Resource Names (ARNs) of one or more source endpoints to retrieve. You can specify from 1 to 20 ARNs.</p>"
+      }
+    },
+    "BatchGetSourceEndpointResponse": {
       "base": null,
       "refs": {}
     },
@@ -433,7 +505,9 @@
       "refs": {
         "CreateRouterInputRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>",
         "CreateRouterNetworkInterfaceRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>",
-        "CreateRouterOutputRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>"
+        "CreateRouterOutputRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>",
+        "RegisterDestinationEndpointRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If this token matches a previous request, the service ignores the request, but does not return an error.</p>",
+        "RegisterSourceEndpointRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If this token matches a previous request, the service ignores the request, but does not return an error.</p>"
       }
     },
     "ColorInformation": {
@@ -454,10 +528,24 @@
       "base": "<p>The requested operation would cause a conflict with the current state of a service resource associated with the request. Resolve the conflict before retrying this request. </p>",
       "refs": {}
     },
+    "ConnectEndpointsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ConnectEndpointsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ConnectionStatus": {
       "base": null,
       "refs": {
         "GatewayInstance$ConnectionStatus": "<p>The connection state of the instance. </p>"
+      }
+    },
+    "ConsumedResourceShareDetails": {
+      "base": "<p>The cross-account sharing details for an endpoint that another account shares with this account.</p>",
+      "refs": {
+        "ResourceShareDetails$Consumed": "<p>The sharing details for an endpoint that another account shares with this account through RAM.</p>"
       }
     },
     "ContentQualityAnalysisFeatureConfiguration": {
@@ -631,6 +719,14 @@
       "base": null,
       "refs": {}
     },
+    "DeregisterDestinationEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeregisterDestinationEndpointResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeregisterGatewayInstanceRequest": {
       "base": null,
       "refs": {}
@@ -642,6 +738,14 @@
       }
     },
     "DeregisterGatewayInstanceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeregisterSourceEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeregisterSourceEndpointResponse": {
       "base": null,
       "refs": {}
     },
@@ -752,6 +856,156 @@
         "__listOfDestinationConfigurationRequest$member": null
       }
     },
+    "DestinationEndpoint": {
+      "base": "<p>The details of a destination endpoint in MediaConnect, including its configuration, state, and connection details.</p>",
+      "refs": {
+        "DestinationEndpointList$member": null,
+        "GetDestinationEndpointResponse$DestinationEndpoint": "<p>The details of the destination endpoint.</p>",
+        "RegisterDestinationEndpointResponse$DestinationEndpoint": "<p>The details of the destination endpoint that was registered.</p>",
+        "UpdateDestinationEndpointResponse$DestinationEndpoint": "<p>The details of the updated destination endpoint.</p>"
+      }
+    },
+    "DestinationEndpointArn": {
+      "base": null,
+      "refs": {
+        "BatchGetDestinationEndpointError$Arn": "<p>The Amazon Resource Name (ARN) of the destination endpoint that MediaConnect couldn't retrieve.</p>",
+        "BatchGetDestinationEndpointRequestArnsList$member": null,
+        "ConnectEndpointsRequest$DestinationEndpointArn": "<p>The Amazon Resource Name (ARN) of the destination endpoint to connect.</p>",
+        "ConnectEndpointsResponse$DestinationEndpointArn": "<p>The Amazon Resource Name (ARN) of the connected destination endpoint.</p>",
+        "DeregisterDestinationEndpointRequest$Arn": "<p>The Amazon Resource Name (ARN) of the destination endpoint to deregister.</p>",
+        "DeregisterDestinationEndpointResponse$Arn": "<p>The Amazon Resource Name (ARN) of the destination endpoint that was deregistered.</p>",
+        "DestinationEndpoint$Arn": "<p>The Amazon Resource Name (ARN) of the destination endpoint.</p>",
+        "DestinationEndpointArnList$member": null,
+        "DisconnectEndpointsRequest$DestinationEndpointArn": "<p>The Amazon Resource Name (ARN) of the destination endpoint to disconnect.</p>",
+        "DisconnectEndpointsResponse$DestinationEndpointArn": "<p>The Amazon Resource Name (ARN) of the disconnected destination endpoint.</p>",
+        "GetDestinationEndpointRequest$Arn": "<p>The Amazon Resource Name (ARN) of the destination endpoint to retrieve.</p>",
+        "ListedDestinationEndpoint$Arn": "<p>The Amazon Resource Name (ARN) of the destination endpoint.</p>",
+        "UpdateDestinationEndpointRequest$Arn": "<p>The Amazon Resource Name (ARN) of the destination endpoint to update.</p>"
+      }
+    },
+    "DestinationEndpointArnList": {
+      "base": null,
+      "refs": {
+        "RouterInput$AssociatedDestinationEndpointArns": "<p>The Amazon Resource Names (ARNs) of one or more destination endpoints that are associated with this router input.</p>",
+        "SourceEndpoint$ConnectedDestinations": "<p>The Amazon Resource Names (ARNs) of the destination endpoints that are connected to the source endpoint.</p>"
+      }
+    },
+    "DestinationEndpointAssociatedResourceDetails": {
+      "base": "<p>The details of the resource that is associated with a destination endpoint. This is a union type, so exactly one of its members is set, depending on the type of the destination endpoint.</p>",
+      "refs": {
+        "DestinationEndpoint$AssociatedResourceDetails": "<p>The details of the resource that is associated with the destination endpoint.</p>"
+      }
+    },
+    "DestinationEndpointConfiguration": {
+      "base": "<p>The configuration settings for a destination endpoint. This is a union type, so exactly one of its members is set, depending on the type of the destination endpoint.</p>",
+      "refs": {
+        "DestinationEndpoint$Configuration": "<p>The configuration settings for the destination endpoint.</p>",
+        "RegisterDestinationEndpointRequest$Configuration": "<p>The configuration settings for the destination endpoint.</p>",
+        "UpdateDestinationEndpointRequest$Configuration": "<p>The updated configuration settings for the destination endpoint.</p>"
+      }
+    },
+    "DestinationEndpointConnectionDetails": {
+      "base": "<p>The connection details for a destination endpoint. After the destination endpoint connects to a source endpoint, MediaConnect populates these details to describe the connected source. This is a union type, so exactly one of its members is set, depending on the destination endpoint type.</p>",
+      "refs": {
+        "DestinationEndpoint$ConnectionDetails": "<p>The connection details for the destination endpoint.</p>"
+      }
+    },
+    "DestinationEndpointConnectionState": {
+      "base": null,
+      "refs": {
+        "DestinationEndpoint$ConnectionState": "<p>The connection state of the destination endpoint. Valid values include the following:</p> <ul> <li> <p> <code>CONNECTED</code> – The destination endpoint is connected to a source endpoint.</p> </li> <li> <p> <code>DISCONNECTED</code> – The destination endpoint isn't connected to a source endpoint.</p> </li> <li> <p> <code>CONNECTING</code> – The destination endpoint is connecting to a source endpoint.</p> </li> <li> <p> <code>DISCONNECTING</code> – The destination endpoint is disconnecting from a source endpoint.</p> </li> </ul>",
+        "ListedDestinationEndpoint$ConnectionState": "<p>The connection state of the destination endpoint. Valid values include the following:</p> <ul> <li> <p> <code>CONNECTED</code> – The destination endpoint is connected to a source endpoint.</p> </li> <li> <p> <code>DISCONNECTED</code> – The destination endpoint isn't connected to a source endpoint.</p> </li> <li> <p> <code>CONNECTING</code> – The destination endpoint is connecting to a source endpoint.</p> </li> <li> <p> <code>DISCONNECTING</code> – The destination endpoint is disconnecting from a source endpoint.</p> </li> </ul>"
+      }
+    },
+    "DestinationEndpointFilter": {
+      "base": "<p>A filter to apply when listing destination endpoints. This is a union type, so exactly one of its members is set.</p>",
+      "refs": {
+        "DestinationEndpointFilterList$member": null
+      }
+    },
+    "DestinationEndpointFilterList": {
+      "base": null,
+      "refs": {
+        "ListDestinationEndpointsRequest$Filters": "<p>The filters to apply to the list of destination endpoints.</p>"
+      }
+    },
+    "DestinationEndpointList": {
+      "base": null,
+      "refs": {
+        "BatchGetDestinationEndpointResponse$DestinationEndpoints": "<p>The destination endpoints that MediaConnect successfully retrieved.</p>"
+      }
+    },
+    "DestinationEndpointMessage": {
+      "base": "<p>A status message for a destination endpoint.</p>",
+      "refs": {
+        "DestinationEndpointMessageList$member": null
+      }
+    },
+    "DestinationEndpointMessageList": {
+      "base": null,
+      "refs": {
+        "DestinationEndpoint$Messages": "<p>The status messages for the destination endpoint.</p>"
+      }
+    },
+    "DestinationEndpointNetworkingType": {
+      "base": null,
+      "refs": {
+        "StandardDestinationEndpointConfiguration$DestinationNetworkingType": "<p>The networking type of the destination endpoint. Valid values include the following:</p> <ul> <li> <p> <code>PUBLIC</code> – The destination endpoint is publicly accessible.</p> </li> <li> <p> <code>VPC</code> – The destination endpoint is in a virtual private cloud (VPC).</p> </li> </ul>"
+      }
+    },
+    "DestinationEndpointProtocol": {
+      "base": null,
+      "refs": {
+        "StandardDestinationEndpointConfiguration$Protocol": "<p>The protocol used by the destination endpoint. Valid values include the following:</p> <ul> <li> <p> <code>RTP</code> – Real-time Transport Protocol.</p> </li> <li> <p> <code>RIST</code> – Reliable Internet Stream Transport.</p> </li> <li> <p> <code>SRT_CALLER</code> – Secure Reliable Transport (SRT) in caller mode.</p> </li> <li> <p> <code>SRT_LISTENER</code> – Secure Reliable Transport (SRT) in listener mode.</p> </li> </ul>"
+      }
+    },
+    "DestinationEndpointRegistrationState": {
+      "base": null,
+      "refs": {
+        "DestinationEndpoint$RegistrationState": "<p>The registration state of the destination endpoint. Valid values include the following:</p> <ul> <li> <p> <code>REGISTERED</code> – The destination endpoint is registered and ready to use.</p> </li> <li> <p> <code>REGISTERING</code> – MediaConnect is registering the destination endpoint.</p> </li> <li> <p> <code>DEREGISTERING</code> – MediaConnect is deregistering the destination endpoint.</p> </li> <li> <p> <code>REGISTRATION_FAILED</code> – MediaConnect couldn't register the destination endpoint.</p> </li> </ul>",
+        "ListedDestinationEndpoint$RegistrationState": "<p>The registration state of the destination endpoint. Valid values include the following:</p> <ul> <li> <p> <code>REGISTERED</code> – The destination endpoint is registered and ready to use.</p> </li> <li> <p> <code>REGISTERING</code> – MediaConnect is registering the destination endpoint.</p> </li> <li> <p> <code>DEREGISTERING</code> – MediaConnect is deregistering the destination endpoint.</p> </li> <li> <p> <code>REGISTRATION_FAILED</code> – MediaConnect couldn't register the destination endpoint.</p> </li> </ul>"
+      }
+    },
+    "DestinationEndpointRouterInputConfiguration": {
+      "base": "<p>Configuration settings for a router input that is represented by a destination endpoint.</p>",
+      "refs": {
+        "RouterInputConfiguration$DestinationEndpoint": "<p>Configuration settings for a router input that is represented by a destination endpoint.</p>"
+      }
+    },
+    "DestinationEndpointRouterInputStreamDetails": {
+      "base": "<p>Configuration details for a router input stream that is represented by a destination endpoint.</p>",
+      "refs": {
+        "RouterInputStreamDetails$DestinationEndpoint": "<p>Configuration details for a router input stream that is represented by a destination endpoint.</p>"
+      }
+    },
+    "DestinationEndpointServiceQuotaExceededException": {
+      "base": "<p>The request would cause you to exceed a service quota for destination endpoints. Delete unused destination endpoints or request a quota increase, then try your request again.</p>",
+      "refs": {}
+    },
+    "DestinationEndpointType": {
+      "base": null,
+      "refs": {
+        "DestinationEndpoint$DestinationType": "<p>The type of the destination endpoint. Valid values include the following:</p> <ul> <li> <p> <code>STANDARD</code> – A destination endpoint that represents an external destination over a standard protocol, such as RTP, RIST, or SRT.</p> </li> <li> <p> <code>ROUTER_INPUT</code> – A destination endpoint that represents a router input.</p> </li> </ul>",
+        "DestinationEndpointTypeList$member": null,
+        "ListedDestinationEndpoint$DestinationType": "<p>The type of the destination endpoint. Valid values include the following:</p> <ul> <li> <p> <code>STANDARD</code> – A destination endpoint that represents an external destination over a standard protocol, such as RTP, RIST, or SRT.</p> </li> <li> <p> <code>ROUTER_INPUT</code> – A destination endpoint that represents a router input.</p> </li> </ul>",
+        "RouterOutputSourceEndpointConnectionDetails$DestinationEndpointType": "<p>The type of the connected destination endpoint.</p>",
+        "StandardSourceEndpointConnectionDetails$DestinationEndpointType": "<p>The type of the connected destination endpoint.</p>"
+      }
+    },
+    "DestinationEndpointTypeList": {
+      "base": null,
+      "refs": {
+        "DestinationEndpointFilter$DestinationTypes": "<p>Filters the results to destination endpoints of the specified types.</p>"
+      }
+    },
+    "DisconnectEndpointsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisconnectEndpointsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "Double": {
       "base": null,
       "refs": {
@@ -823,6 +1077,61 @@
         "Output$Encryption": "<p> The type of key used for the encryption. If no keyType is provided, the service will use the default setting (static-key).</p>",
         "SetSourceRequest$Decryption": "<p> The type of encryption that is used on the content ingested from this source. Allowable encryption types: static-key.</p>",
         "Source$Decryption": "<p> The type of encryption that is used on the content ingested from this source.</p>"
+      }
+    },
+    "EndpointEncryptionConfiguration": {
+      "base": "<p>The encryption settings for an endpoint connection. This is a union type, so exactly one of its members is set: <code>secretsManager</code> when you store the encryption key or passphrase in Secrets Manager, or <code>automatic</code> when you let MediaConnect determine the encryption key when the endpoint connects.</p>",
+      "refs": {
+        "DestinationEndpoint$DecryptionConfiguration": null,
+        "DestinationEndpointRouterInputConfiguration$SourceTransitDecryption": null,
+        "RouterInputDestinationEndpointConnectionDetails$SourceEncryptionConfiguration": null,
+        "RouterOutputSourceEndpointConnectionDetails$DestinationDecryptionConfiguration": null,
+        "SourceEndpoint$EncryptionConfiguration": null,
+        "SourceEndpointRouterOutputConfiguration$DestinationTransitEncryption": null,
+        "StandardDestinationEndpointConnectionDetails$SourceEncryptionConfiguration": null,
+        "StandardSourceEndpointConnectionDetails$DestinationDecryptionConfiguration": null
+      }
+    },
+    "EndpointEncryptionSecretConfiguration": {
+      "base": "<p>The configuration for the Secrets Manager secret that holds the key or passphrase used to encrypt an endpoint connection.</p>",
+      "refs": {
+        "SecretsManagerEndpointEncryptionConfiguration$EncryptionSecret": "<p>The Secrets Manager secret that holds the key or passphrase used to encrypt the connection.</p>",
+        "SrtCallerStandardDestinationEndpointConfiguration$EncryptionPassphrase": null,
+        "SrtCallerStandardSourceEndpointConfiguration$EncryptionPassphrase": null,
+        "SrtListenerStandardDestinationEndpointConfiguration$EncryptionPassphrase": null,
+        "SrtListenerStandardSourceEndpointConfiguration$EncryptionPassphrase": null
+      }
+    },
+    "EndpointEncryptionSecretType": {
+      "base": null,
+      "refs": {
+        "SecretsManagerEndpointEncryptionConfiguration$EncryptionSecretType": "<p>The type of secret used to encrypt the connection. Valid values include the following:</p> <ul> <li> <p> <code>AES_128_KEY</code> – A 128-bit AES encryption key.</p> </li> <li> <p> <code>AES_192_KEY</code> – A 192-bit AES encryption key.</p> </li> <li> <p> <code>AES_256_KEY</code> – A 256-bit AES encryption key.</p> </li> <li> <p> <code>SRT_PASSPHRASE</code> – An SRT passphrase.</p> </li> </ul>"
+      }
+    },
+    "EndpointEncryptionType": {
+      "base": null,
+      "refs": {
+        "DestinationEndpoint$DecryptionType": "<p>The type of decryption used for the destination endpoint connection.</p>",
+        "DestinationEndpointRouterInputConfiguration$SourceTransitDecryptionType": "<p>The type of transit decryption applied to the source content that this router input receives. Valid values include the following:</p> <ul> <li> <p> <code>SECRETS_MANAGER</code> – The decryption key or passphrase is stored in Secrets Manager.</p> </li> <li> <p> <code>AUTOMATIC</code> – MediaConnect determines the decryption key when the endpoint connects.</p> </li> </ul>",
+        "ListedDestinationEndpoint$DecryptionType": "<p>The type of decryption used for the destination endpoint connection.</p>",
+        "ListedSourceEndpoint$EncryptionType": "<p>The type of encryption used for the source endpoint connection.</p>",
+        "RouterInputDestinationEndpointConnectionDetails$SourceEncryptionType": "<p>The type of encryption that the source uses for the connection.</p>",
+        "RouterOutputSourceEndpointConnectionDetails$DestinationDecryptionType": "<p>The type of decryption that the destination uses for the connection.</p>",
+        "SourceEndpoint$EncryptionType": "<p>The type of encryption used for the source endpoint connection.</p>",
+        "SourceEndpointRouterOutputConfiguration$DestinationTransitEncryptionType": "<p>The type of transit encryption applied to the destination content that this router output sends. Valid values include the following:</p> <ul> <li> <p> <code>SECRETS_MANAGER</code> – The encryption key or passphrase is stored in Secrets Manager.</p> </li> <li> <p> <code>AUTOMATIC</code> – MediaConnect determines the encryption key when the endpoint connects.</p> </li> </ul>",
+        "StandardDestinationEndpointConnectionDetails$SourceEncryptionType": "<p>The type of encryption that the source uses for the connection.</p>",
+        "StandardSourceEndpointConnectionDetails$DestinationDecryptionType": "<p>The type of decryption that the destination uses for the connection.</p>"
+      }
+    },
+    "EndpointLifecycle": {
+      "base": null,
+      "refs": {
+        "DestinationEndpoint$LifecycleManagement": "<p>The entity that manages the lifecycle of the destination endpoint.</p>",
+        "DestinationEndpointRouterInputConfiguration$EndpointLifecycleManagement": "<p>The entity that manages the lifecycle of the associated destination endpoint. Valid values include the following:</p> <ul> <li> <p> <code>MANAGED</code> – MediaConnect manages the lifecycle of the associated destination endpoint.</p> </li> <li> <p> <code>UNMANAGED</code> – You manage the lifecycle of the associated destination endpoint.</p> </li> </ul>",
+        "ListedDestinationEndpoint$LifecycleManagement": "<p>The entity that manages the lifecycle of the destination endpoint.</p>",
+        "ListedSourceEndpoint$LifecycleManagement": "<p>The entity that manages the lifecycle of the source endpoint.</p>",
+        "SourceEndpoint$LifecycleManagement": "<p>The entity that manages the lifecycle of the source endpoint.</p>",
+        "SourceEndpointRouterOutputConfiguration$EndpointLifecycleManagement": "<p>The entity that manages the lifecycle of the associated source endpoint. Valid values include the following:</p> <ul> <li> <p> <code>MANAGED</code> – MediaConnect manages the lifecycle of the associated source endpoint.</p> </li> <li> <p> <code>UNMANAGED</code> – You manage the lifecycle of the associated source endpoint.</p> </li> </ul>"
       }
     },
     "Entitlement": {
@@ -995,7 +1304,9 @@
       "base": null,
       "refs": {
         "RtpRouterInputConfiguration$ForwardErrorCorrection": "<p>The state of forward error correction for the RTP protocol in the router input configuration.</p>",
-        "RtpRouterOutputConfiguration$ForwardErrorCorrection": "<p>The state of forward error correction for the RTP protocol in the router output configuration.</p>"
+        "RtpRouterOutputConfiguration$ForwardErrorCorrection": "<p>The state of forward error correction for the RTP protocol in the router output configuration.</p>",
+        "RtpStandardDestinationEndpointConfiguration$ForwardErrorCorrectionState": "<p>Indicates whether forward error correction (FEC) is enabled for the destination endpoint.</p>",
+        "RtpStandardSourceEndpointConfiguration$ForwardErrorCorrectionState": "<p>Indicates whether forward error correction (FEC) is enabled for the source endpoint.</p>"
       }
     },
     "FrameResolution": {
@@ -1049,6 +1360,14 @@
         "ListedGateway$GatewayState": "<p> The status of the gateway.</p>"
       }
     },
+    "GetDestinationEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDestinationEndpointResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetRouterInputRequest": {
       "base": null,
       "refs": {}
@@ -1086,6 +1405,14 @@
       "refs": {}
     },
     "GetRouterOutputResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSourceEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSourceEndpointResponse": {
       "base": null,
       "refs": {}
     },
@@ -1176,12 +1503,15 @@
         "IngressGatewayBridge$MaxOutputs": "<p>The maximum number of outputs on the ingress bridge. </p>",
         "InputConfiguration$InputPort": "<p> The port that the flow listens on for an incoming media stream.</p>",
         "InputConfigurationRequest$InputPort": "<p> The port that you want the flow to listen on for an incoming media stream.</p>",
+        "ListedDestinationEndpoint$MessageCount": "<p>The number of status messages for the destination endpoint.</p>",
         "ListedEntitlement$DataTransferSubscriberFeePercent": "<p> Percentage from 0-100 of the data transfer cost to be billed to the subscriber.</p>",
         "ListedRouterInput$RoutedOutputs": "<p>The number of router outputs that are associated with this router input.</p>",
         "ListedRouterInput$MessageCount": "<p>The number of messages associated with the router input.</p>",
         "ListedRouterNetworkInterface$AssociatedOutputCount": "<p>The number of router outputs associated with the network interface.</p>",
         "ListedRouterNetworkInterface$AssociatedInputCount": "<p>The number of router inputs associated with the network interface.</p>",
         "ListedRouterOutput$MessageCount": "<p>The number of messages associated with the router output.</p>",
+        "ListedSourceEndpoint$MessageCount": "<p>The number of status messages for the source endpoint.</p>",
+        "ListedSourceEndpoint$ConnectedDestinationCount": "<p>The number of destination endpoints that are connected to the source endpoint.</p>",
         "MediaStream$ClockRate": "<p> The sample rate for the stream. This value is measured in Hz.</p>",
         "MediaStream$Fmt": "<p> The format type number (sometimes referred to as RTP payload type) of the media stream. MediaConnect assigns this value to the media stream. For ST 2110 JPEG XS outputs, you need to provide this value to the receiver.</p>",
         "MediaStream$MediaStreamId": "<p> A unique identifier for the media stream. </p>",
@@ -1210,6 +1540,8 @@
         "Source$DataTransferSubscriberFeePercent": "<p> Percentage from 0-100 of the data transfer cost to be billed to the subscriber.</p>",
         "Source$IngestPort": "<p> The port that the flow will be listening on for incoming content.</p>",
         "Source$SenderControlPort": "<p> The port that the flow uses to send outbound requests to initiate connection with the sender.</p>",
+        "StandardDestinationEndpointConnectionDetails$SourceListenerPort": "<p>The port on which the source listens for the connection.</p>",
+        "StandardSourceEndpointConnectionDetails$DestinationIngestPort": "<p>The port on the destination that receives the content.</p>",
         "Transport$MaxBitrate": "<p> The smoothing max bitrate (in bps) for RIST, RTP, and RTP-FEC streams.</p>",
         "Transport$MaxLatency": "<p> The maximum latency in milliseconds. This parameter applies only to RIST-based and Zixi-based streams.</p>",
         "Transport$MaxSyncBuffer": "<p> The size of the buffer (in milliseconds) to use to sync incoming source data.</p>",
@@ -1280,6 +1612,20 @@
       "refs": {}
     },
     "ListBridgesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDestinationEndpointsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDestinationEndpointsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListDestinationEndpointsRequest$MaxResults": "<p>The maximum number of results to return in a single request. The valid range is 1 to 100. If you don't specify a value, the service returns up to 100 results.</p>"
+      }
+    },
+    "ListDestinationEndpointsResponse": {
       "base": null,
       "refs": {}
     },
@@ -1373,6 +1719,20 @@
       "base": null,
       "refs": {}
     },
+    "ListSourceEndpointsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSourceEndpointsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListSourceEndpointsRequest$MaxResults": "<p>The maximum number of results to return in a single request. The valid range is 1 to 100. If you don't specify a value, the service returns up to 100 results.</p>"
+      }
+    },
+    "ListSourceEndpointsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsForGlobalResourceRequest": {
       "base": null,
       "refs": {}
@@ -1393,6 +1753,18 @@
       "base": "<p> Displays details of the selected bridge.</p>",
       "refs": {
         "__listOfListedBridge$member": null
+      }
+    },
+    "ListedDestinationEndpoint": {
+      "base": "<p>A summary of a destination endpoint that the <code>ListDestinationEndpoints</code> operation returns.</p>",
+      "refs": {
+        "ListedDestinationEndpointList$member": null
+      }
+    },
+    "ListedDestinationEndpointList": {
+      "base": null,
+      "refs": {
+        "ListDestinationEndpointsResponse$DestinationEndpoints": "<p>The destination endpoints that match the request.</p>"
       }
     },
     "ListedEntitlement": {
@@ -1455,6 +1827,18 @@
         "ListRouterOutputsResponse$RouterOutputs": "<p>The summary information for the retrieved router outputs.</p>"
       }
     },
+    "ListedSourceEndpoint": {
+      "base": "<p>A summary of a source endpoint that the <code>ListSourceEndpoints</code> operation returns.</p>",
+      "refs": {
+        "ListedSourceEndpointList$member": null
+      }
+    },
+    "ListedSourceEndpointList": {
+      "base": null,
+      "refs": {
+        "ListSourceEndpointsResponse$SourceEndpoints": "<p>The source endpoints that match the request.</p>"
+      }
+    },
     "Long": {
       "base": null,
       "refs": {
@@ -1464,7 +1848,9 @@
         "ListedRouterOutput$MaximumBitrate": "<p>The maximum bitrate of the router output.</p>",
         "MergeRouterInputConfiguration$MergeRecoveryWindowMilliseconds": "<p>The time window in milliseconds for merging the two input sources.</p>",
         "RouterInput$MaximumBitrate": "<p>The maximum bitrate for the router input.</p>",
+        "RouterInputDestinationEndpointAssociatedResourceDetails$MaximumBitrate": "<p>The maximum bitrate of the router input, in bits per second.</p>",
         "RouterOutput$MaximumBitrate": "<p>The maximum bitrate for the router output.</p>",
+        "RouterOutputSourceEndpointAssociatedResourceDetails$MaximumBitrate": "<p>The maximum bitrate of the router output, in bits per second.</p>",
         "UpdateRouterInputRequest$MaximumBitrate": "<p>The updated maximum bitrate for the router input.</p>",
         "UpdateRouterOutputRequest$MaximumBitrate": "<p>The updated maximum bitrate for the router output.</p>"
       }
@@ -1847,6 +2233,12 @@
         "UpdateFlowOutputRequest$OutputStatus": "<p> An indication of whether the output should transmit data or not. If you don't specify the <code>outputStatus</code> field in your request, MediaConnect leaves the value unchanged.</p>"
       }
     },
+    "OwnedResourceShareDetails": {
+      "base": "<p>The cross-account sharing details for an endpoint that this account owns and shares with other accounts.</p>",
+      "refs": {
+        "ResourceShareDetails$Owned": "<p>The sharing details for an endpoint that this account owns and shares with other accounts through RAM.</p>"
+      }
+    },
     "PreferredDayTimeMaintenanceConfiguration": {
       "base": "<p>Configuration for preferred day and time maintenance settings.</p>",
       "refs": {
@@ -1876,6 +2268,30 @@
         "UpdateFlowSourceRequest$Protocol": "<p>The protocol that the source uses to deliver the content to MediaConnect. </p> <note> <p>Elemental MediaConnect no longer supports the Fujitsu QoS protocol. This reference is maintained for legacy purposes only.</p> </note>"
       }
     },
+    "PublicDestinationEndpointNetworkingConfiguration": {
+      "base": "<p>The networking configuration for a publicly accessible destination endpoint, including the CIDR blocks that are allowed to connect.</p>",
+      "refs": {
+        "StandardDestinationEndpointNetworkingConfiguration$Public": "<p>The configuration for a publicly accessible destination endpoint.</p>"
+      }
+    },
+    "PublicDestinationEndpointNetworkingConfigurationAllowRule": {
+      "base": "<p>A rule that allows a specific CIDR block to connect to the public destination endpoint.</p>",
+      "refs": {
+        "PublicDestinationEndpointNetworkingConfigurationDestinationAllowRulesList$member": null
+      }
+    },
+    "PublicDestinationEndpointNetworkingConfigurationAllowRuleCidrString": {
+      "base": null,
+      "refs": {
+        "PublicDestinationEndpointNetworkingConfigurationAllowRule$Cidr": "<p>The CIDR block that is allowed to connect to the destination endpoint, in CIDR notation.</p>"
+      }
+    },
+    "PublicDestinationEndpointNetworkingConfigurationDestinationAllowRulesList": {
+      "base": null,
+      "refs": {
+        "PublicDestinationEndpointNetworkingConfiguration$DestinationAllowRules": "<p>The rules that specify which CIDR blocks can connect to the destination endpoint. You can specify up to 10 rules.</p>"
+      }
+    },
     "PublicRouterNetworkInterfaceConfiguration": {
       "base": "<p>The configuration settings for a public router network interface, including the list of allowed CIDR blocks.</p>",
       "refs": {
@@ -1900,6 +2316,30 @@
         "PublicRouterNetworkInterfaceRule$Cidr": "<p>The CIDR block that is allowed to access the public router network interface.</p>"
       }
     },
+    "PublicSourceEndpointNetworkingConfiguration": {
+      "base": "<p>The networking configuration for a publicly accessible source endpoint, including the CIDR blocks that are allowed to connect.</p>",
+      "refs": {
+        "StandardSourceEndpointNetworkingConfiguration$Public": "<p>The configuration for a publicly accessible source endpoint.</p>"
+      }
+    },
+    "PublicSourceEndpointNetworkingConfigurationAllowRule": {
+      "base": "<p>A rule that allows a specific CIDR block to connect to the public source endpoint.</p>",
+      "refs": {
+        "PublicSourceEndpointNetworkingConfigurationSourceAllowRulesList$member": null
+      }
+    },
+    "PublicSourceEndpointNetworkingConfigurationAllowRuleCidrString": {
+      "base": null,
+      "refs": {
+        "PublicSourceEndpointNetworkingConfigurationAllowRule$Cidr": "<p>The CIDR block that is allowed to connect to the source endpoint, in CIDR notation.</p>"
+      }
+    },
+    "PublicSourceEndpointNetworkingConfigurationSourceAllowRulesList": {
+      "base": null,
+      "refs": {
+        "PublicSourceEndpointNetworkingConfiguration$SourceAllowRules": "<p>The rules that specify which CIDR blocks can connect to the source endpoint. You can specify up to 10 rules.</p>"
+      }
+    },
     "PublicTlsEncryptionConfiguration": {
       "base": "<p>The TLS encryption configuration for destinations that present a certificate from a publicly trusted certificate authority. This type does not require any additional settings.</p>",
       "refs": {
@@ -1920,6 +2360,34 @@
         "Fmtp$Range": "<p>The encoding range of the video. </p>",
         "FmtpRequest$Range": "<p> The encoding range of the video.</p>"
       }
+    },
+    "RegisterDestinationEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RegisterDestinationEndpointRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "RegisterDestinationEndpointRequest$Description": "<p>A description to help you identify the destination endpoint.</p>"
+      }
+    },
+    "RegisterDestinationEndpointResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "RegisterSourceEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RegisterSourceEndpointRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "RegisterSourceEndpointRequest$Description": "<p>A description to help you identify the source endpoint.</p>"
+      }
+    },
+    "RegisterSourceEndpointResponse": {
+      "base": null,
+      "refs": {}
     },
     "RemoveBridgeOutputRequest": {
       "base": null,
@@ -2037,6 +2505,30 @@
         "Reservation$ReservationState": "<p> The status of your reservation.</p>"
       }
     },
+    "ResourceShareDetails": {
+      "base": "<p>The cross-account sharing details for an endpoint. Endpoints are shared through Resource Access Manager (RAM). This is a union type, so exactly one of its members is set: <code>owned</code> when this account owns the endpoint and shares it with other accounts, or <code>consumed</code> when this account consumes an endpoint that another account shares. To change how an endpoint is shared, use RAM.</p>",
+      "refs": {
+        "DestinationEndpoint$ResourceShareDetails": null,
+        "SourceEndpoint$ResourceShareDetails": null
+      }
+    },
+    "ResourceShareOwnership": {
+      "base": null,
+      "refs": {
+        "DestinationEndpoint$ResourceShareOwnership": "<p>Indicates whether this account owns the destination endpoint or consumes it from another account through RAM.</p>",
+        "ListedDestinationEndpoint$ResourceShareOwnership": "<p>Indicates whether this account owns the destination endpoint or consumes it from another account through RAM.</p>",
+        "ListedSourceEndpoint$ResourceShareOwnership": "<p>Indicates whether this account owns the source endpoint or consumes it from another account through RAM.</p>",
+        "SourceEndpoint$ResourceShareOwnership": "<p>Indicates whether this account owns the source endpoint or consumes it from another account through RAM.</p>"
+      }
+    },
+    "ResourceShareState": {
+      "base": null,
+      "refs": {
+        "ListedDestinationEndpoint$ResourceShareState": "<p>The sharing state of the destination endpoint.</p>",
+        "ListedSourceEndpoint$ResourceShareState": "<p>The sharing state of the source endpoint.</p>",
+        "OwnedResourceShareDetails$ShareState": "<p>The sharing state of the endpoint. Valid values include the following:</p> <ul> <li> <p> <code>SHARED</code> – The endpoint is shared with one or more accounts.</p> </li> <li> <p> <code>UNSHARED</code> – The endpoint is not shared with other accounts.</p> </li> </ul>"
+      }
+    },
     "ResourceSpecification": {
       "base": "<p> A definition of what is being billed for, including the type and amount.</p>",
       "refs": {
@@ -2118,6 +2610,36 @@
         "RistRouterOutputConfiguration$DestinationPort": "<p>The destination port number for the RIST protocol in the router output configuration.</p>"
       }
     },
+    "RistStandardDestinationEndpointConfiguration": {
+      "base": "<p>The configuration settings for a destination endpoint that uses the RIST protocol.</p>",
+      "refs": {
+        "StandardDestinationEndpointProtocolConfiguration$Rist": "<p>The configuration settings for a destination endpoint that uses the RIST protocol.</p>"
+      }
+    },
+    "RistStandardDestinationEndpointConfigurationDestinationIngestPortInteger": {
+      "base": null,
+      "refs": {
+        "RistStandardDestinationEndpointConfiguration$DestinationIngestPort": "<p>The port on which the destination endpoint receives content. The valid range is 1024 to 65531.</p>"
+      }
+    },
+    "RistStandardSourceEndpointConfiguration": {
+      "base": "<p>The configuration settings for a source endpoint that uses the RIST protocol.</p>",
+      "refs": {
+        "StandardSourceEndpointProtocolConfiguration$Rist": "<p>The configuration settings for a source endpoint that uses the RIST protocol.</p>"
+      }
+    },
+    "RistStandardSourceEndpointConfigurationDestinationIngestPortInteger": {
+      "base": null,
+      "refs": {
+        "RistStandardSourceEndpointConfiguration$DestinationIngestPort": "<p>The port on the destination that receives the content. The valid range is 3000 to 30000.</p>"
+      }
+    },
+    "RistStandardSourceEndpointConfigurationRecoveryLatencyMillisecondsLong": {
+      "base": null,
+      "refs": {
+        "RistStandardSourceEndpointConfiguration$RecoveryLatencyMilliseconds": "<p>The amount of time, in milliseconds, that the source endpoint allows for recovering lost packets. The valid range is 10 to 10000.</p>"
+      }
+    },
     "RoleArn": {
       "base": null,
       "refs": {
@@ -2173,6 +2695,7 @@
         "RestartRouterInputResponse$Arn": "<p>The ARN of the router input that was restarted.</p>",
         "RouterInput$Arn": "<p>The Amazon Resource Name (ARN) of the router input.</p>",
         "RouterInputArnList$member": null,
+        "RouterInputDestinationEndpointConfiguration$RouterInputArn": "<p>The Amazon Resource Name (ARN) of the router input that the destination endpoint represents.</p>",
         "RouterOutput$RoutedInputArn": "<p>The Amazon Resource Name (ARN) of the router input associated with the output.</p>",
         "StartRouterInputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router input that you want to start.</p>",
         "StartRouterInputResponse$Arn": "<p>The ARN of the router input that was started.</p>",
@@ -2195,6 +2718,24 @@
         "CreateRouterInputRequest$Configuration": "<p>The configuration settings for the router input, which can include the protocol, network interface, and other details.</p>",
         "RouterInput$Configuration": null,
         "UpdateRouterInputRequest$Configuration": "<p>The updated configuration settings for the router input. Changing the type of the configuration is not supported.</p>"
+      }
+    },
+    "RouterInputDestinationEndpointAssociatedResourceDetails": {
+      "base": "<p>The details of the router input that is associated with a destination endpoint.</p>",
+      "refs": {
+        "DestinationEndpointAssociatedResourceDetails$RouterInput": "<p>The associated resource details for a destination endpoint that represents a router input.</p>"
+      }
+    },
+    "RouterInputDestinationEndpointConfiguration": {
+      "base": "<p>The configuration settings for a destination endpoint that represents a router input.</p>",
+      "refs": {
+        "DestinationEndpointConfiguration$RouterInput": "<p>The configuration settings for a destination endpoint that represents a router input.</p>"
+      }
+    },
+    "RouterInputDestinationEndpointConnectionDetails": {
+      "base": "<p>The connection details for a destination endpoint that represents a router input.</p>",
+      "refs": {
+        "DestinationEndpointConnectionDetails$RouterInput": "<p>The connection details for a destination endpoint that represents a router input.</p>"
       }
     },
     "RouterInputFilter": {
@@ -2225,6 +2766,7 @@
       "base": null,
       "refs": {
         "RouterInput$Messages": "<p>The messages associated with the router input.</p>",
+        "RouterInputDestinationEndpointAssociatedResourceDetails$Messages": "<p>The status messages for the router input.</p>",
         "RouterInputSourceMetadataDetails$SourceMetadataMessages": "<p>Collection of metadata messages associated with the router input source.</p>",
         "RouterInputThumbnailDetails$ThumbnailMessages": "<p>The messages associated with the router input thumbnail.</p>"
       }
@@ -2264,6 +2806,7 @@
         "ListedRouterInput$State": "<p>The overall state of the router input.</p>",
         "RestartRouterInputResponse$State": "<p>The current state of the router input after the restart operation.</p>",
         "RouterInput$State": "<p>The current state of the router input.</p>",
+        "RouterInputDestinationEndpointAssociatedResourceDetails$State": "<p>The state of the router input.</p>",
         "StartRouterInputResponse$State": "<p>The current state of the router input after being started.</p>",
         "StopRouterInputResponse$State": "<p>The current state of the router input after being stopped.</p>"
       }
@@ -2431,6 +2974,7 @@
         "RestartRouterOutputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router output that you want to restart.</p>",
         "RestartRouterOutputResponse$Arn": "<p>The ARN of the router output that was restarted.</p>",
         "RouterOutput$Arn": "<p>The Amazon Resource Name (ARN) of the router output.</p>",
+        "RouterOutputSourceEndpointConfiguration$RouterOutputArn": "<p>The Amazon Resource Name (ARN) of the router output that the source endpoint represents.</p>",
         "StartRouterOutputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router output that you want to start.</p>",
         "StartRouterOutputResponse$Arn": "<p>The Amazon Resource Name (ARN) of the router output that was started.</p>",
         "StopRouterOutputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router output that you want to stop.</p>",
@@ -2475,7 +3019,8 @@
     "RouterOutputMessages": {
       "base": null,
       "refs": {
-        "RouterOutput$Messages": "<p>The messages associated with the router output.</p>"
+        "RouterOutput$Messages": "<p>The messages associated with the router output.</p>",
+        "RouterOutputSourceEndpointAssociatedResourceDetails$Messages": "<p>The status messages for the router output.</p>"
       }
     },
     "RouterOutputProtocol": {
@@ -2502,6 +3047,24 @@
       "base": "<p>The request to create a new router output would exceed the service quotas (limits) set for the account. </p>",
       "refs": {}
     },
+    "RouterOutputSourceEndpointAssociatedResourceDetails": {
+      "base": "<p>The details of the router output that is associated with a source endpoint.</p>",
+      "refs": {
+        "SourceEndpointAssociatedResourceDetails$RouterOutput": "<p>The associated resource details for a source endpoint that represents a router output.</p>"
+      }
+    },
+    "RouterOutputSourceEndpointConfiguration": {
+      "base": "<p>The configuration settings for a source endpoint that represents a router output.</p>",
+      "refs": {
+        "SourceEndpointConfiguration$RouterOutput": "<p>The configuration settings for a source endpoint that represents a router output.</p>"
+      }
+    },
+    "RouterOutputSourceEndpointConnectionDetails": {
+      "base": "<p>The connection details for a source endpoint that represents a router output.</p>",
+      "refs": {
+        "SourceEndpointConnectionDetails$RouterOutput": "<p>The connection details for a source endpoint that represents a router output.</p>"
+      }
+    },
     "RouterOutputState": {
       "base": null,
       "refs": {
@@ -2509,6 +3072,7 @@
         "ListedRouterOutput$State": "<p>The overall state of the router output.</p>",
         "RestartRouterOutputResponse$State": "<p>The current state of the router output after the restart operation.</p>",
         "RouterOutput$State": "<p>The overall state of the router output.</p>",
+        "RouterOutputSourceEndpointAssociatedResourceDetails$State": "<p>The state of the router output.</p>",
         "StartRouterOutputResponse$State": "<p>The current state of the router output after being started.</p>",
         "StopRouterOutputResponse$State": "<p>The current state of the router output after being stopped.</p>"
       }
@@ -2600,6 +3164,30 @@
         "RtpRouterOutputConfiguration$DestinationPort": "<p>The destination port number for the RTP protocol in the router output configuration.</p>"
       }
     },
+    "RtpStandardDestinationEndpointConfiguration": {
+      "base": "<p>The configuration settings for a destination endpoint that uses the RTP protocol.</p>",
+      "refs": {
+        "StandardDestinationEndpointProtocolConfiguration$Rtp": "<p>The configuration settings for a destination endpoint that uses the RTP protocol.</p>"
+      }
+    },
+    "RtpStandardDestinationEndpointConfigurationDestinationIngestPortInteger": {
+      "base": null,
+      "refs": {
+        "RtpStandardDestinationEndpointConfiguration$DestinationIngestPort": "<p>The port on which the destination endpoint receives content. The valid range is 1024 to 65531.</p>"
+      }
+    },
+    "RtpStandardSourceEndpointConfiguration": {
+      "base": "<p>The configuration settings for a source endpoint that uses the RTP protocol.</p>",
+      "refs": {
+        "StandardSourceEndpointProtocolConfiguration$Rtp": "<p>The configuration settings for a source endpoint that uses the RTP protocol.</p>"
+      }
+    },
+    "RtpStandardSourceEndpointConfigurationDestinationIngestPortInteger": {
+      "base": null,
+      "refs": {
+        "RtpStandardSourceEndpointConfiguration$DestinationIngestPort": "<p>The port on the destination that receives the content. The valid range is 3000 to 30000.</p>"
+      }
+    },
     "ScanMode": {
       "base": null,
       "refs": {
@@ -2611,6 +3199,7 @@
     "SecretArn": {
       "base": null,
       "refs": {
+        "EndpointEncryptionSecretConfiguration$SecretArn": "<p>The ARN of the Secrets Manager secret that holds the key or passphrase. The secret must be encrypted with a customer managed Amazon Web Services KMS key that is enabled and symmetric; it cannot use the Amazon Web Services managed key <code>aws/secretsmanager</code>. The secret must be in the same Amazon Web Services account and Region as the endpoint.</p>",
         "SecretsManagerEncryptionKeyConfiguration$SecretArn": "<p>The ARN of the Secrets Manager secret used for transit encryption.</p>"
       }
     },
@@ -2622,6 +3211,12 @@
         "RouterInputTransitEncryptionKeyConfiguration$SecretsManager": null,
         "SrtDecryptionConfiguration$EncryptionKey": "<p>Specifies the encryption key configuration used for decrypting SRT streams, including the key source and associated credentials.</p>",
         "SrtEncryptionConfiguration$EncryptionKey": "<p>Specifies the encryption key configuration used for encrypting SRT streams, including the key source and associated credentials.</p>"
+      }
+    },
+    "SecretsManagerEndpointEncryptionConfiguration": {
+      "base": "<p>The endpoint encryption configuration for connections that use a key or passphrase that you store in Secrets Manager.</p>",
+      "refs": {
+        "EndpointEncryptionConfiguration$SecretsManager": "<p>The encryption configuration for a connection that uses a key or passphrase that you store in Secrets Manager.</p>"
       }
     },
     "ServiceUnavailableException": {
@@ -2673,6 +3268,149 @@
         "__listOfSource$member": null
       }
     },
+    "SourceEndpoint": {
+      "base": "<p>The details of a source endpoint in MediaConnect, including its configuration, state, and connection details.</p>",
+      "refs": {
+        "GetSourceEndpointResponse$SourceEndpoint": "<p>The details of the source endpoint.</p>",
+        "RegisterSourceEndpointResponse$SourceEndpoint": "<p>The details of the source endpoint that was registered.</p>",
+        "SourceEndpointList$member": null,
+        "UpdateSourceEndpointResponse$SourceEndpoint": "<p>The details of the updated source endpoint.</p>"
+      }
+    },
+    "SourceEndpointArn": {
+      "base": null,
+      "refs": {
+        "BatchGetSourceEndpointError$Arn": "<p>The Amazon Resource Name (ARN) of the source endpoint that MediaConnect couldn't retrieve.</p>",
+        "BatchGetSourceEndpointRequestArnsList$member": null,
+        "ConnectEndpointsRequest$SourceEndpointArn": "<p>The Amazon Resource Name (ARN) of the source endpoint to connect.</p>",
+        "ConnectEndpointsResponse$SourceEndpointArn": "<p>The Amazon Resource Name (ARN) of the connected source endpoint.</p>",
+        "DeregisterSourceEndpointRequest$Arn": "<p>The Amazon Resource Name (ARN) of the source endpoint to deregister.</p>",
+        "DeregisterSourceEndpointResponse$Arn": "<p>The Amazon Resource Name (ARN) of the source endpoint that was deregistered.</p>",
+        "DestinationEndpoint$ConnectedSource": "<p>The Amazon Resource Name (ARN) of the source endpoint that is connected to the destination endpoint.</p>",
+        "DisconnectEndpointsRequest$SourceEndpointArn": "<p>The Amazon Resource Name (ARN) of the source endpoint to disconnect.</p>",
+        "DisconnectEndpointsResponse$SourceEndpointArn": "<p>The Amazon Resource Name (ARN) of the disconnected source endpoint.</p>",
+        "GetSourceEndpointRequest$Arn": "<p>The Amazon Resource Name (ARN) of the source endpoint to retrieve.</p>",
+        "ListedDestinationEndpoint$ConnectedSource": "<p>The Amazon Resource Name (ARN) of the source endpoint that is connected to the destination endpoint.</p>",
+        "ListedSourceEndpoint$Arn": "<p>The Amazon Resource Name (ARN) of the source endpoint.</p>",
+        "SourceEndpoint$Arn": "<p>The Amazon Resource Name (ARN) of the source endpoint.</p>",
+        "SourceEndpointArnList$member": null,
+        "UpdateSourceEndpointRequest$Arn": "<p>The Amazon Resource Name (ARN) of the source endpoint to update.</p>"
+      }
+    },
+    "SourceEndpointArnList": {
+      "base": null,
+      "refs": {
+        "RouterOutput$AssociatedSourceEndpointArns": "<p>The Amazon Resource Names (ARNs) of one or more source endpoints that are associated with this router output.</p>"
+      }
+    },
+    "SourceEndpointAssociatedResourceDetails": {
+      "base": "<p>The details of the resource that is associated with a source endpoint. This is a union type, so exactly one of its members is set, depending on the type of the source endpoint.</p>",
+      "refs": {
+        "SourceEndpoint$AssociatedResourceDetails": "<p>The details of the resource that is associated with the source endpoint.</p>"
+      }
+    },
+    "SourceEndpointConfiguration": {
+      "base": "<p>The configuration settings for a source endpoint. This is a union type, so exactly one of its members is set, depending on the type of the source endpoint.</p>",
+      "refs": {
+        "RegisterSourceEndpointRequest$Configuration": "<p>The configuration settings for the source endpoint.</p>",
+        "SourceEndpoint$Configuration": "<p>The configuration settings for the source endpoint.</p>",
+        "UpdateSourceEndpointRequest$Configuration": "<p>The updated configuration settings for the source endpoint.</p>"
+      }
+    },
+    "SourceEndpointConnectionDetails": {
+      "base": "<p>The connection details for a source endpoint. After the source endpoint connects to a destination endpoint, MediaConnect populates these details to describe the connected destination and how the source delivers content to it. This is a union type, so exactly one of its members is set, depending on the source endpoint type.</p>",
+      "refs": {
+        "SourceEndpoint$ConnectionDetails": "<p>The connection details for the source endpoint.</p>"
+      }
+    },
+    "SourceEndpointConnectionState": {
+      "base": null,
+      "refs": {
+        "ListedSourceEndpoint$ConnectionState": "<p>The connection state of the source endpoint. Valid values include the following:</p> <ul> <li> <p> <code>CONNECTED</code> – The source endpoint is connected to a destination endpoint.</p> </li> <li> <p> <code>DISCONNECTED</code> – The source endpoint isn't connected to a destination endpoint.</p> </li> <li> <p> <code>CONNECTING</code> – The source endpoint is connecting to a destination endpoint.</p> </li> <li> <p> <code>DISCONNECTING</code> – The source endpoint is disconnecting from a destination endpoint.</p> </li> </ul>",
+        "SourceEndpoint$ConnectionState": "<p>The connection state of the source endpoint. Valid values include the following:</p> <ul> <li> <p> <code>CONNECTED</code> – The source endpoint is connected to a destination endpoint.</p> </li> <li> <p> <code>DISCONNECTED</code> – The source endpoint isn't connected to a destination endpoint.</p> </li> <li> <p> <code>CONNECTING</code> – The source endpoint is connecting to a destination endpoint.</p> </li> <li> <p> <code>DISCONNECTING</code> – The source endpoint is disconnecting from a destination endpoint.</p> </li> </ul>"
+      }
+    },
+    "SourceEndpointFilter": {
+      "base": "<p>A filter to apply when listing source endpoints. This is a union type, so exactly one of its members is set.</p>",
+      "refs": {
+        "SourceEndpointFilterList$member": null
+      }
+    },
+    "SourceEndpointFilterList": {
+      "base": null,
+      "refs": {
+        "ListSourceEndpointsRequest$Filters": "<p>The filters to apply to the list of source endpoints.</p>"
+      }
+    },
+    "SourceEndpointList": {
+      "base": null,
+      "refs": {
+        "BatchGetSourceEndpointResponse$SourceEndpoints": "<p>The source endpoints that MediaConnect successfully retrieved.</p>"
+      }
+    },
+    "SourceEndpointMessage": {
+      "base": "<p>A status message for a source endpoint.</p>",
+      "refs": {
+        "SourceEndpointMessageList$member": null
+      }
+    },
+    "SourceEndpointMessageList": {
+      "base": null,
+      "refs": {
+        "SourceEndpoint$Messages": "<p>The status messages for the source endpoint.</p>"
+      }
+    },
+    "SourceEndpointNetworkingType": {
+      "base": null,
+      "refs": {
+        "StandardSourceEndpointConfiguration$SourceNetworkingType": "<p>The networking type of the source endpoint. Valid values include the following:</p> <ul> <li> <p> <code>PUBLIC</code> – The source endpoint is publicly accessible.</p> </li> <li> <p> <code>VPC</code> – The source endpoint is in a virtual private cloud (VPC).</p> </li> </ul>"
+      }
+    },
+    "SourceEndpointProtocol": {
+      "base": null,
+      "refs": {
+        "StandardSourceEndpointConfiguration$Protocol": "<p>The protocol used by the source endpoint. Valid values include the following:</p> <ul> <li> <p> <code>RTP</code> – Real-time Transport Protocol.</p> </li> <li> <p> <code>RIST</code> – Reliable Internet Stream Transport.</p> </li> <li> <p> <code>SRT_CALLER</code> – Secure Reliable Transport (SRT) in caller mode.</p> </li> <li> <p> <code>SRT_LISTENER</code> – Secure Reliable Transport (SRT) in listener mode.</p> </li> </ul>"
+      }
+    },
+    "SourceEndpointRegistrationState": {
+      "base": null,
+      "refs": {
+        "ListedSourceEndpoint$RegistrationState": "<p>The registration state of the source endpoint. Valid values include the following:</p> <ul> <li> <p> <code>REGISTERED</code> – The source endpoint is registered and ready to use.</p> </li> <li> <p> <code>REGISTERING</code> – MediaConnect is registering the source endpoint.</p> </li> <li> <p> <code>DEREGISTERING</code> – MediaConnect is deregistering the source endpoint.</p> </li> <li> <p> <code>REGISTRATION_FAILED</code> – MediaConnect couldn't register the source endpoint.</p> </li> </ul>",
+        "SourceEndpoint$RegistrationState": "<p>The registration state of the source endpoint. Valid values include the following:</p> <ul> <li> <p> <code>REGISTERED</code> – The source endpoint is registered and ready to use.</p> </li> <li> <p> <code>REGISTERING</code> – MediaConnect is registering the source endpoint.</p> </li> <li> <p> <code>DEREGISTERING</code> – MediaConnect is deregistering the source endpoint.</p> </li> <li> <p> <code>REGISTRATION_FAILED</code> – MediaConnect couldn't register the source endpoint.</p> </li> </ul>"
+      }
+    },
+    "SourceEndpointRouterOutputConfiguration": {
+      "base": "<p>Configuration settings for a router output that is represented by a source endpoint.</p>",
+      "refs": {
+        "RouterOutputConfiguration$SourceEndpoint": "<p>Configuration settings for a router output that is represented by a source endpoint.</p>"
+      }
+    },
+    "SourceEndpointRouterOutputStreamDetails": {
+      "base": "<p>Configuration details for a router output stream that is represented by a source endpoint.</p>",
+      "refs": {
+        "RouterOutputStreamDetails$SourceEndpoint": "<p>Configuration details for a router output stream that is represented by a source endpoint.</p>"
+      }
+    },
+    "SourceEndpointServiceQuotaExceededException": {
+      "base": "<p>The request would cause you to exceed a service quota for source endpoints. Delete unused source endpoints or request a quota increase, then try your request again.</p>",
+      "refs": {}
+    },
+    "SourceEndpointType": {
+      "base": null,
+      "refs": {
+        "ListedSourceEndpoint$SourceType": "<p>The type of the source endpoint. Valid values include the following:</p> <ul> <li> <p> <code>STANDARD</code> – A source endpoint that represents an external source over a standard protocol, such as RTP, RIST, or SRT.</p> </li> <li> <p> <code>ROUTER_OUTPUT</code> – A source endpoint that represents a router output.</p> </li> </ul>",
+        "RouterInputDestinationEndpointConnectionDetails$SourceEndpointType": "<p>The type of the connected source endpoint.</p>",
+        "SourceEndpoint$SourceType": "<p>The type of the source endpoint. Valid values include the following:</p> <ul> <li> <p> <code>STANDARD</code> – A source endpoint that represents an external source over a standard protocol, such as RTP, RIST, or SRT.</p> </li> <li> <p> <code>ROUTER_OUTPUT</code> – A source endpoint that represents a router output.</p> </li> </ul>",
+        "SourceEndpointTypeList$member": null,
+        "StandardDestinationEndpointConnectionDetails$SourceEndpointType": "<p>The type of the connected source endpoint.</p>"
+      }
+    },
+    "SourceEndpointTypeList": {
+      "base": null,
+      "refs": {
+        "SourceEndpointFilter$SourceTypes": "<p>Filters the results to source endpoints of the specified types.</p>"
+      }
+    },
     "SourcePriority": {
       "base": "<p> The priority you want to assign to a source. You can have a primary stream and a backup stream or two equally prioritized streams. </p>",
       "refs": {
@@ -2721,6 +3459,42 @@
       "base": null,
       "refs": {
         "SrtCallerRouterOutputConfiguration$MinimumLatencyMilliseconds": "<p>The minimum latency in milliseconds for the SRT protocol in caller mode.</p>"
+      }
+    },
+    "SrtCallerStandardDestinationEndpointConfiguration": {
+      "base": "<p>The configuration settings for a destination endpoint that uses SRT in caller mode.</p>",
+      "refs": {
+        "StandardDestinationEndpointProtocolConfiguration$SrtCaller": "<p>The configuration settings for a destination endpoint that uses SRT in caller mode.</p>"
+      }
+    },
+    "SrtCallerStandardDestinationEndpointConfigurationMinimumLatencyMillisecondsLong": {
+      "base": null,
+      "refs": {
+        "SrtCallerStandardDestinationEndpointConfiguration$MinimumLatencyMilliseconds": "<p>The minimum latency, in milliseconds, for the SRT connection. The valid range is 10 to 10000.</p>"
+      }
+    },
+    "SrtCallerStandardDestinationEndpointConfigurationSourceListenerPortInteger": {
+      "base": null,
+      "refs": {
+        "SrtCallerStandardDestinationEndpointConfiguration$SourceListenerPort": "<p>The port on which the source listens for the connection. The valid range is 3000 to 30000.</p>"
+      }
+    },
+    "SrtCallerStandardSourceEndpointConfiguration": {
+      "base": "<p>The configuration settings for a source endpoint that uses SRT in caller mode.</p>",
+      "refs": {
+        "StandardSourceEndpointProtocolConfiguration$SrtCaller": "<p>The configuration settings for a source endpoint that uses SRT in caller mode.</p>"
+      }
+    },
+    "SrtCallerStandardSourceEndpointConfigurationDestinationIngestPortInteger": {
+      "base": null,
+      "refs": {
+        "SrtCallerStandardSourceEndpointConfiguration$DestinationIngestPort": "<p>The port on which the destination listens for the connection. The valid range is 3000 to 30000.</p>"
+      }
+    },
+    "SrtCallerStandardSourceEndpointConfigurationMinimumLatencyMillisecondsLong": {
+      "base": null,
+      "refs": {
+        "SrtCallerStandardSourceEndpointConfiguration$MinimumLatencyMilliseconds": "<p>The minimum latency, in milliseconds, for the SRT connection. The valid range is 10 to 10000.</p>"
       }
     },
     "SrtDecryptionConfiguration": {
@@ -2774,6 +3548,78 @@
         "SrtListenerRouterOutputConfiguration$Port": "<p>The port number for the SRT protocol in listener mode.</p>"
       }
     },
+    "SrtListenerStandardDestinationEndpointConfiguration": {
+      "base": "<p>The configuration settings for a destination endpoint that uses SRT in listener mode.</p>",
+      "refs": {
+        "StandardDestinationEndpointProtocolConfiguration$SrtListener": "<p>The configuration settings for a destination endpoint that uses SRT in listener mode.</p>"
+      }
+    },
+    "SrtListenerStandardDestinationEndpointConfigurationDestinationIngestPortInteger": {
+      "base": null,
+      "refs": {
+        "SrtListenerStandardDestinationEndpointConfiguration$DestinationIngestPort": "<p>The port on which the destination endpoint listens for incoming connections. The valid range is 0 to 65531.</p>"
+      }
+    },
+    "SrtListenerStandardDestinationEndpointConfigurationMinimumLatencyMillisecondsLong": {
+      "base": null,
+      "refs": {
+        "SrtListenerStandardDestinationEndpointConfiguration$MinimumLatencyMilliseconds": "<p>The minimum latency, in milliseconds, for the SRT connection. The valid range is 10 to 10000.</p>"
+      }
+    },
+    "SrtListenerStandardSourceEndpointConfiguration": {
+      "base": "<p>The configuration settings for a source endpoint that uses SRT in listener mode.</p>",
+      "refs": {
+        "StandardSourceEndpointProtocolConfiguration$SrtListener": "<p>The configuration settings for a source endpoint that uses SRT in listener mode.</p>"
+      }
+    },
+    "SrtListenerStandardSourceEndpointConfigurationMinimumLatencyMillisecondsLong": {
+      "base": null,
+      "refs": {
+        "SrtListenerStandardSourceEndpointConfiguration$MinimumLatencyMilliseconds": "<p>The minimum latency, in milliseconds, for the SRT connection. The valid range is 10 to 10000.</p>"
+      }
+    },
+    "SrtListenerStandardSourceEndpointConfigurationSourceListenerPortInteger": {
+      "base": null,
+      "refs": {
+        "SrtListenerStandardSourceEndpointConfiguration$SourceListenerPort": "<p>The port that the source endpoint listens on for incoming connections. The valid range is 1024 to 65535.</p>"
+      }
+    },
+    "StandardDestinationEndpointAssociatedResourceDetails": {
+      "base": "<p>The associated resource details for a standard destination endpoint. This type does not require any additional settings.</p>",
+      "refs": {
+        "DestinationEndpointAssociatedResourceDetails$Standard": "<p>The associated resource details for a standard destination endpoint.</p>"
+      }
+    },
+    "StandardDestinationEndpointConfiguration": {
+      "base": "<p>The configuration settings for a standard destination endpoint.</p>",
+      "refs": {
+        "DestinationEndpointConfiguration$Standard": "<p>The configuration settings for a standard destination endpoint, which represents an external destination.</p>"
+      }
+    },
+    "StandardDestinationEndpointConfigurationNameString": {
+      "base": null,
+      "refs": {
+        "StandardDestinationEndpointConfiguration$Name": "<p>The name of the destination endpoint.</p>"
+      }
+    },
+    "StandardDestinationEndpointConnectionDetails": {
+      "base": "<p>The connection details for a standard destination endpoint.</p>",
+      "refs": {
+        "DestinationEndpointConnectionDetails$Standard": "<p>The connection details for a standard destination endpoint.</p>"
+      }
+    },
+    "StandardDestinationEndpointNetworkingConfiguration": {
+      "base": "<p>The networking configuration for a standard destination endpoint. This is a union type, so exactly one of its members is set: <code>public</code> for a publicly accessible endpoint, or <code>vpc</code> for an endpoint in a virtual private cloud (VPC).</p>",
+      "refs": {
+        "StandardDestinationEndpointConfiguration$DestinationNetworkingConfiguration": "<p>The networking configuration for the destination endpoint, which determines whether it is publicly accessible or in a virtual private cloud (VPC).</p>"
+      }
+    },
+    "StandardDestinationEndpointProtocolConfiguration": {
+      "base": "<p>The protocol configuration for a standard destination endpoint. This is a union type, so exactly one of its members is set, depending on the protocol that the destination endpoint uses.</p>",
+      "refs": {
+        "StandardDestinationEndpointConfiguration$ProtocolConfiguration": "<p>The protocol configuration for the destination endpoint.</p>"
+      }
+    },
     "StandardRouterInputConfiguration": {
       "base": "<p>The configuration settings for a standard router input, including the protocol, protocol-specific configuration, network interface, and availability zone.</p>",
       "refs": {
@@ -2796,6 +3642,42 @@
       "base": "<p>Configuration details for a standard router output stream type. Contains information about the destination IP address and connection state for basic output routing.</p>",
       "refs": {
         "RouterOutputStreamDetails$Standard": null
+      }
+    },
+    "StandardSourceEndpointAssociatedResourceDetails": {
+      "base": "<p>The associated resource details for a standard source endpoint. This type does not require any additional settings.</p>",
+      "refs": {
+        "SourceEndpointAssociatedResourceDetails$Standard": "<p>The associated resource details for a standard source endpoint.</p>"
+      }
+    },
+    "StandardSourceEndpointConfiguration": {
+      "base": "<p>The configuration settings for a standard source endpoint.</p>",
+      "refs": {
+        "SourceEndpointConfiguration$Standard": "<p>The configuration settings for a standard source endpoint, which represents an external source.</p>"
+      }
+    },
+    "StandardSourceEndpointConfigurationNameString": {
+      "base": null,
+      "refs": {
+        "StandardSourceEndpointConfiguration$Name": "<p>The name of the source endpoint.</p>"
+      }
+    },
+    "StandardSourceEndpointConnectionDetails": {
+      "base": "<p>The connection details for a standard source endpoint.</p>",
+      "refs": {
+        "SourceEndpointConnectionDetails$Standard": "<p>The connection details for a standard source endpoint.</p>"
+      }
+    },
+    "StandardSourceEndpointNetworkingConfiguration": {
+      "base": "<p>The networking configuration for a standard source endpoint. This is a union type, so exactly one of its members is set: <code>public</code> for a publicly accessible endpoint, or <code>vpc</code> for an endpoint in a virtual private cloud (VPC).</p>",
+      "refs": {
+        "StandardSourceEndpointConfiguration$SourceNetworkingConfiguration": "<p>The networking configuration for the source endpoint, which determines whether it is publicly accessible or in a virtual private cloud (VPC).</p>"
+      }
+    },
+    "StandardSourceEndpointProtocolConfiguration": {
+      "base": "<p>The protocol configuration for a standard source endpoint. This is a union type, so exactly one of its members is set, depending on the protocol that the source endpoint uses.</p>",
+      "refs": {
+        "StandardSourceEndpointConfiguration$ProtocolConfiguration": "<p>The protocol configuration for the source endpoint.</p>"
       }
     },
     "StartFlowRequest": {
@@ -2912,12 +3794,16 @@
         "AddOutputRequest$StreamId": "<p> The stream ID that you want to use for this transport. This parameter applies only to Zixi and SRT caller-based streams.</p>",
         "AddOutputRequest$NdiProgramName": "<p> A suffix for the name of the NDI® sender that the flow creates. If a custom name isn't specified, MediaConnect uses the output name. </p>",
         "BadRequestException$Message": null,
+        "BatchGetDestinationEndpointError$Code": "<p>The error code.</p>",
+        "BatchGetDestinationEndpointError$Message": "<p>A description of the error.</p>",
         "BatchGetRouterInputError$Code": "<p>The error code associated with the error.</p>",
         "BatchGetRouterInputError$Message": "<p>A message describing the error.</p>",
         "BatchGetRouterNetworkInterfaceError$Code": "<p>The error code associated with the error.</p>",
         "BatchGetRouterNetworkInterfaceError$Message": "<p>A message describing the error.</p>",
         "BatchGetRouterOutputError$Code": "<p>The error code associated with the error.</p>",
         "BatchGetRouterOutputError$Message": "<p>A message describing the error.</p>",
+        "BatchGetSourceEndpointError$Code": "<p>The error code.</p>",
+        "BatchGetSourceEndpointError$Message": "<p>A description of the error.</p>",
         "Bridge$BridgeArn": "<p> The Amazon Resource Number (ARN) of the bridge.</p>",
         "Bridge$Name": "<p> The name of the bridge.</p>",
         "Bridge$PlacementArn": "<p> The placement Amazon Resource Number (ARN) of the bridge.</p>",
@@ -2934,6 +3820,9 @@
         "BridgeNetworkSource$Name": "<p> The name of the network source.</p>",
         "BridgeNetworkSource$NetworkName": "<p> The network source's gateway network name.</p>",
         "ConflictException$Message": null,
+        "ConnectEndpointsResponse$DestinationEndpointName": "<p>The name of the connected destination endpoint.</p>",
+        "ConnectEndpointsResponse$SourceEndpointName": "<p>The name of the connected source endpoint.</p>",
+        "ConsumedResourceShareDetails$OwnerAccountId": "<p>The ID of the Amazon Web Services account that owns the shared endpoint.</p>",
         "CreateBridge420Exception$Message": null,
         "CreateBridgeRequest$Name": "<p> The name of the bridge. This name can not be modified after the bridge is created.</p>",
         "CreateBridgeRequest$PlacementArn": "<p> The bridge placement Amazon Resource Number (ARN).</p>",
@@ -2953,11 +3842,24 @@
         "DeleteRouterInputResponse$Name": "<p>The name of the deleted router input.</p>",
         "DeleteRouterNetworkInterfaceResponse$Name": "<p>The name of the deleted router network interface.</p>",
         "DeleteRouterOutputResponse$Name": "<p>The name of the deleted router output.</p>",
+        "DeregisterDestinationEndpointResponse$Name": "<p>The name of the destination endpoint that was deregistered.</p>",
         "DeregisterGatewayInstanceResponse$GatewayInstanceArn": "<p> The ARN of the instance.</p>",
+        "DeregisterSourceEndpointResponse$Name": "<p>The name of the source endpoint that was deregistered.</p>",
         "DescribeFlowSourceMetadataResponse$FlowArn": "<p> The ARN of the flow that DescribeFlowSourceMetadata was performed on.</p>",
         "DestinationConfiguration$DestinationIp": "<p>The IP address where you want MediaConnect to send contents of the media stream.</p>",
         "DestinationConfiguration$OutboundIp": "<p>The IP address that the receiver requires in order to establish a connection with the flow. This value is represented by the elastic network interface IP address of the VPC. This field applies only to outputs that use the CDI or ST 2110 JPEG XS or protocol. </p>",
         "DestinationConfigurationRequest$DestinationIp": "<p>The IP address where you want MediaConnect to send contents of the media stream.</p>",
+        "DestinationEndpoint$Name": "<p>The name of the destination endpoint.</p>",
+        "DestinationEndpoint$Id": "<p>The unique identifier of the destination endpoint.</p>",
+        "DestinationEndpoint$Description": "<p>The description of the destination endpoint.</p>",
+        "DestinationEndpoint$RegionName": "<p>The name of the Amazon Web Services Region in which the destination endpoint is located.</p>",
+        "DestinationEndpoint$AvailabilityZone": "<p>The Availability Zone in which the destination endpoint is located.</p>",
+        "DestinationEndpoint$AvailabilityZoneId": "<p>The ID of the Availability Zone in which the destination endpoint is located.</p>",
+        "DestinationEndpointMessage$Code": "<p>The message code.</p>",
+        "DestinationEndpointMessage$Message": "<p>The message text.</p>",
+        "DestinationEndpointServiceQuotaExceededException$Message": null,
+        "DisconnectEndpointsResponse$DestinationEndpointName": "<p>The name of the disconnected destination endpoint.</p>",
+        "DisconnectEndpointsResponse$SourceEndpointName": "<p>The name of the disconnected source endpoint.</p>",
         "EgressGatewayBridge$InstanceId": "<p> The ID of the instance running this bridge.</p>",
         "Encryption$ConstantInitializationVector": "<p> A 128-bit, 16-byte hex value represented by a 32-character string, to be used with the key for encrypting content. This parameter is not valid for static key encryption.</p>",
         "Encryption$DeviceId": "<p> The value of one of the devices that you configured with your digital rights management (DRM) platform key provider. This parameter is required for SPEKE encryption and is not valid for static key encryption.</p>",
@@ -3004,6 +3906,8 @@
         "ListBridgesRequest$FilterArn": "<p> Filter the list results to display only the bridges associated with the selected ARN.</p>",
         "ListBridgesRequest$NextToken": "<p> The token that identifies the batch of results that you want to see. </p> <p>For example, you submit a <code>ListBridges</code> request with <code>MaxResults</code> set at 5. The service returns the first batch of results (up to 5) and a <code>NextToken</code> value. To see the next batch of results, you can submit the <code>ListBridges</code> request a second time and specify the <code>NextToken</code> value.</p>",
         "ListBridgesResponse$NextToken": "<p> The token that identifies the batch of results that you want to see. </p> <p>For example, you submit a <code>ListBridges</code> request with <code>MaxResults</code> set at 5. The service returns the first batch of results (up to 5) and a <code>NextToken</code> value. To see the next batch of results, you can submit the <code>ListBridges</code> request a second time and specify the <code>NextToken</code> value.</p>",
+        "ListDestinationEndpointsRequest$NextToken": "<p>The token that identifies the next page of results to return. Use the token that a previous request returned.</p>",
+        "ListDestinationEndpointsResponse$NextToken": "<p>The token to use in the next request to retrieve the next page of results. This value is null when there are no more results to return.</p>",
         "ListEntitlementsRequest$NextToken": "<p> The token that identifies the batch of results that you want to see. </p> <p>For example, you submit a <code>ListEntitlements</code> request with <code>MaxResults</code> set at 5. The service returns the first batch of results (up to 5) and a <code>NextToken</code> value. To see the next batch of results, you can submit the <code>ListEntitlements</code> request a second time and specify the <code>NextToken</code> value.</p>",
         "ListEntitlementsResponse$NextToken": "<p>The token that identifies the batch of results that you want to see. </p> <p>For example, you submit a ListEntitlements request with <code>MaxResults</code> set at 5. The service returns the first batch of results (up to 5) and a NextToken value. To see the next batch of results, you can submit the <code>ListEntitlements</code> request a second time and specify the <code>NextToken</code> value. </p>",
         "ListFlowsRequest$NextToken": "<p> The token that identifies the batch of results that you want to see. </p> <p>For example, you submit a <code>ListFlows</code> request with MaxResults set at 5. The service returns the first batch of results (up to 5) and a <code>NextToken</code> value. To see the next batch of results, you can submit the <code>ListFlows</code> request a second time and specify the <code>NextToken</code> value.</p>",
@@ -3023,12 +3927,20 @@
         "ListRouterNetworkInterfacesResponse$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
         "ListRouterOutputsRequest$NextToken": "<p>A token used to retrieve the next page of results.</p>",
         "ListRouterOutputsResponse$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
+        "ListSourceEndpointsRequest$NextToken": "<p>The token that identifies the next page of results to return. Use the token that a previous request returned.</p>",
+        "ListSourceEndpointsResponse$NextToken": "<p>The token to use in the next request to retrieve the next page of results. This value is null when there are no more results to return.</p>",
         "ListTagsForGlobalResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the global resource whose tags you want to list.</p>",
         "ListTagsForResourceRequest$ResourceArn": "<p> The Amazon Resource Name (ARN) that identifies the MediaConnect resource for which to list the tags.</p>",
         "ListedBridge$BridgeArn": "<p> The ARN of the bridge.</p>",
         "ListedBridge$BridgeType": "<p> The type of the bridge.</p>",
         "ListedBridge$Name": "<p> The name of the bridge.</p>",
         "ListedBridge$PlacementArn": "<p> The ARN of the gateway associated with the bridge.</p>",
+        "ListedDestinationEndpoint$Name": "<p>The name of the destination endpoint.</p>",
+        "ListedDestinationEndpoint$Id": "<p>The unique identifier of the destination endpoint.</p>",
+        "ListedDestinationEndpoint$RegionName": "<p>The name of the Amazon Web Services Region in which the destination endpoint is located.</p>",
+        "ListedDestinationEndpoint$AvailabilityZone": "<p>The Availability Zone in which the destination endpoint is located.</p>",
+        "ListedDestinationEndpoint$AvailabilityZoneId": "<p>The ID of the Availability Zone in which the destination endpoint is located.</p>",
+        "ListedDestinationEndpoint$AssociatedResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that is associated with the destination endpoint.</p>",
         "ListedEntitlement$EntitlementArn": "<p> The ARN of the entitlement.</p>",
         "ListedEntitlement$EntitlementName": "<p> The name of the entitlement.</p>",
         "ListedFlow$AvailabilityZone": "<p> The Availability Zone that the flow was created in.</p>",
@@ -3051,6 +3963,12 @@
         "ListedRouterOutput$Id": "<p>The unique identifier of the router output.</p>",
         "ListedRouterOutput$RegionName": "<p>The AAmazon Web Services Region where the router output is located.</p>",
         "ListedRouterOutput$AvailabilityZone": "<p>The Availability Zone of the router output.</p>",
+        "ListedSourceEndpoint$Name": "<p>The name of the source endpoint.</p>",
+        "ListedSourceEndpoint$Id": "<p>The unique identifier of the source endpoint.</p>",
+        "ListedSourceEndpoint$RegionName": "<p>The name of the Amazon Web Services Region in which the source endpoint is located.</p>",
+        "ListedSourceEndpoint$AvailabilityZone": "<p>The Availability Zone in which the source endpoint is located.</p>",
+        "ListedSourceEndpoint$AvailabilityZoneId": "<p>The ID of the Availability Zone in which the source endpoint is located.</p>",
+        "ListedSourceEndpoint$AssociatedResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that is associated with the source endpoint.</p>",
         "Maintenance$MaintenanceDeadline": "<p> The Maintenance has to be performed before this deadline in ISO UTC format. Example: 2021-01-30T08:30:00Z.</p>",
         "Maintenance$MaintenanceScheduledDate": "<p> A scheduled date in ISO UTC format when the maintenance will happen. Use YYYY-MM-DD format. Example: 2021-01-30.</p>",
         "Maintenance$MaintenanceStartHour": "<p> UTC time when the maintenance will happen. Use 24-hour HH:MM format. Minutes must be 00. Example: 13:00. The default value is 02:00.</p>",
@@ -3096,6 +4014,8 @@
         "PurchaseOfferingRequest$OfferingArn": "<p> The Amazon Resource Name (ARN) of the offering.</p>",
         "PurchaseOfferingRequest$ReservationName": "<p> The name that you want to use for the reservation.</p>",
         "PurchaseOfferingRequest$Start": "<p> The date and time that you want the reservation to begin, in Coordinated Universal Time (UTC). </p> <p>You can specify any date and time between 12:00am on the first day of the current month to the current time on today's date, inclusive. Specify the start in a 24-hour notation. Use the following format: <code>YYYY-MM-DDTHH:mm:SSZ</code>, where <code>T</code> and <code>Z</code> are literal characters. For example, to specify 11:30pm on March 5, 2020, enter <code>2020-03-05T23:30:00Z</code>.</p>",
+        "RegisterDestinationEndpointRequest$RegionName": "<p>The name of the Amazon Web Services Region in which to register the destination endpoint. Defaults to the current region if not specified.</p>",
+        "RegisterSourceEndpointRequest$RegionName": "<p>The name of the Amazon Web Services Region in which to register the source endpoint. Defaults to the current region if not specified.</p>",
         "RemoveBridgeOutputRequest$OutputName": "<p> The name of the bridge output that you want to remove.</p>",
         "RemoveBridgeOutputResponse$BridgeArn": "<p> The ARN of the bridge from which the output was removed. </p>",
         "RemoveBridgeOutputResponse$OutputName": "<p> The name of the bridge output that was removed. </p>",
@@ -3125,11 +4045,13 @@
         "RevokeFlowEntitlementResponse$EntitlementArn": "<p> The ARN of the entitlement that was revoked.</p>",
         "RevokeFlowEntitlementResponse$FlowArn": "<p> The ARN of the flow that the entitlement was revoked from.</p>",
         "RistRouterOutputConfiguration$DestinationAddress": "<p>The destination IP address for the RIST protocol in the router output configuration.</p>",
+        "RistStandardDestinationEndpointConfiguration$DestinationAddress": "<p>The IP address on which the destination endpoint receives content.</p>",
         "RouterInput$Name": "<p>The name of the router input.</p>",
         "RouterInput$Id": "<p>The unique identifier of the router input.</p>",
         "RouterInput$RegionName": "<p>The Amazon Web Services Region where the router input is located.</p>",
         "RouterInput$AvailabilityZone": "<p>The Availability Zone of the router input.</p>",
         "RouterInput$IpAddress": "<p>The IP address of the router input.</p>",
+        "RouterInputDestinationEndpointAssociatedResourceDetails$Name": "<p>The name of the router input.</p>",
         "RouterInputMessage$Code": "<p>The code associated with the router input message.</p>",
         "RouterInputMessage$Message": "<p>The message text associated with the router input message.</p>",
         "RouterInputServiceQuotaExceededException$Message": null,
@@ -3146,10 +4068,12 @@
         "RouterOutputMessage$Code": "<p>The code associated with the router output message.</p>",
         "RouterOutputMessage$Message": "<p>The message text associated with the router output message.</p>",
         "RouterOutputServiceQuotaExceededException$Message": null,
+        "RouterOutputSourceEndpointAssociatedResourceDetails$Name": "<p>The name of the router output.</p>",
         "RtmpPushRouterOutputConfiguration$DestinationAddress": "<p>The IP address or hostname of the destination RTMP server that the router output pushes the stream to. Provide only the server address; specify the application and stream names separately.</p>",
         "RtmpPushRouterOutputConfiguration$ApplicationName": "<p>The name of the RTMP application on the destination server. Together with the stream name, the application name forms the RTMP URL path, in the pattern <code>rtmp://destinationAddress/applicationName/streamName</code>.</p>",
         "RtmpPushRouterOutputConfiguration$StreamName": "<p>The name of the RTMP stream that the output publishes to the destination application. The stream name forms the final segment of the RTMP URL path.</p>",
         "RtpRouterOutputConfiguration$DestinationAddress": "<p>The destination IP address for the RTP protocol in the router output configuration.</p>",
+        "RtpStandardDestinationEndpointConfiguration$DestinationAddress": "<p>The IP address on which the destination endpoint receives content.</p>",
         "ServiceUnavailableException$Message": null,
         "SetSourceRequest$Description": "<p> A description for the source. This value is not used or seen outside of the current MediaConnect account.</p>",
         "SetSourceRequest$Name": "<p> The name of the source.</p>",
@@ -3168,13 +4092,28 @@
         "Source$WhitelistCidr": "<p> The range of IP addresses that should be allowed to contribute content to your source. These IP addresses should be in the form of a Classless Inter-Domain Routing (CIDR) block; for example, 10.0.0.0/16.</p>",
         "Source$PeerIpAddress": "<p>The IP address of the device that is currently sending content to this source. </p> <note> <ul> <li> <p>For sources that use protocols where you specify the origin (such as SRT Caller), this value matches the configured origin address. </p> </li> <li> <p>For sources that use listener protocols (such as SRT Listener or RTP), this value shows the address of the connected sender. </p> </li> <li> <p>Peer IP addresses aren't available for entitlements and CDI/ST2110 sources.</p> </li> <li> <p>The peer IP address might not be visible for flows that haven't been started yet, or flows that were started before May 2025. In these cases, restart your flow to see the peer IP address.</p> </li> </ul> </note>",
         "Source$ConnectedRouterOutputArn": "<p>The ARN of the router output that's currently connected to this source.</p>",
+        "SourceEndpoint$Name": "<p>The name of the source endpoint.</p>",
+        "SourceEndpoint$Id": "<p>The unique identifier of the source endpoint.</p>",
+        "SourceEndpoint$Description": "<p>The description of the source endpoint.</p>",
+        "SourceEndpoint$RegionName": "<p>The name of the Amazon Web Services Region in which the source endpoint is located.</p>",
+        "SourceEndpoint$AvailabilityZone": "<p>The Availability Zone in which the source endpoint is located.</p>",
+        "SourceEndpoint$AvailabilityZoneId": "<p>The ID of the Availability Zone in which the source endpoint is located.</p>",
+        "SourceEndpointMessage$Code": "<p>The message code.</p>",
+        "SourceEndpointMessage$Message": "<p>The message text.</p>",
+        "SourceEndpointServiceQuotaExceededException$Message": null,
         "SourcePriority$PrimarySource": "<p> The name of the source you choose as the primary source for this flow.</p>",
         "SrtCallerRouterInputConfiguration$SourceAddress": "<p>The source IP address for the SRT protocol in caller mode.</p>",
         "SrtCallerRouterInputConfiguration$StreamId": "<p>The stream ID for the SRT protocol in caller mode.</p>",
         "SrtCallerRouterOutputConfiguration$DestinationAddress": "<p>The destination IP address for the SRT protocol in caller mode.</p>",
         "SrtCallerRouterOutputConfiguration$StreamId": "<p>The stream ID for the SRT protocol in caller mode.</p>",
+        "SrtListenerStandardDestinationEndpointConfiguration$DestinationAddress": "<p>The IP address on which the destination endpoint listens for incoming connections.</p>",
+        "SrtListenerStandardDestinationEndpointConfiguration$StreamId": "<p>The stream ID that identifies the content for the SRT connection.</p>",
+        "SrtListenerStandardSourceEndpointConfiguration$SourceAddress": "<p>The IP address that the source endpoint listens on for incoming connections.</p>",
+        "SrtListenerStandardSourceEndpointConfiguration$StreamId": "<p>The stream ID that identifies the content for the SRT connection.</p>",
+        "StandardDestinationEndpointConnectionDetails$SourceIpAddress": "<p>The IP address of the source that is connected to the destination endpoint.</p>",
         "StandardRouterInputStreamDetails$SourceIpAddress": "<p>The source IP address for the standard router input stream.</p>",
         "StandardRouterOutputStreamDetails$DestinationIpAddress": "<p>The IP address where the output stream will be sent. This is the destination address that will receive the routed media content.</p>",
+        "StandardSourceEndpointConnectionDetails$DestinationIpAddress": "<p>The IP address of the destination that receives the content.</p>",
         "StartFlowResponse$FlowArn": "<p> The ARN of the flow that you started.</p>",
         "StartRouterInputResponse$Name": "<p>The name of the router input that was started.</p>",
         "StartRouterOutputResponse$Name": "<p>The name of the router output that was started.</p>",
@@ -3240,6 +4179,8 @@
         "UpdateGatewayInstanceResponse$GatewayInstanceArn": "<p>The ARN of the instance that was updated. </p>",
         "UpdateMaintenance$MaintenanceScheduledDate": "<p> A scheduled date in ISO UTC format when the maintenance will happen. Use YYYY-MM-DD format. Example: 2021-01-30.</p>",
         "UpdateMaintenance$MaintenanceStartHour": "<p> UTC time when the maintenance will happen. Use 24-hour HH:MM format. Minutes must be 00. Example: 13:00. The default value is 02:00.</p>",
+        "VpcDestinationEndpointNetworkingConfiguration$SubnetId": "<p>The ID of the subnet to use for the destination endpoint.</p>",
+        "VpcDestinationEndpointNetworkingConfigurationSecurityGroupIdsList$member": null,
         "VpcInterface$Name": "<p> Immutable and has to be a unique against other VpcInterfaces in this Flow.</p>",
         "VpcInterface$RoleArn": "<p> A role Arn MediaConnect can assume to create ENIs in your account.</p>",
         "VpcInterface$SubnetId": "<p> Subnet must be in the AZ of the Flow. </p>",
@@ -3249,6 +4190,8 @@
         "VpcInterfaceRequest$SubnetId": "<p> The subnet IDs that you want to use for your VPC interface. A range of IP addresses in your VPC. When you create your VPC, you specify a range of IPv4 addresses for the VPC in the form of a Classless Inter-Domain Routing (CIDR) block; for example, 10.0.0.0/16. This is the primary CIDR block for your VPC. When you create a subnet for your VPC, you specify the CIDR block for the subnet, which is a subset of the VPC CIDR block. The subnets that you use across all VPC interfaces on the flow must be in the same Availability Zone as the flow. </p>",
         "VpcRouterNetworkInterfaceConfiguration$SubnetId": "<p>The ID of the subnet within the VPC to associate the router network interface with.</p>",
         "VpcRouterNetworkInterfaceConfigurationSecurityGroupIdsList$member": null,
+        "VpcSourceEndpointNetworkingConfiguration$SubnetId": "<p>The ID of the subnet to use for the source endpoint.</p>",
+        "VpcSourceEndpointNetworkingConfigurationSecurityGroupIdsList$member": null,
         "__listOfString$member": null,
         "__mapOfString$key": null,
         "__mapOfString$value": null
@@ -3257,24 +4200,34 @@
     "StringList": {
       "base": null,
       "refs": {
+        "DestinationEndpointFilter$RegionNames": "<p>Filters the results to destination endpoints in the specified Amazon Web Services Regions.</p>",
+        "DestinationEndpointFilter$NameContains": "<p>Filters the results to destination endpoints whose names contain the specified strings.</p>",
         "RouterInputFilter$NameContains": "<p>The names of the router inputs to include in the filter.</p>",
         "RouterInputFilter$RegionNames": "<p>The AWS Regions of the router inputs to include in the filter.</p>",
         "RouterNetworkInterfaceFilter$RegionNames": "<p>The AWS Regions of the router network interfaces to include in the filter.</p>",
         "RouterNetworkInterfaceFilter$NameContains": "<p>The names of the router network interfaces to include in the filter.</p>",
         "RouterOutputFilter$RegionNames": "<p>The AWS Regions of the router outputs to include in the filter.</p>",
-        "RouterOutputFilter$NameContains": "<p>The names of the router outputs to include in the filter.</p>"
+        "RouterOutputFilter$NameContains": "<p>The names of the router outputs to include in the filter.</p>",
+        "SourceEndpointFilter$RegionNames": "<p>Filters the results to source endpoints in the specified Amazon Web Services Regions.</p>",
+        "SourceEndpointFilter$NameContains": "<p>Filters the results to source endpoints whose names contain the specified strings.</p>"
       }
     },
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
         "DescribeFlowSourceMetadataResponse$Timestamp": "<p> The timestamp of the most recent change in metadata for this flow’s source.</p>",
+        "DestinationEndpoint$CreatedAt": "<p>The date and time when the destination endpoint was created.</p>",
+        "DestinationEndpoint$UpdatedAt": "<p>The date and time when the destination endpoint was last updated.</p>",
+        "ListedDestinationEndpoint$CreatedAt": "<p>The date and time when the destination endpoint was created.</p>",
+        "ListedDestinationEndpoint$UpdatedAt": "<p>The date and time when the destination endpoint was last updated.</p>",
         "ListedRouterInput$CreatedAt": "<p>The timestamp when the router input was created.</p>",
         "ListedRouterInput$UpdatedAt": "<p>The timestamp when the router input was last updated.</p>",
         "ListedRouterNetworkInterface$CreatedAt": "<p>The timestamp when the network interface was created.</p>",
         "ListedRouterNetworkInterface$UpdatedAt": "<p>The timestamp when the router network interface was last updated.</p>",
         "ListedRouterOutput$CreatedAt": "<p>The timestamp when the router output was created.</p>",
         "ListedRouterOutput$UpdatedAt": "<p>The timestamp when the router output was last updated.</p>",
+        "ListedSourceEndpoint$CreatedAt": "<p>The date and time when the source endpoint was created.</p>",
+        "ListedSourceEndpoint$UpdatedAt": "<p>The date and time when the source endpoint was last updated.</p>",
         "RouterInput$CreatedAt": "<p>The timestamp when the router input was created.</p>",
         "RouterInput$UpdatedAt": "<p>The timestamp when the router input was last updated.</p>",
         "RouterInputSourceMetadataDetails$Timestamp": "<p>The timestamp when the metadata was last updated.</p>",
@@ -3283,6 +4236,8 @@
         "RouterNetworkInterface$UpdatedAt": "<p>The timestamp when the router network interface was last updated.</p>",
         "RouterOutput$CreatedAt": "<p>The timestamp when the router output was created.</p>",
         "RouterOutput$UpdatedAt": "<p>The timestamp when the router output was last updated.</p>",
+        "SourceEndpoint$CreatedAt": "<p>The date and time when the source endpoint was created.</p>",
+        "SourceEndpoint$UpdatedAt": "<p>The date and time when the source endpoint was last updated.</p>",
         "ThumbnailDetails$Timestamp": "<p> The timestamp of when thumbnail was generated.</p>",
         "WindowMaintenanceSchedule$Start": "<p>The start time of the maintenance window.</p>",
         "WindowMaintenanceSchedule$End": "<p>The end time of the maintenance window.</p>",
@@ -3457,6 +4412,20 @@
       }
     },
     "UpdateBridgeStateResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDestinationEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDestinationEndpointRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "UpdateDestinationEndpointRequest$Description": "<p>A description to help you identify the destination endpoint.</p>"
+      }
+    },
+    "UpdateDestinationEndpointResponse": {
       "base": null,
       "refs": {}
     },
@@ -3655,6 +4624,20 @@
       "base": null,
       "refs": {}
     },
+    "UpdateSourceEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSourceEndpointRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "UpdateSourceEndpointRequest$Description": "<p>A description to help you identify the source endpoint.</p>"
+      }
+    },
+    "UpdateSourceEndpointResponse": {
+      "base": null,
+      "refs": {}
+    },
     "VideoColorimetry": {
       "base": null,
       "refs": {
@@ -3677,6 +4660,18 @@
       "base": null,
       "refs": {
         "ColorInformation$TransferCharacteristics": "<p>The transfer characteristics that the video stream uses (for example, <code>BT601</code>, <code>BT709</code>, <code>BT2100_PQ</code>, or <code>BT2100_HLG</code>).</p>"
+      }
+    },
+    "VpcDestinationEndpointNetworkingConfiguration": {
+      "base": "<p>The networking configuration for a destination endpoint in a virtual private cloud (VPC).</p>",
+      "refs": {
+        "StandardDestinationEndpointNetworkingConfiguration$Vpc": "<p>The configuration for a destination endpoint in a virtual private cloud (VPC).</p>"
+      }
+    },
+    "VpcDestinationEndpointNetworkingConfigurationSecurityGroupIdsList": {
+      "base": null,
+      "refs": {
+        "VpcDestinationEndpointNetworkingConfiguration$SecurityGroupIds": "<p>The IDs of the security groups to associate with the destination endpoint. You can specify from 1 to 5 security groups.</p>"
       }
     },
     "VpcInterface": {
@@ -3715,6 +4710,18 @@
       "base": null,
       "refs": {
         "VpcRouterNetworkInterfaceConfiguration$SecurityGroupIds": "<p>The IDs of the security groups to associate with the router network interface within the VPC.</p>"
+      }
+    },
+    "VpcSourceEndpointNetworkingConfiguration": {
+      "base": "<p>The networking configuration for a source endpoint in a virtual private cloud (VPC).</p>",
+      "refs": {
+        "StandardSourceEndpointNetworkingConfiguration$Vpc": "<p>The configuration for a source endpoint in a virtual private cloud (VPC).</p>"
+      }
+    },
+    "VpcSourceEndpointNetworkingConfigurationSecurityGroupIdsList": {
+      "base": null,
+      "refs": {
+        "VpcSourceEndpointNetworkingConfiguration$SecurityGroupIds": "<p>The IDs of the security groups to associate with the source endpoint. You can specify from 1 to 5 security groups.</p>"
       }
     },
     "WindowMaintenanceSchedule": {
@@ -4008,13 +5015,17 @@
         "CreateRouterInputRequest$Tags": "<p>Key-value pairs that can be used to tag and organize this router input.</p>",
         "CreateRouterNetworkInterfaceRequest$Tags": "<p>Key-value pairs that can be used to tag and organize this router network interface.</p>",
         "CreateRouterOutputRequest$Tags": "<p>Key-value pairs that can be used to tag this router output.</p>",
+        "DestinationEndpoint$Tags": "<p>The tags associated with the destination endpoint. Each tag is a key-value pair.</p>",
         "GrantEntitlementRequest$EntitlementTags": "<p> The key-value pairs that can be used to tag and organize the entitlement. </p>",
         "ListTagsForGlobalResourceResponse$Tags": "<p>A map of tag keys and values associated with the global resource.</p>",
         "ListTagsForResourceResponse$Tags": "<p> A map from tag keys to values. Tag keys can have a maximum character length of 128 characters, and tag values can have a maximum length of 256 characters.</p>",
+        "RegisterDestinationEndpointRequest$Tags": "<p>The tags to apply to the destination endpoint. Each tag is a key-value pair.</p>",
+        "RegisterSourceEndpointRequest$Tags": "<p>The tags to apply to the source endpoint. Each tag is a key-value pair.</p>",
         "RouterInput$Tags": "<p>Key-value pairs that can be used to tag and organize this router input.</p>",
         "RouterNetworkInterface$Tags": "<p>Key-value pairs that can be used to tag and organize this router network interface.</p>",
         "RouterOutput$Tags": "<p>Key-value pairs that can be used to tag and organize this router output.</p>",
         "SetSourceRequest$SourceTags": "<p> The key-value pairs that can be used to tag and organize the source. </p>",
+        "SourceEndpoint$Tags": "<p>The tags associated with the source endpoint. Each tag is a key-value pair.</p>",
         "TagGlobalResourceRequest$Tags": "<p>A map of tag keys and values to add to the global resource.</p>",
         "TagResourceRequest$Tags": "<p> A map from tag keys to values. Tag keys can have a maximum character length of 128 characters, and tag values can have a maximum length of 256 characters.</p>",
         "VpcInterfaceRequest$VpcInterfaceTags": "<p> The key-value pairs that can be used to tag and organize the VPC network interface. </p>"

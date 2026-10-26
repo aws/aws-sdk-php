@@ -1,28 +1,29 @@
 {
   "version": "2.0",
-  "service": "<p>AWS Sign-In manages authentication for AWS services. This service provides secure authentication flows for accessing AWS resources from the console and developer tools.</p>",
+  "service": "<p>AWS Sign-In manages authentication for AWS services. It implements OAuth 2.0, providing secure token exchange and refresh capabilities.</p>",
   "operations": {
-    "CreateOAuth2Token": "<p>CreateOAuth2Token API</p> <p>Path: /v1/token Request Method: POST Content-Type: application/json or application/x-www-form-urlencoded</p> <p>This API implements OAuth 2.0 flows for AWS Sign-In CLI clients, supporting both:</p> <ol> <li>Authorization code redemption (grant_type=authorization_code) - NOT idempotent</li> <li>Token refresh (grant_type=refresh_token) - Idempotent within token validity window</li> </ol> <p>The operation behavior is determined by the grant_type parameter in the request body:</p> <p><strong>Authorization Code Flow (NOT Idempotent):</strong></p> <ul> <li>JSON or form-encoded body with client_id, grant_type=authorization_code, code, redirect_uri, code_verifier</li> <li>Returns access_token, token_type, expires_in, refresh_token, and id_token</li> <li>Each authorization code can only be used ONCE for security (prevents replay attacks)</li> </ul> <p><strong>Token Refresh Flow (Idempotent):</strong></p> <ul> <li>JSON or form-encoded body with client_id, grant_type=refresh_token, refresh_token</li> <li>Returns access_token, token_type, expires_in, and refresh_token (no id_token)</li> <li>Multiple calls with same refresh_token return consistent results within validity window</li> </ul> <p>Authentication and authorization:</p> <ul> <li>Confidential clients: sigv4 signing required with signin:ExchangeToken permissions</li> <li>CLI clients (public): authn/authz skipped based on client_id &amp; grant_type</li> </ul> <p>Note: This operation cannot be marked as @idempotent because it handles both idempotent (token refresh) and non-idempotent (auth code redemption) flows in a single endpoint.</p>",
-    "CreateOAuth2TokenWithIAM": "<p>Grants permission to exchange client credentials for an OAuth 2.0 access token scoped to a resource that can be used to access AWS services from applications</p>",
+    "CreateOAuth2Token": "<p>Exchanges an authorization code or refresh token for an OAuth 2.0 access token and refresh token.</p>",
+    "CreateOAuth2TokenWithIAM": "<p>Exchanges client credentials for an OAuth 2.0 access token scoped to a resource, which you can use to access AWS services from applications.</p>",
+    "CreateOAuth2TokenWithTokenExchange": "<p>Exchanges a supported token for an OAuth 2.0 access token scoped to a resource, which you can use to access AWS services from applications.</p>",
     "DeleteConsoleAuthorizationConfiguration": "<p>Delete console authorization configuration with automatic scope detection</p>",
     "DeleteResourcePermissionStatement": "<p>Remove a permission statement from the account's SignIn resource-based policy</p>",
     "GetConsoleAuthorizationConfiguration": "<p>Get console authorization configuration with automatic scope detection</p>",
     "GetResourcePolicy": "<p>Retrieve the account's consolidated SignIn resource-based policy</p>",
-    "IntrospectOAuth2TokenWithIAM": "<p>Grants permission to inspect the metadata and state of an OAuth 2.0 access token or refresh token</p> <p>Implements RFC 7662 OAuth 2.0 Token Introspection over a SigV4-authenticated endpoint. Inspects the metadata of an access_token or refresh_token issued by AWS Sign-In and returns the claims associated with it.</p> <p>Inactive token semantics (RFC 7662 §2.2): when the supplied token is unknown, expired, revoked, malformed, or owned by a different account, the response body is exactly { &quot;active&quot;: false } with all other claims omitted.</p>",
+    "IntrospectOAuth2TokenWithIAM": "<p>Inspects the metadata and active state of an OAuth 2.0 access token or refresh token.</p> <p>Implements RFC 7662 OAuth 2.0 Token Introspection over a SigV4-authenticated endpoint. Returns the claims associated with a token issued by AWS Sign-In.</p>",
     "ListResourcePermissionStatements": "<p>Retrieve all permission statements in the account's SignIn resource-based policy</p>",
     "PutConsoleAuthorizationConfiguration": "<p>Enable console authorization configuration with automatic scope detection</p>",
     "PutResourcePermissionStatement": "<p>Create a permission statement in the account's SignIn resource-based policy</p>",
-    "RevokeOAuth2TokenWithIAM": "<p>Grants permission to revoke an OAuth 2.0 refresh token and its associated refresh tokens</p> <p>Revokes a refresh_token issued by AWS Sign-In, invalidating the entire token chain so that the refresh_token can no longer be used to mint new access_tokens.</p> <p>Idempotency: revoking an already-revoked, expired, or otherwise invalid token still returns 200 OK with an empty body. Only the refresh_token type is accepted.</p>"
+    "RevokeOAuth2TokenWithIAM": "<p>Revokes an OAuth 2.0 refresh token and its associated token chain.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
-      "base": "<p>Error thrown for access denied scenarios with flexible HTTP status mapping</p> <p>Runtime HTTP Status Code Mapping:</p> <ul> <li>HTTP 401 (Unauthorized): TOKEN_EXPIRED, AUTHCODE_EXPIRED</li> <li>HTTP 403 (Forbidden): USER_CREDENTIALS_CHANGED, INSUFFICIENT_PERMISSIONS</li> </ul> <p>The specific HTTP status code is determined at runtime based on the error enum value. Consumers should use the error field to determine the specific access denial reason.</p>",
+      "base": "<p>You do not have sufficient access to perform this action.</p>",
       "refs": {}
     },
     "AccessToken": {
-      "base": "<p>AWS credentials structure containing temporary access credentials</p> <p>Scoped, temporary AWS credentials with a 15-minute duration.</p>",
+      "base": "<p>Contains the scoped, temporary AWS credentials used to sign requests with SigV4. Valid for 15 minutes.</p>",
       "refs": {
-        "CreateOAuth2TokenResponseBody$accessToken": "<p>Scoped-down AWS credentials (15 minute duration) Present for both authorization code redemption and token refresh</p>"
+        "CreateOAuth2TokenResponseBody$accessToken": "<p>The access token issued by the authorization server. The token contains temporary AWS security credentials that you use to sign requests with SigV4.</p>"
       }
     },
     "AccountId": {
@@ -32,15 +33,16 @@
       }
     },
     "AuthorizationCode": {
-      "base": "<p>Authorization code received from AWS Sign-In /v1/authorize endpoint</p> <p>The authorization code received from AWS Sign-In from /v1/authorize. Used in auth code redemption flow only.</p>",
+      "base": "<p>Authorization code received from AWS Sign-In. Used only in the authorization code redemption flow.</p>",
       "refs": {
-        "CreateOAuth2TokenRequestBody$code": "<p>The authorization code received from /v1/authorize Required only when grant_type=authorization_code</p>"
+        "CreateOAuth2TokenRequestBody$code": "<p>The authorization code received from the &quot;/v1/authorize&quot; endpoint. Required when &quot;grant_type=authorization_code&quot;.</p>"
       }
     },
     "BearerTokenType": {
-      "base": "<p>Token type for access tokens. Always &quot;Bearer&quot; per OAuth 2.1.</p>",
+      "base": "<p>Token type for access tokens. Currently supports &quot;Bearer&quot; as defined in RFC 6749.</p>",
       "refs": {
-        "CreateOAuth2TokenWithIAMResponse$tokenType": "<p>Always &quot;Bearer&quot; per OAuth 2.1 specification</p>"
+        "CreateOAuth2TokenWithIAMResponse$tokenType": "<p>The token type. Always &quot;Bearer&quot; as defined in RFC 6749.</p>",
+        "CreateOAuth2TokenWithTokenExchangeResponse$tokenType": "<p>The token type. Currently only supports &quot;Bearer&quot; as defined in RFC 6749.</p>"
       }
     },
     "Boolean": {
@@ -48,20 +50,20 @@
       "refs": {
         "DeleteConsoleAuthorizationConfigurationOutput$consoleAuthorizationEnabled": "<p>Whether console authorization is enabled</p>",
         "GetConsoleAuthorizationConfigurationOutput$consoleAuthorizationEnabled": "<p>Whether console authorization is enabled</p>",
-        "IntrospectOAuth2TokenWithIAMResponse$active": "<p>Indicates whether the token is currently active. <code>true</code> only when the token is valid, has not expired, has not been revoked, and belongs to the caller's account.</p>",
+        "IntrospectOAuth2TokenWithIAMResponse$active": "<p>Indicates whether the token is currently active. Returns &quot;true&quot; only when the token is valid, has not expired, has not been revoked, and belongs to the caller's account.</p>",
         "PutConsoleAuthorizationConfigurationOutput$consoleAuthorizationEnabled": "<p>Whether console authorization is enabled</p>"
       }
     },
     "ClientCredentialsGrantType": {
       "base": "<p>OAuth 2.0 grant type for client_credentials flow.</p>",
       "refs": {
-        "CreateOAuth2TokenWithIAMRequest$grantType": "<p>OAuth 2.0 grant type. Must be &quot;client_credentials&quot;.</p>"
+        "CreateOAuth2TokenWithIAMRequest$grantType": "<p>The OAuth 2.0 grant type. Must be &quot;client_credentials&quot;.</p>"
       }
     },
     "ClientId": {
-      "base": "<p>Client identifier pattern for AWS Sign-In devtools clients</p> <p>The ARN used by client as part of Sign-In onboarding. Expected values:</p> <ul> <li>arn:aws:signin:::devtools/cross-device (for cross-device devtools login)</li> <li>arn:aws:signin:::devtools/same-device (for same-device devtools login)</li> </ul>",
+      "base": "<p>The OAuth 2.0 client identifier.</p>",
       "refs": {
-        "CreateOAuth2TokenRequestBody$clientId": "<p>The client identifier (ARN) used during Sign-In onboarding Required for both authorization code and refresh token flows</p>"
+        "CreateOAuth2TokenRequestBody$clientId": "<p>The OAuth 2.0 client identifier. Expected values: &quot;arn:aws:signin:::devtools/same-device&quot; or &quot;arn:aws:signin:::devtools/cross-device&quot;.</p>"
       }
     },
     "ClientToken": {
@@ -72,9 +74,9 @@
       }
     },
     "CodeVerifier": {
-      "base": "<p>PKCE code verifier for OAuth 2.0 security</p> <p>PKCE code verifier to prove possession of the original code challenge. Used to prevent authorization code interception attacks in public clients. Must be 43-128 characters using unreserved characters [A-Z] / [a-z] / [0-9] / &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / &quot;~&quot;</p>",
+      "base": "<p>PKCE code verifier used to prove possession of the original code challenge. Must be 43 to 128 characters.</p>",
       "refs": {
-        "CreateOAuth2TokenRequestBody$codeVerifier": "<p>PKCE code verifier to prove possession of the original code challenge Required only when grant_type=authorization_code</p>"
+        "CreateOAuth2TokenRequestBody$codeVerifier": "<p>The PKCE code verifier that proves possession of the original code challenge. Required when &quot;grant_type=authorization_code&quot;.</p>"
       }
     },
     "Condition": {
@@ -117,9 +119,9 @@
       "refs": {}
     },
     "CreateOAuth2TokenRequestBody": {
-      "base": "<p>Request body payload for CreateOAuth2Token operation</p> <p>The operation type is determined by the grant_type parameter:</p> <ul> <li>grant_type=authorization_code: Requires code, redirect_uri, code_verifier</li> <li>grant_type=refresh_token: Requires refresh_token</li> </ul>",
+      "base": "<p>The request body for creating an OAuth 2.0 token. Supports both the authorization code and refresh token flows, selected by the &quot;grant_type&quot; parameter.</p>",
       "refs": {
-        "CreateOAuth2TokenRequest$tokenInput": "<p>Flattened token operation inputs The specific operation is determined by grant_type in the request body</p>"
+        "CreateOAuth2TokenRequest$tokenInput": "<p>Flattened token operation inputs. The &quot;grant_type&quot; in the request body determines the specific operation.</p>"
       }
     },
     "CreateOAuth2TokenResponse": {
@@ -127,23 +129,25 @@
       "refs": {}
     },
     "CreateOAuth2TokenResponseBody": {
-      "base": "<p>Response body payload for CreateOAuth2Token operation</p> <p>The response content depends on the grant_type from the request:</p> <ul> <li>grant_type=authorization_code: Returns all fields including refresh_token and id_token</li> <li>grant_type=refresh_token: Returns access_token, token_type, expires_in, refresh_token (no id_token)</li> </ul>",
+      "base": "<p>The response body for an OAuth 2.0 token request. The fields returned depend on the &quot;grant_type&quot;. The authorization code flow returns &quot;refresh_token&quot; and &quot;id_token&quot;. The refresh token flow omits &quot;id_token&quot;.</p>",
       "refs": {
-        "CreateOAuth2TokenResponse$tokenOutput": "<p>Flattened token operation outputs The specific response fields depend on the grant_type used in the request</p>"
+        "CreateOAuth2TokenResponse$tokenOutput": "<p>Flattened token operation outputs. The specific response fields depend on the grant_type used in the request.</p>"
       }
     },
     "CreateOAuth2TokenWithIAMRequest": {
       "base": "<p>Input structure for CreateOAuth2TokenWithIAM operation</p>",
       "refs": {}
     },
-    "CreateOAuth2TokenWithIAMRequestResourceString": {
-      "base": null,
-      "refs": {
-        "CreateOAuth2TokenWithIAMRequest$resource": "<p>The OAuth resource for which the access token is requested. Example: &quot;aws-mcp.amazonaws.com&quot;.</p>"
-      }
-    },
     "CreateOAuth2TokenWithIAMResponse": {
-      "base": "<p>Output structure for CreateOAuth2TokenWithIAM operation</p> <p>Contains the JWT access token, token type, and expiration per RFC 6749 §5.1.</p>",
+      "base": "<p>Output structure for CreateOAuth2TokenWithIAM operation</p> <p>Contains the access token, token type, and expiration as defined in RFC 6749 §5.1.</p>",
+      "refs": {}
+    },
+    "CreateOAuth2TokenWithTokenExchangeRequest": {
+      "base": "<p>Input structure for CreateOAuth2TokenWithTokenExchange operation</p>",
+      "refs": {}
+    },
+    "CreateOAuth2TokenWithTokenExchangeResponse": {
+      "base": "<p>Output structure for CreateOAuth2TokenWithTokenExchange operation.</p> <p>Contains the access token, issued token type, token type, and expiration as defined in RFC 6749 §5.1 and RFC 8693 §2.2.1.</p>",
       "refs": {}
     },
     "DeleteConsoleAuthorizationConfigurationInput": {
@@ -169,9 +173,9 @@
       }
     },
     "ExpiresIn": {
-      "base": "<p>Time to expiry in seconds</p> <p>The time to expiry in seconds, for these purposes will be at most 900 (15 minutes).</p>",
+      "base": "<p>Time to expiry in seconds. At most 900 (15 minutes).</p>",
       "refs": {
-        "CreateOAuth2TokenResponseBody$expiresIn": "<p>Time to expiry in seconds (maximum 900) Present for both authorization code redemption and token refresh</p>"
+        "CreateOAuth2TokenResponseBody$expiresIn": "<p>The number of seconds until the access token expires. Maximum value is 900 seconds (15 minutes).</p>"
       }
     },
     "GetConsoleAuthorizationConfigurationInput": {
@@ -191,19 +195,19 @@
       "refs": {}
     },
     "GrantType": {
-      "base": "<p>OAuth 2.0 grant type parameter</p> <p>For auth code redemption: Must be &quot;authorization_code&quot; For token refresh: Must be &quot;refresh_token&quot;</p> <p>Based on client_id &amp; grant_type, authn/authz is skipped for CLI endpoints.</p>",
+      "base": "<p>The OAuth 2.0 grant type. &quot;authorization_code&quot; for authorization code redemption, &quot;refresh_token&quot; for token refresh.</p>",
       "refs": {
-        "CreateOAuth2TokenRequestBody$grantType": "<p>OAuth 2.0 grant type - determines which flow is used Must be &quot;authorization_code&quot; or &quot;refresh_token&quot;</p>"
+        "CreateOAuth2TokenRequestBody$grantType": "<p>The OAuth 2.0 grant type. Supported values:</p> <ul> <li>&quot;authorization_code&quot; - Exchange an authorization code for tokens.</li> <li>&quot;refresh_token&quot; - Use a refresh token to obtain a new access token.</li> </ul>"
       }
     },
     "IdToken": {
-      "base": "<p>ID token containing user identity information</p> <p>Encoded JWT token containing user identity claims and authentication context. Returned only in authorization code redemption responses (grant_type=authorization_code). Contains user identity information such as ARN and other identity claims.</p>",
+      "base": "<p>ID token (JWT) containing user identity claims. Returned only for authorization code redemption.</p>",
       "refs": {
-        "CreateOAuth2TokenResponseBody$idToken": "<p>ID token containing user identity information Present only in authorization code redemption response (grant_type=authorization_code) Not included in token refresh responses</p>"
+        "CreateOAuth2TokenResponseBody$idToken": "<p>A JSON Web Token (JWT) containing user identity claims. Present only when &quot;grant_type=authorization_code&quot;. Not included in refresh token responses.</p>"
       }
     },
     "InternalServerException": {
-      "base": "<p>Error thrown when an internal server error occurs</p> <p>HTTP Status Code: 500 Internal Server Error</p> <p>Used for unexpected server-side errors that prevent request processing.</p>",
+      "base": "<p>The request failed because of an internal server error.</p>",
       "refs": {}
     },
     "IntrospectOAuth2TokenWithIAMRequest": {
@@ -215,15 +219,29 @@
       "refs": {}
     },
     "IntrospectedTokenType": {
-      "base": "<p>Introspection response token_type value. Indicates which kind of token was inspected.</p>",
+      "base": "<p>The token_type value in the introspection response.</p>",
       "refs": {
         "IntrospectOAuth2TokenWithIAMResponse$tokenType": "<p>Indicates which kind of token was introspected. One of &quot;access_token&quot; or &quot;refresh_token&quot;.</p>"
       }
     },
     "IntrospectionToken": {
-      "base": "<p>Token string submitted for introspection. May be an AWS Sign-In access_token (prefix &quot;ASOA&quot;) or refresh_token (prefix &quot;ASOR&quot;).</p>",
+      "base": "<p>Token string submitted for introspection. May be an AWS Sign-In access token or refresh token.</p>",
       "refs": {
-        "IntrospectOAuth2TokenWithIAMRequest$token": "<p>The string value of the token to introspect. May be either an access_token or a refresh_token issued by AWS Sign-In.</p>"
+        "IntrospectOAuth2TokenWithIAMRequest$token": "<p>The access token or refresh token issued by AWS Sign-In.</p>"
+      }
+    },
+    "InvalidGrantException": {
+      "base": "<p>The request failed because the provided grant is invalid or expired.</p>",
+      "refs": {}
+    },
+    "InvalidScopeException": {
+      "base": "<p>The request failed because the requested scope is invalid or exceeds the scope that can be granted.</p>",
+      "refs": {}
+    },
+    "IssuedOAuthAccessTokenType": {
+      "base": null,
+      "refs": {
+        "CreateOAuth2TokenWithTokenExchangeResponse$issuedTokenType": "<p>The token type of the issued token. Always &quot;urn:ietf:params:oauth:token-type:access_token&quot; as defined in RFC 8693 §2.2.1.</p>"
       }
     },
     "ListResourcePermissionStatementsInput": {
@@ -252,19 +270,23 @@
     "OAuth2ErrorCode": {
       "base": "<p>OAuth 2.0 error codes returned by the server</p> <p>Standard OAuth 2.0 error codes used in error responses to indicate the specific type of error that occurred during token operations.</p>",
       "refs": {
-        "AccessDeniedException$error": "<p>OAuth 2.0 error code indicating the specific type of access denial Can be TOKEN_EXPIRED, AUTHCODE_EXPIRED, USER_CREDENTIALS_CHANGED, or INSUFFICIENT_PERMISSIONS</p>",
+        "AccessDeniedException$error": "<p>One of TOKEN_EXPIRED, AUTHCODE_EXPIRED, USER_CREDENTIALS_CHANGED, or INSUFFICIENT_PERMISSIONS.</p>",
         "ConflictException$error": "<p>OAuth 2.0 error code indicating conflict Will be CONFLICT</p>",
-        "InternalServerException$error": "<p>OAuth 2.0 error code indicating server error Will be SERVER_ERROR for internal server errors</p>",
+        "InternalServerException$error": "<p>Will be server_error.</p>",
+        "InvalidGrantException$error": "<p>Will be invalid_grant.</p>",
+        "InvalidScopeException$error": "<p>Will be invalid_scope.</p>",
         "ResourceNotFoundException$error": "<p>OAuth 2.0 error code indicating resource not found Will be RESOURCE_NOT_FOUND</p>",
         "ServiceQuotaExceededException$error": "<p>OAuth 2.0 error code indicating service quota exceeded Will be SERVICE_QUOTA_EXCEEDED</p>",
-        "TooManyRequestsError$error": "<p>OAuth 2.0 error code indicating the specific type of error Will be INVALID_REQUEST for rate limiting scenarios</p>",
-        "ValidationException$error": "<p>OAuth 2.0 error code indicating validation failure Will be INVALID_REQUEST for validation errors</p>"
+        "ServiceUnavailableException$error": "<p>Will be service_unavailable.</p>",
+        "TooManyRequestsError$error": "<p>Will be rate_exceeded.</p>",
+        "ValidationException$error": "<p>The specific code depends on which validation failed.</p>"
       }
     },
     "OAuthAccessToken": {
-      "base": "<p>OAuth 2.0 access token (JWT) containing principal identity and resource scope.</p>",
+      "base": "<p>OAuth 2.0 access token containing principal identity and resource scope.</p>",
       "refs": {
-        "CreateOAuth2TokenWithIAMResponse$accessToken": "<p>JWT access token containing principal identity, resource scope, and session metadata</p>"
+        "CreateOAuth2TokenWithIAMResponse$accessToken": "<p>Access token containing principal identity, resource scope, and session metadata.</p>",
+        "CreateOAuth2TokenWithTokenExchangeResponse$accessToken": "<p>Access token containing principal identity, resource scope, and session metadata.</p>"
       }
     },
     "PermissionStatementSummaries": {
@@ -320,16 +342,16 @@
       "refs": {}
     },
     "RedirectUri": {
-      "base": "<p>Redirect URI for OAuth 2.0 flow validation</p> <p>The same redirect URI used in the authorization request. This must match exactly what was sent in the original authorization request for security validation.</p>",
+      "base": "<p>The redirect URI from the authorization request. Must match the original request exactly.</p>",
       "refs": {
-        "CreateOAuth2TokenRequestBody$redirectUri": "<p>The redirect URI that must match the original authorization request Required only when grant_type=authorization_code</p>"
+        "CreateOAuth2TokenRequestBody$redirectUri": "<p>The redirect URI that was used in the original authorization request. Must match exactly. Required when &quot;grant_type=authorization_code&quot;.</p>"
       }
     },
     "RefreshToken": {
-      "base": "<p>Encrypted refresh token with cnf.jkt</p> <p>This is the encrypted refresh token returned from auth code redemption. The token content includes cnf.jkt (SHA-256 thumbprint of the presented jwk). Used in subsequent token refresh requests.</p>",
+      "base": "<p>The refresh token returned from authorization code redemption. Used in subsequent token refresh requests.</p>",
       "refs": {
-        "CreateOAuth2TokenRequestBody$refreshToken": "<p>The refresh token returned from auth_code redemption Required only when grant_type=refresh_token</p>",
-        "CreateOAuth2TokenResponseBody$refreshToken": "<p>Encrypted refresh token with cnf.jkt (SHA-256 thumbprint of presented jwk) Always present in responses (required for both flows)</p>"
+        "CreateOAuth2TokenRequestBody$refreshToken": "<p>The refresh token issued by a previous token response. Required when &quot;grant_type=refresh_token&quot;.</p>",
+        "CreateOAuth2TokenResponseBody$refreshToken": "<p>A refresh token that can be used to obtain new access tokens without re-authenticating.</p>"
       }
     },
     "RequestedRegion": {
@@ -338,14 +360,22 @@
         "PutResourcePermissionStatementInput$requestedRegion": "<p>AWS region where the VPC and VPC endpoint reside Required when sourceVpc or signinSourceVpce/consoleSourceVpce is provided</p>"
       }
     },
+    "Resource": {
+      "base": null,
+      "refs": {
+        "CreateOAuth2TokenWithIAMRequest$resource": "<p>The OAuth resource for which the access token is requested. Example: &quot;aws-mcp.amazonaws.com&quot;.</p>",
+        "CreateOAuth2TokenWithTokenExchangeRequest$resource": "<p>The OAuth resource for which the access token is requested. Required when &quot;grant_type=urn:ietf:params:oauth:grant-type:token-exchange&quot;. Example: &quot;glue.amazonaws.com&quot;.</p>",
+        "IntrospectOAuth2TokenWithIAMResponse$resource": "<p>The OAuth resource the token is scoped to. Only present for refresh token introspection.</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>Error thrown when requested resource is not found</p> <p>HTTP Status Code: 404 Not Found</p> <p>Used when the specified resource does not exist</p>",
       "refs": {}
     },
     "RevocationToken": {
-      "base": "<p>Refresh token string submitted for revocation. Must be an AWS Sign-In refresh_token (prefix &quot;ASOR&quot;).</p>",
+      "base": "<p>Refresh token string submitted for revocation.</p>",
       "refs": {
-        "RevokeOAuth2TokenWithIAMRequest$token": "<p>The refresh_token to revoke. Must be a refresh_token issued by AWS Sign-In (prefix &quot;ASOR&quot;); access_tokens are not accepted for revocation.</p>"
+        "RevokeOAuth2TokenWithIAMRequest$token": "<p>The refresh token to revoke. Must be a refresh token issued by AWS Sign-In. Access tokens are not accepted for revocation.</p>"
       }
     },
     "RevokeOAuth2TokenWithIAMRequest": {
@@ -356,8 +386,18 @@
       "base": "<p>Output structure for RevokeOAuth2TokenWithIAM operation</p> <p>RFC 7009 §2.2 revocation response. The endpoint returns 200 OK with an empty body on success; there are no response fields.</p>",
       "refs": {}
     },
+    "Scope": {
+      "base": null,
+      "refs": {
+        "CreateOAuth2TokenWithTokenExchangeRequest$scope": "<p>IAM managed policy Amazon Resource Names (ARNs) to apply as session policies that further scope down the permissions of the issued access token, provided as a space-delimited list. Example: &quot;arn:aws:iam::444455556666:policy/MyPolicy&quot;.</p>"
+      }
+    },
     "ServiceQuotaExceededException": {
       "base": "<p>Error thrown when service quota is exceeded</p> <p>HTTP Status Code: 402 Payment Required (used as quota exceeded indicator)</p> <p>Used when the request would cause a service quota to be exceeded</p>",
+      "refs": {}
+    },
+    "ServiceUnavailableException": {
+      "base": "<p>The request failed because a dependency is temporarily unavailable. You can retry the request.</p>",
       "refs": {}
     },
     "SigninResourceBasedPolicy": {
@@ -396,24 +436,25 @@
     "String": {
       "base": null,
       "refs": {
-        "AccessDeniedException$message": "<p>Detailed message explaining the access denial Provides specific information about why access was denied</p>",
-        "AccessToken$accessKeyId": "<p>AWS access key ID for temporary credentials</p>",
-        "AccessToken$secretAccessKey": "<p>AWS secret access key for temporary credentials</p>",
-        "AccessToken$sessionToken": "<p>AWS session token for temporary credentials</p>",
+        "AccessDeniedException$message": "<p>The reason access was denied.</p>",
+        "AccessToken$accessKeyId": "<p>The AWS access key ID for the temporary credentials.</p>",
+        "AccessToken$secretAccessKey": "<p>The AWS secret access key used to sign requests.</p>",
+        "AccessToken$sessionToken": "<p>The session token that validates the temporary security credentials.</p>",
         "Condition$key": null,
         "ConditionValues$member": null,
         "ConflictException$message": "<p>Detailed message explaining the conflict Provides specific information about what caused the conflict</p>",
         "DeleteConsoleAuthorizationConfigurationOutput$scope": "<p>Authorization scope</p>",
         "GetConsoleAuthorizationConfigurationOutput$scope": "<p>Authorization scope</p>",
-        "InternalServerException$message": "<p>Detailed message explaining the server error May include error details for debugging purposes</p>",
+        "InternalServerException$message": "<p>The server error detail.</p>",
         "IntrospectOAuth2TokenWithIAMResponse$clientId": "<p>Client identifier for the OAuth 2.0 client that requested the token.</p>",
-        "IntrospectOAuth2TokenWithIAMResponse$userId": "<p>User identifier matching sts:GetCallerIdentity's <code>UserId</code> field for the token's subject principal (e.g. &quot;AIDAEXAMPLE&quot; for an IAM user, or &quot;AROAEXAMPLE:session-name&quot; for an assumed role).</p>",
-        "IntrospectOAuth2TokenWithIAMResponse$sub": "<p>Subject of the token: the IAM principal ARN. For assumed-role sessions, this is the session ARN (matches sts:GetCallerIdentity's <code>Arn</code> field), e.g. arn:aws:sts::123456789012:assumed-role/MyRole/session-name.</p>",
-        "IntrospectOAuth2TokenWithIAMResponse$aud": "<p>Audience of the token: the OAuth resource the token is scoped to (for example, &quot;aws-mcp.amazonaws.com&quot;). Omitted for refresh tokens.</p>",
+        "IntrospectOAuth2TokenWithIAMResponse$userId": "<p>User identifier matching the &quot;UserId&quot; field from &quot;sts:GetCallerIdentity&quot; for the token's subject principal.</p>",
+        "IntrospectOAuth2TokenWithIAMResponse$sub": "<p>The IAM principal Amazon Resource Name (ARN). For assumed-role sessions, this is the session ARN.</p>",
+        "IntrospectOAuth2TokenWithIAMResponse$aud": "<p>The OAuth resource the token is scoped to. Omitted for refresh tokens. Example: &quot;aws-mcp.amazonaws.com&quot;.</p>",
         "IntrospectOAuth2TokenWithIAMResponse$iss": "<p>Issuer of the token. Always &quot;signin.amazonaws.com&quot; for AWS Sign-In.</p>",
         "IntrospectOAuth2TokenWithIAMResponse$jti": "<p>Unique identifier for the token.</p>",
         "IntrospectOAuth2TokenWithIAMResponse$signinSession": "<p>AWS Sign-In session ARN bound to the token, of the form arn:aws:signin:{region}:{account}:session/{uuid}.</p>",
-        "IntrospectOAuth2TokenWithIAMResponse$resource": "<p>The OAuth resource the token is scoped to during Human OAuth flow. Only present for refresh token introspection.</p>",
+        "InvalidGrantException$message": null,
+        "InvalidScopeException$message": null,
         "PolicyActions$member": null,
         "PolicyStatement$effect": "<p>Effect of the policy statement (Allow/Deny)</p>",
         "PolicyStatement$resource": "<p>Resource the statement applies to</p>",
@@ -422,9 +463,22 @@
         "PutConsoleAuthorizationConfigurationOutput$scope": "<p>Authorization scope</p>",
         "ResourceNotFoundException$message": "<p>Detailed message explaining which resource was not found Provides specific information about the missing resource</p>",
         "ServiceQuotaExceededException$message": "<p>Detailed message explaining which quota was exceeded Provides specific information about the limit and current usage</p>",
+        "ServiceUnavailableException$message": null,
         "SigninResourceBasedPolicy$version": "<p>Policy version</p>",
-        "TooManyRequestsError$message": "<p>Detailed message about the rate limiting May include retry-after information or rate limit details</p>",
-        "ValidationException$message": "<p>Detailed message explaining the validation failure Provides specific information about which validation failed</p>"
+        "TooManyRequestsError$message": "<p>Details about the rate limit.</p>",
+        "ValidationException$message": "<p>The validation constraint that failed.</p>"
+      }
+    },
+    "SubjectToken": {
+      "base": null,
+      "refs": {
+        "CreateOAuth2TokenWithTokenExchangeRequest$subjectToken": "<p>The subject token that represents the identity of the party on whose behalf the request is made. Required when &quot;grant_type=urn:ietf:params:oauth:grant-type:token-exchange&quot;.</p>"
+      }
+    },
+    "SubjectTokenType": {
+      "base": null,
+      "refs": {
+        "CreateOAuth2TokenWithTokenExchangeRequest$subjectTokenType": "<p>The token type of the subject token. Currently only supports &quot;urn:ietf:params:oauth:token-type:jwt&quot;. Required when &quot;grant_type=urn:ietf:params:oauth:grant-type:token-exchange&quot;.</p>"
       }
     },
     "TargetId": {
@@ -438,30 +492,37 @@
         "PutConsoleAuthorizationConfigurationOutput$targetId": "<p>Target account identifier</p>"
       }
     },
-    "TokenExpiresIn": {
-      "base": "<p>Token lifetime in seconds. Value is the minimum of session validity and 1 hour (3600 seconds).</p>",
+    "TokenExchangeGrantType": {
+      "base": null,
       "refs": {
-        "CreateOAuth2TokenWithIAMResponse$expiresIn": "<p>Token lifetime in seconds. Value is the minimum of session validity and 1 hour.</p>"
+        "CreateOAuth2TokenWithTokenExchangeRequest$grantType": "<p>The OAuth 2.0 grant type. Currently only supports &quot;urn:ietf:params:oauth:grant-type:token-exchange&quot;.</p>"
+      }
+    },
+    "TokenExpiresIn": {
+      "base": "<p>Token lifetime in seconds. The lesser of session validity and 3600 (1 hour).</p>",
+      "refs": {
+        "CreateOAuth2TokenWithIAMResponse$expiresIn": "<p>Token lifetime in seconds. Value is the minimum of the caller's session validity and 1 hour (3600 seconds).</p>",
+        "CreateOAuth2TokenWithTokenExchangeResponse$expiresIn": "<p>Token lifetime in seconds. Value is the minimum of the subject token's validity and 1 hour (3600 seconds).</p>"
       }
     },
     "TokenType": {
-      "base": "<p>Token type parameter indicating credential usage</p> <p>A parameter which indicates to the client how the token must be used. Value is &quot;aws_sigv4&quot; (instead of typical &quot;Bearer&quot; for other OAuth systems) to indicate that the client must de-serialize the token and use it to generate a signature.</p>",
+      "base": "<p>The token type. &quot;aws_sigv4&quot; indicates the client must use the token to generate a SigV4 signature.</p>",
       "refs": {
-        "CreateOAuth2TokenResponseBody$tokenType": "<p>Token type indicating this is AWS SigV4 credentials Value is &quot;aws_sigv4&quot; for both flows</p>"
+        "CreateOAuth2TokenResponseBody$tokenType": "<p>The type of token issued. Value is &quot;aws_sigv4&quot;.</p>"
       }
     },
     "TokenTypeHint": {
-      "base": "<p>Optional RFC 7662 §2.1 token_type_hint value. One of:</p> <ul> <li>&quot;access_token&quot;</li> <li>&quot;refresh_token&quot;</li> </ul>",
+      "base": "<p>Optional token_type_hint value, as defined in RFC 7662 §2.1. One of &quot;access_token&quot; or &quot;refresh_token&quot;.</p>",
       "refs": {
-        "IntrospectOAuth2TokenWithIAMRequest$tokenTypeHint": "<p>Optional hint about the type of the token submitted for introspection. The server uses this hint to optimize lookup, but still falls back to the other token type on miss. Allowed values: access_token, refresh_token.</p>"
+        "IntrospectOAuth2TokenWithIAMRequest$tokenTypeHint": "<p>An optional hint about the type of the token submitted for introspection, as defined in RFC 7662 §2.1. The server checks both token types regardless of the hint. Allowed values: &quot;access_token&quot;, &quot;refresh_token&quot;.</p>"
       }
     },
     "TooManyRequestsError": {
-      "base": "<p>Error thrown when rate limit is exceeded</p> <p>HTTP Status Code: 429 Too Many Requests</p> <p>Possible OAuth2ErrorCode values:</p> <ul> <li>INVALID_REQUEST: Rate limiting, too many requests, abuse prevention</li> </ul> <p>Possible causes:</p> <ul> <li>Too many token requests from the same client</li> <li>Rate limiting based on client_id or IP address</li> <li>Abuse prevention mechanisms triggered</li> <li>Service protection against excessive token generation</li> </ul>",
+      "base": "<p>The request failed because you exceeded the request rate limit for this operation.</p>",
       "refs": {}
     },
     "ValidationException": {
-      "base": "<p>Error thrown when request validation fails</p> <p>HTTP Status Code: 400 Bad Request</p> <p>Used for request validation errors such as malformed parameters, missing required fields, or invalid parameter values.</p>",
+      "base": "<p>The request failed because it contains a malformed, missing, or invalid parameter.</p>",
       "refs": {}
     },
     "VpcSourceIp": {

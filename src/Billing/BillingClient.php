@@ -5,10 +5,18 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Billing** service.
+ * @method \Aws\Result associateContract(array $args = [])
+ * @phpstan-method \Aws\Result associateContract(array{contractArn?: string, contractDocumentId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise associateContractAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise associateContractAsync(array{contractArn?: string, contractDocumentId?: string, ...} $args = [])
  * @method \Aws\Result associateSourceViews(array $args = [])
  * @phpstan-method \Aws\Result associateSourceViews(array{arn?: string, sourceViews?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise associateSourceViewsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise associateSourceViewsAsync(array{arn?: string, sourceViews?: list<string>, ...} $args = [])
+ * @method \Aws\Result cancelContractualInvestmentAttestation(array $args = [])
+ * @phpstan-method \Aws\Result cancelContractualInvestmentAttestation(array{attestationId?: string, contractArn?: string, reason?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelContractualInvestmentAttestationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise cancelContractualInvestmentAttestationAsync(array{attestationId?: string, contractArn?: string, reason?: string, ...} $args = [])
  * @method \Aws\Result createBillingView(array $args = [])
  * @phpstan-method \Aws\Result createBillingView(array{
  *     name?: string,
@@ -49,10 +57,48 @@ use Aws\AwsClient;
  *     resourceTags?: list<array{key?: string, value?: string, ...}>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createContractualInvestmentAttestation(array $args = [])
+ * @phpstan-method \Aws\Result createContractualInvestmentAttestation(array{
+ *     contractArn?: string,
+ *     investmentSummaryId?: string,
+ *     investmentId?: string,
+ *     contractDocumentId?: string,
+ *     approverDetails?: array{name?: string, title?: string, email?: string, ...},
+ *     investmentDisbursedAt?: int|string|\DateTimeInterface,
+ *     attestationDetails?: array{
+ *         attestationValue?: array{attestationAmount?: array, attestationQuantities?: list<array>, ...},
+ *         investmentDistributions?: list<array>,
+ *         ...,
+ *     },
+ *     additionalRecipients?: list<array{email?: string, ...}>,
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createContractualInvestmentAttestationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createContractualInvestmentAttestationAsync(array{
+ *     contractArn?: string,
+ *     investmentSummaryId?: string,
+ *     investmentId?: string,
+ *     contractDocumentId?: string,
+ *     approverDetails?: array{name?: string, title?: string, email?: string, ...},
+ *     investmentDisbursedAt?: int|string|\DateTimeInterface,
+ *     attestationDetails?: array{
+ *         attestationValue?: array{attestationAmount?: array, attestationQuantities?: list<array>, ...},
+ *         investmentDistributions?: list<array>,
+ *         ...,
+ *     },
+ *     additionalRecipients?: list<array{email?: string, ...}>,
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result deleteBillingView(array $args = [])
  * @phpstan-method \Aws\Result deleteBillingView(array{arn?: string, force?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBillingViewAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteBillingViewAsync(array{arn?: string, force?: bool, ...} $args = [])
+ * @method \Aws\Result disassociateContract(array $args = [])
+ * @phpstan-method \Aws\Result disassociateContract(array{contractArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateContractAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise disassociateContractAsync(array{contractArn?: string, ...} $args = [])
  * @method \Aws\Result disassociateSourceViews(array $args = [])
  * @phpstan-method \Aws\Result disassociateSourceViews(array{arn?: string, sourceViews?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateSourceViewsAsync(array $args = [])
@@ -77,6 +123,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getBillingView(array{arn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getBillingViewAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getBillingViewAsync(array{arn?: string, ...} $args = [])
+ * @method \Aws\Result getContractInformation(array $args = [])
+ * @phpstan-method \Aws\Result getContractInformation(array{contractArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getContractInformationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getContractInformationAsync(array{contractArn?: string, ...} $args = [])
  * @method \Aws\Result getCreditAllocationHistory(array $args = [])
  * @phpstan-method \Aws\Result getCreditAllocationHistory(array{
  *     accountId?: string,
@@ -205,6 +255,22 @@ use Aws\AwsClient;
  *     nextToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listContracts(array $args = [])
+ * @phpstan-method \Aws\Result listContracts(array{nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listContractsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listContractsAsync(array{nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \Aws\Result listContractualInvestmentAttestations(array $args = [])
+ * @phpstan-method \Aws\Result listContractualInvestmentAttestations(array{contractArn?: string, investmentSummaryId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listContractualInvestmentAttestationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listContractualInvestmentAttestationsAsync(array{contractArn?: string, investmentSummaryId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \Aws\Result listContractualInvestmentSummaries(array $args = [])
+ * @phpstan-method \Aws\Result listContractualInvestmentSummaries(array{contractArn?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listContractualInvestmentSummariesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listContractualInvestmentSummariesAsync(array{contractArn?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \Aws\Result listContractualInvestments(array $args = [])
+ * @phpstan-method \Aws\Result listContractualInvestments(array{contractArn?: string, investmentSummaryId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listContractualInvestmentsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listContractualInvestmentsAsync(array{contractArn?: string, investmentSummaryId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \Aws\Result listEnterpriseSupportLinkedAccountCharges(array $args = [])
  * @phpstan-method \Aws\Result listEnterpriseSupportLinkedAccountCharges(array{billingMonth?: string, accountId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listEnterpriseSupportLinkedAccountChargesAsync(array $args = [])

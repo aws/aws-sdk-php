@@ -12,7 +12,7 @@
     "CreateCloudExadataInfrastructure": "<p>Creates an Exadata infrastructure.</p>",
     "CreateCloudVmCluster": "<p>Creates a VM cluster on the specified Exadata infrastructure.</p>",
     "CreateExadbVmCluster": "<p>Creates an Exascale VM cluster.</p>",
-    "CreateExascaleDbStorageVault": "<p>Creates an Exascale storage vault.</p>",
+    "CreateExascaleDbStorageVault": "<p>Creates an Exascale storage vault.</p> <p>To create the Exascale storage vault on dedicated Exadata infrastructure, specify <code>cloudExadataInfrastructureId</code>.</p>",
     "CreateOdbNetwork": "<p>Creates an ODB network.</p>",
     "CreateOdbPeeringConnection": "<p>Creates a peering connection between an ODB network and a VPC.</p> <p>A peering connection enables private connectivity between the networks for application-tier communication.</p>",
     "DeleteAutonomousDatabase": "<p>Deletes the specified Autonomous Database.</p>",
@@ -79,6 +79,7 @@
     "UpdateAutonomousDatabaseBackup": "<p>Updates the properties of an Autonomous Database backup.</p>",
     "UpdateCloudExadataInfrastructure": "<p>Updates the properties of an Exadata infrastructure resource.</p>",
     "UpdateExadbVmCluster": "<p>Updates the specified Exascale VM cluster.</p>",
+    "UpdateExascaleCloudExadataInfrastructure": "<p>Configures or updates the Exascale storage on an Exadata infrastructure. After you configure Exascale storage, you can create Exascale storage vaults on the infrastructure and VM clusters that use Exascale storage.</p>",
     "UpdateExascaleDbStorageVault": "<p>Updates the specified Exascale storage vault.</p>",
     "UpdateOdbNetwork": "<p>Updates properties of a specified ODB network.</p>",
     "UpdateOdbPeeringConnection": "<p>Modifies the settings of an Oracle Database@Amazon Web Services peering connection. You can update the display name and add or remove CIDR blocks from the peering connection.</p>"
@@ -846,7 +847,7 @@
     "CreateExadbVmClusterInputScanListenerPortTcpSslInteger": {
       "base": null,
       "refs": {
-        "CreateExadbVmClusterInput$scanListenerPortTcpSsl": "<p>The port number for TCP connections with SSL to the Single Client Access Name (SCAN) listener.</p>"
+        "CreateExadbVmClusterInput$scanListenerPortTcpSsl": "<p>Reserved for future use.</p>"
       }
     },
     "CreateExadbVmClusterInputShapeString": {
@@ -1508,6 +1509,13 @@
         "ExadbVmClusterList$member": null
       }
     },
+    "ExascaleConfiguration": {
+      "base": "<p>The Exascale storage configuration of an Exadata infrastructure.</p>",
+      "refs": {
+        "CloudExadataInfrastructure$exascaleConfiguration": "<p>The Exascale storage configuration of the Exadata infrastructure. This value is present only when Exascale storage is configured on the infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$exascaleConfiguration": "<p>The Exascale storage configuration of the Exadata infrastructure. This value is present only when Exascale storage is configured on the infrastructure.</p>"
+      }
+    },
     "ExascaleDbStorageDetails": {
       "base": "<p>The storage details for an Exascale storage vault.</p>",
       "refs": {
@@ -1533,6 +1541,14 @@
         "ExascaleDbStorageVaultList$member": null
       }
     },
+    "ExascaleDbStorageVaultType": {
+      "base": null,
+      "refs": {
+        "ExascaleDbStorageVault$vaultType": "<p>The type of infrastructure that hosts the Exascale storage vault.</p>",
+        "ExascaleDbStorageVaultSummary$vaultType": "<p>The type of infrastructure that hosts the Exascale storage vault.</p>",
+        "ListExascaleDbStorageVaultsInput$vaultType": "<p>The type of Exascale storage vaults to return. Specify <code>DEDICATED_INFRASTRUCTURE</code> to return Exascale storage vaults on dedicated Exadata infrastructure, or <code>EXASCALE_INFRASTRUCTURE</code> to return Exascale storage vaults for Exascale VM clusters. If you don't specify a value, the operation returns both types. You can't combine <code>EXASCALE_INFRASTRUCTURE</code> with the <code>cloudExadataInfrastructureId</code> filter.</p>"
+      }
+    },
     "ExternalIdType": {
       "base": null,
       "refs": {
@@ -1549,6 +1565,20 @@
     "FailoverAutonomousDatabaseOutput": {
       "base": null,
       "refs": {}
+    },
+    "FileSystemConfigurationDetails": {
+      "base": "<p>The configuration of a file system on a VM cluster.</p>",
+      "refs": {
+        "FileSystemConfigurationDetailsList$member": null
+      }
+    },
+    "FileSystemConfigurationDetailsList": {
+      "base": null,
+      "refs": {
+        "CloudVmCluster$fileSystemConfigurationDetails": "<p>The list of file system configurations for the VM cluster.</p>",
+        "CloudVmClusterSummary$fileSystemConfigurationDetails": "<p>The list of file system configurations for the VM cluster.</p>",
+        "CreateCloudVmClusterInput$fileSystemConfigurationDetails": "<p>The list of file system configurations for the VM cluster. Each entry specifies the mount point of a file system and its size, in gigabytes (GB).</p>"
+      }
     },
     "FlexComponentList": {
       "base": null,
@@ -1861,7 +1891,7 @@
         "CloudExadataInfrastructure$maxMemoryInGBs": "<p>The total amount of memory, in gigabytes (GB), that's available on the Exadata infrastructure.</p>",
         "CloudExadataInfrastructure$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GB), that's allocated on the Exadata infrastructure.</p>",
         "CloudExadataInfrastructure$storageCount": "<p>The number of storage servers that are activated for the Exadata infrastructure.</p>",
-        "CloudExadataInfrastructure$totalStorageSizeInGBs": "<p>The total amount of storage, in gigabytes (GB), on the the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$totalStorageSizeInGBs": "<p>The total amount of storage, in gigabytes (GB), on the Exadata infrastructure.</p>",
         "CloudExadataInfrastructureSummary$activatedStorageCount": "<p>The number of storage servers requested for the Exadata infrastructure.</p>",
         "CloudExadataInfrastructureSummary$additionalStorageCount": "<p>The number of storage servers requested for the Exadata infrastructure.</p>",
         "CloudExadataInfrastructureSummary$availableStorageSizeInGBs": "<p>The amount of available storage, in gigabytes (GB), for the Exadata infrastructure.</p>",
@@ -1873,7 +1903,7 @@
         "CloudExadataInfrastructureSummary$maxMemoryInGBs": "<p>The total amount of memory, in gigabytes (GB), that's available on the Exadata infrastructure.</p>",
         "CloudExadataInfrastructureSummary$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GB), that's allocated on the Exadata infrastructure.</p>",
         "CloudExadataInfrastructureSummary$storageCount": "<p>The number of storage servers that are activated for the Exadata infrastructure.</p>",
-        "CloudExadataInfrastructureSummary$totalStorageSizeInGBs": "<p>The total amount of storage, in gigabytes (GB), on the the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$totalStorageSizeInGBs": "<p>The total amount of storage, in gigabytes (GB), on the Exadata infrastructure.</p>",
         "CloudExadataInfrastructureUnallocatedResources$localStorageInGBs": "<p>The amount of unallocated local storage available, in gigabytes (GB).</p>",
         "CloudExadataInfrastructureUnallocatedResources$memoryInGBs": "<p>The amount of unallocated memory available, in gigabytes (GB).</p>",
         "CloudExadataInfrastructureUnallocatedResources$ocpus": "<p>The number of unallocated Oracle CPU Units (OCPUs) available.</p>",
@@ -1944,7 +1974,7 @@
         "ExadbVmCluster$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GB), that's allocated for the Exascale VM cluster.</p>",
         "ExadbVmCluster$nodeCount": "<p>The number of nodes in the Exascale VM cluster.</p>",
         "ExadbVmCluster$scanListenerPortTcp": "<p>The port number for TCP connections to the Single Client Access Name (SCAN) listener for the Exascale VM cluster.</p>",
-        "ExadbVmCluster$scanListenerPortTcpSsl": "<p>The port number for TCP connections with SSL to the Single Client Access Name (SCAN) listener for the Exascale VM cluster.</p>",
+        "ExadbVmCluster$scanListenerPortTcpSsl": "<p>Reserved for future use.</p>",
         "ExadbVmCluster$totalEcpuCount": "<p>The total number of ECPUs for the Exascale VM cluster.</p>",
         "ExadbVmClusterStorageDetails$totalSizeInGBs": "<p>The total storage size, in gigabytes (GB).</p>",
         "ExadbVmClusterSummary$enabledEcpuCount": "<p>The number of elastic compute processing units (ECPUs) enabled on the Exascale VM cluster.</p>",
@@ -1952,8 +1982,12 @@
         "ExadbVmClusterSummary$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GB), that's allocated for the Exascale VM cluster.</p>",
         "ExadbVmClusterSummary$nodeCount": "<p>The number of nodes in the Exascale VM cluster.</p>",
         "ExadbVmClusterSummary$scanListenerPortTcp": "<p>The port number for TCP connections to the Single Client Access Name (SCAN) listener for the Exascale VM cluster.</p>",
-        "ExadbVmClusterSummary$scanListenerPortTcpSsl": "<p>The port number for TCP connections with SSL to the Single Client Access Name (SCAN) listener for the Exascale VM cluster.</p>",
+        "ExadbVmClusterSummary$scanListenerPortTcpSsl": "<p>Reserved for future use.</p>",
         "ExadbVmClusterSummary$totalEcpuCount": "<p>The total number of ECPUs for the Exascale VM cluster.</p>",
+        "ExascaleConfiguration$totalStorageSizeInGBs": "<p>The total amount of Exascale storage, in gigabytes (GB), configured on the Exadata infrastructure.</p>",
+        "ExascaleConfiguration$availableStorageSizeInGBs": "<p>The amount of Exascale storage, in gigabytes (GB), that's available on the Exadata infrastructure.</p>",
+        "ExascaleConfiguration$totalVmStorageSizeInGBs": "<p>The total amount of Exascale VM storage, in gigabytes (GB), on the Exadata infrastructure. VM clusters use Exascale VM storage for their VM file systems and VM backups.</p>",
+        "ExascaleConfiguration$availableVmStorageSizeInGBs": "<p>The amount of Exascale VM storage, in gigabytes (GB), that's available on the Exadata infrastructure.</p>",
         "ExascaleDbStorageDetails$availableSizeInGBs": "<p>The available storage size, in gigabytes (GB).</p>",
         "ExascaleDbStorageDetails$totalSizeInGBs": "<p>The total storage size, in gigabytes (GB).</p>",
         "ExascaleDbStorageVault$additionalFlashCacheInPercent": "<p>The additional flash cache percentage for the Exascale storage vault.</p>",
@@ -1962,6 +1996,7 @@
         "ExascaleDbStorageVaultSummary$additionalFlashCacheInPercent": "<p>The additional flash cache percentage for the Exascale storage vault.</p>",
         "ExascaleDbStorageVaultSummary$autoscaleLimitInGBs": "<p>The autoscale limit in gigabytes (GB) for the Exascale storage vault.</p>",
         "ExascaleDbStorageVaultSummary$vmClusterCount": "<p>The number of VM clusters associated with this Exascale storage vault.</p>",
+        "FileSystemConfigurationDetails$fileSystemSizeInGBs": "<p>The size of the file system, in gigabytes (GB).</p>",
         "FlexComponentSummary$availableCoreCount": "<p>The maximum number of CPU cores that can be enabled for the flex component.</p>",
         "FlexComponentSummary$availableDbStorageInGBs": "<p>The maximum amount of database storage, in gigabytes (GB), that can be enabled for the flex component.</p>",
         "FlexComponentSummary$availableLocalStorageInGBs": "<p>The maximum amount of local storage, in gigabytes (GB), that can be enabled for the flex component.</p>",
@@ -1976,6 +2011,8 @@
         "ResourcePoolSummary$totalComputeCapacity": "<p>The total compute capacity of the resource pool.</p>",
         "ResourcePoolSummary$availableComputeCapacity": "<p>The available compute capacity in the resource pool.</p>",
         "ThrottlingException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request after being throttled.</p>",
+        "UpdateExascaleCloudExadataInfrastructureInput$totalStorageSizeInGBs": "<p>The total amount of Exascale storage, in gigabytes (GB), to configure on the Exadata infrastructure.</p>",
+        "UpdateExascaleCloudExadataInfrastructureInput$totalVmStorageSizeInGBs": "<p>The total amount of Exascale storage, in gigabytes (GB), to allocate for VM storage on the Exadata infrastructure. VM clusters that store their VM file systems or VM backups in Exascale storage use this capacity.</p>",
         "WeeksOfMonth$member": null
       }
     },
@@ -2979,8 +3016,10 @@
         "CloudAutonomousVmClusterSummary$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network associated with this Autonomous VM cluster.</p>",
         "CloudAutonomousVmClusterSummary$cloudExadataInfrastructureArn": "<p>The Amazon Resource Name (ARN) of the Exadata infrastructure containing this Autonomous VM cluster.</p>",
         "CloudVmCluster$cloudExadataInfrastructureArn": "<p>The Amazon Resource Name (ARN) of the Exadata infrastructure that this VM cluster belongs to.</p>",
+        "CloudVmCluster$exascaleDbStorageVaultArn": "<p>The Amazon Resource Name (ARN) of the Exascale storage vault that the VM cluster uses. This value is present only for VM clusters that use an Exascale storage vault.</p>",
         "CloudVmCluster$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network associated with this VM cluster.</p>",
         "CloudVmClusterSummary$cloudExadataInfrastructureArn": "<p>The Amazon Resource Name (ARN) of the Exadata infrastructure that this VM cluster belongs to.</p>",
+        "CloudVmClusterSummary$exascaleDbStorageVaultArn": "<p>The Amazon Resource Name (ARN) of the Exascale storage vault that the VM cluster uses. This value is present only for VM clusters that use an Exascale storage vault.</p>",
         "CloudVmClusterSummary$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network associated with this VM cluster.</p>",
         "DbNode$dbNodeArn": "<p>The Amazon Resource Name (ARN) of the DB node.</p>",
         "DbNodeSummary$dbNodeArn": "<p>The Amazon Resource Name (ARN) of the DB node.</p>",
@@ -2990,7 +3029,9 @@
         "ExadbVmClusterSummary$exadbVmClusterArn": "<p>The Amazon Resource Name (ARN) of the Exascale VM cluster.</p>",
         "ExadbVmClusterSummary$exascaleDbStorageVaultArn": "<p>The Amazon Resource Name (ARN) of the Exascale storage vault associated with this Exascale VM cluster.</p>",
         "ExadbVmClusterSummary$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network associated with this Exascale VM cluster.</p>",
+        "ExascaleDbStorageVault$cloudExadataInfrastructureArn": "<p>The Amazon Resource Name (ARN) of the Exadata infrastructure that hosts the Exascale storage vault. This value is present only for vaults on dedicated Exadata infrastructure.</p>",
         "ExascaleDbStorageVault$exascaleDbStorageVaultArn": "<p>The Amazon Resource Name (ARN) of the Exascale storage vault.</p>",
+        "ExascaleDbStorageVaultSummary$cloudExadataInfrastructureArn": "<p>The Amazon Resource Name (ARN) of the Exadata infrastructure that hosts the Exascale storage vault. This value is present only for vaults on dedicated Exadata infrastructure.</p>",
         "ExascaleDbStorageVaultSummary$exascaleDbStorageVaultArn": "<p>The Amazon Resource Name (ARN) of the Exascale storage vault.</p>",
         "FailoverAutonomousDatabaseInput$peerDbArn": "<p>The Amazon Resource Name (ARN) of the peer Autonomous Database to fail over to.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to list tags for.</p>",
@@ -3048,7 +3089,9 @@
         "CloudAutonomousVmClusterResourceDetails$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster.</p>",
         "CloudAutonomousVmClusterSummary$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster.</p>",
         "CloudVmCluster$cloudVmClusterId": "<p>The unique identifier of the VM cluster.</p>",
+        "CloudVmCluster$exascaleDbStorageVaultId": "<p>The unique identifier of the Exascale storage vault that the VM cluster uses. This value is present only for VM clusters that use an Exascale storage vault.</p>",
         "CloudVmClusterSummary$cloudVmClusterId": "<p>The unique identifier of the VM cluster.</p>",
+        "CloudVmClusterSummary$exascaleDbStorageVaultId": "<p>The unique identifier of the Exascale storage vault that the VM cluster uses. This value is present only for VM clusters that use an Exascale storage vault.</p>",
         "DbNode$dbNodeId": "<p>The unique identifier of the DB node.</p>",
         "DbNode$dbServerId": "<p>The unique identifier of the Db server that is associated with the DB node.</p>",
         "DbNodeSummary$dbNodeId": "<p>The unique identifier of the DB node.</p>",
@@ -3058,6 +3101,8 @@
         "DeleteAutonomousDatabaseBackupInput$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup to delete.</p>",
         "DeleteCloudAutonomousVmClusterInput$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster to delete.</p>",
         "DeleteCloudVmClusterInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster to delete.</p>",
+        "ExascaleDbStorageVault$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure that hosts the Exascale storage vault. This value is present only for vaults on dedicated Exadata infrastructure.</p>",
+        "ExascaleDbStorageVaultSummary$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure that hosts the Exascale storage vault. This value is present only for vaults on dedicated Exadata infrastructure.</p>",
         "GetAutonomousDatabaseBackupInput$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup to retrieve information about.</p>",
         "GetCloudAutonomousVmClusterInput$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster to retrieve information about.</p>",
         "GetCloudVmClusterInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster.</p>",
@@ -3115,9 +3160,11 @@
         "CreateCloudAutonomousVmClusterInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure where the VM cluster will be created.</p>",
         "CreateCloudAutonomousVmClusterInput$odbNetworkId": "<p>The unique identifier of the ODB network to be used for the VM cluster.</p>",
         "CreateCloudVmClusterInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure for this VM cluster.</p>",
+        "CreateCloudVmClusterInput$exascaleDbStorageVaultId": "<p>The unique identifier or Amazon Resource Name (ARN) of the Exascale storage vault to use for the VM cluster. Specify this value to create a VM cluster that uses Exascale storage on dedicated Exadata infrastructure.</p>",
         "CreateCloudVmClusterInput$odbNetworkId": "<p>The unique identifier of the ODB network for the VM cluster.</p>",
         "CreateExadbVmClusterInput$exascaleDbStorageVaultId": "<p>The unique identifier of the Exascale storage vault for this Exascale VM cluster.</p>",
         "CreateExadbVmClusterInput$odbNetworkId": "<p>The unique identifier of the ODB network for the Exascale VM cluster.</p>",
+        "CreateExascaleDbStorageVaultInput$cloudExadataInfrastructureId": "<p>The unique identifier or Amazon Resource Name (ARN) of the Exadata infrastructure on which to create the Exascale storage vault. Specify this value to create the Exascale storage vault on dedicated Exadata infrastructure that has Exascale storage configured. If you specify <code>availabilityZone</code> or <code>availabilityZoneId</code>, the value must match the Availability Zone of the Exadata infrastructure. If you specify neither, the service uses the Availability Zone of the Exadata infrastructure.</p>",
         "CreateOdbPeeringConnectionInput$odbNetworkId": "<p>The unique identifier of the ODB network that initiates the peering connection.</p>",
         "CreateOdbPeeringConnectionInput$peerNetworkId": "<p>The unique identifier of the peer network. This can be either a VPC ID or another ODB network ID.</p>",
         "DatabaseCloneConfiguration$sourceAutonomousDatabaseId": "<p>The unique identifier of the source Autonomous Database to clone.</p>",
@@ -3152,6 +3199,7 @@
         "ListCloudVmClustersInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Oracle Exadata infrastructure.</p>",
         "ListDbServersInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Oracle Exadata infrastructure.</p>",
         "ListExadbVmClustersInput$exascaleDbStorageVaultId": "<p>The unique identifier of the Exascale storage vault to list the associated Exascale VM clusters.</p>",
+        "ListExascaleDbStorageVaultsInput$cloudExadataInfrastructureId": "<p>The unique identifier or Amazon Resource Name (ARN) of an Exadata infrastructure. If you specify this value, the operation returns only the Exascale storage vaults on that infrastructure that you own or that are shared with you. The infrastructure can be one that's shared with you through Amazon Web Services Resource Access Manager (Amazon Web Services RAM). You can't combine this filter with a <code>vaultType</code> of <code>EXASCALE_INFRASTRUCTURE</code>.</p>",
         "ListOdbPeeringConnectionsInput$odbNetworkId": "<p>The identifier of the ODB network to list peering connections for.</p> <p>If not specified, lists all ODB peering connections in the account.</p>",
         "OdbNetwork$odbNetworkId": "<p>The unique identifier of the ODB network.</p>",
         "OdbNetworkSummary$odbNetworkId": "<p>The unique identifier of the ODB network.</p>",
@@ -3170,6 +3218,7 @@
         "UpdateAutonomousDatabaseInput$resourcePoolLeaderId": "<p>The unique identifier of the resource pool leader Autonomous Database.</p>",
         "UpdateCloudExadataInfrastructureInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure to update.</p>",
         "UpdateExadbVmClusterInput$exadbVmClusterId": "<p>The unique identifier of the Exascale VM cluster to update.</p>",
+        "UpdateExascaleCloudExadataInfrastructureInput$cloudExadataInfrastructureId": "<p>The unique identifier or Amazon Resource Name (ARN) of the Exadata infrastructure to update.</p>",
         "UpdateExascaleDbStorageVaultInput$exascaleDbStorageVaultId": "<p>The unique identifier of the Exascale storage vault to update.</p>",
         "UpdateOdbNetworkInput$odbNetworkId": "<p>The unique identifier of the ODB network to update.</p>",
         "UpdateOdbPeeringConnectionInput$odbPeeringConnectionId": "<p>The identifier of the Oracle Database@Amazon Web Services peering connection to update.</p>"
@@ -3222,6 +3271,7 @@
         "UpdateAutonomousDatabaseBackupOutput$status": "<p>The current status of the Autonomous Database backup.</p>",
         "UpdateCloudExadataInfrastructureOutput$status": "<p>The current status of the Exadata infrastructure after the update operation.</p>",
         "UpdateExadbVmClusterOutput$status": "<p>The current status of the Exascale VM cluster.</p>",
+        "UpdateExascaleCloudExadataInfrastructureOutput$status": "<p>The current status of the Exadata infrastructure after the update operation.</p>",
         "UpdateExascaleDbStorageVaultOutput$status": "<p>The current status of the Exascale storage vault.</p>",
         "UpdateOdbNetworkOutput$status": "<p>The current status of the ODB network.</p>",
         "UpdateOdbPeeringConnectionOutput$status": "<p>The status of the peering connection update operation.</p>"
@@ -3394,6 +3444,13 @@
     "StopDbNodeOutput": {
       "base": null,
       "refs": {}
+    },
+    "StorageManagementType": {
+      "base": null,
+      "refs": {
+        "CloudVmCluster$storageManagementType": "<p>The type of storage management for the VM cluster. A value of <code>ASM</code> indicates Oracle Automatic Storage Management, and <code>EXASCALE</code> indicates Exascale storage.</p>",
+        "CloudVmClusterSummary$storageManagementType": "<p>The type of storage management for the VM cluster. A value of <code>ASM</code> indicates Oracle Automatic Storage Management, and <code>EXASCALE</code> indicates Exascale storage.</p>"
+      }
     },
     "String": {
       "base": null,
@@ -3713,6 +3770,7 @@
         "FailoverAutonomousDatabaseOutput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that was failed over.</p>",
         "FailoverAutonomousDatabaseOutput$displayName": "<p>The user-friendly name of the Autonomous Database.</p>",
         "FailoverAutonomousDatabaseOutput$statusReason": "<p>Additional information about the status of the Autonomous Database after the failover operation.</p>",
+        "FileSystemConfigurationDetails$mountPoint": "<p>The mount point of the file system.</p>",
         "FlexComponentSummary$descriptionSummary": "<p>A summary description of the flex component.</p>",
         "FlexComponentSummary$name": "<p>The name of the flex component.</p>",
         "FlexComponentSummary$shape": "<p>The shape that uses the flex component.</p>",
@@ -3842,6 +3900,9 @@
         "UpdateExadbVmClusterOutput$displayName": "<p>The user-friendly name for the Exascale VM cluster.</p>",
         "UpdateExadbVmClusterOutput$statusReason": "<p>Additional information about the status of the Exascale VM cluster.</p>",
         "UpdateExadbVmClusterOutput$exadbVmClusterId": "<p>The unique identifier of the Exascale VM cluster.</p>",
+        "UpdateExascaleCloudExadataInfrastructureOutput$displayName": "<p>The user-friendly name of the updated Exadata infrastructure.</p>",
+        "UpdateExascaleCloudExadataInfrastructureOutput$statusReason": "<p>Additional information about the status of the Exadata infrastructure after the update operation.</p>",
+        "UpdateExascaleCloudExadataInfrastructureOutput$cloudExadataInfrastructureId": "<p>The unique identifier of the updated Exadata infrastructure.</p>",
         "UpdateExascaleDbStorageVaultOutput$displayName": "<p>The user-friendly name for the Exascale storage vault.</p>",
         "UpdateExascaleDbStorageVaultOutput$statusReason": "<p>Additional information about the status of the Exascale storage vault.</p>",
         "UpdateExascaleDbStorageVaultOutput$exascaleDbStorageVaultId": "<p>The unique identifier of the Exascale storage vault.</p>",
@@ -4233,6 +4294,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateExascaleCloudExadataInfrastructureInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateExascaleCloudExadataInfrastructureOutput": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateExascaleDbStorageVaultInput": {
       "base": null,
       "refs": {}
@@ -4301,6 +4370,17 @@
       "base": null,
       "refs": {
         "ValidationException$reason": "<p>The reason why the validation failed.</p>"
+      }
+    },
+    "VmStorageType": {
+      "base": null,
+      "refs": {
+        "CloudVmCluster$vmFileSystemStorageType": "<p>The type of storage that the VM cluster uses for its VM file systems.</p>",
+        "CloudVmCluster$vmBackupStorageType": "<p>The type of storage that the VM cluster uses for VM backups.</p>",
+        "CloudVmClusterSummary$vmFileSystemStorageType": "<p>The type of storage that the VM cluster uses for its VM file systems.</p>",
+        "CloudVmClusterSummary$vmBackupStorageType": "<p>The type of storage that the VM cluster uses for VM backups.</p>",
+        "CreateCloudVmClusterInput$vmFileSystemStorageType": "<p>The type of storage to use for the VM file systems. Specify <code>EXASCALE</code> to store the VM file systems in Exascale storage on the storage servers, or <code>LOCAL</code> to store them on the database servers.</p>",
+        "CreateCloudVmClusterInput$vmBackupStorageType": "<p>The type of storage to use for VM backups. Specify <code>EXASCALE</code> to store VM backups in Exascale storage on the storage servers, or <code>LOCAL</code> to store them on the database servers.</p>"
       }
     },
     "VpcEndpointType": {

@@ -9168,6 +9168,18 @@
         "BandwidthReductionFilterSettings": {
           "shape": "BandwidthReductionFilterSettings",
           "locationName": "bandwidthReductionFilterSettings"
+        },
+        "AutoFilterSettings": {
+          "shape": "AutoFilterSettings",
+          "locationName": "autoFilterSettings"
+        },
+        "NoneFilterSettings": {
+          "shape": "NoneFilterSettings",
+          "locationName": "noneFilterSettings"
+        },
+        "PerceptualFilterSettings": {
+          "shape": "PerceptualFilterSettings",
+          "locationName": "perceptualFilterSettings"
         }
       }
     },
@@ -9462,6 +9474,10 @@
         "MinBitrate": {
           "shape": "__integerMin0",
           "locationName": "minBitrate"
+        },
+        "AllowExplicitWeightedPrediction": {
+          "shape": "H264AllowExplicitWeightedPrediction",
+          "locationName": "allowExplicitWeightedPrediction"
         }
       }
     },
@@ -9565,6 +9581,18 @@
         "BandwidthReductionFilterSettings": {
           "shape": "BandwidthReductionFilterSettings",
           "locationName": "bandwidthReductionFilterSettings"
+        },
+        "AutoFilterSettings": {
+          "shape": "AutoFilterSettings",
+          "locationName": "autoFilterSettings"
+        },
+        "NoneFilterSettings": {
+          "shape": "NoneFilterSettings",
+          "locationName": "noneFilterSettings"
+        },
+        "PerceptualFilterSettings": {
+          "shape": "PerceptualFilterSettings",
+          "locationName": "perceptualFilterSettings"
         }
       }
     },
@@ -16963,9 +16991,6 @@
     "__doubleMin1Max65535": {
       "type": "double"
     },
-    "__doubleMin250Max5000": {
-      "type": "double"
-    },
     "__doubleMin32Max46": {
       "type": "double"
     },
@@ -22041,6 +22066,10 @@
         "BitDepth": {
           "shape": "Av1BitDepth",
           "locationName": "bitDepth"
+        },
+        "FilterSettings": {
+          "shape": "Av1FilterSettings",
+          "locationName": "filterSettings"
         }
       },
       "required": [
@@ -25968,7 +25997,7 @@
       "type": "structure",
       "members": {
         "EmbeddingFrequency": {
-          "shape": "__doubleMin250Max5000",
+          "shape": "__double",
           "locationName": "embeddingFrequency"
         },
         "SceneCut": {
@@ -26158,6 +26187,57 @@
       "member": {
         "shape": "OutputUsage"
       }
+    },
+    "AutoFilterSettings": {
+      "type": "structure",
+      "members": {}
+    },
+    "Av1FilterSettings": {
+      "type": "structure",
+      "members": {
+        "AutoFilterSettings": {
+          "shape": "AutoFilterSettings",
+          "locationName": "autoFilterSettings"
+        },
+        "NoneFilterSettings": {
+          "shape": "NoneFilterSettings",
+          "locationName": "noneFilterSettings"
+        },
+        "PerceptualFilterSettings": {
+          "shape": "PerceptualFilterSettings",
+          "locationName": "perceptualFilterSettings"
+        }
+      }
+    },
+    "H264AllowExplicitWeightedPrediction": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "NoneFilterSettings": {
+      "type": "structure",
+      "members": {}
+    },
+    "PerceptualFilterSettings": {
+      "type": "structure",
+      "members": {
+        "Strength": {
+          "shape": "PerceptualFilterStrength",
+          "locationName": "strength"
+        }
+      },
+      "required": [
+        "Strength"
+      ]
+    },
+    "PerceptualFilterStrength": {
+      "type": "string",
+      "enum": [
+        "STRENGTH_1",
+        "STRENGTH_2"
+      ]
     }
   }
 }

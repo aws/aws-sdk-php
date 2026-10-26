@@ -153,7 +153,7 @@
     "AcceleratorRuntime": {
       "base": null,
       "refs": {
-        "AcceleratorSelection$runtime": "<p>Specifies the runtime driver to use for the GPU accelerator. You must use the same runtime for all GPUs in a fleet. </p> <p>You can choose from the following runtimes:</p> <ul> <li> <p> <code>latest</code> - Use the latest runtime available for the chip. If you specify <code>latest</code> and a new version of the runtime is released, the new version of the runtime is used.</p> </li> <li> <p> <code>grid:r580</code> - <a href=\"https://docs.nvidia.com/vgpu/19.0/index.html\">NVIDIA vGPU software 19</a> </p> </li> <li> <p> <code>grid:r570</code> - <a href=\"https://docs.nvidia.com/vgpu/18.0/index.html\">NVIDIA vGPU software 18</a> </p> </li> <li> <p> <code>grid:r535</code> - <a href=\"https://docs.nvidia.com/vgpu/16.0/index.html\">NVIDIA vGPU software 16</a> </p> </li> </ul> <p>If you don't specify a runtime, Amazon Web Services Deadline Cloud uses <code>latest</code> as the default. However, if you have multiple accelerators and specify <code>latest</code> for some and leave others blank, Amazon Web Services Deadline Cloud raises an exception.</p> <important> <p>Not all runtimes are compatible with all accelerator types:</p> <ul> <li> <p> <code>t4</code> and <code>a10g</code>: Support all runtimes (<code>grid:r580</code>, <code>grid:r570</code>, <code>grid:r535</code>)</p> </li> <li> <p> <code>l4</code> and <code>l40s</code>: Only support <code>grid:r570</code> and newer</p> </li> <li> <p> <code>rtx-pro-server-6000</code>: Only supports <code>grid:r580</code> </p> </li> </ul> <p>All accelerators in a fleet must use the same runtime version. You cannot mix different runtime versions within a single fleet.</p> </important> <note> <p>When you specify <code>latest</code>, it resolves to <code>grid:r580</code> for all currently supported accelerators.</p> </note>"
+        "AcceleratorSelection$runtime": "<p>Specifies the runtime driver to use for the GPU accelerator. You must use the same runtime for all GPUs in a fleet. </p> <p>You can choose from the following runtimes:</p> <ul> <li> <p> <code>latest</code> - Use the latest runtime available for the chip. If you specify <code>latest</code> and a new version of the runtime is released, the new version of the runtime is used.</p> </li> <li> <p> <code>grid:r580</code> - <a href=\"https://docs.nvidia.com/vgpu/19.0/index.html\">NVIDIA vGPU software 19</a> </p> </li> </ul> <p>If you don't specify a runtime, Amazon Web Services Deadline Cloud uses <code>latest</code> as the default. However, if you have multiple accelerators and specify <code>latest</code> for some and leave others blank, Amazon Web Services Deadline Cloud raises an exception.</p> <important> <p>All accelerator types support <code>grid:r580</code>.</p> <p>All accelerators in a fleet must use the same runtime version. You cannot mix different runtime versions within a single fleet.</p> </important> <note> <p>When you specify <code>latest</code>, it resolves to <code>grid:r580</code> for all currently supported accelerators.</p> </note>"
       }
     },
     "AcceleratorSelection": {
@@ -296,7 +296,7 @@
       }
     },
     "AssociateMemberToFarmRequest": {
-      "base": "<p>Shared member fields for Associate inputs and {Resource}Member response structures. principalId is excluded because it has @httpLabel on inputs but not on responses.</p>",
+      "base": null,
       "refs": {}
     },
     "AssociateMemberToFarmResponse": {
@@ -304,7 +304,7 @@
       "refs": {}
     },
     "AssociateMemberToFleetRequest": {
-      "base": "<p>Shared member fields for Associate inputs and {Resource}Member response structures. principalId is excluded because it has @httpLabel on inputs but not on responses.</p>",
+      "base": null,
       "refs": {}
     },
     "AssociateMemberToFleetResponse": {
@@ -312,7 +312,7 @@
       "refs": {}
     },
     "AssociateMemberToJobRequest": {
-      "base": "<p>Shared member fields for Associate inputs and {Resource}Member response structures. principalId is excluded because it has @httpLabel on inputs but not on responses.</p>",
+      "base": null,
       "refs": {}
     },
     "AssociateMemberToJobResponse": {
@@ -320,7 +320,7 @@
       "refs": {}
     },
     "AssociateMemberToQueueRequest": {
-      "base": "<p>Shared member fields for Associate inputs and {Resource}Member response structures. principalId is excluded because it has @httpLabel on inputs but not on responses.</p>",
+      "base": null,
       "refs": {}
     },
     "AssociateMemberToQueueResponse": {
@@ -332,7 +332,7 @@
       "refs": {}
     },
     "AssumeFleetRoleForReadResponse": {
-      "base": "<p>Shared response body for AssumeRole operations where credentials are required. AssumeQueueRoleForWorkerResponse is excluded because credentials is optional there because Queue.roleArn is optional, so the mixin's @required trait would be incorrect.</p>",
+      "base": null,
       "refs": {}
     },
     "AssumeFleetRoleForWorkerRequest": {
@@ -340,7 +340,7 @@
       "refs": {}
     },
     "AssumeFleetRoleForWorkerResponse": {
-      "base": "<p>Shared response body for AssumeRole operations where credentials are required. AssumeQueueRoleForWorkerResponse is excluded because credentials is optional there because Queue.roleArn is optional, so the mixin's @required trait would be incorrect.</p>",
+      "base": null,
       "refs": {}
     },
     "AssumeQueueRoleForReadRequest": {
@@ -348,7 +348,7 @@
       "refs": {}
     },
     "AssumeQueueRoleForReadResponse": {
-      "base": "<p>Shared response body for AssumeRole operations where credentials are required. AssumeQueueRoleForWorkerResponse is excluded because credentials is optional there because Queue.roleArn is optional, so the mixin's @required trait would be incorrect.</p>",
+      "base": null,
       "refs": {}
     },
     "AssumeQueueRoleForUserRequest": {
@@ -356,7 +356,7 @@
       "refs": {}
     },
     "AssumeQueueRoleForUserResponse": {
-      "base": "<p>Shared response body for AssumeRole operations where credentials are required. AssumeQueueRoleForWorkerResponse is excluded because credentials is optional there because Queue.roleArn is optional, so the mixin's @required trait would be incorrect.</p>",
+      "base": null,
       "refs": {}
     },
     "AssumeQueueRoleForWorkerRequest": {
@@ -1015,27 +1015,27 @@
       }
     },
     "CreateBudgetRequest": {
-      "base": "<p>Shared displayName + description for Create operations where both are present. displayName is @required here - this mixin is Create-only by design (Update has optional displayName).</p>",
+      "base": null,
       "refs": {}
     },
     "CreateBudgetResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "CreateFarmRequest": {
-      "base": "<p>Shared displayName + description for Create operations where both are present. displayName is @required here - this mixin is Create-only by design (Update has optional displayName).</p>",
+      "base": null,
       "refs": {}
     },
     "CreateFarmResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "CreateFleetRequest": {
-      "base": "<p>Shared displayName + description for Create operations where both are present. displayName is @required here - this mixin is Create-only by design (Update has optional displayName).</p>",
+      "base": null,
       "refs": {}
     },
     "CreateFleetResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "CreateJobRequest": {
@@ -1043,7 +1043,7 @@
       "refs": {}
     },
     "CreateJobResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "CreateJobTargetTaskRunStatus": {
@@ -1069,7 +1069,7 @@
       }
     },
     "CreateLicenseEndpointResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "CreateLimitRequest": {
@@ -1085,7 +1085,7 @@
       "refs": {}
     },
     "CreateMonitorResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "CreateQueueEnvironmentRequest": {
@@ -1113,11 +1113,11 @@
       "refs": {}
     },
     "CreateQueueRequest": {
-      "base": "<p>Shared displayName + description for Create operations where both are present. displayName is @required here - this mixin is Create-only by design (Update has optional displayName).</p>",
+      "base": null,
       "refs": {}
     },
     "CreateQueueResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "CreateStorageProfileRequest": {
@@ -1133,7 +1133,7 @@
       "refs": {}
     },
     "CreateWorkerResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "CreatedAt": {
@@ -1337,7 +1337,7 @@
       "refs": {}
     },
     "DeleteQueueFleetAssociationRequest": {
-      "base": "<p>Identifier mixin for queue-fleet association operations. Composes QueueIdentifierMixin (farmId + queueId) and adds fleetId.</p>",
+      "base": null,
       "refs": {}
     },
     "DeleteQueueFleetAssociationResponse": {
@@ -2020,7 +2020,7 @@
       "refs": {}
     },
     "GetBudgetResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "GetFarmRequest": {
@@ -2028,7 +2028,7 @@
       "refs": {}
     },
     "GetFarmResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "GetFleetRequest": {
@@ -2036,7 +2036,7 @@
       "refs": {}
     },
     "GetFleetResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "GetJobEntityError": {
@@ -2050,7 +2050,7 @@
       "refs": {}
     },
     "GetJobResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "GetLicenseEndpointRequest": {
@@ -2058,7 +2058,7 @@
       "refs": {}
     },
     "GetLicenseEndpointResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "GetLicenseEndpointResponseSecurityGroupIdsList": {
@@ -2078,7 +2078,7 @@
       "refs": {}
     },
     "GetLimitResponse": {
-      "base": "<p>Domain fields for Limit summary/response shapes, ordered before timestamps.</p>",
+      "base": null,
       "refs": {}
     },
     "GetMonitorRequest": {
@@ -2086,7 +2086,7 @@
       "refs": {}
     },
     "GetMonitorResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "GetMonitorSettingsRequest": {
@@ -2106,11 +2106,11 @@
       "refs": {}
     },
     "GetQueueFleetAssociationRequest": {
-      "base": "<p>Identifier mixin for queue-fleet association operations. Composes QueueIdentifierMixin (farmId + queueId) and adds fleetId.</p>",
+      "base": null,
       "refs": {}
     },
     "GetQueueFleetAssociationResponse": {
-      "base": "<p>Domain fields for QueueFleetAssociation summary/response shapes, ordered before timestamps.</p>",
+      "base": null,
       "refs": {}
     },
     "GetQueueLimitAssociationRequest": {
@@ -2118,7 +2118,7 @@
       "refs": {}
     },
     "GetQueueLimitAssociationResponse": {
-      "base": "<p>Domain fields for QueueLimitAssociation summary/response shapes, ordered before timestamps.</p>",
+      "base": null,
       "refs": {}
     },
     "GetQueueRequest": {
@@ -2126,7 +2126,7 @@
       "refs": {}
     },
     "GetQueueResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "GetSessionActionRequest": {
@@ -2142,15 +2142,15 @@
       "refs": {}
     },
     "GetSessionResponse": {
-      "base": "<p>Session lifecycle/status fields, ordered after IDs in session shapes.</p>",
+      "base": null,
       "refs": {}
     },
     "GetSessionsStatisticsAggregationRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "GetSessionsStatisticsAggregationResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "GetStepRequest": {
@@ -2190,7 +2190,7 @@
       "refs": {}
     },
     "GetVolumeResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "GetWorkerRequest": {
@@ -2198,7 +2198,7 @@
       "refs": {}
     },
     "GetWorkerResponse": {
-      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
+      "base": null,
       "refs": {}
     },
     "HostConfiguration": {
@@ -2326,8 +2326,8 @@
     "InstanceTypes": {
       "base": null,
       "refs": {
-        "ServiceManagedEc2InstanceCapabilities$allowedInstanceTypes": "<p>The allowable Amazon EC2 instance types.</p>",
-        "ServiceManagedEc2InstanceCapabilities$excludedInstanceTypes": "<p>The instance types to exclude from the fleet.</p>"
+        "ServiceManagedEc2InstanceCapabilities$allowedInstanceTypes": "<p>The allowable Amazon EC2 instance types.</p> <note> <p>If you specify <code>allowedInstanceTypes</code>, you can't specify <code>excludedInstanceTypes</code>.</p> </note>",
+        "ServiceManagedEc2InstanceCapabilities$excludedInstanceTypes": "<p>The instance types to exclude from the fleet.</p> <note> <p>If you specify <code>excludedInstanceTypes</code>, you can't specify <code>allowedInstanceTypes</code>.</p> </note>"
       }
     },
     "IntString": {
@@ -2798,171 +2798,171 @@
       }
     },
     "ListAvailableMeteredProductsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListAvailableMeteredProductsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListBudgetsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListBudgetsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListFarmMembersRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListFarmMembersResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListFarmsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListFarmsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListFleetMembersRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListFleetMembersResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListFleetsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListFleetsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListJobMembersRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListJobMembersResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListJobParameterDefinitionsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListJobParameterDefinitionsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListJobsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListJobsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListLicenseEndpointsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListLicenseEndpointsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListLimitsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListLimitsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListMembershipsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListMembershipsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListMeteredProductsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListMeteredProductsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListMonitorsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListMonitorsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListQueueEnvironmentsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListQueueEnvironmentsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListQueueFleetAssociationsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListQueueFleetAssociationsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListQueueLimitAssociationsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListQueueLimitAssociationsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListQueueMembersRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListQueueMembersResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListQueuesRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListQueuesResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListSessionActionsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListSessionActionsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListSessionsForWorkerRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListSessionsForWorkerResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListSessionsForWorkerSummaries": {
@@ -2972,11 +2972,11 @@
       }
     },
     "ListSessionsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListSessionsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListStepConsumersRequest": {
@@ -2990,7 +2990,7 @@
       }
     },
     "ListStepConsumersResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListStepDependenciesRequest": {
@@ -3004,31 +3004,31 @@
       }
     },
     "ListStepDependenciesResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListStepsRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListStepsResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListStorageProfilesForQueueRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListStorageProfilesForQueueResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListStorageProfilesRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListStorageProfilesResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListTagsForResourceRequest": {
@@ -3040,27 +3040,27 @@
       "refs": {}
     },
     "ListTasksRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListTasksResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListVolumesRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListVolumesResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "ListWorkersRequest": {
-      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "base": null,
       "refs": {}
     },
     "ListWorkersResponse": {
-      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "base": null,
       "refs": {}
     },
     "LogConfiguration": {
@@ -3575,7 +3575,7 @@
     "PersistentVolumeTtlHours": {
       "base": null,
       "refs": {
-        "PersistentVolumeConfiguration$lastUsedTtlHours": "<p>The number of hours a persistent volume can remain unused before it is deleted. The default is 168 (7 days).</p>"
+        "PersistentVolumeConfiguration$lastUsedTtlHours": "<p>The number of hours a persistent volume can remain unused before it is deleted. The default is 12.</p>"
       }
     },
     "PortNumber": {
@@ -4049,7 +4049,7 @@
       }
     },
     "SearchJobsRequest": {
-      "base": "<p>Shared input fields for all Search operations (filterExpressions, sortExpressions, itemOffset, pageSize).</p>",
+      "base": null,
       "refs": {}
     },
     "SearchJobsRequestItemOffsetInteger": {
@@ -4071,7 +4071,7 @@
       }
     },
     "SearchJobsResponse": {
-      "base": "<p>Shared output fields for all Search operations (nextItemOffset, totalResults).</p>",
+      "base": null,
       "refs": {}
     },
     "SearchSortExpression": {
@@ -4090,7 +4090,7 @@
       }
     },
     "SearchStepsRequest": {
-      "base": "<p>Shared input fields for all Search operations (filterExpressions, sortExpressions, itemOffset, pageSize).</p>",
+      "base": null,
       "refs": {}
     },
     "SearchStepsRequestItemOffsetInteger": {
@@ -4112,11 +4112,11 @@
       }
     },
     "SearchStepsResponse": {
-      "base": "<p>Shared output fields for all Search operations (nextItemOffset, totalResults).</p>",
+      "base": null,
       "refs": {}
     },
     "SearchTasksRequest": {
-      "base": "<p>Shared input fields for all Search operations (filterExpressions, sortExpressions, itemOffset, pageSize).</p>",
+      "base": null,
       "refs": {}
     },
     "SearchTasksRequestItemOffsetInteger": {
@@ -4138,7 +4138,7 @@
       }
     },
     "SearchTasksResponse": {
-      "base": "<p>Shared output fields for all Search operations (nextItemOffset, totalResults).</p>",
+      "base": null,
       "refs": {}
     },
     "SearchTerm": {
@@ -4160,7 +4160,7 @@
       }
     },
     "SearchWorkersRequest": {
-      "base": "<p>Shared input fields for all Search operations (filterExpressions, sortExpressions, itemOffset, pageSize).</p>",
+      "base": null,
       "refs": {}
     },
     "SearchWorkersRequestFleetIdsList": {
@@ -4182,7 +4182,7 @@
       }
     },
     "SearchWorkersResponse": {
-      "base": "<p>Shared output fields for all Search operations (nextItemOffset, totalResults).</p>",
+      "base": null,
       "refs": {}
     },
     "SecretAccessKey": {
@@ -5232,7 +5232,7 @@
       "refs": {}
     },
     "UpdateQueueFleetAssociationRequest": {
-      "base": "<p>Identifier mixin for queue-fleet association operations. Composes QueueIdentifierMixin (farmId + queueId) and adds fleetId.</p>",
+      "base": null,
       "refs": {}
     },
     "UpdateQueueFleetAssociationResponse": {

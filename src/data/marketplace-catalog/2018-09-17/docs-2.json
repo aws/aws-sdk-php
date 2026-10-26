@@ -568,7 +568,12 @@
         "ResaleAuthorizationSummary$CreatedDate": "<p>The created date of the ResaleAuthorization.</p>",
         "ResaleAuthorizationSummary$AvailabilityEndDate": "<p>The availability end date of the ResaleAuthorization.</p>",
         "SaaSProductLastModifiedDateFilterDateRange$AfterValue": "<p>Date after which the SaaS product was last modified.</p>",
-        "SaaSProductLastModifiedDateFilterDateRange$BeforeValue": "<p>Date before which the SaaS product was last modified.</p>"
+        "SaaSProductLastModifiedDateFilterDateRange$BeforeValue": "<p>Date before which the SaaS product was last modified.</p>",
+        "SubsidiaryAuthorizationCreatedDateFilterDateRange$AfterValue": "<p>The start date (inclusive) of the date range. The operation returns subsidiary authorizations created on or after this date.</p>",
+        "SubsidiaryAuthorizationCreatedDateFilterDateRange$BeforeValue": "<p>The end date (inclusive) of the date range. The operation returns subsidiary authorizations created on or before this date.</p>",
+        "SubsidiaryAuthorizationLastModifiedDateFilterDateRange$AfterValue": "<p>The start date (inclusive) of the date range. The operation returns subsidiary authorizations last modified on or after this date.</p>",
+        "SubsidiaryAuthorizationLastModifiedDateFilterDateRange$BeforeValue": "<p>The end date (inclusive) of the date range. The operation returns subsidiary authorizations last modified on or before this date.</p>",
+        "SubsidiaryAuthorizationSummary$CreatedDate": "<p>The date the subsidiary authorization was created.</p>"
       }
     },
     "DeleteResourcePolicyRequest": {
@@ -674,7 +679,7 @@
         "Entity$Type": "<p>The type of entity.</p>",
         "EntityDetail$EntityType": "<p>The entity type of the entity, in the format of <code>EntityType@Version</code>.</p>",
         "EntitySummary$EntityType": "<p>The type of the entity.</p>",
-        "ListEntitiesRequest$EntityType": "<p>The type of entities to retrieve. Valid values are: <code>AmiProduct</code>, <code>ContainerProduct</code>, <code>DataProduct</code>, <code>SaaSProduct</code>, <code>ProcurementPolicy</code>, <code>Experience</code>, <code>Audience</code>, <code>BrandingSettings</code>, <code>Offer</code>, <code>OfferSet</code>, <code>Seller</code>, <code>ResaleAuthorization</code>, <code>Solution</code>.</p>",
+        "ListEntitiesRequest$EntityType": "<p>The type of entities to retrieve. Valid values are: <code>AmiProduct</code>, <code>ContainerProduct</code>, <code>DataProduct</code>, <code>SaaSProduct</code>, <code>ProcurementPolicy</code>, <code>Experience</code>, <code>Audience</code>, <code>BrandingSettings</code>, <code>Offer</code>, <code>OfferSet</code>, <code>Seller</code>, <code>ResaleAuthorization</code>, <code>Solution</code>, <code>SubsidiaryAuthorization</code>.</p>",
         "ValidationExceptionField$EntityType": "<p>The entity type the failing field applies to, if the field is on a specific entity. For example, <code>AmiProduct@1.0</code>.</p>"
       }
     },
@@ -2095,7 +2100,8 @@
         "OfferSort$SortOrder": "<p>Allows to sort offers.</p>",
         "ResaleAuthorizationSort$SortOrder": "<p>Allows to sort ResaleAuthorization.</p>",
         "SaaSProductSort$SortOrder": "<p>The sorting order. Can be <code>ASCENDING</code> or <code>DESCENDING</code>. The default value is <code>DESCENDING</code>.</p>",
-        "Sort$SortOrder": "<p>The sorting order. Can be <code>ASCENDING</code> or <code>DESCENDING</code>. The default value is <code>DESCENDING</code>.</p>"
+        "Sort$SortOrder": "<p>The sorting order. Can be <code>ASCENDING</code> or <code>DESCENDING</code>. The default value is <code>DESCENDING</code>.</p>",
+        "SubsidiaryAuthorizationSort$SortOrder": "<p>The sorting order. Can be <code>ASCENDING</code> or <code>DESCENDING</code>. The default value is <code>DESCENDING</code>.</p>"
       }
     },
     "StartChangeSetRequest": {
@@ -2105,6 +2111,204 @@
     "StartChangeSetResponse": {
       "base": null,
       "refs": {}
+    },
+    "SubsidiaryAuthorizationCreatedDateFilter": {
+      "base": "<p>The filter for the date a subsidiary authorization was created.</p>",
+      "refs": {
+        "SubsidiaryAuthorizationFilters$CreatedDate": "<p>A filter that matches subsidiary authorizations by creation date.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationCreatedDateFilterDateRange": {
+      "base": "<p>A date range for filtering subsidiary authorizations by creation date.</p>",
+      "refs": {
+        "SubsidiaryAuthorizationCreatedDateFilter$DateRange": "<p>A date range to filter by. The operation returns subsidiary authorizations with creation dates that fall within this range.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationEntityIdFilter": {
+      "base": "<p>The filter for subsidiary authorization entity IDs. Each ID begins with <code>subauthz-</code> followed by 13 alphanumeric characters.</p>",
+      "refs": {
+        "SubsidiaryAuthorizationFilters$EntityId": "<p>A filter that matches subsidiary authorizations by entity ID.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationEntityIdFilterValueList": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationEntityIdFilter$ValueList": "<p>A list of entity IDs to filter by. The operation returns subsidiary authorizations with an entity ID that matches any value in this list. You can include up to 10 entity IDs in this list.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationEntityIdString": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationEntityIdFilterValueList$member": null
+      }
+    },
+    "SubsidiaryAuthorizationFilters": {
+      "base": "<p>The filters that you can use with the <code>ListEntities</code> operation to filter subsidiary authorizations. You can filter by <code>EntityId</code>, <code>Status</code>, <code>ResourceId</code>, <code>ResourceName</code>, <code>Name</code>, <code>SubsidiaryAccountId</code>, <code>CreatedDate</code>, and <code>LastModifiedDate</code>. You can add only one wildcard filter in a single <code>ListEntities</code> request.</p>",
+      "refs": {
+        "EntityTypeFilters$SubsidiaryAuthorizationFilters": "<p>A filter for subsidiary authorizations.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationLastModifiedDateFilter": {
+      "base": "<p>The filter for the date a subsidiary authorization was last modified.</p>",
+      "refs": {
+        "SubsidiaryAuthorizationFilters$LastModifiedDate": "<p>A filter that matches subsidiary authorizations by last modified date.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationLastModifiedDateFilterDateRange": {
+      "base": "<p>A date range for filtering subsidiary authorizations by last modified date.</p>",
+      "refs": {
+        "SubsidiaryAuthorizationLastModifiedDateFilter$DateRange": "<p>A date range to filter by. The operation returns subsidiary authorizations with last modified dates that fall within this range.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationNameFilter": {
+      "base": "<p>The filter for subsidiary authorization names.</p>",
+      "refs": {
+        "SubsidiaryAuthorizationFilters$Name": "<p>A filter that matches subsidiary authorizations by name.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationNameFilterValueList": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationNameFilter$ValueList": "<p>A list of names to filter by. The operation returns subsidiary authorizations with a name that matches any value in this list. You can include up to 10 names in this list.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationNameFilterWildcard": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationNameFilter$WildCardValue": "<p>A partial name to filter by. The operation returns subsidiary authorizations whose name contains this value. The value must be at least 3 characters.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationNameString": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationNameFilterValueList$member": null
+      }
+    },
+    "SubsidiaryAuthorizationResourceIdFilter": {
+      "base": "<p>The filter for the IDs of resources that subsidiary authorizations apply to.</p>",
+      "refs": {
+        "SubsidiaryAuthorizationFilters$ResourceId": "<p>A filter that matches subsidiary authorizations by the ID of the authorized resource.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationResourceIdFilterValueList": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationResourceIdFilter$ValueList": "<p>A list of resource IDs to filter by. The operation returns subsidiary authorizations for resources with an ID that matches any value in this list. You can include up to 10 resource IDs in this list.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationResourceIdString": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationResourceIdFilterValueList$member": null
+      }
+    },
+    "SubsidiaryAuthorizationResourceNameFilter": {
+      "base": "<p>The filter for the names of resources that subsidiary authorizations apply to.</p>",
+      "refs": {
+        "SubsidiaryAuthorizationFilters$ResourceName": "<p>A filter that matches subsidiary authorizations by the name of the authorized resource.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationResourceNameFilterValueList": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationResourceNameFilter$ValueList": "<p>A list of resource names to filter by. The operation returns subsidiary authorizations for resources with a name that matches any value in this list. You can include up to 10 resource names in this list.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationResourceNameFilterWildcard": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationResourceNameFilter$WildCardValue": "<p>A partial resource name to filter by. The operation returns subsidiary authorizations for resources whose name contains this value. The value must be at least 3 characters.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationResourceNameString": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationResourceNameFilterValueList$member": null
+      }
+    },
+    "SubsidiaryAuthorizationSort": {
+      "base": "<p>Specifies the field to sort subsidiary authorizations by and the order (ascending or descending) to apply.</p>",
+      "refs": {
+        "EntityTypeSort$SubsidiaryAuthorizationSort": "<p>A sort for subsidiary authorizations.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationSortBy": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationSort$SortBy": "<p>The field to sort subsidiary authorizations by. Valid values are <code>EntityId</code>, <code>Status</code>, <code>ResourceId</code>, <code>SubsidiaryAccountId</code>, <code>CreatedDate</code>, and <code>LastModifiedDate</code>.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationStatusFilter": {
+      "base": "<p>The filter for subsidiary authorization statuses.</p>",
+      "refs": {
+        "SubsidiaryAuthorizationFilters$Status": "<p>A filter that matches subsidiary authorizations by status.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationStatusFilterValueList": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationStatusFilter$ValueList": "<p>A list of statuses to filter by. The operation returns subsidiary authorizations with a status that matches a value in this list. Valid values are:</p> <ul> <li> <p> <code>Draft</code> - The subsidiary authorization was created but not yet released. The subsidiary account can't see it.</p> </li> <li> <p> <code>Active</code> - The subsidiary account can use the subsidiary authorization to create offers for the authorized product.</p> </li> <li> <p> <code>Restricted</code> - The subsidiary authorization was discarded while in <code>Draft</code> or revoked while <code>Active</code>. It can't be used to create new offers. This status is final.</p> </li> </ul>"
+      }
+    },
+    "SubsidiaryAuthorizationStatusString": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationStatusFilterValueList$member": null
+      }
+    },
+    "SubsidiaryAuthorizationSubsidiaryAccountIdFilter": {
+      "base": "<p>The filter for the AWS account IDs of subsidiary accounts.</p>",
+      "refs": {
+        "SubsidiaryAuthorizationFilters$SubsidiaryAccountId": "<p>A filter that matches subsidiary authorizations by the AWS account ID of the subsidiary account.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationSubsidiaryAccountIdFilterValueList": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationSubsidiaryAccountIdFilter$ValueList": "<p>A list of AWS account IDs to filter by. The operation returns subsidiary authorizations whose subsidiary account ID matches any value in this list. You can include up to 10 account IDs in this list.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationSubsidiaryAccountIdString": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationSubsidiaryAccountIdFilterValueList$member": null
+      }
+    },
+    "SubsidiaryAuthorizationSummary": {
+      "base": "<p>An object that contains summary information about a subsidiary authorization, including its name, status, authorized resource, subsidiary account, and creation date. A subsidiary authorization lets a seller authorize one of its subsidiary accounts to create offers for one of its products.</p>",
+      "refs": {
+        "EntitySummary$SubsidiaryAuthorizationSummary": "<p>An object that contains summary information about the subsidiary authorization, such as its status and authorized resource, when the entity type is <code>SubsidiaryAuthorization</code>.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationSummaryNameString": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationSummary$Name": "<p>The name of the subsidiary authorization.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationSummaryResourceIdString": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationSummary$ResourceId": "<p>The ID of the resource that the subsidiary authorization applies to. Currently, this is always a product ID, such as <code>prod-example123</code>.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationSummaryResourceNameString": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationSummary$ResourceName": "<p>The name of the resource that the subsidiary authorization applies to. Currently, this is always a product name.</p>"
+      }
+    },
+    "SubsidiaryAuthorizationSummaryStatusString": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationSummary$Status": "<p>The status of the subsidiary authorization. Valid values are:</p> <ul> <li> <p> <code>Draft</code> - The subsidiary authorization was created but not yet released. The subsidiary account can't see it.</p> </li> <li> <p> <code>Active</code> - The subsidiary account can use the subsidiary authorization to create offers for the authorized product.</p> </li> <li> <p> <code>Restricted</code> - The subsidiary authorization was discarded while in <code>Draft</code> or revoked while <code>Active</code>. It can't be used to create new offers. This status is final.</p> </li> </ul>"
+      }
+    },
+    "SubsidiaryAuthorizationSummarySubsidiaryAccountIdString": {
+      "base": null,
+      "refs": {
+        "SubsidiaryAuthorizationSummary$SubsidiaryAccountId": "<p>The 12-digit AWS account ID of the subsidiary account.</p>"
+      }
     },
     "Tag": {
       "base": "<p>A list of objects specifying each key name and value.</p>",

@@ -7,17 +7,20 @@
     "BatchStartViewerSessionRevocation": "<p>Performs <a>StartViewerSessionRevocation</a> on multiple channel ARN and viewer ID pairs simultaneously.</p>",
     "CreateAdConfiguration": "<p>Creates a new ad configuration to be used for server-side ad insertion.</p>",
     "CreateChannel": "<p>Creates a new channel and an associated stream key to start streaming.</p>",
+    "CreateFailoverSlateConfiguration": "<p>Creates a new failover slate configuration.</p>",
     "CreatePlaybackRestrictionPolicy": "<p>Creates a new playback restriction policy, for constraining playback by countries and/or origins.</p>",
     "CreateRecordingConfiguration": "<p>Creates a new recording configuration, used to enable recording to Amazon S3.</p> <p> <b>Known issue:</b> In the us-east-1 region, if you use the Amazon Web Services CLI to create a recording configuration, it returns success even if the S3 bucket is in a different region. In this case, the <code>state</code> of the recording configuration is <code>CREATE_FAILED</code> (instead of <code>ACTIVE</code>). (In other regions, the CLI correctly returns failure if the bucket is in a different region.)</p> <p> <b>Workaround:</b> Ensure that your S3 bucket is in the same region as the recording configuration. If you create a recording configuration in a different region as your S3 bucket, delete that recording configuration and create a new one with an S3 bucket from the correct region.</p>",
     "CreateStreamKey": "<p>Creates a stream key, used to initiate a stream, for the specified channel ARN.</p> <p>Note that <a>CreateChannel</a> creates a stream key. If you subsequently use CreateStreamKey on the same channel, it will fail because a stream key already exists and there is a limit of 1 stream key per channel. To reset the stream key on a channel, use <a>DeleteStreamKey</a> and then CreateStreamKey.</p>",
     "DeleteAdConfiguration": "<p>Deletes the specified ad configuration.</p>",
     "DeleteChannel": "<p>Deletes the specified channel and its associated stream keys.</p> <p>If you try to delete a live channel, you will get an error (409 ConflictException). To delete a channel that is live, call <a>StopStream</a>, wait for the Amazon EventBridge \"Stream End\" event (to verify that the stream's state is no longer Live), then call DeleteChannel. (See <a href=\"https://docs.aws.amazon.com/ivs/latest/userguide/eventbridge.html\"> Using EventBridge with Amazon IVS</a>.) </p>",
+    "DeleteFailoverSlateConfiguration": "<p>Deletes the specified failover slate configuration.</p>",
     "DeletePlaybackKeyPair": "<p>Deletes a specified authorization key pair. This invalidates future viewer tokens generated using the key pair’s <code>privateKey</code>. For more information, see <a href=\"https://docs.aws.amazon.com/ivs/latest/userguide/private-channels.html\">Setting Up Private Channels</a> in the <i>Amazon IVS User Guide</i>.</p>",
     "DeletePlaybackRestrictionPolicy": "<p>Deletes the specified playback restriction policy.</p>",
     "DeleteRecordingConfiguration": "<p>Deletes the recording configuration for the specified ARN.</p> <p>If you try to delete a recording configuration that is associated with a channel, you will get an error (409 ConflictException). To avoid this, for all channels that reference the recording configuration, first use <a>UpdateChannel</a> to set the <code>recordingConfigurationArn</code> field to an empty string, then use DeleteRecordingConfiguration.</p>",
     "DeleteStreamKey": "<p>Deletes the stream key for the specified ARN, so it can no longer be used to stream.</p>",
     "GetAdConfiguration": "<p>Gets the ad configuration represented by the specified ARN.</p>",
     "GetChannel": "<p>Gets the channel configuration for the specified channel ARN. See also <a>BatchGetChannel</a>.</p>",
+    "GetFailoverSlateConfiguration": "<p>Gets the failover slate configuration for the specified ARN.</p>",
     "GetPlaybackKeyPair": "<p>Gets a specified playback authorization key pair and returns the <code>arn</code> and <code>fingerprint</code>. The <code>privateKey</code> held by the caller can be used to generate viewer authorization tokens, to grant viewers access to private channels. For more information, see <a href=\"https://docs.aws.amazon.com/ivs/latest/userguide/private-channels.html\">Setting Up Private Channels</a> in the <i>Amazon IVS User Guide</i>.</p>",
     "GetPlaybackRestrictionPolicy": "<p>Gets the specified playback restriction policy.</p>",
     "GetRecordingConfiguration": "<p>Gets the recording configuration for the specified ARN.</p>",
@@ -28,6 +31,7 @@
     "InsertAdBreak": "<p>Inserts an ad marker in the playlist for the specified channel and duration using the ad configuration associated with the channel.</p> <p> <b>Note:</b> AWS Elemental MediaTailor (EMT), the service that handles ad requests, provides CloudWatch metrics to help you monitor the success or failure of each InsertAdBreak operation. See <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monitoring-cloudwatch-metrics.html\">Monitoring AWS Elemental MediaTailor with Amazon CloudWatch</a> metrics in the <i>AWS Elemental MediaTailor User Guide</i> for details on available metrics.</p>",
     "ListAdConfigurations": "<p>Gets summary information about all ad configurations in your account, in the AWS region where the API request is processed.</p>",
     "ListChannels": "<p>Gets summary information about all channels in your account, in the Amazon Web Services region where the API request is processed. This list can be filtered to match a specified name or recording-configuration ARN. Filters are mutually exclusive and cannot be used together. If you try to use both filters, you will get an error (409 ConflictException).</p>",
+    "ListFailoverSlateConfigurations": "<p>Gets summary information about all failover slate configurations in your account, in the Amazon Web Services region where the API request is processed.</p>",
     "ListPlaybackKeyPairs": "<p>Gets summary information about playback key pairs. For more information, see <a href=\"https://docs.aws.amazon.com/ivs/latest/userguide/private-channels.html\">Setting Up Private Channels</a> in the <i>Amazon IVS User Guide</i>.</p>",
     "ListPlaybackRestrictionPolicies": "<p>Gets summary information about playback restriction policies.</p>",
     "ListRecordingConfigurations": "<p>Gets summary information about all recording configurations in your account, in the Amazon Web Services region where the API request is processed.</p>",
@@ -42,6 +46,7 @@
     "UntagResource": "<p>Removes tags from the resource with the specified ARN.</p>",
     "UpdateAdConfiguration": "<p>Updates a specified ad configuration.</p>",
     "UpdateChannel": "<p>Updates a channel's configuration. Live channels cannot be updated. You must stop the ongoing stream, update the channel, and restart the stream for the changes to take effect.</p>",
+    "UpdateFailoverSlateConfiguration": "<p>Updates a specified failover slate configuration.</p>",
     "UpdatePlaybackRestrictionPolicy": "<p>Updates a specified playback restriction policy.</p>"
   },
   "shapes": {
@@ -238,6 +243,16 @@
         "BatchGetChannelRequest$arns": "<p>Array of ARNs, one per channel.</p>"
       }
     },
+    "ChannelFailoverSlateConfigurationArn": {
+      "base": null,
+      "refs": {
+        "Channel$failoverSlateConfigurationArn": "<p>Failover-slate-configuration ARN. A valid ARN value here both specifies the ARN and enables failover slate. Default: \"\" (empty string, no failover slate configuration is applied).</p>",
+        "ChannelSummary$failoverSlateConfigurationArn": "<p>Failover-slate-configuration ARN. A valid ARN value here both specifies the ARN and enables failover slate. Default: \"\" (empty string, no failover slate configuration is applied).</p>",
+        "CreateChannelRequest$failoverSlateConfigurationArn": "<p>Failover-slate-configuration ARN. A valid ARN value here both specifies the ARN and enables failover slate. Default: \"\" (empty string, no failover slate configuration is applied).</p>",
+        "ListChannelsRequest$filterByFailoverSlateConfigurationArn": "<p>Filters the channel list to match the specified failover-slate-configuration ARN.</p>",
+        "UpdateChannelRequest$failoverSlateConfigurationArn": "<p>Failover-slate-configuration ARN. A valid ARN value here both specifies the ARN and enables failover slate. If this is set to an empty string, failover slate configuration is disabled.</p>"
+      }
+    },
     "ChannelLatencyMode": {
       "base": null,
       "refs": {
@@ -336,6 +351,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateFailoverSlateConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateFailoverSlateConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreatePlaybackRestrictionPolicyRequest": {
       "base": null,
       "refs": {}
@@ -368,6 +391,10 @@
       "base": null,
       "refs": {}
     },
+    "DeleteFailoverSlateConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
     "DeletePlaybackKeyPairRequest": {
       "base": null,
       "refs": {}
@@ -396,6 +423,80 @@
         "RecordingConfigurationSummary$destinationConfiguration": "<p>A complex type that contains information about where recorded video will be stored.</p>"
       }
     },
+    "FailoverSlateActivationThresholdSeconds": {
+      "base": null,
+      "refs": {
+        "CreateFailoverSlateConfigurationRequest$activationThresholdSeconds": "<p>Number of seconds of ingest interruption before the failover slate activates. Minimum: <code>3</code>. Maximum: <code>5</code>. Default: <code>3</code>.</p>",
+        "FailoverSlateConfiguration$activationThresholdSeconds": "<p>Number of seconds of ingest interruption before the failover slate activates. Minimum: <code>3</code>. Maximum: <code>5</code>. Default: <code>3</code>.</p>",
+        "FailoverSlateConfigurationSummary$activationThresholdSeconds": "<p>Number of seconds of ingest interruption before the failover slate activates. Minimum: <code>3</code>. Maximum: <code>5</code>. Default: <code>3</code>.</p>",
+        "UpdateFailoverSlateConfigurationRequest$activationThresholdSeconds": "<p>Number of seconds of ingest interruption before the failover slate activates. Minimum: <code>3</code>. Maximum: <code>5</code>. Default: <code>3</code>.</p>"
+      }
+    },
+    "FailoverSlateConfiguration": {
+      "base": "<p>Object specifying a failover slate configuration.</p>",
+      "refs": {
+        "CreateFailoverSlateConfigurationResponse$failoverSlateConfiguration": "<p>The failover slate configuration that was created.</p>",
+        "GetFailoverSlateConfigurationResponse$failoverSlateConfiguration": "<p>The failover slate configuration that was retrieved.</p>",
+        "StreamSession$failoverSlateConfiguration": "<p>The properties of the failover slate configuration at the time of going live.</p>",
+        "UpdateFailoverSlateConfigurationResponse$failoverSlateConfiguration": "<p>Object specifying the updated failover slate configuration.</p>"
+      }
+    },
+    "FailoverSlateConfigurationArn": {
+      "base": null,
+      "refs": {
+        "DeleteFailoverSlateConfigurationRequest$arn": "<p>ARN of the failover slate configuration to be deleted.</p>",
+        "FailoverSlateConfiguration$arn": "<p>Failover-slate-configuration ARN.</p>",
+        "FailoverSlateConfigurationSummary$arn": "<p>Failover-slate-configuration ARN.</p>",
+        "GetFailoverSlateConfigurationRequest$arn": "<p>ARN of the failover slate configuration to be retrieved.</p>",
+        "UpdateFailoverSlateConfigurationRequest$arn": "<p>ARN of the failover slate configuration to be updated.</p>"
+      }
+    },
+    "FailoverSlateConfigurationList": {
+      "base": null,
+      "refs": {
+        "ListFailoverSlateConfigurationsResponse$failoverSlateConfigurations": "<p>List of the matching failover slate configurations.</p>"
+      }
+    },
+    "FailoverSlateConfigurationName": {
+      "base": null,
+      "refs": {
+        "CreateFailoverSlateConfigurationRequest$name": "<p>Failover-slate-configuration name. The value does not need to be unique.</p>",
+        "FailoverSlateConfiguration$name": "<p>Failover-slate-configuration name.</p>",
+        "FailoverSlateConfigurationSummary$name": "<p>Failover-slate-configuration name.</p>",
+        "UpdateFailoverSlateConfigurationRequest$name": "<p>Failover-slate-configuration name. The value does not need to be unique.</p>"
+      }
+    },
+    "FailoverSlateConfigurationState": {
+      "base": null,
+      "refs": {
+        "FailoverSlateConfiguration$state": "<p>Current state of the failover slate configuration.</p>",
+        "FailoverSlateConfigurationSummary$state": "<p>Current state of the failover slate configuration.</p>"
+      }
+    },
+    "FailoverSlateConfigurationSummary": {
+      "base": "<p>Summary information about a failover slate configuration.</p>",
+      "refs": {
+        "FailoverSlateConfigurationList$member": null
+      }
+    },
+    "FailoverSlateMaxDisplaySeconds": {
+      "base": null,
+      "refs": {
+        "CreateFailoverSlateConfigurationRequest$maxSlateDisplaySeconds": "<p>Maximum number of seconds that the failover slate displays. Minimum: <code>60</code>. Maximum: <code>180</code>. Default: <code>60</code>.</p>",
+        "FailoverSlateConfiguration$maxSlateDisplaySeconds": "<p>Maximum number of seconds that the failover slate displays. Minimum: <code>60</code>. Maximum: <code>180</code>. Default: <code>60</code>.</p>",
+        "FailoverSlateConfigurationSummary$maxSlateDisplaySeconds": "<p>Maximum number of seconds that the failover slate displays. Minimum: <code>60</code>. Maximum: <code>180</code>. Default: <code>60</code>.</p>",
+        "UpdateFailoverSlateConfigurationRequest$maxSlateDisplaySeconds": "<p>Maximum number of seconds that the failover slate displays. Minimum: <code>60</code>. Maximum: <code>180</code>. Default: <code>60</code>.</p>"
+      }
+    },
+    "FailoverSlateMinDisplaySeconds": {
+      "base": null,
+      "refs": {
+        "CreateFailoverSlateConfigurationRequest$minSlateDisplaySeconds": "<p>Minimum number of seconds that the failover slate displays after activation. Minimum: <code>3</code>. Maximum: <code>10</code>. Default: <code>3</code>.</p>",
+        "FailoverSlateConfiguration$minSlateDisplaySeconds": "<p>Minimum number of seconds that the failover slate displays after activation. Minimum: <code>3</code>. Maximum: <code>10</code>. Default: <code>3</code>.</p>",
+        "FailoverSlateConfigurationSummary$minSlateDisplaySeconds": "<p>Minimum number of seconds that the failover slate displays after activation. Minimum: <code>3</code>. Maximum: <code>10</code>. Default: <code>3</code>.</p>",
+        "UpdateFailoverSlateConfigurationRequest$minSlateDisplaySeconds": "<p>Minimum number of seconds that the failover slate displays after activation. Minimum: <code>3</code>. Maximum: <code>10</code>. Default: <code>3</code>.</p>"
+      }
+    },
     "GetAdConfigurationRequest": {
       "base": null,
       "refs": {}
@@ -409,6 +510,14 @@
       "refs": {}
     },
     "GetChannelResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetFailoverSlateConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetFailoverSlateConfigurationResponse": {
       "base": null,
       "refs": {}
     },
@@ -546,6 +655,14 @@
       "base": null,
       "refs": {}
     },
+    "ListFailoverSlateConfigurationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFailoverSlateConfigurationsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListPlaybackKeyPairsRequest": {
       "base": null,
       "refs": {}
@@ -612,6 +729,12 @@
       "base": null,
       "refs": {
         "ListChannelsRequest$maxResults": "<p>Maximum number of channels to return. Default: 100.</p>"
+      }
+    },
+    "MaxFailoverSlateConfigurationResults": {
+      "base": null,
+      "refs": {
+        "ListFailoverSlateConfigurationsRequest$maxResults": "<p>Maximum number of failover slate configurations to return. Default: your service quota or 100, whichever is smaller.</p>"
       }
     },
     "MaxPlaybackKeyPairResults": {
@@ -693,6 +816,8 @@
         "ListAdConfigurationsResponse$nextToken": "<p>If there are more ad configurations than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set.</p>",
         "ListChannelsRequest$nextToken": "<p>The first channel to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
         "ListChannelsResponse$nextToken": "<p>If there are more channels than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set.</p>",
+        "ListFailoverSlateConfigurationsRequest$nextToken": "<p>The first failover slate configuration to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
+        "ListFailoverSlateConfigurationsResponse$nextToken": "<p>If there are more failover slate configurations than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set.</p>",
         "ListPlaybackKeyPairsRequest$nextToken": "<p>The first key pair to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
         "ListPlaybackKeyPairsResponse$nextToken": "<p>If there are more key pairs than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set.</p>",
         "ListPlaybackRestrictionPoliciesRequest$nextToken": "<p>The first policy to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
@@ -1320,9 +1445,12 @@
         "ChannelSummary$tags": "<p>Tags attached to the resource. Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
         "CreateAdConfigurationRequest$tags": "<p>Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
         "CreateChannelRequest$tags": "<p>Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
+        "CreateFailoverSlateConfigurationRequest$tags": "<p>Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
         "CreatePlaybackRestrictionPolicyRequest$tags": "<p>Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
         "CreateRecordingConfigurationRequest$tags": "<p>Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
         "CreateStreamKeyRequest$tags": "<p>Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
+        "FailoverSlateConfiguration$tags": "<p>Tags attached to the resource. Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
+        "FailoverSlateConfigurationSummary$tags": "<p>Tags attached to the resource. Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
         "ImportPlaybackKeyPairRequest$tags": "<p>Any tags provided with the request are added to the playback key pair tags. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
         "ListTagsForResourceResponse$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>.</p>",
         "PlaybackKeyPair$tags": "<p>Tags attached to the resource. Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
@@ -1411,6 +1539,14 @@
       "refs": {}
     },
     "UpdateChannelResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateFailoverSlateConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateFailoverSlateConfigurationResponse": {
       "base": null,
       "refs": {}
     },

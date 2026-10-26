@@ -455,6 +455,7 @@
         "Cluster$deletionProtection": "<p>The current deletion protection setting for the cluster. When <code>true</code>, deletion protection is enabled and the cluster cannot be deleted until protection is disabled. When <code>false</code>, the cluster can be deleted normally. This setting only applies to clusters in an active state.</p>",
         "ComputeConfigRequest$enabled": "<p>Request to enable or disable the compute capability on your EKS Auto Mode cluster. If the compute capability is enabled, EKS Auto Mode will create and delete EC2 Managed Instances in your Amazon Web Services account.</p>",
         "ComputeConfigResponse$enabled": "<p>Indicates if the compute capability is enabled on your EKS Auto Mode cluster. If the compute capability is enabled, EKS Auto Mode will create and delete EC2 Managed Instances in your Amazon Web Services account.</p>",
+        "CrdManagementConfiguration$managed": "<p>Indicates if Gateway API CRD management is enabled on your EKS Auto Mode cluster. If CRD management is enabled, EKS Auto Mode will create and update the Gateway API CRDs in your EKS Auto Mode cluster.</p>",
         "CreateAccessConfigRequest$bootstrapClusterCreatorAdminPermissions": "<p>Specifies whether or not the cluster creator IAM principal was set as a cluster admin access entry during cluster creation time. The default value is <code>true</code>.</p>",
         "CreateClusterRequest$bootstrapSelfManagedAddons": "<p>If you set this value to <code>False</code> when creating a cluster, the default networking add-ons will not be installed.</p> <p>The default networking add-ons include <code>vpc-cni</code>, <code>coredns</code>, and <code>kube-proxy</code>.</p> <p>Use this option when you plan to install third-party alternative add-ons or self-manage the default networking add-ons.</p>",
         "CreateClusterRequest$deletionProtection": "<p>Indicates whether to enable deletion protection for the cluster. When enabled, the cluster cannot be deleted unless deletion protection is first disabled. This helps prevent accidental cluster deletion. Default value is <code>false</code>.</p>",
@@ -868,6 +869,12 @@
       "base": "<p>A list of available provisioned control plane scaling tiers.</p>",
       "refs": {
         "ClusterVersionInformation$controlPlaneScalingTiers": "<p>The available provisioned control plane scaling tiers and their capabilities for this Kubernetes version.</p>"
+      }
+    },
+    "CrdManagementConfiguration": {
+      "base": "<p>Indicates the current configuration of Gateway API custom resource definition (CRD) management on your EKS Auto Mode cluster. For example, if CRD management is enabled or disabled. For more information, see EKS Auto Mode load balancing capability in the <i>Amazon EKS User Guide</i>.</p>",
+      "refs": {
+        "GatewayApiConfiguration$crds": "<p>Indicates the current configuration of Gateway API custom resource definition (CRD) management on your EKS Auto Mode cluster. For example, if CRD management is enabled or disabled.</p>"
       }
     },
     "CreateAccessConfigRequest": {
@@ -1375,6 +1382,12 @@
       "base": null,
       "refs": {
         "ListFargateProfilesRequest$maxResults": "<p>The maximum number of results, returned in paginated output. You receive <code>maxResults</code> in a single page, along with a <code>nextToken</code> response element. You can see the remaining results of the initial request by sending another request with the returned <code>nextToken</code> value. This value can be between 1 and 100. If you don't use this parameter, 100 results and a <code>nextToken</code> value, if applicable, are returned.</p>"
+      }
+    },
+    "GatewayApiConfiguration": {
+      "base": "<p>Indicates the current configuration of the Kubernetes Gateway API for the load balancing capability on your EKS Auto Mode cluster. For more information, see EKS Auto Mode load balancing capability in the <i>Amazon EKS User Guide</i>.</p>",
+      "refs": {
+        "ElasticLoadBalancing$gatewayApi": "<p>Indicates the current configuration of the Kubernetes Gateway API for the load balancing capability on your EKS Auto Mode cluster. For more information, see EKS Auto Mode load balancing capability in the <i>Amazon EKS User Guide</i>.</p>"
       }
     },
     "HorizontalPodAutoscalerControllerConfigRequest": {

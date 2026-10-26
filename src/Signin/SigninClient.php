@@ -35,6 +35,24 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result createOAuth2TokenWithIAM(array{grantType?: string, resource?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise createOAuth2TokenWithIAMAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createOAuth2TokenWithIAMAsync(array{grantType?: string, resource?: string, ...} $args = [])
+ * @method \Aws\Result createOAuth2TokenWithTokenExchange(array $args = [])
+ * @phpstan-method \Aws\Result createOAuth2TokenWithTokenExchange(array{
+ *     grantType?: string,
+ *     subjectToken?: string,
+ *     subjectTokenType?: string,
+ *     resource?: string,
+ *     scope?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createOAuth2TokenWithTokenExchangeAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createOAuth2TokenWithTokenExchangeAsync(array{
+ *     grantType?: string,
+ *     subjectToken?: string,
+ *     subjectTokenType?: string,
+ *     resource?: string,
+ *     scope?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result deleteConsoleAuthorizationConfiguration(array $args = [])
  * @phpstan-method \Aws\Result deleteConsoleAuthorizationConfiguration(array{targetId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteConsoleAuthorizationConfigurationAsync(array $args = [])

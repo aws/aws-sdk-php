@@ -364,6 +364,21 @@
         {"shape":"ValidationException"}
       ]
     },
+    "DescribeReplicationBackfillResults":{
+      "name":"DescribeReplicationBackfillResults",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeReplicationBackfillResultsRequest"},
+      "output":{"shape":"DescribeReplicationBackfillResultsResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"ReplicationBackfillNotFoundException"}
+      ]
+    },
     "DescribeRepositories":{
       "name":"DescribeRepositories",
       "http":{
@@ -587,6 +602,20 @@
         {"shape":"ServerException"}
       ]
     },
+    "ListReplicationBackfills":{
+      "name":"ListReplicationBackfills",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListReplicationBackfillsRequest"},
+      "output":{"shape":"ListReplicationBackfillsResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -802,6 +831,38 @@
         {"shape":"LifecyclePolicyNotFoundException"},
         {"shape":"LifecyclePolicyPreviewInProgressException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "StartReplicationBackfill":{
+      "name":"StartReplicationBackfill",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartReplicationBackfillRequest"},
+      "output":{"shape":"StartReplicationBackfillResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ReplicationBackfillInProgressException"}
+      ]
+    },
+    "StopReplicationBackfill":{
+      "name":"StopReplicationBackfill",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopReplicationBackfillRequest"},
+      "output":{"shape":"StopReplicationBackfillResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"ReplicationBackfillNotFoundException"},
+        {"shape":"ReplicationBackfillInvalidStatusException"}
       ]
     },
     "TagResource":{
@@ -1486,6 +1547,32 @@
       "members":{
         "registryId":{"shape":"RegistryId"},
         "replicationConfiguration":{"shape":"ReplicationConfiguration"}
+      }
+    },
+    "DescribeReplicationBackfillResultsRequest":{
+      "type":"structure",
+      "required":["replicationBackfillId"],
+      "members":{
+        "registryId":{"shape":"RegistryId"},
+        "replicationBackfillId":{"shape":"ReplicationBackfillId"},
+        "resultStatusFilter":{"shape":"ReplicationBackfillResultStatus"},
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeReplicationBackfillResultsResponse":{
+      "type":"structure",
+      "members":{
+        "registryId":{"shape":"RegistryId"},
+        "replicationBackfillId":{"shape":"ReplicationBackfillId"},
+        "destination":{"shape":"ReplicationDestination"},
+        "status":{"shape":"ReplicationBackfillStatus"},
+        "failureCode":{"shape":"ReplicationBackfillError"},
+        "progress":{"shape":"ReplicationBackfillProgress"},
+        "results":{"shape":"ReplicationBackfillResultList"},
+        "startedAt":{"shape":"Date"},
+        "endedAt":{"shape":"Date"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "DescribeRepositoriesRequest":{
@@ -2395,6 +2482,22 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListReplicationBackfillsRequest":{
+      "type":"structure",
+      "members":{
+        "registryId":{"shape":"RegistryId"},
+        "maxResults":{"shape":"FiftyMaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListReplicationBackfillsResponse":{
+      "type":"structure",
+      "members":{
+        "registryId":{"shape":"RegistryId"},
+        "backfills":{"shape":"ReplicationBackfillSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -2422,6 +2525,10 @@
     },
     "Metric":{"type":"string"},
     "NextToken":{"type":"string"},
+    "NonNegativeInteger":{
+      "type":"integer",
+      "min":0
+    },
     "PTCValidateFailure":{"type":"string"},
     "PackageManager":{"type":"string"},
     "PackageVulnerabilityDetails":{
@@ -2770,6 +2877,106 @@
         "recommendation":{"shape":"Recommendation"}
       }
     },
+    "ReplicationBackfillError":{"type":"string"},
+    "ReplicationBackfillId":{
+      "type":"string",
+      "pattern":"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+    },
+    "ReplicationBackfillInProgressException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
+    "ReplicationBackfillInvalidStatusException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
+    "ReplicationBackfillNotFoundException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
+    "ReplicationBackfillProgress":{
+      "type":"structure",
+      "required":[
+        "totalReplicationCount",
+        "completedReplicationCount",
+        "failedReplicationCount",
+        "failureCodes"
+      ],
+      "members":{
+        "totalReplicationCount":{"shape":"NonNegativeInteger"},
+        "completedReplicationCount":{"shape":"NonNegativeInteger"},
+        "failedReplicationCount":{"shape":"NonNegativeInteger"},
+        "failureCodes":{"shape":"ReplicationErrorList"}
+      }
+    },
+    "ReplicationBackfillResult":{
+      "type":"structure",
+      "required":[
+        "repositoryName",
+        "imageId",
+        "status"
+      ],
+      "members":{
+        "repositoryName":{"shape":"RepositoryName"},
+        "imageId":{"shape":"ImageIdentifier"},
+        "status":{"shape":"ReplicationBackfillResultStatus"},
+        "failureCode":{"shape":"ReplicationError"},
+        "subImageFailureCodes":{"shape":"ReplicationErrorList"}
+      }
+    },
+    "ReplicationBackfillResultList":{
+      "type":"list",
+      "member":{"shape":"ReplicationBackfillResult"}
+    },
+    "ReplicationBackfillResultStatus":{
+      "type":"string",
+      "enum":[
+        "COMPLETE",
+        "FAILED"
+      ]
+    },
+    "ReplicationBackfillStatus":{
+      "type":"string",
+      "enum":[
+        "PREPARING",
+        "IN_PROGRESS",
+        "COMPLETE",
+        "FAILED",
+        "STOPPING",
+        "STOPPED"
+      ]
+    },
+    "ReplicationBackfillSummary":{
+      "type":"structure",
+      "required":[
+        "replicationBackfillId",
+        "destination",
+        "status",
+        "startedAt"
+      ],
+      "members":{
+        "replicationBackfillId":{"shape":"ReplicationBackfillId"},
+        "destination":{"shape":"ReplicationDestination"},
+        "status":{"shape":"ReplicationBackfillStatus"},
+        "failureCode":{"shape":"ReplicationBackfillError"},
+        "progress":{"shape":"ReplicationBackfillProgress"},
+        "startedAt":{"shape":"Date"},
+        "endedAt":{"shape":"Date"}
+      }
+    },
+    "ReplicationBackfillSummaryList":{
+      "type":"list",
+      "member":{"shape":"ReplicationBackfillSummary"}
+    },
     "ReplicationConfiguration":{
       "type":"structure",
       "required":["rules"],
@@ -2795,6 +3002,10 @@
       "min":0
     },
     "ReplicationError":{"type":"string"},
+    "ReplicationErrorList":{
+      "type":"list",
+      "member":{"shape":"ReplicationError"}
+    },
     "ReplicationRule":{
       "type":"structure",
       "required":["destinations"],
@@ -3216,7 +3427,43 @@
         "status":{"shape":"LifecyclePolicyPreviewStatus"}
       }
     },
+    "StartReplicationBackfillRequest":{
+      "type":"structure",
+      "required":["destination"],
+      "members":{
+        "registryId":{"shape":"RegistryId"},
+        "destination":{"shape":"ReplicationDestination"}
+      }
+    },
+    "StartReplicationBackfillResponse":{
+      "type":"structure",
+      "members":{
+        "replicationBackfillId":{"shape":"ReplicationBackfillId"},
+        "registryId":{"shape":"RegistryId"},
+        "destination":{"shape":"ReplicationDestination"},
+        "status":{"shape":"ReplicationBackfillStatus"},
+        "startedAt":{"shape":"Date"}
+      }
+    },
     "Status":{"type":"string"},
+    "StopReplicationBackfillRequest":{
+      "type":"structure",
+      "required":["replicationBackfillId"],
+      "members":{
+        "registryId":{"shape":"RegistryId"},
+        "replicationBackfillId":{"shape":"ReplicationBackfillId"}
+      }
+    },
+    "StopReplicationBackfillResponse":{
+      "type":"structure",
+      "members":{
+        "registryId":{"shape":"RegistryId"},
+        "replicationBackfillId":{"shape":"ReplicationBackfillId"},
+        "destination":{"shape":"ReplicationDestination"},
+        "status":{"shape":"ReplicationBackfillStatus"},
+        "startedAt":{"shape":"Date"}
+      }
+    },
     "String":{"type":"string"},
     "SubjectIdentifier":{
       "type":"structure",

@@ -226,6 +226,24 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeRegistry(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeRegistryAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeRegistryAsync(array{...} $args = [])
+ * @method \Aws\Result describeReplicationBackfillResults(array $args = [])
+ * @phpstan-method \Aws\Result describeReplicationBackfillResults(array{
+ *     registryId?: string,
+ *     replicationBackfillId?: string,
+ *     resultStatusFilter?: 'COMPLETE'|'FAILED',
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeReplicationBackfillResultsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeReplicationBackfillResultsAsync(array{
+ *     registryId?: string,
+ *     replicationBackfillId?: string,
+ *     resultStatusFilter?: 'COMPLETE'|'FAILED',
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result describeRepositories(array $args = [])
  * @phpstan-method \Aws\Result describeRepositories(array{registryId?: string, repositoryNames?: list<string>, nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeRepositoriesAsync(array $args = [])
@@ -332,6 +350,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listPullTimeUpdateExclusions(array{maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listPullTimeUpdateExclusionsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listPullTimeUpdateExclusionsAsync(array{maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listReplicationBackfills(array $args = [])
+ * @phpstan-method \Aws\Result listReplicationBackfills(array{registryId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listReplicationBackfillsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listReplicationBackfillsAsync(array{registryId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @phpstan-method \Aws\Result listTagsForResource(array{resourceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
@@ -444,6 +466,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result startLifecyclePolicyPreview(array{registryId?: string, repositoryName?: string, lifecyclePolicyText?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise startLifecyclePolicyPreviewAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise startLifecyclePolicyPreviewAsync(array{registryId?: string, repositoryName?: string, lifecyclePolicyText?: string, ...} $args = [])
+ * @method \Aws\Result startReplicationBackfill(array $args = [])
+ * @phpstan-method \Aws\Result startReplicationBackfill(array{registryId?: string, destination?: array{region?: string, registryId?: string, ...}, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise startReplicationBackfillAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startReplicationBackfillAsync(array{registryId?: string, destination?: array{region?: string, registryId?: string, ...}, ...} $args = [])
+ * @method \Aws\Result stopReplicationBackfill(array $args = [])
+ * @phpstan-method \Aws\Result stopReplicationBackfill(array{registryId?: string, replicationBackfillId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopReplicationBackfillAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise stopReplicationBackfillAsync(array{registryId?: string, replicationBackfillId?: string, ...} $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @phpstan-method \Aws\Result tagResource(array{resourceArn?: string, tags?: list<array{Key?: string, Value?: string, ...}>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])

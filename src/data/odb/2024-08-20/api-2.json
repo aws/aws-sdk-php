@@ -211,7 +211,8 @@
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
     },
@@ -958,7 +959,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
       ],
       "readonly":true
     },
@@ -1309,6 +1311,23 @@
       },
       "input":{"shape":"UpdateExadbVmClusterInput"},
       "output":{"shape":"UpdateExadbVmClusterOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "UpdateExascaleCloudExadataInfrastructure":{
+      "name":"UpdateExascaleCloudExadataInfrastructure",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateExascaleCloudExadataInfrastructureInput"},
+      "output":{"shape":"UpdateExascaleCloudExadataInfrastructureOutput"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -2133,7 +2152,8 @@
         "percentProgress":{"shape":"Float"},
         "databaseServerType":{"shape":"String"},
         "storageServerType":{"shape":"String"},
-        "computeModel":{"shape":"ComputeModel"}
+        "computeModel":{"shape":"ComputeModel"},
+        "exascaleConfiguration":{"shape":"ExascaleConfiguration"}
       }
     },
     "CloudExadataInfrastructureList":{
@@ -2181,7 +2201,8 @@
         "percentProgress":{"shape":"Float"},
         "databaseServerType":{"shape":"String"},
         "storageServerType":{"shape":"String"},
-        "computeModel":{"shape":"ComputeModel"}
+        "computeModel":{"shape":"ComputeModel"},
+        "exascaleConfiguration":{"shape":"ExascaleConfiguration"}
       }
     },
     "CloudExadataInfrastructureUnallocatedResources":{
@@ -2207,6 +2228,12 @@
         "cloudVmClusterArn":{"shape":"String"},
         "cloudExadataInfrastructureId":{"shape":"String"},
         "cloudExadataInfrastructureArn":{"shape":"ResourceArn"},
+        "exascaleDbStorageVaultId":{"shape":"ResourceId"},
+        "exascaleDbStorageVaultArn":{"shape":"ResourceArn"},
+        "storageManagementType":{"shape":"StorageManagementType"},
+        "vmFileSystemStorageType":{"shape":"VmStorageType"},
+        "vmBackupStorageType":{"shape":"VmStorageType"},
+        "fileSystemConfigurationDetails":{"shape":"FileSystemConfigurationDetailsList"},
         "clusterName":{"shape":"String"},
         "cpuCoreCount":{"shape":"Integer"},
         "dataCollectionOptions":{"shape":"DataCollectionOptions"},
@@ -2260,6 +2287,12 @@
         "cloudVmClusterArn":{"shape":"String"},
         "cloudExadataInfrastructureId":{"shape":"String"},
         "cloudExadataInfrastructureArn":{"shape":"ResourceArn"},
+        "exascaleDbStorageVaultId":{"shape":"ResourceId"},
+        "exascaleDbStorageVaultArn":{"shape":"ResourceArn"},
+        "storageManagementType":{"shape":"StorageManagementType"},
+        "vmFileSystemStorageType":{"shape":"VmStorageType"},
+        "vmBackupStorageType":{"shape":"VmStorageType"},
+        "fileSystemConfigurationDetails":{"shape":"FileSystemConfigurationDetailsList"},
         "clusterName":{"shape":"String"},
         "cpuCoreCount":{"shape":"Integer"},
         "dataCollectionOptions":{"shape":"DataCollectionOptions"},
@@ -2689,6 +2722,10 @@
       ],
       "members":{
         "cloudExadataInfrastructureId":{"shape":"ResourceIdOrArn"},
+        "exascaleDbStorageVaultId":{"shape":"ResourceIdOrArn"},
+        "vmFileSystemStorageType":{"shape":"VmStorageType"},
+        "vmBackupStorageType":{"shape":"VmStorageType"},
+        "fileSystemConfigurationDetails":{"shape":"FileSystemConfigurationDetailsList"},
         "cpuCoreCount":{"shape":"CreateCloudVmClusterInputCpuCoreCountInteger"},
         "displayName":{"shape":"ResourceDisplayName"},
         "giVersion":{"shape":"CreateCloudVmClusterInputGiVersionString"},
@@ -2878,6 +2915,7 @@
         "highCapacityDatabaseStorageTotalSizeInGBs":{"shape":"CreateExascaleDbStorageVaultInputHighCapacityDatabaseStorageTotalSizeInGBsInteger"},
         "additionalFlashCacheInPercent":{"shape":"CreateExascaleDbStorageVaultInputAdditionalFlashCacheInPercentInteger"},
         "autoscaleLimitInGBs":{"shape":"CreateExascaleDbStorageVaultInputAutoscaleLimitInGBsInteger"},
+        "cloudExadataInfrastructureId":{"shape":"ResourceIdOrArn"},
         "availabilityZoneId":{"shape":"CreateExascaleDbStorageVaultInputAvailabilityZoneIdString"},
         "availabilityZone":{"shape":"CreateExascaleDbStorageVaultInputAvailabilityZoneString"},
         "description":{"shape":"CreateExascaleDbStorageVaultInputDescriptionString"},
@@ -3796,6 +3834,15 @@
         "vmFileSystemStorage":{"shape":"ExadbVmClusterStorageDetails"}
       }
     },
+    "ExascaleConfiguration":{
+      "type":"structure",
+      "members":{
+        "totalStorageSizeInGBs":{"shape":"Integer"},
+        "availableStorageSizeInGBs":{"shape":"Integer"},
+        "totalVmStorageSizeInGBs":{"shape":"Integer"},
+        "availableVmStorageSizeInGBs":{"shape":"Integer"}
+      }
+    },
     "ExascaleDbStorageDetails":{
       "type":"structure",
       "members":{
@@ -3813,6 +3860,8 @@
         "autoscaleLimitInGBs":{"shape":"Integer"},
         "availabilityZone":{"shape":"String"},
         "availabilityZoneId":{"shape":"String"},
+        "cloudExadataInfrastructureArn":{"shape":"ResourceArn"},
+        "cloudExadataInfrastructureId":{"shape":"ResourceId"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "description":{"shape":"String"},
         "displayName":{"shape":"String"},
@@ -3828,7 +3877,8 @@
         "percentProgress":{"shape":"Float"},
         "status":{"shape":"ResourceStatus"},
         "statusReason":{"shape":"String"},
-        "timeZone":{"shape":"String"}
+        "timeZone":{"shape":"String"},
+        "vaultType":{"shape":"ExascaleDbStorageVaultType"}
       }
     },
     "ExascaleDbStorageVaultList":{
@@ -3845,6 +3895,8 @@
         "autoscaleLimitInGBs":{"shape":"Integer"},
         "availabilityZone":{"shape":"String"},
         "availabilityZoneId":{"shape":"String"},
+        "cloudExadataInfrastructureArn":{"shape":"ResourceArn"},
+        "cloudExadataInfrastructureId":{"shape":"ResourceId"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "description":{"shape":"String"},
         "displayName":{"shape":"String"},
@@ -3860,8 +3912,16 @@
         "percentProgress":{"shape":"Float"},
         "status":{"shape":"ResourceStatus"},
         "statusReason":{"shape":"String"},
-        "timeZone":{"shape":"String"}
+        "timeZone":{"shape":"String"},
+        "vaultType":{"shape":"ExascaleDbStorageVaultType"}
       }
+    },
+    "ExascaleDbStorageVaultType":{
+      "type":"string",
+      "enum":[
+        "EXASCALE_INFRASTRUCTURE",
+        "DEDICATED_INFRASTRUCTURE"
+      ]
     },
     "ExternalIdType":{
       "type":"string",
@@ -3888,6 +3948,17 @@
         "status":{"shape":"AutonomousDatabaseResourceStatus"},
         "statusReason":{"shape":"String"}
       }
+    },
+    "FileSystemConfigurationDetails":{
+      "type":"structure",
+      "members":{
+        "mountPoint":{"shape":"String"},
+        "fileSystemSizeInGBs":{"shape":"Integer"}
+      }
+    },
+    "FileSystemConfigurationDetailsList":{
+      "type":"list",
+      "member":{"shape":"FileSystemConfigurationDetails"}
     },
     "FlexComponentList":{
       "type":"list",
@@ -4648,7 +4719,9 @@
       "type":"structure",
       "members":{
         "maxResults":{"shape":"ListExascaleDbStorageVaultsInputMaxResultsInteger"},
-        "nextToken":{"shape":"ListExascaleDbStorageVaultsInputNextTokenString"}
+        "nextToken":{"shape":"ListExascaleDbStorageVaultsInputNextTokenString"},
+        "cloudExadataInfrastructureId":{"shape":"ResourceIdOrArn"},
+        "vaultType":{"shape":"ExascaleDbStorageVaultType"}
       }
     },
     "ListExascaleDbStorageVaultsInputMaxResultsInteger":{
@@ -5757,6 +5830,13 @@
         "statusReason":{"shape":"String"}
       }
     },
+    "StorageManagementType":{
+      "type":"string",
+      "enum":[
+        "ASM",
+        "EXASCALE"
+      ]
+    },
     "String":{"type":"string"},
     "StringList":{
       "type":"list",
@@ -6115,6 +6195,28 @@
         "exadbVmClusterId":{"shape":"String"}
       }
     },
+    "UpdateExascaleCloudExadataInfrastructureInput":{
+      "type":"structure",
+      "required":[
+        "cloudExadataInfrastructureId",
+        "totalStorageSizeInGBs"
+      ],
+      "members":{
+        "cloudExadataInfrastructureId":{"shape":"ResourceIdOrArn"},
+        "totalStorageSizeInGBs":{"shape":"Integer"},
+        "totalVmStorageSizeInGBs":{"shape":"Integer"}
+      }
+    },
+    "UpdateExascaleCloudExadataInfrastructureOutput":{
+      "type":"structure",
+      "required":["cloudExadataInfrastructureId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "cloudExadataInfrastructureId":{"shape":"String"}
+      }
+    },
     "UpdateExascaleDbStorageVaultInput":{
       "type":"structure",
       "required":["exascaleDbStorageVaultId"],
@@ -6242,6 +6344,13 @@
         "cannotParse",
         "fieldValidationFailed",
         "other"
+      ]
+    },
+    "VmStorageType":{
+      "type":"string",
+      "enum":[
+        "LOCAL",
+        "EXASCALE"
       ]
     },
     "VpcEndpointType":{

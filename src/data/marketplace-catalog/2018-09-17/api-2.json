@@ -1019,7 +1019,8 @@
         "ResaleAuthorizationSummary":{"shape":"ResaleAuthorizationSummary"},
         "MachineLearningProductSummary":{"shape":"MachineLearningProductSummary"},
         "OfferSetSummary":{"shape":"OfferSetSummary"},
-        "ExpressPrivateOfferConfigurationSummary":{"shape":"ExpressPrivateOfferConfigurationSummary"}
+        "ExpressPrivateOfferConfigurationSummary":{"shape":"ExpressPrivateOfferConfigurationSummary"},
+        "SubsidiaryAuthorizationSummary":{"shape":"SubsidiaryAuthorizationSummary"}
       }
     },
     "EntitySummaryList":{
@@ -1043,7 +1044,8 @@
         "ResaleAuthorizationFilters":{"shape":"ResaleAuthorizationFilters"},
         "MachineLearningProductFilters":{"shape":"MachineLearningProductFilters"},
         "OfferSetFilters":{"shape":"OfferSetFilters"},
-        "ExpressPrivateOfferConfigurationFilters":{"shape":"ExpressPrivateOfferConfigurationFilters"}
+        "ExpressPrivateOfferConfigurationFilters":{"shape":"ExpressPrivateOfferConfigurationFilters"},
+        "SubsidiaryAuthorizationFilters":{"shape":"SubsidiaryAuthorizationFilters"}
       },
       "union":true
     },
@@ -1058,7 +1060,8 @@
         "ResaleAuthorizationSort":{"shape":"ResaleAuthorizationSort"},
         "MachineLearningProductSort":{"shape":"MachineLearningProductSort"},
         "OfferSetSort":{"shape":"OfferSetSort"},
-        "ExpressPrivateOfferConfigurationSort":{"shape":"ExpressPrivateOfferConfigurationSort"}
+        "ExpressPrivateOfferConfigurationSort":{"shape":"ExpressPrivateOfferConfigurationSort"},
+        "SubsidiaryAuthorizationSort":{"shape":"SubsidiaryAuthorizationSort"}
       },
       "union":true
     },
@@ -2640,6 +2643,226 @@
         "ChangeSetId":{"shape":"ResourceId"},
         "ChangeSetArn":{"shape":"ARN"}
       }
+    },
+    "SubsidiaryAuthorizationCreatedDateFilter":{
+      "type":"structure",
+      "members":{
+        "DateRange":{"shape":"SubsidiaryAuthorizationCreatedDateFilterDateRange"}
+      }
+    },
+    "SubsidiaryAuthorizationCreatedDateFilterDateRange":{
+      "type":"structure",
+      "members":{
+        "AfterValue":{"shape":"DateTimeISO8601"},
+        "BeforeValue":{"shape":"DateTimeISO8601"}
+      }
+    },
+    "SubsidiaryAuthorizationEntityIdFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"SubsidiaryAuthorizationEntityIdFilterValueList"}
+      }
+    },
+    "SubsidiaryAuthorizationEntityIdFilterValueList":{
+      "type":"list",
+      "member":{"shape":"SubsidiaryAuthorizationEntityIdString"},
+      "max":10,
+      "min":1
+    },
+    "SubsidiaryAuthorizationEntityIdString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9][.a-zA-Z0-9/-]+[a-zA-Z0-9]$"
+    },
+    "SubsidiaryAuthorizationFilters":{
+      "type":"structure",
+      "members":{
+        "EntityId":{"shape":"SubsidiaryAuthorizationEntityIdFilter"},
+        "Status":{"shape":"SubsidiaryAuthorizationStatusFilter"},
+        "ResourceId":{"shape":"SubsidiaryAuthorizationResourceIdFilter"},
+        "ResourceName":{"shape":"SubsidiaryAuthorizationResourceNameFilter"},
+        "Name":{"shape":"SubsidiaryAuthorizationNameFilter"},
+        "SubsidiaryAccountId":{"shape":"SubsidiaryAuthorizationSubsidiaryAccountIdFilter"},
+        "CreatedDate":{"shape":"SubsidiaryAuthorizationCreatedDateFilter"},
+        "LastModifiedDate":{"shape":"SubsidiaryAuthorizationLastModifiedDateFilter"}
+      }
+    },
+    "SubsidiaryAuthorizationLastModifiedDateFilter":{
+      "type":"structure",
+      "members":{
+        "DateRange":{"shape":"SubsidiaryAuthorizationLastModifiedDateFilterDateRange"}
+      }
+    },
+    "SubsidiaryAuthorizationLastModifiedDateFilterDateRange":{
+      "type":"structure",
+      "members":{
+        "AfterValue":{"shape":"DateTimeISO8601"},
+        "BeforeValue":{"shape":"DateTimeISO8601"}
+      }
+    },
+    "SubsidiaryAuthorizationNameFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"SubsidiaryAuthorizationNameFilterValueList"},
+        "WildCardValue":{"shape":"SubsidiaryAuthorizationNameFilterWildcard"}
+      }
+    },
+    "SubsidiaryAuthorizationNameFilterValueList":{
+      "type":"list",
+      "member":{"shape":"SubsidiaryAuthorizationNameString"},
+      "max":10,
+      "min":1
+    },
+    "SubsidiaryAuthorizationNameFilterWildcard":{
+      "type":"string",
+      "max":255,
+      "min":3,
+      "pattern":"^(.)+$"
+    },
+    "SubsidiaryAuthorizationNameString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^(.)+$"
+    },
+    "SubsidiaryAuthorizationResourceIdFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"SubsidiaryAuthorizationResourceIdFilterValueList"}
+      }
+    },
+    "SubsidiaryAuthorizationResourceIdFilterValueList":{
+      "type":"list",
+      "member":{"shape":"SubsidiaryAuthorizationResourceIdString"},
+      "max":10,
+      "min":1
+    },
+    "SubsidiaryAuthorizationResourceIdString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^(.)+$"
+    },
+    "SubsidiaryAuthorizationResourceNameFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"SubsidiaryAuthorizationResourceNameFilterValueList"},
+        "WildCardValue":{"shape":"SubsidiaryAuthorizationResourceNameFilterWildcard"}
+      }
+    },
+    "SubsidiaryAuthorizationResourceNameFilterValueList":{
+      "type":"list",
+      "member":{"shape":"SubsidiaryAuthorizationResourceNameString"},
+      "max":10,
+      "min":1
+    },
+    "SubsidiaryAuthorizationResourceNameFilterWildcard":{
+      "type":"string",
+      "max":255,
+      "min":3,
+      "pattern":"^(.)+$"
+    },
+    "SubsidiaryAuthorizationResourceNameString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^(.)+$"
+    },
+    "SubsidiaryAuthorizationSort":{
+      "type":"structure",
+      "members":{
+        "SortBy":{"shape":"SubsidiaryAuthorizationSortBy"},
+        "SortOrder":{"shape":"SortOrder"}
+      }
+    },
+    "SubsidiaryAuthorizationSortBy":{
+      "type":"string",
+      "enum":[
+        "EntityId",
+        "Status",
+        "ResourceId",
+        "SubsidiaryAccountId",
+        "CreatedDate",
+        "LastModifiedDate"
+      ]
+    },
+    "SubsidiaryAuthorizationStatusFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"SubsidiaryAuthorizationStatusFilterValueList"}
+      }
+    },
+    "SubsidiaryAuthorizationStatusFilterValueList":{
+      "type":"list",
+      "member":{"shape":"SubsidiaryAuthorizationStatusString"},
+      "max":10,
+      "min":1
+    },
+    "SubsidiaryAuthorizationStatusString":{
+      "type":"string",
+      "enum":[
+        "Draft",
+        "Active",
+        "Restricted"
+      ],
+      "max":64,
+      "min":1
+    },
+    "SubsidiaryAuthorizationSubsidiaryAccountIdFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"SubsidiaryAuthorizationSubsidiaryAccountIdFilterValueList"}
+      }
+    },
+    "SubsidiaryAuthorizationSubsidiaryAccountIdFilterValueList":{
+      "type":"list",
+      "member":{"shape":"SubsidiaryAuthorizationSubsidiaryAccountIdString"},
+      "max":10,
+      "min":1
+    },
+    "SubsidiaryAuthorizationSubsidiaryAccountIdString":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"^[0-9]{12}$"
+    },
+    "SubsidiaryAuthorizationSummary":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"SubsidiaryAuthorizationSummaryNameString"},
+        "Status":{"shape":"SubsidiaryAuthorizationSummaryStatusString"},
+        "ResourceId":{"shape":"SubsidiaryAuthorizationSummaryResourceIdString"},
+        "ResourceName":{"shape":"SubsidiaryAuthorizationSummaryResourceNameString"},
+        "SubsidiaryAccountId":{"shape":"SubsidiaryAuthorizationSummarySubsidiaryAccountIdString"},
+        "CreatedDate":{"shape":"DateTimeISO8601"}
+      }
+    },
+    "SubsidiaryAuthorizationSummaryNameString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "SubsidiaryAuthorizationSummaryResourceIdString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "SubsidiaryAuthorizationSummaryResourceNameString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "SubsidiaryAuthorizationSummaryStatusString":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "SubsidiaryAuthorizationSummarySubsidiaryAccountIdString":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"^[0-9]{12}$"
     },
     "Tag":{
       "type":"structure",

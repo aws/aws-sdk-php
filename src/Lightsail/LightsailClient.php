@@ -353,6 +353,8 @@ use Aws\AwsClient;
  *     enablePrivateOriginAccess?: bool,
  *     defaultRootObject?: string,
  *     customErrorResponses?: list<array{errorCode?: int, responseCode?: string, responsePagePath?: string, errorCachingMinTTL?: int, ...}>,
+ *     enableWaf?: bool,
+ *     wafRules?: list<array{name?: string, atpConfig?: array, acfpConfig?: array, botControlConfig?: array, ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createDistributionAsync(array $args = [])
@@ -391,6 +393,8 @@ use Aws\AwsClient;
  *     enablePrivateOriginAccess?: bool,
  *     defaultRootObject?: string,
  *     customErrorResponses?: list<array{errorCode?: int, responseCode?: string, responsePagePath?: string, errorCachingMinTTL?: int, ...}>,
+ *     enableWaf?: bool,
+ *     wafRules?: list<array{name?: string, atpConfig?: array, acfpConfig?: array, botControlConfig?: array, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createDomain(array $args = [])
@@ -990,7 +994,7 @@ use Aws\AwsClient;
  * @method \Aws\Result getDistributionMetricData(array $args = [])
  * @phpstan-method \Aws\Result getDistributionMetricData(array{
  *     distributionName?: string,
- *     metricName?: 'BytesDownloaded'|'BytesUploaded'|'Http4xxErrorRate'|'Http5xxErrorRate'|'Requests'|'TotalErrorRate',
+ *     metricName?: 'BytesDownloaded'|'BytesUploaded'|'Http4xxErrorRate'|'Http5xxErrorRate'|'Requests'|'TotalErrorRate'|'WafAllowedRequests'|'WafBlockedRequests',
  *     startTime?: int|string|\DateTimeInterface,
  *     endTime?: int|string|\DateTimeInterface,
  *     period?: int,
@@ -1001,7 +1005,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getDistributionMetricDataAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getDistributionMetricDataAsync(array{
  *     distributionName?: string,
- *     metricName?: 'BytesDownloaded'|'BytesUploaded'|'Http4xxErrorRate'|'Http5xxErrorRate'|'Requests'|'TotalErrorRate',
+ *     metricName?: 'BytesDownloaded'|'BytesUploaded'|'Http4xxErrorRate'|'Http5xxErrorRate'|'Requests'|'TotalErrorRate'|'WafAllowedRequests'|'WafBlockedRequests',
  *     startTime?: int|string|\DateTimeInterface,
  *     endTime?: int|string|\DateTimeInterface,
  *     period?: int,
@@ -1514,6 +1518,8 @@ use Aws\AwsClient;
  *     enablePrivateOriginAccess?: bool,
  *     defaultRootObject?: string,
  *     customErrorResponses?: list<array{errorCode?: int, responseCode?: string, responsePagePath?: string, errorCachingMinTTL?: int, ...}>,
+ *     enableWaf?: bool,
+ *     wafRules?: list<array{name?: string, atpConfig?: array, acfpConfig?: array, botControlConfig?: array, ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDistributionAsync(array $args = [])
@@ -1551,6 +1557,8 @@ use Aws\AwsClient;
  *     enablePrivateOriginAccess?: bool,
  *     defaultRootObject?: string,
  *     customErrorResponses?: list<array{errorCode?: int, responseCode?: string, responsePagePath?: string, errorCachingMinTTL?: int, ...}>,
+ *     enableWaf?: bool,
+ *     wafRules?: list<array{name?: string, atpConfig?: array, acfpConfig?: array, botControlConfig?: array, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateDistributionBundle(array $args = [])

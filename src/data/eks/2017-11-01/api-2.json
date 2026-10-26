@@ -2155,6 +2155,12 @@
       "member":{"shape":"ControlPlaneScalingTierInfo"},
       "max":10
     },
+    "CrdManagementConfiguration":{
+      "type":"structure",
+      "members":{
+        "managed":{"shape":"BoxedBoolean"}
+      }
+    },
     "CreateAccessConfigRequest":{
       "type":"structure",
       "members":{
@@ -3287,7 +3293,8 @@
     "ElasticLoadBalancing":{
       "type":"structure",
       "members":{
-        "enabled":{"shape":"BoxedBoolean"}
+        "enabled":{"shape":"BoxedBoolean"},
+        "gatewayApi":{"shape":"GatewayApiConfiguration"}
       }
     },
     "EncryptionConfig":{
@@ -3426,6 +3433,12 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "GatewayApiConfiguration":{
+      "type":"structure",
+      "members":{
+        "crds":{"shape":"CrdManagementConfiguration"}
+      }
     },
     "HorizontalPodAutoscalerControllerConfigRequest":{
       "type":"structure",

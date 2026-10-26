@@ -2,12 +2,17 @@
   "version": "2.0",
   "service": "<p> You can use the Billing API to programatically list the billing views available to you for a given time period. A billing view represents a set of billing data. </p> <p>The Billing API provides the following endpoint:</p> <p> <code>https://billing.us-east-1.api.aws</code> </p>",
   "operations": {
+    "AssociateContract": "<p>Private Pricing contracts let eligible payer accounts manage private pricing agreements with Amazon Web Services. This operation associates a private pricing contract with the caller's Amazon Web Services account. The caller must be a payer (management) account listed on the contract. This operation is idempotent, so retrying a request that already succeeded is safe.</p>",
     "AssociateSourceViews": "<p> Associates one or more source billing views with an existing billing view. This allows creating aggregate billing views that combine data from multiple sources. </p>",
+    "CancelContractualInvestmentAttestation": "<p>Cancels a contractual investment attestation. This operation is idempotent, so retrying is safe. You can cancel an attestation only while it is still pending (its <code>isCancellable</code> value is <code>true</code>).</p>",
     "CreateBillingView": "<p> Creates a billing view with the specified billing view attributes. </p>",
+    "CreateContractualInvestmentAttestation": "<p>Creates an attestation that claims an investment award for a completed milestone or outcome within a private pricing contract. Supply a <code>clientToken</code> to make the request idempotent so a safe retry does not create a duplicate attestation. This operation starts an asynchronous review and returns an <code>attestationId</code> while the attestation is pending.</p>",
     "DeleteBillingView": "<p>Deletes the specified billing view.</p>",
+    "DisassociateContract": "<p>Removes the association between a private pricing contract and your Amazon Web Services account. The account must have been associated with the contract previously. This operation is idempotent, so retrying is safe.</p>",
     "DisassociateSourceViews": "<p> Removes the association between one or more source billing views and an existing billing view. This allows modifying the composition of aggregate billing views. </p>",
     "GetBillingPreferences": "<p>Retrieves billing preferences for the specified feature. Each feature controls a distinct billing capability: which accounts can share Reserved Instances or credits, whether billing alerts are enabled, the historical record of sharing changes, and per-credit options.</p>",
     "GetBillingView": "<p>Returns the metadata associated to the specified billing view ARN. </p>",
+    "GetContractInformation": "<p>Returns information about a specific private pricing contract, including its term (duration), eligible payer accounts, investment accounts, and legal entities. This operation is read-only.</p>",
     "GetCreditAllocationHistory": "<p>Returns the per-billing-month allocation history for credits applied to an Amazon Web Services account's bills. Traverses the consolidated billing family to capture cross-account credit applications. Supports pagination and optional filtering to a single credit.</p>",
     "GetCredits": "<p>Returns the list of Amazon Web Services account credits for the specified account. Each credit includes its identifier, type, monetary amounts, applicable products, expiration, sharing configuration, and current enabled status.</p> <p>When the caller is the management account of a consolidated billing family and <code>payerAccountFlag</code> is <code>true</code>, the response aggregates credits across the entire family. Otherwise, the response includes only credits owned by the account specified in <code>accountId</code>.</p>",
     "GetEnterpriseSupportChargeSummary": "<p>Returns a summary of Enterprise Support data aggregated across all accounts in the Enterprise Support profile.</p>",
@@ -17,6 +22,10 @@
     "ListBillingViews": "<p>Lists the billing views available for a given time period. </p> <p>Every Amazon Web Services account has a unique <code>PRIMARY</code> billing view that represents the billing data available by default. Accounts that use Billing Conductor also have <code>BILLING_GROUP</code> billing views representing pro forma costs associated with each created billing group.</p>",
     "ListBusinessSupportAccountCharges": "<p>Returns Business Support charges broken down at the linked account level for a given billing month.</p>",
     "ListBusinessSupportSubscriptionHistory": "<p>Returns the history of Business Support subscription contracts across accounts.</p>",
+    "ListContracts": "<p>Lists the private pricing contracts that your Amazon Web Services account is an eligible payer account of. This operation is read-only and paginated.</p>",
+    "ListContractualInvestmentAttestations": "<p>Lists the investment attestations submitted under a specific private pricing contract. Use this operation to track attestation status, including the terminal statuses <code>DISBURSED</code>, <code>REJECTED</code>, and <code>CANCELLED</code>. This operation is read-only and paginated.</p>",
+    "ListContractualInvestmentSummaries": "<p>Lists the investment summaries within a specific private pricing contract. This operation is read-only and paginated.</p>",
+    "ListContractualInvestments": "<p>Lists the investments within a specific investment summary. This operation is read-only and paginated.</p>",
     "ListEnterpriseSupportLinkedAccountCharges": "<p>Returns Support-eligible spend broken down at linked account level.</p>",
     "ListSourceViewsForBillingView": "<p>Lists the source views (managed Amazon Web Services billing views) associated with the billing view. </p>",
     "ListTagsForResource": "<p>Lists tags associated with the billing view resource. </p>",
@@ -34,6 +43,7 @@
     "AccountId": {
       "base": null,
       "refs": {
+        "AccountList$member": null,
         "BillingPreferenceSummary$accountId": "<p>The associated Amazon Web Services account ID. Populated for account-list keys; <code>null</code> otherwise.</p>",
         "BillingViewElement$ownerAccountId": "<p>The account owner of the billing view. </p>",
         "BillingViewElement$sourceAccountId": "<p> The Amazon Web Services account ID that owns the source billing view, if this is a derived billing view. </p>",
@@ -50,6 +60,7 @@
         "CreditData$accountId": "<p>The Amazon Web Services account ID that owns the credit.</p>",
         "GetCreditAllocationHistoryRequest$accountId": "<p>The Amazon Web Services account ID whose allocation history to retrieve. Must be a 12-digit numeric string.</p>",
         "GetEnterpriseSupportChargeSummaryResponse$payerAccountId": "<p>The payer account ID that is authorized to view Enterprise Support data for all accounts in its Support profile.</p>",
+        "InvestmentDistribution$accountId": "<p>The recipient Amazon Web Services account ID that receives this portion of the investment. This must be one of the eligible investment accounts on the contract.</p>",
         "LinkedAccountCharge$accountId": "<p>The linked account ID.</p>",
         "LinkedAccountCharge$payerAccountId": "<p>The payer account ID that is authorized to view Enterprise Support data for all accounts in its Support profile.</p>",
         "ListBillingViewsRequest$ownerAccountId": "<p> The list of owners of the billing view. </p>",
@@ -58,6 +69,13 @@
         "ListBusinessSupportSubscriptionHistoryRequest$accountId": "<p>The account ID to filter results to a specific account. If you don't specify a value, the response includes subscription history for all accounts.</p>",
         "ListEnterpriseSupportLinkedAccountChargesRequest$accountId": "<p>The linked account ID to filter results to a specific account. If you don't specify a value, the response includes charges for all linked accounts.</p>",
         "ShareableAccountIds$member": null
+      }
+    },
+    "AccountList": {
+      "base": "<p>A list of 12-digit Amazon Web Services account IDs. The list contains at most 100 account IDs.</p>",
+      "refs": {
+        "PrivatePricingAddendum$eligiblePayerAccounts": "<p>The payer accounts that are eligible under the private pricing addendum. The list contains at most 100 account IDs.</p>",
+        "PrivatePricingAddendum$investmentAccounts": "<p>The accounts that are eligible to receive investments under the private pricing addendum. An <code>InvestmentDistribution</code> must target one of these accounts. The list contains at most 100 account IDs.</p>"
       }
     },
     "AccountName": {
@@ -85,13 +103,32 @@
         "GetEnterpriseSupportContractDetailsResponse$additionalSupportEligibleUsageSpend": "<p>Any Additional support-eligible usage spend charges.</p>"
       }
     },
+    "AdditionalRecipient": {
+      "base": "<p>A recipient copied as a viewer on the executive approval request, in addition to the approver.</p>",
+      "refs": {
+        "AdditionalRecipients$member": null
+      }
+    },
+    "AdditionalRecipients": {
+      "base": "<p>A list of recipients copied as viewers on the executive approval request. The list contains at most 10 recipients.</p>",
+      "refs": {
+        "CreateContractualInvestmentAttestationRequest$additionalRecipients": "<p>The email addresses to copy as viewers on the executive approval request.</p>"
+      }
+    },
     "Amount": {
       "base": "<p>A monetary amount with a currency code. Used throughout the Billing API to represent credit balances, allocations, and adjustments.</p>",
       "refs": {
+        "AttestationValue$attestationAmount": "<p>The value attested as a monetary amount. This form is valid only when the investment has no multiplier.</p>",
         "CreditAllocationHistoryEntry$creditAmount": "<p>The amount of credit applied. Negative values represent credits that reduced the bill.</p>",
         "CreditData$initialAmount": "<p>The initial amount of the credit when it was issued.</p>",
         "CreditData$remainingAmount": "<p>The unused balance of the credit.</p>",
-        "CreditData$estimatedAmount": "<p>The estimated remaining balance, including in-flight (open) bills that have not yet been finalized.</p>"
+        "CreditData$estimatedAmount": "<p>The estimated remaining balance, including in-flight (open) bills that have not yet been finalized.</p>",
+        "InvestmentAttestation$attestedValue": "<p>The monetary value attested.</p>",
+        "InvestmentDistribution$investmentAmount": "<p>The monetary value allocated to the recipient account.</p>",
+        "InvestmentRestriction$amount": "<p>The maximum monetary amount allowed under the restriction.</p>",
+        "InvestmentSummary$maxAllowedInvestmentDisbursementValue": "<p>The maximum monetary value that can be disbursed against the investment summary, inclusive of all outcomes combined under the summary.</p>",
+        "MilestoneBasedInvestment$investmentValue": "<p>The total value of the investment, including its currency and amount.</p>",
+        "OutcomeBasedInvestment$disbursedValue": "<p>The total value already disbursed against the investment. This value can be distributed among the investment accounts distribution.</p>"
       }
     },
     "ApplicationType": {
@@ -100,6 +137,35 @@
         "CreditData$applicationType": "<p>When the credit is applied during bill computation. Valid values: <code>BEFORE_CROSS_SERVICE_DISCOUNTS</code>, <code>AFTER_DISCOUNTS</code>.</p>"
       }
     },
+    "ApproverDetails": {
+      "base": "<p>Information about the executive approver who signs off on an investment attestation.</p>",
+      "refs": {
+        "CreateContractualInvestmentAttestationRequest$approverDetails": "<p>The details of the executive who authorized the attestation, under the terms of the private pricing contract. The executive receives a click-to-accept email to confirm the attestation.</p>"
+      }
+    },
+    "ArnString": {
+      "base": null,
+      "refs": {
+        "AssociateContractRequest$contractArn": "<p>The Amazon Resource Name (ARN) of the contract to associate with your account.</p>",
+        "CancelContractualInvestmentAttestationRequest$contractArn": "<p>The Amazon Resource Name (ARN) of the contract that contains the attested investment.</p>",
+        "ContractSummary$contractArn": "<p>The Amazon Resource Name (ARN) of the contract. Pass this value to operations such as <code>GetContractInformation</code>, <code>ListContractualInvestmentSummaries</code>, and <code>AssociateContract</code>.</p>",
+        "CreateContractualInvestmentAttestationRequest$contractArn": "<p>The Amazon Resource Name (ARN) of the contract that contains the investment being attested.</p>",
+        "DisassociateContractRequest$contractArn": "<p>The Amazon Resource Name (ARN) of the contract to disassociate from your account.</p>",
+        "GetContractInformationRequest$contractArn": "<p>The Amazon Resource Name (ARN) of the contract to retrieve information about.</p>",
+        "ListContractualInvestmentAttestationsRequest$contractArn": "<p>The Amazon Resource Name (ARN) of the contract whose attestations you want to list.</p>",
+        "ListContractualInvestmentSummariesRequest$contractArn": "<p>The Amazon Resource Name (ARN) of the contract whose investment summaries you want to list.</p>",
+        "ListContractualInvestmentsRequest$contractArn": "<p>The Amazon Resource Name (ARN) of the contract that contains the investment summary.</p>",
+        "PrivatePricingAddendum$contractArn": "<p>The Amazon Resource Name (ARN) of the private pricing addendum.</p>"
+      }
+    },
+    "AssociateContractRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateContractResponse": {
+      "base": null,
+      "refs": {}
+    },
     "AssociateSourceViewsRequest": {
       "base": null,
       "refs": {}
@@ -107,6 +173,54 @@
     "AssociateSourceViewsResponse": {
       "base": null,
       "refs": {}
+    },
+    "AssociationStatus": {
+      "base": "<p>Indicates whether a contract is associated with your account. A value of <code>ASSOCIATED</code> indicates that the contract is associated with your account. A value of <code>NOT_ASSOCIATED</code> indicates that the contract is not associated with your account.</p>",
+      "refs": {
+        "ContractSummary$associationStatus": "<p>Indicates whether the contract is currently associated with your account. Valid values are <code>ASSOCIATED</code> and <code>NOT_ASSOCIATED</code>. <code>ASSOCIATED</code> means the contract is associated with your account. <code>NOT_ASSOCIATED</code> means the contract is not associated with your account.</p>"
+      }
+    },
+    "AttestationClientToken": {
+      "base": null,
+      "refs": {
+        "CreateContractualInvestmentAttestationRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry completes without performing any further actions.</p>"
+      }
+    },
+    "AttestationDetails": {
+      "base": "<p>The details of an investment attestation submission, including the value being attested and how the resulting investment is distributed.</p>",
+      "refs": {
+        "CreateContractualInvestmentAttestationRequest$attestationDetails": "<p>The details of the attestation, including the value being claimed and how the resulting investment is distributed across investment accounts.</p>"
+      }
+    },
+    "AttestationQuantities": {
+      "base": "<p>A list of quantity-based attestation values. The list contains at most 50 quantities.</p>",
+      "refs": {
+        "AttestationValue$attestationQuantities": "<p>The value attested as one or more quantities, each with its own unit. The list contains at most 50 quantities.</p>"
+      }
+    },
+    "AttestationQuantity": {
+      "base": "<p>A quantity-based attestation value, such as a count of workloads migrated.</p>",
+      "refs": {
+        "AttestationQuantities$member": null
+      }
+    },
+    "AttestationQuantityAttestationUnitString": {
+      "base": null,
+      "refs": {
+        "AttestationQuantity$attestationUnit": "<p>The unit of the attestation, such as <code>workloads migrated</code>. This value is 1–1000 characters.</p>"
+      }
+    },
+    "AttestationQuantityAttestationVolumeString": {
+      "base": null,
+      "refs": {
+        "AttestationQuantity$attestationVolume": "<p>The number of units being attested, expressed as a decimal string to preserve precision. The value is digits with an optional decimal point and is 1–1000 characters.</p>"
+      }
+    },
+    "AttestationValue": {
+      "base": "<p>The value being attested. This is a union in which exactly one member is set. Set <code>attestationAmount</code> to attest a monetary amount directly, or set <code>attestationQuantities</code> to attest one or more quantities that are converted to a value using the investment's multipliers.</p>",
+      "refs": {
+        "AttestationDetails$attestationValue": "<p>The value being attested, expressed as either a monetary amount or one or more quantities. Exactly one form is set.</p>"
+      }
     },
     "BillingDomain": {
       "base": "<p>The billing domain for a billing view segment. The following values are valid:</p> <ul> <li> <p> <code>PRO_FORMA</code> - Data shaped by Billing Conductor that doesn't reflect the final charges owed to Amazon Web Services.</p> </li> <li> <p> <code>BILLABLE</code> - Data that represents the final charges owed to Amazon Web Services.</p> </li> </ul>",
@@ -342,6 +456,7 @@
         "GetCreditsRequest$payerAccountFlag": "<p>When <code>true</code> and the caller is the management account, the response aggregates credits across the entire consolidated billing family. When <code>false</code> or omitted, returns only credits for the specified <code>accountId</code>.</p>",
         "GetEnterpriseSupportChargeSummaryResponse$isEstimated": "<p>Specifies whether the Support charge amount is estimated. When false, the charge amount is finalized.</p>",
         "GetEnterpriseSupportContractDetailsResponse$isContractActive": "<p>When true, the Enterprise Support contract is active. When false, the Enterprise Support Contract is inactive.</p>",
+        "InvestmentAttestation$isCancellable": "<p>Indicates whether the attestation can be canceled with <code>CancelContractualInvestmentAttestation</code>.</p>",
         "ListBusinessSupportAccountChargesResponse$isEstimated": "<p>Specifies whether the Support charge amount is estimated. When false, the charge amount is finalized.</p>",
         "PricingPlan$discountAppliesToMinimumCharge": "<p>Whether the discount applies to the minimum Support charge.</p>",
         "PricingPlanTier$incremental": "<p>Whether the tier charges are calculated incrementally.</p>"
@@ -409,6 +524,20 @@
         "BusinessSupportAccountCharge$tierCharges": "<p>The tier-level charges that make up the total Business Support charge for this account. Each tier represents a spend range with its own rate.</p>"
       }
     },
+    "CancelContractualInvestmentAttestationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelContractualInvestmentAttestationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CancellationReason": {
+      "base": null,
+      "refs": {
+        "CancelContractualInvestmentAttestationRequest$reason": "<p>The reason for the cancellation. This value can be 1 to 80 characters.</p>"
+      }
+    },
     "ChargeAccount": {
       "base": "<p>An account that is charged all or a portion of the total Support charge and the percentage of the charge allocated to it.</p>",
       "refs": {
@@ -443,6 +572,49 @@
         "GetEnterpriseSupportContractDetailsResponse$contractPayerAccountIds": "<p>The list of accounts covered by the Enterprise Support contract.</p>"
       }
     },
+    "ContractDetails": {
+      "base": "<p>The details of a contract returned by <code>GetContractInformation</code>. This is a union in which exactly one member is set, corresponding to the contract type. For a private pricing addendum, the <code>privatePricingAddendum</code> member is set. Check which member is present to determine the contract type.</p>",
+      "refs": {
+        "GetContractInformationResponse$contract": "<p>The contract details such as term (duration), eligible payer accounts, investment accounts, and legal entities.</p>"
+      }
+    },
+    "ContractDocumentId": {
+      "base": null,
+      "refs": {
+        "AssociateContractRequest$contractDocumentId": "<p>The contract ID from the contract document. It can be found in the top right corner of your contract's pages. This value confirms that you have access to the contract you are associating.</p>",
+        "CreateContractualInvestmentAttestationRequest$contractDocumentId": "<p>The contract ID from the contract document, located in the top-right corner of the private pricing contract pages. This value confirms that you have access to the contract.</p>"
+      }
+    },
+    "ContractRestriction": {
+      "base": "<p>A restriction that limits the self-service actions you can take on a contract. A contract with no restrictions supports all self-service actions.</p>",
+      "refs": {
+        "ContractRestrictions$member": null
+      }
+    },
+    "ContractRestrictions": {
+      "base": "<p>A list of restrictions that apply to a contract. An empty or absent value indicates that no restrictions apply. The list contains at most 10 restrictions.</p>",
+      "refs": {
+        "PrivatePricingAddendum$contractRestrictions": "<p>The restrictions that limit the self-service actions you can take on the private pricing addendum. An empty or absent value indicates that no restrictions apply. The list contains at most 10 restrictions.</p>"
+      }
+    },
+    "ContractSummaries": {
+      "base": "<p>A list of private pricing contract summaries, as returned by <code>ListContracts</code>.</p>",
+      "refs": {
+        "ListContractsResponse$items": "<p>The list of contracts that your Amazon Web Services account is an eligible payer account of.</p>"
+      }
+    },
+    "ContractSummary": {
+      "base": "<p>A summary of a private pricing contract visible to your account. <code>ListContracts</code> returns these summaries.</p>",
+      "refs": {
+        "ContractSummaries$member": null
+      }
+    },
+    "ContractType": {
+      "base": "<p>The classification of a private pricing contract. A value of <code>Cross-Service</code> indicates that the contract terms apply across multiple Amazon Web Services services. A value of <code>Service-Specific</code> indicates that the contract terms apply to a specific Amazon Web Services service. A value of <code>Other</code> indicates that the contract terms apply to other arrangements.</p>",
+      "refs": {
+        "ContractSummary$contractType": "<p>The classification of the contract. Valid values are <code>Cross-Service</code>, <code>Service-Specific</code>, and <code>Other</code>. <code>Cross-Service</code> applies across multiple Amazon Web Services services. <code>Service-Specific</code> applies to a specific Amazon Web Services service. <code>Other</code> applies to other arrangements.</p>"
+      }
+    },
     "CostCategoryName": {
       "base": null,
       "refs": {
@@ -460,6 +632,14 @@
       "refs": {}
     },
     "CreateBillingViewResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateContractualInvestmentAttestationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateContractualInvestmentAttestationResponse": {
       "base": null,
       "refs": {}
     },
@@ -537,6 +717,14 @@
       "refs": {
         "Expression$dimensions": "<p> The specific <code>Dimension</code> to use for <code>Expression</code>. </p>"
       }
+    },
+    "DisassociateContractRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateContractResponse": {
+      "base": null,
+      "refs": {}
     },
     "DisassociateSourceViewsRequest": {
       "base": null,
@@ -629,6 +817,14 @@
       "base": null,
       "refs": {}
     },
+    "GetContractInformationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetContractInformationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetCreditAllocationHistoryRequest": {
       "base": null,
       "refs": {}
@@ -675,6 +871,23 @@
       "base": null,
       "refs": {}
     },
+    "IdentifierString": {
+      "base": null,
+      "refs": {
+        "CancelContractualInvestmentAttestationRequest$attestationId": "<p>The identifier of the investment attestation to cancel.</p>",
+        "CreateContractualInvestmentAttestationRequest$investmentSummaryId": "<p>The identifier of the investment summary being attested. This is the parent to the investmentId.</p>",
+        "CreateContractualInvestmentAttestationRequest$investmentId": "<p>The identifier of the investment (outcome) being attested.</p>",
+        "CreateContractualInvestmentAttestationResponse$attestationId": "<p>The identifier of the submitted attestation.</p>",
+        "InvestmentAttestation$attestationId": "<p>The identifier of the attestation. This value is returned by <code>CreateContractualInvestmentAttestation</code> and is used to cancel the attestation with <code>CancelContractualInvestmentAttestation</code>. This value is 1–36 characters.</p>",
+        "InvestmentAttestation$investmentSummaryId": "<p>The identifier of the investment summary that was attested, as returned by <code>ListContractualInvestmentSummaries</code>.</p>",
+        "InvestmentAttestation$investmentId": "<p>The identifier of the investment that was attested, as returned by <code>ListContractualInvestments</code>.</p>",
+        "InvestmentSummary$investmentSummaryId": "<p>The identifier of the investment summary. Pass this value to <code>ListContractualInvestments</code> to list the investments within the summary, and to <code>CreateContractualInvestmentAttestation</code> to attest an investment. This value is 1–36 characters.</p>",
+        "ListContractualInvestmentAttestationsRequest$investmentSummaryId": "<p>The identifier of a specific investment summary to filter the attestations by. If omitted, attestations for all investment summaries in the contract are returned.</p>",
+        "ListContractualInvestmentsRequest$investmentSummaryId": "<p>The identifier of the investment summary whose investments you want to list.</p>",
+        "MilestoneBasedInvestment$investmentId": "<p>The identifier of the investment, as returned by <code>ListContractualInvestments</code>. This value is 1–36 characters.</p>",
+        "OutcomeBasedInvestment$investmentId": "<p>The identifier of the investment, as returned by <code>ListContractualInvestments</code>. This value is 1–36 characters.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -686,6 +899,141 @@
     "InternalServerException": {
       "base": "<p>The request processing failed because of an unknown error, exception, or failure. </p>",
       "refs": {}
+    },
+    "Interval": {
+      "base": "<p>A time period bounded by an inclusive start date and an inclusive end date.</p>",
+      "refs": {
+        "ContractSummary$contractTerm": "<p>The contract term period of the contract, expressed as an interval with an inclusive start date and an inclusive end date.</p>",
+        "OutcomeBasedInvestment$attestationWindow": "<p>The time window, expressed as an interval with inclusive start and end dates, during which outcomes can be attested to.</p>",
+        "PrivatePricingAddendum$contractTerm": "<p>The contract term period of the private pricing addendum, expressed as an interval with an inclusive start date and an inclusive end date.</p>"
+      }
+    },
+    "Investment": {
+      "base": "<p>An investment within an investment summary. This is a union in which exactly one member is set. The <code>milestoneBasedInvestment</code> member represents a fixed, scheduled investment. The <code>outcomeBasedInvestment</code> member represents an attestable investment awarded upon completion of a defined outcome. Check which member is present to determine the investment type.</p>",
+      "refs": {
+        "Investments$member": null
+      }
+    },
+    "InvestmentAttestation": {
+      "base": "<p>A summary of a submitted investment attestation, as returned by <code>ListContractualInvestmentAttestations</code>.</p>",
+      "refs": {
+        "InvestmentAttestations$member": null
+      }
+    },
+    "InvestmentAttestationInvestmentNameString": {
+      "base": null,
+      "refs": {
+        "InvestmentAttestation$investmentName": "<p>The name of the investment summary that contains the attested outcome. This value is 1–400 characters.</p>"
+      }
+    },
+    "InvestmentAttestationOutcomeDescriptionString": {
+      "base": null,
+      "refs": {
+        "InvestmentAttestation$outcomeDescription": "<p>The description of the attested outcome. This value is 1–2048 characters.</p>"
+      }
+    },
+    "InvestmentAttestationStatus": {
+      "base": "<p>The current state of a submitted investment attestation in its lifecycle. Valid values are <code>PENDING_REVIEW</code>, <code>PENDING_C_LEVEL_APPROVAL</code>, <code>PENDING_CANCELLATION</code>, <code>REJECTED</code>, <code>CANCELLED</code>, and <code>DISBURSED</code>. The values <code>DISBURSED</code>, <code>REJECTED</code>, and <code>CANCELLED</code> are terminal. The values <code>PENDING_REVIEW</code>, <code>PENDING_C_LEVEL_APPROVAL</code>, and <code>PENDING_CANCELLATION</code> indicate the attestation is still in progress.</p>",
+      "refs": {
+        "InvestmentAttestation$attestationStatus": "<p>The current status of the attestation. Valid values are <code>PENDING_REVIEW</code>, <code>PENDING_C_LEVEL_APPROVAL</code>, <code>PENDING_CANCELLATION</code>, <code>REJECTED</code>, <code>CANCELLED</code>, and <code>DISBURSED</code>. The values <code>DISBURSED</code>, <code>REJECTED</code>, and <code>CANCELLED</code> are terminal. The other values indicate the attestation is still in progress.</p>"
+      }
+    },
+    "InvestmentAttestations": {
+      "base": "<p>A list of investment attestations submitted under a private pricing contract, as returned by <code>ListContractualInvestmentAttestations</code>.</p>",
+      "refs": {
+        "ListContractualInvestmentAttestationsResponse$items": "<p>The list of investment attestations submitted under the contract.</p>"
+      }
+    },
+    "InvestmentDistribution": {
+      "base": "<p>An allocation of an investment disbursement to a specific recipient account. The account is the target account that receives the investment, not your account.</p>",
+      "refs": {
+        "InvestmentDistributions$member": null
+      }
+    },
+    "InvestmentDistributions": {
+      "base": "<p>A list of investment distributions that allocate an attested investment across recipient accounts. The list contains at most 200 distributions.</p>",
+      "refs": {
+        "AttestationDetails$investmentDistributions": "<p>The distribution of the resulting investment across the eligible investment accounts on the contract. If you omit this value, the full investment is allocated to the single eligible investment account on the contract. This value is required when multiple investment accounts are eligible. When you provide this value, the sum of all distributions must equal the resulting monetary investment value (the attested amount, or the value computed from the attested quantities using the investment multipliers). The list contains at most 200 distributions.</p>",
+        "InvestmentAttestation$investmentDistributions": "<p>The distribution of the attested investment across the eligible investment accounts. The list contains at most 200 distributions.</p>"
+      }
+    },
+    "InvestmentMultiplier": {
+      "base": "<p>A multiplier used to convert attestation input into an investment value.</p>",
+      "refs": {
+        "InvestmentMultipliers$member": null
+      }
+    },
+    "InvestmentMultiplierInvestmentAttestationInputUnitString": {
+      "base": null,
+      "refs": {
+        "InvestmentMultiplier$investmentAttestationInputUnit": "<p>The unit of the attestation input that the multiplier applies to, such as <code>workloads migrated</code>. This value is 1–1000 characters. The terms of the contract define this value.</p>"
+      }
+    },
+    "InvestmentMultiplierValueString": {
+      "base": null,
+      "refs": {
+        "InvestmentMultiplier$value": "<p>The multiplier value, expressed as a decimal string to preserve precision. The value is digits with an optional decimal point and is 1–1000 characters. The terms of the contract define this value.</p>"
+      }
+    },
+    "InvestmentMultipliers": {
+      "base": "<p>A list of multipliers used to compute investment value from attestation input, derived from the terms of the contract. The list contains at most 200 multipliers.</p>",
+      "refs": {
+        "OutcomeBasedInvestment$investmentMultipliers": "<p>The multipliers used to compute the investment value from the attestation input. The list contains at most 200 multipliers. Multipliers are derived from the terms of the private pricing contract.</p>"
+      }
+    },
+    "InvestmentRestriction": {
+      "base": "<p>A restriction that caps the value that can be disbursed for an investment. The cap applies for each attestation window.</p>",
+      "refs": {
+        "InvestmentRestrictions$member": null
+      }
+    },
+    "InvestmentRestrictions": {
+      "base": "<p>A list of restrictions that cap the value that can be disbursed for an investment. The list contains at most 10 restrictions.</p>",
+      "refs": {
+        "OutcomeBasedInvestment$investmentRestrictions": "<p>The restrictions that cap the value that can be disbursed for the investment. The list contains at most 10 restrictions.</p>"
+      }
+    },
+    "InvestmentSummaries": {
+      "base": "<p>A list of investment summaries within a contract or a private pricing addendum, as returned by <code>ListContractualInvestmentSummaries</code>.</p>",
+      "refs": {
+        "ListContractualInvestmentSummariesResponse$items": "<p>The list of investment summaries under the contract. It includes the investment name, maximum investment amount, and investment type. It does not provide investment details. Use this to know if the contract has investment terms and what type.</p>"
+      }
+    },
+    "InvestmentSummary": {
+      "base": "<p>Detailed information about an investment summary within a contract or a private pricing addendum.</p>",
+      "refs": {
+        "InvestmentSummaries$member": null
+      }
+    },
+    "InvestmentSummaryInvestmentNameString": {
+      "base": null,
+      "refs": {
+        "InvestmentSummary$investmentName": "<p>The name of the investment summary, used to reference the investment against a term in the physical contract. This value is 1–400 characters.</p>"
+      }
+    },
+    "InvestmentType": {
+      "base": "<p>The type of an investment summary. A value of <code>MILESTONE_BASED</code> indicates a fixed investment amount disbursed on a schedule. A value of <code>OUTCOME_BASED</code> indicates an investment awarded based on the completion of a defined outcome or milestone.</p>",
+      "refs": {
+        "InvestmentSummary$investmentType": "<p>The type of the investment summary. Valid values are <code>MILESTONE_BASED</code> and <code>OUTCOME_BASED</code>. <code>OUTCOME_BASED</code> investments can be attested to, upon completion of outcomes. <code>MILESTONE_BASED</code> are automatically triggered by Amazon Web Services, based on the time schedule in the contract.</p>"
+      }
+    },
+    "Investments": {
+      "base": "<p>A list of investments within an investment summary, as returned by <code>ListContractualInvestments</code>. For <code>OUTCOME_BASED</code> investments, they are referred to as <code>outcomes</code>.</p>",
+      "refs": {
+        "ListContractualInvestmentsResponse$items": "<p>The list of investments for the investment summary.</p>"
+      }
+    },
+    "LegalEntities": {
+      "base": "<p>A list of legal entities on a private pricing contract. The list contains at most 10 legal entities.</p>",
+      "refs": {
+        "PrivatePricingAddendum$legalEntities": "<p>The legal entities on the private pricing addendum. The list contains at most 10 legal entities.</p>"
+      }
+    },
+    "LegalEntity": {
+      "base": "<p>A legal entity on a private pricing contract. It can be found on your contract's signature page.</p>",
+      "refs": {
+        "LegalEntities$member": null
+      }
     },
     "LinkedAccountCharge": {
       "base": "<p>Enterprise Support charges for a linked account.</p>",
@@ -743,6 +1091,62 @@
       "base": "<p>Contains the list of Business Support subscription contracts that match the request filters.</p>",
       "refs": {}
     },
+    "ListContractsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContractsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListContractsRequest$maxResults": "<p>The maximum number of contracts to return in a single call. Minimum value of 1, maximum value of 100.</p>"
+      }
+    },
+    "ListContractsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContractualInvestmentAttestationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContractualInvestmentAttestationsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListContractualInvestmentAttestationsRequest$maxResults": "<p>The maximum number of attestations to return in a single call. Minimum value of 1, maximum value of 100.</p>"
+      }
+    },
+    "ListContractualInvestmentAttestationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContractualInvestmentSummariesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContractualInvestmentSummariesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListContractualInvestmentSummariesRequest$maxResults": "<p>The maximum number of investment summaries to return in a single call. Minimum value of 1, maximum value of 100.</p>"
+      }
+    },
+    "ListContractualInvestmentSummariesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContractualInvestmentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContractualInvestmentsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListContractualInvestmentsRequest$maxResults": "<p>The maximum number of investments to return in a single call. Minimum value of 1, maximum value of 100.</p>"
+      }
+    },
+    "ListContractualInvestmentsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListEnterpriseSupportLinkedAccountChargesRequest": {
       "base": "<p>The request structure for ListEnterpriseSupportLinkedAccountCharges.</p>",
       "refs": {}
@@ -781,10 +1185,34 @@
         "LinkedAccountCharge$totalSeconds": "<p>The total number of seconds in the billing period.</p>"
       }
     },
+    "MilestoneBasedInvestment": {
+      "base": "<p>An investment with a fixed value that is disbursed on a schedule. This corresponds to the <code>MILESTONE_BASED</code> investment type.</p>",
+      "refs": {
+        "Investment$milestoneBasedInvestment": "<p>An investment with a fixed value that is disbursed on a schedule. This member is set for a milestone-based investment and corresponds to the <code>MILESTONE_BASED</code> investment type.</p>"
+      }
+    },
     "Month": {
       "base": null,
       "refs": {
         "BillingPeriod$month": "<p>The month of the billing period as an integer between 1 and 12.</p>"
+      }
+    },
+    "MultiplierType": {
+      "base": "<p>The type of an investment multiplier. A value of <code>PERCENTAGE</code> applies a percentage of a value, expressed as a decimal string. A value of <code>CURRENCY_AMOUNT</code> applies a currency amount per unit of attestation input.</p>",
+      "refs": {
+        "InvestmentMultiplier$multiplierType": "<p>The type of the multiplier. A value of <code>PERCENTAGE</code> applies a percentage of a value. A value of <code>CURRENCY_AMOUNT</code> applies a currency amount per unit of attestation input. The terms of the contract define this value.</p>"
+      }
+    },
+    "OutcomeBasedInvestment": {
+      "base": "<p>An investment that is awarded upon completion of a defined outcome. This corresponds to the <code>OUTCOME_BASED</code> investment type and is claimed through <code>CreateContractualInvestmentAttestation</code>.</p>",
+      "refs": {
+        "Investment$outcomeBasedInvestment": "<p>An investment that is awarded upon completion of a defined outcome. This member is set for an outcome-based (attestable) investment and corresponds to the <code>OUTCOME_BASED</code> investment type.</p>"
+      }
+    },
+    "OutcomeBasedInvestmentOutcomeDescriptionString": {
+      "base": null,
+      "refs": {
+        "OutcomeBasedInvestment$outcomeDescription": "<p>The description of what must be completed to attest the outcome. This value is 1–2048 characters.</p>"
       }
     },
     "PageToken": {
@@ -802,6 +1230,14 @@
         "ListBusinessSupportAccountChargesResponse$nextToken": "<p>The pagination token for the next page of results.</p>",
         "ListBusinessSupportSubscriptionHistoryRequest$nextToken": "<p>The pagination token for the next page of results.</p>",
         "ListBusinessSupportSubscriptionHistoryResponse$nextToken": "<p>The pagination token for the next page of results.</p>",
+        "ListContractsRequest$nextToken": "<p>The pagination token that indicates the next set of results to retrieve.</p>",
+        "ListContractsResponse$nextToken": "<p>The pagination token to use on subsequent calls to retrieve the next set of results.</p>",
+        "ListContractualInvestmentAttestationsRequest$nextToken": "<p>The pagination token that indicates the next set of results to retrieve.</p>",
+        "ListContractualInvestmentAttestationsResponse$nextToken": "<p>The pagination token to use on subsequent calls to retrieve the next set of results.</p>",
+        "ListContractualInvestmentSummariesRequest$nextToken": "<p>The pagination token that indicates the next set of results to retrieve.</p>",
+        "ListContractualInvestmentSummariesResponse$nextToken": "<p>The pagination token to use on subsequent calls to retrieve the next set of results.</p>",
+        "ListContractualInvestmentsRequest$nextToken": "<p>The pagination token that indicates the next set of results to retrieve.</p>",
+        "ListContractualInvestmentsResponse$nextToken": "<p>The pagination token to use on subsequent calls to retrieve the next set of results.</p>",
         "ListEnterpriseSupportLinkedAccountChargesRequest$nextToken": "<p>The pagination token for the next page of results.</p>",
         "ListEnterpriseSupportLinkedAccountChargesResponse$nextToken": "<p>The pagination token for the next page of results.</p>",
         "ListSourceViewsForBillingViewRequest$nextToken": "<p> The pagination token that is used on subsequent calls to list billing views. </p>",
@@ -853,6 +1289,12 @@
         "PricingPlan$tiers": "<p>The pricing tiers within this plan.</p>"
       }
     },
+    "PrivatePricingAddendum": {
+      "base": "<p>The details of a private pricing addendum contract.</p>",
+      "refs": {
+        "ContractDetails$privatePricingAddendum": "<p>The details of a private pricing addendum contract. This member is set when the contract is a private pricing addendum.</p>"
+      }
+    },
     "ProductName": {
       "base": null,
       "refs": {
@@ -896,6 +1338,18 @@
     "RedeemCreditsResponse": {
       "base": null,
       "refs": {}
+    },
+    "RejectionReason": {
+      "base": "<p>A single reason an attestation was rejected. This value is 1–300 characters.</p>",
+      "refs": {
+        "RejectionReasons$member": null
+      }
+    },
+    "RejectionReasons": {
+      "base": "<p>A list of reasons an attestation was rejected. The list contains at most 30 reasons.</p>",
+      "refs": {
+        "InvestmentAttestation$rejectionReasons": "<p>The reasons the attestation was rejected. This value is present only when <code>attestationStatus</code> is <code>REJECTED</code>. The list contains at most 30 reasons.</p>"
+      }
     },
     "ResourceArn": {
       "base": null,
@@ -970,6 +1424,21 @@
       "base": null,
       "refs": {
         "StringSearch$searchValue": "<p> The string value to use in the search operation. This value is compared against the target field using the specified search option. </p>"
+      }
+    },
+    "SensitiveEmail": {
+      "base": null,
+      "refs": {
+        "AdditionalRecipient$email": "<p>The email address of the recipient. This value is 3–256 characters and must be a valid email address.</p>",
+        "ApproverDetails$email": "<p>The email address of the approver. This value is 3–256 characters and must be a valid email address.</p>"
+      }
+    },
+    "SensitiveString": {
+      "base": null,
+      "refs": {
+        "ApproverDetails$name": "<p>The name of the approver as it appears on the contract. This value can be up to 256 characters.</p>",
+        "ApproverDetails$title": "<p>The title of the approver, such as <code>Chief Financial Officer</code>. This value can be up to 256 characters.</p>",
+        "LegalEntity$legalEntityName": "<p>The name of the legal entity as it appears on the contract document. This value can be up to 256 characters.</p>"
       }
     },
     "ServiceCode": {
@@ -1130,7 +1599,9 @@
         "BusinessSupportSubscriptionContract$contractEndDate": "<p>The end date of the subscription contract.</p>",
         "BusinessSupportTierCharge$chargePeriodStartDate": "<p>The start date of the charge period for this tier charge.</p>",
         "BusinessSupportTierCharge$chargePeriodEndDate": "<p>The end date of the charge period for this tier charge.</p>",
+        "ContractSummary$lastUpdatedAt": "<p>The time when the contract was last associated with your account.</p>",
         "CreateBillingViewResponse$createdAt": "<p> The time when the billing view was created. </p>",
+        "CreateContractualInvestmentAttestationRequest$investmentDisbursedAt": "<p>The date on which the investment is disbursed to the investment accounts. The disbursement date is subject to review timelines.</p>",
         "CreditData$startDate": "<p>The date the credit becomes valid, as Unix epoch seconds.</p>",
         "CreditData$endDate": "<p>The date the credit expires, as Unix epoch seconds.</p>",
         "CreditData$exhaustDate": "<p>The date the credit balance reached zero, as Unix epoch seconds.</p>",
@@ -1146,8 +1617,14 @@
         "GetEnterpriseSupportContractDetailsResponse$supportReservedInstanceAmortizationStartDate": "<p>When supportReservedInstanceTreatmentMethod = AmortizedCustom, only amortized fees for Reserved Instances purchased on or after this date are included in the calculation. This field is Null for all other treatment methods.</p>",
         "GetEnterpriseSupportContractDetailsResponse$supportSavingsPlansAmortizationStartDate": "<p>This is applicable when supportSavingsPlansTreatmentMethod = Amortized and is Null for all other methods. It shows the start date from which Savings Plan fees are included in Support Eligible Spend.</p>",
         "GetEnterpriseSupportContractDetailsResponse$supportProrateStartDate": "<p>The start date for accounts subscribed or unsubscribed to Support billing during the billing month.</p>",
+        "Interval$startDateInclusive": "<p>The start date of the interval. This date is included in the interval.</p>",
+        "Interval$endDateInclusive": "<p>The end date of the interval. This date is included in the interval.</p>",
+        "InvestmentAttestation$attestedAt": "<p>The date on which the attestation was submitted.</p>",
+        "InvestmentAttestation$updatedAt": "<p>The date on which the attestation was last updated.</p>",
+        "InvestmentAttestation$investmentDisbursedAt": "<p>The start date on which the investment is disbursed to the investment accounts. This is not the same as the time of disbursement, but reflects the date you submitted with the attestation.</p>",
         "ListBusinessSupportSubscriptionHistoryRequest$startDate": "<p>The start date to filter subscription contracts from.</p>",
         "ListBusinessSupportSubscriptionHistoryRequest$endDate": "<p>The end date to filter subscription contracts to.</p>",
+        "MilestoneBasedInvestment$investmentDisbursedAt": "<p>The date on which the investment is disbursed to the investment accounts.</p>",
         "PricingPlan$startDate": "<p>The start date of the pricing plan.</p>",
         "PricingPlan$endDate": "<p>The end date of the pricing plan.</p>",
         "TimeRange$beginDateInclusive": "<p> The inclusive start date of the time range. </p>",

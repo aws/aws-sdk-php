@@ -2841,7 +2841,8 @@
       "type":"structure",
       "members":{
         "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"Token"}
+        "NextToken":{"shape":"Token"},
+        "RegionScope":{"shape":"RegionScope"}
       }
     },
     "ListInstancesResponse":{
@@ -3291,6 +3292,13 @@
       "max":32,
       "min":1,
       "pattern":"([a-z]+-){2,3}\\d"
+    },
+    "RegionScope":{
+      "type":"string",
+      "enum":[
+        "CURRENT_REGION",
+        "ALL_REGIONS"
+      ]
     },
     "RegionStatus":{
       "type":"string",

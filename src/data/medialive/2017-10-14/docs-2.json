@@ -3841,7 +3841,8 @@
         "CreateCloudWatchAlarmTemplateResponseContent$Threshold": "The threshold value to compare with the specified statistic.",
         "GetCloudWatchAlarmTemplateResponseContent$Threshold": "The threshold value to compare with the specified statistic.",
         "UpdateCloudWatchAlarmTemplateRequestContent$Threshold": "The threshold value to compare with the specified statistic.",
-        "UpdateCloudWatchAlarmTemplateResponseContent$Threshold": "The threshold value to compare with the specified statistic."
+        "UpdateCloudWatchAlarmTemplateResponseContent$Threshold": "The threshold value to compare with the specified statistic.",
+        "AbWatermarkingCustomProfile$EmbeddingFrequency": "The frequency with which watermarks will be embedded, in milliseconds."
       }
     },
     "__doubleMin0": {
@@ -3885,12 +3886,6 @@
       "refs": {
         "NielsenNaesIiNw$Sid": "Enter the Nielsen Source ID (SID) to include in the watermark",
         "NielsenNwOnly$Sid": "Enter the Nielsen Source ID (SID) to include in the watermark"
-      }
-    },
-    "__doubleMin250Max5000": {
-      "base": null,
-      "refs": {
-        "AbWatermarkingCustomProfile$EmbeddingFrequency": "The frequency with which watermarks will be embedded, in milliseconds."
       }
     },
     "__doubleMin32Max46": {
@@ -7849,6 +7844,48 @@
       "base": null,
       "refs": {
         "MediaPackageV2DestinationSettings$OutputUsage": "List of usage tags declaring how this MediaPackage V2 output is used. Currently these are all multiview-related (multiviewPrimaryView, multiviewSecondaryView, multiviewEqualSizeView) and enable multiview validations and augmentations to help ensure proper multiview configuration and compatibility with MediaPackage. Leave empty (the default) if this output has no multiview role. If any video-carrying MediaPackage V2 output in an output group specifies a multiview value, every video-carrying MediaPackage V2 output in the group must also specify a multiview value; place standalone video outputs in a separate output group."
+      }
+    },
+    "AutoFilterSettings": {
+      "base": "System-managed filter selection. Resolves to the perceptual filter at strength 1 where the codec\nis eligible (AV1 and H.265 unconditionally; H.264 only at enhanced_quality), and to no filter\notherwise. An empty / undefined filter_settings_choice is treated as \"auto\".\n\nCarries no body (extends EmptySettings, which sets additionalProperties: false), mirroring the\nColorSpacePassthroughSettings empty-settings pattern.",
+      "refs": {
+        "Av1FilterSettings$AutoFilterSettings": null,
+        "H264FilterSettings$AutoFilterSettings": null,
+        "H265FilterSettings$AutoFilterSettings": null
+      }
+    },
+    "Av1FilterSettings": {
+      "base": "Av1 Filter Settings",
+      "refs": {
+        "Av1Settings$FilterSettings": "Optional filters that you can apply to an encode."
+      }
+    },
+    "H264AllowExplicitWeightedPrediction": {
+      "base": "H264 Allow Explicit Weighted Prediction",
+      "refs": {
+        "H264Settings$AllowExplicitWeightedPrediction": "Specifies whether the encoder may apply explicit weighted prediction (EWP), an H.264 coding tool that can improve compression. EWP applies a scaling factor and offset to reference frames, which helps when brightness changes between frames, such as during a fade. When this setting is enabled, the encoder decides whether to apply EWP based on the output's other codec settings, such as profile and quality level. We recommend that you keep the default, enabled. When disabled, the encoder never applies EWP."
+      }
+    },
+    "NoneFilterSettings": {
+      "base": "Explicitly disables the video filter. This is the customer opt-out: a video description set to\n\"none\" never has a filter applied and is never overridden by the system-managed \"auto\" default.\n\nCarries no body (extends EmptySettings, which sets additionalProperties: false), mirroring the\nColorSpacePassthroughSettings empty-settings pattern.",
+      "refs": {
+        "Av1FilterSettings$NoneFilterSettings": null,
+        "H264FilterSettings$NoneFilterSettings": null,
+        "H265FilterSettings$NoneFilterSettings": null
+      }
+    },
+    "PerceptualFilterSettings": {
+      "base": "Perceptual Filter Settings",
+      "refs": {
+        "Av1FilterSettings$PerceptualFilterSettings": null,
+        "H264FilterSettings$PerceptualFilterSettings": null,
+        "H265FilterSettings$PerceptualFilterSettings": null
+      }
+    },
+    "PerceptualFilterStrength": {
+      "base": "Perceptual Filter Strength",
+      "refs": {
+        "PerceptualFilterSettings$Strength": "Selects the perceptual noise filter strength. Strength 1 (perceptual lite) is the recommended default and adds\napproximately 30% of an AVC encode of compute on the highest rendition. Strength 2 adds approximately 60% of an\nAVC encode of compute and can introduce slight softening on noisy content."
       }
     }
   },

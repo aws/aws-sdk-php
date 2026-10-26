@@ -6077,6 +6077,23 @@
         {"shape":"InvalidParameterException"}
       ]
     },
+    "UpdateOutboundEmailContactMessage":{
+      "name":"UpdateOutboundEmailContactMessage",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/instances/{InstanceId}/contacts/{ContactId}/outbound-email-message"
+      },
+      "input":{"shape":"UpdateOutboundEmailContactMessageRequest"},
+      "output":{"shape":"UpdateOutboundEmailContactMessageResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceConflictException"}
+      ]
+    },
     "UpdateParticipantAuthentication":{
       "name":"UpdateParticipantAuthentication",
       "http":{
@@ -21098,6 +21115,12 @@
         "WIDGET_ACTION"
       ]
     },
+    "NullableAdditionalRecipients":{
+      "type":"structure",
+      "members":{
+        "CcEmailAddresses":{"shape":"OptionalEmailAddressRecipientList"}
+      }
+    },
     "NullableBoolean":{"type":"boolean"},
     "NullableDouble":{"type":"double"},
     "NullableProficiencyLevel":{
@@ -21195,6 +21218,12 @@
         "OPEN",
         "CLOSED"
       ]
+    },
+    "OptionalEmailAddressRecipientList":{
+      "type":"list",
+      "member":{"shape":"EmailAddressInfo"},
+      "max":50,
+      "min":0
     },
     "Origin":{
       "type":"string",
@@ -23240,7 +23269,8 @@
         "APPROVED",
         "REJECTED",
         "PROCESSING",
-        "FAILED"
+        "FAILED",
+        "DRAFTING"
       ]
     },
     "ReferenceStatusReason":{
@@ -27256,7 +27286,8 @@
         "QueueInfo":{"shape":"QueueInfoInput"},
         "UserInfo":{"shape":"UserInfo"},
         "CustomerEndpoint":{"shape":"Endpoint"},
-        "SystemEndpoint":{"shape":"Endpoint"}
+        "SystemEndpoint":{"shape":"Endpoint"},
+        "AdditionalRecipients":{"shape":"NullableAdditionalRecipients"}
       }
     },
     "UpdateContactResponse":{
@@ -27756,6 +27787,60 @@
     "UpdateNotificationContentResponse":{
       "type":"structure",
       "members":{}
+    },
+    "UpdateOutboundEmailContactMessageRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId",
+        "EmailMessage"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactId":{
+          "shape":"ContactId",
+          "location":"uri",
+          "locationName":"ContactId"
+        },
+        "EmailMessage":{"shape":"UpdateOutboundEmailContent"}
+      }
+    },
+    "UpdateOutboundEmailContactMessageResponse":{
+      "type":"structure",
+      "required":["ContactId"],
+      "members":{
+        "ContactId":{"shape":"ContactId"}
+      }
+    },
+    "UpdateOutboundEmailContent":{
+      "type":"structure",
+      "required":[
+        "MessageSourceType",
+        "RawMessage"
+      ],
+      "members":{
+        "MessageSourceType":{"shape":"UpdateOutboundEmailMessageSourceType"},
+        "RawMessage":{"shape":"UpdateOutboundRawMessage"}
+      }
+    },
+    "UpdateOutboundEmailMessageSourceType":{
+      "type":"string",
+      "enum":["RAW"]
+    },
+    "UpdateOutboundRawMessage":{
+      "type":"structure",
+      "required":[
+        "Body",
+        "ContentType"
+      ],
+      "members":{
+        "Body":{"shape":"Body"},
+        "ContentType":{"shape":"EmailMessageContentType"}
+      }
     },
     "UpdateParticipantAuthenticationRequest":{
       "type":"structure",

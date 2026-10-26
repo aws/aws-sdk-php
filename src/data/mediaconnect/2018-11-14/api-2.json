@@ -124,6 +124,24 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "BatchGetDestinationEndpoint":{
+      "name":"BatchGetDestinationEndpoint",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/destinationEndpoints",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetDestinationEndpointRequest"},
+      "output":{"shape":"BatchGetDestinationEndpointResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "readonly":true
+    },
     "BatchGetRouterInput":{
       "name":"BatchGetRouterInput",
       "http":{
@@ -177,6 +195,44 @@
         {"shape":"ServiceUnavailableException"}
       ],
       "readonly":true
+    },
+    "BatchGetSourceEndpoint":{
+      "name":"BatchGetSourceEndpoint",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/sourceEndpoints",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetSourceEndpointRequest"},
+      "output":{"shape":"BatchGetSourceEndpointResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "readonly":true
+    },
+    "ConnectEndpoints":{
+      "name":"ConnectEndpoints",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v1/connectEndpoints/{DestinationEndpointArn}",
+        "responseCode":202
+      },
+      "input":{"shape":"ConnectEndpointsRequest"},
+      "output":{"shape":"ConnectEndpointsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
     },
     "CreateBridge":{
       "name":"CreateBridge",
@@ -410,6 +466,26 @@
       ],
       "idempotent":true
     },
+    "DeregisterDestinationEndpoint":{
+      "name":"DeregisterDestinationEndpoint",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/destinationEndpoint/{Arn}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeregisterDestinationEndpointRequest"},
+      "output":{"shape":"DeregisterDestinationEndpointResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "DeregisterGatewayInstance":{
       "name":"DeregisterGatewayInstance",
       "http":{
@@ -419,6 +495,26 @@
       },
       "input":{"shape":"DeregisterGatewayInstanceRequest"},
       "output":{"shape":"DeregisterGatewayInstanceResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
+    "DeregisterSourceEndpoint":{
+      "name":"DeregisterSourceEndpoint",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/sourceEndpoint/{Arn}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeregisterSourceEndpointRequest"},
+      "output":{"shape":"DeregisterSourceEndpointResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"TooManyRequestsException"},
@@ -583,6 +679,46 @@
       ],
       "readonly":true
     },
+    "DisconnectEndpoints":{
+      "name":"DisconnectEndpoints",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v1/disconnectEndpoints/{DestinationEndpointArn}",
+        "responseCode":202
+      },
+      "input":{"shape":"DisconnectEndpointsRequest"},
+      "output":{"shape":"DisconnectEndpointsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
+    "GetDestinationEndpoint":{
+      "name":"GetDestinationEndpoint",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/destinationEndpoint/{Arn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDestinationEndpointRequest"},
+      "output":{"shape":"GetDestinationEndpointResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "readonly":true
+    },
     "GetRouterInput":{
       "name":"GetRouterInput",
       "http":{
@@ -681,6 +817,25 @@
       ],
       "readonly":true
     },
+    "GetSourceEndpoint":{
+      "name":"GetSourceEndpoint",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/sourceEndpoint/{Arn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetSourceEndpointRequest"},
+      "output":{"shape":"GetSourceEndpointResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "readonly":true
+    },
     "GrantFlowEntitlements":{
       "name":"GrantFlowEntitlements",
       "http":{
@@ -709,6 +864,24 @@
       },
       "input":{"shape":"ListBridgesRequest"},
       "output":{"shape":"ListBridgesResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "readonly":true
+    },
+    "ListDestinationEndpoints":{
+      "name":"ListDestinationEndpoints",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/destinationEndpoints",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDestinationEndpointsRequest"},
+      "output":{"shape":"ListDestinationEndpointsResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"TooManyRequestsException"},
@@ -876,6 +1049,24 @@
       ],
       "readonly":true
     },
+    "ListSourceEndpoints":{
+      "name":"ListSourceEndpoints",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/sourceEndpoints",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSourceEndpointsRequest"},
+      "output":{"shape":"ListSourceEndpointsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "readonly":true
+    },
     "ListTagsForGlobalResource":{
       "name":"ListTagsForGlobalResource",
       "http":{
@@ -924,6 +1115,44 @@
         {"shape":"InternalServerErrorException"},
         {"shape":"NotFoundException"},
         {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "RegisterDestinationEndpoint":{
+      "name":"RegisterDestinationEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/destinationEndpoint",
+        "responseCode":201
+      },
+      "input":{"shape":"RegisterDestinationEndpointRequest"},
+      "output":{"shape":"RegisterDestinationEndpointResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"DestinationEndpointServiceQuotaExceededException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "RegisterSourceEndpoint":{
+      "name":"RegisterSourceEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/sourceEndpoint",
+        "responseCode":201
+      },
+      "input":{"shape":"RegisterSourceEndpointRequest"},
+      "output":{"shape":"RegisterSourceEndpointResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"SourceEndpointServiceQuotaExceededException"}
       ]
     },
     "RemoveBridgeOutput":{
@@ -1369,6 +1598,26 @@
       ],
       "idempotent":true
     },
+    "UpdateDestinationEndpoint":{
+      "name":"UpdateDestinationEndpoint",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v1/destinationEndpoint/{Arn}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateDestinationEndpointRequest"},
+      "output":{"shape":"UpdateDestinationEndpointResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "UpdateFlow":{
       "name":"UpdateFlow",
       "http":{
@@ -1532,6 +1781,26 @@
       },
       "input":{"shape":"UpdateRouterOutputRequest"},
       "output":{"shape":"UpdateRouterOutputResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateSourceEndpoint":{
+      "name":"UpdateSourceEndpoint",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v1/sourceEndpoint/{Arn}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateSourceEndpointRequest"},
+      "output":{"shape":"UpdateSourceEndpointResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"TooManyRequestsException"},
@@ -2090,6 +2359,10 @@
       "type":"structure",
       "members":{}
     },
+    "AutomaticEndpointEncryptionConfiguration":{
+      "type":"structure",
+      "members":{}
+    },
     "BadRequestException":{
       "type":"structure",
       "required":["Message"],
@@ -2104,6 +2377,66 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "BatchGetDestinationEndpointError":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Code",
+        "Message"
+      ],
+      "members":{
+        "Arn":{
+          "shape":"DestinationEndpointArn",
+          "locationName":"arn"
+        },
+        "Code":{
+          "shape":"String",
+          "locationName":"code"
+        },
+        "Message":{
+          "shape":"String",
+          "locationName":"message"
+        }
+      }
+    },
+    "BatchGetDestinationEndpointErrorList":{
+      "type":"list",
+      "member":{"shape":"BatchGetDestinationEndpointError"}
+    },
+    "BatchGetDestinationEndpointRequest":{
+      "type":"structure",
+      "required":["Arns"],
+      "members":{
+        "Arns":{
+          "shape":"BatchGetDestinationEndpointRequestArnsList",
+          "location":"querystring",
+          "locationName":"arns"
+        }
+      }
+    },
+    "BatchGetDestinationEndpointRequestArnsList":{
+      "type":"list",
+      "member":{"shape":"DestinationEndpointArn"},
+      "max":20,
+      "min":1
+    },
+    "BatchGetDestinationEndpointResponse":{
+      "type":"structure",
+      "required":[
+        "DestinationEndpoints",
+        "Errors"
+      ],
+      "members":{
+        "DestinationEndpoints":{
+          "shape":"DestinationEndpointList",
+          "locationName":"destinationEndpoints"
+        },
+        "Errors":{
+          "shape":"BatchGetDestinationEndpointErrorList",
+          "locationName":"errors"
+        }
+      }
     },
     "BatchGetRouterInputError":{
       "type":"structure",
@@ -2281,6 +2614,66 @@
         },
         "Errors":{
           "shape":"BatchGetRouterOutputErrorList",
+          "locationName":"errors"
+        }
+      }
+    },
+    "BatchGetSourceEndpointError":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Code",
+        "Message"
+      ],
+      "members":{
+        "Arn":{
+          "shape":"SourceEndpointArn",
+          "locationName":"arn"
+        },
+        "Code":{
+          "shape":"String",
+          "locationName":"code"
+        },
+        "Message":{
+          "shape":"String",
+          "locationName":"message"
+        }
+      }
+    },
+    "BatchGetSourceEndpointErrorList":{
+      "type":"list",
+      "member":{"shape":"BatchGetSourceEndpointError"}
+    },
+    "BatchGetSourceEndpointRequest":{
+      "type":"structure",
+      "required":["Arns"],
+      "members":{
+        "Arns":{
+          "shape":"BatchGetSourceEndpointRequestArnsList",
+          "location":"querystring",
+          "locationName":"arns"
+        }
+      }
+    },
+    "BatchGetSourceEndpointRequestArnsList":{
+      "type":"list",
+      "member":{"shape":"SourceEndpointArn"},
+      "max":20,
+      "min":1
+    },
+    "BatchGetSourceEndpointResponse":{
+      "type":"structure",
+      "required":[
+        "SourceEndpoints",
+        "Errors"
+      ],
+      "members":{
+        "SourceEndpoints":{
+          "shape":"SourceEndpointList",
+          "locationName":"sourceEndpoints"
+        },
+        "Errors":{
+          "shape":"BatchGetSourceEndpointErrorList",
           "locationName":"errors"
         }
       }
@@ -2593,12 +2986,67 @@
       "exception":true,
       "retryable":{"throttling":false}
     },
+    "ConnectEndpointsRequest":{
+      "type":"structure",
+      "required":[
+        "DestinationEndpointArn",
+        "SourceEndpointArn"
+      ],
+      "members":{
+        "DestinationEndpointArn":{
+          "shape":"DestinationEndpointArn",
+          "location":"uri",
+          "locationName":"DestinationEndpointArn"
+        },
+        "SourceEndpointArn":{
+          "shape":"SourceEndpointArn",
+          "locationName":"sourceEndpointArn"
+        }
+      }
+    },
+    "ConnectEndpointsResponse":{
+      "type":"structure",
+      "required":[
+        "DestinationEndpointArn",
+        "DestinationEndpointName",
+        "SourceEndpointArn",
+        "SourceEndpointName"
+      ],
+      "members":{
+        "DestinationEndpointArn":{
+          "shape":"DestinationEndpointArn",
+          "locationName":"destinationEndpointArn"
+        },
+        "DestinationEndpointName":{
+          "shape":"String",
+          "locationName":"destinationEndpointName"
+        },
+        "SourceEndpointArn":{
+          "shape":"SourceEndpointArn",
+          "locationName":"sourceEndpointArn"
+        },
+        "SourceEndpointName":{
+          "shape":"String",
+          "locationName":"sourceEndpointName"
+        }
+      }
+    },
     "ConnectionStatus":{
       "type":"string",
       "enum":[
         "CONNECTED",
         "DISCONNECTED"
       ]
+    },
+    "ConsumedResourceShareDetails":{
+      "type":"structure",
+      "required":["OwnerAccountId"],
+      "members":{
+        "OwnerAccountId":{
+          "shape":"String",
+          "locationName":"ownerAccountId"
+        }
+      }
     },
     "ContentQualityAnalysisFeatureConfiguration":{
       "type":"structure",
@@ -3207,6 +3655,34 @@
         }
       }
     },
+    "DeregisterDestinationEndpointRequest":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{
+          "shape":"DestinationEndpointArn",
+          "location":"uri",
+          "locationName":"Arn"
+        }
+      }
+    },
+    "DeregisterDestinationEndpointResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Name"
+      ],
+      "members":{
+        "Arn":{
+          "shape":"DestinationEndpointArn",
+          "locationName":"arn"
+        },
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        }
+      }
+    },
     "DeregisterGatewayInstanceRequest":{
       "type":"structure",
       "required":["GatewayInstanceArn"],
@@ -3237,6 +3713,34 @@
         "InstanceState":{
           "shape":"InstanceState",
           "locationName":"instanceState"
+        }
+      }
+    },
+    "DeregisterSourceEndpointRequest":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{
+          "shape":"SourceEndpointArn",
+          "location":"uri",
+          "locationName":"Arn"
+        }
+      }
+    },
+    "DeregisterSourceEndpointResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Name"
+      ],
+      "members":{
+        "Arn":{
+          "shape":"SourceEndpointArn",
+          "locationName":"arn"
+        },
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
         }
       }
     },
@@ -3493,6 +3997,351 @@
         }
       }
     },
+    "DestinationEndpoint":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Arn",
+        "Id",
+        "Description",
+        "RegionName",
+        "CreatedAt",
+        "UpdatedAt",
+        "LifecycleManagement",
+        "Messages",
+        "DestinationType",
+        "Configuration",
+        "ResourceShareOwnership",
+        "ResourceShareDetails",
+        "RegistrationState",
+        "ConnectionState",
+        "AssociatedResourceDetails",
+        "Tags"
+      ],
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "Arn":{
+          "shape":"DestinationEndpointArn",
+          "locationName":"arn"
+        },
+        "Id":{
+          "shape":"String",
+          "locationName":"id"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "RegionName":{
+          "shape":"String",
+          "locationName":"regionName"
+        },
+        "AvailabilityZone":{
+          "shape":"String",
+          "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
+        "CreatedAt":{
+          "shape":"SyntheticTimestamp_date_time",
+          "locationName":"createdAt"
+        },
+        "UpdatedAt":{
+          "shape":"SyntheticTimestamp_date_time",
+          "locationName":"updatedAt"
+        },
+        "LifecycleManagement":{
+          "shape":"EndpointLifecycle",
+          "locationName":"lifecycleManagement"
+        },
+        "Messages":{
+          "shape":"DestinationEndpointMessageList",
+          "locationName":"messages"
+        },
+        "DestinationType":{
+          "shape":"DestinationEndpointType",
+          "locationName":"destinationType"
+        },
+        "Configuration":{
+          "shape":"DestinationEndpointConfiguration",
+          "locationName":"configuration"
+        },
+        "ResourceShareOwnership":{
+          "shape":"ResourceShareOwnership",
+          "locationName":"resourceShareOwnership"
+        },
+        "ResourceShareDetails":{
+          "shape":"ResourceShareDetails",
+          "locationName":"resourceShareDetails"
+        },
+        "RegistrationState":{
+          "shape":"DestinationEndpointRegistrationState",
+          "locationName":"registrationState"
+        },
+        "ConnectionDetails":{
+          "shape":"DestinationEndpointConnectionDetails",
+          "locationName":"connectionDetails"
+        },
+        "ConnectionState":{
+          "shape":"DestinationEndpointConnectionState",
+          "locationName":"connectionState"
+        },
+        "ConnectedSource":{
+          "shape":"SourceEndpointArn",
+          "locationName":"connectedSource"
+        },
+        "DecryptionType":{
+          "shape":"EndpointEncryptionType",
+          "locationName":"decryptionType"
+        },
+        "DecryptionConfiguration":{
+          "shape":"EndpointEncryptionConfiguration",
+          "locationName":"decryptionConfiguration"
+        },
+        "AssociatedResourceDetails":{
+          "shape":"DestinationEndpointAssociatedResourceDetails",
+          "locationName":"associatedResourceDetails"
+        },
+        "Tags":{
+          "shape":"__mapOfString",
+          "locationName":"tags"
+        }
+      }
+    },
+    "DestinationEndpointArn":{
+      "type":"string",
+      "max":128,
+      "min":64,
+      "pattern":"arn:(aws[a-zA-Z-]*):mediaconnect:[a-z0-9-]+:[0-9]{12}:destinationEndpoint:[a-z0-9]{12}"
+    },
+    "DestinationEndpointArnList":{
+      "type":"list",
+      "member":{"shape":"DestinationEndpointArn"}
+    },
+    "DestinationEndpointAssociatedResourceDetails":{
+      "type":"structure",
+      "members":{
+        "Standard":{
+          "shape":"StandardDestinationEndpointAssociatedResourceDetails",
+          "locationName":"standard"
+        },
+        "RouterInput":{
+          "shape":"RouterInputDestinationEndpointAssociatedResourceDetails",
+          "locationName":"routerInput"
+        }
+      },
+      "union":true
+    },
+    "DestinationEndpointConfiguration":{
+      "type":"structure",
+      "members":{
+        "Standard":{
+          "shape":"StandardDestinationEndpointConfiguration",
+          "locationName":"standard"
+        },
+        "RouterInput":{
+          "shape":"RouterInputDestinationEndpointConfiguration",
+          "locationName":"routerInput"
+        }
+      },
+      "union":true
+    },
+    "DestinationEndpointConnectionDetails":{
+      "type":"structure",
+      "members":{
+        "Standard":{
+          "shape":"StandardDestinationEndpointConnectionDetails",
+          "locationName":"standard"
+        },
+        "RouterInput":{
+          "shape":"RouterInputDestinationEndpointConnectionDetails",
+          "locationName":"routerInput"
+        }
+      },
+      "union":true
+    },
+    "DestinationEndpointConnectionState":{
+      "type":"string",
+      "enum":[
+        "CONNECTED",
+        "DISCONNECTED",
+        "CONNECTING",
+        "DISCONNECTING"
+      ]
+    },
+    "DestinationEndpointFilter":{
+      "type":"structure",
+      "members":{
+        "RegionNames":{
+          "shape":"StringList",
+          "locationName":"regionNames"
+        },
+        "DestinationTypes":{
+          "shape":"DestinationEndpointTypeList",
+          "locationName":"destinationTypes"
+        },
+        "NameContains":{
+          "shape":"StringList",
+          "locationName":"nameContains"
+        }
+      },
+      "union":true
+    },
+    "DestinationEndpointFilterList":{
+      "type":"list",
+      "member":{"shape":"DestinationEndpointFilter"}
+    },
+    "DestinationEndpointList":{
+      "type":"list",
+      "member":{"shape":"DestinationEndpoint"}
+    },
+    "DestinationEndpointMessage":{
+      "type":"structure",
+      "required":[
+        "Code",
+        "Message"
+      ],
+      "members":{
+        "Code":{
+          "shape":"String",
+          "locationName":"code"
+        },
+        "Message":{
+          "shape":"String",
+          "locationName":"message"
+        }
+      }
+    },
+    "DestinationEndpointMessageList":{
+      "type":"list",
+      "member":{"shape":"DestinationEndpointMessage"}
+    },
+    "DestinationEndpointNetworkingType":{
+      "type":"string",
+      "enum":[
+        "PUBLIC",
+        "VPC"
+      ]
+    },
+    "DestinationEndpointProtocol":{
+      "type":"string",
+      "enum":[
+        "RTP",
+        "RIST",
+        "SRT_CALLER",
+        "SRT_LISTENER"
+      ]
+    },
+    "DestinationEndpointRegistrationState":{
+      "type":"string",
+      "enum":[
+        "REGISTERED",
+        "REGISTERING",
+        "DEREGISTERING",
+        "REGISTRATION_FAILED"
+      ]
+    },
+    "DestinationEndpointRouterInputConfiguration":{
+      "type":"structure",
+      "required":[
+        "EndpointLifecycleManagement",
+        "SourceTransitDecryption"
+      ],
+      "members":{
+        "EndpointLifecycleManagement":{
+          "shape":"EndpointLifecycle",
+          "locationName":"endpointLifecycleManagement"
+        },
+        "SourceTransitDecryptionType":{
+          "shape":"EndpointEncryptionType",
+          "locationName":"sourceTransitDecryptionType"
+        },
+        "SourceTransitDecryption":{
+          "shape":"EndpointEncryptionConfiguration",
+          "locationName":"sourceTransitDecryption"
+        }
+      }
+    },
+    "DestinationEndpointRouterInputStreamDetails":{
+      "type":"structure",
+      "members":{}
+    },
+    "DestinationEndpointServiceQuotaExceededException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{
+          "shape":"String",
+          "locationName":"message"
+        }
+      },
+      "error":{
+        "httpStatusCode":420,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "DestinationEndpointType":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "ROUTER_INPUT"
+      ]
+    },
+    "DestinationEndpointTypeList":{
+      "type":"list",
+      "member":{"shape":"DestinationEndpointType"}
+    },
+    "DisconnectEndpointsRequest":{
+      "type":"structure",
+      "required":[
+        "DestinationEndpointArn",
+        "SourceEndpointArn"
+      ],
+      "members":{
+        "DestinationEndpointArn":{
+          "shape":"DestinationEndpointArn",
+          "location":"uri",
+          "locationName":"DestinationEndpointArn"
+        },
+        "SourceEndpointArn":{
+          "shape":"SourceEndpointArn",
+          "locationName":"sourceEndpointArn"
+        }
+      }
+    },
+    "DisconnectEndpointsResponse":{
+      "type":"structure",
+      "required":[
+        "DestinationEndpointArn",
+        "DestinationEndpointName",
+        "SourceEndpointArn",
+        "SourceEndpointName"
+      ],
+      "members":{
+        "DestinationEndpointArn":{
+          "shape":"DestinationEndpointArn",
+          "locationName":"destinationEndpointArn"
+        },
+        "DestinationEndpointName":{
+          "shape":"String",
+          "locationName":"destinationEndpointName"
+        },
+        "SourceEndpointArn":{
+          "shape":"SourceEndpointArn",
+          "locationName":"sourceEndpointArn"
+        },
+        "SourceEndpointName":{
+          "shape":"String",
+          "locationName":"sourceEndpointName"
+        }
+      }
+    },
     "Double":{
       "type":"double",
       "box":true
@@ -3626,6 +4475,53 @@
           "locationName":"url"
         }
       }
+    },
+    "EndpointEncryptionConfiguration":{
+      "type":"structure",
+      "members":{
+        "SecretsManager":{
+          "shape":"SecretsManagerEndpointEncryptionConfiguration",
+          "locationName":"secretsManager"
+        },
+        "Automatic":{
+          "shape":"AutomaticEndpointEncryptionConfiguration",
+          "locationName":"automatic"
+        }
+      },
+      "union":true
+    },
+    "EndpointEncryptionSecretConfiguration":{
+      "type":"structure",
+      "required":["SecretArn"],
+      "members":{
+        "SecretArn":{
+          "shape":"SecretArn",
+          "locationName":"secretArn"
+        }
+      }
+    },
+    "EndpointEncryptionSecretType":{
+      "type":"string",
+      "enum":[
+        "AES_128_KEY",
+        "AES_192_KEY",
+        "AES_256_KEY",
+        "SRT_PASSPHRASE"
+      ]
+    },
+    "EndpointEncryptionType":{
+      "type":"string",
+      "enum":[
+        "SECRETS_MANAGER",
+        "AUTOMATIC"
+      ]
+    },
+    "EndpointLifecycle":{
+      "type":"string",
+      "enum":[
+        "MANAGED",
+        "UNMANAGED"
+      ]
     },
     "Entitlement":{
       "type":"structure",
@@ -4212,6 +5108,27 @@
         "DELETED"
       ]
     },
+    "GetDestinationEndpointRequest":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{
+          "shape":"DestinationEndpointArn",
+          "location":"uri",
+          "locationName":"Arn"
+        }
+      }
+    },
+    "GetDestinationEndpointResponse":{
+      "type":"structure",
+      "required":["DestinationEndpoint"],
+      "members":{
+        "DestinationEndpoint":{
+          "shape":"DestinationEndpoint",
+          "locationName":"destinationEndpoint"
+        }
+      }
+    },
     "GetRouterInputRequest":{
       "type":"structure",
       "required":["Arn"],
@@ -4338,6 +5255,27 @@
         "RouterOutput":{
           "shape":"RouterOutput",
           "locationName":"routerOutput"
+        }
+      }
+    },
+    "GetSourceEndpointRequest":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{
+          "shape":"SourceEndpointArn",
+          "location":"uri",
+          "locationName":"Arn"
+        }
+      }
+    },
+    "GetSourceEndpointResponse":{
+      "type":"structure",
+      "required":["SourceEndpoint"],
+      "members":{
+        "SourceEndpoint":{
+          "shape":"SourceEndpoint",
+          "locationName":"sourceEndpoint"
         }
       }
     },
@@ -4568,6 +5506,45 @@
         "Bridges":{
           "shape":"__listOfListedBridge",
           "locationName":"bridges"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListDestinationEndpointsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"ListDestinationEndpointsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "Filters":{
+          "shape":"DestinationEndpointFilterList",
+          "locationName":"filters"
+        }
+      }
+    },
+    "ListDestinationEndpointsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListDestinationEndpointsResponse":{
+      "type":"structure",
+      "required":["DestinationEndpoints"],
+      "members":{
+        "DestinationEndpoints":{
+          "shape":"ListedDestinationEndpointList",
+          "locationName":"destinationEndpoints"
         },
         "NextToken":{
           "shape":"String",
@@ -4865,6 +5842,45 @@
         }
       }
     },
+    "ListSourceEndpointsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"ListSourceEndpointsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "Filters":{
+          "shape":"SourceEndpointFilterList",
+          "locationName":"filters"
+        }
+      }
+    },
+    "ListSourceEndpointsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListSourceEndpointsResponse":{
+      "type":"structure",
+      "required":["SourceEndpoints"],
+      "members":{
+        "SourceEndpoints":{
+          "shape":"ListedSourceEndpointList",
+          "locationName":"sourceEndpoints"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
     "ListTagsForGlobalResourceRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -4936,6 +5952,102 @@
           "locationName":"placementArn"
         }
       }
+    },
+    "ListedDestinationEndpoint":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Arn",
+        "Id",
+        "DestinationType",
+        "RegionName",
+        "CreatedAt",
+        "UpdatedAt",
+        "LifecycleManagement",
+        "MessageCount",
+        "ResourceShareOwnership",
+        "ResourceShareState",
+        "RegistrationState",
+        "ConnectionState"
+      ],
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "Arn":{
+          "shape":"DestinationEndpointArn",
+          "locationName":"arn"
+        },
+        "Id":{
+          "shape":"String",
+          "locationName":"id"
+        },
+        "DestinationType":{
+          "shape":"DestinationEndpointType",
+          "locationName":"destinationType"
+        },
+        "RegionName":{
+          "shape":"String",
+          "locationName":"regionName"
+        },
+        "AvailabilityZone":{
+          "shape":"String",
+          "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
+        "CreatedAt":{
+          "shape":"SyntheticTimestamp_date_time",
+          "locationName":"createdAt"
+        },
+        "UpdatedAt":{
+          "shape":"SyntheticTimestamp_date_time",
+          "locationName":"updatedAt"
+        },
+        "LifecycleManagement":{
+          "shape":"EndpointLifecycle",
+          "locationName":"lifecycleManagement"
+        },
+        "MessageCount":{
+          "shape":"Integer",
+          "locationName":"messageCount"
+        },
+        "ResourceShareOwnership":{
+          "shape":"ResourceShareOwnership",
+          "locationName":"resourceShareOwnership"
+        },
+        "ResourceShareState":{
+          "shape":"ResourceShareState",
+          "locationName":"resourceShareState"
+        },
+        "RegistrationState":{
+          "shape":"DestinationEndpointRegistrationState",
+          "locationName":"registrationState"
+        },
+        "ConnectionState":{
+          "shape":"DestinationEndpointConnectionState",
+          "locationName":"connectionState"
+        },
+        "DecryptionType":{
+          "shape":"EndpointEncryptionType",
+          "locationName":"decryptionType"
+        },
+        "ConnectedSource":{
+          "shape":"SourceEndpointArn",
+          "locationName":"connectedSource"
+        },
+        "AssociatedResourceArn":{
+          "shape":"String",
+          "locationName":"associatedResourceArn"
+        }
+      }
+    },
+    "ListedDestinationEndpointList":{
+      "type":"list",
+      "member":{"shape":"ListedDestinationEndpoint"}
     },
     "ListedEntitlement":{
       "type":"structure",
@@ -5287,6 +6399,103 @@
     "ListedRouterOutputList":{
       "type":"list",
       "member":{"shape":"ListedRouterOutput"}
+    },
+    "ListedSourceEndpoint":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Arn",
+        "Id",
+        "SourceType",
+        "RegionName",
+        "CreatedAt",
+        "UpdatedAt",
+        "LifecycleManagement",
+        "MessageCount",
+        "ResourceShareOwnership",
+        "ResourceShareState",
+        "RegistrationState",
+        "ConnectionState",
+        "ConnectedDestinationCount"
+      ],
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "Arn":{
+          "shape":"SourceEndpointArn",
+          "locationName":"arn"
+        },
+        "Id":{
+          "shape":"String",
+          "locationName":"id"
+        },
+        "SourceType":{
+          "shape":"SourceEndpointType",
+          "locationName":"sourceType"
+        },
+        "RegionName":{
+          "shape":"String",
+          "locationName":"regionName"
+        },
+        "AvailabilityZone":{
+          "shape":"String",
+          "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
+        "CreatedAt":{
+          "shape":"SyntheticTimestamp_date_time",
+          "locationName":"createdAt"
+        },
+        "UpdatedAt":{
+          "shape":"SyntheticTimestamp_date_time",
+          "locationName":"updatedAt"
+        },
+        "LifecycleManagement":{
+          "shape":"EndpointLifecycle",
+          "locationName":"lifecycleManagement"
+        },
+        "MessageCount":{
+          "shape":"Integer",
+          "locationName":"messageCount"
+        },
+        "ResourceShareOwnership":{
+          "shape":"ResourceShareOwnership",
+          "locationName":"resourceShareOwnership"
+        },
+        "ResourceShareState":{
+          "shape":"ResourceShareState",
+          "locationName":"resourceShareState"
+        },
+        "RegistrationState":{
+          "shape":"SourceEndpointRegistrationState",
+          "locationName":"registrationState"
+        },
+        "ConnectionState":{
+          "shape":"SourceEndpointConnectionState",
+          "locationName":"connectionState"
+        },
+        "EncryptionType":{
+          "shape":"EndpointEncryptionType",
+          "locationName":"encryptionType"
+        },
+        "ConnectedDestinationCount":{
+          "shape":"Integer",
+          "locationName":"connectedDestinationCount"
+        },
+        "AssociatedResourceArn":{
+          "shape":"String",
+          "locationName":"associatedResourceArn"
+        }
+      }
+    },
+    "ListedSourceEndpointList":{
+      "type":"list",
+      "member":{"shape":"ListedSourceEndpoint"}
     },
     "Long":{
       "type":"long",
@@ -6146,6 +7355,16 @@
         "DISABLED"
       ]
     },
+    "OwnedResourceShareDetails":{
+      "type":"structure",
+      "required":["ShareState"],
+      "members":{
+        "ShareState":{
+          "shape":"ResourceShareState",
+          "locationName":"shareState"
+        }
+      }
+    },
     "PreferredDayTimeMaintenanceConfiguration":{
       "type":"structure",
       "required":[
@@ -6184,6 +7403,36 @@
         "ndi-speed-hq"
       ]
     },
+    "PublicDestinationEndpointNetworkingConfiguration":{
+      "type":"structure",
+      "required":["DestinationAllowRules"],
+      "members":{
+        "DestinationAllowRules":{
+          "shape":"PublicDestinationEndpointNetworkingConfigurationDestinationAllowRulesList",
+          "locationName":"destinationAllowRules"
+        }
+      }
+    },
+    "PublicDestinationEndpointNetworkingConfigurationAllowRule":{
+      "type":"structure",
+      "required":["Cidr"],
+      "members":{
+        "Cidr":{
+          "shape":"PublicDestinationEndpointNetworkingConfigurationAllowRuleCidrString",
+          "locationName":"cidr"
+        }
+      }
+    },
+    "PublicDestinationEndpointNetworkingConfigurationAllowRuleCidrString":{
+      "type":"string",
+      "pattern":"(?:[0-9]{1,3}\\.){3}[0-9]{1,3}/([0-9]|[12][0-9]|3[0-2])"
+    },
+    "PublicDestinationEndpointNetworkingConfigurationDestinationAllowRulesList":{
+      "type":"list",
+      "member":{"shape":"PublicDestinationEndpointNetworkingConfigurationAllowRule"},
+      "max":10,
+      "min":0
+    },
     "PublicRouterNetworkInterfaceConfiguration":{
       "type":"structure",
       "required":["AllowRules"],
@@ -6213,6 +7462,36 @@
     "PublicRouterNetworkInterfaceRuleCidrString":{
       "type":"string",
       "pattern":"(?:[0-9]{1,3}\\.){3}[0-9]{1,3}/([0-9]|[12][0-9]|3[0-2])"
+    },
+    "PublicSourceEndpointNetworkingConfiguration":{
+      "type":"structure",
+      "required":["SourceAllowRules"],
+      "members":{
+        "SourceAllowRules":{
+          "shape":"PublicSourceEndpointNetworkingConfigurationSourceAllowRulesList",
+          "locationName":"sourceAllowRules"
+        }
+      }
+    },
+    "PublicSourceEndpointNetworkingConfigurationAllowRule":{
+      "type":"structure",
+      "required":["Cidr"],
+      "members":{
+        "Cidr":{
+          "shape":"PublicSourceEndpointNetworkingConfigurationAllowRuleCidrString",
+          "locationName":"cidr"
+        }
+      }
+    },
+    "PublicSourceEndpointNetworkingConfigurationAllowRuleCidrString":{
+      "type":"string",
+      "pattern":"(?:[0-9]{1,3}\\.){3}[0-9]{1,3}/([0-9]|[12][0-9]|3[0-2])"
+    },
+    "PublicSourceEndpointNetworkingConfigurationSourceAllowRulesList":{
+      "type":"list",
+      "member":{"shape":"PublicSourceEndpointNetworkingConfigurationAllowRule"},
+      "max":10,
+      "min":0
     },
     "PublicTlsEncryptionConfiguration":{
       "type":"structure",
@@ -6257,6 +7536,92 @@
         "FULL",
         "FULLPROTECT"
       ]
+    },
+    "RegisterDestinationEndpointRequest":{
+      "type":"structure",
+      "required":["Configuration"],
+      "members":{
+        "Description":{
+          "shape":"RegisterDestinationEndpointRequestDescriptionString",
+          "locationName":"description"
+        },
+        "Configuration":{
+          "shape":"DestinationEndpointConfiguration",
+          "locationName":"configuration"
+        },
+        "RegionName":{
+          "shape":"String",
+          "locationName":"regionName"
+        },
+        "Tags":{
+          "shape":"__mapOfString",
+          "locationName":"tags"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "RegisterDestinationEndpointRequestDescriptionString":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "pattern":"[ a-zA-Z_0-9\\-.',@:;\\(\\)\\[\\]*]+"
+    },
+    "RegisterDestinationEndpointResponse":{
+      "type":"structure",
+      "required":["DestinationEndpoint"],
+      "members":{
+        "DestinationEndpoint":{
+          "shape":"DestinationEndpoint",
+          "locationName":"destinationEndpoint"
+        }
+      }
+    },
+    "RegisterSourceEndpointRequest":{
+      "type":"structure",
+      "required":["Configuration"],
+      "members":{
+        "RegionName":{
+          "shape":"String",
+          "locationName":"regionName"
+        },
+        "Description":{
+          "shape":"RegisterSourceEndpointRequestDescriptionString",
+          "locationName":"description"
+        },
+        "Configuration":{
+          "shape":"SourceEndpointConfiguration",
+          "locationName":"configuration"
+        },
+        "Tags":{
+          "shape":"__mapOfString",
+          "locationName":"tags"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "RegisterSourceEndpointRequestDescriptionString":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "pattern":"[ a-zA-Z_0-9\\-.',@:;\\(\\)\\[\\]*]+"
+    },
+    "RegisterSourceEndpointResponse":{
+      "type":"structure",
+      "required":["SourceEndpoint"],
+      "members":{
+        "SourceEndpoint":{
+          "shape":"SourceEndpoint",
+          "locationName":"sourceEndpoint"
+        }
+      }
     },
     "RemoveBridgeOutputRequest":{
       "type":"structure",
@@ -6568,6 +7933,34 @@
         "CANCELED"
       ]
     },
+    "ResourceShareDetails":{
+      "type":"structure",
+      "members":{
+        "Owned":{
+          "shape":"OwnedResourceShareDetails",
+          "locationName":"owned"
+        },
+        "Consumed":{
+          "shape":"ConsumedResourceShareDetails",
+          "locationName":"consumed"
+        }
+      },
+      "union":true
+    },
+    "ResourceShareOwnership":{
+      "type":"string",
+      "enum":[
+        "OWNED",
+        "CONSUMED"
+      ]
+    },
+    "ResourceShareState":{
+      "type":"string",
+      "enum":[
+        "SHARED",
+        "UNSHARED"
+      ]
+    },
     "ResourceSpecification":{
       "type":"structure",
       "required":["ResourceType"],
@@ -6744,6 +8137,58 @@
       "max":65535,
       "min":1024
     },
+    "RistStandardDestinationEndpointConfiguration":{
+      "type":"structure",
+      "required":[
+        "DestinationAddress",
+        "DestinationIngestPort"
+      ],
+      "members":{
+        "DestinationAddress":{
+          "shape":"String",
+          "locationName":"destinationAddress"
+        },
+        "DestinationIngestPort":{
+          "shape":"RistStandardDestinationEndpointConfigurationDestinationIngestPortInteger",
+          "locationName":"destinationIngestPort"
+        }
+      }
+    },
+    "RistStandardDestinationEndpointConfigurationDestinationIngestPortInteger":{
+      "type":"integer",
+      "box":true,
+      "max":65531,
+      "min":1024
+    },
+    "RistStandardSourceEndpointConfiguration":{
+      "type":"structure",
+      "required":[
+        "DestinationIngestPort",
+        "RecoveryLatencyMilliseconds"
+      ],
+      "members":{
+        "DestinationIngestPort":{
+          "shape":"RistStandardSourceEndpointConfigurationDestinationIngestPortInteger",
+          "locationName":"destinationIngestPort"
+        },
+        "RecoveryLatencyMilliseconds":{
+          "shape":"RistStandardSourceEndpointConfigurationRecoveryLatencyMillisecondsLong",
+          "locationName":"recoveryLatencyMilliseconds"
+        }
+      }
+    },
+    "RistStandardSourceEndpointConfigurationDestinationIngestPortInteger":{
+      "type":"integer",
+      "box":true,
+      "max":30000,
+      "min":3000
+    },
+    "RistStandardSourceEndpointConfigurationRecoveryLatencyMillisecondsLong":{
+      "type":"long",
+      "box":true,
+      "max":10000,
+      "min":10
+    },
     "RoleArn":{
       "type":"string",
       "pattern":"arn:(aws[a-zA-Z-]*):iam::[0-9]{12}:role/[a-zA-Z0-9_+=,.@-]+"
@@ -6898,6 +8343,10 @@
         "ContentQualityAnalysisConfiguration":{
           "shape":"RouterContentQualityAnalysisConfiguration",
           "locationName":"contentQualityAnalysisConfiguration"
+        },
+        "AssociatedDestinationEndpointArns":{
+          "shape":"DestinationEndpointArnList",
+          "locationName":"associatedDestinationEndpointArns"
         }
       }
     },
@@ -6912,6 +8361,10 @@
     "RouterInputConfiguration":{
       "type":"structure",
       "members":{
+        "DestinationEndpoint":{
+          "shape":"DestinationEndpointRouterInputConfiguration",
+          "locationName":"destinationEndpoint"
+        },
         "Standard":{
           "shape":"StandardRouterInputConfiguration",
           "locationName":"standard"
@@ -6934,6 +8387,60 @@
         }
       },
       "union":true
+    },
+    "RouterInputDestinationEndpointAssociatedResourceDetails":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "MaximumBitrate",
+        "State",
+        "Messages"
+      ],
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "MaximumBitrate":{
+          "shape":"Long",
+          "locationName":"maximumBitrate"
+        },
+        "State":{
+          "shape":"RouterInputState",
+          "locationName":"state"
+        },
+        "Messages":{
+          "shape":"RouterInputMessages",
+          "locationName":"messages"
+        }
+      }
+    },
+    "RouterInputDestinationEndpointConfiguration":{
+      "type":"structure",
+      "required":["RouterInputArn"],
+      "members":{
+        "RouterInputArn":{
+          "shape":"RouterInputArn",
+          "locationName":"routerInputArn"
+        }
+      }
+    },
+    "RouterInputDestinationEndpointConnectionDetails":{
+      "type":"structure",
+      "members":{
+        "SourceEncryptionType":{
+          "shape":"EndpointEncryptionType",
+          "locationName":"sourceEncryptionType"
+        },
+        "SourceEncryptionConfiguration":{
+          "shape":"EndpointEncryptionConfiguration",
+          "locationName":"sourceEncryptionConfiguration"
+        },
+        "SourceEndpointType":{
+          "shape":"SourceEndpointType",
+          "locationName":"sourceEndpointType"
+        }
+      }
     },
     "RouterInputFilter":{
       "type":"structure",
@@ -7085,6 +8592,10 @@
     "RouterInputStreamDetails":{
       "type":"structure",
       "members":{
+        "DestinationEndpoint":{
+          "shape":"DestinationEndpointRouterInputStreamDetails",
+          "locationName":"destinationEndpoint"
+        },
         "Standard":{
           "shape":"StandardRouterInputStreamDetails",
           "locationName":"standard"
@@ -7182,7 +8693,8 @@
         "FAILOVER",
         "MERGE",
         "MEDIACONNECT_FLOW",
-        "MEDIALIVE_CHANNEL"
+        "MEDIALIVE_CHANNEL",
+        "DESTINATION_ENDPOINT"
       ]
     },
     "RouterInputTypeList":{
@@ -7461,6 +8973,10 @@
         "FabricConfiguration":{
           "shape":"FabricConfiguration",
           "locationName":"fabricConfiguration"
+        },
+        "AssociatedSourceEndpointArns":{
+          "shape":"SourceEndpointArnList",
+          "locationName":"associatedSourceEndpointArns"
         }
       }
     },
@@ -7482,6 +8998,10 @@
         "MediaLiveInput":{
           "shape":"MediaLiveInputRouterOutputConfiguration",
           "locationName":"mediaLiveInput"
+        },
+        "SourceEndpoint":{
+          "shape":"SourceEndpointRouterOutputConfiguration",
+          "locationName":"sourceEndpoint"
         }
       },
       "union":true
@@ -7604,6 +9124,60 @@
       },
       "exception":true
     },
+    "RouterOutputSourceEndpointAssociatedResourceDetails":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "MaximumBitrate",
+        "State",
+        "Messages"
+      ],
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "MaximumBitrate":{
+          "shape":"Long",
+          "locationName":"maximumBitrate"
+        },
+        "State":{
+          "shape":"RouterOutputState",
+          "locationName":"state"
+        },
+        "Messages":{
+          "shape":"RouterOutputMessages",
+          "locationName":"messages"
+        }
+      }
+    },
+    "RouterOutputSourceEndpointConfiguration":{
+      "type":"structure",
+      "required":["RouterOutputArn"],
+      "members":{
+        "RouterOutputArn":{
+          "shape":"RouterOutputArn",
+          "locationName":"routerOutputArn"
+        }
+      }
+    },
+    "RouterOutputSourceEndpointConnectionDetails":{
+      "type":"structure",
+      "members":{
+        "DestinationDecryptionType":{
+          "shape":"EndpointEncryptionType",
+          "locationName":"destinationDecryptionType"
+        },
+        "DestinationDecryptionConfiguration":{
+          "shape":"EndpointEncryptionConfiguration",
+          "locationName":"destinationDecryptionConfiguration"
+        },
+        "DestinationEndpointType":{
+          "shape":"DestinationEndpointType",
+          "locationName":"destinationEndpointType"
+        }
+      }
+    },
     "RouterOutputState":{
       "type":"string",
       "enum":[
@@ -7633,6 +9207,10 @@
         "MediaLiveInput":{
           "shape":"MediaLiveInputRouterOutputStreamDetails",
           "locationName":"mediaLiveInput"
+        },
+        "SourceEndpoint":{
+          "shape":"SourceEndpointRouterOutputStreamDetails",
+          "locationName":"sourceEndpoint"
         }
       },
       "union":true
@@ -7652,7 +9230,8 @@
       "enum":[
         "STANDARD",
         "MEDIACONNECT_FLOW",
-        "MEDIALIVE_INPUT"
+        "MEDIALIVE_INPUT",
+        "SOURCE_ENDPOINT"
       ]
     },
     "RouterOutputTypeList":{
@@ -7754,6 +9333,57 @@
       "max":65531,
       "min":1024
     },
+    "RtpStandardDestinationEndpointConfiguration":{
+      "type":"structure",
+      "required":[
+        "DestinationAddress",
+        "DestinationIngestPort",
+        "ForwardErrorCorrectionState"
+      ],
+      "members":{
+        "DestinationAddress":{
+          "shape":"String",
+          "locationName":"destinationAddress"
+        },
+        "DestinationIngestPort":{
+          "shape":"RtpStandardDestinationEndpointConfigurationDestinationIngestPortInteger",
+          "locationName":"destinationIngestPort"
+        },
+        "ForwardErrorCorrectionState":{
+          "shape":"ForwardErrorCorrectionState",
+          "locationName":"forwardErrorCorrectionState"
+        }
+      }
+    },
+    "RtpStandardDestinationEndpointConfigurationDestinationIngestPortInteger":{
+      "type":"integer",
+      "box":true,
+      "max":65531,
+      "min":1024
+    },
+    "RtpStandardSourceEndpointConfiguration":{
+      "type":"structure",
+      "required":[
+        "DestinationIngestPort",
+        "ForwardErrorCorrectionState"
+      ],
+      "members":{
+        "DestinationIngestPort":{
+          "shape":"RtpStandardSourceEndpointConfigurationDestinationIngestPortInteger",
+          "locationName":"destinationIngestPort"
+        },
+        "ForwardErrorCorrectionState":{
+          "shape":"ForwardErrorCorrectionState",
+          "locationName":"forwardErrorCorrectionState"
+        }
+      }
+    },
+    "RtpStandardSourceEndpointConfigurationDestinationIngestPortInteger":{
+      "type":"integer",
+      "box":true,
+      "max":30000,
+      "min":3000
+    },
     "ScanMode":{
       "type":"string",
       "enum":[
@@ -7780,6 +9410,20 @@
         "RoleArn":{
           "shape":"RoleArn",
           "locationName":"roleArn"
+        }
+      }
+    },
+    "SecretsManagerEndpointEncryptionConfiguration":{
+      "type":"structure",
+      "required":["EncryptionSecret"],
+      "members":{
+        "EncryptionSecretType":{
+          "shape":"EndpointEncryptionSecretType",
+          "locationName":"encryptionSecretType"
+        },
+        "EncryptionSecret":{
+          "shape":"EndpointEncryptionSecretConfiguration",
+          "locationName":"encryptionSecret"
         }
       }
     },
@@ -8031,6 +9675,307 @@
         }
       }
     },
+    "SourceEndpoint":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Arn",
+        "Id",
+        "Description",
+        "RegionName",
+        "CreatedAt",
+        "UpdatedAt",
+        "LifecycleManagement",
+        "Messages",
+        "SourceType",
+        "Configuration",
+        "ResourceShareOwnership",
+        "ResourceShareDetails",
+        "RegistrationState",
+        "ConnectionState",
+        "ConnectedDestinations",
+        "AssociatedResourceDetails",
+        "Tags"
+      ],
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "Arn":{
+          "shape":"SourceEndpointArn",
+          "locationName":"arn"
+        },
+        "Id":{
+          "shape":"String",
+          "locationName":"id"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "RegionName":{
+          "shape":"String",
+          "locationName":"regionName"
+        },
+        "AvailabilityZone":{
+          "shape":"String",
+          "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
+        "CreatedAt":{
+          "shape":"SyntheticTimestamp_date_time",
+          "locationName":"createdAt"
+        },
+        "UpdatedAt":{
+          "shape":"SyntheticTimestamp_date_time",
+          "locationName":"updatedAt"
+        },
+        "LifecycleManagement":{
+          "shape":"EndpointLifecycle",
+          "locationName":"lifecycleManagement"
+        },
+        "Messages":{
+          "shape":"SourceEndpointMessageList",
+          "locationName":"messages"
+        },
+        "SourceType":{
+          "shape":"SourceEndpointType",
+          "locationName":"sourceType"
+        },
+        "Configuration":{
+          "shape":"SourceEndpointConfiguration",
+          "locationName":"configuration"
+        },
+        "ResourceShareOwnership":{
+          "shape":"ResourceShareOwnership",
+          "locationName":"resourceShareOwnership"
+        },
+        "ResourceShareDetails":{
+          "shape":"ResourceShareDetails",
+          "locationName":"resourceShareDetails"
+        },
+        "RegistrationState":{
+          "shape":"SourceEndpointRegistrationState",
+          "locationName":"registrationState"
+        },
+        "ConnectionState":{
+          "shape":"SourceEndpointConnectionState",
+          "locationName":"connectionState"
+        },
+        "ConnectionDetails":{
+          "shape":"SourceEndpointConnectionDetails",
+          "locationName":"connectionDetails"
+        },
+        "ConnectedDestinations":{
+          "shape":"DestinationEndpointArnList",
+          "locationName":"connectedDestinations"
+        },
+        "EncryptionType":{
+          "shape":"EndpointEncryptionType",
+          "locationName":"encryptionType"
+        },
+        "EncryptionConfiguration":{
+          "shape":"EndpointEncryptionConfiguration",
+          "locationName":"encryptionConfiguration"
+        },
+        "AssociatedResourceDetails":{
+          "shape":"SourceEndpointAssociatedResourceDetails",
+          "locationName":"associatedResourceDetails"
+        },
+        "Tags":{
+          "shape":"__mapOfString",
+          "locationName":"tags"
+        }
+      }
+    },
+    "SourceEndpointArn":{
+      "type":"string",
+      "max":128,
+      "min":64,
+      "pattern":"arn:(aws[a-zA-Z-]*):mediaconnect:[a-z0-9-]+:[0-9]{12}:sourceEndpoint:[a-z0-9]{12}"
+    },
+    "SourceEndpointArnList":{
+      "type":"list",
+      "member":{"shape":"SourceEndpointArn"}
+    },
+    "SourceEndpointAssociatedResourceDetails":{
+      "type":"structure",
+      "members":{
+        "Standard":{
+          "shape":"StandardSourceEndpointAssociatedResourceDetails",
+          "locationName":"standard"
+        },
+        "RouterOutput":{
+          "shape":"RouterOutputSourceEndpointAssociatedResourceDetails",
+          "locationName":"routerOutput"
+        }
+      },
+      "union":true
+    },
+    "SourceEndpointConfiguration":{
+      "type":"structure",
+      "members":{
+        "Standard":{
+          "shape":"StandardSourceEndpointConfiguration",
+          "locationName":"standard"
+        },
+        "RouterOutput":{
+          "shape":"RouterOutputSourceEndpointConfiguration",
+          "locationName":"routerOutput"
+        }
+      },
+      "union":true
+    },
+    "SourceEndpointConnectionDetails":{
+      "type":"structure",
+      "members":{
+        "Standard":{
+          "shape":"StandardSourceEndpointConnectionDetails",
+          "locationName":"standard"
+        },
+        "RouterOutput":{
+          "shape":"RouterOutputSourceEndpointConnectionDetails",
+          "locationName":"routerOutput"
+        }
+      },
+      "union":true
+    },
+    "SourceEndpointConnectionState":{
+      "type":"string",
+      "enum":[
+        "CONNECTED",
+        "DISCONNECTED",
+        "CONNECTING",
+        "DISCONNECTING"
+      ]
+    },
+    "SourceEndpointFilter":{
+      "type":"structure",
+      "members":{
+        "RegionNames":{
+          "shape":"StringList",
+          "locationName":"regionNames"
+        },
+        "SourceTypes":{
+          "shape":"SourceEndpointTypeList",
+          "locationName":"sourceTypes"
+        },
+        "NameContains":{
+          "shape":"StringList",
+          "locationName":"nameContains"
+        }
+      },
+      "union":true
+    },
+    "SourceEndpointFilterList":{
+      "type":"list",
+      "member":{"shape":"SourceEndpointFilter"}
+    },
+    "SourceEndpointList":{
+      "type":"list",
+      "member":{"shape":"SourceEndpoint"}
+    },
+    "SourceEndpointMessage":{
+      "type":"structure",
+      "required":[
+        "Code",
+        "Message"
+      ],
+      "members":{
+        "Code":{
+          "shape":"String",
+          "locationName":"code"
+        },
+        "Message":{
+          "shape":"String",
+          "locationName":"message"
+        }
+      }
+    },
+    "SourceEndpointMessageList":{
+      "type":"list",
+      "member":{"shape":"SourceEndpointMessage"}
+    },
+    "SourceEndpointNetworkingType":{
+      "type":"string",
+      "enum":[
+        "PUBLIC",
+        "VPC"
+      ]
+    },
+    "SourceEndpointProtocol":{
+      "type":"string",
+      "enum":[
+        "RTP",
+        "RIST",
+        "SRT_CALLER",
+        "SRT_LISTENER"
+      ]
+    },
+    "SourceEndpointRegistrationState":{
+      "type":"string",
+      "enum":[
+        "REGISTERED",
+        "REGISTERING",
+        "DEREGISTERING",
+        "REGISTRATION_FAILED"
+      ]
+    },
+    "SourceEndpointRouterOutputConfiguration":{
+      "type":"structure",
+      "required":[
+        "EndpointLifecycleManagement",
+        "DestinationTransitEncryption"
+      ],
+      "members":{
+        "EndpointLifecycleManagement":{
+          "shape":"EndpointLifecycle",
+          "locationName":"endpointLifecycleManagement"
+        },
+        "DestinationTransitEncryptionType":{
+          "shape":"EndpointEncryptionType",
+          "locationName":"destinationTransitEncryptionType"
+        },
+        "DestinationTransitEncryption":{
+          "shape":"EndpointEncryptionConfiguration",
+          "locationName":"destinationTransitEncryption"
+        }
+      }
+    },
+    "SourceEndpointRouterOutputStreamDetails":{
+      "type":"structure",
+      "members":{}
+    },
+    "SourceEndpointServiceQuotaExceededException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{
+          "shape":"String",
+          "locationName":"message"
+        }
+      },
+      "error":{
+        "httpStatusCode":420,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "SourceEndpointType":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "ROUTER_OUTPUT"
+      ]
+    },
+    "SourceEndpointTypeList":{
+      "type":"list",
+      "member":{"shape":"SourceEndpointType"}
+    },
     "SourcePriority":{
       "type":"structure",
       "members":{
@@ -8131,6 +10076,72 @@
       "max":10000,
       "min":10
     },
+    "SrtCallerStandardDestinationEndpointConfiguration":{
+      "type":"structure",
+      "required":[
+        "SourceListenerPort",
+        "MinimumLatencyMilliseconds"
+      ],
+      "members":{
+        "SourceListenerPort":{
+          "shape":"SrtCallerStandardDestinationEndpointConfigurationSourceListenerPortInteger",
+          "locationName":"sourceListenerPort"
+        },
+        "MinimumLatencyMilliseconds":{
+          "shape":"SrtCallerStandardDestinationEndpointConfigurationMinimumLatencyMillisecondsLong",
+          "locationName":"minimumLatencyMilliseconds"
+        },
+        "EncryptionPassphrase":{
+          "shape":"EndpointEncryptionSecretConfiguration",
+          "locationName":"encryptionPassphrase"
+        }
+      }
+    },
+    "SrtCallerStandardDestinationEndpointConfigurationMinimumLatencyMillisecondsLong":{
+      "type":"long",
+      "box":true,
+      "max":10000,
+      "min":10
+    },
+    "SrtCallerStandardDestinationEndpointConfigurationSourceListenerPortInteger":{
+      "type":"integer",
+      "box":true,
+      "max":30000,
+      "min":3000
+    },
+    "SrtCallerStandardSourceEndpointConfiguration":{
+      "type":"structure",
+      "required":[
+        "DestinationIngestPort",
+        "MinimumLatencyMilliseconds"
+      ],
+      "members":{
+        "DestinationIngestPort":{
+          "shape":"SrtCallerStandardSourceEndpointConfigurationDestinationIngestPortInteger",
+          "locationName":"destinationIngestPort"
+        },
+        "MinimumLatencyMilliseconds":{
+          "shape":"SrtCallerStandardSourceEndpointConfigurationMinimumLatencyMillisecondsLong",
+          "locationName":"minimumLatencyMilliseconds"
+        },
+        "EncryptionPassphrase":{
+          "shape":"EndpointEncryptionSecretConfiguration",
+          "locationName":"encryptionPassphrase"
+        }
+      }
+    },
+    "SrtCallerStandardSourceEndpointConfigurationDestinationIngestPortInteger":{
+      "type":"integer",
+      "box":true,
+      "max":30000,
+      "min":3000
+    },
+    "SrtCallerStandardSourceEndpointConfigurationMinimumLatencyMillisecondsLong":{
+      "type":"long",
+      "box":true,
+      "max":10000,
+      "min":10
+    },
     "SrtDecryptionConfiguration":{
       "type":"structure",
       "required":["EncryptionKey"],
@@ -8217,6 +10228,191 @@
       "max":30000,
       "min":3000
     },
+    "SrtListenerStandardDestinationEndpointConfiguration":{
+      "type":"structure",
+      "required":[
+        "DestinationAddress",
+        "DestinationIngestPort",
+        "MinimumLatencyMilliseconds"
+      ],
+      "members":{
+        "DestinationAddress":{
+          "shape":"String",
+          "locationName":"destinationAddress"
+        },
+        "DestinationIngestPort":{
+          "shape":"SrtListenerStandardDestinationEndpointConfigurationDestinationIngestPortInteger",
+          "locationName":"destinationIngestPort"
+        },
+        "MinimumLatencyMilliseconds":{
+          "shape":"SrtListenerStandardDestinationEndpointConfigurationMinimumLatencyMillisecondsLong",
+          "locationName":"minimumLatencyMilliseconds"
+        },
+        "StreamId":{
+          "shape":"String",
+          "locationName":"streamId"
+        },
+        "EncryptionPassphrase":{
+          "shape":"EndpointEncryptionSecretConfiguration",
+          "locationName":"encryptionPassphrase"
+        }
+      }
+    },
+    "SrtListenerStandardDestinationEndpointConfigurationDestinationIngestPortInteger":{
+      "type":"integer",
+      "box":true,
+      "max":65531,
+      "min":0
+    },
+    "SrtListenerStandardDestinationEndpointConfigurationMinimumLatencyMillisecondsLong":{
+      "type":"long",
+      "box":true,
+      "max":10000,
+      "min":10
+    },
+    "SrtListenerStandardSourceEndpointConfiguration":{
+      "type":"structure",
+      "required":[
+        "SourceListenerPort",
+        "SourceAddress",
+        "MinimumLatencyMilliseconds"
+      ],
+      "members":{
+        "SourceListenerPort":{
+          "shape":"SrtListenerStandardSourceEndpointConfigurationSourceListenerPortInteger",
+          "locationName":"sourceListenerPort"
+        },
+        "SourceAddress":{
+          "shape":"String",
+          "locationName":"sourceAddress"
+        },
+        "MinimumLatencyMilliseconds":{
+          "shape":"SrtListenerStandardSourceEndpointConfigurationMinimumLatencyMillisecondsLong",
+          "locationName":"minimumLatencyMilliseconds"
+        },
+        "StreamId":{
+          "shape":"String",
+          "locationName":"streamId"
+        },
+        "EncryptionPassphrase":{
+          "shape":"EndpointEncryptionSecretConfiguration",
+          "locationName":"encryptionPassphrase"
+        }
+      }
+    },
+    "SrtListenerStandardSourceEndpointConfigurationMinimumLatencyMillisecondsLong":{
+      "type":"long",
+      "box":true,
+      "max":10000,
+      "min":10
+    },
+    "SrtListenerStandardSourceEndpointConfigurationSourceListenerPortInteger":{
+      "type":"integer",
+      "box":true,
+      "max":65535,
+      "min":1024
+    },
+    "StandardDestinationEndpointAssociatedResourceDetails":{
+      "type":"structure",
+      "members":{}
+    },
+    "StandardDestinationEndpointConfiguration":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "DestinationNetworkingConfiguration",
+        "ProtocolConfiguration"
+      ],
+      "members":{
+        "Name":{
+          "shape":"StandardDestinationEndpointConfigurationNameString",
+          "locationName":"name"
+        },
+        "DestinationNetworkingConfiguration":{
+          "shape":"StandardDestinationEndpointNetworkingConfiguration",
+          "locationName":"destinationNetworkingConfiguration"
+        },
+        "ProtocolConfiguration":{
+          "shape":"StandardDestinationEndpointProtocolConfiguration",
+          "locationName":"protocolConfiguration"
+        },
+        "DestinationNetworkingType":{
+          "shape":"DestinationEndpointNetworkingType",
+          "locationName":"destinationNetworkingType"
+        },
+        "Protocol":{
+          "shape":"DestinationEndpointProtocol",
+          "locationName":"protocol"
+        }
+      }
+    },
+    "StandardDestinationEndpointConfigurationNameString":{
+      "type":"string",
+      "max":164,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]([a-zA-Z0-9\\-_]*[a-zA-Z0-9])?"
+    },
+    "StandardDestinationEndpointConnectionDetails":{
+      "type":"structure",
+      "members":{
+        "SourceIpAddress":{
+          "shape":"String",
+          "locationName":"sourceIpAddress"
+        },
+        "SourceListenerPort":{
+          "shape":"Integer",
+          "locationName":"sourceListenerPort"
+        },
+        "SourceEncryptionType":{
+          "shape":"EndpointEncryptionType",
+          "locationName":"sourceEncryptionType"
+        },
+        "SourceEncryptionConfiguration":{
+          "shape":"EndpointEncryptionConfiguration",
+          "locationName":"sourceEncryptionConfiguration"
+        },
+        "SourceEndpointType":{
+          "shape":"SourceEndpointType",
+          "locationName":"sourceEndpointType"
+        }
+      }
+    },
+    "StandardDestinationEndpointNetworkingConfiguration":{
+      "type":"structure",
+      "members":{
+        "Public":{
+          "shape":"PublicDestinationEndpointNetworkingConfiguration",
+          "locationName":"public"
+        },
+        "Vpc":{
+          "shape":"VpcDestinationEndpointNetworkingConfiguration",
+          "locationName":"vpc"
+        }
+      },
+      "union":true
+    },
+    "StandardDestinationEndpointProtocolConfiguration":{
+      "type":"structure",
+      "members":{
+        "Rist":{
+          "shape":"RistStandardDestinationEndpointConfiguration",
+          "locationName":"rist"
+        },
+        "SrtListener":{
+          "shape":"SrtListenerStandardDestinationEndpointConfiguration",
+          "locationName":"srtListener"
+        },
+        "SrtCaller":{
+          "shape":"SrtCallerStandardDestinationEndpointConfiguration",
+          "locationName":"srtCaller"
+        },
+        "Rtp":{
+          "shape":"RtpStandardDestinationEndpointConfiguration",
+          "locationName":"rtp"
+        }
+      },
+      "union":true
+    },
     "StandardRouterInputConfiguration":{
       "type":"structure",
       "required":[
@@ -8276,6 +10472,107 @@
           "locationName":"destinationIpAddress"
         }
       }
+    },
+    "StandardSourceEndpointAssociatedResourceDetails":{
+      "type":"structure",
+      "members":{}
+    },
+    "StandardSourceEndpointConfiguration":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "SourceNetworkingConfiguration",
+        "ProtocolConfiguration"
+      ],
+      "members":{
+        "Name":{
+          "shape":"StandardSourceEndpointConfigurationNameString",
+          "locationName":"name"
+        },
+        "SourceNetworkingConfiguration":{
+          "shape":"StandardSourceEndpointNetworkingConfiguration",
+          "locationName":"sourceNetworkingConfiguration"
+        },
+        "ProtocolConfiguration":{
+          "shape":"StandardSourceEndpointProtocolConfiguration",
+          "locationName":"protocolConfiguration"
+        },
+        "SourceNetworkingType":{
+          "shape":"SourceEndpointNetworkingType",
+          "locationName":"sourceNetworkingType"
+        },
+        "Protocol":{
+          "shape":"SourceEndpointProtocol",
+          "locationName":"protocol"
+        }
+      }
+    },
+    "StandardSourceEndpointConfigurationNameString":{
+      "type":"string",
+      "max":164,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]([a-zA-Z0-9\\-_]*[a-zA-Z0-9])?"
+    },
+    "StandardSourceEndpointConnectionDetails":{
+      "type":"structure",
+      "members":{
+        "DestinationIpAddress":{
+          "shape":"String",
+          "locationName":"destinationIpAddress"
+        },
+        "DestinationIngestPort":{
+          "shape":"Integer",
+          "locationName":"destinationIngestPort"
+        },
+        "DestinationDecryptionType":{
+          "shape":"EndpointEncryptionType",
+          "locationName":"destinationDecryptionType"
+        },
+        "DestinationDecryptionConfiguration":{
+          "shape":"EndpointEncryptionConfiguration",
+          "locationName":"destinationDecryptionConfiguration"
+        },
+        "DestinationEndpointType":{
+          "shape":"DestinationEndpointType",
+          "locationName":"destinationEndpointType"
+        }
+      }
+    },
+    "StandardSourceEndpointNetworkingConfiguration":{
+      "type":"structure",
+      "members":{
+        "Public":{
+          "shape":"PublicSourceEndpointNetworkingConfiguration",
+          "locationName":"public"
+        },
+        "Vpc":{
+          "shape":"VpcSourceEndpointNetworkingConfiguration",
+          "locationName":"vpc"
+        }
+      },
+      "union":true
+    },
+    "StandardSourceEndpointProtocolConfiguration":{
+      "type":"structure",
+      "members":{
+        "Rist":{
+          "shape":"RistStandardSourceEndpointConfiguration",
+          "locationName":"rist"
+        },
+        "SrtListener":{
+          "shape":"SrtListenerStandardSourceEndpointConfiguration",
+          "locationName":"srtListener"
+        },
+        "SrtCaller":{
+          "shape":"SrtCallerStandardSourceEndpointConfiguration",
+          "locationName":"srtCaller"
+        },
+        "Rtp":{
+          "shape":"RtpStandardSourceEndpointConfiguration",
+          "locationName":"rtp"
+        }
+      },
+      "union":true
     },
     "StartFlowRequest":{
       "type":"structure",
@@ -9116,6 +11413,41 @@
         }
       }
     },
+    "UpdateDestinationEndpointRequest":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{
+          "shape":"DestinationEndpointArn",
+          "location":"uri",
+          "locationName":"Arn"
+        },
+        "Description":{
+          "shape":"UpdateDestinationEndpointRequestDescriptionString",
+          "locationName":"description"
+        },
+        "Configuration":{
+          "shape":"DestinationEndpointConfiguration",
+          "locationName":"configuration"
+        }
+      }
+    },
+    "UpdateDestinationEndpointRequestDescriptionString":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "pattern":"[ a-zA-Z_0-9\\-.',@:;\\(\\)\\[\\]*]+"
+    },
+    "UpdateDestinationEndpointResponse":{
+      "type":"structure",
+      "required":["DestinationEndpoint"],
+      "members":{
+        "DestinationEndpoint":{
+          "shape":"DestinationEndpoint",
+          "locationName":"destinationEndpoint"
+        }
+      }
+    },
     "UpdateEgressGatewayBridgeRequest":{
       "type":"structure",
       "members":{
@@ -9829,6 +12161,41 @@
         }
       }
     },
+    "UpdateSourceEndpointRequest":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{
+          "shape":"SourceEndpointArn",
+          "location":"uri",
+          "locationName":"Arn"
+        },
+        "Description":{
+          "shape":"UpdateSourceEndpointRequestDescriptionString",
+          "locationName":"description"
+        },
+        "Configuration":{
+          "shape":"SourceEndpointConfiguration",
+          "locationName":"configuration"
+        }
+      }
+    },
+    "UpdateSourceEndpointRequestDescriptionString":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "pattern":"[ a-zA-Z_0-9\\-.',@:;\\(\\)\\[\\]*]+"
+    },
+    "UpdateSourceEndpointResponse":{
+      "type":"structure",
+      "required":["SourceEndpoint"],
+      "members":{
+        "SourceEndpoint":{
+          "shape":"SourceEndpoint",
+          "locationName":"sourceEndpoint"
+        }
+      }
+    },
     "VideoColorimetry":{
       "type":"string",
       "enum":[
@@ -9896,6 +12263,29 @@
         "SMPTE428",
         "BT2100_HLG"
       ]
+    },
+    "VpcDestinationEndpointNetworkingConfiguration":{
+      "type":"structure",
+      "required":[
+        "SecurityGroupIds",
+        "SubnetId"
+      ],
+      "members":{
+        "SecurityGroupIds":{
+          "shape":"VpcDestinationEndpointNetworkingConfigurationSecurityGroupIdsList",
+          "locationName":"securityGroupIds"
+        },
+        "SubnetId":{
+          "shape":"String",
+          "locationName":"subnetId"
+        }
+      }
+    },
+    "VpcDestinationEndpointNetworkingConfigurationSecurityGroupIdsList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":5,
+      "min":1
     },
     "VpcInterface":{
       "type":"structure",
@@ -9996,6 +12386,29 @@
       }
     },
     "VpcRouterNetworkInterfaceConfigurationSecurityGroupIdsList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":5,
+      "min":1
+    },
+    "VpcSourceEndpointNetworkingConfiguration":{
+      "type":"structure",
+      "required":[
+        "SecurityGroupIds",
+        "SubnetId"
+      ],
+      "members":{
+        "SecurityGroupIds":{
+          "shape":"VpcSourceEndpointNetworkingConfigurationSecurityGroupIdsList",
+          "locationName":"securityGroupIds"
+        },
+        "SubnetId":{
+          "shape":"String",
+          "locationName":"subnetId"
+        }
+      }
+    },
+    "VpcSourceEndpointNetworkingConfigurationSecurityGroupIdsList":{
       "type":"list",
       "member":{"shape":"String"},
       "max":5,

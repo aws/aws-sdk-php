@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Fixed an issue in NonSeekableStreamDecodingEventStreamIterator where a message checksum returned across multiple partial reads caused a checksum mismatch.
+* `Aws\Api` - Caches compiled AWS Query and EC2 Query serialization plans on model shapes, reducing per-request parameter building overhead. Serialized parameters are unchanged, and plans are invalidated when a shape is mutated. The internal QueryParamBuilder and Ec2ParamBuilder no longer expose their protected format_*, queryName() and isFlat() methods.
+* `Aws\KMS` - This release adds support for ML-KEM (Module-Lattice-Based Key-Encapsulation Mechanism) keys in AWS KMS. ML-KEM, as specified in NIST FIPS 203, is a post-quantum key encapsulation mechanism that can be used to establish a shared secret between two parties.
+* `Aws\SageMaker` - Amazon SageMaker HyperPod adds the MultiNodeTrainingValidation deep health check for clusters orchestrated by Amazon EKS. It validates NVIDIA GPU instances by running a short multi-node training workload and flags instances that produce numerical errors or fall behind expected training time.
+* `Aws\IVS` - The release adds failover slate configurations, which show viewers a slate during temporary broadcaster network disruptions to reduce viewer drop-off and refresh storms.
+* `Aws\Odb` - Adds support for Exascale storage with Oracle Exadata Database Service on Dedicated Infrastructure
+* `Aws\Signin` - Adds support for the OAuth 2.0 Token Exchange grant (RFC 8693), enabling applications to exchange identity provider issued JSON Web Tokens (JWTs) for short-lived OAuth access tokens to access supported AWS services without managing separate AWS credentials.
+* `Aws\MediaConnect` - This release adds support for managing and sharing endpoint across accounts in AWS Elemental MediaConnect. You can now register endpoints to represent external or service-managed sources and destinations, and share them across AWS accounts.
+* `Aws\ECR` - Add support for ECR replication backfill
+* `Aws\TaxSettings` - Add Mexico Additional Info changes
+* `Aws\Billing` - Adds support for managing private pricing contracts and contractual investments including listing and associating contracts, retrieving contractual investments and their summaries, and creating, listing, and canceling contractual investment attestations
+* `Aws\MediaLive` - AWS Elemental MediaLive now lets you control whether explicit weighted prediction is applied to H.264 outputs. It also introduces Perceptual Filter, a new noise reduction filter designed to improve video quality by increasing VMAF scores, now with Auto, None, and strength options.
+* `Aws\SSOAdmin` - Added support for the RegionScope parameter on ListInstances, allowing you to list IAM Identity Center instances in the current Region or across all Regions.
+* `Aws\EKS` - This release adds support for EKS management of Gateway API CRDs (Custom Resource Definitions)
+* `Aws\MarketplaceCatalog` - This release adds support for the SubsidiaryAuthorization entity type in the ListEntities operation, including entity-type filters with partial name search, sort options, and a summary returned for each subsidiary authorization.
+* `Aws\Lightsail` - This release adds Web Application Firewall (WAF) support for Lightsail distribution.
+* `Aws\AppStream` - Add Windows 11 to PlatformType enum
+* `Aws\Deadline` - fix the sdk documenation issue only
+* `Aws\Connect` - Amazon Connect now automatically saves agents' in-progress email drafts preserving the message, recipients, and subject during browser or network interruptions so agents can return to the mail and continue instead of starting over.
+
 ## 3.402.0 - 2026-10-22
 
 * `Aws\` - Updates the minimum required PHP version to 8.2, following the disclosure of CVE-2026-109618 and CVE-2026-109619.
