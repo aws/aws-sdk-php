@@ -20,7 +20,7 @@ class LogFileIterator extends \IteratorIterator
 {
     // For internal use
     const DEFAULT_TRAIL_NAME = 'Default';
-    const PREFIX_TEMPLATE = 'prefix/AWSLogs/account/CloudTrail/region/date/';
+    const PREFIX_TEMPLATE = 'prefix/AWSLogs/organization/account/CloudTrail/region/date/';
     const PREFIX_WILDCARD = '*';
 
     // Option names used internally or externally
@@ -30,6 +30,7 @@ class LogFileIterator extends \IteratorIterator
     const END_DATE = 'end_date';
     const ACCOUNT_ID = 'account_id';
     const LOG_REGION = 'log_region';
+    const ORGANIZATION_ID = 'organization_id';
 
     /** @var S3Client S3 client used to perform ListObjects operations */
     private $s3Client;
@@ -163,6 +164,9 @@ class LogFileIterator extends \IteratorIterator
             'prefix' => isset($options[self::KEY_PREFIX])
                     ? $options[self::KEY_PREFIX]
                     : null,
+            'organization' => isset($options[self::ORGANIZATION_ID])
+                    ? $options[self::ORGANIZATION_ID]
+                    : null,                    
             'account' => isset($options[self::ACCOUNT_ID])
                     ? $options[self::ACCOUNT_ID]
                     : self::PREFIX_WILDCARD,
@@ -175,6 +179,8 @@ class LogFileIterator extends \IteratorIterator
         // Determine the longest key prefix that can be used to retrieve all
         // of the relevant log files.
         $candidatePrefix = ltrim(strtr(self::PREFIX_TEMPLATE, $parts), '/');
+        // Normalize the key prefix to remove double slashes
+        $candidatePrefix = preg_replace('#/{2,}#', '/', $candidatePrefix);
         $logKeyPrefix = $candidatePrefix;
         $index = strpos($candidatePrefix, self::PREFIX_WILDCARD);
 
