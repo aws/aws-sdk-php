@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.402.1 - 2026-10-26
 
 * `Aws\` - Fixed an issue in NonSeekableStreamDecodingEventStreamIterator where a message checksum returned across multiple partial reads caused a checksum mismatch.
 * `Aws\Api` - Caches compiled AWS Query and EC2 Query serialization plans on model shapes, reducing per-request parameter building overhead. Serialized parameters are unchanged, and plans are invalidated when a shape is mutated. The internal QueryParamBuilder and Ec2ParamBuilder no longer expose their protected format_*, queryName() and isFlat() methods.
