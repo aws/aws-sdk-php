@@ -400,8 +400,9 @@ function is_valid_hostlabel($label)
 }
 
 /**
- * Ignores '#' full line comments, which parse_ini_file no longer does
- * in PHP 7+.
+ * Parses INI files while supporting additional equals signs in values.
+ * Ignores '#' full line comments, which parse_ini_file no longer does in
+ * PHP 7+.
  *
  * @param $filename
  * @param bool $process_sections
@@ -413,11 +414,178 @@ function parse_ini_file(
     $process_sections = false,
     $scanner_mode = INI_SCANNER_NORMAL)
 {
-    return parse_ini_string(
-        preg_replace('/^#.*\\n/m', "", file_get_contents($filename)),
+    $contents = preg_replace(
+        '/^#.*\\n/m',
+        "",
+        file_get_contents($filename)
+    );
+    if ($scanner_mode === INI_SCANNER_RAW) {
+        return parse_ini_string(
+            $contents,
+            $process_sections,
+            $scanner_mode
+        );
+    }
+
+    $data = @parse_ini_string(
+        $contents,
         $process_sections,
         $scanner_mode
     );
+    if ($data !== false) {
+        return $data;
+    }
+
+    // NORMAL and TYPED reject additional unquoted equals signs. Parse those
+    // values as raw strings while retaining the requested mode for other keys.
+    $protectedValues = [];
+    $tokenPrefix = '__AWS_SDK_PHP_INI_VALUE_';
+    while (strpos($contents, $tokenPrefix) !== false) {
+        $tokenPrefix .= '_';
+    }
+
+    $findAssignment = static function (string $line): ?array {
+        $length = strlen($line);
+        $offset = strspn($line, " \t");
+        if ($offset === $length
+            || $line[$offset] === ';'
+            || $line[$offset] === '#'
+            || $line[$offset] === '['
+        ) {
+            return null;
+        }
+
+        $quote = null;
+        $offsetDepth = 0;
+        for ($i = $offset; $i < $length; $i++) {
+            if ($quote === '"' && $line[$i] === '\\') {
+                $i++;
+            } elseif ($line[$i] === $quote) {
+                $quote = null;
+            } elseif ($quote === null) {
+                if ($line[$i] === '"' || $line[$i] === "'") {
+                    $quote = $line[$i];
+                } elseif ($line[$i] === '[') {
+                    $offsetDepth++;
+                } elseif ($line[$i] === ']' && $offsetDepth > 0) {
+                    $offsetDepth--;
+                } elseif ($line[$i] === '=' && $offsetDepth === 0) {
+                    return [
+                        substr($line, 0, $i + 1),
+                        substr($line, $i + 1),
+                    ];
+                }
+            }
+        }
+
+        return null;
+    };
+    $updateQuoteState = static function (
+        string $value,
+        ?string $quote = null
+    ): ?string {
+        $length = strlen($value);
+        for ($i = 0; $i < $length; $i++) {
+            if ($quote === '"' && $value[$i] === '\\') {
+                $i++;
+            } elseif ($value[$i] === $quote) {
+                $quote = null;
+            } elseif ($quote === null) {
+                if ($value[$i] === ';') {
+                    break;
+                }
+                if ($value[$i] === '"' || $value[$i] === "'") {
+                    $quote = $value[$i];
+                }
+            }
+        }
+
+        return $quote;
+    };
+    $lines = preg_split(
+        '/(\r\n|\n|\r)/',
+        $contents,
+        -1,
+        PREG_SPLIT_DELIM_CAPTURE
+    );
+    $multilineQuote = null;
+    foreach ($lines as $index => &$line) {
+        if ($index % 2 !== 0) {
+            continue;
+        }
+        if ($multilineQuote !== null) {
+            $multilineQuote = $updateQuoteState($line, $multilineQuote);
+            continue;
+        }
+        $assignment = $findAssignment($line);
+        if ($assignment === null) {
+            continue;
+        }
+        [$assignmentPrefix, $assignmentValue] = $assignment;
+
+        $parsedValue = @parse_ini_string(
+            'value=' . $assignmentValue,
+            false,
+            $scanner_mode
+        );
+        if ($parsedValue !== false) {
+            continue;
+        }
+
+        $hasAdditionalEquals = strpos($assignmentValue, '=') !== false;
+        if (!$hasAdditionalEquals) {
+            $multilineQuote = $updateQuoteState($assignmentValue);
+            continue;
+        }
+
+        $trimmedValue = ltrim($assignmentValue);
+        if ($trimmedValue !== ''
+            && ($trimmedValue[0] === '"' || $trimmedValue[0] === "'")
+        ) {
+            $multilineQuote = $updateQuoteState($assignmentValue);
+            if ($multilineQuote !== null) {
+                continue;
+            }
+        }
+
+        $parsed = @parse_ini_string(
+            'value=' . $assignmentValue,
+            false,
+            INI_SCANNER_RAW
+        );
+        if ($parsed === false
+            || strpos($parsed['value'], '=') === false
+        ) {
+            continue;
+        }
+
+        $token = $tokenPrefix . count($protectedValues) . '__';
+        $protectedValues[$token] = $parsed['value'];
+        $line = $assignmentPrefix . '"' . $token . '"';
+    }
+    unset($line);
+
+    $data = parse_ini_string(
+        implode('', $lines),
+        $process_sections,
+        $scanner_mode
+    );
+    if ($data === false || empty($protectedValues)) {
+        return $data;
+    }
+
+    array_walk_recursive(
+        $data,
+        function (mixed &$value) use ($protectedValues): void {
+            if (is_string($value)
+                && array_key_exists($value, $protectedValues)
+            ) {
+                $value = $protectedValues[$value];
+            }
+        }
+    );
+
+    return $data;
 }
 
 /**
