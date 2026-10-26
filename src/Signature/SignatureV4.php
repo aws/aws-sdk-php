@@ -387,14 +387,58 @@ class SignatureV4 implements SignatureInterface
         if ($dateValue instanceof \DateTimeInterface) {
             $timestamp = $dateValue->getTimestamp();
         } elseif (!is_numeric($dateValue)) {
-            $timestamp = strtotime($dateValue,
-                $relativeTimeBase === null ? time() : $relativeTimeBase
-            );
+            $relativeTimeBase = $relativeTimeBase === null ? time() : $relativeTimeBase;
+            $timestamp = $this->addElapsedTime($dateValue, $relativeTimeBase)
+                ?? strtotime($dateValue, $relativeTimeBase);
         } else {
             $timestamp = $dateValue;
         }
 
         return $timestamp;
+    }
+
+    /**
+     * Adds a relative time of only hours, minutes, seconds and smaller units
+     * (for example "+15 minutes") as elapsed time, in UTC.
+     *
+     * strtotime() adds these units as wall-clock time in the default
+     * timezone. When the result falls into the repeated hour of a daylight
+     * saving time change, it is one hour too late, so a "+15 minutes"
+     * presigned URL gets X-Amz-Expires=4500.
+     *
+     * Returns null for all other values, which keep the strtotime() result.
+     */
+    private function addElapsedTime(string $dateValue, int $relativeTimeBase): ?int
+    {
+        $parsed = date_parse($dateValue);
+        if ($parsed['error_count'] > 0
+            || $parsed['warning_count'] > 0
+            || !isset($parsed['relative'])
+            || isset($parsed['zone_type'])
+        ) {
+            return null;
+        }
+
+        foreach (['year', 'month', 'day', 'hour', 'minute', 'second'] as $field) {
+            if ($parsed[$field] !== false) {
+                return null;
+            }
+        }
+
+        $relative = $parsed['relative'];
+        $timeOnly = ['year', 'month', 'day', 'hour', 'minute', 'second', 'microsecond'];
+        if ($relative['year'] !== 0
+            || $relative['month'] !== 0
+            || $relative['day'] !== 0
+            || array_diff(array_keys($relative), $timeOnly) !== []
+        ) {
+            return null;
+        }
+
+        // A "@timestamp" date is in UTC, which has no daylight saving time.
+        return (new \DateTimeImmutable('@' . $relativeTimeBase))
+            ->modify($dateValue)
+            ->getTimestamp();
     }
 
     private function convertExpires($expiresTimestamp, $startTimestamp)

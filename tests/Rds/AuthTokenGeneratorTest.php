@@ -8,6 +8,8 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
+require_once __DIR__ . '/../Signature/sig_hack.php';
+
 #[CoversClass(AuthTokenGenerator::class)]
 class AuthTokenGeneratorTest extends TestCase
 {
@@ -28,6 +30,29 @@ class AuthTokenGeneratorTest extends TestCase
         $this->assertStringContainsString('X-Amz-SignedHeaders=host', $token);
         $this->assertStringContainsString('DBUser=myDBUser', $token);
         $this->assertStringContainsString('Action=connect', $token);
+    }
+
+    public function testTokenIsValidFor15MinutesDuringDstChange()
+    {
+        // 2026-10-25 01:45 CEST: "+15 minutes" falls into the repeated hour.
+        $defaultTimezone = date_default_timezone_get();
+        date_default_timezone_set('Europe/Berlin');
+        $_SERVER['aws_time'] = strtotime('2026-10-24T23:45:00Z');
+        $_SERVER['formatAwsTime'] = true;
+
+        try {
+            $token = (new AuthTokenGenerator(new Credentials('foo', 'bar')))->createToken(
+                'prod-instance.us-east-1.rds.amazonaws.com:3306',
+                'us-west-2',
+                'myDBUser'
+            );
+        } finally {
+            date_default_timezone_set($defaultTimezone);
+            unset($_SERVER['aws_time'], $_SERVER['formatAwsTime']);
+        }
+
+        $this->assertStringContainsString('X-Amz-Date=20261024T234500Z', $token);
+        $this->assertStringContainsString('X-Amz-Expires=900', $token);
     }
 
     public function testCanCreateAuthTokenWthCredentialProvider()
