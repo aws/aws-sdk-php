@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.402.2 - 2026-10-27
 
 * `Aws\Credentials` - Parse shared configuration values without rejecting unquoted equals signs in credential_process commands, and resolve the canonical default config profile in the default credential chain.
 * `Aws\EC2` - EC2 AMIs can now show vulnerability data and be targeted directly for scanning.
