@@ -6363,6 +6363,12 @@
         "rdp"
       ]
     },
+    "InstanceAttributeUpdates":{
+      "type":"structure",
+      "members":{
+        "bundleId":{"shape":"NonEmptyString"}
+      }
+    },
     "InstanceEntry":{
       "type":"structure",
       "required":[
@@ -8056,7 +8062,8 @@
       "type":"structure",
       "required":["instanceName"],
       "members":{
-        "instanceName":{"shape":"ResourceName"}
+        "instanceName":{"shape":"ResourceName"},
+        "attributeUpdates":{"shape":"InstanceAttributeUpdates"}
       }
     },
     "StartInstanceResult":{

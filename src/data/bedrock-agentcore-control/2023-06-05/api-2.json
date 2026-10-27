@@ -619,6 +619,7 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -2561,6 +2562,25 @@
       ],
       "idempotent":true
     },
+    "ResetTokenVaultKeyMaterial":{
+      "name":"ResetTokenVaultKeyMaterial",
+      "http":{
+        "method":"POST",
+        "requestUri":"/identities/reset-token-vault-key-material",
+        "responseCode":200
+      },
+      "input":{"shape":"ResetTokenVaultKeyMaterialRequest"},
+      "output":{"shape":"ResetTokenVaultKeyMaterialResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "RotatePaymentConnectorCredentials":{
       "name":"RotatePaymentConnectorCredentials",
       "http":{
@@ -2594,6 +2614,7 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -3219,6 +3240,7 @@
       "errors":[
         {"shape":"UnauthorizedException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
@@ -12996,12 +13018,24 @@
       },
       "union":true
     },
+    "OnBehalfOfAuthenticationConfig":{
+      "type":"structure",
+      "required":["clientAuthenticationMethod"],
+      "members":{
+        "clientAuthenticationMethod":{"shape":"OnBehalfOfClientAuthenticationMethod"}
+      }
+    },
+    "OnBehalfOfClientAuthenticationMethod":{
+      "type":"string",
+      "enum":["NO_CLIENT"]
+    },
     "OnBehalfOfTokenExchangeConfigType":{
       "type":"structure",
       "required":["grantType"],
       "members":{
         "grantType":{"shape":"OnBehalfOfTokenExchangeGrantTypeType"},
-        "tokenExchangeGrantTypeConfig":{"shape":"TokenExchangeGrantTypeConfigType"}
+        "tokenExchangeGrantTypeConfig":{"shape":"TokenExchangeGrantTypeConfigType"},
+        "onBehalfOfAuthenticationConfig":{"shape":"OnBehalfOfAuthenticationConfig"}
       }
     },
     "OnBehalfOfTokenExchangeGrantTypeType":{
@@ -14084,6 +14118,26 @@
     "RequiredProperties":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "ResetTokenVaultKeyMaterialRequest":{
+      "type":"structure",
+      "required":["tokenVaultId"],
+      "members":{
+        "tokenVaultId":{"shape":"TokenVaultIdType"}
+      }
+    },
+    "ResetTokenVaultKeyMaterialResponse":{
+      "type":"structure",
+      "required":[
+        "tokenVaultId",
+        "kmsConfiguration",
+        "lastModifiedDate"
+      ],
+      "members":{
+        "tokenVaultId":{"shape":"TokenVaultIdType"},
+        "kmsConfiguration":{"shape":"KmsConfiguration"},
+        "lastModifiedDate":{"shape":"Timestamp"}
+      }
     },
     "Resource":{
       "type":"structure",

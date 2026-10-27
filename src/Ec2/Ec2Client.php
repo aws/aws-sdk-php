@@ -1268,6 +1268,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise getImageAncestryAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getImageBlockPublicAccessState(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise getImageBlockPublicAccessStateAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result getImageFindings(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise getImageFindingsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getInstanceMetadataDefaults(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise getInstanceMetadataDefaultsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getInstanceTpmEkPub(array $args = []) (supported in versions 2016-11-15)

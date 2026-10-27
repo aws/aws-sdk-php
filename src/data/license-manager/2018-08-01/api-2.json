@@ -1143,7 +1143,8 @@
         "CheckInLicense",
         "ExtendConsumptionLicense",
         "ListPurchasedLicenses",
-        "CreateToken"
+        "CreateToken",
+        "ListReceivedLicenses"
       ]
     },
     "AllowedOperationList":{
@@ -1341,7 +1342,9 @@
         "Principals":{"shape":"PrincipalArnList"},
         "HomeRegion":{"shape":"String"},
         "AllowedOperations":{"shape":"AllowedOperationList"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "GrantType":{"shape":"GrantType"},
+        "Options":{"shape":"Options"}
       }
     },
     "CreateGrantResponse":{
@@ -2078,7 +2081,8 @@
         "StatusReason":{"shape":"StatusReasonMessage"},
         "Version":{"shape":"String"},
         "GrantedOperations":{"shape":"AllowedOperationList"},
-        "Options":{"shape":"Options"}
+        "Options":{"shape":"Options"},
+        "GrantType":{"shape":"GrantType"}
       }
     },
     "GrantList":{
@@ -2097,6 +2101,13 @@
         "PENDING_DELETE",
         "DISABLED",
         "WORKFLOW_COMPLETED"
+      ]
+    },
+    "GrantType":{
+      "type":"string",
+      "enum":[
+        "BuyerGrant",
+        "DelegateGrant"
       ]
     },
     "GrantedLicense":{
@@ -2898,7 +2909,8 @@
     "Options":{
       "type":"structure",
       "members":{
-        "ActivationOverrideBehavior":{"shape":"ActivationOverrideBehavior"}
+        "ActivationOverrideBehavior":{"shape":"ActivationOverrideBehavior"},
+        "DesiredStatus":{"shape":"GrantStatus"}
       }
     },
     "OrRuleStatement":{
@@ -2994,7 +3006,8 @@
       "members":{
         "ReceivedStatus":{"shape":"ReceivedStatus"},
         "ReceivedStatusReason":{"shape":"StatusReasonMessage"},
-        "AllowedOperations":{"shape":"AllowedOperationList"}
+        "AllowedOperations":{"shape":"AllowedOperationList"},
+        "GrantType":{"shape":"GrantType"}
       }
     },
     "ReceivedStatus":{

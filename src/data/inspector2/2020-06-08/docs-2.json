@@ -43,6 +43,7 @@
     "GetEncryptionKey": "<p>Gets an encryption key.</p>",
     "GetFindingsReportStatus": "<p>Gets the status of a findings report.</p>",
     "GetMember": "<p>Gets member information for your organization.</p>",
+    "GetOnDemandScanStatus": "<p>Retrieves the status of a specific on-demand scan for a resource.</p>",
     "GetSbomExport": "<p>Gets details of a software bill of materials (SBOM) report.</p>",
     "ListAccountPermissions": "<p> Lists the permissions an account has to configure Amazon Inspector. If the account is a member account or standalone account with resources managed by an Organizations policy, the operation returns fewer permissions. </p>",
     "ListCisScanConfigurations": "<p>Lists CIS scan configurations.</p>",
@@ -61,6 +62,7 @@
     "ListFindingAggregations": "<p>Lists aggregated finding data for your environment based on specific criteria.</p>",
     "ListFindings": "<p>Lists findings for your environment.</p>",
     "ListMembers": "<p>List members associated with the Amazon Inspector delegated administrator for your organization.</p>",
+    "ListOnDemandScans": "<p>Lists the on-demand scans for a resource.</p>",
     "ListTagsForResource": "<p>Lists all tags attached to a given resource.</p>",
     "ListUsageTotals": "<p>Lists the Amazon Inspector usage totals over the last 30 days.</p>",
     "ResetEncryptionKey": "<p>Resets an encryption key. After the key is reset your resources will be encrypted by an Amazon Web Services owned key.</p>",
@@ -69,6 +71,7 @@
     "SendCisSessionTelemetry": "<p> Sends a CIS session telemetry. This API is used by the Amazon Inspector SSM plugin to communicate with the Amazon Inspector service. The Amazon Inspector SSM plugin calls this API to start a CIS scan session for the scan ID supplied by the service. </p>",
     "StartCisSession": "<p> Starts a CIS session. This API is used by the Amazon Inspector SSM plugin to communicate with the Amazon Inspector service. The Amazon Inspector SSM plugin calls this API to start a CIS scan session for the scan ID supplied by the service. </p>",
     "StartCodeSecurityScan": "<p>Initiates a code security scan on a specified repository.</p>",
+    "StartOnDemandScan": "<p>Starts an on-demand scan of the specified resource, such as an Amazon Machine Image (AMI).</p>",
     "StopCisSession": "<p> Stops a CIS session. This API is used by the Amazon Inspector SSM plugin to communicate with the Amazon Inspector service. The Amazon Inspector SSM plugin calls this API to stop a CIS scan session for the scan ID supplied by the service. </p>",
     "TagResource": "<p>Adds tags to a resource.</p>",
     "UntagResource": "<p>Removes tags from a resource.</p>",
@@ -125,6 +128,7 @@
         "CoveredResource$accountId": "<p>The Amazon Web Services account ID of the covered resource.</p>",
         "DelegatedAdmin$accountId": "<p>The Amazon Web Services account ID of the Amazon Inspector delegated administrator for your organization.</p>",
         "DelegatedAdminAccount$accountId": "<p>The Amazon Web Services account ID of the Amazon Inspector delegated administrator for your organization.</p>",
+        "Destination$expectedBucketOwner": "<p>The Amazon Web Services account ID of the expected owner of the Amazon S3 bucket. If the actual bucket owner does not match, the export request fails.</p>",
         "DisableDelegatedAdminAccountRequest$delegatedAdminAccountId": "<p>The Amazon Web Services account ID of the current Amazon Inspector delegated administrator.</p>",
         "DisableDelegatedAdminAccountResponse$delegatedAdminAccountId": "<p>The Amazon Web Services account ID of the successfully disabled delegated administrator.</p>",
         "DisassociateMemberRequest$accountId": "<p>The Amazon Web Services account ID of the member account to disassociate.</p>",
@@ -252,6 +256,24 @@
         "AggregationResponse$amiAggregation": "<p>An object that contains details about an aggregation response based on Amazon Machine Images (AMIs).</p>"
       }
     },
+    "AmiConfiguration": {
+      "base": "<p>The configuration that controls how Amazon Machine Images (AMIs) are scanned for an account.</p>",
+      "refs": {
+        "UpdateConfigurationRequest$amiConfiguration": "<p>The Amazon Machine Image (AMI) scan configuration to apply to the account.</p>"
+      }
+    },
+    "AmiConfigurationState": {
+      "base": "<p>The current state of the Amazon Machine Image (AMI) scan configuration for an account.</p>",
+      "refs": {
+        "GetConfigurationResponse$amiConfiguration": "<p>The current state of the Amazon Machine Image (AMI) scan configuration for the account.</p>"
+      }
+    },
+    "AmiConfigurationStatus": {
+      "base": null,
+      "refs": {
+        "AmiConfigurationState$status": "<p>The status of the AMI scan configuration.</p>"
+      }
+    },
     "AmiId": {
       "base": null,
       "refs": {
@@ -260,16 +282,63 @@
         "Ec2Metadata$amiId": "<p>The ID of the Amazon Machine Image (AMI) used to launch the instance.</p>"
       }
     },
+    "AmiScanDuration": {
+      "base": null,
+      "refs": {
+        "AmiConfiguration$lastLaunchedWithin": "<p>Restricts scanning to AMIs that were last launched within the specified duration.</p>",
+        "AmiConfiguration$createdWithin": "<p>Restricts scanning to AMIs that were created within the specified duration.</p>",
+        "AmiConfigurationState$lastLaunchedWithin": "<p>Restricts scanning to AMIs that were last launched within the specified duration.</p>",
+        "AmiConfigurationState$createdWithin": "<p>Restricts scanning to AMIs that were created within the specified duration.</p>"
+      }
+    },
+    "AmiScanMode": {
+      "base": null,
+      "refs": {
+        "AmiScanModeConfiguration$scanMode": "<p>The scan mode that determines whether all AMIs are scanned or only those matching the specified tags.</p>"
+      }
+    },
+    "AmiScanModeConfiguration": {
+      "base": "<p>The scan mode configuration that determines which Amazon Machine Images (AMIs) are scanned.</p>",
+      "refs": {
+        "AmiConfiguration$scanModeConfiguration": "<p>The scan mode configuration that determines which AMIs are scanned.</p>",
+        "AmiConfigurationState$scanModeConfiguration": "<p>The scan mode configuration that determines which AMIs are scanned.</p>"
+      }
+    },
     "AmiSortBy": {
       "base": null,
       "refs": {
         "AmiAggregation$sortBy": "<p>The value to sort results by.</p>"
       }
     },
+    "AmiTagFilter": {
+      "base": "<p>A filter that matches Amazon Machine Images (AMIs) by tag key and, optionally, tag value.</p>",
+      "refs": {
+        "AmiTagFilterList$member": null
+      }
+    },
+    "AmiTagFilterList": {
+      "base": null,
+      "refs": {
+        "AmiScanModeConfiguration$tags": "<p>The tag filters used to select which AMIs are scanned when using targeted scanning.</p>"
+      }
+    },
+    "AmiTagKey": {
+      "base": null,
+      "refs": {
+        "AmiTagFilter$key": "<p>The tag key to match against an AMI's tags.</p>"
+      }
+    },
+    "AmiTagValue": {
+      "base": null,
+      "refs": {
+        "AmiTagFilter$value": "<p>The tag value to match against an AMI's tags. If omitted, the filter matches on the tag key alone.</p>"
+      }
+    },
     "Architecture": {
       "base": null,
       "refs": {
-        "ArchitectureList$member": null
+        "ArchitectureList$member": null,
+        "MachineImageDetails$architecture": "<p>CPU architecture (x86_64/arm64)</p>"
       }
     },
     "ArchitectureList": {
@@ -599,17 +668,21 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "AmiScanModeConfiguration$excludeCopiedAmis": "<p>Whether to exclude AMIs that are copies of other AMIs from scanning.</p>",
+        "AmiScanModeConfiguration$excludeBackupDlmAmis": "<p>Whether to exclude AMIs created by Amazon Data Lifecycle Manager (DLM) backups from scanning.</p>",
         "AutoEnable$ec2": "<p>Represents whether Amazon EC2 scans are automatically enabled for new members of your Amazon Inspector organization.</p>",
         "AutoEnable$ecr": "<p>Represents whether Amazon ECR scans are automatically enabled for new members of your Amazon Inspector organization.</p>",
         "AutoEnable$lambda": "<p>Represents whether Amazon Web Services Lambda standard scans are automatically enabled for new members of your Amazon Inspector organization. </p>",
         "AutoEnable$lambdaCode": "<p>Represents whether Lambda code scans are automatically enabled for new members of your Amazon Inspector organization. </p>",
         "AutoEnable$codeRepository": "<p>Represents whether code repository scans are automatically enabled for new members of your Amazon Inspector organization.</p>",
+        "AutoEnable$ami": "<p>Represents whether Amazon Machine Image (AMI) scans are automatically enabled for new members of your Amazon Inspector organization.</p>",
         "AzureProviderDetailCreate$autoInstallVMScanner": "<p>Specifies whether to automatically install the VM scanner on connected Azure resources. Defaults to <code>true</code>.</p>",
         "AzureProviderDetailUpdate$autoInstallVMScanner": "<p>Specifies whether to automatically install the VM scanner on connected Azure resources.</p>",
         "Connector$autoInstallVMScanner": "<p>Specifies whether the VM scanner is automatically installed on connected resources.</p>",
         "DescribeOrganizationConfigurationResponse$maxAccountLimitReached": "<p>Represents whether your organization has reached the maximum Amazon Web Services account limit for Amazon Inspector.</p>",
         "Ec2Configuration$activateVMScanner": "<p>Whether to activate Amazon Inspector VM scanner for Amazon EC2 scanning.</p>",
         "ListMembersRequest$onlyAssociated": "<p>Specifies whether to list only currently associated members if <code>True</code> or to list all members within the organization if <code>False</code>.</p>",
+        "MachineImageDetails$isPublic": "<p>Whether the image is publicly shared</p>",
         "MemberAccountEc2DeepInspectionStatus$activateDeepInspection": "<p>Whether Amazon Inspector deep inspection is active in the account. If <code>TRUE</code> Amazon Inspector deep inspection is active, if <code>FALSE</code> it is not active.</p>",
         "UpdateEc2DeepInspectionConfigurationRequest$activateDeepInspection": "<p>Specify <code>TRUE</code> to activate Amazon Inspector deep inspection in your account, or <code>FALSE</code> to deactivate. Member accounts in an organization cannot deactivate deep inspection, instead the delegated administrator for the organization can deactivate a member account using <a href=\"https://docs.aws.amazon.com/inspector/v2/APIReference/API_BatchUpdateMemberEc2DeepInspectionStatus.html\">BatchUpdateMemberEc2DeepInspectionStatus</a>.</p>",
         "VMScannerState$activated": "<p>Whether the VM scanner is activated.</p>"
@@ -1736,6 +1809,7 @@
       "refs": {
         "CoverageFilterCriteria$ec2InstanceTags": "<p>The Amazon EC2 instance tags to filter on.</p>",
         "CoverageFilterCriteria$lambdaFunctionTags": "<p>Returns coverage statistics for Amazon Web Services Lambda functions filtered by tag.</p>",
+        "CoverageFilterCriteria$machineImageTags": "<p>The machine image tags to filter coverage results by.</p>",
         "CoverageFilterCriteria$cloudVmInstanceTags": "<p>The cloud VM instance tags to filter coverage results by.</p>",
         "CoverageFilterCriteria$cloudServerlessFunctionTags": "<p>The cloud serverless function tags to filter coverage results by.</p>"
       }
@@ -2011,6 +2085,7 @@
     "DateTimeTimestamp": {
       "base": null,
       "refs": {
+        "AmiConfigurationState$updatedAt": "<p>The date and time when the AMI scan configuration was last updated.</p>",
         "AwsEc2InstanceDetails$launchedAt": "<p>The date and time the Amazon EC2 instance was launched at.</p>",
         "AwsEcrContainerAggregationResponse$lastInUseAt": "<p>The last time an Amazon ECR image was used in an Amazon ECS task or Amazon EKS pod.</p>",
         "AwsEcrContainerImageDetails$pushedAt": "<p>The date and time the Amazon ECR container image was pushed.</p>",
@@ -2034,6 +2109,7 @@
         "Image$pushedAt": "<p>The date and time the container image was pushed.</p>",
         "Image$lastInUseAt": "<p>The last time the container image was in use.</p>",
         "LambdaFunctionAggregationResponse$lastModifiedAt": "<p>The date that the Amazon Web Services Lambda function included in the aggregation results was last changed.</p>",
+        "MachineImageDetails$creationDate": "<p>When the image was created</p>",
         "Member$updatedAt": "<p>A timestamp showing when the status of this member was last updated.</p>",
         "PackageVulnerabilityDetails$vendorCreatedAt": "<p>The date and time that this vulnerability was first added to the vendor's database.</p>",
         "PackageVulnerabilityDetails$vendorUpdatedAt": "<p>The date and time the vendor last updated this vulnerability in their database.</p>",
@@ -2879,6 +2955,14 @@
       "base": null,
       "refs": {}
     },
+    "GetOnDemandScanStatusRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOnDemandScanStatusResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetSbomExportRequest": {
       "base": null,
       "refs": {}
@@ -2965,7 +3049,8 @@
       "base": "<p>The inheritance behavior for a scan-type configuration. Used with <code>UpdateConfigurationInheritance</code> to reset a member account's configuration to inherit from the delegated administrator. The only valid value is <code>INHERIT_FROM_ADMIN</code>, which resets the member account's configuration so that it inherits scan settings from the delegated administrator.</p>",
       "refs": {
         "UpdateConfigurationInheritance$ec2Configuration": "<p>The inheritance mode for Amazon EC2 scan configuration. Set to <code>INHERIT_FROM_ADMIN</code> to reset the member account's Amazon EC2 scan configuration to inherit from the delegated administrator. If omitted, the member account's existing Amazon EC2 scan configuration is not changed.</p>",
-        "UpdateConfigurationInheritance$ecrConfiguration": "<p>The inheritance mode for Amazon ECR scan configuration. Set to <code>INHERIT_FROM_ADMIN</code> to reset the member account's Amazon ECR scan configuration to inherit from the delegated administrator. If omitted, the member account's existing Amazon ECR scan configuration is not changed.</p>"
+        "UpdateConfigurationInheritance$ecrConfiguration": "<p>The inheritance mode for Amazon ECR scan configuration. Set to <code>INHERIT_FROM_ADMIN</code> to reset the member account's Amazon ECR scan configuration to inherit from the delegated administrator. If omitted, the member account's existing Amazon ECR scan configuration is not changed.</p>",
+        "UpdateConfigurationInheritance$amiConfiguration": null
       }
     },
     "InspectorScoreDetails": {
@@ -3381,6 +3466,20 @@
       "base": null,
       "refs": {}
     },
+    "ListOnDemandScansRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOnDemandScansRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListOnDemandScansRequest$maxResults": "<p>The maximum number of results to return in a single page of the response.</p>"
+      }
+    },
+    "ListOnDemandScansResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {}
@@ -3446,6 +3545,36 @@
         "VmInstanceAggregationResponse$networkFindings": "<p>The number of network findings for the VM instance. This field applies only to Amazon Web Services resources.</p>",
         "VmInstanceAggregationResponse$exploitAvailableActiveFindingsCount": "<p>The number of active findings with an exploit available for the VM instance.</p>",
         "VmInstanceAggregationResponse$fixAvailableActiveFindingsCount": "<p>The number of active findings with a fix available for the VM instance.</p>"
+      }
+    },
+    "MachineImageDetails": {
+      "base": "<p>Details about a machine image resource scanned directly by Inspector.</p>",
+      "refs": {
+        "ResourceDetails$machineImage": null
+      }
+    },
+    "MachineImageDetailsMachineImageIdString": {
+      "base": null,
+      "refs": {
+        "MachineImageDetails$machineImageId": "<p>The machine image ID (e.g., ami-0abcdef1234567890)</p>"
+      }
+    },
+    "MachineImageDetailsSourceResourceIdString": {
+      "base": null,
+      "refs": {
+        "MachineImageDetails$sourceResourceId": "<p>Source resource the image was created from (nullable)</p>"
+      }
+    },
+    "MachineImageMetadata": {
+      "base": "<p>Contains metadata about a machine image associated with a covered resource.</p>",
+      "refs": {
+        "ResourceScanMetadata$machineImage": "<p>The machine image metadata associated with a covered resource.</p>"
+      }
+    },
+    "MachineImagePlatform": {
+      "base": null,
+      "refs": {
+        "MachineImageMetadata$platform": "<p>The platform of the machine image.</p>"
       }
     },
     "MapComparison": {
@@ -3655,6 +3784,10 @@
         "LambdaLayerAggregationResponse$functionName": "<p>The names of the Amazon Web Services Lambda functions associated with the layers.</p>",
         "LambdaLayerAggregationResponse$resourceId": "<p>The Resource ID of the Amazon Web Services Lambda function layer.</p>",
         "LambdaLayerAggregationResponse$layerArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Lambda function layer.</p>",
+        "MachineImageDetails$name": "<p>Human-readable image name</p>",
+        "MachineImageDetails$state": "<p>Image state (available/pending/deregistered)</p>",
+        "MachineImageDetails$rootDeviceType": "<p>Root device type (ebs/instance-store) — AWS-specific</p>",
+        "MachineImageDetails$virtualizationType": "<p>Virtualization type (hvm/paravirtual) — AWS-specific</p>",
         "MemberAccountEc2DeepInspectionStatusState$errorMessage": "<p>The error message explaining why the account failed to activate Amazon Inspector deep inspection.</p>",
         "NonEmptyStringList$member": null,
         "PackageAggregationResponse$packageName": "<p>The name of the operating system package.</p>",
@@ -3715,6 +3848,49 @@
         "FilterCriteria$ecrImageInUseCount": "<p>Filter criteria indicating when details for an Amazon ECR image include when an Amazon ECR image is in use.</p>",
         "FilterCriteria$epssScore": "<p>The EPSS score used to filter findings.</p>",
         "FilterCriteria$cloudImageInUseCount": "<p>Filter criteria for the in-use count of a container image.</p>"
+      }
+    },
+    "OnDemandResourceType": {
+      "base": null,
+      "refs": {
+        "GetOnDemandScanStatusRequest$resourceType": "<p>The type of the resource whose on-demand scan status is being requested.</p>",
+        "GetOnDemandScanStatusResponse$resourceType": "<p>The type of the resource that was scanned.</p>",
+        "ListOnDemandScansRequest$resourceType": "<p>The type of the resource whose on-demand scans are being listed.</p>",
+        "OnDemandScan$resourceType": "<p>The type of the resource that was scanned.</p>",
+        "StartOnDemandScanRequest$resourceType": "<p>The type of the resource to scan on demand.</p>"
+      }
+    },
+    "OnDemandScan": {
+      "base": "<p>Details of a single on-demand scan of a resource.</p>",
+      "refs": {
+        "OnDemandScanList$member": null
+      }
+    },
+    "OnDemandScanList": {
+      "base": null,
+      "refs": {
+        "ListOnDemandScansResponse$items": "<p>The list of on-demand scans that match the request.</p>"
+      }
+    },
+    "OnDemandScanNextToken": {
+      "base": null,
+      "refs": {
+        "ListOnDemandScansRequest$nextToken": "<p>A pagination token from a previous response used to retrieve the next page of results.</p>",
+        "ListOnDemandScansResponse$nextToken": "<p>A pagination token to use in a subsequent request to retrieve the next page of results. This field is absent when there are no more results.</p>"
+      }
+    },
+    "OnDemandScanStatus": {
+      "base": null,
+      "refs": {
+        "GetOnDemandScanStatusResponse$scanStatus": "<p>The current status of the on-demand scan.</p>",
+        "OnDemandScan$scanStatus": "<p>The current status of the on-demand scan.</p>"
+      }
+    },
+    "OnDemandScanStatusReason": {
+      "base": null,
+      "refs": {
+        "GetOnDemandScanStatusResponse$scanStatusReason": "<p>The reason associated with the current on-demand scan status.</p>",
+        "OnDemandScan$scanStatusReason": "<p>The reason associated with the current on-demand scan status.</p>"
       }
     },
     "OneAccountIdFilterList": {
@@ -3870,6 +4046,7 @@
         "AwsEc2InstanceDetails$platform": "<p>The platform of the Amazon EC2 instance.</p>",
         "AwsEcrContainerImageDetails$platform": "<p>The platform of the Amazon ECR container image.</p>",
         "Image$platform": "<p>The platform of the container image.</p>",
+        "MachineImageDetails$platform": "<p>OS platform (Linux/Windows)</p>",
         "Vm$platform": "<p>The platform of the VM instance.</p>"
       }
     },
@@ -3979,6 +4156,7 @@
         "AmiAggregationResponse$cloudAccountId": "<p>The cloud account ID for the AMI aggregation.</p>",
         "ContainerImageAggregationResponse$cloudAccountId": "<p>The cloud account ID for the container image aggregation.</p>",
         "CoveredResource$providerAccountId": "<p>The cloud provider account ID of the covered resource.</p>",
+        "MachineImageDetails$ownerAccountId": "<p>Account ID that owns the image</p>",
         "RepositoryAggregationResponse$cloudAccountId": "<p>The cloud account ID for the repository aggregation.</p>",
         "Resource$providerAccountId": "<p>The cloud provider account ID of the resource.</p>",
         "ServerlessFunctionAggregationResponse$cloudAccountId": "<p>The cloud account ID for the serverless function aggregation.</p>",
@@ -4177,7 +4355,12 @@
         "CisScanResultDetails$targetResourceId": "<p>The CIS scan result details' target resource ID.</p>",
         "CisTargetResourceAggregation$targetResourceId": "<p>The ID of the target resource.</p>",
         "CoveredResource$resourceId": "<p>The ID of the covered resource.</p>",
-        "GetCisScanResultDetailsRequest$targetResourceId": "<p>The target resource ID.</p>"
+        "GetCisScanResultDetailsRequest$targetResourceId": "<p>The target resource ID.</p>",
+        "GetOnDemandScanStatusRequest$resourceId": "<p>The ID of the resource whose on-demand scan status is being requested.</p>",
+        "GetOnDemandScanStatusResponse$resourceId": "<p>The ID of the resource that was scanned.</p>",
+        "ListOnDemandScansRequest$resourceId": "<p>The ID of the resource whose on-demand scans are being listed.</p>",
+        "OnDemandScan$resourceId": "<p>The ID of the resource that was scanned.</p>",
+        "StartOnDemandScanRequest$resourceId": "<p>The ID of the resource to scan on demand.</p>"
       }
     },
     "ResourceIdFilterList": {
@@ -4366,10 +4549,32 @@
         "GetCodeSecurityScanConfigurationResponse$name": "<p>The name of the scan configuration.</p>"
       }
     },
+    "ScanId": {
+      "base": null,
+      "refs": {
+        "GetOnDemandScanStatusRequest$scanId": "<p>The unique identifier of the on-demand scan whose status is being requested.</p>",
+        "GetOnDemandScanStatusResponse$scanId": "<p>The unique identifier of the on-demand scan.</p>",
+        "OnDemandScan$scanId": "<p>The unique identifier of the on-demand scan.</p>",
+        "StartOnDemandScanResponse$scanId": "<p>The unique identifier assigned to the on-demand scan that was started.</p>"
+      }
+    },
     "ScanMode": {
       "base": null,
       "refs": {
         "CoveredResource$scanMode": "<p>The scan method that is applied to the instance.</p>"
+      }
+    },
+    "ScanSource": {
+      "base": null,
+      "refs": {
+        "AmiAggregationResponse$scanSource": "<p>The source of the scan that generated the findings for the Amazon Machine Image (AMI).</p>",
+        "ScanSourceList$member": null
+      }
+    },
+    "ScanSourceList": {
+      "base": null,
+      "refs": {
+        "AmiAggregation$scanSources": "<p>The scan sources to filter the aggregation results by.</p>"
       }
     },
     "ScanStatus": {
@@ -4388,7 +4593,7 @@
     "ScanStatusReason": {
       "base": null,
       "refs": {
-        "ScanStatus$reason": "<p>The scan status. Possible return values and descriptions are: </p> <p> <code>ACCESS_DENIED</code> - Resource access policy restricting Amazon Inspector access. Please update the IAM policy.</p> <p> <code>ACCESS_DENIED_TO_ENCRYPTION_KEY</code> - The KMS key policy doesn't allow Amazon Inspector access. Update the key policy.</p> <p> <code>DEEP_INSPECTION_COLLECTION_TIME_LIMIT_EXCEEDED</code> - Amazon Inspector failed to extract the package inventory because the package collection time exceeding the maximum threshold of 15 minutes.</p> <p> <code>DEEP_INSPECTION_DAILY_SSM_INVENTORY_LIMIT_EXCEEDED</code> - The SSM agent couldn't send inventory to Amazon Inspector because the SSM quota for Inventory data collected per instance per day has already been reached for this instance.</p> <p> <code>DEEP_INSPECTION_NO_INVENTORY</code> - The Amazon Inspector plugin hasn't yet been able to collect an inventory of packages for this instance. This is usually the result of a pending scan, however, if this status persists after 6 hours, use SSM to ensure that the required Amazon Inspector associations exist and are running for the instance.</p> <p> <code>DEEP_INSPECTION_PACKAGE_COLLECTION_LIMIT_EXCEEDED</code> - The instance has exceeded the 5000 package limit for Amazon Inspector Deep inspection. To resume Deep inspection for this instance you can try to adjust the custom paths associated with the account.</p> <p> <code>EC2_INSTANCE_STOPPED</code> - This EC2 instance is in a stopped state, therefore, Amazon Inspector will pause scanning. The existing findings will continue to exist until the instance is terminated. Once the instance is re-started, Inspector will automatically start scanning the instance again. Please note that you will not be charged for this instance while it's in a stopped state.</p> <p> <code>EXCLUDED_BY_TAG</code> - This resource was not scanned because it has been excluded by a tag.</p> <p> <code>IMAGE_SIZE_EXCEEDED</code> - Reserved for future use.</p> <p> <code>INTEGRATION_CONNNECTION_LOST</code> - Amazon Inspector couldn't communicate with the source code management platform.</p> <p> <code>INTERNAL_ERROR</code> - Amazon Inspector has encountered an internal error for this resource. Amazon Inspector service will automatically resolve the issue and resume the scanning. No action required from the user.</p> <p> <code>NO_INVENTORY</code> - Amazon Inspector couldn't find software application inventory to scan for vulnerabilities. This might be caused due to required Amazon Inspector associations being deleted or failing to run on your resource. Please verify the status of <code>InspectorInventoryCollection-do-not-delete</code> association in the SSM console for the resource. Additionally, you can verify the instance's inventory in the SSM Fleet Manager console.</p> <p> <code>NO_RESOURCES_FOUND</code> - Reserved for future use.</p> <p> <code>NO_SCAN_CONFIGURATION_ASSOCIATED</code> - The code repository resource doesn't have an associated scan configuration.</p> <p> <code>PENDING_DISABLE</code> - This resource is pending cleanup during disablement. The customer will not be billed while a resource is in the pending disable status.</p> <p> <code>PENDING_INITIAL_SCAN</code> - This resource has been identified for scanning, results will be available soon.</p> <p> <code>RESOURCE_TERMINATED</code> - This resource has been terminated. The findings and coverage associated with this resource are in the process of being cleaned up.</p> <p> <code>SCAN_ELIGIBILITY_EXPIRED</code> - The configured scan duration has lapsed for this image.</p> <p> <code>SCAN_FREQUENCY_MANUAL</code> - This image will not be covered by Amazon Inspector due to the repository scan frequency configuration.</p> <p> <code>SCAN_FREQUENCY_SCAN_ON_PUSH</code> - This image will be scanned one time and will not new findings because of the scan frequency configuration.</p> <p> <code>SCAN_IN_PROGRESS</code> - The resource is currently being scanned.</p> <p> <code>STALE_INVENTORY</code> - Amazon Inspector wasn't able to collect an updated software application inventory in the last 7 days. Please confirm the required Amazon Inspector associations still exist and you can still see an updated inventory in the SSM console.</p> <p> <code>SUCCESSFUL</code> - The scan was successful.</p> <p> <code>UNMANAGED_EC2_INSTANCE</code> - The EC2 instance is not managed by SSM, please use the following SSM automation to remediate the issue: <a href=\"https://docs.aws.amazon.com/systems-manager-automation-runbooks/latest/userguide/automation-awssupport-troubleshoot-managed-instance.html\">https://docs.aws.amazon.com/systems-manager-automation-runbooks/latest/userguide/automation-awssupport-troubleshoot-managed-instance.html</a>. Once the instance becomes managed by SSM, Inspector will automatically begin scanning this instance. </p> <p> <code>UNSUPPORTED_CODE_ARTIFACTS </code> - The function was not scanned because it has an unsupported code artifacts.</p> <p> <code>UNSUPPORTED_CONFIG_FILE</code> - Reserved for future use.</p> <p> <code>UNSUPPORTED_LANGUAGE</code> - The scan was unsuccessful because the repository contains files in an unsupported programming language.</p> <p> <code>UNSUPPORTED_MEDIA_TYPE </code>- The ECR image has an unsupported media type.</p> <p> <code>UNSUPPORTED_OS</code> - Amazon Inspector does not support this OS, architecture, or image manifest type at this time. To see a complete list of supported operating systems see: <a href=\" https://docs.aws.amazon.com/inspector/latest/user/supported.html\">https://docs.aws.amazon.com/inspector/latest/user/supported.html</a>.</p> <p> <code>UNSUPPORTED_RUNTIME</code> - The function was not scanned because it has an unsupported runtime. To see a complete list of supported runtimes see: <a href=\" https://docs.aws.amazon.com/inspector/latest/user/supported.html\">https://docs.aws.amazon.com/inspector/latest/user/supported.html</a>.</p> <p> <code>IMAGE_ARCHIVED</code> - This image has been archived in Amazon ECR and is no longer available for scanning in Amazon Inspector. </p>"
+        "ScanStatus$reason": "<p>The scan status. Possible return values and descriptions are: </p> <p> <code>ACCESS_DENIED</code> - Resource access policy restricting Amazon Inspector access. Please update the IAM policy.</p> <p> <code>ACCESS_DENIED_TO_ENCRYPTION_KEY</code> - The KMS key policy doesn't allow Amazon Inspector access. Update the key policy.</p> <p> <code>DEEP_INSPECTION_COLLECTION_TIME_LIMIT_EXCEEDED</code> - Amazon Inspector failed to extract the package inventory because the package collection time exceeding the maximum threshold of 15 minutes.</p> <p> <code>DEEP_INSPECTION_DAILY_SSM_INVENTORY_LIMIT_EXCEEDED</code> - The SSM agent couldn't send inventory to Amazon Inspector because the SSM quota for Inventory data collected per instance per day has already been reached for this instance.</p> <p> <code>DEEP_INSPECTION_NO_INVENTORY</code> - The Amazon Inspector plugin hasn't yet been able to collect an inventory of packages for this instance. This is usually the result of a pending scan, however, if this status persists after 6 hours, use SSM to ensure that the required Amazon Inspector associations exist and are running for the instance.</p> <p> <code>DEEP_INSPECTION_PACKAGE_COLLECTION_LIMIT_EXCEEDED</code> - The instance has exceeded the 5000 package limit for Amazon Inspector Deep inspection. To resume Deep inspection for this instance you can try to adjust the custom paths associated with the account.</p> <p> <code>EC2_INSTANCE_STOPPED</code> - This EC2 instance is in a stopped state, therefore, Amazon Inspector will pause scanning. The existing findings will continue to exist until the instance is terminated. Once the instance is re-started, Inspector will automatically start scanning the instance again. Please note that you will not be charged for this instance while it's in a stopped state.</p> <p> <code>EXCLUDED_BY_TAG</code> - This resource was not scanned because it has been excluded by a tag.</p> <p> <code>IMAGE_SIZE_EXCEEDED</code> - Reserved for future use.</p> <p> <code>INTEGRATION_CONNNECTION_LOST</code> - Amazon Inspector couldn't communicate with the source code management platform.</p> <p> <code>INTERNAL_ERROR</code> - Amazon Inspector has encountered an internal error for this resource. Amazon Inspector service will automatically resolve the issue and resume the scanning. No action required from the user.</p> <p> <code>INVALID_ARTIFACT</code> - Amazon Inspector couldn't scan this resource because its artifact is malformed and couldn't be safely extracted.</p> <p> <code>NO_INVENTORY</code> - Amazon Inspector couldn't find software application inventory to scan for vulnerabilities. This might be caused due to required Amazon Inspector associations being deleted or failing to run on your resource. Please verify the status of <code>InspectorInventoryCollection-do-not-delete</code> association in the SSM console for the resource. Additionally, you can verify the instance's inventory in the SSM Fleet Manager console.</p> <p> <code>NO_RESOURCES_FOUND</code> - Reserved for future use.</p> <p> <code>NO_SCAN_CONFIGURATION_ASSOCIATED</code> - The code repository resource doesn't have an associated scan configuration.</p> <p> <code>PENDING_DISABLE</code> - This resource is pending cleanup during disablement. The customer will not be billed while a resource is in the pending disable status.</p> <p> <code>PENDING_INITIAL_SCAN</code> - This resource has been identified for scanning, results will be available soon.</p> <p> <code>RESOURCE_TERMINATED</code> - This resource has been terminated. The findings and coverage associated with this resource are in the process of being cleaned up.</p> <p> <code>SCAN_ELIGIBILITY_EXPIRED</code> - The configured scan duration has lapsed for this image.</p> <p> <code>SCAN_FREQUENCY_MANUAL</code> - This image will not be covered by Amazon Inspector due to the repository scan frequency configuration.</p> <p> <code>SCAN_FREQUENCY_SCAN_ON_PUSH</code> - This image will be scanned one time and will not new findings because of the scan frequency configuration.</p> <p> <code>SCAN_IN_PROGRESS</code> - The resource is currently being scanned.</p> <p> <code>STALE_INVENTORY</code> - Amazon Inspector wasn't able to collect an updated software application inventory in the last 7 days. Please confirm the required Amazon Inspector associations still exist and you can still see an updated inventory in the SSM console.</p> <p> <code>SUCCESSFUL</code> - The scan was successful.</p> <p> <code>UNMANAGED_EC2_INSTANCE</code> - The EC2 instance is not managed by SSM, please use the following SSM automation to remediate the issue: <a href=\"https://docs.aws.amazon.com/systems-manager-automation-runbooks/latest/userguide/automation-awssupport-troubleshoot-managed-instance.html\">https://docs.aws.amazon.com/systems-manager-automation-runbooks/latest/userguide/automation-awssupport-troubleshoot-managed-instance.html</a>. Once the instance becomes managed by SSM, Inspector will automatically begin scanning this instance. </p> <p> <code>UNSUPPORTED_CODE_ARTIFACTS </code> - The function was not scanned because it has an unsupported code artifacts.</p> <p> <code>UNSUPPORTED_CONFIG_FILE</code> - Reserved for future use.</p> <p> <code>UNSUPPORTED_LANGUAGE</code> - The scan was unsuccessful because the repository contains files in an unsupported programming language.</p> <p> <code>UNSUPPORTED_MEDIA_TYPE </code>- The ECR image has an unsupported media type.</p> <p> <code>UNSUPPORTED_OS</code> - Amazon Inspector does not support this OS, architecture, or image manifest type at this time. To see a complete list of supported operating systems see: <a href=\" https://docs.aws.amazon.com/inspector/latest/user/supported.html\">https://docs.aws.amazon.com/inspector/latest/user/supported.html</a>.</p> <p> <code>UNSUPPORTED_RUNTIME</code> - The function was not scanned because it has an unsupported runtime. To see a complete list of supported runtimes see: <a href=\" https://docs.aws.amazon.com/inspector/latest/user/supported.html\">https://docs.aws.amazon.com/inspector/latest/user/supported.html</a>.</p> <p> <code>IMAGE_ARCHIVED</code> - This image has been archived in Amazon ECR and is no longer available for scanning in Amazon Inspector. </p>"
       }
     },
     "ScanType": {
@@ -4640,6 +4845,14 @@
       "base": null,
       "refs": {}
     },
+    "StartOnDemandScanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartOnDemandScanResponse": {
+      "base": null,
+      "refs": {}
+    },
     "State": {
       "base": "<p>An object that described the state of Amazon Inspector scans for an account.</p>",
       "refs": {
@@ -4648,7 +4861,8 @@
         "ResourceState$ecr": "<p>An object detailing the state of Amazon Inspector scanning for Amazon ECR resources.</p>",
         "ResourceState$lambda": "<p>An object that described the state of Amazon Inspector scans for an account.</p>",
         "ResourceState$lambdaCode": "<p>An object that described the state of Amazon Inspector scans for an account.</p>",
-        "ResourceState$codeRepository": null
+        "ResourceState$codeRepository": null,
+        "ResourceState$ami": null
       }
     },
     "Status": {
@@ -4662,6 +4876,7 @@
         "ResourceStatus$lambda": "<p>The status of Amazon Inspector scanning for Amazon Web Services Lambda function.</p>",
         "ResourceStatus$lambdaCode": "<p>The status of Amazon Inspector scanning for custom application code for Amazon Web Services Lambda functions. </p>",
         "ResourceStatus$codeRepository": "<p>The status of Amazon Inspector scanning for code repositories.</p>",
+        "ResourceStatus$ami": "<p>The status of Amazon Machine Image (AMI) scanning for the account.</p>",
         "State$status": "<p>The status of Amazon Inspector for the account.</p>"
       }
     },
@@ -4790,6 +5005,7 @@
         "ServerlessFunctionMetadata$runtime": "<p>The runtime of the serverless function.</p>",
         "ServiceQuotaExceededException$message": null,
         "ServiceQuotaExceededException$resourceId": "<p>The ID of the resource that exceeds a service quota.</p>",
+        "StartOnDemandScanRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "TagList$member": null,
         "ThrottlingException$message": null,
         "TitleAggregationResponse$vulnerabilityId": "<p>The vulnerability ID of the finding.</p>",
@@ -4881,6 +5097,10 @@
         "FilterCriteria$codeVulnerabilityFilePath": "<p>The file path to the file in a Lambda function that contains a code vulnerability used to filter findings.</p>",
         "FilterCriteria$codeRepositoryProjectName": "<p>Filter criteria for findings based on the project name in a code repository.</p>",
         "FilterCriteria$codeRepositoryProviderType": "<p>Filter criteria for findings based on the repository provider type (such as GitHub, GitLab, etc.).</p>",
+        "FilterCriteria$machineImageId": "<p>The ID of the Amazon Machine Image (AMI) used to filter findings.</p>",
+        "FilterCriteria$machineImageName": "<p>The name of the Amazon Machine Image (AMI) used to filter findings.</p>",
+        "FilterCriteria$machineImageOwnerAccountId": "<p>The ID of the Amazon Web Services account that owns the Amazon Machine Image (AMI) used to filter findings.</p>",
+        "FilterCriteria$machineImagePlatform": "<p>The platform of the Amazon Machine Image (AMI) used to filter findings.</p>",
         "FilterCriteria$cloudProvider": "<p>Filter criteria for the cloud provider.</p>",
         "FilterCriteria$cloudProviderRegion": "<p>Filter criteria for the cloud provider region.</p>",
         "FilterCriteria$cloudProviderAccountId": "<p>Filter criteria for the cloud provider account ID.</p>",
@@ -5000,7 +5220,11 @@
       "refs": {
         "Connector$createdAt": "<p>The date and time when the connector was created.</p>",
         "Connector$updatedAt": "<p>The date and time when the connector was last updated.</p>",
-        "ConnectorHealth$lastCheckedAt": "<p>The date and time when the connector health was last checked.</p>"
+        "ConnectorHealth$lastCheckedAt": "<p>The date and time when the connector health was last checked.</p>",
+        "GetOnDemandScanStatusResponse$startedAt": "<p>The date and time, in ISO 8601 format, when the on-demand scan started.</p>",
+        "GetOnDemandScanStatusResponse$completedAt": "<p>The date and time, in ISO 8601 format, when the on-demand scan completed. This field is absent if the scan has not completed.</p>",
+        "OnDemandScan$startedAt": "<p>The date and time, in ISO 8601 format, when the on-demand scan started.</p>",
+        "OnDemandScan$completedAt": "<p>The date and time, in ISO 8601 format, when the on-demand scan completed. This field is absent if the scan has not completed.</p>"
       }
     },
     "TagComparison": {
@@ -5049,6 +5273,7 @@
         "LambdaFunctionAggregationResponse$lambdaTags": "<p>The tags included in the aggregation results.</p>",
         "LambdaFunctionMetadata$functionTags": "<p>The resource tags on an Amazon Web Services Lambda function.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags associated with the resource.</p>",
+        "MachineImageMetadata$tags": "<p>The tags associated with the machine image.</p>",
         "Resource$tags": "<p>The tags attached to the resource.</p>",
         "ServerlessFunctionAggregationResponse$tags": "<p>The tags attached to the serverless function.</p>",
         "ServerlessFunctionMetadata$functionTags": "<p>The tags associated with the serverless function.</p>",

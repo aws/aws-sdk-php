@@ -139,6 +139,7 @@
     "ListTagsForResource": "<p>Lists the tags associated with the specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Browser Profile, Code Interpreter tool, and Gateway.</p> </note>",
     "ListWorkloadIdentities": "<p>Lists all workload identities in your account.</p>",
     "PutResourcePolicy": "<p>Creates or updates a resource-based policy for a resource with the specified resourceArn.</p> <note> <p>This feature is currently available only for AgentCore Runtime and Gateway.</p> </note>",
+    "ResetTokenVaultKeyMaterial": "<p>Resets the key material for a token vault whose customer managed KMS key has been deleted, and re-encrypts the token vault with an Amazon Web Services managed key so that you can use the token vault again.</p> <important> <p>This operation can't be undone. The reset permanently deletes the OAuth2 access tokens and refresh tokens stored in the token vault, including tokens obtained through all supported flows. After the reset, your agents must complete these flows again to get new tokens, and for user-delegated flows your users must authorize access again. The reset doesn't delete your credential providers or their configuration.</p> </important> <p>You can reset a token vault only if its customer managed key has been deleted. If the key still exists, including when it's disabled or scheduled for deletion, this operation returns a <code>ValidationException</code>. To use the token vault again, enable the key or cancel its scheduled deletion in KMS. To switch to a different key, use <code>SetTokenVaultCMK</code>.</p>",
     "RotatePaymentConnectorCredentials": "<p>Replaces the service-managed credentials of a payment connector with newly issued credentials.</p> <p>Use this operation only for payment connectors with a <code>provisionMode</code> of <code>QUICK_CREATE</code>. For payment connectors with a <code>provisionMode</code> of <code>MANUAL</code>, call <code>UpdatePaymentCredentialProvider</code> instead after rotating credentials with the payment provider directly.</p> <p>The rotation finishes before the response is returned, and only one rotation runs at a time for a given payment connector. When it succeeds, the new credential is in effect and the payment connector stays in the <code>READY</code> state. When it fails, an error is returned, the payment connector and its existing credential are left unchanged, and you can retry the request.</p> <p>Rotation replaces the credential on the connector's credential provider, so every payment connector that uses that provider is affected. Replace any copy of the previous credential that you use outside AgentCore.</p>",
     "SetTokenVaultCMK": "<p>Sets the customer master key (CMK) for a token vault.</p>",
     "StartPolicyGeneration": "<p>Initiates the AI-powered generation of Dogwood policies from natural language descriptions within the AgentCore Policy system. This feature enables both technical and non-technical users to create policies by describing their authorization requirements in plain English, which is then automatically translated into formal Dogwood policy statements. The generation process analyzes the natural language input along with the Gateway's tool context to produce validated policy options. Generated policy assets are automatically deleted after 7 days, so you should review and create policies from the generated assets within this timeframe. Once created, policies are permanent and not subject to this expiration. Generated policies should be reviewed and tested in log-only mode before deploying to production. Use this when you want to describe policy intent naturally rather than learning Dogwood syntax, though generated policies may require refinement for complex scenarios.</p>",
@@ -3314,7 +3315,7 @@
       }
     },
     "EvaluationDimensions": {
-      "base": "<p> The list of dimensions for an LLM-as-a-judge evaluator that uses a multi-dimensional rating scale. The service enforces a lower limit than the model's maximum; see the AgentCore Evaluation quotas for the current effective limit. </p>",
+      "base": "<p> The list of dimensions for an LLM-as-a-judge evaluator that uses a multi-dimensional rating scale. An evaluator can have up to 50 dimensions. </p>",
       "refs": {
         "RatingScale$multiDimensional": "<p> A list of dimensions that lets an LLM-as-a-judge evaluator score several dimensions of the same target in a single evaluation. Each dimension has its own instruction and rating scale, and produces its own result. </p>"
       }
@@ -5323,6 +5324,7 @@
       "base": "<p>Contains the KMS configuration for a resource.</p>",
       "refs": {
         "GetTokenVaultResponse$kmsConfiguration": "<p>The KMS configuration for the token vault.</p>",
+        "ResetTokenVaultKeyMaterialResponse$kmsConfiguration": "<p>The KMS configuration for the token vault after the reset. The token vault uses an Amazon Web Services managed key.</p>",
         "SetTokenVaultCMKRequest$kmsConfiguration": "<p>The KMS configuration for the token vault, including the key type and KMS key ARN.</p>",
         "SetTokenVaultCMKResponse$kmsConfiguration": "<p>The KMS configuration for the token vault.</p>"
       }
@@ -6798,6 +6800,18 @@
         "UpdateOauth2CredentialProviderResponse$oauth2ProviderConfigOutput": "<p>The configuration output for the OAuth2 provider.</p>"
       }
     },
+    "OnBehalfOfAuthenticationConfig": {
+      "base": "<p>Specifies the client authentication method to use for the on-behalf-of token exchange.</p>",
+      "refs": {
+        "OnBehalfOfTokenExchangeConfigType$onBehalfOfAuthenticationConfig": "<p>Specify the client authentication configuration to use for the on-behalf-of token exchange. With this configuration, you override the provider level client authentication method for the on-behalf-of exchange with the identity provider. If you don't specify this configuration, we use the provider level client authentication method.</p>"
+      }
+    },
+    "OnBehalfOfClientAuthenticationMethod": {
+      "base": null,
+      "refs": {
+        "OnBehalfOfAuthenticationConfig$clientAuthenticationMethod": "<p>The client authentication method to use during the on-behalf-of token exchange. The <code>NO_CLIENT</code> option omits the <code>clientId</code> and <code>clientSecret</code> during the on-behalf-of token exchange with the identity provider.</p>"
+      }
+    },
     "OnBehalfOfTokenExchangeConfigType": {
       "base": "<p>Configuration for on-behalf-of token exchange.</p>",
       "refs": {
@@ -7837,6 +7851,14 @@
       "refs": {
         "SchemaDefinition$required": "<p>The required fields in the schema definition. These fields must be provided when using the schema.</p>"
       }
+    },
+    "ResetTokenVaultKeyMaterialRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ResetTokenVaultKeyMaterialResponse": {
+      "base": null,
+      "refs": {}
     },
     "Resource": {
       "base": "<p>Represents a resource within the AgentCore Policy system. Resources are the targets of policy evaluation. Currently, only AgentCore Gateways are supported as resources for policy enforcement.</p>",
@@ -9320,6 +9342,7 @@
         "OnlineEvaluationConfigSummary$updatedAt": "<p> The timestamp when the online evaluation configuration was last updated. </p>",
         "PaymentCredentialProviderItem$createdTime": "<p>The timestamp when the payment credential provider was created.</p>",
         "PaymentCredentialProviderItem$lastUpdatedTime": "<p>The timestamp when the payment credential provider was last updated.</p>",
+        "ResetTokenVaultKeyMaterialResponse$lastModifiedDate": "<p>The timestamp when the token vault was last modified.</p>",
         "SetTokenVaultCMKResponse$lastModifiedDate": "<p>The timestamp when the token vault was last modified.</p>",
         "UpdateApiKeyCredentialProviderResponse$createdTime": "<p>The timestamp when the API key credential provider was created.</p>",
         "UpdateApiKeyCredentialProviderResponse$lastUpdatedTime": "<p>The timestamp when the API key credential provider was last updated.</p>",
@@ -9386,6 +9409,8 @@
       "refs": {
         "GetTokenVaultRequest$tokenVaultId": "<p>The unique identifier of the token vault to retrieve.</p>",
         "GetTokenVaultResponse$tokenVaultId": "<p>The ID of the token vault.</p>",
+        "ResetTokenVaultKeyMaterialRequest$tokenVaultId": "<p>The unique identifier of the token vault to reset. To reset your account's default token vault, specify <code>default</code>.</p>",
+        "ResetTokenVaultKeyMaterialResponse$tokenVaultId": "<p>The ID of the token vault.</p>",
         "SetTokenVaultCMKRequest$tokenVaultId": "<p>The unique identifier of the token vault to update.</p>",
         "SetTokenVaultCMKResponse$tokenVaultId": "<p>The ID of the token vault.</p>"
       }

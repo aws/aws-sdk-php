@@ -5165,6 +5165,15 @@
       "input":{"shape":"GetImageBlockPublicAccessStateRequest"},
       "output":{"shape":"GetImageBlockPublicAccessStateResult"}
     },
+    "GetImageFindings":{
+      "name":"GetImageFindings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetImageFindingsRequest"},
+      "output":{"shape":"GetImageFindingsResult"}
+    },
     "GetInstanceMetadataDefaults":{
       "name":"GetInstanceMetadataDefaults",
       "http":{
@@ -31779,6 +31788,41 @@
         }
       }
     },
+    "GetImageFindingsEntrySet":{
+      "type":"list",
+      "member":{
+        "shape":"ImageFinding",
+        "locationName":"item"
+      }
+    },
+    "GetImageFindingsMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "GetImageFindingsRequest":{
+      "type":"structure",
+      "required":["ImageId"],
+      "members":{
+        "ImageId":{"shape":"ImageId"},
+        "MaxResults":{"shape":"GetImageFindingsMaxResults"},
+        "NextToken":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetImageFindingsResult":{
+      "type":"structure",
+      "members":{
+        "ImageFindings":{
+          "shape":"GetImageFindingsEntrySet",
+          "locationName":"imageFindingSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
     "GetInstanceMetadataDefaultsRequest":{
       "type":"structure",
       "members":{
@@ -34189,6 +34233,10 @@
           "shape":"ImageWatermarkList",
           "locationName":"imageWatermarkSet"
         },
+        "ScanResults":{
+          "shape":"ScanResults",
+          "locationName":"scanResults"
+        },
         "InstanceTypeSpecification":{
           "shape":"InstanceTypeSpecification",
           "locationName":"instanceTypeSpecification"
@@ -34388,6 +34436,10 @@
         "ImageWatermarks":{
           "shape":"ImageWatermarkFilterResponseList",
           "locationName":"imageWatermarkSet"
+        },
+        "ScanResultCondition":{
+          "shape":"ScanResultCondition",
+          "locationName":"scanResultCondition"
         }
       }
     },
@@ -34418,7 +34470,8 @@
         "ImageWatermarks":{
           "shape":"ImageWatermarkFilterRequestList",
           "locationName":"ImageWatermark"
-        }
+        },
+        "ScanResultCondition":{"shape":"ScanResultConditionRequest"}
       }
     },
     "ImageCriterionRequestList":{
@@ -34448,6 +34501,50 @@
       "type":"list",
       "member":{
         "shape":"ImageDiskContainer",
+        "locationName":"item"
+      }
+    },
+    "ImageFinding":{
+      "type":"structure",
+      "members":{
+        "FixAvailable":{
+          "shape":"Boolean",
+          "locationName":"fixAvailable"
+        },
+        "Score":{
+          "shape":"Double",
+          "locationName":"score"
+        },
+        "FirstObservedAt":{
+          "shape":"MillisecondDateTime",
+          "locationName":"firstObservedAt"
+        },
+        "UpdatedAt":{
+          "shape":"MillisecondDateTime",
+          "locationName":"updatedAt"
+        },
+        "Title":{
+          "shape":"String",
+          "locationName":"title"
+        },
+        "Paths":{
+          "shape":"ImageFindingPathSet",
+          "locationName":"pathSet"
+        },
+        "SeverityLabel":{
+          "shape":"SeverityLabel",
+          "locationName":"severityLabel"
+        },
+        "SnapshotId":{
+          "shape":"SnapshotId",
+          "locationName":"snapshotId"
+        }
+      }
+    },
+    "ImageFindingPathSet":{
+      "type":"list",
+      "member":{
+        "shape":"String",
         "locationName":"item"
       }
     },
@@ -44342,6 +44439,16 @@
         "shape":"MarketplaceProductCodeRequest",
         "locationName":"item"
       }
+    },
+    "MaxDaysSinceFixAvailableValue":{
+      "type":"integer",
+      "max":2147483647,
+      "min":0
+    },
+    "MaxDaysSinceLastFindingScanValue":{
+      "type":"integer",
+      "max":2147483647,
+      "min":0
     },
     "MaxIpv4AddrPerInterface":{"type":"integer"},
     "MaxIpv6AddrPerInterface":{"type":"integer"},
@@ -54322,6 +54429,84 @@
         "none"
       ]
     },
+    "ScanResultCondition":{
+      "type":"structure",
+      "members":{
+        "MaxDaysSinceLastFindingScan":{
+          "shape":"MaxDaysSinceLastFindingScanValue",
+          "locationName":"maxDaysSinceLastFindingScan"
+        },
+        "MaximumSeverityLabel":{
+          "shape":"SeverityLabel",
+          "locationName":"maximumSeverityLabel"
+        },
+        "MaxDaysSinceInformationalFixAvailable":{
+          "shape":"MaxDaysSinceFixAvailableValue",
+          "locationName":"maxDaysSinceInformationalFixAvailable"
+        },
+        "MaxDaysSinceLowFixAvailable":{
+          "shape":"MaxDaysSinceFixAvailableValue",
+          "locationName":"maxDaysSinceLowFixAvailable"
+        },
+        "MaxDaysSinceMediumFixAvailable":{
+          "shape":"MaxDaysSinceFixAvailableValue",
+          "locationName":"maxDaysSinceMediumFixAvailable"
+        },
+        "MaxDaysSinceHighFixAvailable":{
+          "shape":"MaxDaysSinceFixAvailableValue",
+          "locationName":"maxDaysSinceHighFixAvailable"
+        },
+        "MaxDaysSinceCriticalFixAvailable":{
+          "shape":"MaxDaysSinceFixAvailableValue",
+          "locationName":"maxDaysSinceCriticalFixAvailable"
+        }
+      }
+    },
+    "ScanResultConditionRequest":{
+      "type":"structure",
+      "members":{
+        "MaxDaysSinceLastFindingScan":{"shape":"MaxDaysSinceLastFindingScanValue"},
+        "MaximumSeverityLabel":{"shape":"SeverityLabel"},
+        "MaxDaysSinceInformationalFixAvailable":{"shape":"MaxDaysSinceFixAvailableValue"},
+        "MaxDaysSinceLowFixAvailable":{"shape":"MaxDaysSinceFixAvailableValue"},
+        "MaxDaysSinceMediumFixAvailable":{"shape":"MaxDaysSinceFixAvailableValue"},
+        "MaxDaysSinceHighFixAvailable":{"shape":"MaxDaysSinceFixAvailableValue"},
+        "MaxDaysSinceCriticalFixAvailable":{"shape":"MaxDaysSinceFixAvailableValue"}
+      }
+    },
+    "ScanResults":{
+      "type":"structure",
+      "members":{
+        "HighestFindingSeverityLabel":{
+          "shape":"SeverityLabel",
+          "locationName":"highestFindingSeverityLabel"
+        },
+        "FindingScanDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"findingScanDate"
+        },
+        "InformationalFixAvailableSince":{
+          "shape":"MillisecondDateTime",
+          "locationName":"informationalFixAvailableSince"
+        },
+        "LowFixAvailableSince":{
+          "shape":"MillisecondDateTime",
+          "locationName":"lowFixAvailableSince"
+        },
+        "MediumFixAvailableSince":{
+          "shape":"MillisecondDateTime",
+          "locationName":"mediumFixAvailableSince"
+        },
+        "HighFixAvailableSince":{
+          "shape":"MillisecondDateTime",
+          "locationName":"highFixAvailableSince"
+        },
+        "CriticalFixAvailableSince":{
+          "shape":"MillisecondDateTime",
+          "locationName":"criticalFixAvailableSince"
+        }
+      }
+    },
     "Schedule":{
       "type":"string",
       "enum":["hourly"]
@@ -55809,6 +55994,16 @@
         "shape":"ServiceTypeDetail",
         "locationName":"item"
       }
+    },
+    "SeverityLabel":{
+      "type":"string",
+      "enum":[
+        "informational",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
     },
     "ShutdownBehavior":{
       "type":"string",

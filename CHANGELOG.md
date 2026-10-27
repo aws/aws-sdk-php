@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - Parse shared configuration values without rejecting unquoted equals signs in credential_process commands, and resolve the canonical default config profile in the default credential chain.
+* `Aws\EC2` - EC2 AMIs can now show vulnerability data and be targeted directly for scanning.
+* `Aws\Lightsail` - Added the attributeUpdates parameter to the Lightsail StartInstance API, which allows customers to update the attributes of a stopped instance when starting it.
+* `Aws\Inspector2` - Adding support for Machine Image scan
+* `Aws\BedrockAgentCoreControl` - Adds the ResetTokenVaultKeyMaterial API, which restores a token vault whose customer managed key was deleted by moving it to an AWS owned key. The reset permanently deletes the stored OAuth 2.0 tokens, users must consent again. Adds on-behalf-of token exchange client authentication override option.
+* `Aws\ECS` - ECS now supports GPU sharing via NVIDIA Multi-Process Service (MPS) on ECS Managed Instances and ECS EC2, allowing multiple ECS tasks to share a single Nvidia GPU for improved utilization.
+* `Aws\LicenseManager` - AWS License Manager now supports delegate grants for read-only visibility into license distributions. CreateGrant accepts a new GrantType (BuyerGrant or DelegateGrant) and a desired status at distribution time.
+
 ## 3.402.1 - 2026-10-26
 
 * `Aws\` - Fixed an issue in NonSeekableStreamDecodingEventStreamIterator where a message checksum returned across multiple partial reads caused a checksum mismatch.

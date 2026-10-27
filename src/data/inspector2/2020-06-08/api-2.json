@@ -715,6 +715,24 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetOnDemandScanStatus":{
+      "name":"GetOnDemandScanStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ondemand/scan/status",
+        "responseCode":200
+      },
+      "input":{"shape":"GetOnDemandScanStatusRequest"},
+      "output":{"shape":"GetOnDemandScanStatusResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "GetSbomExport":{
       "name":"GetSbomExport",
       "http":{
@@ -1005,6 +1023,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListOnDemandScans":{
+      "name":"ListOnDemandScans",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ondemand/scans",
+        "responseCode":200
+      },
+      "input":{"shape":"ListOnDemandScansRequest"},
+      "output":{"shape":"ListOnDemandScansResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -1144,6 +1179,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "StartOnDemandScan":{
+      "name":"StartOnDemandScan",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ondemand/scan",
+        "responseCode":202
+      },
+      "input":{"shape":"StartOnDemandScanRequest"},
+      "output":{"shape":"StartOnDemandScanResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "StopCisSession":{
       "name":"StopCisSession",
       "http":{
@@ -1259,6 +1311,7 @@
       "input":{"shape":"UpdateConfigurationRequest"},
       "output":{"shape":"UpdateConfigurationResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
@@ -1572,7 +1625,8 @@
       "members":{
         "amis":{"shape":"StringFilterList"},
         "sortOrder":{"shape":"SortOrder"},
-        "sortBy":{"shape":"AmiSortBy"}
+        "sortBy":{"shape":"AmiSortBy"},
+        "scanSources":{"shape":"ScanSourceList"}
       }
     },
     "AmiAggregationResponse":{
@@ -1587,12 +1641,68 @@
         "cloudOrgId":{"shape":"ProviderOrgId"},
         "cloudAccountId":{"shape":"ProviderAccountId"},
         "severityCounts":{"shape":"SeverityCounts"},
-        "affectedInstances":{"shape":"Long"}
+        "affectedInstances":{"shape":"Long"},
+        "scanSource":{"shape":"ScanSource"}
       }
+    },
+    "AmiConfiguration":{
+      "type":"structure",
+      "required":["scanModeConfiguration"],
+      "members":{
+        "lastLaunchedWithin":{"shape":"AmiScanDuration"},
+        "createdWithin":{"shape":"AmiScanDuration"},
+        "scanModeConfiguration":{"shape":"AmiScanModeConfiguration"}
+      }
+    },
+    "AmiConfigurationState":{
+      "type":"structure",
+      "members":{
+        "lastLaunchedWithin":{"shape":"AmiScanDuration"},
+        "createdWithin":{"shape":"AmiScanDuration"},
+        "scanModeConfiguration":{"shape":"AmiScanModeConfiguration"},
+        "status":{"shape":"AmiConfigurationStatus"},
+        "updatedAt":{"shape":"DateTimeTimestamp"}
+      }
+    },
+    "AmiConfigurationStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCESS",
+        "PENDING",
+        "FAILED"
+      ]
     },
     "AmiId":{
       "type":"string",
       "pattern":"ami-([a-z0-9]{8}|[a-z0-9]{17}|\\*)"
+    },
+    "AmiScanDuration":{
+      "type":"string",
+      "enum":[
+        "DAYS_180",
+        "DAYS_90",
+        "DAYS_60",
+        "DAYS_30",
+        "DAYS_14",
+        "DAYS_7"
+      ]
+    },
+    "AmiScanMode":{
+      "type":"string",
+      "enum":[
+        "SCAN_ALL",
+        "TARGET_SCANNING"
+      ]
+    },
+    "AmiScanModeConfiguration":{
+      "type":"structure",
+      "required":["scanMode"],
+      "members":{
+        "scanMode":{"shape":"AmiScanMode"},
+        "tags":{"shape":"AmiTagFilterList"},
+        "excludeCopiedAmis":{"shape":"Boolean"},
+        "excludeBackupDlmAmis":{"shape":"Boolean"}
+      }
     },
     "AmiSortBy":{
       "type":"string",
@@ -1602,6 +1712,30 @@
         "ALL",
         "AFFECTED_INSTANCES"
       ]
+    },
+    "AmiTagFilter":{
+      "type":"structure",
+      "required":["key"],
+      "members":{
+        "key":{"shape":"AmiTagKey"},
+        "value":{"shape":"AmiTagValue"}
+      }
+    },
+    "AmiTagFilterList":{
+      "type":"list",
+      "member":{"shape":"AmiTagFilter"},
+      "max":1,
+      "min":0
+    },
+    "AmiTagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "AmiTagValue":{
+      "type":"string",
+      "max":256,
+      "min":0
     },
     "Architecture":{
       "type":"string",
@@ -1691,7 +1825,8 @@
         "ecr":{"shape":"Boolean"},
         "lambda":{"shape":"Boolean"},
         "lambdaCode":{"shape":"Boolean"},
-        "codeRepository":{"shape":"Boolean"}
+        "codeRepository":{"shape":"Boolean"},
+        "ami":{"shape":"Boolean"}
       }
     },
     "AwsConfigConnectorArn":{
@@ -3409,6 +3544,7 @@
         "lambdaFunctionName":{"shape":"CoverageStringFilterList"},
         "lambdaFunctionTags":{"shape":"CoverageMapFilterList"},
         "lambdaFunctionRuntime":{"shape":"CoverageStringFilterList"},
+        "machineImageTags":{"shape":"CoverageMapFilterList"},
         "lastScannedAt":{"shape":"CoverageDateFilterList"},
         "scanMode":{"shape":"CoverageStringFilterList"},
         "imagePulledAt":{"shape":"CoverageDateFilterList"},
@@ -3478,7 +3614,8 @@
         "Microsoft.ContainerRegistry/registry/containerImage",
         "Microsoft.ContainerRegistry/registry/containerRepository",
         "Microsoft.Web/sites",
-        "Microsoft.ContainerRegistry/registries"
+        "Microsoft.ContainerRegistry/registries",
+        "MACHINE_IMAGE"
       ]
     },
     "CoverageStringComparison":{
@@ -3968,7 +4105,8 @@
       "members":{
         "bucketName":{"shape":"String"},
         "keyPrefix":{"shape":"String"},
-        "kmsKeyArn":{"shape":"String"}
+        "kmsKeyArn":{"shape":"String"},
+        "expectedBucketOwner":{"shape":"AccountId"}
       }
     },
     "DetectionPlatforms":{
@@ -4007,7 +4145,7 @@
     "DisableResourceTypeList":{
       "type":"list",
       "member":{"shape":"ResourceScanType"},
-      "max":5,
+      "max":6,
       "min":0
     },
     "DisableResponse":{
@@ -4270,7 +4408,7 @@
     "EnableResourceTypeList":{
       "type":"list",
       "member":{"shape":"ResourceScanType"},
-      "max":5,
+      "max":6,
       "min":1
     },
     "EnableResponse":{
@@ -4535,6 +4673,10 @@
         "epssScore":{"shape":"NumberFilterList"},
         "codeRepositoryProjectName":{"shape":"StringFilterList"},
         "codeRepositoryProviderType":{"shape":"StringFilterList"},
+        "machineImageId":{"shape":"StringFilterList"},
+        "machineImageName":{"shape":"StringFilterList"},
+        "machineImageOwnerAccountId":{"shape":"StringFilterList"},
+        "machineImagePlatform":{"shape":"StringFilterList"},
         "cloudProvider":{"shape":"StringFilterList"},
         "cloudProviderRegion":{"shape":"StringFilterList"},
         "cloudProviderAccountId":{"shape":"StringFilterList"},
@@ -4819,7 +4961,8 @@
         "CODE_REPOSITORY",
         "VM",
         "CONTAINER_IMAGE",
-        "SERVERLESS_FUNCTION"
+        "SERVERLESS_FUNCTION",
+        "MACHINE_IMAGE"
       ]
     },
     "FrequencyExpression":{
@@ -4991,7 +5134,8 @@
       "type":"structure",
       "members":{
         "ecrConfiguration":{"shape":"EcrConfigurationState"},
-        "ec2Configuration":{"shape":"Ec2ConfigurationState"}
+        "ec2Configuration":{"shape":"Ec2ConfigurationState"},
+        "amiConfiguration":{"shape":"AmiConfigurationState"}
       }
     },
     "GetDelegatedAdminAccountRequest":{
@@ -5071,6 +5215,38 @@
       "type":"structure",
       "members":{
         "member":{"shape":"Member"}
+      }
+    },
+    "GetOnDemandScanStatusRequest":{
+      "type":"structure",
+      "required":[
+        "resourceId",
+        "scanId",
+        "resourceType"
+      ],
+      "members":{
+        "resourceId":{"shape":"ResourceId"},
+        "scanId":{"shape":"ScanId"},
+        "resourceType":{"shape":"OnDemandResourceType"}
+      }
+    },
+    "GetOnDemandScanStatusResponse":{
+      "type":"structure",
+      "required":[
+        "scanId",
+        "resourceId",
+        "resourceType",
+        "scanStatus",
+        "startedAt"
+      ],
+      "members":{
+        "scanId":{"shape":"ScanId"},
+        "resourceId":{"shape":"ResourceId"},
+        "resourceType":{"shape":"OnDemandResourceType"},
+        "scanStatus":{"shape":"OnDemandScanStatus"},
+        "scanStatusReason":{"shape":"OnDemandScanStatusReason"},
+        "startedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "completedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "GetSbomExportRequest":{
@@ -5808,6 +5984,33 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListOnDemandScansRequest":{
+      "type":"structure",
+      "required":[
+        "resourceId",
+        "resourceType"
+      ],
+      "members":{
+        "resourceId":{"shape":"ResourceId"},
+        "resourceType":{"shape":"OnDemandResourceType"},
+        "maxResults":{"shape":"ListOnDemandScansRequestMaxResultsInteger"},
+        "nextToken":{"shape":"OnDemandScanNextToken"}
+      }
+    },
+    "ListOnDemandScansRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListOnDemandScansResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"OnDemandScanList"},
+        "nextToken":{"shape":"OnDemandScanNextToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -5853,6 +6056,48 @@
     "Long":{
       "type":"long",
       "box":true
+    },
+    "MachineImageDetails":{
+      "type":"structure",
+      "required":["machineImageId"],
+      "members":{
+        "machineImageId":{"shape":"MachineImageDetailsMachineImageIdString"},
+        "name":{"shape":"NonEmptyString"},
+        "ownerAccountId":{"shape":"ProviderAccountId"},
+        "platform":{"shape":"Platform"},
+        "architecture":{"shape":"Architecture"},
+        "creationDate":{"shape":"DateTimeTimestamp"},
+        "state":{"shape":"NonEmptyString"},
+        "isPublic":{"shape":"Boolean"},
+        "rootDeviceType":{"shape":"NonEmptyString"},
+        "virtualizationType":{"shape":"NonEmptyString"},
+        "sourceResourceId":{"shape":"MachineImageDetailsSourceResourceIdString"}
+      }
+    },
+    "MachineImageDetailsMachineImageIdString":{
+      "type":"string",
+      "min":1,
+      "pattern":"ami-[0-9a-f]{8,17}"
+    },
+    "MachineImageDetailsSourceResourceIdString":{
+      "type":"string",
+      "min":1,
+      "pattern":"i-[0-9a-f]{8,17}"
+    },
+    "MachineImageMetadata":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"TagMap"},
+        "platform":{"shape":"MachineImagePlatform"}
+      }
+    },
+    "MachineImagePlatform":{
+      "type":"string",
+      "enum":[
+        "WINDOWS",
+        "LINUX",
+        "UNKNOWN"
+      ]
     },
     "MapComparison":{
       "type":"string",
@@ -6003,6 +6248,57 @@
       "member":{"shape":"NumberFilter"},
       "max":10,
       "min":1
+    },
+    "OnDemandResourceType":{
+      "type":"string",
+      "enum":["AMI"]
+    },
+    "OnDemandScan":{
+      "type":"structure",
+      "required":[
+        "scanId",
+        "resourceId",
+        "resourceType",
+        "scanStatus",
+        "startedAt"
+      ],
+      "members":{
+        "scanId":{"shape":"ScanId"},
+        "resourceId":{"shape":"ResourceId"},
+        "resourceType":{"shape":"OnDemandResourceType"},
+        "scanStatus":{"shape":"OnDemandScanStatus"},
+        "scanStatusReason":{"shape":"OnDemandScanStatusReason"},
+        "startedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "completedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "OnDemandScanList":{
+      "type":"list",
+      "member":{"shape":"OnDemandScan"}
+    },
+    "OnDemandScanNextToken":{
+      "type":"string",
+      "max":1000000,
+      "min":1
+    },
+    "OnDemandScanStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "SUCCESSFUL",
+        "FAILED"
+      ]
+    },
+    "OnDemandScanStatusReason":{
+      "type":"string",
+      "enum":[
+        "ACCESS_DENIED",
+        "INTERNAL_ERROR",
+        "STORAGE_LIMIT_EXCEEDED",
+        "EXTRACTION_COLLECTION_TIME_LIMIT_EXCEEDED",
+        "UNSUPPORTED_OS",
+        "RESOURCE_TERMINATED"
+      ]
     },
     "OneAccountIdFilterList":{
       "type":"list",
@@ -6492,6 +6788,7 @@
         "awsEcrContainerImage":{"shape":"AwsEcrContainerImageDetails"},
         "awsLambdaFunction":{"shape":"AwsLambdaFunctionDetails"},
         "codeRepository":{"shape":"CodeRepositoryDetails"},
+        "machineImage":{"shape":"MachineImageDetails"},
         "vm":{"shape":"Vm"},
         "image":{"shape":"Image"},
         "serverlessFunction":{"shape":"ServerlessFunction"}
@@ -6585,7 +6882,8 @@
         "containerImage":{"shape":"ContainerImageMetadata"},
         "containerRepository":{"shape":"ContainerRepositoryMetadata"},
         "containerRegistry":{"shape":"ContainerRegistryMetadata"},
-        "serverlessFunction":{"shape":"ServerlessFunctionMetadata"}
+        "serverlessFunction":{"shape":"ServerlessFunctionMetadata"},
+        "machineImage":{"shape":"MachineImageMetadata"}
       }
     },
     "ResourceScanType":{
@@ -6609,7 +6907,8 @@
         "ecr":{"shape":"State"},
         "lambda":{"shape":"State"},
         "lambdaCode":{"shape":"State"},
-        "codeRepository":{"shape":"State"}
+        "codeRepository":{"shape":"State"},
+        "ami":{"shape":"State"}
       }
     },
     "ResourceStatus":{
@@ -6623,7 +6922,8 @@
         "ecr":{"shape":"Status"},
         "lambda":{"shape":"Status"},
         "lambdaCode":{"shape":"Status"},
-        "codeRepository":{"shape":"Status"}
+        "codeRepository":{"shape":"Status"},
+        "ami":{"shape":"Status"}
       }
     },
     "ResourceStringComparison":{
@@ -6671,7 +6971,8 @@
         "CODE_REPOSITORY",
         "Microsoft.Compute/virtualMachines",
         "Microsoft.ContainerRegistry/registry/containerImage",
-        "Microsoft.Web/sites"
+        "Microsoft.Web/sites",
+        "MACHINE_IMAGE"
       ]
     },
     "RiskScore":{
@@ -6751,6 +7052,12 @@
       "min":1,
       "pattern":"[a-zA-Z0-9-_$:.]*"
     },
+    "ScanId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-z0-9]+"
+    },
     "ScanMode":{
       "type":"string",
       "enum":[
@@ -6759,6 +7066,19 @@
         "EC2_INSPECTOR_AGENT_BASED",
         "VM_INSPECTOR_AGENT_BASED"
       ]
+    },
+    "ScanSource":{
+      "type":"string",
+      "enum":[
+        "INSTANCE_SCAN",
+        "MACHINE_IMAGE_SCAN"
+      ]
+    },
+    "ScanSourceList":{
+      "type":"list",
+      "member":{"shape":"ScanSource"},
+      "max":2,
+      "min":1
     },
     "ScanStatus":{
       "type":"structure",
@@ -6816,7 +7136,10 @@
         "IMAGE_ARCHIVED",
         "UNSUPPORTED_CODE_ARTIFACTS",
         "RESOURCE_UNMANAGED",
-        "RESOURCE_STOPPED"
+        "RESOURCE_STOPPED",
+        "EXTRACTION_COLLECTION_TIME_LIMIT_EXCEEDED",
+        "STORAGE_LIMIT_EXCEEDED",
+        "INVALID_ARTIFACT"
       ]
     },
     "ScanType":{
@@ -7162,6 +7485,28 @@
       "members":{
         "scanId":{"shape":"CodeSecurityUuid"},
         "status":{"shape":"CodeScanStatus"}
+      }
+    },
+    "StartOnDemandScanRequest":{
+      "type":"structure",
+      "required":[
+        "resourceId",
+        "resourceType"
+      ],
+      "members":{
+        "resourceId":{"shape":"ResourceId"},
+        "resourceType":{"shape":"OnDemandResourceType"},
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartOnDemandScanResponse":{
+      "type":"structure",
+      "required":["scanId"],
+      "members":{
+        "scanId":{"shape":"ScanId"}
       }
     },
     "State":{
@@ -7651,7 +7996,8 @@
       "type":"structure",
       "members":{
         "ec2Configuration":{"shape":"InheritanceMode"},
-        "ecrConfiguration":{"shape":"InheritanceMode"}
+        "ecrConfiguration":{"shape":"InheritanceMode"},
+        "amiConfiguration":{"shape":"InheritanceMode"}
       }
     },
     "UpdateConfigurationRequest":{
@@ -7660,6 +8006,7 @@
         "accountId":{"shape":"AccountId"},
         "ecrConfiguration":{"shape":"EcrConfiguration"},
         "ec2Configuration":{"shape":"Ec2Configuration"},
+        "amiConfiguration":{"shape":"AmiConfiguration"},
         "updateConfigurationInheritance":{"shape":"UpdateConfigurationInheritance"}
       }
     },
@@ -7850,7 +8197,8 @@
         "AZURE_CONTAINER_IMAGE_INITIAL_SCAN",
         "AZURE_CONTAINER_IMAGE_RESCAN",
         "AZURE_VM_AGENT_BASED_INSTANCE_HOURS",
-        "AZURE_SERVERLESS_FUNCTION_HOURS"
+        "AZURE_SERVERLESS_FUNCTION_HOURS",
+        "EC2_AMI_HOURS"
       ]
     },
     "UsageValue":{

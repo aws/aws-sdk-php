@@ -218,6 +218,10 @@ use Aws\AwsClient;
  *         epssScore?: list<array>,
  *         codeRepositoryProjectName?: list<array>,
  *         codeRepositoryProviderType?: list<array>,
+ *         machineImageId?: list<array>,
+ *         machineImageName?: list<array>,
+ *         machineImageOwnerAccountId?: list<array>,
+ *         machineImagePlatform?: list<array>,
  *         cloudProvider?: list<array>,
  *         cloudProviderRegion?: list<array>,
  *         cloudProviderAccountId?: list<array>,
@@ -295,6 +299,10 @@ use Aws\AwsClient;
  *         epssScore?: list<array>,
  *         codeRepositoryProjectName?: list<array>,
  *         codeRepositoryProviderType?: list<array>,
+ *         machineImageId?: list<array>,
+ *         machineImageName?: list<array>,
+ *         machineImageOwnerAccountId?: list<array>,
+ *         machineImagePlatform?: list<array>,
  *         cloudProvider?: list<array>,
  *         cloudProviderRegion?: list<array>,
  *         cloudProviderAccountId?: list<array>,
@@ -370,6 +378,10 @@ use Aws\AwsClient;
  *         epssScore?: list<array>,
  *         codeRepositoryProjectName?: list<array>,
  *         codeRepositoryProviderType?: list<array>,
+ *         machineImageId?: list<array>,
+ *         machineImageName?: list<array>,
+ *         machineImageOwnerAccountId?: list<array>,
+ *         machineImagePlatform?: list<array>,
  *         cloudProvider?: list<array>,
  *         cloudProviderRegion?: list<array>,
  *         cloudProviderAccountId?: list<array>,
@@ -392,7 +404,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     reportFormat?: 'CSV'|'JSON',
- *     s3Destination?: array{bucketName?: string, keyPrefix?: string, kmsKeyArn?: string, ...},
+ *     s3Destination?: array{bucketName?: string, keyPrefix?: string, kmsKeyArn?: string, expectedBucketOwner?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createFindingsReportAsync(array $args = [])
@@ -444,6 +456,10 @@ use Aws\AwsClient;
  *         epssScore?: list<array>,
  *         codeRepositoryProjectName?: list<array>,
  *         codeRepositoryProviderType?: list<array>,
+ *         machineImageId?: list<array>,
+ *         machineImageName?: list<array>,
+ *         machineImageOwnerAccountId?: list<array>,
+ *         machineImagePlatform?: list<array>,
  *         cloudProvider?: list<array>,
  *         cloudProviderRegion?: list<array>,
  *         cloudProviderAccountId?: list<array>,
@@ -466,7 +482,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     reportFormat?: 'CSV'|'JSON',
- *     s3Destination?: array{bucketName?: string, keyPrefix?: string, kmsKeyArn?: string, ...},
+ *     s3Destination?: array{bucketName?: string, keyPrefix?: string, kmsKeyArn?: string, expectedBucketOwner?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result createSbomExport(array $args = [])
@@ -494,7 +510,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     reportFormat?: 'CYCLONEDX_1_4'|'SPDX_2_3',
- *     s3Destination?: array{bucketName?: string, keyPrefix?: string, kmsKeyArn?: string, ...},
+ *     s3Destination?: array{bucketName?: string, keyPrefix?: string, kmsKeyArn?: string, expectedBucketOwner?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createSbomExportAsync(array $args = [])
@@ -522,7 +538,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     reportFormat?: 'CYCLONEDX_1_4'|'SPDX_2_3',
- *     s3Destination?: array{bucketName?: string, keyPrefix?: string, kmsKeyArn?: string, ...},
+ *     s3Destination?: array{bucketName?: string, keyPrefix?: string, kmsKeyArn?: string, expectedBucketOwner?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result deleteCisScanConfiguration(array $args = [])
@@ -660,13 +676,13 @@ use Aws\AwsClient;
  * @method \Aws\Result getEncryptionKey(array $args = [])
  * @phpstan-method \Aws\Result getEncryptionKey(array{
  *     scanType?: 'CODE'|'NETWORK'|'PACKAGE',
- *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise getEncryptionKeyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getEncryptionKeyAsync(array{
  *     scanType?: 'CODE'|'NETWORK'|'PACKAGE',
- *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
  *     ...,
  * } $args = [])
  * @method \Aws\Result getFindingsReportStatus(array $args = [])
@@ -677,6 +693,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getMember(array{accountId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getMemberAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getMemberAsync(array{accountId?: string, ...} $args = [])
+ * @method \Aws\Result getOnDemandScanStatus(array $args = [])
+ * @phpstan-method \Aws\Result getOnDemandScanStatus(array{resourceId?: string, scanId?: string, resourceType?: 'AMI', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getOnDemandScanStatusAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getOnDemandScanStatusAsync(array{resourceId?: string, scanId?: string, resourceType?: 'AMI', ...} $args = [])
  * @method \Aws\Result getSbomExport(array $args = [])
  * @phpstan-method \Aws\Result getSbomExport(array{reportId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getSbomExportAsync(array $args = [])
@@ -896,6 +916,7 @@ use Aws\AwsClient;
  *         lambdaFunctionName?: list<array>,
  *         lambdaFunctionTags?: list<array>,
  *         lambdaFunctionRuntime?: list<array>,
+ *         machineImageTags?: list<array>,
  *         lastScannedAt?: list<array>,
  *         scanMode?: list<array>,
  *         imagePulledAt?: list<array>,
@@ -937,6 +958,7 @@ use Aws\AwsClient;
  *         lambdaFunctionName?: list<array>,
  *         lambdaFunctionTags?: list<array>,
  *         lambdaFunctionRuntime?: list<array>,
+ *         machineImageTags?: list<array>,
  *         lastScannedAt?: list<array>,
  *         scanMode?: list<array>,
  *         imagePulledAt?: list<array>,
@@ -976,6 +998,7 @@ use Aws\AwsClient;
  *         lambdaFunctionName?: list<array>,
  *         lambdaFunctionTags?: list<array>,
  *         lambdaFunctionRuntime?: list<array>,
+ *         machineImageTags?: list<array>,
  *         lastScannedAt?: list<array>,
  *         scanMode?: list<array>,
  *         imagePulledAt?: list<array>,
@@ -1017,6 +1040,7 @@ use Aws\AwsClient;
  *         lambdaFunctionName?: list<array>,
  *         lambdaFunctionTags?: list<array>,
  *         lambdaFunctionRuntime?: list<array>,
+ *         machineImageTags?: list<array>,
  *         lastScannedAt?: list<array>,
  *         scanMode?: list<array>,
  *         imagePulledAt?: list<array>,
@@ -1069,6 +1093,7 @@ use Aws\AwsClient;
  *             amis?: list<array>,
  *             sortOrder?: 'ASC'|'DESC',
  *             sortBy?: 'AFFECTED_INSTANCES'|'ALL'|'CRITICAL'|'HIGH',
+ *             scanSources?: list<'INSTANCE_SCAN'|'MACHINE_IMAGE_SCAN'>,
  *             ...,
  *         },
  *         awsEcrContainerAggregation?: array{
@@ -1221,6 +1246,7 @@ use Aws\AwsClient;
  *             amis?: list<array>,
  *             sortOrder?: 'ASC'|'DESC',
  *             sortBy?: 'AFFECTED_INSTANCES'|'ALL'|'CRITICAL'|'HIGH',
+ *             scanSources?: list<'INSTANCE_SCAN'|'MACHINE_IMAGE_SCAN'>,
  *             ...,
  *         },
  *         awsEcrContainerAggregation?: array{
@@ -1406,6 +1432,10 @@ use Aws\AwsClient;
  *         epssScore?: list<array>,
  *         codeRepositoryProjectName?: list<array>,
  *         codeRepositoryProviderType?: list<array>,
+ *         machineImageId?: list<array>,
+ *         machineImageName?: list<array>,
+ *         machineImageOwnerAccountId?: list<array>,
+ *         machineImagePlatform?: list<array>,
  *         cloudProvider?: list<array>,
  *         cloudProviderRegion?: list<array>,
  *         cloudProviderAccountId?: list<array>,
@@ -1485,6 +1515,10 @@ use Aws\AwsClient;
  *         epssScore?: list<array>,
  *         codeRepositoryProjectName?: list<array>,
  *         codeRepositoryProviderType?: list<array>,
+ *         machineImageId?: list<array>,
+ *         machineImageName?: list<array>,
+ *         machineImageOwnerAccountId?: list<array>,
+ *         machineImagePlatform?: list<array>,
  *         cloudProvider?: list<array>,
  *         cloudProviderRegion?: list<array>,
  *         cloudProviderAccountId?: list<array>,
@@ -1517,6 +1551,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listMembers(array{onlyAssociated?: bool, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listMembersAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listMembersAsync(array{onlyAssociated?: bool, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listOnDemandScans(array $args = [])
+ * @phpstan-method \Aws\Result listOnDemandScans(array{resourceId?: string, resourceType?: 'AMI', maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listOnDemandScansAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listOnDemandScansAsync(array{resourceId?: string, resourceType?: 'AMI', maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @phpstan-method \Aws\Result listTagsForResource(array{resourceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
@@ -1528,13 +1566,13 @@ use Aws\AwsClient;
  * @method \Aws\Result resetEncryptionKey(array $args = [])
  * @phpstan-method \Aws\Result resetEncryptionKey(array{
  *     scanType?: 'CODE'|'NETWORK'|'PACKAGE',
- *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise resetEncryptionKeyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise resetEncryptionKeyAsync(array{
  *     scanType?: 'CODE'|'NETWORK'|'PACKAGE',
- *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
  *     ...,
  * } $args = [])
  * @method \Aws\Result searchVulnerabilities(array $args = [])
@@ -1577,6 +1615,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result startCodeSecurityScan(array{clientToken?: string, resource?: array{projectId?: string, ...}, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise startCodeSecurityScanAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise startCodeSecurityScanAsync(array{clientToken?: string, resource?: array{projectId?: string, ...}, ...} $args = [])
+ * @method \Aws\Result startOnDemandScan(array $args = [])
+ * @phpstan-method \Aws\Result startOnDemandScan(array{resourceId?: string, resourceType?: 'AMI', clientToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise startOnDemandScanAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startOnDemandScanAsync(array{resourceId?: string, resourceType?: 'AMI', clientToken?: string, ...} $args = [])
  * @method \Aws\Result stopCisSession(array $args = [])
  * @phpstan-method \Aws\Result stopCisSession(array{
  *     scanJobId?: string,
@@ -1717,7 +1759,24 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     ec2Configuration?: array{scanMode?: 'EC2_HYBRID'|'EC2_SSM_AGENT_BASED', activateVMScanner?: bool, ...},
- *     updateConfigurationInheritance?: array{ec2Configuration?: 'INHERIT_FROM_ADMIN', ecrConfiguration?: 'INHERIT_FROM_ADMIN', ...},
+ *     amiConfiguration?: array{
+ *         lastLaunchedWithin?: 'DAYS_14'|'DAYS_180'|'DAYS_30'|'DAYS_60'|'DAYS_7'|'DAYS_90',
+ *         createdWithin?: 'DAYS_14'|'DAYS_180'|'DAYS_30'|'DAYS_60'|'DAYS_7'|'DAYS_90',
+ *         scanModeConfiguration?: array{
+ *             scanMode?: 'SCAN_ALL'|'TARGET_SCANNING',
+ *             tags?: list<array>,
+ *             excludeCopiedAmis?: bool,
+ *             excludeBackupDlmAmis?: bool,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     updateConfigurationInheritance?: array{
+ *         ec2Configuration?: 'INHERIT_FROM_ADMIN',
+ *         ecrConfiguration?: 'INHERIT_FROM_ADMIN',
+ *         amiConfiguration?: 'INHERIT_FROM_ADMIN',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateConfigurationAsync(array $args = [])
@@ -1730,7 +1789,24 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     ec2Configuration?: array{scanMode?: 'EC2_HYBRID'|'EC2_SSM_AGENT_BASED', activateVMScanner?: bool, ...},
- *     updateConfigurationInheritance?: array{ec2Configuration?: 'INHERIT_FROM_ADMIN', ecrConfiguration?: 'INHERIT_FROM_ADMIN', ...},
+ *     amiConfiguration?: array{
+ *         lastLaunchedWithin?: 'DAYS_14'|'DAYS_180'|'DAYS_30'|'DAYS_60'|'DAYS_7'|'DAYS_90',
+ *         createdWithin?: 'DAYS_14'|'DAYS_180'|'DAYS_30'|'DAYS_60'|'DAYS_7'|'DAYS_90',
+ *         scanModeConfiguration?: array{
+ *             scanMode?: 'SCAN_ALL'|'TARGET_SCANNING',
+ *             tags?: list<array>,
+ *             excludeCopiedAmis?: bool,
+ *             excludeBackupDlmAmis?: bool,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     updateConfigurationInheritance?: array{
+ *         ec2Configuration?: 'INHERIT_FROM_ADMIN',
+ *         ecrConfiguration?: 'INHERIT_FROM_ADMIN',
+ *         amiConfiguration?: 'INHERIT_FROM_ADMIN',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateConnector(array $args = [])
@@ -1787,14 +1863,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateEncryptionKey(array{
  *     kmsKeyId?: string,
  *     scanType?: 'CODE'|'NETWORK'|'PACKAGE',
- *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateEncryptionKeyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateEncryptionKeyAsync(array{
  *     kmsKeyId?: string,
  *     scanType?: 'CODE'|'NETWORK'|'PACKAGE',
- *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateFilter(array $args = [])
@@ -1848,6 +1924,10 @@ use Aws\AwsClient;
  *         epssScore?: list<array>,
  *         codeRepositoryProjectName?: list<array>,
  *         codeRepositoryProviderType?: list<array>,
+ *         machineImageId?: list<array>,
+ *         machineImageName?: list<array>,
+ *         machineImageOwnerAccountId?: list<array>,
+ *         machineImagePlatform?: list<array>,
  *         cloudProvider?: list<array>,
  *         cloudProviderRegion?: list<array>,
  *         cloudProviderAccountId?: list<array>,
@@ -1925,6 +2005,10 @@ use Aws\AwsClient;
  *         epssScore?: list<array>,
  *         codeRepositoryProjectName?: list<array>,
  *         codeRepositoryProviderType?: list<array>,
+ *         machineImageId?: list<array>,
+ *         machineImageName?: list<array>,
+ *         machineImageOwnerAccountId?: list<array>,
+ *         machineImagePlatform?: list<array>,
  *         cloudProvider?: list<array>,
  *         cloudProviderRegion?: list<array>,
  *         cloudProviderAccountId?: list<array>,
@@ -1957,12 +2041,12 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise updateOrgEc2DeepInspectionConfigurationAsync(array{orgPackagePaths?: list<string>, ...} $args = [])
  * @method \Aws\Result updateOrganizationConfiguration(array $args = [])
  * @phpstan-method \Aws\Result updateOrganizationConfiguration(array{
- *     autoEnable?: array{ec2?: bool, ecr?: bool, lambda?: bool, lambdaCode?: bool, codeRepository?: bool, ...},
+ *     autoEnable?: array{ec2?: bool, ecr?: bool, lambda?: bool, lambdaCode?: bool, codeRepository?: bool, ami?: bool, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateOrganizationConfigurationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateOrganizationConfigurationAsync(array{
- *     autoEnable?: array{ec2?: bool, ecr?: bool, lambda?: bool, lambdaCode?: bool, codeRepository?: bool, ...},
+ *     autoEnable?: array{ec2?: bool, ecr?: bool, lambda?: bool, lambdaCode?: bool, codeRepository?: bool, ami?: bool, ...},
  *     ...,
  * } $args = [])
  */

@@ -2150,7 +2150,8 @@
         "memory":{"shape":"String"},
         "memoryReservation":{"shape":"String"},
         "gpuIds":{"shape":"GpuIds"},
-        "neuronDeviceIds":{"shape":"NeuronDeviceIds"}
+        "neuronDeviceIds":{"shape":"NeuronDeviceIds"},
+        "gpuSharingStrategy":{"shape":"SharingStrategy"}
       }
     },
     "ContainerCondition":{
@@ -2260,7 +2261,8 @@
         "registeredAt":{"shape":"Timestamp"},
         "attachments":{"shape":"Attachments"},
         "tags":{"shape":"Tags"},
-        "healthStatus":{"shape":"ContainerInstanceHealthStatus"}
+        "healthStatus":{"shape":"ContainerInstanceHealthStatus"},
+        "gpuDevices":{"shape":"GpuDevices"}
       }
     },
     "ContainerInstanceField":{
@@ -4453,9 +4455,31 @@
         "failures":{"shape":"Failures"}
       }
     },
+    "GpuDevice":{
+      "type":"structure",
+      "members":{
+        "gpuId":{"shape":"String"},
+        "sharingMode":{"shape":"GpuSharingMode"},
+        "totalMemoryInMiB":{"shape":"BoxedInteger"},
+        "remainingMemoryInMiB":{"shape":"BoxedInteger"},
+        "containerCount":{"shape":"BoxedInteger"}
+      }
+    },
+    "GpuDevices":{
+      "type":"list",
+      "member":{"shape":"GpuDevice"}
+    },
     "GpuIds":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "GpuSharingMode":{
+      "type":"string",
+      "enum":[
+        "IDLE",
+        "NVIDIA_MPS",
+        "DEDICATED"
+      ]
     },
     "HealthCheck":{
       "type":"structure",
@@ -5607,6 +5631,25 @@
       },
       "exception":true
     },
+    "NvidiaMpsAllocation":{
+      "type":"structure",
+      "required":["memory"],
+      "members":{
+        "memory":{"shape":"NvidiaMpsAllocationMemoryInteger"},
+        "maxComputePercent":{"shape":"NvidiaMpsAllocationMaxComputePercentInteger"}
+      }
+    },
+    "NvidiaMpsAllocationMaxComputePercentInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "NvidiaMpsAllocationMemoryInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
     "OSFamily":{
       "type":"string",
       "enum":[
@@ -5983,13 +6026,11 @@
     },
     "ResourceRequirement":{
       "type":"structure",
-      "required":[
-        "value",
-        "type"
-      ],
+      "required":["type"],
       "members":{
         "value":{"shape":"String"},
-        "type":{"shape":"ResourceType"}
+        "type":{"shape":"ResourceType"},
+        "sharingStrategy":{"shape":"SharingStrategy"}
       }
     },
     "ResourceRequirements":{
@@ -6631,6 +6672,13 @@
     "Settings":{
       "type":"list",
       "member":{"shape":"Setting"}
+    },
+    "SharingStrategy":{
+      "type":"structure",
+      "members":{
+        "nvidiaMps":{"shape":"NvidiaMpsAllocation"}
+      },
+      "union":true
     },
     "SortOrder":{
       "type":"string",
