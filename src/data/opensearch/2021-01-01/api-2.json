@@ -61,6 +61,22 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "AddReplicationPeer":{
+      "name":"AddReplicationPeer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/replication/addPeer"
+      },
+      "input":{"shape":"AddReplicationPeerRequest"},
+      "output":{"shape":"AddReplicationPeerResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "AddTags":{
       "name":"AddTags",
       "http":{
@@ -174,6 +190,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ]
+    },
+    "CompareDomainConfiguration":{
+      "name":"CompareDomainConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/compareDomainConfiguration"
+      },
+      "input":{"shape":"CompareDomainConfigurationRequest"},
+      "output":{"shape":"CompareDomainConfigurationResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
+      ],
+      "readonly":true
     },
     "CreateApplication":{
       "name":"CreateApplication",
@@ -550,6 +582,22 @@
         {"shape":"DependencyFailureException"}
       ]
     },
+    "DescribeDomainReplication":{
+      "name":"DescribeDomainReplication",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/replication"
+      },
+      "input":{"shape":"DescribeDomainReplicationRequest"},
+      "output":{"shape":"DescribeDomainReplicationResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
+      ],
+      "readonly":true
+    },
     "DescribeDomains":{
       "name":"DescribeDomains",
       "http":{
@@ -750,6 +798,21 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
+    "FailoverReplication":{
+      "name":"FailoverReplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/replication/failover"
+      },
+      "input":{"shape":"FailoverReplicationRequest"},
+      "output":{"shape":"FailoverReplicationResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
         {"shape":"DisabledOperationException"}
       ]
     },
@@ -1301,6 +1364,21 @@
         {"shape":"DisabledOperationException"}
       ]
     },
+    "RemoveReplicationPeer":{
+      "name":"RemoveReplicationPeer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/replication/removePeer"
+      },
+      "input":{"shape":"RemoveReplicationPeerRequest"},
+      "output":{"shape":"RemoveReplicationPeerResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "RemoveTags":{
       "name":"RemoveTags",
       "http":{
@@ -1393,6 +1471,21 @@
         {"shape":"InternalException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "SwitchoverReplication":{
+      "name":"SwitchoverReplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/replication/switchover"
+      },
+      "input":{"shape":"SwitchoverReplicationRequest"},
+      "output":{"shape":"SwitchoverReplicationResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
       ]
     },
     "UpdateApplication":{
@@ -1733,6 +1826,29 @@
       "type":"structure",
       "members":{
         "DataSourceArn":{"shape":"String"}
+      }
+    },
+    "AddReplicationPeerRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "PeerDomainArn"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "PeerDomainArn":{"shape":"DomainArn"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "AddReplicationPeerResponse":{
+      "type":"structure",
+      "members":{
+        "DomainArn":{"shape":"DomainArn"},
+        "Status":{"shape":"ReplicationStatus"}
       }
     },
     "AddTagsRequest":{
@@ -2248,6 +2364,18 @@
         "delete_failed"
       ]
     },
+    "CategoryDiffResult":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"DiffStatus"},
+        "InSync":{"shape":"DiffCount"},
+        "SourceOnly":{"shape":"DiffCount"},
+        "TargetOnly":{"shape":"DiffCount"},
+        "Diverged":{"shape":"DiffCount"},
+        "Items":{"shape":"DiffItems"},
+        "Truncated":{"shape":"Boolean"}
+      }
+    },
     "ChangeProgressDetails":{
       "type":"structure",
       "members":{
@@ -2376,6 +2504,33 @@
     "CommitMessage":{
       "type":"string",
       "max":160
+    },
+    "CompareDomainConfigurationCategoryMap":{
+      "type":"map",
+      "key":{"shape":"MetadataCategory"},
+      "value":{"shape":"CategoryDiffResult"},
+      "max":20
+    },
+    "CompareDomainConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "SourceDomainArn",
+        "TargetDomainArn",
+        "Categories"
+      ],
+      "members":{
+        "SourceDomainArn":{"shape":"DomainArn"},
+        "TargetDomainArn":{"shape":"DomainArn"},
+        "Categories":{"shape":"MetadataCategoryList"}
+      }
+    },
+    "CompareDomainConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "SourceDomainArn":{"shape":"DomainArn"},
+        "TargetDomainArn":{"shape":"DomainArn"},
+        "Categories":{"shape":"CompareDomainConfigurationCategoryMap"}
+      }
     },
     "CompatibleVersionsList":{
       "type":"list",
@@ -3046,6 +3201,25 @@
         "DomainNodesStatusList":{"shape":"DomainNodesStatusList"}
       }
     },
+    "DescribeDomainReplicationRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        }
+      }
+    },
+    "DescribeDomainReplicationResponse":{
+      "type":"structure",
+      "members":{
+        "DomainArn":{"shape":"DomainArn"},
+        "Role":{"shape":"ReplicationRole"},
+        "Peers":{"shape":"ReplicationPeerList"}
+      }
+    },
     "DescribeDomainRequest":{
       "type":"structure",
       "required":["DomainName"],
@@ -3328,6 +3502,46 @@
         "dataSourceArn":{"shape":"ARN"}
       }
     },
+    "DiffCount":{
+      "type":"integer",
+      "min":0
+    },
+    "DiffFieldPath":{
+      "type":"string",
+      "max":512
+    },
+    "DiffFieldPolicy":{
+      "type":"string",
+      "enum":["redacted"]
+    },
+    "DiffFieldValue":{
+      "type":"string",
+      "max":10240
+    },
+    "DiffItemName":{
+      "type":"string",
+      "max":256
+    },
+    "DiffItemNameList":{
+      "type":"list",
+      "member":{"shape":"DiffItemName"},
+      "max":1000
+    },
+    "DiffItems":{
+      "type":"structure",
+      "members":{
+        "SourceOnly":{"shape":"DiffItemNameList"},
+        "TargetOnly":{"shape":"DiffItemNameList"},
+        "Diverged":{"shape":"DivergentItemList"}
+      }
+    },
+    "DiffStatus":{
+      "type":"string",
+      "enum":[
+        "compared",
+        "error"
+      ]
+    },
     "DirectQueryDataSource":{
       "type":"structure",
       "members":{
@@ -3421,6 +3635,32 @@
       "members":{
         "DomainPackageDetailsList":{"shape":"DomainPackageDetailsList"}
       }
+    },
+    "DivergentField":{
+      "type":"structure",
+      "members":{
+        "Path":{"shape":"DiffFieldPath"},
+        "SourceValue":{"shape":"DiffFieldValue"},
+        "TargetValue":{"shape":"DiffFieldValue"},
+        "Policy":{"shape":"DiffFieldPolicy"}
+      }
+    },
+    "DivergentFieldList":{
+      "type":"list",
+      "member":{"shape":"DivergentField"},
+      "max":100
+    },
+    "DivergentItem":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"DiffItemName"},
+        "Fields":{"shape":"DivergentFieldList"}
+      }
+    },
+    "DivergentItemList":{
+      "type":"list",
+      "member":{"shape":"DivergentItem"},
+      "max":1000
     },
     "DomainArn":{
       "type":"string",
@@ -3827,6 +4067,30 @@
         "types":{"shape":"StringList"},
         "objects":{"shape":"SavedObjectIdentifierList"},
         "includeReferencesDeep":{"shape":"Boolean"}
+      }
+    },
+    "FailoverReplicationRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "PeerDomainArn",
+        "AllowDataLoss"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "PeerDomainArn":{"shape":"DomainArn"},
+        "AllowDataLoss":{"shape":"Boolean"}
+      }
+    },
+    "FailoverReplicationResponse":{
+      "type":"structure",
+      "members":{
+        "DomainArn":{"shape":"DomainArn"},
+        "Status":{"shape":"ReplicationStatus"}
       }
     },
     "Filter":{
@@ -5139,6 +5403,17 @@
       "max":1024,
       "min":0
     },
+    "MetadataCategory":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "MetadataCategoryList":{
+      "type":"list",
+      "member":{"shape":"MetadataCategory"},
+      "max":20,
+      "min":1
+    },
     "MigrationError":{
       "type":"structure",
       "members":{
@@ -5862,6 +6137,28 @@
         "Connection":{"shape":"InboundConnection"}
       }
     },
+    "RemoveReplicationPeerRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "PeerDomainArn"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "PeerDomainArn":{"shape":"DomainArn"}
+      }
+    },
+    "RemoveReplicationPeerResponse":{
+      "type":"structure",
+      "members":{
+        "DomainArn":{"shape":"DomainArn"},
+        "Status":{"shape":"ReplicationStatus"}
+      }
+    },
     "RemoveTagsRequest":{
       "type":"structure",
       "required":[
@@ -5872,6 +6169,43 @@
         "ARN":{"shape":"ARN"},
         "TagKeys":{"shape":"StringList"}
       }
+    },
+    "ReplicationPeer":{
+      "type":"structure",
+      "members":{
+        "PeerDomainArn":{"shape":"DomainArn"},
+        "PeerRole":{"shape":"ReplicationRole"},
+        "Status":{"shape":"ReplicationStatus"},
+        "StatusMessage":{"shape":"ReplicationStatusMessage"}
+      }
+    },
+    "ReplicationPeerList":{
+      "type":"list",
+      "member":{"shape":"ReplicationPeer"}
+    },
+    "ReplicationRole":{
+      "type":"string",
+      "enum":[
+        "PRIMARY",
+        "SECONDARY"
+      ]
+    },
+    "ReplicationStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING_SETUP",
+        "ACTIVE",
+        "SWITCHING_OVER",
+        "FAILING_OVER",
+        "PENDING_REMOVAL",
+        "DETACHED",
+        "EJECTED",
+        "FAILED"
+      ]
+    },
+    "ReplicationStatusMessage":{
+      "type":"string",
+      "max":2048
     },
     "RequestId":{
       "type":"string",
@@ -6361,6 +6695,28 @@
         "UserId",
         "Email"
       ]
+    },
+    "SwitchoverReplicationRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "PeerDomainArn"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "PeerDomainArn":{"shape":"DomainArn"}
+      }
+    },
+    "SwitchoverReplicationResponse":{
+      "type":"structure",
+      "members":{
+        "DomainArn":{"shape":"DomainArn"},
+        "Status":{"shape":"ReplicationStatus"}
+      }
     },
     "TLSSecurityPolicy":{
       "type":"string",

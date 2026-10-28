@@ -839,6 +839,20 @@
         "name":{"shape":"__string"}
       }
     },
+    "CustomPluginUpdate":{
+      "type":"structure",
+      "required":[
+        "customPluginArn",
+        "revision"
+      ],
+      "members":{
+        "customPluginArn":{"shape":"__string"},
+        "revision":{
+          "shape":"__longMin1",
+          "box":true
+        }
+      }
+    },
     "DeleteConnectorRequest":{
       "type":"structure",
       "required":["connectorArn"],
@@ -1287,6 +1301,13 @@
         "customPlugin":{"shape":"CustomPluginDescription"}
       }
     },
+    "PluginUpdate":{
+      "type":"structure",
+      "required":["customPlugin"],
+      "members":{
+        "customPlugin":{"shape":"CustomPluginUpdate"}
+      }
+    },
     "ProvisionedCapacity":{
       "type":"structure",
       "required":[
@@ -1556,7 +1577,10 @@
           "shape":"__string",
           "location":"querystring",
           "locationName":"currentVersion"
-        }
+        },
+        "plugins":{"shape":"__listOfPluginUpdate"},
+        "workerConfiguration":{"shape":"WorkerConfigurationUpdate"},
+        "useDefaultWorkerConfiguration":{"shape":"__boolean"}
       }
     },
     "UpdateConnectorResponse":{
@@ -1635,6 +1659,20 @@
         "workerConfigurationState":{"shape":"WorkerConfigurationState"}
       }
     },
+    "WorkerConfigurationUpdate":{
+      "type":"structure",
+      "required":[
+        "revision",
+        "workerConfigurationArn"
+      ],
+      "members":{
+        "revision":{
+          "shape":"__longMin1",
+          "box":true
+        },
+        "workerConfigurationArn":{"shape":"__string"}
+      }
+    },
     "WorkerLogDelivery":{
       "type":"structure",
       "members":{
@@ -1654,7 +1692,10 @@
     "WorkerSetting":{
       "type":"structure",
       "members":{
-        "capacity":{"shape":"CapacityDescription"}
+        "capacity":{"shape":"CapacityDescription"},
+        "plugins":{"shape":"__listOfPluginDescription"},
+        "workerConfiguration":{"shape":"WorkerConfigurationDescription"},
+        "useDefaultWorkerConfiguration":{"shape":"__boolean"}
       }
     },
     "__boolean":{"type":"boolean"},
@@ -1692,6 +1733,10 @@
     "__listOfPluginDescription":{
       "type":"list",
       "member":{"shape":"PluginDescription"}
+    },
+    "__listOfPluginUpdate":{
+      "type":"list",
+      "member":{"shape":"PluginUpdate"}
     },
     "__listOfWorkerConfigurationSummary":{
       "type":"list",

@@ -9,6 +9,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result cancelGremlinQuery(array{queryId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelGremlinQueryAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise cancelGremlinQueryAsync(array{queryId?: string, ...} $args = [])
+ * @method \Aws\Result cancelIndexRebuild(array $args = [])
+ * @phpstan-method \Aws\Result cancelIndexRebuild(array{rebuildId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelIndexRebuildAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise cancelIndexRebuildAsync(array{rebuildId?: string, ...} $args = [])
  * @method \Aws\Result cancelLoaderJob(array $args = [])
  * @phpstan-method \Aws\Result cancelLoaderJob(array{loadId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelLoaderJobAsync(array $args = [])
@@ -99,6 +103,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getGremlinQueryStatus(array{queryId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getGremlinQueryStatusAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getGremlinQueryStatusAsync(array{queryId?: string, ...} $args = [])
+ * @method \Aws\Result getIndexRebuildStatus(array $args = [])
+ * @phpstan-method \Aws\Result getIndexRebuildStatus(array{rebuildId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getIndexRebuildStatusAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getIndexRebuildStatusAsync(array{rebuildId?: string, ...} $args = [])
  * @method \Aws\Result getLoaderJobStatus(array $args = [])
  * @phpstan-method \Aws\Result getLoaderJobStatus(array{loadId?: string, details?: bool, errors?: bool, page?: int, errorsPerPage?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getLoaderJobStatusAsync(array $args = [])
@@ -175,10 +183,18 @@ use Aws\AwsClient;
  *     encoding?: 'gzip',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result getStorageInfo(array $args = [])
+ * @phpstan-method \Aws\Result getStorageInfo(array{...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getStorageInfoAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getStorageInfoAsync(array{...} $args = [])
  * @method \Aws\Result listGremlinQueries(array $args = [])
  * @phpstan-method \Aws\Result listGremlinQueries(array{includeWaiting?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listGremlinQueriesAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listGremlinQueriesAsync(array{includeWaiting?: bool, ...} $args = [])
+ * @method \Aws\Result listIndexRebuilds(array $args = [])
+ * @phpstan-method \Aws\Result listIndexRebuilds(array{...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listIndexRebuildsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listIndexRebuildsAsync(array{...} $args = [])
  * @method \Aws\Result listLoaderJobs(array $args = [])
  * @phpstan-method \Aws\Result listLoaderJobs(array{limit?: int, includeQueuedLoads?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listLoaderJobsAsync(array $args = [])
@@ -211,6 +227,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result manageSparqlStatistics(array{mode?: 'disableAutoCompute'|'enableAutoCompute'|'refresh', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise manageSparqlStatisticsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise manageSparqlStatisticsAsync(array{mode?: 'disableAutoCompute'|'enableAutoCompute'|'refresh', ...} $args = [])
+ * @method \Aws\Result startIndexRebuild(array $args = [])
+ * @phpstan-method \Aws\Result startIndexRebuild(array{
+ *     scope?: 'ALL'|'DICTIONARIES'|'QUADS',
+ *     concurrency?: int,
+ *     writeBufferSize?: 'HIGH'|'LOW'|'MEDIUM',
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise startIndexRebuildAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startIndexRebuildAsync(array{
+ *     scope?: 'ALL'|'DICTIONARIES'|'QUADS',
+ *     concurrency?: int,
+ *     writeBufferSize?: 'HIGH'|'LOW'|'MEDIUM',
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result startLoaderJob(array $args = [])
  * @phpstan-method \Aws\Result startLoaderJob(array{
  *     source?: string,

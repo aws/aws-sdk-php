@@ -57,6 +57,7 @@
     "AdBreakId": {
       "base": null,
       "refs": {
+        "InsertAdBreakRequest$adBreakId": "<p>Caller-specified unique identifier for the ad break to insert into the playlist.</p>",
         "InsertAdBreakResponse$adBreakId": "<p>Unique identifier for the ad break that was inserted into the playlist.</p>"
       }
     },
@@ -426,10 +427,10 @@
     "FailoverSlateActivationThresholdSeconds": {
       "base": null,
       "refs": {
-        "CreateFailoverSlateConfigurationRequest$activationThresholdSeconds": "<p>Number of seconds of ingest interruption before the failover slate activates. Minimum: <code>3</code>. Maximum: <code>5</code>. Default: <code>3</code>.</p>",
-        "FailoverSlateConfiguration$activationThresholdSeconds": "<p>Number of seconds of ingest interruption before the failover slate activates. Minimum: <code>3</code>. Maximum: <code>5</code>. Default: <code>3</code>.</p>",
-        "FailoverSlateConfigurationSummary$activationThresholdSeconds": "<p>Number of seconds of ingest interruption before the failover slate activates. Minimum: <code>3</code>. Maximum: <code>5</code>. Default: <code>3</code>.</p>",
-        "UpdateFailoverSlateConfigurationRequest$activationThresholdSeconds": "<p>Number of seconds of ingest interruption before the failover slate activates. Minimum: <code>3</code>. Maximum: <code>5</code>. Default: <code>3</code>.</p>"
+        "CreateFailoverSlateConfigurationRequest$activationThresholdSeconds": "<p>Number of seconds of ingest interruption before the failover slate activates. Default: <code>3</code>.</p>",
+        "FailoverSlateConfiguration$activationThresholdSeconds": "<p>Number of seconds of ingest interruption before the failover slate activates. Default: <code>3</code>.</p>",
+        "FailoverSlateConfigurationSummary$activationThresholdSeconds": "<p>Number of seconds of ingest interruption before the failover slate activates. Default: <code>3</code>.</p>",
+        "UpdateFailoverSlateConfigurationRequest$activationThresholdSeconds": "<p>Number of seconds of ingest interruption before the failover slate activates. Default: <code>3</code>.</p>"
       }
     },
     "FailoverSlateConfiguration": {
@@ -482,19 +483,19 @@
     "FailoverSlateMaxDisplaySeconds": {
       "base": null,
       "refs": {
-        "CreateFailoverSlateConfigurationRequest$maxSlateDisplaySeconds": "<p>Maximum number of seconds that the failover slate displays. Minimum: <code>60</code>. Maximum: <code>180</code>. Default: <code>60</code>.</p>",
-        "FailoverSlateConfiguration$maxSlateDisplaySeconds": "<p>Maximum number of seconds that the failover slate displays. Minimum: <code>60</code>. Maximum: <code>180</code>. Default: <code>60</code>.</p>",
-        "FailoverSlateConfigurationSummary$maxSlateDisplaySeconds": "<p>Maximum number of seconds that the failover slate displays. Minimum: <code>60</code>. Maximum: <code>180</code>. Default: <code>60</code>.</p>",
-        "UpdateFailoverSlateConfigurationRequest$maxSlateDisplaySeconds": "<p>Maximum number of seconds that the failover slate displays. Minimum: <code>60</code>. Maximum: <code>180</code>. Default: <code>60</code>.</p>"
+        "CreateFailoverSlateConfigurationRequest$maxSlateDisplaySeconds": "<p>Maximum number of seconds that the failover slate displays. Default: <code>60</code>.</p>",
+        "FailoverSlateConfiguration$maxSlateDisplaySeconds": "<p>Maximum number of seconds that the failover slate displays. Default: <code>60</code>.</p>",
+        "FailoverSlateConfigurationSummary$maxSlateDisplaySeconds": "<p>Maximum number of seconds that the failover slate displays. Default: <code>60</code>.</p>",
+        "UpdateFailoverSlateConfigurationRequest$maxSlateDisplaySeconds": "<p>Maximum number of seconds that the failover slate displays. Default: <code>60</code>.</p>"
       }
     },
     "FailoverSlateMinDisplaySeconds": {
       "base": null,
       "refs": {
-        "CreateFailoverSlateConfigurationRequest$minSlateDisplaySeconds": "<p>Minimum number of seconds that the failover slate displays after activation. Minimum: <code>3</code>. Maximum: <code>10</code>. Default: <code>3</code>.</p>",
-        "FailoverSlateConfiguration$minSlateDisplaySeconds": "<p>Minimum number of seconds that the failover slate displays after activation. Minimum: <code>3</code>. Maximum: <code>10</code>. Default: <code>3</code>.</p>",
-        "FailoverSlateConfigurationSummary$minSlateDisplaySeconds": "<p>Minimum number of seconds that the failover slate displays after activation. Minimum: <code>3</code>. Maximum: <code>10</code>. Default: <code>3</code>.</p>",
-        "UpdateFailoverSlateConfigurationRequest$minSlateDisplaySeconds": "<p>Minimum number of seconds that the failover slate displays after activation. Minimum: <code>3</code>. Maximum: <code>10</code>. Default: <code>3</code>.</p>"
+        "CreateFailoverSlateConfigurationRequest$minSlateDisplaySeconds": "<p>Minimum number of seconds that the failover slate displays after activation. Default: <code>3</code>.</p>",
+        "FailoverSlateConfiguration$minSlateDisplaySeconds": "<p>Minimum number of seconds that the failover slate displays after activation. Default: <code>3</code>.</p>",
+        "FailoverSlateConfigurationSummary$minSlateDisplaySeconds": "<p>Minimum number of seconds that the failover slate displays after activation. Default: <code>3</code>.</p>",
+        "UpdateFailoverSlateConfigurationRequest$minSlateDisplaySeconds": "<p>Minimum number of seconds that the failover slate displays after activation. Default: <code>3</code>.</p>"
       }
     },
     "GetAdConfigurationRequest": {
@@ -1502,6 +1503,8 @@
     "Time": {
       "base": null,
       "refs": {
+        "InsertAdBreakRequest$targetStartAt": "<p>Target time at which the ad break starts.</p>",
+        "InsertAdBreakResponse$targetStartAt": "<p>Target start time for the inserted ad break.</p>",
         "StreamEvent$eventTime": "<p>Time when the event occurred. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
         "StreamSession$startTime": "<p>Time when the channel went live. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
         "StreamSession$endTime": "<p>Time when the channel went offline. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>. For live streams, this is <code>NULL</code>.</p>",

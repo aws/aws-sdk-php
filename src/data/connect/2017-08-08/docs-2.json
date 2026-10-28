@@ -2829,6 +2829,7 @@
         "DeleteContactFlowModuleRequest$ContactFlowModuleId": "<p>The identifier of the flow module.</p>",
         "DescribeContactFlowModuleAliasRequest$ContactFlowModuleId": "<p>The identifier of the flow module.</p>",
         "DescribeContactFlowModuleRequest$ContactFlowModuleId": "<p>The identifier of the flow module.</p>",
+        "TaskTemplateContactHooks$WrapUpFlowId": "<p>The identifier of the flow module that runs when an agent attempts to disconnect from a task created by referencing this template. If no agent ever connects to the task, the flow module runs when the task is terminated.</p>",
         "UpdateContactFlowModuleAliasRequest$ContactFlowModuleId": "<p>The identifier of the flow module.</p>",
         "UpdateContactFlowModuleContentRequest$ContactFlowModuleId": "<p>The identifier of the flow module.</p>",
         "UpdateContactFlowModuleMetadataRequest$ContactFlowModuleId": "<p>The identifier of the flow module.</p>"
@@ -14328,6 +14329,15 @@
         "GetTaskTemplateResponse$Constraints": "<p>Constraints that are applicable to the fields listed. Although this parameter is marked as optional in the API model, the service requires it when calling <code>CreateTaskTemplate</code> or <code>UpdateTaskTemplate</code>. The <code>RequiredFields</code> array must contain at least one element, and the field of type <code>NAME</code> must be included in <code>RequiredFields</code>.</p>",
         "UpdateTaskTemplateRequest$Constraints": "<p>Constraints that are applicable to the fields listed. Although this parameter is marked as optional in the API model, the service requires it when calling <code>CreateTaskTemplate</code> or <code>UpdateTaskTemplate</code>. The <code>RequiredFields</code> array must contain at least one element, and the field of type <code>NAME</code> must be included in <code>RequiredFields</code>.</p>",
         "UpdateTaskTemplateResponse$Constraints": "<p>Constraints that are applicable to the fields listed. Although this parameter is marked as optional in the API model, the service requires it when calling <code>CreateTaskTemplate</code> or <code>UpdateTaskTemplate</code>. The <code>RequiredFields</code> array must contain at least one element, and the field of type <code>NAME</code> must be included in <code>RequiredFields</code>.</p>"
+      }
+    },
+    "TaskTemplateContactHooks": {
+      "base": "<p>The event hooks that are set on tasks created by using this template.</p>",
+      "refs": {
+        "CreateTaskTemplateRequest$ContactHooks": "<p>The event hooks that are set on tasks created by using this template.</p>",
+        "GetTaskTemplateResponse$ContactHooks": "<p>The event hooks that are set on tasks created by using this template.</p>",
+        "UpdateTaskTemplateRequest$ContactHooks": "<p>The event hooks that are set on tasks created by using this template.</p>",
+        "UpdateTaskTemplateResponse$ContactHooks": "<p>The event hooks that are set on tasks created by using this template.</p>"
       }
     },
     "TaskTemplateDefaultFieldValue": {

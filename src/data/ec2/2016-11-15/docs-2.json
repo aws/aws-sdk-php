@@ -563,6 +563,7 @@
     "GetCapacityManagerMetricData": "<p> Retrieves capacity usage metrics for your EC2 resources. Returns time-series data for metrics like unused capacity, utilization rates, and costs across On-Demand, Spot, and Capacity Reservations. Data can be grouped and filtered by various dimensions such as region, account, and instance family. </p>",
     "GetCapacityManagerMetricDimensions": "<p> Retrieves the available dimension values for capacity metrics within a specified time range. This is useful for discovering what accounts, regions, instance families, and other dimensions have data available for filtering and grouping. </p>",
     "GetCapacityManagerMonitoredTagKeys": "<p> Retrieves the tag keys that are currently being monitored by EC2 Capacity Manager. Monitored tag keys are included as dimensions in capacity metric data, enabling you to group and filter metrics by tag values. </p>",
+    "GetCapacityManagerSupportabilityScores": "<p> Scores how well each instance type and Availability Zone combination can support a capacity request, based on current Amazon EC2 capacity. The response includes a score for each combination and an aggregate score for all combinations in the request. This action doesn't launch or reserve instances, and a score doesn't guarantee that a later launch will succeed. </p> <p> Call this action in the Region where you turned on Capacity Manager. A single request can include Availability Zones in any Region. Real-time supportability checks are available only to Amazon Web Services Support customers on the Unified Operations plan. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/capacity-manager-supportability.html\">Check supportability</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "GetCapacityReservationUsage": "<p>Gets usage information about a Capacity Reservation. If the Capacity Reservation is shared, it shows usage information for the Capacity Reservation owner and each Amazon Web Services account that is currently using the shared capacity. If the Capacity Reservation is not shared, it shows only the Capacity Reservation owner's usage.</p>",
     "GetClientVpnEndpointAuthorizationPolicy": "<p>Describes the authorization policy for a Client VPN endpoint.</p>",
     "GetCoipPoolUsage": "<p>Describes the allocations from the specified customer-owned address pool.</p>",
@@ -2348,8 +2349,10 @@
         "AvailabilityZoneAddress$AvailabilityZoneId": "<p>For regional NAT gateways only: The ID of the Availability Zone where this specific NAT gateway configuration will be active. Each AZ in a regional NAT gateway has its own configuration to handle outbound NAT traffic from that AZ. Use this instead of AvailabilityZone for consistent identification of AZs across Amazon Web Services Regions. </p> <p>A regional NAT gateway is a single NAT Gateway that works across multiple availability zones (AZs) in your VPC, providing redundancy, scalability and availability across all the AZs in a Region.</p>",
         "CapacityBlockExtension$AvailabilityZoneId": "<p>The Availability Zone ID of the Capacity Block extension.</p>",
         "CapacityBlockExtensionOffering$AvailabilityZoneId": "<p>The Availability Zone ID of the Capacity Block that will be extended.</p>",
+        "CapacityManagerSupportabilityScore$AvailabilityZoneId": "<p> The ID of the Availability Zone. </p>",
         "CapacityReservationInfo$AvailabilityZoneId": "<p>The ID of the Availability Zone.</p>",
         "ClientVpnAvailabilityZoneIdSet$member": null,
+        "CreateCapacityReservationFleetRequest$AvailabilityZoneId": "<p>Reserved for internal use.</p>",
         "CreateCapacityReservationRequest$AvailabilityZoneId": "<p>The ID of the Availability Zone in which to create the Capacity Reservation.</p>",
         "CreateDefaultSubnetRequest$AvailabilityZoneId": "<p>The ID of the Availability Zone.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> must be specified, but not both.</p>",
         "CreateFleetInstance$AvailabilityZoneId": "<p>The ID of the Availability Zone in which the instance was launched. For example, <code>use2-az1</code>.</p> <p>Supported only for fleets of type <code>instant</code>.</p>",
@@ -2408,6 +2411,7 @@
         "CapacityBlockExtensionOffering$AvailabilityZone": "<p>The Availability Zone of the Capacity Block that will be extended.</p>",
         "CapacityReservationInfo$AvailabilityZone": "<p>The Availability Zone for the Capacity Reservation.</p>",
         "ClientVpnAvailabilityZoneSet$member": null,
+        "CreateCapacityReservationFleetRequest$AvailabilityZone": "<p>Reserved for internal use.</p>",
         "CreateCapacityReservationRequest$AvailabilityZone": "<p>The Availability Zone in which to create the Capacity Reservation.</p>",
         "CreateDefaultSubnetRequest$AvailabilityZone": "<p>The Availability Zone in which to create the default subnet.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> must be specified, but not both.</p>",
         "CreateFleetInstance$AvailabilityZone": "<p>The name of the Availability Zone in which the instance was launched. For example, <code>us-east-2a</code>.</p> <p>Supported only for fleets of type <code>instant</code>.</p>",
@@ -3336,6 +3340,7 @@
         "GetCapacityManagerMetricDataRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "GetCapacityManagerMetricDimensionsRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "GetCapacityManagerMonitoredTagKeysRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
+        "GetCapacityManagerSupportabilityScoresRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "GetCapacityReservationUsageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetClientVpnEndpointAuthorizationPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetCoipPoolUsageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -4259,6 +4264,18 @@
         "CapacityReservation$CapacityAllocations": "<p>Information about instance capacity usage.</p>"
       }
     },
+    "CapacityAmount": {
+      "base": null,
+      "refs": {
+        "GetCapacityManagerSupportabilityScoresRequest$CapacityAmount": "<p> The amount of capacity that you need, in the unit that you specify for <code>CapacityUnit</code>. Each score is relative to this amount. </p>"
+      }
+    },
+    "CapacityAvailabilityZoneIdList": {
+      "base": null,
+      "refs": {
+        "GetCapacityManagerSupportabilityScoresRequest$CapacityAvailabilityZoneIds": "<p> The IDs of the Availability Zones to score, such as <code>use1-az1</code>. You can specify Availability Zones in different Regions. You can specify up to 10 Availability Zones. </p>"
+      }
+    },
     "CapacityBlock": {
       "base": "<p>Reserve powerful GPU instances on a future date to support your short duration machine learning (ML) workloads. Instances that run inside a Capacity Block are automatically placed close together inside <a href=\"http://aws.amazon.com/ec2/ultraclusters/\">Amazon EC2 UltraClusters</a>, for low-latency, petabit-scale, non-blocking networking.</p> <p>You can also reserve Amazon EC2 UltraServers. UltraServers connect multiple EC2 instances using a low-latency, high-bandwidth accelerator interconnect (NeuronLink). They are built to tackle very large-scale AI/ML workloads that require significant processing power. For more information, see Amazon EC2 UltraServers.</p>",
       "refs": {
@@ -4435,6 +4452,18 @@
         "EnableCapacityManagerResult$CapacityManagerStatus": "<p> The current status of Capacity Manager after the enable operation. </p>",
         "GetCapacityManagerAttributesResult$CapacityManagerStatus": "<p> The current status of Capacity Manager. </p>",
         "UpdateCapacityManagerOrganizationsAccessResult$CapacityManagerStatus": "<p> The current status of Capacity Manager after the update operation. </p>"
+      }
+    },
+    "CapacityManagerSupportabilityScore": {
+      "base": "<p> The supportability score for a single instance type and Availability Zone combination. </p>",
+      "refs": {
+        "CapacityManagerSupportabilityScoreSet$member": null
+      }
+    },
+    "CapacityManagerSupportabilityScoreSet": {
+      "base": null,
+      "refs": {
+        "GetCapacityManagerSupportabilityScoresResult$CapacityManagerSupportabilityScores": "<p> The score for each instance type and Availability Zone combination in the request. </p>"
       }
     },
     "CapacityManagerTagDimension": {
@@ -4823,6 +4852,12 @@
       "base": null,
       "refs": {
         "CapacityManagerDimension$Tenancy": "<p> The tenancy of the EC2 instances associated with this capacity dimension. Valid values are 'default' for shared tenancy, 'dedicated' for dedicated instances, or 'host' for dedicated hosts. </p>"
+      }
+    },
+    "CapacityUnit": {
+      "base": null,
+      "refs": {
+        "GetCapacityManagerSupportabilityScoresRequest$CapacityUnit": "<p> The unit for <code>CapacityAmount</code>. </p>"
       }
     },
     "CarrierGateway": {
@@ -13377,6 +13412,16 @@
       "refs": {
       }
     },
+    "GetCapacityManagerSupportabilityScoresRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCapacityManagerSupportabilityScoresResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetCapacityReservationUsageRequest": {
       "base": null,
       "refs": {
@@ -16046,6 +16091,8 @@
     "InstanceRequirementsRequest": {
       "base": "<p>The attributes for the instance types. When you specify instance attributes, Amazon EC2 will identify instance types with these attributes.</p> <p>You must specify <code>VCpuCount</code> and <code>MemoryMiB</code>. All other attributes are optional. Any unspecified optional attribute is set to its default.</p> <p>When you specify multiple attributes, you get instance types that satisfy all of the specified attributes. If you specify multiple values for an attribute, you get instance types that satisfy any of the specified values.</p> <p>To limit the list of instance types from which Amazon EC2 can identify matching instance types, you can use one of the following parameters, but not both in the same request:</p> <ul> <li> <p> <code>AllowedInstanceTypes</code> - The instance types to include in the list. All other instance types are ignored, even if they match your specified attributes.</p> </li> <li> <p> <code>ExcludedInstanceTypes</code> - The instance types to exclude from the list, even if they match your specified attributes.</p> </li> </ul> <note> <p>If you specify <code>InstanceRequirements</code>, you can't specify <code>InstanceType</code>.</p> <p>Attribute-based instance type selection is only supported when using Auto Scaling groups, EC2 Fleet, and Spot Fleet to launch instances. If you plan to use the launch template in the <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-instance-wizard.html\">launch instance wizard</a>, or with the <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html\">RunInstances</a> API or <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-instance.html\">AWS::EC2::Instance</a> Amazon Web Services CloudFormation resource, you can't specify <code>InstanceRequirements</code>.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet-attribute-based-instance-type-selection.html\">Specify attributes for instance type selection for EC2 Fleet or Spot Fleet</a> and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-placement-score.html\">Spot placement score</a> in the <i>Amazon EC2 User Guide</i>.</p>",
       "refs": {
+        "CapacityReservationFleet$InstanceRequirements": "<p>Reserved for internal use.</p>",
+        "CreateCapacityReservationFleetRequest$InstanceRequirements": "<p>Reserved for internal use.</p>",
         "FleetLaunchTemplateOverridesRequest$InstanceRequirements": "<p>The attributes for the instance types. When you specify instance attributes, Amazon EC2 will identify instance types with those attributes.</p> <note> <p>If you specify <code>InstanceRequirements</code>, you can't specify <code>InstanceType</code>.</p> </note>",
         "GetInstanceTypesFromInstanceRequirementsRequest$InstanceRequirements": "<p>The attributes required for the instance types.</p>",
         "InstanceRequirementsWithMetadataRequest$InstanceRequirements": "<p>The attributes for the instance types. When you specify instance attributes, Amazon EC2 will identify instance types with those attributes.</p>",
@@ -16055,6 +16102,7 @@
     "InstanceRequirementsWithMetadataRequest": {
       "base": "<p>The architecture type, virtualization type, and other attributes for the instance types. When you specify instance attributes, Amazon EC2 will identify instance types with those attributes.</p> <p>If you specify <code>InstanceRequirementsWithMetadataRequest</code>, you can't specify <code>InstanceTypes</code>.</p>",
       "refs": {
+        "GetCapacityManagerSupportabilityScoresRequest$InstanceRequirementsWithMetadata": "<p> The attributes that the instance types must have, such as vCPU and memory ranges. Capacity Manager resolves the attributes into matching instance types and scores each one. </p> <p> Specify either <code>InstanceTypes</code> or <code>InstanceRequirementsWithMetadata</code>, but not both. </p>",
         "GetSpotPlacementScoresRequest$InstanceRequirementsWithMetadata": "<p>The attributes for the instance types. When you specify instance attributes, Amazon EC2 will identify instance types with those attributes.</p> <p>If you specify <code>InstanceRequirementsWithMetadata</code>, you can't specify <code>InstanceTypes</code>.</p>"
       }
     },
@@ -26580,6 +26628,7 @@
         "CancelledSpotInstanceRequest$SpotInstanceRequestId": "<p>The ID of the Spot Instance request.</p>",
         "CapacityAllocationMetadataEntry$Key": "<p>The key of the metadata entry.</p>",
         "CapacityAllocationMetadataEntry$Value": "<p>The value of the metadata entry.</p>",
+        "CapacityAvailabilityZoneIdList$member": null,
         "CapacityBlock$UltraserverType": "<p>The EC2 UltraServer type of the Capacity Block.</p>",
         "CapacityBlock$AvailabilityZone": "<p>The Availability Zone of the Capacity Block.</p>",
         "CapacityBlock$AvailabilityZoneId": "<p>The Availability Zone ID of the Capacity Block.</p>",
@@ -26614,6 +26663,7 @@
         "CapacityManagerDimension$ReservationUnusedFinancialOwner": "<p> The Amazon Web Services account ID that is financially responsible for unused capacity reservation costs. </p>",
         "CapacityManagerMonitoredTagKey$TagKey": "<p> The tag key being monitored. </p>",
         "CapacityManagerMonitoredTagKey$StatusMessage": "<p> A message providing additional details about the current status of the monitored tag key. </p>",
+        "CapacityManagerSupportabilityScore$InstanceType": "<p> The instance type. </p>",
         "CapacityManagerTagDimension$Key": "<p> The tag key. </p>",
         "CapacityManagerTagDimension$Value": "<p> The tag value. </p>",
         "CapacityReservation$CapacityReservationId": "<p>The ID of the Capacity Reservation.</p>",
@@ -26630,6 +26680,8 @@
         "CapacityReservationConfiguration$ReservationState": "<p>The current state of the Capacity Reservation.</p>",
         "CapacityReservationFleet$CapacityReservationFleetArn": "<p>The ARN of the Capacity Reservation Fleet.</p>",
         "CapacityReservationFleet$AllocationStrategy": "<p>The strategy used by the Capacity Reservation Fleet to determine which of the specified instance types to use. For more information, see For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/crfleet-concepts.html#allocation-strategy\">Allocation strategy</a> in the <i>Amazon EC2 User Guide</i>.</p>",
+        "CapacityReservationFleet$AvailabilityZone": "<p>Reserved for internal use.</p>",
+        "CapacityReservationFleet$AvailabilityZoneId": "<p>Reserved for internal use.</p>",
         "CapacityReservationGroup$GroupArn": "<p>The ARN of the resource group.</p>",
         "CapacityReservationGroup$OwnerId": "<p>The ID of the Amazon Web Services account that owns the resource group.</p>",
         "CapacityReservationInfo$InstanceType": "<p>The instance type for the Capacity Reservation.</p>",
@@ -28742,6 +28794,7 @@
         "SuccessfulAssociationResponseObject$AssociationValue": "<p>The association value. For <code>EC2TAG</code>, the value is formatted as <code>key=value</code>. For <code>INSTANCE_ID</code>, the value is the instance ID.</p>",
         "SuccessfulInstanceCreditSpecificationItem$InstanceId": "<p>The ID of the instance.</p>",
         "SuccessfulQueuedPurchaseDeletion$ReservedInstancesId": "<p>The ID of the Reserved Instance.</p>",
+        "SupportabilityInstanceTypeList$member": null,
         "SupportedRegionDetail$Region": "<p>The Region code.</p>",
         "SupportedRegionDetail$ServiceState": "<p>The service state. The possible values are <code>Pending</code>, <code>Available</code>, <code>Deleting</code>, <code>Deleted</code>, <code>Failed</code>, and <code>Closed</code>.</p>",
         "Tag$Key": "<p>The key of the tag.</p> <p>Constraints: Tag keys are case-sensitive and accept a maximum of 127 Unicode characters. May not begin with <code>aws:</code>.</p>",
@@ -29364,6 +29417,25 @@
         "EbsStatusSummary$Status": "<p>The current status.</p>",
         "InstanceStatusSummary$Status": "<p>The status.</p>",
         "PerformanceStatusSummary$Status": "<p>The current status.</p>"
+      }
+    },
+    "SupportabilityInstanceTypeList": {
+      "base": null,
+      "refs": {
+        "GetCapacityManagerSupportabilityScoresRequest$InstanceTypes": "<p> The instance types to score. You can specify up to 50 instance types. </p> <p> Specify either <code>InstanceTypes</code> or <code>InstanceRequirementsWithMetadata</code>, but not both. </p>"
+      }
+    },
+    "SupportabilityMarketType": {
+      "base": null,
+      "refs": {
+        "GetCapacityManagerSupportabilityScoresRequest$MarketType": "<p> The capacity market to score. </p>"
+      }
+    },
+    "SupportabilityScore": {
+      "base": null,
+      "refs": {
+        "CapacityManagerSupportabilityScore$Score": "<p> How well the combination can support the requested capacity right now. <code>high</code> means that the combination holds several times the requested amount. <code>medium</code> means that it can cover the request with little to spare. <code>low</code> means that it holds less than the requested amount. </p>",
+        "GetCapacityManagerSupportabilityScoresResult$AggregateScore": "<p> The score for all instance type and Availability Zone combinations in the request together. A <code>high</code> aggregate score with lower individual scores means that no single combination can support the full request, but the combinations together can. </p>"
       }
     },
     "SupportedAdditionalProcessorFeature": {

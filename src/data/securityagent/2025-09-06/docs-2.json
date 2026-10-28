@@ -790,6 +790,31 @@
         "PentestJob$cleanUpStrategy": "<p>Strategy for cleaning up resources after pentest job completion.</p>"
       }
     },
+    "ClientCertificate": {
+      "base": "<p>A client certificate for mutual TLS (mTLS) authentication to target hosts.</p>",
+      "refs": {
+        "ClientCertificateList$member": null
+      }
+    },
+    "ClientCertificateList": {
+      "base": "<p>A list of client certificates for mTLS authentication.</p>",
+      "refs": {
+        "Assets$clientCertificates": "<p>The client certificates for mutual TLS (mTLS) authentication to target hosts. Each certificate is stored in Secrets Manager and scoped to specific target origins.</p>",
+        "PentestJob$clientCertificates": "<p>The client certificates for mutual TLS (mTLS) authentication to target hosts during the pentest job.</p>"
+      }
+    },
+    "ClientCertificateName": {
+      "base": "<p>A customer-chosen name for a client certificate, used in error messages and console display.</p>",
+      "refs": {
+        "ClientCertificate$name": "<p>A customer-chosen name for this client certificate, used in error messages and console display.</p>"
+      }
+    },
+    "ClientCertificateOriginList": {
+      "base": "<p>The list of origins that a client certificate applies to.</p>",
+      "refs": {
+        "ClientCertificate$origins": "<p>The origins (scheme://host[:port]) this certificate applies to. Paths are not supported. Each hostname can have at most one client certificate.</p>"
+      }
+    },
     "ClientId": {
       "base": "<p>A client ID for an OAuth application registered on a self-managed provider instance.</p>",
       "refs": {
@@ -3043,6 +3068,8 @@
         "CaCertificateSource$artifactId": "<p>The artifact ID of an uploaded certificate file.</p>",
         "CaCertificateSource$s3Location": "<p>The Amazon S3 location URI of a customer-staged certificate.</p>",
         "Category$name": "<p>The name of the category.</p>",
+        "ClientCertificate$secretArn": "<p>The ARN of the Secrets Manager secret containing the certificate and private key.</p>",
+        "ClientCertificateOriginList$member": null,
         "CloudWatchLog$logGroup": "<p>The name of the CloudWatch log group.</p>",
         "CloudWatchLog$logStream": "<p>The name of the CloudWatch log stream.</p>",
         "CodeLocation$filePath": "<p>The absolute path to the file containing the code location.</p>",

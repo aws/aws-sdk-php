@@ -40,6 +40,35 @@
       ],
       "idempotent":true
     },
+    "CancelIndexRebuild":{
+      "name":"CancelIndexRebuild",
+      "http":{
+        "method":"POST",
+        "requestUri":"/storage/indexes/rebuilds/{rebuildId}/cancel",
+        "responseCode":200
+      },
+      "input":{"shape":"CancelIndexRebuildInput"},
+      "output":{"shape":"CancelIndexRebuildOutput"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"CancelledByMaintenanceException"},
+        {"shape":"ClientTimeoutException"},
+        {"shape":"CancelledByUserException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"IllegalArgumentException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"MethodNotAllowedException"},
+        {"shape":"PreconditionsFailedException"},
+        {"shape":"ServerShutdownException"},
+        {"shape":"ReadOnlyViolationException"},
+        {"shape":"ConstraintViolationException"},
+        {"shape":"InvalidArgumentException"}
+      ],
+      "idempotent":true
+    },
     "CancelLoaderJob":{
       "name":"CancelLoaderJob",
       "http":{
@@ -304,6 +333,7 @@
         {"shape":"QueryLimitExceededException"},
         {"shape":"InvalidParameterException"},
         {"shape":"QueryLimitException"},
+        {"shape":"CancelledByMaintenanceException"},
         {"shape":"ClientTimeoutException"},
         {"shape":"CancelledByUserException"},
         {"shape":"IllegalArgumentException"},
@@ -336,6 +366,7 @@
         {"shape":"QueryLimitExceededException"},
         {"shape":"InvalidParameterException"},
         {"shape":"QueryLimitException"},
+        {"shape":"CancelledByMaintenanceException"},
         {"shape":"ClientTimeoutException"},
         {"shape":"CancelledByUserException"},
         {"shape":"IllegalArgumentException"},
@@ -368,6 +399,7 @@
         {"shape":"QueryLimitExceededException"},
         {"shape":"InvalidParameterException"},
         {"shape":"QueryLimitException"},
+        {"shape":"CancelledByMaintenanceException"},
         {"shape":"ClientTimeoutException"},
         {"shape":"CancelledByUserException"},
         {"shape":"IllegalArgumentException"},
@@ -401,6 +433,7 @@
         {"shape":"QueryLimitExceededException"},
         {"shape":"InvalidParameterException"},
         {"shape":"QueryLimitException"},
+        {"shape":"CancelledByMaintenanceException"},
         {"shape":"ClientTimeoutException"},
         {"shape":"CancelledByUserException"},
         {"shape":"IllegalArgumentException"},
@@ -435,6 +468,7 @@
         {"shape":"QueryLimitExceededException"},
         {"shape":"InvalidParameterException"},
         {"shape":"QueryLimitException"},
+        {"shape":"CancelledByMaintenanceException"},
         {"shape":"ClientTimeoutException"},
         {"shape":"CancelledByUserException"},
         {"shape":"IllegalArgumentException"},
@@ -498,6 +532,31 @@
         {"shape":"InvalidArgumentException"},
         {"shape":"ConcurrentModificationException"},
         {"shape":"MissingParameterException"}
+      ],
+      "readonly":true
+    },
+    "GetIndexRebuildStatus":{
+      "name":"GetIndexRebuildStatus",
+      "http":{
+        "method":"GET",
+        "requestUri":"/storage/indexes/rebuilds/{rebuildId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetIndexRebuildStatusInput"},
+      "output":{"shape":"GetIndexRebuildStatusOutput"},
+      "errors":[
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ClientTimeoutException"},
+        {"shape":"MethodNotAllowedException"},
+        {"shape":"PreconditionsFailedException"},
+        {"shape":"ConstraintViolationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidArgumentException"},
+        {"shape":"IllegalArgumentException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ValidationException"}
       ],
       "readonly":true
     },
@@ -805,6 +864,30 @@
       ],
       "readonly":true
     },
+    "GetStorageInfo":{
+      "name":"GetStorageInfo",
+      "http":{
+        "method":"GET",
+        "requestUri":"/storage/info",
+        "responseCode":200
+      },
+      "output":{"shape":"GetStorageOutput"},
+      "errors":[
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ClientTimeoutException"},
+        {"shape":"MethodNotAllowedException"},
+        {"shape":"PreconditionsFailedException"},
+        {"shape":"ServerShutdownException"},
+        {"shape":"ConstraintViolationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidArgumentException"},
+        {"shape":"IllegalArgumentException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
+    },
     "ListGremlinQueries":{
       "name":"ListGremlinQueries",
       "http":{
@@ -831,6 +914,29 @@
         {"shape":"InvalidArgumentException"},
         {"shape":"ConcurrentModificationException"},
         {"shape":"MissingParameterException"}
+      ],
+      "readonly":true
+    },
+    "ListIndexRebuilds":{
+      "name":"ListIndexRebuilds",
+      "http":{
+        "method":"GET",
+        "requestUri":"/storage/indexes/rebuilds",
+        "responseCode":200
+      },
+      "output":{"shape":"ListIndexRebuildsOutput"},
+      "errors":[
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ClientTimeoutException"},
+        {"shape":"MethodNotAllowedException"},
+        {"shape":"PreconditionsFailedException"},
+        {"shape":"ConstraintViolationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidArgumentException"},
+        {"shape":"IllegalArgumentException"},
+        {"shape":"TooManyRequestsException"}
       ],
       "readonly":true
     },
@@ -1037,6 +1143,35 @@
       ],
       "idempotent":true
     },
+    "StartIndexRebuild":{
+      "name":"StartIndexRebuild",
+      "http":{
+        "method":"POST",
+        "requestUri":"/storage/indexes/rebuilds",
+        "responseCode":200
+      },
+      "input":{"shape":"StartIndexRebuildInput"},
+      "output":{"shape":"StartIndexRebuildOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientTimeoutException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"IllegalArgumentException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"MemoryLimitExceededException"},
+        {"shape":"MethodNotAllowedException"},
+        {"shape":"PreconditionsFailedException"},
+        {"shape":"ServerShutdownException"},
+        {"shape":"ReadOnlyViolationException"},
+        {"shape":"ConstraintViolationException"},
+        {"shape":"InvalidArgumentException"},
+        {"shape":"ConcurrentModificationException"}
+      ],
+      "idempotent":true
+    },
     "StartLoaderJob":{
       "name":"StartLoaderJob",
       "http":{
@@ -1219,6 +1354,30 @@
         "status":{"shape":"String"}
       }
     },
+    "CancelIndexRebuildInput":{
+      "type":"structure",
+      "required":["rebuildId"],
+      "members":{
+        "rebuildId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"rebuildId"
+        }
+      }
+    },
+    "CancelIndexRebuildOutput":{
+      "type":"structure",
+      "required":[
+        "status",
+        "concurrency",
+        "writeBufferSize"
+      ],
+      "members":{
+        "status":{"shape":"RebuildStatus"},
+        "concurrency":{"shape":"RebuildConcurrency"},
+        "writeBufferSize":{"shape":"WriteBufferSize"}
+      }
+    },
     "CancelLoaderJobInput":{
       "type":"structure",
       "required":["loadId"],
@@ -1339,6 +1498,23 @@
         "status":{"shape":"String"},
         "payload":{"shape":"Boolean"}
       }
+    },
+    "CancelledByMaintenanceException":{
+      "type":"structure",
+      "required":[
+        "detailedMessage",
+        "requestId",
+        "code"
+      ],
+      "members":{
+        "detailedMessage":{"shape":"String"},
+        "requestId":{"shape":"String"},
+        "code":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":500},
+      "exception":true,
+      "fault":true,
+      "retryable":{"throttling":false}
     },
     "CancelledByUserException":{
       "type":"structure",
@@ -1508,6 +1684,13 @@
       "members":{
         "active":{"shape":"Boolean"},
         "statisticsId":{"shape":"String"}
+      }
+    },
+    "DictionariesInfo":{
+      "type":"structure",
+      "members":{
+        "total":{"shape":"StorageMetrics"},
+        "blobs":{"shape":"StorageMetrics"}
       }
     },
     "Document":{
@@ -1764,6 +1947,39 @@
         "queryId":{"shape":"String"},
         "queryString":{"shape":"String"},
         "queryEvalStats":{"shape":"QueryEvalStats"}
+      }
+    },
+    "GetIndexRebuildStatusInput":{
+      "type":"structure",
+      "required":["rebuildId"],
+      "members":{
+        "rebuildId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"rebuildId"
+        }
+      }
+    },
+    "GetIndexRebuildStatusOutput":{
+      "type":"structure",
+      "required":[
+        "status",
+        "scope",
+        "concurrency",
+        "writeBufferSize",
+        "startTime",
+        "progressPercentage"
+      ],
+      "members":{
+        "status":{"shape":"RebuildStatus"},
+        "scope":{"shape":"Scope"},
+        "concurrency":{"shape":"RebuildConcurrency"},
+        "writeBufferSize":{"shape":"WriteBufferSize"},
+        "startTime":{"shape":"SyntheticTimestamp_date_time"},
+        "progressPercentage":{"shape":"Integer"},
+        "estimatedEndTime":{"shape":"SyntheticTimestamp_date_time"},
+        "endTime":{"shape":"SyntheticTimestamp_date_time"},
+        "failureReason":{"shape":"String"}
       }
     },
     "GetLoaderJobStatusInput":{
@@ -2103,6 +2319,19 @@
         "totalRecords":{"shape":"Integer"}
       }
     },
+    "GetStorageOutput":{
+      "type":"structure",
+      "members":{
+        "totalStorageBytesUsed":{"shape":"Long"},
+        "quads":{"shape":"QuadsIndexesInfo"},
+        "dictionaries":{"shape":"DictionariesInfo"},
+        "undoLogs":{"shape":"UndoLogsMetrics"},
+        "streams":{"shape":"StorageMetrics"},
+        "dfeStatistics":{"shape":"StorageMetrics"},
+        "schema":{"shape":"StorageMetrics"},
+        "internals":{"shape":"StorageMetrics"}
+      }
+    },
     "GraphSummaryType":{
       "type":"string",
       "enum":[
@@ -2247,6 +2476,13 @@
         "acceptedQueryCount":{"shape":"Integer"},
         "runningQueryCount":{"shape":"Integer"},
         "queries":{"shape":"GremlinQueries"}
+      }
+    },
+    "ListIndexRebuildsOutput":{
+      "type":"structure",
+      "required":["rebuildIds"],
+      "members":{
+        "rebuildIds":{"shape":"RebuildIdList"}
       }
     },
     "ListLoaderJobsInput":{
@@ -2752,6 +2988,23 @@
         "graphSummary":{"shape":"PropertygraphSummary"}
       }
     },
+    "QuadsIndexesInfo":{
+      "type":"structure",
+      "members":{
+        "RDF":{"shape":"QuadsInfo"},
+        "PG":{"shape":"QuadsInfo"}
+      }
+    },
+    "QuadsInfo":{
+      "type":"structure",
+      "members":{
+        "SPOG":{"shape":"StorageMetrics"},
+        "POGS":{"shape":"StorageMetrics"},
+        "GPSO":{"shape":"StorageMetrics"},
+        "OSGP":{"shape":"StorageMetrics"},
+        "PZSOG":{"shape":"StorageMetrics"}
+      }
+    },
     "QueryEvalStats":{
       "type":"structure",
       "members":{
@@ -2859,6 +3112,26 @@
       },
       "exception":true
     },
+    "RebuildConcurrency":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "RebuildIdList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "RebuildStatus":{
+      "type":"string",
+      "enum":[
+        "PREPARING",
+        "REBUILDING",
+        "COMPLETED",
+        "FAILED",
+        "CANCELLED",
+        "CANCELLING"
+      ]
+    },
     "RefreshStatisticsIdMap":{
       "type":"structure",
       "members":{
@@ -2866,6 +3139,24 @@
       }
     },
     "ReportAsText":{"type":"blob"},
+    "ResourceNotFoundException":{
+      "type":"structure",
+      "required":[
+        "detailedMessage",
+        "requestId",
+        "code"
+      ],
+      "members":{
+        "detailedMessage":{"shape":"String"},
+        "requestId":{"shape":"String"},
+        "code":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "S3BucketRegion":{
       "type":"string",
       "enum":[
@@ -2926,6 +3217,14 @@
       "exception":true,
       "retryable":{"throttling":false}
     },
+    "Scope":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "QUADS",
+        "DICTIONARIES"
+      ]
+    },
     "ServerShutdownException":{
       "type":"structure",
       "required":[
@@ -2971,6 +3270,47 @@
     "SparqlRecordsList":{
       "type":"list",
       "member":{"shape":"SparqlRecord"}
+    },
+    "StartIndexRebuildInput":{
+      "type":"structure",
+      "members":{
+        "scope":{
+          "shape":"Scope",
+          "location":"querystring",
+          "locationName":"scope"
+        },
+        "concurrency":{
+          "shape":"RebuildConcurrency",
+          "location":"querystring",
+          "locationName":"concurrency"
+        },
+        "writeBufferSize":{
+          "shape":"WriteBufferSize",
+          "location":"querystring",
+          "locationName":"writeBufferSize"
+        },
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartIndexRebuildOutput":{
+      "type":"structure",
+      "required":[
+        "status",
+        "rebuildId",
+        "scope",
+        "concurrency",
+        "writeBufferSize"
+      ],
+      "members":{
+        "status":{"shape":"RebuildStatus"},
+        "rebuildId":{"shape":"String"},
+        "scope":{"shape":"Scope"},
+        "concurrency":{"shape":"RebuildConcurrency"},
+        "writeBufferSize":{"shape":"WriteBufferSize"}
+      }
     },
     "StartLoaderJobInput":{
       "type":"structure",
@@ -3150,6 +3490,17 @@
         "predicateCount":{"shape":"Integer"}
       }
     },
+    "StorageMetrics":{
+      "type":"structure",
+      "required":[
+        "sizeInBytes",
+        "count"
+      ],
+      "members":{
+        "sizeInBytes":{"shape":"Long"},
+        "count":{"shape":"Long"}
+      }
+    },
     "StreamRecordsNotFoundException":{
       "type":"structure",
       "required":[
@@ -3246,6 +3597,17 @@
       "exception":true,
       "retryable":{"throttling":false}
     },
+    "UndoLogsMetrics":{
+      "type":"structure",
+      "required":[
+        "sizeInBytes",
+        "listSize"
+      ],
+      "members":{
+        "sizeInBytes":{"shape":"Long"},
+        "listSize":{"shape":"Long"}
+      }
+    },
     "UnsupportedOperationException":{
       "type":"structure",
       "required":[
@@ -3263,6 +3625,32 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ValidationException":{
+      "type":"structure",
+      "required":[
+        "detailedMessage",
+        "requestId",
+        "code"
+      ],
+      "members":{
+        "detailedMessage":{"shape":"String"},
+        "requestId":{"shape":"String"},
+        "code":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "WriteBufferSize":{
+      "type":"string",
+      "enum":[
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
     }
   }
 }

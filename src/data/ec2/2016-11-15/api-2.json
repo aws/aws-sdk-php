@@ -5030,6 +5030,15 @@
       "input":{"shape":"GetCapacityManagerMonitoredTagKeysRequest"},
       "output":{"shape":"GetCapacityManagerMonitoredTagKeysResult"}
     },
+    "GetCapacityManagerSupportabilityScores":{
+      "name":"GetCapacityManagerSupportabilityScores",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetCapacityManagerSupportabilityScoresRequest"},
+      "output":{"shape":"GetCapacityManagerSupportabilityScoresResult"}
+    },
     "GetCapacityReservationUsage":{
       "name":"GetCapacityReservationUsage",
       "http":{
@@ -11367,6 +11376,19 @@
         "locationName":"item"
       }
     },
+    "CapacityAmount":{
+      "type":"integer",
+      "min":1
+    },
+    "CapacityAvailabilityZoneIdList":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"item"
+      },
+      "max":10,
+      "min":0
+    },
     "CapacityBlock":{
       "type":"structure",
       "members":{
@@ -11909,6 +11931,30 @@
         "disabled"
       ]
     },
+    "CapacityManagerSupportabilityScore":{
+      "type":"structure",
+      "members":{
+        "InstanceType":{
+          "shape":"String",
+          "locationName":"instanceType"
+        },
+        "AvailabilityZoneId":{
+          "shape":"AvailabilityZoneId",
+          "locationName":"availabilityZoneId"
+        },
+        "Score":{
+          "shape":"SupportabilityScore",
+          "locationName":"score"
+        }
+      }
+    },
+    "CapacityManagerSupportabilityScoreSet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityManagerSupportabilityScore",
+        "locationName":"item"
+      }
+    },
     "CapacityManagerTagDimension":{
       "type":"structure",
       "members":{
@@ -12311,6 +12357,18 @@
           "shape":"FleetCapacityReservationSet",
           "locationName":"instanceTypeSpecificationSet"
         },
+        "InstanceRequirements":{
+          "shape":"InstanceRequirementsRequest",
+          "locationName":"instanceRequirements"
+        },
+        "AvailabilityZone":{
+          "shape":"String",
+          "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
@@ -12696,6 +12754,13 @@
       "enum":[
         "default",
         "dedicated"
+      ]
+    },
+    "CapacityUnit":{
+      "type":"string",
+      "enum":[
+        "vcpus",
+        "instances"
       ]
     },
     "CarrierGateway":{
@@ -14279,6 +14344,9 @@
           "shape":"ReservationFleetInstanceSpecificationList",
           "locationName":"InstanceTypeSpecification"
         },
+        "InstanceRequirements":{"shape":"InstanceRequirementsRequest"},
+        "AvailabilityZone":{"shape":"AvailabilityZoneName"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "Tenancy":{"shape":"FleetCapacityReservationTenancy"},
         "TotalTargetCapacity":{"shape":"Integer"},
         "EndDate":{"shape":"MillisecondDateTime"},
@@ -31364,6 +31432,43 @@
         }
       }
     },
+    "GetCapacityManagerSupportabilityScoresRequest":{
+      "type":"structure",
+      "required":[
+        "MarketType",
+        "CapacityAmount",
+        "CapacityUnit",
+        "CapacityAvailabilityZoneIds"
+      ],
+      "members":{
+        "MarketType":{"shape":"SupportabilityMarketType"},
+        "CapacityAmount":{"shape":"CapacityAmount"},
+        "CapacityUnit":{"shape":"CapacityUnit"},
+        "CapacityAvailabilityZoneIds":{
+          "shape":"CapacityAvailabilityZoneIdList",
+          "locationName":"CapacityAvailabilityZoneId"
+        },
+        "InstanceTypes":{
+          "shape":"SupportabilityInstanceTypeList",
+          "locationName":"InstanceType"
+        },
+        "InstanceRequirementsWithMetadata":{"shape":"InstanceRequirementsWithMetadataRequest"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetCapacityManagerSupportabilityScoresResult":{
+      "type":"structure",
+      "members":{
+        "AggregateScore":{
+          "shape":"SupportabilityScore",
+          "locationName":"aggregateScore"
+        },
+        "CapacityManagerSupportabilityScores":{
+          "shape":"CapacityManagerSupportabilityScoreSet",
+          "locationName":"capacityManagerSupportabilityScoreSet"
+        }
+      }
+    },
     "GetCapacityReservationUsageRequest":{
       "type":"structure",
       "required":["CapacityReservationId"],
@@ -44650,7 +44755,17 @@
         "spot-total-count-inst",
         "spot-total-count-vcpu",
         "spot-interruption-rate-inst",
-        "spot-interruption-rate-vcpu"
+        "spot-interruption-rate-vcpu",
+        "capacity-total-requested-vcpu",
+        "capacity-total-fulfilled-vcpu",
+        "spot-capacity-total-requested-vcpu",
+        "spot-capacity-total-fulfilled-vcpu",
+        "capacity-request-fulfillment-rate",
+        "avg-inst-az-count-per-requested-vcpu",
+        "inst-az-fulfillment-rate",
+        "spot-capacity-request-fulfillment-rate",
+        "spot-avg-inst-az-count-per-requested-vcpu",
+        "spot-inst-az-fulfillment-rate"
       ]
     },
     "MetricDataResult":{
@@ -57869,6 +57984,30 @@
         "insufficient-data",
         "not-applicable",
         "initializing"
+      ]
+    },
+    "SupportabilityInstanceTypeList":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"item"
+      },
+      "max":50,
+      "min":0
+    },
+    "SupportabilityMarketType":{
+      "type":"string",
+      "enum":[
+        "on-demand",
+        "spot"
+      ]
+    },
+    "SupportabilityScore":{
+      "type":"string",
+      "enum":[
+        "high",
+        "medium",
+        "low"
       ]
     },
     "SupportedAdditionalProcessorFeature":{

@@ -1244,6 +1244,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise getCapacityManagerMetricDimensionsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getCapacityManagerMonitoredTagKeys(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise getCapacityManagerMonitoredTagKeysAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result getCapacityManagerSupportabilityScores(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise getCapacityManagerSupportabilityScoresAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getCapacityReservationUsage(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise getCapacityReservationUsageAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getClientVpnEndpointAuthorizationPolicy(array $args = []) (supported in versions 2016-11-15)

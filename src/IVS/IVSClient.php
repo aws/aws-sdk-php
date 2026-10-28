@@ -222,9 +222,21 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise importPlaybackKeyPairAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise importPlaybackKeyPairAsync(array{publicKeyMaterial?: string, name?: string, tags?: array<string, string>, ...} $args = [])
  * @method \Aws\Result insertAdBreak(array $args = [])
- * @phpstan-method \Aws\Result insertAdBreak(array{channelArn?: string, durationSeconds?: int, ...} $args = [])
+ * @phpstan-method \Aws\Result insertAdBreak(array{
+ *     channelArn?: string,
+ *     durationSeconds?: int,
+ *     adBreakId?: string,
+ *     targetStartAt?: int|string|\DateTimeInterface,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise insertAdBreakAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise insertAdBreakAsync(array{channelArn?: string, durationSeconds?: int, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise insertAdBreakAsync(array{
+ *     channelArn?: string,
+ *     durationSeconds?: int,
+ *     adBreakId?: string,
+ *     targetStartAt?: int|string|\DateTimeInterface,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listAdConfigurations(array $args = [])
  * @phpstan-method \Aws\Result listAdConfigurations(array{nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listAdConfigurationsAsync(array $args = [])

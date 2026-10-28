@@ -1462,7 +1462,8 @@
         "documents":{"shape":"DocumentList"},
         "sourceCode":{"shape":"SourceCodeRepositoryList"},
         "integratedRepositories":{"shape":"IntegratedRepositoryList"},
-        "trustedCaCertificates":{"shape":"TrustedCaCertificateList"}
+        "trustedCaCertificates":{"shape":"TrustedCaCertificateList"},
+        "clientCertificates":{"shape":"ClientCertificateList"}
       }
     },
     "AuthCode":{"type":"string"},
@@ -2202,6 +2203,37 @@
         "BEST_EFFORT_DELETE",
         "RETAIN_ALL"
       ]
+    },
+    "ClientCertificate":{
+      "type":"structure",
+      "required":[
+        "name",
+        "secretArn",
+        "origins"
+      ],
+      "members":{
+        "name":{"shape":"ClientCertificateName"},
+        "secretArn":{"shape":"String"},
+        "origins":{"shape":"ClientCertificateOriginList"}
+      }
+    },
+    "ClientCertificateList":{
+      "type":"list",
+      "member":{"shape":"ClientCertificate"},
+      "max":10,
+      "min":0
+    },
+    "ClientCertificateName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[A-Za-z0-9][A-Za-z0-9\\-_]*"
+    },
+    "ClientCertificateOriginList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":10,
+      "min":1
     },
     "ClientId":{"type":"string"},
     "ClientSecret":{
@@ -4408,6 +4440,7 @@
         "errorInformation":{"shape":"ErrorInformation"},
         "integratedRepositories":{"shape":"IntegratedRepositoryList"},
         "trustedCaCertificates":{"shape":"TrustedCaCertificateList"},
+        "clientCertificates":{"shape":"ClientCertificateList"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
         "cleanUpStrategy":{"shape":"CleanUpStrategy"},
         "disableManagedSkills":{"shape":"SkillTypeList"},

@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_Operations_Amazon_Connect_Participant_Service.html\">Participant Service actions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_Types_Amazon_Connect_Participant_Service.html\">Participant Service data types</a> </p> </li> </ul> <p>Connect Customer is an easy-to-use omnichannel cloud contact center service that enables companies of any size to deliver superior customer service at a lower cost. Connect Customer communications capabilities make it easy for companies to deliver personalized interactions across communication channels, including chat. </p> <p>Use the Connect Customer Participant Service to manage participants (for example, agents, customers, and managers listening in), and to send messages and events within a chat contact. The APIs in the service enable the following: sending chat messages, attachment sharing, managing a participant's connection state and message events, and retrieving chat transcripts.</p>",
+  "service": "<ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_Operations_Amazon_Connect_Participant_Service.html\">Participant Service actions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_Types_Amazon_Connect_Participant_Service.html\">Participant Service data types</a> </p> </li> </ul> <p>Use the Connect Customer Participant Service to manage participants (for example, agents, customers, and managers listening in), and to send messages and events within a chat contact. The APIs in the service enable the following: sending chat messages, attachment sharing, managing a participant's connection state and message events, and retrieving chat transcripts.</p>",
   "operations": {
     "CancelParticipantAuthentication": "<p>Cancels the authentication session. The opted out branch of the Authenticate Customer flow block will be taken.</p> <note> <p>The current supported channel is chat. This API is not supported for Apple Messages for Business, WhatsApp, or SMS chats.</p> </note> <note> <p> <code>ConnectionToken</code> is used for invoking this API instead of <code>ParticipantToken</code>.</p> </note> <p>The Amazon Connect Participant Service APIs do not use <a href=\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version 4 authentication</a>.</p>",
     "CompleteAttachmentUpload": "<p>Allows you to confirm that the attachment has been uploaded using the pre-signed URL provided in StartAttachmentUpload API. A conflict exception is thrown when an attachment with that identifier is already being uploaded.</p> <p>For security recommendations, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat\">Connect Customer Chat security best practices</a>. </p> <note> <p> <code>ConnectionToken</code> is used for invoking this API instead of <code>ParticipantToken</code>.</p> </note> <p>The Amazon Connect Participant Service APIs do not use <a href=\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version 4 authentication</a>.</p>",
@@ -115,7 +115,7 @@
       "refs": {
         "Item$Content": "<p>The content of the message or event.</p>",
         "SendEventRequest$Content": "<p>The content of the event to be sent (for example, message text). For content related to message receipts, this is supported in the form of a JSON string.</p> <p>Sample Content: \"{\\\"messageId\\\":\\\"11111111-aaaa-bbbb-cccc-EXAMPLE01234\\\"}\"</p>",
-        "SendMessageRequest$Content": "<p>The content of the message. </p> <ul> <li> <p>For <code>text/plain</code> and <code>text/markdown</code>, the Length Constraints are Minimum of 1, Maximum of 1024. </p> </li> <li> <p>For <code>application/json</code>, the Length Constraints are Minimum of 1, Maximum of 12000. </p> </li> <li> <p>For <code>application/vnd.amazonaws.connect.message.interactive.response</code>, the Length Constraints are Minimum of 1, Maximum of 12288.</p> </li> </ul>"
+        "SendMessageRequest$Content": "<p>The content of the message. Maximum of 16,384 bytes for all content types (<code>text/plain</code>, <code>text/markdown</code>, <code>application/json</code>, and <code>application/vnd.amazonaws.connect.message.interactive.response</code>).</p> <p>Some messaging channels enforce lower limits. For channel-specific message size limits, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/feature-limits.html#chat-message-size-limits\">Chat message size limits by channel</a> in the <i>Amazon Connect Customer Administrator Guide</i>.</p>"
       }
     },
     "ChatContentType": {
@@ -187,6 +187,12 @@
         "GetTranscriptResponse$InitialContactId": "<p>The initial contact ID for the contact. </p>",
         "Item$RelatedContactId": "<p>The contactId on which the transcript item was originally sent. This field is only populated for persistent chats when the transcript item is from the past chat session. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-persistence.html\">Enable persistent chat</a>.</p>",
         "Item$ContactId": "<p>The contactId on which the transcript item was originally sent. This field is populated only when the transcript item is from the current chat session.</p>"
+      }
+    },
+    "ContentDisposition": {
+      "base": null,
+      "refs": {
+        "GetAttachmentRequest$UrlContentDisposition": "<p>Specifies how a browser handles the file at the pre-signed URL. The following values are valid:</p> <dl> <dt>INLINE</dt> <dd> <p>Displays the file in the browser.</p> </dd> <dt>ATTACHMENT</dt> <dd> <p>Downloads the file. This is the default behavior.</p> </dd> </dl>"
       }
     },
     "ContentType": {
@@ -337,6 +343,12 @@
       "refs": {
         "MessageMetadata$MessageProcessingStatus": "<p>The status of Message Processing for the message.</p>",
         "MessageProcessingMetadata$MessageProcessingStatus": "<p>The status of Message Processing for the message.</p>"
+      }
+    },
+    "MetadataUrl": {
+      "base": null,
+      "refs": {
+        "UploadMetadata$Url": "<p>This is the pre-signed URL that can be used for uploading the file to Amazon S3 when used in response to <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_StartAttachmentUpload.html\">StartAttachmentUpload</a>.</p>"
       }
     },
     "MostRecent": {
@@ -526,28 +538,22 @@
         "StartAttachmentUploadResponse$UploadMetadata": "<p>The headers to be provided while uploading the file to the URL.</p>"
       }
     },
-    "UploadMetadataSignedHeaders": {
+    "UrlMetadataSignedHeaders": {
       "base": null,
       "refs": {
         "UploadMetadata$HeadersToInclude": "<p>The headers to be provided while uploading the file to the URL.</p>"
       }
     },
-    "UploadMetadataSignedHeadersKey": {
+    "UrlMetadataSignedHeadersKey": {
       "base": null,
       "refs": {
-        "UploadMetadataSignedHeaders$key": null
+        "UrlMetadataSignedHeaders$key": null
       }
     },
-    "UploadMetadataSignedHeadersValue": {
+    "UrlMetadataSignedHeadersValue": {
       "base": null,
       "refs": {
-        "UploadMetadataSignedHeaders$value": null
-      }
-    },
-    "UploadMetadataUrl": {
-      "base": null,
-      "refs": {
-        "UploadMetadata$Url": "<p>This is the pre-signed URL that can be used for uploading the file to Amazon S3 when used in response to <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_StartAttachmentUpload.html\">StartAttachmentUpload</a>.</p>"
+        "UrlMetadataSignedHeaders$value": null
       }
     },
     "ValidationException": {

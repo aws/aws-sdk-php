@@ -5,6 +5,7 @@
     "AcceptInboundConnection": "<p>Allows the destination Amazon OpenSearch Service domain owner to accept an inbound cross-cluster search connection request. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
     "AddDataSource": "<p>Creates a new direct-query data source to the specified domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-creating.html\">Creating Amazon OpenSearch Service data source integrations with Amazon S3</a>.</p>",
     "AddDirectQueryDataSource": "<p> Adds a new data source in Amazon OpenSearch Service so that you can perform direct queries on external data. </p>",
+    "AddReplicationPeer": "<p>Starts replicating a domain to a peer domain in another AWS Region. A domain can have one peer. The domain you call becomes the primary and the peer becomes the secondary, which receives a copy of the primary's indexes and serves read requests.</p> <p>Replication is established asynchronously. Use the <code>DescribeDomainReplication</code> operation to check whether the relationship has reached the <code>ACTIVE</code> state.</p>",
     "AddTags": "<p>Attaches tags to an existing Amazon OpenSearch Service domain, data source, or application. </p> <p>Tags are a set of case-sensitive key-value pairs. A domain, data source, or application can have up to 10 tags. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-awsresourcetagging.html\">Tagging Amazon OpenSearch Service resources</a>. </p>",
     "AssociatePackage": "<p>Associates a package with an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "AssociatePackages": "<p>Operation in the Amazon OpenSearch Service API for associating multiple packages with a domain simultaneously.</p>",
@@ -12,6 +13,7 @@
     "AuthorizeVpcEndpointAccess": "<p>Provides access to an Amazon OpenSearch Service domain through the use of an interface VPC endpoint.</p>",
     "CancelDomainConfigChange": "<p>Cancels a pending configuration change on an Amazon OpenSearch Service domain.</p>",
     "CancelServiceSoftwareUpdate": "<p>Cancels a scheduled service software update for an Amazon OpenSearch Service domain. You can only perform this operation before the <code>AutomatedUpdateDate</code> and when the domain's <code>UpdateStatus</code> is <code>PENDING_UPDATE</code>. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
+    "CompareDomainConfiguration": "<p>Compares the metadata of two domains and reports where they differ. Use this operation to check that a secondary domain is configured consistently with its primary before you rely on it, because replication copies index data but does not copy domain metadata such as index templates, ingest pipelines, or security roles.</p> <p>You choose which categories to compare. The response reports, for each category, how many items match, how many exist on only one domain, and which fields diverge.</p>",
     "CreateApplication": "<p>Creates an OpenSearch UI application. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/application.html\">Using the OpenSearch user interface in Amazon OpenSearch Service</a>.</p>",
     "CreateDomain": "<p>Creates an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html\">Creating and managing Amazon OpenSearch Service domains</a>.</p>",
     "CreateIndex": "<p>Creates an OpenSearch index with optional automatic semantic enrichment for specified text fields. Automatic semantic enrichment enables semantic search capabilities without requiring machine learning expertise, improving search relevance by up to 20% by understanding search intent and contextual meaning beyond keyword matching. The semantic enrichment process has zero impact on search latency as sparse encodings are stored directly within the index during indexing. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/opensearch-semantic-enrichment.html\">Automatic semantic enrichment</a>.</p>",
@@ -35,6 +37,7 @@
     "DescribeDomainConfig": "<p>Returns the configuration of an Amazon OpenSearch Service domain.</p>",
     "DescribeDomainHealth": "<p>Returns information about domain and node health, the standby Availability Zone, number of nodes per Availability Zone, and shard count per node.</p>",
     "DescribeDomainNodes": "<p>Returns information about domain and nodes, including data nodes, master nodes, ultrawarm nodes, Availability Zone(s), standby nodes, node configurations, and node states.</p>",
+    "DescribeDomainReplication": "<p>Describes the replication arrangement that a domain participates in, including the domain's role and the state of its relationship with each peer.</p> <p>A domain that is not replicating is returned with an empty <code>Peers</code> list and no <code>Role</code>. Returns <code>ResourceNotFoundException</code> if the domain does not exist.</p>",
     "DescribeDomains": "<p>Returns domain configuration information about the specified Amazon OpenSearch Service domains.</p>",
     "DescribeDryRunProgress": "<p>Describes the progress of a pre-update dry run analysis on an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-configuration-changes#dryrun\">Determining whether a change will cause a blue/green deployment</a>.</p>",
     "DescribeInboundConnections": "<p>Lists all the inbound cross-cluster search connections for a destination (remote) Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
@@ -48,6 +51,7 @@
     "DetachDataSource": "<p>Removes a data source from an OpenSearch application. The application must be in the <code>ACTIVE</code> state. This operation removes the data source saved object from the application and deletes the attachment record. Throws a <code>ConflictException</code> if the specified data source has a <code>PENDING</code> attachment, and a <code>ResourceNotFoundException</code> if the data source is not currently attached to the application.</p>",
     "DissociatePackage": "<p>Removes a package from the specified Amazon OpenSearch Service domain. The package can't be in use with any OpenSearch index for the dissociation to succeed. The package is still available in OpenSearch Service for association later. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "DissociatePackages": "<p>Dissociates multiple packages from a domain simultaneously.</p>",
+    "FailoverReplication": "<p>Promotes a secondary domain to primary without coordinating with the current primary. Use this operation when the primary is unreachable and you cannot wait for it to recover.</p> <p>Writes that had not yet replicated when the primary became unreachable are lost. You must set <code>AllowDataLoss</code> to acknowledge this. To promote a domain without losing writes, use the <code>SwitchoverReplication</code> operation instead.</p> <p>Call this operation in the Region of the domain you want to promote.</p>",
     "GetApplication": "<p>Retrieves the configuration and status of an existing OpenSearch application.</p>",
     "GetCapability": "<p>Retrieves information about a registered capability for an OpenSearch UI application, including its configuration and current status.</p>",
     "GetCompatibleVersions": "<p>Returns a map of OpenSearch or Elasticsearch versions and the versions you can upgrade them to.</p>",
@@ -82,12 +86,14 @@
     "PutDefaultApplicationSetting": "<p>Sets the default application to the application with the specified ARN.</p> <p> To remove the default application, use the <code>GetDefaultApplicationSetting</code> operation to get the current default and then call the <code>PutDefaultApplicationSetting</code> with the current applications ARN and the <code>setAsDefault</code> parameter set to <code>false</code>.</p>",
     "RegisterCapability": "<p>Registers a capability for an OpenSearch UI application. Use this operation to enable specific capabilities, such as AI features, for a given application. The capability configuration defines the type and settings of the capability to register. For more information about the AI features, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/application-ai-assistant.html\">Agentic AI for OpenSearch UI</a>.</p>",
     "RejectInboundConnection": "<p>Allows the remote Amazon OpenSearch Service domain owner to reject an inbound cross-cluster connection request.</p>",
+    "RemoveReplicationPeer": "<p>Stops replicating a domain to its peer. Replication ends for both domains, and each domain keeps the data it holds at that point. Neither domain is deleted.</p>",
     "RemoveTags": "<p>Removes the specified set of tags from an Amazon OpenSearch Service domain, data source, or application. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains.html#managedomains-awsresorcetagging\"> Tagging Amazon OpenSearch Service resources</a>.</p>",
     "RevokeVpcEndpointAccess": "<p>Revokes access to an Amazon OpenSearch Service domain that was provided through an interface VPC endpoint.</p>",
     "RollbackServiceSoftwareUpdate": "<p>Rolls back a service software update for a domain to the previous version. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
     "StartDomainMaintenance": "<p>Starts the node maintenance process on the data node. These processes can include a node reboot, an Opensearch or Elasticsearch process restart, or a Dashboard or Kibana restart.</p>",
     "StartMigration": "<p>Initiates a migration job to migrate saved objects from a data source to an Amazon OpenSearch Service application workspace. Saved objects include dashboards, visualizations, index patterns, and searches. You can specify export filters to control the scope of the migration and a conflict resolution strategy for handling existing objects in the target workspace.</p>",
     "StartServiceSoftwareUpdate": "<p>Schedules a service software update for an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
+    "SwitchoverReplication": "<p>Promotes a secondary domain to primary, coordinating with the current primary so that no writes are lost. Use this operation for planned role changes, such as testing your recovery procedure or moving write traffic to another Region.</p> <p>Call this operation in the Region of the domain you want to promote. If the current primary is unreachable, use the <code>FailoverReplication</code> operation instead.</p>",
     "UpdateApplication": "<p>Updates the configuration and settings of an existing OpenSearch application.</p>",
     "UpdateDataSource": "<p>Updates a direct-query data source. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-creating.html\">Working with Amazon OpenSearch Service data source integrations with Amazon S3</a>.</p>",
     "UpdateDirectQueryDataSource": "<p> Updates the configuration or properties of an existing direct query data source in Amazon OpenSearch Service. </p>",
@@ -247,6 +253,14 @@
       "refs": {}
     },
     "AddDirectQueryDataSourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "AddReplicationPeerRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AddReplicationPeerResponse": {
       "base": null,
       "refs": {}
     },
@@ -573,6 +587,7 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "AddReplicationPeerRequest$DryRun": "<p>When <code>true</code>, validates the request and reports whether replication could be established, without changing either domain.</p>",
         "AdvancedSecurityOptions$Enabled": "<p>True if fine-grained access control is enabled.</p>",
         "AdvancedSecurityOptions$InternalUserDatabaseEnabled": "<p>True if the internal user database is enabled.</p>",
         "AdvancedSecurityOptions$AnonymousAuthEnabled": "<p>True if a 30-day migration period is enabled, during which administrators can create role mappings. Only necessary when <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/fgac.html#fgac-enabling-existing\">enabling fine-grained access control on an existing domain</a>.</p>",
@@ -585,6 +600,7 @@
         "AutoTuneStatus$PendingDeletion": "<p>Indicates whether the domain is being deleted.</p>",
         "AutomatedSnapshotPauseOptions$Enabled": "<p>Whether automated snapshot pause is enabled for the domain.</p>",
         "AutomatedSnapshotPauseRequestOptions$Enabled": "<p>Whether to enable or disable automated snapshot pause for the domain.</p>",
+        "CategoryDiffResult$Truncated": "<p>Whether <code>Items</code> omits some differences because the category contained more than the response can carry. The counts remain complete when this is <code>true</code>.</p>",
         "ClusterConfig$DedicatedMasterEnabled": "<p>Indicates whether dedicated master nodes are enabled for the cluster.<code>True</code> if the cluster will use a dedicated master node.<code>False</code> if the cluster will not.</p>",
         "ClusterConfig$ZoneAwarenessEnabled": "<p>Indicates whether multiple Availability Zones are enabled. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-multiaz.html\">Configuring a multi-AZ domain in Amazon OpenSearch Service</a>.</p>",
         "ClusterConfig$WarmEnabled": "<p>Whether to enable warm storage for the cluster.</p>",
@@ -603,6 +619,7 @@
         "EBSOptions$EBSEnabled": "<p>Indicates whether EBS volumes are attached to data nodes in an OpenSearch Service domain.</p>",
         "EncryptionAtRestOptions$Enabled": "<p>True to enable encryption at rest.</p>",
         "ExportOptions$includeReferencesDeep": "<p>Specifies whether to include all objects referenced by the exported objects, recursively.</p>",
+        "FailoverReplicationRequest$AllowDataLoss": "<p>Acknowledges that writes which had not yet replicated are lost. You must set this to <code>true</code>; the request is rejected otherwise.</p>",
         "IAMFederationOptionsInput$Enabled": "<p>Specifies whether IAM identity federation is enabled for the OpenSearch domain.</p>",
         "IAMFederationOptionsOutput$Enabled": "<p>Indicates whether IAM identity federation is currently enabled for the domain.</p>",
         "IamIdentityCenterOptions$enabled": "<p>Indicates whether IAM Identity Center is enabled for the OpenSearch application.</p>",
@@ -735,6 +752,12 @@
         "RegisterCapabilityResponse$status": "<p>The current status of the capability. Possible values: <code>creating</code>, <code>create_failed</code>, <code>active</code>, <code>updating</code>, <code>update_failed</code>, <code>deleting</code>, <code>delete_failed</code>.</p>"
       }
     },
+    "CategoryDiffResult": {
+      "base": "<p>The result of comparing one metadata category between two domains.</p>",
+      "refs": {
+        "CompareDomainConfigurationCategoryMap$value": null
+      }
+    },
     "ChangeProgressDetails": {
       "base": "<p>Container for information about a configuration change happening on a domain.</p>",
       "refs": {
@@ -836,6 +859,20 @@
         "PackageVersionHistory$CommitMessage": "<p>A message associated with the package version when it was uploaded.</p>",
         "UpdatePackageRequest$CommitMessage": "<p>Commit message for the updated file, which is shown as part of <code>GetPackageVersionHistoryResponse</code>.</p>"
       }
+    },
+    "CompareDomainConfigurationCategoryMap": {
+      "base": null,
+      "refs": {
+        "CompareDomainConfigurationResponse$Categories": "<p>The comparison result for each category you requested, keyed by category name.</p>"
+      }
+    },
+    "CompareDomainConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CompareDomainConfigurationResponse": {
+      "base": null,
+      "refs": {}
     },
     "CompatibleVersionsList": {
       "base": null,
@@ -1218,6 +1255,14 @@
       "base": "<p>The result of a <code>DescribeDomainNodes</code> request. Contains information about the nodes on the requested domain. </p>",
       "refs": {}
     },
+    "DescribeDomainReplicationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeDomainReplicationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeDomainRequest": {
       "base": "<p>Container for the parameters to the <code>DescribeDomain</code> operation.</p>",
       "refs": {}
@@ -1350,6 +1395,60 @@
       "base": null,
       "refs": {}
     },
+    "DiffCount": {
+      "base": null,
+      "refs": {
+        "CategoryDiffResult$InSync": "<p>The number of items that are identical on both domains.</p>",
+        "CategoryDiffResult$SourceOnly": "<p>The number of items that exist only on the source domain.</p>",
+        "CategoryDiffResult$TargetOnly": "<p>The number of items that exist only on the target domain.</p>",
+        "CategoryDiffResult$Diverged": "<p>The number of items that exist on both domains but differ.</p>"
+      }
+    },
+    "DiffFieldPath": {
+      "base": null,
+      "refs": {
+        "DivergentField$Path": "<p>The location of the field within the item.</p>"
+      }
+    },
+    "DiffFieldPolicy": {
+      "base": null,
+      "refs": {
+        "DivergentField$Policy": "<p>How the comparison treats this field.</p>"
+      }
+    },
+    "DiffFieldValue": {
+      "base": null,
+      "refs": {
+        "DivergentField$SourceValue": "<p>The field's value on the source domain.</p>",
+        "DivergentField$TargetValue": "<p>The field's value on the target domain.</p>"
+      }
+    },
+    "DiffItemName": {
+      "base": null,
+      "refs": {
+        "DiffItemNameList$member": null,
+        "DivergentItem$Name": "<p>The name of the item.</p>"
+      }
+    },
+    "DiffItemNameList": {
+      "base": null,
+      "refs": {
+        "DiffItems$SourceOnly": "<p>The names of items that exist only on the source domain.</p>",
+        "DiffItems$TargetOnly": "<p>The names of items that exist only on the target domain.</p>"
+      }
+    },
+    "DiffItems": {
+      "base": "<p>The items that differ within one metadata category.</p>",
+      "refs": {
+        "CategoryDiffResult$Items": "<p>The names of the items that differ, and for diverging items, the fields that differ.</p>"
+      }
+    },
+    "DiffStatus": {
+      "base": null,
+      "refs": {
+        "CategoryDiffResult$Status": "<p>Whether the category was compared successfully. <code>compared</code> means the result is complete; <code>error</code> means the category could not be read.</p>"
+      }
+    },
     "DirectQueryDataSource": {
       "base": "<p> The configuration details for a data source that can be directly queried. </p>",
       "refs": {
@@ -1434,10 +1533,48 @@
       "base": null,
       "refs": {}
     },
+    "DivergentField": {
+      "base": "<p>A single field that differs between the source and target copies of an item.</p>",
+      "refs": {
+        "DivergentFieldList$member": null
+      }
+    },
+    "DivergentFieldList": {
+      "base": null,
+      "refs": {
+        "DivergentItem$Fields": "<p>The fields of the item that differ.</p>"
+      }
+    },
+    "DivergentItem": {
+      "base": "<p>An item that exists on both domains but whose contents differ.</p>",
+      "refs": {
+        "DivergentItemList$member": null
+      }
+    },
+    "DivergentItemList": {
+      "base": null,
+      "refs": {
+        "DiffItems$Diverged": "<p>The items that exist on both domains but differ, with the diverging fields.</p>"
+      }
+    },
     "DomainArn": {
       "base": null,
       "refs": {
+        "AddReplicationPeerRequest$PeerDomainArn": "<p>The Amazon Resource Name (ARN) of the domain to replicate to. The peer must be in a different Region from the domain you are calling, and in the same AWS account.</p>",
+        "AddReplicationPeerResponse$DomainArn": "<p>The Amazon Resource Name (ARN) of the domain that is now replicating to the peer.</p>",
+        "CompareDomainConfigurationRequest$SourceDomainArn": "<p>The Amazon Resource Name (ARN) of the domain to compare from.</p>",
+        "CompareDomainConfigurationRequest$TargetDomainArn": "<p>The Amazon Resource Name (ARN) of the domain to compare against.</p>",
+        "CompareDomainConfigurationResponse$SourceDomainArn": "<p>The Amazon Resource Name (ARN) of the domain that was compared from.</p>",
+        "CompareDomainConfigurationResponse$TargetDomainArn": "<p>The Amazon Resource Name (ARN) of the domain that was compared against.</p>",
         "CreateVpcEndpointRequest$DomainArn": "<p>The Amazon Resource Name (ARN) of the domain to create the endpoint for.</p>",
+        "DescribeDomainReplicationResponse$DomainArn": "<p>The Amazon Resource Name (ARN) of the domain described.</p>",
+        "FailoverReplicationRequest$PeerDomainArn": "<p>The Amazon Resource Name (ARN) of the relationship's current primary. The request is rejected if this domain is no longer the peer of the domain you are calling.</p>",
+        "FailoverReplicationResponse$DomainArn": "<p>The Amazon Resource Name (ARN) of the domain being promoted.</p>",
+        "RemoveReplicationPeerRequest$PeerDomainArn": "<p>The Amazon Resource Name (ARN) of the peer to stop replicating with. Both domains are named so that the request identifies exactly one replication relationship.</p>",
+        "RemoveReplicationPeerResponse$DomainArn": "<p>The Amazon Resource Name (ARN) of the domain that is no longer replicating.</p>",
+        "ReplicationPeer$PeerDomainArn": "<p>The Amazon Resource Name (ARN) of the peer domain.</p>",
+        "SwitchoverReplicationRequest$PeerDomainArn": "<p>The Amazon Resource Name (ARN) of the relationship's current primary. The request is rejected if this domain is no longer the peer of the domain you are calling.</p>",
+        "SwitchoverReplicationResponse$DomainArn": "<p>The Amazon Resource Name (ARN) of the domain being promoted.</p>",
         "VpcEndpoint$DomainArn": "<p>The Amazon Resource Name (ARN) of the domain associated with the endpoint.</p>",
         "VpcEndpointSummary$DomainArn": "<p>The Amazon Resource Name (ARN) of the domain associated with the endpoint.</p>"
       }
@@ -1518,6 +1655,7 @@
       "refs": {
         "AWSDomainInformation$DomainName": "<p>Name of the domain.</p>",
         "AddDataSourceRequest$DomainName": "<p>The name of the domain to add the data source to.</p>",
+        "AddReplicationPeerRequest$DomainName": null,
         "AssociatePackageRequest$DomainName": "<p>Name of the domain to associate the package with.</p>",
         "AssociatePackagesRequest$DomainName": null,
         "AuthorizeVpcEndpointAccessRequest$DomainName": "<p>The name of the OpenSearch Service domain to provide access to.</p>",
@@ -1533,6 +1671,7 @@
         "DescribeDomainConfigRequest$DomainName": "<p>Name of the OpenSearch Service domain configuration that you want to describe.</p>",
         "DescribeDomainHealthRequest$DomainName": "<p>The name of the domain.</p>",
         "DescribeDomainNodesRequest$DomainName": "<p>The name of the domain.</p>",
+        "DescribeDomainReplicationRequest$DomainName": null,
         "DescribeDomainRequest$DomainName": "<p>The name of the domain that you want information about.</p>",
         "DescribeDryRunProgressRequest$DomainName": "<p>The name of the domain.</p>",
         "DescribeInstanceTypeLimitsRequest$DomainName": "<p>The name of the domain. Only specify if you need the limits for an existing domain.</p>",
@@ -1543,6 +1682,7 @@
         "DomainNameList$member": null,
         "DomainPackageDetails$DomainName": "<p>Name of the domain that the package is associated with.</p>",
         "DomainStatus$DomainName": "<p>Name of the domain. Domain names are unique across all domains owned by the same account within an Amazon Web Services Region.</p>",
+        "FailoverReplicationRequest$DomainName": null,
         "GetCompatibleVersionsRequest$DomainName": "<p>The name of an existing domain. Provide this parameter to limit the results to a single domain.</p>",
         "GetDataSourceRequest$DomainName": "<p>The name of the domain.</p>",
         "GetDomainMaintenanceStatusRequest$DomainName": "<p>The name of the domain.</p>",
@@ -1556,10 +1696,12 @@
         "ListScheduledActionsRequest$DomainName": "<p>The name of the domain.</p>",
         "ListVpcEndpointAccessRequest$DomainName": "<p>The name of the OpenSearch Service domain to retrieve access information for.</p>",
         "ListVpcEndpointsForDomainRequest$DomainName": "<p>The name of the domain to list associated VPC endpoints for.</p>",
+        "RemoveReplicationPeerRequest$DomainName": null,
         "RevokeVpcEndpointAccessRequest$DomainName": "<p>The name of the OpenSearch Service domain.</p>",
         "RollbackServiceSoftwareUpdateRequest$DomainName": "<p>The name of the domain to roll back the service software update on.</p>",
         "StartDomainMaintenanceRequest$DomainName": "<p>The name of the domain.</p>",
         "StartServiceSoftwareUpdateRequest$DomainName": "<p>The name of the domain that you want to update to the latest service software.</p>",
+        "SwitchoverReplicationRequest$DomainName": null,
         "UpdateDataSourceRequest$DomainName": "<p>The name of the domain.</p>",
         "UpdateDomainConfigRequest$DomainName": "<p>The name of the domain that you're updating.</p>",
         "UpdateIndexRequest$DomainName": null,
@@ -1818,6 +1960,14 @@
       "refs": {
         "MigrationOptions$exportOptions": "<p>Options to filter the scope of saved objects to export from the source.</p>"
       }
+    },
+    "FailoverReplicationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "FailoverReplicationResponse": {
+      "base": null,
+      "refs": {}
     },
     "Filter": {
       "base": "<p>A filter used to limit results when describing inbound or outbound cross-cluster connections. You can specify multiple values per filter. A cross-cluster connection must match at least one of the specified values for it to be returned from an operation.</p>",
@@ -2700,6 +2850,19 @@
         "DryRunResults$Message": "<p>A message corresponding to the deployment type.</p>"
       }
     },
+    "MetadataCategory": {
+      "base": null,
+      "refs": {
+        "CompareDomainConfigurationCategoryMap$key": null,
+        "MetadataCategoryList$member": null
+      }
+    },
+    "MetadataCategoryList": {
+      "base": null,
+      "refs": {
+        "CompareDomainConfigurationRequest$Categories": "<p>The metadata categories to compare. At least one is required, and only the categories you name are read and returned.</p> <ul> <li> <p> <code>aliases</code> </p> </li> <li> <p> <code>alerting_monitors</code> </p> </li> <li> <p> <code>cluster_settings</code> </p> </li> <li> <p> <code>component_templates</code> </p> </li> <li> <p> <code>ingest_pipelines</code> </p> </li> <li> <p> <code>ism_policies</code> — index state management policies</p> </li> <li> <p> <code>security_action_groups</code> </p> </li> <li> <p> <code>security_internal_users</code> </p> </li> <li> <p> <code>security_role_mappings</code> </p> </li> <li> <p> <code>security_roles</code> </p> </li> <li> <p> <code>templates</code> — index templates</p> </li> </ul> <p>The set of categories grows over time, so this list is not fixed. A category the service does not recognise is rejected with the supported categories named in the error message.</p>"
+      }
+    },
     "MigrationError": {
       "base": "<p>Contains error details for a migration that failed or completed with errors.</p>",
       "refs": {
@@ -3335,9 +3498,52 @@
       "base": "<p>Represents the output of a <code>RejectInboundConnection</code> operation.</p>",
       "refs": {}
     },
+    "RemoveReplicationPeerRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RemoveReplicationPeerResponse": {
+      "base": null,
+      "refs": {}
+    },
     "RemoveTagsRequest": {
       "base": "<p>Container for the request parameters to the <code>RemoveTags</code> operation.</p>",
       "refs": {}
+    },
+    "ReplicationPeer": {
+      "base": "<p>A domain that another domain replicates with, and the state of that relationship.</p>",
+      "refs": {
+        "ReplicationPeerList$member": null
+      }
+    },
+    "ReplicationPeerList": {
+      "base": null,
+      "refs": {
+        "DescribeDomainReplicationResponse$Peers": "<p>The domains that this domain replicates with. Each entry carries the state of that one relationship. Empty when the domain is not replicating.</p>"
+      }
+    },
+    "ReplicationRole": {
+      "base": null,
+      "refs": {
+        "DescribeDomainReplicationResponse$Role": "<p>The domain's role in the arrangement, either <code>PRIMARY</code> or <code>SECONDARY</code>. Absent when the domain is not replicating.</p>",
+        "ReplicationPeer$PeerRole": "<p>The peer's role in the relationship, either <code>PRIMARY</code> or <code>SECONDARY</code>.</p>"
+      }
+    },
+    "ReplicationStatus": {
+      "base": null,
+      "refs": {
+        "AddReplicationPeerResponse$Status": "<p>The state of the replication relationship. This is <code>PENDING_SETUP</code> immediately after the request is accepted.</p>",
+        "FailoverReplicationResponse$Status": "<p>The state of the replication relationship. This is <code>FAILING_OVER</code> while the promotion is in progress.</p>",
+        "RemoveReplicationPeerResponse$Status": "<p>The state of the replication relationship. This is <code>PENDING_REMOVAL</code> while replication is being stopped.</p>",
+        "ReplicationPeer$Status": "<p>The state of the relationship:</p> <ul> <li> <p> <code>PENDING_SETUP</code> - replication is being established.</p> </li> <li> <p> <code>ACTIVE</code> - replication is running.</p> </li> <li> <p> <code>SWITCHING_OVER</code> - a planned promotion is in progress.</p> </li> <li> <p> <code>FAILING_OVER</code> - an unplanned promotion is in progress.</p> </li> <li> <p> <code>PENDING_REMOVAL</code> - replication is being stopped.</p> </li> <li> <p> <code>DETACHED</code> - the relationship has ended.</p> </li> <li> <p> <code>EJECTED</code> - a failover promoted the other domain. The former primary keeps the data it had when it was ejected and stays read-only until you remove the peer, or discard that data and pair again.</p> </li> <li> <p> <code>FAILED</code> - setup or teardown could not complete. You can still remove the relationship.</p> </li> </ul> <p>A relationship that is removed successfully no longer appears in <code>Peers</code>.</p>",
+        "SwitchoverReplicationResponse$Status": "<p>The state of the replication relationship. This is <code>SWITCHING_OVER</code> while the promotion is in progress.</p>"
+      }
+    },
+    "ReplicationStatusMessage": {
+      "base": null,
+      "refs": {
+        "ReplicationPeer$StatusMessage": "<p>An explanation of why the relationship is in its current state, when more detail is available.</p>"
+      }
     },
     "RequestId": {
       "base": null,
@@ -3865,6 +4071,14 @@
         "IdentityCenterOptions$SubjectKey": "<p>Specifies the attribute that contains the subject identifier (such as username, user ID, or email) in IAM Identity Center.</p>",
         "IdentityCenterOptionsInput$SubjectKey": "<p>Specifies the attribute that contains the subject identifier (such as username, user ID, or email) in IAM Identity Center.</p>"
       }
+    },
+    "SwitchoverReplicationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SwitchoverReplicationResponse": {
+      "base": null,
+      "refs": {}
     },
     "TLSSecurityPolicy": {
       "base": null,

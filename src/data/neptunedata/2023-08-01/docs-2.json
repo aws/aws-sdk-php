@@ -3,6 +3,7 @@
   "service": "<p><fullname>Neptune Data API</fullname> <p>The Amazon Neptune data API provides SDK support for more than 40 of Neptune's data operations, including data loading, query execution, data inquiry, and machine learning. It supports the Gremlin and openCypher query languages, and is available in all SDK languages. It automatically signs API requests and greatly simplifies integrating Neptune into your applications.</p></p>",
   "operations": {
     "CancelGremlinQuery": "<p>Cancels a Gremlin query. See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/gremlin-api-status-cancel.html\">Gremlin query cancellation</a> for more information.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#cancelquery\">neptune-db:CancelQuery</a> IAM action in that cluster.</p>",
+    "CancelIndexRebuild": "<p>Cancels an in-progress index rebuild operation.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#cancelindexrebuild\">neptune-db:CancelIndexRebuild</a> IAM action in that cluster.</p>",
     "CancelLoaderJob": "<p>Cancels a specified load job. This is an HTTP <code>DELETE</code> request. See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/load-api-reference-status.htm\">Neptune Loader Get-Status API</a> for more information.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#cancelloaderjob\">neptune-db:CancelLoaderJob</a> IAM action in that cluster..</p>",
     "CancelMLDataProcessingJob": "<p>Cancels a Neptune ML data processing job. See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/machine-learning-api-dataprocessing.html\">The <code>dataprocessing</code> command</a>.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#cancelmldataprocessingjob\">neptune-db:CancelMLDataProcessingJob</a> IAM action in that cluster.</p>",
     "CancelMLModelTrainingJob": "<p>Cancels a Neptune ML model training job. See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/machine-learning-api-modeltraining.html\">Model training using the <code>modeltraining</code> command</a>.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#cancelmlmodeltrainingjob\">neptune-db:CancelMLModelTrainingJob</a> IAM action in that cluster.</p>",
@@ -20,6 +21,7 @@
     "ExecuteOpenCypherQuery": "<p>Executes an openCypher query. See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/access-graph-opencypher.html\">Accessing the Neptune Graph with openCypher</a> for more information.</p> <p>Neptune supports building graph applications using openCypher, which is currently one of the most popular query languages among developers working with graph databases. Developers, business analysts, and data scientists like openCypher's declarative, SQL-inspired syntax because it provides a familiar structure in which to querying property graphs.</p> <p>The openCypher language was originally developed by Neo4j, then open-sourced in 2015 and contributed to the <a href=\"https://opencypher.org/\">openCypher project</a> under an Apache 2 open-source license.</p> <p>Note that when invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows one of the following IAM actions in that cluster, depending on the query:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#readdataviaquery\">neptune-db:ReadDataViaQuery</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#writedataviaquery\">neptune-db:WriteDataViaQuery</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#deletedataviaquery\">neptune-db:DeleteDataViaQuery</a> </p> </li> </ul> <p>Note also that the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-data-condition-keys.html#iam-neptune-condition-keys\">neptune-db:QueryLanguage:OpenCypher</a> IAM condition key can be used in the policy document to restrict the use of openCypher queries (see <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-data-condition-keys.html\">Condition keys available in Neptune IAM data-access policy statements</a>).</p>",
     "GetEngineStatus": "<p>Retrieves the status of the graph database on the host.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#getenginestatus\">neptune-db:GetEngineStatus</a> IAM action in that cluster.</p>",
     "GetGremlinQueryStatus": "<p>Gets the status of a specified Gremlin query.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#getquerystatus\">neptune-db:GetQueryStatus</a> IAM action in that cluster.</p> <p>Note that the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-data-condition-keys.html#iam-neptune-condition-keys\">neptune-db:QueryLanguage:Gremlin</a> IAM condition key can be used in the policy document to restrict the use of Gremlin queries (see <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-data-condition-keys.html\">Condition keys available in Neptune IAM data-access policy statements</a>).</p>",
+    "GetIndexRebuildStatus": "<p>Retrieves the status of an index rebuild operation.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#getindexrebuildstatus\">neptune-db:GetIndexRebuildStatus</a> IAM action in that cluster.</p>",
     "GetLoaderJobStatus": "<p>Gets status information about a specified load job. Neptune keeps track of the most recent 1,024 bulk load jobs, and stores the last 10,000 error details per job.</p> <p>See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/load-api-reference-status.htm\">Neptune Loader Get-Status API</a> for more information.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#getloaderjobstatus\">neptune-db:GetLoaderJobStatus</a> IAM action in that cluster..</p>",
     "GetMLDataProcessingJob": "<p>Retrieves information about a specified data processing job. See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/machine-learning-api-dataprocessing.html\">The <code>dataprocessing</code> command</a>.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#getmldataprocessingjobstatus\">neptune-db:neptune-db:GetMLDataProcessingJobStatus</a> IAM action in that cluster.</p>",
     "GetMLEndpoint": "<p>Retrieves details about an inference endpoint. See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/machine-learning-api-endpoints.html\">Managing inference endpoints using the endpoints command</a>.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#getmlendpointstatus\">neptune-db:GetMLEndpointStatus</a> IAM action in that cluster.</p>",
@@ -32,7 +34,9 @@
     "GetRDFGraphSummary": "<p>Gets a graph summary for an RDF graph.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#getgraphsummary\">neptune-db:GetGraphSummary</a> IAM action in that cluster.</p>",
     "GetSparqlStatistics": "<p>Gets RDF statistics (SPARQL).</p>",
     "GetSparqlStream": "<p>Gets a stream for an RDF graph.</p> <p>With the Neptune Streams feature, you can generate a complete sequence of change-log entries that record every change made to your graph data as it happens. <code>GetSparqlStream</code> lets you collect these change-log entries for an RDF graph.</p> <p>The Neptune streams feature needs to be enabled on your Neptune DBcluster. To enable streams, set the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/parameters.html#parameters-db-cluster-parameters-neptune_streams\">neptune_streams</a> DB cluster parameter to <code>1</code>.</p> <p>See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/streams.html\">Capturing graph changes in real time using Neptune streams</a>.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#getstreamrecords\">neptune-db:GetStreamRecords</a> IAM action in that cluster.</p> <p>Note that the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-data-condition-keys.html#iam-neptune-condition-keys\">neptune-db:QueryLanguage:Sparql</a> IAM condition key can be used in the policy document to restrict the use of SPARQL queries (see <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-data-condition-keys.html\">Condition keys available in Neptune IAM data-access policy statements</a>).</p>",
+    "GetStorageInfo": "<p>Retrieves storage information for the Neptune database instance, including approximate total storage used and per-category size and entry counts. Storage categories include:</p> <ul> <li> <p> <i>Quad indexes</i> - the indexes that store graph data, for both RDF (SPARQL) and Property Graph (Gremlin/openCypher) models.</p> </li> <li> <p> <i>Dictionaries</i> - the term dictionaries, including total dictionary storage and the portion used by blob (large value) entries.</p> </li> <li> <p> <i>Undo logs</i> - the undo logs, reported as a total size and the number of entries in the undo log list.</p> </li> <li> <p> <i>Streams</i> - the change-log streams.</p> </li> <li> <p> <i>Schema</i> - the schema.</p> </li> <li> <p> <i>DFE statistics</i> - the DFE engine statistics.</p> </li> <li> <p> <i>System metadata</i> - internal system metadata.</p> </li> </ul> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#getstorageinfo\">neptune-db:GetStorageInfo</a> IAM action in that cluster.</p>",
     "ListGremlinQueries": "<p>Lists active Gremlin queries. See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/gremlin-api-status.html\">Gremlin query status API</a> for details about the output.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#getquerystatus\">neptune-db:GetQueryStatus</a> IAM action in that cluster.</p> <p>Note that the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-data-condition-keys.html#iam-neptune-condition-keys\">neptune-db:QueryLanguage:Gremlin</a> IAM condition key can be used in the policy document to restrict the use of Gremlin queries (see <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-data-condition-keys.html\">Condition keys available in Neptune IAM data-access policy statements</a>).</p>",
+    "ListIndexRebuilds": "<p>Retrieves a list of all index rebuild operation identifiers.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#listindexrebuilds\">neptune-db:ListIndexRebuilds</a> IAM action in that cluster.</p>",
     "ListLoaderJobs": "<p>Retrieves a list of the <code>loadIds</code> for all active loader jobs.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#listloaderjobs\">neptune-db:ListLoaderJobs</a> IAM action in that cluster..</p>",
     "ListMLDataProcessingJobs": "<p>Returns a list of Neptune ML data processing jobs. See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/machine-learning-api-dataprocessing.html#machine-learning-api-dataprocessing-list-jobs\">Listing active data-processing jobs using the Neptune ML dataprocessing command</a>.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#listmldataprocessingjobs\">neptune-db:ListMLDataProcessingJobs</a> IAM action in that cluster.</p>",
     "ListMLEndpoints": "<p>Lists existing inference endpoints. See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/machine-learning-api-endpoints.html\">Managing inference endpoints using the endpoints command</a>.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#listmlendpoints\">neptune-db:ListMLEndpoints</a> IAM action in that cluster.</p>",
@@ -41,6 +45,7 @@
     "ListOpenCypherQueries": "<p>Lists active openCypher queries. See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/access-graph-opencypher-status.html\">Neptune openCypher status endpoint</a> for more information.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#getquerystatus\">neptune-db:GetQueryStatus</a> IAM action in that cluster.</p> <p>Note that the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-data-condition-keys.html#iam-neptune-condition-keys\">neptune-db:QueryLanguage:OpenCypher</a> IAM condition key can be used in the policy document to restrict the use of openCypher queries (see <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-data-condition-keys.html\">Condition keys available in Neptune IAM data-access policy statements</a>).</p>",
     "ManagePropertygraphStatistics": "<p>Manages the generation and use of property graph statistics.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#managestatistics\">neptune-db:ManageStatistics</a> IAM action in that cluster.</p>",
     "ManageSparqlStatistics": "<p>Manages the generation and use of RDF graph statistics.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#managestatistics\">neptune-db:ManageStatistics</a> IAM action in that cluster.</p>",
+    "StartIndexRebuild": "<p>Initiates an index rebuild operation to optimize storage and improve query performance. The rebuild operation reorganizes index to reclaim space and improve efficiency.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#startindexrebuild\">neptune-db:StartIndexRebuild</a> IAM action in that cluster.</p>",
     "StartLoaderJob": "<p>Starts a Neptune bulk loader job to load data from an Amazon S3 bucket into a Neptune DB instance. See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load.html\">Using the Amazon Neptune Bulk Loader to Ingest Data</a>.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#startloaderjob\">neptune-db:StartLoaderJob</a> IAM action in that cluster.</p>",
     "StartMLDataProcessingJob": "<p>Creates a new Neptune ML data processing job for processing the graph data exported from Neptune for training. See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/machine-learning-api-dataprocessing.html\">The <code>dataprocessing</code> command</a>.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#startmlmodeldataprocessingjob\">neptune-db:StartMLModelDataProcessingJob</a> IAM action in that cluster.</p>",
     "StartMLModelTrainingJob": "<p>Creates a new Neptune ML model training job. See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/machine-learning-api-modeltraining.html\">Model training using the <code>modeltraining</code> command</a>.</p> <p>When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/iam-dp-actions.html#startmlmodeltrainingjob\">neptune-db:StartMLModelTrainingJob</a> IAM action in that cluster.</p>",
@@ -110,6 +115,14 @@
       "base": null,
       "refs": {}
     },
+    "CancelIndexRebuildInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelIndexRebuildOutput": {
+      "base": null,
+      "refs": {}
+    },
     "CancelLoaderJobInput": {
       "base": null,
       "refs": {}
@@ -148,6 +161,10 @@
     },
     "CancelOpenCypherQueryOutput": {
       "base": null,
+      "refs": {}
+    },
+    "CancelledByMaintenanceException": {
+      "base": "<p>Raised when a request is cancelled because the storage layer entered maintenance mode. This typically happens during a customer-initiated operation such as an index rebuild. It should be treated like <code>ConcurrentModificationException</code>.</p>",
       "refs": {}
     },
     "CancelledByUserException": {
@@ -213,6 +230,12 @@
       "refs": {
         "DeletePropertygraphStatisticsOutput$payload": "<p>The deletion payload.</p>",
         "DeleteSparqlStatisticsOutput$payload": "<p>The deletion payload.</p>"
+      }
+    },
+    "DictionariesInfo": {
+      "base": "<p>Contains dictionary storage metrics for the Neptune database, including total dictionary size and entry count, and the size and count for blob (large value) entries.</p>",
+      "refs": {
+        "GetStorageOutput$dictionaries": "<p>Contains information about the dictionaries, including total dictionary storage and the portion used by blob entries. For additional details on the storage of the Neptune dictionary, see <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/feature-overview-storage.html#feature-overview-storage-billing\">Neptune Storage Billing</a>.</p>"
       }
     },
     "Document": {
@@ -345,6 +368,14 @@
       "base": null,
       "refs": {}
     },
+    "GetIndexRebuildStatusInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIndexRebuildStatusOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GetLoaderJobStatusInput": {
       "base": null,
       "refs": {}
@@ -445,6 +476,10 @@
       "base": null,
       "refs": {}
     },
+    "GetStorageOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GraphSummaryType": {
       "base": null,
       "refs": {
@@ -483,6 +518,7 @@
         "DeleteSparqlStatisticsOutput$statusCode": "<p>The HTTP response code: 200 if the delete was successful, or 204 if there were no statistics to delete.</p>",
         "ExecuteGremlinProfileQueryInput$chop": "<p>If non-zero, causes the results string to be truncated at that number of characters. If set to zero, the string contains all the results.</p>",
         "GetEngineStatusOutput$rollingBackTrxCount": "<p>If there are transactions being rolled back, this field is set to the number of such transactions. If there are none, the field doesn't appear at all.</p>",
+        "GetIndexRebuildStatusOutput$progressPercentage": "<p>The percentage of the index rebuild operation that has been completed, expressed as an integer from 0 to 100.</p>",
         "GetPropertygraphStreamOutput$totalRecords": "<p>The total number of records in the response.</p>",
         "GetPropertygraphSummaryOutput$statusCode": "<p>The HTTP return code of the request. If the request succeeded, the code is 200.</p>",
         "GetRDFGraphSummaryOutput$statusCode": "<p>The HTTP return code of the request. If the request succeeded, the code is 200.</p>",
@@ -534,6 +570,10 @@
       "refs": {}
     },
     "ListGremlinQueriesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIndexRebuildsOutput": {
       "base": null,
       "refs": {}
     },
@@ -636,6 +676,7 @@
         "GetSparqlStreamInput$commitNum": "<p>The commit number of the starting record to read from the change-log stream. This parameter is required when <code>iteratorType</code> is<code>AT_SEQUENCE_NUMBER</code> or <code>AFTER_SEQUENCE_NUMBER</code>, and ignored when <code>iteratorType</code> is <code>TRIM_HORIZON</code> or <code>LATEST</code>.</p>",
         "GetSparqlStreamInput$opNum": "<p>The operation sequence number within the specified commit to start reading from in the change-log stream data. The default is <code>1</code>.</p>",
         "GetSparqlStreamOutput$lastTrxTimestampInMillis": "<p>The time at which the commit for the transaction was requested, in milliseconds from the Unix epoch.</p>",
+        "GetStorageOutput$totalStorageBytesUsed": "<p>The approximate total amount of storage used by the Neptune database instance, in bytes.</p>",
         "LongValuedMap$value": null,
         "NodeStructure$count": "<p>Number of nodes that have this specific structure.</p>",
         "PropertygraphRecord$commitTimestampInMillis": "<p>The time at which the commit for the transaction was requested, in milliseconds from the Unix epoch.</p>",
@@ -655,7 +696,11 @@
         "StartMLDataProcessingJobOutput$creationTimeInMillis": "<p>The time it took to create the new processing job, in milliseconds.</p>",
         "StartMLModelTrainingJobOutput$creationTimeInMillis": "<p>The model training job creation time, in milliseconds.</p>",
         "StartMLModelTransformJobOutput$creationTimeInMillis": "<p>The creation time of the model transform job, in milliseconds.</p>",
-        "SubjectStructure$count": "<p>Number of occurrences of this specific structure.</p>"
+        "StorageMetrics$sizeInBytes": "<p>Storage size in bytes.</p>",
+        "StorageMetrics$count": "<p>The number of entries.</p>",
+        "SubjectStructure$count": "<p>Number of occurrences of this specific structure.</p>",
+        "UndoLogsMetrics$sizeInBytes": "<p>The total size of the undo logs in bytes.</p>",
+        "UndoLogsMetrics$listSize": "<p>The number of entries in the undo log list.</p>"
       }
     },
     "LongValuedMap": {
@@ -845,6 +890,19 @@
         "GetPropertygraphSummaryOutput$payload": "<p>Payload containing the property graph summary response.</p>"
       }
     },
+    "QuadsIndexesInfo": {
+      "base": "<p>Contains storage information about quad indexes for both RDF and Property Graph data models.</p>",
+      "refs": {
+        "GetStorageOutput$quads": "<p>Contains information about the quad indexes, including counts and sizes for both RDF (SPARQL) and Property Graph (Gremlin/openCypher) data.</p>"
+      }
+    },
+    "QuadsInfo": {
+      "base": "<p>Contains storage information about quad indexes.</p>",
+      "refs": {
+        "QuadsIndexesInfo$RDF": "<p>Contains quad index information for the RDF (SPARQL) data model.</p>",
+        "QuadsIndexesInfo$PG": "<p>Contains quad index information for the Property Graph (Gremlin/openCypher) data model.</p>"
+      }
+    },
     "QueryEvalStats": {
       "base": "<p>Structure to capture query statistics such as how many queries are running, accepted or waiting and their details.</p>",
       "refs": {
@@ -889,6 +947,29 @@
       "base": "<p>Raised when a request attempts to write to a read-only resource.</p>",
       "refs": {}
     },
+    "RebuildConcurrency": {
+      "base": null,
+      "refs": {
+        "CancelIndexRebuildOutput$concurrency": "<p>The concurrency of the rebuild being cancelled, echoed from the original <code>StartIndexRebuild</code> request.</p>",
+        "GetIndexRebuildStatusOutput$concurrency": "<p>The concurrency in effect for this rebuild, as echoed from the original <code>StartIndexRebuild</code> request.</p>",
+        "StartIndexRebuildInput$concurrency": "<p>The number of concurrent indexes to rebuild in parallel. If not specified, defaults to <code>1</code>.</p> <p>Valid values are between <code>1</code> and the number of vCPUs available on the writer instance. If the value exceeds the available vCPUs, it is capped at the maximum instead of returning an <code>InvalidParameterException</code>. The effective (capped) value is returned in the response.</p> <p>Higher concurrency can shorten the overall rebuild, but also increases CPU and I/O load during the operation.</p>",
+        "StartIndexRebuildOutput$concurrency": "<p>The effective concurrency used for this rebuild. This is the value supplied in the request, capped at the number of vCPUs on the writer instance.</p>"
+      }
+    },
+    "RebuildIdList": {
+      "base": null,
+      "refs": {
+        "ListIndexRebuildsOutput$rebuildIds": "<p>A list of unique identifiers for index rebuild operations. Use each ID with the GetIndexRebuildStatus operation to retrieve detailed status information.</p>"
+      }
+    },
+    "RebuildStatus": {
+      "base": "<p>Indicates the current state of a rebuild operation.</p>",
+      "refs": {
+        "CancelIndexRebuildOutput$status": "<p>The status of the cancellation request.</p>",
+        "GetIndexRebuildStatusOutput$status": "<p>The current status of the rebuild operation. See <code>RebuildStatus</code> for possible values: <code>PREPARING</code>, <code>REBUILDING</code>, <code>COMPLETED</code>, <code>FAILED</code>, <code>CANCELLING</code> or <code>CANCELLED</code>.</p>",
+        "StartIndexRebuildOutput$status": "<p>The current status of the rebuild operation. See <code>RebuildStatus</code> for possible values.</p>"
+      }
+    },
     "RefreshStatisticsIdMap": {
       "base": "<p>Statistics for <code>REFRESH</code> mode.</p>",
       "refs": {
@@ -903,6 +984,10 @@
         "ExecuteGremlinProfileQueryOutput$output": "<p>A text blob containing the Gremlin Profile result. See <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/gremlin-profile-api.html\">Gremlin profile API in Neptune</a> for details.</p>"
       }
     },
+    "ResourceNotFoundException": {
+      "base": "<p>Raised when the specified resource could not be found. The resource might have been deleted or the identifier might be incorrect.</p>",
+      "refs": {}
+    },
     "S3BucketRegion": {
       "base": null,
       "refs": {
@@ -912,6 +997,14 @@
     "S3Exception": {
       "base": "<p>Raised when there is a problem accessing Amazon S3.</p>",
       "refs": {}
+    },
+    "Scope": {
+      "base": "<p>Specifies the scope of the storage rebuild operation.</p>",
+      "refs": {
+        "GetIndexRebuildStatusOutput$scope": "<p>The scope of the rebuild operation. See <code>Scope</code> for possible values: <code>ALL</code>, <code>QUADS</code>, or <code>DICTIONARIES</code>.</p>",
+        "StartIndexRebuildInput$scope": "<p>Specifies the scope of the rebuild operation. Possible values are:</p> <ul> <li> <p> <code>ALL</code> - Rebuild all (quads and dictionaries). This is the default if not specified.</p> </li> <li> <p> <code>QUADS</code> - Rebuild only the quad indexes. </p> </li> <li> <p> <code>DICTIONARIES</code> - Rebuild only the dictionaries.</p> </li> </ul>",
+        "StartIndexRebuildOutput$scope": "<p>The scope of the rebuild operation that was requested. See <code>Scope</code> for possible values: <code>ALL</code>, <code>QUADS</code>, or <code>DICTIONARIES</code>.</p>"
+      }
     },
     "ServerShutdownException": {
       "base": "<p>Raised when the server shuts down while processing a request.</p>",
@@ -934,6 +1027,14 @@
       "refs": {
         "GetSparqlStreamOutput$records": "<p>An array of serialized change-log stream records included in the response.</p>"
       }
+    },
+    "StartIndexRebuildInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartIndexRebuildOutput": {
+      "base": null,
+      "refs": {}
     },
     "StartLoaderJobInput": {
       "base": null,
@@ -991,6 +1092,22 @@
         "Statistics$signatureInfo": "<p>A StatisticsSummary structure that contains:</p> <ul> <li> <p> <code>signatureCount</code> - The total number of signatures across all characteristic sets.</p> </li> <li> <p> <code>instanceCount</code> - The total number of characteristic-set instances.</p> </li> <li> <p> <code>predicateCount</code> - The total number of unique predicates.</p> </li> </ul>"
       }
     },
+    "StorageMetrics": {
+      "base": "<p>Contains storage size and entry count metrics.</p>",
+      "refs": {
+        "DictionariesInfo$total": "<p>The total size and entry count across all dictionary entries.</p>",
+        "DictionariesInfo$blobs": "<p>The size and entry count for the blob (large value) dictionary entries.</p>",
+        "GetStorageOutput$streams": "<p>Contains storage metrics for the Neptune change-log streams, including size in bytes and entry count.</p>",
+        "GetStorageOutput$dfeStatistics": "<p>Contains storage metrics for the Neptune DFE engine statistics, including size in bytes and entry count.</p>",
+        "GetStorageOutput$schema": "<p>Contains storage metrics for the Neptune schema, including size in bytes and entry count.</p>",
+        "GetStorageOutput$internals": "<p>Contains storage metrics for Neptune system metadata, including size in bytes and entry count.</p>",
+        "QuadsInfo$SPOG": "<p>Size and count information for the SPOG quad index.</p>",
+        "QuadsInfo$POGS": "<p>Size and count information for the POGS quad index.</p>",
+        "QuadsInfo$GPSO": "<p>Size and count information for the GPSO quad index.</p>",
+        "QuadsInfo$OSGP": "<p>Size and count information for the OSGP quad index. This index is optional. For details on how to enable it and evaluate the benefits and costs, see <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/feature-overview-data-model.html\">Neptune Data Model</a>.</p>",
+        "QuadsInfo$PZSOG": "<p>Size and count information for the PZSOG quad index.</p>"
+      }
+    },
     "StreamRecordsNotFoundException": {
       "base": "<p>Raised when stream records requested by a query cannot be found.</p>",
       "refs": {}
@@ -1009,6 +1126,7 @@
         "BulkLoadIdNotFoundException$code": "<p>The HTTP status code returned with the exception.</p>",
         "CancelGremlinQueryInput$queryId": "<p>The unique identifier that identifies the query to be canceled.</p>",
         "CancelGremlinQueryOutput$status": "<p>The status of the cancelation</p>",
+        "CancelIndexRebuildInput$rebuildId": "<p>The unique identifier of the index rebuild job to cancel.</p>",
         "CancelLoaderJobInput$loadId": "<p>The ID of the load job to be deleted.</p>",
         "CancelLoaderJobOutput$status": "<p>The cancellation status.</p>",
         "CancelMLDataProcessingJobInput$id": "<p>The unique identifier of the data-processing job.</p>",
@@ -1022,6 +1140,9 @@
         "CancelMLModelTransformJobOutput$status": "<p>the status of the cancelation.</p>",
         "CancelOpenCypherQueryInput$queryId": "<p>The unique ID of the openCypher query to cancel.</p>",
         "CancelOpenCypherQueryOutput$status": "<p>The cancellation status of the openCypher query.</p>",
+        "CancelledByMaintenanceException$detailedMessage": "<p>A detailed message describing the problem.</p>",
+        "CancelledByMaintenanceException$requestId": "<p>The ID of the request in question.</p>",
+        "CancelledByMaintenanceException$code": "<p>The HTTP status code returned with the exception.</p>",
         "CancelledByUserException$detailedMessage": "<p>A detailed message describing the problem.</p>",
         "CancelledByUserException$requestId": "<p>The ID of the request in question.</p>",
         "CancelledByUserException$code": "<p>The HTTP status code returned with the exception.</p>",
@@ -1086,6 +1207,8 @@
         "GetGremlinQueryStatusInput$queryId": "<p>The unique identifier that identifies the Gremlin query.</p>",
         "GetGremlinQueryStatusOutput$queryId": "<p>The ID of the query for which status is being returned.</p>",
         "GetGremlinQueryStatusOutput$queryString": "<p>The Gremlin query string.</p>",
+        "GetIndexRebuildStatusInput$rebuildId": "<p>The unique identifier of the index rebuild job returned by the StartIndexRebuild operation.</p>",
+        "GetIndexRebuildStatusOutput$failureReason": "<p>The reason for the failure, if the rebuild operation failed. This field is only populated when the status is <code>FAILED</code>.</p>",
         "GetLoaderJobStatusInput$loadId": "<p>The load ID of the load job to get the status of.</p>",
         "GetLoaderJobStatusOutput$status": "<p>The HTTP response code for the request.</p>",
         "GetMLDataProcessingJobInput$id": "<p>The unique identifier of the data-processing job to be retrieved.</p>",
@@ -1194,7 +1317,11 @@
         "ReadOnlyViolationException$detailedMessage": "<p>A detailed message describing the problem.</p>",
         "ReadOnlyViolationException$requestId": "<p>The ID of the request in which the parameter is missing.</p>",
         "ReadOnlyViolationException$code": "<p>The HTTP status code returned with the exception.</p>",
+        "RebuildIdList$member": null,
         "RefreshStatisticsIdMap$statisticsId": "<p>The ID of the statistics generation run that is currently occurring.</p>",
+        "ResourceNotFoundException$detailedMessage": "<p>A detailed message describing the problem.</p>",
+        "ResourceNotFoundException$requestId": "<p>The ID of the request in question.</p>",
+        "ResourceNotFoundException$code": "<p>The HTTP status code returned with the exception.</p>",
         "S3Exception$detailedMessage": "<p>A detailed message describing the problem.</p>",
         "S3Exception$requestId": "<p>The ID of the request in question.</p>",
         "S3Exception$code": "<p>The HTTP status code returned with the exception.</p>",
@@ -1203,6 +1330,8 @@
         "ServerShutdownException$code": "<p>The HTTP status code returned with the exception.</p>",
         "SparqlData$stmt": "<p>Holds an <a href=\"https://www.w3.org/TR/n-quads/\">N-QUADS</a> statement expressing the changed quad.</p>",
         "SparqlRecord$op": "<p>The operation that created the change.</p>",
+        "StartIndexRebuildInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, the SDK automatically generates one.</p>",
+        "StartIndexRebuildOutput$rebuildId": "<p>The unique identifier for the index rebuild job. Use this ID with the GetIndexRebuildStatus operation to check the progress of the rebuild.</p>",
         "StartLoaderJobInput$source": "<p>The <code>source</code> parameter accepts an S3 URI that identifies a single file, multiple files, a folder, or multiple folders. Neptune loads every data file in any folder that is specified.</p> <p>The URI can be in any of the following formats.</p> <ul> <li> <p> <code>s3://(bucket_name)/(object-key-name)</code> </p> </li> <li> <p> <code>https://s3.amazonaws.com/(bucket_name)/(object-key-name)</code> </p> </li> <li> <p> <code>https://s3.us-east-1.amazonaws.com/(bucket_name)/(object-key-name)</code> </p> </li> </ul> <p>The <code>object-key-name</code> element of the URI is equivalent to the <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html#API_ListObjects_RequestParameters\">prefix</a> parameter in an S3 <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html\">ListObjects</a> API call. It identifies all the objects in the specified S3 bucket whose names begin with that prefix. That can be a single file or folder, or multiple files and/or folders.</p> <p>The specified folder or folders can contain multiple vertex files and multiple edge files.</p>",
         "StartLoaderJobInput$iamRoleArn": "<p>The Amazon Resource Name (ARN) for an IAM role to be assumed by the Neptune DB instance for access to the S3 bucket. The IAM role ARN provided here should be attached to the DB cluster (see <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-IAM-add-role-cluster.html\">Adding the IAM Role to an Amazon Neptune Cluster</a>.</p>",
         "StartLoaderJobOutput$status": "<p>The HTTP return code indicating the status of the load job.</p>",
@@ -1265,7 +1394,10 @@
         "TooManyRequestsException$code": "<p>The HTTP status code returned with the exception.</p>",
         "UnsupportedOperationException$detailedMessage": "<p>A detailed message describing the problem.</p>",
         "UnsupportedOperationException$requestId": "<p>The ID of the request in question.</p>",
-        "UnsupportedOperationException$code": "<p>The HTTP status code returned with the exception.</p>"
+        "UnsupportedOperationException$code": "<p>The HTTP status code returned with the exception.</p>",
+        "ValidationException$detailedMessage": "<p>A detailed message describing the problem.</p>",
+        "ValidationException$requestId": "<p>The ID of the request in question.</p>",
+        "ValidationException$code": "<p>The HTTP status code returned with the exception.</p>"
       }
     },
     "StringList": {
@@ -1313,6 +1445,9 @@
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
+        "GetIndexRebuildStatusOutput$startTime": "<p>The ISO-8601 timestamp indicating when the index rebuild operation started.</p>",
+        "GetIndexRebuildStatusOutput$estimatedEndTime": "<p>The estimated ISO-8601 timestamp for when the index rebuild operation will complete. The estimate may change as the operation progresses.</p>",
+        "GetIndexRebuildStatusOutput$endTime": "<p>The ISO-8601 timestamp indicating when the index rebuild operation completed. This field is only present when the operation has completed (status is <code>COMPLETED</code>, <code>FAILED</code>, or <code>CANCELLED</code>).</p>",
         "PropertygraphSummaryValueMap$lastStatisticsComputationTime": "<p>The timestamp, in ISO 8601 format, of the time at which Neptune last computed statistics.</p>",
         "RDFGraphSummaryValueMap$lastStatisticsComputationTime": "<p>The timestamp, in ISO 8601 format, of the time at which Neptune last computed statistics.</p>",
         "Statistics$date": "<p>The UTC time at which DFE statistics have most recently been generated.</p>"
@@ -1330,9 +1465,28 @@
       "base": "<p>Raised when the number of requests being processed exceeds the limit.</p>",
       "refs": {}
     },
+    "UndoLogsMetrics": {
+      "base": "<p>Contains storage metrics for the Neptune undo logs, including the total size in bytes and the number of entries in the undo log list.</p>",
+      "refs": {
+        "GetStorageOutput$undoLogs": "<p>Contains information about the undo logs. The <code>sizeInBytes</code> field represents the total size of the undo logs in bytes, and the <code>listSize</code> field represents the number of entries in the undo log list.</p>"
+      }
+    },
     "UnsupportedOperationException": {
       "base": "<p>Raised when a request attempts to initiate an operation that is not supported.</p>",
       "refs": {}
+    },
+    "ValidationException": {
+      "base": "<p>Raised when a parameter value is not valid or is malformed.</p>",
+      "refs": {}
+    },
+    "WriteBufferSize": {
+      "base": "<p>Controls the buffer size used during an index rebuild to track concurrent write operations. Larger values allow the rebuild to tolerate heavier concurrent write traffic.</p>",
+      "refs": {
+        "CancelIndexRebuildOutput$writeBufferSize": "<p>The <code>WriteBufferSize</code> of the rebuild being cancelled, echoed from the original <code>StartIndexRebuild</code> request.</p>",
+        "GetIndexRebuildStatusOutput$writeBufferSize": "<p>The <code>WriteBufferSize</code> in effect for this rebuild, as echoed from the original <code>StartIndexRebuild</code> request.</p>",
+        "StartIndexRebuildInput$writeBufferSize": "<p>Controls the buffer size used for tracking concurrent write operations during the index rebuild. If your database has high write traffic during the rebuild, a larger buffer prevents the operation from failing due to buffer overflow. Possible values are:</p> <ul> <li> <p> <code>LOW</code> - Suitable for databases with light to moderate write activity. This is the default.</p> </li> <li> <p> <code>MEDIUM</code> - Recommended for databases with sustained write traffic or bulk loading.</p> </li> <li> <p> <code>HIGH</code> - Use when rebuilding indexes during heavy write workloads or continuous bulk data ingestion.</p> </li> </ul> <p>If your rebuild fails and you are actively writing data to the database, retry with a higher <code>writeBufferSize</code> value. For bulk load operations, consider using <code>HIGH</code>.</p>",
+        "StartIndexRebuildOutput$writeBufferSize": "<p>The <code>WriteBufferSize</code> applied to this rebuild. See the <code>WriteBufferSize</code> enum for possible values.</p>"
+      }
     }
   }
 }

@@ -14,7 +14,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     clientToken?: string,
- *     supportMode?: 'AI_ONLY'|'FULL_SUPPORT',
+ *     supportMode?: 'AI_ONLY',
  *     tags?: array<string, string>,
  *     ...,
  * } $args = [])
@@ -27,7 +27,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     clientToken?: string,
- *     supportMode?: 'AI_ONLY'|'FULL_SUPPORT',
+ *     supportMode?: 'AI_ONLY',
  *     tags?: array<string, string>,
  *     ...,
  * } $args = [])
