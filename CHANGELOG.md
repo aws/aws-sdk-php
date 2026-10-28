@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.402.3 - 2026-10-28
 
 * `Aws\` - Fixed AssumeRoleCredentialProvider throwing a TypeError and losing the original exception when the STS request fails with an exception that does not extend RuntimeException.
 * `Aws\Neptunedata` - Get Storage API analyzes storage usage to identify database bloat and your storage footprint. Index Rebuild API triggers on-demand index reconstruction to eliminate bloat and restore query performance.
