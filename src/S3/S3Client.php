@@ -2794,7 +2794,10 @@ class S3Client extends AwsClient implements S3ClientInterface
         );
         if ($signature_version == 'v4-s3express') {
             $provider = $this->getConfig('s3_express_identity_provider');
-            $credentials = $provider($command)->wait();
+            $credentials = $provider(
+                $command,
+                $this->getCredentials()->wait()
+            )->wait();
         } else {
             $credentials = $this->getCredentials()->wait();
         }

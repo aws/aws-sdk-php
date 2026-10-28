@@ -4,6 +4,7 @@ namespace Aws\Test\S3;
 use Aws\Api\DateTimeResult;
 use Aws\Command;
 use Aws\CommandInterface;
+use Aws\Credentials\CredentialsInterface;
 use Aws\Exception\AwsException;
 use Aws\Identity\S3\S3ExpressIdentity;
 use Aws\LruArrayCache;
@@ -1231,6 +1232,74 @@ EOXML;
         $url = (string)$request->getUri();
         $this->assertStringContainsString('x-amz-s3session-token=baz', $url);
         $this->assertStringNotContainsString('X-Amz-Security-Token', $url);
+    }
+
+    public function testS3ExpressProviderReceivesClientCredentials(): void
+    {
+        $received = [];
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'credentials' => ['key' => 'ALICE', 'secret' => 's'],
+            's3_express_identity_provider' => function (
+                $command,
+                $credentials = null
+            ) use (&$received) {
+                $received[] = $credentials;
+                return Promise\Create::promiseFor(new S3ExpressIdentity(
+                    'foo',
+                    'bar',
+                    'baz',
+                    time() + 4000
+                ));
+            },
+            'http_handler' => function (RequestInterface $r) {
+                $this->assertSame('baz', $r->getHeaderLine('x-amz-s3session-token'));
+                return Promise\Create::promiseFor(new Response);
+            }
+        ]);
+        $client->getObject(['Bucket' => 'bucket--use1-az2--x-s3', 'Key' => 'key']);
+        $command = $client->getCommand('GetObject', [
+            'Bucket' => 'bucket--use1-az2--x-s3',
+            'Key' => 'key'
+        ]);
+        $url = (string) $client->createPresignedRequest($command, '+20 minutes')
+            ->getUri();
+        $this->assertStringContainsString('x-amz-s3session-token=baz', $url);
+
+        $this->assertCount(2, $received);
+        foreach ($received as $credentials) {
+            $this->assertInstanceOf(CredentialsInterface::class, $credentials);
+            $this->assertSame('ALICE', $credentials->getAccessKeyId());
+            $this->assertSame('s', $credentials->getSecretKey());
+        }
+    }
+
+    public function testS3ExpressProviderErrorIsNotRetried(): void
+    {
+        $calls = 0;
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'credentials' => ['key' => 'ALICE', 'secret' => 's'],
+            'retries' => ['mode' => 'standard', 'max_attempts' => 3],
+            's3_express_identity_provider' => function ($command) use (&$calls) {
+                $calls++;
+                throw new S3Exception(
+                    'slow',
+                    new Command('CreateSession'),
+                    ['code' => 'SlowDown', 'response' => new Response(503)]
+                );
+            },
+            'http_handler' => function (RequestInterface $r) {
+                $this->fail('No request should be sent');
+            }
+        ]);
+        try {
+            $client->getObject(['Bucket' => 'bucket--use1-az2--x-s3', 'Key' => 'key']);
+            $this->fail('Expected an S3Exception');
+        } catch (S3Exception $e) {
+            $this->assertSame('SlowDown', $e->getAwsErrorCode());
+        }
+        $this->assertSame(1, $calls);
     }
 
     public function testCanDetermineRegionOfBucket()
