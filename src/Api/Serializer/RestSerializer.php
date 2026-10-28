@@ -433,7 +433,8 @@ abstract class RestSerializer
         Plan $plan,
         array $args,
         array $opts
-    ): UriInterface {
+    ): UriInterface
+    {
         // Expand `requestUri` field members
         $relativeUri = $plan->uriLiteral ?? $this->expandUriTemplate($plan, $args);
 
@@ -443,8 +444,7 @@ abstract class RestSerializer
         }
 
         // Special case - S3 keys that need path preservation
-        if (
-            $plan->isS3
+        if ($plan->isS3
             && isset($args['Key'])
             && $this->shouldPreservePath($args['Key'])
         ) {
@@ -539,8 +539,7 @@ abstract class RestSerializer
 
             // if relative is '/?query', we want base path without trailing slash + query
             // for now, this is only seen with S3 GetBucketLocation after processing the model
-            if (
-                empty($opts['query'])
+            if (empty($opts['query'])
                 && str_starts_with($relativeUri, '/?')
             ) {
                 $query = substr($relativeUri, 2); // Remove '/?'
@@ -583,7 +582,8 @@ abstract class RestSerializer
     private function formatTimestamp(
         DateTimeInterface|string|int|float $value,
         string $timestampFormat
-    ): string {
+    ): string
+    {
         return TimestampShape::formatAsString($value, $timestampFormat);
     }
 
