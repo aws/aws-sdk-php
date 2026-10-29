@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.402.4 - 2026-10-29
 
 * `Aws\S3` - The default S3 Express identity provider now creates sessions with the requesting client's credentials and caches them per bucket and per identity.
 * `Aws\imagebuilder` - This release adds support for on-demand AMI scanning with Amazon Inspector.
