@@ -55,7 +55,8 @@ final class HttpRequestBindingPlanProvider
         $payload = $input['payload'];
 
         $uriMembers = [];
-        foreach ($input->getMembers() as $name => $member) {
+        $resolved = $input->getMembers();
+        foreach ($resolved as $name => $member) {
             $location = $member['location'];
             if (!$payload && !$location) {
                 $plan->bindings[$name] = [HttpRequestBindingPlan::D_TAG => HttpRequestBindingPlan::BODY];
@@ -75,6 +76,18 @@ final class HttpRequestBindingPlanProvider
                     HttpRequestBindingPlan::U_CONVERT  => self::conversion($member),
                     HttpRequestBindingPlan::U_TSFORMAT => $member['timestampFormat'] ?? 'iso8601',
                 ];
+            }
+        }
+
+        // A failed shape resolution leaves a partial member hash that getMembers() never retries. 
+        $defined = $input['members'];
+        if (is_array($defined) && count($resolved) !== count($defined)) {
+            foreach ($defined as $name => $definition) {
+                if (!isset($resolved[$name])) {
+                    $plan->bindings[$name] = [
+                        HttpRequestBindingPlan::D_TAG => HttpRequestBindingPlan::UNRESOLVED,
+                    ];
+                }
             }
         }
 

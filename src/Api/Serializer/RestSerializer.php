@@ -169,6 +169,11 @@ abstract class RestSerializer
                 case Plan::QUERY_SHAPE:
                     $this->applyQuery($name, $binding[Plan::D_SHAPE], $value, $opts);
                     break;
+
+                case Plan::UNRESOLVED:
+                    // Same exception StructureShape::getMember() raises, which
+                    // legacy reached through its per-argument getMember() call.
+                    throw new \InvalidArgumentException('Unknown member ' . $name);
             }
         }
 

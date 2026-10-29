@@ -26,6 +26,7 @@ final class HttpRequestBindingPlan
     public const QUERY_MAP    = 6;
     public const HEADER_SHAPE = 7; // cold path: legacy recursive header logic
     public const QUERY_SHAPE  = 8; // cold path: legacy recursive query logic
+    public const UNRESOLVED   = 9; // member defined but not resolvable; throws
 
     // Value conversions.
     public const CONVERT_NONE      = 0;
