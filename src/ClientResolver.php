@@ -587,9 +587,6 @@ class ClientResolver
     {
         $config = ConfigModeProvider::unwrap($value);
         if ($config->getMode() !== 'legacy') {
-            if (!isset($args['retries']) && !is_null($config->getRetryMode())) {
-                $args['retries'] = ['mode' => $config->getRetryMode()];
-            }
             if (
                 !isset($args['sts_regional_endpoints'])
                 && !is_null($config->getStsRegionalEndpoints())

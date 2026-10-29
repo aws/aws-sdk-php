@@ -28,6 +28,7 @@ class RetryMiddleware
     private const THROTTLING_BASE_DELAY_MS = 1_000;
     private const DEFAULT_BASE_DELAY_MS = 50;
     private const DEFAULT_MAX_BACKOFF_MS = 20_000;
+    private const THROTTLING_STATUS_CODE = 429;
     private const RETRY_AFTER_HEADER = 'x-amz-retry-after';
 
     private static array $standardThrottlingErrors = [
@@ -390,6 +391,10 @@ class RetryMiddleware
             return true;
         }
 
+        if (self::isUnmodeledThrottlingStatus($result)) {
+            return true;
+        }
+
         if (!empty($errorShape = $result->getAwsErrorShape())) {
             $definition = $errorShape->toArray();
             if (!empty($definition['retryable'])) {
@@ -423,9 +428,24 @@ class RetryMiddleware
                     return true;
                 }
             }
+
+            if (self::isUnmodeledThrottlingStatus($result)) {
+                return true;
+            }
         }
 
         return false;
+    }
+
+    /**
+     * An HTTP 429 whose error does not match one of the operation's
+     * modeled errors is a throttling error. When the error is modeled,
+     * the shape's retryable trait decides instead.
+     */
+    private static function isUnmodeledThrottlingStatus(AwsException $result): bool
+    {
+        return $result->getStatusCode() === self::THROTTLING_STATUS_CODE
+            && empty($result->getAwsErrorShape());
     }
 
     private function resolveMaxAttempts(CommandInterface $cmd): int

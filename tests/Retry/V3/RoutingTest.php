@@ -194,6 +194,79 @@ class RoutingTest extends TestCase
         $this->assertSame(4, $attempts);
     }
 
+    #[DataProvider('defaultsModeProvider')]
+    public function testDefaultsModeDoesNotOverrideRetryConfiguration(
+        array $env,
+        ?string $ini,
+        string $expectedMode,
+        int $expectedSnsAttempts,
+        int $expectedDynamoDbAttempts
+    ): void
+    {
+        // A non-legacy defaults mode recommends 'standard' retries, but the
+        // retry mode and max attempts a customer sets through the environment
+        // or ~/.aws/config take precedence over that recommendation.
+        $saved = [];
+        foreach (['AWS_RETRY_MODE', 'AWS_MAX_ATTEMPTS', 'AWS_CONFIG_FILE', 'AWS_PROFILE', 'HOME'] as $k) {
+            $saved[$k] = getenv($k);
+        }
+        $home = sys_get_temp_dir() . '/defaults-mode-retries-' . uniqid();
+        mkdir($home . '/.aws', 0777, true);
+        try {
+            putenv('AWS_CONFIG_FILE');
+            putenv('AWS_PROFILE');
+            putenv('AWS_RETRY_MODE');
+            putenv('AWS_MAX_ATTEMPTS');
+            putenv("HOME=$home");
+            foreach ($env as $k => $v) {
+                putenv("$k=$v");
+            }
+            if ($ini !== null) {
+                file_put_contents($home . '/.aws/config', $ini);
+            }
+
+            $attempts = 0;
+            $sns = new SnsClient([
+                'region'             => 'us-east-1',
+                'version'            => 'latest',
+                'credentials'        => false,
+                'configuration_mode' => 'standard',
+                'http_handler'       => $this->failingHandler($attempts),
+            ]);
+            $this->assertSame($expectedMode, $this->retryEntries($sns)[0]['mode'], 'sns');
+            $sns->listTopics();
+            $this->assertSame($expectedSnsAttempts, $attempts, 'sns');
+
+            $attempts = 0;
+            $ddb = new DynamoDbClient([
+                'region'             => 'us-east-1',
+                'version'            => 'latest',
+                'credentials'        => false,
+                'configuration_mode' => 'standard',
+                'http_handler'       => $this->failingHandler($attempts),
+            ]);
+            $this->assertSame($expectedMode, $this->retryEntries($ddb)[0]['mode'], 'dynamodb');
+            $ddb->listTables();
+            $this->assertSame($expectedDynamoDbAttempts, $attempts, 'dynamodb');
+        } finally {
+            foreach ($saved as $k => $v) {
+                putenv($v === false ? $k : "$k=$v");
+            }
+            @unlink($home . '/.aws/config');
+            rmdir($home . '/.aws');
+            rmdir($home);
+        }
+    }
+
+    public static function defaultsModeProvider(): array
+    {
+        return [
+            'no retry config'    => [[], null, 'standard', 3, 4],
+            'env legacy'         => [['AWS_RETRY_MODE' => 'legacy'], null, 'legacy', 3, 11],
+            'env mode + ini max' => [['AWS_RETRY_MODE' => 'adaptive'], "[default]\nmax_attempts = 7\n", 'adaptive', 7, 7],
+        ];
+    }
+
     public function testStsRetriesFnIsRegistered(): void
     {
         $args = StsClient::getArguments();
@@ -255,11 +328,12 @@ class RoutingTest extends TestCase
     }
 
     /**
-     * Returns the list of registered 'retry' handlers and the runtime class
-     * each one wraps the next handler with. The handler list keeps entries
-     * tagged by name; we filter for 'retry' and instantiate each closure
-     * against a no-op next handler so we can read the resulting middleware's
-     * class.
+     * Returns the list of registered 'retry' handlers, the runtime class
+     * each one wraps the next handler with, and the retry mode it was built
+     * with ('legacy' for the legacy middleware). The handler list keeps
+     * entries tagged by name; we filter for 'retry' and instantiate each
+     * closure against a no-op next handler so we can inspect the resulting
+     * middleware.
      */
     private function retryEntries($client): array
     {
@@ -280,6 +354,9 @@ class RoutingTest extends TestCase
                 $entries[] = [
                     'name' => $name,
                     'middleware_class' => is_object($middleware) ? get_class($middleware) : null,
+                    'mode' => $middleware instanceof RetryV3Middleware
+                        ? (new \ReflectionClass($middleware))->getProperty('mode')->getValue($middleware)
+                        : 'legacy',
                 ];
             }
         }

@@ -2,6 +2,6 @@
   {
     "type": "feature",
     "category": "Retries",
-    "description": "The retry behavior previously gated behind AWS_NEW_RETRIES_2026 is now the default and the environment variable is no longer read: the default retry mode is 'standard' (3 attempts, 50ms transient / 1s throttling base backoff, retry quota; DynamoDB and DynamoDB Streams use 4 attempts and a 25ms base)."
+    "description": "The retry behavior previously gated behind AWS_NEW_RETRIES_2026 is now the default and the environment variable is no longer read: the default retry mode is 'standard' (3 attempts, 50ms transient / 1s throttling base backoff, retry quota; DynamoDB and DynamoDB Streams use 4 attempts and a 25ms base). HTTP 429 is now retried as a throttling error when the response does not match a modeled error."
   }
 ]

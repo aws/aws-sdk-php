@@ -3,6 +3,8 @@ namespace Aws\Test\Retry\V3;
 
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
+use Aws\Api\ShapeMap;
+use Aws\Api\StructureShape;
 use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
@@ -163,6 +165,14 @@ class RetryMiddlewareTest extends TestCase
             [
                 'response' => new Response(400),
                 'code' => 'Throttling'
+            ],
+        );
+        $unmodeled429 = new AwsException(
+            'Too many requests',
+            $command,
+            [
+                'response' => new Response(429),
+                'code' => 'SomeUnmodeledError',
             ],
         );
         $awsException500WithRetryAfterHeader =
@@ -421,6 +431,19 @@ class RetryMiddlewareTest extends TestCase
                     [
                         'retry_quota' => 500,
                     ]
+                ]
+            ],
+            'Unmodeled 429 is a throttling error (5 tokens, 1000ms backoff)' => [
+                'command' => $command,
+                'queue' => [
+                    $unmodeled429, $result200
+                ],
+                'options' => [
+                    'exponential_base' => 1
+                ],
+                'expected' => [
+                    ['retry_quota' => 495, 'max_delay' => 1000],
+                    ['retry_quota' => 500],
                 ]
             ],
             'DynamoDB base backoff (25ms) and increased retries' => [
@@ -884,6 +907,31 @@ class RetryMiddlewareTest extends TestCase
         $this->assertTrue($decider(0, $command, $err));
         $err = new AwsException('e', $command, ['response' => new Response(401)]);
         $this->assertFalse($decider(0, $command, $err));
+    }
+
+    public function testDeciderRetriesUnmodeled429()
+    {
+        $decider = RetryMiddleware::createDefaultDecider();
+        $command = new Command('foo');
+        $err = new AwsException('e', $command, ['response' => new Response(429)]);
+        $this->assertTrue($decider(0, $command, $err));
+        // A 429 that matches a modeled error defers to the model's retryable trait.
+        $err = new AwsException('e', $command, [
+            'response' => new Response(429),
+            'error_shape' => new StructureShape(
+                ['type' => 'structure'],
+                new ShapeMap([])
+            ),
+        ]);
+        $this->assertFalse($decider(0, $command, $err));
+        $err = new AwsException('e', $command, [
+            'response' => new Response(429),
+            'error_shape' => new StructureShape(
+                ['type' => 'structure', 'retryable' => ['throttling' => true]],
+                new ShapeMap([])
+            ),
+        ]);
+        $this->assertTrue($decider(0, $command, $err));
     }
 
     public function testDeciderDoesNotRetryAfterMaxAttempts()
