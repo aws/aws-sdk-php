@@ -101,16 +101,14 @@ class FunctionsTest extends TestCase
     public function testOnlyLoadsCompiledJsonOnce()
     {
         $soughtData = ['foo' => 'bar'];
-        $jsonPath = sys_get_temp_dir() . '/some-file-name-' . time() . '.json';
+        $jsonPath = sys_get_temp_dir() . '/some-file-name-' . uniqid('', true) . '.json';
+        $compiledPath = "{$jsonPath}.php";
 
         file_put_contents($jsonPath, json_encode($soughtData), LOCK_EX);
 
         $this->assertSame($soughtData, Aws\load_compiled_json($jsonPath));
-        $jsonAtime = fileatime($jsonPath);
 
         file_put_contents($jsonPath, 'INVALID JSON', LOCK_EX);
-
-        $compiledPath = "{$jsonPath}.php";
         file_put_contents(
             $compiledPath,
             '<?php return ' . var_export($soughtData, true) . ';',
@@ -118,13 +116,11 @@ class FunctionsTest extends TestCase
         );
 
         $this->assertSame($soughtData, Aws\load_compiled_json($jsonPath));
-        $compiledAtime = fileatime($compiledPath);
 
-        sleep(1);
-        clearstatcache();
+        unlink($jsonPath);
+        unlink($compiledPath);
+
         $this->assertSame($soughtData, Aws\load_compiled_json($jsonPath));
-        $this->assertEquals($jsonAtime, fileatime($jsonPath));
-        $this->assertEquals($compiledAtime, fileatime($compiledPath));
     }
 
     public function testFilter()
