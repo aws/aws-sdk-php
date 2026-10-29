@@ -109,7 +109,9 @@ class NonSeekableStreamDecodingEventStreamIterator extends DecodingEventStreamIt
     public function next()
     {
         $this->tempBuffer[] = $this->stream->read(1);
-        if ($this->valid()) {
+        if ($this->stream->eof()) {
+            $this->currentEvent = null;
+        } else {
             $this->key++;
             $this->currentEvent = $this->parseEvent();
         }
@@ -121,6 +123,6 @@ class NonSeekableStreamDecodingEventStreamIterator extends DecodingEventStreamIt
     #[\ReturnTypeWillChange]
     public function valid()
     {
-        return !$this->stream->eof();
+        return $this->currentEvent !== null;
     }
 }
