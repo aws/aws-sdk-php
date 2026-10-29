@@ -5741,7 +5741,8 @@
       "type":"structure",
       "required":["instanceName"],
       "members":{
-        "instanceName":{"shape":"ResourceName"}
+        "instanceName":{"shape":"ResourceName"},
+        "includeHealthStatus":{"shape":"boolean"}
       }
     },
     "GetInstanceResult":{
@@ -5792,7 +5793,8 @@
     "GetInstancesRequest":{
       "type":"structure",
       "members":{
-        "pageToken":{"shape":"string"}
+        "pageToken":{"shape":"string"},
+        "includeHealthStatus":{"shape":"boolean"}
       }
     },
     "GetInstancesResult":{
@@ -6337,7 +6339,9 @@
         "state":{"shape":"InstanceState"},
         "username":{"shape":"NonEmptyString"},
         "sshKeyName":{"shape":"ResourceName"},
-        "metadataOptions":{"shape":"InstanceMetadataOptions"}
+        "metadataOptions":{"shape":"InstanceMetadataOptions"},
+        "instanceStatus":{"shape":"InstanceHealthStatus"},
+        "systemStatus":{"shape":"InstanceHealthStatus"}
       }
     },
     "InstanceAccessDetails":{
@@ -6422,6 +6426,48 @@
         "unused",
         "draining",
         "unavailable"
+      ]
+    },
+    "InstanceHealthStatus":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"InstanceHealthStatusValue"},
+        "details":{"shape":"InstanceHealthStatusDetailList"}
+      }
+    },
+    "InstanceHealthStatusDetail":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"InstanceHealthStatusDetailName"},
+        "status":{"shape":"InstanceHealthStatusDetailValue"},
+        "impairedSince":{"shape":"IsoDate"}
+      }
+    },
+    "InstanceHealthStatusDetailList":{
+      "type":"list",
+      "member":{"shape":"InstanceHealthStatusDetail"}
+    },
+    "InstanceHealthStatusDetailName":{
+      "type":"string",
+      "enum":["reachability"]
+    },
+    "InstanceHealthStatusDetailValue":{
+      "type":"string",
+      "enum":[
+        "passed",
+        "failed",
+        "insufficient-data",
+        "initializing"
+      ]
+    },
+    "InstanceHealthStatusValue":{
+      "type":"string",
+      "enum":[
+        "ok",
+        "impaired",
+        "initializing",
+        "insufficient-data",
+        "not-applicable"
       ]
     },
     "InstanceHealthSummary":{

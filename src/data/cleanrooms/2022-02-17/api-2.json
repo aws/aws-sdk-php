@@ -2119,7 +2119,8 @@
       "type":"string",
       "enum":[
         "SQL",
-        "PYSPARK_1_0"
+        "PYSPARK_1_0",
+        "PYSPARK_2_0"
       ]
     },
     "AnalysisIdentifier":{
@@ -8004,6 +8005,7 @@
       "type":"structure",
       "required":["bucket"],
       "members":{
+        "resultFormat":{"shape":"ResultFormat"},
         "bucket":{"shape":"ProtectedJobS3OutputConfigurationInputBucketString"},
         "keyPrefix":{"shape":"KeyPrefix"}
       }

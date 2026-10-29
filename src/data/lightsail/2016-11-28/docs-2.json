@@ -2399,6 +2399,43 @@
         "InstanceHealthSummary$instanceHealth": "<p>Describes the overall instance health. Valid values are below.</p>"
       }
     },
+    "InstanceHealthStatus": {
+      "base": "<p>Describes the status of an Amazon Lightsail instance.</p>",
+      "refs": {
+        "Instance$instanceStatus": "<p>Reports impaired functionality that stems from issues internal to the instance, such as impaired reachability.</p> <p>This value is returned only when you set <code>includeHealthStatus</code> to <code>true</code> in your request.</p>",
+        "Instance$systemStatus": "<p>Reports impaired functionality that stems from issues related to the systems that support an instance, such as hardware failures and network connectivity problems.</p> <p>This value is returned only when you set <code>includeHealthStatus</code> to <code>true</code> in your request.</p>"
+      }
+    },
+    "InstanceHealthStatusDetail": {
+      "base": "<p>Describes the instance status.</p>",
+      "refs": {
+        "InstanceHealthStatusDetailList$member": null
+      }
+    },
+    "InstanceHealthStatusDetailList": {
+      "base": null,
+      "refs": {
+        "InstanceHealthStatus$details": "<p>The system instance health or instance health.</p>"
+      }
+    },
+    "InstanceHealthStatusDetailName": {
+      "base": null,
+      "refs": {
+        "InstanceHealthStatusDetail$name": "<p>The type of instance status. The only possible value is <code>reachability</code>.</p>"
+      }
+    },
+    "InstanceHealthStatusDetailValue": {
+      "base": null,
+      "refs": {
+        "InstanceHealthStatusDetail$status": "<p>The status.</p> <p>The following values are possible:</p> <ul> <li> <p> <code>passed</code> - The check passed.</p> </li> <li> <p> <code>failed</code> - The check failed.</p> </li> <li> <p> <code>initializing</code> - The check is in progress.</p> </li> <li> <p> <code>insufficient-data</code> - There isn't enough data yet to determine the result.</p> </li> </ul>"
+      }
+    },
+    "InstanceHealthStatusValue": {
+      "base": null,
+      "refs": {
+        "InstanceHealthStatus$status": "<p>The status.</p> <p>The following values are possible:</p> <ul> <li> <p> <code>ok</code> - All checks are passing. The instance is reachable.</p> </li> <li> <p> <code>impaired</code> - One or more checks have failed.</p> </li> <li> <p> <code>initializing</code> - The instance was recently started, and the checks are in progress.</p> </li> <li> <p> <code>insufficient-data</code> - There isn't enough data yet to determine the result.</p> </li> <li> <p> <code>not-applicable</code> - The check doesn't apply because the instance isn't running.</p> </li> </ul>"
+      }
+    },
     "InstanceHealthSummary": {
       "base": "<p>Describes information about the health of the instance.</p>",
       "refs": {
@@ -2605,6 +2642,7 @@
         "HostKeyAttributes$notValidAfter": "<p>The returned RDP certificate is not valid after this point in time.</p> <p>This value is listed only for RDP certificates.</p>",
         "Instance$createdAt": "<p>The timestamp when the instance was created (<code>1479734909.17</code>) in Unix time format.</p>",
         "InstanceAccessDetails$expiresAt": "<p>For SSH access, the date on which the temporary keys expire.</p>",
+        "InstanceHealthStatusDetail$impairedSince": "<p>The time when a status check failed. For an instance that was launched and impaired, this is the time when the instance was launched.</p>",
         "InstanceSnapshot$createdAt": "<p>The timestamp when the snapshot was created (<code>1479907467.024</code>).</p>",
         "KeyPair$createdAt": "<p>The timestamp when the key pair was created (<code>1479816991.349</code>).</p>",
         "LightsailDistribution$createdAt": "<p>The timestamp when the distribution was created.</p>",
@@ -4415,6 +4453,8 @@
         "GetBucketsRequest$includeConnectedResources": "<p>A Boolean value that indicates whether to include Lightsail instances that were given access to the bucket using the <a href=\"https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_SetResourceAccessForBucket.html\">SetResourceAccessForBucket</a> action.</p>",
         "GetBucketsRequest$includeCors": "<p>A Boolean value that indicates whether to include Lightsail bucket CORS configuration in the response. For more information, see <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/configure-cors.html\">Configuring cross-origin resource sharing (CORS)</a>.</p> <note> <p>This parameter is only supported when getting a single bucket with <code>bucketName</code> specified. The default value for this parameter is <code>False</code>.</p> </note>",
         "GetBundlesRequest$includeInactive": "<p>A Boolean value that indicates whether to include inactive (unavailable) bundles in the response of your request.</p>",
+        "GetInstanceRequest$includeHealthStatus": "<p>Specifies whether to include the instance health status checks in the response of your request.</p> <p>When set to <code>true</code>, the response includes the <code>instanceStatus</code> and <code>systemStatus</code> of the instance. When omitted or set to <code>false</code>, the response doesn't include them.</p>",
+        "GetInstancesRequest$includeHealthStatus": "<p>Specifies whether to include the instance health status checks of each instance in the response of your request.</p> <p>When set to <code>true</code>, the response includes the <code>instanceStatus</code> and <code>systemStatus</code> of each instance. When omitted or set to <code>false</code>, the response doesn't include them.</p>",
         "GetKeyPairsRequest$includeDefaultKeyPair": "<p>A Boolean value that indicates whether to include the default key pair in the response of your request.</p>",
         "GetRegionsRequest$includeAvailabilityZones": "<p>A Boolean value indicating whether to also include Availability Zones in your get regions request. Availability Zones are indicated with a letter: <code>us-east-2a</code>.</p>",
         "GetRegionsRequest$includeRelationalDatabaseAvailabilityZones": "<p>A Boolean value indicating whether to also include Availability Zones for databases in your get regions request. Availability Zones are indicated with a letter (<code>us-east-2a</code>).</p>",

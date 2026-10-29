@@ -30,7 +30,7 @@ use Aws\AwsClient;
  *     description?: string,
  *     membershipIdentifier?: string,
  *     name?: string,
- *     format?: 'PYSPARK_1_0'|'SQL',
+ *     format?: 'PYSPARK_1_0'|'PYSPARK_2_0'|'SQL',
  *     source?: array{
  *         text?: string,
  *         artifacts?: array{entryPoint?: array, additionalArtifacts?: list<array>, roleArn?: string, ...},
@@ -56,7 +56,7 @@ use Aws\AwsClient;
  *     description?: string,
  *     membershipIdentifier?: string,
  *     name?: string,
- *     format?: 'PYSPARK_1_0'|'SQL',
+ *     format?: 'PYSPARK_1_0'|'PYSPARK_2_0'|'SQL',
  *     source?: array{
  *         text?: string,
  *         artifacts?: array{entryPoint?: array, additionalArtifacts?: list<array>, roleArn?: string, ...},

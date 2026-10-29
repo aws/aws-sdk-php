@@ -1385,11 +1385,23 @@
     "ImageScanningConfiguration": {
       "base": "<p>Contains settings for Image Builder image resource and container image scans.</p>",
       "refs": {
-        "CreateImagePipelineRequest$imageScanningConfiguration": "<p>Contains settings for vulnerability scans that Amazon Inspector runs against the test instance during image creation.</p>",
-        "CreateImageRequest$imageScanningConfiguration": "<p>Settings for vulnerability scans that Amazon Inspector runs during image creation. For AMI output, Amazon Inspector scans the test instance. For container output, Amazon Inspector scans the container image that Image Builder pushes to the Amazon ECR repository specified in <code>ecrConfiguration</code>.</p>",
-        "Image$imageScanningConfiguration": "<p>Settings for the vulnerability scans that Amazon Inspector runs for this image. For AMI output, Amazon Inspector scans the test instance during image creation. For container output, Amazon Inspector scans the container image in its Amazon ECR repository.</p>",
-        "ImagePipeline$imageScanningConfiguration": "<p>Contains settings for vulnerability scans that Amazon Inspector runs against the test instance during image creation.</p>",
-        "UpdateImagePipelineRequest$imageScanningConfiguration": "<p>Contains settings for vulnerability scans that Amazon Inspector runs against the test instance during image creation.</p>"
+        "CreateImagePipelineRequest$imageScanningConfiguration": "<p>The settings that determine whether and how Amazon Inspector scans the images that this pipeline creates.</p>",
+        "CreateImageRequest$imageScanningConfiguration": "<p>The settings that determine whether and how Amazon Inspector scans the image for vulnerabilities.</p>",
+        "Image$imageScanningConfiguration": "<p>The settings that determine whether and how Amazon Inspector scans this image.</p>",
+        "ImagePipeline$imageScanningConfiguration": "<p>The settings that determine whether and how Amazon Inspector scans the images that the pipeline creates.</p>",
+        "UpdateImagePipelineRequest$imageScanningConfiguration": "<p>The updated settings that determine whether and how Amazon Inspector scans the images that this pipeline creates.</p>"
+      }
+    },
+    "ImageScanningType": {
+      "base": null,
+      "refs": {
+        "ImageScanningTypeList$member": null
+      }
+    },
+    "ImageScanningTypeList": {
+      "base": null,
+      "refs": {
+        "ImageScanningConfiguration$imageScanningTypes": "<p>The type of vulnerability scan that Image Builder runs for AMI output when <code>imageScanningEnabled</code> is <code>true</code>. Specify a single value. If you omit <code>imageScanningTypes</code>, Image Builder uses <code>TEST_INSTANCE_CVE</code>. The scan types work as follows:</p> <ul> <li> <p>With <code>TEST_INSTANCE_CVE</code>, Amazon Inspector scans the test instance during image tests. To use this scan, you must activate Amazon Inspector for Amazon EC2 scanning in your account. The Image Builder <code>ListImageScanFindings</code> operation returns the findings.</p> </li> <li> <p>With <code>ON_DEMAND_AMI_CVE</code>, Amazon Inspector starts an on-demand scan of the output AMI during image tests. To use this scan, you must build from an image recipe, but you do not need to activate Amazon Inspector in your account. The Amazon EC2 <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetImageFindings.html\">GetImageFindings</a> operation returns the findings.</p> </li> </ul>"
       }
     },
     "ImageSource": {
@@ -2152,6 +2164,12 @@
         "FastLaunchConfiguration$maxParallelLaunches": "<p>The maximum number of parallel instances that are launched for creating resources.</p>"
       }
     },
+    "MaximumSeverityLabel": {
+      "base": null,
+      "refs": {
+        "ScanResultCondition$maximumSeverityLabel": "<p>The maximum severity allowed for findings on the output AMI. A finding above this severity fails the image, unless <code>fixAvailable</code> excludes it. Valid values are <code>INFORMATIONAL</code>, <code>LOW</code>, <code>MEDIUM</code>, and <code>HIGH</code>. A <code>CRITICAL</code> finding that counts always fails the image.</p>"
+      }
+    },
     "NonEmptyMaxLengthString": {
       "base": null,
       "refs": {
@@ -2413,12 +2431,13 @@
         "EbsInstanceBlockDeviceSpecification$deleteOnTermination": "<p>Specifies whether to delete the associated device on termination.</p>",
         "Image$enhancedImageMetadataEnabled": "<p>Indicates whether Image Builder collects additional information about the image, such as the operating system (OS) version and package list.</p>",
         "ImagePipeline$enhancedImageMetadataEnabled": "<p>Specifies whether to collect additional information about the image being created, including the operating system (OS) version and package list. Defaults to <code>true</code>.</p>",
-        "ImageScanningConfiguration$imageScanningEnabled": "<p>Specifies whether Amazon Inspector scans for vulnerabilities when you create a new image, and whether Image Builder saves the findings. Amazon Inspector must be enabled in the account. Image tests must also be enabled. For AMI output, Amazon Inspector scans the test instance. For container output, Amazon Inspector scans the container image that Image Builder pushes to the Amazon ECR repository from your <code>ecrConfiguration</code> settings.</p>",
+        "ImageScanningConfiguration$imageScanningEnabled": "<p>Specifies whether Amazon Inspector scans for vulnerabilities when you create a new image. You must also enable image tests. For AMI output, <code>imageScanningTypes</code> sets whether Amazon Inspector scans the test instance or the output AMI. For container output, Amazon Inspector scans the container image that Image Builder pushes to the Amazon ECR repository from your <code>ecrConfiguration</code> settings.</p> <p>To use container image scans, you must activate Amazon Inspector for Amazon ECR scanning in your account. The Image Builder <code>ListImageScanFindings</code> operation returns the findings of these scans.</p>",
         "ImageTestsConfiguration$imageTestsEnabled": "<p>Specifies whether tests run after building the image. When enabled, tests run after the image build and before image distribution. Defaults to <code>true</code>.</p>",
         "InfrastructureConfiguration$terminateInstanceOnFailure": "<p>Indicates whether Image Builder terminates the build and test instances when the image build fails. When <code>false</code>, Image Builder retains the instance so that you can debug it.</p>",
         "InfrastructureConfiguration$terminateInstanceOnCompletion": "<p>Specifies whether Image Builder terminates build and test instances when image creation ends without a failure.</p>",
         "ListImagesRequest$includeDeprecated": "<p>Specifies whether to include deprecated Amazon-managed images in the results. Deprecated images that you own are always returned. Defaults to <code>false</code>.</p>",
         "RegisterImageOptions$secureBootEnabled": "<p>Specifies whether Secure Boot is enabled for the output AMI. The default value is <code>true</code>. To disable Secure Boot for custom unsigned drivers, set this value to <code>false</code>.</p>",
+        "ScanResultCondition$fixAvailable": "<p>Specifies whether only findings that have a fix available count toward <code>maximumSeverityLabel</code>. When <code>false</code>, Image Builder counts every finding. The default is <code>true</code>.</p>",
         "SystemsManagerAgent$uninstallAfterBuild": "<p>Specifies whether the Systems Manager agent is removed from your final build image before Image Builder creates the new AMI. If <code>true</code>, the agent is removed. If <code>false</code>, the agent is kept, so that it's included in the AMI. If you don't set this property, Image Builder removes the agent only if Image Builder installed the agent during the build. An agent that was pre-installed on the base image is kept.</p>",
         "UpdateImagePipelineRequest$enhancedImageMetadataEnabled": "<p>Specifies whether to collect additional information about the image being created, including the operating system (OS) version and package list. Defaults to <code>true</code>.</p>",
         "UpdateInfrastructureConfigurationRequest$terminateInstanceOnFailure": "<p>Specifies whether to terminate the instance on failure. Set to false if you want Image Builder to retain the instance used to configure your AMI if the build or test phase of your workflow fails. Defaults to <code>true</code>.</p>",
@@ -2882,6 +2901,12 @@
       "base": "<p>Amazon S3 logging configuration.</p>",
       "refs": {
         "Logging$s3Logs": "<p>The Amazon S3 logging configuration.</p>"
+      }
+    },
+    "ScanResultCondition": {
+      "base": "<p>A condition that sets which findings from an on-demand AMI scan fail the image. Image Builder checks the output AMI's findings against this condition during the test phase.</p>",
+      "refs": {
+        "ImageScanningConfiguration$scanResultCondition": "<p>The condition that the output AMI's scan results must meet for the image to pass. You can set <code>scanResultCondition</code> only when <code>imageScanningTypes</code> is <code>ON_DEMAND_AMI_CVE</code>. If you omit it, Image Builder starts the scan but does not wait for it or use its results to pass or fail the image.</p> <p>When you set <code>scanResultCondition</code>, the test phase waits for the scan to finish. Then Image Builder checks the findings against the condition. By default, Image Builder counts only findings that have a fix available. To count every finding, set <code>fixAvailable</code> to <code>false</code>. If a counted finding exceeds <code>maximumSeverityLabel</code>, Image Builder fails the image in the test phase and does not distribute the AMI.</p>"
       }
     },
     "Schedule": {

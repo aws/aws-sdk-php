@@ -5161,6 +5161,11 @@
           "location":"header",
           "locationName":"X-Amzn-Bedrock-AgentCore-Runtime-Session-Id"
         },
+        "sessionEndpointUrl":{
+          "shape":"InvokeAgentRuntimeResponseSessionEndpointUrlString",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Runtime-Session-Endpoint-Url"
+        },
         "mcpSessionId":{
           "shape":"SessionId",
           "location":"header",
@@ -5203,6 +5208,11 @@
         }
       },
       "payload":"response"
+    },
+    "InvokeAgentRuntimeResponseSessionEndpointUrlString":{
+      "type":"string",
+      "max":128,
+      "min":1
     },
     "InvokeBrowserRequest":{
       "type":"structure",

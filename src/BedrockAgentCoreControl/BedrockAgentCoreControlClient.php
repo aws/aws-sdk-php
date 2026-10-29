@@ -70,7 +70,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     requestHeaderConfiguration?: array{requestHeaderAllowlist?: list<string>, ...},
- *     protocolConfiguration?: array{serverProtocol?: 'A2A'|'AGUI'|'HTTP'|'MCP', ...},
+ *     protocolConfiguration?: array{serverProtocol?: 'A2A'|'AGUI'|'HTTP'|'MCP', port?: int, path?: string, ...},
  *     lifecycleConfiguration?: array{idleRuntimeSessionTimeout?: int, maxLifetime?: int, ...},
  *     environmentVariables?: array<string, string>,
  *     filesystemConfigurations?: list<array{
@@ -83,6 +83,7 @@ use Aws\AwsClient;
  *     capacityProviderConfiguration?: array{capacityProviderArn?: string, ...},
  *     tags?: array<string, string>,
  *     platformVersion?: string,
+ *     allowedPorts?: list<array{port?: int, portRange?: array, ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createAgentRuntimeAsync(array $args = [])
@@ -122,7 +123,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     requestHeaderConfiguration?: array{requestHeaderAllowlist?: list<string>, ...},
- *     protocolConfiguration?: array{serverProtocol?: 'A2A'|'AGUI'|'HTTP'|'MCP', ...},
+ *     protocolConfiguration?: array{serverProtocol?: 'A2A'|'AGUI'|'HTTP'|'MCP', port?: int, path?: string, ...},
  *     lifecycleConfiguration?: array{idleRuntimeSessionTimeout?: int, maxLifetime?: int, ...},
  *     environmentVariables?: array<string, string>,
  *     filesystemConfigurations?: list<array{
@@ -135,6 +136,7 @@ use Aws\AwsClient;
  *     capacityProviderConfiguration?: array{capacityProviderArn?: string, ...},
  *     tags?: array<string, string>,
  *     platformVersion?: string,
+ *     allowedPorts?: list<array{port?: int, portRange?: array, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createAgentRuntimeEndpoint(array $args = [])
@@ -1973,7 +1975,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     requestHeaderConfiguration?: array{requestHeaderAllowlist?: list<string>, ...},
- *     protocolConfiguration?: array{serverProtocol?: 'A2A'|'AGUI'|'HTTP'|'MCP', ...},
+ *     protocolConfiguration?: array{serverProtocol?: 'A2A'|'AGUI'|'HTTP'|'MCP', port?: int, path?: string, ...},
  *     lifecycleConfiguration?: array{idleRuntimeSessionTimeout?: int, maxLifetime?: int, ...},
  *     metadataConfiguration?: array{requireMMDSV2?: bool, ...},
  *     environmentVariables?: array<string, string>,
@@ -1986,6 +1988,7 @@ use Aws\AwsClient;
  *     }>,
  *     capacityProviderConfiguration?: array{capacityProviderArn?: string, ...},
  *     platformVersion?: string,
+ *     allowedPorts?: list<array{port?: int, portRange?: array, ...}>,
  *     clientToken?: string,
  *     ...,
  * } $args = [])
@@ -2025,7 +2028,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     requestHeaderConfiguration?: array{requestHeaderAllowlist?: list<string>, ...},
- *     protocolConfiguration?: array{serverProtocol?: 'A2A'|'AGUI'|'HTTP'|'MCP', ...},
+ *     protocolConfiguration?: array{serverProtocol?: 'A2A'|'AGUI'|'HTTP'|'MCP', port?: int, path?: string, ...},
  *     lifecycleConfiguration?: array{idleRuntimeSessionTimeout?: int, maxLifetime?: int, ...},
  *     metadataConfiguration?: array{requireMMDSV2?: bool, ...},
  *     environmentVariables?: array<string, string>,
@@ -2038,6 +2041,7 @@ use Aws\AwsClient;
  *     }>,
  *     capacityProviderConfiguration?: array{capacityProviderArn?: string, ...},
  *     platformVersion?: string,
+ *     allowedPorts?: list<array{port?: int, portRange?: array, ...}>,
  *     clientToken?: string,
  *     ...,
  * } $args = [])

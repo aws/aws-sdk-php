@@ -453,6 +453,20 @@
         "CustomJWTAuthorizerConfiguration$allowedClients": "<p>Represents individual client IDs that are validated in the incoming JWT token validation process.</p>"
       }
     },
+    "AllowedPort": {
+      "base": "<p>A port or port range that is reachable through the runtime's session URL. Specify exactly one of <code>port</code> or <code>portRange</code>.</p>",
+      "refs": {
+        "AllowedPorts$member": null
+      }
+    },
+    "AllowedPorts": {
+      "base": "<p>Additional ports on the AgentCore Runtime that are reachable through the runtime's session URL. The list can contain up to five non-overlapping entries.</p>",
+      "refs": {
+        "CreateAgentRuntimeRequest$allowedPorts": "<p>The additional ports on the AgentCore Runtime that are reachable through the runtime's session URL. Specify one to five non-overlapping entries, each containing either a single port or an inclusive port range. Ports must be between <code>8000</code> and <code>12000</code>, excluding the reserved port <code>8443</code>.</p>",
+        "GetAgentRuntimeResponse$allowedPorts": "<p>The additional ports on the AgentCore Runtime that are reachable through the runtime's session URL.</p>",
+        "UpdateAgentRuntimeRequest$allowedPorts": "<p>The updated additional ports on the AgentCore Runtime that are reachable through the runtime's session URL. Specify one to five non-overlapping entries, each containing either a single port or an inclusive port range. Ports must be between <code>8000</code> and <code>12000</code>, excluding the reserved port <code>8443</code>.</p>"
+      }
+    },
     "AllowedQueryParameters": {
       "base": null,
       "refs": {
@@ -7431,6 +7445,20 @@
         "UpdatePolicyRequest$validationMode": "<p>The validation mode for the policy update. Determines how Cedar analyzer validation results are handled during policy updates. FAIL_ON_ANY_FINDINGS runs the Cedar analyzer and fails the update if validation issues are detected, ensuring the policy conforms to the Cedar schema and tool context. IGNORE_ALL_FINDINGS runs the Cedar analyzer but allows updates despite validation warnings. Use FAIL_ON_ANY_FINDINGS to ensure policy correctness during updates, especially when modifying policy logic or conditions.</p>"
       }
     },
+    "Port": {
+      "base": "<p>A port between <code>8000</code> and <code>12000</code>. Port <code>8443</code> is reserved and cannot be used.</p>",
+      "refs": {
+        "AllowedPort$port": "<p>A single port that is reachable through the runtime's session URL.</p>",
+        "PortRange$from": "<p>The first port in the inclusive range.</p>",
+        "PortRange$to": "<p>The last port in the inclusive range.</p>"
+      }
+    },
+    "PortRange": {
+      "base": "<p>An inclusive range of ports. The value of <code>from</code> must be less than or equal to the value of <code>to</code>.</p>",
+      "refs": {
+        "AllowedPort$portRange": "<p>An inclusive range of ports that are reachable through the runtime's session URL.</p>"
+      }
+    },
     "PortalUrlType": {
       "base": null,
       "refs": {
@@ -7527,9 +7555,9 @@
     "ProtocolConfiguration": {
       "base": "<p>The protocol configuration for an agent runtime. This structure defines how the agent runtime communicates with clients.</p>",
       "refs": {
-        "CreateAgentRuntimeRequest$protocolConfiguration": null,
-        "GetAgentRuntimeResponse$protocolConfiguration": null,
-        "UpdateAgentRuntimeRequest$protocolConfiguration": null
+        "CreateAgentRuntimeRequest$protocolConfiguration": "<p>The protocol configuration for the AgentCore Runtime, including the protocol, port, and path on which the agent server is available.</p>",
+        "GetAgentRuntimeResponse$protocolConfiguration": "<p>The protocol configuration for the AgentCore Runtime, including the protocol, port, and path on which the agent server is available.</p>",
+        "UpdateAgentRuntimeRequest$protocolConfiguration": "<p>The updated protocol configuration for the AgentCore Runtime, including the protocol, port, and path on which the agent server is available.</p>"
       }
     },
     "Provider": {
@@ -8529,6 +8557,18 @@
       "refs": {
         "McpDescriptor$server": "<p>The MCP server definition, containing the server configuration and schema as defined by the MCP protocol specification.</p>",
         "UpdatedServerDefinition$optionalValue": "<p>The updated server definition value.</p>"
+      }
+    },
+    "ServerPath": {
+      "base": "<p>The path on which the agent server accepts requests. The path must begin with <code>/</code> and can contain up to 2,048 characters.</p>",
+      "refs": {
+        "ProtocolConfiguration$path": "<p>The path on which the agent server accepts requests. The path must begin with <code>/</code>. When this field is omitted, the default is <code>/invocations</code> for <code>HTTP</code> and <code>AGUI</code>, <code>/mcp</code> for <code>MCP</code>, and <code>/</code> for <code>A2A</code>.</p>"
+      }
+    },
+    "ServerPort": {
+      "base": "<p>A port between <code>8000</code> and <code>12000</code>. Port <code>8443</code> is reserved and cannot be used.</p>",
+      "refs": {
+        "ProtocolConfiguration$port": "<p>The port on which the agent server listens. The port must be between <code>8000</code> and <code>12000</code>, excluding the reserved port <code>8443</code>. When this field is omitted, the default is <code>8080</code> for <code>HTTP</code> and <code>AGUI</code>, <code>8000</code> for <code>MCP</code>, and <code>9000</code> for <code>A2A</code>.</p>"
       }
     },
     "ServerProtocol": {

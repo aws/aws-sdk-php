@@ -3529,6 +3529,20 @@
       "member":{"shape":"AllowedClient"},
       "min":1
     },
+    "AllowedPort":{
+      "type":"structure",
+      "members":{
+        "port":{"shape":"Port"},
+        "portRange":{"shape":"PortRange"}
+      },
+      "union":true
+    },
+    "AllowedPorts":{
+      "type":"list",
+      "member":{"shape":"AllowedPort"},
+      "max":5,
+      "min":1
+    },
     "AllowedQueryParameters":{
       "type":"list",
       "member":{"shape":"HttpQueryParameterName"},
@@ -4890,7 +4904,8 @@
         "filesystemConfigurations":{"shape":"FilesystemConfigurations"},
         "capacityProviderConfiguration":{"shape":"CapacityProviderConfiguration"},
         "tags":{"shape":"TagsMap"},
-        "platformVersion":{"shape":"PlatformVersion"}
+        "platformVersion":{"shape":"PlatformVersion"},
+        "allowedPorts":{"shape":"AllowedPorts"}
       }
     },
     "CreateAgentRuntimeResponse":{
@@ -8369,7 +8384,8 @@
         "metadataConfiguration":{"shape":"RuntimeMetadataConfiguration"},
         "filesystemConfigurations":{"shape":"FilesystemConfigurations"},
         "capacityProviderConfiguration":{"shape":"CapacityProviderConfiguration"},
-        "platformVersion":{"shape":"PlatformVersion"}
+        "platformVersion":{"shape":"PlatformVersion"},
+        "allowedPorts":{"shape":"AllowedPorts"}
       }
     },
     "GetApiKeyCredentialProviderRequest":{
@@ -13713,6 +13729,23 @@
         "IGNORE_ALL_FINDINGS"
       ]
     },
+    "Port":{
+      "type":"integer",
+      "box":true,
+      "max":12000,
+      "min":8000
+    },
+    "PortRange":{
+      "type":"structure",
+      "required":[
+        "from",
+        "to"
+      ],
+      "members":{
+        "from":{"shape":"Port"},
+        "to":{"shape":"Port"}
+      }
+    },
     "PortalUrlType":{
       "type":"string",
       "max":2000,
@@ -13785,7 +13818,9 @@
       "type":"structure",
       "required":["serverProtocol"],
       "members":{
-        "serverProtocol":{"shape":"ServerProtocol"}
+        "serverProtocol":{"shape":"ServerProtocol"},
+        "port":{"shape":"ServerPort"},
+        "path":{"shape":"ServerPath"}
       }
     },
     "Provider":{
@@ -14754,6 +14789,18 @@
         "schemaVersion":{"shape":"SchemaVersion"},
         "inlineContent":{"shape":"InlineContent"}
       }
+    },
+    "ServerPath":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"/[A-Za-z0-9\\-._~/%]*"
+    },
+    "ServerPort":{
+      "type":"integer",
+      "box":true,
+      "max":12000,
+      "min":8000
     },
     "ServerProtocol":{
       "type":"string",
@@ -15838,6 +15885,7 @@
         "filesystemConfigurations":{"shape":"FilesystemConfigurations"},
         "capacityProviderConfiguration":{"shape":"CapacityProviderConfiguration"},
         "platformVersion":{"shape":"PlatformVersion"},
+        "allowedPorts":{"shape":"AllowedPorts"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true

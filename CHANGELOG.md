@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - The default S3 Express identity provider now creates sessions with the requesting client's credentials and caches them per bucket and per identity.
+* `Aws\imagebuilder` - This release adds support for on-demand AMI scanning with Amazon Inspector.
+* `Aws\Lightsail` - This release adds support for instance health status checks and system status checks.
+* `Aws\BedrockAgentCore` - Adds AgentCore Runtime session endpoint support, including sessionEndpointUrl on the InvokeAgentRuntime response
+* `Aws\WAFV2` - AWS WAF customers using Targeted Bot Control, ATP, or ACFP managed rule groups can now enable automatic Challenge JavaScript SDK injection. When enabled, Amazon CloudFront injects the script tag into HTML responses on your behalf, removing the need for manual integration.
+* `Aws\BedrockAgentCoreControl` - Adds Session Endpoint Feature on AgentCore Runtime
+* `Aws\CleanRooms` - Adds support for the PySpark 2.0 analysis template format and for choosing the file format (CSV or Parquet) of protected job results written to Amazon S3, including in a membership's default job result configuration.
+
 ## 3.402.3 - 2026-10-28
 
 * `Aws\` - Fixed AssumeRoleCredentialProvider throwing a TypeError and losing the original exception when the STS request fails with an exception that does not extend RuntimeException.

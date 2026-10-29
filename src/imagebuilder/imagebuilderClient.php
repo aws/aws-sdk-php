@@ -140,6 +140,8 @@ use Aws\AwsClient;
  *     imageScanningConfiguration?: array{
  *         imageScanningEnabled?: bool,
  *         ecrConfiguration?: array{repositoryName?: string, containerTags?: list<string>, ...},
+ *         imageScanningTypes?: list<'ON_DEMAND_AMI_CVE'|'TEST_INSTANCE_CVE'>,
+ *         scanResultCondition?: array{maximumSeverityLabel?: 'HIGH'|'INFORMATIONAL'|'LOW'|'MEDIUM', fixAvailable?: bool, ...},
  *         ...,
  *     },
  *     workflows?: list<array{
@@ -166,6 +168,8 @@ use Aws\AwsClient;
  *     imageScanningConfiguration?: array{
  *         imageScanningEnabled?: bool,
  *         ecrConfiguration?: array{repositoryName?: string, containerTags?: list<string>, ...},
+ *         imageScanningTypes?: list<'ON_DEMAND_AMI_CVE'|'TEST_INSTANCE_CVE'>,
+ *         scanResultCondition?: array{maximumSeverityLabel?: 'HIGH'|'INFORMATIONAL'|'LOW'|'MEDIUM', fixAvailable?: bool, ...},
  *         ...,
  *     },
  *     workflows?: list<array{
@@ -203,6 +207,8 @@ use Aws\AwsClient;
  *     imageScanningConfiguration?: array{
  *         imageScanningEnabled?: bool,
  *         ecrConfiguration?: array{repositoryName?: string, containerTags?: list<string>, ...},
+ *         imageScanningTypes?: list<'ON_DEMAND_AMI_CVE'|'TEST_INSTANCE_CVE'>,
+ *         scanResultCondition?: array{maximumSeverityLabel?: 'HIGH'|'INFORMATIONAL'|'LOW'|'MEDIUM', fixAvailable?: bool, ...},
  *         ...,
  *     },
  *     workflows?: list<array{
@@ -241,6 +247,8 @@ use Aws\AwsClient;
  *     imageScanningConfiguration?: array{
  *         imageScanningEnabled?: bool,
  *         ecrConfiguration?: array{repositoryName?: string, containerTags?: list<string>, ...},
+ *         imageScanningTypes?: list<'ON_DEMAND_AMI_CVE'|'TEST_INSTANCE_CVE'>,
+ *         scanResultCondition?: array{maximumSeverityLabel?: 'HIGH'|'INFORMATIONAL'|'LOW'|'MEDIUM', fixAvailable?: bool, ...},
  *         ...,
  *     },
  *     workflows?: list<array{
@@ -1009,6 +1017,8 @@ use Aws\AwsClient;
  *     imageScanningConfiguration?: array{
  *         imageScanningEnabled?: bool,
  *         ecrConfiguration?: array{repositoryName?: string, containerTags?: list<string>, ...},
+ *         imageScanningTypes?: list<'ON_DEMAND_AMI_CVE'|'TEST_INSTANCE_CVE'>,
+ *         scanResultCondition?: array{maximumSeverityLabel?: 'HIGH'|'INFORMATIONAL'|'LOW'|'MEDIUM', fixAvailable?: bool, ...},
  *         ...,
  *     },
  *     workflows?: list<array{
@@ -1045,6 +1055,8 @@ use Aws\AwsClient;
  *     imageScanningConfiguration?: array{
  *         imageScanningEnabled?: bool,
  *         ecrConfiguration?: array{repositoryName?: string, containerTags?: list<string>, ...},
+ *         imageScanningTypes?: list<'ON_DEMAND_AMI_CVE'|'TEST_INSTANCE_CVE'>,
+ *         scanResultCondition?: array{maximumSeverityLabel?: 'HIGH'|'INFORMATIONAL'|'LOW'|'MEDIUM', fixAvailable?: bool, ...},
  *         ...,
  *     },
  *     workflows?: list<array{
