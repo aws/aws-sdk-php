@@ -79,7 +79,7 @@ final class HttpRequestBindingPlanProvider
             }
         }
 
-        // A failed shape resolution leaves a partial member hash that getMembers() never retries. 
+        // A failed shape resolution leaves a partial member hash that getMembers() never retries.
         $defined = $input['members'];
         if (is_array($defined) && count($resolved) !== count($defined)) {
             foreach ($defined as $name => $definition) {
@@ -112,7 +112,6 @@ final class HttpRequestBindingPlanProvider
             HttpRequestBindingPlan::D_CONVERT   => self::conversion($member),
             HttpRequestBindingPlan::D_TSFORMAT  => $member['timestampFormat'] ?? 'rfc822',
             HttpRequestBindingPlan::D_JSONVALUE => (bool) $member['jsonvalue'],
-            HttpRequestBindingPlan::D_SHAPE     => $member,
         ];
 
         if ($member instanceof ListShape) {
@@ -124,6 +123,7 @@ final class HttpRequestBindingPlanProvider
             $item = isset($member['member']) ? $member->getMember() : null;
             if ($item === null || $item instanceof ListShape || $item['locationName']) {
                 $binding[HttpRequestBindingPlan::D_TAG] = HttpRequestBindingPlan::HEADER_SHAPE;
+                $binding[HttpRequestBindingPlan::D_SHAPE] = $member;
                 return $binding;
             }
 
@@ -143,7 +143,10 @@ final class HttpRequestBindingPlanProvider
             HttpRequestBindingPlan::D_NAME     => $member['locationName'] ?: $name,
             HttpRequestBindingPlan::D_CONVERT  => self::conversion($member),
             HttpRequestBindingPlan::D_TSFORMAT => $member['timestampFormat'] ?? 'iso8601',
-            HttpRequestBindingPlan::D_SHAPE    => $member,
+            // Always false, and never read: legacy applyQuery() had no
+            // jsonvalue branch. Present so a QUERY_LIST descriptor runs 0..6
+            // with no hole and stays a packed array.
+            HttpRequestBindingPlan::D_JSONVALUE => false,
         ];
 
         if ($member instanceof MapShape) {
@@ -159,6 +162,7 @@ final class HttpRequestBindingPlanProvider
                 || $item['locationName']
             ) {
                 $binding[HttpRequestBindingPlan::D_TAG] = HttpRequestBindingPlan::QUERY_SHAPE;
+                $binding[HttpRequestBindingPlan::D_SHAPE] = $member;
             } else {
                 $binding[HttpRequestBindingPlan::D_TAG] = HttpRequestBindingPlan::QUERY_LIST;
                 $binding[HttpRequestBindingPlan::D_ITEM_CONVERT] = self::conversion($item);

@@ -42,6 +42,7 @@ final class HttpRequestBindingPlan
     public const D_ITEM_CONVERT   = 5; // list item conversion
     public const D_ITEM_TSFORMAT  = 6; // list item timestamp format, or null
     public const D_ITEM_JSONVALUE = 7; // list item carries jsonvalue
+    // Set only on HEADER_SHAPE and QUERY_SHAPE, the only tags that read it.
     public const D_SHAPE          = 8; // member Shape, for cold paths
 
     // URI member descriptor: uriMembers[] = [...], in input member order
