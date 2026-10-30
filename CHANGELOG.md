@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.402.5 - 2026-10-30
 
 * `Aws\` - Fixed an issue in NonSeekableStreamDecodingEventStreamIterator where the final event was dropped when reading it reached the end of the stream.
 * `Aws\BedrockAgentRuntime` - Adds the CodeExecution step and codeExecution action to AgenticRetrieveStream trace events, showing when the agent runs code and which documents it reads.
