@@ -6,7 +6,6 @@ use Aws\CacheInterface;
 use Aws\Configuration\ConfigurationResolver;
 use Aws\ConfigurationProviderInterface;
 use Aws\Retry\Exception\ConfigurationException;
-use Aws\Retry\V3\OptIn;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 
@@ -48,7 +47,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     implements ConfigurationProviderInterface
 {
     const DEFAULT_MAX_ATTEMPTS = 3;
-    const DEFAULT_MODE = 'legacy';
+    const DEFAULT_MODE = 'standard';
     const ENV_MAX_ATTEMPTS = 'AWS_MAX_ATTEMPTS';
     const ENV_MODE = 'AWS_RETRY_MODE';
     const ENV_PROFILE = 'AWS_PROFILE';
@@ -137,12 +136,11 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     }
 
     /**
-     * Returns the default retry mode. Reflects the AWS_NEW_RETRIES_2026
-     * opt-in: 'standard' when the env flag is set, 'legacy' otherwise.
+     * Returns the default retry mode.
      */
     public static function getDefaultMode(): string
     {
-        return OptIn::isEnabled() ? 'standard' : self::DEFAULT_MODE;
+        return self::DEFAULT_MODE;
     }
 
     /**

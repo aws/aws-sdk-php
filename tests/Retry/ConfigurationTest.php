@@ -16,6 +16,13 @@ class ConfigurationTest extends TestCase
         $this->assertSame(8, $config->getMaxAttempts());
     }
 
+    public function testDefaultsToStandardMode()
+    {
+        $config = new Configuration();
+        $this->assertSame('standard', $config->getMode());
+        $this->assertSame(3, $config->getMaxAttempts());
+    }
+
     public function testToArray()
     {
         $config = new Configuration('standard', 25);

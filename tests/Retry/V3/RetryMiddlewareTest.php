@@ -3,6 +3,8 @@ namespace Aws\Test\Retry\V3;
 
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
+use Aws\Api\ShapeMap;
+use Aws\Api\StructureShape;
 use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
@@ -12,7 +14,6 @@ use Aws\ResultInterface;
 use Aws\Retry\Configuration;
 use Aws\Retry\ConfigurationProvider;
 use Aws\Retry\V3\QuotaManager;
-use Aws\Retry\V3\OptIn;
 use Aws\Retry\V3\RetryMiddleware;
 use Aws\Retry\RateLimiter;
 use GuzzleHttp\Promise\RejectedPromise;
@@ -28,23 +29,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 class RetryMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
-
-    private string $previousOptIn;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->previousOptIn = getenv(OptIn::ENV) ?: '';
-        putenv(OptIn::ENV . '=');
-        OptIn::reset();
-    }
-
-    protected function tearDown(): void
-    {
-        putenv(OptIn::ENV . '=' . $this->previousOptIn);
-        OptIn::reset();
-        parent::tearDown();
-    }
 
     /**
      * @param CommandInterface $command
@@ -181,6 +165,14 @@ class RetryMiddlewareTest extends TestCase
             [
                 'response' => new Response(400),
                 'code' => 'Throttling'
+            ],
+        );
+        $unmodeled429 = new AwsException(
+            'Too many requests',
+            $command,
+            [
+                'response' => new Response(429),
+                'code' => 'SomeUnmodeledError',
             ],
         );
         $awsException500WithRetryAfterHeader =
@@ -439,6 +431,19 @@ class RetryMiddlewareTest extends TestCase
                     [
                         'retry_quota' => 500,
                     ]
+                ]
+            ],
+            'Unmodeled 429 is a throttling error (5 tokens, 1000ms backoff)' => [
+                'command' => $command,
+                'queue' => [
+                    $unmodeled429, $result200
+                ],
+                'options' => [
+                    'exponential_base' => 1
+                ],
+                'expected' => [
+                    ['retry_quota' => 495, 'max_delay' => 1000],
+                    ['retry_quota' => 500],
                 ]
             ],
             'DynamoDB base backoff (25ms) and increased retries' => [
@@ -902,6 +907,31 @@ class RetryMiddlewareTest extends TestCase
         $this->assertTrue($decider(0, $command, $err));
         $err = new AwsException('e', $command, ['response' => new Response(401)]);
         $this->assertFalse($decider(0, $command, $err));
+    }
+
+    public function testDeciderRetriesUnmodeled429()
+    {
+        $decider = RetryMiddleware::createDefaultDecider();
+        $command = new Command('foo');
+        $err = new AwsException('e', $command, ['response' => new Response(429)]);
+        $this->assertTrue($decider(0, $command, $err));
+        // A 429 that matches a modeled error defers to the model's retryable trait.
+        $err = new AwsException('e', $command, [
+            'response' => new Response(429),
+            'error_shape' => new StructureShape(
+                ['type' => 'structure'],
+                new ShapeMap([])
+            ),
+        ]);
+        $this->assertFalse($decider(0, $command, $err));
+        $err = new AwsException('e', $command, [
+            'response' => new Response(429),
+            'error_shape' => new StructureShape(
+                ['type' => 'structure', 'retryable' => ['throttling' => true]],
+                new ShapeMap([])
+            ),
+        ]);
+        $this->assertTrue($decider(0, $command, $err));
     }
 
     public function testDeciderDoesNotRetryAfterMaxAttempts()
@@ -1567,7 +1597,6 @@ class RetryMiddlewareTest extends TestCase
 
     public function testWrapSharesQuotaManagerState()
     {
-        $this->enableOptInFlag();
         $factory = RetryMiddleware::wrap(
             new Configuration('standard', 3),
             []
@@ -1588,7 +1617,6 @@ class RetryMiddlewareTest extends TestCase
 
     public function testWrapSharesAdaptiveRateLimiterState()
     {
-        $this->enableOptInFlag();
         $factory = RetryMiddleware::wrap(
             new Configuration('adaptive', 3),
             []
@@ -1712,12 +1740,6 @@ class RetryMiddlewareTest extends TestCase
         $wrapped($command, $request)->wait();
         // retry-after=0 clamped to [50, 5050] = 50ms (the computed delay minimum)
         $this->assertSame(50, $delays[0]);
-    }
-
-    private function enableOptInFlag(): void
-    {
-        putenv(OptIn::ENV . '=true');
-        OptIn::reset();
     }
 
     private function getPrivateProperty(object $object, string $property): mixed
