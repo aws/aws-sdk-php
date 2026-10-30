@@ -900,6 +900,7 @@
     "AgenticRetrieveAction":{
       "type":"structure",
       "members":{
+        "codeExecution":{"shape":"AgenticRetrieveCodeExecutionDetails"},
         "fullDocumentExpansion":{"shape":"AgenticRetrieveFullDocExpansionDetails"},
         "memoryRetrieve":{"shape":"AgenticRetrieveMemoryRetrieveDetails"},
         "retrieve":{"shape":"AgenticRetrieveActionDetails"}
@@ -992,6 +993,23 @@
     "AgenticRetrieveCitationReferenceList":{
       "type":"list",
       "member":{"shape":"AgenticRetrieveCitationReference"}
+    },
+    "AgenticRetrieveCodeExecutionDetails":{
+      "type":"structure",
+      "members":{
+        "documents":{"shape":"AgenticRetrieveCodeExecutionDocumentList"}
+      }
+    },
+    "AgenticRetrieveCodeExecutionDocument":{
+      "type":"structure",
+      "members":{
+        "documentId":{"shape":"String"},
+        "sourceRetriever":{"shape":"AgenticRetrieveSourceRetriever"}
+      }
+    },
+    "AgenticRetrieveCodeExecutionDocumentList":{
+      "type":"list",
+      "member":{"shape":"AgenticRetrieveCodeExecutionDocument"}
     },
     "AgenticRetrieveConfiguration":{
       "type":"structure",
@@ -1309,7 +1327,8 @@
         "Retrieval",
         "SpeculativeRetrieval",
         "FullDocumentExpansion",
-        "SessionHistoryLoad"
+        "SessionHistoryLoad",
+        "CodeExecution"
       ]
     },
     "AgenticRetrieveStreamRequest":{

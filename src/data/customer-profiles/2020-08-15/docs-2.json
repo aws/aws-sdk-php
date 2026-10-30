@@ -3892,6 +3892,7 @@
         "CreateDomainLayoutResponse$IsDefault": "<p>If set to true for a layout, this layout will be used by default to view data. If set to false, then the layout will not be used by default, but it can be used to view data by explicitly selecting it in the console.</p>",
         "GetDomainLayoutResponse$IsDefault": "<p>If set to true for a layout, this layout will be used by default to view data. If set to false, then the layout will not be used by default, but it can be used to view data by explicitly selecting it in the console.</p>",
         "GetProfileObjectTypeResponse$AllowProfileCreation": "<p>Indicates whether a profile should be created when data is received if one doesn’t exist for an object of this type. The default is <code>FALSE</code>. If the AllowProfileCreation flag is set to <code>FALSE</code>, then the service tries to fetch a standard profile and associate this object with the profile. If it is set to <code>TRUE</code>, and if no match is found, then the service creates a new standard profile.</p>",
+        "GetProfileObjectTypeTemplateResponse$StoreOnly": "<p>Indicates whether the template is store-only. Objects of an object type created from a store-only template are ingested and stored, but the object type can't be used by calculated attributes or event triggers.</p>",
         "GetProfileObjectTypeTemplateResponse$AllowProfileCreation": "<p>Indicates whether a profile should be created when data is received if one doesn’t exist for an object of this type. The default is <code>FALSE</code>. If the AllowProfileCreation flag is set to <code>FALSE</code>, then the service tries to fetch a standard profile and associate this object with the profile. If it is set to <code>TRUE</code>, and if no match is found, then the service creates a new standard profile.</p>",
         "LayoutItem$IsDefault": "<p>If set to true for a layout, this layout will be used by default to view data. If set to false, then layout will not be used by default but it can be used to view data by explicit selection on UI.</p>",
         "Period$Unlimited": "<p>If set to true, there is no limit on the number of destination invocations per profile. The default is false.</p>",
@@ -4074,6 +4075,7 @@
       "base": null,
       "refs": {
         "GetProfileObjectTypeResponse$MaxAvailableProfileObjectCount": "<p>The amount of provisioned profile object max count available.</p>",
+        "GetProfileObjectTypeTemplateResponse$DefaultMaxProfileObjectCount": "<p>The default maximum number of objects of this object type that can be stored per profile. This default applies when you don't set <code>MaxProfileObjectCount</code> on an object type created from this template. If this value isn't present, no default limit applies.</p>",
         "ListProfileObjectTypeItem$MaxAvailableProfileObjectCount": "<p>The amount of provisioned profile object max count available.</p>",
         "PutProfileObjectTypeResponse$MaxAvailableProfileObjectCount": "<p>The amount of provisioned profile object max count available.</p>"
       }
@@ -4553,6 +4555,7 @@
         "GetProfileHistoryRecordResponse$LastUpdatedAt": "<p>The timestamp of when the profile history record was last updated.</p>",
         "GetProfileObjectTypeResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "GetProfileObjectTypeResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
+        "GetProfileObjectTypeTemplateResponse$DefaultMaxProfileObjectCountEffectiveAfter": "<p>The timestamp after which <code>DefaultMaxProfileObjectCount</code> takes effect. The default limit applies only to domains created after this time.</p>",
         "GetRecommenderFilterResponse$CreatedAt": "<p>The timestamp of when the recommender filter was created.</p>",
         "GetRecommenderResponse$LastUpdatedAt": "<p>The timestamp of when the recommender was edited.</p>",
         "GetRecommenderResponse$CreatedAt": "<p>The timestamp of when the recommender was created.</p>",

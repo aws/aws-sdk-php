@@ -8750,6 +8750,24 @@
         "TargetSlaMinutes":{"shape":"TargetSlaMinutes"}
       }
     },
+    "CategoriesAttributeAndCondition":{
+      "type":"structure",
+      "members":{
+        "TagConditions":{"shape":"TagAndConditionList"}
+      }
+    },
+    "CategoriesAttributeFilter":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"CategoriesAttributeOrConditionList"},
+        "AndCondition":{"shape":"CategoriesAttributeAndCondition"},
+        "TagCondition":{"shape":"TagCondition"}
+      }
+    },
+    "CategoriesAttributeOrConditionList":{
+      "type":"list",
+      "member":{"shape":"CategoriesAttributeAndCondition"}
+    },
     "Channel":{
       "type":"string",
       "enum":[
@@ -19352,7 +19370,8 @@
         "MaxResults":{"shape":"MaxResult100"},
         "NextToken":{"shape":"LargeNextToken"},
         "OutputType":{"shape":"RealTimeContactAnalysisOutputType"},
-        "SegmentTypes":{"shape":"RealTimeContactAnalysisSegmentTypes"}
+        "SegmentTypes":{"shape":"RealTimeContactAnalysisSegmentTypes"},
+        "ListFilter":{"shape":"RealTimeContactAnalysisSegmentsFilter"}
       }
     },
     "ListRealtimeContactAnalysisSegmentsV2Response":{
@@ -22091,7 +22110,10 @@
     },
     "PreEvaluationFilterResourceType":{
       "type":"string",
-      "enum":["CONTACT"]
+      "enum":[
+        "CONTACT",
+        "CONTACT_EVALUATION"
+      ]
     },
     "PreEvaluationFilterType":{
       "type":"string",
@@ -22773,6 +22795,7 @@
       "type":"structure",
       "required":["PointsOfInterest"],
       "members":{
+        "RuleId":{"shape":"RuleId256"},
         "PointsOfInterest":{"shape":"RealTimeContactAnalysisPointsOfInterest"}
       }
     },
@@ -23012,6 +23035,12 @@
       "type":"list",
       "member":{"shape":"RealTimeContactAnalysisSegmentType"},
       "max":7
+    },
+    "RealTimeContactAnalysisSegmentsFilter":{
+      "type":"structure",
+      "members":{
+        "CategoriesAttributeFilter":{"shape":"CategoriesAttributeFilter"}
+      }
     },
     "RealTimeContactAnalysisSentimentLabel":{
       "type":"string",
@@ -23927,6 +23956,11 @@
     },
     "RuleFunction":{"type":"string"},
     "RuleId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "RuleId256":{
       "type":"string",
       "max":256,
       "min":1

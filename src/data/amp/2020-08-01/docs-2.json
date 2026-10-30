@@ -7,7 +7,7 @@
     "CreateLoggingConfiguration": "<p>The <code>CreateLoggingConfiguration</code> operation creates rules and alerting logging configuration for the workspace. Use this operation to set the CloudWatch log group to which the logs will be published to.</p> <note> <p>These logging configurations are only for rules and alerting logs.</p> </note>",
     "CreateQueryLoggingConfiguration": "<p>Creates a query logging configuration for the specified workspace. This operation enables logging of queries that exceed the specified QSP threshold.</p>",
     "CreateRuleGroupsNamespace": "<p>The <code>CreateRuleGroupsNamespace</code> operation creates a rule groups namespace within a workspace. A rule groups namespace is associated with exactly one rules file. A workspace can have multiple rule groups namespaces.</p> <important> <p>The combined length of a rule group namespace and a rule group name cannot exceed 721 UTF-8 bytes.</p> </important> <p>Use this operation only to create new rule groups namespaces. To update an existing rule groups namespace, use <code>PutRuleGroupsNamespace</code>.</p>",
-    "CreateScraper": "<p>Creates a scraper to collect metrics from Prometheus-compatible sources. The scraper sends the collected metrics to Amazon Managed Service for Prometheus workspaces or CloudWatch datasets. You can configure scrapers to collect metrics from Amazon EKS clusters, Amazon MSK clusters, or from VPC-based sources that support DNS-based service discovery. Scrapers are flexible. You can configure a scraper to control which metrics to collect, the frequency of collection, which transformations to apply to the metrics, and more.</p> <p>An IAM role will be created for you that Amazon Managed Service for Prometheus uses to access the metrics in your source. You must configure this role with a policy that allows it to scrape metrics from your source. For Amazon EKS sources, see <a href=\"https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-collector-how-to.html#AMP-collector-eks-setup\">Configuring your Amazon EKS cluster</a> in the <i>Amazon Managed Service for Prometheus User Guide</i>.</p> <p>The <code>scrapeConfiguration</code> parameter contains the base-64 encoded YAML configuration for the scraper.</p> <p>When creating a scraper, the service creates a <code>Network Interface</code> in each <b>Availability Zone</b> that are passed into <code>CreateScraper</code> through subnets. These network interfaces are used to connect to your source within the VPC for scraping metrics.</p> <note> <p>For more information about collectors, including what metrics are collected, and how to configure the scraper, see <a href=\"https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-collector-how-to.html\">Using an Amazon Web Services managed collector</a> in the <i>Amazon Managed Service for Prometheus User Guide</i>.</p> </note>",
+    "CreateScraper": "<p>Creates a scraper to collect metrics from Prometheus-compatible sources. The scraper sends the collected metrics to Amazon Managed Service for Prometheus workspaces or CloudWatch datasets. You can configure scrapers to collect metrics from Amazon EKS clusters, Amazon MSK clusters, or from VPC-based sources that support DNS-based service discovery. Scrapers are flexible. You can configure a scraper to control which metrics to collect, the frequency of collection, which transformations to apply to the metrics, and more.</p> <p>An IAM role will be created for you that Amazon Managed Service for Prometheus uses to access the metrics in your source. You must configure this role with a policy that allows it to scrape metrics from your source. For Amazon EKS sources, see <a href=\"https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-collector-how-to.html#AMP-collector-eks-setup\">Configuring your Amazon EKS cluster</a> in the <i>Amazon Managed Service for Prometheus User Guide</i>. For a Kafka exporter, grant this role access with a cluster policy on the Amazon MSK cluster instead. For details, see <code>KafkaExporterConfiguration</code>.</p> <p>The <code>scrapeConfiguration</code> parameter contains the base-64 encoded YAML configuration for the scraper.</p> <p>When creating a scraper, the service creates a <code>Network Interface</code> in each <b>Availability Zone</b> that are passed into <code>CreateScraper</code> through subnets. These network interfaces are used to connect to your source within the VPC for scraping metrics.</p> <note> <p>For more information about collectors, including what metrics are collected, and how to configure the scraper, see <a href=\"https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-collector-how-to.html\">Using an Amazon Web Services managed collector</a> in the <i>Amazon Managed Service for Prometheus User Guide</i>.</p> </note>",
     "CreateWorkspace": "<p>Creates a Prometheus workspace. A workspace is a logical space dedicated to the storage and querying of Prometheus metrics. You can have one or more workspaces in each Region in your account.</p>",
     "DeleteAlertManagerDefinition": "<p>Deletes the alert manager definition from a workspace.</p>",
     "DeleteAnomalyDetector": "<p>Removes an anomaly detector from a workspace. This operation is idempotent.</p>",
@@ -426,12 +426,12 @@
       }
     },
     "ExporterList": {
-      "base": "<p>A list of exporter configurations for a scraper. You can configure at most one Amazon OpenSearch Service domain.</p>",
+      "base": "<p>A list of exporter configurations for a scraper. You can configure at most one exporter, for either an Amazon OpenSearch Service domain or an Amazon MSK cluster.</p>",
       "refs": {
-        "CreateScraperRequest$exporters": "<p>The exporter configurations for the scraper. You can configure at most one Amazon OpenSearch Service domain. If you don't specify a value, the scraper is created without an exporter configuration.</p>",
-        "ScraperDescription$exporters": "<p>The exporter configurations for the scraper, if configured. The list contains at most one configuration for an Amazon OpenSearch Service domain.</p>",
-        "ScraperSummary$exporters": "<p>The exporter configurations for the scraper, if configured. The list contains at most one configuration for an Amazon OpenSearch Service domain.</p>",
-        "UpdateScraperRequest$exporters": "<p>The exporter configurations for the scraper. You can configure at most one Amazon OpenSearch Service domain. If you don't specify a value, the existing exporter configuration remains unchanged.</p>"
+        "CreateScraperRequest$exporters": "<p>The exporter configurations for the scraper. You can configure at most one exporter, for either an Amazon OpenSearch Service domain or an Amazon MSK cluster. If you don't specify a value, the scraper is created without an exporter configuration.</p>",
+        "ScraperDescription$exporters": "<p>The exporter configurations for the scraper, if configured. The list contains at most one configuration, for either an Amazon OpenSearch Service domain or an Amazon MSK cluster.</p>",
+        "ScraperSummary$exporters": "<p>The exporter configurations for the scraper, if configured. The list contains at most one configuration, for either an Amazon OpenSearch Service domain or an Amazon MSK cluster.</p>",
+        "UpdateScraperRequest$exporters": "<p>The exporter configurations for the scraper. You can configure at most one exporter, for either an Amazon OpenSearch Service domain or an Amazon MSK cluster. If you don't specify a value, the existing exporter configuration remains unchanged. Specify an empty list to remove the exporter.</p>"
       }
     },
     "FilterKey": {
@@ -528,6 +528,19 @@
     "InternalServerException": {
       "base": "<p>An unexpected error occurred during the processing of the request.</p>",
       "refs": {}
+    },
+    "KafkaExporterConfiguration": {
+      "base": "<p>The configuration for collecting broker, topic, and consumer-group metrics from an Amazon MSK cluster through a managed Kafka exporter. The cluster must be active, have IAM authentication enabled, and be in the same account and Region as the scraper. Provisioned clusters with Standard brokers are supported. MSK Serverless clusters are not supported.</p> <p>Use a VPC source that can connect to the cluster's IAM bootstrap brokers. The exporter authenticates with the scraper's service-linked role. Metrics can be sent to an Amazon Managed Service for Prometheus workspace or a CloudWatch dataset.</p> <p>You must have an Amazon MSK cluster policy that grants the scraper's service-linked role access to the cluster. Without this policy, the scraper collects no Kafka metrics. For the required actions and example policies, see <a href=\"https://docs.aws.amazon.com/prometheus/latest/userguide/prom-msk-kafka-exporter.html#prom-msk-kafka-exporter-access\">Grant the scraper access to the cluster</a> in the <i>Amazon Managed Service for Prometheus User Guide</i>.</p>",
+      "refs": {
+        "ExporterConfiguration$kafkaConfiguration": "<p>The configuration that the scraper uses to collect metrics from an Amazon MSK cluster through a managed Kafka exporter.</p>"
+      }
+    },
+    "KafkaExporterFilter": {
+      "base": "<p>An anchored RE2 regular expression of 1 to 256 characters used by the managed Kafka exporter. Control characters are not allowed.</p>",
+      "refs": {
+        "KafkaExporterConfiguration$topicFilter": "<p>An anchored RE2 regular expression that selects the Kafka topics to monitor. The expression must start with <code>^</code> and end with <code>$</code>. If omitted, the default is <code>^.*$</code>, which selects all topics.</p>",
+        "KafkaExporterConfiguration$consumerGroupFilter": "<p>An anchored RE2 regular expression that selects the Kafka consumer groups to monitor. The expression must start with <code>^</code> and end with <code>$</code>. If omitted, the default is <code>^.*$</code>, which selects all consumer groups.</p>"
+      }
     },
     "KmsKeyArn": {
       "base": "<p>A KMS Key ARN.</p>",
@@ -698,6 +711,12 @@
       "base": null,
       "refs": {
         "LoggingFilter$qspThreshold": "<p>The Query Samples Processed (QSP) threshold above which queries will be logged. Queries processing more samples than this threshold will be captured in logs.</p>"
+      }
+    },
+    "MskClusterArn": {
+      "base": "<p>An Amazon Resource Name (ARN) that identifies an Amazon MSK cluster.</p>",
+      "refs": {
+        "KafkaExporterConfiguration$clusterArn": "<p>The Amazon Resource Name (ARN) of the Amazon MSK cluster.</p>"
       }
     },
     "OpenSearchDomainArn": {

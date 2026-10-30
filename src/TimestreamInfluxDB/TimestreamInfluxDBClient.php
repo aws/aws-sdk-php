@@ -26,6 +26,7 @@ use Aws\AwsClient;
  *     vpcSubnetIds?: list<string>,
  *     vpcSecurityGroupIds?: list<string>,
  *     deploymentType?: 'MULTI_NODE_READ_REPLICAS',
+ *     deploymentConfiguration?: array{InfluxDBv3Enterprise?: array{nodeGroups?: list<array>, ...}, ...},
  *     failoverMode?: 'AUTOMATIC'|'NO_FAILOVER',
  *     logDeliveryConfiguration?: array{s3Configuration?: array{bucketName?: string, enabled?: bool, ...}, ...},
  *     maintenanceSchedule?: array{timezone?: string, preferredMaintenanceWindow?: string, ...},
@@ -57,6 +58,7 @@ use Aws\AwsClient;
  *     vpcSubnetIds?: list<string>,
  *     vpcSecurityGroupIds?: list<string>,
  *     deploymentType?: 'MULTI_NODE_READ_REPLICAS',
+ *     deploymentConfiguration?: array{InfluxDBv3Enterprise?: array{nodeGroups?: list<array>, ...}, ...},
  *     failoverMode?: 'AUTOMATIC'|'NO_FAILOVER',
  *     logDeliveryConfiguration?: array{s3Configuration?: array{bucketName?: string, enabled?: bool, ...}, ...},
  *     maintenanceSchedule?: array{timezone?: string, preferredMaintenanceWindow?: string, ...},
@@ -560,6 +562,7 @@ use Aws\AwsClient;
  *     dbParameterGroupIdentifier?: string,
  *     port?: int,
  *     dbInstanceType?: 'db.influx.12xlarge'|'db.influx.16xlarge'|'db.influx.24xlarge'|'db.influx.2xlarge'|'db.influx.4xlarge'|'db.influx.8xlarge'|'db.influx.large'|'db.influx.medium'|'db.influx.xlarge',
+ *     deploymentConfiguration?: array{InfluxDBv3Enterprise?: array{nodeGroups?: list<array>, ...}, ...},
  *     failoverMode?: 'AUTOMATIC'|'NO_FAILOVER',
  *     maintenanceSchedule?: array{timezone?: string, preferredMaintenanceWindow?: string, ...},
  *     dbBackupConfigurations?: list<array{
@@ -578,6 +581,7 @@ use Aws\AwsClient;
  *     dbParameterGroupIdentifier?: string,
  *     port?: int,
  *     dbInstanceType?: 'db.influx.12xlarge'|'db.influx.16xlarge'|'db.influx.24xlarge'|'db.influx.2xlarge'|'db.influx.4xlarge'|'db.influx.8xlarge'|'db.influx.large'|'db.influx.medium'|'db.influx.xlarge',
+ *     deploymentConfiguration?: array{InfluxDBv3Enterprise?: array{nodeGroups?: list<array>, ...}, ...},
  *     failoverMode?: 'AUTOMATIC'|'NO_FAILOVER',
  *     maintenanceSchedule?: array{timezone?: string, preferredMaintenanceWindow?: string, ...},
  *     dbBackupConfigurations?: list<array{

@@ -4519,7 +4519,8 @@
         "configuration":{"shape":"ConfigurationDetails"},
         "vpcConfig":{"shape":"VpcConfigResponse"},
         "engineSettings":{"shape":"EngineSettings"},
-        "sessionPolicy":{"shape":"SessionPolicy"}
+        "sessionPolicy":{"shape":"SessionPolicy"},
+        "outputUriPrefixMode":{"shape":"RunOutputUriPrefixMode"}
       }
     },
     "GetRunResponsePriorityInteger":{
@@ -6971,6 +6972,13 @@
       "min":1,
       "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
+    "RunOutputUriPrefixMode":{
+      "type":"string",
+      "enum":[
+        "SERVICE_DEFINED",
+        "NONE_WITH_OVERWRITE"
+      ]
+    },
     "RunParameters":{
       "type":"structure",
       "members":{},
@@ -7649,7 +7657,8 @@
         "scratchStorageMode":{"shape":"ScratchStorageMode"},
         "configurationName":{"shape":"ConfigurationName"},
         "sessionPolicy":{"shape":"SessionPolicy"},
-        "engineSettings":{"shape":"EngineSettings"}
+        "engineSettings":{"shape":"EngineSettings"},
+        "outputUriPrefixMode":{"shape":"RunOutputUriPrefixMode"}
       }
     },
     "StartRunRequestPriorityInteger":{

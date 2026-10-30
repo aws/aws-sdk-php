@@ -547,7 +547,12 @@
         "engineType":{"shape":"EngineType"},
         "deploymentType":{"shape":"ResourceDeploymentType"},
         "kmsKeyId":{"shape":"KmsKeyId"},
-        "clusterConfiguration":{"shape":"ClusterConfiguration"},
+        "clusterConfiguration":{
+          "shape":"ClusterConfiguration",
+          "deprecated":true,
+          "deprecatedMessage":"Use deploymentConfiguration instead."
+        },
+        "deploymentConfiguration":{"shape":"DeploymentConfiguration"},
         "dbParameterGroupId":{"shape":"DbParameterGroupId"},
         "dbInstanceType":{"shape":"DbInstanceType"},
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
@@ -567,7 +572,6 @@
       "type":"structure",
       "required":[
         "name",
-        "dbInstanceType",
         "vpcSubnetIds",
         "vpcSecurityGroupIds"
       ],
@@ -587,6 +591,7 @@
         "vpcSubnetIds":{"shape":"VpcSubnetIdList"},
         "vpcSecurityGroupIds":{"shape":"VpcSecurityGroupIdList"},
         "deploymentType":{"shape":"ClusterDeploymentType"},
+        "deploymentConfiguration":{"shape":"DeploymentConfiguration"},
         "failoverMode":{"shape":"FailoverMode"},
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
         "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
@@ -1015,7 +1020,12 @@
         "engineType":{"shape":"EngineType"},
         "deploymentType":{"shape":"ResourceDeploymentType"},
         "kmsKeyId":{"shape":"KmsKeyId"},
-        "clusterConfiguration":{"shape":"ClusterConfiguration"},
+        "clusterConfiguration":{
+          "shape":"ClusterConfiguration",
+          "deprecated":true,
+          "deprecatedMessage":"Use deploymentConfiguration instead."
+        },
+        "deploymentConfiguration":{"shape":"DeploymentConfiguration"},
         "dbParameterGroupId":{"shape":"DbParameterGroupId"},
         "dbInstanceType":{"shape":"DbInstanceType"},
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
@@ -1091,6 +1101,13 @@
         "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
+    "DeploymentConfiguration":{
+      "type":"structure",
+      "members":{
+        "InfluxDBv3Enterprise":{"shape":"InfluxDBv3EnterpriseDeploymentConfiguration"}
+      },
+      "union":true
+    },
     "DeploymentType":{
       "type":"string",
       "enum":[
@@ -1164,7 +1181,12 @@
         "engineType":{"shape":"EngineType"},
         "deploymentType":{"shape":"ResourceDeploymentType"},
         "kmsKeyId":{"shape":"KmsKeyId"},
-        "clusterConfiguration":{"shape":"ClusterConfiguration"},
+        "clusterConfiguration":{
+          "shape":"ClusterConfiguration",
+          "deprecated":true,
+          "deprecatedMessage":"Use deploymentConfiguration instead."
+        },
+        "deploymentConfiguration":{"shape":"DeploymentConfiguration"},
         "dbParameterGroupId":{"shape":"DbParameterGroupId"},
         "dbInstanceType":{"shape":"DbInstanceType"},
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
@@ -1219,7 +1241,12 @@
         "vpcSubnetIds":{"shape":"VpcSubnetIdList"},
         "vpcSecurityGroupIds":{"shape":"VpcSecurityGroupIdList"},
         "failoverMode":{"shape":"FailoverMode"},
-        "clusterConfiguration":{"shape":"ClusterConfiguration"},
+        "clusterConfiguration":{
+          "shape":"ClusterConfiguration",
+          "deprecated":true,
+          "deprecatedMessage":"Use deploymentConfiguration instead."
+        },
+        "deploymentConfiguration":{"shape":"DeploymentConfiguration"},
         "dbBackupConfigurations":{"shape":"DbBackupConfigurationOutputList"},
         "kmsKeyId":{"shape":"KmsKeyId"}
       }
@@ -1595,13 +1622,15 @@
       "max":10000,
       "min":1
     },
+    "InfluxDBv3EnterpriseDeploymentConfiguration":{
+      "type":"structure",
+      "required":["nodeGroups"],
+      "members":{
+        "nodeGroups":{"shape":"NodeGroupList"}
+      }
+    },
     "InfluxDBv3EnterpriseParameters":{
       "type":"structure",
-      "required":[
-        "ingestQueryInstances",
-        "queryOnlyInstances",
-        "dedicatedCompactor"
-      ],
       "members":{
         "queryFileLimit":{"shape":"InfluxDBv3EnterpriseParametersQueryFileLimitInteger"},
         "queryLogSize":{"shape":"InfluxDBv3EnterpriseParametersQueryLogSizeInteger"},
@@ -1644,9 +1673,24 @@
         "hardDeleteDefaultDuration":{"shape":"Duration"},
         "pluginRepositoryUrl":{"shape":"String"},
         "pluginRepositorySecretArn":{"shape":"PluginRepositorySecretArn"},
-        "ingestQueryInstances":{"shape":"InfluxDBv3EnterpriseParametersIngestQueryInstancesInteger"},
-        "queryOnlyInstances":{"shape":"InfluxDBv3EnterpriseParametersQueryOnlyInstancesInteger"},
-        "dedicatedCompactor":{"shape":"Boolean"},
+        "ingestQueryInstances":{
+          "shape":"InfluxDBv3EnterpriseParametersIngestQueryInstancesInteger",
+          "box":true,
+          "deprecated":true,
+          "deprecatedMessage":"Use deploymentConfiguration instead."
+        },
+        "queryOnlyInstances":{
+          "shape":"InfluxDBv3EnterpriseParametersQueryOnlyInstancesInteger",
+          "box":true,
+          "deprecated":true,
+          "deprecatedMessage":"Use deploymentConfiguration instead."
+        },
+        "dedicatedCompactor":{
+          "shape":"Boolean",
+          "box":true,
+          "deprecated":true,
+          "deprecatedMessage":"Use deploymentConfiguration instead."
+        },
         "compactionRowLimit":{"shape":"InfluxDBv3EnterpriseParametersCompactionRowLimitInteger"},
         "compactionMaxNumFilesPerPlan":{"shape":"InfluxDBv3EnterpriseParametersCompactionMaxNumFilesPerPlanInteger"},
         "compactionGen2Duration":{"shape":"Duration"},
@@ -1824,7 +1868,9 @@
     },
     "InstanceModeList":{
       "type":"list",
-      "member":{"shape":"InstanceMode"}
+      "member":{"shape":"InstanceMode"},
+      "max":4,
+      "min":1
     },
     "Integer":{
       "type":"integer",
@@ -1988,6 +2034,31 @@
     },
     "NextToken":{
       "type":"string",
+      "min":1
+    },
+    "NodeGroup":{
+      "type":"structure",
+      "required":[
+        "instanceModes",
+        "instanceType",
+        "count"
+      ],
+      "members":{
+        "instanceModes":{"shape":"InstanceModeList"},
+        "instanceType":{"shape":"DbInstanceType"},
+        "count":{"shape":"NodeGroupCountInteger"}
+      }
+    },
+    "NodeGroupCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":13,
+      "min":1
+    },
+    "NodeGroupList":{
+      "type":"list",
+      "member":{"shape":"NodeGroup"},
+      "max":10,
       "min":1
     },
     "Organization":{
@@ -2316,6 +2387,7 @@
         "dbParameterGroupIdentifier":{"shape":"DbParameterGroupIdentifier"},
         "port":{"shape":"Port"},
         "dbInstanceType":{"shape":"DbInstanceType"},
+        "deploymentConfiguration":{"shape":"DeploymentConfiguration"},
         "failoverMode":{"shape":"FailoverMode"},
         "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
         "dbBackupConfigurations":{"shape":"DbBackupConfigurationInputList"}

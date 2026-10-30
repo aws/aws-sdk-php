@@ -116,7 +116,7 @@ use Aws\AwsClient;
  *     roleConfiguration?: array{sourceRoleArn?: string, targetRoleArn?: string, ...},
  *     clientToken?: string,
  *     tags?: array<string, string>,
- *     exporters?: list<array{openSearchConfiguration?: array, ...}>,
+ *     exporters?: list<array{openSearchConfiguration?: array, kafkaConfiguration?: array, ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createScraperAsync(array $args = [])
@@ -136,7 +136,7 @@ use Aws\AwsClient;
  *     roleConfiguration?: array{sourceRoleArn?: string, targetRoleArn?: string, ...},
  *     clientToken?: string,
  *     tags?: array<string, string>,
- *     exporters?: list<array{openSearchConfiguration?: array, ...}>,
+ *     exporters?: list<array{openSearchConfiguration?: array, kafkaConfiguration?: array, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createWorkspace(array $args = [])
@@ -357,7 +357,7 @@ use Aws\AwsClient;
  *     },
  *     roleConfiguration?: array{sourceRoleArn?: string, targetRoleArn?: string, ...},
  *     clientToken?: string,
- *     exporters?: list<array{openSearchConfiguration?: array, ...}>,
+ *     exporters?: list<array{openSearchConfiguration?: array, kafkaConfiguration?: array, ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateScraperAsync(array $args = [])
@@ -372,7 +372,7 @@ use Aws\AwsClient;
  *     },
  *     roleConfiguration?: array{sourceRoleArn?: string, targetRoleArn?: string, ...},
  *     clientToken?: string,
- *     exporters?: list<array{openSearchConfiguration?: array, ...}>,
+ *     exporters?: list<array{openSearchConfiguration?: array, kafkaConfiguration?: array, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateScraperLoggingConfiguration(array $args = [])

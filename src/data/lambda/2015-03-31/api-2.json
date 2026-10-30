@@ -4575,6 +4575,13 @@
       "exception":true,
       "fault":true
     },
+    "KafkaEventSourceMappingConsumptionMode":{
+      "type":"string",
+      "enum":[
+        "Stream",
+        "Queue"
+      ]
+    },
     "KafkaSchemaRegistryAccessConfig":{
       "type":"structure",
       "members":{
@@ -6407,7 +6414,8 @@
       "type":"structure",
       "members":{
         "ConsumerGroupId":{"shape":"URI"},
-        "SchemaRegistryConfig":{"shape":"KafkaSchemaRegistryConfig"}
+        "SchemaRegistryConfig":{"shape":"KafkaSchemaRegistryConfig"},
+        "ConsumptionMode":{"shape":"KafkaEventSourceMappingConsumptionMode"}
       }
     },
     "SendDurableExecutionCallbackFailureRequest":{

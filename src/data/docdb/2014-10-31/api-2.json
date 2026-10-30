@@ -588,6 +588,18 @@
         {"shape":"ResourceNotFoundFault"}
       ]
     },
+    "DescribeServerlessV2PlatformVersions":{
+      "name":"DescribeServerlessV2PlatformVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeServerlessV2PlatformVersionsMessage"},
+      "output":{
+        "shape":"ServerlessV2PlatformVersionsMessage",
+        "resultWrapper":"DescribeServerlessV2PlatformVersionsResult"
+      }
+    },
     "FailoverDBCluster":{
       "name":"FailoverDBCluster",
       "http":{
@@ -1379,6 +1391,7 @@
         "IOOptimizedNextAllowedModificationTime":{"shape":"TStamp"},
         "StorageType":{"shape":"String"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfigurationInfo"},
+        "ServerlessV2PlatformVersion":{"shape":"String"},
         "MasterUserSecret":{"shape":"ClusterMasterUserSecret"},
         "NetworkType":{"shape":"String"},
         "CopyTagsToSnapshot":{"shape":"BooleanOptional"}
@@ -2109,6 +2122,18 @@
         "Filters":{"shape":"FilterList"},
         "Marker":{"shape":"String"},
         "MaxRecords":{"shape":"IntegerOptional"}
+      }
+    },
+    "DescribeServerlessV2PlatformVersionsMessage":{
+      "type":"structure",
+      "members":{
+        "ServerlessV2PlatformVersion":{"shape":"String"},
+        "Engine":{"shape":"String"},
+        "Filters":{"shape":"FilterList"},
+        "DefaultOnly":{"shape":"BooleanOptional"},
+        "IncludeAll":{"shape":"BooleanOptional"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
       }
     },
     "DoubleOptional":{"type":"double"},
@@ -3041,6 +3066,31 @@
       "members":{
         "MinCapacity":{"shape":"DoubleOptional"},
         "MaxCapacity":{"shape":"DoubleOptional"}
+      }
+    },
+    "ServerlessV2PlatformVersionInfo":{
+      "type":"structure",
+      "members":{
+        "ServerlessV2PlatformVersion":{"shape":"String"},
+        "ServerlessV2PlatformVersionDescription":{"shape":"String"},
+        "Engine":{"shape":"String"},
+        "ServerlessV2FeaturesSupport":{"shape":"ServerlessV2FeaturesSupport"},
+        "Status":{"shape":"String"},
+        "IsDefault":{"shape":"Boolean"}
+      }
+    },
+    "ServerlessV2PlatformVersionList":{
+      "type":"list",
+      "member":{
+        "shape":"ServerlessV2PlatformVersionInfo",
+        "locationName":"ServerlessV2PlatformVersionInfo"
+      }
+    },
+    "ServerlessV2PlatformVersionsMessage":{
+      "type":"structure",
+      "members":{
+        "Marker":{"shape":"String"},
+        "ServerlessV2PlatformVersions":{"shape":"ServerlessV2PlatformVersionList"}
       }
     },
     "ServerlessV2ScalingConfiguration":{

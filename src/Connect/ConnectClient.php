@@ -2815,6 +2815,10 @@ use Aws\AwsClient;
  *     NextToken?: string,
  *     OutputType?: 'Raw'|'Redacted',
  *     SegmentTypes?: list<'Attachments'|'Categories'|'Event'|'ExtractedInformation'|'Issues'|'PostContactSummary'|'Transcript'>,
+ *     ListFilter?: array{
+ *         CategoriesAttributeFilter?: array{OrConditions?: list<array>, AndCondition?: array, TagCondition?: array, ...},
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listRealtimeContactAnalysisSegmentsV2Async(array $args = [])
@@ -2825,6 +2829,10 @@ use Aws\AwsClient;
  *     NextToken?: string,
  *     OutputType?: 'Raw'|'Redacted',
  *     SegmentTypes?: list<'Attachments'|'Categories'|'Event'|'ExtractedInformation'|'Issues'|'PostContactSummary'|'Transcript'>,
+ *     ListFilter?: array{
+ *         CategoriesAttributeFilter?: array{OrConditions?: list<array>, AndCondition?: array, TagCondition?: array, ...},
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result listReplicationFindings(array $args = [])

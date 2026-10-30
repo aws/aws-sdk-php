@@ -214,6 +214,7 @@
         "requestUri":"/"
       },
       "input":{"shape":"DeleteAccountPolicyRequest"},
+      "output":{"shape":"DeleteAccountPolicyResponse"},
       "errors":[
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
@@ -2370,7 +2371,14 @@
       ],
       "members":{
         "policyName":{"shape":"PolicyName"},
-        "policyType":{"shape":"PolicyType"}
+        "policyType":{"shape":"PolicyType"},
+        "dryRun":{"shape":"DryRun"}
+      }
+    },
+    "DeleteAccountPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "dryRunResult":{"shape":"DryRunResult"}
       }
     },
     "DeleteDataProtectionPolicyRequest":{
@@ -3186,6 +3194,22 @@
         "Random",
         "ByLogStream"
       ]
+    },
+    "DryRun":{"type":"boolean"},
+    "DryRunCount":{
+      "type":"integer",
+      "min":0
+    },
+    "DryRunResult":{
+      "type":"structure",
+      "members":{
+        "totalMatchedLogGroups":{"shape":"DryRunCount"},
+        "increasedRetentionLogGroupCount":{"shape":"DryRunCount"},
+        "decreasedRetentionLogGroupCount":{"shape":"DryRunCount"},
+        "unchangedRetentionLogGroupCount":{"shape":"DryRunCount"},
+        "failedAnalysisCount":{"shape":"DryRunCount"},
+        "topLogGroupsImpacted":{"shape":"LogGroupImpacts"}
+      }
     },
     "DynamicTokenPosition":{"type":"integer"},
     "EmitSystemFields":{
@@ -4451,7 +4475,8 @@
         "logGroupClass":{"shape":"LogGroupClass"},
         "logGroupArn":{"shape":"Arn"},
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
-        "bearerTokenAuthenticationEnabled":{"shape":"BearerTokenAuthenticationEnabled"}
+        "bearerTokenAuthenticationEnabled":{"shape":"BearerTokenAuthenticationEnabled"},
+        "retentionPolicyName":{"shape":"PolicyName"}
       }
     },
     "LogGroupArn":{
@@ -4493,6 +4518,19 @@
     "LogGroupIdentifiers":{
       "type":"list",
       "member":{"shape":"LogGroupIdentifier"}
+    },
+    "LogGroupImpact":{
+      "type":"structure",
+      "members":{
+        "logGroupName":{"shape":"LogGroupName"},
+        "currentRetention":{"shape":"RetentionValue"},
+        "proposedRetention":{"shape":"RetentionValue"},
+        "storedBytes":{"shape":"StoredBytes"}
+      }
+    },
+    "LogGroupImpacts":{
+      "type":"list",
+      "member":{"shape":"LogGroupImpact"}
     },
     "LogGroupName":{
       "type":"string",
@@ -5074,7 +5112,8 @@
         "SUBSCRIPTION_FILTER_POLICY",
         "FIELD_INDEX_POLICY",
         "TRANSFORMER_POLICY",
-        "METRIC_EXTRACTION_POLICY"
+        "METRIC_EXTRACTION_POLICY",
+        "RETENTION_POLICY"
       ]
     },
     "Priority":{
@@ -5127,13 +5166,15 @@
         "policyDocument":{"shape":"AccountPolicyDocument"},
         "policyType":{"shape":"PolicyType"},
         "scope":{"shape":"Scope"},
-        "selectionCriteria":{"shape":"SelectionCriteria"}
+        "selectionCriteria":{"shape":"SelectionCriteria"},
+        "dryRun":{"shape":"DryRun"}
       }
     },
     "PutAccountPolicyResponse":{
       "type":"structure",
       "members":{
-        "accountPolicy":{"shape":"AccountPolicy"}
+        "accountPolicy":{"shape":"AccountPolicy"},
+        "dryRunResult":{"shape":"DryRunResult"}
       }
     },
     "PutBearerTokenAuthenticationRequest":{
@@ -5723,6 +5764,11 @@
     "ResultRows":{
       "type":"list",
       "member":{"shape":"ResultField"}
+    },
+    "RetentionValue":{
+      "type":"string",
+      "max":12,
+      "min":1
     },
     "RoleArn":{
       "type":"string",

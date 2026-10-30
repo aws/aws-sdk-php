@@ -942,6 +942,33 @@
         "AcceleratorPartitionConfig$Count": "<p>The number of accelerator partitions to allocate with the specified partition type. If you don't specify a value for vCPU and MemoryInGiB, SageMaker AI automatically allocates ratio-based values for those parameters based on the accelerator partition count you provide.</p>"
       }
     },
+    "AcceleratorPartitionLayout": {
+      "base": "<p>A layout of accelerator partitions for a production variant. On NVIDIA GPUs, the partitions are Multi-Instance GPU (MIG) instances. SageMaker applies the layout to every accelerator on the variant's instance type. You can't change the layout of a running endpoint. To use a different layout, create a new endpoint.</p>",
+      "refs": {
+        "AcceleratorPartitionLayouts$member": null,
+        "ProductionVariantAcceleratorPartitionLayoutsList$member": null
+      }
+    },
+    "AcceleratorPartitionLayouts": {
+      "base": null,
+      "refs": {
+        "PendingProductionVariantSummary$AcceleratorPartitionLayouts": "<p>The accelerator partition layout that SageMaker is applying to this production variant. On NVIDIA GPUs, the profiles are Multi-Instance GPU (MIG) profiles. SageMaker returns the accelerator partition layout as you provided it in the pending deployment configuration, without normalization.</p>",
+        "ProductionVariantSummary$AcceleratorPartitionLayouts": "<p>The accelerator partition layout that SageMaker applies to this production variant. On NVIDIA GPUs, the profiles are Multi-Instance GPU (MIG) profiles. SageMaker returns the accelerator partition layout as you provided it when you created the variant, without normalization.</p>"
+      }
+    },
+    "AcceleratorPartitionType": {
+      "base": null,
+      "refs": {
+        "AcceleratorPartitionTypeList$member": null,
+        "InferenceComponentComputeResourceRequirements$AcceleratorPartitionType": "<p>The accelerator partition profile this inference component occupies; on NVIDIA GPUs this is a Multi-Instance GPU (MIG) profile such as <code>mig-3g.40gb</code>. It must be one of the partition profiles declared in the target endpoint's accelerator partition layout, and when set, <code>NumberOfAcceleratorDevicesRequired</code> must be <code>1</code>. This field is required when the endpoint's production variant has an accelerator partition layout. For endpoints without a layout, omit this field to place the inference component on a whole accelerator.</p>"
+      }
+    },
+    "AcceleratorPartitionTypeList": {
+      "base": null,
+      "refs": {
+        "AcceleratorPartitionLayout$AcceleratorPartitionTypes": "<p>The list of partition profiles to carve on each accelerator that this layout applies to. On NVIDIA GPUs these are Multi-Instance GPU (MIG) profiles, for example <code>[\"mig-3g.40gb\", \"mig-4g.40gb\"]</code>. The order of the profiles doesn't change how the accelerator is partitioned. However, when you update an endpoint, a layout with the same profiles in a different order counts as a different layout, and the update is rejected. Repeat a profile to request more than one partition of that size: for example, <code>[\"mig-3g.40gb\", \"mig-3g.40gb\"]</code> requests two <code>mig-3g.40gb</code> partitions.</p>"
+      }
+    },
     "AcceleratorsAmount": {
       "base": null,
       "refs": {
@@ -15678,7 +15705,7 @@
     "PrefixAwareRoutingConcurrencyThreshold": {
       "base": null,
       "refs": {
-        "PrefixAwareRoutingConfig$ConcurrencyThreshold": "<p>The maximum number of in-flight requests on the target instance before the endpoint routes to another instance. Required when <code>RoutingStrategy</code> is <code>PREFIX_AWARE</code>. When in-flight requests on the prefix-selected instance reach this threshold, the endpoint routes the request to an instance with more available capacity.</p>"
+        "PrefixAwareRoutingConfig$ConcurrencyThreshold": "<p>The number of in-flight requests on the selected instance or inference component copy at which the endpoint routes a request to another copy or instance. Required when <code>RoutingStrategy</code> is <code>PREFIX_AWARE</code>.</p> <p>On an endpoint without inference components, the endpoint compares this threshold with the number of in-flight requests on the selected instance. When that number reaches the threshold, the endpoint routes the request to another instance.</p> <p>On an endpoint with inference components, the endpoint compares this threshold with the number of in-flight requests on the selected copy of the invoked inference component. Requests to other inference components on the same instance don't count. When the instance hosts more than one copy of the inference component, the endpoint routes requests that share a prefix to the same copy and, while that copy has reached the threshold, to another copy on the instance that is under the threshold. When every copy on the instance has reached the threshold, the endpoint routes the request to another instance.</p> <p>The threshold applies to every instance and every copy of every inference component in the production variant, so choose a value that suits the instance or copy that can serve the fewest concurrent requests.</p>"
       }
     },
     "PrefixAwareRoutingConfig": {
@@ -15690,7 +15717,7 @@
     "PrefixAwareRoutingPrefixLength": {
       "base": null,
       "refs": {
-        "PrefixAwareRoutingConfig$PrefixLength": "<p>The maximum length of the prefix used for routing decisions. Required when <code>RoutingStrategy</code> is <code>PREFIX_AWARE</code>.</p> <ul> <li> <p>For the SageMaker Runtime <code>InvokeEndpoint</code> and <code>InvokeEndpointWithResponseStream</code> APIs, this value specifies the number of bytes from the beginning of the request body.</p> </li> <li> <p>For OpenAI-compatible API, this value specifies the number of characters from the text content of the messages array.</p> </li> </ul> <p>The endpoint routes requests that share the same prefix to the same instance. Set this value to cover shared content (such as system prompts) plus enough unique content to distribute workloads across instances.</p>"
+        "PrefixAwareRoutingConfig$PrefixLength": "<p>The maximum length of the prefix used for routing decisions. Required when <code>RoutingStrategy</code> is <code>PREFIX_AWARE</code>.</p> <ul> <li> <p>For the SageMaker Runtime <code>InvokeEndpoint</code> and <code>InvokeEndpointWithResponseStream</code> APIs, this value specifies the number of bytes from the beginning of the request body.</p> </li> <li> <p>For OpenAI-compatible API, this value specifies the number of characters from the text content of the messages array.</p> </li> </ul> <p>The endpoint routes requests that share the same prefix to the same instance and, when that instance hosts more than one copy of the invoked inference component, to the same copy. Set this value to cover shared content (such as system prompts) plus enough unique content to distribute workloads across instances and copies.</p>"
       }
     },
     "PresignedDomainUrl": {
@@ -16015,6 +16042,12 @@
       "base": "<p> Identifies a model that you want to host and the resources chosen to deploy for hosting it. If you are deploying multiple models, tell SageMaker how to distribute traffic among the models by specifying variant weights. For more information on production variants, check <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-ab-testing.html\"> Production variants</a>. </p>",
       "refs": {
         "ProductionVariantList$member": null
+      }
+    },
+    "ProductionVariantAcceleratorPartitionLayoutsList": {
+      "base": null,
+      "refs": {
+        "ProductionVariant$AcceleratorPartitionLayouts": "<p>The accelerator partition layout for the accelerators backing this production variant. A layout lists the partition profiles to carve on the accelerators it applies to; on NVIDIA GPUs these are Multi-Instance GPU (MIG) profiles such as <code>mig-3g.40gb</code>. Specify a single layout: SageMaker applies it uniformly to every accelerator on the variant's instance type, and you place one inference component on each partition. Omit this field to use whole, unpartitioned accelerators.</p>"
       }
     },
     "ProductionVariantAcceleratorType": {
@@ -17303,7 +17336,7 @@
     "RoutingStrategy": {
       "base": null,
       "refs": {
-        "ProductionVariantRoutingConfig$RoutingStrategy": "<p>Sets how the endpoint routes incoming traffic:</p> <ul> <li> <p> <code>LEAST_OUTSTANDING_REQUESTS</code>: The endpoint routes requests to the specific instances that have more capacity to process them.</p> </li> <li> <p> <code>RANDOM</code>: The endpoint routes each request to a randomly chosen instance.</p> </li> <li> <p> <code>PREFIX_AWARE</code>: The endpoint routes requests that share the same prompt prefix to the same instance. When the number of in-flight requests on the selected instance reaches the configured threshold, the endpoint routes the request to an instance with more available capacity.</p> </li> </ul>"
+        "ProductionVariantRoutingConfig$RoutingStrategy": "<p>Sets how the endpoint routes incoming traffic:</p> <ul> <li> <p> <code>LEAST_OUTSTANDING_REQUESTS</code>: The endpoint routes requests to the specific instances that have more capacity to process them.</p> </li> <li> <p> <code>RANDOM</code>: The endpoint routes each request to a randomly chosen instance.</p> </li> <li> <p> <code>PREFIX_AWARE</code>: The endpoint routes requests that share the same prompt prefix to the same instance and, when that instance hosts more than one copy of the invoked inference component, to the same copy. When the number of in-flight requests on the selected instance or copy reaches the <code>ConcurrencyThreshold</code> value, the endpoint routes the request to another copy on that instance or to another instance. The endpoint applies prefix-aware routing only when two or more instances can serve the request.</p> </li> </ul>"
       }
     },
     "RuleConfigurationName": {
@@ -17792,7 +17825,7 @@
     "SequenceLength": {
       "base": null,
       "refs": {
-        "ServerlessJobConfig$SequenceLength": "<p> The maximum sequence length, in tokens, that the customization job supports. SageMaker uses this value to select a training configuration for the base model that you specify. The parameter supports the following values: </p> <ul> <li> <p> <code>1K</code> </p> </li> <li> <p> <code>2K</code> </p> </li> <li> <p> <code>4K</code> </p> </li> <li> <p> <code>8K</code> </p> </li> <li> <p> <code>16K</code> </p> </li> <li> <p> <code>32K</code> </p> </li> <li> <p> <code>64K</code> </p> </li> <li> <p> <code>128K</code> </p> </li> </ul> <p> If you don't specify a value, SageMaker selects a training configuration based on the other values that you specify. The selection is not restricted to a particular sequence length. </p>"
+        "ServerlessJobConfig$SequenceLength": "<p> The maximum sequence length, in tokens, that the customization job supports. SageMaker uses this value to select a training configuration for the base model that you specify. The value must be an integer value from <code>1K</code> to <code>1024K</code> (for example, <code>32K</code>). </p> <p> If you don't specify a value, SageMaker selects a training configuration based on the other values that you specify. The selection is not restricted to a particular sequence length. </p>"
       }
     },
     "ServerlessJobBaseModelArn": {

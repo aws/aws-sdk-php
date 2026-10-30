@@ -333,6 +333,24 @@
         "AgenticRetrieveCitation$references": "<p>References to results that support this span.</p>"
       }
     },
+    "AgenticRetrieveCodeExecutionDetails": {
+      "base": "<p>The details of code that the agent chose to run in an isolated sandbox. The record includes the documents that the code reads. The corresponding CodeExecution step reports the outcome.</p>",
+      "refs": {
+        "AgenticRetrieveAction$codeExecution": "<p>The details of code that the agent chose to run.</p>"
+      }
+    },
+    "AgenticRetrieveCodeExecutionDocument": {
+      "base": "<p>A document that a code execution action reads.</p>",
+      "refs": {
+        "AgenticRetrieveCodeExecutionDocumentList$member": "<p>A document read by the code.</p>"
+      }
+    },
+    "AgenticRetrieveCodeExecutionDocumentList": {
+      "base": "<p>The documents read by a code execution action.</p>",
+      "refs": {
+        "AgenticRetrieveCodeExecutionDetails$documents": "<p>The documents that the code reads. This field is present when the code reads documents.</p>"
+      }
+    },
     "AgenticRetrieveConfiguration": {
       "base": "<p>Configuration settings for the agentic retrieval operation.</p>",
       "refs": {
@@ -561,6 +579,7 @@
     "AgenticRetrieveSourceRetriever": {
       "base": "<p>A source retriever that produced retrieval results.</p>",
       "refs": {
+        "AgenticRetrieveCodeExecutionDocument$sourceRetriever": "<p>The source retriever associated with the document.</p>",
         "AgenticRetrieveFullDocExpansionDetails$sourceRetriever": "<p>The source retriever associated with the document.</p>",
         "AgenticRetrieveResultItem$sourceRetriever": "<p>The source retriever that produced this result.</p>",
         "AgenticRetrieveSourceRetrieverList$member": "<p>A source retriever.</p>",
@@ -4284,6 +4303,7 @@
         "ActionGroupInvocationInput$invocationId": "<p>The unique identifier of the invocation. Only returned if the <code>executionType</code> is <code>RETURN_CONTROL</code>.</p>",
         "AgentCollaboratorInvocationInput$agentCollaboratorName": "<p>The collaborator's name.</p>",
         "AgentCollaboratorInvocationOutput$agentCollaboratorName": "<p>The output's agent collaborator name.</p>",
+        "AgenticRetrieveCodeExecutionDocument$documentId": "<p>The identifier of the document.</p>",
         "AgenticRetrieveFailure$message": "<p>A message describing the failure.</p>",
         "AgenticRetrieveFullDocExpansionDetails$documentId": "<p>The identifier of the document to expand.</p>",
         "AgenticRetrieveGeneratedResponse$answer": "<p>The generated answer text.</p>",

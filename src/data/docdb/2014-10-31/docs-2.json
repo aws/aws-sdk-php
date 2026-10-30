@@ -37,6 +37,7 @@
     "DescribeGlobalClusters": "<p>Returns information about Amazon DocumentDB global clusters. This API supports pagination.</p> <note> <p>This action only applies to Amazon DocumentDB clusters.</p> </note>",
     "DescribeOrderableDBInstanceOptions": "<p>Returns a list of orderable instance options for the specified engine.</p>",
     "DescribePendingMaintenanceActions": "<p>Returns a list of resources (for example, instances) that have at least one pending maintenance action.</p>",
+    "DescribeServerlessV2PlatformVersions": "<p>Describes the properties of specific platform versions for Amazon DocumentDB Serverless v2.</p>",
     "FailoverDBCluster": "<p>Forces a failover for a cluster.</p> <p>A failover for a cluster promotes one of the Amazon DocumentDB replicas (read-only instances) in the cluster to be the primary instance (the cluster writer).</p> <p>If the primary instance fails, Amazon DocumentDB automatically fails over to an Amazon DocumentDB replica, if one exists. You can force a failover when you want to simulate a failure of a primary instance for testing.</p>",
     "FailoverGlobalCluster": "<p>Promotes the specified secondary DB cluster to be the primary DB cluster in the global cluster when failing over a global cluster occurs.</p> <p>Use this operation to respond to an unplanned event, such as a regional disaster in the primary region. Failing over can result in a loss of write transaction data that wasn't replicated to the chosen secondary before the failover event occurred. However, the recovery process that promotes a DB instance on the chosen seconday DB cluster to be the primary writer DB instance guarantees that the data is in a transactionally consistent state.</p>",
     "ListTagsForResource": "<p>Lists all tags on an Amazon DocumentDB resource.</p>",
@@ -146,6 +147,7 @@
         "Parameter$IsModifiable": "<p> Indicates whether (<code>true</code>) or not (<code>false</code>) the parameter can be modified. Some parameters have security or operational implications that prevent them from being changed. </p>",
         "ResetDBClusterParameterGroupMessage$ResetAllParameters": "<p>A value that is set to <code>true</code> to reset all parameters in the cluster parameter group to their default values, and <code>false</code> otherwise. You can't use this parameter if there is a list of parameter names specified for the <code>Parameters</code> parameter.</p>",
         "RestoreDBClusterToPointInTimeMessage$UseLatestRestorableTime": "<p>A value that is set to <code>true</code> to restore the cluster to the latest restorable backup time, and <code>false</code> otherwise. </p> <p>Default: <code>false</code> </p> <p>Constraints: Cannot be specified if the <code>RestoreToTime</code> parameter is provided.</p>",
+        "ServerlessV2PlatformVersionInfo$IsDefault": "<p>Specifies whether this platform version is the default version for the engine. The default platform version is the version used for new DB clusters.</p>",
         "UpgradeTarget$AutoUpgrade": "<p>A value that indicates whether the target version is applied to any source DB instances that have <code>AutoMinorVersionUpgrade</code> set to <code>true</code>.</p>",
         "UpgradeTarget$IsMajorVersionUpgrade": "<p>A value that indicates whether a database engine is upgraded to a major version.</p>"
       }
@@ -171,6 +173,8 @@
         "DescribeDBEngineVersionsMessage$ListSupportedCharacterSets": "<p>If this parameter is specified and the requested engine supports the <code>CharacterSetName</code> parameter for <code>CreateDBInstance</code>, the response includes a list of supported character sets for each engine version. </p>",
         "DescribeDBEngineVersionsMessage$ListSupportedTimezones": "<p>If this parameter is specified and the requested engine supports the <code>TimeZone</code> parameter for <code>CreateDBInstance</code>, the response includes a list of supported time zones for each engine version. </p>",
         "DescribeOrderableDBInstanceOptionsMessage$Vpc": "<p>The virtual private cloud (VPC) filter value. Specify this parameter to show only the available VPC or non-VPC offerings.</p>",
+        "DescribeServerlessV2PlatformVersionsMessage$DefaultOnly": "<p>Specifies whether to return only the default platform versions for each engine. The default platform version is the version used for new DB clusters.</p>",
+        "DescribeServerlessV2PlatformVersionsMessage$IncludeAll": "<p>Specifies whether to also include platform versions that are no longer in use. If you don't specify a value, the response includes only active platform versions.</p>",
         "FailoverGlobalClusterMessage$AllowDataLoss": "<p>Specifies whether to allow data loss for this global cluster operation. Allowing data loss triggers a global failover operation.</p> <p>If you don't specify <code>AllowDataLoss</code>, the global cluster operation defaults to a switchover.</p> <p>Constraints:</p> <ul> <li> <p>Can't be specified together with the <code>Switchover</code> parameter.</p> </li> </ul>",
         "FailoverGlobalClusterMessage$Switchover": "<p>Specifies whether to switch over this global database cluster.</p> <p>Constraints:</p> <ul> <li> <p>Can't be specified together with the <code>AllowDataLoss</code> parameter.</p> </li> </ul>",
         "GlobalCluster$StorageEncrypted": "<p>The storage encryption setting for the global cluster.</p>",
@@ -695,6 +699,10 @@
       "base": "<p>Represents the input to <a>DescribePendingMaintenanceActions</a>.</p>",
       "refs": {}
     },
+    "DescribeServerlessV2PlatformVersionsMessage": {
+      "base": "<p>The input for the <code>DescribeServerlessV2PlatformVersions</code> operation.</p>",
+      "refs": {}
+    },
     "DoubleOptional": {
       "base": null,
       "refs": {
@@ -838,6 +846,7 @@
         "DescribeGlobalClustersMessage$Filters": "<p>A filter that specifies one or more global DB clusters to describe.</p> <p>Supported filters: <code>db-cluster-id</code> accepts cluster identifiers and cluster Amazon Resource Names (ARNs). The results list will only include information about the clusters identified by these ARNs.</p>",
         "DescribeOrderableDBInstanceOptionsMessage$Filters": "<p>This parameter is not currently supported.</p>",
         "DescribePendingMaintenanceActionsMessage$Filters": "<p>A filter that specifies one or more resources to return pending maintenance actions for.</p> <p>Supported filters:</p> <ul> <li> <p> <code>db-cluster-id</code> - Accepts cluster identifiers and cluster Amazon Resource Names (ARNs). The results list includes only pending maintenance actions for the clusters identified by these ARNs.</p> </li> <li> <p> <code>db-instance-id</code> - Accepts instance identifiers and instance ARNs. The results list includes only pending maintenance actions for the DB instances identified by these ARNs.</p> </li> </ul>",
+        "DescribeServerlessV2PlatformVersionsMessage$Filters": "<p>This parameter isn't currently supported.</p>",
         "ListTagsForResourceMessage$Filters": "<p>This parameter is not currently supported.</p>"
       }
     },
@@ -964,6 +973,7 @@
         "DescribeGlobalClustersMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that you can retrieve the remaining results. </p>",
         "DescribeOrderableDBInstanceOptionsMessage$MaxRecords": "<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token (marker) is included in the response so that the remaining results can be retrieved.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribePendingMaintenanceActionsMessage$MaxRecords": "<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token (marker) is included in the response so that the remaining results can be retrieved.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
+        "DescribeServerlessV2PlatformVersionsMessage$MaxRecords": "<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token (marker) is included in the response so that the remaining results can be retrieved.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "ModifyDBClusterMessage$BackupRetentionPeriod": "<p>The number of days for which automated backups are retained. You must specify a minimum value of 1.</p> <p>Default: 1</p> <p>Constraints:</p> <ul> <li> <p>Must be a value from 1 to 35.</p> </li> </ul>",
         "ModifyDBClusterMessage$Port": "<p>The port number on which the cluster accepts connections.</p> <p>Constraints: Must be a value from <code>1150</code> to <code>65535</code>. </p> <p>Default: The same port as the original cluster.</p>",
         "ModifyDBInstanceMessage$PromotionTier": "<p>A value that specifies the order in which an Amazon DocumentDB replica is promoted to the primary instance after a failure of the existing primary instance.</p> <p>Default: 1</p> <p>Valid values: 0-15</p>",
@@ -1269,8 +1279,25 @@
     "ServerlessV2FeaturesSupport": {
       "base": "<p>Specifies any Amazon DocumentDB Serverless properties or limits that differ between Amazon DocumentDB engine versions. You can test the values of this attribute when deciding which Amazon DocumentDB version to use in a new or upgraded cluster. You can also retrieve the version of an existing cluster and check whether that version supports certain Amazon DocumentDB Serverless features before you attempt to use those features.</p>",
       "refs": {
-        "DBEngineVersion$ServerlessV2FeaturesSupport": "<p>Specifies any Amazon DocumentDB Serverless properties or limits that differ between Amazon DocumentDB engine versions. You can test the values of this attribute when deciding which Amazon DocumentDB version to use in a new or upgraded cluster. You can also retrieve the version of an existing cluster and check whether that version supports certain Amazon DocumentDB Serverless features before you attempt to use those features.</p>"
+        "DBEngineVersion$ServerlessV2FeaturesSupport": "<p>Specifies any Amazon DocumentDB Serverless properties or limits that differ between Amazon DocumentDB engine versions. You can test the values of this attribute when deciding which Amazon DocumentDB version to use in a new or upgraded cluster. You can also retrieve the version of an existing cluster and check whether that version supports certain Amazon DocumentDB Serverless features before you attempt to use those features.</p>",
+        "ServerlessV2PlatformVersionInfo$ServerlessV2FeaturesSupport": "<p>Specifies any Amazon DocumentDB Serverless v2 properties or limits that differ between platform versions. You can retrieve the platform version of an existing cluster and check whether it supports specific features before you use them.</p>"
       }
+    },
+    "ServerlessV2PlatformVersionInfo": {
+      "base": "<p>Contains details about a specific Amazon DocumentDB Serverless platform version, including its version number, status, engine, and supported features.</p>",
+      "refs": {
+        "ServerlessV2PlatformVersionList$member": null
+      }
+    },
+    "ServerlessV2PlatformVersionList": {
+      "base": null,
+      "refs": {
+        "ServerlessV2PlatformVersionsMessage$ServerlessV2PlatformVersions": "<p>A list of <code>ServerlessV2PlatformVersionInfo</code> elements.</p>"
+      }
+    },
+    "ServerlessV2PlatformVersionsMessage": {
+      "base": "<p>Contains the result of a successful invocation of the <code>DescribeServerlessV2PlatformVersions</code> operation.</p>",
+      "refs": {}
     },
     "ServerlessV2ScalingConfiguration": {
       "base": "<p>Sets the scaling configuration of an Amazon DocumentDB Serverless cluster.</p>",
@@ -1421,6 +1448,7 @@
         "DBCluster$DBClusterArn": "<p>The Amazon Resource Name (ARN) for the cluster.</p>",
         "DBCluster$CloneGroupId": "<p>Identifies the clone group to which the DB cluster is associated.</p>",
         "DBCluster$StorageType": "<p>Storage type associated with your cluster</p> <p>For information on storage types for Amazon DocumentDB clusters, see Cluster storage configurations in the <i>Amazon DocumentDB Developer Guide</i>.</p> <p>Valid values for storage type - <code>standard | iopt1</code> </p> <p>Default value is <code>standard </code> </p>",
+        "DBCluster$ServerlessV2PlatformVersion": "<p>The version of the Amazon DocumentDB Serverless platform used by the cluster.</p>",
         "DBCluster$NetworkType": "<p>The network type of the cluster.</p> <p>The network type is determined by the <code>DBSubnetGroup</code> specified for the cluster. A <code>DBSubnetGroup</code> can support only the IPv4 protocol or the IPv4 and the IPv6 protocols (<code>DUAL</code>).</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/documentdb/latest/devguide/vpc-clusters.html\">DocumentDB clusters in a VPC</a> in the Amazon DocumentDB Developer Guide.</p> <p>Valid Values: <code>IPV4</code> | <code>DUAL</code> </p>",
         "DBClusterMember$DBInstanceIdentifier": "<p>Specifies the instance identifier for this member of the cluster.</p>",
         "DBClusterMember$DBClusterParameterGroupStatus": "<p>Specifies the status of the cluster parameter group for this member of the DB cluster.</p>",
@@ -1523,6 +1551,9 @@
         "DescribeOrderableDBInstanceOptionsMessage$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
         "DescribePendingMaintenanceActionsMessage$ResourceIdentifier": "<p>The ARN of a resource to return pending maintenance actions for.</p>",
         "DescribePendingMaintenanceActionsMessage$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
+        "DescribeServerlessV2PlatformVersionsMessage$ServerlessV2PlatformVersion": "<p>A specific platform version to return details for.</p> <p>Example: <code>3</code> </p>",
+        "DescribeServerlessV2PlatformVersionsMessage$Engine": "<p>The database engine to return platform version details for.</p>",
+        "DescribeServerlessV2PlatformVersionsMessage$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
         "Endpoint$Address": "<p>Specifies the DNS address of the instance.</p>",
         "Endpoint$HostedZoneId": "<p>Specifies the ID that Amazon Route 53 assigns when you create a hosted zone.</p>",
         "EngineDefaults$DBParameterGroupFamily": "<p>The name of the cluster parameter group family to return the engine parameter information for.</p>",
@@ -1634,6 +1665,11 @@
         "RestoreDBClusterToPointInTimeMessage$KmsKeyId": "<p>The KMS key identifier to use when restoring an encrypted cluster from an encrypted cluster.</p> <p>The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are restoring a cluster with the same Amazon Web Services account that owns the KMS encryption key used to encrypt the new cluster, then you can use the KMS key alias instead of the ARN for the KMS encryption key.</p> <p>You can restore to a new cluster and encrypt the new cluster with an KMS key that is different from the KMS key used to encrypt the source cluster. The new DB cluster is encrypted with the KMS key identified by the <code>KmsKeyId</code> parameter.</p> <p>If you do not specify a value for the <code>KmsKeyId</code> parameter, then the following occurs:</p> <ul> <li> <p>If the cluster is encrypted, then the restored cluster is encrypted using the KMS key that was used to encrypt the source cluster.</p> </li> <li> <p>If the cluster is not encrypted, then the restored cluster is not encrypted.</p> </li> </ul> <p>If <code>DBClusterIdentifier</code> refers to a cluster that is not encrypted, then the restore request is rejected.</p>",
         "RestoreDBClusterToPointInTimeMessage$StorageType": "<p>The storage type to associate with the DB cluster.</p> <p>For information on storage types for Amazon DocumentDB clusters, see Cluster storage configurations in the <i>Amazon DocumentDB Developer Guide</i>.</p> <p>Valid values for storage type - <code>standard | iopt1</code> </p> <p>Default value is <code>standard </code> </p>",
         "RestoreDBClusterToPointInTimeMessage$NetworkType": "<p>The network type of the cluster.</p> <p>The network type is determined by the <code>DBSubnetGroup</code> specified for the cluster. A <code>DBSubnetGroup</code> can support only the IPv4 protocol or the IPv4 and the IPv6 protocols (<code>DUAL</code>).</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/documentdb/latest/devguide/vpc-clusters.html\">DocumentDB clusters in a VPC</a> in the Amazon DocumentDB Developer Guide.</p> <p>Valid Values: <code>IPV4</code> | <code>DUAL</code> </p>",
+        "ServerlessV2PlatformVersionInfo$ServerlessV2PlatformVersion": "<p>The version number of the serverless platform.</p>",
+        "ServerlessV2PlatformVersionInfo$ServerlessV2PlatformVersionDescription": "<p>The description of the serverless platform.</p>",
+        "ServerlessV2PlatformVersionInfo$Engine": "<p>The name of the database engine.</p>",
+        "ServerlessV2PlatformVersionInfo$Status": "<p>The status of the serverless platform. Valid statuses are the following:</p> <ul> <li> <p> <code>enabled</code> - The platform version is in use.</p> </li> <li> <p> <code>disabled</code> - The platform version is not in use.</p> </li> </ul>",
+        "ServerlessV2PlatformVersionsMessage$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
         "SourceIdsList$member": null,
         "StartDBClusterMessage$DBClusterIdentifier": "<p>The identifier of the cluster to restart. Example: <code>docdb-2019-05-28-15-24-52</code> </p>",
         "StopDBClusterMessage$DBClusterIdentifier": "<p>The identifier of the cluster to stop. Example: <code>docdb-2019-05-28-15-24-52</code> </p>",
