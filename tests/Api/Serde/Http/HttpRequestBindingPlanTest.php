@@ -345,6 +345,61 @@ class HttpRequestBindingPlanTest extends TestCase
         $this->serialize($this->service(), 'Plain', ['HNL' => ['a']]);
     }
 
+    /**
+     * A list whose member references an unavailable shape must not be
+     * resolved while compiling. Legacy resolved the item inside
+     * applyHeader()/applyQuery(), so an unused or null header binding
+     * produced a request and only a sent value threw.
+     */
+    public function testUnresolvableListItemDefersToRequestTime(): void
+    {
+        $api = $this->unresolvableItemService();
+
+        $this->assertSame(
+            '{"Good":"g"}',
+            $this->serialize($api, 'Op', ['Good' => 'g'])[3],
+            'an unused header or query list must not throw'
+        );
+        $this->assertSame(
+            '{"Good":"g"}',
+            $this->serialize($api, 'Op', ['Good' => 'g', 'HL' => null])[3],
+            'a null header list must not throw'
+        );
+
+        // applyQuery() resolves the item before it looks at the value, so a
+        // null query list threw on legacy too.
+        foreach ([['HL' => ['a']], ['QL' => ['a']], ['QL' => null]] as $args) {
+            try {
+                $this->serialize($api, 'Op', $args + ['Good' => 'g']);
+                $this->fail('expected Shape not found for ' . key($args));
+            } catch (\InvalidArgumentException $e) {
+                $this->assertSame('Shape not found: Missing', $e->getMessage());
+            }
+        }
+    }
+
+    private function unresolvableItemService(): Service
+    {
+        return new Service([
+            'metadata' => ['protocol' => 'rest-json', 'serviceIdentifier' => 'foo', 'apiVersion' => '2020-01-01'],
+            'operations' => ['Op' => [
+                'http' => ['method' => 'POST', 'requestUri' => '/x'],
+                'input' => ['shape' => 'In'],
+            ]],
+            'shapes' => [
+                'S' => ['type' => 'string'],
+                'BadL' => ['type' => 'list', 'member' => ['shape' => 'Missing']],
+                'In' => ['type' => 'structure', 'members' => [
+                    'Good' => ['shape' => 'S'],
+                    'HL' => ['shape' => 'BadL', 'location' => 'header', 'locationName' => 'x-hl'],
+                    'QL' => ['shape' => 'BadL', 'location' => 'querystring', 'locationName' => 'ql'],
+                ]],
+            ],
+        ], function () {
+            return [];
+        });
+    }
+
     public function testInlineShapesCompileWithoutWarnings(): void
     {
         $api = new Service([

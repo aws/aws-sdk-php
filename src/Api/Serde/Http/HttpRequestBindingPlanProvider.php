@@ -117,10 +117,9 @@ final class HttpRequestBindingPlanProvider
         if ($member instanceof ListShape) {
             // Legacy serializes each item under the item's own locationName
             // and then reads it back as "temp", and recurses into nested
-            // lists. Those cases keep the legacy path. A list with no member
-            // definition is never resolved here, so an unsent member cannot
-            // throw at compile time.
-            $item = isset($member['member']) ? $member->getMember() : null;
+            // lists. Those cases keep the legacy path, as does an item that
+            // listItem() could not resolve.
+            $item = self::listItem($member);
             if ($item === null || $item instanceof ListShape || $item['locationName']) {
                 $binding[HttpRequestBindingPlan::D_TAG] = HttpRequestBindingPlan::HEADER_SHAPE;
                 $binding[HttpRequestBindingPlan::D_SHAPE] = $member;
@@ -155,7 +154,7 @@ final class HttpRequestBindingPlanProvider
             // Same item-name quirk as headers: legacy writes the item under
             // its own locationName and reads "temp", so keep the legacy path
             // for those and for nested collections.
-            $item = isset($member['member']) ? $member->getMember() : null;
+            $item = self::listItem($member);
             if ($item === null
                 || $item instanceof ListShape
                 || $item instanceof MapShape
@@ -171,6 +170,28 @@ final class HttpRequestBindingPlanProvider
         }
 
         return $binding;
+    }
+
+    /**
+     * Resolves a list's item shape, or null when it cannot be resolved here.
+     *
+     * Legacy resolved the item inside applyHeader()/applyQuery(), so a list
+     * whose member references an unavailable shape only threw once a request
+     * reached that resolution. Returning null routes the binding to the cold
+     * HEADER_SHAPE/QUERY_SHAPE path, which calls those same helpers and so
+     * throws at the same point, or not at all.
+     */
+    private static function listItem(ListShape $member): ?Shape
+    {
+        if (!isset($member['member'])) {
+            return null;
+        }
+
+        try {
+            return $member->getMember();
+        } catch (\InvalidArgumentException $e) {
+            return null;
+        }
     }
 
     private static function conversion(Shape $shape): int
