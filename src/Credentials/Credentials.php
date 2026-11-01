@@ -135,6 +135,10 @@ class Credentials extends AwsCredentialIdentity implements
      * or returns expires credentials.
      *
      * @internal
+     * @deprecated Static stability is now owned by the caching layer
+     *   (CredentialProvider::memoize), which retains cached credentials and
+     *   applies the refresh backoff on failure. No caller remains in the SDK.
+     *   Scheduled for removal in a future major version.
      */
     public function extendExpiration() {
         $extension = mt_rand(5, 10);

@@ -3,6 +3,7 @@ namespace Aws\Credentials;
 
 use Aws\Configuration\ConfigurationResolver;
 use Aws\Exception\CredentialsException;
+use Aws\Exception\NonRecoverableCredentialsException;
 use Aws\Signin\SigninClient;
 use Aws\Signin\Exception\SigninException;
 use GuzzleHttp\Promise;
@@ -260,8 +261,10 @@ final class LoginCredentialProvider
      * Loads and validates the token from the cache file
      *
      * @return array The loaded token data with Credentials object, DPoP key, and other fields
-     * @throws CredentialsException If the cache file is invalid, missing required keys,
-     *                              or DPoP key cannot be loaded
+     * @throws NonRecoverableCredentialsException If the cached token is
+     *         unparseable, is missing required keys, has an invalid expiration,
+     *         or its DPoP key cannot be loaded. Re-running `aws login` is
+     *         required, so retrying the refresh will not help.
      */
     private function loadToken(): array
     {
@@ -271,8 +274,9 @@ final class LoginCredentialProvider
                 true, 512, JSON_THROW_ON_ERROR
             );
         } catch (\JsonException $e) {
-            throw new CredentialsException(
-                'Invalid JSON in cache file: ' . $e->getMessage(),
+            throw new NonRecoverableCredentialsException(
+                'Invalid JSON in cache file: ' . $e->getMessage()
+                . self::REAUTHENTICATE_MSG,
                 0,
                 $e
             );
@@ -287,7 +291,7 @@ final class LoginCredentialProvider
             // Convert expiresAt to Unix timestamp
             $expiresAt = strtotime($cached[self::KEY_ACCESS_TOKEN][self::KEY_EXPIRES_AT]);
             if ($expiresAt === false) {
-                throw new CredentialsException(
+                throw new NonRecoverableCredentialsException(
                     'Invalid expiration date format in cached token `'
                     . self::KEY_EXPIRES_AT . '` field.' . self::REAUTHENTICATE_MSG
                 );
@@ -303,7 +307,7 @@ final class LoginCredentialProvider
             $cached[self::KEY_DPOP_KEY] = openssl_pkey_get_private($cached[self::KEY_DPOP_KEY]);
             if ($cached[self::KEY_DPOP_KEY] === false) {
                 $error = openssl_error_string();
-                throw new CredentialsException(
+                throw new NonRecoverableCredentialsException(
                     'Failed to load DPoP private key from cached token for profile '
                     . "{$this->profileName}: " . ($error ? ": {$error}" : '.')
                     . self::REAUTHENTICATE_MSG
@@ -313,7 +317,7 @@ final class LoginCredentialProvider
             return $cached;
         }
 
-        throw new CredentialsException(
+        throw new NonRecoverableCredentialsException(
             'Missing required keys in cached token for profile '
             . $this->profileName . '.' . self::REAUTHENTICATE_MSG
         );
@@ -348,20 +352,20 @@ final class LoginCredentialProvider
                 $error = strtolower($e->get('error'));
                 switch ($error) {
                     case 'token_expired':
-                        return new CredentialsException(
+                        return new NonRecoverableCredentialsException(
                             'Your session has expired.' . self::REAUTHENTICATE_MSG,
                             0,
                             $e
                         );
                     case 'user_credentials_changed':
-                        return new CredentialsException(
+                        return new NonRecoverableCredentialsException(
                             'Unable to refresh credentials because of a change in your password. '
                             . 'Please reauthenticate with your new password.',
                             0,
                             $e
                         );
                     case 'insufficient_permissions':
-                        return new CredentialsException(
+                        return new NonRecoverableCredentialsException(
                             'Unable to refresh credentials due to insufficient permissions. '
                             . 'You may be missing permission for the `CreateOAuth2Token` action.',
                             0,
@@ -369,7 +373,18 @@ final class LoginCredentialProvider
                         );
                 }
             }
-            
+
+            if ($e->getAwsErrorCode() === 'ValidationException') {
+                // The Sign-In service rejected the CreateOAuth2Token request as
+                // invalid.
+                return new NonRecoverableCredentialsException(
+                    'Unable to refresh login credentials: the Sign-In service '
+                    . 'rejected the request as invalid.' . self::REAUTHENTICATE_MSG,
+                    0,
+                    $e
+                );
+            }
+
             return $e;
         }
         
