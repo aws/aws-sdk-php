@@ -1,7 +1,9 @@
 <?php
 namespace Aws\Credentials;
 
+use Aws\Exception\AwsException;
 use Aws\Exception\CredentialsException;
+use Aws\Exception\NonRecoverableCredentialsException;
 use Aws\Result;
 use Aws\Sts\StsClient;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -57,6 +59,23 @@ class AssumeRoleCredentialProvider
                     CredentialSources::STS_ASSUME_ROLE
                 );
             })->otherwise(function (\Throwable $exception) {
+                if ($exception instanceof AwsException
+                    && in_array(
+                        $exception->getAwsErrorCode(),
+                        NonRecoverableCredentialsException::STS_NON_RECOVERABLE_ERROR_CODES,
+                        true
+                    )
+                ) {
+                    // Non-recoverable: requires customer action. Surface it
+                    // immediately rather than retrying or backing off. The
+                    // original STS error is preserved as the previous exception.
+                    throw new NonRecoverableCredentialsException(
+                        "Error in retrieving assume role credentials.",
+                        0,
+                        $exception
+                    );
+                }
+
                 throw new CredentialsException(
                     "Error in retrieving assume role credentials.",
                     0,
