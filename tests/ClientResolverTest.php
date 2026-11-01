@@ -1494,6 +1494,50 @@ EOF;
         }
     }
 
+    public function testParsesSharedConfigFileOncePerResolve()
+    {
+        $configFile = sys_get_temp_dir() . '/aws_config_' . uniqid();
+        $previousConfigFile = getenv('AWS_CONFIG_FILE');
+        file_put_contents(
+            $configFile,
+            "[default]\nfirst_option = one\nsecond_option = two\n"
+        );
+        putenv("AWS_CONFIG_FILE=$configFile");
+
+        try {
+            $r = new ClientResolver([
+                'first_option' => [
+                    'type' => 'value',
+                    'valid' => ['string'],
+                    'default' => ClientResolver::DEFAULT_FROM_ENV_INI,
+                ],
+                'config_removed' => [
+                    'type' => 'value',
+                    'valid' => ['bool'],
+                    'default' => function () use ($configFile) {
+                        return unlink($configFile);
+                    },
+                ],
+                'second_option' => [
+                    'type' => 'value',
+                    'valid' => ['string'],
+                    'default' => ClientResolver::DEFAULT_FROM_ENV_INI,
+                ],
+            ]);
+            $args = $r->resolve([], new HandlerList());
+
+            $this->assertTrue($args['config_removed']);
+            $this->assertSame('one', $args['first_option']);
+            $this->assertSame('two', $args['second_option']);
+            $this->assertNull(
+                ConfigurationResolver::ini('second_option', 'string')
+            );
+        } finally {
+            @unlink($configFile);
+            putenv('AWS_CONFIG_FILE=' . ($previousConfigFile ?: ''));
+        }
+    }
+
     public function testAppliesAuthSchemeResolver()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
