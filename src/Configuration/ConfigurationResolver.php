@@ -20,10 +20,9 @@ class ConfigurationResolver
 
     public static $envPrefix = 'AWS_';
 
-    /** @var array<string, array|false>|null Parsed config files, keyed by filename; null when no scope is active. */
+    /** @var array<string, array|false>|null */
     private static $iniCache = null;
 
-    /** @var int Nesting depth of withIniCache() calls. */
     private static $iniCacheDepth = 0;
 
     /**
