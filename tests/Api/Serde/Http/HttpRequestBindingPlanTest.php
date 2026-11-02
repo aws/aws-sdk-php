@@ -378,7 +378,52 @@ class HttpRequestBindingPlanTest extends TestCase
         }
     }
 
-    private function unresolvableItemService(): Service
+    /**
+     * A malformed member definition raises RuntimeException or TypeError
+     * rather than InvalidArgumentException, so compilation has to tolerate
+     * any failure. 
+     *
+     * @dataProvider malformedListMembers
+     */
+    public function testMalformedListMemberDefersToRequestTime($definition): void
+    {
+        $api = $this->unresolvableItemService($definition);
+        
+        $this->assertSame(
+            '{"Good":"g"}',
+            $this->withoutWarnings(
+                fn () => $this->serialize($api, 'Op', ['Good' => 'g'])
+            )[3],
+            'an unused list with a malformed member must serialize'
+        );
+
+        set_error_handler(fn () => true);
+        $threw = false;
+        try {
+            $this->serialize($api, 'Op', ['Good' => 'g', 'HL' => ['a']]);
+        } catch (\Throwable $e) {
+            $threw = true;
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertTrue($threw, 'a sent malformed list must still throw');
+    }
+
+    public static function malformedListMembers(): array
+    {
+        return [
+            'dangling shape ref' => [['shape' => 'Missing']],
+            'member is a string' => ['notanarray'],
+            'member is an int' => [7],
+            'member is false' => [false],
+            'member is empty array' => [[]],
+            'member has a bogus type' => [['type' => 'bogus']],
+            'member ref has no shape key' => [['locationName' => 'item']],
+        ];
+    }
+
+    private function unresolvableItemService($member = ['shape' => 'Missing']): Service
     {
         return new Service([
             'metadata' => ['protocol' => 'rest-json', 'serviceIdentifier' => 'foo', 'apiVersion' => '2020-01-01'],
@@ -388,7 +433,7 @@ class HttpRequestBindingPlanTest extends TestCase
             ]],
             'shapes' => [
                 'S' => ['type' => 'string'],
-                'BadL' => ['type' => 'list', 'member' => ['shape' => 'Missing']],
+                'BadL' => ['type' => 'list', 'member' => $member],
                 'In' => ['type' => 'structure', 'members' => [
                     'Good' => ['shape' => 'S'],
                     'HL' => ['shape' => 'BadL', 'location' => 'header', 'locationName' => 'x-hl'],

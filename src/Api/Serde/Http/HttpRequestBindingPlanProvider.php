@@ -183,13 +183,16 @@ final class HttpRequestBindingPlanProvider
      */
     private static function listItem(ListShape $member): ?Shape
     {
-        if (!isset($member['member'])) {
+        $definition = $member['member'];
+        if (!is_array($definition)
+            || (!isset($definition['shape']) && !isset($definition['type']))
+        ) {
             return null;
         }
 
         try {
             return $member->getMember();
-        } catch (\InvalidArgumentException $e) {
+        } catch (\Throwable $e) {
             return null;
         }
     }
