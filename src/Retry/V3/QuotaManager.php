@@ -2,7 +2,7 @@
 namespace Aws\Retry\V3;
 
 /**
- * Retry-quota manager for the AWS_NEW_RETRIES_2026 opt-in path. Implements
+ * Retry-quota manager for standard and adaptive modes. Implements
  * the throttling-aware token-bucket model described in the specs.
  *
  * @internal

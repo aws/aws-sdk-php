@@ -7,7 +7,6 @@ use Aws\Retry\Configuration;
 use Aws\Retry\ConfigurationInterface;
 use Aws\Retry\ConfigurationProvider;
 use Aws\Retry\Exception\ConfigurationException;
-use Aws\Retry\V3\OptIn;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -44,7 +43,6 @@ EOT;
             'home' => getenv('HOME') ?: '',
             'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
             'config_file' => getenv(ConfigurationProvider::ENV_CONFIG_FILE) ?: '',
-            'opt_in' => getenv(OptIn::ENV) ?: '',
         ];
     }
 
@@ -54,8 +52,6 @@ EOT;
         putenv(ConfigurationProvider::ENV_MAX_ATTEMPTS . '=');
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=');
         putenv(ConfigurationProvider::ENV_PROFILE . '=');
-        putenv(OptIn::ENV . '=');
-        OptIn::reset();
 
         $dir = sys_get_temp_dir() . '/.aws';
 
@@ -76,8 +72,6 @@ EOT;
             self::$originalEnv['profile']);
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' .
             self::$originalEnv['config_file']);
-        putenv(OptIn::ENV . '=' . self::$originalEnv['opt_in']);
-        OptIn::reset();
         putenv('HOME=' . self::$originalEnv['home']);
     }
 
@@ -95,8 +89,6 @@ EOT;
     public function testCreatesFromEnvironmentMaxAttemptsUsingDefaultMode()
     {
         $this->clearEnv();
-        putenv(OptIn::ENV . '=true');
-        OptIn::reset();
         $expected = new Configuration('standard', 17);
         putenv(ConfigurationProvider::ENV_MAX_ATTEMPTS . '=17');
         $result = call_user_func(ConfigurationProvider::env())->wait();
@@ -124,25 +116,10 @@ EOT;
     public function testCreatesDefaultFromFallback()
     {
         $this->clearEnv();
-        $expected  = new Configuration('legacy', 3);
+        $expected  = new Configuration('standard', 3);
         /** @var ConfigurationInterface $result */
         $result = call_user_func(ConfigurationProvider::fallback())->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
-    }
-
-    public function testFallbackIsStandardWhenOptedIn()
-    {
-        $this->clearEnv();
-        putenv(OptIn::ENV . '=true');
-        OptIn::reset();
-        try {
-            $expected = new Configuration('standard', 3);
-            $result = call_user_func(ConfigurationProvider::fallback())->wait();
-            $this->assertSame($expected->toArray(), $result->toArray());
-        } finally {
-            putenv(OptIn::ENV . '=');
-            OptIn::reset();
-        }
     }
 
     public function testCreatesFromIniFileWithDefaultProfile()
@@ -174,7 +151,7 @@ EOT;
     public function testIgnoresIniWithUseAwsConfigFileFalse()
     {
         $dir = $this->clearEnv();
-        $expected = new Configuration('legacy', 3);
+        $expected = new Configuration('standard', 3);
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname("garbageDirectory"));
         /** @var ConfigurationInterface $result */
@@ -216,8 +193,6 @@ EOT;
     public function testCreatesFromIniFileWithMaxAttemptsOnlyUsingDefaultMode()
     {
         $dir = $this->clearEnv();
-        putenv(OptIn::ENV . '=true');
-        OptIn::reset();
         $expected = new Configuration('standard', 7);
         file_put_contents($dir . '/config', "[default]\nmax_attempts = 7\n");
         putenv('HOME=' . dirname($dir));
@@ -420,7 +395,7 @@ EOT;
             'empty ini values' => [
                 [],
                 "[default]\nretry_mode =\nmax_attempts =\n",
-                'legacy',
+                'standard',
                 3,
             ],
         ];
