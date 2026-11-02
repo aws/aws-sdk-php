@@ -261,7 +261,9 @@ abstract class RestSerializer
             if ($itemJson) {
                 $item = self::encodeJsonValue($item);
             }
-            $headerValues[] = self::prepareHeaderValue($item);
+            $headerValues[] = is_string($item)
+                ? $item
+                : self::prepareHeaderValue($item);
         }
 
         $value = $headerValues;
