@@ -2,6 +2,8 @@
 namespace Aws\Test\Credentials;
 
 use Aws\Api\DateTimeResult;
+use Aws\CacheInterface;
+use Aws\Command;
 use Aws\Credentials\AssumeRoleWithWebIdentityCredentialProvider;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
@@ -9,11 +11,14 @@ use Aws\Credentials\CredentialSources;
 use Aws\Credentials\EcsCredentialProvider;
 use Aws\Credentials\InstanceProfileProvider;
 use Aws\Exception\CredentialsException;
+use Aws\Exception\NoCredentialsError;
+use Aws\Exception\NonRecoverableCredentialsException;
 use Aws\History;
 use Aws\LruArrayCache;
 use Aws\Result;
 use Aws\SSO\SSOClient;
 use Aws\Sts\StsClient;
+use Aws\Sts\Exception\StsException;
 use Aws\Token\SsoTokenProvider;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
@@ -23,6 +28,10 @@ use GuzzleHttp\Psr7\Utils;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
+
+// Shadows time() within Aws\Credentials for the memoize() refresh-lifecycle
+// tests via $_SERVER['aws_time'].
+require_once __DIR__ . '/CredentialsClockOverride.php';
 
 #[CoversClass(CredentialProvider::class)]
 class CredentialProviderTest extends TestCase
@@ -183,6 +192,34 @@ EOT;
         @rmdir($dir);
     }
 
+    private function createPersistentCredentialProvider(
+        callable $provider,
+        CacheInterface $cache,
+        string $cacheKey
+    ): callable
+    {
+        $method = (new \ReflectionClass(CredentialProvider::class))
+            ->getMethod('cacheCredentials');
+        $method->setAccessible(true);
+
+        return $method->invoke(null, $provider, $cache, $cacheKey);
+    }
+
+    private function createDefaultRoleProfile(): void
+    {
+        $awsDir = $this->createAwsHome();
+        $ini = <<<EOT
+[source]
+aws_access_key_id = foo
+aws_secret_access_key = sourceSecret
+[default]
+role_arn = arn:aws:iam::012345678910:role/role_name
+source_profile = source
+role_session_name = foobar
+EOT;
+        file_put_contents($awsDir . '/credentials', $ini);
+    }
+
     public function testCreatesFromCache(): void
     {
         $cache = new LruArrayCache();
@@ -251,6 +288,156 @@ EOT;
         $this->assertSame($creds->getSecretKey(), $found->getSecretKey());
         $this->assertEquals($creds->getSecurityToken(), $found->getSecurityToken());
         $this->assertEquals($creds->getExpiration(), $found->getExpiration());
+    }
+
+    public function testPersistentCacheAllowsAdvisoryRefresh(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $cache = new LruArrayCache();
+        $key = __METHOD__;
+        $saved = new Credentials('saved', 'secret', null, $now + 3600);
+        $fresh = new Credentials('fresh', 'secret', null, $now + 7200);
+        $cache->set($key, $saved, 0);
+        $calls = 0;
+        $source = static function () use (&$calls, $fresh) {
+            $calls++;
+            return Create::promiseFor($fresh);
+        };
+        $provider = CredentialProvider::memoize(
+            $this->createPersistentCredentialProvider($source, $cache, $key)
+        );
+
+        try {
+            $this->assertSame($saved, $provider()->wait());
+            $this->assertSame(0, $calls);
+
+            $_SERVER['aws_time'] = $now + 2800;
+            $this->assertSame($fresh, $provider()->wait());
+            $this->assertSame(1, $calls);
+            $this->assertSame($fresh, $cache->get($key));
+        } finally {
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testPersistentCacheRetainsExpiredCredentialsWhenRefreshFails(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $cache = new LruArrayCache();
+        $key = __METHOD__;
+        $saved = new Credentials('saved', 'secret', null, $now - 1);
+        $cache->set($key, $saved, 0);
+        $calls = 0;
+        $source = static function () use (&$calls) {
+            $calls++;
+            return Create::rejectionFor(new CredentialsException('source down'));
+        };
+        $provider = CredentialProvider::memoize(
+            $this->createPersistentCredentialProvider($source, $cache, $key)
+        );
+        set_error_handler(static function () { return true; }, E_USER_WARNING);
+
+        try {
+            $this->assertSame($saved, $provider()->wait());
+            $this->assertSame(0, $calls);
+            $this->assertSame($saved, $provider()->wait());
+            $this->assertSame(1, $calls);
+            $this->assertSame($saved, $cache->get($key));
+        } finally {
+            restore_error_handler();
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testPersistentCacheDoesNotStoreExpiredRefreshResponse(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $cache = new LruArrayCache();
+        $key = __METHOD__;
+        $saved = new Credentials('saved', 'secret', null, $now + 30);
+        $expired = new Credentials('expired', 'secret', null, $now + 10);
+        $cache->set($key, $saved, 0);
+        $pending = new Promise\Promise();
+        $source = static function () use ($pending) {
+            return $pending;
+        };
+        $provider = CredentialProvider::memoize(
+            $this->createPersistentCredentialProvider($source, $cache, $key)
+        );
+        set_error_handler(static function () { return true; }, E_USER_WARNING);
+
+        try {
+            $this->assertSame($saved, $provider()->wait());
+            $refresh = $provider();
+            $_SERVER['aws_time'] = $now + 20;
+            $pending->resolve($expired);
+
+            $this->assertSame($saved, $refresh->wait());
+            $this->assertSame($saved, $cache->get($key));
+        } finally {
+            restore_error_handler();
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testPersistentCacheStoresExpiredInitialCredentials(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $cache = new LruArrayCache();
+        $key = __METHOD__;
+        $expired = new Credentials('expired', 'secret', null, $now - 1);
+        $source = static function () use ($expired) {
+            return Create::promiseFor($expired);
+        };
+        $provider = CredentialProvider::memoize(
+            $this->createPersistentCredentialProvider($source, $cache, $key)
+        );
+
+        try {
+            $this->assertSame($expired, $provider()->wait());
+            $this->assertSame($expired, $cache->get($key));
+        } finally {
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testPersistentCacheSeedsAnotherProvider(): void
+    {
+        $cache = new LruArrayCache();
+        $key = __METHOD__;
+        $credentials = new Credentials(
+            'shared',
+            'secret',
+            null,
+            time() + 3600
+        );
+        $sourceCalls = 0;
+        $source = static function () use (&$sourceCalls, $credentials) {
+            $sourceCalls++;
+            return Create::promiseFor($credentials);
+        };
+        $first = CredentialProvider::memoize(
+            $this->createPersistentCredentialProvider($source, $cache, $key)
+        );
+        $second = CredentialProvider::memoize(
+            $this->createPersistentCredentialProvider(
+                static function () {
+                    throw new \BadFunctionCallException(
+                        'The second source should not be called.'
+                    );
+                },
+                $cache,
+                $key
+            )
+        );
+
+        $this->assertSame($credentials, $first()->wait());
+        $this->assertSame($credentials, $second()->wait());
+        $this->assertSame(1, $sourceCalls);
     }
 
     public function testCreatesFromEnvironmentVariables(): void
@@ -810,6 +997,164 @@ EOT;
         $this->assertNull($creds->getSecurityToken());
         $this->assertIsInt($creds->getExpiration());
         $this->assertFalse($creds->isExpired());
+    }
+
+    public function testMemoizedRoleProfileCachesNonRecoverableRefreshError(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $this->createDefaultRoleProfile();
+
+        $result = [
+            'Credentials' => [
+                'AccessKeyId' => 'assumedKey',
+                'SecretAccessKey' => 'assumedSecret',
+                'SessionToken' => 'assumedToken',
+                'Expiration' => DateTimeResult::fromEpoch($now + 30)
+            ],
+        ];
+        $calls = 0;
+        $sts = new StsClient([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => false,
+            'retries' => 0,
+            'handler' => static function () use (&$calls, $result) {
+                $calls++;
+                if ($calls === 1) {
+                    return Create::promiseFor(new Result($result));
+                }
+
+                return Create::rejectionFor(new StsException(
+                    'access denied',
+                    new Command('AssumeRole'),
+                    ['code' => 'AccessDenied']
+                ));
+            },
+        ]);
+        $provider = CredentialProvider::memoize(
+            CredentialProvider::ini('default', null, ['stsClient' => $sts])
+        );
+
+        try {
+            $this->assertSame('assumedKey', $provider()->wait()->getAccessKeyId());
+
+            $firstError = null;
+            try {
+                $provider()->wait();
+                $this->fail('Expected a non-recoverable STS error.');
+            } catch (NonRecoverableCredentialsException $e) {
+                $firstError = $e;
+                $this->assertInstanceOf(StsException::class, $e->getPrevious());
+            }
+
+            try {
+                $provider()->wait();
+                $this->fail('Expected the cached non-recoverable STS error.');
+            } catch (NonRecoverableCredentialsException $e) {
+                $this->assertSame($firstError, $e);
+            }
+
+            $this->assertSame(2, $calls);
+        } finally {
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testMemoizedRoleProfileCachesInitialNonRecoverableError(): void
+    {
+        $_SERVER['aws_time'] = 1000000000;
+        $this->createDefaultRoleProfile();
+        $calls = 0;
+        $sts = new StsClient([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => false,
+            'retries' => 0,
+            'handler' => static function () use (&$calls) {
+                $calls++;
+                return Create::rejectionFor(new StsException(
+                    'access denied',
+                    new Command('AssumeRole'),
+                    ['code' => 'AccessDenied']
+                ));
+            },
+        ]);
+        $provider = CredentialProvider::memoize(
+            CredentialProvider::ini('default', null, ['stsClient' => $sts])
+        );
+
+        try {
+            $firstError = null;
+            try {
+                $provider()->wait();
+                $this->fail('Expected a non-recoverable STS error.');
+            } catch (NonRecoverableCredentialsException $e) {
+                $firstError = $e;
+                $this->assertInstanceOf(StsException::class, $e->getPrevious());
+            }
+
+            try {
+                $provider()->wait();
+                $this->fail('Expected the cached non-recoverable STS error.');
+            } catch (NonRecoverableCredentialsException $e) {
+                $this->assertSame($firstError, $e);
+            }
+
+            $this->assertSame(1, $calls);
+        } finally {
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testDefaultProviderContinuesAfterRecoverableRoleProfileError(): void
+    {
+        $this->createDefaultRoleProfile();
+        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/credentials');
+        $stsCalls = 0;
+        $sts = new StsClient([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => false,
+            'retries' => 0,
+            'handler' => static function () use (&$stsCalls) {
+                $stsCalls++;
+                return Create::rejectionFor(new StsException(
+                    'service unavailable',
+                    new Command('AssumeRole'),
+                    ['code' => 'ServiceUnavailable']
+                ));
+            },
+        ]);
+        $ecsCalls = 0;
+        $ecsClient = static function () use (&$ecsCalls) {
+            $ecsCalls++;
+            return Create::promiseFor(new Response(
+                200,
+                [],
+                json_encode([
+                    'AccessKeyId' => 'ecsKey',
+                    'SecretAccessKey' => 'ecsSecret',
+                    'Token' => 'ecsToken',
+                    'Expiration' => gmdate('c', time() + 3600),
+                ])
+            ));
+        };
+
+        try {
+            $provider = CredentialProvider::defaultProvider([
+                'stsClient' => $sts,
+                'client' => $ecsClient,
+            ]);
+            $credentials = $provider()->wait();
+
+            $this->assertSame('ecsKey', $credentials->getAccessKeyId());
+            $this->assertSame(1, $stsCalls);
+            $this->assertSame(1, $ecsCalls);
+        } finally {
+            putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=');
+            unset($_SERVER['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI']);
+        }
     }
 
     public function testCreatesFromRoleArnWithSourceProfileEmitsNoticeOnFallbackRegion(): void
@@ -1727,9 +2072,15 @@ EOT;
 
     public function testMemoizeRefreshesWhenExpiringWithinThreshold(): void
     {
+        // Per the SEP, the initial fetch returns whatever the source gives and
+        // does not immediately re-refresh. creds1 has a 30s lifetime (advisory
+        // window 300s), so the NEXT call, still within the advisory window,
+        // refreshes to creds2.
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
         $called = 0;
-        $creds1 = new Credentials('foo', 'bar', null, time() + 30);
-        $creds2 = new Credentials('baz', 'qux', null, time() + 3600);
+        $creds1 = new Credentials('foo', 'bar', null, $now + 30);
+        $creds2 = new Credentials('baz', 'qux', null, $now + 3600);
 
         $f = static function () use (&$called, $creds1, $creds2): Promise\PromiseInterface {
             $called++;
@@ -1739,18 +2090,24 @@ EOT;
         $p = CredentialProvider::memoize($f);
 
         $result = $p()->wait();
-        $this->assertSame($creds2, $result);
-        $this->assertSame(2, $called);
+        $this->assertSame($creds1, $result);
+        $this->assertSame(1, $called);
 
         $result = $p()->wait();
         $this->assertSame($creds2, $result);
         $this->assertSame(2, $called);
+
+        unset($_SERVER['aws_time']);
     }
 
-    public function testMemoizeDoesNotRefreshWhenExpiringAfterThreshold(): void
+    public function testMemoizeDoesNotRefreshWhenValid(): void
     {
+        // Credentials with a long lifetime are outside every refresh window, so
+        // no refresh is attempted on subsequent calls.
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
         $called = 0;
-        $creds = new Credentials('foo', 'bar', null, time() + 90);
+        $creds = new Credentials('foo', 'bar', null, $now + 3600);
 
         $f = static function () use (&$called, $creds): Promise\PromiseInterface {
             $called++;
@@ -1766,13 +2123,56 @@ EOT;
         $result = $p()->wait();
         $this->assertSame($creds, $result);
         $this->assertSame(1, $called);
+
+        unset($_SERVER['aws_time']);
     }
 
-    public function testMemoizeRefreshesExpiredCredentials(): void
+    public function testMemoizeCachesExpiredCredentialsOnInitialFetch(): void
     {
+        // A source response whose Expiration is at or before now is treated as
+        // a failed refresh when credentials are already cached. On the initial
+        // fetch there is nothing to fall back on, so the SDK caches and returns
+        // the expired credentials rather than raising. Because they are
+        // expired, the next call attempts a mandatory refresh.
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $expired = new Credentials('foo', 'bar', null, $now - 10);
+        $fresh = new Credentials('baz', 'qux', null, $now + 3600);
+
+        $calls = 0;
+        $f = static function () use (&$calls, $expired, $fresh): Promise\PromiseInterface {
+            $calls++;
+            return Create::promiseFor($calls === 1 ? $expired : $fresh);
+        };
+
+        $p = CredentialProvider::memoize($f);
+
+        try {
+            $this->assertSame(
+                $expired,
+                $p()->wait(),
+                'the initial fetch caches and returns the expired credentials'
+            );
+            $this->assertSame(1, $calls);
+
+            // Expired cached credentials route the next call through a mandatory
+            // refresh, which succeeds.
+            $this->assertSame($fresh, $p()->wait(), 'the next call refreshes the expired credentials');
+            $this->assertSame(2, $calls);
+        } finally {
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testMemoizeRefreshesOnSecondCallAtExactThreshold(): void
+    {
+        // creds1 expires in exactly 60s. The initial fetch returns creds1. The
+        // next call, within the advisory window, refreshes to creds2.
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
         $called = 0;
-        $creds1 = new Credentials('foo', 'bar', null, time() - 10);
-        $creds2 = new Credentials('baz', 'qux', null, time() + 3600);
+        $creds1 = new Credentials('foo', 'bar', null, $now + 60);
+        $creds2 = new Credentials('baz', 'qux', null, $now + 3600);
 
         $f = static function () use (&$called, $creds1, $creds2): Promise\PromiseInterface {
             $called++;
@@ -1782,26 +2182,863 @@ EOT;
         $p = CredentialProvider::memoize($f);
 
         $result = $p()->wait();
-        $this->assertSame($creds2, $result);
-        $this->assertSame(2, $called);
-    }
-
-    public function testMemoizeRefreshesAtExactThreshold(): void
-    {
-        $called = 0;
-        $creds1 = new Credentials('foo', 'bar', null, time() + 60);
-        $creds2 = new Credentials('baz', 'qux', null, time() + 3600);
-
-        $f = static function () use (&$called, $creds1, $creds2): Promise\PromiseInterface {
-            $called++;
-            return Create::promiseFor($called === 1 ? $creds1 : $creds2);
-        };
-
-        $p = CredentialProvider::memoize($f);
+        $this->assertSame($creds1, $result);
+        $this->assertSame(1, $called);
 
         $result = $p()->wait();
         $this->assertSame($creds2, $result);
         $this->assertSame(2, $called);
+
+        unset($_SERVER['aws_time']);
+    }
+
+    /**
+     * SEP Concurrency Test 1: advisory window, concurrent callers.
+     *
+     * While credentials are within the advisory window, one caller starts the
+     * refresh. A second caller arriving while that refresh is still in flight
+     * returns immediately with the existing cached credentials and does NOT
+     * start a second refresh. The source is contacted exactly once.
+     */
+    public function testMemoizeAdvisoryConcurrentCallersDoNotStartSecondRefresh(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+
+        // Initial creds: 6h lifetime -> 3600s advisory window, 60s mandatory.
+        $initial = new Credentials('AKID1', 'secret1', null, $now + 21600);
+        $fresh   = new Credentials('AKID2', 'secret2', null, $now + 21600);
+
+        $calls = 0;
+        $pending = null;        // the in-flight refresh promise the test controls
+        $f = static function () use (&$calls, &$pending, $initial, $fresh) {
+            $calls++;
+            if ($calls === 1) {
+                // Initial fetch resolves immediately.
+                return Create::promiseFor($initial);
+            }
+            // Refresh: return a promise that stays PENDING until the test
+            // resolves it, so a second caller can arrive mid-flight.
+            $pending = new Promise\Promise();
+            return $pending->then(static function () use ($fresh) {
+                return $fresh;
+            });
+        };
+
+        $p = CredentialProvider::memoize($f);
+
+        // State 1 -> initial fetch.
+        $this->assertSame($initial, $p()->wait());
+        $this->assertSame(1, $calls);
+
+        // Move into the advisory window (800s left: inside 3600 advisory,
+        // outside 60 mandatory).
+        $_SERVER['aws_time'] = $now + 21600 - 800;
+
+        // Caller A starts the refresh. It does NOT resolve yet (pending source).
+        $promiseA = $p();
+        $this->assertSame(2, $calls, 'caller A started exactly one refresh');
+
+        // Caller B arrives while A's refresh is in flight. Advisory rule: B
+        // returns cached immediately without starting a second refresh.
+        $promiseB = $p();
+        $this->assertSame(2, $calls, 'caller B must NOT start a second refresh');
+        $this->assertSame(
+            $initial,
+            $promiseB->wait(),
+            'advisory concurrent caller receives existing cached credentials'
+        );
+
+        // Now let A's refresh complete. A receives the freshly refreshed creds.
+        $pending->resolve(null);
+        $this->assertSame(
+            $fresh,
+            $promiseA->wait(),
+            'the caller that started the advisory refresh receives fresh credentials'
+        );
+        $this->assertSame(2, $calls, 'source contacted exactly once for the refresh');
+
+        unset($_SERVER['aws_time']);
+    }
+
+    /**
+     * SEP Concurrency Test 2: mandatory/expired window, concurrent callers.
+     *
+     * While credentials are within the mandatory window (or expired), one
+     * caller starts the refresh and all other callers wait for that single
+     * in-flight refresh and receive the same freshly refreshed result. The
+     * source is contacted exactly once.
+     */
+    public function testMemoizeMandatoryConcurrentCallersJoinSingleRefresh(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+
+        $initial = new Credentials('AKID1', 'secret1', null, $now + 21600);
+        $fresh   = new Credentials('AKID2', 'secret2', null, $now + 21600);
+
+        $calls = 0;
+        $pending = null;
+        $f = static function () use (&$calls, &$pending, $initial, $fresh) {
+            $calls++;
+            if ($calls === 1) {
+                return Create::promiseFor($initial);
+            }
+            $pending = new Promise\Promise();
+            return $pending->then(static function () use ($fresh) {
+                return $fresh;
+            });
+        };
+
+        $p = CredentialProvider::memoize($f);
+
+        $this->assertSame($initial, $p()->wait());
+        $this->assertSame(1, $calls);
+
+        // Move into the mandatory window (30s left: inside 60s mandatory).
+        $_SERVER['aws_time'] = $now + 21600 - 30;
+
+        // Caller A starts the refresh (still pending).
+        $promiseA = $p();
+        $this->assertSame(2, $calls, 'caller A started exactly one refresh');
+
+        // Caller B arrives mid-flight. Mandatory rule: B joins the SAME
+        // in-flight refresh rather than starting its own or taking cached.
+        $promiseB = $p();
+        $this->assertSame(2, $calls, 'caller B must join the in-flight refresh, not start another');
+
+        // Resolve the single refresh. Both callers receive the fresh creds.
+        $pending->resolve(null);
+        $this->assertSame($fresh, $promiseA->wait(), 'caller A receives fresh credentials');
+        $this->assertSame($fresh, $promiseB->wait(), 'caller B receives the same fresh credentials');
+        $this->assertSame(2, $calls, 'source contacted exactly once for the shared refresh');
+
+        unset($_SERVER['aws_time']);
+    }
+
+    /**
+     * A refresh that returns credentials already past expiration is treated as
+     * a failed refresh: the cached credentials are retained, the backoff is
+     * applied, and the stale response is not adopted.
+     */
+    public function testMemoizeStaleRefreshResponseKeepsCachedCredentials(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+
+        $initial = new Credentials('AKID1', 'secret1', null, $now + 21600);
+        $stale   = new Credentials('AKID2', 'secret2', null, $now - 5); // already expired
+
+        $calls = 0;
+        $f = static function () use (&$calls, $initial, $stale) {
+            $calls++;
+            return Create::promiseFor($calls === 1 ? $initial : $stale);
+        };
+
+        $p = CredentialProvider::memoize($f);
+
+        $this->assertSame($initial, $p()->wait());
+
+        // Enter the advisory window and refresh. The source returns a stale
+        // (already-expired) response, which is treated as a failed refresh and
+        // emits a warning.
+        $warning = null;
+        set_error_handler(static function ($errno, $errstr) use (&$warning) {
+            $warning = $errstr;
+            return true;
+        }, E_USER_WARNING);
+
+        try {
+            $_SERVER['aws_time'] = $now + 21600 - 800;
+            $result = $p()->wait();
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertSame(
+            $initial,
+            $result,
+            'a stale refresh response is rejected and the cached credentials are retained'
+        );
+        $this->assertSame(2, $calls);
+        $this->assertNotNull($warning, 'expected a failed-refresh warning');
+        $this->assertStringContainsString('Credential refresh failed', $warning);
+        $this->assertStringContainsString('expired credentials', $warning);
+
+        unset($_SERVER['aws_time']);
+    }
+
+    /**
+     * The failed-refresh warning is emitted once per failed refresh attempt,
+     * not once per caller that reads the cached credentials during the backoff.
+     */
+    public function testMemoizeFailedRefreshLogsOncePerAttempt(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+
+        $initial = new Credentials('AKID1', 'secret1', null, $now + 21600);
+
+        $calls = 0;
+        $f = static function () use (&$calls, $initial) {
+            $calls++;
+            if ($calls === 1) {
+                return Create::promiseFor($initial);
+            }
+            return Create::rejectionFor(new CredentialsException('source down'));
+        };
+
+        $warnings = 0;
+        $message = null;
+        set_error_handler(static function ($errno, $errstr) use (&$warnings, &$message) {
+            $warnings++;
+            $message = $errstr;
+            return true;
+        }, E_USER_WARNING);
+
+        try {
+            $p = CredentialProvider::memoize($f);
+            $this->assertSame($initial, $p()->wait());
+
+            // Enter the advisory window. The refresh fails and the backoff is set.
+            $_SERVER['aws_time'] = $now + 21600 - 800;
+            $this->assertSame($initial, $p()->wait(), 'failed refresh falls back to cached');
+
+            // Subsequent calls within the backoff return cached without
+            // contacting the source and without re-logging.
+            $this->assertSame($initial, $p()->wait());
+            $this->assertSame($initial, $p()->wait());
+
+            $this->assertSame(2, $calls, 'source contacted once for the failed refresh, then gated by backoff');
+            $this->assertSame(1, $warnings, 'the failed-refresh warning is emitted exactly once');
+            $this->assertStringContainsString('Credential refresh failed', $message);
+            $this->assertStringContainsString('continue using cached credentials', $message);
+        } finally {
+            restore_error_handler();
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testMemoizeFailedRefreshErrorHandlerCannotInterruptFallback(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+
+        $initial = new Credentials('AKID1', 'secret1', null, $now + 21600);
+        $calls = 0;
+        $f = static function () use (&$calls, $initial) {
+            $calls++;
+            if ($calls === 1) {
+                return Create::promiseFor($initial);
+            }
+            return Create::rejectionFor(new CredentialsException('source down'));
+        };
+
+        $logPath = $this->createTempDir('aws_error_log_') . '/error.log';
+        $previousErrorLog = ini_set('error_log', $logPath);
+        $this->assertNotFalse($previousErrorLog);
+
+        $p = CredentialProvider::memoize($f);
+        $this->assertSame($initial, $p()->wait());
+
+        set_error_handler(
+            static function ($severity, $message, $file, $line) {
+                throw new \ErrorException($message, 0, $severity, $file, $line);
+            },
+            E_USER_WARNING
+        );
+
+        try {
+            $_SERVER['aws_time'] = $now + 21600 - 800;
+            $result = $p()->wait();
+        } finally {
+            restore_error_handler();
+            ini_set('error_log', $previousErrorLog);
+            unset($_SERVER['aws_time']);
+        }
+
+        $this->assertSame($initial, $result);
+        $this->assertSame(2, $calls);
+        $this->assertStringContainsString(
+            'Credential refresh failed: source down',
+            file_get_contents($logPath)
+        );
+    }
+
+    public function testMemoizeStartsBackoffWhenDelayedRefreshFails(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $initial = new Credentials('initial', 'secret', null, $now + 30);
+        $fresh = new Credentials('fresh', 'secret', null, $now + 3600);
+        $pending = new Promise\Promise();
+        $calls = 0;
+        $source = static function () use (&$calls, $initial, $fresh, $pending) {
+            $calls++;
+            if ($calls === 1) {
+                return Create::promiseFor($initial);
+            }
+            if ($calls === 2) {
+                return $pending;
+            }
+            return Create::promiseFor($fresh);
+        };
+        $provider = CredentialProvider::memoize($source);
+        set_error_handler(static function () { return true; }, E_USER_WARNING);
+
+        try {
+            $this->assertSame($initial, $provider()->wait());
+            $refresh = $provider();
+            $_SERVER['aws_time'] = $now + 100;
+            $pending->reject(new CredentialsException('source down'));
+
+            $this->assertSame($initial, $refresh->wait());
+            $this->assertSame($initial, $provider()->wait());
+            $this->assertSame(2, $calls);
+
+            $_SERVER['aws_time'] = $now + 200;
+            $this->assertSame($fresh, $provider()->wait());
+            $this->assertSame(3, $calls);
+        } finally {
+            restore_error_handler();
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testMemoizeCachesDelayedNonRecoverableErrorFromCompletion(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $initial = new Credentials('initial', 'secret', null, $now + 30);
+        $fresh = new Credentials('fresh', 'secret', null, $now + 3600);
+        $pending = new Promise\Promise();
+        $error = new NonRecoverableCredentialsException('customer action required');
+        $calls = 0;
+        $source = static function () use (
+            &$calls,
+            $initial,
+            $fresh,
+            $pending
+        ) {
+            $calls++;
+            if ($calls === 1) {
+                return Create::promiseFor($initial);
+            }
+            if ($calls === 2) {
+                return $pending;
+            }
+            return Create::promiseFor($fresh);
+        };
+        $provider = CredentialProvider::memoize($source);
+
+        try {
+            $this->assertSame($initial, $provider()->wait());
+            $refresh = $provider();
+            $_SERVER['aws_time'] = $now + 10;
+            $pending->reject($error);
+
+            try {
+                $refresh->wait();
+                $this->fail('Expected a non-recoverable credentials error.');
+            } catch (NonRecoverableCredentialsException $e) {
+                $this->assertSame($error, $e);
+            }
+
+            try {
+                $provider()->wait();
+                $this->fail('Expected the cached non-recoverable credentials error.');
+            } catch (NonRecoverableCredentialsException $e) {
+                $this->assertSame($error, $e);
+            }
+            $this->assertSame(2, $calls);
+
+            $_SERVER['aws_time'] = $now + 16;
+            $this->assertSame($fresh, $provider()->wait());
+            $this->assertSame(3, $calls);
+        } finally {
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testMemoizeCachesDelayedInitialNonRecoverableErrorFromCompletion(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $fresh = new Credentials('fresh', 'secret', null, $now + 3600);
+        $pending = new Promise\Promise();
+        $error = new NonRecoverableCredentialsException('customer action required');
+        $calls = 0;
+        $source = static function () use (&$calls, $fresh, $pending) {
+            $calls++;
+            return $calls === 1
+                ? $pending
+                : Create::promiseFor($fresh);
+        };
+        $provider = CredentialProvider::memoize($source);
+
+        try {
+            $initialFetch = $provider();
+            $_SERVER['aws_time'] = $now + 10;
+            $pending->reject($error);
+
+            try {
+                $initialFetch->wait();
+                $this->fail('Expected a non-recoverable credentials error.');
+            } catch (NonRecoverableCredentialsException $e) {
+                $this->assertSame($error, $e);
+            }
+
+            try {
+                $provider()->wait();
+                $this->fail('Expected the cached non-recoverable credentials error.');
+            } catch (NonRecoverableCredentialsException $e) {
+                $this->assertSame($error, $e);
+            }
+            $this->assertSame(1, $calls);
+
+            $_SERVER['aws_time'] = $now + 16;
+            $this->assertSame($fresh, $provider()->wait());
+            $this->assertSame(2, $calls);
+        } finally {
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testMemoizeRejectsRefreshResponseExpiredBeforeCompletion(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $initial = new Credentials('initial', 'secret', null, $now + 30);
+        $expiredAtCompletion = new Credentials(
+            'expired',
+            'secret',
+            null,
+            $now + 10
+        );
+        $pending = new Promise\Promise();
+        $calls = 0;
+        $source = static function () use (
+            &$calls,
+            $initial,
+            $pending
+        ) {
+            $calls++;
+            return $calls === 1
+                ? Create::promiseFor($initial)
+                : $pending;
+        };
+        $provider = CredentialProvider::memoize($source);
+        set_error_handler(static function () { return true; }, E_USER_WARNING);
+
+        try {
+            $this->assertSame($initial, $provider()->wait());
+            $refresh = $provider();
+            $_SERVER['aws_time'] = $now + 20;
+            $pending->resolve($expiredAtCompletion);
+
+            $this->assertSame($initial, $refresh->wait());
+            $this->assertSame($initial, $provider()->wait());
+            $this->assertSame(2, $calls);
+        } finally {
+            restore_error_handler();
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testMemoizeComputesAdvisoryWindowAtRefreshCompletion(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $initial = new Credentials('initial', 'secret', null, $now + 30);
+        $refreshed = new Credentials('refreshed', 'secret', null, $now + 1230);
+        $fresh = new Credentials('fresh', 'secret', null, $now + 7200);
+        $pending = new Promise\Promise();
+        $calls = 0;
+        $source = static function () use (
+            &$calls,
+            $initial,
+            $fresh,
+            $pending
+        ) {
+            $calls++;
+            if ($calls === 1) {
+                return Create::promiseFor($initial);
+            }
+            if ($calls === 2) {
+                return $pending;
+            }
+            return Create::promiseFor($fresh);
+        };
+        $provider = CredentialProvider::memoize($source);
+
+        try {
+            $this->assertSame($initial, $provider()->wait());
+            $refresh = $provider();
+            $_SERVER['aws_time'] = $now + 60;
+            $pending->resolve($refreshed);
+            $this->assertSame($refreshed, $refresh->wait());
+
+            $_SERVER['aws_time'] = $refreshed->getExpiration() - 600;
+            $this->assertSame($refreshed, $provider()->wait());
+            $this->assertSame(2, $calls);
+
+            $_SERVER['aws_time'] = $refreshed->getExpiration() - 299;
+            $this->assertSame($fresh, $provider()->wait());
+            $this->assertSame(3, $calls);
+        } finally {
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testMemoizeWrapsSynchronousInitialThrowAsNoCredentialsError(): void
+    {
+        $error = new CredentialsException('source down');
+        $provider = CredentialProvider::memoize(static function () use ($error) {
+            throw $error;
+        });
+
+        try {
+            $provider()->wait();
+            $this->fail('Expected a NoCredentialsError.');
+        } catch (NoCredentialsError $e) {
+            $this->assertSame($error, $e->getPrevious());
+        }
+    }
+
+    public function testMemoizeCachesSynchronousInitialNonRecoverableThrow(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $error = new NonRecoverableCredentialsException('customer action required');
+        $calls = 0;
+        $provider = CredentialProvider::memoize(
+            static function () use (&$calls, $error) {
+                $calls++;
+                throw $error;
+            }
+        );
+
+        try {
+            foreach ([0, 1] as $attempt) {
+                try {
+                    $provider()->wait();
+                    $this->fail('Expected a non-recoverable credentials error.');
+                } catch (NonRecoverableCredentialsException $e) {
+                    $this->assertSame($error, $e);
+                }
+            }
+            $this->assertSame(1, $calls, 'the second call must use the cached error');
+
+            $_SERVER['aws_time'] = $now + 6;
+            try {
+                $provider()->wait();
+                $this->fail('Expected the error again once the cache expired.');
+            } catch (NonRecoverableCredentialsException $e) {
+                $this->assertSame(2, $calls);
+            }
+        } finally {
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testMemoizeKeepsCachedCredentialsWhenRefreshThrowsSynchronously(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $initial = new Credentials('initial', 'secret', null, $now + 30);
+        $fresh = new Credentials('fresh', 'secret', null, $now + 3600);
+        $calls = 0;
+        $provider = CredentialProvider::memoize(
+            static function () use (&$calls, $initial, $fresh) {
+                $calls++;
+                if ($calls === 1) {
+                    return Create::promiseFor($initial);
+                }
+                if ($calls === 2) {
+                    throw new CredentialsException('source down');
+                }
+                return Create::promiseFor($fresh);
+            }
+        );
+        set_error_handler(static function () { return true; }, E_USER_WARNING);
+
+        try {
+            $this->assertSame($initial, $provider()->wait());
+            $this->assertSame($initial, $provider()->wait());
+            $this->assertSame(2, $calls);
+
+            $this->assertSame($initial, $provider()->wait());
+            $this->assertSame(2, $calls, 'backoff must block another source call');
+
+            $_SERVER['aws_time'] = $now + 200;
+            $this->assertSame($fresh, $provider()->wait());
+            $this->assertSame(3, $calls);
+        } finally {
+            restore_error_handler();
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testMemoizeCachesSynchronousRefreshNonRecoverableThrow(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $initial = new Credentials('initial', 'secret', null, $now + 30);
+        $fresh = new Credentials('fresh', 'secret', null, $now + 3600);
+        $error = new NonRecoverableCredentialsException('customer action required');
+        $calls = 0;
+        $provider = CredentialProvider::memoize(
+            static function () use (&$calls, $initial, $fresh, $error) {
+                $calls++;
+                if ($calls === 1) {
+                    return Create::promiseFor($initial);
+                }
+                if ($calls === 2) {
+                    throw $error;
+                }
+                return Create::promiseFor($fresh);
+            }
+        );
+
+        try {
+            $this->assertSame($initial, $provider()->wait());
+
+            foreach ([0, 1] as $attempt) {
+                try {
+                    $provider()->wait();
+                    $this->fail('Expected a non-recoverable credentials error.');
+                } catch (NonRecoverableCredentialsException $e) {
+                    $this->assertSame($error, $e);
+                }
+            }
+            $this->assertSame(2, $calls, 'the second call must use the cached error');
+
+            $_SERVER['aws_time'] = $now + 6;
+            $this->assertSame($fresh, $provider()->wait());
+            $this->assertSame(3, $calls);
+        } finally {
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public static function advisoryWindowBoundaryProvider(): array
+    {
+        return [
+            '20 minutes selects the 5 minute window' => [1200, 300],
+            'just over 20 minutes selects the 15 minute window' => [1201, 900],
+            'just under 90 minutes selects the 15 minute window' => [5399, 900],
+            '90 minutes selects the 60 minute window' => [5400, 3600],
+        ];
+    }
+
+    #[DataProvider('advisoryWindowBoundaryProvider')]
+    public function testMemoizeAdvisoryWindowTierBoundaries(
+        int $lifetime,
+        int $window
+    ): void {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $calls = 0;
+        $provider = CredentialProvider::memoize(
+            static function () use (&$calls, $lifetime, $now) {
+                $calls++;
+                return Create::promiseFor(
+                    new Credentials('key' . $calls, 'secret', null, $now + $lifetime)
+                );
+            }
+        );
+
+        try {
+            $provider()->wait();
+
+            // One second before the window opens, nothing is refreshed.
+            $_SERVER['aws_time'] = $now + $lifetime - $window - 1;
+            $provider()->wait();
+            $this->assertSame(1, $calls);
+
+            // The window is inclusive, so it opens exactly $window seconds out.
+            $_SERVER['aws_time'] = $now + $lifetime - $window;
+            $provider()->wait();
+            $this->assertSame(2, $calls);
+        } finally {
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public function testMemoizeDoesNotRecomputeAdvisoryWindowAfterFailedRefresh(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $expiration = $now + 21600;
+        $calls = 0;
+        $provider = CredentialProvider::memoize(
+            static function () use (&$calls, $expiration, $now) {
+                $calls++;
+                if ($calls === 2) {
+                    return Create::rejectionFor(new CredentialsException('source down'));
+                }
+                return Create::promiseFor(
+                    new Credentials('key' . $calls, 'secret', null, $expiration)
+                );
+            }
+        );
+        set_error_handler(static function () { return true; }, E_USER_WARNING);
+
+        try {
+            // Six hour credentials use the 60 minute window.
+            $provider()->wait();
+
+            // 3000 seconds left is inside it, and the refresh fails.
+            $_SERVER['aws_time'] = $expiration - 3000;
+            $provider()->wait();
+            $this->assertSame(2, $calls);
+
+            // After the longest possible backoff, 2300 seconds are left. That
+            // is still inside the original window. A window recomputed from the
+            // remaining lifetime would be 15 minutes and skip this refresh.
+            $_SERVER['aws_time'] = $expiration - 3000 + 700;
+            $provider()->wait();
+            $this->assertSame(3, $calls);
+        } finally {
+            restore_error_handler();
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public static function backoffBoundsProvider(): array
+    {
+        // [credential lifetime, seconds after the first fetch when the
+        // refresh fails, longest backoff the SEP allows at that point]
+        return [
+            'expired credentials' => [900, 910, 90],
+            '200 seconds left' => [900, 700, 100],
+            '1000 seconds left' => [21600, 21600 - 1000, 500],
+            '3000 seconds left, capped at 10 minutes' => [21600, 21600 - 3000, 600],
+        ];
+    }
+
+    #[DataProvider('backoffBoundsProvider')]
+    public function testMemoizeRefreshBackoffStaysWithinSepBounds(
+        int $lifetime,
+        int $failureOffset,
+        int $longestBackoff
+    ): void {
+        $now = 1000000000;
+        set_error_handler(static function () { return true; }, E_USER_WARNING);
+
+        try {
+            // The delay is random, so repeat to cover both ends of the range.
+            for ($run = 0; $run < 25; $run++) {
+                $_SERVER['aws_time'] = $now;
+                $calls = 0;
+                $provider = CredentialProvider::memoize(
+                    static function () use (&$calls, $lifetime, $now) {
+                        $calls++;
+                        if ($calls === 2) {
+                            return Create::rejectionFor(
+                                new CredentialsException('source down')
+                            );
+                        }
+                        return Create::promiseFor(new Credentials(
+                            'key' . $calls,
+                            'secret',
+                            null,
+                            $now + $lifetime
+                        ));
+                    }
+                );
+
+                $provider()->wait();
+                $_SERVER['aws_time'] = $now + $failureOffset;
+                $provider()->wait();
+                $this->assertSame(2, $calls);
+
+                // The shortest backoff is 60 seconds.
+                $_SERVER['aws_time'] = $now + $failureOffset + 59;
+                $provider()->wait();
+                $this->assertSame(2, $calls, 'blocked before the minimum backoff');
+
+                // After the longest backoff the source is tried again.
+                $_SERVER['aws_time'] = $now + $failureOffset + $longestBackoff + 1;
+                $provider()->wait();
+                $this->assertSame(3, $calls, 'retried after the maximum backoff');
+            }
+        } finally {
+            restore_error_handler();
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    public static function invalidSourceResponseProvider(): array
+    {
+        return [
+            'null' => [null],
+            'string' => ['not credentials'],
+            'array' => [['key' => 'k', 'secret' => 's']],
+        ];
+    }
+
+    #[DataProvider('invalidSourceResponseProvider')]
+    public function testMemoizeTreatsInvalidInitialResponseAsNoCredentials($response): void
+    {
+        $valid = new Credentials('valid', 'secret', null, time() + 3600);
+        $calls = 0;
+        $provider = CredentialProvider::memoize(
+            static function () use (&$calls, $response, $valid) {
+                $calls++;
+                return Create::promiseFor($calls === 1 ? $response : $valid);
+            }
+        );
+
+        try {
+            $provider()->wait();
+            $this->fail('Expected a NoCredentialsError.');
+        } catch (NoCredentialsError $e) {
+            $this->assertStringContainsString('did not return credentials', $e->getMessage());
+        }
+
+        // The failed fetch must not leave the provider stuck.
+        $this->assertSame($valid, $provider()->wait());
+        $this->assertSame(2, $calls);
+    }
+
+    #[DataProvider('invalidSourceResponseProvider')]
+    public function testMemoizeKeepsCachedCredentialsWhenRefreshReturnsInvalidResponse(
+        $response
+    ): void {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $initial = new Credentials('initial', 'secret', null, $now + 30);
+        $fresh = new Credentials('fresh', 'secret', null, $now + 3600);
+        $calls = 0;
+        $provider = CredentialProvider::memoize(
+            static function () use (&$calls, $initial, $fresh, $response) {
+                $calls++;
+                if ($calls === 1) {
+                    return Create::promiseFor($initial);
+                }
+                return Create::promiseFor($calls === 2 ? $response : $fresh);
+            }
+        );
+        set_error_handler(static function () { return true; }, E_USER_WARNING);
+
+        try {
+            $this->assertSame($initial, $provider()->wait());
+
+            // The invalid response is a failed refresh: cached credentials are
+            // returned and the backoff applies.
+            $this->assertSame($initial, $provider()->wait());
+            $this->assertSame($initial, $provider()->wait());
+            $this->assertSame(2, $calls);
+
+            // The failure must not leave the provider stuck.
+            $_SERVER['aws_time'] = $now + 200;
+            $this->assertSame($fresh, $provider()->wait());
+            $this->assertSame(3, $calls);
+        } finally {
+            restore_error_handler();
+            unset($_SERVER['aws_time']);
+        }
     }
 
     public function testCallsDefaultsCreds(): void
@@ -1914,6 +3151,26 @@ EOT;
             $credentials->getAccessKeyId()
         );
         $this->assertSame($ecsCredential->getSecretKey(), $credentials->getSecretKey());
+    }
+
+    public function testChainContinuesAfterNonRecoverableError(): void
+    {
+        $error = new NonRecoverableCredentialsException('customer action required');
+        $nextCalls = 0;
+        $chain = CredentialProvider::chain(
+            static function () use ($error) {
+                return Create::rejectionFor($error);
+            },
+            static function () use (&$nextCalls) {
+                $nextCalls++;
+                return Create::promiseFor(new Credentials('foo', 'bar'));
+            }
+        );
+
+        $credentials = $chain()->wait();
+
+        $this->assertSame('foo', $credentials->getAccessKeyId());
+        $this->assertSame(1, $nextCalls);
     }
 
     public function testChainsCredentials(): void
