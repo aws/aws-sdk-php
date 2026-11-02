@@ -2,11 +2,14 @@
 namespace Aws\Test\Credentials;
 
 use Aws\Arn\ArnParser;
+use Aws\Command;
 use Aws\Credentials\AssumeRoleCredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
+use Aws\Exception\NonRecoverableCredentialsException;
 use Aws\Result;
 use Aws\Sts\StsClient;
+use Aws\Sts\Exception\StsException;
 use Aws\Api\DateTimeResult;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\RejectedPromise;
@@ -115,6 +118,86 @@ class AssumeRoleCredentialProviderTest extends TestCase
         ];
         $provider = new AssumeRoleCredentialProvider($args);
         $provider()->wait();
+    }
+
+    public function testRegionDisabledExceptionIsNonRecoverable()
+    {
+        $stsException = new StsException(
+            'STS is disabled in this region',
+            new Command('AssumeRole'),
+            ['code' => 'RegionDisabledException']
+        );
+        $sts = new StsClient([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => false,
+            'retries' => 0,
+            'handler' => static function () use ($stsException) {
+                return Promise\Create::rejectionFor($stsException);
+            },
+        ]);
+        $provider = new AssumeRoleCredentialProvider([
+            'client' => $sts,
+            'assume_role_params' => [
+                'RoleArn' => self::SAMPLE_ROLE_ARN,
+                'RoleSessionName' => 'test_session',
+            ],
+        ]);
+
+        try {
+            $provider()->wait();
+            $this->fail('Expected a non-recoverable credentials error.');
+        } catch (NonRecoverableCredentialsException $e) {
+            $this->assertSame($stsException, $e->getPrevious());
+        }
+    }
+
+    #[DataProvider('stsErrorCodeProvider')]
+    public function testClassifiesStsErrorCodes(string $code, bool $nonRecoverable)
+    {
+        $sts = new StsClient([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => false,
+            'retries' => 0,
+            'handler' => static function () use ($code) {
+                return Promise\Create::rejectionFor(new StsException(
+                    'sts failure',
+                    new Command('AssumeRole'),
+                    ['code' => $code]
+                ));
+            },
+        ]);
+        $provider = new AssumeRoleCredentialProvider([
+            'client' => $sts,
+            'assume_role_params' => [
+                'RoleArn' => self::SAMPLE_ROLE_ARN,
+                'RoleSessionName' => 'test_session',
+            ],
+        ]);
+
+        try {
+            $provider()->wait();
+            $this->fail('Expected an exception.');
+        } catch (NonRecoverableCredentialsException $e) {
+            $this->assertTrue($nonRecoverable, "$code must be recoverable");
+        } catch (\Exception $e) {
+            $this->assertFalse($nonRecoverable, "$code must be non-recoverable");
+        }
+    }
+
+    public static function stsErrorCodeProvider(): array
+    {
+        return [
+            'AccessDenied' => ['AccessDenied', true],
+            'IDPRejectedClaim' => ['IDPRejectedClaim', true],
+            'InvalidIdentityToken' => ['InvalidIdentityToken', true],
+            'MalformedPolicyDocument' => ['MalformedPolicyDocument', true],
+            'PackedPolicyTooLarge' => ['PackedPolicyTooLarge', true],
+            'RegionDisabledException' => ['RegionDisabledException', true],
+            'ServiceUnavailable' => ['ServiceUnavailable', false],
+            'ExpiredToken' => ['ExpiredToken', false],
+        ];
     }
 
     public function testWrapsNonRuntimeExceptionWhenRetrievingAssumeRoleCredentialFails()

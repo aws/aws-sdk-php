@@ -116,6 +116,25 @@ class EcsCredentialProviderTest extends TestCase
         }
     }
 
+    public function testFailuresAreRecoverable()
+    {
+        $client = function () {
+            return Promise\Create::rejectionFor([
+                'exception' => new \Exception('container metadata unavailable')
+            ]);
+        };
+        $p = new EcsCredentialProvider(['client' => $client]);
+        try {
+            $p()->wait();
+            $this->fail('Expected a CredentialsException.');
+        } catch (CredentialsException $e) {
+            $this->assertNotInstanceOf(
+                \Aws\Exception\NonRecoverableCredentialsExceptionInterface::class,
+                $e
+            );
+        }
+    }
+
     public function testLoadsCredentialsAndProfile()
     {
         $t = time() + 1000;

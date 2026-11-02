@@ -221,9 +221,7 @@ class InstanceProfileProvider
 
             // Static stability is owned by the caching layer (memoize), not by
             // this provider. On failure the provider rejects and memoize retains
-            // the cached credentials and applies the refresh backoff. The
-            // provider returns whatever IMDS last served, even if already
-            // expired.
+            // the cached credentials and applies the refresh backoff.
             yield $credentials;
         });
     }
