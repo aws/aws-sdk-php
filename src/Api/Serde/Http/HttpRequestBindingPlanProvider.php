@@ -55,9 +55,14 @@ final class HttpRequestBindingPlanProvider
         $payload = $input['payload'];
 
         $uriMembers = [];
+        $hasUnbound = false;
         $resolved = $input->getMembers();
         foreach ($resolved as $name => $member) {
             $location = $member['location'];
+            if ($location === null) {
+                $hasUnbound = true;
+            }
+
             if (!$payload && !$location) {
                 $plan->bindings[$name] = [HttpRequestBindingPlan::D_TAG => HttpRequestBindingPlan::BODY];
             } elseif ($location === 'header') {
@@ -96,9 +101,9 @@ final class HttpRequestBindingPlanProvider
 
         if ($payload) {
             $plan->payloadName = $payload;
-            $this->compilePayload($plan, $input, $payload);
+            $this->compilePayload($plan, $input, $payload, $hasUnbound);
         } else {
-            $plan->hasPayloadParam = self::hasUnboundMember($input);
+            $plan->hasPayloadParam = $hasUnbound;
         }
 
         return $plan;
@@ -257,7 +262,12 @@ final class HttpRequestBindingPlanProvider
         $plan->uriParts = $parts;
     }
 
-    private function compilePayload(HttpRequestBindingPlan $plan, StructureShape $input, string $payload): void
+    private function compilePayload(
+        HttpRequestBindingPlan $plan,
+        StructureShape $input,
+        string $payload,
+        bool $hasUnbound
+    ): void
     {
         if (!$input->hasMember($payload)) {
             // Legacy throws from getMember() on every request. The serializer
@@ -293,17 +303,6 @@ final class HttpRequestBindingPlanProvider
         // Unions may also be empty or unset.
         $plan->hasPayloadParam = empty($member['union'])
             && !in_array($member['type'], $potentiallyEmptyTypes)
-            && self::hasUnboundMember($input);
-    }
-
-    private static function hasUnboundMember(StructureShape $input): bool
-    {
-        foreach ($input->getMembers() as $member) {
-            if (!isset($member['location'])) {
-                return true;
-            }
-        }
-
-        return false;
+            && $hasUnbound;
     }
 }
