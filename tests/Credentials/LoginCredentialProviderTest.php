@@ -2,10 +2,12 @@
 namespace Aws\Test\Credentials;
 
 use Aws\CommandInterface;
+use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\LoginCredentialProvider;
 use Aws\Credentials\CredentialSources;
 use Aws\Exception\AwsException;
 use Aws\Exception\CredentialsException;
+use Aws\Exception\NonRecoverableCredentialsException;
 use Aws\Result;
 use Aws\Signin\SigninClient;
 use Aws\Signin\Exception\SigninException;
@@ -13,6 +15,9 @@ use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
+
+// Allows Login and memoize tests to use a fixed clock.
+require_once __DIR__ . '/CredentialsClockOverride.php';
 
 #[CoversClass(LoginCredentialProvider::class)]
 class LoginCredentialProviderTest extends TestCase
@@ -85,6 +90,7 @@ class LoginCredentialProviderTest extends TestCase
             }
         }
         $this->tempDirs = [];
+        unset($_SERVER['aws_time']);
 
         parent::tearDown();
     }
@@ -479,7 +485,7 @@ EOT;
         $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
         $this->createConfigFile($awsDir, 'default', $loginSession);
         
-        // Create credentials expiring in 2 minutes (within 3 minute threshold)
+        // Create credentials expiring in 2 minutes (inside the 5-minute window)
         $expiration = gmdate('Y-m-d\TH:i:s\Z', time() + 120);
         $this->createValidTokenCache($awsDir, $loginSession, [
             'accessToken' => [
@@ -522,13 +528,60 @@ EOT;
         $this->assertEquals('refreshedKey', $credentials->getAccessKeyId());
     }
 
+    public function testMemoizeRefreshesLoginCredentialsAtFiveMinuteBoundary(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+        $awsDir = $this->createAwsHome();
+        $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
+        $this->createConfigFile($awsDir, 'default', $loginSession);
+        $expiration = gmdate('Y-m-d\TH:i:s\Z', $now + 900);
+        $this->createValidTokenCache($awsDir, $loginSession, [
+            'accessToken' => [
+                'accessKeyId' => 'testKey',
+                'secretAccessKey' => 'testSecret',
+                'sessionToken' => 'testToken',
+                'accountId' => '123456789012',
+                'expiresAt' => $expiration,
+            ],
+        ]);
+        $mockClient = $this->getTestClient(
+            'Signin',
+            ['credentials' => false, 'signature_version' => 'dpop']
+        );
+        $this->addMockResults($mockClient, [new Result([
+            'tokenOutput' => [
+                'refreshToken' => 'newRefresh',
+                'accessToken' => [
+                    'accessKeyId' => 'refreshedKey',
+                    'secretAccessKey' => 'refreshedSecret',
+                    'sessionToken' => 'refreshedToken',
+                ],
+                'expiresIn' => 900,
+            ],
+        ])]);
+        $loginProvider = new LoginCredentialProvider('default', 'us-west-2');
+        $reflection = new \ReflectionClass($loginProvider);
+        $clientProperty = $reflection->getProperty('client');
+        $clientProperty->setValue($loginProvider, $mockClient);
+        $provider = CredentialProvider::memoize($loginProvider);
+
+        $this->assertSame('testKey', $provider()->wait()->getAccessKeyId());
+
+        $_SERVER['aws_time'] = $now + 600;
+        $this->assertSame(
+            'refreshedKey',
+            $provider()->wait()->getAccessKeyId()
+        );
+    }
+
     public function testShouldRefreshReturnsFalseForFreshCredentials(): void
     {
         $awsDir = $this->createAwsHome();
         $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
         $this->createConfigFile($awsDir, 'default', $loginSession);
         
-        // Create credentials expiring in 10 minutes (outside 3 minute threshold)
+        // Create credentials expiring in 10 minutes (outside the 5-minute window)
         $expiration = gmdate('Y-m-d\TH:i:s\Z', time() + 600);
         $this->createValidTokenCache($awsDir, $loginSession, [
             'accessToken' => [
@@ -627,57 +680,61 @@ EOT;
         $this->assertEquals('refreshedToken', $credentials->getSecurityToken());
     }
 
-    public function testContinuesWithExistingTokenAfterRefreshFailure(): void
+    public function testMemoizeKeepsLoginCredentialsAfterRefreshFailure(): void
     {
+        $now = 1792065600;
+        $_SERVER['aws_time'] = $now;
         $awsDir = $this->createAwsHome();
         $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
         $this->createConfigFile($awsDir, 'default', $loginSession);
-        
-        // Create credentials expiring in 5 minutes (within refresh window)
-        $expiration = gmdate('Y-m-d\TH:i:s\Z', time() + 300);
         $this->createValidTokenCache($awsDir, $loginSession, [
             'accessToken' => [
                 'accessKeyId' => 'existingKey',
                 'secretAccessKey' => 'existingSecret',
                 'sessionToken' => 'existingToken',
                 'accountId' => '123456789012',
-                'expiresAt' => $expiration
+                'expiresAt' => gmdate('Y-m-d\TH:i:s\Z', $now + 600)
             ]
         ]);
-        
-        // Use test client with mock handler that returns a network error
+
         $mockClient = $this->getTestClient(
             'Signin',
             ['credentials' => false, 'signature_version' => 'dpop']
         );
-        
-        // Add a generic network error to the mock handler
         $mockCommand = $this->getMockBuilder(CommandInterface::class)->getMock();
-        $exception = new AwsException(
-            'Network error',
-            $mockCommand,
-            [
-                'code' => 'Network error',
-            ]
-        );
-        $this->addMockResults($mockClient, [$exception]);
-        
-        $provider = new LoginCredentialProvider('default', 'us-west-2');
+        $this->addMockResults($mockClient, [
+            new AwsException('Network error', $mockCommand)
+        ]);
 
-        $reflection = new \ReflectionClass($provider);
+        $loginProvider = new LoginCredentialProvider('default', 'us-west-2');
+        $reflection = new \ReflectionClass($loginProvider);
         $clientProperty = $reflection->getProperty('client');
-        $clientProperty->setValue($provider, $mockClient);
-        $credentials = @$provider()->wait();
-        
-        // Should use existing credentials despite refresh failure
-        $this->assertEquals('existingKey', $credentials->getAccessKeyId());
-        $this->assertEquals('existingSecret', $credentials->getSecretKey());
-        $this->assertEquals('existingToken', $credentials->getSecurityToken());
+        $clientProperty->setValue($loginProvider, $mockClient);
+        $provider = CredentialProvider::memoize($loginProvider);
+        $credentials = $provider()->wait();
+
+        $warnings = [];
+        set_error_handler(static function ($errno, $message) use (&$warnings) {
+            if ($errno === E_USER_WARNING) {
+                $warnings[] = $message;
+            }
+            return true;
+        });
+        try {
+            $_SERVER['aws_time'] = $now + 301;
+            $credentials = $provider()->wait();
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertSame('existingKey', $credentials->getAccessKeyId());
+        $this->assertCount(1, $warnings);
+        $this->assertStringContainsString('Credential refresh failed', $warnings[0]);
     }
 
     public function testRefreshThrowsOnTokenExpiredError(): void
     {
-        $this->expectException(CredentialsException::class);
+        $this->expectException(NonRecoverableCredentialsException::class);
         $this->expectExceptionMessage(
             'Your session has expired. Please reauthenticate using `aws login`'
         );
@@ -725,7 +782,7 @@ EOT;
 
     public function testRefreshThrowsOnUserCredentialsChangedError(): void
     {
-        $this->expectException(CredentialsException::class);
+        $this->expectException(NonRecoverableCredentialsException::class);
         $this->expectExceptionMessage('Unable to refresh credentials because of a change in your password');
         
         $awsDir = $this->createAwsHome();
@@ -771,7 +828,7 @@ EOT;
 
     public function testRefreshThrowsOnInsufficientPermissionsError(): void
     {
-        $this->expectException(CredentialsException::class);
+        $this->expectException(NonRecoverableCredentialsException::class);
         $this->expectExceptionMessage(
             'Unable to refresh credentials due to insufficient permissions'
         );
@@ -814,6 +871,51 @@ EOT;
         $clientProperty = $reflection->getProperty('client');
         $clientProperty->setValue($provider, $mockClient);
         
+        @$provider()->wait();
+    }
+
+    public function testRefreshThrowsNonRecoverableOnValidationException(): void
+    {
+        $this->expectException(NonRecoverableCredentialsException::class);
+        $this->expectExceptionMessage(
+            'the Sign-In service rejected the request as invalid'
+        );
+
+        $awsDir = $this->createAwsHome();
+        $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
+        $this->createConfigFile($awsDir, 'default', $loginSession);
+
+        // Create expired credentials to force refresh
+        $expiration = gmdate('Y-m-d\TH:i:s\Z', time() - 3600);
+        $this->createValidTokenCache($awsDir, $loginSession, [
+            'accessToken' => [
+                'accessKeyId' => 'expiredKey',
+                'secretAccessKey' => 'expiredSecret',
+                'sessionToken' => 'expiredToken',
+                'accountId' => '123456789012',
+                'expiresAt' => $expiration
+            ]
+        ]);
+
+        $mockClient = $this->getTestClient(
+            'Signin',
+            ['credentials' => false, 'signature_version' => 'dpop']
+        );
+
+        $mockCommand = $this->getMockBuilder(CommandInterface::class)->getMock();
+        $exception = new SigninException(
+            'Validation error',
+            $mockCommand,
+            ['code' => 'ValidationException']
+        );
+
+        $this->addMockResults($mockClient, [$exception]);
+
+        $provider = new LoginCredentialProvider('default', 'us-west-2');
+        $reflection = new \ReflectionClass($provider);
+        $clientProperty = $reflection->getProperty('client');
+        $clientProperty->setValue($provider, $mockClient);
+
         @$provider()->wait();
     }
 
@@ -1553,7 +1655,7 @@ EOT;
             'external token needs refresh - no external refresh' => [
                 'scenario' => 'external token needs refresh',
                 'currentExpiryMinutes' => 2,
-                'diskExpiryMinutes' => 2,      // Also within 3-minute threshold
+                'diskExpiryMinutes' => 2,      // Also inside the 5-minute window
                 'sameRefreshToken' => false,
                 'shouldUseExternal' => false
             ]

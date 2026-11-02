@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Test\Token;
 
+use Aws\Command;
+use Aws\Exception\AwsException;
 use Aws\Exception\TokenException;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
@@ -185,6 +187,63 @@ EOT;
             $tokenProvider()->wait();
         } finally {
             unlink($dir . '/config');
+        }
+    }
+
+    public function testTransientRefreshFailureIsNotConvertedToTokenException()
+    {
+        $dir = $this->clearEnv();
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, <<<EOT
+[default]
+sso_account_id = 12345
+sso_session = session-name
+sso_role_name = roleName
+
+[sso-session session-name]
+sso_start_url = https://d-123.awsapps.com/start
+sso_region = us-west-2
+EOT
+        );
+        putenv('HOME=' . dirname($dir));
+
+        $tokenLocation = SsoTokenProvider::getTokenLocation('session-name');
+        if (!is_dir(dirname($tokenLocation))) {
+            mkdir(dirname($tokenLocation), 0777, true);
+        }
+        file_put_contents($tokenLocation, json_encode([
+            'accessToken' => 'token',
+            'expiresAt' => gmdate('Y-m-d\TH:i:s\Z', \time() + 60),
+            'clientId' => 'client',
+            'clientSecret' => 'secret',
+            'refreshToken' => 'refresh',
+        ]));
+        touch($tokenLocation, \time() - 31);
+
+        $error = new AwsException(
+            'OIDC unavailable',
+            new Command('CreateToken'),
+            ['code' => 'InternalServerException']
+        );
+        $ssoOidc = $this->getTestClient('SsoOidc', [
+            'credentials' => false,
+            'retries' => 0,
+        ]);
+        $this->addMockResults($ssoOidc, [$error]);
+
+        try {
+            (new SsoTokenProvider(
+                'default',
+                $configFilename,
+                $ssoOidc
+            ))()->wait();
+            $this->fail('Expected the OIDC error.');
+        } catch (AwsException $e) {
+            $this->assertSame($error, $e);
+        } finally {
+            unlink($configFilename);
+            unlink($tokenLocation);
+            rmdir(dirname($tokenLocation));
         }
     }
 

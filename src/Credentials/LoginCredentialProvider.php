@@ -14,7 +14,8 @@ use GuzzleHttp\Promise;
 final class LoginCredentialProvider
 {
     private const EXT_OPENSSL = 'openssl';
-    private const DEFAULT_REFRESH_THRESHOLD = 180; // 3 minutes
+    // Matches the shared advisory window for 15-minute credentials.
+    private const DEFAULT_REFRESH_THRESHOLD = 300;
     private const ENV_CACHE_DIRECTORY = 'AWS_LOGIN_CACHE_DIRECTORY';
     private const DEFAULT_CACHE_DIRECTORY = '/.aws/login/cache';
     private const REAUTHENTICATE_MSG = ' Please reauthenticate using `aws login`.';
@@ -115,12 +116,6 @@ final class LoginCredentialProvider
                         'Unable to refresh login credentials: ' . $e->getAwsErrorMessage(),
                         $e->getCode(),
                         $e
-                    );
-                } catch (\Exception $e) {
-                    // For other refresh failures, log and continue with existing token
-                    trigger_error(
-                        'Continuing with existing token after refresh failure: ' . $e->getMessage(),
-                        E_USER_NOTICE
                     );
                 }
             }
