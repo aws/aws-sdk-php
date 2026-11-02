@@ -135,11 +135,12 @@ class AssumeRoleWithWebIdentityCredentialProvider
                 try {
                     $result = $client->assumeRoleWithWebIdentity($assumeParams);
                 } catch (AwsException $e) {
-                    if (in_array(
+                    $isNonRecoverable = in_array(
                         $e->getAwsErrorCode(),
                         NonRecoverableCredentialsException::STS_NON_RECOVERABLE_ERROR_CODES,
                         true
-                    )) {
+                    );
+                    if ($isNonRecoverable) {
                         throw new NonRecoverableCredentialsException(
                             "Error assuming role from web identity credentials",
                             0,
