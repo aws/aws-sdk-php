@@ -33,6 +33,7 @@ use Aws\Exception\InvalidRegionException;
 use Aws\Handler\HttpTransportSharing;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
+use Aws\Retry\V3\OptIn as NewRetriesOptIn;
 use Aws\Retry\V3\RetryMiddleware as RetryV3Middleware;
 use Aws\Signature\SignatureProvider;
 use Aws\Token\Token;
@@ -574,11 +575,22 @@ class ClientResolver
             return;
         }
 
+        if (NewRetriesOptIn::isEnabled()) {
+            $list->appendSign(
+                RetryV3Middleware::wrap($config, [
+                    'collect_stats' => $args['stats']['retries'],
+                    'service'       => $args['service'],
+                ]),
+                'retry'
+            );
+            return;
+        }
+
         $list->appendSign(
-            RetryV3Middleware::wrap($config, [
-                'collect_stats' => $args['stats']['retries'],
-                'service'       => $args['service'],
-            ]),
+            RetryMiddlewareV2::wrap(
+                $config,
+                ['collect_stats' => $args['stats']['retries']]
+            ),
             'retry'
         );
     }
@@ -587,6 +599,9 @@ class ClientResolver
     {
         $config = ConfigModeProvider::unwrap($value);
         if ($config->getMode() !== 'legacy') {
+            if (!isset($args['retries']) && !is_null($config->getRetryMode())) {
+                $args['retries'] = ['mode' => $config->getRetryMode()];
+            }
             if (
                 !isset($args['sts_regional_endpoints'])
                 && !is_null($config->getStsRegionalEndpoints())
