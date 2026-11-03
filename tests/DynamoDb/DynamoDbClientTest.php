@@ -156,37 +156,6 @@ class DynamoDbClientTest extends TestCase
         ];
     }
 
-    public function testValidatesAndRetriesCrc32InLegacyMode()
-    {
-        $queue = [
-            new Response(200, ['x-amz-crc32' => '123'], '"foo"'),
-            new Response(200, ['x-amz-crc32' => '400595255'], '"foo"')
-        ];
-
-        $handler = function ($request, $options) use (&$queue) {
-            // Test the custom legacy retry policy (no delay on first retry).
-            if (count($queue) == 1) {
-                $this->assertSame(0, $options['delay']);
-            }
-
-            return \GuzzleHttp\Promise\Create::promiseFor(array_shift($queue));
-        };
-
-        $client = new DynamoDbClient([
-            'region'       => 'us-east-1',
-            'version'      => 'latest',
-            'http_handler' => $handler,
-            'retries'      => ['mode' => 'legacy'],
-        ]);
-
-        $client->getItem([
-            'TableName' => 'foo',
-            'Key' => ['baz' => ['S' => 'foo']]
-        ]);
-
-        $this->assertEmpty($queue);
-    }
-
     public function testValidatesAndRetriesCrc32()
     {
         $queue = [
@@ -195,10 +164,9 @@ class DynamoDbClientTest extends TestCase
         ];
 
         $handler = function ($request, $options) use (&$queue) {
-            // Standard mode: full-jitter backoff with DynamoDB's 25 ms base.
+            // Test the custom retry policy.
             if (count($queue) == 1) {
-                $this->assertGreaterThanOrEqual(0, $options['delay']);
-                $this->assertLessThanOrEqual(25, $options['delay']);
+                $this->assertSame(0, $options['delay']);
             }
 
             return \GuzzleHttp\Promise\Create::promiseFor(array_shift($queue));

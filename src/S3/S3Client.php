@@ -17,8 +17,11 @@ use Aws\InputValidationMiddleware;
 use Aws\Middleware;
 use Aws\ResultInterface;
 use Aws\Retry\ConfigurationInterface as RetryConfigurationInterface;
+use Aws\Retry\QuotaManager;
+use Aws\Retry\V3\OptIn as NewRetriesOptIn;
 use Aws\Retry\V3\RetryMiddleware as RetryV3Middleware;
 use Aws\RetryMiddleware;
+use Aws\RetryMiddlewareV2;
 use Aws\S3\Parser\GetBucketLocationResultMutator;
 use Aws\S3\Parser\S3Parser;
 use Aws\S3\Parser\ValidateResponseChecksumResultMutator;
@@ -3154,6 +3157,11 @@ class S3Client extends AwsClient implements S3ClientInterface
             return;
         }
 
+        if (NewRetriesOptIn::isEnabled()) {
+            self::appendStandardModeRetriesNew($config, $args, $list);
+            return;
+        }
+
         self::appendStandardModeRetries($config, $args, $list);
     }
 
@@ -3191,8 +3199,47 @@ class S3Client extends AwsClient implements S3ClientInterface
         HandlerList $list
     ): void
     {
-        // The base middleware already handles the standard retryable
-        // shapes, so this decider only adds the S3-specific socket carve-out.
+        // decider that combines V2's default decider with S3-specific checks.
+        $defaultDecider = RetryMiddlewareV2::createDefaultDecider(
+            new QuotaManager(),
+            $config->getMaxAttempts()
+        );
+
+        $list->appendSign(
+            RetryMiddlewareV2::wrap(
+                $config,
+                [
+                    'collect_stats' => $args['stats']['retries'],
+                    'decider' => function (
+                        $attempts,
+                        CommandInterface $cmd,
+                        $result
+                    ) use ($defaultDecider, $config) {
+                        if ($defaultDecider($attempts, $cmd, $result)) {
+                            return true;
+                        }
+                        if ($result instanceof AwsException
+                            && $attempts < $config->getMaxAttempts()
+                        ) {
+                            return self::isS3SocketIssue($result, $cmd->getName());
+                        }
+                        return false;
+                    },
+                ]
+            ),
+            'retry'
+        );
+    }
+
+    private static function appendStandardModeRetriesNew(
+        RetryConfigurationInterface $config,
+        $args,
+        HandlerList $list
+    ): void
+    {
+        // AWS_NEW_RETRIES_2026 path. The base middleware already handles
+        // the standard retryable shapes, so this decider only adds the
+        // S3-specific socket carve-out.
         $list->appendSign(
             RetryV3Middleware::wrap(
                 $config,
