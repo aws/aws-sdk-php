@@ -46,10 +46,14 @@ use GuzzleHttp\Psr7;
  * @phpstan-method \Aws\Result listSpeechSynthesisTasks(array{MaxResults?: int, NextToken?: string, Status?: 'completed'|'failed'|'inProgress'|'scheduled', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listSpeechSynthesisTasksAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listSpeechSynthesisTasksAsync(array{MaxResults?: int, NextToken?: string, Status?: 'completed'|'failed'|'inProgress'|'scheduled', ...} $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @phpstan-method \Aws\Result listTagsForResource(array{ResourceArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array{ResourceArn?: string, ...} $args = [])
  * @method \Aws\Result putLexicon(array $args = [])
- * @phpstan-method \Aws\Result putLexicon(array{Name?: string, Content?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result putLexicon(array{Name?: string, Content?: string, Tags?: array<string, string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise putLexiconAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise putLexiconAsync(array{Name?: string, Content?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putLexiconAsync(array{Name?: string, Content?: string, Tags?: array<string, string>, ...} $args = [])
  * @method \Aws\Result startSpeechSynthesisTask(array $args = [])
  * @phpstan-method \Aws\Result startSpeechSynthesisTask(array{
  *     Engine?: 'generative'|'long-form'|'neural'|'standard',
@@ -108,6 +112,14 @@ use GuzzleHttp\Psr7;
  *     VoiceId?: 'Aditi'|'Adriano'|'Ambre'|'Amy'|'Andres'|'Aria'|'Arjun'|'Arlet'|'Arthur'|'Astrid'|'Ayanda'|'Beatrice'|'Bianca'|'Brian'|'Burcu'|'Camila'|'Carla'|'Carlos'|'Carmen'|'Carolina'|'Celine'|'Chantal'|'Conchita'|'Cristiano'|'Curtis'|'Daniel'|'Danielle'|'Dora'|'Elin'|'Emma'|'Enrique'|'Ewa'|'Filiz'|'Florian'|'Gabrielle'|'Geraint'|'Giorgio'|'Gregory'|'Gwyneth'|'Hala'|'Hannah'|'Hans'|'Hiujin'|'Hyunduk'|'Ida'|'Ines'|'Isabelle'|'Ivy'|'Jacek'|'Jan'|'Jasmine'|'Jihye'|'Jitka'|'Joanna'|'Joey'|'Justin'|'Kajal'|'Karl'|'Kazuha'|'Kendra'|'Kenneth'|'Kevin'|'Kiara'|'Kimberly'|'Laura'|'Lea'|'Lennart'|'Leo'|'Liam'|'Lisa'|'Liv'|'Lorenzo'|'Lotte'|'Lucia'|'Lupe'|'Mads'|'Maja'|'Marlene'|'Mathieu'|'Matthew'|'Maxim'|'Mia'|'Miguel'|'Mizuki'|'Naja'|'Nate'|'Niamh'|'Nicole'|'Ola'|'Olivia'|'Pedro'|'Penelope'|'Raveena'|'Remi'|'Ricardo'|'Ruben'|'Russell'|'Ruth'|'Sabrina'|'Salli'|'Seoyeon'|'Sergio'|'Sofie'|'Stephen'|'Suvi'|'Takumi'|'Tatyana'|'Thiago'|'Tiffany'|'Tina'|'Tomoko'|'Vicki'|'Vitoria'|'Zayd'|'Zeina'|'Zhiyu',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @phpstan-method \Aws\Result tagResource(array{ResourceArn?: string, Tags?: array<string, string>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise tagResourceAsync(array{ResourceArn?: string, Tags?: array<string, string>, ...} $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @phpstan-method \Aws\Result untagResource(array{ResourceArn?: string, TagKeys?: list<string>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise untagResourceAsync(array{ResourceArn?: string, TagKeys?: list<string>, ...} $args = [])
  */
 class PollyClient extends AwsClient
 {

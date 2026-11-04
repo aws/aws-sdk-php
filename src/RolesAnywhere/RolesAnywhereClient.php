@@ -40,6 +40,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     enabled?: bool,
+ *     crlDpRevocationEnabled?: bool,
  *     tags?: list<array{key?: string, value?: string, ...}>,
  *     notificationSettings?: list<array{
  *         enabled?: bool,
@@ -59,6 +60,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     enabled?: bool,
+ *     crlDpRevocationEnabled?: bool,
  *     tags?: list<array{key?: string, value?: string, ...}>,
  *     notificationSettings?: list<array{
  *         enabled?: bool,
@@ -266,6 +268,7 @@ use Aws\AwsClient;
  *         sourceData?: array{x509CertificateData?: string, acmPcaArn?: string, ...},
  *         ...,
  *     },
+ *     crlDpRevocationEnabled?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTrustAnchorAsync(array $args = [])
@@ -277,6 +280,7 @@ use Aws\AwsClient;
  *         sourceData?: array{x509CertificateData?: string, acmPcaArn?: string, ...},
  *         ...,
  *     },
+ *     crlDpRevocationEnabled?: bool,
  *     ...,
  * } $args = [])
  */

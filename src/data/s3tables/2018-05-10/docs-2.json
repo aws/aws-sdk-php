@@ -1,7 +1,8 @@
 {
   "version": "2.0",
-  "service": "<p>An Amazon S3 table represents a structured dataset consisting of tabular data in <a href=\"https://parquet.apache.org/docs/\">Apache Parquet</a> format and related metadata. This data is stored inside an S3 table as a subresource. All tables in a table bucket are stored in the <a href=\"https://iceberg.apache.org/docs/latest/\">Apache Iceberg</a> table format. Through integration with the <a href=\"https://docs.aws.amazon.com/https:/docs.aws.amazon.com/glue/latest/dg/catalog-and-crawler.html\">Amazon Web Services Glue Data Catalog</a> you can interact with your tables using Amazon Web Services analytics services, such as <a href=\"https://docs.aws.amazon.com/https:/docs.aws.amazon.com/athena/\">Amazon Athena</a> and <a href=\"https://docs.aws.amazon.com/https:/docs.aws.amazon.com/redshift/\">Amazon Redshift</a>. Amazon S3 manages maintenance of your tables through automatic file compaction and snapshot management. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-buckets.html\">Amazon S3 table buckets</a>.</p>",
+  "service": "<p>An Amazon S3 table represents a structured dataset consisting of tabular data in <a href=\"https://parquet.apache.org/docs/\">Apache Parquet</a> format and related metadata. This data is stored inside an S3 table as a subresource. All tables in a table bucket are stored in the <a href=\"https://iceberg.apache.org/docs/latest/\">Apache Iceberg</a> table format. Through integration with the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/catalog-and-crawler.html\">Amazon Web Services Glue Data Catalog</a> you can interact with your tables using Amazon Web Services analytics services, such as <a href=\"https://docs.aws.amazon.com/athena/\">Amazon Athena</a> and <a href=\"https://docs.aws.amazon.com/redshift/\">Amazon Redshift</a>. Amazon S3 manages maintenance of your tables through automatic file compaction and snapshot management. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-buckets.html\">Amazon S3 table buckets</a>.</p>",
   "operations": {
+    "CompleteTableMigration": "<p>Completes the migration of a table. The table's most recent migration must be in the <code>succeeded</code>, <code>failed</code> or <code>cancelled</code> state. After you complete the migration, you can't sync the table again, and you can write to and maintain the table as you do any other table: compaction starts, and unreferenced file removal follows the table bucket's configuration. You can't undo this operation. Calling it again for the same table returns a <code>ConflictException</code>.</p> <dl> <dt>Permissions</dt> <dd> <ul> <li> <p>You must have the <code>s3tables:CompleteTableMigration</code> permission to use this operation.</p> </li> </ul> </dd> </dl>",
     "CreateNamespace": "<p>Creates a namespace. A namespace is a logical grouping of tables within your table bucket, which you can use to organize tables. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-namespace-create.html\">Create a namespace</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:CreateNamespace</code> permission to use this operation. </p> </dd> </dl>",
     "CreateTable": "<p>Creates a new table associated with the given namespace in a table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-create.html\">Creating an Amazon S3 table</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <ul> <li> <p>You must have the <code>s3tables:CreateTable</code> permission to use this operation. </p> </li> <li> <p>If you use this operation with the optional <code>metadata</code> request parameter you must have the <code>s3tables:PutTableData</code> permission. </p> </li> <li> <p>If you use this operation with the optional <code>encryptionConfiguration</code> request parameter you must have the <code>s3tables:PutTableEncryption</code> permission. </p> </li> <li> <p>If you use this operation with the <code>storageClassConfiguration</code> request parameter, you must have the <code>s3tables:PutTableStorageClass</code> permission.</p> </li> <li> <p>To create a table with tags, you must have the <code>s3tables:TagResource</code> permission in addition to <code>s3tables:CreateTable</code> permission.</p> </li> </ul> <note> <p>Additionally, If you choose SSE-KMS encryption you must grant the S3 Tables maintenance principal access to your KMS key. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-kms-permissions.html\">Permissions requirements for S3 Tables SSE-KMS encryption</a>. </p> </note> </dd> </dl>",
     "CreateTableBucket": "<p>Creates a table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-buckets-create.html\">Creating a table bucket</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <ul> <li> <p>You must have the <code>s3tables:CreateTableBucket</code> permission to use this operation. </p> </li> <li> <p>If you use this operation with the optional <code>encryptionConfiguration</code> parameter you must have the <code>s3tables:PutTableBucketEncryption</code> permission.</p> </li> <li> <p>If you use this operation with the <code>storageClassConfiguration</code> request parameter, you must have the <code>s3tables:PutTableBucketStorageClass</code> permission.</p> </li> <li> <p>To create a table bucket with tags, you must have the <code>s3tables:TagResource</code> permission in addition to <code>s3tables:CreateTableBucket</code> permission.</p> </li> </ul> </dd> </dl>",
@@ -27,6 +28,7 @@
     "GetTableMaintenanceConfiguration": "<p>Gets details about the maintenance configuration of a table. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-maintenance.html\">S3 Tables maintenance</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <ul> <li> <p>You must have the <code>s3tables:GetTableMaintenanceConfiguration</code> permission to use this operation. </p> </li> <li> <p>You must have the <code>s3tables:GetTableData</code> permission to use set the compaction strategy to <code>sort</code> or <code>zorder</code>.</p> </li> </ul> </dd> </dl>",
     "GetTableMaintenanceJobStatus": "<p>Gets the status of a maintenance job for a table. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-maintenance.html\">S3 Tables maintenance</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableMaintenanceJobStatus</code> permission to use this operation. </p> </dd> </dl>",
     "GetTableMetadataLocation": "<p>Gets the location of the table metadata.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableMetadataLocation</code> permission to use this operation. </p> </dd> </dl>",
+    "GetTableMigration": "<p>Gets the details of a migration, including its state, the reason it failed, its statistics and the location of its reports. Identify the migration by its <code>migrationId</code>, or specify the <code>tableARN</code> of a destination table to get that table's most recent migration.</p> <dl> <dt>Permissions</dt> <dd> <ul> <li> <p>You must have the <code>s3tables:GetTableMigration</code> permission to use this operation.</p> </li> </ul> </dd> </dl>",
     "GetTablePolicy": "<p>Gets details about a table policy. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-table-policy.html#table-policy-get\">Viewing a table policy</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTablePolicy</code> permission to use this operation. </p> </dd> </dl>",
     "GetTableRecordExpirationConfiguration": "<p>Retrieves the expiration configuration settings for records in a table, and the status of the configuration. If the status of the configuration is <code>enabled</code>, records expire and are automatically removed from the table after the specified number of days.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableRecordExpirationConfiguration</code> permission to use this operation.</p> </dd> </dl>",
     "GetTableRecordExpirationJobStatus": "<p>Retrieves the status, metrics, and details of the latest record expiration job for a table. This includes when the job ran, and whether it succeeded or failed. If the job ran successfully, this also includes statistics about the records that were removed.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableRecordExpirationJobStatus</code> permission to use this operation.</p> </dd> </dl>",
@@ -35,6 +37,7 @@
     "GetTableStorageClass": "<p>Retrieves the storage class configuration for a specific table. This allows you to view the storage class settings that apply to an individual table, which may differ from the table bucket's default configuration.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableStorageClass</code> permission to use this operation.</p> </dd> </dl>",
     "ListNamespaces": "<p>Lists the namespaces within a table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-namespace.html\">Table namespaces</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:ListNamespaces</code> permission to use this operation. </p> </dd> </dl>",
     "ListTableBuckets": "<p>Lists table buckets for your account. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-buckets.html\">S3 Table buckets</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:ListTableBuckets</code> permission to use this operation. </p> </dd> </dl>",
+    "ListTableMigrations": "<p>Lists the migrations whose destination is in a table bucket, a namespace or a table. Specify a <code>tableBucketARN</code> to list the migrations into a table bucket, and add a <code>namespace</code>, or a <code>namespace</code> and a <code>name</code>, to narrow the list. Or specify a <code>tableARN</code> to list the migrations into a table.</p> <p>Migrations are listed newest first. Results are paginated: use <code>maxResults</code> to set the page size, and pass the <code>nextToken</code> from a response to retrieve the next page of results. A page can contain fewer migrations than <code>maxResults</code>, or none, and still return a <code>nextToken</code>. Continue until a response has no <code>nextToken</code>.</p> <dl> <dt>Permissions</dt> <dd> <ul> <li> <p>You must have the <code>s3tables:ListTableMigrations</code> permission to use this operation.</p> </li> </ul> </dd> </dl>",
     "ListTables": "<p>List tables in the given table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-tables.html\">S3 Tables</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:ListTables</code> permission to use this operation. </p> </dd> </dl>",
     "ListTagsForResource": "<p>Lists all of the tags applied to a specified Amazon S3 Tables resource. Each tag is a label consisting of a key and value pair. Tags can help you organize, track costs for, and control access to resources. </p> <note> <p>For a list of S3 resources that support tagging, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html#manage-tags\">Managing tags for Amazon S3 resources</a>.</p> </note> <dl> <dt>Permissions</dt> <dd> <p>For tables and table buckets, you must have the <code>s3tables:ListTagsForResource</code> permission to use this operation.</p> </dd> </dl>",
     "PutTableBucketEncryption": "<p>Sets the encryption configuration for a table bucket.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:PutTableBucketEncryption</code> permission to use this operation.</p> <note> <p>If you choose SSE-KMS encryption you must grant the S3 Tables maintenance principal access to your KMS key. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-kms-permissions.html\">Permissions requirements for S3 Tables SSE-KMS encryption</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> </note> </dd> </dl>",
@@ -48,9 +51,12 @@
     "PutTableRecordExpirationConfiguration": "<p>Creates or updates the expiration configuration settings for records in a table, including the status of the configuration. If you enable record expiration for a table, records expire and are automatically removed from the table after the number of days that you specify.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:PutTableRecordExpirationConfiguration</code> permission to use this operation.</p> </dd> </dl>",
     "PutTableReplication": "<p>Creates or updates the replication configuration for a specific table. This operation allows you to define table-level replication independently of bucket-level replication, providing granular control over which tables are replicated and where.</p> <dl> <dt>Permissions</dt> <dd> <ul> <li> <p>You must have the <code>s3tables:PutTableReplication</code> permission to use this operation. The IAM role specified in the configuration must have permissions to read from the source table and write to all destination tables.</p> </li> <li> <p>You must also have the following permissions:</p> <ul> <li> <p> <code>s3tables:GetTable</code> permission on the source table being replicated.</p> </li> <li> <p> <code>s3tables:CreateTable</code> permission for the destination.</p> </li> <li> <p> <code>s3tables:CreateNamespace</code> permission for the destination.</p> </li> <li> <p> <code>s3tables:GetTableMaintenanceConfig</code> permission for the source table.</p> </li> <li> <p> <code>s3tables:PutTableMaintenanceConfig</code> permission for the destination table.</p> </li> </ul> </li> <li> <p>You must have <code>iam:PassRole</code> permission with condition allowing roles to be passed to <code>replication.s3tables.amazonaws.com</code>.</p> </li> </ul> </dd> </dl>",
     "RenameTable": "<p>Renames a table or a namespace. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-tables.html\">S3 Tables</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:RenameTable</code> permission to use this operation. </p> </dd> </dl>",
+    "StartTableMigration": "<p>Starts migrating an Amazon Web Services Glue Data Catalog table into a new table in a table bucket. The migration runs asynchronously: this operation returns the migration ID and its initial state, and you track progress with <code>GetTableMigration</code>.</p> <p>The namespace must already exist, and a table with the specified name must not. The migration creates the table during planning and commits data to it as it runs. Until you call <code>CompleteTableMigration</code>, you can read the table but you can't write to it. If the migration fails or is cancelled, the table and the data already committed to it remain.</p> <p>The migration first checks the source and the destination, and writes the table compatibility and object compatibility reports to the bucket that you specify in <code>migrationOutput</code>. If you set <code>reviewMigrationPlan</code> to <code>true</code>, the migration waits in the <code>pendingReview</code> state so that you can review the reports, and continues only when you call <code>UpdateTableMigration</code> with <code>requestedState</code> set to <code>queued</code>. If you don't continue or cancel the migration within 30 days, the migration fails. Otherwise it continues to migrate the data, and writes the object migration report when the migration ends. If planning fails, the migration writes no object migration report.</p> <dl> <dt>Permissions</dt> <dd> <ul> <li> <p>You must have the <code>s3tables:StartTableMigration</code> permission to use this operation.</p> </li> <li> <p>You must have the <code>iam:PassRole</code> permission on the role that you specify in <code>roleARN</code>, with a condition that allows passing it to <code>migration.s3tables.amazonaws.com</code>. The associated resource is the table bucket.</p> </li> <li> <p>If <code>destinationTable</code> specifies SSE-KMS encryption, you must have the <code>kms:DescribeKey</code> and <code>kms:GenerateDataKey</code> permissions on the KMS key. You must also grant the S3 Tables maintenance principal access to the key. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-kms-permissions.html\">Permissions requirements for S3 Tables SSE-KMS encryption</a>.</p> </li> </ul> </dd> </dl>",
+    "SyncTableMigration": "<p>Migrates the changes in the source table since the previous start or sync, such as added and deleted source objects, into the destination table. The sync runs asynchronously: this operation returns the migration ID of the sync and its initial state, and you track progress with <code>GetTableMigration</code>.</p> <p>A sync uses the source, destination and data migration settings of the table's migration, and plans the work and writes its reports in the same way as <code>StartTableMigration</code>. You can sync after a start or sync that succeeded, failed or was cancelled, if an earlier start or sync of the table has a valid plan (<code>hasValidPlan</code>). You can't sync a table while a start or sync is in progress for it, and you can sync a table until you call <code>CompleteTableMigration</code> for it. If a source object that an earlier migration migrated has since been overwritten, the sync fails.</p> <dl> <dt>Permissions</dt> <dd> <ul> <li> <p>You must have the <code>s3tables:SyncTableMigration</code> permission to use this operation.</p> </li> <li> <p>You must have the <code>iam:PassRole</code> permission on the role that you specify in <code>roleARN</code>, with a condition that allows passing it to <code>migration.s3tables.amazonaws.com</code>. The associated resource is the table.</p> </li> </ul> </dd> </dl>",
     "TagResource": "<p>Applies one or more user-defined tags to an Amazon S3 Tables resource or updates existing tags. Each tag is a label consisting of a key and value pair. Tags can help you organize, track costs for, and control access to your resources. You can add up to 50 tags for each S3 resource. </p> <note> <p>For a list of S3 resources that support tagging, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html#manage-tags\">Managing tags for Amazon S3 resources</a>.</p> </note> <dl> <dt>Permissions</dt> <dd> <p>For tables and table buckets, you must have the <code>s3tables:TagResource</code> permission to use this operation.</p> </dd> </dl>",
     "UntagResource": "<p>Removes the specified user-defined tags from an Amazon S3 Tables resource. You can pass one or more tag keys. </p> <note> <p>For a list of S3 resources that support tagging, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html#manage-tags\">Managing tags for Amazon S3 resources</a>.</p> </note> <dl> <dt>Permissions</dt> <dd> <p>For tables and table buckets, you must have the <code>s3tables:UntagResource</code> permission to use this operation.</p> </dd> </dl>",
-    "UpdateTableMetadataLocation": "<p>Updates the metadata location for a table. The metadata location of a table must be an S3 URI that begins with the table's warehouse location. The metadata location for an Apache Iceberg table must end with <code>.metadata.json</code>, or if the metadata file is Gzip-compressed, <code>.metadata.json.gz</code>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:UpdateTableMetadataLocation</code> permission to use this operation. </p> </dd> </dl>"
+    "UpdateTableMetadataLocation": "<p>Updates the metadata location for a table. The metadata location of a table must be an S3 URI that begins with the table's warehouse location. The metadata location for an Apache Iceberg table must end with <code>.metadata.json</code>, or if the metadata file is Gzip-compressed, <code>.metadata.json.gz</code>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:UpdateTableMetadataLocation</code> permission to use this operation. </p> </dd> </dl>",
+    "UpdateTableMigration": "<p>Requests a state change for a migration. Identify the migration by its <code>migrationId</code> or by the <code>tableARN</code> of its destination table.</p> <p>Set <code>requestedState</code> to <code>queued</code> to continue a migration in the <code>pendingReview</code> state; the migration moves to <code>queued</code> or <code>migrating</code>. Set it to <code>cancelled</code> to cancel a migration in the <code>new</code>, <code>planning</code>, <code>pendingReview</code>, <code>queued</code> or <code>migrating</code> state; the migration moves to <code>cancelling</code>, finishes the work in progress, and then ends in the <code>cancelled</code> state, or in the <code>failed</code> state if any objects failed to migrate. Data that the migration already committed stays in the destination table.</p> <dl> <dt>Permissions</dt> <dd> <ul> <li> <p>You must have the <code>s3tables:UpdateTableMigration</code> permission to use this operation.</p> </li> </ul> </dd> </dl>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -78,8 +84,31 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "GetTableMigrationResponse$reviewMigrationPlan": "<p>A Boolean value that specifies whether the migration waits in the <code>pendingReview</code> state, so that you can review the compatibility reports before it migrates any data.</p>",
+        "GetTableMigrationResponse$hasValidPlan": "<p>A Boolean value that specifies whether planning produced a plan that the migration can run. If planning hasn't finished, this value isn't returned.</p>",
+        "ListTableMigrationsRequest$hasValidPlan": "<p>The <code>hasValidPlan</code> value to filter the list by. Migrations that are still planning aren't listed, whichever value you specify.</p>",
+        "MigrationSummary$hasValidPlan": "<p>A Boolean value that specifies whether planning produced a plan that the migration can run. If planning hasn't finished, this value isn't returned.</p>",
+        "MigrationTableProperties$dictionaryEncoding": "<p>Specifies whether the data files use dictionary encoding. The default is <code>true</code>.</p>",
         "SchemaField$required": "<p>A Boolean value that specifies whether values are required for each row in this field. By default, this is <code>false</code> and null values are allowed in the field. If this is <code>true</code> the field does not allow null values.</p>",
-        "SchemaV2Field$required": "<p>A Boolean value that specifies whether values are required for each row in this field. If this is <code>true</code>, the field does not allow null values.</p>"
+        "SchemaV2Field$required": "<p>A Boolean value that specifies whether values are required for each row in this field. If this is <code>true</code>, the field does not allow null values.</p>",
+        "StartTableMigrationRequest$reviewMigrationPlan": "<p>Specifies whether the migration waits in the <code>pendingReview</code> state, so that you can review the compatibility reports before it migrates any data. If <code>true</code>, the migration continues when you call <code>UpdateTableMigration</code> with <code>requestedState</code> set to <code>queued</code>. If you don't continue or cancel the migration within 30 days, the migration fails. The default is <code>false</code>.</p>",
+        "SyncTableMigrationRequest$reviewMigrationPlan": "<p>Specifies whether the sync waits in the <code>pendingReview</code> state, so that you can review the compatibility reports before it migrates any data. If <code>true</code>, the migration continues when you call <code>UpdateTableMigration</code> with <code>requestedState</code> set to <code>queued</code>. If you don't continue or cancel the migration within 30 days, the migration fails. The default is <code>false</code>.</p>"
+      }
+    },
+    "ChecksumCRC64NVME": {
+      "base": null,
+      "refs": {
+        "ReportOverview$checksumCRC64NVME": "<p>The Base64-encoded CRC64NVME checksum of the object that <code>key</code> names. For a report that has a manifest, the manifest lists the checksum of each report file. This value is returned after the migration writes the report.</p>"
+      }
+    },
+    "CompleteTableMigrationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CompressionCodec": {
+      "base": null,
+      "refs": {
+        "MigrationTableProperties$compressionCodec": "<p>The compression codec of the data files. The default is <code>zstd</code>.</p>"
       }
     },
     "ConflictException": {
@@ -115,6 +144,24 @@
     "CreateTableResponse": {
       "base": null,
       "refs": {}
+    },
+    "DataFileFormat": {
+      "base": null,
+      "refs": {
+        "MigrationTableProperties$writeFormat": "<p>The file format of the data files. The only supported format is <code>parquet</code>, the default.</p>"
+      }
+    },
+    "DataMigrationOverview": {
+      "base": "<p>The maintenance settings and migration policies for the destination table.</p>",
+      "refs": {
+        "GetTableMigrationResponse$dataMigration": "<p>The maintenance settings and migration policies for the destination table.</p>"
+      }
+    },
+    "DataMigrationSettings": {
+      "base": "<p>The maintenance settings and migration policies for the destination table.</p>",
+      "refs": {
+        "StartTableMigrationRequest$dataMigration": "<p>The maintenance settings and migration policies for the destination table.</p>"
+      }
     },
     "DeleteNamespaceRequest": {
       "base": null,
@@ -152,6 +199,12 @@
       "base": null,
       "refs": {}
     },
+    "DestinationTable": {
+      "base": "<p>The table that a migration creates in a table bucket and migrates the source into.</p>",
+      "refs": {
+        "StartTableMigrationRequest$destinationTable": "<p>The table to create and migrate the source into.</p>"
+      }
+    },
     "Document": {
       "base": null,
       "refs": {
@@ -163,6 +216,7 @@
       "refs": {
         "CreateTableBucketRequest$encryptionConfiguration": "<p>The encryption configuration to use for the table bucket. This configuration specifies the default encryption settings that will be applied to all tables created in this bucket unless overridden at the table level. The configuration includes the encryption algorithm and, if using SSE-KMS, the KMS key to use.</p>",
         "CreateTableRequest$encryptionConfiguration": "<p>The encryption configuration to use for the table. This configuration specifies the encryption algorithm and, if using SSE-KMS, the KMS key to use for encrypting the table. </p> <note> <p>If you choose SSE-KMS encryption you must grant the S3 Tables maintenance principal access to your KMS key. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-kms-permissions.html\">Permissions requirements for S3 Tables SSE-KMS encryption</a>.</p> </note>",
+        "DestinationTable$encryptionConfiguration": "<p>The encryption configuration for the table. If you don't specify one, the table uses the default encryption configuration of its table bucket. If you specify an encryption configuration, the migration role must have the <code>s3tables:PutTableEncryption</code> permission. If you choose SSE-KMS, the migration role must have the <code>kms:DescribeKey</code>, <code>kms:GenerateDataKey</code> and <code>kms:Decrypt</code> permissions on the KMS key, and the S3 Tables maintenance principal must have access to it. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-kms-permissions.html\">Permissions requirements for S3 Tables SSE-KMS encryption</a>.</p>",
         "GetTableBucketEncryptionResponse$encryptionConfiguration": "<p>The encryption configuration for the table bucket.</p>",
         "GetTableEncryptionResponse$encryptionConfiguration": "<p>The encryption configuration for the table.</p>",
         "PutTableBucketEncryptionRequest$encryptionConfiguration": "<p>The encryption configuration to apply to the table bucket.</p>"
@@ -185,6 +239,18 @@
         "MethodNotAllowedException$message": null,
         "NotFoundException$message": null,
         "TooManyRequestsException$message": null
+      }
+    },
+    "FindingCategory": {
+      "base": "<p>The category of a compatibility report finding, by what you change to fix it. Valid values:</p> <ul> <li> <p> <code>access</code> - A permission or a request setting. You don't need to change the source.</p> </li> <li> <p> <code>metadata</code> - The Amazon Web Services Glue table definition, or properties of a source object, such as its size, storage class, encryption or Parquet types.</p> </li> <li> <p> <code>data</code> - The contents of a source object, such as a partition value that can't be read, an object overwritten after an earlier migration, or a corrupt file.</p> </li> <li> <p> <code>internal</code> - An internal error in S3 Tables. Retry the migration, and contact Amazon Web Services Support if the error persists.</p> </li> </ul>",
+      "refs": {
+        "FindingCategoryCounts$key": null
+      }
+    },
+    "FindingCategoryCounts": {
+      "base": null,
+      "refs": {
+        "ReportOverview$invalidFindings": "<p>For the compatibility reports, the number of blocking findings in each category. The object compatibility report counts each blocked object once, under its most severe finding. Categories with no blocking findings are left out.</p>"
       }
     },
     "ForbiddenException": {
@@ -287,6 +353,14 @@
       "base": null,
       "refs": {}
     },
+    "GetTableMigrationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTableMigrationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetTablePolicyRequest": {
       "base": null,
       "refs": {}
@@ -343,6 +417,30 @@
       "base": null,
       "refs": {}
     },
+    "GlueTableSource": {
+      "base": "<p>An Amazon Web Services Glue Data Catalog table to migrate. The table must be an external Apache Hive table whose data is stored as Parquet in a general purpose bucket in the same account and Region as the table bucket. Views, transactional (ACID) tables, tables in an open table format such as Apache Iceberg, and tables registered with Amazon Web Services Lake Formation can't be migrated. If the table can't be migrated, the migration fails, and the table compatibility report lists the reason.</p>",
+      "refs": {
+        "SourceConfiguration$glueTable": "<p>An Amazon Web Services Glue Data Catalog table to migrate. The table must be an external Apache Hive table whose data is stored as Parquet in a general purpose bucket in the same account and Region as the table bucket. Views, transactional (ACID) tables, tables in an open table format such as Apache Iceberg, and tables registered with Amazon Web Services Lake Formation can't be migrated. If the table can't be migrated, the migration fails, and the table compatibility report lists the reason.</p>"
+      }
+    },
+    "GlueTableSourceCatalogIdString": {
+      "base": null,
+      "refs": {
+        "GlueTableSource$catalogId": "<p>The ID of the Data Catalog that contains the table. It must be your account ID.</p>"
+      }
+    },
+    "GlueTableSourceDatabaseNameString": {
+      "base": null,
+      "refs": {
+        "GlueTableSource$databaseName": "<p>The name of the database that contains the table.</p>"
+      }
+    },
+    "GlueTableSourceTableNameString": {
+      "base": null,
+      "refs": {
+        "GlueTableSource$tableName": "<p>The name of the table.</p>"
+      }
+    },
     "IAMRole": {
       "base": null,
       "refs": {
@@ -359,7 +457,8 @@
     "IcebergCompactionStrategy": {
       "base": null,
       "refs": {
-        "IcebergCompactionSettings$strategy": "<p>The compaction strategy to use for the table. This determines how files are selected and combined during compaction operations.</p>"
+        "IcebergCompactionSettings$strategy": "<p>The compaction strategy to use for the table. This determines how files are selected and combined during compaction operations.</p>",
+        "MigrationCompactionSettings$strategy": "<p>The compaction strategy. The only valid value is <code>binpack</code>, which is the default.</p>"
       }
     },
     "IcebergMetadata": {
@@ -401,6 +500,7 @@
     "IcebergSchemaV2": {
       "base": "<p>Contains details about the schema for an Iceberg table using the V2 format. This schema format supports nested and complex data types such as <code>struct</code>, <code>list</code>, and <code>map</code>, in addition to primitive types.</p>",
       "refs": {
+        "DestinationTable$schema": "<p>The schema of the table to create. If you don't specify a schema, the migration infers it from the source table, with every column optional. A schema that you specify must include every partition column of the source table. It can leave out other columns only if <code>unmatchedSourceFieldsPolicy</code> is <code>drop</code>. A struct column must have the same fields as the source column. Column default values aren't supported. If you mark a column as required, every source object must have a value for it: an object with a null value in a required column fails to migrate. The destination table is partitioned in the same way as the source table. To specify fields in <code>icebergSortOrder</code>, you must specify a schema.</p>",
         "IcebergMetadata$schemaV2": "<p>The schema for an Iceberg table using the V2 format. Use this property to define table schemas that include nested or complex data types such as <code>struct</code>, <code>list</code>, or <code>map</code>, in addition to primitive types. For schemas with only primitive types, you can use either <code>schema</code> or <code>schemaV2</code>.</p>"
       }
     },
@@ -431,6 +531,7 @@
     "IcebergSortOrder": {
       "base": "<p>Defines the sort order for data within an Iceberg table. Sorting data can improve query performance by enabling more efficient data skipping.</p>",
       "refs": {
+        "DestinationTable$icebergSortOrder": "<p>The sort order of the rows within each data file that the migration writes. A sort order can have up to five fields, each naming a column of the schema that you specify by its field ID, so to use a sort order you must specify a schema. <code>StartTableMigration</code> rejects a field that names no column of the schema, or whose transform doesn't fit the column's type.</p>",
         "IcebergMetadata$writeOrder": "<p>The sort order for the Iceberg table. Sort order defines how data is sorted within data files, which can improve query performance by enabling more efficient data skipping and filtering.</p>"
       }
     },
@@ -438,6 +539,12 @@
       "base": "<p>Contains details about the unreferenced file removal settings for an Iceberg table bucket.</p>",
       "refs": {
         "TableBucketMaintenanceSettings$icebergUnreferencedFileRemoval": "<p>The unreferenced file removal settings for the table bucket.</p>"
+      }
+    },
+    "IncompatibleValuesPolicy": {
+      "base": null,
+      "refs": {
+        "MigrationPolicies$incompatibleValuesPolicy": "<p>The migration policy for a source value that the destination column's type can't hold. Valid values:</p> <ul> <li> <p> <code>fail</code> - Fails the migration. This is the default.</p> </li> <li> <p> <code>setNull</code> - Writes null for a value that the destination column's type can't hold. If a column's type in a source object is incompatible with the destination column's type, the column is null for that whole object.</p> </li> </ul> <p>A required column, or a type that migration doesn't support, fails the migration under either value.</p>"
       }
     },
     "Integer": {
@@ -450,6 +557,7 @@
         "IcebergSortField$sourceId": "<p>The ID of the source schema field to sort by. This must reference a valid field ID from the table schema.</p>",
         "IcebergSortOrder$orderId": "<p>The unique identifier for this sort order. If not specified, defaults to <code>1</code>. The order ID is used by Apache Iceberg to track sort order evolution.</p>",
         "IntegerList$member": null,
+        "MigrationTableProperties$icebergFormatVersion": "<p>The Iceberg format version of the destination table. Valid values are <code>2</code> and <code>3</code>. The default is <code>2</code>.</p>",
         "SchemaField$id": "<p>An optional unique identifier for the schema field. Field IDs are used by Apache Iceberg to track schema evolution and maintain compatibility across schema changes. If not specified, S3 Tables automatically assigns field IDs.</p>",
         "SchemaV2Field$id": "<p>The unique identifier for the schema field. Field IDs are used by Apache Iceberg to track schema evolution and maintain compatibility across schema changes.</p>"
       }
@@ -516,6 +624,20 @@
       "base": null,
       "refs": {}
     },
+    "ListTableMigrationsLimit": {
+      "base": null,
+      "refs": {
+        "ListTableMigrationsRequest$maxResults": "<p>The maximum number of migrations to return, from 1 to 1,000. If you don't specify a value, the default is 100.</p>"
+      }
+    },
+    "ListTableMigrationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTableMigrationsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListTablesLimit": {
       "base": null,
       "refs": {
@@ -547,9 +669,23 @@
     "Long": {
       "base": null,
       "refs": {
+        "FindingCategoryCounts$value": null,
+        "MigrationStats$objectsMigrated": "<p>The number of source objects whose data the migration wrote to the destination table. Migrated data can be queried after the migration commits it. If the migration fails or is cancelled, some migrated objects might not be committed.</p>",
+        "MigrationStats$objectsFailedMigration": "<p>The number of source objects that didn't migrate, because they failed or because another object, such as an object in the same partition, failed. The object migration report lists the cause for each object.</p>",
+        "MigrationStats$objectsPendingMigration": "<p>The number of source objects that haven't migrated or failed yet. When a migration fails or is cancelled, these are the objects that it didn't migrate.</p>",
+        "PlanningStats$objectsScanned": "<p>The number of source objects that the migration found under the source table's location, whether or not it migrates them. The object compatibility report has one row for each.</p>",
+        "PlanningStats$objectsPlanned": "<p>The number of source objects in the migration. For a start, these are the data files in the Amazon Web Services Glue table's partitions, or under the table's location if the table isn't partitioned. For a sync, these are all the data files of the table after the sync, including files that earlier migrations migrated.</p>",
+        "PlanningStats$partitionCount": "<p>The number of partitions in the destination table after this migration, or 0 if the source table isn't partitioned. This value is returned when planning produces a valid plan.</p>",
         "TableRecordExpirationJobMetrics$deletedDataFiles": "<p>The total number of data files that were removed when the job ran.</p>",
         "TableRecordExpirationJobMetrics$deletedRecords": "<p>The total number of records that were removed when the job ran.</p>",
         "TableRecordExpirationJobMetrics$removedFilesSize": "<p>The total size (in bytes) of the data files that were removed when the job ran.</p>"
+      }
+    },
+    "MaintenanceSettings": {
+      "base": "<p>The maintenance settings for the destination table. The migration applies them when it creates the table: snapshot management starts then, and compaction starts after you complete the migration. If you don't specify a setting, the migration uses its default: a target file size of 512 MB, the binpack compaction strategy, at least 3 snapshots, and a maximum snapshot age of 120 hours. Unreferenced file removal follows the table bucket's configuration after you complete the migration.</p>",
+      "refs": {
+        "DataMigrationOverview$maintenanceSettings": "<p>The maintenance settings for the destination table. The migration applies them when it creates the table: snapshot management starts then, and compaction starts after you complete the migration. If you don't specify a setting, the migration uses its default: a target file size of 512 MB, the binpack compaction strategy, at least 3 snapshots, and a maximum snapshot age of 120 hours. Unreferenced file removal follows the table bucket's configuration after you complete the migration.</p>",
+        "DataMigrationSettings$maintenanceSettings": "<p>The maintenance settings for the destination table. The migration applies them when it creates the table: snapshot management starts then, and compaction starts after you complete the migration. If you don't specify a setting, the migration uses its default: a target file size of 512 MB, the binpack compaction strategy, at least 3 snapshots, and a maximum snapshot age of 120 hours. Unreferenced file removal follows the table bucket's configuration after you complete the migration.</p>"
       }
     },
     "MaintenanceStatus": {
@@ -579,6 +715,150 @@
       "base": "<p>The requested operation is not allowed on this resource. This may occur when attempting to modify a resource that is managed by a service or has restrictions that prevent the operation.</p>",
       "refs": {}
     },
+    "MigrationCompactionSettings": {
+      "base": "<p>The compaction settings that a migration applies to the destination table.</p>",
+      "refs": {
+        "MaintenanceSettings$icebergCompaction": "<p>The compaction settings.</p>"
+      }
+    },
+    "MigrationFailureCode": {
+      "base": "<p>The reason a migration failed. Each code names the cause, or the report that lists the findings.</p>",
+      "refs": {
+        "MigrationFailureReason$code": "<p>The failure code. It names the cause or the report that lists the findings. Valid values:</p> <ul> <li> <p> <code>rolePermissions</code> - S3 Tables couldn't assume the migration role, or the role doesn't have a permission that the migration needs. <code>detail</code> is the role ARN.</p> </li> <li> <p> <code>sourcePermissions</code> - The migration role couldn't read the Amazon Web Services Glue table or the source objects. <code>detail</code> names the table (<code>database.table</code>) or the source bucket.</p> </li> <li> <p> <code>destinationPermissions</code> - The migration role couldn't write to the table bucket or the report bucket. <code>detail</code> names the bucket.</p> </li> <li> <p> <code>resourceNotFound</code> - A resource that you specified doesn't exist, such as the Amazon Web Services Glue table or the source bucket. <code>detail</code> names it.</p> </li> <li> <p> <code>sourceNotSupported</code> - The source table can't be migrated, for example because it is empty, has too many objects, or has columns or partitions that can't be migrated. The table compatibility report lists the findings.</p> </li> <li> <p> <code>tableCompatibilityReport</code> - The migration couldn't create the destination table, for example because a table with that name already exists or the KMS key can't be used. For a sync, the destination table changed after the previous migration. The table compatibility report lists the finding.</p> </li> <li> <p> <code>objectCompatibilityReport</code> - Some source objects can't be migrated, for example because they are archived, or because they were overwritten after an earlier migration migrated them. The object compatibility report lists them.</p> </li> <li> <p> <code>objectMigrationReport</code> - Some source objects failed to migrate. The object migration report lists them and the cause for each.</p> </li> <li> <p> <code>reportBucketNotSupported</code> - The report bucket can't receive the migration's reports, for example because it is in a different Region than the table bucket.</p> </li> <li> <p> <code>internalError</code> - S3 Tables encountered an internal error. Retry the migration, and contact Amazon Web Services Support if the error persists.</p> </li> </ul>"
+      }
+    },
+    "MigrationFailureDetail": {
+      "base": "<p>The resource that the failure applies to, such as the role ARN, the Amazon Web Services Glue table (<code>database.table</code>) or a bucket. For <code>sourceNotSupported</code>, the reason that the source isn't supported.</p>",
+      "refs": {
+        "MigrationFailureReason$detail": "<p>The resource that the failure applies to, such as the role ARN, the Amazon Web Services Glue table (<code>database.table</code>) or a bucket. For <code>sourceNotSupported</code>, the reason that the source isn't supported, such as <code>EMPTY_TABLE</code>. This value isn't returned for the report codes or for <code>internalError</code>.</p>"
+      }
+    },
+    "MigrationFailureReason": {
+      "base": "<p>The reason that a migration failed: a code and, when there is one, the resource or reason it applies to. This value is returned only when the migration is in the <code>failed</code> state.</p>",
+      "refs": {
+        "GetTableMigrationResponse$failureReason": "<p>The reason that the migration failed. The code names the cause, such as a migration role that S3 Tables can't assume or an Amazon Web Services Glue table that doesn't exist, or the report that lists the findings. This value is returned only when the migration is in the <code>failed</code> state.</p>"
+      }
+    },
+    "MigrationId": {
+      "base": null,
+      "refs": {
+        "GetTableMigrationRequest$migrationId": "<p>The ID of the migration to get. Specify either <code>migrationId</code> or <code>tableARN</code>, not both.</p>",
+        "GetTableMigrationResponse$migrationId": "<p>The ID of the migration.</p>",
+        "MigrationSummary$migrationId": "<p>The ID of the migration.</p>",
+        "StartTableMigrationResponse$migrationId": "<p>The ID of the migration.</p>",
+        "SyncTableMigrationResponse$migrationId": "<p>The migration ID of the sync.</p>",
+        "UpdateTableMigrationRequest$migrationId": "<p>The ID of the migration to update. Specify either <code>migrationId</code> or <code>tableARN</code>, not both.</p>",
+        "UpdateTableMigrationResponse$migrationId": "<p>The ID of the migration.</p>"
+      }
+    },
+    "MigrationMinSnapshotsToKeep": {
+      "base": null,
+      "refs": {
+        "MigrationSnapshotManagementSettings$minSnapshotsToKeep": "<p>The minimum number of snapshots to keep. The value must be 3 or more. The default is 3.</p>"
+      }
+    },
+    "MigrationOutputConfiguration": {
+      "base": "<p>The bucket and prefixes that a migration writes its reports to. Every report goes to one bucket, each under its own prefix.</p>",
+      "refs": {
+        "StartTableMigrationRequest$migrationOutput": "<p>The bucket and prefixes that the migration writes its reports to. The bucket must be a general purpose bucket in your account and in the same Region as the table bucket, and the migration role must be able to write objects to it. Otherwise, the migration fails when it writes its first report.</p>",
+        "SyncTableMigrationRequest$migrationOutput": "<p>The bucket and prefixes that the sync writes its reports to. The bucket must be a general purpose bucket in your account and in the same Region as the table bucket, and the migration role must be able to write objects to it. Otherwise, the migration fails when it writes its first report.</p>"
+      }
+    },
+    "MigrationOutputOverview": {
+      "base": "<p>Where a migration writes its reports, and the location of each report once it is written.</p>",
+      "refs": {
+        "GetTableMigrationResponse$migrationOutput": "<p>The bucket and prefixes for the migration's reports, and the location of each report once it is written.</p>"
+      }
+    },
+    "MigrationPolicies": {
+      "base": "<p>The policies for source data that doesn't fit the destination schema.</p>",
+      "refs": {
+        "DataMigrationOverview$migrationPolicies": "<p>The policies for source data that doesn't fit the destination schema.</p>",
+        "DataMigrationSettings$migrationPolicies": "<p>The policies for source data that doesn't fit the destination schema.</p>"
+      }
+    },
+    "MigrationReportPrefix": {
+      "base": null,
+      "refs": {
+        "MigrationReportPrefixes$tableCompatibilityReport": "<p>The key prefix for the table compatibility report, up to 512 bytes. If not specified, the report's keys start at the root of the bucket.</p>",
+        "MigrationReportPrefixes$objectCompatibilityReport": "<p>The key prefix for the object compatibility report, up to 512 bytes. If not specified, the report's keys start at the root of the bucket.</p>",
+        "MigrationReportPrefixes$objectMigrationReport": "<p>The key prefix for the object migration report, up to 512 bytes. If not specified, the report's keys start at the root of the bucket.</p>",
+        "ReportOverview$prefix": "<p>The key prefix that the report is written under.</p>"
+      }
+    },
+    "MigrationReportPrefixes": {
+      "base": "<p>The key prefix for each report. If you don't specify a prefix for a report, its keys start at the root of the bucket.</p>",
+      "refs": {
+        "MigrationOutputConfiguration$prefixes": "<p>The key prefix for each report.</p>"
+      }
+    },
+    "MigrationRequestedState": {
+      "base": null,
+      "refs": {
+        "UpdateTableMigrationRequest$requestedState": "<p>The state to move the migration to: <code>queued</code> to continue a migration in the <code>pendingReview</code> state, or <code>cancelled</code> to cancel a migration in the <code>new</code>, <code>planning</code>, <code>pendingReview</code>, <code>queued</code> or <code>migrating</code> state.</p>"
+      }
+    },
+    "MigrationSnapshotManagementSettings": {
+      "base": "<p>The snapshot management settings that a migration applies to the destination table.</p>",
+      "refs": {
+        "MaintenanceSettings$icebergSnapshotManagement": "<p>The snapshot management settings.</p>"
+      }
+    },
+    "MigrationSourceType": {
+      "base": "<p>The type of source that a migration reads from. It names the member that is set in <code>SourceConfiguration</code>.</p>",
+      "refs": {
+        "GetTableMigrationResponse$sourceType": "<p>The type of the migration's source.</p>",
+        "StartTableMigrationRequest$sourceType": "<p>The type of the source. It must match the member that you set in <code>source</code>.</p>"
+      }
+    },
+    "MigrationState": {
+      "base": null,
+      "refs": {
+        "GetTableMigrationResponse$state": "<p>The state of the migration. Valid values:</p> <ul> <li> <p> <code>new</code> - S3 Tables accepted the request.</p> </li> <li> <p> <code>planning</code> - The migration is checking the source table, its objects and the destination for compatibility, and writing the compatibility reports.</p> </li> <li> <p> <code>pendingReview</code> - Planning finished, and the migration waits for you to continue or cancel it with <code>UpdateTableMigration</code>.</p> </li> <li> <p> <code>queued</code> - The migration is waiting to start migrating data.</p> </li> <li> <p> <code>migrating</code> - The migration is running the plan from the <code>planning</code> state: it copies data and commits it to the destination table. A migration reaches this state only if <code>hasValidPlan</code> is <code>true</code>.</p> </li> <li> <p> <code>succeeded</code> - Every planned object migrated.</p> </li> <li> <p> <code>failed</code> - The migration failed. Check <code>failureReason</code> for the cause.</p> </li> <li> <p> <code>cancelling</code> - You cancelled the migration, and it is finishing the work in progress.</p> </li> <li> <p> <code>cancelled</code> - The migration is cancelled.</p> </li> </ul> <p>A migration ends in the <code>succeeded</code>, <code>failed</code> or <code>cancelled</code> state. You can cancel it until it ends.</p>",
+        "ListTableMigrationsRequest$state": "<p>The state to filter the list by. For the valid values, see the <code>state</code> member of <code>GetTableMigration</code>.</p>",
+        "MigrationSummary$state": "<p>The state of the migration. Valid values:</p> <ul> <li> <p> <code>new</code> - S3 Tables accepted the request.</p> </li> <li> <p> <code>planning</code> - The migration is checking the source table, its objects and the destination for compatibility, and writing the compatibility reports.</p> </li> <li> <p> <code>pendingReview</code> - Planning finished, and the migration waits for you to continue or cancel it with <code>UpdateTableMigration</code>.</p> </li> <li> <p> <code>queued</code> - The migration is waiting to start migrating data.</p> </li> <li> <p> <code>migrating</code> - The migration is running the plan from the <code>planning</code> state: it copies data and commits it to the destination table. A migration reaches this state only if <code>hasValidPlan</code> is <code>true</code>.</p> </li> <li> <p> <code>succeeded</code> - Every planned object migrated.</p> </li> <li> <p> <code>failed</code> - The migration failed. Check <code>failureReason</code> for the cause.</p> </li> <li> <p> <code>cancelling</code> - You cancelled the migration, and it is finishing the work in progress.</p> </li> <li> <p> <code>cancelled</code> - The migration is cancelled.</p> </li> </ul>",
+        "StartTableMigrationResponse$state": "<p>The state of the migration when the request is accepted, such as <code>planning</code>.</p>",
+        "SyncTableMigrationResponse$state": "<p>The state of the migration when the request is accepted, such as <code>planning</code>.</p>",
+        "UpdateTableMigrationResponse$state": "<p>The state of the migration after the update, such as <code>queued</code>, <code>migrating</code> or <code>cancelling</code>.</p>"
+      }
+    },
+    "MigrationStats": {
+      "base": "<p>The number of source objects that migrated, failed or are pending. For a sync, the counts cover every object of the table after the sync, including objects that earlier migrations migrated. The counts are set when planning finishes and updated when the migration ends.</p>",
+      "refs": {
+        "GetTableMigrationResponse$migrationStats": "<p>The number of objects that migrated, failed or are pending. These counts are set when planning finishes and updated when the migration ends.</p>"
+      }
+    },
+    "MigrationSummary": {
+      "base": "<p>A summary of a migration.</p>",
+      "refs": {
+        "MigrationSummaryList$member": null
+      }
+    },
+    "MigrationSummaryList": {
+      "base": null,
+      "refs": {
+        "ListTableMigrationsResponse$migrations": "<p>The migrations, newest first.</p>"
+      }
+    },
+    "MigrationTableProperties": {
+      "base": "<p>The properties of the data files that a migration writes. The migration also sets the compression codec and dictionary encoding as the destination table's write properties, so they remain the table's defaults after you complete the migration.</p>",
+      "refs": {
+        "DestinationTable$properties": "<p>The properties of the destination table, such as its Iceberg format version and the format of its data files.</p>"
+      }
+    },
+    "MigrationTargetFileSizeMB": {
+      "base": null,
+      "refs": {
+        "MigrationCompactionSettings$targetFileSizeMB": "<p>The target size, from 64 to 512 MB, of the data files that the migration writes, and of the files that compaction writes after you complete the migration. The default is 512.</p>"
+      }
+    },
+    "MigrationType": {
+      "base": null,
+      "refs": {
+        "GetTableMigrationResponse$type": "<p>The type of the migration. Valid values:</p> <ul> <li> <p> <code>start</code> - A migration that <code>StartTableMigration</code> started.</p> </li> <li> <p> <code>sync</code> - A migration that <code>SyncTableMigration</code> started.</p> </li> </ul>",
+        "MigrationSummary$type": "<p>The type of the migration. Valid values:</p> <ul> <li> <p> <code>start</code> - A migration that <code>StartTableMigration</code> started.</p> </li> <li> <p> <code>sync</code> - A migration that <code>SyncTableMigration</code> started.</p> </li> </ul>"
+      }
+    },
     "NamespaceId": {
       "base": null,
       "refs": {
@@ -607,15 +887,19 @@
         "DeleteNamespaceRequest$namespace": "<p>The name of the namespace.</p>",
         "DeleteTablePolicyRequest$namespace": "<p>The namespace associated with the table. </p>",
         "DeleteTableRequest$namespace": "<p>The namespace associated with the table.</p>",
+        "DestinationTable$namespace": "<p>The namespace to create the table in.</p>",
         "GetNamespaceRequest$namespace": "<p>The name of the namespace.</p>",
         "GetTableEncryptionRequest$namespace": "<p>The namespace associated with the table.</p>",
         "GetTableMaintenanceConfigurationRequest$namespace": "<p>The namespace associated with the table.</p>",
         "GetTableMaintenanceJobStatusRequest$namespace": "<p>The name of the namespace the table is associated with. </p>",
         "GetTableMetadataLocationRequest$namespace": "<p>The namespace of the table.</p>",
+        "GetTableMigrationResponse$namespace": "<p>The namespace of the destination table.</p>",
         "GetTablePolicyRequest$namespace": "<p>The namespace associated with the table.</p>",
         "GetTableRequest$namespace": "<p>The name of the namespace the table is associated with.</p>",
         "GetTableStorageClassRequest$namespace": "<p>The namespace associated with the table.</p>",
+        "ListTableMigrationsRequest$namespace": "<p>The namespace to list migrations for. Requires <code>tableBucketARN</code>.</p>",
         "ListTablesRequest$namespace": "<p>The namespace of the tables.</p>",
+        "MigrationSummary$namespace": "<p>The namespace of the destination table.</p>",
         "NamespaceList$member": null,
         "PutTableMaintenanceConfigurationRequest$namespace": "<p>The namespace of the table.</p>",
         "PutTablePolicyRequest$namespace": "<p>The namespace associated with the table.</p>",
@@ -643,6 +927,8 @@
         "ListNamespacesResponse$continuationToken": "<p>The <code>ContinuationToken</code> for pagination of the list results.</p>",
         "ListTableBucketsRequest$continuationToken": "<p> <code>ContinuationToken</code> indicates to Amazon S3 that the list is being continued on this bucket with a token. <code>ContinuationToken</code> is obfuscated and is not a real key. You can use this <code>ContinuationToken</code> for pagination of the list results.</p>",
         "ListTableBucketsResponse$continuationToken": "<p>You can use this <code>ContinuationToken</code> for pagination of the list results.</p>",
+        "ListTableMigrationsRequest$nextToken": "<p>The <code>nextToken</code> from a previous response, to get the next page of results.</p>",
+        "ListTableMigrationsResponse$nextToken": "<p>A token to pass as <code>nextToken</code> to get the next page of results. If there are no more results, this value isn't returned.</p>",
         "ListTablesRequest$continuationToken": "<p> <code>ContinuationToken</code> indicates to Amazon S3 that the list is being continued on this bucket with a token. <code>ContinuationToken</code> is obfuscated and is not a real key. You can use this <code>ContinuationToken</code> for pagination of the list results.</p>",
         "ListTablesResponse$continuationToken": "<p>You can use this <code>ContinuationToken</code> for pagination of the list results.</p>"
       }
@@ -658,6 +944,12 @@
         "GetTableResponse$format": "<p>The format of the table.</p>"
       }
     },
+    "PlanningStats": {
+      "base": "<p>Statistics about the source and the partitions in a migration.</p>",
+      "refs": {
+        "GetTableMigrationResponse$planningStats": "<p>Statistics about the source and the partitions in the migration. This value is returned after planning finishes.</p>"
+      }
+    },
     "PositiveInteger": {
       "base": null,
       "refs": {
@@ -666,6 +958,7 @@
         "IcebergSnapshotManagementSettings$maxSnapshotAgeHours": "<p>The maximum age of a snapshot before it can be expired.</p>",
         "IcebergUnreferencedFileRemovalSettings$unreferencedDays": "<p>The number of days an object has to be unreferenced before it is marked as non-current.</p>",
         "IcebergUnreferencedFileRemovalSettings$nonCurrentDays": "<p>The number of days an object has to be non-current before it is deleted.</p>",
+        "MigrationSnapshotManagementSettings$maxSnapshotAgeHours": "<p>The maximum age, in hours, of a snapshot before it can be expired. The default is 120.</p>",
         "TableRecordExpirationSettings$days": "<p>If you enable record expiration for a table, you can specify the number of days to retain your table records. For example, to retain your table records for one year, set this value to <code>365</code>.</p>"
       }
     },
@@ -758,6 +1051,20 @@
         "ReplicationDestinationStatusModel$replicationStatus": "<p>The current status of replication to this destination.</p>"
       }
     },
+    "ReportObjectKey": {
+      "base": null,
+      "refs": {
+        "ReportOverview$key": "<p>The key of the report object in the bucket. For the object compatibility and object migration reports, this is the report's manifest; for the table compatibility report, it is the report itself. This value is returned after the migration writes the report. A migration doesn't always write every report. For example, a migration that fails during planning doesn't write the object migration report.</p>"
+      }
+    },
+    "ReportOverview": {
+      "base": "<p>A report of a migration: the prefix it is written under and, once it is written, its key, its checksum and, for the compatibility reports, the number of blocking findings in each category.</p>",
+      "refs": {
+        "MigrationOutputOverview$tableCompatibilityReport": "<p>The table compatibility report: the sample object that the schema is inferred from, the table-level findings, and one row for each destination column with its type change and how the migration policies apply to it. The migration writes it when planning finishes, before any data migrates. If planning fails, the report might not be written.</p>",
+        "MigrationOutputOverview$objectCompatibilityReport": "<p>The object compatibility report: one row for each source object under the source table's location, with whether the migration includes the object and its most severe finding. The migration writes it when planning finishes. If planning fails, the report might not be written.</p>",
+        "MigrationOutputOverview$objectMigrationReport": "<p>The object migration report: one row for each source object that the migration tried to migrate, with whether it migrated, how it was transformed, and why it failed. The migration writes it once, when the migration ends. It isn't written if planning fails or if a sync has nothing to migrate.</p>"
+      }
+    },
     "ResourceArn": {
       "base": null,
       "refs": {
@@ -773,6 +1080,21 @@
         "GetTablePolicyResponse$resourcePolicy": "<p>The <code>JSON</code> that defines the policy.</p>",
         "PutTableBucketPolicyRequest$resourcePolicy": "<p>The <code>JSON</code> that defines the policy.</p>",
         "PutTablePolicyRequest$resourcePolicy": "<p>The <code>JSON</code> that defines the policy.</p>"
+      }
+    },
+    "RoleArn": {
+      "base": null,
+      "refs": {
+        "GetTableMigrationResponse$roleARN": "<p>The Amazon Resource Name (ARN) of the IAM role that the migration uses.</p>",
+        "StartTableMigrationRequest$roleARN": "<p>The Amazon Resource Name (ARN) of the IAM role that the migration uses to read the source table and its data and to write the destination table and the reports. The role must be in your account, and its trust policy must allow <code>migration.s3tables.amazonaws.com</code> to assume it. You can limit the trust policy to the destination table bucket with the <code>aws:SourceArn</code> and <code>aws:SourceAccount</code> condition keys.</p>",
+        "SyncTableMigrationRequest$roleARN": "<p>The Amazon Resource Name (ARN) of the IAM role that the sync uses to read the source table and its data and to write the destination table and the reports. The role must be in your account, and its trust policy must allow <code>migration.s3tables.amazonaws.com</code> to assume it. You can limit the trust policy to the destination table bucket with the <code>aws:SourceArn</code> and <code>aws:SourceAccount</code> condition keys.</p>"
+      }
+    },
+    "S3BucketARN": {
+      "base": null,
+      "refs": {
+        "MigrationOutputConfiguration$bucket": "<p>The general purpose bucket that the migration writes every report to.</p>",
+        "MigrationOutputOverview$bucket": "<p>The general purpose bucket that the migration writes every report to.</p>"
       }
     },
     "SSEAlgorithm": {
@@ -811,6 +1133,21 @@
         "IcebergSchemaV2$type": "<p>The type of the top-level schema, which is always a <code>struct</code> type as defined in the <a href=\"https://iceberg.apache.org/spec/#schemas-and-data-types\">Apache Iceberg specification</a>. This value must be <code>struct</code>.</p>"
       }
     },
+    "SourceConfiguration": {
+      "base": "<p>The source to migrate from. Set exactly one member, and set <code>sourceType</code> to match it.</p>",
+      "refs": {
+        "GetTableMigrationResponse$source": "<p>The source table of the migration.</p>",
+        "StartTableMigrationRequest$source": "<p>The source table to migrate.</p>"
+      }
+    },
+    "StartTableMigrationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartTableMigrationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StorageClass": {
       "base": null,
       "refs": {
@@ -822,6 +1159,7 @@
       "refs": {
         "CreateTableBucketRequest$storageClassConfiguration": "<p>The default storage class configuration for the table bucket. This configuration will be applied to all new tables created in this bucket unless overridden at the table level. If not specified, the service default storage class will be used.</p>",
         "CreateTableRequest$storageClassConfiguration": "<p>The storage class configuration for the table. If not specified, the table inherits the storage class configuration from its table bucket. Specify this parameter to override the bucket's default storage class for this table.</p>",
+        "DestinationTable$storageClassConfiguration": "<p>The storage class configuration for the table. If you don't specify one, the table inherits the storage class configuration of its table bucket. If you specify a storage class configuration, the migration role must have the <code>s3tables:PutTableStorageClass</code> permission.</p>",
         "GetTableBucketStorageClassResponse$storageClassConfiguration": "<p>The storage class configuration for the table bucket.</p>",
         "GetTableStorageClassResponse$storageClassConfiguration": "<p>The storage class configuration for the table.</p>",
         "PutTableBucketStorageClassRequest$storageClassConfiguration": "<p>The storage class configuration to apply to the table bucket. This configuration will serve as the default for new tables created in this bucket.</p>"
@@ -853,15 +1191,27 @@
         "TableSummary$managedByService": "<p>The Amazon Web Services service managing this table, if applicable. For example, a replicated table is managed by the S3 Tables replication service.</p>"
       }
     },
+    "SyncTableMigrationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SyncTableMigrationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
         "GetNamespaceResponse$createdAt": "<p>The date and time the namespace was created at.</p>",
         "GetTableBucketResponse$createdAt": "<p>The date and time the table bucket was created.</p>",
+        "GetTableMigrationResponse$createdAt": "<p>The date and time that the migration was created.</p>",
+        "GetTableMigrationResponse$stateUpdatedAt": "<p>The date and time that the migration's state last changed.</p>",
         "GetTableRecordExpirationJobStatusResponse$lastRunTimestamp": "<p>The timestamp when the expiration job was last executed.</p>",
         "GetTableResponse$createdAt": "<p>The date and time the table bucket was created at.</p>",
         "GetTableResponse$modifiedAt": "<p>The date and time the table was last modified on.</p>",
         "LastSuccessfulReplicatedUpdate$timestamp": "<p>The timestamp when the replication update completed successfully.</p>",
+        "MigrationSummary$createdAt": "<p>The date and time that the migration was created.</p>",
+        "MigrationSummary$stateUpdatedAt": "<p>The date and time that the migration's state last changed.</p>",
         "NamespaceSummary$createdAt": "<p>The date and time the namespace was created at.</p>",
         "TableBucketSummary$createdAt": "<p>The date and time the table bucket was created at.</p>",
         "TableMaintenanceJobStatusValue$lastRunTimestamp": "<p>The date and time that the maintenance job was last run.</p>",
@@ -872,10 +1222,13 @@
     "TableARN": {
       "base": null,
       "refs": {
+        "CompleteTableMigrationRequest$tableARN": "<p>The Amazon Resource Name (ARN) of the migrated table to complete the migration of.</p>",
         "CreateTableResponse$tableARN": "<p>The Amazon Resource Name (ARN) of the table.</p>",
         "DeleteTableReplicationRequest$tableArn": "<p>The Amazon Resource Name (ARN) of the table.</p>",
         "GetTableMaintenanceConfigurationResponse$tableARN": "<p>The Amazon Resource Name (ARN) of the table.</p>",
         "GetTableMaintenanceJobStatusResponse$tableARN": "<p>The Amazon Resource Name (ARN) of the table.</p>",
+        "GetTableMigrationRequest$tableARN": "<p>The Amazon Resource Name (ARN) of the destination table. Gets the table's most recent migration. Specify either <code>tableARN</code> or <code>migrationId</code>, not both.</p>",
+        "GetTableMigrationResponse$tableARN": "<p>The Amazon Resource Name (ARN) of the destination table, once the migration creates it.</p>",
         "GetTableRecordExpirationConfigurationRequest$tableArn": "<p>The Amazon Resource Name (ARN) of the table.</p>",
         "GetTableRecordExpirationJobStatusRequest$tableArn": "<p>The Amazon Resource Name (ARN) of the table.</p>",
         "GetTableReplicationRequest$tableArn": "<p>The Amazon Resource Name (ARN) of the table.</p>",
@@ -883,12 +1236,17 @@
         "GetTableReplicationStatusResponse$sourceTableArn": "<p>The Amazon Resource Name (ARN) of the source table being replicated.</p>",
         "GetTableRequest$tableArn": "<p>The Amazon Resource Name (ARN) of the table.</p>",
         "GetTableResponse$tableARN": "<p>The Amazon Resource Name (ARN) of the table.</p>",
+        "ListTableMigrationsRequest$tableARN": "<p>The Amazon Resource Name (ARN) of the table to list migrations for. The list includes the migrations into this table. To also list migrations into an earlier table of the same name, specify <code>tableBucketARN</code>, <code>namespace</code> and <code>name</code> instead. Specify either <code>tableARN</code> or <code>tableBucketARN</code>, not both.</p>",
+        "MigrationSummary$tableARN": "<p>The Amazon Resource Name (ARN) of the destination table, once the migration creates it.</p>",
         "PutTableRecordExpirationConfigurationRequest$tableArn": "<p>The Amazon Resource Name (ARN) of the table.</p>",
         "PutTableReplicationRequest$tableArn": "<p>The Amazon Resource Name (ARN) of the source table.</p>",
         "ReplicationDestinationStatusModel$destinationTableArn": "<p>The Amazon Resource Name (ARN) of the destination table.</p>",
         "ReplicationInformation$sourceTableARN": "<p>The Amazon Resource Name (ARN) of the source table from which this table is replicated.</p>",
+        "SyncTableMigrationRequest$tableARN": "<p>The Amazon Resource Name (ARN) of the destination table to sync. The table must have a migration, and you must not have called <code>CompleteTableMigration</code> for it.</p>",
         "TableSummary$tableARN": "<p>The Amazon Resource Name (ARN) of the table.</p>",
-        "UpdateTableMetadataLocationResponse$tableARN": "<p>The Amazon Resource Name (ARN) of the table.</p>"
+        "UpdateTableMetadataLocationResponse$tableARN": "<p>The Amazon Resource Name (ARN) of the table.</p>",
+        "UpdateTableMigrationRequest$tableARN": "<p>The Amazon Resource Name (ARN) of the destination table. Updates the table's most recent migration. Until the migration creates the destination table, specify <code>migrationId</code>. Specify either <code>tableARN</code> or <code>migrationId</code>, not both.</p>",
+        "UpdateTableMigrationResponse$tableARN": "<p>The Amazon Resource Name (ARN) of the destination table.</p>"
       }
     },
     "TableBucketARN": {
@@ -906,6 +1264,7 @@
         "DeleteTableBucketRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "DeleteTablePolicyRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket that contains the table.</p>",
         "DeleteTableRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket that contains the table.</p>",
+        "DestinationTable$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket to create the table in.</p>",
         "GetNamespaceRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "GetTableBucketEncryptionRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "GetTableBucketMaintenanceConfigurationRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket associated with the maintenance configuration.</p>",
@@ -921,11 +1280,14 @@
         "GetTableMaintenanceConfigurationRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "GetTableMaintenanceJobStatusRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "GetTableMetadataLocationRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
+        "GetTableMigrationResponse$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket that contains the destination table.</p>",
         "GetTablePolicyRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket that contains the table.</p>",
         "GetTableRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket associated with the table.</p>",
         "GetTableStorageClassRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket that contains the table.</p>",
         "ListNamespacesRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
+        "ListTableMigrationsRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket to list migrations for.</p>",
         "ListTablesRequest$tableBucketARN": "<p>The Amazon resource Name (ARN) of the table bucket.</p>",
+        "MigrationSummary$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket that contains the destination table.</p>",
         "PutTableBucketEncryptionRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "PutTableBucketMaintenanceConfigurationRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket associated with the maintenance configuration.</p>",
         "PutTableBucketMetricsConfigurationRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
@@ -1081,14 +1443,18 @@
         "CreateTableRequest$name": "<p>The name for the table.</p>",
         "DeleteTablePolicyRequest$name": "<p>The table name.</p>",
         "DeleteTableRequest$name": "<p>The name of the table.</p>",
+        "DestinationTable$name": "<p>The name of the table to create.</p>",
         "GetTableEncryptionRequest$name": "<p>The name of the table.</p>",
         "GetTableMaintenanceConfigurationRequest$name": "<p>The name of the table.</p>",
         "GetTableMaintenanceJobStatusRequest$name": "<p>The name of the table containing the maintenance job status you want to check.</p>",
         "GetTableMetadataLocationRequest$name": "<p>The name of the table.</p>",
+        "GetTableMigrationResponse$name": "<p>The name of the destination table.</p>",
         "GetTablePolicyRequest$name": "<p>The name of the table.</p>",
         "GetTableRequest$name": "<p>The name of the table.</p>",
         "GetTableResponse$name": "<p>The name of the table.</p>",
         "GetTableStorageClassRequest$name": "<p>The name of the table.</p>",
+        "ListTableMigrationsRequest$name": "<p>The name of the table to list migrations for. Requires <code>tableBucketARN</code> and <code>namespace</code>.</p>",
+        "MigrationSummary$name": "<p>The name of the destination table.</p>",
         "PutTableMaintenanceConfigurationRequest$name": "<p>The name of the table.</p>",
         "PutTablePolicyRequest$name": "<p>The name of the table.</p>",
         "RenameTableRequest$name": "<p>The current name of the table.</p>",
@@ -1205,6 +1571,7 @@
       "refs": {
         "CreateTableBucketRequest$tags": "<p>A map of user-defined tags that you would like to apply to the table bucket that you are creating. A tag is a key-value pair that you apply to your resources. Tags can help you organize and control access to resources. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html\">Tagging for cost allocation or attribute-based access control (ABAC)</a>.</p> <note> <p>You must have the <code>s3tables:TagResource</code> permission in addition to <code>s3tables:CreateTableBucket</code> permisson to create a table bucket with tags.</p> </note>",
         "CreateTableRequest$tags": "<p>A map of user-defined tags that you would like to apply to the table that you are creating. A tag is a key-value pair that you apply to your resources. Tags can help you organize, track costs for, and control access to resources. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html\">Tagging for cost allocation or attribute-based access control (ABAC)</a>.</p> <note> <p>You must have the <code>s3tables:TagResource</code> permission in addition to <code>s3tables:CreateTable</code> permission to create a table with tags.</p> </note>",
+        "DestinationTable$tags": "<p>The tags to add to the table. A tag is a key-value pair that you apply to your resources. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html\">Tagging for cost allocation or attribute-based access control (ABAC)</a>. If you specify tags, the migration role must have the <code>s3tables:TagResource</code> permission.</p>",
         "ListTagsForResourceResponse$tags": "<p>The user-defined tags that are applied to the resource. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html\">Tagging for cost allocation or attribute-based access control (ABAC)</a>.</p>",
         "TagResourceRequest$tags": "<p>The user-defined tag that you want to add to the specified S3 Tables resource. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html\">Tagging for cost allocation or attribute-based access control (ABAC)</a>.</p>"
       }
@@ -1212,6 +1579,12 @@
     "TooManyRequestsException": {
       "base": "<p>The limit on the number of requests per second was exceeded.</p>",
       "refs": {}
+    },
+    "UnmatchedSourceFieldsPolicy": {
+      "base": null,
+      "refs": {
+        "MigrationPolicies$unmatchedSourceFieldsPolicy": "<p>The migration policy for a source field that has no matching column in the destination schema. Valid values:</p> <ul> <li> <p> <code>fail</code> - Fails the migration. This is the default.</p> </li> <li> <p> <code>drop</code> - Leaves source columns that the destination schema doesn't have out of the destination table, and doesn't migrate source objects outside the Amazon Web Services Glue table's partition locations.</p> </li> </ul> <p>A destination schema that leaves out a partition column or a field of a struct column fails the migration under either value.</p>"
+      }
     },
     "UntagResourceRequest": {
       "base": null,
@@ -1226,6 +1599,20 @@
       "refs": {}
     },
     "UpdateTableMetadataLocationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTableMigrationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTableMigrationRequestUpdateDescriptionString": {
+      "base": null,
+      "refs": {
+        "UpdateTableMigrationRequest$updateDescription": "<p>A description of the update, up to 1,024 characters, with no control characters. <code>GetTableMigration</code> doesn't return it.</p>"
+      }
+    },
+    "UpdateTableMigrationResponse": {
       "base": null,
       "refs": {}
     },

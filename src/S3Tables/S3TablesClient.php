@@ -5,6 +5,10 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon S3 Tables** service.
+ * @method \Aws\Result completeTableMigration(array $args = [])
+ * @phpstan-method \Aws\Result completeTableMigration(array{tableARN?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise completeTableMigrationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise completeTableMigrationAsync(array{tableARN?: string, ...} $args = [])
  * @method \Aws\Result createNamespace(array $args = [])
  * @phpstan-method \Aws\Result createNamespace(array{tableBucketARN?: string, namespace?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise createNamespaceAsync(array $args = [])
@@ -157,6 +161,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getTableMetadataLocation(array{tableBucketARN?: string, namespace?: string, name?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getTableMetadataLocationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getTableMetadataLocationAsync(array{tableBucketARN?: string, namespace?: string, name?: string, ...} $args = [])
+ * @method \Aws\Result getTableMigration(array $args = [])
+ * @phpstan-method \Aws\Result getTableMigration(array{migrationId?: string, tableARN?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getTableMigrationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getTableMigrationAsync(array{migrationId?: string, tableARN?: string, ...} $args = [])
  * @method \Aws\Result getTablePolicy(array $args = [])
  * @phpstan-method \Aws\Result getTablePolicy(array{tableBucketARN?: string, namespace?: string, name?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getTablePolicyAsync(array $args = [])
@@ -189,6 +197,30 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listTableBuckets(array{prefix?: string, continuationToken?: string, maxBuckets?: int, type?: 'aws'|'customer', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listTableBucketsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listTableBucketsAsync(array{prefix?: string, continuationToken?: string, maxBuckets?: int, type?: 'aws'|'customer', ...} $args = [])
+ * @method \Aws\Result listTableMigrations(array $args = [])
+ * @phpstan-method \Aws\Result listTableMigrations(array{
+ *     tableBucketARN?: string,
+ *     namespace?: string,
+ *     name?: string,
+ *     tableARN?: string,
+ *     state?: 'cancelled'|'cancelling'|'failed'|'migrating'|'new'|'pendingReview'|'planning'|'queued'|'succeeded',
+ *     hasValidPlan?: bool,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTableMigrationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listTableMigrationsAsync(array{
+ *     tableBucketARN?: string,
+ *     namespace?: string,
+ *     name?: string,
+ *     tableARN?: string,
+ *     state?: 'cancelled'|'cancelling'|'failed'|'migrating'|'new'|'pendingReview'|'planning'|'queued'|'succeeded',
+ *     hasValidPlan?: bool,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listTables(array $args = [])
  * @phpstan-method \Aws\Result listTables(array{
  *     tableBucketARN?: string,
@@ -347,6 +379,122 @@ use Aws\AwsClient;
  *     versionToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result startTableMigration(array $args = [])
+ * @phpstan-method \Aws\Result startTableMigration(array{
+ *     roleARN?: string,
+ *     destinationTable?: array{
+ *         tableBucketARN?: string,
+ *         namespace?: string,
+ *         name?: string,
+ *         encryptionConfiguration?: array{sseAlgorithm?: 'AES256'|'aws:kms', kmsKeyArn?: string, ...},
+ *         storageClassConfiguration?: array{storageClass?: 'INTELLIGENT_TIERING'|'STANDARD', ...},
+ *         tags?: array<string, string>,
+ *         properties?: array{
+ *             writeFormat?: 'parquet',
+ *             icebergFormatVersion?: int,
+ *             compressionCodec?: 'gzip'|'snappy'|'uncompressed'|'zstd',
+ *             dictionaryEncoding?: bool,
+ *             ...,
+ *         },
+ *         schema?: array{type?: 'struct', fields?: list<array>, schemaId?: int, identifierFieldIds?: list<int>, ...},
+ *         icebergSortOrder?: array{orderId?: int, fields?: list<array>, ...},
+ *         ...,
+ *     },
+ *     sourceType?: 'glueTable',
+ *     source?: array{glueTable?: array{catalogId?: string, databaseName?: string, tableName?: string, ...}, ...},
+ *     dataMigration?: array{
+ *         maintenanceSettings?: array{icebergCompaction?: array, icebergSnapshotManagement?: array, ...},
+ *         migrationPolicies?: array{unmatchedSourceFieldsPolicy?: 'drop'|'fail', incompatibleValuesPolicy?: 'fail'|'setNull', ...},
+ *         ...,
+ *     },
+ *     reviewMigrationPlan?: bool,
+ *     migrationOutput?: array{
+ *         bucket?: string,
+ *         prefixes?: array{
+ *             tableCompatibilityReport?: string,
+ *             objectCompatibilityReport?: string,
+ *             objectMigrationReport?: string,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise startTableMigrationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startTableMigrationAsync(array{
+ *     roleARN?: string,
+ *     destinationTable?: array{
+ *         tableBucketARN?: string,
+ *         namespace?: string,
+ *         name?: string,
+ *         encryptionConfiguration?: array{sseAlgorithm?: 'AES256'|'aws:kms', kmsKeyArn?: string, ...},
+ *         storageClassConfiguration?: array{storageClass?: 'INTELLIGENT_TIERING'|'STANDARD', ...},
+ *         tags?: array<string, string>,
+ *         properties?: array{
+ *             writeFormat?: 'parquet',
+ *             icebergFormatVersion?: int,
+ *             compressionCodec?: 'gzip'|'snappy'|'uncompressed'|'zstd',
+ *             dictionaryEncoding?: bool,
+ *             ...,
+ *         },
+ *         schema?: array{type?: 'struct', fields?: list<array>, schemaId?: int, identifierFieldIds?: list<int>, ...},
+ *         icebergSortOrder?: array{orderId?: int, fields?: list<array>, ...},
+ *         ...,
+ *     },
+ *     sourceType?: 'glueTable',
+ *     source?: array{glueTable?: array{catalogId?: string, databaseName?: string, tableName?: string, ...}, ...},
+ *     dataMigration?: array{
+ *         maintenanceSettings?: array{icebergCompaction?: array, icebergSnapshotManagement?: array, ...},
+ *         migrationPolicies?: array{unmatchedSourceFieldsPolicy?: 'drop'|'fail', incompatibleValuesPolicy?: 'fail'|'setNull', ...},
+ *         ...,
+ *     },
+ *     reviewMigrationPlan?: bool,
+ *     migrationOutput?: array{
+ *         bucket?: string,
+ *         prefixes?: array{
+ *             tableCompatibilityReport?: string,
+ *             objectCompatibilityReport?: string,
+ *             objectMigrationReport?: string,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result syncTableMigration(array $args = [])
+ * @phpstan-method \Aws\Result syncTableMigration(array{
+ *     roleARN?: string,
+ *     tableARN?: string,
+ *     reviewMigrationPlan?: bool,
+ *     migrationOutput?: array{
+ *         bucket?: string,
+ *         prefixes?: array{
+ *             tableCompatibilityReport?: string,
+ *             objectCompatibilityReport?: string,
+ *             objectMigrationReport?: string,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise syncTableMigrationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise syncTableMigrationAsync(array{
+ *     roleARN?: string,
+ *     tableARN?: string,
+ *     reviewMigrationPlan?: bool,
+ *     migrationOutput?: array{
+ *         bucket?: string,
+ *         prefixes?: array{
+ *             tableCompatibilityReport?: string,
+ *             objectCompatibilityReport?: string,
+ *             objectMigrationReport?: string,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @phpstan-method \Aws\Result tagResource(array{resourceArn?: string, tags?: array<string, string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
@@ -371,6 +519,22 @@ use Aws\AwsClient;
  *     name?: string,
  *     versionToken?: string,
  *     metadataLocation?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateTableMigration(array $args = [])
+ * @phpstan-method \Aws\Result updateTableMigration(array{
+ *     tableARN?: string,
+ *     migrationId?: string,
+ *     requestedState?: 'cancelled'|'queued',
+ *     updateDescription?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateTableMigrationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateTableMigrationAsync(array{
+ *     tableARN?: string,
+ *     migrationId?: string,
+ *     requestedState?: 'cancelled'|'queued',
+ *     updateDescription?: string,
  *     ...,
  * } $args = [])
  */

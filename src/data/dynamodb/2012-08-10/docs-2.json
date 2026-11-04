@@ -5,6 +5,7 @@
     "BatchExecuteStatement": "<p>This operation allows you to perform batch reads or writes on data stored in DynamoDB, using PartiQL. Each read statement in a <code>BatchExecuteStatement</code> must specify an equality condition on all key attributes. This enforces that each <code>SELECT</code> statement in a batch returns at most a single item. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ql-reference.multiplestatements.batching.html\">Running batch operations with PartiQL for DynamoDB </a>.</p> <note> <p>The entire batch must consist of either read statements or write statements, you cannot mix both in one batch.</p> </note> <important> <p>A HTTP 200 response does not mean that all statements in the BatchExecuteStatement succeeded. Error details for individual statements can be found under the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchStatementResponse.html#DDB-Type-BatchStatementResponse-Error\">Error</a> field of the <code>BatchStatementResponse</code> for each statement.</p> </important>",
     "BatchGetItem": "<p>The <code>BatchGetItem</code> operation returns the attributes of one or more items from one or more tables. You identify requested items by primary key.</p> <p>A single operation can retrieve up to 16 MB of data, which can contain as many as 100 items. <code>BatchGetItem</code> returns a partial result if the response size limit is exceeded, the table's provisioned throughput is exceeded, more than 1MB per partition is requested, or an internal processing failure occurs. If a partial result is returned, the operation returns a value for <code>UnprocessedKeys</code>. You can use this value to retry the operation starting with the next item to get.</p> <important> <p>If you request more than 100 items, <code>BatchGetItem</code> returns a <code>ValidationException</code> with the message \"Too many items requested for the BatchGetItem call.\"</p> </important> <p>For example, if you ask to retrieve 100 items, but each individual item is 300 KB in size, the system returns 52 items (so as not to exceed the 16 MB limit). It also returns an appropriate <code>UnprocessedKeys</code> value so you can get the next page of results. If desired, your application can include its own logic to assemble the pages of results into one dataset.</p> <p>If <i>none</i> of the items can be processed due to insufficient provisioned throughput on all of the tables in the request, then <code>BatchGetItem</code> returns a <code>ProvisionedThroughputExceededException</code>. If <i>at least one</i> of the items is successfully processed, then <code>BatchGetItem</code> completes successfully, while returning the keys of the unread items in <code>UnprocessedKeys</code>.</p> <important> <p>If DynamoDB returns any unprocessed items, you should retry the batch operation on those items. However, <i>we strongly recommend that you use an exponential backoff algorithm</i>. If you retry the batch operation immediately, the underlying read or write requests can still fail due to throttling on the individual tables. If you delay the batch operation using exponential backoff, the individual requests in the batch are much more likely to succeed.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#BatchOperations\">Batch Operations and Error Handling</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> </important> <p>By default, <code>BatchGetItem</code> performs eventually consistent reads on every table in the request. If you want strongly consistent reads instead, you can set <code>ConsistentRead</code> to <code>true</code> for any or all tables.</p> <p>In order to minimize response latency, <code>BatchGetItem</code> may retrieve items in parallel.</p> <p>When designing your application, keep in mind that DynamoDB does not return items in any particular order. To help parse the response by item, include the primary key values for the items in your request in the <code>ProjectionExpression</code> parameter.</p> <p>If a requested item does not exist, it is not returned in the result. Requests for nonexistent items consume the minimum read capacity units according to the type of read. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#CapacityUnitCalculations\">Working with Tables</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <note> <p> <code>BatchGetItem</code> will result in a <code>ValidationException</code> if the same key is specified multiple times.</p> </note>",
     "BatchWriteItem": "<p>The <code>BatchWriteItem</code> operation puts or deletes multiple items in one or more tables. A single call to <code>BatchWriteItem</code> can transmit up to 16MB of data over the network, consisting of up to 25 item put or delete operations. While individual items can be up to 400 KB once stored, it's important to note that an item's representation might be greater than 400KB while being sent in DynamoDB's JSON format for the API call. For more details on this distinction, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html\">Naming Rules and Data Types</a>.</p> <note> <p> <code>BatchWriteItem</code> cannot update items. If you perform a <code>BatchWriteItem</code> operation on an existing item, that item's values will be overwritten by the operation and it will appear like it was updated. To update items, we recommend you use the <code>UpdateItem</code> action.</p> </note> <p>The individual <code>PutItem</code> and <code>DeleteItem</code> operations specified in <code>BatchWriteItem</code> are atomic; however <code>BatchWriteItem</code> as a whole is not. If any requested operations fail because the table's provisioned throughput is exceeded or an internal processing failure occurs, the failed operations are returned in the <code>UnprocessedItems</code> response parameter. You can investigate and optionally resend the requests. Typically, you would call <code>BatchWriteItem</code> in a loop. Each iteration would check for unprocessed items and submit a new <code>BatchWriteItem</code> request with those unprocessed items until all items have been processed.</p> <p>If <code>BatchWriteItem</code> cannot process any items due to throttling (for example, insufficient provisioned throughput on the tables in the request, or partition-level or account-level limits), it returns a <code>ProvisionedThroughputExceededException</code> or a <code>ThrottlingException</code>. Both indicate that the request was throttled; check the <code>ThrottlingReason</code> field in the returned exception for details.</p> <important> <p>If DynamoDB returns any unprocessed items, you should retry the batch operation on those items. However, <i>we strongly recommend that you use an exponential backoff algorithm</i>. If you retry the batch operation immediately, the underlying read or write requests can still fail due to throttling on the individual tables. If you delay the batch operation using exponential backoff, the individual requests in the batch are much more likely to succeed.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#Programming.Errors.BatchOperations\">Batch Operations and Error Handling</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> </important> <p>With <code>BatchWriteItem</code>, you can efficiently write or delete large amounts of data, such as from Amazon EMR, or copy data from another database into DynamoDB. In order to improve performance with these large-scale operations, <code>BatchWriteItem</code> does not behave in the same way as individual <code>PutItem</code> and <code>DeleteItem</code> calls would. For example, you cannot specify conditions on individual put and delete requests, and <code>BatchWriteItem</code> does not return deleted items in the response.</p> <p>If you use a programming language that supports concurrency, you can use threads to write items in parallel. Your application must include the necessary logic to manage the threads. With languages that don't support threading, you must update or delete the specified items one at a time. In both situations, <code>BatchWriteItem</code> performs the specified put and delete operations in parallel, giving you the power of the thread pool approach without having to introduce complexity into your application.</p> <p>Parallel processing reduces latency, but each specified put and delete request consumes the same number of write capacity units whether it is processed in parallel or not. Delete operations on nonexistent items consume one write capacity unit.</p> <p>If one or more of the following is true, DynamoDB rejects the entire batch write operation:</p> <ul> <li> <p>One or more tables specified in the <code>BatchWriteItem</code> request does not exist.</p> </li> <li> <p>Primary key attributes specified on an item in the request do not match those in the corresponding table's primary key schema.</p> </li> <li> <p>You try to perform multiple operations on the same item in the same <code>BatchWriteItem</code> request. For example, you cannot put and delete the same item in the same <code>BatchWriteItem</code> request. </p> </li> <li> <p> Your request contains at least two items with identical hash and range keys (which essentially is two put operations). </p> </li> <li> <p>There are more than 25 requests in the batch.</p> </li> <li> <p>Any individual item in a batch exceeds 400 KB.</p> </li> <li> <p>The total request size exceeds 16 MB.</p> </li> <li> <p>Any individual items with keys exceeding the key length limits. For a partition key, the limit is 2048 bytes and for a sort key, the limit is 1024 bytes.</p> </li> </ul>",
+    "CancelBulkOperation": "<p>Cancels an in-progress bulk operation asynchronously. Cancellation doesn't remove items that the operation has already written. Use <code>DescribeBulkOperation</code> to monitor the operation until it reaches a terminal status.</p>",
     "CreateBackup": "<p>Creates a backup for an existing table.</p> <p> Each time you create an on-demand backup, the entire table data is backed up. There is no limit to the number of on-demand backups that can be taken. </p> <p> When you create an on-demand backup, a time marker of the request is cataloged, and the backup is created asynchronously, by applying all changes until the time of the request to the last full table snapshot. Backup requests are processed instantaneously and become available for restore within minutes. </p> <p>You can call <code>CreateBackup</code> at a maximum rate of 50 times per second.</p> <p>All backups in DynamoDB work without consuming any provisioned throughput on the table.</p> <p> If you submit a backup request on 2018-12-14 at 14:25:00, the backup is guaranteed to contain all data committed to the table up to 14:24:00, and data committed after 14:26:00 will not be. The backup might contain data modifications made between 14:24:00 and 14:26:00. On-demand backup does not support causal consistency. </p> <p> Along with data, the following are also included on the backups: </p> <ul> <li> <p>Global secondary indexes (GSIs)</p> </li> <li> <p>Local secondary indexes (LSIs)</p> </li> <li> <p>Streams</p> </li> <li> <p>Provisioned read and write capacity</p> </li> </ul>",
     "CreateGlobalTable": "<p>Creates a global table from an existing table. A global table creates a replication relationship between two or more DynamoDB tables with the same table name in the provided Regions. </p> <important> <p>This documentation is for version 2017.11.29 (Legacy) of global tables, which should be avoided for new global tables. Customers should use <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html\">Global Tables version 2019.11.21 (Current)</a> when possible, because it provides greater flexibility, higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).</p> <p>To determine which version you're using, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html\">Determining the global table version you are using</a>. To update existing global tables from version 2017.11.29 (Legacy) to version 2019.11.21 (Current), see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html\">Upgrading global tables</a>.</p> </important> <p>If you want to add a new replica table to a global table, each of the following conditions must be true:</p> <ul> <li> <p>The table must have the same primary key as all of the other replicas.</p> </li> <li> <p>The table must have the same name as all of the other replicas.</p> </li> <li> <p>The table must have DynamoDB Streams enabled, with the stream containing both the new and the old images of the item.</p> </li> <li> <p>None of the replica tables in the global table can contain any data.</p> </li> </ul> <p> If global secondary indexes are specified, then the following conditions must also be met: </p> <ul> <li> <p> The global secondary indexes must have the same name. </p> </li> <li> <p> The global secondary indexes must have the same hash key and sort key (if present). </p> </li> </ul> <p> If local secondary indexes are specified, then the following conditions must also be met: </p> <ul> <li> <p> The local secondary indexes must have the same name. </p> </li> <li> <p> The local secondary indexes must have the same hash key and sort key (if present). </p> </li> </ul> <important> <p> Write capacity settings should be set consistently across your replica tables and secondary indexes. DynamoDB strongly recommends enabling auto scaling to manage the write capacity settings for all of your global tables replicas and indexes. </p> <p> If you prefer to manage write capacity settings manually, you should provision equal replicated write capacity units to your replica tables. You should also provision equal replicated write capacity units to matching secondary indexes across your global table. </p> </important>",
     "CreateTable": "<p>The <code>CreateTable</code> operation adds a new table to your account. In an Amazon Web Services account, table names must be unique within each Region. That is, you can have two tables with same name if you create the tables in different Regions.</p> <p> <code>CreateTable</code> is an asynchronous operation. Upon receiving a <code>CreateTable</code> request, DynamoDB immediately returns a response with a <code>TableStatus</code> of <code>CREATING</code>. After the table is created, DynamoDB sets the <code>TableStatus</code> to <code>ACTIVE</code>. You can perform read and write operations only on an <code>ACTIVE</code> table. </p> <p>You can optionally define secondary indexes on the new table, as part of the <code>CreateTable</code> operation. If you want to create multiple tables with secondary indexes on them, you must create the tables sequentially. Only one table with secondary indexes can be in the <code>CREATING</code> state at any given time.</p> <p>You can use the <code>DescribeTable</code> action to check the table status.</p>",
@@ -13,6 +14,7 @@
     "DeleteResourcePolicy": "<p>Deletes the resource-based policy attached to the resource, which can be a table or stream.</p> <p> <code>DeleteResourcePolicy</code> is an idempotent operation; running it multiple times on the same resource <i>doesn't</i> result in an error response, unless you specify an <code>ExpectedRevisionId</code>, which will then return a <code>PolicyNotFoundException</code>.</p> <important> <p>To make sure that you don't inadvertently lock yourself out of your own resources, the root principal in your Amazon Web Services account can perform <code>DeleteResourcePolicy</code> requests, even if your resource-based policy explicitly denies the root principal's access. </p> </important> <note> <p> <code>DeleteResourcePolicy</code> is an asynchronous operation. If you issue a <code>GetResourcePolicy</code> request immediately after running the <code>DeleteResourcePolicy</code> request, DynamoDB might still return the deleted policy. This is because the policy for your resource might not have been deleted yet. Wait for a few seconds, and then try the <code>GetResourcePolicy</code> request again.</p> </note>",
     "DeleteTable": "<p>The <code>DeleteTable</code> operation deletes a table and all of its items. After a <code>DeleteTable</code> request, the specified table is in the <code>DELETING</code> state until DynamoDB completes the deletion. If the table is in the <code>ACTIVE</code> state, you can delete it. If a table is in <code>CREATING</code> or <code>UPDATING</code> states, then DynamoDB returns a <code>ResourceInUseException</code>. If the specified table does not exist, DynamoDB returns a <code>ResourceNotFoundException</code>. If table is already in the <code>DELETING</code> state, no error is returned. </p> <note> <p>DynamoDB might continue to accept data read and write operations, such as <code>GetItem</code> and <code>PutItem</code>, on a table in the <code>DELETING</code> state until the table deletion is complete. For the full list of table states, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TableDescription.html#DDB-Type-TableDescription-TableStatus\">TableStatus</a>.</p> </note> <p>When you delete a table, any indexes on that table are also deleted.</p> <p>If you have DynamoDB Streams enabled on the table, then the corresponding stream on that table goes into the <code>DISABLED</code> state, and the stream is automatically deleted after 24 hours.</p> <p>Use the <code>DescribeTable</code> action to check the status of the table. </p>",
     "DescribeBackup": "<p>Describes an existing backup of a table.</p> <p>You can call <code>DescribeBackup</code> at a maximum rate of 10 times per second.</p>",
+    "DescribeBulkOperation": "<p>Describes the specified bulk operation.</p>",
     "DescribeContinuousBackups": "<p>Checks the status of continuous backups and point in time recovery on the specified table. Continuous backups are <code>ENABLED</code> on all tables at table creation. If point in time recovery is enabled, <code>PointInTimeRecoveryStatus</code> will be set to ENABLED.</p> <p> After continuous backups and point in time recovery are enabled, you can restore to any point in time within <code>EarliestRestorableDateTime</code> and <code>LatestRestorableDateTime</code>. </p> <p> <code>LatestRestorableDateTime</code> is typically 5 minutes before the current time. You can restore your table to any point in time in the last 35 days. You can set the recovery period to any value between 1 and 35 days. </p> <p>You can call <code>DescribeContinuousBackups</code> at a maximum rate of 10 times per second.</p>",
     "DescribeContributorInsights": "<p>Returns information about contributor insights for a given table or global secondary index.</p>",
     "DescribeEndpoints": "<p>Returns the regional endpoint information. For more information on policy permissions, please see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/inter-network-traffic-privacy.html#inter-network-traffic-DescribeEndpoints\">Internetwork traffic privacy</a>.</p>",
@@ -34,6 +36,7 @@
     "GetResourcePolicy": "<p>Returns the resource-based policy document attached to the resource, which can be a table or stream, in JSON format.</p> <p> <code>GetResourcePolicy</code> follows an <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html\"> <i>eventually consistent</i> </a> model. The following list describes the outcomes when you issue the <code>GetResourcePolicy</code> request immediately after issuing another request:</p> <ul> <li> <p>If you issue a <code>GetResourcePolicy</code> request immediately after a <code>PutResourcePolicy</code> request, DynamoDB might return a <code>PolicyNotFoundException</code>.</p> </li> <li> <p>If you issue a <code>GetResourcePolicy</code>request immediately after a <code>DeleteResourcePolicy</code> request, DynamoDB might return the policy that was present before the deletion request.</p> </li> <li> <p>If you issue a <code>GetResourcePolicy</code> request immediately after a <code>CreateTable</code> request, which includes a resource-based policy, DynamoDB might return a <code>ResourceNotFoundException</code> or a <code>PolicyNotFoundException</code>.</p> </li> </ul> <p>Because <code>GetResourcePolicy</code> uses an <i>eventually consistent</i> query, the metadata for your policy or table might not be available at that moment. Wait for a few seconds, and then retry the <code>GetResourcePolicy</code> request.</p> <p>After a <code>GetResourcePolicy</code> request returns a policy created using the <code>PutResourcePolicy</code> request, the policy will be applied in the authorization of requests to the resource. Because this process is eventually consistent, it will take some time to apply the policy to all requests to a resource. Policies that you attach while creating a table using the <code>CreateTable</code> request will always be applied to all requests for that table.</p>",
     "ImportTable": "<p> Imports table data from an S3 bucket. </p>",
     "ListBackups": "<p>List DynamoDB backups that are associated with an Amazon Web Services account and weren't made with Amazon Web Services Backup. To list these backups for a given table, specify <code>TableName</code>. <code>ListBackups</code> returns a paginated list of results with at most 1 MB worth of items in a page. You can also specify a maximum number of entries to be returned in a page.</p> <p>In the request, start time is inclusive, but end time is exclusive. Note that these boundaries are for the time at which the original backup was requested.</p> <p>You can call <code>ListBackups</code> a maximum of five times per second.</p> <p>If you want to retrieve the complete list of backups made with Amazon Web Services Backup, use the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/API_ListBackupJobs.html\">Amazon Web Services Backup list API.</a> </p>",
+    "ListBulkOperations": "<p>Lists bulk operations that started within the past 90 days for the current Amazon Web Services account and Amazon Web Services Region, with the most recent operations first. Results are paginated. Use the <code>NextToken</code> parameter to retrieve additional results.</p>",
     "ListContributorInsights": "<p>Returns a list of ContributorInsightsSummary for a table and all its global secondary indexes.</p>",
     "ListExports": "<p>Lists completed exports within the past 90 days, in reverse alphanumeric order of <code>ExportArn</code>.</p>",
     "ListGlobalTables": "<p>Lists all global tables that have a replica in the specified Region.</p> <important> <p>This documentation is for version 2017.11.29 (Legacy) of global tables, which should be avoided for new global tables. Customers should use <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html\">Global Tables version 2019.11.21 (Current)</a> when possible, because it provides greater flexibility, higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).</p> <p>To determine which version you're using, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html\">Determining the global table version you are using</a>. To update existing global tables from version 2017.11.29 (Legacy) to version 2019.11.21 (Current), see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html\">Upgrading global tables</a>.</p> </important>",
@@ -47,6 +50,7 @@
     "RestoreTableToPointInTime": "<p>Restores the specified table to the specified point in time within <code>EarliestRestorableDateTime</code> and <code>LatestRestorableDateTime</code>. You can restore your table to any point in time in the last 35 days. You can set the recovery period to any value between 1 and 35 days. Any number of users can execute up to 50 concurrent restores (any type of restore) in a given account. </p> <p>When you restore using point in time recovery, DynamoDB restores your table data to the state based on the selected date and time (day:hour:minute:second) to a new table. </p> <p>Along with data, the following are also included on the new restored table using point in time recovery: </p> <ul> <li> <p>Global secondary indexes (GSIs)</p> </li> <li> <p>Local secondary indexes (LSIs)</p> </li> <li> <p>Provisioned read and write capacity</p> </li> <li> <p>Encryption settings</p> <important> <p> All these settings come from the current settings of the source table at the time of restore. </p> </important> </li> </ul> <p>You must manually set up the following on the restored table:</p> <ul> <li> <p>Auto scaling policies</p> </li> <li> <p>IAM policies</p> </li> <li> <p>Amazon CloudWatch metrics and alarms</p> </li> <li> <p>Tags</p> </li> <li> <p>Stream settings</p> </li> <li> <p>Time to Live (TTL) settings</p> </li> <li> <p>Point in time recovery settings</p> </li> </ul>",
     "Scan": "<p>The <code>Scan</code> operation returns one or more items and item attributes by accessing every item in a table or a secondary index. To have DynamoDB return fewer items, you can provide a <code>FilterExpression</code> operation.</p> <p>If the total size of scanned items exceeds the maximum dataset size limit of 1 MB, the scan completes and results are returned to the user. The <code>LastEvaluatedKey</code> value is also returned and the requestor can use the <code>LastEvaluatedKey</code> to continue the scan in a subsequent operation. Each scan response also includes number of items that were scanned (ScannedCount) as part of the request. If using a <code>FilterExpression</code>, a scan result can result in no items meeting the criteria and the <code>Count</code> will result in zero. If you did not use a <code>FilterExpression</code> in the scan request, then <code>Count</code> is the same as <code>ScannedCount</code>.</p> <note> <p> <code>Count</code> and <code>ScannedCount</code> only return the count of items specific to a single scan request and, unless the table is less than 1MB, do not represent the total number of items in the table. </p> </note> <p>A single <code>Scan</code> operation first reads up to the maximum number of items set (if using the <code>Limit</code> parameter) or a maximum of 1 MB of data and then applies any filtering to the results if a <code>FilterExpression</code> is provided. If <code>LastEvaluatedKey</code> is present in the response, pagination is required to complete the full table scan. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.Pagination\">Paginating the Results</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p> <code>Scan</code> operations proceed sequentially; however, for faster performance on a large table or secondary index, applications can request a parallel <code>Scan</code> operation by providing the <code>Segment</code> and <code>TotalSegments</code> parameters. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.ParallelScan\">Parallel Scan</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>By default, a <code>Scan</code> uses eventually consistent reads when accessing the items in a table. Therefore, the results from an eventually consistent <code>Scan</code> may not include the latest item changes at the time the scan iterates through each item in the table. If you require a strongly consistent read of each item as the scan iterates through the items in the table, you can set the <code>ConsistentRead</code> parameter to true. Strong consistency only relates to the consistency of the read at the item level.</p> <note> <p> DynamoDB does not provide snapshot isolation for a scan operation when the <code>ConsistentRead</code> parameter is set to true. Thus, a DynamoDB scan operation does not guarantee that all reads in a scan see a consistent snapshot of the table when the scan operation was requested. </p> </note>",
     "SearchVectors": "<p>Performs a vector similarity search on a vector index associated with an Amazon DynamoDB table, and returns the most similar items sorted by similarity score based on the distance function configured for the index.</p> <p>Score interpretation depends on the distance function:</p> <ul> <li> <p> <code>COSINE</code> - Returns the items with the <i>k smallest</i> scores. Scores range from 0 (identical) to 2 (opposite). Lower scores indicate higher similarity.</p> </li> <li> <p> <code>EUCLIDEAN</code> - Returns the items with the <i>k smallest</i> scores. Scores represent the Euclidean distance between vectors. Lower scores indicate higher similarity.</p> </li> <li> <p> <code>DOT_PRODUCT</code> - Returns the items with the <i>k highest</i> scores. Higher scores indicate higher similarity.</p> </li> </ul>",
+    "StartBulkPutItems": "<p>Starts an asynchronous bulk operation that reads items from Amazon S3 and writes them to an existing DynamoDB table, so you can efficiently load or migrate large datasets.</p>",
     "TagResource": "<p>Associate a set of tags with an Amazon DynamoDB resource. You can then activate these user-defined tags so that they appear on the Billing and Cost Management console for cost allocation tracking. You can call TagResource up to five times per second, per account. </p> <ul> <li> <p> <code>TagResource</code> is an asynchronous operation. If you issue a <a>ListTagsOfResource</a> request immediately after a <code>TagResource</code> request, DynamoDB might return your previous tag set, if there was one, or an empty tag set. This is because <code>ListTagsOfResource</code> uses an eventually consistent query, and the metadata for your tags or table might not be available at that moment. Wait for a few seconds, and then try the <code>ListTagsOfResource</code> request again.</p> </li> <li> <p>The application or removal of tags using <code>TagResource</code> and <code>UntagResource</code> APIs is eventually consistent. <code>ListTagsOfResource</code> API will only reflect the changes after a few seconds.</p> </li> </ul> <p>For an overview on tagging DynamoDB resources, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tagging.html\">Tagging for DynamoDB</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
     "TransactGetItems": "<p> <code>TransactGetItems</code> is a synchronous operation that atomically retrieves multiple items from one or more tables (but not from indexes) in a single account and Region. A <code>TransactGetItems</code> call can contain up to 100 <code>TransactGetItem</code> objects, each of which contains a <code>Get</code> structure that specifies an item to retrieve from a table in the account and Region. A call to <code>TransactGetItems</code> cannot retrieve items from tables in more than one Amazon Web Services account or Region. The aggregate size of the items in the transaction cannot exceed 4 MB.</p> <p>DynamoDB rejects the entire <code>TransactGetItems</code> request if any of the following is true:</p> <ul> <li> <p>A conflicting operation is in the process of updating an item to be read.</p> </li> <li> <p>There is insufficient provisioned capacity for the transaction to be completed.</p> </li> <li> <p>There is a user error, such as an invalid data format.</p> </li> <li> <p>The aggregate size of the items in the transaction exceeded 4 MB.</p> </li> </ul>",
     "TransactWriteItems": "<p> <code>TransactWriteItems</code> is a synchronous write operation that groups up to 100 action requests. These actions can target items in different tables, but not in different Amazon Web Services accounts or Regions, and no two actions can target the same item. For example, you cannot both <code>ConditionCheck</code> and <code>Update</code> the same item. The aggregate size of the items in the transaction cannot exceed 4 MB.</p> <p>The actions are completed atomically so that either all of them succeed, or all of them fail. They are defined by the following objects:</p> <ul> <li> <p> <code>Put</code>  —   Initiates a <code>PutItem</code> operation to write a new item. This structure specifies the primary key of the item to be written, the name of the table to write it in, an optional condition expression that must be satisfied for the write to succeed, a list of the item's attributes, and a field indicating whether to retrieve the item's attributes if the condition is not met.</p> </li> <li> <p> <code>Update</code>  —   Initiates an <code>UpdateItem</code> operation to update an existing item. This structure specifies the primary key of the item to be updated, the name of the table where it resides, an optional condition expression that must be satisfied for the update to succeed, an expression that defines one or more attributes to be updated, and a field indicating whether to retrieve the item's attributes if the condition is not met.</p> </li> <li> <p> <code>Delete</code>  —   Initiates a <code>DeleteItem</code> operation to delete an existing item. This structure specifies the primary key of the item to be deleted, the name of the table where it resides, an optional condition expression that must be satisfied for the deletion to succeed, and a field indicating whether to retrieve the item's attributes if the condition is not met.</p> </li> <li> <p> <code>ConditionCheck</code>  —   Applies a condition to an item that is not being modified by the transaction. This structure specifies the primary key of the item to be checked, the name of the table where it resides, a condition expression that must be satisfied for the transaction to succeed, and a field indicating whether to retrieve the item's attributes if the condition is not met.</p> </li> </ul> <p>DynamoDB rejects the entire <code>TransactWriteItems</code> request if any of the following is true:</p> <ul> <li> <p>A condition in one of the condition expressions is not met.</p> </li> <li> <p>An ongoing operation is in the process of updating the same item.</p> </li> <li> <p>There is insufficient provisioned capacity for the transaction to be completed.</p> </li> <li> <p>An item size becomes too large (bigger than 400 KB), a local secondary index (LSI) becomes too large, or a similar validation error occurs because of changes made by the transaction.</p> </li> <li> <p>The aggregate size of the items in the transaction exceeds 4 MB.</p> </li> <li> <p>There is a user error, such as an invalid data format.</p> </li> </ul>",
@@ -485,6 +489,136 @@
         "RestoreTableToPointInTimeInput$UseLatestRestorableTime": "<p>Restore the table to the latest possible time. <code>LatestRestorableDateTime</code> is typically 5 minutes before the current time. </p>"
       }
     },
+    "BulkOperationArn": {
+      "base": null,
+      "refs": {
+        "BulkOperationDescription$BulkOperationArn": "<p>The Amazon Resource Name (ARN) of the bulk operation.</p>",
+        "BulkOperationSummary$BulkOperationArn": "<p>The Amazon Resource Name (ARN) of the bulk operation.</p>",
+        "CancelBulkOperationInput$BulkOperationArn": "<p>The Amazon Resource Name (ARN) of the bulk operation to cancel.</p>",
+        "CancelBulkOperationOutput$BulkOperationArn": "<p>The Amazon Resource Name (ARN) of the bulk operation for which DynamoDB accepted the cancellation request.</p>",
+        "DescribeBulkOperationInput$BulkOperationArn": "<p>The Amazon Resource Name (ARN) of the bulk operation to describe.</p>"
+      }
+    },
+    "BulkOperationBytes": {
+      "base": "<p>Contains the bulk put bytes used during a bulk operation.</p>",
+      "refs": {
+        "BulkOperationUsage$Table": "<p>The number of bulk put bytes for the table, excluding its indexes.</p>",
+        "SecondaryIndexesBulkBytesMap$value": null
+      }
+    },
+    "BulkOperationDescription": {
+      "base": "<p>Contains detailed information about a bulk operation.</p>",
+      "refs": {
+        "DescribeBulkOperationOutput$BulkOperationDescription": "<p>Contains detailed information about the bulk operation.</p>",
+        "StartBulkPutItemsOutput$BulkOperationDescription": "<p>Contains detailed information about a bulk operation.</p>"
+      }
+    },
+    "BulkOperationEndTime": {
+      "base": null,
+      "refs": {
+        "BulkOperationDescription$EndTime": "<p>The time when the operation reached a terminal status. DynamoDB omits this value while the operation remains in progress.</p>",
+        "BulkOperationSummary$EndTime": "<p>The time when the operation reached a terminal status. DynamoDB omits this value while the operation remains in progress.</p>"
+      }
+    },
+    "BulkOperationInputFormat": {
+      "base": null,
+      "refs": {
+        "InputS3Configuration$InputFormat": "<p>The format of the input objects. <code>DYNAMODB_JSON</code> uses JSON Lines, with one JSON record per line. <code>ION</code> uses a sequence of Ion structs.</p>"
+      }
+    },
+    "BulkOperationItemCount": {
+      "base": null,
+      "refs": {
+        "BulkOperationDescription$ProcessedItemCount": "<p>The number of input items that DynamoDB has processed. This count includes successful writes, parsing or validation failures, and condition-check failures.</p>",
+        "BulkOperationDescription$FailedItemCount": "<p>The number of processed input items that failed because of parsing or validation errors. This count is included in <code>ProcessedItemCount</code>. Condition-check failures do not increase this count.</p>"
+      }
+    },
+    "BulkOperationMaxWriteRequestUnits": {
+      "base": null,
+      "refs": {
+        "BulkOperationDescription$MaxWriteRequestUnits": "<p>The maximum write request unit rate configured for the bulk operation.</p>",
+        "StartBulkPutItemsInput$MaxWriteRequestUnits": "<p>The maximum rate, in write request units per second, at which the bulk operation attempts to write. The value must be at least 1,024. With this setting, you limit only the bulk operation; the table's provisioned or on-demand capacity settings don't change. The actual write rate can be lower.</p>"
+      }
+    },
+    "BulkOperationNextToken": {
+      "base": null,
+      "refs": {
+        "ListBulkOperationsInput$NextToken": "<p>An optional string that, if supplied, must be copied from the output of a previous call to <code>ListBulkOperations</code>. When provided in this manner, the API fetches the next page of results.</p>",
+        "ListBulkOperationsOutput$NextToken": "<p>If this value is returned, there are additional results to be displayed. To retrieve them, call <code>ListBulkOperations</code> again, with <code>NextToken</code> set to this value.</p>"
+      }
+    },
+    "BulkOperationPerformanceTier": {
+      "base": null,
+      "refs": {
+        "BulkOperationDescription$PerformanceTier": "<p>The performance tier selected for the bulk operation. Valid values are <code>STANDARD</code> and <code>ACCELERATED</code>. If the start request omitted this value, DynamoDB uses <code>STANDARD</code>.</p>",
+        "StartBulkPutItemsInput$PerformanceTier": "<p>The performance tier for the bulk operation. Valid values are <code>STANDARD</code> and <code>ACCELERATED</code>. If you don't specify a value, the operation uses <code>STANDARD</code>.</p>"
+      }
+    },
+    "BulkOperationStartTime": {
+      "base": null,
+      "refs": {
+        "BulkOperationDescription$StartTime": "<p>The time when DynamoDB accepted the start request.</p>",
+        "BulkOperationSummary$StartTime": "<p>The time when DynamoDB accepted the start request.</p>"
+      }
+    },
+    "BulkOperationStatus": {
+      "base": null,
+      "refs": {
+        "BulkOperationDescription$BulkOperationStatus": "<p>The current status of the bulk operation can be one of the following values:</p> <dl> <dt> IN_PROGRESS </dt> <dd> <p>DynamoDB is processing the input.</p> </dd> <dt> COMPLETED </dt> <dd> <p>The bulk operation finished without parsing or validation errors. Condition-check failures do not cause the operation to complete with errors.</p> </dd> <dt> COMPLETED_WITH_ERRORS </dt> <dd> <p>The bulk operation finished, but DynamoDB couldn't process at least one input item because of a parsing or validation error. When you enable <code>ERROR</code> output, DynamoDB writes the details to the configured Amazon S3 output location.</p> </dd> <dt> CANCELLING </dt> <dd> <p>DynamoDB accepted a cancellation request and is stopping the operation.</p> </dd> <dt> CANCELLED </dt> <dd> <p>DynamoDB stopped the operation after a cancellation request.</p> </dd> <dt> FAILED </dt> <dd> <p>The bulk operation failed. DynamoDB might write some items before the operation reaches this status. See <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BulkOperationDescription.html#DDB-Type-BulkOperationDescription-FailureCode\">FailureCode</a> and <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BulkOperationDescription.html#DDB-Type-BulkOperationDescription-FailureMessage\">FailureMessage</a> for details.</p> </dd> </dl>",
+        "BulkOperationSummary$BulkOperationStatus": "<p>The current status of the bulk operation.</p>",
+        "CancelBulkOperationOutput$BulkOperationStatus": "<p>The status returned after DynamoDB accepts the cancellation request. This value is <code>CANCELLING</code>. Use <code>DescribeBulkOperation</code> to determine when the operation reaches <code>CANCELLED</code>.</p>"
+      }
+    },
+    "BulkOperationSummary": {
+      "base": "<p>Contains summary information about a bulk operation.</p>",
+      "refs": {
+        "BulkOperationsSummaryList$member": null
+      }
+    },
+    "BulkOperationTableDetail": {
+      "base": "<p>Contains identifying information for a table associated with a bulk operation.</p>",
+      "refs": {
+        "BulkOperationTableDetails$member": null
+      }
+    },
+    "BulkOperationTableDetails": {
+      "base": null,
+      "refs": {
+        "BulkOperationDescription$TableDetails": "<p>A list containing identifying information for the table targeted by the bulk operation.</p>"
+      }
+    },
+    "BulkOperationUsage": {
+      "base": "<p>Contains the bytes used during a bulk operation, including a breakdown for the table and its indexes.</p>",
+      "refs": {
+        "BulkOperationUsageMultiple$member": null
+      }
+    },
+    "BulkOperationUsageMultiple": {
+      "base": null,
+      "refs": {
+        "BulkOperationDescription$BulkOperationUsage": "<p>Usage information for the table and its indexes.</p>"
+      }
+    },
+    "BulkOperationVectorBytes": {
+      "base": "<p>Contains the bulk put vector bytes used by a vector index during a bulk operation.</p>",
+      "refs": {
+        "VectorIndexesBulkVectorBytesMap$value": null
+      }
+    },
+    "BulkOperationsSummaryList": {
+      "base": null,
+      "refs": {
+        "ListBulkOperationsOutput$BulkOperationsSummaryList": "<p>A list of bulk operation summaries for the current Amazon Web Services account and Amazon Web Services Region.</p>"
+      }
+    },
+    "CancelBulkOperationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelBulkOperationOutput": {
+      "base": null,
+      "refs": {}
+    },
     "CancellationReason": {
       "base": "<p>An ordered list of errors for each item in the request which caused the transaction to get cancelled. The values of the list are ordered according to the ordering of the <code>TransactWriteItems</code> request parameter. If no error occurred for the associated item an error with a Null code and Null message will be present. </p>",
       "refs": {
@@ -514,10 +648,12 @@
     "ClientToken": {
       "base": null,
       "refs": {
+        "BulkOperationDescription$ClientToken": "<p>The idempotency token associated with the start request.</p>",
         "ExportDescription$ClientToken": "<p>The client token that was provided for the export task. A client token makes calls to <code>ExportTableToPointInTimeInput</code> idempotent, meaning that multiple identical calls have the same effect as one single call.</p>",
         "ExportTableToPointInTimeInput$ClientToken": "<p>Providing a <code>ClientToken</code> makes the call to <code>ExportTableToPointInTimeInput</code> idempotent, meaning that multiple identical calls have the same effect as one single call.</p> <p>A client token is valid for 8 hours after the first request that uses it is completed. After 8 hours, any request with the same client token is treated as a new request. Do not resubmit the same request with the same client token for more than 8 hours, or the result might not be idempotent.</p> <p>If you submit a request with the same client token but a change in other parameters within the 8-hour idempotency window, DynamoDB returns an <code>ExportConflictException</code>.</p>",
         "ImportTableDescription$ClientToken": "<p> The client token that was provided for the import task. Reusing the client token on retry makes a call to <code>ImportTable</code> idempotent. </p>",
-        "ImportTableInput$ClientToken": "<p>Providing a <code>ClientToken</code> makes the call to <code>ImportTableInput</code> idempotent, meaning that multiple identical calls have the same effect as one single call.</p> <p>A client token is valid for 8 hours after the first request that uses it is completed. After 8 hours, any request with the same client token is treated as a new request. Do not resubmit the same request with the same client token for more than 8 hours, or the result might not be idempotent.</p> <p>If you submit a request with the same client token but a change in other parameters within the 8-hour idempotency window, DynamoDB returns an <code>IdempotentParameterMismatch</code> exception.</p>"
+        "ImportTableInput$ClientToken": "<p>Providing a <code>ClientToken</code> makes the call to <code>ImportTableInput</code> idempotent, meaning that multiple identical calls have the same effect as one single call.</p> <p>A client token is valid for 8 hours after the first request that uses it is completed. After 8 hours, any request with the same client token is treated as a new request. Do not resubmit the same request with the same client token for more than 8 hours, or the result might not be idempotent.</p> <p>If you submit a request with the same client token but a change in other parameters within the 8-hour idempotency window, DynamoDB returns an <code>IdempotentParameterMismatch</code> exception.</p>",
+        "StartBulkPutItemsInput$ClientToken": "<p>A unique, case-sensitive identifier that ensures the bulk operation starts no more than one time. During the 8 hours after the initial request, repeated requests that use the same token and parameters return the same bulk operation. If a request reuses the token with different parameters, DynamoDB returns an <code>IdempotentParameterMismatchException</code>. If you omit the token, an Amazon Web Services SDK automatically generates one.</p>"
       }
     },
     "CloudWatchLogGroupArn": {
@@ -885,6 +1021,14 @@
       "refs": {}
     },
     "DescribeBackupOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeBulkOperationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeBulkOperationOutput": {
       "base": null,
       "refs": {}
     },
@@ -1293,6 +1437,7 @@
     "FailureCode": {
       "base": null,
       "refs": {
+        "BulkOperationDescription$FailureCode": "<p>A code that identifies why the bulk operation failed or was cancelled. DynamoDB returns this value only when <code>BulkOperationStatus</code> is <code>FAILED</code> or <code>CANCELLED</code>.</p>",
         "ExportDescription$FailureCode": "<p>Status code for the result of the failed export.</p>",
         "ImportTableDescription$FailureCode": "<p> The error code corresponding to the failure that the import job ran into during execution. </p>"
       }
@@ -1306,6 +1451,7 @@
     "FailureMessage": {
       "base": null,
       "refs": {
+        "BulkOperationDescription$FailureMessage": "<p>A message that describes why the bulk operation failed or was cancelled. DynamoDB returns this value only when <code>BulkOperationStatus</code> is <code>FAILED</code> or <code>CANCELLED</code>.</p>",
         "ExportDescription$FailureMessage": "<p>Export failure reason description.</p>",
         "ImportTableDescription$FailureMessage": "<p> The error message corresponding to the failure that the import job ran into during execution. </p>"
       }
@@ -1616,6 +1762,7 @@
         "ReplicaGlobalSecondaryIndexSettingsUpdate$IndexName": "<p>The name of the global secondary index. The name must be unique among all other indexes on this table.</p>",
         "ScanInput$IndexName": "<p>The name of a secondary index to scan. This index can be any local secondary index or global secondary index. Note that if you use the <code>IndexName</code> parameter, you must also provide <code>TableName</code>.</p>",
         "SearchVectorsInput$IndexName": "<p>The name of the vector index to search. The index must be in the <code>ACTIVE</code> state.</p>",
+        "SecondaryIndexesBulkBytesMap$key": null,
         "SecondaryIndexesCapacityMap$key": null,
         "UpdateContributorInsightsInput$IndexName": "<p>The global secondary index name, if applicable.</p>",
         "UpdateContributorInsightsOutput$IndexName": "<p>The name of the global secondary index, if applicable.</p>",
@@ -1623,6 +1770,7 @@
         "VectorIndex$IndexName": "<p>The name of the vector index.</p>",
         "VectorIndexDescription$IndexName": "<p>The name of the vector index.</p>",
         "VectorIndexInfo$IndexName": "<p>The name of the vector index.</p>",
+        "VectorIndexesBulkVectorBytesMap$key": null,
         "VectorIndexesCapacityMap$key": null
       }
     },
@@ -1644,7 +1792,8 @@
       "base": null,
       "refs": {
         "ImportTableDescription$InputCompressionType": "<p> The compression options for the data that has been imported into the target table. The values are NONE, GZIP, or ZSTD. </p>",
-        "ImportTableInput$InputCompressionType": "<p> Type of compression to be used on the input coming from the imported table. </p>"
+        "ImportTableInput$InputCompressionType": "<p> Type of compression to be used on the input coming from the imported table. </p>",
+        "InputS3Configuration$InputCompressionType": "<p>The compression type of the input objects. Valid values are <code>GZIP</code>, <code>ZSTD</code>, and <code>NONE</code>. If you don't specify a value, DynamoDB uses <code>NONE</code>.</p>"
       }
     },
     "InputFormat": {
@@ -1660,6 +1809,13 @@
       "refs": {
         "ImportTableDescription$InputFormatOptions": "<p> The format options for the data that was imported into the target table. There is one value, CsvOption. </p>",
         "ImportTableInput$InputFormatOptions": "<p> Additional properties that specify how the input is formatted, </p>"
+      }
+    },
+    "InputS3Configuration": {
+      "base": "<p>Contains the Amazon S3 location and format settings for bulk operation input. The <code>S3Bucket</code> and <code>InputFormat</code> fields are required.</p>",
+      "refs": {
+        "BulkOperationDescription$InputS3Configuration": "<p>The Amazon S3 input configuration associated with the bulk operation.</p>",
+        "StartBulkPutItemsInput$InputS3Configuration": "<p>The Amazon S3 location, data format, and compression settings for the input objects.</p>"
       }
     },
     "Integer": {
@@ -1903,6 +2059,20 @@
       "base": null,
       "refs": {}
     },
+    "ListBulkOperationsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBulkOperationsMaxLimit": {
+      "base": null,
+      "refs": {
+        "ListBulkOperationsInput$MaxResults": "<p>The maximum number of bulk operation summaries to return in one page. If you don't specify a value, DynamoDB uses 10.</p>"
+      }
+    },
+    "ListBulkOperationsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListContributorInsightsInput": {
       "base": null,
       "refs": {}
@@ -2076,6 +2246,9 @@
     "NonNegativeLongObject": {
       "base": null,
       "refs": {
+        "BulkOperationBytes$BulkPutBytes": "<p>The number of bulk put bytes.</p>",
+        "BulkOperationUsage$BulkPutBytes": "<p>The total number of bulk put bytes used by the operation. This value excludes bulk put vector bytes.</p>",
+        "BulkOperationVectorBytes$BulkPutVectorBytes": "<p>The number of bulk put vector bytes used on the vector index.</p>",
         "ProvisionedThroughputDescription$ReadCapacityUnits": "<p>The maximum number of strongly consistent reads consumed per second before DynamoDB returns a <code>ThrottlingException</code>. Eventually consistent reads require less effort than strongly consistent reads, so a setting of 50 <code>ReadCapacityUnits</code> per second provides 100 eventually consistent <code>ReadCapacityUnits</code> per second.</p> <p>For a table or global secondary index that uses on-demand capacity mode (<code>PAY_PER_REQUEST</code>), this value is <code>0</code>, because on-demand mode does not use provisioned throughput.</p>",
         "ProvisionedThroughputDescription$WriteCapacityUnits": "<p>The maximum number of writes consumed per second before DynamoDB returns a <code>ThrottlingException</code>.</p> <p>For a table or global secondary index that uses on-demand capacity mode (<code>PAY_PER_REQUEST</code>), this value is <code>0</code>, because on-demand mode does not use provisioned throughput.</p>",
         "ReplicaSettingsDescription$ReplicaProvisionedReadCapacityUnits": "<p>The maximum number of strongly consistent reads consumed per second before DynamoDB returns a <code>ThrottlingException</code>. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#ProvisionedThroughput\">Specifying Read and Write Requirements</a> in the <i>Amazon DynamoDB Developer Guide</i>. </p>",
@@ -2126,6 +2299,25 @@
         "ReplicaGlobalSecondaryIndex$OnDemandThroughputOverride": "<p>Overrides the maximum on-demand throughput settings for the specified global secondary index in the specified replica table.</p>",
         "ReplicaGlobalSecondaryIndexDescription$OnDemandThroughputOverride": "<p>Overrides the maximum on-demand throughput for the specified global secondary index in the specified replica table.</p>",
         "UpdateReplicationGroupMemberAction$OnDemandThroughputOverride": "<p>Overrides the maximum on-demand throughput for the replica table.</p>"
+      }
+    },
+    "OutputS3Configuration": {
+      "base": "<p>Contains the Amazon S3 location, encryption settings, and output types for a bulk operation. The <code>S3Bucket</code> and <code>OutputType</code> fields are required.</p>",
+      "refs": {
+        "BulkOperationDescription$OutputS3Configuration": "<p>The Amazon S3 output configuration associated with the bulk operation.</p>",
+        "StartBulkPutItemsInput$OutputS3Configuration": "<p>The Amazon S3 location, encryption settings, and output types for the bulk operation.</p>"
+      }
+    },
+    "OutputTypeEnum": {
+      "base": null,
+      "refs": {
+        "OutputTypeList$member": null
+      }
+    },
+    "OutputTypeList": {
+      "base": null,
+      "refs": {
+        "OutputS3Configuration$OutputType": "<p>The following values describe the types of output that DynamoDB writes for individual input items. Include one or both values.</p> <dl> <dt> ERROR </dt> <dd> <p>Reports input records or input objects that DynamoDB couldn't process. This includes malformed input and item validation failures, such as a missing or incorrectly typed primary key attribute or an item that exceeds a DynamoDB limit.</p> </dd> <dt> CONDITION_CHECK_FAILURE </dt> <dd> <p>Reports the attempted item and, when present, the existing item for a write whose condition expression evaluates to false.</p> </dd> </dl>"
       }
     },
     "ParameterizedStatement": {
@@ -2249,6 +2441,12 @@
         "BatchStatementRequest$Parameters": "<p> The parameters associated with a PartiQL statement in the batch request. </p>",
         "ExecuteStatementInput$Parameters": "<p>The parameters for the PartiQL statement, if any.</p>",
         "ParameterizedStatement$Parameters": "<p> The parameter values. </p>"
+      }
+    },
+    "ProcessedInputBytes": {
+      "base": null,
+      "refs": {
+        "BulkOperationDescription$ProcessedInputBytes": "<p>The number of bytes that DynamoDB has read from the Amazon S3 input objects.</p>"
       }
     },
     "ProcessedItemCount": {
@@ -2731,6 +2929,8 @@
       "refs": {
         "ExportDescription$S3Bucket": "<p>The name of the Amazon S3 bucket containing the export.</p>",
         "ExportTableToPointInTimeInput$S3Bucket": "<p>The name of the Amazon S3 bucket to export the snapshot to.</p>",
+        "InputS3Configuration$S3Bucket": "<p>The name of the Amazon S3 bucket that contains the input objects.</p>",
+        "OutputS3Configuration$S3Bucket": "<p>The name of the Amazon S3 bucket where DynamoDB writes output records.</p>",
         "S3BucketSource$S3Bucket": "<p> The S3 bucket that is being imported from. </p>"
       }
     },
@@ -2739,6 +2939,8 @@
       "refs": {
         "ExportDescription$S3BucketOwner": "<p>The ID of the Amazon Web Services account that owns the bucket containing the export.</p>",
         "ExportTableToPointInTimeInput$S3BucketOwner": "<p>The ID of the Amazon Web Services account that owns the bucket the export will be stored in.</p> <note> <p>S3BucketOwner is a required parameter when exporting to a S3 bucket in another account.</p> </note>",
+        "InputS3Configuration$S3BucketOwner": "<p>The Amazon Web Services account ID of the input bucket owner. If you omit this value, DynamoDB uses the Amazon Web Services account ID of the requester.</p> <note> <p> <code>S3BucketOwner</code> is required when the bucket is owned by another Amazon Web Services account.</p> </note>",
+        "OutputS3Configuration$S3BucketOwner": "<p>The Amazon Web Services account ID of the output bucket owner. If you omit this value, DynamoDB uses the Amazon Web Services account ID of the requester.</p> <note> <p> <code>S3BucketOwner</code> is required when the bucket is owned by another Amazon Web Services account.</p> </note>",
         "S3BucketSource$S3BucketOwner": "<p> The account number of the S3 bucket that is being imported from. If the bucket is owned by the requester this is optional. </p>"
       }
     },
@@ -2755,6 +2957,8 @@
       "refs": {
         "ExportDescription$S3Prefix": "<p>The Amazon S3 bucket prefix used as the file name and path of the exported snapshot.</p>",
         "ExportTableToPointInTimeInput$S3Prefix": "<p>The Amazon S3 bucket prefix to use as the file name and path of the exported snapshot.</p>",
+        "InputS3Configuration$S3KeyPrefix": "<p>An optional key prefix that limits the input to matching objects in the Amazon S3 bucket.</p>",
+        "OutputS3Configuration$S3KeyPrefix": "<p>An optional key prefix under which DynamoDB writes the output records.</p>",
         "S3BucketSource$S3KeyPrefix": "<p> The key prefix shared by all S3 Objects that are being imported. </p>"
       }
     },
@@ -2762,14 +2966,16 @@
       "base": null,
       "refs": {
         "ExportDescription$S3SseAlgorithm": "<p>Type of encryption used on the bucket where export data is stored. Valid values for <code>S3SseAlgorithm</code> are:</p> <ul> <li> <p> <code>AES256</code> - server-side encryption with Amazon S3 managed keys</p> </li> <li> <p> <code>KMS</code> - server-side encryption with KMS managed keys</p> </li> </ul>",
-        "ExportTableToPointInTimeInput$S3SseAlgorithm": "<p>Type of encryption used on the bucket where export data will be stored. Valid values for <code>S3SseAlgorithm</code> are:</p> <ul> <li> <p> <code>AES256</code> - server-side encryption with Amazon S3 managed keys</p> </li> <li> <p> <code>KMS</code> - server-side encryption with KMS managed keys</p> </li> </ul>"
+        "ExportTableToPointInTimeInput$S3SseAlgorithm": "<p>Type of encryption used on the bucket where export data will be stored. Valid values for <code>S3SseAlgorithm</code> are:</p> <ul> <li> <p> <code>AES256</code> - server-side encryption with Amazon S3 managed keys</p> </li> <li> <p> <code>KMS</code> - server-side encryption with KMS managed keys</p> </li> </ul>",
+        "OutputS3Configuration$S3SseAlgorithm": "<p>The server-side encryption algorithm for the output objects. Valid values are <code>AES256</code> and <code>KMS</code>. If you don't specify a value, Amazon S3 applies the destination bucket's default encryption settings.</p>"
       }
     },
     "S3SseKmsKeyId": {
       "base": null,
       "refs": {
         "ExportDescription$S3SseKmsKeyId": "<p>The ID of the KMS managed key used to encrypt the S3 bucket where export data is stored (if applicable).</p>",
-        "ExportTableToPointInTimeInput$S3SseKmsKeyId": "<p>The ID of the KMS managed key used to encrypt the S3 bucket where export data will be stored (if applicable).</p>"
+        "ExportTableToPointInTimeInput$S3SseKmsKeyId": "<p>The ID of the KMS managed key used to encrypt the S3 bucket where export data will be stored (if applicable).</p>",
+        "OutputS3Configuration$S3SseKmsKeyId": "<p>The identifier of the KMS key that encrypts the output objects. Specify this value when <code>S3SseAlgorithm</code> is <code>KMS</code>. Don't specify it when the algorithm is <code>AES256</code>.</p>"
       }
     },
     "SSEDescription": {
@@ -2887,6 +3093,13 @@
       "base": null,
       "refs": {}
     },
+    "SecondaryIndexesBulkBytesMap": {
+      "base": null,
+      "refs": {
+        "BulkOperationUsage$LocalSecondaryIndexes": "<p>The bulk put bytes used on each local secondary index affected by the operation, keyed by index name.</p>",
+        "BulkOperationUsage$GlobalSecondaryIndexes": "<p>The bulk put bytes used on each global secondary index affected by the operation, keyed by index name.</p>"
+      }
+    },
     "SecondaryIndexesCapacityMap": {
       "base": null,
       "refs": {
@@ -2912,6 +3125,14 @@
       "refs": {
         "BackupDescription$SourceTableFeatureDetails": "<p>Contains the details of the features enabled on the table when the backup was created. For example, LSIs, GSIs, streams, TTL.</p>"
       }
+    },
+    "StartBulkPutItemsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartBulkPutItemsOutput": {
+      "base": null,
+      "refs": {}
     },
     "StreamArn": {
       "base": null,
@@ -2955,7 +3176,7 @@
         "KinesisDataStreamDestination$DestinationStatusDescription": "<p>The human-readable string that corresponds to the replica status.</p>",
         "LocalSecondaryIndexDescription$IndexArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the index.</p>",
         "ReplicaDescription$ReplicaArn": "<p>The Amazon Resource Name (ARN) of the global table replica.</p>",
-        "SearchVectorsInput$SearchConditionExpression": "<p>A condition expression used to filter the vector search results. The expression can reference attributes defined in the vector index search schema, including <code>HASH</code> and <code>INLINE_FILTER</code> key elements.</p> <p>Only the equality operator (<code>=</code>) is supported for <code>HASH</code> attributes. Comparison and range operators are supported for <code>INLINE_FILTER</code> attributes. Only top-level attributes from the search schema can be referenced.</p>",
+        "SearchVectorsInput$SearchConditionExpression": "<p>A condition expression used to filter the vector search results. The expression can reference attributes defined in the vector index search schema, including <code>HASH</code> and <code>INLINE_FILTER</code> key elements.</p> <p>The <code>HASH</code> and <code>INLINE_FILTER</code> attributes support only the equality operator (<code>=</code>). You can reference only top-level attributes from the search schema.</p>",
         "TableDescription$TableArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the table.</p>",
         "TableDescription$LatestStreamLabel": "<p>A timestamp, in ISO 8601 format, for this stream.</p> <p>Note that <code>LatestStreamLabel</code> is not a unique identifier for the stream, because it is possible that a stream from another table might have the same timestamp. However, the combination of the following three elements is guaranteed to be unique:</p> <ul> <li> <p>Amazon Web Services customer ID</p> </li> <li> <p>Table name</p> </li> <li> <p> <code>StreamLabel</code> </p> </li> </ul>",
         "TableDescription$GlobalTableVersion": "<p>Represents the version of <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html\">global tables</a> in use, if the table is replicated across Amazon Web Services Regions.</p>",
@@ -2986,6 +3207,8 @@
         "BatchGetRequestMap$key": null,
         "BatchGetResponseMap$key": null,
         "BatchWriteItemRequestMap$key": null,
+        "BulkOperationTableDetail$TableName": "<p>The name or ARN of the table associated with the bulk operation.</p>",
+        "BulkOperationUsage$TableName": "<p>The name or ARN of the table associated with the reported usage.</p>",
         "ConditionCheck$TableName": "<p>Name of the table for the check item request. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>",
         "ConsumedCapacity$TableName": "<p>The name of the table that was affected by the operation. If you had specified the Amazon Resource Name (ARN) of a table in the input, you'll see the table ARN in the response.</p>",
         "CreateBackupInput$TableName": "<p>The name of the table. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>",
@@ -3020,6 +3243,7 @@
         "ScanInput$TableName": "<p>The name of the table containing the requested items or if you provide <code>IndexName</code>, the name of the table to which that index belongs.</p> <p>You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>",
         "SearchVectorsInput$TableName": "<p>The name or Amazon Resource Name (ARN) of the table containing the vector index.</p>",
         "SourceTableDetails$TableArn": "<p>ARN of the table for which backup was created. </p>",
+        "StartBulkPutItemsInput$TableName": "<p>The name or ARN of the existing DynamoDB table that receives the items.</p>",
         "Update$TableName": "<p>Name of the table for the <code>UpdateItem</code> request. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>",
         "UpdateContinuousBackupsInput$TableName": "<p>The name of the table. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>",
         "UpdateContributorInsightsInput$TableName": "<p>The name of the table. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>",
@@ -3084,6 +3308,7 @@
       "base": null,
       "refs": {
         "BackupSummary$TableId": "<p>Unique identifier for the table.</p>",
+        "BulkOperationTableDetail$TableId": "<p>The unique identifier of the table associated with the bulk operation.</p>",
         "ExportDescription$TableId": "<p>Unique ID of the table that was exported.</p>",
         "ImportTableDescription$TableId": "<p> The table id corresponding to the table created by import table process. </p>",
         "SourceTableDetails$TableId": "<p>Unique identifier for the table for which the backup was created. </p>",
@@ -3257,6 +3482,12 @@
       "base": null,
       "refs": {
         "SearchVectorsInput$TopK": "<p>The number of most similar results to return.</p>"
+      }
+    },
+    "TotalInputBytes": {
+      "base": null,
+      "refs": {
+        "BulkOperationDescription$TotalInputBytes": "<p>The total size, in bytes, of the Amazon S3 input objects. DynamoDB omits this value until the initial input-size calculation completes.</p>"
       }
     },
     "TransactGetItem": {
@@ -3499,6 +3730,12 @@
       "base": null,
       "refs": {
         "SourceTableFeatureDetails$VectorIndexes": "<p>The vector index properties for the table at the time the backup was created, including the index name, vector attribute, dimensions, distance function, search schema, and projection.</p>"
+      }
+    },
+    "VectorIndexesBulkVectorBytesMap": {
+      "base": null,
+      "refs": {
+        "BulkOperationUsage$VectorIndexes": "<p>The bulk put vector bytes used on each vector index affected by the operation, keyed by index name.</p>"
       }
     },
     "VectorIndexesCapacityMap": {

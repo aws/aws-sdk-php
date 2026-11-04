@@ -733,7 +733,7 @@
         "PurchaseOptionSummary$purchaseOptionId": "<p>The unique identifier of the purchase option.</p>",
         "PurchaseOptionSummary$purchaseOptionName": "<p>The display name of the purchase option.</p>",
         "Resource$value": "<p>The resource content. Interpretation depends on the content type.</p>",
-        "ReviewSourceSummary$sourceName": "<p>The name of the review source, such as AWS Marketplace.</p>",
+        "ReviewSourceSummary$sourceName": "<p>The name of the review source. This field has one of the following values:</p> <ul> <li> <p>AWS Marketplace</p> </li> <li> <p>G2</p> </li> <li> <p>PeerSpot</p> </li> </ul>",
         "ReviewSourceSummary$averageRating": "<p>The average rating across all reviews from this source.</p>",
         "SellerEngagement$value": "<p>The engagement value, such as a URL to the engagement form.</p>",
         "SellerInformation$displayName": "<p>The human-readable name of the seller.</p>",
@@ -1113,7 +1113,7 @@
     "ReviewSourceId": {
       "base": null,
       "refs": {
-        "ReviewSourceSummary$sourceId": "<p>The machine-readable identifier of the review source.</p>"
+        "ReviewSourceSummary$sourceId": "<p>The machine-readable identifier of the review source. This field has one of the following values:</p> <ul> <li> <p> <code>AWS_MARKETPLACE</code> – The reviews come from AWS Marketplace.</p> </li> <li> <p> <code>G2</code> – The reviews come from G2.</p> </li> <li> <p> <code>PEERSPOT</code> – The reviews come from PeerSpot.</p> </li> </ul>"
       }
     },
     "ReviewSourceSummary": {
@@ -1125,7 +1125,7 @@
     "ReviewSourceSummaryList": {
       "base": null,
       "refs": {
-        "ReviewSummary$reviewSourceSummaries": "<p>Review summaries from different sources, such as AWS Marketplace.</p>"
+        "ReviewSummary$reviewSourceSummaries": "<p>Review summaries from different sources, such as AWS Marketplace, G2, and PeerSpot.</p>"
       }
     },
     "ReviewSummary": {

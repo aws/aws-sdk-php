@@ -53,11 +53,31 @@
         "MatchedDetails":{"shape":"MatchedDetails"}
       }
     },
+    "CategoriesAttributeAndCondition":{
+      "type":"structure",
+      "members":{
+        "TagConditions":{"shape":"TagAndConditionList"}
+      }
+    },
+    "CategoriesAttributeFilter":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"CategoriesAttributeOrConditionList"},
+        "AndCondition":{"shape":"CategoriesAttributeAndCondition"},
+        "TagCondition":{"shape":"TagCondition"}
+      }
+    },
+    "CategoriesAttributeOrConditionList":{
+      "type":"list",
+      "member":{"shape":"CategoriesAttributeAndCondition"},
+      "max":25
+    },
     "CategoryDetails":{
       "type":"structure",
       "required":["PointsOfInterest"],
       "members":{
-        "PointsOfInterest":{"shape":"PointsOfInterest"}
+        "PointsOfInterest":{"shape":"PointsOfInterest"},
+        "RuleId":{"shape":"RuleId"}
       }
     },
     "CategoryName":{
@@ -194,7 +214,8 @@
         "InstanceId":{"shape":"InstanceId"},
         "ContactId":{"shape":"ContactId"},
         "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"NextToken"}
+        "NextToken":{"shape":"NextToken"},
+        "ListFilter":{"shape":"RealTimeContactAnalysisSegmentsFilter"}
       }
     },
     "ListRealtimeContactAnalysisSegmentsResponse":{
@@ -294,6 +315,12 @@
         "COMPLETED"
       ]
     },
+    "RealTimeContactAnalysisSegmentsFilter":{
+      "type":"structure",
+      "members":{
+        "CategoriesAttributeFilter":{"shape":"CategoriesAttributeFilter"}
+      }
+    },
     "RealtimeContactAnalysisSegment":{
       "type":"structure",
       "members":{
@@ -317,6 +344,12 @@
       "error":{"httpStatusCode":404},
       "exception":true
     },
+    "RuleId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^\\S+$"
+    },
     "SentimentValue":{
       "type":"string",
       "enum":[
@@ -324,6 +357,35 @@
         "NEUTRAL",
         "NEGATIVE"
       ]
+    },
+    "TagAndConditionList":{
+      "type":"list",
+      "member":{"shape":"TagCondition"},
+      "max":25
+    },
+    "TagComparisonType":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "NOT_EQUALS"
+      ]
+    },
+    "TagCondition":{
+      "type":"structure",
+      "members":{
+        "TagKey":{"shape":"TagKey"},
+        "TagValue":{"shape":"TagValue"},
+        "ComparisonType":{"shape":"TagComparisonType"}
+      }
+    },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256
     },
     "ThrottlingException":{
       "type":"structure",

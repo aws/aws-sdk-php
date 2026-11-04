@@ -3533,7 +3533,15 @@
         "Status":{"shape":"StepStatus"},
         "ExecutionRoleArn":{"shape":"OptionalArnType"},
         "LogUri":{"shape":"String"},
-        "EncryptionKeyArn":{"shape":"String"}
+        "EncryptionKeyArn":{"shape":"String"},
+        "AdditionalInfo":{"shape":"StepAdditionalInfo"}
+      }
+    },
+    "StepAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "ResourceManagerApplicationIds":{"shape":"StringList"},
+        "ResourceManager":{"shape":"String"}
       }
     },
     "StepCancellationOption":{
@@ -3657,7 +3665,8 @@
         "ActionOnFailure":{"shape":"ActionOnFailure"},
         "Status":{"shape":"StepStatus"},
         "LogUri":{"shape":"String"},
-        "EncryptionKeyArn":{"shape":"String"}
+        "EncryptionKeyArn":{"shape":"String"},
+        "AdditionalInfo":{"shape":"StepAdditionalInfo"}
       }
     },
     "StepSummaryList":{

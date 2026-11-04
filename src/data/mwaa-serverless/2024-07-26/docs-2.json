@@ -96,6 +96,32 @@
         "UpdateWorkflowRequest$EngineVersion": "<p>The version of the Amazon Managed Workflows for Apache Airflow Serverless engine that you want to use for the updated workflow.</p>"
       }
     },
+    "Environment": {
+      "base": "<p>Contains the environment variables that tasks in a workflow use during execution.</p>",
+      "refs": {
+        "CreateWorkflowRequest$Environment": "<p>The environment variables to set for tasks in the workflow. If you don't specify this parameter, the workflow has no environment variables.</p>",
+        "GetWorkflowResponse$Environment": "<p>The environment variables that tasks in the workflow use during execution.</p>",
+        "UpdateWorkflowRequest$Environment": "<p>The environment variables to set for tasks in the workflow.</p> <important> <p>The variables that you specify replace all existing environment variables for the workflow. If you don't specify this parameter, the workflow has no environment variables. To keep existing environment variables, include them in the request.</p> </important>"
+      }
+    },
+    "EnvironmentVariableKey": {
+      "base": null,
+      "refs": {
+        "EnvironmentVariablesMap$key": null
+      }
+    },
+    "EnvironmentVariableValue": {
+      "base": null,
+      "refs": {
+        "EnvironmentVariablesMap$value": null
+      }
+    },
+    "EnvironmentVariablesMap": {
+      "base": null,
+      "refs": {
+        "Environment$Variables": "<p>A map of environment variable names to values. Your workflow tasks use these variables while they run. You can specify up to 50 environment variables. Each name must be between 1 and 128 characters, start with a letter, and contain only letters, numbers, and underscores. Each value can be up to 255 characters.</p> <p>Names that start with <code>AWS_</code> or <code>AIRFLOW__</code> are reserved. You can use the following Apache Airflow secrets backend settings, which are exceptions:</p> <ul> <li> <p> <code>AIRFLOW__WORKERS__SECRETS_BACKEND</code> – The secrets backend class that workers use.</p> </li> <li> <p> <code>AIRFLOW__WORKERS__SECRETS_BACKEND_KWARGS</code> – The keyword arguments for the secrets backend, as a JSON string.</p> </li> <li> <p> <code>AIRFLOW__WORKERS__SECRETS_BACKEND_KWARG__*</code> – Names with this prefix, for additional secrets backend configuration.</p> </li> </ul> <p>If you set <code>EncryptionConfiguration</code> to use a customer managed AWS KMS key, we encrypt the environment variables with that key. Otherwise, we store them with default encryption at rest.</p>"
+      }
+    },
     "ErrorMessage": {
       "base": null,
       "refs": {
@@ -354,7 +380,7 @@
     "S3LocationVersionIdString": {
       "base": null,
       "refs": {
-        "S3Location$VersionId": "<p>The version ID of the object in Amazon S3. If not specified, the latest version is used.</p>"
+        "S3Location$VersionId": "<p>Specifies the version ID of the object in Amazon S3. If you don't specify a version, we use the latest version.</p>"
       }
     },
     "ScheduleConfiguration": {
@@ -404,7 +430,7 @@
         "CreateWorkflowResponse$RevisionId": "<p>A unique identifier for this revision of the workflow configuration. This ID changes when the workflow is updated and you can use it for optimistic concurrency control in update operations. The revision ID helps prevent conflicting updates and ensures that updates are applied to the expected version of the workflow configuration.</p>",
         "DefinitionS3Location$Bucket": "<p>The name of the Amazon S3 bucket that contains the workflow definition file.</p>",
         "DefinitionS3Location$ObjectKey": "<p>The key (name) of the workflow definition file within the S3 bucket.</p>",
-        "DefinitionS3Location$VersionId": "<p>Optional. The version ID of the workflow definition file in Amazon S3. If not specified, the latest version is used.</p>",
+        "DefinitionS3Location$VersionId": "<p>Optional. The version ID of the workflow definition file in Amazon S3. If you don't specify a version, we use the latest version.</p>",
         "EncryptionConfiguration$KmsKeyId": "<p>The ID or ARN of the Amazon Web Services KMS key to use for encryption. Required when <code>Type</code> is <code>CUSTOMER_MANAGED_KEY</code>.</p>",
         "ListTaskInstancesRequest$NextToken": "<p>The pagination token you need to use to retrieve the next set of results. This value is returned from a previous call to <code>ListTaskInstances</code>.</p>",
         "ListTaskInstancesResponse$NextToken": "<p>The pagination token you need to use to retrieve the next set of results. This value is null if there are no more results.</p>",
@@ -582,7 +608,7 @@
         "GetTaskInstanceResponse$WorkflowVersion": "<p>The version of the workflow that contains this task instance.</p>",
         "GetWorkflowRunResponse$WorkflowVersion": "<p>The version of the workflow that is used for this run.</p>",
         "ListWorkflowRunsRequest$WorkflowVersion": "<p>Optional. The specific version of the workflow for which you want a list of runs. If not specified, runs for all versions are returned.</p>",
-        "StartWorkflowRunRequest$WorkflowVersion": "<p>Optional. The specific version of the workflow to execute. If not specified, the latest version is used.</p>",
+        "StartWorkflowRunRequest$WorkflowVersion": "<p>Optional. The specific version of the workflow to execute. If you don't specify a version, we use the latest version.</p>",
         "StopWorkflowRunResponse$WorkflowVersion": "<p>The version of the workflow that was stopped.</p>",
         "TaskInstanceSummary$WorkflowVersion": "<p>The version of the workflow that contains this task instance.</p>",
         "WorkflowRunDetail$WorkflowVersion": "<p>The version of the workflow used for this run.</p>",

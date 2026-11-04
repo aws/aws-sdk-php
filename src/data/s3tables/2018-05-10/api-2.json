@@ -13,6 +13,25 @@
     "uid":"s3tables-2018-05-10"
   },
   "operations":{
+    "CompleteTableMigration":{
+      "name":"CompleteTableMigration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/complete-table-migration",
+        "responseCode":204
+      },
+      "input":{"shape":"CompleteTableMigrationRequest"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
+    },
     "CreateNamespace":{
       "name":"CreateNamespace",
       "http":{
@@ -482,6 +501,25 @@
       ],
       "readonly":true
     },
+    "GetTableMigration":{
+      "name":"GetTableMigration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/get-table-migration",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTableMigrationRequest"},
+      "output":{"shape":"GetTableMigrationResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ],
+      "readonly":true
+    },
     "GetTablePolicy":{
       "name":"GetTablePolicy",
       "http":{
@@ -633,6 +671,25 @@
         {"shape":"AccessDeniedException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "readonly":true
+    },
+    "ListTableMigrations":{
+      "name":"ListTableMigrations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/list-table-migrations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTableMigrationsRequest"},
+      "output":{"shape":"ListTableMigrationsResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
         {"shape":"BadRequestException"}
       ],
       "readonly":true
@@ -874,6 +931,44 @@
         {"shape":"BadRequestException"}
       ]
     },
+    "StartTableMigration":{
+      "name":"StartTableMigration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/start-table-migration",
+        "responseCode":202
+      },
+      "input":{"shape":"StartTableMigrationRequest"},
+      "output":{"shape":"StartTableMigrationResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "SyncTableMigration":{
+      "name":"SyncTableMigration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/sync-table-migration",
+        "responseCode":202
+      },
+      "input":{"shape":"SyncTableMigrationRequest"},
+      "output":{"shape":"SyncTableMigrationResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -929,6 +1024,25 @@
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
       ]
+    },
+    "UpdateTableMigration":{
+      "name":"UpdateTableMigration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/update-table-migration",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateTableMigrationRequest"},
+      "output":{"shape":"UpdateTableMigrationResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ]
     }
   },
   "shapes":{
@@ -963,6 +1077,32 @@
     "Boolean":{
       "type":"boolean",
       "box":true
+    },
+    "ChecksumCRC64NVME":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"[A-Za-z0-9+/]{11}="
+    },
+    "CompleteTableMigrationRequest":{
+      "type":"structure",
+      "required":["tableARN"],
+      "members":{
+        "tableARN":{
+          "shape":"TableARN",
+          "location":"querystring",
+          "locationName":"tableARN"
+        }
+      }
+    },
+    "CompressionCodec":{
+      "type":"string",
+      "enum":[
+        "zstd",
+        "snappy",
+        "gzip",
+        "uncompressed"
+      ]
     },
     "ConflictException":{
       "type":"structure",
@@ -1060,6 +1200,28 @@
       "members":{
         "tableARN":{"shape":"TableARN"},
         "versionToken":{"shape":"VersionToken"}
+      }
+    },
+    "DataFileFormat":{
+      "type":"string",
+      "enum":["parquet"]
+    },
+    "DataMigrationOverview":{
+      "type":"structure",
+      "required":[
+        "maintenanceSettings",
+        "migrationPolicies"
+      ],
+      "members":{
+        "maintenanceSettings":{"shape":"MaintenanceSettings"},
+        "migrationPolicies":{"shape":"MigrationPolicies"}
+      }
+    },
+    "DataMigrationSettings":{
+      "type":"structure",
+      "members":{
+        "maintenanceSettings":{"shape":"MaintenanceSettings"},
+        "migrationPolicies":{"shape":"MigrationPolicies"}
       }
     },
     "DeleteNamespaceRequest":{
@@ -1215,6 +1377,25 @@
         }
       }
     },
+    "DestinationTable":{
+      "type":"structure",
+      "required":[
+        "tableBucketARN",
+        "namespace",
+        "name"
+      ],
+      "members":{
+        "tableBucketARN":{"shape":"TableBucketARN"},
+        "namespace":{"shape":"NamespaceName"},
+        "name":{"shape":"TableName"},
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "storageClassConfiguration":{"shape":"StorageClassConfiguration"},
+        "tags":{"shape":"Tags"},
+        "properties":{"shape":"MigrationTableProperties"},
+        "schema":{"shape":"IcebergSchemaV2"},
+        "icebergSortOrder":{"shape":"IcebergSortOrder"}
+      }
+    },
     "Document":{
       "type":"structure",
       "members":{},
@@ -1235,6 +1416,20 @@
       "pattern":"(arn:aws[-a-z0-9]*:kms:[-a-z0-9]*:[0-9]{12}:key/.+)"
     },
     "ErrorMessage":{"type":"string"},
+    "FindingCategory":{
+      "type":"string",
+      "enum":[
+        "access",
+        "metadata",
+        "data",
+        "internal"
+      ]
+    },
+    "FindingCategoryCounts":{
+      "type":"map",
+      "key":{"shape":"FindingCategory"},
+      "value":{"shape":"Long"}
+    },
     "ForbiddenException":{
       "type":"structure",
       "members":{
@@ -1568,6 +1763,61 @@
         "warehouseLocation":{"shape":"WarehouseLocation"}
       }
     },
+    "GetTableMigrationRequest":{
+      "type":"structure",
+      "members":{
+        "migrationId":{
+          "shape":"MigrationId",
+          "location":"querystring",
+          "locationName":"migrationId"
+        },
+        "tableARN":{
+          "shape":"TableARN",
+          "location":"querystring",
+          "locationName":"tableARN"
+        }
+      }
+    },
+    "GetTableMigrationResponse":{
+      "type":"structure",
+      "required":[
+        "migrationId",
+        "tableBucketARN",
+        "namespace",
+        "name",
+        "type",
+        "state",
+        "roleARN",
+        "reviewMigrationPlan",
+        "createdAt",
+        "stateUpdatedAt",
+        "sourceType",
+        "source",
+        "dataMigration",
+        "migrationOutput"
+      ],
+      "members":{
+        "migrationId":{"shape":"MigrationId"},
+        "tableBucketARN":{"shape":"TableBucketARN"},
+        "namespace":{"shape":"NamespaceName"},
+        "tableARN":{"shape":"TableARN"},
+        "name":{"shape":"TableName"},
+        "type":{"shape":"MigrationType"},
+        "state":{"shape":"MigrationState"},
+        "roleARN":{"shape":"RoleArn"},
+        "reviewMigrationPlan":{"shape":"Boolean"},
+        "hasValidPlan":{"shape":"Boolean"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "stateUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "failureReason":{"shape":"MigrationFailureReason"},
+        "planningStats":{"shape":"PlanningStats"},
+        "migrationStats":{"shape":"MigrationStats"},
+        "sourceType":{"shape":"MigrationSourceType"},
+        "source":{"shape":"SourceConfiguration"},
+        "dataMigration":{"shape":"DataMigrationOverview"},
+        "migrationOutput":{"shape":"MigrationOutputOverview"}
+      }
+    },
     "GetTablePolicyRequest":{
       "type":"structure",
       "required":[
@@ -1776,6 +2026,34 @@
         "storageClassConfiguration":{"shape":"StorageClassConfiguration"}
       }
     },
+    "GlueTableSource":{
+      "type":"structure",
+      "required":[
+        "catalogId",
+        "databaseName",
+        "tableName"
+      ],
+      "members":{
+        "catalogId":{"shape":"GlueTableSourceCatalogIdString"},
+        "databaseName":{"shape":"GlueTableSourceDatabaseNameString"},
+        "tableName":{"shape":"GlueTableSourceTableNameString"}
+      }
+    },
+    "GlueTableSourceCatalogIdString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "GlueTableSourceDatabaseNameString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "GlueTableSourceTableNameString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
     "IAMRole":{
       "type":"string",
       "max":2048,
@@ -1936,6 +2214,13 @@
         "nonCurrentDays":{"shape":"PositiveInteger"}
       }
     },
+    "IncompatibleValuesPolicy":{
+      "type":"string",
+      "enum":[
+        "fail",
+        "setNull"
+      ]
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -2062,6 +2347,65 @@
         "continuationToken":{"shape":"NextToken"}
       }
     },
+    "ListTableMigrationsLimit":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListTableMigrationsRequest":{
+      "type":"structure",
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"querystring",
+          "locationName":"tableBucketARN"
+        },
+        "namespace":{
+          "shape":"NamespaceName",
+          "location":"querystring",
+          "locationName":"namespace"
+        },
+        "name":{
+          "shape":"TableName",
+          "location":"querystring",
+          "locationName":"name"
+        },
+        "tableARN":{
+          "shape":"TableARN",
+          "location":"querystring",
+          "locationName":"tableARN"
+        },
+        "state":{
+          "shape":"MigrationState",
+          "location":"querystring",
+          "locationName":"state"
+        },
+        "hasValidPlan":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"hasValidPlan"
+        },
+        "maxResults":{
+          "shape":"ListTableMigrationsLimit",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListTableMigrationsResponse":{
+      "type":"structure",
+      "required":["migrations"],
+      "members":{
+        "migrations":{"shape":"MigrationSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListTablesLimit":{
       "type":"integer",
       "box":true,
@@ -2133,6 +2477,13 @@
       "type":"long",
       "box":true
     },
+    "MaintenanceSettings":{
+      "type":"structure",
+      "members":{
+        "icebergCompaction":{"shape":"MigrationCompactionSettings"},
+        "icebergSnapshotManagement":{"shape":"MigrationSnapshotManagementSettings"}
+      }
+    },
     "MaintenanceStatus":{
       "type":"string",
       "enum":[
@@ -2161,6 +2512,186 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "MigrationCompactionSettings":{
+      "type":"structure",
+      "members":{
+        "targetFileSizeMB":{"shape":"MigrationTargetFileSizeMB"},
+        "strategy":{"shape":"IcebergCompactionStrategy"}
+      }
+    },
+    "MigrationFailureCode":{
+      "type":"string",
+      "enum":[
+        "rolePermissions",
+        "sourcePermissions",
+        "destinationPermissions",
+        "resourceNotFound",
+        "sourceNotSupported",
+        "objectMigrationReport",
+        "objectCompatibilityReport",
+        "tableCompatibilityReport",
+        "internalError",
+        "reportBucketNotSupported"
+      ]
+    },
+    "MigrationFailureDetail":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "MigrationFailureReason":{
+      "type":"structure",
+      "required":["code"],
+      "members":{
+        "code":{"shape":"MigrationFailureCode"},
+        "detail":{"shape":"MigrationFailureDetail"}
+      }
+    },
+    "MigrationId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-z0-9-]+"
+    },
+    "MigrationMinSnapshotsToKeep":{
+      "type":"integer",
+      "box":true,
+      "min":3
+    },
+    "MigrationOutputConfiguration":{
+      "type":"structure",
+      "required":["bucket"],
+      "members":{
+        "bucket":{"shape":"S3BucketARN"},
+        "prefixes":{"shape":"MigrationReportPrefixes"}
+      }
+    },
+    "MigrationOutputOverview":{
+      "type":"structure",
+      "required":[
+        "bucket",
+        "tableCompatibilityReport",
+        "objectCompatibilityReport",
+        "objectMigrationReport"
+      ],
+      "members":{
+        "bucket":{"shape":"S3BucketARN"},
+        "tableCompatibilityReport":{"shape":"ReportOverview"},
+        "objectCompatibilityReport":{"shape":"ReportOverview"},
+        "objectMigrationReport":{"shape":"ReportOverview"}
+      }
+    },
+    "MigrationPolicies":{
+      "type":"structure",
+      "members":{
+        "unmatchedSourceFieldsPolicy":{"shape":"UnmatchedSourceFieldsPolicy"},
+        "incompatibleValuesPolicy":{"shape":"IncompatibleValuesPolicy"}
+      }
+    },
+    "MigrationReportPrefix":{
+      "type":"string",
+      "max":512,
+      "min":0
+    },
+    "MigrationReportPrefixes":{
+      "type":"structure",
+      "members":{
+        "tableCompatibilityReport":{"shape":"MigrationReportPrefix"},
+        "objectCompatibilityReport":{"shape":"MigrationReportPrefix"},
+        "objectMigrationReport":{"shape":"MigrationReportPrefix"}
+      }
+    },
+    "MigrationRequestedState":{
+      "type":"string",
+      "enum":[
+        "queued",
+        "cancelled"
+      ]
+    },
+    "MigrationSnapshotManagementSettings":{
+      "type":"structure",
+      "members":{
+        "minSnapshotsToKeep":{"shape":"MigrationMinSnapshotsToKeep"},
+        "maxSnapshotAgeHours":{"shape":"PositiveInteger"}
+      }
+    },
+    "MigrationSourceType":{
+      "type":"string",
+      "enum":["glueTable"]
+    },
+    "MigrationState":{
+      "type":"string",
+      "enum":[
+        "new",
+        "planning",
+        "pendingReview",
+        "queued",
+        "migrating",
+        "succeeded",
+        "failed",
+        "cancelling",
+        "cancelled"
+      ]
+    },
+    "MigrationStats":{
+      "type":"structure",
+      "members":{
+        "objectsMigrated":{"shape":"Long"},
+        "objectsFailedMigration":{"shape":"Long"},
+        "objectsPendingMigration":{"shape":"Long"}
+      }
+    },
+    "MigrationSummary":{
+      "type":"structure",
+      "required":[
+        "migrationId",
+        "tableBucketARN",
+        "namespace",
+        "name",
+        "type",
+        "state",
+        "createdAt",
+        "stateUpdatedAt"
+      ],
+      "members":{
+        "migrationId":{"shape":"MigrationId"},
+        "tableBucketARN":{"shape":"TableBucketARN"},
+        "namespace":{"shape":"NamespaceName"},
+        "tableARN":{"shape":"TableARN"},
+        "name":{"shape":"TableName"},
+        "type":{"shape":"MigrationType"},
+        "state":{"shape":"MigrationState"},
+        "hasValidPlan":{"shape":"Boolean"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "stateUpdatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "MigrationSummaryList":{
+      "type":"list",
+      "member":{"shape":"MigrationSummary"}
+    },
+    "MigrationTableProperties":{
+      "type":"structure",
+      "members":{
+        "writeFormat":{"shape":"DataFileFormat"},
+        "icebergFormatVersion":{"shape":"Integer"},
+        "compressionCodec":{"shape":"CompressionCodec"},
+        "dictionaryEncoding":{"shape":"Boolean"}
+      }
+    },
+    "MigrationTargetFileSizeMB":{
+      "type":"integer",
+      "box":true,
+      "max":512,
+      "min":64
+    },
+    "MigrationType":{
+      "type":"string",
+      "enum":[
+        "start",
+        "sync"
+      ]
     },
     "NamespaceId":{"type":"string"},
     "NamespaceList":{
@@ -2213,6 +2744,14 @@
     "OpenTableFormat":{
       "type":"string",
       "enum":["ICEBERG"]
+    },
+    "PlanningStats":{
+      "type":"structure",
+      "members":{
+        "objectsScanned":{"shape":"Long"},
+        "objectsPlanned":{"shape":"Long"},
+        "partitionCount":{"shape":"Long"}
+      }
     },
     "PositiveInteger":{
       "type":"integer",
@@ -2510,6 +3049,20 @@
         "failed"
       ]
     },
+    "ReportObjectKey":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "ReportOverview":{
+      "type":"structure",
+      "members":{
+        "prefix":{"shape":"MigrationReportPrefix"},
+        "key":{"shape":"ReportObjectKey"},
+        "checksumCRC64NVME":{"shape":"ChecksumCRC64NVME"},
+        "invalidFindings":{"shape":"FindingCategoryCounts"}
+      }
+    },
     "ResourceArn":{
       "type":"string",
       "max":2048,
@@ -2520,6 +3073,18 @@
       "type":"string",
       "max":20480,
       "min":1
+    },
+    "RoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[-a-z0-9]*:iam::[0-9]{12}:role/.+"
+    },
+    "S3BucketARN":{
+      "type":"string",
+      "max":1024,
+      "min":12,
+      "pattern":"arn:aws[-a-z0-9]*:s3[a-z]*:[-a-z0-9]*:([0-9]{12})?:.+"
     },
     "SSEAlgorithm":{
       "type":"string",
@@ -2569,6 +3134,43 @@
       "type":"string",
       "enum":["struct"]
     },
+    "SourceConfiguration":{
+      "type":"structure",
+      "members":{
+        "glueTable":{"shape":"GlueTableSource"}
+      },
+      "union":true
+    },
+    "StartTableMigrationRequest":{
+      "type":"structure",
+      "required":[
+        "roleARN",
+        "destinationTable",
+        "sourceType",
+        "source",
+        "migrationOutput"
+      ],
+      "members":{
+        "roleARN":{"shape":"RoleArn"},
+        "destinationTable":{"shape":"DestinationTable"},
+        "sourceType":{"shape":"MigrationSourceType"},
+        "source":{"shape":"SourceConfiguration"},
+        "dataMigration":{"shape":"DataMigrationSettings"},
+        "reviewMigrationPlan":{"shape":"Boolean"},
+        "migrationOutput":{"shape":"MigrationOutputConfiguration"}
+      }
+    },
+    "StartTableMigrationResponse":{
+      "type":"structure",
+      "required":[
+        "migrationId",
+        "state"
+      ],
+      "members":{
+        "migrationId":{"shape":"MigrationId"},
+        "state":{"shape":"MigrationState"}
+      }
+    },
     "StorageClass":{
       "type":"string",
       "enum":[
@@ -2584,6 +3186,31 @@
       }
     },
     "String":{"type":"string"},
+    "SyncTableMigrationRequest":{
+      "type":"structure",
+      "required":[
+        "roleARN",
+        "tableARN",
+        "migrationOutput"
+      ],
+      "members":{
+        "roleARN":{"shape":"RoleArn"},
+        "tableARN":{"shape":"TableARN"},
+        "reviewMigrationPlan":{"shape":"Boolean"},
+        "migrationOutput":{"shape":"MigrationOutputConfiguration"}
+      }
+    },
+    "SyncTableMigrationResponse":{
+      "type":"structure",
+      "required":[
+        "migrationId",
+        "state"
+      ],
+      "members":{
+        "migrationId":{"shape":"MigrationId"},
+        "state":{"shape":"MigrationState"}
+      }
+    },
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
@@ -2890,6 +3517,13 @@
       },
       "exception":true
     },
+    "UnmatchedSourceFieldsPolicy":{
+      "type":"string",
+      "enum":[
+        "fail",
+        "drop"
+      ]
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -2957,6 +3591,41 @@
         "namespace":{"shape":"NamespaceList"},
         "versionToken":{"shape":"VersionToken"},
         "metadataLocation":{"shape":"MetadataLocation"}
+      }
+    },
+    "UpdateTableMigrationRequest":{
+      "type":"structure",
+      "required":["requestedState"],
+      "members":{
+        "tableARN":{
+          "shape":"TableARN",
+          "location":"querystring",
+          "locationName":"tableARN"
+        },
+        "migrationId":{
+          "shape":"MigrationId",
+          "location":"querystring",
+          "locationName":"migrationId"
+        },
+        "requestedState":{"shape":"MigrationRequestedState"},
+        "updateDescription":{"shape":"UpdateTableMigrationRequestUpdateDescriptionString"}
+      }
+    },
+    "UpdateTableMigrationRequestUpdateDescriptionString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "UpdateTableMigrationResponse":{
+      "type":"structure",
+      "required":[
+        "migrationId",
+        "state"
+      ],
+      "members":{
+        "migrationId":{"shape":"MigrationId"},
+        "state":{"shape":"MigrationState"},
+        "tableARN":{"shape":"TableARN"}
       }
     },
     "VersionToken":{

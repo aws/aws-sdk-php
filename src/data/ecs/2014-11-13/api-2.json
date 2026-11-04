@@ -2952,7 +2952,8 @@
       "type":"structure",
       "members":{
         "name":{"shape":"String"},
-        "host":{"shape":"HostVolumeProperties"}
+        "host":{"shape":"HostVolumeProperties"},
+        "logDriverVolumeConfiguration":{"shape":"LogDriverVolumeConfiguration"}
       }
     },
     "DaemonVolumeList":{
@@ -5142,6 +5143,13 @@
         "splunk",
         "awsfirelens"
       ]
+    },
+    "LogDriverVolumeConfiguration":{
+      "type":"structure",
+      "required":["driver"],
+      "members":{
+        "driver":{"shape":"LogDriver"}
+      }
     },
     "Long":{"type":"long"},
     "ManagedAgent":{

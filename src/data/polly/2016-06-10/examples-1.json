@@ -110,6 +110,26 @@
         "title": "To list all lexicons in a region"
       }
     ],
+    "ListTagsForResource": [
+      {
+        "input": {
+          "ResourceArn": "arn:aws:polly:us-east-1:111122223333:lexicon/example"
+        },
+        "output": {
+          "Tags": {
+            "Environment": "Production",
+            "Project": "Narration"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example lists the tags associated with a pronunciation lexicon.",
+        "id": "to-list-tags-for-a-lexicon-1793030400002",
+        "title": "To list the tags on a lexicon"
+      }
+    ],
     "PutLexicon": [
       {
         "input": {
@@ -191,6 +211,43 @@
         "description": "Synthesizes plain text or SSML into a file of human-like speech.",
         "id": "to-synthesize-speech-1482186064046",
         "title": "To synthesize speech"
+      }
+    ],
+    "TagResource": [
+      {
+        "input": {
+          "ResourceArn": "arn:aws:polly:us-east-1:111122223333:lexicon/example",
+          "Tags": {
+            "Environment": "Production",
+            "Project": "Narration"
+          }
+        },
+        "output": {},
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example adds the specified tags to a pronunciation lexicon.",
+        "id": "to-tag-a-lexicon-1793030400000",
+        "title": "To add tags to a lexicon"
+      }
+    ],
+    "UntagResource": [
+      {
+        "input": {
+          "ResourceArn": "arn:aws:polly:us-east-1:111122223333:lexicon/example",
+          "TagKeys": [
+            "Environment"
+          ]
+        },
+        "output": {},
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example removes the tags with the specified keys from a pronunciation lexicon.",
+        "id": "to-untag-a-lexicon-1793030400001",
+        "title": "To remove tags from a lexicon"
       }
     ]
   }

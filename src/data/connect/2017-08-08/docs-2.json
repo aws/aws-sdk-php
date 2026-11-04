@@ -2172,6 +2172,30 @@
         "StartOutboundVoiceContactRequest$CampaignId": "<p>The campaign identifier of the outbound communication.</p>"
       }
     },
+    "CaseEntries": {
+      "base": "<p>A list of cases associated with the contact.</p>",
+      "refs": {
+        "Contact$Cases": "<p>A list of cases associated with the contact. This field is populated when one or more cases have been linked to the contact.</p>"
+      }
+    },
+    "CaseEntry": {
+      "base": "<p>Information about a case associated with a contact.</p>",
+      "refs": {
+        "CaseEntries$member": null
+      }
+    },
+    "CaseId": {
+      "base": null,
+      "refs": {
+        "CaseEntry$CaseId": "<p>Unique identifier of the case in UUID format.</p>"
+      }
+    },
+    "CaseReferenceNumber": {
+      "base": null,
+      "refs": {
+        "CaseEntry$CaseReferenceNumber": "<p>A friendly number for the case. Reference numbers are not guaranteed to be unique.</p>"
+      }
+    },
     "CaseSlaConfiguration": {
       "base": "<p>The SLA configuration for Case SlaAssignmentType.</p>",
       "refs": {

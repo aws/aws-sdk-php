@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Lambda` - Stops applying the default Curl options to streamed commands such as InvokeWithResponseStream, which are served by a stream handler that rejects them.
+* `Aws\Connect` - Adds support for retrieving associated cases in contact responses. The Contact object now includes a Cases field containing case IDs and reference numbers linked to the contact.
+* `Aws\mgn` - This release adds Migration Planning artifacts as a source environment for network migration definitions, and an optional clientToken on CreateNetworkMigrationDefinition so that retried requests don't create duplicate definitions.
+* `Aws\EMR` - Added StepAdditionalInfo on DescribeStep and ListSteps to surface YARN application IDs for steps.
+* `Aws\RDS` - Adding support for copying and tagging option groups with cross-Region DB snapshot copies, in the same account or across accounts.
+* `Aws\ECS` - Amazon ECS Managed Instances now supports the json-file log driver in task definitions. Daemon task definition volumes also support logDriverVolumeConfiguration, letting managed daemons read those logs.
+* `Aws\WorkSpaces` - Add Ubuntu 24.04, Ubuntu 26.04, RHEL 9, RHEL10, Rocky 9 and Rocky 10 to OperatingSystemName and documentation update for WorkspaceProperties Protocols.
+* `Aws\DynamoDB` - Adds StartBulkPutItems, DescribeBulkOperation, ListBulkOperations, and CancelBulkOperation for asynchronously loading Amazon S3 datasets into existing DynamoDB tables.
+* `Aws\Polly` - Amazon Polly now supports tagging lexicons. Use the new TagResource, UntagResource and ListTagsForResource APIs, or add tags when creating a lexicon with PutLexicon, to organize lexicons and control access with tag-based (ABAC) IAM policies.
+* `Aws\SecurityHub` - Release Software APIs- GetSoftwareV2, GetSoftwareStatisticsV2 and GetSoftwareResourcesV2 to list software packages with aggregated resource count, get aggregated software statistics, and find the resources that contain a specific software package.
+* `Aws\MWAAServerless` - Adding support to Environment Variables in MWAA Serverless
+* `Aws\S3Tables` - Amazon S3 Tables now supports migrating AWS Glue Data Catalog tables into S3 Table buckets. This release adds the StartTableMigration, SyncTableMigration, UpdateTableMigration, CompleteTableMigration, GetTableMigration, and ListTableMigrations APIs.
+* `Aws\TaxSettings` - Adds Colombia additional information (responsibility codes, taxpayer type code, and RUT issue date) and a rejection reason (statusReason) to tax registration responses, and adds Argentina and Uruguay tax registration types.
+* `Aws\ConnectContactLens` - Rules TBAC GA (Contact Lens V1) - Adds an optional ListFilter (CategoriesAttributeFilter with OrConditions, AndCondition and TagCondition) to ListRealtimeContactAnalysisSegments. This filters matched categories by rule tags. It also adds an optional RuleId to CategoryDetails in the response.
+* `Aws\IoTSiteWise` - Adds support for an optional jobName on CreateDatasetExportJob. The jobName is returned by DescribeDatasetExportJob and ListDatasetExportJobs, making dataset export jobs easier to identify and track. If jobName is omitted, a default name is generated automatically.
+* `Aws\ElasticBeanstalk` - Adds DefaultAmiList to DescribePlatformVersion to return the default AMI for each processor architecture that a platform version supports.
+* `Aws\EC2` - Add the Unsupported SupportabilityScore to GetCapacityManagerSupportabilityScores.
+* `Aws\MarketplaceDiscovery` - GetListing and SearchListings APIs now return G2 and PeerSpot review sources in review summaries.
+* `Aws\RolesAnywhere` - Adds the crlDpRevocationEnabled field to enable automatic revocation checking using CRL distribution points in X.509 certificates.
+* `Aws\LookoutEquipment` - Amazon Lookout for Equipment reached end of support on October 7, 2026. All Lookout for Equipment APIs are now marked as deprecated.
+
 ## 3.402.5 - 2026-10-30
 
 * `Aws\` - Fixed an issue in NonSeekableStreamDecodingEventStreamIterator where the final event was dropped when reading it reached the end of the stream.

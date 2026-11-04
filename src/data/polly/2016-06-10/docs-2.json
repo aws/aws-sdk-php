@@ -8,16 +8,27 @@
     "GetSpeechSynthesisTask": "<p>Retrieves a specific SpeechSynthesisTask object based on its TaskID. This object contains information about the given speech synthesis task, including the status of the task, and a link to the S3 bucket containing the output of the task.</p>",
     "ListLexicons": "<p>Returns a list of pronunciation lexicons stored in an Amazon Web Services Region. For more information, see <a href=\"https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html\">Managing Lexicons</a>.</p>",
     "ListSpeechSynthesisTasks": "<p>Returns a list of SpeechSynthesisTask objects ordered by their creation date. This operation can filter the tasks by their status, for example, allowing users to list only tasks that are completed.</p>",
-    "PutLexicon": "<p>Stores a pronunciation lexicon in an Amazon Web Services Region. If a lexicon with the same name already exists in the region, it is overwritten by the new lexicon. Lexicon operations have eventual consistency, therefore, it might take some time before the lexicon is available to the SynthesizeSpeech operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html\">Managing Lexicons</a>.</p>",
+    "ListTagsForResource": "<p>Lists the tags for an Amazon Polly resource.</p>",
+    "PutLexicon": "<p>Stores a pronunciation lexicon in an Amazon Web Services Region. If a lexicon with the same name already exists in the region, it is overwritten by the new lexicon. Lexicon operations have eventual consistency, therefore, it might take some time before the lexicon is available to the SynthesizeSpeech operation.</p> <p>Overwriting a lexicon keeps its existing tags. You can specify tags only when you create a lexicon. If you specify tags for a lexicon that already exists, the request fails with a <code>ValidationException</code>. To change the tags of an existing lexicon, use <code>TagResource</code> and <code>UntagResource</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html\">Managing Lexicons</a>.</p>",
     "StartSpeechSynthesisStream": "<p>Synthesizes UTF-8 input, plain text, or SSML over a bidirectional streaming connection. Specify synthesis parameters in HTTP/2 headers, send text incrementally as events on the input stream, and receive synthesized audio as it becomes available.</p> <p>This operation serves as a bidirectional counterpart to <code>SynthesizeSpeech</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/polly/latest/dg/API_SynthesizeSpeech.html\">SynthesizeSpeech</a> </p> </li> </ul>",
     "StartSpeechSynthesisTask": "<p>Allows the creation of an asynchronous synthesis task, by starting a new <code>SpeechSynthesisTask</code>. This operation requires all the standard information needed for speech synthesis, plus the name of an Amazon S3 bucket for the service to store the output of the synthesis task and two optional parameters (<code>OutputS3KeyPrefix</code> and <code>SnsTopicArn</code>). Once the synthesis task is created, this operation will return a <code>SpeechSynthesisTask</code> object, which will include an identifier of this task as well as the current status. The <code>SpeechSynthesisTask</code> object is available for 72 hours after starting the asynchronous synthesis task.</p>",
-    "SynthesizeSpeech": "<p>Synthesizes UTF-8 input, plain text or SSML, to a stream of bytes. SSML input must be valid, well-formed SSML. Some alphabets might not be available with all the voices (for example, Cyrillic might not be read at all by English voices) unless phoneme mapping is used. For more information, see <a href=\"https://docs.aws.amazon.com/polly/latest/dg/how-text-to-speech-works.html\">How it Works</a>.</p>"
+    "SynthesizeSpeech": "<p>Synthesizes UTF-8 input, plain text or SSML, to a stream of bytes. SSML input must be valid, well-formed SSML. Some alphabets might not be available with all the voices (for example, Cyrillic might not be read at all by English voices) unless phoneme mapping is used. For more information, see <a href=\"https://docs.aws.amazon.com/polly/latest/dg/how-text-to-speech-works.html\">How it Works</a>.</p>",
+    "TagResource": "<p>Adds specified tags to a resource with the specified ARN. Existing tags on a resource are not changed if they are not specified in the request parameters. If you specify a tag key that already exists on the resource, the value in the request replaces the existing value.</p>",
+    "UntagResource": "<p>Deletes specified tags from a resource.</p>"
   },
   "shapes": {
     "Alphabet": {
       "base": null,
       "refs": {
         "LexiconAttributes$Alphabet": "<p>Phonetic alphabet used in the lexicon. Valid values are <code>ipa</code>, <code>x-sampa</code>, <code>x-amazon-pinyin</code>, <code>x-amazon-jyutping</code>, <code>x-amazon-pron-kana</code>, and <code>x-amazon-yomigana</code>.</p>"
+      }
+    },
+    "AmazonResourceName": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceInput$ResourceArn": "<p>The Amazon Resource Name (ARN) that identifies the resource for which to list the tags. Currently, the only supported resource is an Amazon Polly lexicon.</p>",
+        "TagResourceInput$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource to which to add tags. Currently, the only supported resource is an Amazon Polly lexicon.</p>",
+        "UntagResourceInput$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource from which to remove tags. Currently, the only supported resource is an Amazon Polly lexicon.</p>"
       }
     },
     "AudioChunk": {
@@ -129,6 +140,7 @@
         "MarksNotSupportedForFormatException$message": null,
         "MaxLexemeLengthExceededException$message": null,
         "MaxLexiconsNumberExceededException$message": null,
+        "ResourceNotFoundException$message": null,
         "ServiceFailureException$message": null,
         "ServiceQuotaExceededException$message": null,
         "SsmlMarksNotSupportedForTextTypeException$message": null,
@@ -137,6 +149,13 @@
         "UnsupportedPlsAlphabetException$message": null,
         "UnsupportedPlsLanguageException$message": null,
         "ValidationException$message": null
+      }
+    },
+    "ExceptionMessage": {
+      "base": null,
+      "refs": {
+        "InvalidTagParameterException$message": null,
+        "TooManyTagsException$message": null
       }
     },
     "FlushStreamConfiguration": {
@@ -205,6 +224,10 @@
     },
     "InvalidSsmlException": {
       "base": "<p>The SSML you provided is invalid. Verify the SSML syntax, spelling of tags and values, and then try again.</p>",
+      "refs": {}
+    },
+    "InvalidTagParameterException": {
+      "base": "<p>The resource ARN or a tag in the request isn't valid. Specify the ARN of a supported resource in the Amazon Web Services account and Region of the request. Tag keys can have a maximum length of 128 characters, and tag values can have a maximum length of 256 characters. Correct the ARN or the tags, and then try again.</p>",
       "refs": {}
     },
     "InvalidTaskIdException": {
@@ -298,7 +321,7 @@
         "Lexicon$Name": "<p>Name of the lexicon.</p>",
         "LexiconDescription$Name": "<p>Name of the lexicon.</p>",
         "LexiconNameList$member": null,
-        "PutLexiconInput$Name": "<p>Name of the lexicon. The name must follow the regular express format [0-9A-Za-z]{1,20}. That is, the name is a case-sensitive alphanumeric string up to 20 characters long. </p>"
+        "PutLexiconInput$Name": "<p>Name of the lexicon. The name must follow the regular expression format [0-9A-Za-z]{1,20}. That is, the name is a case-sensitive alphanumeric string up to 20 characters long. </p>"
       }
     },
     "LexiconNameList": {
@@ -331,6 +354,14 @@
       "refs": {}
     },
     "ListSpeechSynthesisTasksOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceOutput": {
       "base": null,
       "refs": {}
     },
@@ -410,6 +441,22 @@
         "StreamClosedEvent$RequestCharacters": "<p>The total number of characters synthesized during the streaming session.</p>",
         "SynthesisTask$RequestCharacters": "<p>Number of billable characters synthesized.</p>",
         "SynthesizeSpeechOutput$RequestCharacters": "<p>Number of characters synthesized.</p>"
+      }
+    },
+    "ResourceId": {
+      "base": null,
+      "refs": {
+        "ResourceNotFoundException$resourceId": "<p>The identifier of the resource that wasn't found.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>Amazon Polly can't find the specified resource. Verify that the resource exists in the Amazon Web Services account and Region of the request and that its ARN is spelled correctly, and then try again.</p>",
+      "refs": {}
+    },
+    "ResourceType": {
+      "base": null,
+      "refs": {
+        "ResourceNotFoundException$resourceType": "<p>The type of the resource that wasn't found.</p>"
       }
     },
     "SampleRate": {
@@ -530,6 +577,41 @@
       "base": null,
       "refs": {}
     },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagKeyList$member": null,
+        "TagMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceInput$TagKeys": "<p>The keys of the tags to be removed.</p>"
+      }
+    },
+    "TagMap": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceOutput$Tags": "<p>The tags for the resource.</p>",
+        "PutLexiconInput$Tags": "<p>The metadata that you apply to the lexicon to help you categorize and organize it. Each tag consists of a key and an optional value, both of which you define. Tag keys can have a maximum character length of 128 characters, and tag values can have a maximum length of 256 characters. You can't replace the tags of an existing lexicon by overwriting it with PutLexicon.</p>",
+        "TagResourceInput$Tags": "<p>The tags to add to the resource, as key-value pairs. Tag keys can have a maximum character length of 128 characters, and tag values can have a maximum length of 256 characters.</p>"
+      }
+    },
+    "TagResourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "TagMap$value": null
+      }
+    },
     "TaskId": {
       "base": null,
       "refs": {
@@ -595,12 +677,24 @@
         "ThrottlingException$throttlingReasons": "<p>A list of reasons explaining why the request was throttled.</p>"
       }
     },
+    "TooManyTagsException": {
+      "base": "<p>The list of tags on the resource is over the limit. The maximum number of tags that can be applied to a resource is 50. Remove unused tags or reduce the number of tags in the request, and then try again.</p>",
+      "refs": {}
+    },
     "UnsupportedPlsAlphabetException": {
       "base": "<p>The alphabet specified by the lexicon is not a supported alphabet. Valid values are <code>ipa</code>, <code>x-sampa</code>, <code>x-amazon-pinyin</code>, <code>x-amazon-jyutping</code>, <code>x-amazon-pron-kana</code>, and <code>x-amazon-yomigana</code>. Replace the unsupported alphabet with one of the valid values and resubmit your request.</p>",
       "refs": {}
     },
     "UnsupportedPlsLanguageException": {
       "base": "<p>The language specified in the lexicon is unsupported. For a list of supported languages, see <a href=\"https://docs.aws.amazon.com/polly/latest/dg/API_LexiconAttributes.html\">Lexicon Attributes</a>.</p>",
+      "refs": {}
+    },
+    "UntagResourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceOutput": {
+      "base": null,
       "refs": {}
     },
     "ValidationException": {

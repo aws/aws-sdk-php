@@ -3712,7 +3712,8 @@
         "TargetCustomAvailabilityZone":{"shape":"String"},
         "SnapshotTarget":{"shape":"String"},
         "CopyOptionGroup":{"shape":"BooleanOptional"},
-        "SnapshotAvailabilityZone":{"shape":"String"}
+        "SnapshotAvailabilityZone":{"shape":"String"},
+        "TagSpecifications":{"shape":"TagSpecificationList"}
       }
     },
     "CopyDBSnapshotResult":{
@@ -8833,7 +8834,8 @@
         "OptionGroupArn":{"shape":"String"},
         "SourceOptionGroup":{"shape":"String"},
         "SourceAccountId":{"shape":"String"},
-        "CopyTimestamp":{"shape":"TStamp"}
+        "CopyTimestamp":{"shape":"TStamp"},
+        "SourceRegion":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -8890,7 +8892,8 @@
         "SupportsOptionVersionDowngrade":{"shape":"BooleanOptional"},
         "OptionGroupOptionSettings":{"shape":"OptionGroupOptionSettingsList"},
         "OptionGroupOptionVersions":{"shape":"OptionGroupOptionVersionsList"},
-        "CopyableCrossAccount":{"shape":"BooleanOptional"}
+        "CopyableCrossAccount":{"shape":"BooleanOptional"},
+        "CopyableCrossRegion":{"shape":"BooleanOptional"}
       }
     },
     "OptionGroupOptionSetting":{

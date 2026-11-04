@@ -380,7 +380,8 @@
         "franceAdditionalInfo":{"shape":"FranceAdditionalInfo"},
         "monacoAdditionalInfo":{"shape":"MonacoAdditionalInfo"},
         "germanyAdditionalInfo":{"shape":"GermanyAdditionalInfo"},
-        "mexicoAdditionalInfo":{"shape":"MexicoAdditionalInfo"}
+        "mexicoAdditionalInfo":{"shape":"MexicoAdditionalInfo"},
+        "colombiaAdditionalInfo":{"shape":"ColombiaAdditionalInfo"}
       }
     },
     "Address":{
@@ -652,6 +653,28 @@
       "max":50,
       "min":1,
       "pattern":"(?!\\s*$)[\\s\\S]+"
+    },
+    "ColombiaAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "responsibilityCodes":{"shape":"ColombiaResponsabilidadesList"},
+        "taxpayerTypeCode":{"shape":"ColombiaTipoContribuyenteCode"},
+        "issueDate":{"shape":"DateString"}
+      }
+    },
+    "ColombiaResponsabilidadCode":{
+      "type":"string",
+      "pattern":"\\d{2}"
+    },
+    "ColombiaResponsabilidadesList":{
+      "type":"list",
+      "member":{"shape":"ColombiaResponsabilidadCode"},
+      "max":26,
+      "min":0
+    },
+    "ColombiaTipoContribuyenteCode":{
+      "type":"string",
+      "pattern":"\\d{1}"
     },
     "ConflictException":{
       "type":"structure",
@@ -1413,6 +1436,14 @@
       "min":1,
       "pattern":"(?!\\s*$)[\\s\\S]+"
     },
+    "StatusReasonCode":{
+      "type":"string",
+      "pattern":"[\\s\\S]*"
+    },
+    "StatusReasonMessage":{
+      "type":"string",
+      "pattern":"[\\s\\S]*"
+    },
     "Steuernummer":{
       "type":"string",
       "pattern":"((10|11|21|22|23|24|26|27|28|30|31|32|40|41)[0-9]{11}|[59][0-9]{12})"
@@ -1569,6 +1600,7 @@
         "taxDocumentMetadatas":{"shape":"TaxDocumentMetadatas"},
         "certifiedEmailId":{"shape":"CertifiedEmailId"},
         "additionalTaxInformation":{"shape":"AdditionalInfoResponse"},
+        "statusReason":{"shape":"TaxRegistrationStatusReason"},
         "legalAddress":{"shape":"Address"}
       },
       "sensitive":true
@@ -1631,6 +1663,13 @@
         "Rejected"
       ]
     },
+    "TaxRegistrationStatusReason":{
+      "type":"structure",
+      "members":{
+        "code":{"shape":"StatusReasonCode"},
+        "message":{"shape":"StatusReasonMessage"}
+      }
+    },
     "TaxRegistrationType":{
       "type":"string",
       "enum":[
@@ -1642,7 +1681,12 @@
         "TIN",
         "NRIC",
         "PAN",
-        "NIP"
+        "NIP",
+        "CUIT",
+        "CDI",
+        "RUT",
+        "NIE",
+        "CI"
       ]
     },
     "TaxRegistrationWithJurisdiction":{
@@ -1663,6 +1707,7 @@
         "taxDocumentMetadatas":{"shape":"TaxDocumentMetadatas"},
         "certifiedEmailId":{"shape":"CertifiedEmailId"},
         "additionalTaxInformation":{"shape":"AdditionalInfoResponse"},
+        "statusReason":{"shape":"TaxRegistrationStatusReason"},
         "jurisdiction":{"shape":"Jurisdiction"}
       },
       "sensitive":true

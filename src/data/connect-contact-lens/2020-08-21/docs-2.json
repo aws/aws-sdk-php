@@ -15,6 +15,25 @@
         "RealtimeContactAnalysisSegment$Categories": "<p>The matched category rules.</p>"
       }
     },
+    "CategoriesAttributeAndCondition": {
+      "base": "<p>A list of tag conditions that the filter evaluates together using AND logic. A category segment matches only when the tags on its rule satisfy every tag condition in the list.</p>",
+      "refs": {
+        "CategoriesAttributeFilter$AndCondition": "<p>A condition that the filter evaluates using AND logic. A category segment matches only when all of the tag conditions in the condition are met.</p>",
+        "CategoriesAttributeOrConditionList$member": null
+      }
+    },
+    "CategoriesAttributeFilter": {
+      "base": "<p>A filter that matches category segments based on the tags assigned to the rules that create the categories. Provide exactly one of <code>OrConditions</code>, <code>AndCondition</code>, or <code>TagCondition</code>.</p>",
+      "refs": {
+        "RealTimeContactAnalysisSegmentsFilter$CategoriesAttributeFilter": "<p>A filter applied to category segments based on the tags of the rules that create the matched categories.</p>"
+      }
+    },
+    "CategoriesAttributeOrConditionList": {
+      "base": null,
+      "refs": {
+        "CategoriesAttributeFilter$OrConditions": "<p>A list of conditions that the filter evaluates using OR logic. A category segment matches when at least one of the conditions in the list is met.</p>"
+      }
+    },
     "CategoryDetails": {
       "base": "<p>Provides information about the category rule that was matched.</p>",
       "refs": {
@@ -222,6 +241,12 @@
         "PostContactSummary$Status": "<p>Whether the summary was successfully COMPLETED or FAILED to be generated.</p>"
       }
     },
+    "RealTimeContactAnalysisSegmentsFilter": {
+      "base": "<p>A filter that restricts the segments returned by <code>ListRealtimeContactAnalysisSegments</code>. It supports filtering category segments by the tags on the rules that create them, which enforces tag-based access control on the categories a caller can view.</p>",
+      "refs": {
+        "ListRealtimeContactAnalysisSegmentsRequest$ListFilter": "<p>A filter that limits the category segments returned by the operation. When provided, use <code>CategoriesAttributeFilter</code> to return only the category segments whose rules have tags that match the filter. This enforces tag-based access control on the categories that the caller can view.</p>"
+      }
+    },
     "RealtimeContactAnalysisSegment": {
       "base": "<p>An analyzed segment for a real-time analysis session.</p>",
       "refs": {
@@ -238,10 +263,47 @@
       "base": "<p>The specified resource was not found.</p>",
       "refs": {}
     },
+    "RuleId": {
+      "base": null,
+      "refs": {
+        "CategoryDetails$RuleId": "<p>The unique identifier of the rule that created the matched category.</p>"
+      }
+    },
     "SentimentValue": {
       "base": null,
       "refs": {
         "Transcript$Sentiment": "<p>The sentiment detected for this piece of transcript.</p>"
+      }
+    },
+    "TagAndConditionList": {
+      "base": null,
+      "refs": {
+        "CategoriesAttributeAndCondition$TagConditions": "<p>A list of tag conditions. All of the tag conditions must be met for the condition to match.</p>"
+      }
+    },
+    "TagComparisonType": {
+      "base": null,
+      "refs": {
+        "TagCondition$ComparisonType": "<p>The comparison operator for the tag condition. Valid values: <code>EQUALS</code> | <code>NOT_EQUALS</code>.</p>"
+      }
+    },
+    "TagCondition": {
+      "base": "<p>A tag condition that consists of a tag key, a tag value, and a comparison operator.</p>",
+      "refs": {
+        "CategoriesAttributeFilter$TagCondition": "<p>A single tag condition that a category segment must match. The category's rule must have the specified tag.</p>",
+        "TagAndConditionList$member": null
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagCondition$TagKey": "<p>The tag key in the tag condition.</p>"
+      }
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "TagCondition$TagValue": "<p>The tag value in the tag condition.</p>"
       }
     },
     "ThrottlingException": {

@@ -151,10 +151,11 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \Aws\Result createNetworkMigrationDefinition(array $args = [])
  * @phpstan-method \Aws\Result createNetworkMigrationDefinition(array{
+ *     clientToken?: string,
  *     name?: string,
  *     description?: string,
  *     sourceConfigurations?: list<array{
- *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
+ *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MIGRATION_PLANNING_ARTIFACTS'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
  *         sourceS3Configuration?: array,
  *         ...,
  *     }>,
@@ -175,10 +176,11 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createNetworkMigrationDefinitionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createNetworkMigrationDefinitionAsync(array{
+ *     clientToken?: string,
  *     name?: string,
  *     description?: string,
  *     sourceConfigurations?: list<array{
- *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
+ *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MIGRATION_PLANNING_ARTIFACTS'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
  *         sourceS3Configuration?: array,
  *         ...,
  *     }>,
@@ -1095,7 +1097,7 @@ use Aws\AwsClient;
  *     name?: string,
  *     description?: string,
  *     sourceConfigurations?: list<array{
- *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
+ *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MIGRATION_PLANNING_ARTIFACTS'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
  *         sourceS3Configuration?: array,
  *         ...,
  *     }>,
@@ -1119,7 +1121,7 @@ use Aws\AwsClient;
  *     name?: string,
  *     description?: string,
  *     sourceConfigurations?: list<array{
- *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
+ *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MIGRATION_PLANNING_ARTIFACTS'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
  *         sourceS3Configuration?: array,
  *         ...,
  *     }>,

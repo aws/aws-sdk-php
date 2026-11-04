@@ -735,6 +735,10 @@ use GuzzleHttp\Promise\Create;
  *     ReturnConsumedCapacity?: 'INDEXES'|'NONE'|'TOTAL',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result cancelBulkOperation(array $args = []) (supported in versions 2012-08-10)
+ * @phpstan-method \Aws\Result cancelBulkOperation(array{BulkOperationArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelBulkOperationAsync(array $args = []) (supported in versions 2012-08-10)
+ * @phpstan-method \GuzzleHttp\Promise\Promise cancelBulkOperationAsync(array{BulkOperationArn?: string, ...} $args = [])
  * @method \Aws\Result createBackup(array $args = []) (supported in versions 2012-08-10)
  * @phpstan-method \Aws\Result createBackup(array{TableName?: string, BackupName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise createBackupAsync(array $args = []) (supported in versions 2012-08-10)
@@ -755,6 +759,10 @@ use GuzzleHttp\Promise\Create;
  * @phpstan-method \Aws\Result describeBackup(array{BackupArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeBackupAsync(array $args = []) (supported in versions 2012-08-10)
  * @phpstan-method \GuzzleHttp\Promise\Promise describeBackupAsync(array{BackupArn?: string, ...} $args = [])
+ * @method \Aws\Result describeBulkOperation(array $args = []) (supported in versions 2012-08-10)
+ * @phpstan-method \Aws\Result describeBulkOperation(array{BulkOperationArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeBulkOperationAsync(array $args = []) (supported in versions 2012-08-10)
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeBulkOperationAsync(array{BulkOperationArn?: string, ...} $args = [])
  * @method \Aws\Result describeContinuousBackups(array $args = []) (supported in versions 2012-08-10)
  * @phpstan-method \Aws\Result describeContinuousBackups(array{TableName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeContinuousBackupsAsync(array $args = []) (supported in versions 2012-08-10)
@@ -1019,6 +1027,10 @@ use GuzzleHttp\Promise\Create;
  *     BackupType?: 'ALL'|'AWS_BACKUP'|'SYSTEM'|'USER',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listBulkOperations(array $args = []) (supported in versions 2012-08-10)
+ * @phpstan-method \Aws\Result listBulkOperations(array{MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listBulkOperationsAsync(array $args = []) (supported in versions 2012-08-10)
+ * @phpstan-method \GuzzleHttp\Promise\Promise listBulkOperationsAsync(array{MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \Aws\Result listContributorInsights(array $args = []) (supported in versions 2012-08-10)
  * @phpstan-method \Aws\Result listContributorInsights(array{TableName?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listContributorInsightsAsync(array $args = []) (supported in versions 2012-08-10)
@@ -1249,6 +1261,56 @@ use GuzzleHttp\Promise\Create;
  *     }>,
  *     SearchConditionExpression?: string,
  *     TopK?: int,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result startBulkPutItems(array $args = []) (supported in versions 2012-08-10)
+ * @phpstan-method \Aws\Result startBulkPutItems(array{
+ *     ClientToken?: string,
+ *     InputS3Configuration?: array{
+ *         S3BucketOwner?: string,
+ *         S3Bucket?: string,
+ *         S3KeyPrefix?: string,
+ *         InputFormat?: 'DYNAMODB_JSON'|'ION',
+ *         InputCompressionType?: 'GZIP'|'NONE'|'ZSTD',
+ *         ...,
+ *     },
+ *     OutputS3Configuration?: array{
+ *         S3BucketOwner?: string,
+ *         S3Bucket?: string,
+ *         S3KeyPrefix?: string,
+ *         S3SseAlgorithm?: 'AES256'|'KMS',
+ *         S3SseKmsKeyId?: string,
+ *         OutputType?: list<'CONDITION_CHECK_FAILURE'|'ERROR'>,
+ *         ...,
+ *     },
+ *     TableName?: string,
+ *     MaxWriteRequestUnits?: int,
+ *     PerformanceTier?: 'ACCELERATED'|'STANDARD',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise startBulkPutItemsAsync(array $args = []) (supported in versions 2012-08-10)
+ * @phpstan-method \GuzzleHttp\Promise\Promise startBulkPutItemsAsync(array{
+ *     ClientToken?: string,
+ *     InputS3Configuration?: array{
+ *         S3BucketOwner?: string,
+ *         S3Bucket?: string,
+ *         S3KeyPrefix?: string,
+ *         InputFormat?: 'DYNAMODB_JSON'|'ION',
+ *         InputCompressionType?: 'GZIP'|'NONE'|'ZSTD',
+ *         ...,
+ *     },
+ *     OutputS3Configuration?: array{
+ *         S3BucketOwner?: string,
+ *         S3Bucket?: string,
+ *         S3KeyPrefix?: string,
+ *         S3SseAlgorithm?: 'AES256'|'KMS',
+ *         S3SseKmsKeyId?: string,
+ *         OutputType?: list<'CONDITION_CHECK_FAILURE'|'ERROR'>,
+ *         ...,
+ *     },
+ *     TableName?: string,
+ *     MaxWriteRequestUnits?: int,
+ *     PerformanceTier?: 'ACCELERATED'|'STANDARD',
  *     ...,
  * } $args = [])
  * @method \Aws\Result tagResource(array $args = []) (supported in versions 2012-08-10)

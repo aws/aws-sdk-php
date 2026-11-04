@@ -4977,6 +4977,7 @@
         },
         "destinationS3Uri":{"shape":"S3Uri"},
         "input":{"shape":"ProcessingInput"},
+        "jobName":{"shape":"DatasetExportJobNameInput"},
         "errorReportLocation":{"shape":"ExportErrorReportLocation"}
       }
     },
@@ -5449,6 +5450,18 @@
       "max":36,
       "min":36,
       "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "DatasetExportJobName":{
+      "type":"string",
+      "max":350,
+      "min":1,
+      "pattern":"[^\\x00-\\x1f\\x7f]+"
+    },
+    "DatasetExportJobNameInput":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^\\x00-\\x1f\\x7f]+"
     },
     "DatasetExportJobStatus":{
       "type":"string",
@@ -6582,6 +6595,7 @@
       "members":{
         "jobId":{"shape":"DatasetExportJobId"},
         "workspaceName":{"shape":"WorkspaceName"},
+        "jobName":{"shape":"DatasetExportJobName"},
         "status":{"shape":"DatasetExportJobStatus"},
         "startedAt":{"shape":"Timestamp"},
         "completedAt":{"shape":"Timestamp"},
@@ -7719,6 +7733,7 @@
       ],
       "members":{
         "jobId":{"shape":"DatasetExportJobId"},
+        "jobName":{"shape":"DatasetExportJobName"},
         "status":{"shape":"DatasetExportJobStatus"},
         "startedAt":{"shape":"Timestamp"},
         "completedAt":{"shape":"Timestamp"},

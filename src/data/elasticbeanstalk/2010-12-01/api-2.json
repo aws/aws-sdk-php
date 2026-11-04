@@ -694,6 +694,13 @@
         "Unknown"
       ]
     },
+    "AmiArchitecture":{
+      "type":"string",
+      "enum":[
+        "x86_64",
+        "arm64"
+      ]
+    },
     "ApplicationArn":{"type":"string"},
     "ApplicationDescription":{
       "type":"structure",
@@ -1180,6 +1187,17 @@
       "type":"string",
       "max":63,
       "min":4
+    },
+    "DefaultAmi":{
+      "type":"structure",
+      "members":{
+        "Architecture":{"shape":"AmiArchitecture"},
+        "ImageId":{"shape":"ImageId"}
+      }
+    },
+    "DefaultAmiList":{
+      "type":"list",
+      "member":{"shape":"DefaultAmi"}
     },
     "DeleteApplicationMessage":{
       "type":"structure",
@@ -2044,6 +2062,7 @@
         "ProgrammingLanguages":{"shape":"PlatformProgrammingLanguages"},
         "Frameworks":{"shape":"PlatformFrameworks"},
         "CustomAmiList":{"shape":"CustomAmiList"},
+        "DefaultAmiList":{"shape":"DefaultAmiList"},
         "SupportedTierList":{"shape":"SupportedTierList"},
         "SupportedAddonList":{"shape":"SupportedAddonList"},
         "PlatformLifecycleState":{"shape":"PlatformLifecycleState"},

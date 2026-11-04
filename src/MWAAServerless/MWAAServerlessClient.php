@@ -17,6 +17,7 @@ use Aws\AwsClient;
  *     LoggingConfiguration?: array{LogGroupName?: string, ...},
  *     EngineVersion?: int,
  *     NetworkConfiguration?: array{SecurityGroupIds?: list<string>, SubnetIds?: list<string>, ...},
+ *     Environment?: array{Variables?: array<string, string>, ...},
  *     Tags?: array<string, string>,
  *     TriggerMode?: string,
  *     ...,
@@ -33,6 +34,7 @@ use Aws\AwsClient;
  *     LoggingConfiguration?: array{LogGroupName?: string, ...},
  *     EngineVersion?: int,
  *     NetworkConfiguration?: array{SecurityGroupIds?: list<string>, SubnetIds?: list<string>, ...},
+ *     Environment?: array{Variables?: array<string, string>, ...},
  *     Tags?: array<string, string>,
  *     TriggerMode?: string,
  *     ...,
@@ -111,6 +113,7 @@ use Aws\AwsClient;
  *     LoggingConfiguration?: array{LogGroupName?: string, ...},
  *     EngineVersion?: int,
  *     NetworkConfiguration?: array{SecurityGroupIds?: list<string>, SubnetIds?: list<string>, ...},
+ *     Environment?: array{Variables?: array<string, string>, ...},
  *     TriggerMode?: string,
  *     ...,
  * } $args = [])
@@ -124,6 +127,7 @@ use Aws\AwsClient;
  *     LoggingConfiguration?: array{LogGroupName?: string, ...},
  *     EngineVersion?: int,
  *     NetworkConfiguration?: array{SecurityGroupIds?: list<string>, SubnetIds?: list<string>, ...},
+ *     Environment?: array{Variables?: array<string, string>, ...},
  *     TriggerMode?: string,
  *     ...,
  * } $args = [])

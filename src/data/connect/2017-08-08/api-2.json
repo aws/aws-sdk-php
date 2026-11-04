@@ -8735,6 +8735,27 @@
       "max":100,
       "min":1
     },
+    "CaseEntries":{
+      "type":"list",
+      "member":{"shape":"CaseEntry"}
+    },
+    "CaseEntry":{
+      "type":"structure",
+      "members":{
+        "CaseId":{"shape":"CaseId"},
+        "CaseReferenceNumber":{"shape":"CaseReferenceNumber"}
+      }
+    },
+    "CaseId":{
+      "type":"string",
+      "max":36,
+      "min":1
+    },
+    "CaseReferenceNumber":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
     "CaseSlaConfiguration":{
       "type":"structure",
       "required":[
@@ -9114,6 +9135,7 @@
         "DisconnectReason":{"shape":"String"},
         "ContactEvaluations":{"shape":"ContactEvaluations"},
         "TaskTemplateInfo":{"shape":"TaskTemplateInfoV2"},
+        "Cases":{"shape":"CaseEntries"},
         "ContactDetails":{"shape":"ContactDetails"},
         "OutboundStrategy":{"shape":"OutboundStrategy"},
         "Attributes":{"shape":"Attributes"},

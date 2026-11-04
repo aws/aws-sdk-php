@@ -154,6 +154,37 @@
                 }
             ]
         },
+        "ListTagsForResource": {
+            "name": "ListTagsForResource",
+            "http": {
+                "method": "GET",
+                "requestUri": "\/v1\/listTagsForResource\/",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "ListTagsForResourceInput"
+            },
+            "output": {
+                "shape": "ListTagsForResourceOutput"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "InvalidTagParameterException"
+                },
+                {
+                    "shape": "ServiceFailureException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                }
+            ]
+        },
         "PutLexicon": {
             "name": "PutLexicon",
             "http": {
@@ -187,7 +218,16 @@
                     "shape": "MaxLexiconsNumberExceededException"
                 },
                 {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "TooManyTagsException"
+                },
+                {
                     "shape": "ServiceFailureException"
+                },
+                {
+                    "shape": "InvalidTagParameterException"
                 }
             ]
         },
@@ -285,11 +325,81 @@
                     "shape": "EngineNotSupportedException"
                 }
             ]
+        },
+        "TagResource": {
+            "name": "TagResource",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/v1\/tagResource",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "TagResourceInput"
+            },
+            "output": {
+                "shape": "TagResourceOutput"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "TooManyTagsException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "InvalidTagParameterException"
+                },
+                {
+                    "shape": "ServiceFailureException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                }
+            ]
+        },
+        "UntagResource": {
+            "name": "UntagResource",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/v1\/untagResource",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "UntagResourceInput"
+            },
+            "output": {
+                "shape": "UntagResourceOutput"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "InvalidTagParameterException"
+                },
+                {
+                    "shape": "ServiceFailureException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                }
+            ]
         }
     },
     "shapes": {
         "Alphabet": {
             "type": "string"
+        },
+        "AmazonResourceName": {
+            "type": "string",
+            "max": 1011,
+            "min": 1
         },
         "AudioChunk": {
             "type": "blob"
@@ -409,6 +519,9 @@
             "exception": true
         },
         "ErrorMessage": {
+            "type": "string"
+        },
+        "ExceptionMessage": {
             "type": "string"
         },
         "FlushStreamConfiguration": {
@@ -554,6 +667,18 @@
             "members": {
                 "message": {
                     "shape": "ErrorMessage"
+                }
+            },
+            "error": {
+                "httpStatusCode": 400
+            },
+            "exception": true
+        },
+        "InvalidTagParameterException": {
+            "type": "structure",
+            "members": {
+                "message": {
+                    "shape": "ExceptionMessage"
                 }
             },
             "error": {
@@ -792,6 +917,27 @@
                 }
             }
         },
+        "ListTagsForResourceInput": {
+            "type": "structure",
+            "required": [
+                "ResourceArn"
+            ],
+            "members": {
+                "ResourceArn": {
+                    "shape": "AmazonResourceName",
+                    "location": "querystring",
+                    "locationName": "arn"
+                }
+            }
+        },
+        "ListTagsForResourceOutput": {
+            "type": "structure",
+            "members": {
+                "Tags": {
+                    "shape": "TagMap"
+                }
+            }
+        },
         "MarksNotSupportedForFormatException": {
             "type": "structure",
             "members": {
@@ -875,6 +1021,9 @@
                 },
                 "Content": {
                     "shape": "LexiconContent"
+                },
+                "Tags": {
+                    "shape": "TagMap"
                 }
             }
         },
@@ -891,6 +1040,38 @@
         },
         "RequestCharacters": {
             "type": "integer"
+        },
+        "ResourceId": {
+            "type": "string"
+        },
+        "ResourceNotFoundException": {
+            "type": "structure",
+            "required": [
+                "message",
+                "resourceId",
+                "resourceType"
+            ],
+            "members": {
+                "message": {
+                    "shape": "ErrorMessage"
+                },
+                "resourceId": {
+                    "shape": "ResourceId"
+                },
+                "resourceType": {
+                    "shape": "ResourceType"
+                }
+            },
+            "error": {
+                "httpStatusCode": 404
+            },
+            "exception": true
+        },
+        "ResourceType": {
+            "type": "string",
+            "enum": [
+                "lexicon"
+            ]
         },
         "SampleRate": {
             "type": "string"
@@ -1249,6 +1430,54 @@
             },
             "payload": "AudioStream"
         },
+        "TagKey": {
+            "type": "string",
+            "max": 128,
+            "min": 1
+        },
+        "TagKeyList": {
+            "type": "list",
+            "member": {
+                "shape": "TagKey"
+            },
+            "max": 200,
+            "min": 1
+        },
+        "TagMap": {
+            "type": "map",
+            "key": {
+                "shape": "TagKey"
+            },
+            "value": {
+                "shape": "TagValue"
+            },
+            "max": 200,
+            "min": 1
+        },
+        "TagResourceInput": {
+            "type": "structure",
+            "required": [
+                "ResourceArn",
+                "Tags"
+            ],
+            "members": {
+                "ResourceArn": {
+                    "shape": "AmazonResourceName"
+                },
+                "Tags": {
+                    "shape": "TagMap"
+                }
+            }
+        },
+        "TagResourceOutput": {
+            "type": "structure",
+            "members": []
+        },
+        "TagValue": {
+            "type": "string",
+            "max": 256,
+            "min": 0
+        },
         "TaskId": {
             "type": "string",
             "pattern": "^[a-zA-Z0-9_-]{1,100}$"
@@ -1338,6 +1567,18 @@
                 "shape": "ThrottlingReason"
             }
         },
+        "TooManyTagsException": {
+            "type": "structure",
+            "members": {
+                "message": {
+                    "shape": "ExceptionMessage"
+                }
+            },
+            "error": {
+                "httpStatusCode": 400
+            },
+            "exception": true
+        },
         "UnsupportedPlsAlphabetException": {
             "type": "structure",
             "members": {
@@ -1361,6 +1602,25 @@
                 "httpStatusCode": 400
             },
             "exception": true
+        },
+        "UntagResourceInput": {
+            "type": "structure",
+            "required": [
+                "ResourceArn",
+                "TagKeys"
+            ],
+            "members": {
+                "ResourceArn": {
+                    "shape": "AmazonResourceName"
+                },
+                "TagKeys": {
+                    "shape": "TagKeyList"
+                }
+            }
+        },
+        "UntagResourceOutput": {
+            "type": "structure",
+            "members": []
         },
         "ValidationException": {
             "type": "structure",

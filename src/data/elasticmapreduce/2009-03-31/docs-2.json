@@ -2134,6 +2134,13 @@
         "DescribeStepOutput$Step": "<p>The step details for the requested step identifier.</p>"
       }
     },
+    "StepAdditionalInfo": {
+      "base": "<p>Additional information about a step's execution, available after the step has started running.</p>",
+      "refs": {
+        "Step$AdditionalInfo": "<p>Additional information about the step, including the YARN application IDs associated with the step and the resource manager that processed it.</p>",
+        "StepSummary$AdditionalInfo": "<p>Additional information about the step, including the YARN application IDs associated with the step and the resource manager that processed it.</p>"
+      }
+    },
     "StepCancellationOption": {
       "base": null,
       "refs": {
@@ -2331,6 +2338,7 @@
         "Step$Name": "<p>The name of the cluster step.</p>",
         "Step$LogUri": "<p>The Amazon S3 destination URI for log publishing.</p>",
         "Step$EncryptionKeyArn": "<p>The KMS key ARN to encrypt the logs published to the given Amazon S3 destination.</p>",
+        "StepAdditionalInfo$ResourceManager": "<p>The address of the YARN resource manager that processed the step.</p>",
         "StepStateChangeReason$Message": "<p>The descriptive message for the state change reason.</p>",
         "StepSummary$Name": "<p>The name of the cluster step.</p>",
         "StepSummary$LogUri": "<p>The Amazon S3 destination URI for log publishing.</p>",
@@ -2356,7 +2364,8 @@
         "Ec2InstanceAttributes$AdditionalSlaveSecurityGroups": "<p>A list of additional Amazon EC2 security group IDs for the core and task nodes.</p>",
         "HadoopStepConfig$Args": "<p>The list of command line arguments to pass to the JAR file's main function for execution.</p>",
         "ListReleaseLabelsOutput$ReleaseLabels": "<p>The returned release labels.</p>",
-        "RemoveTagsInput$TagKeys": "<p>A list of tag keys to remove from the resource.</p>"
+        "RemoveTagsInput$TagKeys": "<p>A list of tag keys to remove from the resource.</p>",
+        "StepAdditionalInfo$ResourceManagerApplicationIds": "<p>The YARN application IDs associated with the step.</p>"
       }
     },
     "StringMap": {
