@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.402.6 - 2026-11-04
 
 * `Aws\Lambda` - Stops applying the default Curl options to streamed commands such as InvokeWithResponseStream, which are served by a stream handler that rejects them.
 * `Aws\Connect` - Adds support for retrieving associated cases in contact responses. The Contact object now includes a Cases field containing case IDs and reference numbers linked to the contact.
