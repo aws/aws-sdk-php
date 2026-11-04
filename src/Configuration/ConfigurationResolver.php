@@ -20,6 +20,37 @@ class ConfigurationResolver
 
     public static $envPrefix = 'AWS_';
 
+    /** @var array<string, array|false>|null */
+    private static $iniCache = null;
+
+    private static $iniCacheDepth = 0;
+
+    /**
+     * Runs a callable while reusing each parsed config file across ini()
+     * calls. The cache is discarded when the outermost call returns, so
+     * later calls read the file again.
+     *
+     * @internal
+     *
+     * @param callable $fn
+     *
+     * @return mixed The callable's return value.
+     */
+    public static function withIniCache(callable $fn)
+    {
+        if (self::$iniCacheDepth++ === 0) {
+            self::$iniCache = [];
+        }
+
+        try {
+            return $fn();
+        } finally {
+            if (--self::$iniCacheDepth === 0) {
+                self::$iniCache = null;
+            }
+        }
+    }
+
     /**
      * @param string $key          Key to look up in the environment / config file.
      * @param mixed  $defaultValue Returned when nothing else resolves.
@@ -100,14 +131,7 @@ class ConfigurationResolver
         $filename = $filename ?: self::getDefaultConfigFilename();
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: self::DEFAULT_PROFILE);
 
-        if (!@is_readable($filename)) {
-            return null;
-        }
-
-        // INI_SCANNER_TYPED coerces bool/int/float/null at parse time; a value
-        // left empty (key =) still comes back as an empty string. convertType()
-        // normalizes both these typed values and the raw strings from env().
-        $data = @\Aws\parse_ini_file($filename, true, INI_SCANNER_TYPED);
+        $data = self::loadIniFile($filename);
         if ($data === false) {
             return null;
         }
@@ -128,6 +152,35 @@ class ConfigurationResolver
         }
 
         return self::convertType($section[$key], $expectedType);
+    }
+
+    /**
+     * Parses a config file, reusing the result while withIniCache() is active.
+     *
+     * @param string $filename
+     *
+     * @return array|false False when the file is unreadable or invalid.
+     */
+    private static function loadIniFile($filename)
+    {
+        if (isset(self::$iniCache)
+            && array_key_exists($filename, self::$iniCache)
+        ) {
+            return self::$iniCache[$filename];
+        }
+
+        // INI_SCANNER_TYPED coerces bool/int/float/null at parse time; a value
+        // left empty (key =) still comes back as an empty string. convertType()
+        // normalizes both these typed values and the raw strings from env().
+        $data = @is_readable($filename)
+            ? @\Aws\parse_ini_file($filename, true, INI_SCANNER_TYPED)
+            : false;
+
+        if (isset(self::$iniCache)) {
+            self::$iniCache[$filename] = $data;
+        }
+
+        return $data;
     }
 
     /**
