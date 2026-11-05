@@ -477,7 +477,10 @@
     },
     "Architecture":{
       "type":"string",
-      "enum":["ARM_64"]
+      "enum":[
+        "ARM_64",
+        "X86_64"
+      ]
     },
     "AuthTokenKey":{
       "type":"string",
@@ -514,7 +517,10 @@
     },
     "Chipset":{
       "type":"string",
-      "enum":["GRAVITON"]
+      "enum":[
+        "GRAVITON",
+        "INTEL"
+      ]
     },
     "CloudWatchLogging":{
       "type":"structure",
@@ -553,7 +559,8 @@
         "httpStatusCode":409,
         "senderFault":true
       },
-      "exception":true
+      "exception":true,
+      "retryable":{"throttling":false}
     },
     "CpuConfiguration":{
       "type":"structure",
@@ -758,7 +765,7 @@
       "type":"map",
       "key":{"shape":"EnvironmentVariableKey"},
       "value":{"shape":"EnvironmentVariableValue"},
-      "max":50,
+      "max":100,
       "min":0
     },
     "EnvironmentVariableValue":{
@@ -1336,6 +1343,7 @@
         "imageArn":{"shape":"NonBlankString"},
         "imageVersion":{"shape":"NonBlankString"},
         "status":{"shape":"ManagedMicrovmImageVersionStatus"},
+        "supportedCpuConfigurations":{"shape":"CpuConfigurationList"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"}
       }
@@ -1348,7 +1356,8 @@
       "type":"string",
       "enum":[
         "AVAILABLE",
-        "DEPRECATED"
+        "DEPRECATED",
+        "RECALLED"
       ]
     },
     "MicrovmHooks":{

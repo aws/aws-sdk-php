@@ -107,7 +107,7 @@ use Generator;
  *     logGroupName?: string,
  *     kmsKeyId?: string,
  *     tags?: array<string, string>,
- *     logGroupClass?: 'DELIVERY'|'INFREQUENT_ACCESS'|'STANDARD',
+ *     logGroupClass?: 'DELIVERY'|'ESSENTIALS'|'INFREQUENT_ACCESS'|'STANDARD',
  *     deletionProtectionEnabled?: bool,
  *     ...,
  * } $args = [])
@@ -116,7 +116,7 @@ use Generator;
  *     logGroupName?: string,
  *     kmsKeyId?: string,
  *     tags?: array<string, string>,
- *     logGroupClass?: 'DELIVERY'|'INFREQUENT_ACCESS'|'STANDARD',
+ *     logGroupClass?: 'DELIVERY'|'ESSENTIALS'|'INFREQUENT_ACCESS'|'STANDARD',
  *     deletionProtectionEnabled?: bool,
  *     ...,
  * } $args = [])
@@ -426,7 +426,7 @@ use Generator;
  *     nextToken?: string,
  *     limit?: int,
  *     includeLinkedAccounts?: bool,
- *     logGroupClass?: 'DELIVERY'|'INFREQUENT_ACCESS'|'STANDARD',
+ *     logGroupClass?: 'DELIVERY'|'ESSENTIALS'|'INFREQUENT_ACCESS'|'STANDARD',
  *     logGroupIdentifiers?: list<string>,
  *     ...,
  * } $args = [])
@@ -438,7 +438,7 @@ use Generator;
  *     nextToken?: string,
  *     limit?: int,
  *     includeLinkedAccounts?: bool,
- *     logGroupClass?: 'DELIVERY'|'INFREQUENT_ACCESS'|'STANDARD',
+ *     logGroupClass?: 'DELIVERY'|'ESSENTIALS'|'INFREQUENT_ACCESS'|'STANDARD',
  *     logGroupIdentifiers?: list<string>,
  *     ...,
  * } $args = [])
@@ -684,7 +684,7 @@ use Generator;
  * @phpstan-method \Aws\Result listAggregateLogGroupSummaries(array{
  *     accountIdentifiers?: list<string>,
  *     includeLinkedAccounts?: bool,
- *     logGroupClass?: 'DELIVERY'|'INFREQUENT_ACCESS'|'STANDARD',
+ *     logGroupClass?: 'DELIVERY'|'ESSENTIALS'|'INFREQUENT_ACCESS'|'STANDARD',
  *     logGroupNamePattern?: string,
  *     dataSources?: list<array{name?: string, type?: string, ...}>,
  *     groupBy?: 'DATA_SOURCE_NAME_AND_TYPE'|'DATA_SOURCE_NAME_TYPE_AND_FORMAT',
@@ -696,7 +696,7 @@ use Generator;
  * @phpstan-method \GuzzleHttp\Promise\Promise listAggregateLogGroupSummariesAsync(array{
  *     accountIdentifiers?: list<string>,
  *     includeLinkedAccounts?: bool,
- *     logGroupClass?: 'DELIVERY'|'INFREQUENT_ACCESS'|'STANDARD',
+ *     logGroupClass?: 'DELIVERY'|'ESSENTIALS'|'INFREQUENT_ACCESS'|'STANDARD',
  *     logGroupNamePattern?: string,
  *     dataSources?: list<array{name?: string, type?: string, ...}>,
  *     groupBy?: 'DATA_SOURCE_NAME_AND_TYPE'|'DATA_SOURCE_NAME_TYPE_AND_FORMAT',
@@ -741,7 +741,7 @@ use Generator;
  * @method \Aws\Result listLogGroups(array $args = [])
  * @phpstan-method \Aws\Result listLogGroups(array{
  *     logGroupNamePattern?: string,
- *     logGroupClass?: 'DELIVERY'|'INFREQUENT_ACCESS'|'STANDARD',
+ *     logGroupClass?: 'DELIVERY'|'ESSENTIALS'|'INFREQUENT_ACCESS'|'STANDARD',
  *     includeLinkedAccounts?: bool,
  *     accountIdentifiers?: list<string>,
  *     nextToken?: string,
@@ -754,7 +754,7 @@ use Generator;
  * @method \GuzzleHttp\Promise\Promise listLogGroupsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listLogGroupsAsync(array{
  *     logGroupNamePattern?: string,
- *     logGroupClass?: 'DELIVERY'|'INFREQUENT_ACCESS'|'STANDARD',
+ *     logGroupClass?: 'DELIVERY'|'ESSENTIALS'|'INFREQUENT_ACCESS'|'STANDARD',
  *     includeLinkedAccounts?: bool,
  *     accountIdentifiers?: list<string>,
  *     nextToken?: string,

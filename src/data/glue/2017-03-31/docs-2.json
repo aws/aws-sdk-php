@@ -152,6 +152,7 @@
     "GetJobBookmark": "<p>Returns information on a job bookmark entry.</p> <p>For more information about enabling and using job bookmarks, see:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-continuations.html\">Tracking processed data using job bookmarks</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html\">Job parameters used by Glue</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-jobs-job.html#aws-glue-api-jobs-job-Job\">Job structure</a> </p> </li> </ul>",
     "GetJobRun": "<p>Retrieves the metadata for a given job run. Job run history is accessible for 365 days for your workflow and job run.</p>",
     "GetJobRuns": "<p>Retrieves metadata for all runs of a given job definition.</p> <p> <code>GetJobRuns</code> returns the job runs in chronological order, with the newest jobs returned first.</p>",
+    "GetJobUpgradeAnalysis": "<p>Retrieves the current status and results of an upgrade analysis.</p>",
     "GetJobs": "<p>Retrieves all current job definitions.</p>",
     "GetMLTaskRun": "<p>Gets details for a specific task run on a machine learning transform. Machine learning task runs are asynchronous tasks that Glue runs on your behalf as part of various machine learning workflows. You can check the stats of any task run by calling <code>GetMLTaskRun</code> with the <code>TaskRunID</code> and its parent transform's <code>TransformID</code>.</p>",
     "GetMLTaskRuns": "<p>Gets a list of runs for a machine learning transform. Machine learning task runs are asynchronous tasks that Glue runs on your behalf as part of various machine learning workflows. You can get a sortable, filterable list of machine learning task runs by calling <code>GetMLTaskRuns</code> with their parent transform's <code>TransformID</code> and other optional parameters as documented in this section.</p> <p>This operation returns a list of historic runs and must be paginated.</p>",
@@ -261,6 +262,7 @@
     "StartExportLabelsTaskRun": "<p>Begins an asynchronous task to export all labeled data for a particular transform. This task is the only label-related API call that is not part of the typical active learning workflow. You typically use <code>StartExportLabelsTaskRun</code> when you want to work with all of your existing labels at the same time, such as when you want to remove or change labels that were previously submitted as truth. This API operation accepts the <code>TransformId</code> whose labels you want to export and an Amazon Simple Storage Service (Amazon S3) path to export the labels to. The operation returns a <code>TaskRunId</code>. You can check on the status of your task run by calling the <code>GetMLTaskRun</code> API.</p>",
     "StartImportLabelsTaskRun": "<p>Enables you to provide additional labels (examples of truth) to be used to teach the machine learning transform and improve its quality. This API operation is generally used as part of the active learning workflow that starts with the <code>StartMLLabelingSetGenerationTaskRun</code> call and that ultimately results in improving the quality of your machine learning transform. </p> <p>After the <code>StartMLLabelingSetGenerationTaskRun</code> finishes, Glue machine learning will have generated a series of questions for humans to answer. (Answering these questions is often called 'labeling' in the machine learning workflows). In the case of the <code>FindMatches</code> transform, these questions are of the form, “What is the correct way to group these rows together into groups composed entirely of matching records?” After the labeling process is finished, users upload their answers/labels with a call to <code>StartImportLabelsTaskRun</code>. After <code>StartImportLabelsTaskRun</code> finishes, all future runs of the machine learning transform use the new and improved labels and perform a higher-quality transformation.</p> <p>By default, <code>StartMLLabelingSetGenerationTaskRun</code> continually learns from and combines all labels that you upload unless you set <code>Replace</code> to true. If you set <code>Replace</code> to true, <code>StartImportLabelsTaskRun</code> deletes and forgets all previously uploaded labels and learns only from the exact set that you upload. Replacing labels can be helpful if you realize that you previously uploaded incorrect labels, and you believe that they are having a negative effect on your transform quality.</p> <p>You can check on the status of your task run by calling the <code>GetMLTaskRun</code> operation. </p>",
     "StartJobRun": "<p>Starts a job run using a job definition.</p>",
+    "StartJobUpgradeAnalysis": "<p>Resumes an analysis that is waiting for upgrade consent.</p>",
     "StartMLEvaluationTaskRun": "<p>Starts a task to estimate the quality of the transform. </p> <p>When you provide label sets as examples of truth, Glue machine learning uses some of those examples to learn from them. The rest of the labels are used as a test to estimate quality.</p> <p>Returns a unique identifier for the run. You can call <code>GetMLTaskRun</code> to get more information about the stats of the <code>EvaluationTaskRun</code>.</p>",
     "StartMLLabelingSetGenerationTaskRun": "<p>Starts the active learning workflow for your machine learning transform to improve the transform's quality by generating label sets and adding labels.</p> <p>When the <code>StartMLLabelingSetGenerationTaskRun</code> finishes, Glue will have generated a \"labeling set\" or a set of questions for humans to answer.</p> <p>In the case of the <code>FindMatches</code> transform, these questions are of the form, “What is the correct way to group these rows together into groups composed entirely of matching records?” </p> <p>After the labeling process is finished, you can upload your labels with a call to <code>StartImportLabelsTaskRun</code>. After <code>StartImportLabelsTaskRun</code> finishes, all future runs of the machine learning transform will use the new and improved labels and perform a higher-quality transformation.</p> <p>Note: The role used to write the generated labeling set to the <code>OutputS3Path</code> is the role associated with the Machine Learning Transform, specified in the <code>CreateMLTransform</code> API.</p>",
     "StartMaterializedViewRefreshTaskRun": "<p>Starts a materialized view refresh task run for a specified materialized view.</p>",
@@ -270,6 +272,7 @@
     "StopColumnStatisticsTaskRunSchedule": "<p>Stops a column statistics task run schedule.</p>",
     "StopCrawler": "<p>If the specified crawler is running, stops the crawl.</p>",
     "StopCrawlerSchedule": "<p>Sets the schedule state of the specified crawler to <code>NOT_SCHEDULED</code>, but does not stop the crawler if it is already running.</p>",
+    "StopJobUpgradeAnalysis": "<p>Stops an in-progress upgrade analysis.</p>",
     "StopMaterializedViewRefreshTaskRun": "<p>Stops a materialized view refresh task run for a specified materialized view.</p>",
     "StopSession": "<p>Stops the session.</p>",
     "StopTrigger": "<p>Stops a specified trigger.</p>",
@@ -483,6 +486,12 @@
       "base": "<p>Specifies an Amazon Redshift target.</p>",
       "refs": {
         "CodeGenConfigurationNode$AmazonRedshiftTarget": "<p>Specifies a target that writes to a data target in Amazon Redshift.</p>"
+      }
+    },
+    "AnalysisType": {
+      "base": "<p>The type of upgrade analysis. For auto-upgrade jobs, this value is <code>AUTO_UPGRADE</code>.</p>",
+      "refs": {
+        "GetJobUpgradeAnalysisResponse$analysisType": "<p>The type of upgrade analysis. For auto-upgrade jobs, this value is <code>AUTO_UPGRADE</code>.</p>"
       }
     },
     "AnnotationError": {
@@ -779,6 +788,18 @@
         "S3HyperDirectTarget$AutoDataQuality": "<p>Specifies whether to automatically enable data quality evaluation for the S3 Hyper direct target. When set to <code>true</code>, data quality checks are performed automatically during the write operation.</p>",
         "S3IcebergCatalogTarget$AutoDataQuality": "<p>Specifies whether to automatically enable data quality evaluation for the S3 Iceberg catalog target. When set to <code>true</code>, data quality checks are performed automatically during the write operation.</p>",
         "S3IcebergDirectTarget$AutoDataQuality": null
+      }
+    },
+    "AutoUpgradeMetadata": {
+      "base": "<text>The auto-upgrade assessment information for a job configured with glueVersion=auto.</text>",
+      "refs": {
+        "Job$AutoUpgradeMetadata": "<text>The auto-upgrade assessment information for a job configured with glueVersion=auto. This field is null when the job is not configured to auto.</text>"
+      }
+    },
+    "AutoUpgradeStatus": {
+      "base": "<p>The current phase of the auto-upgrade lifecycle for a job configured with <code>GlueVersion=auto</code>.</p>",
+      "refs": {
+        "AutoUpgradeMetadata$Status": "<text>The current auto-upgrade lifecycle status (OBSERVING, UPGRADING, UPGRADE_SUCCEEDED, UPGRADE_FAILED, STOPPED, WAITING_FOR_CONSENT).</text>"
       }
     },
     "BackfillError": {
@@ -5654,6 +5675,14 @@
       "base": null,
       "refs": {}
     },
+    "GetJobUpgradeAnalysisRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetJobUpgradeAnalysisResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetJobsRequest": {
       "base": null,
       "refs": {}
@@ -6280,6 +6309,8 @@
     "GlueVersionString": {
       "base": null,
       "refs": {
+        "AutoUpgradeMetadata$TargetVersion": "<text>The target Glue runtime version the job is being upgraded to.</text>",
+        "AutoUpgradeMetadata$SourceVersion": "<text>The source Glue runtime version the job was running before auto-version was enabled.</text>",
         "CreateDevEndpointRequest$GlueVersion": "<p>Glue version determines the versions of Apache Spark and Python that Glue supports. The Python version indicates the version supported for running your ETL scripts on development endpoints. </p> <p>For more information about the available Glue versions and corresponding Spark and Python versions, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/add-job.html\">Glue version</a> in the developer guide.</p> <p>Development endpoints that are created without specifying a Glue version default to Glue 0.9.</p> <p>You can specify a version of Python support for development endpoints by using the <code>Arguments</code> parameter in the <code>CreateDevEndpoint</code> or <code>UpdateDevEndpoint</code> APIs. If no arguments are provided, the version defaults to Python 2.</p>",
         "CreateDevEndpointResponse$GlueVersion": "<p>Glue version determines the versions of Apache Spark and Python that Glue supports. The Python version indicates the version supported for running your ETL scripts on development endpoints. </p> <p>For more information about the available Glue versions and corresponding Spark and Python versions, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/add-job.html\">Glue version</a> in the developer guide.</p>",
         "CreateJobRequest$GlueVersion": "<p>In Spark jobs, <code>GlueVersion</code> determines the versions of Apache Spark and Python that Glue available in a job. The Python version indicates the version supported for jobs of type Spark. </p> <p>Ray jobs should set <code>GlueVersion</code> to <code>4.0</code> or greater. However, the versions of Ray, Python and additional libraries available in your Ray job are determined by the <code>Runtime</code> parameter of the Job command.</p> <p>For more information about the available Glue versions and corresponding Spark and Python versions, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/add-job.html\">Glue version</a> in the developer guide.</p> <p>Jobs that are created without specifying a Glue version default to Glue 5.1.</p>",
@@ -6712,9 +6743,20 @@
         "IcebergTableUpdate$Action": "<p>The type of update action to be performed on the Iceberg table. Defines the specific operation such as adding schema, setting current schema, adding partition spec, or managing encryption keys.</p>"
       }
     },
+    "Id": {
+      "base": "<p>The unique identifier of an upgrade analysis, in the format <code>ja-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>.</p>",
+      "refs": {
+        "GetJobUpgradeAnalysisRequest$analysisId": "<p>The unique identifier of the upgrade analysis to retrieve.</p>",
+        "GetJobUpgradeAnalysisResponse$analysisId": "<p>The unique identifier of the upgrade analysis.</p>",
+        "StartJobUpgradeAnalysisRequest$analysisId": "<p>The unique identifier of the upgrade analysis. The analysis must be in <code>WAITING_FOR_CONSENT</code> status.</p>",
+        "StartJobUpgradeAnalysisResponse$analysisId": "<p>The unique identifier of the upgrade analysis.</p>",
+        "StopJobUpgradeAnalysisRequest$analysisId": "<p>The unique identifier of the analysis to stop.</p>"
+      }
+    },
     "IdString": {
       "base": null,
       "refs": {
+        "AutoUpgradeMetadata$AnalysisId": "<text>The unique identifier of the auto-upgrade assessment analysis.</text>",
         "BatchStopJobRunError$JobRunId": "<p>The <code>JobRunId</code> of the job run in question.</p>",
         "BatchStopJobRunJobRunIdList$member": null,
         "BatchStopJobRunSuccessfulSubmission$JobRunId": "<p>The <code>JobRunId</code> of the job run that was stopped.</p>",
@@ -8367,6 +8409,16 @@
       "base": "<p>Specifies a target that uses MySQL.</p>",
       "refs": {
         "CodeGenConfigurationNode$MySQLCatalogTarget": "<p>Specifies a target that uses MySQL.</p>"
+      }
+    },
+    "Name": {
+      "base": "<p>The name of an Glue job.</p>",
+      "refs": {
+        "GetJobUpgradeAnalysisRequest$jobName": "<p>The name of the job associated with the analysis.</p>",
+        "GetJobUpgradeAnalysisResponse$jobName": "<p>The name of the job associated with this analysis.</p>",
+        "StartJobUpgradeAnalysisRequest$jobName": "<p>The name of the job associated with the analysis to resume.</p>",
+        "StartJobUpgradeAnalysisResponse$jobName": "<p>The name of the job associated with this analysis.</p>",
+        "StopJobUpgradeAnalysisRequest$jobName": "<p>The name of the job associated with the analysis.</p>"
       }
     },
     "NameString": {
@@ -11637,6 +11689,14 @@
       "base": null,
       "refs": {}
     },
+    "StartJobUpgradeAnalysisRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartJobUpgradeAnalysisResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StartMLEvaluationTaskRunRequest": {
       "base": null,
       "refs": {}
@@ -11770,6 +11830,12 @@
         "PublishDataQualityResultV2Request$Statistics": "<p>The statistics for the result.</p>"
       }
     },
+    "Status": {
+      "base": "<p>The current status of an upgrade analysis. Possible values are <code>OBSERVING</code>, <code>WAITING_FOR_CONSENT</code>, <code>UPGRADING</code>, <code>SUCCEEDED</code>, <code>FAILED</code>, <code>TIMEOUT</code>, and <code>STOPPED</code>.</p>",
+      "refs": {
+        "GetJobUpgradeAnalysisResponse$status": "<p>The current status of the analysis.</p>"
+      }
+    },
     "StatusDetails": {
       "base": "<p>A structure containing information about an asynchronous change to a table.</p>",
       "refs": {
@@ -11805,6 +11871,14 @@
       "refs": {}
     },
     "StopCrawlerScheduleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StopJobUpgradeAnalysisRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopJobUpgradeAnalysisResponse": {
       "base": null,
       "refs": {}
     },
@@ -11880,6 +11954,11 @@
         "FilterStringConfiguration$QueryParameterName": "<p>The query parameter name used to send the constructed filter expression string in API requests.</p>",
         "FilterStringConfiguration$QuoteCharacter": "<p>The character used to quote values when <code>QuoteStringValues</code> is true. Defaults to double quotes if not specified.</p>",
         "GetEntityRecordsRequest$OrderBy": "<p>A parameter that orders the response preview data.</p>",
+        "GetJobUpgradeAnalysisResponse$sourceVersion": "<p>The Glue version the job was running before the upgrade, for example <code>4.0</code>.</p>",
+        "GetJobUpgradeAnalysisResponse$targetVersion": "<p>The Glue version the job will be upgraded to, for example <code>6.0</code>.</p>",
+        "GetJobUpgradeAnalysisResponse$autoUpgradeEvaluationSummary": "<p>The Amazon S3 URI of the terminal-state evaluation summary, available once the analysis reaches a terminal status (<code>SUCCEEDED</code> or <code>FAILED</code>).</p>",
+        "GetJobUpgradeAnalysisResponse$errorMessage": "<p>The reason the analysis did not complete.</p>",
+        "GetJobUpgradeAnalysisResponse$autoUpgradeEligibilitySummary": "<p>The Amazon S3 URI of the consent report summarizing upgrade assessment findings. Populated when the analysis reaches <code>WAITING_FOR_CONSENT</code> and remains available in all subsequent states.</p>",
         "ListOfString$member": null,
         "Property$DefaultValue": "<p>The default value for the property.</p>",
         "Property$KeyOverride": "<p>A key name to use when sending this property in API requests, if different from the display name.</p>"
@@ -13262,6 +13341,12 @@
         "GetSchemaResponse$UpdatedTime": "<p>The date and time the schema was updated.</p>",
         "RegistryListItem$UpdatedTime": "<p>The date the registry was updated.</p>",
         "SchemaListItem$UpdatedTime": "<p>The date and time that a schema was updated.</p>"
+      }
+    },
+    "UpgradeConsent": {
+      "base": null,
+      "refs": {
+        "StartJobUpgradeAnalysisRequest$upgradeConsent": "<p>The customer's decision on whether to proceed with the upgrade.</p>"
       }
     },
     "UpsertRedshiftTargetOptions": {

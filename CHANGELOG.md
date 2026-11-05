@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AgentRegistryControl` - Adds support for OAuth2 Authorization Server Metadata (RFC 8414) discovery URLs in custom JWT authorizer.
+* `Aws\QConnect` - Adds support for real-time agent assistance and self-service with Amazon Connect Global Resiliency, including cross-Region replication of supported AI agent resources and configurations.
+* `Aws\AccountAccessRuntime` - Adds SDK support for Account Access user portal operations, enabling users to list out and get credentials for role assignments configured in AWS IAM Account Access Manager.
+* `Aws\Glue` - AWS Glue Spark ETL jobs can now auto-upgrade to the latest version. Set GlueVersion to Auto, then track progress with the AutoVersionStatus field in GetJob. Use StartJobUpgradeAnalysis to approve or decline an upgrade, GetJobUpgradeAnalysis to view details, and StopJobUpgradeAnalysis to stop it.
+* `Aws\Route53Domains` - Route 53 Domains now supports restoring domains. This release adds the RestoreDomain API to self-serve domain restoration.
+* `Aws\DataSync` - Adds support for federated identity on Azure Blob Storage and object storage locations, enabling DataSync to authenticate to Azure and Google Cloud Storage using Workload Identity Federation (WIF) over OpenID Connect (OIDC) instead of stored long-lived credentials.
+* `Aws\CloudWatchLogs` - Adds account-level retention policies with dry run preview and the Essentials log group class to Amazon CloudWatch Logs
+* `Aws\SecurityAgent` - Adds support for IAM Identity Center groups as Agent Space members. CreateMembership, DeleteMembership, and ListMemberships now accept the GROUP member type. ListMemberships can filter by USER, GROUP, or ALL, and returns group display name and description.
+* `Aws\BedrockAgentRuntime` - Amazon Bedrock Managed Knowledge Base now supports an optional mediaId parameter in GetDocumentContent that you can use to retrieve images embedded in source documents.
+* `Aws\LambdaMicrovms` - AWS Lambda MicroVMs now support the x86-64 CPU architecture, which you can select in addition to ARM64 (Graviton) when launching a MicroVM.
+* `Aws\QuickSight` - Amazon QuickSight adds APIs to view account service role settings and switch to or replace a customer-managed IAM role.
+* `Aws\AppIntegrationsService` - This release adds a LastModifiedRegion field to GetApplication and ListApplications so customers can see which Region an application was last modified in.
+* `Aws\WAFV2` - AWS WAF customers who monetize AI traffic on Web ACLs can now configure payments through connected accounts (Stripe).
+* `Aws\SageMaker` - Fixed the ImageDeleted and ImageVersionDeleted waiters to succeed on the ResourceNotFound error returned by DescribeImage and DescribeImageVersion
+* `Aws\BedrockAgentCoreControl` - Adds support for OAuth2 Authorization Server Metadata (RFC 8414) discovery URLs in custom JWT authorizer and OAuth2 credential provider configurations.
+
 ## 3.402.6 - 2026-11-04
 
 * `Aws\Lambda` - Stops applying the default Curl options to streamed commands such as InvokeWithResponseStream, which are served by a stream handler that rejects them.

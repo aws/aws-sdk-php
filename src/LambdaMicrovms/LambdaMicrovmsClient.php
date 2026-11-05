@@ -28,7 +28,7 @@ use Aws\AwsClient;
  *     codeArtifact?: array{uri?: string, ...},
  *     logging?: array{disabled?: array, cloudWatch?: array{logGroup?: string, logStream?: string, ...}, ...},
  *     egressNetworkConnectors?: list<string>,
- *     cpuConfigurations?: list<array{architecture?: 'ARM_64', ...}>,
+ *     cpuConfigurations?: list<array{architecture?: 'ARM_64'|'X86_64', ...}>,
  *     resources?: list<array{minimumMemoryInMiB?: int, ...}>,
  *     additionalOsCapabilities?: list<'ALL'>,
  *     hooks?: array{
@@ -68,7 +68,7 @@ use Aws\AwsClient;
  *     codeArtifact?: array{uri?: string, ...},
  *     logging?: array{disabled?: array, cloudWatch?: array{logGroup?: string, logStream?: string, ...}, ...},
  *     egressNetworkConnectors?: list<string>,
- *     cpuConfigurations?: list<array{architecture?: 'ARM_64', ...}>,
+ *     cpuConfigurations?: list<array{architecture?: 'ARM_64'|'X86_64', ...}>,
  *     resources?: list<array{minimumMemoryInMiB?: int, ...}>,
  *     additionalOsCapabilities?: list<'ALL'>,
  *     hooks?: array{
@@ -141,8 +141,8 @@ use Aws\AwsClient;
  *     nextToken?: string,
  *     imageIdentifier?: string,
  *     imageVersion?: string,
- *     architecture?: 'ARM_64',
- *     chipset?: 'GRAVITON',
+ *     architecture?: 'ARM_64'|'X86_64',
+ *     chipset?: 'GRAVITON'|'INTEL',
  *     chipsetGeneration?: string,
  *     ...,
  * } $args = [])
@@ -152,8 +152,8 @@ use Aws\AwsClient;
  *     nextToken?: string,
  *     imageIdentifier?: string,
  *     imageVersion?: string,
- *     architecture?: 'ARM_64',
- *     chipset?: 'GRAVITON',
+ *     architecture?: 'ARM_64'|'X86_64',
+ *     chipset?: 'GRAVITON'|'INTEL',
  *     chipsetGeneration?: string,
  *     ...,
  * } $args = [])
@@ -230,7 +230,7 @@ use Aws\AwsClient;
  *     codeArtifact?: array{uri?: string, ...},
  *     logging?: array{disabled?: array, cloudWatch?: array{logGroup?: string, logStream?: string, ...}, ...},
  *     egressNetworkConnectors?: list<string>,
- *     cpuConfigurations?: list<array{architecture?: 'ARM_64', ...}>,
+ *     cpuConfigurations?: list<array{architecture?: 'ARM_64'|'X86_64', ...}>,
  *     resources?: list<array{minimumMemoryInMiB?: int, ...}>,
  *     additionalOsCapabilities?: list<'ALL'>,
  *     hooks?: array{
@@ -269,7 +269,7 @@ use Aws\AwsClient;
  *     codeArtifact?: array{uri?: string, ...},
  *     logging?: array{disabled?: array, cloudWatch?: array{logGroup?: string, logStream?: string, ...}, ...},
  *     egressNetworkConnectors?: list<string>,
- *     cpuConfigurations?: list<array{architecture?: 'ARM_64', ...}>,
+ *     cpuConfigurations?: list<array{architecture?: 'ARM_64'|'X86_64', ...}>,
  *     resources?: list<array{minimumMemoryInMiB?: int, ...}>,
  *     additionalOsCapabilities?: list<'ALL'>,
  *     hooks?: array{

@@ -72,6 +72,8 @@
     "NotifyRecommendationsReceived": "<p>Removes the specified recommendations from the specified assistant's queue of newly available recommendations. You can use this API in conjunction with <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_GetRecommendations.html\">GetRecommendations</a> and a <code>waitTimeSeconds</code> input for long-polling behavior and avoiding duplicate recommendations.</p>",
     "PutFeedback": "<p>Provides feedback against the specified assistant for the specified target. This API only supports generative targets.</p>",
     "QueryAssistant": "<p><important> <p>This API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024, you will need to create a new Assistant in the Connect Customer console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.</p> </important> <p>Performs a manual search against the specified assistant. To retrieve recommendations for an assistant, use <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_GetRecommendations.html\">GetRecommendations</a>. </p></p>",
+    "RegisterAssistantReplicaKey": "<p>Registers a replica Region KMS key for an Amazon Q in Connect assistant. To use this operation, you must have <code>kms:GenerateDataKey</code> permission on the replica key.</p>",
+    "RegisterKnowledgeBaseReplicaKey": "<p>Registers a replica Region KMS key for an Amazon Q in Connect knowledge base. To use this operation, you must have <code>kms:GenerateDataKey</code> permission on the replica key. You must also have <code>kms:CreateGrant</code> permission on the primary key.</p>",
     "RemoveAssistantAIAgent": "<p>Removes the AI Agent that is set for use by default on an Amazon Q in Connect Assistant.</p>",
     "RemoveKnowledgeBaseTemplateUri": "<p>Removes a URI template from a knowledge base.</p>",
     "RenderMessageTemplate": "<p>Renders the Amazon Q in Connect message template based on the attribute values provided and generates the message content. For any variable present in the message template, if the attribute value is neither provided in the attribute request parameter nor the default attribute of the message template, the rendered message content will keep the variable placeholder as it is and return the attribute keys that are missing.</p>",
@@ -561,7 +563,14 @@
       "refs": {
         "CreateAssistantResponse$assistant": "<p>Information about the assistant.</p>",
         "GetAssistantResponse$assistant": "<p>Information about the assistant.</p>",
+        "RegisterAssistantReplicaKeyResponse$assistant": null,
         "UpdateAssistantAIAgentResponse$assistant": null
+      }
+    },
+    "AssistantGlobalResiliencyStatus": {
+      "base": "<p>Whether an assistant's Connect instance is replicated by Amazon Connect Global Resiliency.</p> <p>Distinct from <code>GlobalResiliencyStatus</code> on <code>ModelSummary</code>, which answers a different question - is this <em>model</em> published across the replication group. This one answers whether <em>this assistant</em> is subject to that constraint at all.</p>",
+      "refs": {
+        "AssistantData$assistantGlobalResiliencyStatus": "<p>Whether Amazon Connect Global Resiliency replicates the Connect instance this assistant is associated with, and so whether resources created under this assistant must satisfy the replication group's model parity constraint. Answered from the ACGR side per request rather than stored, so it reflects the customer's replication state now.</p> <p>Absent means &quot;not applicable or not known&quot; - never read an absent field as DISABLED. It is absent on the operations that return an assistant which is not yet associated with a Connect instance, because replication cannot be established until it is.</p>"
       }
     },
     "AssistantIntegrationConfiguration": {
@@ -633,6 +642,28 @@
       "refs": {
         "CreateMessageTemplateAttachmentRequest$name": "<p>The name of the attachment file being uploaded. The name should include the file extension.</p>",
         "MessageTemplateAttachment$name": "<p>The name of the attachment file being uploaded. The name should include the file extension.</p>"
+      }
+    },
+    "AwsRegion": {
+      "base": null,
+      "refs": {
+        "AIAgentData$lastModifiedRegion": "<p>The Amazon Web Services Region where the AI Agent was last modified.</p>",
+        "AIAgentSummary$lastModifiedRegion": "<p>The Amazon Web Services Region where the AI Agent was last modified.</p>",
+        "AIGuardrailData$lastModifiedRegion": "<p>The Amazon Web Services Region where the AI Guardrail was last modified.</p>",
+        "AIGuardrailSummary$lastModifiedRegion": "<p>The Amazon Web Services Region where the AI Guardrail was last modified.</p>",
+        "AIPromptData$lastModifiedRegion": "<p>The Amazon Web Services Region where the AI Prompt was last modified.</p>",
+        "AIPromptSummary$lastModifiedRegion": "<p>The Amazon Web Services Region where the AI Prompt was last modified.</p>",
+        "AssistantAssociationData$lastModifiedRegion": "<p>The Amazon Web Services Region where the assistant association was last modified.</p>",
+        "AssistantAssociationSummary$lastModifiedRegion": "<p>The Amazon Web Services Region where the assistant association was last modified.</p>",
+        "AssistantData$lastModifiedRegion": "<p>The Amazon Web Services Region where the assistant was last modified.</p>",
+        "AssistantSummary$lastModifiedRegion": "<p>The Amazon Web Services Region where the assistant was last modified.</p>",
+        "ContentData$lastModifiedRegion": "<p>The Amazon Web Services Region where the content was last modified.</p>",
+        "ContentSummary$lastModifiedRegion": "<p>The Amazon Web Services Region where the content was last modified.</p>",
+        "KnowledgeBaseData$lastModifiedRegion": "<p>The Amazon Web Services Region where the knowledge base was last modified.</p>",
+        "KnowledgeBaseSummary$lastModifiedRegion": "<p>The Amazon Web Services Region where the knowledge base was last modified.</p>",
+        "QuickResponseData$lastModifiedRegion": "<p>The Amazon Web Services Region where the quick response was last modified.</p>",
+        "QuickResponseSearchResultData$lastModifiedRegion": "<p>The Amazon Web Services Region where the quick response was last modified.</p>",
+        "QuickResponseSummary$lastModifiedRegion": "<p>The Amazon Web Services Region where the quick response was last modified.</p>"
       }
     },
     "BedrockFoundationModelConfigurationForParsing": {
@@ -795,6 +826,8 @@
         "CreateMessageTemplateAttachmentRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateMessageTemplateRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateSessionRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
+        "RegisterAssistantReplicaKeyRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>..</p>",
+        "RegisterKnowledgeBaseReplicaKeyRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>..</p>",
         "SendMessageRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the AWS SDK populates this field.For more information about idempotency, see Making retries safe with idempotent APIs.</p>",
         "UpdateAIAgentRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>..</p>",
         "UpdateAIGuardrailRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>..</p>",
@@ -1677,6 +1710,12 @@
       "base": null,
       "refs": {}
     },
+    "GlobalResiliencyStatus": {
+      "base": null,
+      "refs": {
+        "ModelSummary$globalResiliencyStatus": "<p>Whether this model is published in every Region of the caller's Amazon Connect Global Resiliency replication group, and so can be referenced by an AI Prompt that replicates. Present only for callers to which global resiliency applies.</p>"
+      }
+    },
     "GroupingConfiguration": {
       "base": "<p>The configuration information of the grouping of Amazon Q in Connect users.</p>",
       "refs": {
@@ -2082,6 +2121,7 @@
       "refs": {
         "CreateKnowledgeBaseResponse$knowledgeBase": "<p>The knowledge base.</p>",
         "GetKnowledgeBaseResponse$knowledgeBase": "<p>The knowledge base.</p>",
+        "RegisterKnowledgeBaseReplicaKeyResponse$knowledgeBase": null,
         "UpdateKnowledgeBaseTemplateUriResponse$knowledgeBase": "<p>The knowledge base to update.</p>"
       }
     },
@@ -2858,9 +2898,11 @@
         "CaseSummarizationAIAgentConfiguration$locale": "<p>The locale setting for the Case Summarization AI Agent.</p>",
         "ConnectConfiguration$instanceId": "<p>The identifier of the Connect Customer instance. You can find the instanceId in the ARN of the instance.</p>",
         "ContentData$revisionId": "<p>The identifier of the content revision.</p>",
+        "ContentData$fileHash": "<p>The Base64-encoded SHA-256 hash of the content file. Amazon Connect Global Resiliency returns this field only for replicated content.</p>",
         "ContentMetadata$key": null,
         "ContentMetadata$value": null,
         "ContentSummary$revisionId": "<p>The identifier of the revision of the content.</p>",
+        "ContentSummary$fileHash": "<p>The Base64-encoded SHA-256 hash of the content file. Amazon Connect Global Resiliency returns this field only for replicated content.</p>",
         "CreateContentRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateKnowledgeBaseRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateQuickResponseRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
@@ -2893,6 +2935,7 @@
         "QuickResponseOrderField$name": "<p>The name of the attribute to order the quick response query results by.</p>",
         "QuickResponseQueryField$name": "<p>The name of the attribute to query the quick responses by.</p>",
         "RemoveAssistantAIAgentRequest$orchestratorUseCase": "<p>The orchestrator use case for the AI Agent being removed.</p>",
+        "ReplicaKmsKey$arn": "<p>The Amazon Resource Name (ARN) of the KMS key in the replica Region.</p>",
         "SearchQuickResponsesRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "SearchQuickResponsesResponse$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "SendMessageRequest$orchestratorUseCase": "<p>The orchestrator use case for message processing.</p>",
@@ -3500,6 +3543,22 @@
         "RetrieveResult$referenceType": "<p>A type to define the KB origin of a retrieved content.</p>"
       }
     },
+    "RegisterAssistantReplicaKeyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RegisterAssistantReplicaKeyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "RegisterKnowledgeBaseReplicaKeyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RegisterKnowledgeBaseReplicaKeyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "Relevance": {
       "base": null,
       "refs": {
@@ -3552,6 +3611,20 @@
         "CreateKnowledgeBaseRequest$renderingConfiguration": "<p>Information about how to render the content.</p>",
         "KnowledgeBaseData$renderingConfiguration": "<p>Information about how to render the content.</p>",
         "KnowledgeBaseSummary$renderingConfiguration": "<p>Information about how to render the content.</p>"
+      }
+    },
+    "ReplicaKmsKey": {
+      "base": "<p>Contains information about the KMS key used to encrypt data in a replica Amazon Web Services Region, including its Amazon Resource Name (ARN).</p>",
+      "refs": {
+        "RegisterAssistantReplicaKeyRequest$replicaKmsKey": "<p>The replica Region KMS key to register for the assistant.</p>",
+        "RegisterKnowledgeBaseReplicaKeyRequest$replicaKmsKey": "<p>The replica Region KMS key to register for the knowledge base.</p>",
+        "ReplicaKmsKeyList$member": null
+      }
+    },
+    "ReplicaKmsKeyList": {
+      "base": null,
+      "refs": {
+        "ServerSideEncryptionConfiguration$replicaKmsKeys": "<p>The list of KMS keys used to encrypt data for this resource's replicas in other Amazon Web Services Regions. Each entry corresponds to a Region where a replica is configured.</p>"
       }
     },
     "RequestTimeoutException": {
@@ -4268,14 +4341,28 @@
       "base": null,
       "refs": {
         "AIAgentData$modifiedTime": "<p>The time the AI Agent was last modified.</p>",
+        "AIAgentData$lastModifiedTime": "<p>The timestamp when the AI Agent was last modified.</p>",
         "AIAgentSummary$modifiedTime": "<p>The time the AI Agent was last modified.</p>",
+        "AIAgentSummary$lastModifiedTime": "<p>The timestamp when the AI Agent was last modified.</p>",
         "AIGuardrailData$modifiedTime": "<p>The time the AI Guardrail was last modified.</p>",
+        "AIGuardrailData$lastModifiedTime": "<p>The timestamp when the AI Guardrail was last modified.</p>",
         "AIGuardrailSummary$modifiedTime": "<p>The time the AI Guardrail was last modified.</p>",
+        "AIGuardrailSummary$lastModifiedTime": "<p>The timestamp when the AI Guardrail was last modified.</p>",
         "AIPromptData$modifiedTime": "<p>The time the AI Prompt was last modified.</p>",
+        "AIPromptData$lastModifiedTime": "<p>The timestamp when the AI Prompt was last modified.</p>",
         "AIPromptSummary$modifiedTime": "<p>The time the AI Prompt was last modified.</p>",
+        "AIPromptSummary$lastModifiedTime": "<p>The timestamp when the AI Prompt was last modified.</p>",
+        "AssistantAssociationData$lastModifiedTime": "<p>The timestamp when the assistant association was last modified.</p>",
+        "AssistantAssociationSummary$lastModifiedTime": "<p>The timestamp when the assistant association was last modified.</p>",
+        "AssistantData$lastModifiedTime": "<p>The timestamp when the assistant was last modified.</p>",
+        "AssistantSummary$lastModifiedTime": "<p>The timestamp when the assistant was last modified.</p>",
+        "ContentData$lastModifiedTime": "<p>The timestamp when the content was last modified.</p>",
+        "ContentSummary$lastModifiedTime": "<p>The timestamp when the content was last modified.</p>",
         "CreateAIAgentVersionRequest$modifiedTime": "<p>The modification time of the AI Agent should be tracked for version creation. This field should be specified to avoid version creation when simultaneous update to the underlying AI Agent are possible. The value should be the modifiedTime returned from the request to create or update an AI Agent so that version creation can fail if an update to the AI Agent post the specified modification time has been made.</p>",
         "CreateAIGuardrailVersionRequest$modifiedTime": "<p>The time the AI Guardrail was last modified.</p>",
         "CreateAIPromptVersionRequest$modifiedTime": "<p>The time the AI Prompt was last modified.</p>",
+        "KnowledgeBaseData$lastModifiedTime": "<p>The timestamp when the knowledge base was last modified.</p>",
+        "KnowledgeBaseSummary$lastModifiedTime": "<p>The timestamp when the knowledge base was last modified.</p>",
         "MessageOutput$timestamp": "<p>The timestamp of a message.</p>",
         "ModelSummary$legacyTimestamp": "<p>The timestamp when the model lifecycle will transition from <code>ACTIVE</code> to <code>LEGACY</code>.</p>",
         "ModelSummary$endOfLifeTimestamp": "<p>The timestamp when the model will reach end of life and no longer be available for use.</p>",
@@ -4386,6 +4473,12 @@
     "UnprocessableContentException": {
       "base": "<p>The server has a failure of processing the message</p>",
       "refs": {}
+    },
+    "UnprocessableContentReason": {
+      "base": null,
+      "refs": {
+        "UnprocessableContentException$reason": "<p>The reason the content could not be processed.</p>"
+      }
     },
     "UntagResourceRequest": {
       "base": null,
@@ -4731,6 +4824,8 @@
         "PutFeedbackResponse$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
         "QueryAssistantRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "QueryAssistantRequest$sessionId": "<p>The identifier of the Amazon Q in Connect session. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "RegisterAssistantReplicaKeyRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
+        "RegisterKnowledgeBaseReplicaKeyRequest$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "RemoveAssistantAIAgentRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "RemoveKnowledgeBaseTemplateUriRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "RenderMessageTemplateRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",

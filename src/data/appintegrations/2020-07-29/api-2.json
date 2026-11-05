@@ -284,7 +284,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServiceError"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "TagResource":{
@@ -299,7 +300,9 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServiceError"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
       ]
     },
     "UntagResource":{
@@ -314,7 +317,9 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServiceError"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
       ]
     },
     "UpdateApplication":{
@@ -446,6 +451,7 @@
         "Namespace":{"shape":"ApplicationNamespace"},
         "CreatedTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"},
         "IsService":{
           "shape":"Boolean",
           "deprecated":true,
@@ -764,7 +770,7 @@
       "type":"string",
       "max":1000,
       "min":1,
-      "pattern":"^(\\w+\\:\\/\\/[\\w.-]+[\\w/!@#+=.-]+$)|(\\w+\\:\\/\\/[\\w.-]+[\\w/!@#+=.-]+[\\w/!@#+=.-]+[\\w/!@#+=.,-]+$)"
+      "pattern":"^((\\w+\\:\\/\\/[\\w.-]+[\\w/!@#+=.-]+)|(\\w+\\:\\/\\/[\\w.-]+[\\w/!@#+=.-]+[\\w/!@#+=.-]+[\\w/!@#+=.,-]+))$"
     },
     "DuplicateResourceException":{
       "type":"structure",
@@ -934,6 +940,7 @@
         },
         "CreatedTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"},
         "Tags":{"shape":"TagMap"},
         "Permissions":{"shape":"PermissionList"},
         "IsService":{
@@ -1308,6 +1315,12 @@
       "max":50,
       "min":0
     },
+    "RegionName":{
+      "type":"string",
+      "max":25,
+      "min":1,
+      "pattern":"[a-z]{2,4}(-[a-z0-9]+){1,3}"
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -1343,7 +1356,7 @@
       "type":"string",
       "max":1000,
       "min":1,
-      "pattern":"^(\\w+\\:\\/\\/[\\w.-]+[\\w/!@#+=.-]+$)|(\\w+\\:\\/\\/[\\w.-]+[\\w/!@#+=.-]+[\\w/!@#+=.-]+[\\w/!@#+=.,-]+$)"
+      "pattern":"^((\\w+\\:\\/\\/[\\w.-]+[\\w/!@#+=.-]+)|(\\w+\\:\\/\\/[\\w.-]+[\\w/!@#+=.-]+[\\w/!@#+=.-]+[\\w/!@#+=.,-]+))$"
     },
     "Subscription":{
       "type":"structure",
@@ -1362,8 +1375,7 @@
     "TagKey":{
       "type":"string",
       "max":128,
-      "min":1,
-      "pattern":"^(?!aws:)[a-zA-Z+-=._:/]+$"
+      "min":1
     },
     "TagKeyList":{
       "type":"list",

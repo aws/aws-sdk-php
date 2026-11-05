@@ -11,7 +11,7 @@
     "EndSession": "<p>Ends the session. After you end a session, you can still access its content but you can’t add to it. To delete the session and it's content, you use the DeleteSession API operation. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
     "GenerateQuery": "<p>Generates an SQL query from a natural language query. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-generate-query.html\">Generate a query for structured data</a> in the Amazon Bedrock User Guide.</p>",
     "GetAgentMemory": "<p>Gets the sessions stored in the memory of the agent.</p>",
-    "GetDocumentContent": "<p>Retrieves the content of an ingested document from a knowledge base. Returns a pre-signed URL for secure document access.</p>",
+    "GetDocumentContent": "<p>Retrieves the content of an ingested document from a knowledge base, or of an image embedded in the document. Returns a pre-signed URL for downloading the content. Use this operation to display the source of a <code>Retrieve</code> result.</p>",
     "GetExecutionFlowSnapshot": "<p>Retrieves the flow definition snapshot used for a flow execution. The snapshot represents the flow metadata and definition as it existed at the time the execution was started. Note that even if the flow is edited after an execution starts, the snapshot connected to the execution remains unchanged.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
     "GetFlowExecution": "<p>Retrieves details about a specific flow execution, including its status, start and end times, and any errors that occurred during execution.</p>",
     "GetIngestedDocumentAcl": "<p>Retrieves the ingested access control list (ACL) for a specific document in a knowledge base. Use this operation to inspect the allow and deny lists that were ingested for a document to troubleshoot access control issues. To use this operation, you must have the <code>bedrock:GetIngestedDocumentAcl</code> permission.</p>",
@@ -1270,7 +1270,7 @@
     "DocumentOutputFormat": {
       "base": null,
       "refs": {
-        "GetDocumentContentRequest$outputFormat": "<p>The output format for the document content. <code>RAW</code> returns the original file. <code>EXTRACTED</code> returns parsed text as JSON. Defaults to <code>RAW</code>.</p>"
+        "GetDocumentContentRequest$outputFormat": "<p>The output format for the content. You can specify one of the following values:</p> <dl> <dt>RAW</dt> <dd> <p>Returns the original document, or the selected image if you specify <code>mediaId</code>.</p> </dd> <dt>EXTRACTED</dt> <dd> <p>Returns parsed document text as JSON.</p> </dd> </dl> <p>If you omit this parameter, the default is <code>RAW</code>. You can't use <code>EXTRACTED</code> with <code>mediaId</code>.</p>"
       }
     },
     "Double": {
@@ -2753,7 +2753,7 @@
       "base": null,
       "refs": {
         "AgenticRetrieveTraceEvent$timestamp": "<p>The timestamp when the trace event occurred.</p>",
-        "GetDocumentContentResponse$documentContentLength": "<p>The size of the document content in bytes available at the pre-signed URL.</p>",
+        "GetDocumentContentResponse$documentContentLength": "<p>The size, in bytes, of the content available at the pre-signed URL.</p>",
         "Metadata$operationTotalTimeMs": "<p>The total time it took for the agent to complete execution. This field is only set for the final response.</p>",
         "Metadata$totalTimeMs": "<p> The total execution time for the specific invocation being processed (model, knowledge base, guardrail, agent collaborator, or code interpreter). It represents how long the individual invocation took.</p>"
       }
@@ -2839,6 +2839,12 @@
       "base": null,
       "refs": {
         "InferenceConfiguration$maximumLength": "<p>The maximum number of tokens allowed in the generated response.</p>"
+      }
+    },
+    "MediaId": {
+      "base": "<p>The unique identifier of an image embedded in a document.</p>",
+      "refs": {
+        "GetDocumentContentRequest$mediaId": "<p>The unique identifier (in UUID format) of an image embedded in the specified document. Set this parameter to the <code>_media_id</code> value in the metadata of the corresponding <code>Retrieve</code> result. If you specify this parameter, the response contains a pre-signed URL for the image instead of the document, and you must omit <code>outputFormat</code> or set it to <code>RAW</code>.</p>"
       }
     },
     "Memories": {
@@ -3416,7 +3422,7 @@
     "PresignedUrl": {
       "base": null,
       "refs": {
-        "GetDocumentContentResponse$presignedUrl": "<p>A pre-signed URL for downloading the document content. The URL expires after 5 minutes.</p>"
+        "GetDocumentContentResponse$presignedUrl": "<p>A pre-signed URL for downloading the document content, or the selected image if you specify <code>mediaId</code>. The URL expires after 5 minutes.</p>"
       }
     },
     "PromptConfiguration": {
@@ -4359,7 +4365,7 @@
         "FunctionResult$agentId": "<p>The agent's ID.</p>",
         "FunctionResult$function": "<p>The name of the function that was called.</p>",
         "GeneratedQuery$sql": "<p>An SQL query that corresponds to the natural language query.</p>",
-        "GetDocumentContentResponse$mimeType": "<p>The MIME type of the document content. For <code>RAW</code> format, this is the original file type (for example, <code>application/pdf</code>). For <code>EXTRACTED</code> format, this is always <code>application/json</code>.</p>",
+        "GetDocumentContentResponse$mimeType": "<p>The MIME type of the returned content. For <code>RAW</code> format, this is the original file type (for example, <code>application/pdf</code>), or the image type (for example, <code>image/png</code>) if you specify <code>mediaId</code>. For <code>EXTRACTED</code> format, this is always <code>application/json</code>.</p>",
         "GetExecutionFlowSnapshotResponse$definition": "<p>The flow definition used for the flow execution, including the nodes, connections, and configuration at the time when the execution started.</p> <p>The definition returns as a string that follows the structure of a <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_FlowDefinition.html\">FlowDefinition</a> object.</p>",
         "GuardrailCustomWord$match": "<p>The match details for the custom word filter in the Guardrail.</p>",
         "GuardrailManagedWord$match": "<p>The match details for the managed word filter in the Guardrail.</p>",

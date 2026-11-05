@@ -1364,6 +1364,76 @@
       "member":{"shape":"Condition"},
       "min":1
     },
+    "ConnectedAccountArn":{
+      "type":"string",
+      "max":140,
+      "min":56,
+      "pattern":"^arn:aws(-[a-z]+)*:payments::[0-9]{12}:connectedaccount/[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}-[A-Za-z0-9]{6}$"
+    },
+    "ConnectedAccountChain":{
+      "type":"string",
+      "enum":[
+        "BASE",
+        "SOLANA"
+      ]
+    },
+    "ConnectedAccountChainConfig":{
+      "type":"structure",
+      "required":[
+        "Chain",
+        "Prices"
+      ],
+      "members":{
+        "Chain":{"shape":"ConnectedAccountChain"},
+        "Prices":{"shape":"ConnectedAccountPrices"}
+      }
+    },
+    "ConnectedAccountConfig":{
+      "type":"structure",
+      "required":[
+        "ConnectedAccountArn",
+        "PaymentNetworks"
+      ],
+      "members":{
+        "ConnectedAccountArn":{"shape":"ConnectedAccountArn"},
+        "PaymentNetworks":{"shape":"ConnectedAccountPaymentNetworks"}
+      }
+    },
+    "ConnectedAccountConfigs":{
+      "type":"list",
+      "member":{"shape":"ConnectedAccountConfig"},
+      "max":1,
+      "min":1
+    },
+    "ConnectedAccountPaymentNetworks":{
+      "type":"list",
+      "member":{"shape":"ConnectedAccountChainConfig"},
+      "max":2,
+      "min":1
+    },
+    "ConnectedAccountPrice":{
+      "type":"structure",
+      "required":[
+        "Amount",
+        "Currency"
+      ],
+      "members":{
+        "Amount":{"shape":"ConnectedAccountPriceAmount"},
+        "Currency":{"shape":"CryptoCurrency"}
+      }
+    },
+    "ConnectedAccountPriceAmount":{
+      "type":"string",
+      "max":9,
+      "min":1,
+      "pattern":"^([1-9][0-9]{0,5}(\\.[0-9]{1,2})?|0\\.(0[1-9]|[1-9][0-9]?))$"
+    },
+    "ConnectedAccountPrices":{
+      "type":"list",
+      "member":{"shape":"ConnectedAccountPrice"},
+      "max":1,
+      "min":1
+    },
     "ConsumedCapacity":{
       "type":"long",
       "min":0
@@ -3468,6 +3538,7 @@
       "type":"structure",
       "members":{
         "CryptoConfig":{"shape":"CryptoConfig"},
+        "ConnectedAccountConfigs":{"shape":"ConnectedAccountConfigs"},
         "CurrencyMode":{"shape":"CurrencyMode"}
       }
     },

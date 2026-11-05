@@ -30,7 +30,7 @@
     "CreateApplication": "<p>Creates a new application. An application is the top-level organizational unit that supports IAM Identity Center integration.</p>",
     "CreateCodeReview": "<p>Creates a new code review configuration in an agent space. A code review defines the parameters for automated security-focused code analysis.</p>",
     "CreateIntegration": "<p>Creates a new integration with a third-party provider, such as GitHub, for code review and remediation.</p>",
-    "CreateMembership": "<p>Creates a new membership, granting a user access to an agent space within an application.</p>",
+    "CreateMembership": "<p>Creates a new membership, granting a user or group access to an agent space within an application.</p>",
     "CreatePentest": "<p>Creates a new pentest configuration in an agent space. A pentest defines the security test parameters, including target assets, risk type exclusions, and logging configuration.</p>",
     "CreatePrivateConnection": "<p>Creates a private connection for reaching a self-hosted provider instance over private networking using Amazon VPC Lattice.</p>",
     "CreateSecurityRequirementPack": "<p>Creates a customer managed security requirement pack.</p>",
@@ -41,7 +41,7 @@
     "DeleteApplication": "<p>Deletes an application and its associated configuration, including IAM Identity Center settings.</p>",
     "DeleteArtifact": "<p>Deletes an artifact from an agent space.</p>",
     "DeleteIntegration": "<p>Deletes an integration with a third-party provider.</p>",
-    "DeleteMembership": "<p>Deletes a membership, revoking a user's access to an agent space.</p>",
+    "DeleteMembership": "<p>Deletes a membership, revoking a user's or group's access to an agent space.</p>",
     "DeletePrivateConnection": "<p>Deletes a private connection.</p>",
     "DeleteSecurityRequirementPack": "<p>Deletes a customer managed security requirement pack and all its associated security requirements.</p>",
     "DeleteTargetDomain": "<p>Deletes a target domain registration. After deletion, the domain can no longer be used for penetration testing.</p>",
@@ -1568,6 +1568,12 @@
         "GitLabIntegrationInput$tokenType": "<p>The type of GitLab access token provided in accessToken.</p>"
       }
     },
+    "GroupMetadata": {
+      "base": "<p>Contains metadata about an IAM Identity Center group member, including the group display name and description.</p>",
+      "refs": {
+        "MemberMetadata$group": "<p>The group metadata for the member.</p>"
+      }
+    },
     "HostAddress": {
       "base": "<p>The IP address or DNS name of a target resource.</p>",
       "refs": {
@@ -2155,7 +2161,7 @@
     "MembershipType": {
       "base": "<p>Type of membership.</p>",
       "refs": {
-        "CreateMembershipRequest$memberType": "<p>The type of member. Currently, only USER is supported.</p>",
+        "CreateMembershipRequest$memberType": "<p>The type of member. Use USER for an individual user or GROUP for an IAM Identity Center group. All members of a group have access to the agent space.</p>",
         "DeleteMembershipRequest$memberType": "<p>The type of member to remove.</p>",
         "MembershipSummary$memberType": "<p>The type of member.</p>"
       }
@@ -3224,6 +3230,8 @@
         "GitHubIntegrationInput$organizationName": "<p>The name of the GitHub organization to integrate with.</p>",
         "GitHubIntegrationInput$installationId": "<p>The installation identifier provided by GitHub Enterprise Server on the install callback. Required for GitHub Enterprise Server integrations and ignored for GitHub.com.</p>",
         "GitLabIntegrationInput$groupId": "<p>The identifier of the GitLab group. Required when tokenType is group and ignored for personal tokens.</p>",
+        "GroupMetadata$displayName": "<p>The display name of the group.</p>",
+        "GroupMetadata$description": "<p>The description of the group.</p>",
         "HttpVerification$token": "<p>The verification token to serve at the specified route path.</p>",
         "HttpVerification$routePath": "<p>The HTTP route path where the verification token must be served.</p>",
         "InitiateProviderRegistrationInput$organizationName": "<p>The name of the organization to connect.</p>",

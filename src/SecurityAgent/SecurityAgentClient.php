@@ -308,7 +308,7 @@ use Aws\AwsClient;
  *     applicationId?: string,
  *     agentSpaceId?: string,
  *     membershipId?: string,
- *     memberType?: 'USER',
+ *     memberType?: 'GROUP'|'USER',
  *     config?: array{user?: array{role?: 'MEMBER', ...}, ...},
  *     ...,
  * } $args = [])
@@ -317,7 +317,7 @@ use Aws\AwsClient;
  *     applicationId?: string,
  *     agentSpaceId?: string,
  *     membershipId?: string,
- *     memberType?: 'USER',
+ *     memberType?: 'GROUP'|'USER',
  *     config?: array{user?: array{role?: 'MEMBER', ...}, ...},
  *     ...,
  * } $args = [])
@@ -572,9 +572,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteIntegrationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteIntegrationAsync(array{integrationId?: string, ...} $args = [])
  * @method \Aws\Result deleteMembership(array $args = [])
- * @phpstan-method \Aws\Result deleteMembership(array{applicationId?: string, agentSpaceId?: string, membershipId?: string, memberType?: 'USER', ...} $args = [])
+ * @phpstan-method \Aws\Result deleteMembership(array{applicationId?: string, agentSpaceId?: string, membershipId?: string, memberType?: 'GROUP'|'USER', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteMembershipAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise deleteMembershipAsync(array{applicationId?: string, agentSpaceId?: string, membershipId?: string, memberType?: 'USER', ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteMembershipAsync(array{applicationId?: string, agentSpaceId?: string, membershipId?: string, memberType?: 'GROUP'|'USER', ...} $args = [])
  * @method \Aws\Result deletePrivateConnection(array $args = [])
  * @phpstan-method \Aws\Result deletePrivateConnection(array{privateConnectionName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deletePrivateConnectionAsync(array $args = [])
@@ -777,7 +777,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listMemberships(array{
  *     applicationId?: string,
  *     agentSpaceId?: string,
- *     memberType?: 'ALL'|'USER',
+ *     memberType?: 'ALL'|'GROUP'|'USER',
  *     maxResults?: int,
  *     nextToken?: string,
  *     ...,
@@ -786,7 +786,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise listMembershipsAsync(array{
  *     applicationId?: string,
  *     agentSpaceId?: string,
- *     memberType?: 'ALL'|'USER',
+ *     memberType?: 'ALL'|'GROUP'|'USER',
  *     maxResults?: int,
  *     nextToken?: string,
  *     ...,

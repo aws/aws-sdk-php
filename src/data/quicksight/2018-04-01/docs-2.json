@@ -136,6 +136,7 @@
     "DescribeQPersonalizationConfiguration": "<p>Describes a personalization configuration.</p>",
     "DescribeQuickSightQSearchConfiguration": "<p>Describes the state of a Quick Sight Q Search configuration.</p>",
     "DescribeRefreshSchedule": "<p>Provides a summary of a refresh schedule.</p>",
+    "DescribeResourcePermissions": "<p>Describes the service role configuration for your Amazon Quick Sight account.</p> <p>Call this operation in the Amazon Web Services Region where your Amazon Quick Sight account is registered (the home Region).</p>",
     "DescribeRoleCustomPermission": "<p>Describes all custom permissions that are mapped to a role.</p>",
     "DescribeSelfUpgradeConfiguration": "<p>Describes the self-upgrade configuration for a Quick account.</p>",
     "DescribeSpace": "<p>Describes an Amazon QuickSight space.</p>",
@@ -280,6 +281,7 @@
     "UpdateQPersonalizationConfiguration": "<p>Updates a personalization configuration.</p>",
     "UpdateQuickSightQSearchConfiguration": "<p>Updates the state of a Quick Sight Q Search configuration.</p>",
     "UpdateRefreshSchedule": "<p>Updates a refresh schedule for a dataset.</p>",
+    "UpdateResourcePermissions": "<p>Updates the service role configuration that Amazon Quick Sight uses to access resources in your Amazon Web Services account. To use this operation, you must have the <code>quicksight:UpdateResourcePermissions</code> and <code>iam:PassRole</code> permissions.</p> <p>Call this operation in the Amazon Web Services Region where your Amazon Quick Sight account is registered (the home Region). You can switch from a role managed by Amazon Quick Sight to a customer-managed role, or replace one customer-managed role with another. You can't use this operation to switch back to a role managed by Amazon Quick Sight.</p>",
     "UpdateRoleCustomPermission": "<p>Updates the custom permissions that are associated with a role.</p>",
     "UpdateSPICECapacityConfiguration": "<p>Updates the SPICE capacity configuration for a Quick Sight account.</p>",
     "UpdateSelfUpgrade": "<p>Updates a self-upgrade request for a Quick user by approving, denying, or verifying the request.</p>",
@@ -2477,6 +2479,7 @@
         "DescribeQPersonalizationConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the personalization configuration that the user wants described.</p>",
         "DescribeQuickSightQSearchConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the Quick Sight Q Search configuration that the user wants described.</p>",
         "DescribeRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
+        "DescribeResourcePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account whose service role configuration you want to describe.</p>",
         "DescribeRoleCustomPermissionRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "DescribeSelfUpgradeConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the Quick self-upgrade configuration.</p>",
         "DescribeSpacePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the space.</p>",
@@ -2609,6 +2612,7 @@
         "UpdateQPersonalizationConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account account that contains the personalization configuration that the user wants to update.</p>",
         "UpdateQuickSightQSearchConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the Quick Sight Q Search configuration that you want to update.</p>",
         "UpdateRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
+        "UpdateResourcePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account whose service role configuration you want to update.</p>",
         "UpdateRoleCustomPermissionRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "UpdateSPICECapacityConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the SPICE configuration that you want to update.</p>",
         "UpdateSelfUpgradeConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the Quick self-upgrade configuration that you want to update.</p>",
@@ -6300,8 +6304,8 @@
     "DataSourceKmsKeyArn": {
       "base": null,
       "refs": {
-        "OneDriveClientCredentials$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the AWS Key Management Service (AWS KMS) key used to encrypt the OneDrive certificate credentials. This field is required.</p>",
-        "SharePointClientCredentials$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the AWS Key Management Service (AWS KMS) key used to encrypt the SharePoint certificate credentials. This field is required.</p>"
+        "OneDriveClientCredentials$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the Key Management Service (KMS) key used to encrypt the OneDrive certificate credentials. This field is required.</p>",
+        "SharePointClientCredentials$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the Key Management Service (KMS) key used to encrypt the SharePoint certificate credentials. This field is required.</p>"
       }
     },
     "DataSourceList": {
@@ -7633,6 +7637,14 @@
       "refs": {}
     },
     "DescribeRefreshScheduleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeResourcePermissionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeResourcePermissionsResponse": {
       "base": null,
       "refs": {}
     },
@@ -14899,6 +14911,7 @@
         "RedshiftIAMParameters$RoleArn": "<p>Use the <code>RoleArn</code> structure to allow Quick Sight to call <code>redshift:GetClusterCredentials</code> on your cluster. The calling principal must have <code>iam:PassRole</code> access to pass the role to Quick Sight. The role's trust policy must allow the Quick Sight service principal to assume the role.</p>",
         "S3KnowledgeBaseParameters$RoleArn": "<p>Use the <code>RoleArn</code> structure to override an account-wide role for a specific S3 Knowledge Base data source. For example, say an account administrator has turned off all S3 access with an account-wide role. The administrator can then use <code>RoleArn</code> to bypass the account-wide role and allow S3 access for the single S3 Knowledge Base data source that is specified in the structure, even if the account-wide role forbidding S3 access is still active.</p>",
         "S3Parameters$RoleArn": "<p>Use the <code>RoleArn</code> structure to override an account-wide role for a specific S3 data source. For example, say an account administrator has turned off all S3 access with an account-wide role. The administrator can then use <code>RoleArn</code> to bypass the account-wide role and allow S3 access for the single S3 data source that is specified in the structure, even if the account-wide role forbidding S3 access is still active.</p>",
+        "UpdateResourcePermissionsRequest$CustomerManagedRoleArn": "<p>The ARN of the customer-managed role that you want Amazon Quick Sight to use. To use this operation, you must have the <code>iam:PassRole</code> permission for the role.</p> <p>Configure the role as follows:</p> <ul> <li> <p>The role must belong to the Amazon Web Services account specified by <code>AwsAccountId</code>.</p> </li> <li> <p>Configure the role trust policy to allow the Amazon Quick Sight service principal to call <code>sts:AssumeRole</code>.</p> </li> <li> <p>Attach a permissions policy that allows access to the resources that you want Amazon Quick Sight to use.</p> </li> <li> <p>To use features that rely on session tags, configure the role trust policy to allow the Amazon Quick Sight service principal to call <code>sts:TagSession</code>.</p> </li> </ul> <p>If the role doesn't exist or its trust policy doesn't allow <code>sts:AssumeRole</code>, the request returns an <code>AccessDeniedException</code>.</p> <p>When you call this operation, Amazon Quick Sight attempts to assume the role with session tags and records whether the attempt succeeds. If you later add or remove <code>sts:TagSession</code> from the trust policy, call this operation again with the same role ARN to refresh the stored capability.</p>",
         "UpdateVPCConnectionRequest$RoleArn": "<p>An IAM role associated with the VPC connection.</p>"
       }
     },
@@ -15685,6 +15698,14 @@
       "base": "<p>The parameters for ServiceNow.</p>",
       "refs": {
         "DataSourceParameters$ServiceNowParameters": "<p>The parameters for ServiceNow.</p>"
+      }
+    },
+    "ServiceRoleType": {
+      "base": "<p>The type of service role that Amazon Quick Sight uses to access resources in an Amazon Web Services account. Valid values:</p> <ul> <li> <p> <code>QUICKSIGHT_MANAGED</code>: Amazon Quick Sight manages the role.</p> </li> <li> <p> <code>CUSTOMER_MANAGED</code>: You manage the role and its permissions.</p> </li> </ul>",
+      "refs": {
+        "DescribeResourcePermissionsResponse$RoleType": "<p>The type of service role that Amazon Quick Sight uses for your account.</p>",
+        "UpdateResourcePermissionsRequest$RoleType": "<p>The type of service role that you want Amazon Quick Sight to use. The only supported value for this operation is <code>CUSTOMER_MANAGED</code>. Requests that specify <code>QUICKSIGHT_MANAGED</code> are rejected.</p>",
+        "UpdateResourcePermissionsResponse$RoleType": "<p>The type of service role that Amazon Quick Sight uses for your account after the update. This value is <code>CUSTOMER_MANAGED</code>.</p>"
       }
     },
     "ServiceType": {
@@ -17122,6 +17143,7 @@
         "DescribeQPersonalizationConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeQuickSightQSearchConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DescribeResourcePermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeRoleCustomPermissionResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeSelfUpgradeConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeTemplateAliasResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -17243,6 +17265,7 @@
         "UpdateQPersonalizationConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateQuickSightQSearchConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
+        "UpdateResourcePermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateRoleCustomPermissionResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateSPICECapacityConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateSelfUpgradeConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -17489,6 +17512,8 @@
         "DescribeQuickSightQSearchConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeRefreshScheduleRequest$ScheduleId": "<p>The ID of the refresh schedule.</p>",
         "DescribeRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeResourcePermissionsResponse$CustomerManagedRoleArn": "<p>The ARN of the customer-managed role that Amazon Quick Sight uses for your account. Amazon Quick Sight returns this value only when <code>RoleType</code> is <code>CUSTOMER_MANAGED</code>.</p>",
+        "DescribeResourcePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeRoleCustomPermissionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeSelfUpgradeConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeSpacePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -17873,6 +17898,8 @@
         "UpdateQuickSightQSearchConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateRefreshScheduleResponse$ScheduleId": "<p>The ID of the refresh schedule.</p>",
+        "UpdateResourcePermissionsResponse$CustomerManagedRoleArn": "<p>The ARN of the customer-managed role that Amazon Quick Sight uses for your account after the update.</p>",
+        "UpdateResourcePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateRoleCustomPermissionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateSPICECapacityConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateSelfUpgradeConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -20367,6 +20394,14 @@
         "UpdateTopicPermissionsV2Request$GrantPermissions": "<p>The resource permissions that you want to grant to the topic.</p>",
         "UpdateTopicPermissionsV2Request$RevokePermissions": "<p>The resource permissions that you want to revoke from the topic.</p>"
       }
+    },
+    "UpdateResourcePermissionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateResourcePermissionsResponse": {
+      "base": null,
+      "refs": {}
     },
     "UpdateRoleCustomPermissionRequest": {
       "base": null,

@@ -3107,6 +3107,7 @@
           "location":"uri",
           "locationName":"knowledgeBaseId"
         },
+        "mediaId":{"shape":"MediaId"},
         "outputFormat":{"shape":"DocumentOutputFormat"},
         "userContext":{"shape":"UserContext"}
       }
@@ -4552,6 +4553,12 @@
       "box":true,
       "max":8192,
       "min":0
+    },
+    "MediaId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9-]{35}$"
     },
     "Memories":{
       "type":"list",

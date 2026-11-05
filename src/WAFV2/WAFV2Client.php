@@ -106,7 +106,12 @@ use Aws\AwsClient;
  *     VisibilityConfig?: array{SampledRequestsEnabled?: bool, CloudWatchMetricsEnabled?: bool, MetricName?: string, ...},
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     CustomResponseBodies?: array<string, array{ContentType?: 'APPLICATION_JSON'|'TEXT_HTML'|'TEXT_PLAIN', Content?: string, ...}>,
- *     MonetizationConfig?: array{CryptoConfig?: array{PaymentNetworks?: list<array>, ...}, CurrencyMode?: 'REAL'|'TEST', ...},
+ *     MonetizationConfig?: array{
+ *         CryptoConfig?: array{PaymentNetworks?: list<array>, ...},
+ *         ConnectedAccountConfigs?: list<array>,
+ *         CurrencyMode?: 'REAL'|'TEST',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createRuleGroupAsync(array $args = [])
@@ -130,7 +135,12 @@ use Aws\AwsClient;
  *     VisibilityConfig?: array{SampledRequestsEnabled?: bool, CloudWatchMetricsEnabled?: bool, MetricName?: string, ...},
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     CustomResponseBodies?: array<string, array{ContentType?: 'APPLICATION_JSON'|'TEXT_HTML'|'TEXT_PLAIN', Content?: string, ...}>,
- *     MonetizationConfig?: array{CryptoConfig?: array{PaymentNetworks?: list<array>, ...}, CurrencyMode?: 'REAL'|'TEST', ...},
+ *     MonetizationConfig?: array{
+ *         CryptoConfig?: array{PaymentNetworks?: list<array>, ...},
+ *         ConnectedAccountConfigs?: list<array>,
+ *         CurrencyMode?: 'REAL'|'TEST',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result createWebACL(array $args = [])
@@ -161,7 +171,12 @@ use Aws\AwsClient;
  *     AssociationConfig?: array{RequestBody?: array<string, array>, ChallengeJavascriptSdkInjection?: array<string, array>, ...},
  *     OnSourceDDoSProtectionConfig?: array{ALBLowReputationMode?: 'ACTIVE_UNDER_DDOS'|'ALWAYS_ON', ...},
  *     ApplicationConfig?: array{Attributes?: list<array>, ...},
- *     MonetizationConfig?: array{CryptoConfig?: array{PaymentNetworks?: list<array>, ...}, CurrencyMode?: 'REAL'|'TEST', ...},
+ *     MonetizationConfig?: array{
+ *         CryptoConfig?: array{PaymentNetworks?: list<array>, ...},
+ *         ConnectedAccountConfigs?: list<array>,
+ *         CurrencyMode?: 'REAL'|'TEST',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createWebACLAsync(array $args = [])
@@ -192,7 +207,12 @@ use Aws\AwsClient;
  *     AssociationConfig?: array{RequestBody?: array<string, array>, ChallengeJavascriptSdkInjection?: array<string, array>, ...},
  *     OnSourceDDoSProtectionConfig?: array{ALBLowReputationMode?: 'ACTIVE_UNDER_DDOS'|'ALWAYS_ON', ...},
  *     ApplicationConfig?: array{Attributes?: list<array>, ...},
- *     MonetizationConfig?: array{CryptoConfig?: array{PaymentNetworks?: list<array>, ...}, CurrencyMode?: 'REAL'|'TEST', ...},
+ *     MonetizationConfig?: array{
+ *         CryptoConfig?: array{PaymentNetworks?: list<array>, ...},
+ *         ConnectedAccountConfigs?: list<array>,
+ *         CurrencyMode?: 'REAL'|'TEST',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result deleteAPIKey(array $args = [])
@@ -688,7 +708,12 @@ use Aws\AwsClient;
  *     VisibilityConfig?: array{SampledRequestsEnabled?: bool, CloudWatchMetricsEnabled?: bool, MetricName?: string, ...},
  *     LockToken?: string,
  *     CustomResponseBodies?: array<string, array{ContentType?: 'APPLICATION_JSON'|'TEXT_HTML'|'TEXT_PLAIN', Content?: string, ...}>,
- *     MonetizationConfig?: array{CryptoConfig?: array{PaymentNetworks?: list<array>, ...}, CurrencyMode?: 'REAL'|'TEST', ...},
+ *     MonetizationConfig?: array{
+ *         CryptoConfig?: array{PaymentNetworks?: list<array>, ...},
+ *         ConnectedAccountConfigs?: list<array>,
+ *         CurrencyMode?: 'REAL'|'TEST',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRuleGroupAsync(array $args = [])
@@ -712,7 +737,12 @@ use Aws\AwsClient;
  *     VisibilityConfig?: array{SampledRequestsEnabled?: bool, CloudWatchMetricsEnabled?: bool, MetricName?: string, ...},
  *     LockToken?: string,
  *     CustomResponseBodies?: array<string, array{ContentType?: 'APPLICATION_JSON'|'TEXT_HTML'|'TEXT_PLAIN', Content?: string, ...}>,
- *     MonetizationConfig?: array{CryptoConfig?: array{PaymentNetworks?: list<array>, ...}, CurrencyMode?: 'REAL'|'TEST', ...},
+ *     MonetizationConfig?: array{
+ *         CryptoConfig?: array{PaymentNetworks?: list<array>, ...},
+ *         ConnectedAccountConfigs?: list<array>,
+ *         CurrencyMode?: 'REAL'|'TEST',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateWebACL(array $args = [])
@@ -744,7 +774,12 @@ use Aws\AwsClient;
  *     AssociationConfig?: array{RequestBody?: array<string, array>, ChallengeJavascriptSdkInjection?: array<string, array>, ...},
  *     OnSourceDDoSProtectionConfig?: array{ALBLowReputationMode?: 'ACTIVE_UNDER_DDOS'|'ALWAYS_ON', ...},
  *     ApplicationConfig?: array{Attributes?: list<array>, ...},
- *     MonetizationConfig?: array{CryptoConfig?: array{PaymentNetworks?: list<array>, ...}, CurrencyMode?: 'REAL'|'TEST', ...},
+ *     MonetizationConfig?: array{
+ *         CryptoConfig?: array{PaymentNetworks?: list<array>, ...},
+ *         ConnectedAccountConfigs?: list<array>,
+ *         CurrencyMode?: 'REAL'|'TEST',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWebACLAsync(array $args = [])
@@ -776,7 +811,12 @@ use Aws\AwsClient;
  *     AssociationConfig?: array{RequestBody?: array<string, array>, ChallengeJavascriptSdkInjection?: array<string, array>, ...},
  *     OnSourceDDoSProtectionConfig?: array{ALBLowReputationMode?: 'ACTIVE_UNDER_DDOS'|'ALWAYS_ON', ...},
  *     ApplicationConfig?: array{Attributes?: list<array>, ...},
- *     MonetizationConfig?: array{CryptoConfig?: array{PaymentNetworks?: list<array>, ...}, CurrencyMode?: 'REAL'|'TEST', ...},
+ *     MonetizationConfig?: array{
+ *         CryptoConfig?: array{PaymentNetworks?: list<array>, ...},
+ *         ConnectedAccountConfigs?: list<array>,
+ *         CurrencyMode?: 'REAL'|'TEST',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  */

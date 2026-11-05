@@ -33,7 +33,7 @@
     "DescribeLocationSmb": "<p>Provides details about how an DataSync transfer location for a Server Message Block (SMB) file server is configured.</p>",
     "DescribeTask": "<p>Provides information about a <i>task</i>, which defines where and how DataSync transfers your data.</p>",
     "DescribeTaskExecution": "<p>Provides information about an execution of your DataSync task. You can use this operation to help monitor the progress of an ongoing data transfer or check the results of the transfer.</p> <note> <p>Some <code>DescribeTaskExecution</code> response elements are only relevant to a specific task mode. For information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/choosing-task-mode.html#task-mode-differences\">Understanding task mode differences</a> and <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/transfer-performance-counters.html\">Understanding data transfer performance counters</a>.</p> </note>",
-    "ListAgents": "<p>Returns a list of DataSync agents that belong to an Amazon Web Services account in the Amazon Web Services Region specified in the request.</p> <p>With pagination, you can reduce the number of agents returned in a response. If you get a truncated list of agents in a response, the response contains a marker that you can specify in your next request to fetch the next page of agents.</p> <p> <code>ListAgents</code> is eventually consistent. This means the result of running the operation might not reflect that you just created or deleted an agent. For example, if you create an agent with <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/API_CreateAgent.html\">CreateAgent</a> and then immediately run <code>ListAgents</code>, that agent might not show up in the list right away. In situations like this, you can always confirm whether an agent has been created (or deleted) by using <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/API_DescribeAgent.html\">DescribeAgent</a>.</p>",
+    "ListAgents": "<p>Returns a list of DataSync agents that belong to an Amazon Web Services account in the Amazon Web Services Region specified in the request.</p> <p>With pagination, you can reduce the number of agents returned in a response. If you get a truncated list of agents in a response, the response contains a marker that you can specify in your next request to fetch the next page of agents.</p>",
     "ListLocations": "<p>Returns a list of source and destination locations.</p> <p>If you have more locations than are returned in a response (that is, the response returns only a truncated list of your agents), the response contains a token that you can specify in your next request to fetch the next page of locations.</p>",
     "ListTagsForResource": "<p>Returns all the tags associated with an Amazon Web Services resource.</p>",
     "ListTaskExecutions": "<p>Returns a list of executions for an DataSync transfer task.</p>",
@@ -137,9 +137,9 @@
     "AzureBlobAuthenticationType": {
       "base": null,
       "refs": {
-        "CreateLocationAzureBlobRequest$AuthenticationType": "<p>Specifies the authentication method DataSync uses to access your Azure Blob Storage. DataSync can access blob storage using a shared access signature (SAS).</p>",
-        "DescribeLocationAzureBlobResponse$AuthenticationType": "<p>The authentication method DataSync uses to access your Azure Blob Storage. DataSync can access blob storage using a shared access signature (SAS).</p>",
-        "UpdateLocationAzureBlobRequest$AuthenticationType": "<p>Specifies the authentication method DataSync uses to access your Azure Blob Storage. DataSync can access blob storage using a shared access signature (SAS).</p>"
+        "CreateLocationAzureBlobRequest$AuthenticationType": "<p>Specifies the authentication method DataSync uses to access your Azure Blob Storage. DataSync can access blob storage using a shared access signature (SAS) or an OpenID Connect (OIDC) token.</p>",
+        "DescribeLocationAzureBlobResponse$AuthenticationType": "<p>The authentication method DataSync uses to access your Azure Blob Storage. DataSync can access blob storage using a shared access signature (SAS) or an OpenID Connect (OIDC) token.</p>",
+        "UpdateLocationAzureBlobRequest$AuthenticationType": "<p>Specifies the authentication method DataSync uses to access your Azure Blob Storage. DataSync can access blob storage using a shared access signature (SAS) or an OpenID Connect (OIDC) token.</p>"
       }
     },
     "AzureBlobContainerUrl": {
@@ -174,6 +174,27 @@
         "CreateLocationAzureBlobRequest$BlobType": "<p>Specifies the type of blob that you want your objects or files to be when transferring them into Azure Blob Storage. Currently, DataSync only supports moving data into Azure Blob Storage as block blobs. For more information on blob types, see the <a href=\"https://learn.microsoft.com/en-us/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs\">Azure Blob Storage documentation</a>.</p>",
         "DescribeLocationAzureBlobResponse$BlobType": "<p>The type of blob that you want your objects or files to be when transferring them into Azure Blob Storage. Currently, DataSync only supports moving data into Azure Blob Storage as block blobs. For more information on blob types, see the <a href=\"https://learn.microsoft.com/en-us/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs\">Azure Blob Storage documentation</a>.</p>",
         "UpdateLocationAzureBlobRequest$BlobType": "<p>Specifies the type of blob that you want your objects or files to be when transferring them into Azure Blob Storage. Currently, DataSync only supports moving data into Azure Blob Storage as block blobs. For more information on blob types, see the <a href=\"https://learn.microsoft.com/en-us/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs\">Azure Blob Storage documentation</a>.</p>"
+      }
+    },
+    "AzureFederatedIdentityConfig": {
+      "base": "<p>Specifies federated identity parameters that allow DataSync to obtain an OpenID Connect token for access to customer Azure Blob Storage. The token allows for temporary, short-term access to the storage. DataSync automatically refreshes the token to assure uninterrupted access to the storage.</p> <note> <p>Federated identity parameters are an alternative to the <code>SasConfiguration</code> credentials that are expected to be valid long-term (e.g. at least for the duration of DataSync task execution). Do not specify federated identity and the SAS configuration for the same Azure Blob location. </p> </note>",
+      "refs": {
+        "CreateLocationAzureBlobRequest$FederatedIdentity": "<p>Specifies the federated identity configuration that allows DataSync to access your Azure Blob Storage using an OpenID Connect (OIDC) token instead of a shared access signature (SAS). Provide either <code>FederatedIdentity</code> or <code>SasConfiguration</code>, but not both.</p>",
+        "DescribeLocationAzureBlobResponse$FederatedIdentity": "<p>The federated identity configuration that DataSync uses to access your Azure Blob Storage using an OpenID Connect (OIDC) token.</p>",
+        "UpdateLocationAzureBlobRequest$FederatedIdentity": "<p>Specifies the federated identity configuration that allows DataSync to access your Azure Blob Storage using an OpenID Connect (OIDC) token instead of a shared access signature (SAS). Provide either <code>FederatedIdentity</code> or <code>SasConfiguration</code>, but not both.</p>"
+      }
+    },
+    "AzureGuidString": {
+      "base": null,
+      "refs": {
+        "AzureOidcConfig$TenantId": "<p>Azure tenant ID string.</p>",
+        "AzureOidcConfig$ClientId": "<p>Azure client ID string.</p>"
+      }
+    },
+    "AzureOidcConfig": {
+      "base": "<p>External identity parameters for Azure Blob Storage.</p>",
+      "refs": {
+        "AzureFederatedIdentityConfig$AzureOidc": "<p>External identity parameters for Azure Blob Storage.</p>"
       }
     },
     "BytesPerSecond": {
@@ -694,6 +715,19 @@
         "Options$Gid": "<p>Specifies the POSIX group ID (GID) of the file's owners.</p> <ul> <li> <p> <code>INT_VALUE</code> (default) - Preserves the integer value of user ID (UID) and GID, which is recommended.</p> </li> <li> <p> <code>NONE</code> - Ignores UID and GID.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/metadata-copied.html\">Understanding how DataSync handles file and object metadata</a>.</p>"
       }
     },
+    "GoogleIdentityFederationResourceString": {
+      "base": null,
+      "refs": {
+        "GoogleOidcConfig$IdentityPoolName": "<p>Human-readable pool name (e.g. \"my-pool\").</p>",
+        "GoogleOidcConfig$IdentityProviderName": "<p>Human-readable provider name (e.g. \"my-oidc-provider\").</p>"
+      }
+    },
+    "GoogleOidcConfig": {
+      "base": "<p>External identity parameters for Google Cloud Storage.</p>",
+      "refs": {
+        "ObjectStorageExternalIdentityConfig$GoogleOidc": "<p>External identity parameters for Google Cloud Storage.</p>"
+      }
+    },
     "HdfsAuthenticationType": {
       "base": null,
       "refs": {
@@ -774,8 +808,10 @@
     "IamRoleArn": {
       "base": null,
       "refs": {
+        "AzureFederatedIdentityConfig$AwsIamRole": "<p>Specifies the ARN for an Amazon Web Services role that allows DataSync to invoke STS GetWebIdentityToken API on behalf of the customer account and to obtain Amazon Web Services STS JWT (web token).</p>",
         "CreateLocationEfsRequest$FileSystemAccessRoleArn": "<p>Specifies an Identity and Access Management (IAM) role that allows DataSync to access your Amazon EFS file system.</p> <p>For information on creating this role, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-efs-location.html#create-efs-location-iam-role\">Creating a DataSync IAM role for file system access</a>.</p>",
         "DescribeLocationEfsResponse$FileSystemAccessRoleArn": "<p>The Identity and Access Management (IAM) role that allows DataSync to access your Amazon EFS file system.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-efs-location.html#create-efs-location-iam-role\">Creating a DataSync IAM role for file system access</a>.</p>",
+        "ObjectStorageFederatedIdentityConfig$AwsIamRole": "<p>Specifies the ARN for an Amazon Web Services role that allows DataSync to invoke STS GetWebIdentityToken API on behalf of the customer account and to obtain Amazon Web Services STS JWT (web token).</p>",
         "ReportDestinationS3$BucketAccessRoleArn": "<p>Specifies the Amazon Resource Name (ARN) of the IAM policy that allows DataSync to upload a task report to your S3 bucket. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/task-reports.html\">Allowing DataSync to upload a task report to an Amazon S3 bucket</a>.</p>",
         "S3Config$BucketAccessRoleArn": "<p>Specifies the ARN of the IAM role that DataSync uses to access your S3 bucket.</p>",
         "S3ManifestConfig$BucketAccessRoleArn": "<p>Specifies the Identity and Access Management (IAM) role that allows DataSync to access your manifest. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html#transferring-with-manifest-access\">Providing DataSync access to your manifest</a>.</p>"
@@ -1147,6 +1183,20 @@
         "UpdateLocationObjectStorageRequest$ServerCertificate": "<p>Specifies a certificate chain for DataSync to authenticate with your object storage system if the system uses a private or self-signed certificate authority (CA). You must specify a single <code>.pem</code> file with a full certificate chain (for example, <code>file:///home/user/.ssh/object_storage_certificates.pem</code>).</p> <p>The certificate chain might include:</p> <ul> <li> <p>The object storage system's certificate</p> </li> <li> <p>All intermediate certificates (if there are any)</p> </li> <li> <p>The root certificate of the signing CA</p> </li> </ul> <p>You can concatenate your certificates into a <code>.pem</code> file (which can be up to 32768 bytes before base64 encoding). The following example <code>cat</code> command creates an <code>object_storage_certificates.pem</code> file that includes three certificates:</p> <p> <code>cat object_server_certificate.pem intermediate_certificate.pem ca_root_certificate.pem &gt; object_storage_certificates.pem</code> </p> <p>To use this parameter, configure <code>ServerProtocol</code> to <code>HTTPS</code>.</p> <p>Updating this parameter doesn't interfere with tasks that you have in progress.</p>"
       }
     },
+    "ObjectStorageExternalIdentityConfig": {
+      "base": "<p>Specifies cloud-provider-specific external identity parameters used when exchanging the Amazon Web Services web token for an OpenID Connect token at the object storage provider.</p>",
+      "refs": {
+        "ObjectStorageFederatedIdentityConfig$ExternalIdentity": "<p>Specifies cloud-provider-specific external identity parameters used when exchanging the Amazon Web Services web token for an OpenID Connect token at the object storage provider.</p>"
+      }
+    },
+    "ObjectStorageFederatedIdentityConfig": {
+      "base": "<p>Specifies federated identity parameters that allow DataSync to obtain OpenID Connect token for access to customer object storage. The token allows for temporary, short-term access to the storage. DataSync automatically refreshes the token to assure uninterrupted access to the storage.</p> <note> <p>Federated identity parameters are an alternative to the <code>AccessKey</code>/<code>SecretKey</code> credentials that are expected to be valid long-term (e.g. at least for the duration of DataSync task execution). Do not specify federated identity and the key parameters for the same object storage location. </p> </note>",
+      "refs": {
+        "CreateLocationObjectStorageRequest$FederatedIdentity": "<p>Specifies the federated identity configuration that allows DataSync to access your object storage using an OpenID Connect (OIDC) token instead of a long-term access key and secret key. Provide either <code>FederatedIdentity</code> or the <code>AccessKey</code>/<code>SecretKey</code> credentials, but not both.</p>",
+        "DescribeLocationObjectStorageResponse$FederatedIdentity": "<p>The federated identity configuration that DataSync uses to access your object storage using an OpenID Connect (OIDC) token.</p>",
+        "UpdateLocationObjectStorageRequest$FederatedIdentity": "<p>Specifies the federated identity configuration that allows DataSync to access your object storage using an OpenID Connect (OIDC) token instead of a long-term access key and secret key. Provide either <code>FederatedIdentity</code> or the <code>AccessKey</code>/<code>SecretKey</code> credentials, but not both.</p>"
+      }
+    },
     "ObjectStorageSecretKey": {
       "base": null,
       "refs": {
@@ -1272,6 +1322,18 @@
       "base": "<p>Specifies how your DataSync agent connects to Amazon Web Services using a <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/choose-service-endpoint.html#choose-service-endpoint-vpc\">virtual private cloud (VPC) service endpoint</a>. An agent that uses a VPC endpoint isn't accessible over the public internet.</p>",
       "refs": {
         "DescribeAgentResponse$PrivateLinkConfig": "<p>The network configuration that the agent uses when connecting to a <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/choose-service-endpoint.html#choose-service-endpoint-vpc\">VPC service endpoint</a>.</p>"
+      }
+    },
+    "ProjectNameString": {
+      "base": null,
+      "refs": {
+        "GoogleOidcConfig$ProjectName": "<p>Human-readable project name (e.g. \"my-project\").</p>"
+      }
+    },
+    "ProjectNumberString": {
+      "base": null,
+      "refs": {
+        "GoogleOidcConfig$ProjectNumber": "<p>Numeric project ID as a string (e.g. \"123456789\").</p>"
       }
     },
     "QopConfiguration": {
@@ -1682,7 +1744,7 @@
     "TaskMode": {
       "base": null,
       "refs": {
-        "CreateTaskRequest$TaskMode": "<p>Specifies one of the following task modes for your data transfer:</p> <ul> <li> <p> <code>ENHANCED</code> - Transfer virtually unlimited numbers of objects with higher performance than Basic mode. Enhanced mode tasks optimize the data transfer process by listing, preparing, transferring, and verifying data in parallel. Enhanced mode is currently available for transfers between Amazon S3 locations, transfers between Azure Blob and Amazon S3 without an agent, and transfers between other clouds and Amazon S3 without an agent.</p> <note> <p>To create an Enhanced mode task, the IAM role that you use to call the <code>CreateTask</code> operation must have the <code>iam:CreateServiceLinkedRole</code> permission.</p> </note> </li> <li> <p> <code>BASIC</code> (default) - Transfer files or objects between Amazon Web Services storage and all other supported DataSync locations. Basic mode tasks are subject to <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/datasync-limits.html\">quotas</a> on the number of files, objects, and directories in a dataset. Basic mode sequentially prepares, transfers, and verifies data, making it slower than Enhanced mode for most workloads.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/choosing-task-mode.html#task-mode-differences\">Understanding task mode differences</a>.</p>",
+        "CreateTaskRequest$TaskMode": "<p>Specifies one of the following task modes for your data transfer:</p> <ul> <li> <p> <code>ENHANCED</code> - Transfer virtually unlimited numbers of objects with higher performance than Basic mode. Enhanced mode tasks optimize the data transfer process by listing, preparing, transferring, and verifying data in parallel. Enhanced mode is currently available for all transfers except those that use Amazon S3 on Outposts.</p> <note> <p>To create an Enhanced mode task, the IAM role that you use to call the <code>CreateTask</code> operation must have the <code>iam:CreateServiceLinkedRole</code> permission.</p> </note> </li> <li> <p> <code>BASIC</code> (default) - Transfer files or objects between Amazon Web Services storage and all other supported DataSync locations. Basic mode tasks are subject to <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/datasync-limits.html\">quotas</a> on the number of files, objects, and directories in a dataset. Basic mode sequentially prepares, transfers, and verifies data, making it slower than Enhanced mode for most workloads.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/choosing-task-mode.html#task-mode-differences\">Understanding task mode differences</a>.</p>",
         "DescribeTaskExecutionResponse$TaskMode": "<p>The task mode that you're using. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/choosing-task-mode.html\">Choosing a task mode for your data transfer</a>.</p>",
         "DescribeTaskResponse$TaskMode": "<p>The task mode that you're using. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/choosing-task-mode.html\">Choosing a task mode for your data transfer</a>.</p>",
         "TaskExecutionListEntry$TaskMode": "<p>The task mode that you're using. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/choosing-task-mode.html\">Choosing a task mode for your data transfer</a>.</p>",

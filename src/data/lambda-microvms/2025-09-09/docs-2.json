@@ -138,6 +138,7 @@
         "CreateMicrovmImageRequest$cpuConfigurations": "<p>The list of supported CPU configurations for the MicroVM.</p>",
         "CreateMicrovmImageResponse$cpuConfigurations": "<p>The list of supported CPU configurations for the MicroVM.</p>",
         "GetMicrovmImageVersionOutput$cpuConfigurations": "<p>The list of supported CPU configurations for the MicroVM.</p>",
+        "ManagedMicrovmImageVersion$supportedCpuConfigurations": "<p>CPU configurations supported by this managed base image version.</p>",
         "MicrovmImageVersionSummary$cpuConfigurations": "<p>The list of supported CPU configurations for the MicroVM.</p>",
         "UpdateMicrovmImageRequest$cpuConfigurations": "<p>The list of supported CPU configurations for the MicroVM.</p>",
         "UpdateMicrovmImageResponse$cpuConfigurations": "<p>The list of supported CPU configurations for the MicroVM.</p>",
@@ -165,7 +166,7 @@
     "CreateMicrovmImageRequestEgressNetworkConnectorsList": {
       "base": null,
       "refs": {
-        "CreateMicrovmImageRequest$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at runtime.</p>"
+        "CreateMicrovmImageRequest$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at image build time.</p>"
       }
     },
     "CreateMicrovmImageResponse": {
@@ -175,7 +176,7 @@
     "CreateMicrovmImageResponseEgressNetworkConnectorsList": {
       "base": null,
       "refs": {
-        "CreateMicrovmImageResponse$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at runtime.</p>"
+        "CreateMicrovmImageResponse$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at image build time.</p>"
       }
     },
     "CreateMicrovmShellAuthTokenRequest": {
@@ -253,7 +254,7 @@
     "GetMicrovmImageVersionOutputEgressNetworkConnectorsList": {
       "base": null,
       "refs": {
-        "GetMicrovmImageVersionOutput$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at runtime.</p>"
+        "GetMicrovmImageVersionOutput$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at image build time.</p>"
       }
     },
     "GetMicrovmRequest": {
@@ -656,7 +657,7 @@
     "MicrovmImageVersionSummaryEgressNetworkConnectorsList": {
       "base": null,
       "refs": {
-        "MicrovmImageVersionSummary$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at runtime.</p>"
+        "MicrovmImageVersionSummary$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at image build time.</p>"
       }
     },
     "MicrovmImageVersionSummaryList": {
@@ -702,11 +703,11 @@
       "base": null,
       "refs": {
         "GetMicrovmResponse$ingressNetworkConnectors": "<p>The list of ingress network connectors configured for the MicroVM.</p>",
-        "GetMicrovmResponse$egressNetworkConnectors": "<p>The list of egress network connectors configured for the MicroVM.</p>",
+        "GetMicrovmResponse$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at runtime.</p>",
         "RunMicrovmRequest$ingressNetworkConnectors": "<p>The list of ingress network connectors to configure for the MicroVM.</p>",
-        "RunMicrovmRequest$egressNetworkConnectors": "<p>The list of egress network connectors to configure for the MicroVM.</p>",
+        "RunMicrovmRequest$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at runtime.</p>",
         "RunMicrovmResponse$ingressNetworkConnectors": "<p>The list of ingress network connectors configured for the MicroVM.</p>",
-        "RunMicrovmResponse$egressNetworkConnectors": "<p>The list of egress network connectors configured for the MicroVM.</p>"
+        "RunMicrovmResponse$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at runtime.</p>"
       }
     },
     "NonBlankString": {
@@ -1069,7 +1070,7 @@
     "UpdateMicrovmImageRequestEgressNetworkConnectorsList": {
       "base": null,
       "refs": {
-        "UpdateMicrovmImageRequest$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at runtime.</p>"
+        "UpdateMicrovmImageRequest$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at image build time.</p>"
       }
     },
     "UpdateMicrovmImageResponse": {
@@ -1079,7 +1080,7 @@
     "UpdateMicrovmImageResponseEgressNetworkConnectorsList": {
       "base": null,
       "refs": {
-        "UpdateMicrovmImageResponse$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at runtime.</p>"
+        "UpdateMicrovmImageResponse$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at image build time.</p>"
       }
     },
     "UpdateMicrovmImageVersionRequest": {
@@ -1093,7 +1094,7 @@
     "UpdateMicrovmImageVersionResponseEgressNetworkConnectorsList": {
       "base": null,
       "refs": {
-        "UpdateMicrovmImageVersionResponse$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at runtime.</p>"
+        "UpdateMicrovmImageVersionResponse$egressNetworkConnectors": "<p>The list of egress network connectors available to the MicroVM at image build time.</p>"
       }
     },
     "ValidationException": {

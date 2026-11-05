@@ -3059,6 +3059,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeRefreshSchedule(array{AwsAccountId?: string, DataSetId?: string, ScheduleId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeRefreshScheduleAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeRefreshScheduleAsync(array{AwsAccountId?: string, DataSetId?: string, ScheduleId?: string, ...} $args = [])
+ * @method \Aws\Result describeResourcePermissions(array $args = [])
+ * @phpstan-method \Aws\Result describeResourcePermissions(array{AwsAccountId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeResourcePermissionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeResourcePermissionsAsync(array{AwsAccountId?: string, ...} $args = [])
  * @method \Aws\Result describeRoleCustomPermission(array $args = [])
  * @phpstan-method \Aws\Result describeRoleCustomPermission(array{
  *     Role?: 'ADMIN'|'ADMIN_PRO'|'AUTHOR'|'AUTHOR_PRO'|'READER'|'READER_PRO',
@@ -6543,6 +6547,20 @@ use Aws\AwsClient;
  *         Arn?: string,
  *         ...,
  *     },
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateResourcePermissions(array $args = [])
+ * @phpstan-method \Aws\Result updateResourcePermissions(array{
+ *     AwsAccountId?: string,
+ *     RoleType?: 'CUSTOMER_MANAGED'|'QUICKSIGHT_MANAGED',
+ *     CustomerManagedRoleArn?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateResourcePermissionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateResourcePermissionsAsync(array{
+ *     AwsAccountId?: string,
+ *     RoleType?: 'CUSTOMER_MANAGED'|'QUICKSIGHT_MANAGED',
+ *     CustomerManagedRoleArn?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateRoleCustomPermission(array $args = [])

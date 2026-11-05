@@ -18,6 +18,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionAccount(array $args = [])
  * @method \Aws\AccountAccess\AccountAccessClient createAccountAccess(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAccountAccess(array $args = [])
+ * @method \Aws\AccountAccessRuntime\AccountAccessRuntimeClient createAccountAccessRuntime(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAccountAccessRuntime(array $args = [])
  * @method \Aws\Acm\AcmClient createAcm(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAcm(array $args = [])
  * @method \Aws\AgentRegistry\AgentRegistryClient createAgentRegistry(array $args = [])

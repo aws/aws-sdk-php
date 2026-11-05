@@ -768,7 +768,8 @@
       "type":"string",
       "enum":[
         "SAS",
-        "NONE"
+        "NONE",
+        "OIDC"
       ]
     },
     "AzureBlobContainerUrl":{
@@ -798,6 +799,30 @@
     "AzureBlobType":{
       "type":"string",
       "enum":["BLOCK"]
+    },
+    "AzureFederatedIdentityConfig":{
+      "type":"structure",
+      "members":{
+        "AwsIamRole":{"shape":"IamRoleArn"},
+        "AzureOidc":{"shape":"AzureOidcConfig"}
+      }
+    },
+    "AzureGuidString":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "AzureOidcConfig":{
+      "type":"structure",
+      "required":[
+        "TenantId",
+        "ClientId"
+      ],
+      "members":{
+        "TenantId":{"shape":"AzureGuidString"},
+        "ClientId":{"shape":"AzureGuidString"}
+      }
     },
     "BytesPerSecond":{
       "type":"long",
@@ -849,6 +874,7 @@
         "ContainerUrl":{"shape":"AzureBlobContainerUrl"},
         "AuthenticationType":{"shape":"AzureBlobAuthenticationType"},
         "SasConfiguration":{"shape":"AzureBlobSasConfiguration"},
+        "FederatedIdentity":{"shape":"AzureFederatedIdentityConfig"},
         "BlobType":{"shape":"AzureBlobType"},
         "AccessTier":{"shape":"AzureAccessTier"},
         "Subdirectory":{"shape":"AzureBlobSubdirectory"},
@@ -1038,6 +1064,7 @@
         "BucketName":{"shape":"ObjectStorageBucketName"},
         "AccessKey":{"shape":"ObjectStorageAccessKey"},
         "SecretKey":{"shape":"ObjectStorageSecretKey"},
+        "FederatedIdentity":{"shape":"ObjectStorageFederatedIdentityConfig"},
         "AgentArns":{"shape":"AgentArnList"},
         "Tags":{"shape":"InputTagList"},
         "ServerCertificate":{"shape":"ObjectStorageCertificate"},
@@ -1203,6 +1230,7 @@
         "LocationArn":{"shape":"LocationArn"},
         "LocationUri":{"shape":"LocationUri"},
         "AuthenticationType":{"shape":"AzureBlobAuthenticationType"},
+        "FederatedIdentity":{"shape":"AzureFederatedIdentityConfig"},
         "BlobType":{"shape":"AzureBlobType"},
         "AccessTier":{"shape":"AzureAccessTier"},
         "AgentArns":{"shape":"AgentArnList"},
@@ -1361,6 +1389,7 @@
         "LocationArn":{"shape":"LocationArn"},
         "LocationUri":{"shape":"LocationUri"},
         "AccessKey":{"shape":"ObjectStorageAccessKey"},
+        "FederatedIdentity":{"shape":"ObjectStorageFederatedIdentityConfig"},
         "ServerPort":{"shape":"ObjectStorageServerPort"},
         "ServerProtocol":{"shape":"ObjectStorageServerProtocol"},
         "AgentArns":{"shape":"AgentArnList"},
@@ -1681,6 +1710,27 @@
         "NAME",
         "BOTH"
       ]
+    },
+    "GoogleIdentityFederationResourceString":{
+      "type":"string",
+      "max":32,
+      "min":4,
+      "pattern":"^(?!gcp-)[a-z][a-z0-9-]{2,30}[a-z0-9]$"
+    },
+    "GoogleOidcConfig":{
+      "type":"structure",
+      "required":[
+        "ProjectName",
+        "ProjectNumber",
+        "IdentityPoolName",
+        "IdentityProviderName"
+      ],
+      "members":{
+        "ProjectName":{"shape":"ProjectNameString"},
+        "ProjectNumber":{"shape":"ProjectNumberString"},
+        "IdentityPoolName":{"shape":"GoogleIdentityFederationResourceString"},
+        "IdentityProviderName":{"shape":"GoogleIdentityFederationResourceString"}
+      }
     },
     "HdfsAuthenticationType":{
       "type":"string",
@@ -2043,6 +2093,19 @@
       "type":"blob",
       "max":32768
     },
+    "ObjectStorageExternalIdentityConfig":{
+      "type":"structure",
+      "members":{
+        "GoogleOidc":{"shape":"GoogleOidcConfig"}
+      }
+    },
+    "ObjectStorageFederatedIdentityConfig":{
+      "type":"structure",
+      "members":{
+        "AwsIamRole":{"shape":"IamRoleArn"},
+        "ExternalIdentity":{"shape":"ObjectStorageExternalIdentityConfig"}
+      }
+    },
     "ObjectStorageSecretKey":{
       "type":"string",
       "max":200,
@@ -2188,6 +2251,18 @@
         "SubnetArns":{"shape":"PLSubnetArnList"},
         "SecurityGroupArns":{"shape":"PLSecurityGroupArnList"}
       }
+    },
+    "ProjectNameString":{
+      "type":"string",
+      "max":30,
+      "min":6,
+      "pattern":"^[a-z][a-z0-9-]{4,28}[a-z0-9]$"
+    },
+    "ProjectNumberString":{
+      "type":"string",
+      "max":20,
+      "min":1,
+      "pattern":"^[0-9]+$"
     },
     "QopConfiguration":{
       "type":"structure",
@@ -2695,6 +2770,7 @@
         "Subdirectory":{"shape":"AzureBlobSubdirectory"},
         "AuthenticationType":{"shape":"AzureBlobAuthenticationType"},
         "SasConfiguration":{"shape":"AzureBlobSasConfiguration"},
+        "FederatedIdentity":{"shape":"AzureFederatedIdentityConfig"},
         "BlobType":{"shape":"AzureBlobType"},
         "AccessTier":{"shape":"AzureAccessTier"},
         "AgentArns":{"shape":"AgentArnList"},
@@ -2827,6 +2903,7 @@
         "ServerHostname":{"shape":"ServerHostname"},
         "AccessKey":{"shape":"ObjectStorageAccessKey"},
         "SecretKey":{"shape":"ObjectStorageSecretKey"},
+        "FederatedIdentity":{"shape":"ObjectStorageFederatedIdentityConfig"},
         "AgentArns":{"shape":"AgentArnList"},
         "ServerCertificate":{"shape":"ObjectStorageCertificate"},
         "CmkSecretConfig":{"shape":"CmkSecretConfig"},
