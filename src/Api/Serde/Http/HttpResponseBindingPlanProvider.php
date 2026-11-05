@@ -145,8 +145,16 @@ final class HttpResponseBindingPlanProvider
         }
 
         $definition = $member['member'];
-        if (!is_array($definition)
-            || (!isset($definition['shape']) && !isset($definition['type']))
+        if (!is_array($definition)) {
+            return null;
+        }
+
+        if (isset($definition['shape'])) {
+            if (!is_string($definition['shape'])) {
+                return null;
+            }
+        } elseif (!isset($definition['type'])
+            || !is_string($definition['type'])
         ) {
             return null;
         }
