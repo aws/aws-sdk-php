@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.403.0 - 2026-11-05
 
 * `Aws\AgentRegistryControl` - Adds support for OAuth2 Authorization Server Metadata (RFC 8414) discovery URLs in custom JWT authorizer.
 * `Aws\QConnect` - Adds support for real-time agent assistance and self-service with Amazon Connect Global Resiliency, including cross-Region replication of supported AI agent resources and configurations.
