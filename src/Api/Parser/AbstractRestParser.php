@@ -75,7 +75,11 @@ abstract class AbstractRestParser extends AbstractParser
                 );
                 break;
             case HttpResponseBindingPlan::PAYLOAD_RAW:
-                $result[$plan->payloadName] = $response->getBody();
+                $body = $response->getBody();
+                $response = AbstractParser::getResponseWithCachingStream(
+                    $response
+                );
+                $result[$plan->payloadName] = $body;
                 break;
             case HttpResponseBindingPlan::PAYLOAD_STRUCTURE:
                 $response = AbstractParser::getResponseWithCachingStream(
