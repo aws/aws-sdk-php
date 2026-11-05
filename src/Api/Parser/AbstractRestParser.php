@@ -130,6 +130,14 @@ abstract class AbstractRestParser extends AbstractParser
                         $result
                     );
                     break;
+                case HttpResponseBindingPlan::PREFIX_HEADERS_SHAPE:
+                    $this->extractHeaders(
+                        $binding[HttpResponseBindingPlan::B_NAME],
+                        $binding[HttpResponseBindingPlan::P_SHAPE],
+                        $response,
+                        $result
+                    );
+                    break;
                 case HttpResponseBindingPlan::STATUS_CODE:
                     $result[$binding[HttpResponseBindingPlan::B_NAME]] =
                         (int) $response->getStatusCode();

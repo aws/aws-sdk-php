@@ -74,12 +74,20 @@ final class HttpResponseBindingPlanProvider
                     break;
                 case 'headers':
                     $prefix = $member['locationName'];
-                    $plan->bindings[] = [
-                        HttpResponseBindingPlan::PREFIX_HEADERS,
-                        $name,
-                        $prefix,
-                        $prefix !== null ? strlen($prefix) : 0,
-                    ];
+                    if ($prefix === null || is_string($prefix)) {
+                        $plan->bindings[] = [
+                            HttpResponseBindingPlan::PREFIX_HEADERS,
+                            $name,
+                            $prefix,
+                            $prefix !== null ? strlen($prefix) : 0,
+                        ];
+                    } else {
+                        $plan->bindings[] = [
+                            HttpResponseBindingPlan::PREFIX_HEADERS_SHAPE,
+                            $name,
+                            $member,
+                        ];
+                    }
                     break;
                 case 'statusCode':
                     $plan->bindings[] = [

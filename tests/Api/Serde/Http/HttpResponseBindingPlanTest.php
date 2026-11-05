@@ -66,6 +66,13 @@ class HttpResponseBindingPlanTest extends TestCase
                     'location' => 'header',
                     'member' => [],
                 ],
+                'ColdMetadata' => [
+                    'type' => 'map',
+                    'location' => 'headers',
+                    'locationName' => [],
+                    'key' => ['type' => 'string'],
+                    'value' => ['type' => 'string'],
+                ],
                 'Metadata' => [
                     'type' => 'map',
                     'location' => 'headers',
@@ -87,7 +94,8 @@ class HttpResponseBindingPlanTest extends TestCase
         $plan = $this->withoutWarnings(
             fn() => (new HttpResponseBindingPlanProvider())->get($operation)
         );
-        $coldShape = $operation->getOutput()->getMember('ColdList');
+        $coldHeaderShape = $operation->getOutput()->getMember('ColdList');
+        $coldPrefixShape = $operation->getOutput()->getMember('ColdMetadata');
         $expected = [
             [Plan::HEADER, 'Header', 'Header', Plan::CONVERT_NONE, null],
             [Plan::HEADER, 'Float', 'Float', Plan::CONVERT_FLOAT, null],
@@ -116,7 +124,8 @@ class HttpResponseBindingPlanTest extends TestCase
                 Plan::CONVERT_NONE,
                 null,
             ],
-            [Plan::HEADER_SHAPE, 'ColdList', $coldShape],
+            [Plan::HEADER_SHAPE, 'ColdList', $coldHeaderShape],
+            [Plan::PREFIX_HEADERS_SHAPE, 'ColdMetadata', $coldPrefixShape],
             [Plan::PREFIX_HEADERS, 'Metadata', 'x-meta-', 7],
             [Plan::PREFIX_HEADERS, 'AllHeaders', null, 0],
             [Plan::STATUS_CODE, 'Status'],
@@ -135,10 +144,16 @@ class HttpResponseBindingPlanTest extends TestCase
                 Plan::PREFIX_HEADERS => 4,
                 Plan::STATUS_CODE => 2,
                 Plan::HEADER_SHAPE => 3,
+                Plan::PREFIX_HEADERS_SHAPE => 3,
             ][$tag], $binding);
 
             foreach ($binding as $value) {
-                if ($tag === Plan::HEADER_SHAPE && $value === $binding[Plan::H_SHAPE]) {
+                $shapeIndex = match ($tag) {
+                    Plan::HEADER_SHAPE => Plan::H_SHAPE,
+                    Plan::PREFIX_HEADERS_SHAPE => Plan::P_SHAPE,
+                    default => null,
+                };
+                if ($shapeIndex !== null && $value === $binding[$shapeIndex]) {
                     $this->assertInstanceOf(Shape::class, $value);
                 } else {
                     $this->assertNotInstanceOf(Shape::class, $value);
@@ -534,6 +549,130 @@ class HttpResponseBindingPlanTest extends TestCase
                 'Using null as an array offset is deprecated, use an empty string instead',
             ],
         ], $diagnostics);
+    }
+
+    #[DataProvider('malformedPrefixBodyProvider')]
+    public function testMalformedPrefixRunsAfterImplicitBodyHandling(
+        string $bodyContents,
+        bool $knownSize,
+        bool $seekable,
+        string $expectedExceptionClass,
+        string $expectedExceptionMessage
+    ): void
+    {
+        $body = Utils::streamFor($bodyContents);
+        $overrides = [];
+        if (!$knownSize) {
+            $overrides['getSize'] = static function (): ?int {
+                return null;
+            };
+        }
+        if (!$seekable) {
+            $overrides['isSeekable'] = static function (): bool {
+                return false;
+            };
+            $overrides['seek'] = static function (): void {
+                throw new \RuntimeException('Cannot seek');
+            };
+            $overrides['rewind'] = static function (): void {
+                throw new \RuntimeException('Cannot rewind');
+            };
+        }
+        if ($overrides) {
+            $body = FnStream::decorate($body, $overrides);
+        }
+
+        $output = [
+            'type' => 'structure',
+            'members' => [
+                'Body' => ['type' => 'string'],
+                'Metadata' => [
+                    'type' => 'map',
+                    'location' => 'headers',
+                    'locationName' => [],
+                    'key' => ['type' => 'string'],
+                    'value' => ['type' => 'string'],
+                ],
+            ],
+        ];
+        $service = $this->service('rest-json', $output);
+        $parser = new RestJsonParser($service);
+        $diagnostics = [];
+        $exception = null;
+
+        set_error_handler(static function (
+            $severity,
+            $message
+        ) use (&$diagnostics): bool {
+            $diagnostics[] = [$severity, $message];
+            return true;
+        });
+        try {
+            try {
+                $parser(new Command('Op'), new Response(200, [], $body));
+            } catch (\Throwable $e) {
+                $exception = $e;
+            }
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertInstanceOf($expectedExceptionClass, $exception);
+        $this->assertSame($expectedExceptionMessage, $exception->getMessage());
+        $this->assertSame([], $diagnostics);
+        $this->assertSame(strlen($bodyContents), $body->tell());
+        if ($bodyContents !== '') {
+            $this->assertTrue($body->eof());
+        }
+
+        $plan = $service->getOperation('Op')->getSerdePlan(
+            ShapePlanCache::HTTP_RESPONSE_BINDINGS
+        );
+        $this->assertSame(
+            [[
+                Plan::PREFIX_HEADERS_SHAPE,
+                'Metadata',
+                $service->getOperation('Op')->getOutput()->getMember('Metadata'),
+            ]],
+            $plan->bindings
+        );
+    }
+
+    public static function malformedPrefixBodyProvider(): iterable
+    {
+        $valid = '{"Body":"value"}';
+        $invalid = '{';
+        $prefixMessage = 'strlen(): Argument #1 ($string) must be of type string, array given';
+        $jsonMessage = 'Error parsing JSON: Syntax error';
+
+        foreach ([true, false] as $knownSize) {
+            foreach ([true, false] as $seekable) {
+                $stream = ($knownSize ? 'known' : 'unknown')
+                    . ($seekable ? '-seekable' : '-nonseekable');
+                yield "valid $stream" => [
+                    $valid,
+                    $knownSize,
+                    $seekable,
+                    \TypeError::class,
+                    $prefixMessage,
+                ];
+                yield "invalid $stream" => [
+                    $invalid,
+                    $knownSize,
+                    $seekable,
+                    \Aws\Api\Parser\Exception\ParserException::class,
+                    $jsonMessage,
+                ];
+            }
+        }
+
+        yield 'empty body still reaches unused malformed prefix' => [
+            '',
+            true,
+            true,
+            \TypeError::class,
+            $prefixMessage,
+        ];
     }
 
     public function testColdImplicitMalformedOutputConsumesUnknownSizeBodyBeforeFailing(): void

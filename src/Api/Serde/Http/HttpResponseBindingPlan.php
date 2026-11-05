@@ -19,10 +19,11 @@ use Aws\Api\StructureShape;
 final class HttpResponseBindingPlan
 {
     // Binding tags (B_TAG).
-    public const HEADER         = 0;
-    public const PREFIX_HEADERS = 1;
-    public const STATUS_CODE    = 2;
-    public const HEADER_SHAPE   = 3; // cold path: legacy exact-header logic
+    public const HEADER               = 0;
+    public const PREFIX_HEADERS       = 1;
+    public const STATUS_CODE          = 2;
+    public const HEADER_SHAPE         = 3; // cold path: legacy exact-header logic
+    public const PREFIX_HEADERS_SHAPE = 4; // cold path: legacy prefix-header logic
 
     // Exact-header value conversions (H_CONVERT).
     public const CONVERT_NONE         = 0;
@@ -49,6 +50,9 @@ final class HttpResponseBindingPlan
     // PREFIX_HEADERS descriptor: [tag, SDK name, prefix, prefix length].
     public const P_PREFIX     = 2;
     public const P_PREFIX_LEN = 3;
+
+    // PREFIX_HEADERS_SHAPE descriptor: [tag, SDK name, member Shape].
+    public const P_SHAPE = 2;
 
     // Payload kinds.
     public const PAYLOAD_IMPLICIT     = 0;
