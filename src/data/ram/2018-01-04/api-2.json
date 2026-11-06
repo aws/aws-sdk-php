@@ -116,7 +116,8 @@
         {"shape":"MalformedArnException"},
         {"shape":"InvalidClientTokenException"},
         {"shape":"IdempotentParameterMismatchException"},
-        {"shape":"PermissionVersionsLimitExceededException"}
+        {"shape":"PermissionVersionsLimitExceededException"},
+        {"shape":"OperationNotPermittedException"}
       ]
     },
     "CreateResourceShare":{
@@ -647,6 +648,26 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "UpdatePermission":{
+      "name":"UpdatePermission",
+      "http":{
+        "method":"POST",
+        "requestUri":"/updatepermission"
+      },
+      "input":{"shape":"UpdatePermissionRequest"},
+      "output":{"shape":"UpdatePermissionResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"MalformedArnException"},
+        {"shape":"ServerInternalException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnknownResourceException"},
+        {"shape":"InvalidClientTokenException"},
+        {"shape":"IdempotentParameterMismatchException"},
+        {"shape":"PermissionLimitExceededException"}
+      ]
+    },
     "UpdateResourceShare":{
       "name":"UpdateResourceShare",
       "http":{
@@ -693,6 +714,7 @@
       "members":{
         "resourceShareArn":{"shape":"String"},
         "permissionArn":{"shape":"String"},
+        "permissionTemplateParameters":{"shape":"PermissionTemplateParameterInputList"},
         "replace":{"shape":"Boolean"},
         "clientToken":{"shape":"String"},
         "permissionVersion":{"shape":"Integer"}
@@ -733,7 +755,8 @@
         "status":{"shape":"String"},
         "featureSet":{"shape":"PermissionFeatureSet"},
         "lastUpdatedTime":{"shape":"DateTime"},
-        "resourceShareArn":{"shape":"String"}
+        "resourceShareArn":{"shape":"String"},
+        "permissionTemplateParameters":{"shape":"PermissionTemplateParameterList"}
       }
     },
     "AssociatedPermissionList":{
@@ -768,6 +791,7 @@
         "name":{"shape":"PermissionName"},
         "resourceType":{"shape":"String"},
         "policyTemplate":{"shape":"Policy"},
+        "permissionTemplateParameters":{"shape":"PermissionTemplateParameterDeclarationList"},
         "clientToken":{"shape":"String"},
         "tags":{"shape":"TagList"}
       }
@@ -788,6 +812,7 @@
       "members":{
         "permissionArn":{"shape":"String"},
         "policyTemplate":{"shape":"Policy"},
+        "permissionTemplateParameters":{"shape":"PermissionTemplateParameterDeclarationList"},
         "clientToken":{"shape":"String"}
       }
     },
@@ -810,6 +835,7 @@
         "clientToken":{"shape":"String"},
         "permissionArns":{"shape":"PermissionArnList"},
         "sources":{"shape":"SourceArnOrAccountList"},
+        "permissionTemplateParameters":{"shape":"PermissionArnAndTemplateParametersList"},
         "resourceShareConfiguration":{"shape":"ResourceShareConfiguration"}
       }
     },
@@ -952,7 +978,8 @@
       "required":["permissionArn"],
       "members":{
         "permissionArn":{"shape":"String"},
-        "permissionVersion":{"shape":"Integer"}
+        "permissionVersion":{"shape":"Integer"},
+        "permissionTemplateParameters":{"shape":"PermissionTemplateParameterInputList"}
       }
     },
     "GetPermissionResponse":{
@@ -1135,6 +1162,8 @@
         "resourceType":{"shape":"String"},
         "featureSet":{"shape":"PermissionFeatureSet"},
         "defaultVersion":{"shape":"Boolean"},
+        "resourceOwner":{"shape":"ResourceOwner"},
+        "resourceShareArn":{"shape":"String"},
         "nextToken":{"shape":"String"},
         "maxResults":{"shape":"MaxResults"}
       }
@@ -1166,9 +1195,11 @@
       "type":"structure",
       "members":{
         "resourceType":{"shape":"String"},
+        "resourceOwner":{"shape":"ResourceOwner"},
         "nextToken":{"shape":"String"},
         "maxResults":{"shape":"MaxResults"},
-        "permissionType":{"shape":"PermissionTypeFilter"}
+        "permissionType":{"shape":"PermissionTypeFilter"},
+        "permissionStatus":{"shape":"PermissionStatus"}
       }
     },
     "ListPermissionsResponse":{
@@ -1334,6 +1365,17 @@
       "error":{"httpStatusCode":409},
       "exception":true
     },
+    "PermissionArnAndTemplateParameters":{
+      "type":"structure",
+      "members":{
+        "permissionArn":{"shape":"String"},
+        "permissionTemplateParameters":{"shape":"PermissionTemplateParameterInputList"}
+      }
+    },
+    "PermissionArnAndTemplateParametersList":{
+      "type":"list",
+      "member":{"shape":"PermissionArnAndTemplateParameters"}
+    },
     "PermissionArnList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -1367,8 +1409,57 @@
         "ATTACHABLE",
         "UNATTACHABLE",
         "DELETING",
-        "DELETED"
+        "DELETED",
+        "DEPRECATED"
       ]
+    },
+    "PermissionTemplateParameter":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"String"},
+        "type":{"shape":"PermissionTemplateParameterType"},
+        "description":{"shape":"String"},
+        "values":{"shape":"PermissionTemplateParameterValueList"}
+      }
+    },
+    "PermissionTemplateParameterDeclaration":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"String"},
+        "type":{"shape":"PermissionTemplateParameterType"},
+        "description":{"shape":"String"}
+      }
+    },
+    "PermissionTemplateParameterDeclarationList":{
+      "type":"list",
+      "member":{"shape":"PermissionTemplateParameterDeclaration"},
+      "max":100
+    },
+    "PermissionTemplateParameterInput":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"String"},
+        "values":{"shape":"PermissionTemplateParameterValueList"}
+      }
+    },
+    "PermissionTemplateParameterInputList":{
+      "type":"list",
+      "member":{"shape":"PermissionTemplateParameterInput"}
+    },
+    "PermissionTemplateParameterList":{
+      "type":"list",
+      "member":{"shape":"PermissionTemplateParameter"}
+    },
+    "PermissionTemplateParameterType":{
+      "type":"string",
+      "enum":[
+        "STRING",
+        "STRING_LIST"
+      ]
+    },
+    "PermissionTemplateParameterValueList":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "PermissionType":{
       "type":"string",
@@ -1478,6 +1569,7 @@
         "fromPermissionArn":{"shape":"String"},
         "fromPermissionVersion":{"shape":"Integer"},
         "toPermissionArn":{"shape":"String"},
+        "permissionTemplateParameters":{"shape":"PermissionTemplateParameterInputList"},
         "clientToken":{"shape":"String"}
       }
     },
@@ -1496,6 +1588,7 @@
         "fromPermissionVersion":{"shape":"String"},
         "toPermissionArn":{"shape":"String"},
         "toPermissionVersion":{"shape":"String"},
+        "permissionTemplateParameters":{"shape":"PermissionTemplateParameterList"},
         "status":{"shape":"ReplacePermissionAssociationsWorkStatus"},
         "statusMessage":{"shape":"String"},
         "creationTime":{"shape":"DateTime"},
@@ -1737,13 +1830,15 @@
         "name":{"shape":"String"},
         "resourceType":{"shape":"String"},
         "permission":{"shape":"String"},
+        "permissionTemplateParameters":{"shape":"PermissionTemplateParameterDeclarationList"},
         "creationTime":{"shape":"DateTime"},
         "lastUpdatedTime":{"shape":"DateTime"},
         "isResourceTypeDefault":{"shape":"Boolean"},
         "permissionType":{"shape":"PermissionType"},
         "featureSet":{"shape":"PermissionFeatureSet"},
         "status":{"shape":"PermissionStatus"},
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "resourceOwner":{"shape":"ResourceOwner"}
       }
     },
     "ResourceSharePermissionList":{
@@ -1764,7 +1859,9 @@
         "isResourceTypeDefault":{"shape":"Boolean"},
         "permissionType":{"shape":"PermissionType"},
         "featureSet":{"shape":"PermissionFeatureSet"},
-        "tags":{"shape":"TagList"}
+        "permissionTemplateParameters":{"shape":"PermissionTemplateParameterList"},
+        "tags":{"shape":"TagList"},
+        "resourceOwner":{"shape":"ResourceOwner"}
       }
     },
     "ResourceShareStatus":{
@@ -1943,6 +2040,32 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{}
+    },
+    "UpdatePermissionRequest":{
+      "type":"structure",
+      "required":[
+        "permissionArn",
+        "status"
+      ],
+      "members":{
+        "permissionArn":{"shape":"String"},
+        "status":{"shape":"UpdatePermissionStatus"},
+        "clientToken":{"shape":"String"}
+      }
+    },
+    "UpdatePermissionResponse":{
+      "type":"structure",
+      "members":{
+        "clientToken":{"shape":"String"},
+        "permissionStatus":{"shape":"UpdatePermissionStatus"}
+      }
+    },
+    "UpdatePermissionStatus":{
+      "type":"string",
+      "enum":[
+        "ATTACHABLE",
+        "DEPRECATED"
+      ]
     },
     "UpdateResourceShareRequest":{
       "type":"structure",

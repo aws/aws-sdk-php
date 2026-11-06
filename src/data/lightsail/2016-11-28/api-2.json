@@ -3004,7 +3004,7 @@
       "type":"structure",
       "members":{
         "accessKeyId":{"shape":"IAMAccessKeyId"},
-        "secretAccessKey":{"shape":"NonEmptyString"},
+        "secretAccessKey":{"shape":"SensitiveNonEmptyString"},
         "status":{"shape":"StatusType"},
         "createdAt":{"shape":"IsoDate"},
         "lastUsed":{"shape":"AccessKeyLastUsed"}
@@ -3921,7 +3921,7 @@
       "type":"structure",
       "members":{
         "username":{"shape":"string"},
-        "password":{"shape":"string"},
+        "password":{"shape":"SensitiveString"},
         "expiresAt":{"shape":"IsoDate"},
         "registry":{"shape":"string"}
       }
@@ -4375,7 +4375,7 @@
       "members":{
         "keyPair":{"shape":"KeyPair"},
         "publicKeyBase64":{"shape":"Base64"},
-        "privateKeyBase64":{"shape":"Base64"},
+        "privateKeyBase64":{"shape":"SensitiveBase64"},
         "operation":{"shape":"Operation"}
       }
     },
@@ -5105,7 +5105,7 @@
       "type":"structure",
       "members":{
         "publicKeyBase64":{"shape":"Base64"},
-        "privateKeyBase64":{"shape":"Base64"},
+        "privateKeyBase64":{"shape":"SensitiveBase64"},
         "createdAt":{"shape":"IsoDate"}
       }
     },
@@ -6351,9 +6351,9 @@
         "expiresAt":{"shape":"IsoDate"},
         "ipAddress":{"shape":"IpAddress"},
         "ipv6Addresses":{"shape":"Ipv6AddressList"},
-        "password":{"shape":"string"},
+        "password":{"shape":"SensitiveString"},
         "passwordData":{"shape":"PasswordData"},
-        "privateKey":{"shape":"string"},
+        "privateKey":{"shape":"SensitiveString"},
         "protocol":{"shape":"InstanceAccessProtocol"},
         "instanceName":{"shape":"ResourceName"},
         "username":{"shape":"string"},
@@ -7329,7 +7329,7 @@
     "PasswordData":{
       "type":"structure",
       "members":{
-        "ciphertext":{"shape":"string"},
+        "ciphertext":{"shape":"SensitiveString"},
         "keyPairName":{"shape":"ResourceName"}
       }
     },
@@ -7358,7 +7358,7 @@
     "PendingModifiedRelationalDatabaseValues":{
       "type":"structure",
       "members":{
-        "masterUserPassword":{"shape":"string"},
+        "masterUserPassword":{"shape":"SensitiveString"},
         "engineVersion":{"shape":"string"},
         "backupRetentionEnabled":{"shape":"boolean"}
       }
@@ -7927,6 +7927,10 @@
       "members":{
         "operations":{"shape":"OperationList"}
       }
+    },
+    "SensitiveBase64":{
+      "type":"string",
+      "sensitive":true
     },
     "SensitiveNonEmptyString":{
       "type":"string",

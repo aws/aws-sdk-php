@@ -14,6 +14,26 @@
     "uid":"connectcases-2022-10-03"
   },
   "operations":{
+    "BatchCreateRelatedItem":{
+      "name":"BatchCreateRelatedItem",
+      "http":{
+        "method":"POST",
+        "requestUri":"/cases:batchCreateRelatedItem",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchCreateRelatedItemRequest"},
+      "output":{"shape":"BatchCreateRelatedItemResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
     "BatchGetCaseRule":{
       "name":"BatchGetCaseRule",
       "http":{
@@ -66,6 +86,25 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
+    "BatchUpdateCase":{
+      "name":"BatchUpdateCase",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/cases:batchUpdateCase",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchUpdateCaseRequest"},
+      "output":{"shape":"BatchUpdateCaseResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -920,6 +959,87 @@
         "moreInfo":{"shape":"LayoutSections"}
       }
     },
+    "BatchCreateRelatedItemErrorEntry":{
+      "type":"structure",
+      "required":[
+        "caseIdentifier",
+        "errorCode",
+        "errorMessage"
+      ],
+      "members":{
+        "caseIdentifier":{"shape":"CaseIdentifier"},
+        "errorCode":{"shape":"String"},
+        "errorMessage":{"shape":"String"}
+      }
+    },
+    "BatchCreateRelatedItemErrorEntryList":{
+      "type":"list",
+      "member":{"shape":"BatchCreateRelatedItemErrorEntry"}
+    },
+    "BatchCreateRelatedItemIdentifier":{
+      "type":"structure",
+      "required":["caseIdentifier"],
+      "members":{
+        "caseIdentifier":{"shape":"CaseIdentifierUnion"}
+      }
+    },
+    "BatchCreateRelatedItemRequest":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "content",
+        "cases"
+      ],
+      "members":{
+        "domainId":{"shape":"DomainId"},
+        "content":{"shape":"RelatedItemInputContent"},
+        "cases":{"shape":"BatchCreateRelatedItemRequestCasesList"},
+        "performedBy":{"shape":"UserUnion"},
+        "clientToken":{
+          "shape":"BatchCreateRelatedItemRequestClientTokenString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "BatchCreateRelatedItemRequestCasesList":{
+      "type":"list",
+      "member":{"shape":"BatchCreateRelatedItemIdentifier"},
+      "max":100,
+      "min":1
+    },
+    "BatchCreateRelatedItemRequestClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":0
+    },
+    "BatchCreateRelatedItemResponse":{
+      "type":"structure",
+      "required":[
+        "successfulItems",
+        "failedItems"
+      ],
+      "members":{
+        "successfulItems":{"shape":"BatchCreateRelatedItemSuccessEntryList"},
+        "failedItems":{"shape":"BatchCreateRelatedItemErrorEntryList"}
+      }
+    },
+    "BatchCreateRelatedItemSuccessEntry":{
+      "type":"structure",
+      "required":[
+        "caseIdentifier",
+        "relatedItemId",
+        "relatedItemArn"
+      ],
+      "members":{
+        "caseIdentifier":{"shape":"CaseIdentifier"},
+        "relatedItemId":{"shape":"RelatedItemId"},
+        "relatedItemArn":{"shape":"RelatedItemArn"}
+      }
+    },
+    "BatchCreateRelatedItemSuccessEntryList":{
+      "type":"list",
+      "member":{"shape":"BatchCreateRelatedItemSuccessEntry"}
+    },
     "BatchGetCaseRuleRequest":{
       "type":"structure",
       "required":[
@@ -1048,6 +1168,90 @@
       "max":50,
       "min":0
     },
+    "BatchUpdateCaseErrorEntry":{
+      "type":"structure",
+      "required":[
+        "caseIdentifier",
+        "errorCode",
+        "errorMessage"
+      ],
+      "members":{
+        "caseIdentifier":{"shape":"CaseIdentifier"},
+        "errorCode":{"shape":"String"},
+        "errorMessage":{"shape":"String"}
+      }
+    },
+    "BatchUpdateCaseErrorEntryList":{
+      "type":"list",
+      "member":{"shape":"BatchUpdateCaseErrorEntry"}
+    },
+    "BatchUpdateCaseIdentifier":{
+      "type":"structure",
+      "required":["caseIdentifier"],
+      "members":{
+        "caseIdentifier":{"shape":"CaseIdentifierUnion"}
+      }
+    },
+    "BatchUpdateCaseRequest":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "cases",
+        "fields"
+      ],
+      "members":{
+        "domainId":{"shape":"DomainId"},
+        "cases":{"shape":"BatchUpdateCaseRequestCasesList"},
+        "fields":{"shape":"BatchUpdateCaseRequestFieldsList"},
+        "performedBy":{"shape":"UserUnion"},
+        "title":{"shape":"CaseTitle"},
+        "status":{"shape":"CaseStatus"},
+        "customerId":{"shape":"CustomerProfileArn"},
+        "clientToken":{
+          "shape":"BatchUpdateCaseRequestClientTokenString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "BatchUpdateCaseRequestCasesList":{
+      "type":"list",
+      "member":{"shape":"BatchUpdateCaseIdentifier"},
+      "max":100,
+      "min":1
+    },
+    "BatchUpdateCaseRequestClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":0
+    },
+    "BatchUpdateCaseRequestFieldsList":{
+      "type":"list",
+      "member":{"shape":"FieldValueInput"},
+      "max":220,
+      "min":0
+    },
+    "BatchUpdateCaseResponse":{
+      "type":"structure",
+      "required":[
+        "successfulCases",
+        "failedCases"
+      ],
+      "members":{
+        "successfulCases":{"shape":"BatchUpdateCaseSuccessEntryList"},
+        "failedCases":{"shape":"BatchUpdateCaseErrorEntryList"}
+      }
+    },
+    "BatchUpdateCaseSuccessEntry":{
+      "type":"structure",
+      "required":["caseIdentifier"],
+      "members":{
+        "caseIdentifier":{"shape":"CaseIdentifier"}
+      }
+    },
+    "BatchUpdateCaseSuccessEntryList":{
+      "type":"list",
+      "member":{"shape":"BatchUpdateCaseSuccessEntry"}
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -1125,7 +1329,24 @@
     "CaseId":{
       "type":"string",
       "max":500,
-      "min":1
+      "min":1,
+      "pattern":"[A-Za-z0-9\\-._/:#=+-]*"
+    },
+    "CaseIdentifier":{
+      "type":"structure",
+      "members":{
+        "caseId":{"shape":"CaseId"},
+        "referenceNumber":{"shape":"ReferenceNumber"},
+        "referenceId":{"shape":"ReferenceId"}
+      }
+    },
+    "CaseIdentifierUnion":{
+      "type":"structure",
+      "members":{
+        "caseId":{"shape":"CaseId"},
+        "referenceId":{"shape":"ReferenceId"}
+      },
+      "union":true
     },
     "CaseRuleArn":{
       "type":"string",
@@ -1198,6 +1419,12 @@
         "description":{"shape":"CaseRuleDescription"}
       }
     },
+    "CaseStatus":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_\\-\\s]+"
+    },
     "CaseSummary":{
       "type":"structure",
       "required":[
@@ -1208,6 +1435,13 @@
         "caseId":{"shape":"CaseId"},
         "templateId":{"shape":"TemplateId"}
       }
+    },
+    "CaseTitle":{
+      "type":"string",
+      "max":500,
+      "min":1,
+      "pattern":"[\\s\\S]*",
+      "sensitive":true
     },
     "Channel":{
       "type":"string",
@@ -1621,6 +1855,12 @@
       "max":50,
       "min":1
     },
+    "CustomerProfileArn":{
+      "type":"string",
+      "max":500,
+      "min":1,
+      "pattern":"[a-zA-Z0-9/_\\-:.]+"
+    },
     "DeleteCaseRequest":{
       "type":"structure",
       "required":[
@@ -1921,6 +2161,14 @@
         "id":{"shape":"FieldId"}
       }
     },
+    "FieldIdentifierUnion":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"FieldId"},
+        "name":{"shape":"FieldName"}
+      },
+      "union":true
+    },
     "FieldItem":{
       "type":"structure",
       "required":["id"],
@@ -2030,6 +2278,17 @@
       ],
       "members":{
         "id":{"shape":"FieldId"},
+        "value":{"shape":"FieldValueUnion"}
+      }
+    },
+    "FieldValueInput":{
+      "type":"structure",
+      "required":[
+        "fieldIdentifier",
+        "value"
+      ],
+      "members":{
+        "fieldIdentifier":{"shape":"FieldIdentifierUnion"},
         "value":{"shape":"FieldValueUnion"}
       }
     },
@@ -2787,6 +3046,18 @@
     "PutCaseEventConfigurationResponse":{
       "type":"structure",
       "members":{}
+    },
+    "ReferenceId":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"[A-Za-z0-9\\-._/:#=+-]*"
+    },
+    "ReferenceNumber":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"[A-Za-z0-9\\-._/:#=+-]*"
     },
     "RelatedItemArn":{
       "type":"string",

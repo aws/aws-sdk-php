@@ -429,6 +429,19 @@
         {"shape":"ResourcePolicyNotFoundException"}
       ]
     },
+    "DeregisterDefaultHostManagementConfiguration":{
+      "name":"DeregisterDefaultHostManagementConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeregisterDefaultHostManagementConfigurationRequest"},
+      "output":{"shape":"DeregisterDefaultHostManagementConfigurationResult"},
+      "errors":[
+        {"shape":"InternalServerError"}
+      ],
+      "idempotent":true
+    },
     "DeregisterManagedInstance":{
       "name":"DeregisterManagedInstance",
       "http":{
@@ -1742,6 +1755,19 @@
         {"shape":"MalformedResourcePolicyDocumentException"},
         {"shape":"ResourcePolicyNotFoundException"}
       ]
+    },
+    "RegisterDefaultHostManagementConfiguration":{
+      "name":"RegisterDefaultHostManagementConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RegisterDefaultHostManagementConfigurationRequest"},
+      "output":{"shape":"RegisterDefaultHostManagementConfigurationResult"},
+      "errors":[
+        {"shape":"InternalServerError"}
+      ],
+      "idempotent":true
     },
     "RegisterDefaultPatchBaseline":{
       "name":"RegisterDefaultPatchBaseline",
@@ -4215,6 +4241,19 @@
       },
       "exception":true
     },
+    "DHMCPermissionModel":{
+      "type":"string",
+      "enum":[
+        "SERVICE_MANAGED",
+        "SELF_MANAGED"
+      ]
+    },
+    "DHMCRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z0-9-]*:iam::\\d{12}:role/[\\w+=,.@/-]+$"
+    },
     "DateTime":{"type":"timestamp"},
     "DefaultBaseline":{"type":"boolean"},
     "DefaultInstanceName":{
@@ -4405,6 +4444,14 @@
       ]
     },
     "DeliveryTimedOutCount":{"type":"integer"},
+    "DeregisterDefaultHostManagementConfigurationRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeregisterDefaultHostManagementConfigurationResult":{
+      "type":"structure",
+      "members":{}
+    },
     "DeregisterManagedInstanceRequest":{
       "type":"structure",
       "required":["InstanceId"],
@@ -10260,6 +10307,21 @@
       "member":{"shape":"Region"},
       "max":50,
       "min":1
+    },
+    "RegisterDefaultHostManagementConfigurationRequest":{
+      "type":"structure",
+      "required":["PermissionModel"],
+      "members":{
+        "PermissionModel":{"shape":"DHMCPermissionModel"},
+        "RoleArn":{"shape":"DHMCRoleArn"},
+        "Overwrite":{"shape":"Boolean"}
+      }
+    },
+    "RegisterDefaultHostManagementConfigurationResult":{
+      "type":"structure",
+      "members":{
+        "RoleArn":{"shape":"DHMCRoleArn"}
+      }
     },
     "RegisterDefaultPatchBaselineRequest":{
       "type":"structure",

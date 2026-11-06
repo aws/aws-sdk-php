@@ -506,6 +506,10 @@ use Aws\AwsClient;
  *     DeletionMode?: 'RemoveSharing'|'RollbackMigration',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result deregisterDefaultHostManagementConfiguration(array $args = [])
+ * @phpstan-method \Aws\Result deregisterDefaultHostManagementConfiguration(array{...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deregisterDefaultHostManagementConfigurationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deregisterDefaultHostManagementConfigurationAsync(array{...} $args = [])
  * @method \Aws\Result deregisterManagedInstance(array $args = [])
  * @phpstan-method \Aws\Result deregisterManagedInstance(array{InstanceId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deregisterManagedInstanceAsync(array $args = [])
@@ -1738,6 +1742,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result putResourcePolicy(array{ResourceArn?: string, Policy?: string, PolicyId?: string, PolicyHash?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise putResourcePolicyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise putResourcePolicyAsync(array{ResourceArn?: string, Policy?: string, PolicyId?: string, PolicyHash?: string, ...} $args = [])
+ * @method \Aws\Result registerDefaultHostManagementConfiguration(array $args = [])
+ * @phpstan-method \Aws\Result registerDefaultHostManagementConfiguration(array{PermissionModel?: 'SELF_MANAGED'|'SERVICE_MANAGED', RoleArn?: string, Overwrite?: bool, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise registerDefaultHostManagementConfigurationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise registerDefaultHostManagementConfigurationAsync(array{PermissionModel?: 'SELF_MANAGED'|'SERVICE_MANAGED', RoleArn?: string, Overwrite?: bool, ...} $args = [])
  * @method \Aws\Result registerDefaultPatchBaseline(array $args = [])
  * @phpstan-method \Aws\Result registerDefaultPatchBaseline(array{BaselineId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise registerDefaultPatchBaselineAsync(array $args = [])

@@ -12,12 +12,14 @@
     "CreateNotebook": "<p>Creates an empty <code>ipynb</code> file in the specified Apache Spark enabled workgroup. Throws an error if a file in the workgroup with the same name already exists.</p>",
     "CreatePreparedStatement": "<p>Creates a prepared statement for use with SQL queries in Athena.</p>",
     "CreatePresignedNotebookUrl": "<p>Gets an authentication token and the URL at which the notebook can be accessed. During programmatic access, <code>CreatePresignedNotebookUrl</code> must be called every 10 minutes to refresh the authentication token. For information about granting programmatic access, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/setting-up.html#setting-up-grant-programmatic-access\">Grant programmatic access</a>.</p>",
+    "CreateSystemTableConfiguration": "<p>Enables system tables for the current account. System tables are enabled or disabled for the entire account: creating this configuration enables them. If a configuration already exists, use <a>UpdateSystemTableConfiguration</a> to update it.</p>",
     "CreateWorkGroup": "<p>Creates a workgroup with the specified name. A workgroup can be an Apache Spark enabled workgroup or an Athena SQL workgroup.</p>",
     "DeleteCapacityReservation": "<p>Deletes a cancelled capacity reservation. A reservation must be cancelled before it can be deleted. A deleted reservation is immediately removed from your account and can no longer be referenced, including by its ARN. A deleted reservation cannot be called by <code>GetCapacityReservation</code>, and deleted reservations do not appear in the output of <code>ListCapacityReservations</code>.</p>",
     "DeleteDataCatalog": "<p>Deletes a data catalog.</p>",
     "DeleteNamedQuery": "<p>Deletes the named query if you have access to the workgroup in which the query was saved.</p>",
     "DeleteNotebook": "<p>Deletes the specified notebook.</p>",
     "DeletePreparedStatement": "<p>Deletes the prepared statement with the specified name from the specified workgroup.</p>",
+    "DeleteSystemTableConfiguration": "<p>Disables system tables for the current account by deleting the account-level configuration. If the configuration doesn't exist, the operation succeeds without making any changes. The system table and previously published data are left intact.</p>",
     "DeleteWorkGroup": "<p>Deletes the workgroup with the specified name. The primary workgroup cannot be deleted.</p>",
     "ExportNotebook": "<p>Exports the specified notebook and its metadata.</p>",
     "GetCalculationExecution": "<p>Describes a previously submitted calculation execution.</p>",
@@ -37,6 +39,7 @@
     "GetSession": "<p>Gets the full details of a previously created session, including the session status and configuration.</p>",
     "GetSessionEndpoint": "<p>Gets a connection endpoint and authentication token for a given session Id.</p>",
     "GetSessionStatus": "<p>Gets the current status of a session.</p>",
+    "GetSystemTableConfiguration": "<p>Returns the account-level system tables configuration. Fails with a <code>ResourceNotFoundException</code> if system tables are not enabled for the account.</p>",
     "GetTableMetadata": "<p>Returns table metadata for the specified catalog, database, and table.</p>",
     "GetWorkGroup": "<p>Returns information about the workgroup with the specified name.</p>",
     "ImportNotebook": "<p>Imports a single <code>ipynb</code> file to a Spark enabled workgroup. To import the notebook, the request must specify a value for either <code>Payload</code> or <code>NoteBookS3LocationUri</code>. If neither is specified or both are specified, an <code>InvalidRequestException</code> occurs. The maximum file size that can be imported is 10 megabytes. If an <code>ipynb</code> file with the same name already exists in the workgroup, throws an error.</p>",
@@ -53,6 +56,7 @@
     "ListPreparedStatements": "<p>Lists the prepared statements in the specified workgroup.</p>",
     "ListQueryExecutions": "<p>Provides a list of available query execution IDs for the queries in the specified workgroup. Athena keeps a query history for 45 days. If a workgroup is not specified, returns a list of query execution IDs for the primary workgroup. Requires you to have access to the workgroup in which the queries ran.</p>",
     "ListSessions": "<p>Lists the sessions in a workgroup that are in an active state like <code>CREATING</code>, <code>CREATED</code>, <code>IDLE</code>, or <code>BUSY</code>. Newer sessions are listed first; older sessions are listed later.</p>",
+    "ListSystemTableStatuses": "<p>Lists the system tables that the account-level configuration activates, along with whether each is currently enabled. Because system tables are enabled at the account level, every entry reflects the same account-wide state.</p>",
     "ListTableMetadata": "<p>Lists the metadata for the tables in the specified data catalog database.</p>",
     "ListTagsForResource": "<p>Lists the tags associated with an Athena resource.</p>",
     "ListWorkGroups": "<p>Lists available workgroups for the account.</p>",
@@ -71,6 +75,7 @@
     "UpdateNotebook": "<p>Updates the contents of a Spark notebook.</p>",
     "UpdateNotebookMetadata": "<p>Updates the metadata for a notebook.</p>",
     "UpdatePreparedStatement": "<p>Updates a prepared statement.</p>",
+    "UpdateSystemTableConfiguration": "<p>Updates the account-level system tables configuration. If no configuration exists, use <a>CreateSystemTableConfiguration</a> to create one. Fields that you omit retain their current values.</p>",
     "UpdateWorkGroup": "<p>Updates the workgroup with the specified name. The workgroup's name cannot be changed. Only <code>ConfigurationUpdates</code> can be specified.</p>"
   },
   "shapes": {
@@ -192,6 +197,7 @@
         "ResultConfigurationUpdates$RemoveAclConfiguration": "<p>If set to <code>true</code>, indicates that the previously-specified ACL configuration for queries in this workgroup should be ignored and set to null. If set to <code>false</code> or not set, and a value is present in the <code>AclConfiguration</code> of <code>ResultConfigurationUpdates</code>, the <code>AclConfiguration</code> in the workgroup's <code>ResultConfiguration</code> is updated with the new value. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/workgroups-settings-override.html\">Workgroup Settings Override Client-Side Settings</a>.</p>",
         "S3LoggingConfiguration$Enabled": "<p>Enables S3 log delivery.</p>",
         "StartSessionRequest$CopyWorkGroupTags": "<p>Copies the tags from the Workgroup to the Session when.</p>",
+        "SystemTableStatus$Enabled": "<p>Indicates whether the system table is enabled for the account.</p>",
         "WorkGroupConfiguration$EnforceWorkGroupConfiguration": "<p>If set to \"true\", the settings for the workgroup override client-side settings. If set to \"false\", client-side settings are used. This property is not required for Apache Spark enabled workgroups. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/workgroups-settings-override.html\">Workgroup Settings Override Client-Side Settings</a>.</p>",
         "WorkGroupConfiguration$PublishCloudWatchMetricsEnabled": "<p>Indicates that the Amazon CloudWatch metrics are enabled for the workgroup.</p>",
         "WorkGroupConfiguration$RequesterPaysEnabled": "<p>If set to <code>true</code>, allows members assigned to a workgroup to reference Amazon S3 Requester Pays buckets in queries. If set to <code>false</code>, workgroup members cannot query data from Requester Pays buckets, and queries that retrieve data from Requester Pays buckets cause an error. The default is <code>false</code>. For more information about Requester Pays buckets, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/RequesterPaysBuckets.html\">Requester Pays Buckets</a> in the <i>Amazon Simple Storage Service Developer Guide</i>.</p>",
@@ -498,6 +504,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateSystemTableConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSystemTableConfigurationOutput": {
+      "base": null,
+      "refs": {}
+    },
     "CreateWorkGroupInput": {
       "base": null,
       "refs": {}
@@ -642,6 +656,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteSystemTableConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSystemTableConfigurationOutput": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteWorkGroupInput": {
       "base": null,
       "refs": {}
@@ -697,7 +719,7 @@
       "base": "<p>The engine configuration for the workgroup, which includes the minimum/maximum number of Data Processing Units (DPU) that queries should use when running in provisioned capacity. If not specified, Athena uses default values (Default value for min is 4 and for max is Minimum of 124 and allocated DPUs).</p> <p>To specify DPU values for PC queries the WG containing EngineConfiguration should have the following values: The name of the Classifications should be <code>athena-query-engine-properties</code>, with the only allowed properties as <code>max-dpu-count</code> and <code>min-dpu-count</code>.</p>",
       "refs": {
         "GetSessionResponse$EngineConfiguration": "<p>Contains engine configuration information like DPU usage.</p>",
-        "StartQueryExecutionInput$EngineConfiguration": "<p>The engine configuration for the workgroup, which includes the minimum/maximum number of Data Processing Units (DPU) that queries should use when running in provisioned capacity. If not specified, Athena uses default values (Default value for min is 4 and for max is Minimum of 124 and allocated DPUs).</p> <p>To specify minimum and maximum DPU values for Capacity Reservations queries, the workgroup containing <code>EngineConfiguration</code> should have the following values: The name of the <code>Classifications</code> should be <code>athena-query-engine-properties</code>, with the only allowed properties as <code>max-dpu-count</code> and <code>min-dpu-count</code>.</p>",
+        "StartQueryExecutionInput$EngineConfiguration": "<p>The engine configuration for the workgroup, which includes the minimum/maximum number of Data Processing Units (DPU) that queries should use when running in provisioned capacity. If not specified, Athena uses default values (Default value for min is 4 and for max is Minimum of 124 and allocated DPUs).</p> <p>To specify minimum and maximum DPU values for Capacity Reservations queries, the workgroup containing <code>EngineConfiguration</code> should have the following values: The name of the <code>Classifications</code> should be <code>athena-query-engine-properties</code>, with the only allowed properties as <code>max-dpu-count</code> and <code>min-dpu-count</code>.</p> <p> <b>Note:</b> When using StartQueryExecution, only the Classifications field applies. Do not specify the other fields (AdditionalConfigs, CoordinatorDpuSize, DefaultExecutorDpuSize, MaxConcurrentDpus, and SparkProperties), as these are used only with StartSession to configure Apache Spark-based sessions.</p>",
         "StartSessionRequest$EngineConfiguration": "<p>Contains engine data processing unit (DPU) configuration settings and parameter mappings.</p>",
         "WorkGroupConfiguration$EngineConfiguration": null,
         "WorkGroupConfigurationUpdates$EngineConfiguration": null
@@ -957,6 +979,14 @@
       "base": null,
       "refs": {}
     },
+    "GetSystemTableConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSystemTableConfigurationOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GetTableMetadataInput": {
       "base": null,
       "refs": {}
@@ -977,6 +1007,7 @@
       "base": null,
       "refs": {
         "CreateNamedQueryInput$ClientRequestToken": "<p>A unique case-sensitive string used to ensure the request to create the query is idempotent (executes only once). If another <code>CreateNamedQuery</code> request is received, the same response is returned and another query is not created. If a parameter has changed, for example, the <code>QueryString</code>, an error is returned.</p> <important> <p>This token is listed as not required because Amazon Web Services SDKs (for example the Amazon Web Services SDK for Java) auto-generate the token for users. If you are not using the Amazon Web Services SDK or the Amazon Web Services CLI, you must provide this token or the action will fail.</p> </important>",
+        "CreateSystemTableConfigurationInput$ClientRequestToken": "<p>A unique case-sensitive string used to ensure the request to create the system table configuration is idempotent (executes only once). If another <code>CreateSystemTableConfiguration</code> request is received with the same client token but different parameters, the request fails with an <code>InvalidRequestException</code>.</p>",
         "StartCalculationExecutionRequest$ClientRequestToken": "<p>A unique case-sensitive string used to ensure the request to create the calculation is idempotent (executes only once). If another <code>StartCalculationExecutionRequest</code> is received, the same response is returned and another calculation is not created. If a parameter has changed, an error is returned.</p> <important> <p>This token is listed as not required because Amazon Web Services SDKs (for example the Amazon Web Services SDK for Java) auto-generate the token for users. If you are not using the Amazon Web Services SDK or the Amazon Web Services CLI, you must provide this token or the action will fail.</p> </important>",
         "StartQueryExecutionInput$ClientRequestToken": "<p>A unique case-sensitive string used to ensure the request to create the query is idempotent (executes only once). If another <code>StartQueryExecution</code> request is received, the same response is returned and another query is not created. An error is returned if a parameter, such as <code>QueryString</code>, has changed. A call to <code>StartQueryExecution</code> that uses a previous client request token returns the same <code>QueryExecutionId</code> even if the requester doesn't have permission on the tables specified in <code>QueryString</code>.</p> <important> <p>This token is listed as not required because Amazon Web Services SDKs (for example the Amazon Web Services SDK for Java) auto-generate the token for users. If you are not using the Amazon Web Services SDK or the Amazon Web Services CLI, you must provide this token or the action will fail.</p> </important>",
         "StartSessionRequest$ClientRequestToken": "<p>A unique case-sensitive string used to ensure the request to create the session is idempotent (executes only once). If another <code>StartSessionRequest</code> is received, the same response is returned and another session is not created. If a parameter has changed, an error is returned.</p> <important> <p>This token is listed as not required because Amazon Web Services SDKs (for example the Amazon Web Services SDK for Java) auto-generate the token for users. If you are not using the Amazon Web Services SDK or the Amazon Web Services CLI, you must provide this token or the action will fail.</p> </important>"
@@ -1038,6 +1069,16 @@
         "ManagedLoggingConfiguration$KmsKey": "<p>The KMS key ARN to encrypt the logs stored in managed log persistence.</p>",
         "ManagedQueryResultsEncryptionConfiguration$KmsKey": "<p>The ARN of an KMS key for encrypting managed query results.</p>",
         "S3LoggingConfiguration$KmsKey": "<p>The KMS key ARN to encrypt the logs published to the given Amazon S3 destination.</p>"
+      }
+    },
+    "KmsKeyArn": {
+      "base": null,
+      "refs": {
+        "CreateSystemTableConfigurationInput$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the AWS Key Management Service (AWS KMS) key to use for encrypting the system table data.</p>",
+        "CreateSystemTableConfigurationOutput$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the AWS Key Management Service (AWS KMS) key used for encrypting the system table data.</p>",
+        "GetSystemTableConfigurationOutput$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the AWS Key Management Service (AWS KMS) key used for encrypting the system table data.</p>",
+        "UpdateSystemTableConfigurationInput$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the AWS Key Management Service (AWS KMS) key to use for encrypting the system table data. The encryption key is immutable while the system table exists, so a change takes effect only after the table has been deleted.</p>",
+        "UpdateSystemTableConfigurationOutput$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the AWS Key Management Service (AWS KMS) key used for encrypting the system table data.</p>"
       }
     },
     "ListApplicationDPUSizesInput": {
@@ -1141,6 +1182,14 @@
       "refs": {}
     },
     "ListSessionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSystemTableStatusesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSystemTableStatusesOutput": {
       "base": null,
       "refs": {}
     },
@@ -1349,6 +1398,12 @@
       "refs": {
         "ListNotebookSessionsRequest$MaxResults": "<p>The maximum number of notebook sessions to return.</p>",
         "ListSessionsRequest$MaxResults": "<p>The maximum number of sessions to return.</p>"
+      }
+    },
+    "MaxSystemTableStatusesCount": {
+      "base": null,
+      "refs": {
+        "ListSystemTableStatusesInput$MaxResults": "<p>Specifies the maximum number of results to return.</p>"
       }
     },
     "MaxTableMetadataCount": {
@@ -1984,6 +2039,37 @@
         "ApplicationDPUSizes$SupportedDPUSizes": "<p>A list of the supported DPU sizes that the application runtime supports.</p>"
       }
     },
+    "SystemTableName": {
+      "base": null,
+      "refs": {
+        "CreateSystemTableConfigurationInput$TableName": "<p>The system table configuration to create. The only accepted value is <code>ALL</code>, the reserved keyword that enables all system tables for the account.</p>",
+        "CreateSystemTableConfigurationOutput$TableName": "<p>The system table configuration that was created. Always <code>ALL</code>.</p>",
+        "DeleteSystemTableConfigurationInput$TableName": "<p>The system table configuration to delete. The only accepted value is <code>ALL</code>.</p>",
+        "GetSystemTableConfigurationInput$TableName": "<p>The system table configuration to retrieve. The only accepted value is <code>ALL</code>.</p>",
+        "GetSystemTableConfigurationOutput$TableName": "<p>The system table configuration. Always <code>ALL</code>.</p>",
+        "UpdateSystemTableConfigurationInput$TableName": "<p>The system table configuration to update. The only accepted value is <code>ALL</code>.</p>",
+        "UpdateSystemTableConfigurationOutput$TableName": "<p>The system table configuration. Always <code>ALL</code>.</p>"
+      }
+    },
+    "SystemTableStatus": {
+      "base": "<p>The enablement status of a single system table. Because system tables are enabled at the account level, every status reflects the same account-wide state.</p>",
+      "refs": {
+        "SystemTableStatusList$member": null
+      }
+    },
+    "SystemTableStatusList": {
+      "base": null,
+      "refs": {
+        "ListSystemTableStatusesOutput$Items": "<p>The list of system tables and their enablement status for the current account.</p>",
+        "WorkGroupConfiguration$SystemTableStatuses": "<p>The read-only enablement status of each system table for the account. This field is returned by <a>GetWorkGroup</a> and is ignored on write.</p>"
+      }
+    },
+    "SystemTableType": {
+      "base": null,
+      "refs": {
+        "SystemTableStatus$TableName": "<p>The name of the system table, such as <code>QUERY_EXECUTIONS</code>.</p>"
+      }
+    },
     "TableMetadata": {
       "base": "<p>Contains metadata for a table.</p>",
       "refs": {
@@ -2027,6 +2113,7 @@
       "refs": {
         "CreateCapacityReservationInput$Tags": "<p>The tags for the capacity reservation.</p>",
         "CreateDataCatalogInput$Tags": "<p>A list of comma separated tags to add to the data catalog that is created. All the resources that are created by the <code>CreateDataCatalog</code> API operation with <code>FEDERATED</code> type will have the tag <code>federated_athena_datacatalog=\"true\"</code>. This includes the CFN Stack, Glue Connection, Athena DataCatalog, and all the resources created as part of the CFN Stack (Lambda Function, IAM policies/roles).</p>",
+        "CreateSystemTableConfigurationInput$Tags": "<p>The tags to add to the system table configuration.</p>",
         "CreateWorkGroupInput$Tags": "<p>A list of comma separated tags to add to the workgroup that is created.</p>",
         "ListTagsForResourceOutput$Tags": "<p>The list of tags associated with the specified resource.</p>",
         "StartSessionRequest$Tags": "<p>A list of comma separated tags to add to the session that is created.</p>",
@@ -2076,9 +2163,15 @@
         "CapacityAllocation$RequestCompletionTime": "<p>The time when the capacity allocation request was completed.</p>",
         "CapacityReservation$LastSuccessfulAllocationTime": "<p>The time of the most recent capacity allocation that succeeded.</p>",
         "CapacityReservation$CreationTime": "<p>The time in UTC epoch millis when the capacity reservation was created.</p>",
+        "CreateSystemTableConfigurationOutput$CreatedAt": "<p>The date and time the system table configuration was created.</p>",
+        "CreateSystemTableConfigurationOutput$LastModifiedAt": "<p>The date and time the system table configuration was last modified.</p>",
         "GetSessionEndpointResponse$AuthTokenExpirationTime": "<p>Expiration time of the auth token.</p>",
+        "GetSystemTableConfigurationOutput$CreatedAt": "<p>The date and time the system table configuration was created.</p>",
+        "GetSystemTableConfigurationOutput$LastModifiedAt": "<p>The date and time the system table configuration was last modified.</p>",
         "TableMetadata$CreateTime": "<p>The time that the table was created.</p>",
-        "TableMetadata$LastAccessTime": "<p>The last time the table was accessed.</p>"
+        "TableMetadata$LastAccessTime": "<p>The last time the table was accessed.</p>",
+        "UpdateSystemTableConfigurationOutput$CreatedAt": "<p>The date and time the system table configuration was created.</p>",
+        "UpdateSystemTableConfigurationOutput$LastModifiedAt": "<p>The date and time the system table configuration was last modified.</p>"
       }
     },
     "Token": {
@@ -2106,6 +2199,8 @@
         "ListPreparedStatementsOutput$NextToken": "<p>A token generated by the Athena service that specifies where to continue pagination if a previous request was truncated. To obtain the next set of pages, pass in the <code>NextToken</code> from the response object of the previous page call.</p>",
         "ListQueryExecutionsInput$NextToken": "<p>A token generated by the Athena service that specifies where to continue pagination if a previous request was truncated. To obtain the next set of pages, pass in the <code>NextToken</code> from the response object of the previous page call.</p>",
         "ListQueryExecutionsOutput$NextToken": "<p>A token to be used by the next request if this request is truncated.</p>",
+        "ListSystemTableStatusesInput$NextToken": "<p>A token generated by the Athena service that specifies where to continue pagination if a previous request was truncated.</p>",
+        "ListSystemTableStatusesOutput$NextToken": "<p>A token generated by the Athena service that specifies where to continue pagination if a previous request was truncated. To obtain the next set of pages, pass in the NextToken from the response object of the previous page call.</p>",
         "ListTableMetadataInput$NextToken": "<p>A token generated by the Athena service that specifies where to continue pagination if a previous request was truncated. To obtain the next set of pages, pass in the NextToken from the response object of the previous page call.</p>",
         "ListTableMetadataOutput$NextToken": "<p>A token generated by the Athena service that specifies where to continue pagination if a previous request was truncated. To obtain the next set of pages, pass in the NextToken from the response object of the previous page call.</p>",
         "ListTagsForResourceInput$NextToken": "<p>The token for the next set of results, or null if there are no additional results for this request, where the request lists the tags for the resource with the specified ARN.</p>",
@@ -2213,6 +2308,14 @@
       "refs": {}
     },
     "UpdatePreparedStatementOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSystemTableConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSystemTableConfigurationOutput": {
       "base": null,
       "refs": {}
     },

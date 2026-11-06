@@ -6327,6 +6327,13 @@
         "UpdateMLTransformRequest$GlueVersion": "<p>This value determines which version of Glue this machine learning transform is compatible with. Glue 1.0 is recommended for most customers. If the value is not set, the Glue compatibility defaults to Glue 0.9. For more information, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/release-notes.html#release-notes-versions\">Glue Versions</a> in the developer guide.</p>"
       }
     },
+    "GovernanceMode": {
+      "base": null,
+      "refs": {
+        "UserDefinedFunction$GovernanceMode": "<p>How access to the function is governed. <code>IAM_ONLY</code> means access is controlled by IAM permissions only. <code>LAKE_FORMATION</code> means Lake Formation permissions (<code>EXECUTE</code>, <code>DESCRIBE</code>, <code>ALTER</code>, and <code>DROP</code>) also control who can run, describe, update, and delete the function.</p>",
+        "UserDefinedFunctionInput$GovernanceMode": "<p>How access to the function is governed. Specify <code>LAKE_FORMATION</code> to manage access to the function with Lake Formation permissions. If you don't specify a value, the default is <code>IAM_ONLY</code>. You can't change the governance mode after the function is created.</p> <p>When <code>GovernanceMode</code> is <code>LAKE_FORMATION</code>:</p> <ul> <li> <p>You must be a data lake administrator or have all permissions on the Data Catalog with the grant option.</p> </li> <li> <p>You must have the <code>DATA_LOCATION_ACCESS</code> permission on the <code>ArtifactLocation</code>, unless you're a data lake administrator.</p> </li> <li> <p>You must specify from 1 to 10 resource URIs, each under the <code>ArtifactLocation</code>.</p> </li> <li> <p>You can't rename the function.</p> </li> </ul>"
+      }
+    },
     "GovernedCatalogSource": {
       "base": "<p>Specifies the data store in the governed Glue Data Catalog.</p>",
       "refs": {
@@ -12634,6 +12641,7 @@
         "PublishDataQualityResultV2Request$ExecutionStartedOn": "<p>The time execution started for the result.</p>",
         "PublishDataQualityResultV2Request$ExecutionCompletedOn": "<p>The time execution completed for the result.</p>",
         "QuerySessionContext$QueryStartTime": "<p>A timestamp provided by the query engine for when the query started.</p>",
+        "ResourceUri$LastModified": "<p>The time at which the resource was last modified in Amazon S3. Glue records this value when you create or update a function whose <code>GovernanceMode</code> is <code>LAKE_FORMATION</code>. Analytics engines use it to verify that the resource hasn't changed. This is an output-only field.</p>",
         "StatisticAnnotation$StatisticRecordedOn": "<p>The timestamp when the annotated statistic was recorded.</p>",
         "StatisticModelResult$Date": "<p>The date.</p>",
         "StatisticSummary$RecordedOn": "<p>The timestamp when the statistic was recorded.</p>",
@@ -12966,7 +12974,9 @@
       "refs": {
         "Database$LocationUri": "<p>The location of the database (for example, an HDFS path).</p>",
         "DatabaseInput$LocationUri": "<p>The location of the database (for example, an HDFS path). </p>",
-        "ResourceUri$Uri": "<p>The URI for accessing the resource.</p>"
+        "ResourceUri$Uri": "<p>The URI for accessing the resource.</p>",
+        "UserDefinedFunction$ArtifactLocation": "<p>The Amazon S3 location that contains the function's artifacts. This location must be registered with Lake Formation. Glue returns this field only for functions whose <code>GovernanceMode</code> is <code>LAKE_FORMATION</code>.</p>",
+        "UserDefinedFunctionInput$ArtifactLocation": "<p>The Amazon S3 location that contains the function's artifacts. Required when <code>GovernanceMode</code> is <code>LAKE_FORMATION</code>. You must register the location with Lake Formation, and every resource URI must be under this location.</p>"
       }
     },
     "UUIDv4": {

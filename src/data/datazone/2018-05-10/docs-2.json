@@ -6634,7 +6634,8 @@
     "OAuth2ClientApplication": {
       "base": "<p>The OAuth2Client application.</p>",
       "refs": {
-        "OAuth2Properties$oAuth2ClientApplication": "<p>The OAuth2 client application of the OAuth2 properties.</p>"
+        "OAuth2Properties$oAuth2ClientApplication": "<p>The OAuth2 client application of the OAuth2 properties.</p>",
+        "OAuth2PropertiesPatch$oAuth2ClientApplication": "<p>The OAuth2 client application of the OAuth2 properties to update.</p>"
       }
     },
     "OAuth2ClientApplicationAWSManagedClientApplicationReferenceString": {
@@ -6652,7 +6653,8 @@
     "OAuth2GrantType": {
       "base": null,
       "refs": {
-        "OAuth2Properties$oAuth2GrantType": "<p>The OAuth2 grant type of the OAuth2 properties.</p>"
+        "OAuth2Properties$oAuth2GrantType": "<p>The OAuth2 grant type of the OAuth2 properties.</p>",
+        "OAuth2PropertiesPatch$oAuth2GrantType": "<p>The OAuth2 grant type of the OAuth2 properties to update.</p>"
       }
     },
     "OAuth2Properties": {
@@ -6660,6 +6662,18 @@
       "refs": {
         "AuthenticationConfiguration$oAuth2Properties": "<p>The oAuth2 properties of a connection.</p>",
         "AuthenticationConfigurationInput$oAuth2Properties": "<p>The oAuth2 properties of a connection.</p>"
+      }
+    },
+    "OAuth2PropertiesPatch": {
+      "base": "<p>Contains the OAuth2 properties, such as the client application, grant type, and token URL, that you want to update for a connection.</p>",
+      "refs": {
+        "AuthenticationConfigurationPatch$oAuth2Properties": "<p>The OAuth2 properties, such as the client application, grant type, and token URL, that you want to update for a connection. Only the properties that you specify are updated; the connection keeps its existing values for the properties that you omit.</p>"
+      }
+    },
+    "OAuth2PropertiesPatchTokenUrlString": {
+      "base": null,
+      "refs": {
+        "OAuth2PropertiesPatch$tokenUrl": "<p>The OAuth2 token URL of the OAuth2 properties to update.</p>"
       }
     },
     "OAuth2PropertiesTokenUrlString": {
@@ -9849,7 +9863,8 @@
     "TokenUrlParametersMap": {
       "base": null,
       "refs": {
-        "OAuth2Properties$tokenUrlParametersMap": "<p>The OAuth2 token URL parameter map of the OAuth2 properties.</p>"
+        "OAuth2Properties$tokenUrlParametersMap": "<p>The OAuth2 token URL parameter map of the OAuth2 properties.</p>",
+        "OAuth2PropertiesPatch$tokenUrlParametersMap": "<p>The OAuth2 token URL parameter map of the OAuth2 properties to update, for example the scope. If you specify an empty map, the existing parameters are kept.</p>"
       }
     },
     "TokenUrlParametersMapKeyString": {

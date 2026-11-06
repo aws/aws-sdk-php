@@ -688,6 +688,12 @@
         "__mapOfCaptionSelector$member": null
       }
     },
+    "CaptionSource": {
+      "base": "Specify the source of the captions for this caption description. Choose Captions input source (INPUT_CAPTION_SELECTOR) to use a caption selector from your input. Choose Smart subtitling (SMART_SUBTITLE) to have MediaConvert and Elemental Inference generate subtitles automatically from an audio source that you specify.",
+      "refs": {
+        "CaptionDescription$Source": "Specify the source of the captions for this caption description. Choose Captions input source (INPUT_CAPTION_SELECTOR) to use a caption selector from your input. Choose Smart subtitling (SMART_SUBTITLE) to have MediaConvert and Elemental Inference generate subtitles automatically from an audio source that you specify."
+      }
+    },
     "CaptionSourceByteRateLimit": {
       "base": "Choose whether to limit the byte rate at which your SCC input captions are inserted into your output. To not limit the caption rate: We recommend that you keep the default value, Disabled. MediaConvert inserts captions in your output according to the byte rates listed in the EIA-608 specification, typically 2 or 3 caption bytes per frame depending on your output frame rate. To limit your output caption rate: Choose Enabled. Choose this option if your downstream systems require a maximum of 2 caption bytes per frame. Note that this setting has no effect when your output frame rate is 30 or 60.",
       "refs": {
@@ -1662,15 +1668,31 @@
       }
     },
     "ElementalInferenceFeed": {
-      "base": "Elemental Inference Feed.",
+      "base": "An AWS Elemental Inference Feed.",
       "refs": {
         "__listOfElementalInferenceFeed$member": null
+      }
+    },
+    "ElementalInferenceFeedConfigurationSource": {
+      "base": "The source of your Elemental Inference Feed configuration.",
+      "refs": {
+        "ElementalInferenceSettings$FeedConfigurationSource": "Optional. The source of your Elemental Inference Feed configuration. MediaConvert will reference this configuration source when you specify job settings which use Elemental Inference."
       }
     },
     "ElementalInferenceFeedManagementState": {
       "base": "Elemental Inference Feed management state.",
       "refs": {
         "ElementalInferenceFeed$FeedManagementState": "Elemental Inference Feed management state."
+      }
+    },
+    "ElementalInferenceSettings": {
+      "base": "The Elemental Inference settings used in this job.",
+      "refs": {
+        "CreateJobRequest$ElementalInferenceSettings": "The Elemental Inference settings used in this job.",
+        "CreateJobTemplateRequest$ElementalInferenceSettings": "The Elemental Inference settings used in this job.",
+        "Job$ElementalInferenceSettings": "The Elemental Inference settings used in this job.",
+        "JobTemplate$ElementalInferenceSettings": "The Elemental Inference settings used in this job.",
+        "UpdateJobTemplateRequest$ElementalInferenceSettings": "The Elemental Inference settings used in this job."
       }
     },
     "EmbeddedConvert608To708": {
@@ -5275,8 +5297,8 @@
     "__integerMin1Max150": {
       "base": null,
       "refs": {
-        "JobSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings.  MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all  outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs.",
-        "JobTemplateSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings.  MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all  outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs."
+        "JobSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings. MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs.",
+        "JobTemplateSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings. MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs."
       }
     },
     "__integerMin1Max17895697": {
@@ -5850,7 +5872,7 @@
     "__listOfElementalInferenceFeed": {
       "base": null,
       "refs": {
-        "ElementalInferenceConfiguration$Feeds": "A list of Elemental Inference feeds used by this job."
+        "ElementalInferenceConfiguration$Feeds": "A list of Elemental Inference feeds created during this job."
       }
     },
     "__listOfEndpoint": {
@@ -6154,6 +6176,7 @@
       "base": null,
       "refs": {
         "AudioSelectorGroup$AudioSelectorNames": "Name of an Audio Selector within the same input to include in the group. Audio selector names are standardized, based on their order within the input (e.g., \"Audio Selector 1\"). The audio selector name parameter can be repeated to add any number of audio selectors to the group.",
+        "CaptionDescription$AudioSourceNames": "Specifies the audio selector or audio selector group that MediaConvert uses to generate Smart subtitles. The audio selector you choose must exist in all inputs for the job. If MediaConvert can't detect speech in the audio, it can't generate subtitles. Required when source is SMART_SUBTITLE; not allowed otherwise.",
         "CmafAdditionalManifest$SelectedOutputs": "Specify the outputs that you want this additional top-level manifest to reference.",
         "DashAdditionalManifest$SelectedOutputs": "Specify the outputs that you want this additional top-level manifest to reference.",
         "HlsAdditionalManifest$SelectedOutputs": "Specify the outputs that you want this additional top-level manifest to reference.",
@@ -6275,7 +6298,7 @@
         "DescribeEndpointsRequest$NextToken": "Use this string, provided with the response to a previous request, to request the next batch of endpoints.",
         "DescribeEndpointsResponse$NextToken": "Use this string to request the next batch of endpoints.",
         "DisassociateCertificateRequest$Arn": "The ARN of the ACM certificate that you want to disassociate from your MediaConvert resource.",
-        "ElementalInferenceFeed$Arn": "Feed ARN.",
+        "ElementalInferenceFeed$Arn": "The ARN of an AWS Elemental Inference Feed.",
         "Endpoint$Url": "URL of endpoint",
         "ExceptionBody$Message": null,
         "GetJobRequest$Id": "the job ID of the job.",
@@ -6667,6 +6690,12 @@
       "base": null,
       "refs": {
         "InputTamsSettings$AuthConnectionArn": "Specify the ARN (Amazon Resource Name) of an EventBridge Connection to authenticate with your TAMS server. The EventBridge Connection stores your authentication credentials securely. MediaConvert assumes your job's IAM role to access this connection, so ensure the role has the events:RetrieveConnectionCredentials, secretsmanager:DescribeSecret, and secretsmanager:GetSecretValue permissions. Format: arn:aws:events:region:account-id:connection/connection-name/unique-id This setting is required when you include TAMS settings in your job."
+      }
+    },
+    "__stringPatternArnAwsElementalInferenceFeedAZ0919": {
+      "base": null,
+      "refs": {
+        "ElementalInferenceFeedConfigurationSource$FeedArn": "The ARN of an Elemental Inference Feed."
       }
     },
     "__stringPatternArnAwsUsGovAcm": {

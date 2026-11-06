@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SSM` - AWS Systems Manager now provides two new APIs - RegisterDefaultHostManagementConfiguration and DeregisterDefaultHostManagementConfiguration - along with a new DefaultHostManagementConfiguration CloudFormation resource type.
+* `Aws\Glue` - Adds support for user-defined functions governed by AWS Lake Formation.
+* `Aws\EKSAuth` - Added workloadIdentityProviderArn to the AssumeRoleForPodIdentity API response.
+* `Aws\Lightsail` - Marking fields as sensitive in GetInstanceAccessDetails, CreateKeyPair, DownloadDefaultKeyPair, CreateBucketAccessKey, CreateContainerServiceRegistryLogin, and GetRelationalDatabase responses.
+* `Aws\Connect` - Rules in Amazon Connect now support ending email contacts associated to a case based on case events.
+* `Aws\Athena` - Added support for Athena System Tables which writes Athena usage data to AWS S3 managed tables in Apache Iceberg format. Adds CreateSystemTableConfiguration, UpdateSystemTableConfiguration, DeleteSystemTableConfiguration, GetSystemTableConfiguration, and ListSystemTableStatuses.
+* `Aws\DataZone` - Adds support for updating OAuth 2.0 connection settings with UpdateConnection.
+* `Aws\RAM` - Adds support for using managed permission template parameters, discovering shared customer-managed permissions, and managing customer-managed permission deprecation.
+* `Aws\AutoScaling` - Amazon EC2 Auto Scaling now lets you exclude managed resources from describe API responses using the new optional IncludeManagedResources parameter. Set this parameter to false to exclude managed resources from the response. By default, managed resources are included.
+* `Aws\ConnectCases` - Amazon Connect Cases adds two Bulk Case Actions operations. BatchCreateRelatedItem adds a Comment-type related item to up to 100 cases per request, BatchUpdateCase updates fields (title, status, customer ID, custom) on up to 100 cases. Same domain, per-case success and failure results returned.
+* `Aws\BedrockAgent` - Add support for configuring searchability for metadata fields via UpdateKnowledgeBase request for Managed Knowledge Base. Once a field is marked as searchable it can be queried via query text and is factored into Managed Knowledge Base's ranking algorithm.
+* `Aws\MediaConvert` - Smart subtitling uses AWS Elemental Inference to generate captions from your content's audio, in embedded, burn-in, DVB-Sub, IMSC, SMI, SRT, teletext, TTML, or WebVTT outputs. Also fixes HEVC passthrough writing an incomplete codecs string to DASH and HLS manifests.
+
 ## 3.403.0 - 2026-11-05
 
 * `Aws\AgentRegistryControl` - Adds support for OAuth2 Authorization Server Metadata (RFC 8414) discovery URLs in custom JWT authorizer.

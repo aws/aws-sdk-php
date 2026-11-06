@@ -4695,7 +4695,8 @@
       "type":"structure",
       "members":{
         "secretArn":{"shape":"AuthenticationConfigurationPatchSecretArnString"},
-        "basicAuthenticationCredentials":{"shape":"BasicAuthenticationCredentials"}
+        "basicAuthenticationCredentials":{"shape":"BasicAuthenticationCredentials"},
+        "oAuth2Properties":{"shape":"OAuth2PropertiesPatch"}
       }
     },
     "AuthenticationConfigurationPatchSecretArnString":{
@@ -14481,6 +14482,21 @@
         "authorizationCodeProperties":{"shape":"AuthorizationCodeProperties"},
         "oAuth2Credentials":{"shape":"GlueOAuth2Credentials"}
       }
+    },
+    "OAuth2PropertiesPatch":{
+      "type":"structure",
+      "members":{
+        "oAuth2GrantType":{"shape":"OAuth2GrantType"},
+        "oAuth2ClientApplication":{"shape":"OAuth2ClientApplication"},
+        "tokenUrl":{"shape":"OAuth2PropertiesPatchTokenUrlString"},
+        "tokenUrlParametersMap":{"shape":"TokenUrlParametersMap"}
+      }
+    },
+    "OAuth2PropertiesPatchTokenUrlString":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"(https?)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"
     },
     "OAuth2PropertiesTokenUrlString":{
       "type":"string",

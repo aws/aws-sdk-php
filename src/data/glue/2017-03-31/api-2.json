@@ -12852,6 +12852,13 @@
       "min":1,
       "pattern":"^((\\w+\\.)+\\w+|auto)$"
     },
+    "GovernanceMode":{
+      "type":"string",
+      "enum":[
+        "IAM_ONLY",
+        "LAKE_FORMATION"
+      ]
+    },
     "GovernedCatalogSource":{
       "type":"structure",
       "required":[
@@ -16802,7 +16809,8 @@
       "type":"structure",
       "members":{
         "ResourceType":{"shape":"ResourceType"},
-        "Uri":{"shape":"URI"}
+        "Uri":{"shape":"URI"},
+        "LastModified":{"shape":"Timestamp"}
       }
     },
     "ResourceUriList":{
@@ -20279,6 +20287,8 @@
         "OwnerType":{"shape":"PrincipalType"},
         "CreateTime":{"shape":"Timestamp"},
         "ResourceUris":{"shape":"ResourceUriList"},
+        "ArtifactLocation":{"shape":"URI"},
+        "GovernanceMode":{"shape":"GovernanceMode"},
         "CatalogId":{"shape":"CatalogIdString"}
       }
     },
@@ -20290,7 +20300,9 @@
         "OwnerName":{"shape":"NameString"},
         "FunctionType":{"shape":"FunctionType"},
         "OwnerType":{"shape":"PrincipalType"},
-        "ResourceUris":{"shape":"ResourceUriList"}
+        "ResourceUris":{"shape":"ResourceUriList"},
+        "ArtifactLocation":{"shape":"URI"},
+        "GovernanceMode":{"shape":"GovernanceMode"}
       }
     },
     "UserDefinedFunctionList":{

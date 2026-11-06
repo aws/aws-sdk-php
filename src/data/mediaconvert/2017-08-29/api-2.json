@@ -957,10 +957,10 @@
       },
       "errors": [
         {
-          "shape": "UnprocessableEntityException"
+          "shape": "BadRequestException"
         },
         {
-          "shape": "BadRequestException"
+          "shape": "UnprocessableEntityException"
         },
         {
           "shape": "InternalServerErrorException"
@@ -2805,6 +2805,10 @@
     "CaptionDescription": {
       "type": "structure",
       "members": {
+        "AudioSourceNames": {
+          "shape": "__listOf__stringMin1",
+          "locationName": "audioSourceNames"
+        },
         "CaptionSelectorName": {
           "shape": "__stringMin1",
           "locationName": "captionSelectorName"
@@ -2824,6 +2828,10 @@
         "LanguageDescription": {
           "shape": "__string",
           "locationName": "languageDescription"
+        },
+        "Source": {
+          "shape": "CaptionSource",
+          "locationName": "source"
         }
       }
     },
@@ -2926,6 +2934,13 @@
           "locationName": "sourceSettings"
         }
       }
+    },
+    "CaptionSource": {
+      "type": "string",
+      "enum": [
+        "INPUT_CAPTION_SELECTOR",
+        "SMART_SUBTITLE"
+      ]
     },
     "CaptionSourceByteRateLimit": {
       "type": "string",
@@ -3976,6 +3991,10 @@
           "locationName": "clientRequestToken",
           "idempotencyToken": true
         },
+        "ElementalInferenceSettings": {
+          "shape": "ElementalInferenceSettings",
+          "locationName": "elementalInferenceSettings"
+        },
         "HopDestinations": {
           "shape": "__listOfHopDestination",
           "locationName": "hopDestinations"
@@ -4049,6 +4068,10 @@
         "Description": {
           "shape": "__string",
           "locationName": "description"
+        },
+        "ElementalInferenceSettings": {
+          "shape": "ElementalInferenceSettings",
+          "locationName": "elementalInferenceSettings"
         },
         "HopDestinations": {
           "shape": "__listOfHopDestination",
@@ -5495,7 +5518,8 @@
     "ElementalInferenceFeature": {
       "type": "string",
       "enum": [
-        "SMART_CROP"
+        "SMART_CROP",
+        "SMART_SUBTITLE"
       ]
     },
     "ElementalInferenceFeed": {
@@ -5511,6 +5535,15 @@
         }
       }
     },
+    "ElementalInferenceFeedConfigurationSource": {
+      "type": "structure",
+      "members": {
+        "FeedArn": {
+          "shape": "__stringPatternArnAwsElementalInferenceFeedAZ0919",
+          "locationName": "feedArn"
+        }
+      }
+    },
     "ElementalInferenceFeedManagementState": {
       "type": "string",
       "enum": [
@@ -5519,6 +5552,15 @@
         "PENDING_DELETION",
         "DELETED"
       ]
+    },
+    "ElementalInferenceSettings": {
+      "type": "structure",
+      "members": {
+        "FeedConfigurationSource": {
+          "shape": "ElementalInferenceFeedConfigurationSource",
+          "locationName": "feedConfigurationSource"
+        }
+      }
     },
     "EmbeddedConvert608To708": {
       "type": "string",
@@ -8106,6 +8148,10 @@
           "shape": "ElementalInferenceConfiguration",
           "locationName": "elementalInferenceConfiguration"
         },
+        "ElementalInferenceSettings": {
+          "shape": "ElementalInferenceSettings",
+          "locationName": "elementalInferenceSettings"
+        },
         "ErrorCode": {
           "shape": "__integer",
           "locationName": "errorCode"
@@ -8340,6 +8386,10 @@
           "shape": "__string",
           "locationName": "description"
         },
+        "ElementalInferenceSettings": {
+          "shape": "ElementalInferenceSettings",
+          "locationName": "elementalInferenceSettings"
+        },
         "HopDestinations": {
           "shape": "__listOfHopDestination",
           "locationName": "hopDestinations"
@@ -8374,8 +8424,8 @@
         }
       },
       "required": [
-        "Settings",
-        "Name"
+        "Name",
+        "Settings"
       ]
     },
     "JobTemplateListBy": {
@@ -12251,6 +12301,10 @@
           "shape": "__string",
           "locationName": "description"
         },
+        "ElementalInferenceSettings": {
+          "shape": "ElementalInferenceSettings",
+          "locationName": "elementalInferenceSettings"
+        },
         "HopDestinations": {
           "shape": "__listOfHopDestination",
           "locationName": "hopDestinations"
@@ -14845,6 +14899,10 @@
     "__stringPatternArnAwsAZ09EventsAZ090912ConnectionAZAZ09AF0936": {
       "type": "string",
       "pattern": "^arn:aws[a-z0-9-]*:events:[a-z0-9-]+:[0-9]{12}:connection/[a-zA-Z0-9-]+/[a-f0-9-]{36}$"
+    },
+    "__stringPatternArnAwsElementalInferenceFeedAZ0919": {
+      "type": "string",
+      "pattern": "^arn:aws:elemental-inference:.*:feed/[a-z0-9]{19}$"
     },
     "__stringPatternArnAwsUsGovAcm": {
       "type": "string",

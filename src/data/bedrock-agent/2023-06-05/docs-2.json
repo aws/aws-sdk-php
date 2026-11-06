@@ -1490,6 +1490,12 @@
         "RedisEnterpriseCloudFieldMapping$metadataField": "<p>The name of the field in which Amazon Bedrock stores metadata about the vector store.</p>"
       }
     },
+    "FieldType": {
+      "base": "<p>The data type of a custom metadata field. Valid values:</p> <ul> <li> <p> <code>STRING</code> – The field holds a single string value.</p> </li> <li> <p> <code>STRING_LIST</code> – The field holds a list of string values.</p> </li> </ul>",
+      "refs": {
+        "MetadataConfiguration$type": "<p>The data type of the custom metadata field. Valid values are <code>STRING</code> and <code>STRING_LIST</code>.</p>"
+      }
+    },
     "FieldsForReranking": {
       "base": null,
       "refs": {
@@ -3076,10 +3082,29 @@
         "MetadataAttributeValue$stringListValue": "<p>An array of strings that define the value of the metadata attribute.</p>"
       }
     },
+    "MetadataConfiguration": {
+      "base": "<p>Contains the configuration of a single custom metadata field in a knowledge base, including its name, data type, and whether the field is searchable.</p>",
+      "refs": {
+        "MetadataConfigurations$member": null
+      }
+    },
     "MetadataConfigurationForReranking": {
       "base": "<p>Specifies how metadata fields should be handled during the reranking process.</p>",
       "refs": {
         "VectorSearchBedrockRerankingConfiguration$metadataConfiguration": "<p>Specifies how metadata fields should be handled during the reranking process.</p>"
+      }
+    },
+    "MetadataConfigurations": {
+      "base": "<p>A list of up to 30 custom metadata field configurations.</p>",
+      "refs": {
+        "KnowledgeBase$metadataConfigurations": "<p>The custom metadata field configurations of the knowledge base. Each configuration specifies whether its field is searchable (<code>ENABLED</code> or <code>DISABLED</code>).</p> <p>If the update fails, the knowledge base status becomes <code>UPDATE_UNSUCCESSFUL</code>, the field configurations revert to their previous values, and <code>failureReasons</code> describes the cause. You can retry the update from <code>UPDATE_UNSUCCESSFUL</code>.</p>",
+        "UpdateKnowledgeBaseRequest$metadataConfigurations": "<p>Specifies up to 30 custom metadata field configurations for a managed knowledge base.</p> <p>The list that you specify replaces the existing configurations. The update removes any configuration that you leave out, and its field is no longer searchable. An empty list removes all configurations. If you don't specify a list, the existing configurations don't change.</p>"
+      }
+    },
+    "MetadataKeyName": {
+      "base": "<p>The name of a custom metadata field.</p>",
+      "refs": {
+        "MetadataConfiguration$name": "<p>The name of the custom metadata field.</p>"
       }
     },
     "MetadataSourceType": {
@@ -4422,6 +4447,12 @@
       "base": "<p>The endpoint information to connect to your Salesforce data source.</p>",
       "refs": {
         "SalesforceDataSourceConfiguration$sourceConfiguration": "<p>The endpoint information to connect to your Salesforce data source.</p>"
+      }
+    },
+    "SearchableStatus": {
+      "base": "<p>Specifies whether a custom metadata field is searchable. The knowledge base matches query text against the values of searchable fields.</p>",
+      "refs": {
+        "MetadataConfiguration$searchability": "<p>Specifies whether the custom metadata field is searchable. Valid values:</p> <ul> <li> <p> <code>ENABLED</code> – The field is searchable.</p> </li> <li> <p> <code>DISABLED</code> – The field is not searchable.</p> </li> </ul>"
       }
     },
     "SecretArn": {

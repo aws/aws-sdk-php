@@ -1,3 +1,3 @@
 <?php
 // This file was auto-generated from sdk-root/src/data/ram/2018-01-04/examples-1.json
-return [ 'version' => '1.0', 'examples' => [],];
+return [ 'version' => '1.0', 'examples' => [ 'UpdatePermission' => [ [ 'input' => [ 'permissionArn' => 'arn:aws:ram:us-east-1:123456789012:permission/AnyCompanyImageBuilderPermission', 'status' => 'DEPRECATED', ], 'output' => [ 'permissionStatus' => 'DEPRECATED', ], 'comments' => [ 'input' => [], 'output' => [], ], 'description' => 'Deprecates a customer managed permission so it can no longer be associated with new resource shares.', 'id' => 'updatepermission-1', 'title' => 'Deprecate a managed permission', ], ], ],];

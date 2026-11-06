@@ -3935,6 +3935,13 @@
       "min":0,
       "pattern":".*"
     },
+    "FieldType":{
+      "type":"string",
+      "enum":[
+        "STRING",
+        "STRING_LIST"
+      ]
+    },
     "FieldsForReranking":{
       "type":"list",
       "member":{"shape":"FieldForReranking"},
@@ -5494,7 +5501,8 @@
         "status":{"shape":"KnowledgeBaseStatus"},
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
-        "failureReasons":{"shape":"FailureReasons"}
+        "failureReasons":{"shape":"FailureReasons"},
+        "metadataConfigurations":{"shape":"MetadataConfigurations"}
       }
     },
     "KnowledgeBaseArn":{
@@ -6317,6 +6325,19 @@
       "max":10,
       "min":1
     },
+    "MetadataConfiguration":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type",
+        "searchability"
+      ],
+      "members":{
+        "name":{"shape":"MetadataKeyName"},
+        "type":{"shape":"FieldType"},
+        "searchability":{"shape":"SearchableStatus"}
+      }
+    },
     "MetadataConfigurationForReranking":{
       "type":"structure",
       "required":["selectionMode"],
@@ -6324,6 +6345,19 @@
         "selectionMode":{"shape":"RerankingMetadataSelectionMode"},
         "selectiveModeConfiguration":{"shape":"RerankingMetadataSelectiveModeConfiguration"}
       }
+    },
+    "MetadataConfigurations":{
+      "type":"list",
+      "member":{"shape":"MetadataConfiguration"},
+      "max":30,
+      "min":0
+    },
+    "MetadataKeyName":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_][a-zA-Z0-9_-]*",
+      "sensitive":true
     },
     "MetadataSourceType":{
       "type":"string",
@@ -7810,6 +7844,13 @@
         "credentialsSecretArn":{"shape":"SecretArn"}
       }
     },
+    "SearchableStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "SecretArn":{
       "type":"string",
       "pattern":"arn:aws(|-cn|-us-gov):secretsmanager:[a-z0-9-]{1,20}:([0-9]{12}|):secret:[a-zA-Z0-9!/_+=.@-]{1,512}"
@@ -8792,7 +8833,8 @@
         "description":{"shape":"Description"},
         "roleArn":{"shape":"KnowledgeBaseRoleArn"},
         "knowledgeBaseConfiguration":{"shape":"KnowledgeBaseConfiguration"},
-        "storageConfiguration":{"shape":"StorageConfiguration"}
+        "storageConfiguration":{"shape":"StorageConfiguration"},
+        "metadataConfigurations":{"shape":"MetadataConfigurations"}
       }
     },
     "UpdateKnowledgeBaseResponse":{
