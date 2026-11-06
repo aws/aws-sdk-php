@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.403.1 - 2026-11-06
 
 * `Aws\SSM` - AWS Systems Manager now provides two new APIs - RegisterDefaultHostManagementConfiguration and DeregisterDefaultHostManagementConfiguration - along with a new DefaultHostManagementConfiguration CloudFormation resource type.
 * `Aws\Glue` - Adds support for user-defined functions governed by AWS Lake Formation.
