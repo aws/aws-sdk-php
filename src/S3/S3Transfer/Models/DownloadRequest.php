@@ -53,7 +53,8 @@ final class DownloadRequest extends AbstractTransferRequest
      *    failure occurs.
      *  - resume_file_path (string, optional): To override the default resume file
      *    location to be generated. If specified the file name must end in `.resume`
-     *     otherwise it will be added automatically.
+     *    otherwise it will be added automatically. The destination and temporary
+     *    download files must be contained by this file's directory.
      * @param AbstractDownloadHandler|null $downloadHandler
      * @param AbstractTransferListener[]|null $listeners
      * @param AbstractTransferListener|null $progressTracker

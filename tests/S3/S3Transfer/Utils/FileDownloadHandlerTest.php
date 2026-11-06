@@ -8,9 +8,11 @@ use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\Utils\FileDownloadHandler;
 use Aws\Test\TestsUtility;
 use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(FileDownloadHandler::class)]
 final class FileDownloadHandlerTest extends TestCase
 {
     private string $tempDir;
@@ -236,6 +238,62 @@ final class FileDownloadHandlerTest extends TestCase
         $this->expectException(FileDownloadException::class);
         $this->expectExceptionMessage('Checksum mismatch when writing part to destination file.');
         $handler->bytesTransferred([AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $snapshot]);
+    }
+
+    /**
+     * FileDownloadHandler accepts paths explicitly selected by the caller.
+     */
+    #[DataProvider('legitimatePathsProvider')]
+    public function testConstructorAcceptsLegitimatePaths(
+        string $destination,
+        ?string $temporaryFilePath,
+        string $description
+    ): void
+    {
+        $handler = new FileDownloadHandler(
+            $destination,
+            false,
+            false,
+            $temporaryFilePath
+        );
+
+        $this->assertEquals($destination, $handler->getDestination());
+    }
+
+    public static function legitimatePathsProvider(): array
+    {
+        return [
+            'absolute path' => [
+                '/home/user/downloads/file.dat',
+                null,
+                'Legitimate absolute path succeeds',
+            ],
+            'relative path' => [
+                'downloads/file.dat',
+                null,
+                'Relative path succeeds',
+            ],
+            'relative parent path' => [
+                '../downloads/file.dat',
+                null,
+                'Relative parent path succeeds',
+            ],
+            'dots in filename' => [
+                '/tmp/file.v2.0.tar.gz',
+                null,
+                'Dots in filename must NOT be falsely rejected',
+            ],
+            'equivalent destination and temporary directories' => [
+                '/tmp/downloads/file.dat',
+                '/tmp/downloads/./file.s3tmp.12345678',
+                'Equivalent directory paths succeed',
+            ],
+            'null temporaryFilePath' => [
+                '/tmp/destination.dat',
+                null,
+                'Null temporaryFilePath succeeds',
+            ],
+        ];
     }
 
     public function testCleansUpResourcesAfterFailure(): void
