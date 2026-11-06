@@ -46,6 +46,7 @@ error indicates a bug in the generated annotations.
 | Dynamically-built `array` variable | accepted |
 | Wrong value type on a known key | flagged with `expects X, Y given` |
 | Empty-input operation (`describeLimits([])`) | accepted (renders as `array{...}`) |
+| DynamoDB `Marshaler` output passed to `putItem()` | accepted |
 
 Case 5 is commented out by default so `phpstan analyze` exits clean.
 Uncomment it to confirm the annotation is enforced.

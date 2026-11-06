@@ -5,6 +5,21 @@ use Psr\Http\Message\StreamInterface;
 
 /**
  * Marshals and unmarshals JSON documents and PHP arrays into DynamoDB items.
+ *
+ * @phpstan-type AttributeValue array{
+ *     S?: string,
+ *     N?: string,
+ *     B?: string,
+ *     SS?: list<string>,
+ *     NS?: list<string>,
+ *     BS?: list<string>,
+ *     M?: array<string, array>,
+ *     L?: list<array>,
+ *     NULL?: bool,
+ *     BOOL?: bool,
+ *     ...,
+ * }
+ * @phpstan-type Item array<string, AttributeValue>
  */
 class Marshaler
 {
@@ -90,6 +105,7 @@ class Marshaler
      * @param string $json A valid JSON document.
      *
      * @return array Item formatted for DynamoDB.
+     * @phpstan-return Item
      * @throws \InvalidArgumentException if the JSON is invalid.
      */
     public function marshalJson($json)
@@ -113,6 +129,7 @@ class Marshaler
      * @param array|\stdClass $item An associative array of data.
      *
      * @return array Item formatted for DynamoDB.
+     * @phpstan-return Item
      */
     public function marshalItem($item)
     {
@@ -127,7 +144,8 @@ class Marshaler
      *
      * @param mixed $value A scalar, array, or `stdClass` value.
      *
-     * @return array Attribute formatted for DynamoDB.
+     * @return array|null Attribute formatted for DynamoDB.
+     * @phpstan-return AttributeValue|null
      * @throws \UnexpectedValueException if the value cannot be marshaled.
      */
     public function marshalValue($value)
@@ -216,6 +234,7 @@ class Marshaler
      *
      * @param array $data            Item/document from a DynamoDB result.
      * @param int   $jsonEncodeFlags Flags to use with `json_encode()`.
+     * @phpstan-param Item $data
      *
      * @return string
      */
@@ -234,6 +253,7 @@ class Marshaler
      *
      * @param array $data Item from a DynamoDB result.
      * @param bool  $mapAsObject Whether maps should be represented as stdClass.
+     * @phpstan-param Item $data
      *
      * @return array|\stdClass
      */
@@ -249,6 +269,7 @@ class Marshaler
      *
      * @param array $value       Value from a DynamoDB result.
      * @param bool  $mapAsObject Whether maps should be represented as stdClass.
+     * @phpstan-param AttributeValue $value
      *
      * @return mixed
      * @throws \UnexpectedValueException
@@ -304,6 +325,7 @@ class Marshaler
      * @param string $message Error message
      *
      * @return array|null
+     * @phpstan-return AttributeValue|null
      */
     private function handleInvalid($message)
     {

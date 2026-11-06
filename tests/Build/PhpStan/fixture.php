@@ -16,6 +16,7 @@ declare(strict_types=1);
  *      calibration accepts general arrays).
  *   6. Omitting a "required" key is NOT flagged (we intentionally make
  *      every key optional in the docblock).
+ *   7. DynamoDB Marshaler output satisfies generated client argument shapes.
  *
  * Run from the SDK root:
  *   vendor/bin/phpstan analyze tests/Build/PhpStan/fixture.php
@@ -28,6 +29,7 @@ declare(strict_types=1);
 namespace Aws\Test\Build\PhpStan;
 
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\DynamoDb\Marshaler;
 use Aws\Ec2\Ec2Client;
 use Aws\S3\S3Client;
 use Aws\Sqs\SqsClient;
@@ -78,7 +80,10 @@ function fixture_s3(S3Client $s3): void
     // ]);
 }
 
-function fixture_dynamodb(DynamoDbClient $ddb): void
+function fixture_dynamodb(
+    DynamoDbClient $ddb,
+    Marshaler $marshaler
+): void
 {
     $ddb->putItem([
         'TableName' => 'Users',
@@ -90,6 +95,14 @@ function fixture_dynamodb(DynamoDbClient $ddb): void
         'TableName' => 'Users',
         'Item' => ['UserId' => ['S' => 'abc-123']],
         'NotARealOption' => true,
+    ]);
+
+    // Marshaler output must satisfy the generated DynamoDB item shape.
+    $ddb->putItem([
+        'TableName' => 'Users',
+        'Item' => $marshaler->marshalItem([
+            'UserId' => 'abc-123',
+        ]),
     ]);
 
     // Empty-input operation: should accept any array without flagging.
