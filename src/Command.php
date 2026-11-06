@@ -54,6 +54,19 @@ class Command implements CommandInterface
         $this->handlerList = clone $this->handlerList;
     }
 
+    /**
+     * Returns concise command details for debugging.
+     *
+     * @return array{name: string, data: array}
+     */
+    public function __debugInfo(): array
+    {
+        return [
+            'name' => $this->name,
+            'data' => $this->data,
+        ];
+    }
+
     public function getName()
     {
         return $this->name;

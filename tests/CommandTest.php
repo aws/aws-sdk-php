@@ -16,6 +16,38 @@ class CommandTest extends TestCase
         $this->assertSame('foo', $c->getName());
     }
 
+    public function testProvidesConciseDebugInformation(): void
+    {
+        $command = new Command('foo', ['bar' => 'baz']);
+
+        $this->assertSame(
+            [
+                'name' => 'foo',
+                'data' => [
+                    'bar' => 'baz',
+                    '@http' => [],
+                    '@context' => [],
+                ],
+            ],
+            $command->__debugInfo()
+        );
+
+        ob_start();
+        var_dump($command);
+        $varDump = ob_get_clean();
+        $printOutput = print_r($command, true);
+
+        $this->assertIsString($varDump);
+        $this->assertIsString($printOutput);
+        foreach ([$varDump, $printOutput] as $debugOutput) {
+            $this->assertStringContainsString('name', $debugOutput);
+            $this->assertStringContainsString('data', $debugOutput);
+            $this->assertStringNotContainsString('handlerList', $debugOutput);
+            $this->assertStringNotContainsString('authSchemes', $debugOutput);
+            $this->assertStringNotContainsString('metricsBuilder', $debugOutput);
+        }
+    }
+
     public function testHasParam()
     {
         $c = new Command('foo', ['bar' => null, 'baz' => 'bam']);
