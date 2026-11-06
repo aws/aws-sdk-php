@@ -537,13 +537,16 @@ class HttpResponseBindingPlanTest extends TestCase
 
         $this->assertInstanceOf(\RuntimeException::class, $exception);
         $this->assertSame("Invalid type: Array\n(\n)\n", $exception->getMessage());
-        $this->assertSame([
+        $expectedDiagnostics = [
             [E_WARNING, 'Undefined array key "type"'],
-            [
+        ];
+        if (PHP_VERSION_ID >= 80500) {
+            $expectedDiagnostics[] = [
                 E_DEPRECATED,
                 'Using null as an array offset is deprecated, use an empty string instead',
-            ],
-        ], $diagnostics);
+            ];
+        }
+        $this->assertSame($expectedDiagnostics, $diagnostics);
     }
 
     #[DataProvider('malformedPrefixBodyProvider')]
