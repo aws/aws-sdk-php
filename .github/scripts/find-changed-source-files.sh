@@ -31,6 +31,7 @@ git diff --name-only --diff-filter=ACMRT "$DIFF_BASE" "$HEAD_SHA" -- '*.php' \
     | while IFS= read -r file; do
         [[ "$file" == src/* ]] || continue
         [[ "$file" == src/data/* ]] && continue
+        [[ "$file" == *.json.php ]] && continue
 
         echo "$file"
     done > "$CHANGED_FILES"
