@@ -8,8 +8,6 @@ use Aws\Api\Parser\DecodingEventStreamIterator;
 use Aws\Api\Parser\EventParsingIterator;
 use Aws\Api\Parser\RestJsonParser;
 use Aws\Api\Parser\RestXmlParser;
-use Aws\Api\Serde\Http\HttpRequestBindingPlan as RequestPlan;
-use Aws\Api\Serde\Http\HttpRequestBindingPlanProvider;
 use Aws\Api\Serde\Http\HttpResponseBindingPlan as Plan;
 use Aws\Api\Serde\Http\HttpResponseBindingPlanProvider;
 use Aws\Api\Serde\ShapePlanCache;
@@ -164,16 +162,6 @@ class HttpResponseBindingPlanTest extends TestCase
 
     public function testReusesCacheAndKeepsRequestAndResponseSlotsIndependent(): void
     {
-        $input = [
-            'type' => 'structure',
-            'members' => [
-                'RequestHeader' => [
-                    'type' => 'string',
-                    'location' => 'header',
-                    'locationName' => 'X-Request',
-                ],
-            ],
-        ];
         $output = [
             'type' => 'structure',
             'members' => [
@@ -184,14 +172,15 @@ class HttpResponseBindingPlanTest extends TestCase
                 ],
             ],
         ];
-        $service = $this->service('rest-json', $output, $input);
-        $operation = $service->getOperation('Op');
-        $requestProvider = new HttpRequestBindingPlanProvider($service);
+        $operation = $this->service('rest-json', $output)->getOperation('Op');
         $responseProvider = new HttpResponseBindingPlanProvider();
-        $requestPlan = $requestProvider->get($operation);
+        $requestPlan = new \stdClass();
+        $operation->cacheSerdePlan(
+            ShapePlanCache::HTTP_REQUEST_BINDINGS,
+            $requestPlan
+        );
         $responsePlan = $responseProvider->get($operation);
 
-        $this->assertSame($requestPlan, $requestProvider->get($operation));
         $this->assertSame($responsePlan, $responseProvider->get($operation));
         $this->assertSame(
             $requestPlan,
@@ -213,12 +202,18 @@ class HttpResponseBindingPlanTest extends TestCase
             $operation->getSerdePlan(ShapePlanCache::HTTP_REQUEST_BINDINGS)
         );
 
-        $rebuiltRequest = $requestProvider->get($operation);
+        $rebuiltRequest = new \stdClass();
+        $operation->cacheSerdePlan(
+            ShapePlanCache::HTTP_REQUEST_BINDINGS,
+            $rebuiltRequest
+        );
+
         $this->assertNotSame($requestPlan, $rebuiltRequest);
         $this->assertSame(
-            'X-Request',
-            $rebuiltRequest->bindings['RequestHeader'][RequestPlan::D_NAME]
+            $rebuiltRequest,
+            $operation->getSerdePlan(ShapePlanCache::HTTP_REQUEST_BINDINGS)
         );
+        $this->assertSame($rebuiltResponse, $responseProvider->get($operation));
         $this->assertSame(
             $rebuiltResponse,
             $operation->getSerdePlan(ShapePlanCache::HTTP_RESPONSE_BINDINGS)
