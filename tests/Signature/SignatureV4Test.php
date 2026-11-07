@@ -228,6 +228,83 @@ class SignatureV4Test extends TestCase
         $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
+    public static function getRelativeExpiresAcrossDstChange(): array
+    {
+        return [
+            // Europe/Berlin falls back at 2026-10-25 03:00 CEST (01:00 UTC).
+            'Europe/Berlin, 01:45 CEST, +15 minutes' => ['Europe/Berlin', '2026-10-24T23:45:00Z', '+15 minutes', 900],
+            'Europe/Berlin, 02:59 CEST, +15 minutes' => ['Europe/Berlin', '2026-10-25T00:59:00Z', '+15 minutes', 900],
+            'Europe/Berlin, 02:30 CEST, +1 hour' => ['Europe/Berlin', '2026-10-25T00:30:00Z', '+1 hour', 3600],
+            // America/New_York falls back at 2026-11-01 02:00 EDT (06:00 UTC).
+            'America/New_York, 01:50 EDT, +20 minutes' => ['America/New_York', '2026-11-01T05:50:00Z', '+20 minutes', 1200],
+            // Spring forward is not affected, but must stay correct.
+            'Europe/Berlin, 01:50 CET, +15 minutes' => ['Europe/Berlin', '2027-03-28T00:50:00Z', '+15 minutes', 900],
+        ];
+    }
+
+    #[DataProvider('getRelativeExpiresAcrossDstChange')]
+    public function testRelativeExpiresIsElapsedTimeAcrossDstChange(
+        string $timezone,
+        string $startTime,
+        string $expires,
+        int $expectedSeconds
+    ) {
+        $defaultTimezone = date_default_timezone_get();
+        date_default_timezone_set($timezone);
+        unset($_SERVER['aws_time']);
+
+        try {
+            list($request, $credentials, $signature) = $this->getFixtures();
+            $url = (string) $signature->presign(
+                $request,
+                $credentials,
+                $expires,
+                ['start_time' => strtotime($startTime)]
+            )->getUri();
+        } finally {
+            date_default_timezone_set($defaultTimezone);
+        }
+
+        $this->assertStringContainsString("X-Amz-Expires={$expectedSeconds}", $url);
+    }
+
+    public function testRelativeExpiresWithSubSecondUnitKeepsStrtotimeResult()
+    {
+        unset($_SERVER['aws_time']);
+
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $url = (string) $signature->presign(
+            $request,
+            $credentials,
+            '+15 minutes -3000000 usec',
+            ['start_time' => strtotime('December 5, 2013 00:00:00 UTC')]
+        )->getUri();
+
+        $this->assertStringContainsString('X-Amz-Expires=897', $url);
+    }
+
+    public function testRelativeExpiresInDaysKeepsLocalTime()
+    {
+        $defaultTimezone = date_default_timezone_get();
+        date_default_timezone_set('Europe/Berlin');
+        unset($_SERVER['aws_time']);
+
+        try {
+            list($request, $credentials, $signature) = $this->getFixtures();
+            $url = (string) $signature->presign(
+                $request,
+                $credentials,
+                '+1 day',
+                ['start_time' => strtotime('2026-10-24T12:00:00Z')]
+            )->getUri();
+        } finally {
+            date_default_timezone_set($defaultTimezone);
+        }
+
+        // Same local time on the next day: the day has 25 hours.
+        $this->assertStringContainsString('X-Amz-Expires=90000', $url);
+    }
+
     public function testEnsuresSigV4DurationIsLessThanOneWeek()
     {
         $this->expectException(\InvalidArgumentException::class);
