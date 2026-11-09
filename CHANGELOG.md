@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.403.2 - 2026-11-09
 
 * `Aws\` - Ensures checksum mode member is set for requests whose responses contain modeled checksums.
 * `Aws\Aws` - Adds concise debug output for Command objects to prevent handler and service model internals from overwhelming var_dump() and print_r() output.
