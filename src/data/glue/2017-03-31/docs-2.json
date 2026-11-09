@@ -36,6 +36,7 @@
     "CreateConnection": "<p>Creates a connection definition in the Data Catalog.</p> <p>Connections used for creating federated resources require the IAM <code>glue:PassConnection</code> permission.</p>",
     "CreateCrawler": "<p>Creates a new crawler with specified targets, role, configuration, and optional schedule. At least one crawl target must be specified, in the <code>s3Targets</code> field, the <code>jdbcTargets</code> field, or the <code>DynamoDBTargets</code> field.</p>",
     "CreateCustomEntityType": "<p>Creates a custom pattern that is used to detect sensitive data across the columns and rows of your structured data.</p> <p>Each custom pattern you create specifies a regular expression and an optional list of context words. If no context words are passed only a regular expression is checked.</p>",
+    "CreateDataQualityEvaluationConfig": "<p>Creates a data quality evaluation configuration, which evaluates the data quality of a collection of tables in the Glue Data Catalog once, on a schedule, or when table metadata changes. A configuration applies to a catalog, a database, or a single table, and evaluates every table in scope, including tables added later, without per-table setup.</p> <p>When configurations at more than one level apply to the same table, the most specific configuration applies. Each table is evaluated at most once an hour, whichever triggers you choose.</p>",
     "CreateDataQualityRuleset": "<p>Creates a data quality ruleset with DQDL rules applied to a specified Glue table.</p> <p>You create the ruleset using the Data Quality Definition Language (DQDL). For more information, see the Glue developer guide.</p>",
     "CreateDatabase": "<p>Creates a new database in a Data Catalog.</p>",
     "CreateDevEndpoint": "<p>Creates a new development endpoint.</p>",
@@ -73,6 +74,7 @@
     "DeleteConnectionType": "<p>Deletes a custom connection type in Glue.</p> <p>The connection type must exist and be registered before it can be deleted. This operation supports cleanup of connection type resources and helps maintain proper lifecycle management of custom connection types.</p>",
     "DeleteCrawler": "<p>Removes a specified crawler from the Glue Data Catalog, unless the crawler state is <code>RUNNING</code>.</p>",
     "DeleteCustomEntityType": "<p>Deletes a custom pattern by specifying its name.</p>",
+    "DeleteDataQualityEvaluationConfig": "<p>Deletes a data quality evaluation configuration.</p>",
     "DeleteDataQualityRuleset": "<p>Deletes a data quality ruleset.</p>",
     "DeleteDatabase": "<p>Removes a specified database from a Data Catalog.</p> <note> <p>After completing this operation, you no longer have access to the tables (and all table versions and partitions that might belong to the tables) and the user-defined functions in the deleted database. Glue deletes these \"orphaned\" resources asynchronously in a timely manner, at the discretion of the service.</p> <p>To ensure the immediate deletion of all related resources, before calling <code>DeleteDatabase</code>, use <code>DeleteTableVersion</code> or <code>BatchDeleteTableVersion</code>, <code>DeletePartition</code> or <code>BatchDeletePartition</code>, <code>DeleteUserDefinedFunction</code>, and <code>DeleteTable</code> or <code>BatchDeleteTable</code>, to delete any resources that belong to the database.</p> </note>",
     "DeleteDevEndpoint": "<p>Deletes a specified development endpoint.</p>",
@@ -129,6 +131,7 @@
     "GetDashboardUrl": "<p>Retrieves the URL for the Spark monitoring dashboard for a Glue resource.</p>",
     "GetDataCatalogEncryptionSettings": "<p>Retrieves the security configuration for a specified catalog.</p>",
     "GetDataCatalogExportConfiguration": "<p>Retrieves the current export configuration for the Glue Data Catalog. The export configuration controls whether catalog metadata is exported to S3 Tables.</p>",
+    "GetDataQualityEvaluationConfig": "<p>Retrieves a data quality evaluation configuration.</p>",
     "GetDataQualityModel": "<p>Retrieve the training status of the model along with more information (CompletedOn, StartedOn, FailureReason).</p>",
     "GetDataQualityModelResult": "<p>Retrieve a statistic's predictions for a given Profile ID.</p>",
     "GetDataQualityResult": "<p>Retrieves the result of a data quality rule evaluation.</p>",
@@ -204,6 +207,7 @@
     "ListCrawlers": "<p>Retrieves the names of all crawler resources in this Amazon Web Services account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
     "ListCrawls": "<p>Returns all the crawls of a specified crawler. Returns only the crawls that have occurred since the launch date of the crawler history feature, and only retains up to 12 months of crawls. Older crawls will not be returned.</p> <p>You may use this API to:</p> <ul> <li> <p>Retrive all the crawls of a specified crawler.</p> </li> <li> <p>Retrieve all the crawls of a specified crawler within a limited count.</p> </li> <li> <p>Retrieve all the crawls of a specified crawler in a specific time range.</p> </li> <li> <p>Retrieve all the crawls of a specified crawler with a particular state, crawl ID, or DPU hour value.</p> </li> </ul>",
     "ListCustomEntityTypes": "<p>Lists all the custom patterns that have been created.</p>",
+    "ListDataQualityEvaluationConfigs": "<p>Lists the data quality evaluation configurations in your account, optionally filtered by level.</p>",
     "ListDataQualityResults": "<p>Returns all data quality execution results for your account.</p>",
     "ListDataQualityResultsV2": "<p>Returns a paginated list of data quality execution results for your account, filtered by the specified criteria. Use the <code>NextToken</code> parameter to retrieve additional results.</p>",
     "ListDataQualityRuleRecommendationRuns": "<p>Lists the recommendation runs meeting the filter criteria.</p>",
@@ -290,6 +294,7 @@
     "UpdateConnection": "<p>Updates a connection definition in the Data Catalog.</p>",
     "UpdateCrawler": "<p>Updates a crawler. If a crawler is running, you must stop it using <code>StopCrawler</code> before updating it.</p>",
     "UpdateCrawlerSchedule": "<p>Updates the schedule of a crawler using a <code>cron</code> expression. </p>",
+    "UpdateDataQualityEvaluationConfig": "<p>Updates a data quality evaluation configuration. Fields that you don't specify keep their current values.</p>",
     "UpdateDataQualityRuleset": "<p>Updates the specified data quality ruleset.</p>",
     "UpdateDatabase": "<p>Updates an existing database definition in a Data Catalog.</p>",
     "UpdateDevEndpoint": "<p>Updates a specified development endpoint.</p>",
@@ -1769,6 +1774,7 @@
     "ClientTokenString": {
       "base": null,
       "refs": {
+        "CreateDataQualityEvaluationConfigRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the operation completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error.</p>",
         "PublishDataQualityResultV2Request$ClientToken": "<p>The client token for the request.</p>"
       }
     },
@@ -2687,6 +2693,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateDataQualityEvaluationConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDataQualityEvaluationConfigResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateDataQualityRulesetRequest": {
       "base": "<p>A request to create a data quality ruleset.</p>",
       "refs": {}
@@ -3082,6 +3096,7 @@
     "DQCompositeRuleEvaluationMethod": {
       "base": null,
       "refs": {
+        "DataQualityEvaluationConfigAdditionalRunOptions$CompositeRuleEvaluationMethod": "<p>Set the evaluation method for composite rules in the ruleset to ROW/COLUMN</p>",
         "DataQualityEvaluationRunAdditionalRunOptions$CompositeRuleEvaluationMethod": "<p>Set the evaluation method for composite rules in the ruleset to ROW/COLUMN</p>"
       }
     },
@@ -3240,7 +3255,105 @@
     "DataQualityEngine": {
       "base": null,
       "refs": {
-        "DataQualityTelemetry$Engine": null
+        "DataQualityTelemetry$Engine": "<p/>"
+      }
+    },
+    "DataQualityEvaluationConfigAdditionalRunOptions": {
+      "base": "<p>Additional run options for each evaluation of a data quality evaluation configuration.</p>",
+      "refs": {
+        "CreateDataQualityEvaluationConfigRequest$AdditionalRunOptions": "<p>Additional run options you can specify for an evaluation run.</p>",
+        "GetDataQualityEvaluationConfigResponse$AdditionalRunOptions": "<p>Additional run options you can specify for an evaluation run.</p>",
+        "UpdateDataQualityEvaluationConfigRequest$AdditionalRunOptions": "<p>Additional run options you can specify for an evaluation run.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$AdditionalRunOptions": "<p>Additional run options you can specify for an evaluation run.</p>"
+      }
+    },
+    "DataQualityEvaluationConfigDataSource": {
+      "base": "<p>The data source that a data quality evaluation configuration applies to.</p>",
+      "refs": {
+        "CreateDataQualityEvaluationConfigRequest$DataSource": "<p>The catalog, database, or table that the configuration applies to, as specified by <code>Level</code>.</p>",
+        "GetDataQualityEvaluationConfigResponse$DataSource": "<p>The catalog, database, or table that the configuration applies to.</p>",
+        "UpdateDataQualityEvaluationConfigRequest$DataSource": "<p>The database or table that the configuration applies to. Replaces the current data source.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$DataSource": "<p>The catalog, database, or table that the configuration applies to.</p>"
+      }
+    },
+    "DataQualityEvaluationConfigGlueTables": {
+      "base": "<p>Identifies the Glue Data Catalog tables that a data quality evaluation configuration applies to.</p>",
+      "refs": {
+        "DataQualityEvaluationConfigDataSource$GlueTables": "<p>The Glue Data Catalog tables that the configuration applies to.</p>"
+      }
+    },
+    "DataQualityEvaluationConfigLevel": {
+      "base": null,
+      "refs": {
+        "CreateDataQualityEvaluationConfigRequest$Level": "<p>The Glue Data Catalog hierarchical level that the configuration applies to. Valid values are <code>CATALOG</code>, <code>DATABASE</code>, and <code>TABLE</code>.</p>",
+        "DataQualityEvaluationConfigListDetails$Level": "<p>The Glue Data Catalog hierarchical level that the configuration applies to.</p>",
+        "GetDataQualityEvaluationConfigResponse$Level": "<p>The Glue Data Catalog hierarchical level that the configuration applies to.</p>",
+        "ListDataQualityEvaluationConfigsRequest$Level": "<p>Lists only the configurations that apply to this level.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$Level": "<p>The Glue Data Catalog hierarchical level that the configuration applies to.</p>"
+      }
+    },
+    "DataQualityEvaluationConfigList": {
+      "base": null,
+      "refs": {
+        "ListDataQualityEvaluationConfigsResponse$DataQualityEvaluationConfigs": "<p>A list of <code>DataQualityEvaluationConfigListDetails</code> objects.</p>"
+      }
+    },
+    "DataQualityEvaluationConfigListDataSource": {
+      "base": "<p>The data source that a data quality evaluation configuration applies to.</p>",
+      "refs": {
+        "DataQualityEvaluationConfigListDetails$DataSource": "<p>The catalog, database, or table that the configuration applies to.</p>"
+      }
+    },
+    "DataQualityEvaluationConfigListDetails": {
+      "base": "<p>Describes a data quality evaluation configuration.</p>",
+      "refs": {
+        "DataQualityEvaluationConfigList$member": null
+      }
+    },
+    "DataQualityEvaluationConfigListGlueTables": {
+      "base": "<p>Identifies the Glue Data Catalog tables that a data quality evaluation configuration applies to.</p>",
+      "refs": {
+        "DataQualityEvaluationConfigListDataSource$GlueTables": "<p>The Glue Data Catalog tables that the configuration applies to.</p>"
+      }
+    },
+    "DataQualityEvaluationConfigManagedRuleset": {
+      "base": null,
+      "refs": {
+        "CreateDataQualityEvaluationConfigRequest$ManagedRulesetName": "<p>A built-in ruleset that profiles each table, used when <code>RulesetName</code> is not set. The default is <code>SIMPLE</code>. Choose from the following built-in rulesets:</p> <dl> <dt>SIMPLE</dt> <dd> <p>Row count and column count, completeness, minimum, and maximum for every column, mean, sum, and standard deviation for numeric columns, and column length for string columns.</p> </dd> <dt>ADVANCED</dt> <dd> <p>Every statistic in <code>SIMPLE</code>, plus distribution, uniqueness, and distinct values count.</p> </dd> </dl>",
+        "DataQualityEvaluationConfigListDetails$ManagedRulesetName": "<p>The built-in ruleset that tables are evaluated with.</p>",
+        "GetDataQualityEvaluationConfigResponse$ManagedRulesetName": "<p>The built-in ruleset that tables are evaluated with.</p>",
+        "UpdateDataQualityEvaluationConfigRequest$ManagedRulesetName": "<p>A built-in ruleset, <code>SIMPLE</code> or <code>ADVANCED</code>, that profiles each table.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$ManagedRulesetName": "<p>The built-in ruleset that tables are evaluated with.</p>"
+      }
+    },
+    "DataQualityEvaluationConfigPageSize": {
+      "base": null,
+      "refs": {
+        "ListDataQualityEvaluationConfigsRequest$MaxResults": "<p>The maximum number of results to return.</p>"
+      }
+    },
+    "DataQualityEvaluationConfigScheduleExpression": {
+      "base": null,
+      "refs": {
+        "CreateDataQualityEvaluationConfigRequest$ScheduleExpression": "<p>A cron or rate expression, in UTC, for the <code>SCHEDULE</code> trigger, for example <code>cron(0 6 * * ? *)</code>. The schedule can run at most once an hour.</p>",
+        "GetDataQualityEvaluationConfigResponse$ScheduleExpression": "<p>The cron or rate expression, in UTC, for the <code>SCHEDULE</code> trigger.</p>",
+        "UpdateDataQualityEvaluationConfigRequest$ScheduleExpression": "<p>A cron or rate expression, in UTC, for the <code>SCHEDULE</code> trigger, for example <code>cron(0 6 * * ? *)</code>. The schedule can run at most once an hour.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$ScheduleExpression": "<p>The cron or rate expression, in UTC, for the <code>SCHEDULE</code> trigger.</p>"
+      }
+    },
+    "DataQualityEvaluationConfigTrigger": {
+      "base": null,
+      "refs": {
+        "DataQualityEvaluationConfigTriggers$member": null
+      }
+    },
+    "DataQualityEvaluationConfigTriggers": {
+      "base": null,
+      "refs": {
+        "CreateDataQualityEvaluationConfigRequest$Triggers": "<p>When the configuration evaluates tables. You can choose one or more triggers, and each table is evaluated at most once an hour. The default is <code>ONCE</code>. Choose from the following triggers:</p> <dl> <dt>ONCE</dt> <dd> <p>Evaluates each table one time, including when tables are added to a database or catalog.</p> </dd> <dt>SCHEDULE</dt> <dd> <p>Evaluates each table on the cron or rate expression in <code>ScheduleExpression</code>, between the optional <code>StartAt</code> and <code>EndAt</code> times.</p> </dd> <dt>METADATA_CHANGE</dt> <dd> <p>Evaluates a table whenever its Glue Data Catalog metadata changes, such as a schema change or an Apache Iceberg commit.</p> </dd> </dl>",
+        "GetDataQualityEvaluationConfigResponse$Triggers": "<p>When the configuration evaluates tables:</p> <dl> <dt>ONCE</dt> <dd> <p>Each table is evaluated one time, including when tables are added to a database or catalog.</p> </dd> <dt>SCHEDULE</dt> <dd> <p>Each table is evaluated on the cron or rate expression in <code>ScheduleExpression</code>.</p> </dd> <dt>METADATA_CHANGE</dt> <dd> <p>A table is evaluated whenever its Glue Data Catalog metadata changes.</p> </dd> </dl>",
+        "UpdateDataQualityEvaluationConfigRequest$Triggers": "<p>When the configuration evaluates tables. Replaces the current triggers. Choose from the following triggers:</p> <dl> <dt>ONCE</dt> <dd> <p>Evaluates each table one time, including when tables are added to a database or catalog.</p> </dd> <dt>SCHEDULE</dt> <dd> <p>Evaluates each table on the cron or rate expression in <code>ScheduleExpression</code>, between the optional <code>StartAt</code> and <code>EndAt</code> times.</p> </dd> <dt>METADATA_CHANGE</dt> <dd> <p>Evaluates a table whenever its Glue Data Catalog metadata changes, such as a schema change or an Apache Iceberg commit.</p> </dd> </dl>",
+        "UpdateDataQualityEvaluationConfigResponse$Triggers": "<p>When the configuration evaluates tables:</p> <dl> <dt>ONCE</dt> <dd> <p>Each table is evaluated one time, including when tables are added to a database or catalog.</p> </dd> <dt>SCHEDULE</dt> <dd> <p>Each table is evaluated on the cron or rate expression in <code>ScheduleExpression</code>.</p> </dd> <dt>METADATA_CHANGE</dt> <dd> <p>A table is evaluated whenever its Glue Data Catalog metadata changes.</p> </dd> </dl>"
       }
     },
     "DataQualityEvaluationRunAdditionalRunOptions": {
@@ -3251,10 +3364,27 @@
         "StartDataQualityRulesetEvaluationRunRequest$AdditionalRunOptions": "<p>Additional run options you can specify for an evaluation run.</p>"
       }
     },
+    "DataQualityEvaluationRunMode": {
+      "base": null,
+      "refs": {
+        "CreateDataQualityEvaluationConfigResponse$EvaluationRunMode": "<p>The evaluation run mode of the configuration's results, which is <code>EVALUATION_CONFIG</code>.</p>",
+        "DataQualityEvaluationConfigListDetails$EvaluationRunMode": "<p>The evaluation run mode of the configuration's results, which is <code>EVALUATION_CONFIG</code>.</p>",
+        "DataQualityResult$EvaluationRunMode": "<p>How the evaluation run that produced the result started: <code>ON_DEMAND</code> for a run started by <code>StartDataQualityRulesetEvaluationRun</code>, or <code>EVALUATION_CONFIG</code> for a run started by a data quality evaluation configuration. Not returned for results that no evaluation run produced, such as results from any ETL job.</p>",
+        "DataQualityResultDescription$EvaluationRunMode": "<p>How the evaluation run that produced the result started: <code>ON_DEMAND</code> for a run started by <code>StartDataQualityRulesetEvaluationRun</code>, or <code>EVALUATION_CONFIG</code> for a run started by a data quality evaluation configuration. Not returned for results that no evaluation run produced, such as results from any ETL job.</p>",
+        "DataQualityResultFilterCriteria$EvaluationRunMode": "<p>Filter results by how their evaluation run started: <code>ON_DEMAND</code> or <code>EVALUATION_CONFIG</code>. Results that no evaluation run produced match neither value.</p>",
+        "DataQualityResultV2Item$EvaluationRunMode": "<p>How the evaluation run that produced the result started: <code>ON_DEMAND</code> for a run started by <code>StartDataQualityRulesetEvaluationRun</code>, or <code>EVALUATION_CONFIG</code> for a run started by a data quality evaluation configuration. Not returned for results that no evaluation run produced, such as results from any ETL job.</p>",
+        "DataQualityResultsV2Description$EvaluationRunMode": "<p>How the evaluation run that produced the result started: <code>ON_DEMAND</code> for a run started by <code>StartDataQualityRulesetEvaluationRun</code>, or <code>EVALUATION_CONFIG</code> for a run started by a data quality evaluation configuration. Not returned for results that no evaluation run produced, such as results from any ETL job.</p>",
+        "DataQualityResultsV2FilterCriteria$EvaluationRunMode": "<p>Filter results by how their evaluation run started: <code>ON_DEMAND</code> or <code>EVALUATION_CONFIG</code>. Results that no evaluation run produced match neither value.</p>",
+        "GetDataQualityEvaluationConfigResponse$EvaluationRunMode": "<p>The evaluation run mode of the configuration's results, which is <code>EVALUATION_CONFIG</code>.</p>",
+        "GetDataQualityResultResponse$EvaluationRunMode": "<p>How the evaluation run that produced the result started: <code>ON_DEMAND</code> for a run started by <code>StartDataQualityRulesetEvaluationRun</code>, or <code>EVALUATION_CONFIG</code> for a run started by a data quality evaluation configuration. Not returned for results that no evaluation run produced, such as results from any ETL job.</p>",
+        "GetDataQualityResultV2Response$EvaluationRunMode": "<p>How the evaluation run that produced the result started: <code>ON_DEMAND</code> for a run started by <code>StartDataQualityRulesetEvaluationRun</code>, or <code>EVALUATION_CONFIG</code> for a run started by a data quality evaluation configuration. Not returned for results that no evaluation run produced, such as results from any ETL job.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$EvaluationRunMode": "<p>The evaluation run mode of the configuration's results, which is <code>EVALUATION_CONFIG</code>.</p>"
+      }
+    },
     "DataQualityFlagsEnabled": {
       "base": null,
       "refs": {
-        "DataQualityTelemetry$FlagsEnabled": null
+        "DataQualityTelemetry$FlagsEnabled": "<p/>"
       }
     },
     "DataQualityGlueTable": {
@@ -3438,6 +3568,7 @@
     "DataQualityRuleResultsOptions": {
       "base": "<p>The configuration for writing data quality rule results.</p>",
       "refs": {
+        "DataQualityEvaluationConfigAdditionalRunOptions$DataQualityRuleResults": "<p>The configuration for writing rule results to a Glue Data Catalog table.</p>",
         "DataQualityEvaluationRunAdditionalRunOptions$DataQualityRuleResults": "<p>The configuration for writing rule results to a Glue Data Catalog table.</p>"
       }
     },
@@ -3516,9 +3647,9 @@
       }
     },
     "DataQualityTelemetry": {
-      "base": null,
+      "base": "<p/>",
       "refs": {
-        "PublishDataQualityResultV2Request$Telemetry": null
+        "PublishDataQualityResultV2Request$Telemetry": "<p/>"
       }
     },
     "DataSource": {
@@ -3547,9 +3678,13 @@
     "DataSourceMap": {
       "base": null,
       "refs": {
+        "CreateDataQualityEvaluationConfigRequest$AdditionalDataSources": "<p>A map of reference strings to additional data sources you can specify for an evaluation run.</p>",
         "DataQualityRulesetEvaluationRun$AdditionalDataSources": "<p>A map of reference strings to additional data sources you can specify for an evaluation run.</p>",
+        "GetDataQualityEvaluationConfigResponse$AdditionalDataSources": "<p>A map of reference strings to additional data sources you can specify for an evaluation run.</p>",
         "GetDataQualityRulesetEvaluationRunResponse$AdditionalDataSources": "<p>A map of reference strings to additional data sources you can specify for an evaluation run.</p>",
-        "StartDataQualityRulesetEvaluationRunRequest$AdditionalDataSources": "<p>A map of reference strings to additional data sources you can specify for an evaluation run.</p>"
+        "StartDataQualityRulesetEvaluationRunRequest$AdditionalDataSources": "<p>A map of reference strings to additional data sources you can specify for an evaluation run.</p>",
+        "UpdateDataQualityEvaluationConfigRequest$AdditionalDataSources": "<p>A map of reference strings to additional data sources you can specify for an evaluation run.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$AdditionalDataSources": "<p>A map of reference strings to additional data sources you can specify for an evaluation run.</p>"
       }
     },
     "Database": {
@@ -3772,6 +3907,14 @@
       "refs": {}
     },
     "DeleteCustomEntityTypeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDataQualityEvaluationConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDataQualityEvaluationConfigResponse": {
       "base": null,
       "refs": {}
     },
@@ -5201,6 +5344,7 @@
         "CreateDevEndpointResponse$FailureReason": "<p>The reason for a current failure in this <code>DevEndpoint</code>.</p>",
         "CreateTriggerRequest$Schedule": "<p>A <code>cron</code> expression used to specify the schedule (see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p> <p>This field is required when the trigger type is SCHEDULED.</p>",
         "DQAdditionalOptions$value": null,
+        "DataQualityEvaluationConfigAdditionalRunOptions$CustomLogGroupPrefix": "<p>A custom prefix for the CloudWatch log group names. When specified, evaluation run logs are written to <code>&lt;CustomLogGroupPrefix&gt;/error</code> and <code>&lt;CustomLogGroupPrefix&gt;/output</code> instead of the default <code>/aws-glue/data-quality/error</code> and <code>/aws-glue/data-quality/output</code> log groups.</p>",
         "DataQualityEvaluationRunAdditionalRunOptions$CustomLogGroupPrefix": "<p>A custom prefix for the CloudWatch log group names. When specified, evaluation run logs are written to <code>&lt;CustomLogGroupPrefix&gt;/error</code> and <code>&lt;CustomLogGroupPrefix&gt;/output</code> instead of the default <code>/aws-glue/data-quality/error</code> and <code>/aws-glue/data-quality/output</code> log groups.</p>",
         "DataQualityResult$EvaluationContext": "<p>In the context of a job in Glue Studio, each node in the canvas is typically assigned some sort of name and data quality nodes will have names. In the case of multiple nodes, the <code>evaluationContext</code> can differentiate the nodes.</p>",
         "DataQualityRuleRecommendationRunAdditionalRunOptions$CustomLogGroupPrefix": "<p>A custom prefix for the CloudWatch log group names. When specified, recommendation run logs are written to <code>&lt;CustomLogGroupPrefix&gt;/error</code> and <code>&lt;CustomLogGroupPrefix&gt;/output</code> instead of the default <code>/aws-glue/data-quality/error</code> and <code>/aws-glue/data-quality/output</code> log groups.</p>",
@@ -5489,6 +5633,14 @@
     },
     "GetDataCatalogExportConfigurationOutput": {
       "base": "<p>The export configuration returned by the <code>GetDataCatalogExportConfiguration</code> operation.</p>",
+      "refs": {}
+    },
+    "GetDataQualityEvaluationConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDataQualityEvaluationConfigResponse": {
+      "base": null,
       "refs": {}
     },
     "GetDataQualityModelRequest": {
@@ -6294,6 +6446,7 @@
     "GlueTableAdditionalOptions": {
       "base": null,
       "refs": {
+        "DataQualityEvaluationConfigGlueTables$AdditionalOptions": "<p>Options for reading the table. The following keys are supported:</p> <ul> <li> <p> <code>pushDownPredicate</code>: to filter on partitions without having to list and read all the files in your dataset.</p> </li> <li> <p> <code>catalogPartitionPredicate</code>: to use server-side partition pruning using partition indexes in the Glue Data Catalog.</p> </li> </ul>",
         "DataQualityGlueTable$AdditionalOptions": "<p>Additional options for the table. Currently there are two keys supported:</p> <ul> <li> <p> <code>pushDownPredicate</code>: to filter on partitions without having to list and read all the files in your dataset.</p> </li> <li> <p> <code>catalogPartitionPredicate</code>: to use server-side partition pruning using partition indexes in the Glue Data Catalog.</p> </li> </ul>",
         "GlueTable$AdditionalOptions": "<p>Additional options for the table. Currently there are two keys supported:</p> <ul> <li> <p> <code>pushDownPredicate</code>: to filter on partitions without having to list and read all the files in your dataset.</p> </li> <li> <p> <code>catalogPartitionPredicate</code>: to use server-side partition pruning using partition indexes in the Glue Data Catalog.</p> </li> </ul>"
       }
@@ -7760,6 +7913,14 @@
       "base": null,
       "refs": {}
     },
+    "ListDataQualityEvaluationConfigsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDataQualityEvaluationConfigsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListDataQualityResultsRequest": {
       "base": null,
       "refs": {}
@@ -8489,6 +8650,9 @@
         "CreateCustomEntityTypeRequest$Name": "<p>A name for the custom pattern that allows it to be retrieved or deleted later. This name must be unique per Amazon Web Services account.</p>",
         "CreateCustomEntityTypeRequest$RegexString": "<p>A regular expression string that is used for detecting sensitive data in a custom pattern.</p>",
         "CreateCustomEntityTypeResponse$Name": "<p>The name of the custom pattern you created.</p>",
+        "CreateDataQualityEvaluationConfigRequest$Name": "<p>A name for the data quality evaluation configuration. The name must be unique within your account.</p>",
+        "CreateDataQualityEvaluationConfigRequest$RulesetName": "<p>The name of a Data Quality Definition Language (DQDL) ruleset, containing analyzers, rules, or both, to evaluate tables with. You create the ruleset using the <code>CreateDataQualityRuleset</code> API. Specify either <code>RulesetName</code> or <code>ManagedRulesetName</code>, not both.</p>",
+        "CreateDataQualityEvaluationConfigResponse$Name": "<p>The name of the data quality evaluation configuration.</p>",
         "CreateDataQualityRulesetRequest$Name": "<p>A unique name for the data quality ruleset.</p>",
         "CreateDataQualityRulesetRequest$DataQualitySecurityConfiguration": "<p>The name of the security configuration created with the data quality encryption option.</p>",
         "CreateDataQualityRulesetResponse$Name": "<p>A unique name for the data quality ruleset.</p>",
@@ -8534,20 +8698,35 @@
         "DataLakeAccessPropertiesOutput$StatusMessage": "<p>A message that gives more detailed information about the managed workgroup status.</p>",
         "DataLakeAccessPropertiesOutput$CatalogType": "<p>Specifies a federated catalog type for the native catalog resource. The currently supported type is <code>aws:redshift</code>.</p>",
         "DataQualityAnalyzerResult$Name": "<p>The name of the data quality analyzer.</p>",
+        "DataQualityEvaluationConfigGlueTables$CatalogId": "<p>A unique identifier for the Glue Data Catalog.</p>",
+        "DataQualityEvaluationConfigGlueTables$DatabaseName": "<p>A database name in the Glue Data Catalog.</p>",
+        "DataQualityEvaluationConfigGlueTables$TableNamePattern": "<p>For the <code>CATALOG</code> and <code>DATABASE</code> levels, a glob pattern, such as <code>orders_*</code>, that selects tables. If you don't specify a pattern, every table at the level is in scope. For the <code>TABLE</code> level, the name of the table.</p>",
+        "DataQualityEvaluationConfigGlueTables$ConnectionName": "<p>The name of the connection to the Glue Data Catalog.</p>",
+        "DataQualityEvaluationConfigListDetails$Name": "<p>The name of the data quality evaluation configuration.</p>",
+        "DataQualityEvaluationConfigListDetails$RulesetName": "<p>The name of the data quality ruleset that tables are evaluated with.</p>",
+        "DataQualityEvaluationConfigListGlueTables$CatalogId": "<p>A unique identifier for the Glue Data Catalog.</p>",
+        "DataQualityEvaluationConfigListGlueTables$DatabaseName": "<p>A database name in the Glue Data Catalog.</p>",
+        "DataQualityEvaluationConfigListGlueTables$TableNamePattern": "<p>For the <code>CATALOG</code> and <code>DATABASE</code> levels, a glob pattern, such as <code>orders_*</code>, that selects tables. If you don't specify a pattern, every table at the level is in scope. For the <code>TABLE</code> level, the name of the table.</p>",
         "DataQualityFlagsEnabled$key": null,
         "DataQualityFlagsEnabled$value": null,
         "DataQualityGlueTable$DatabaseName": "<p>A database name in the Glue Data Catalog.</p>",
         "DataQualityGlueTable$TableName": "<p>A table name in the Glue Data Catalog.</p>",
         "DataQualityGlueTable$CatalogId": "<p>A unique identifier for the Glue Data Catalog.</p>",
         "DataQualityGlueTable$ConnectionName": "<p>The name of the connection to the Glue Data Catalog.</p>",
+        "DataQualityResult$DataQualityEvaluationConfig": "<p>The name of the data quality evaluation configuration that started the evaluation run, returned when <code>EvaluationRunMode</code> is <code>EVALUATION_CONFIG</code>.</p>",
         "DataQualityResult$RulesetName": "<p>The name of the ruleset associated with the data quality result.</p>",
         "DataQualityResult$JobName": "<p>The job name associated with the data quality result, if any.</p>",
+        "DataQualityResultDescription$DataQualityEvaluationConfig": "<p>The name of the data quality evaluation configuration that started the evaluation run, returned when <code>EvaluationRunMode</code> is <code>EVALUATION_CONFIG</code>.</p>",
         "DataQualityResultDescription$JobName": "<p>The job name associated with the data quality result.</p>",
         "DataQualityResultFilterCriteria$JobName": "<p>Filter results by the specified job name.</p>",
+        "DataQualityResultFilterCriteria$DataQualityEvaluationConfig": "<p>Filter results by the evaluation configuration name which started the evaluation run.</p>",
+        "DataQualityResultV2Item$DataQualityEvaluationConfig": "<p>The name of the data quality evaluation configuration that started the evaluation run, returned when <code>EvaluationRunMode</code> is <code>EVALUATION_CONFIG</code>.</p>",
         "DataQualityResultV2Item$EvaluationContext": "<p>The evaluation context for the data quality result. This value identifies a specific data quality result, or a series of related results, within a run.</p>",
         "DataQualityResultV2Item$RulesetName": "<p>The name of the ruleset associated with the data quality result.</p>",
+        "DataQualityResultsV2Description$DataQualityEvaluationConfig": "<p>The name of the data quality evaluation configuration that started the evaluation run, returned when <code>EvaluationRunMode</code> is <code>EVALUATION_CONFIG</code>.</p>",
         "DataQualityResultsV2Description$EvaluationContext": "<p>The evaluation context for the data quality result. This value identifies a specific data quality result, or a series of related results, within a run.</p>",
         "DataQualityResultsV2FilterCriteria$EvaluationContext": "<p>The evaluation context to filter results by.</p>",
+        "DataQualityResultsV2FilterCriteria$DataQualityEvaluationConfig": "<p>Filter results by the evaluation configuration name which started the evaluation run.</p>",
         "DataQualityRuleRecommendationRunDescription$CreatedRulesetName": "<p>The name of the ruleset that was created by the recommendation run.</p>",
         "DataQualityRuleResult$Name": "<p>The name of the data quality rule.</p>",
         "DataQualityRulesetEvaluationRunFilter$RulesetName": "<p>Filter results by the name of the ruleset.</p>",
@@ -8556,9 +8735,9 @@
         "DataQualityTargetTable$TableName": "<p>The name of the Glue table.</p>",
         "DataQualityTargetTable$DatabaseName": "<p>The name of the database where the Glue table exists.</p>",
         "DataQualityTargetTable$CatalogId": "<p>The catalog id where the Glue table exists.</p>",
-        "DataQualityTelemetry$LibraryVersion": null,
-        "DataQualityTelemetry$SparkVersion": null,
-        "DataQualityTelemetry$HostRuntimeVersion": null,
+        "DataQualityTelemetry$LibraryVersion": "<p/>",
+        "DataQualityTelemetry$SparkVersion": "<p/>",
+        "DataQualityTelemetry$HostRuntimeVersion": "<p/>",
         "DataSourceMap$key": null,
         "Database$Name": "<p>The name of the database. For Hive compatibility, this is folded to lowercase when it is stored.</p>",
         "DatabaseIdentifier$DatabaseName": "<p>The name of the catalog database.</p>",
@@ -8581,6 +8760,7 @@
         "DeleteCrawlerRequest$Name": "<p>The name of the crawler to remove.</p>",
         "DeleteCustomEntityTypeRequest$Name": "<p>The name of the custom pattern that you want to delete.</p>",
         "DeleteCustomEntityTypeResponse$Name": "<p>The name of the custom pattern you deleted.</p>",
+        "DeleteDataQualityEvaluationConfigRequest$Name": "<p>The name of the data quality evaluation configuration to delete.</p>",
         "DeleteDataQualityRulesetRequest$Name": "<p>A name for the data quality ruleset.</p>",
         "DeleteDatabaseRequest$Name": "<p>The name of the database to delete. For Hive compatibility, this must be all lowercase.</p>",
         "DeleteJobRequest$JobName": "<p>The name of the job definition to delete.</p>",
@@ -8643,8 +8823,13 @@
         "GetCustomEntityTypeResponse$Name": "<p>The name of the custom pattern that you retrieved.</p>",
         "GetCustomEntityTypeResponse$RegexString": "<p>A regular expression string that is used for detecting sensitive data in a custom pattern.</p>",
         "GetDashboardUrlRequest$ResourceId": "<p>The unique identifier of the resource for which to retrieve the dashboard URL.</p>",
+        "GetDataQualityEvaluationConfigRequest$Name": "<p>The name of the data quality evaluation configuration.</p>",
+        "GetDataQualityEvaluationConfigResponse$Name": "<p>The name of the data quality evaluation configuration.</p>",
+        "GetDataQualityEvaluationConfigResponse$RulesetName": "<p>The name of the data quality ruleset that tables are evaluated with.</p>",
+        "GetDataQualityResultResponse$DataQualityEvaluationConfig": "<p>The name of the data quality evaluation configuration that started the evaluation run, returned when <code>EvaluationRunMode</code> is <code>EVALUATION_CONFIG</code>.</p>",
         "GetDataQualityResultResponse$RulesetName": "<p>The name of the ruleset associated with the data quality result.</p>",
         "GetDataQualityResultResponse$JobName": "<p>The job name associated with the data quality result, if any.</p>",
+        "GetDataQualityResultV2Response$DataQualityEvaluationConfig": "<p>The name of the data quality evaluation configuration that started the evaluation run, returned when <code>EvaluationRunMode</code> is <code>EVALUATION_CONFIG</code>.</p>",
         "GetDataQualityResultV2Response$EvaluationContext": "<p>The evaluation context for the data quality result. This value identifies a specific data quality result, or a series of related results, within a run.</p>",
         "GetDataQualityResultV2Response$RulesetName": "<p>The name of the ruleset associated with the data quality result.</p>",
         "GetDataQualityRuleRecommendationRunResponse$CreatedRulesetName": "<p>The name of the ruleset that was created by the run.</p>",
@@ -8834,6 +9019,10 @@
         "UpdateCrawlerRequest$Name": "<p>Name of the new crawler.</p>",
         "UpdateCrawlerScheduleRequest$CrawlerName": "<p>The name of the crawler whose schedule to update.</p>",
         "UpdateCsvClassifierRequest$Name": "<p>The name of the classifier.</p>",
+        "UpdateDataQualityEvaluationConfigRequest$Name": "<p>The name of the data quality evaluation configuration to update.</p>",
+        "UpdateDataQualityEvaluationConfigRequest$RulesetName": "<p>The name of a Data Quality Definition Language (DQDL) ruleset, containing analyzers, rules, or both, to evaluate tables with. You create the ruleset using the <code>CreateDataQualityRuleset</code> API. Specify either <code>RulesetName</code> or <code>ManagedRulesetName</code>, not both.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$Name": "<p>The name of the data quality evaluation configuration.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$RulesetName": "<p>The name of the data quality ruleset that tables are evaluated with.</p>",
         "UpdateDataQualityRulesetRequest$Name": "<p>The name of the data quality ruleset.</p>",
         "UpdateDataQualityRulesetResponse$Name": "<p>The name of the data quality ruleset.</p>",
         "UpdateDatabaseRequest$Name": "<p>The name of the database to update in the catalog. For Hive compatibility, this is folded to lowercase.</p>",
@@ -9139,6 +9328,8 @@
         "CsvClassifier$DisableValueTrimming": "<p>Specifies not to trim values before identifying the type of column values. The default value is <code>true</code>.</p>",
         "CsvClassifier$AllowSingleColumn": "<p>Enables the processing of files that contain only one column.</p>",
         "CsvClassifier$CustomDatatypeConfigured": "<p>Enables the custom datatype to be configured.</p>",
+        "DataQualityEvaluationConfigAdditionalRunOptions$CloudWatchMetricsEnabled": "<p>Specifies whether to enable CloudWatch metrics.</p>",
+        "DataQualityEvaluationConfigListDetails$PauseRuns": "<p>Specifies whether evaluations are paused.</p>",
         "DataQualityEvaluationRunAdditionalRunOptions$CloudWatchMetricsEnabled": "<p>Whether or not to enable CloudWatch metrics.</p>",
         "DataQualityRuleResultsOptions$WriteDataQualityRuleResultsEnabled": "<p>Set to true to write data quality rule results.</p>",
         "DeltaTarget$WriteManifest": "<p>Specifies whether to write the manifest files to the Delta table path.</p>",
@@ -9151,6 +9342,7 @@
         "GetBlueprintRequest$IncludeParameterSpec": "<p>Specifies whether or not to include the parameter specification.</p>",
         "GetCatalogsRequest$IncludeRoot": "<p>Whether to list the default catalog in the account and region in the response. Defaults to <code>false</code>. When <code>true</code> and <code>ParentCatalogId = NULL | Amazon Web Services Account ID</code>, all catalogs and the default catalog are enumerated in the response.</p> <p>When the <code>ParentCatalogId</code> is not equal to null, and this attribute is passed as <code>false</code> or <code>true</code>, an <code>InvalidInputException</code> is thrown.</p>",
         "GetCatalogsRequest$HasDatabases": "<p>When <code>true</code>, the response only includes catalogs that can contain databases. Some catalogs are organizational containers that hold only other catalogs, not databases. When this parameter is set to <code>true</code>, those container-only catalogs are excluded, and only catalogs capable of containing databases are returned. Defaults to <code>false</code>.</p>",
+        "GetDataQualityEvaluationConfigResponse$PauseRuns": "<p>Specifies whether evaluations are paused.</p>",
         "GetGlueIdentityCenterConfigurationResponse$UserBackgroundSessionsEnabled": "<p>Indicates whether users can run background sessions when using Identity Center authentication with Glue services.</p>",
         "GetWorkflowRequest$IncludeGraph": "<p>Specifies whether to include a graph when returning the workflow resource metadata.</p>",
         "GetWorkflowRunRequest$IncludeGraph": "<p>Specifies whether to include the workflow graph in response or not.</p>",
@@ -9172,6 +9364,8 @@
         "UpdateCsvClassifierRequest$DisableValueTrimming": "<p>Specifies not to trim values before identifying the type of column values. The default value is true.</p>",
         "UpdateCsvClassifierRequest$AllowSingleColumn": "<p>Enables the processing of files that contain only one column.</p>",
         "UpdateCsvClassifierRequest$CustomDatatypeConfigured": "<p>Specifies the configuration of custom datatypes.</p>",
+        "UpdateDataQualityEvaluationConfigRequest$PauseRuns": "<p>Specifies whether to pause the configuration. While paused, the configuration evaluates nothing, including tables added to the catalog or database.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$PauseRuns": "<p>Specifies whether evaluations are paused.</p>",
         "UpdateGlueIdentityCenterConfigurationRequest$UserBackgroundSessionsEnabled": "<p>Specifies whether users can run background sessions when using Identity Center authentication with Glue services.</p>",
         "ViewDefinition$IsProtected": "<p>You can set this flag as true to instruct the engine not to push user-provided operations into the logical plan of the view during query planning. However, setting this flag does not guarantee that the engine will comply. Refer to the engine's documentation to understand the guarantees provided, if any.</p>",
         "ViewDefinition$IsManaged": "<p>Specifies whether the materialized view is managed by Glue.</p>",
@@ -9196,7 +9390,7 @@
         "DataQualityMetricValues$ExpectedValue": "<p>The expected value of the data quality metric according to the analysis of historical data.</p>",
         "DataQualityMetricValues$LowerLimit": "<p>The lower limit of the data quality metric value according to the analysis of historical data.</p>",
         "DataQualityMetricValues$UpperLimit": "<p>The upper limit of the data quality metric value according to the analysis of historical data.</p>",
-        "DataQualityTelemetry$VcpuHours": null,
+        "DataQualityTelemetry$VcpuHours": "<p/>",
         "DynamoDBTarget$scanRate": "<p>The percentage of the configured read capacity units to use by the Glue crawler. Read capacity units is a term defined by DynamoDB, and is a numeric value that acts as rate limiter for the number of reads that can be performed on that table per second.</p> <p>The valid values are null or a value between 0.1 to 1.5. A null value is used when user does not provide a value, and defaults to 0.5 of the configured Read Capacity Unit (for provisioned tables), or 0.25 of the max configured Read Capacity Unit (for tables using on-demand mode).</p>",
         "EvaluatedMetricsMap$value": null,
         "GetMLTransformResponse$MaxCapacity": "<p>The number of Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">Glue pricing page</a>. </p> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>",
@@ -9221,6 +9415,7 @@
       "base": null,
       "refs": {
         "Count$member": null,
+        "CreateDataQualityEvaluationConfigRequest$NumberOfWorkers": "<p>The number of <code>G.1X</code> workers to be used in the run. The default is 5.</p>",
         "CreateDevEndpointRequest$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated to the development endpoint.</p> <p>The maximum number of workers you can define are 299 for <code>G.1X</code>, and 149 for <code>G.2X</code>. </p>",
         "CreateDevEndpointResponse$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated to the development endpoint.</p>",
         "CreateJobRequest$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when a job runs.</p>",
@@ -9231,6 +9426,7 @@
         "DataQualityRulesetEvaluationRun$NumberOfWorkers": "<p>The number of <code>G.1X</code> workers to be used in the run. The default is 5.</p>",
         "DataQualityRulesetListDetails$RuleCount": "<p>The number of rules in the ruleset.</p>",
         "DevEndpoint$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated to the development endpoint.</p> <p>The maximum number of workers you can define are 299 for <code>G.1X</code>, and 149 for <code>G.2X</code>. </p>",
+        "GetDataQualityEvaluationConfigResponse$NumberOfWorkers": "<p>The number of <code>G.1X</code> workers to be used in the run. The default is 5.</p>",
         "GetDataQualityRuleRecommendationRunResponse$NumberOfWorkers": "<p>The number of <code>G.1X</code> workers to be used in the run. The default is 5.</p>",
         "GetDataQualityRulesetEvaluationRunResponse$NumberOfWorkers": "<p>The number of <code>G.1X</code> workers to be used in the run. The default is 5.</p>",
         "GetMLTransformResponse$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when this task runs.</p>",
@@ -9257,6 +9453,8 @@
         "StartJobRunRequest$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when a job runs.</p>",
         "StartingEventBatchCondition$BatchSize": "<p>Number of events in the batch.</p>",
         "StartingEventBatchCondition$BatchWindow": "<p>Duration of the batch window in seconds.</p>",
+        "UpdateDataQualityEvaluationConfigRequest$NumberOfWorkers": "<p>The number of <code>G.1X</code> workers to be used in the run. The default is 5.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$NumberOfWorkers": "<p>The number of <code>G.1X</code> workers to be used in the run. The default is 5.</p>",
         "UpdateMLTransformRequest$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when this task runs.</p>",
         "UpdateMLTransformRequest$MaxRetries": "<p>The maximum number of times to retry a task for this transform after a task run fails.</p>",
         "UpdateWorkflowRequest$MaxConcurrentRuns": "<p>You can use this parameter to prevent unwanted multiple updates to data, to control costs, or in some cases, to prevent exceeding the maximum number of concurrent runs of any of the component jobs. If you leave this parameter blank, there is no limit to the number of concurrent workflow runs.</p>",
@@ -9326,6 +9524,7 @@
       "base": null,
       "refs": {
         "DataQualityConfigurationV2$ObservationsEnabled": "<p>Whether observations are enabled for the run. Valid values are:</p> <ul> <li> <p> <code>ALL</code> </p> </li> <li> <p> <code>NONE</code> </p> </li> </ul>",
+        "DataQualityEvaluationConfigAdditionalRunOptions$ObservationScope": "<p>The scope of the observation for the evaluation run. Specifies whether anomaly detection is enabled or disabled.</p>",
         "DataQualityEvaluationRunAdditionalRunOptions$ObservationScope": "<p>The scope of the observation for the evaluation run. Specifies whether anomaly detection is enabled or disabled.</p>"
       }
     },
@@ -9333,12 +9532,14 @@
       "base": null,
       "refs": {
         "DataQualityConfigurationV2$ObservationMode": "<p>The observation mode for the run. Valid values are:</p> <ul> <li> <p> <code>SCHEDULED</code> </p> </li> <li> <p> <code>FIXED</code> </p> </li> </ul>",
+        "DataQualityEvaluationConfigAdditionalRunOptions$ObservationMode": "<p>The observation mode for the evaluation run. Specifies how anomaly detection bounds are calculated.</p>",
         "DataQualityEvaluationRunAdditionalRunOptions$ObservationMode": "<p>The observation mode for the evaluation run. Specifies how anomaly detection bounds are calculated.</p>"
       }
     },
     "ObservationResultsOptions": {
       "base": "<p>The configuration for writing observation results.</p>",
       "refs": {
+        "DataQualityEvaluationConfigAdditionalRunOptions$ObservationResults": "<p>The configuration for writing observation results to a Glue Data Catalog table.</p>",
         "DataQualityEvaluationRunAdditionalRunOptions$ObservationResults": "<p>The configuration for writing observation results to a Glue Data Catalog table.</p>"
       }
     },
@@ -9678,6 +9879,8 @@
         "GetMLTransformsResponse$NextToken": "<p>A pagination token, if more results are available.</p>",
         "ListCustomEntityTypesRequest$NextToken": "<p>A paginated token to offset the results.</p>",
         "ListCustomEntityTypesResponse$NextToken": "<p>A pagination token, if more results are available.</p>",
+        "ListDataQualityEvaluationConfigsRequest$NextToken": "<p>A paginated token to offset the results. If you don't specify a token, the operation returns results starting from the beginning of the list.</p>",
+        "ListDataQualityEvaluationConfigsResponse$NextToken": "<p>A pagination token, if more results are available.</p>",
         "ListDataQualityResultsRequest$NextToken": "<p>A paginated token to offset the results.</p>",
         "ListDataQualityResultsResponse$NextToken": "<p>A pagination token, if more results are available.</p>",
         "ListDataQualityResultsV2Request$NextToken": "<p>A pagination token to retrieve the next page of results.</p>",
@@ -9962,6 +10165,7 @@
     "PreProcessingQueryString": {
       "base": "<p>SQL Query of SparkSQL format that can be used to pre-process data before running Data Quality Operations.</p>",
       "refs": {
+        "DataQualityEvaluationConfigGlueTables$PreProcessingQuery": "<p>SQL Query of SparkSQL format that can be used to pre-process the data for the table in Glue Data Catalog, before running the Data Quality Operation.</p> <p>For the <code>CATALOG</code> and <code>DATABASE</code> levels, use the <code>{{DATABASE_NAME}}</code> and <code>{{TABLE_NAME}}</code> placeholders, which are filled in for each table.</p>",
         "DataQualityGlueTable$PreProcessingQuery": "<p>SQL Query of SparkSQL format that can be used to pre-process the data for the table in Glue Data Catalog, before running the Data Quality Operation.</p>"
       }
     },
@@ -10041,6 +10245,7 @@
     "ProfilingResultsOptions": {
       "base": "<p>The configuration for writing profiling results.</p>",
       "refs": {
+        "DataQualityEvaluationConfigAdditionalRunOptions$ProfilingResults": "<p>The configuration for writing profiling results to a Glue Data Catalog table.</p>",
         "DataQualityEvaluationRunAdditionalRunOptions$ProfilingResults": "<p>The configuration for writing profiling results to a Glue Data Catalog table.</p>"
       }
     },
@@ -10638,9 +10843,11 @@
     "RoleString": {
       "base": null,
       "refs": {
+        "CreateDataQualityEvaluationConfigRequest$Role": "<p>The IAM role that evaluations assume. You can specify the role name or the role Amazon Resource Name (ARN).</p> <p>The role must allow the <code>glue.amazonaws.com</code> service principal to assume it, and needs permissions to read the catalog (<code>glue:GetCatalog</code>, <code>glue:GetDatabase</code>, <code>glue:GetTable</code>, <code>glue:SearchTables</code>, and <code>glue:GetPartitions</code>), read and create rulesets (<code>glue:GetDataQualityRuleset</code> and <code>glue:CreateDataQualityRuleset</code>), start evaluations (<code>glue:StartDataQualityRulesetEvaluationRun</code>, <code>glue:PublishDataQuality</code>, and <code>iam:PassRole</code> on the role itself), read the tables' data in Amazon S3, and write logs to Amazon CloudWatch Logs. If a catalog-level or database-level configuration applies to an Amazon S3 Tables catalog, the role also needs <code>s3tables:ListTableBuckets</code> and <code>s3tables:ListTables</code>. If you use Lake Formation, the role needs the <code>DESCRIBE</code> permission on the tables.</p>",
         "CreateJobRequest$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role associated with this job.</p>",
         "CreateMLTransformRequest$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role with the required permissions. The required permissions include both Glue service role permissions to Glue resources, and Amazon S3 permissions required by the transform. </p> <ul> <li> <p>This role needs Glue service role permissions to allow access to resources in Glue. See <a href=\"https://docs.aws.amazon.com/glue/latest/dg/attach-policy-iam-user.html\">Attach a Policy to IAM Users That Access Glue</a>.</p> </li> <li> <p>This role needs permission to your Amazon Simple Storage Service (Amazon S3) sources, targets, temporary directory, scripts, and any libraries used by the task run for this transform.</p> </li> </ul>",
         "DataQualityRulesetEvaluationRun$Role": "<p>An IAM role supplied to encrypt the results of the run.</p>",
+        "GetDataQualityEvaluationConfigResponse$Role": "<p>The Amazon Resource Name (ARN) of the IAM role that evaluation runs assume.</p>",
         "GetDataQualityRuleRecommendationRunResponse$Role": "<p>The IAM role that Glue assumes to access resources for the run.</p>",
         "GetDataQualityRulesetEvaluationRunResponse$Role": "<p>An IAM role supplied to encrypt the results of the run.</p>",
         "GetMLTransformResponse$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role with the required permissions.</p>",
@@ -10649,6 +10856,8 @@
         "MLTransform$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role with the required permissions. The required permissions include both Glue service role permissions to Glue resources, and Amazon S3 permissions required by the transform. </p> <ul> <li> <p>This role needs Glue service role permissions to allow access to resources in Glue. See <a href=\"https://docs.aws.amazon.com/glue/latest/dg/attach-policy-iam-user.html\">Attach a Policy to IAM Users That Access Glue</a>.</p> </li> <li> <p>This role needs permission to your Amazon Simple Storage Service (Amazon S3) sources, targets, temporary directory, scripts, and any libraries used by the task run for this transform.</p> </li> </ul>",
         "StartDataQualityRuleRecommendationRunRequest$Role": "<p>The IAM role that Glue assumes to access resources for the run.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/data-quality-authorization.html\">Configure IAM permissions for Glue Data Quality</a>.</p>",
         "StartDataQualityRulesetEvaluationRunRequest$Role": "<p>An IAM role supplied to encrypt the results of the run.</p>",
+        "UpdateDataQualityEvaluationConfigRequest$Role": "<p>The IAM role that evaluations assume. You can specify the role name or the role Amazon Resource Name (ARN). The role needs the trust policy and permissions described for <code>CreateDataQualityEvaluationConfig</code>.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$Role": "<p>The Amazon Resource Name (ARN) of the IAM role that evaluation runs assume.</p>",
         "UpdateMLTransformRequest$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role with the required permissions.</p>"
       }
     },
@@ -10661,6 +10870,7 @@
     "RowLevelResultsOptions": {
       "base": "<p>The configuration for writing row-level evaluation results.</p>",
       "refs": {
+        "DataQualityEvaluationConfigAdditionalRunOptions$RowLevelResults": "<p>The configuration for writing row-level evaluation results to a Glue Data Catalog table.</p>",
         "DataQualityEvaluationRunAdditionalRunOptions$RowLevelResults": "<p>The configuration for writing row-level evaluation results to a Glue Data Catalog table.</p>"
       }
     },
@@ -12364,6 +12574,7 @@
         "CreateConnectionRequest$Tags": "<p>The tags you assign to the connection.</p>",
         "CreateCrawlerRequest$Tags": "<p>The tags to use with this crawler request. You may use tags to limit access to the crawler. For more information about tags in Glue, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">Amazon Web Services Tags in Glue</a> in the developer guide.</p>",
         "CreateCustomEntityTypeRequest$Tags": "<p>A list of tags applied to the custom entity type.</p>",
+        "CreateDataQualityEvaluationConfigRequest$Tags": "<p>A list of tags applied to the data quality evaluation configuration.</p>",
         "CreateDataQualityRulesetRequest$Tags": "<p>A list of tags applied to the data quality ruleset.</p>",
         "CreateDatabaseRequest$Tags": "<p>The tags you assign to the database.</p>",
         "CreateDevEndpointRequest$Tags": "<p>The tags to use with this DevEndpoint. You may use tags to limit access to the DevEndpoint. For more information about tags in Glue, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">Amazon Web Services Tags in Glue</a> in the developer guide.</p>",
@@ -12525,11 +12736,13 @@
       "base": null,
       "refs": {
         "Action$Timeout": "<p>The <code>JobRun</code> timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. This overrides the timeout value set in the parent job.</p> <p>Jobs must have timeout values less than 7 days or 10080 minutes. Otherwise, the jobs will throw an exception.</p> <p>When the value is left blank, the timeout is defaulted to 2,880 minutes for Glue version 4.0 and earlier, or 480 minutes for Glue version 5.0 and later.</p> <p>Any existing Glue jobs that had a timeout value greater than 7 days will be defaulted to 7 days. For instance if you have specified a timeout of 20 days for a batch job, it will be stopped on the 7th day.</p> <p>For streaming jobs, if you have set up a maintenance window, it will be restarted during the maintenance window after 7 days.</p>",
+        "CreateDataQualityEvaluationConfigRequest$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "CreateJobRequest$Timeout": "<p>The job timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status.</p> <p>Jobs must have timeout values less than 7 days or 10080 minutes. Otherwise, the jobs will throw an exception.</p> <p>When the value is left blank, the timeout is defaulted to 2,880 minutes for Glue version 4.0 and earlier, or 480 minutes for Glue version 5.0 and later.</p> <p>Any existing Glue jobs that had a timeout value greater than 7 days will be defaulted to 7 days. For instance if you have specified a timeout of 20 days for a batch job, it will be stopped on the 7th day.</p> <p>For streaming jobs, if you have set up a maintenance window, it will be restarted during the maintenance window after 7 days.</p>",
         "CreateMLTransformRequest$Timeout": "<p>The timeout of the task run for this transform in minutes. This is the maximum time that a task run for this transform can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "CreateSessionRequest$Timeout": "<p> The number of minutes before session times out. Default for Spark ETL jobs is 48 hours (2880 minutes). Consult the documentation for other job types. </p>",
         "CreateSessionRequest$IdleTimeout": "<p> The number of minutes when idle before session times out. Default for Spark ETL jobs is value of Timeout. Consult the documentation for other job types. </p>",
         "DataQualityRulesetEvaluationRun$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
+        "GetDataQualityEvaluationConfigResponse$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "GetDataQualityRuleRecommendationRunResponse$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "GetDataQualityRulesetEvaluationRunResponse$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "GetMLTransformResponse$Timeout": "<p>The timeout for a task run for this transform in minutes. This is the maximum time that a task run for this transform can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
@@ -12540,6 +12753,8 @@
         "StartDataQualityRuleRecommendationRunRequest$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "StartDataQualityRulesetEvaluationRunRequest$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "StartJobRunRequest$Timeout": "<p>The <code>JobRun</code> timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. This value overrides the timeout value set in the parent job. </p> <p>Jobs must have timeout values less than 7 days or 10080 minutes. Otherwise, the jobs will throw an exception.</p> <p>When the value is left blank, the timeout is defaulted to 2,880 minutes for Glue version 4.0 and earlier, or 480 minutes for Glue version 5.0 and later.</p> <p>Any existing Glue jobs that had a timeout value greater than 7 days will be defaulted to 7 days. For instance if you have specified a timeout of 20 days for a batch job, it will be stopped on the 7th day.</p> <p>For streaming jobs, if you have set up a maintenance window, it will be restarted during the maintenance window after 7 days.</p>",
+        "UpdateDataQualityEvaluationConfigRequest$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
+        "UpdateDataQualityEvaluationConfigResponse$Timeout": "<p>The timeout for a run in minutes. This is the maximum time that a run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>",
         "UpdateMLTransformRequest$Timeout": "<p>The timeout for a task run for this transform in minutes. This is the maximum time that a task run for this transform can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>"
       }
     },
@@ -12561,8 +12776,12 @@
         "Crawler$LastUpdated": "<p>The time that the crawler was last updated.</p>",
         "CrawlerHistory$StartTime": "<p>The date and time on which the crawl started.</p>",
         "CrawlerHistory$EndTime": "<p>The date and time on which the crawl ended.</p>",
+        "CreateDataQualityEvaluationConfigRequest$StartAt": "<p>The time from which the schedule runs, inclusive.</p>",
+        "CreateDataQualityEvaluationConfigRequest$EndAt": "<p>The time at which the schedule stops running, exclusive.</p>",
         "CsvClassifier$CreationTime": "<p>The time that this classifier was registered.</p>",
         "CsvClassifier$LastUpdated": "<p>The time that this classifier was last updated.</p>",
+        "DataQualityEvaluationConfigListDetails$CreatedOn": "<p>The time when the configuration was created.</p>",
+        "DataQualityEvaluationConfigListDetails$LastModifiedOn": "<p>The time when the configuration was last modified.</p>",
         "DataQualityResult$StartedOn": "<p>The date and time when this data quality run started.</p>",
         "DataQualityResult$CompletedOn": "<p>The date and time when this data quality run completed.</p>",
         "DataQualityResultDescription$StartedOn": "<p>The time that the run started for this data quality result.</p>",
@@ -12593,6 +12812,10 @@
         "DateColumnStatisticsData$MinimumValue": "<p>The lowest value in the column.</p>",
         "DateColumnStatisticsData$MaximumValue": "<p>The highest value in the column.</p>",
         "ExecutionAttempt$ExecutionTimestamp": "<p>A timestamp when the last column statistics task run occurred.</p>",
+        "GetDataQualityEvaluationConfigResponse$CreatedOn": "<p>The time when the configuration was created.</p>",
+        "GetDataQualityEvaluationConfigResponse$LastModifiedOn": "<p>The time when the configuration was last modified.</p>",
+        "GetDataQualityEvaluationConfigResponse$StartAt": "<p>The time from which the schedule runs, inclusive.</p>",
+        "GetDataQualityEvaluationConfigResponse$EndAt": "<p>The time at which the schedule stops running, exclusive.</p>",
         "GetDataQualityModelResponse$StartedOn": "<p>The timestamp when the data quality model training started.</p>",
         "GetDataQualityModelResponse$CompletedOn": "<p>The timestamp when the data quality model training completed.</p>",
         "GetDataQualityModelResultResponse$CompletedOn": "<p>The timestamp when the data quality model training completed.</p>",
@@ -12665,6 +12888,12 @@
         "TransformFilterCriteria$CreatedAfter": "<p>The time and date after which the transforms were created.</p>",
         "TransformFilterCriteria$LastModifiedBefore": "<p>Filter on transforms last modified before this date.</p>",
         "TransformFilterCriteria$LastModifiedAfter": "<p>Filter on transforms last modified after this date.</p>",
+        "UpdateDataQualityEvaluationConfigRequest$StartAt": "<p>The time from which the schedule runs, inclusive.</p>",
+        "UpdateDataQualityEvaluationConfigRequest$EndAt": "<p>The time at which the schedule stops running, exclusive.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$CreatedOn": "<p>The time when the configuration was created.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$LastModifiedOn": "<p>The time when the configuration was last modified.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$StartAt": "<p>The time from which the schedule runs, inclusive.</p>",
+        "UpdateDataQualityEvaluationConfigResponse$EndAt": "<p>The time at which the schedule stops running, exclusive.</p>",
         "UserDefinedFunction$CreateTime": "<p>The time at which the function was created.</p>",
         "ViewValidation$UpdateTime": "<p>The time of the last update.</p>",
         "XMLClassifier$CreationTime": "<p>The time that this classifier was registered.</p>",
@@ -13131,6 +13360,14 @@
         "UpdateClassifierRequest$CsvClassifier": "<p>A <code>CsvClassifier</code> object with updated fields.</p>"
       }
     },
+    "UpdateDataQualityEvaluationConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDataQualityEvaluationConfigResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateDataQualityRulesetRequest": {
       "base": null,
       "refs": {}
@@ -13370,6 +13607,7 @@
       "refs": {
         "CatalogTableConfigOptions$S3Location": "<p>The Amazon S3 location for storing the results.</p>",
         "CreateJobRequest$LogUri": "<p>This field is reserved for future use.</p>",
+        "DataQualityEvaluationConfigAdditionalRunOptions$ResultsS3Prefix": "<p>Prefix for Amazon S3 to store results.</p>",
         "DataQualityEvaluationRunAdditionalRunOptions$ResultsS3Prefix": "<p>Prefix for Amazon S3 to store results.</p>",
         "ExportLabelsTaskRunProperties$OutputS3Path": "<p>The Amazon Simple Storage Service (Amazon S3) path where you will export the labels.</p>",
         "ImportLabelsTaskRunProperties$InputS3Path": "<p>The Amazon Simple Storage Service (Amazon S3) path from where you will import the labels.</p>",

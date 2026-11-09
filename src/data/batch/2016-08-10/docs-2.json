@@ -142,6 +142,7 @@
         "EksPodProperties$shareProcessNamespace": "<p>Indicates if the processes in a container are shared, or visible, to other containers in the same pod. For more information, see <a href=\"https://kubernetes.io/docs/tasks/configure-pod-container/share-process-namespace/\">Share Process Namespace between Containers in a Pod</a>.</p>",
         "EksPodPropertiesDetail$hostNetwork": "<p>Indicates if the pod uses the hosts' network IP address. The default value is <code>true</code>. Setting this to <code>false</code> enables the Kubernetes pod networking model. Most Batch workloads are egress-only and don't require the overhead of IP allocation for each pod for incoming connections. For more information, see <a href=\"https://kubernetes.io/docs/concepts/security/pod-security-policy/#host-namespaces\">Host namespaces</a> and <a href=\"https://kubernetes.io/docs/concepts/workloads/pods/#pod-networking\">Pod networking</a> in the <i>Kubernetes documentation</i>.</p>",
         "EksPodPropertiesDetail$shareProcessNamespace": "<p>Indicates if the processes in a container are shared, or visible, to other containers in the same pod. For more information, see <a href=\"https://kubernetes.io/docs/tasks/configure-pod-container/share-process-namespace/\">Share Process Namespace between Containers in a Pod</a>.</p>",
+        "EksPodSecurityContext$runAsNonRoot": "<p>Specifies whether Kubernetes validates that containers in the pod don't run as the root user unless a container specifies an overriding value.</p>",
         "EksSecret$optional": "<p>Specifies whether the secret or the secret's keys must be defined.</p>",
         "InstanceLaunchTemplate$fipsEnabled": "<p>Specifies whether FIPS 140-2 validated cryptographic modules are enabled on the managed instances. Not available in all Regions.</p>",
         "InstanceLaunchTemplate$instanceMetadataTagsPropagation": "<p>Specifies whether instance tags are accessible from the instance metadata service (IMDS). If not specified, instance tags are not accessible from IMDS.</p>",
@@ -375,7 +376,7 @@
       "refs": {
         "JobDefinition$containerProperties": "<p>An object with properties specific to Amazon ECS-based jobs. When <code>containerProperties</code> is used in the job definition, it can't be used in addition to <code>eksProperties</code>, <code>ecsProperties</code>, or <code>nodeProperties</code>.</p>",
         "NodeRangeProperty$container": "<p>The container details for the node range.</p>",
-        "RegisterJobDefinitionRequest$containerProperties": "<p>An object with properties specific to Amazon ECS-based single-node container-based jobs. If the job definition's <code>type</code> parameter is <code>container</code>, then you must specify either <code>containerProperties</code> or <code>nodeProperties</code>. This must not be specified for Amazon EKS-based job definitions.</p> <note> <p>If the job runs on Fargate resources, then you must not specify <code>nodeProperties</code>; use only <code>containerProperties</code>.</p> </note>"
+        "RegisterJobDefinitionRequest$containerProperties": "<p>An object with properties specific to Amazon ECS-based single-node container-based jobs. If the job definition's <code>type</code> parameter is <code>container</code>, then you must specify either <code>containerProperties</code> or <code>nodeProperties</code>. This must not be specified for Amazon EKS-based job definitions.</p> <note> <p>If the job runs on Fargate resources, then you must not specify <code>nodeProperties</code>. We recommend <code>ecsProperties</code>, which supports both single-container and multi-container jobs. <code>containerProperties</code> is also supported for single-container jobs. For more information, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/multi-container-jobs.html\">Multi-container jobs</a> in the <i>Batch User Guide</i>.</p> </note>"
       }
     },
     "ContainerSummary": {
@@ -769,6 +770,25 @@
         "EksContainerOverride$env": "<p>The environment variables to send to the container. You can add new environment variables, which are added to the container at launch. Or, you can override the existing environment variables from the Docker image or the job definition.</p> <note> <p>Environment variables cannot start with \"<code>AWS_BATCH</code>\". This naming convention is reserved for variables that Batch sets.</p> </note>"
       }
     },
+    "EksContainerLinuxCapabilities": {
+      "base": "<p>The Linux capabilities for the container. For more information, see <a href=\"https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-capabilities-for-a-container\">Set capabilities for a container</a> in the <i>Kubernetes documentation</i>.</p>",
+      "refs": {
+        "EksContainerSecurityContext$capabilities": "<p>Adds or removes Linux capabilities from the container's default capability set. With Linux capabilities, you can grant specific privileges without granting full root permissions.</p>"
+      }
+    },
+    "EksContainerLinuxCapability": {
+      "base": null,
+      "refs": {
+        "EksContainerLinuxCapabilityList$member": null
+      }
+    },
+    "EksContainerLinuxCapabilityList": {
+      "base": null,
+      "refs": {
+        "EksContainerLinuxCapabilities$add": "<p>The Linux capabilities to add to the default capability set for the container. This parameter contains up to 64 values. Specify capability names without the <code>CAP_</code> prefix.</p>",
+        "EksContainerLinuxCapabilities$drop": "<p>The Linux capabilities to remove from the default capability set for the container. This parameter contains up to 64 values. Specify capability names without the <code>CAP_</code> prefix.</p>"
+      }
+    },
     "EksContainerOverride": {
       "base": "<p>Object representing any Kubernetes overrides to a job definition that's used in a <a href=\"https://docs.aws.amazon.com/batch/latest/APIReference/API_SubmitJob.html\">SubmitJob</a> API operation.</p>",
       "refs": {
@@ -873,6 +893,13 @@
         "EksPropertiesOverride$podProperties": "<p>The overrides for the Kubernetes pod resources of a job.</p>"
       }
     },
+    "EksPodSecurityContext": {
+      "base": "<p>The security context for the pod. The settings apply to all containers in the pod when the container does not specify an overriding value. For more information, see <a href=\"https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod\">Set the security context for a Pod</a> in the <i>Kubernetes documentation</i>.</p>",
+      "refs": {
+        "EksPodProperties$securityContext": "<p>The security context to apply to the pod. The settings apply to all containers in the pod unless an individual container specifies an overriding value.</p>",
+        "EksPodPropertiesDetail$securityContext": "<p>The security context applied to the pod. The settings apply to all containers in the pod unless an individual container specifies an overriding value.</p>"
+      }
+    },
     "EksProperties": {
       "base": "<p>An object that contains the properties for the Kubernetes resources of a job.</p>",
       "refs": {
@@ -898,6 +925,25 @@
       "base": null,
       "refs": {
         "EksContainerResourceRequirements$requests": "<p>The type and quantity of the resources to request for the container. The values vary based on the <code>name</code> that's specified. Resources can be requested by using either the <code>limits</code> or the <code>requests</code> objects.</p> <dl> <dt>memory</dt> <dd> <p>The memory hard limit (in MiB) for the container, using whole integers, with a \"Mi\" suffix. If your container attempts to exceed the memory specified, the container is terminated. You must specify at least 4 MiB of memory for a job. <code>memory</code> can be specified in <code>limits</code>, <code>requests</code>, or both. If <code>memory</code> is specified in both, then the value that's specified in <code>limits</code> must be equal to the value that's specified in <code>requests</code>.</p> <note> <p>If you're trying to maximize your resource utilization by providing your jobs as much memory as possible for a particular instance type, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/memory-management.html\">Memory management</a> in the <i>Batch User Guide</i>.</p> </note> </dd> <dt>cpu</dt> <dd> <p>The number of CPUs that are reserved for the container. Values must be an even multiple of <code>0.25</code>. <code>cpu</code> can be specified in <code>limits</code>, <code>requests</code>, or both. If <code>cpu</code> is specified in both, then the value that's specified in <code>limits</code> must be at least as large as the value that's specified in <code>requests</code>.</p> </dd> <dt>nvidia.com/gpu</dt> <dd> <p>The number of GPUs that are reserved for the container. Values must be a whole integer. <code>nvidia.com/gpu</code> can be specified in <code>limits</code>, <code>requests</code>, or both. If <code>nvidia.com/gpu</code> is specified in both, then the value that's specified in <code>limits</code> must be equal to the value that's specified in <code>requests</code>.</p> </dd> </dl>"
+      }
+    },
+    "EksSeccompLocalhostProfile": {
+      "base": null,
+      "refs": {
+        "EksSeccompProfile$localhostProfile": "<p>The path of the profile on the node, relative to the configured seccomp profile location. You must specify this parameter when <code>type</code> is <code>Localhost</code>. Don't set this parameter for any other type. You are responsible for ensuring that the profile exists on every eligible worker node. For information about providing files to Amazon EKS nodes, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/eks-launch-templates.html\">Use a launch template with Batch on Amazon EKS</a> in the <i>Batch User Guide</i>.</p>"
+      }
+    },
+    "EksSeccompProfile": {
+      "base": "<p>The Linux seccomp profile for a pod or container. For more information, see <a href=\"https://kubernetes.io/docs/tutorials/security/seccomp/\">Restrict a Container's Syscalls with seccomp</a> in the <i>Kubernetes documentation</i>.</p>",
+      "refs": {
+        "EksContainerSecurityContext$seccompProfile": "<p>The seccomp profile for the container. A container-level seccomp profile overrides the profile in the pod security context, which defines security settings that apply to all containers in the pod unless a container overrides them. If this parameter isn't specified, the container uses the pod security context's seccomp profile when one is specified.</p>",
+        "EksPodSecurityContext$seccompProfile": "<p>The default seccomp profile for containers in the pod. A container-level seccomp profile overrides this value.</p>"
+      }
+    },
+    "EksSeccompProfileType": {
+      "base": null,
+      "refs": {
+        "EksSeccompProfile$type": "<p>The seccomp profile type can be one of the following values:</p> <dl> <dt>RuntimeDefault</dt> <dd> <p>The <code>RuntimeDefault</code> value uses the container runtime's default seccomp profile.</p> </dd> <dt>Unconfined</dt> <dd> <p>The <code>Unconfined</code> value doesn't filter the container with seccomp.</p> </dd> <dt>Localhost</dt> <dd> <p>The <code>Localhost</code> value uses a custom profile at the path specified by <code>localhostProfile</code>.</p> </dd> </dl>"
       }
     },
     "EksSecret": {
@@ -1602,8 +1648,11 @@
         "DescribeServiceJobResponse$stoppedAt": "<p>The Unix timestamp (in milliseconds) for when the service job stopped running.</p>",
         "EksAttemptDetail$startedAt": "<p>The Unix timestamp (in milliseconds) for when the attempt was started (when the attempt transitioned from the <code>STARTING</code> state to the <code>RUNNING</code> state).</p>",
         "EksAttemptDetail$stoppedAt": "<p>The Unix timestamp (in milliseconds) for when the attempt was stopped. This happens when the attempt transitioned from the <code>RUNNING</code> state to a terminal state, such as <code>SUCCEEDED</code> or <code>FAILED</code>.</p>",
-        "EksContainerSecurityContext$runAsUser": "<p>When this parameter is specified, the container is run as the specified user ID (<code>uid</code>). If this parameter isn't specified, the default is the user that's specified in the image metadata. This parameter maps to <code>RunAsUser</code> and <code>MustRanAs</code> policy in the <a href=\"https://kubernetes.io/docs/concepts/security/pod-security-policy/#users-and-groups\">Users and groups pod security policies</a> in the <i>Kubernetes documentation</i>.</p>",
-        "EksContainerSecurityContext$runAsGroup": "<p>When this parameter is specified, the container is run as the specified group ID (<code>gid</code>). If this parameter isn't specified, the default is the group that's specified in the image metadata. This parameter maps to <code>RunAsGroup</code> and <code>MustRunAs</code> policy in the <a href=\"https://kubernetes.io/docs/concepts/security/pod-security-policy/#users-and-groups\">Users and groups pod security policies</a> in the <i>Kubernetes documentation</i>.</p>",
+        "EksContainerSecurityContext$runAsUser": "<p>When this parameter is specified, the container is run as the specified user ID (<code>uid</code>). If this parameter isn't specified, the default is the user that's specified in the image metadata. The supported value range is <code>0</code> through <code>2147483647</code>. This parameter maps to <code>RunAsUser</code> and <code>MustRunAs</code> policy in the <a href=\"https://kubernetes.io/docs/concepts/security/pod-security-policy/#users-and-groups\">Users and groups pod security policies</a> in the <i>Kubernetes documentation</i>.</p>",
+        "EksContainerSecurityContext$runAsGroup": "<p>When this parameter is specified, the container is run as the specified group ID (<code>gid</code>). If this parameter isn't specified, the default is the group that's specified in the image metadata. The supported value range is <code>0</code> through <code>2147483647</code>. This parameter maps to <code>RunAsGroup</code> and <code>MustRunAs</code> policy in the <a href=\"https://kubernetes.io/docs/concepts/security/pod-security-policy/#users-and-groups\">Users and groups pod security policies</a> in the <i>Kubernetes documentation</i>.</p>",
+        "EksPodSecurityContext$runAsUser": "<p>The user ID that runs containers in the pod when a container does not specify its own user ID. The supported value range is <code>0</code> through <code>2147483647</code>.</p>",
+        "EksPodSecurityContext$runAsGroup": "<p>The primary group ID that runs containers in the pod when a container does not specify its own group ID. The supported value range is <code>0</code> through <code>2147483647</code>.</p>",
+        "EksPodSecurityContext$fsGroup": "<p>A special supplemental group that is applied to all containers in the pod. Some volume types allow Kubernetes to change the ownership and permissions of the volume contents to this group when the volume is mounted. The supported value range is <code>0</code> through <code>2147483647</code>.</p>",
         "FairshareUtilizationDetail$activeShareCount": "<p>The total number of active shares in the fairshare scheduling job queue that are currently utilizing capacity.</p>",
         "FrontOfQueueDetail$lastUpdatedAt": "<p>The Unix timestamp (in milliseconds) for when each of the first 100 <code>RUNNABLE</code> jobs were last updated. </p>",
         "FrontOfQueueJobSummary$earliestTimeAtPosition": "<p>The Unix timestamp (in milliseconds) for when the job transitioned to its current position in the job queue.</p>",
@@ -1713,9 +1762,9 @@
     "NodeProperties": {
       "base": "<p>An object that represents the node properties of a multi-node parallel job.</p> <note> <p>Node properties can't be specified for Amazon EKS based job definitions.</p> </note>",
       "refs": {
-        "JobDefinition$nodeProperties": "<p>An object with properties that are specific to multi-node parallel jobs. When <code>nodeProperties</code> is used in the job definition, it can't be used in addition to <code>containerProperties</code>, <code>ecsProperties</code>, or <code>eksProperties</code>.</p> <note> <p>If the job runs on Fargate resources, don't specify <code>nodeProperties</code>. Use <code>containerProperties</code> instead.</p> </note>",
+        "JobDefinition$nodeProperties": "<p>An object with properties that are specific to multi-node parallel jobs. When <code>nodeProperties</code> is used in the job definition, it can't be used in addition to <code>containerProperties</code>, <code>ecsProperties</code>, or <code>eksProperties</code>.</p> <note> <p>If the job runs on Fargate resources, don't specify <code>nodeProperties</code>. We recommend <code>ecsProperties</code>, which supports both single-container and multi-container jobs. <code>containerProperties</code> is also supported for single-container jobs.</p> </note>",
         "JobDetail$nodeProperties": "<p>An object that represents the node properties of a multi-node parallel job.</p> <note> <p>This isn't applicable to jobs that are running on Fargate resources.</p> </note>",
-        "RegisterJobDefinitionRequest$nodeProperties": "<p>An object with properties specific to multi-node parallel jobs. If you specify node properties for a job, it becomes a multi-node parallel job. For more information, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html\">Multi-node Parallel Jobs</a> in the <i>Batch User Guide</i>.</p> <note> <p>If the job runs on Fargate resources, then you must not specify <code>nodeProperties</code>; use <code>containerProperties</code> instead.</p> </note> <note> <p>If the job runs on Amazon EKS resources, then you must not specify <code>nodeProperties</code>.</p> </note>"
+        "RegisterJobDefinitionRequest$nodeProperties": "<p>An object with properties specific to multi-node parallel jobs. If you specify node properties for a job, it becomes a multi-node parallel job. For more information, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html\">Multi-node Parallel Jobs</a> in the <i>Batch User Guide</i>.</p> <note> <p>If the job runs on Fargate resources, then you must not specify <code>nodeProperties</code>. We recommend <code>ecsProperties</code>, which supports both single-container and multi-container jobs. <code>containerProperties</code> is also supported for single-container jobs.</p> </note> <note> <p>If the job runs on Amazon EKS resources, then you must not specify <code>nodeProperties</code>.</p> </note>"
       }
     },
     "NodePropertiesSummary": {

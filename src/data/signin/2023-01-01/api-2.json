@@ -13,6 +13,25 @@
     "uid":"signin-2023-01-01"
   },
   "operations":{
+    "CreateBearerToken":{
+      "name":"CreateBearerToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/token?x-amz-token-request-type=bearer",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateBearerTokenRequest"},
+      "output":{"shape":"CreateBearerTokenResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsError"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "staticContextParams":{
+        "IsOAuthEndpoint":{"value":true}
+      }
+    },
     "CreateOAuth2Token":{
       "name":"CreateOAuth2Token",
       "http":{
@@ -311,6 +330,11 @@
       "max":512,
       "min":1
     },
+    "BearerTokenExpiresIn":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
     "BearerTokenType":{
       "type":"string",
       "pattern":"Bearer"
@@ -375,6 +399,46 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "CreateBearerTokenRequest":{
+      "type":"structure",
+      "required":[
+        "grantType",
+        "resource"
+      ],
+      "members":{
+        "grantType":{
+          "shape":"ClientCredentialsGrantType",
+          "locationName":"grant_type"
+        },
+        "resource":{"shape":"Resource"},
+        "durationSeconds":{
+          "shape":"TokenDuration",
+          "locationName":"duration"
+        }
+      }
+    },
+    "CreateBearerTokenResponse":{
+      "type":"structure",
+      "required":[
+        "accessToken",
+        "tokenType",
+        "expiresIn"
+      ],
+      "members":{
+        "accessToken":{
+          "shape":"OAuthAccessToken",
+          "locationName":"access_token"
+        },
+        "tokenType":{
+          "shape":"BearerTokenType",
+          "locationName":"token_type"
+        },
+        "expiresIn":{
+          "shape":"BearerTokenExpiresIn",
+          "locationName":"expires_in"
+        }
+      }
     },
     "CreateOAuth2TokenRequest":{
       "type":"structure",
@@ -1033,6 +1097,11 @@
       "max":32,
       "min":12,
       "pattern":"(\\d{12}|o-[a-z0-9]{10}|r-[0-9a-z]{4,32})"
+    },
+    "TokenDuration":{
+      "type":"integer",
+      "box":true,
+      "min":300
     },
     "TokenExchangeGrantType":{
       "type":"string",

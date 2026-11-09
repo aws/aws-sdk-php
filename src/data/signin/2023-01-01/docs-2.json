@@ -2,6 +2,7 @@
   "version": "2.0",
   "service": "<p>AWS Sign-In manages authentication for AWS services. It implements OAuth 2.0, providing secure token exchange and refresh capabilities.</p>",
   "operations": {
+    "CreateBearerToken": "<p>Creates a bearer token that represents your IAM credentials and can be used to access a supported AWS service. By default, the token is valid for 12 hours.</p>",
     "CreateOAuth2Token": "<p>Exchanges an authorization code or refresh token for an OAuth 2.0 access token and refresh token.</p>",
     "CreateOAuth2TokenWithIAM": "<p>Exchanges client credentials for an OAuth 2.0 access token scoped to a resource, which you can use to access AWS services from applications.</p>",
     "CreateOAuth2TokenWithTokenExchange": "<p>Exchanges a supported token for an OAuth 2.0 access token scoped to a resource, which you can use to access AWS services from applications.</p>",
@@ -38,9 +39,16 @@
         "CreateOAuth2TokenRequestBody$code": "<p>The authorization code received from the &quot;/v1/authorize&quot; endpoint. Required when &quot;grant_type=authorization_code&quot;.</p>"
       }
     },
+    "BearerTokenExpiresIn": {
+      "base": "<p>Token lifetime in seconds.</p>",
+      "refs": {
+        "CreateBearerTokenResponse$expiresIn": "<p>Token lifetime in seconds.</p>"
+      }
+    },
     "BearerTokenType": {
       "base": "<p>Token type for access tokens. Currently supports &quot;Bearer&quot; as defined in RFC 6749.</p>",
       "refs": {
+        "CreateBearerTokenResponse$tokenType": "<p>The token type. Always &quot;Bearer&quot;.</p>",
         "CreateOAuth2TokenWithIAMResponse$tokenType": "<p>The token type. Always &quot;Bearer&quot; as defined in RFC 6749.</p>",
         "CreateOAuth2TokenWithTokenExchangeResponse$tokenType": "<p>The token type. Currently only supports &quot;Bearer&quot; as defined in RFC 6749.</p>"
       }
@@ -57,6 +65,7 @@
     "ClientCredentialsGrantType": {
       "base": "<p>OAuth 2.0 grant type for client_credentials flow.</p>",
       "refs": {
+        "CreateBearerTokenRequest$grantType": "<p>The grant type. Must be &quot;client_credentials&quot;.</p>",
         "CreateOAuth2TokenWithIAMRequest$grantType": "<p>The OAuth 2.0 grant type. Must be &quot;client_credentials&quot;.</p>"
       }
     },
@@ -113,6 +122,14 @@
       "refs": {
         "ListResourcePermissionStatementsInput$maxResults": "<p>Maximum number of results to return</p>"
       }
+    },
+    "CreateBearerTokenRequest": {
+      "base": "<p>Input structure for CreateBearerToken operation</p>",
+      "refs": {}
+    },
+    "CreateBearerTokenResponse": {
+      "base": "<p>Output structure for CreateBearerToken operation</p> <p>Contains the bearer token, its type, and its lifetime.</p>",
+      "refs": {}
     },
     "CreateOAuth2TokenRequest": {
       "base": "<p>Input structure for CreateOAuth2Token operation</p> <p>Contains flattened token operation inputs for both authorization code and refresh token flows. The operation type is determined by the grant_type parameter in the request body.</p>",
@@ -285,6 +302,7 @@
     "OAuthAccessToken": {
       "base": "<p>OAuth 2.0 access token containing principal identity and resource scope.</p>",
       "refs": {
+        "CreateBearerTokenResponse$accessToken": "<p>The bearer token. Present it to the AWS service named in the request.</p>",
         "CreateOAuth2TokenWithIAMResponse$accessToken": "<p>Access token containing principal identity, resource scope, and session metadata.</p>",
         "CreateOAuth2TokenWithTokenExchangeResponse$accessToken": "<p>Access token containing principal identity, resource scope, and session metadata.</p>"
       }
@@ -363,6 +381,7 @@
     "Resource": {
       "base": null,
       "refs": {
+        "CreateBearerTokenRequest$resource": "<p>The AWS service the bearer token is for. Example: &quot;ecr.amazonaws.com&quot;.</p>",
         "CreateOAuth2TokenWithIAMRequest$resource": "<p>The OAuth resource for which the access token is requested. Example: &quot;aws-mcp.amazonaws.com&quot;.</p>",
         "CreateOAuth2TokenWithTokenExchangeRequest$resource": "<p>The OAuth resource for which the access token is requested. Required when &quot;grant_type=urn:ietf:params:oauth:grant-type:token-exchange&quot;. Example: &quot;glue.amazonaws.com&quot;.</p>",
         "IntrospectOAuth2TokenWithIAMResponse$resource": "<p>The OAuth resource the token is scoped to. Only present for refresh token introspection.</p>"
@@ -490,6 +509,12 @@
         "GetConsoleAuthorizationConfigurationOutput$targetId": "<p>Target account identifier</p>",
         "PutConsoleAuthorizationConfigurationInput$targetId": "<p>Target account identifier</p>",
         "PutConsoleAuthorizationConfigurationOutput$targetId": "<p>Target account identifier</p>"
+      }
+    },
+    "TokenDuration": {
+      "base": "<p>Requested token lifetime in seconds, at least 300 (5 minutes).</p>",
+      "refs": {
+        "CreateBearerTokenRequest$durationSeconds": "<p>The requested token lifetime in seconds, from 300 (5 minutes) up to the maximum allowed for the service, currently 43200 (12 hours). If omitted, the token is valid for 12 hours.</p>"
       }
     },
     "TokenExchangeGrantType": {

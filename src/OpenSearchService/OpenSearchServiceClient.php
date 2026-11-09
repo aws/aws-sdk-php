@@ -923,6 +923,22 @@ use Aws\AwsClient;
  *     },
  *     ...,
  * } $args = [])
+ * @method \Aws\Result updateClone(array $args = [])
+ * @phpstan-method \Aws\Result updateClone(array{
+ *     DomainName?: string,
+ *     TrafficSplitOptions?: array{Strategy?: 'ShiftReadTrafficPercent', CloneReadTrafficPercent?: int, ...},
+ *     CutoverOptions?: array{Target?: 'ClonedCluster'|'PrimaryCluster', ...},
+ *     RetentionOptions?: array{RetentionInHours?: int, RetentionAction?: 'DeletePrimaryCluster'|'RollbackToPrimaryCluster', ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateCloneAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateCloneAsync(array{
+ *     DomainName?: string,
+ *     TrafficSplitOptions?: array{Strategy?: 'ShiftReadTrafficPercent', CloneReadTrafficPercent?: int, ...},
+ *     CutoverOptions?: array{Target?: 'ClonedCluster'|'PrimaryCluster', ...},
+ *     RetentionOptions?: array{RetentionInHours?: int, RetentionAction?: 'DeletePrimaryCluster'|'RollbackToPrimaryCluster', ...},
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateDataSource(array $args = [])
  * @phpstan-method \Aws\Result updateDataSource(array{
  *     DomainName?: string,
@@ -1235,6 +1251,11 @@ use Aws\AwsClient;
  *     TargetVersion?: string,
  *     PerformCheckOnly?: bool,
  *     AdvancedOptions?: array<string, string>,
+ *     DeploymentStrategyOptions?: array{
+ *         DeploymentStrategy?: 'ClonedBlueGreen',
+ *         ClonedBlueGreenOptions?: array{RetentionOptions?: array, ...},
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise upgradeDomainAsync(array $args = [])
@@ -1243,6 +1264,11 @@ use Aws\AwsClient;
  *     TargetVersion?: string,
  *     PerformCheckOnly?: bool,
  *     AdvancedOptions?: array<string, string>,
+ *     DeploymentStrategyOptions?: array{
+ *         DeploymentStrategy?: 'ClonedBlueGreen',
+ *         ClonedBlueGreenOptions?: array{RetentionOptions?: array, ...},
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  */

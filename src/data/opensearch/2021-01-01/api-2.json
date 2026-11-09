@@ -1507,6 +1507,22 @@
         {"shape":"DisabledOperationException"}
       ]
     },
+    "UpdateClone":{
+      "name":"UpdateClone",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/clone"
+      },
+      "input":{"shape":"UpdateCloneRequest"},
+      "output":{"shape":"UpdateCloneResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "UpdateDataSource":{
       "name":"UpdateDataSource",
       "http":{
@@ -2423,6 +2439,7 @@
         "LastUpdatedTime":{"shape":"UpdateTimestamp"},
         "ConfigChangeStatus":{"shape":"ConfigChangeStatus"},
         "InitiatedBy":{"shape":"InitiatedBy"},
+        "ClonedBlueGreenUpgradeDetails":{"shape":"ClonedBlueGreenUpgradeDetails"},
         "ValidationFailures":{"shape":"ValidationFailures"},
         "AcceptedWarnings":{"shape":"AcceptedWarningsList"}
       }
@@ -2431,6 +2448,34 @@
       "type":"string",
       "max":64,
       "min":1
+    },
+    "ClonedBlueGreenOptions":{
+      "type":"structure",
+      "members":{
+        "RetentionOptions":{"shape":"RetentionOptions"}
+      }
+    },
+    "ClonedBlueGreenScheduledAction":{
+      "type":"structure",
+      "members":{
+        "Action":{"shape":"ClonedBlueGreenScheduledActionType"},
+        "ScheduledTime":{"shape":"UpdateTimestamp"}
+      }
+    },
+    "ClonedBlueGreenScheduledActionType":{
+      "type":"string",
+      "enum":[
+        "AutomaticCutoverToPrimaryCluster",
+        "DeletePrimaryCluster"
+      ]
+    },
+    "ClonedBlueGreenUpgradeDetails":{
+      "type":"structure",
+      "members":{
+        "TrafficSplit":{"shape":"TrafficPercents"},
+        "ScheduledAction":{"shape":"ClonedBlueGreenScheduledAction"},
+        "RetentionInHours":{"shape":"IntegerClass"}
+      }
     },
     "CloudWatchDirectQueryDataSource":{
       "type":"structure",
@@ -2757,6 +2802,39 @@
         "SkipUnavailable":{"shape":"SkipUnavailableStatus"}
       }
     },
+    "CutoverOptions":{
+      "type":"structure",
+      "required":[
+        "Target",
+        "Status"
+      ],
+      "members":{
+        "Target":{"shape":"CutoverTarget"},
+        "Status":{"shape":"CutoverStatus"}
+      }
+    },
+    "CutoverRequestOptions":{
+      "type":"structure",
+      "required":["Target"],
+      "members":{
+        "Target":{"shape":"CutoverTarget"}
+      }
+    },
+    "CutoverStatus":{
+      "type":"string",
+      "enum":[
+        "InProgress",
+        "Completed",
+        "Failed"
+      ]
+    },
+    "CutoverTarget":{
+      "type":"string",
+      "enum":[
+        "ClonedCluster",
+        "PrimaryCluster"
+      ]
+    },
     "DataSource":{
       "type":"structure",
       "members":{
@@ -3030,6 +3108,18 @@
       "members":{
         "Options":{"shape":"DeploymentStrategyOptions"},
         "Status":{"shape":"OptionStatus"}
+      }
+    },
+    "DeploymentStrategyOverride":{
+      "type":"string",
+      "enum":["ClonedBlueGreen"]
+    },
+    "DeploymentStrategyOverrideOptions":{
+      "type":"structure",
+      "required":["DeploymentStrategy"],
+      "members":{
+        "DeploymentStrategy":{"shape":"DeploymentStrategyOverride"},
+        "ClonedBlueGreenOptions":{"shape":"ClonedBlueGreenOptions"}
       }
     },
     "DeploymentType":{
@@ -6287,6 +6377,21 @@
       "error":{"httpStatusCode":409},
       "exception":true
     },
+    "RetentionAction":{
+      "type":"string",
+      "enum":[
+        "RollbackToPrimaryCluster",
+        "DeletePrimaryCluster"
+      ]
+    },
+    "RetentionOptions":{
+      "type":"structure",
+      "members":{
+        "RetentionInHours":{"shape":"IntegerClass"},
+        "RetentionAction":{"shape":"RetentionAction"}
+      },
+      "union":true
+    },
     "RevokeVpcEndpointAccessRequest":{
       "type":"structure",
       "required":["DomainName"],
@@ -6767,6 +6872,58 @@
     },
     "Timestamp":{"type":"timestamp"},
     "TotalNumberOfStages":{"type":"integer"},
+    "TrafficPercent":{
+      "type":"integer",
+      "max":100,
+      "min":0
+    },
+    "TrafficPercents":{
+      "type":"structure",
+      "required":[
+        "PrimaryReadTrafficPercent",
+        "CloneReadTrafficPercent"
+      ],
+      "members":{
+        "PrimaryReadTrafficPercent":{"shape":"TrafficPercent"},
+        "CloneReadTrafficPercent":{"shape":"TrafficPercent"}
+      }
+    },
+    "TrafficSplitOptions":{
+      "type":"structure",
+      "required":[
+        "Current",
+        "Target",
+        "Status"
+      ],
+      "members":{
+        "Current":{"shape":"TrafficPercents"},
+        "Target":{"shape":"TrafficPercents"},
+        "Status":{"shape":"TrafficSplitStatus"}
+      }
+    },
+    "TrafficSplitRequestOptions":{
+      "type":"structure",
+      "required":[
+        "Strategy",
+        "CloneReadTrafficPercent"
+      ],
+      "members":{
+        "Strategy":{"shape":"TrafficStrategy"},
+        "CloneReadTrafficPercent":{"shape":"TrafficPercent"}
+      }
+    },
+    "TrafficSplitStatus":{
+      "type":"string",
+      "enum":[
+        "InProgress",
+        "Completed",
+        "Failed"
+      ]
+    },
+    "TrafficStrategy":{
+      "type":"string",
+      "enum":["ShiftReadTrafficPercent"]
+    },
     "UIntValue":{
       "type":"integer",
       "min":0
@@ -6797,6 +6954,34 @@
         "appConfigs":{"shape":"AppConfigs"},
         "createdAt":{"shape":"Timestamp"},
         "lastUpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "UpdateCloneRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "TrafficSplitOptions":{"shape":"TrafficSplitRequestOptions"},
+        "CutoverOptions":{"shape":"CutoverRequestOptions"},
+        "RetentionOptions":{"shape":"RetentionOptions"}
+      }
+    },
+    "UpdateCloneResponse":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "ChangeId"
+      ],
+      "members":{
+        "DomainName":{"shape":"DomainName"},
+        "ChangeId":{"shape":"GUID"},
+        "CutoverOptions":{"shape":"CutoverOptions"},
+        "TrafficSplitOptions":{"shape":"TrafficSplitOptions"},
+        "RetentionOptions":{"shape":"RetentionOptions"}
       }
     },
     "UpdateDataSourceRequest":{
@@ -7022,7 +7207,8 @@
         "DomainName":{"shape":"DomainName"},
         "TargetVersion":{"shape":"VersionString"},
         "PerformCheckOnly":{"shape":"Boolean"},
-        "AdvancedOptions":{"shape":"AdvancedOptions"}
+        "AdvancedOptions":{"shape":"AdvancedOptions"},
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOverrideOptions"}
       }
     },
     "UpgradeDomainResponse":{
@@ -7033,6 +7219,7 @@
         "TargetVersion":{"shape":"VersionString"},
         "PerformCheckOnly":{"shape":"Boolean"},
         "AdvancedOptions":{"shape":"AdvancedOptions"},
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOverrideOptions"},
         "ChangeProgressDetails":{"shape":"ChangeProgressDetails"}
       }
     },

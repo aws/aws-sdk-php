@@ -544,6 +544,26 @@
         {"shape":"ResourceNumberLimitExceededException"}
       ]
     },
+    "CreateDataQualityEvaluationConfig":{
+      "name":"CreateDataQualityEvaluationConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateDataQualityEvaluationConfigRequest"},
+      "output":{"shape":"CreateDataQualityEvaluationConfigResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"AlreadyExistsException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"IdempotentParameterMismatchException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNumberLimitExceededException"}
+      ],
+      "idempotent":true
+    },
     "CreateDataQualityRuleset":{
       "name":"CreateDataQualityRuleset",
       "http":{
@@ -1181,6 +1201,22 @@
         {"shape":"InternalServiceException"},
         {"shape":"InvalidInputException"},
         {"shape":"OperationTimeoutException"}
+      ]
+    },
+    "DeleteDataQualityEvaluationConfig":{
+      "name":"DeleteDataQualityEvaluationConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteDataQualityEvaluationConfigRequest"},
+      "output":{"shape":"DeleteDataQualityEvaluationConfigResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InternalServiceException"}
       ]
     },
     "DeleteDataQualityRuleset":{
@@ -2062,6 +2098,22 @@
         {"shape":"ThrottlingException"}
       ],
       "readonly":true
+    },
+    "GetDataQualityEvaluationConfig":{
+      "name":"GetDataQualityEvaluationConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDataQualityEvaluationConfigRequest"},
+      "output":{"shape":"GetDataQualityEvaluationConfigResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InternalServiceException"}
+      ]
     },
     "GetDataQualityModel":{
       "name":"GetDataQualityModel",
@@ -3233,6 +3285,21 @@
       "input":{"shape":"ListCustomEntityTypesRequest"},
       "output":{"shape":"ListCustomEntityTypesResponse"},
       "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "ListDataQualityEvaluationConfigs":{
+      "name":"ListDataQualityEvaluationConfigs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDataQualityEvaluationConfigsRequest"},
+      "output":{"shape":"ListDataQualityEvaluationConfigsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
         {"shape":"InvalidInputException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"InternalServiceException"}
@@ -4606,6 +4673,23 @@
         {"shape":"VersionMismatchException"},
         {"shape":"SchedulerTransitioningException"},
         {"shape":"OperationTimeoutException"}
+      ]
+    },
+    "UpdateDataQualityEvaluationConfig":{
+      "name":"UpdateDataQualityEvaluationConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateDataQualityEvaluationConfigRequest"},
+      "output":{"shape":"UpdateDataQualityEvaluationConfigResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InternalServiceException"}
       ]
     },
     "UpdateDataQualityRuleset":{
@@ -7870,6 +7954,43 @@
         "Name":{"shape":"NameString"}
       }
     },
+    "CreateDataQualityEvaluationConfigRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Level",
+        "DataSource",
+        "Role"
+      ],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "Level":{"shape":"DataQualityEvaluationConfigLevel"},
+        "DataSource":{"shape":"DataQualityEvaluationConfigDataSource"},
+        "RulesetName":{"shape":"NameString"},
+        "ManagedRulesetName":{"shape":"DataQualityEvaluationConfigManagedRuleset"},
+        "Triggers":{"shape":"DataQualityEvaluationConfigTriggers"},
+        "ScheduleExpression":{"shape":"DataQualityEvaluationConfigScheduleExpression"},
+        "StartAt":{"shape":"Timestamp"},
+        "EndAt":{"shape":"Timestamp"},
+        "Role":{"shape":"RoleString"},
+        "NumberOfWorkers":{"shape":"NullableInteger"},
+        "Timeout":{"shape":"Timeout"},
+        "AdditionalRunOptions":{"shape":"DataQualityEvaluationConfigAdditionalRunOptions"},
+        "AdditionalDataSources":{"shape":"DataSourceMap"},
+        "Tags":{"shape":"TagsMap"},
+        "ClientToken":{
+          "shape":"ClientTokenString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateDataQualityEvaluationConfigResponse":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NameString"},
+        "EvaluationRunMode":{"shape":"DataQualityEvaluationRunMode"}
+      }
+    },
     "CreateDataQualityRulesetRequest":{
       "type":"structure",
       "required":[
@@ -8825,6 +8946,112 @@
         "PYTHON"
       ]
     },
+    "DataQualityEvaluationConfigAdditionalRunOptions":{
+      "type":"structure",
+      "members":{
+        "CloudWatchMetricsEnabled":{"shape":"NullableBoolean"},
+        "ResultsS3Prefix":{"shape":"UriString"},
+        "CompositeRuleEvaluationMethod":{"shape":"DQCompositeRuleEvaluationMethod"},
+        "RowLevelResults":{"shape":"RowLevelResultsOptions"},
+        "ProfilingResults":{"shape":"ProfilingResultsOptions"},
+        "ObservationScope":{"shape":"ObservationConfiguration"},
+        "ObservationMode":{"shape":"ObservationMode"},
+        "DataQualityRuleResults":{"shape":"DataQualityRuleResultsOptions"},
+        "ObservationResults":{"shape":"ObservationResultsOptions"},
+        "CustomLogGroupPrefix":{"shape":"GenericString"}
+      }
+    },
+    "DataQualityEvaluationConfigDataSource":{
+      "type":"structure",
+      "members":{
+        "GlueTables":{"shape":"DataQualityEvaluationConfigGlueTables"}
+      }
+    },
+    "DataQualityEvaluationConfigGlueTables":{
+      "type":"structure",
+      "required":["CatalogId"],
+      "members":{
+        "CatalogId":{"shape":"NameString"},
+        "DatabaseName":{"shape":"NameString"},
+        "TableNamePattern":{"shape":"NameString"},
+        "PreProcessingQuery":{"shape":"PreProcessingQueryString"},
+        "ConnectionName":{"shape":"NameString"},
+        "AdditionalOptions":{"shape":"GlueTableAdditionalOptions"}
+      }
+    },
+    "DataQualityEvaluationConfigLevel":{
+      "type":"string",
+      "enum":[
+        "CATALOG",
+        "DATABASE",
+        "TABLE"
+      ]
+    },
+    "DataQualityEvaluationConfigList":{
+      "type":"list",
+      "member":{"shape":"DataQualityEvaluationConfigListDetails"}
+    },
+    "DataQualityEvaluationConfigListDataSource":{
+      "type":"structure",
+      "members":{
+        "GlueTables":{"shape":"DataQualityEvaluationConfigListGlueTables"}
+      }
+    },
+    "DataQualityEvaluationConfigListDetails":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NameString"},
+        "EvaluationRunMode":{"shape":"DataQualityEvaluationRunMode"},
+        "CreatedOn":{"shape":"Timestamp"},
+        "LastModifiedOn":{"shape":"Timestamp"},
+        "Level":{"shape":"DataQualityEvaluationConfigLevel"},
+        "DataSource":{"shape":"DataQualityEvaluationConfigListDataSource"},
+        "RulesetName":{"shape":"NameString"},
+        "ManagedRulesetName":{"shape":"DataQualityEvaluationConfigManagedRuleset"},
+        "PauseRuns":{"shape":"NullableBoolean"}
+      }
+    },
+    "DataQualityEvaluationConfigListGlueTables":{
+      "type":"structure",
+      "required":["CatalogId"],
+      "members":{
+        "CatalogId":{"shape":"NameString"},
+        "DatabaseName":{"shape":"NameString"},
+        "TableNamePattern":{"shape":"NameString"}
+      }
+    },
+    "DataQualityEvaluationConfigManagedRuleset":{
+      "type":"string",
+      "enum":[
+        "SIMPLE",
+        "ADVANCED"
+      ]
+    },
+    "DataQualityEvaluationConfigPageSize":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
+    },
+    "DataQualityEvaluationConfigScheduleExpression":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "DataQualityEvaluationConfigTrigger":{
+      "type":"string",
+      "enum":[
+        "ONCE",
+        "SCHEDULE",
+        "METADATA_CHANGE"
+      ]
+    },
+    "DataQualityEvaluationConfigTriggers":{
+      "type":"list",
+      "member":{"shape":"DataQualityEvaluationConfigTrigger"},
+      "max":3,
+      "min":1
+    },
     "DataQualityEvaluationRunAdditionalRunOptions":{
       "type":"structure",
       "members":{
@@ -8839,6 +9066,13 @@
         "DataQualityRuleResults":{"shape":"DataQualityRuleResultsOptions"},
         "ObservationResults":{"shape":"ObservationResultsOptions"}
       }
+    },
+    "DataQualityEvaluationRunMode":{
+      "type":"string",
+      "enum":[
+        "ON_DEMAND",
+        "EVALUATION_CONFIG"
+      ]
     },
     "DataQualityFlagsEnabled":{
       "type":"map",
@@ -8903,6 +9137,8 @@
       "type":"structure",
       "members":{
         "ResultId":{"shape":"HashString"},
+        "EvaluationRunMode":{"shape":"DataQualityEvaluationRunMode"},
+        "DataQualityEvaluationConfig":{"shape":"NameString"},
         "ProfileId":{"shape":"HashString"},
         "Score":{"shape":"GenericBoundedDouble"},
         "DataSource":{"shape":"DataSource"},
@@ -8923,6 +9159,8 @@
       "type":"structure",
       "members":{
         "ResultId":{"shape":"HashString"},
+        "EvaluationRunMode":{"shape":"DataQualityEvaluationRunMode"},
+        "DataQualityEvaluationConfig":{"shape":"NameString"},
         "DataSource":{"shape":"DataSource"},
         "JobName":{"shape":"NameString"},
         "JobRunId":{"shape":"HashString"},
@@ -8940,7 +9178,9 @@
         "JobName":{"shape":"NameString"},
         "JobRunId":{"shape":"HashString"},
         "StartedAfter":{"shape":"Timestamp"},
-        "StartedBefore":{"shape":"Timestamp"}
+        "StartedBefore":{"shape":"Timestamp"},
+        "EvaluationRunMode":{"shape":"DataQualityEvaluationRunMode"},
+        "DataQualityEvaluationConfig":{"shape":"NameString"}
       }
     },
     "DataQualityResultIdList":{
@@ -8966,6 +9206,8 @@
       "required":["ResultId"],
       "members":{
         "ResultId":{"shape":"HashString"},
+        "EvaluationRunMode":{"shape":"DataQualityEvaluationRunMode"},
+        "DataQualityEvaluationConfig":{"shape":"NameString"},
         "DataSource":{"shape":"DataSource"},
         "Dimensions":{"shape":"PublishDataQualityResultDimensions"},
         "Tags":{"shape":"PublishDataQualityResultTags"},
@@ -8996,6 +9238,8 @@
       "type":"structure",
       "members":{
         "ResultId":{"shape":"HashString"},
+        "EvaluationRunMode":{"shape":"DataQualityEvaluationRunMode"},
+        "DataQualityEvaluationConfig":{"shape":"NameString"},
         "DataSource":{"shape":"DataSource"},
         "ResultPublishedOn":{"shape":"Timestamp"},
         "Dimensions":{"shape":"PublishDataQualityResultDimensions"},
@@ -9016,7 +9260,9 @@
         "PublishedAfter":{"shape":"Timestamp"},
         "PublishedBefore":{"shape":"Timestamp"},
         "Dimensions":{"shape":"PublishDataQualityResultDimensions"},
-        "EvaluationContext":{"shape":"NameString"}
+        "EvaluationContext":{"shape":"NameString"},
+        "EvaluationRunMode":{"shape":"DataQualityEvaluationRunMode"},
+        "DataQualityEvaluationConfig":{"shape":"NameString"}
       }
     },
     "DataQualityRuleRecommendationRunAdditionalRunOptions":{
@@ -9534,6 +9780,17 @@
       "members":{
         "Name":{"shape":"NameString"}
       }
+    },
+    "DeleteDataQualityEvaluationConfigRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"NameString"}
+      }
+    },
+    "DeleteDataQualityEvaluationConfigResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteDataQualityRulesetRequest":{
       "type":"structure",
@@ -11396,6 +11653,36 @@
         "UpdatedAt":{"shape":"UpdatedAt"}
       }
     },
+    "GetDataQualityEvaluationConfigRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"NameString"}
+      }
+    },
+    "GetDataQualityEvaluationConfigResponse":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NameString"},
+        "EvaluationRunMode":{"shape":"DataQualityEvaluationRunMode"},
+        "CreatedOn":{"shape":"Timestamp"},
+        "LastModifiedOn":{"shape":"Timestamp"},
+        "Level":{"shape":"DataQualityEvaluationConfigLevel"},
+        "DataSource":{"shape":"DataQualityEvaluationConfigDataSource"},
+        "RulesetName":{"shape":"NameString"},
+        "ManagedRulesetName":{"shape":"DataQualityEvaluationConfigManagedRuleset"},
+        "Triggers":{"shape":"DataQualityEvaluationConfigTriggers"},
+        "ScheduleExpression":{"shape":"DataQualityEvaluationConfigScheduleExpression"},
+        "StartAt":{"shape":"Timestamp"},
+        "EndAt":{"shape":"Timestamp"},
+        "PauseRuns":{"shape":"NullableBoolean"},
+        "Role":{"shape":"RoleString"},
+        "NumberOfWorkers":{"shape":"NullableInteger"},
+        "Timeout":{"shape":"Timeout"},
+        "AdditionalRunOptions":{"shape":"DataQualityEvaluationConfigAdditionalRunOptions"},
+        "AdditionalDataSources":{"shape":"DataSourceMap"}
+      }
+    },
     "GetDataQualityModelRequest":{
       "type":"structure",
       "required":["ProfileId"],
@@ -11442,6 +11729,8 @@
       "type":"structure",
       "members":{
         "ResultId":{"shape":"HashString"},
+        "EvaluationRunMode":{"shape":"DataQualityEvaluationRunMode"},
+        "DataQualityEvaluationConfig":{"shape":"NameString"},
         "ProfileId":{"shape":"HashString"},
         "Score":{"shape":"GenericBoundedDouble"},
         "DataSource":{"shape":"DataSource"},
@@ -11469,6 +11758,8 @@
       "type":"structure",
       "members":{
         "ResultId":{"shape":"HashString"},
+        "EvaluationRunMode":{"shape":"DataQualityEvaluationRunMode"},
+        "DataQualityEvaluationConfig":{"shape":"NameString"},
         "DataSource":{"shape":"DataSource"},
         "ProfileId":{"shape":"HashString"},
         "Dimensions":{"shape":"PublishDataQualityResultDimensions"},
@@ -14383,6 +14674,21 @@
       "type":"structure",
       "members":{
         "CustomEntityTypes":{"shape":"CustomEntityTypes"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListDataQualityEvaluationConfigsRequest":{
+      "type":"structure",
+      "members":{
+        "Level":{"shape":"DataQualityEvaluationConfigLevel"},
+        "MaxResults":{"shape":"DataQualityEvaluationConfigPageSize"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListDataQualityEvaluationConfigsResponse":{
+      "type":"structure",
+      "members":{
+        "DataQualityEvaluationConfigs":{"shape":"DataQualityEvaluationConfigList"},
         "NextToken":{"shape":"PaginationToken"}
       }
     },
@@ -19803,6 +20109,49 @@
         "CustomDatatypeConfigured":{"shape":"NullableBoolean"},
         "CustomDatatypes":{"shape":"CustomDatatypes"},
         "Serde":{"shape":"CsvSerdeOption"}
+      }
+    },
+    "UpdateDataQualityEvaluationConfigRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "DataSource":{"shape":"DataQualityEvaluationConfigDataSource"},
+        "RulesetName":{"shape":"NameString"},
+        "ManagedRulesetName":{"shape":"DataQualityEvaluationConfigManagedRuleset"},
+        "Triggers":{"shape":"DataQualityEvaluationConfigTriggers"},
+        "ScheduleExpression":{"shape":"DataQualityEvaluationConfigScheduleExpression"},
+        "StartAt":{"shape":"Timestamp"},
+        "EndAt":{"shape":"Timestamp"},
+        "PauseRuns":{"shape":"NullableBoolean"},
+        "Role":{"shape":"RoleString"},
+        "NumberOfWorkers":{"shape":"NullableInteger"},
+        "Timeout":{"shape":"Timeout"},
+        "AdditionalRunOptions":{"shape":"DataQualityEvaluationConfigAdditionalRunOptions"},
+        "AdditionalDataSources":{"shape":"DataSourceMap"}
+      }
+    },
+    "UpdateDataQualityEvaluationConfigResponse":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NameString"},
+        "EvaluationRunMode":{"shape":"DataQualityEvaluationRunMode"},
+        "CreatedOn":{"shape":"Timestamp"},
+        "LastModifiedOn":{"shape":"Timestamp"},
+        "Level":{"shape":"DataQualityEvaluationConfigLevel"},
+        "DataSource":{"shape":"DataQualityEvaluationConfigDataSource"},
+        "RulesetName":{"shape":"NameString"},
+        "ManagedRulesetName":{"shape":"DataQualityEvaluationConfigManagedRuleset"},
+        "Triggers":{"shape":"DataQualityEvaluationConfigTriggers"},
+        "ScheduleExpression":{"shape":"DataQualityEvaluationConfigScheduleExpression"},
+        "StartAt":{"shape":"Timestamp"},
+        "EndAt":{"shape":"Timestamp"},
+        "PauseRuns":{"shape":"NullableBoolean"},
+        "Role":{"shape":"RoleString"},
+        "NumberOfWorkers":{"shape":"NullableInteger"},
+        "Timeout":{"shape":"Timeout"},
+        "AdditionalRunOptions":{"shape":"DataQualityEvaluationConfigAdditionalRunOptions"},
+        "AdditionalDataSources":{"shape":"DataSourceMap"}
       }
     },
     "UpdateDataQualityRulesetRequest":{

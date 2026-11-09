@@ -49,6 +49,7 @@
     "RemoveTags": "<p>Removes the specified set of tags from the specified Elasticsearch domain.</p>",
     "RevokeVpcEndpointAccess": "<p>Revokes access to an Amazon OpenSearch Service domain that was provided through an interface VPC endpoint.</p>",
     "StartElasticsearchServiceSoftwareUpdate": "<p>Schedules a service software update for an Amazon ES domain.</p>",
+    "UpdateClone": "<p>Manages a cloned blue/green upgrade that is in progress on a domain. Use it to shift a percentage of search traffic to the cloned cluster, to cut over to the cloned cluster or back to the primary cluster, or to change the retention period. Specify exactly one of <code>TrafficSplitOptions</code>, <code>CutoverOptions</code>, or <code>RetentionOptions</code> in each request.</p>",
     "UpdateElasticsearchDomainConfig": "<p>Modifies the cluster configuration of the specified Elasticsearch domain, setting as setting the instance type and the number of instances. </p>",
     "UpdatePackage": "<p>Updates a package for use with Amazon ES domains.</p>",
     "UpdateVpcEndpoint": "<p>Modifies an Amazon OpenSearch Service-managed interface VPC endpoint.</p>",
@@ -399,6 +400,30 @@
         "CreateVpcEndpointRequest$ClientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>"
       }
     },
+    "ClonedBlueGreenOptions": {
+      "base": "<p>Options for a cloned blue/green upgrade.</p>",
+      "refs": {
+        "DeploymentStrategyOverrideOptions$ClonedBlueGreenOptions": "<p>Options that apply when <code>DeploymentStrategy</code> is <code>ClonedBlueGreen</code>.</p>"
+      }
+    },
+    "ClonedBlueGreenScheduledAction": {
+      "base": "<p>An action that the service takes automatically at a scheduled time during a cloned blue/green upgrade.</p>",
+      "refs": {
+        "ClonedBlueGreenUpgradeDetails$ScheduledAction": "<p>The action that the service takes automatically if you don't act before the scheduled time.</p>"
+      }
+    },
+    "ClonedBlueGreenScheduledActionType": {
+      "base": "<p><code>AutomaticCutoverToPrimaryCluster</code> cuts the domain back over to the primary cluster if you haven't cut over by the scheduled time. <code>DeletePrimaryCluster</code> deletes the primary cluster when the retention period ends.</p>",
+      "refs": {
+        "ClonedBlueGreenScheduledAction$Action": "<p>The action that the service takes.</p>"
+      }
+    },
+    "ClonedBlueGreenUpgradeDetails": {
+      "base": "<p>The state of a cloned blue/green upgrade. Members that don't apply are omitted.</p>",
+      "refs": {
+        "ChangeProgressStatusDetails$ClonedBlueGreenUpgradeDetails": "<p>Details about a cloned blue/green upgrade, when the change is one.</p>"
+      }
+    },
     "CloudWatchLogsLogGroupArn": {
       "base": "<p>ARN of the Cloudwatch log group to which log needs to be published.</p>",
       "refs": {
@@ -522,6 +547,31 @@
         "OutboundCrossClusterSearchConnectionStatus$Message": "<p>Specifies verbose information for the outbound connection status.</p>"
       }
     },
+    "CutoverOptions": {
+      "base": "<p>The cutover target and status for a cloned blue/green upgrade.</p>",
+      "refs": {
+        "UpdateCloneResponse$CutoverOptions": "<p>The requested cutover target and the status of the cutover.</p>"
+      }
+    },
+    "CutoverRequestOptions": {
+      "base": "<p>The cutover to perform for a cloned blue/green upgrade.</p>",
+      "refs": {
+        "UpdateCloneRequest$CutoverOptions": "<p>Cuts the domain over to the cloned cluster or back to the primary cluster.</p>"
+      }
+    },
+    "CutoverStatus": {
+      "base": "<p>The status of a cutover.</p>",
+      "refs": {
+        "CutoverOptions$Status": "<p>The status of the cutover.</p>"
+      }
+    },
+    "CutoverTarget": {
+      "base": "<p>The cluster to cut over to in a cloned blue/green upgrade.</p>",
+      "refs": {
+        "CutoverOptions$Target": "<p>The cluster that the domain is cutting over to.</p>",
+        "CutoverRequestOptions$Target": "<p>The cluster to cut over to. <code>ClonedCluster</code> makes the cloned cluster serve the domain. <code>PrimaryCluster</code> keeps the primary cluster and ends the upgrade.</p>"
+      }
+    },
     "DeleteElasticsearchDomainRequest": {
       "base": "<p>Container for the parameters to the <code><a>DeleteElasticsearchDomain</a></code> operation. Specifies the name of the Elasticsearch domain that you want to delete.</p>",
       "refs": {}
@@ -593,6 +643,19 @@
       "base": "<p>Specifies the status of deployment strategy options for the specified Elasticsearch domain.</p>",
       "refs": {
         "ElasticsearchDomainConfig$DeploymentStrategyOptions": "<p>Specifies <code>DeploymentStrategyOptions</code> for the domain. </p>"
+      }
+    },
+    "DeploymentStrategyOverride": {
+      "base": "<p>The deployment strategy override for an operation. The only valid value is <code>ClonedBlueGreen</code>.</p>",
+      "refs": {
+        "DeploymentStrategyOverrideOptions$DeploymentStrategy": "<p>The deployment strategy to use for this operation. The only valid value is <code>ClonedBlueGreen</code>, which creates a cloned cluster on the target version next to the primary cluster so that you can validate it and shift traffic to it before you cut over.</p>"
+      }
+    },
+    "DeploymentStrategyOverrideOptions": {
+      "base": "<p>Overrides the deployment strategy for a single operation, such as a version upgrade.</p>",
+      "refs": {
+        "UpgradeElasticsearchDomainRequest$DeploymentStrategyOptions": "<p>Overrides the deployment strategy for this upgrade. To run a cloned blue/green upgrade, set <code>DeploymentStrategy</code> to <code>ClonedBlueGreen</code>.</p>",
+        "UpgradeElasticsearchDomainResponse$DeploymentStrategyOptions": "<p>The deployment strategy override used for the upgrade.</p>"
       }
     },
     "DeploymentType": {
@@ -843,6 +906,8 @@
         "ListVpcEndpointsForDomainRequest$DomainName": "<p>Name of the ElasticSearch domain whose VPC endpoints are to be listed.</p>",
         "RevokeVpcEndpointAccessRequest$DomainName": "<p>The name of the OpenSearch Service domain.</p>",
         "StartElasticsearchServiceSoftwareUpdateRequest$DomainName": "<p>The name of the domain that you want to update to the latest service software.</p>",
+        "UpdateCloneRequest$DomainName": "<p>The name of the domain that has a cloned blue/green upgrade in progress.</p>",
+        "UpdateCloneResponse$DomainName": "<p>The name of the domain.</p>",
         "UpdateElasticsearchDomainConfigRequest$DomainName": "<p>The name of the Elasticsearch domain that you are updating. </p>",
         "UpgradeElasticsearchDomainRequest$DomainName": null,
         "UpgradeElasticsearchDomainResponse$DomainName": null
@@ -1120,7 +1185,8 @@
         "PurchaseReservedElasticsearchInstanceOfferingRequest$ReservedElasticsearchInstanceOfferingId": "<p>The ID of the reserved Elasticsearch instance offering to purchase.</p>",
         "PurchaseReservedElasticsearchInstanceOfferingResponse$ReservedElasticsearchInstanceId": "<p>Details of the reserved Elasticsearch instance which was purchased.</p>",
         "ReservedElasticsearchInstance$ReservedElasticsearchInstanceId": "<p>The unique identifier for the reservation.</p>",
-        "ReservedElasticsearchInstanceOffering$ReservedElasticsearchInstanceOfferingId": "<p>The Elasticsearch reserved instance offering identifier.</p>"
+        "ReservedElasticsearchInstanceOffering$ReservedElasticsearchInstanceOfferingId": "<p>The Elasticsearch reserved instance offering identifier.</p>",
+        "UpdateCloneResponse$ChangeId": "<p>The unique identifier of the configuration change. Use it with <code>DescribeDomainChangeProgress</code> to track the change.</p>"
       }
     },
     "GUIDList": {
@@ -1236,12 +1302,14 @@
     "IntegerClass": {
       "base": null,
       "refs": {
+        "ClonedBlueGreenUpgradeDetails$RetentionInHours": "<p>The retention period, in hours, for the cluster that you cut over from.</p>",
         "EBSOptions$VolumeSize": "<p> Integer to specify the size of an EBS volume.</p>",
         "EBSOptions$Iops": "<p>Specifies the IOPS for Provisioned IOPS And GP3 EBS volume (SSD).</p>",
         "EBSOptions$Throughput": "<p>Specifies the Throughput for GP3 EBS volume (SSD).</p>",
         "ElasticsearchClusterConfig$InstanceCount": "<p>The number of instances in the specified domain cluster.</p>",
         "ElasticsearchClusterConfig$DedicatedMasterCount": "<p>Total number of dedicated master nodes, active and on standby, for the cluster.</p>",
         "ElasticsearchClusterConfig$WarmCount": "<p>The number of warm nodes in the cluster.</p>",
+        "RetentionOptions$RetentionInHours": "<p>The number of hours to keep the cluster that you cut over from. The retention period starts when cutover completes. The minimum is 1 hour. In an <code>UpdateClone</code> response after cutover completes, this value is the number of hours remaining in the retention period, rounded up.</p>",
         "SAMLOptionsInput$SessionTimeoutMinutes": "<p>The duration, in minutes, after which a user session becomes inactive. Acceptable values are between 1 and 1440, and the default value is 60.</p>",
         "SAMLOptionsOutput$SessionTimeoutMinutes": "<p>The duration, in minutes, after which a user session becomes inactive.</p>",
         "SnapshotOptions$AutomatedSnapshotStartHour": "<p>Specifies the time, in UTC format, when the service takes a daily automated snapshot of the specified Elasticsearch domain. Default value is <code>0</code> hours.</p>",
@@ -1804,6 +1872,20 @@
       "base": "<p>An exception for accessing or deleting a resource that does not exist. Gives http status code of 400.</p>",
       "refs": {}
     },
+    "RetentionAction": {
+      "base": "<p>The action that ends the retention period. <code>RollbackToPrimaryCluster</code> moves the domain back to the primary cluster. <code>DeletePrimaryCluster</code> deletes the primary cluster.</p>",
+      "refs": {
+        "RetentionOptions$RetentionAction": "<p>Ends the retention period now. Valid only after cutover completes.</p>"
+      }
+    },
+    "RetentionOptions": {
+      "base": "<p>Controls how long the cluster that you cut over from is kept after cutover completes. Specify exactly one of <code>RetentionInHours</code> or <code>RetentionAction</code>.</p>",
+      "refs": {
+        "ClonedBlueGreenOptions$RetentionOptions": "<p>How long to keep the cluster that you cut over from after cutover completes. When you start the upgrade, only <code>RetentionInHours</code> is accepted.</p>",
+        "UpdateCloneRequest$RetentionOptions": "<p>Changes the retention period, or ends it after cutover completes.</p>",
+        "UpdateCloneResponse$RetentionOptions": "<p>The retention settings for the upgrade.</p>"
+      }
+    },
     "RevokeVpcEndpointAccessRequest": {
       "base": "<p>Revokes access to an Amazon OpenSearch Service domain that was provided through an interface VPC endpoint.</p>",
       "refs": {}
@@ -2074,12 +2156,60 @@
         "ChangeProgressStatusDetails$TotalNumberOfStages": "<p>The total number of stages required for the configuration change.</p>"
       }
     },
+    "TrafficPercent": {
+      "base": "<p>A traffic percentage from 0 to 100.</p>",
+      "refs": {
+        "TrafficPercents$PrimaryReadTrafficPercent": "<p>The percentage of search traffic sent to the primary cluster.</p>",
+        "TrafficPercents$CloneReadTrafficPercent": "<p>The percentage of search traffic sent to the cloned cluster.</p>",
+        "TrafficSplitRequestOptions$CloneReadTrafficPercent": "<p>The percentage of search traffic, from 0 to 100, to send to the cloned cluster. The rest goes to the primary cluster.</p>"
+      }
+    },
+    "TrafficPercents": {
+      "base": "<p>The split of search traffic between the primary and cloned clusters.</p>",
+      "refs": {
+        "ClonedBlueGreenUpgradeDetails$TrafficSplit": "<p>The current split of search traffic between the primary and cloned clusters.</p>",
+        "TrafficSplitOptions$Current": "<p>The traffic split currently in effect.</p>",
+        "TrafficSplitOptions$Target": "<p>The requested traffic split.</p>"
+      }
+    },
+    "TrafficSplitOptions": {
+      "base": "<p>The traffic split and status for a cloned blue/green upgrade.</p>",
+      "refs": {
+        "UpdateCloneResponse$TrafficSplitOptions": "<p>The current and requested traffic split, and the status of the traffic shift.</p>"
+      }
+    },
+    "TrafficSplitRequestOptions": {
+      "base": "<p>The traffic shift to perform for a cloned blue/green upgrade.</p>",
+      "refs": {
+        "UpdateCloneRequest$TrafficSplitOptions": "<p>Shifts a percentage of search traffic from the primary cluster to the cloned cluster.</p>"
+      }
+    },
+    "TrafficSplitStatus": {
+      "base": "<p>The status of a traffic shift.</p>",
+      "refs": {
+        "TrafficSplitOptions$Status": "<p>The status of the traffic shift.</p>"
+      }
+    },
+    "TrafficStrategy": {
+      "base": "<p>The strategy used to shift traffic between the primary and cloned clusters.</p>",
+      "refs": {
+        "TrafficSplitRequestOptions$Strategy": "<p>The traffic shifting strategy. The only valid value is <code>ShiftReadTrafficPercent</code>.</p>"
+      }
+    },
     "UIntValue": {
       "base": null,
       "refs": {
         "AutoTuneStatus$UpdateVersion": "<p>Specifies the Auto-Tune options latest version.</p>",
         "OptionStatus$UpdateVersion": "<p>Specifies the latest version for the entity.</p>"
       }
+    },
+    "UpdateCloneRequest": {
+      "base": "<p>Container for the request parameters to the <code>UpdateClone</code> operation.</p>",
+      "refs": {}
+    },
+    "UpdateCloneResponse": {
+      "base": "<p>Container for the response returned by the <code>UpdateClone</code> operation.</p>",
+      "refs": {}
     },
     "UpdateElasticsearchDomainConfigRequest": {
       "base": "<p>Container for the parameters to the <code><a>UpdateElasticsearchDomain</a></code> operation. Specifies the type and number of instances in the domain cluster.</p>",
@@ -2110,6 +2240,7 @@
         "ChangeProgressDetails$LastUpdatedTime": "<p>The last time that the configuration change was updated.</p>",
         "ChangeProgressStatusDetails$StartTime": "<p>The time at which the configuration change is made on the domain.</p>",
         "ChangeProgressStatusDetails$LastUpdatedTime": "<p>The last time that the status of the configuration change was updated.</p>",
+        "ClonedBlueGreenScheduledAction$ScheduledTime": "<p>The time at which the service takes the action.</p>",
         "OptionStatus$CreationDate": "<p>Timestamp which tells the creation date for the entity.</p>",
         "OptionStatus$UpdateDate": "<p>Timestamp which tells the last updated time for the entity.</p>",
         "ReservedElasticsearchInstance$StartTime": "<p>The time the reservation started.</p>"

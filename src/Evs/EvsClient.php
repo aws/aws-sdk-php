@@ -58,7 +58,7 @@ use Aws\AwsClient;
  *     hosts?: list<array{
  *         hostName?: string,
  *         keyName?: string,
- *         instanceType?: 'i4i.metal'|'i7i.metal-24xl'|'i7i.metal-48xl',
+ *         instanceType?: 'i4i.metal'|'i7i.metal-24xl'|'i7i.metal-48xl'|'r7i.metal-24xl'|'r7i.metal-48xl',
  *         placementGroupId?: string,
  *         dedicatedHostId?: string,
  *         ...,
@@ -109,7 +109,7 @@ use Aws\AwsClient;
  *     hosts?: list<array{
  *         hostName?: string,
  *         keyName?: string,
- *         instanceType?: 'i4i.metal'|'i7i.metal-24xl'|'i7i.metal-48xl',
+ *         instanceType?: 'i4i.metal'|'i7i.metal-24xl'|'i7i.metal-48xl'|'r7i.metal-24xl'|'r7i.metal-48xl',
  *         placementGroupId?: string,
  *         dedicatedHostId?: string,
  *         ...,
@@ -154,7 +154,7 @@ use Aws\AwsClient;
  *     host?: array{
  *         hostName?: string,
  *         keyName?: string,
- *         instanceType?: 'i4i.metal'|'i7i.metal-24xl'|'i7i.metal-48xl',
+ *         instanceType?: 'i4i.metal'|'i7i.metal-24xl'|'i7i.metal-48xl'|'r7i.metal-24xl'|'r7i.metal-48xl',
  *         placementGroupId?: string,
  *         dedicatedHostId?: string,
  *         ...,
@@ -169,7 +169,7 @@ use Aws\AwsClient;
  *     host?: array{
  *         hostName?: string,
  *         keyName?: string,
- *         instanceType?: 'i4i.metal'|'i7i.metal-24xl'|'i7i.metal-48xl',
+ *         instanceType?: 'i4i.metal'|'i7i.metal-24xl'|'i7i.metal-48xl'|'r7i.metal-24xl'|'r7i.metal-48xl',
  *         placementGroupId?: string,
  *         dedicatedHostId?: string,
  *         ...,

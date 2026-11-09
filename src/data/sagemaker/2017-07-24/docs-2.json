@@ -23,6 +23,7 @@
     "CreateAutoMLJob": "<p>Creates an Autopilot job also referred to as Autopilot experiment or AutoML job.</p> <p>An AutoML job in SageMaker AI is a fully automated process that allows you to build machine learning models with minimal effort and machine learning expertise. When initiating an AutoML job, you provide your data and optionally specify parameters tailored to your use case. SageMaker AI then automates the entire model development lifecycle, including data preprocessing, model training, tuning, and evaluation. AutoML jobs are designed to simplify and accelerate the model building process by automating various tasks and exploring different combinations of machine learning algorithms, data preprocessing techniques, and hyperparameter values. The output of an AutoML job comprises one or more trained models ready for deployment and inference. Additionally, SageMaker AI AutoML jobs generate a candidate model leaderboard, allowing you to select the best-performing model for deployment.</p> <p>For more information about AutoML jobs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development.html\">https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development.html</a> in the SageMaker AI developer guide.</p> <note> <p>We recommend using the new versions <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJobV2.html\">CreateAutoMLJobV2</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a>, which offer backward compatibility.</p> <p> <code>CreateAutoMLJobV2</code> can manage tabular problem types identical to those of its previous version <code>CreateAutoMLJob</code>, as well as time-series forecasting, non-tabular problem types such as image or text classification, and text generation (LLMs fine-tuning).</p> <p>Find guidelines about how to migrate a <code>CreateAutoMLJob</code> to <code>CreateAutoMLJobV2</code> in <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development-create-experiment.html#autopilot-create-experiment-api-migrate-v1-v2\">Migrate a CreateAutoMLJob to CreateAutoMLJobV2</a>.</p> </note> <p>You can find the best-performing model after you run an AutoML job by calling <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a> (recommended) or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJob.html\">DescribeAutoMLJob</a>.</p>",
     "CreateAutoMLJobV2": "<p>Creates an Autopilot job also referred to as Autopilot experiment or AutoML job V2.</p> <p>An AutoML job in SageMaker AI is a fully automated process that allows you to build machine learning models with minimal effort and machine learning expertise. When initiating an AutoML job, you provide your data and optionally specify parameters tailored to your use case. SageMaker AI then automates the entire model development lifecycle, including data preprocessing, model training, tuning, and evaluation. AutoML jobs are designed to simplify and accelerate the model building process by automating various tasks and exploring different combinations of machine learning algorithms, data preprocessing techniques, and hyperparameter values. The output of an AutoML job comprises one or more trained models ready for deployment and inference. Additionally, SageMaker AI AutoML jobs generate a candidate model leaderboard, allowing you to select the best-performing model for deployment.</p> <p>For more information about AutoML jobs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development.html\">https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development.html</a> in the SageMaker AI developer guide.</p> <p>AutoML jobs V2 support various problem types such as regression, binary, and multiclass classification with tabular data, text and image classification, time-series forecasting, and fine-tuning of large language models (LLMs) for text generation.</p> <note> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJobV2.html\">CreateAutoMLJobV2</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a> are new versions of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJob.html\">CreateAutoMLJob</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJob.html\">DescribeAutoMLJob</a> which offer backward compatibility.</p> <p> <code>CreateAutoMLJobV2</code> can manage tabular problem types identical to those of its previous version <code>CreateAutoMLJob</code>, as well as time-series forecasting, non-tabular problem types such as image or text classification, and text generation (LLMs fine-tuning).</p> <p>Find guidelines about how to migrate a <code>CreateAutoMLJob</code> to <code>CreateAutoMLJobV2</code> in <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development-create-experiment.html#autopilot-create-experiment-api-migrate-v1-v2\">Migrate a CreateAutoMLJob to CreateAutoMLJobV2</a>.</p> </note> <p>For the list of available problem types supported by <code>CreateAutoMLJobV2</code>, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AutoMLProblemTypeConfig.html\">AutoMLProblemTypeConfig</a>.</p> <p>You can find the best-performing model after you run an AutoML job V2 by calling <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a>.</p>",
     "CreateCluster": "<p>Creates an Amazon SageMaker HyperPod cluster. SageMaker HyperPod is a capability of SageMaker for creating and managing persistent clusters for developing large machine learning models, such as large language models (LLMs) and diffusion models. To learn more, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod.html\">Amazon SageMaker HyperPod</a> in the <i>Amazon SageMaker Developer Guide</i>.</p>",
+    "CreateClusterExtension": "<p>Installs an extension, such as <code>sagemaker-observability</code>, on a SageMaker HyperPod cluster orchestrated by Slurm. The cluster must have <code>NodeProvisioningMode</code> set to <code>Continuous</code> and can have only one extension with a given name. To track the installation, call <code>DescribeClusterExtension</code>.</p>",
     "CreateClusterSchedulerConfig": "<p>Create cluster policy configuration. This policy is used for task prioritization and fair-share allocation of idle compute. This helps prioritize critical workloads and distributes idle compute across entities.</p>",
     "CreateCodeRepository": "<p>Creates a Git repository as a resource in your SageMaker AI account. You can associate the repository with notebook instances so that you can use Git source control for the notebooks you create. The Git repository is a resource in your SageMaker AI account, so it can be associated with more than one notebook instance, and it persists independently from the lifecycle of any notebook instances it is associated with.</p> <p>The repository can be hosted either in <a href=\"https://docs.aws.amazon.com/codecommit/latest/userguide/welcome.html\">Amazon Web Services CodeCommit</a> or in any other Git repository.</p>",
     "CreateCompilationJob": "<p>Starts a model compilation job. After the model has been compiled, Amazon SageMaker AI saves the resulting model artifacts to an Amazon Simple Storage Service (Amazon S3) bucket that you specify. </p> <p>If you choose to host your model using Amazon SageMaker AI hosting services, you can use the resulting model artifacts as part of the model. You can also use the artifacts with Amazon Web Services IoT Greengrass. In that case, deploy them as an ML resource.</p> <p>In the request body, you provide the following:</p> <ul> <li> <p>A name for the compilation job</p> </li> <li> <p> Information about the input model artifacts </p> </li> <li> <p>The output location for the compiled model and the device (target) that the model runs on </p> </li> <li> <p>The Amazon Resource Name (ARN) of the IAM role that Amazon SageMaker AI assumes to perform the model compilation job. </p> </li> </ul> <p>You can also provide a <code>Tag</code> to track the model compilation job's resource use and costs. The response body contains the <code>CompilationJobArn</code> for the compiled job.</p> <p>To stop a model compilation job, use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_StopCompilationJob.html\">StopCompilationJob</a>. To get information about a particular model compilation job, use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeCompilationJob.html\">DescribeCompilationJob</a>. To get information about multiple model compilation jobs, use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListCompilationJobs.html\">ListCompilationJobs</a>.</p>",
@@ -95,6 +96,7 @@
     "DeleteArtifact": "<p>Deletes an artifact. Either <code>ArtifactArn</code> or <code>Source</code> must be specified.</p>",
     "DeleteAssociation": "<p>Deletes an association.</p>",
     "DeleteCluster": "<p>Delete a SageMaker HyperPod cluster.</p>",
+    "DeleteClusterExtension": "<p>Deletes an extension from a SageMaker HyperPod cluster. SageMaker HyperPod removes the extension's software from every node in the cluster. While SageMaker HyperPod removes the extension, its status is <code>Deleting</code>. After SageMaker HyperPod removes the extension from all nodes, it no longer appears in <code>ListClusterExtensions</code>, and <code>DescribeClusterExtension</code> returns a <code>ResourceNotFound</code> error.</p> <p>Deleting an extension doesn't delete data that the extension sent to other Amazon Web Services services, such as metrics in Amazon CloudWatch or Amazon Managed Service for Prometheus.</p>",
     "DeleteClusterSchedulerConfig": "<p>Deletes the cluster policy of the cluster.</p>",
     "DeleteCodeRepository": "<p>Deletes the specified Git repository from your account.</p>",
     "DeleteCompilationJob": "<p>Deletes the specified compilation job. This action deletes only the compilation job resource in Amazon SageMaker AI. It doesn't delete other resources that are related to that job, such as the model artifacts that the job creates, the compilation logs in CloudWatch, the compiled model, or the IAM role.</p> <p>You can delete a compilation job only if its current status is <code>COMPLETED</code>, <code>FAILED</code>, or <code>STOPPED</code>. If the job status is <code>STARTING</code> or <code>INPROGRESS</code>, stop the job, and then delete it after its status becomes <code>STOPPED</code>.</p>",
@@ -161,6 +163,7 @@
     "DescribeAutoMLJobV2": "<p>Returns information about an AutoML job created by calling <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJobV2.html\">CreateAutoMLJobV2</a> or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJob.html\">CreateAutoMLJob</a>.</p>",
     "DescribeCluster": "<p>Retrieves information of a SageMaker HyperPod cluster.</p>",
     "DescribeClusterEvent": "<p>Retrieves detailed information about a specific event for a given HyperPod cluster. This functionality is only supported when the <code>NodeProvisioningMode</code> is set to <code>Continuous</code>.</p>",
+    "DescribeClusterExtension": "<p>Retrieves information about an extension installed on a SageMaker HyperPod cluster. The information includes the extension's version, configuration, and status, and a summary of how many cluster nodes are running the current version and configuration of the extension.</p>",
     "DescribeClusterNode": "<p>Retrieves information of a node (also called a <i>instance</i> interchangeably) of a SageMaker HyperPod cluster.</p>",
     "DescribeClusterSchedulerConfig": "<p>Description of the cluster policy. This policy is used for task prioritization and fair-share allocation. This helps prioritize critical workloads and distributes idle compute across entities.</p>",
     "DescribeCodeRepository": "<p>Gets details about the specified Git repository.</p>",
@@ -251,6 +254,7 @@
     "ListAutoMLJobs": "<p>Request a list of jobs.</p>",
     "ListCandidatesForAutoMLJob": "<p>List the candidates created for the job.</p>",
     "ListClusterEvents": "<p>Retrieves a list of event summaries for a specified HyperPod cluster. The operation supports filtering, sorting, and pagination of results. This functionality is only supported when the <code>NodeProvisioningMode</code> is set to <code>Continuous</code>.</p>",
+    "ListClusterExtensions": "<p>Lists the extensions installed on a SageMaker HyperPod cluster.</p>",
     "ListClusterNodes": "<p>Retrieves the list of instances (also called <i>nodes</i> interchangeably) in a SageMaker HyperPod cluster.</p>",
     "ListClusterSchedulerConfigs": "<p>List the cluster policy configurations.</p>",
     "ListClusters": "<p>Retrieves the list of SageMaker HyperPod clusters.</p>",
@@ -370,6 +374,7 @@
     "UpdateAppImageConfig": "<p>Updates the properties of an AppImageConfig.</p>",
     "UpdateArtifact": "<p>Updates an artifact.</p>",
     "UpdateCluster": "<p>Updates a SageMaker HyperPod cluster.</p>",
+    "UpdateClusterExtension": "<p>Updates the configuration or the version of an extension installed on a SageMaker HyperPod cluster. SageMaker HyperPod applies the change to every node in the cluster. You can change the configuration, the version, or both in one request.</p> <ul> <li> <p> <b>Configuration:</b> You can change settings by sending <code>ConfigurationValues</code>. Settings that you include are changed. Settings that you omit keep their current values. A setting with the value <code>null</code> is removed and returns to its default value.</p> </li> <li> <p> <b>Version:</b> You can update to a later version. You can't update to an earlier version. To use an earlier version, delete the extension and create it again with that version.</p> </li> </ul> <p>You can't update an extension while it is being deleted.</p>",
     "UpdateClusterSchedulerConfig": "<p>Update the cluster policy configuration.</p>",
     "UpdateClusterSoftware": "<p>Updates the platform software of a SageMaker HyperPod cluster for security patching. To learn how to use this API, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-operate.html#sagemaker-hyperpod-operate-cli-command-update-cluster-software\">Update the SageMaker HyperPod platform software of a cluster</a>.</p> <important> <p>The <code>UpgradeClusterSoftware</code> API call may impact your SageMaker HyperPod cluster uptime and availability. Plan accordingly to mitigate potential disruptions to your workloads.</p> </important>",
     "UpdateCodeRepository": "<p>Updates the specified Git repository with the specified values.</p>",
@@ -1306,6 +1311,12 @@
       "refs": {
         "CreateAlgorithmInput$ValidationSpecification": "<p>Specifies configurations for one or more training jobs and that SageMaker runs to test the algorithm's training code and, optionally, one or more batch transform jobs that SageMaker runs to test the algorithm's inference code.</p>",
         "DescribeAlgorithmOutput$ValidationSpecification": "<p>Details about configurations for one or more training jobs that SageMaker runs to test the algorithm.</p>"
+      }
+    },
+    "AliasOperations": {
+      "base": "<p>The aliases to add to and remove from a pipeline version. An alias can't appear in both lists. After the update, the version can have up to 10 aliases.</p>",
+      "refs": {
+        "UpdatePipelineVersionRequest$PipelineVersionAliasOperations": "<p>The aliases to add to or remove from the pipeline version.</p>"
       }
     },
     "AmazonQSettings": {
@@ -3345,18 +3356,24 @@
         "ClusterSchedulerConfigSummary$ClusterArn": "<p>ARN of the cluster.</p>",
         "ClusterSummary$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster.</p>",
         "ComputeQuotaSummary$ClusterArn": "<p>ARN of the cluster.</p>",
+        "CreateClusterExtensionRequest$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster on which to install the extension. The cluster must use Slurm as the orchestrator and have <code>NodeProvisioningMode</code> set to <code>Continuous</code>.</p>",
         "CreateClusterResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "CreateClusterSchedulerConfigRequest$ClusterArn": "<p>ARN of the cluster.</p>",
         "CreateComputeQuotaRequest$ClusterArn": "<p>ARN of the cluster.</p>",
+        "DeleteClusterExtensionRequest$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster on which the extension is installed.</p>",
         "DeleteClusterResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster to delete.</p>",
+        "DescribeClusterExtensionRequest$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster on which the extension is installed.</p>",
         "DescribeClusterResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster.</p>",
         "DescribeClusterSchedulerConfigResponse$ClusterArn": "<p>ARN of the cluster where the cluster policy is applied.</p>",
         "DescribeComputeQuotaResponse$ClusterArn": "<p>ARN of the cluster.</p>",
         "DetachClusterNodeVolumeRequest$ClusterArn": "<p> The Amazon Resource Name (ARN) of your SageMaker HyperPod cluster containing the target node. Your cluster must use EKS as the orchestration and be in the <code>InService</code> state. </p>",
         "DetachClusterNodeVolumeResponse$ClusterArn": "<p> The Amazon Resource Name (ARN) of your SageMaker HyperPod cluster where the volume detachment operation was performed. </p>",
+        "ExtensionDetails$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster on which the extension is installed.</p>",
+        "ListClusterExtensionsRequest$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster whose extensions you want to list.</p>",
         "ListClusterSchedulerConfigsRequest$ClusterArn": "<p>Filter for ARN of the cluster.</p>",
         "ListComputeQuotasRequest$ClusterArn": "<p>Filter for ARN of the cluster.</p>",
         "StartClusterHealthCheckResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster on which the deep health checks were initiated.</p>",
+        "UpdateClusterExtensionRequest$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster on which the extension is installed.</p>",
         "UpdateClusterResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the updated SageMaker HyperPod cluster.</p>",
         "UpdateClusterSoftwareResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster being updated for security patching.</p>"
       }
@@ -4793,6 +4810,20 @@
       "base": null,
       "refs": {}
     },
+    "CreateClusterExtensionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateClusterExtensionRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateClusterExtensionRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide so that the operation completes no more than one time. This token is valid for 8 hours. If you retry the request with the same client token and the same parameters within this time, the API returns the Amazon Resource Name (ARN) of the extension that the original request created, without creating a duplicate. If you use the same client token with different parameters, the request fails.</p>"
+      }
+    },
+    "CreateClusterExtensionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateClusterRequest": {
       "base": null,
       "refs": {}
@@ -5766,6 +5797,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteClusterExtensionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteClusterExtensionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteClusterRequest": {
       "base": null,
       "refs": {}
@@ -6235,6 +6274,14 @@
       "refs": {}
     },
     "DescribeClusterEventResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeClusterExtensionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeClusterExtensionResponse": {
       "base": null,
       "refs": {}
     },
@@ -8245,6 +8292,82 @@
       "base": null,
       "refs": {}
     },
+    "ExtensionArn": {
+      "base": null,
+      "refs": {
+        "CreateClusterExtensionResponse$ExtensionArn": "<p>The Amazon Resource Name (ARN) of the extension that you created. Use this ARN to describe, update, or delete the extension.</p>",
+        "DeleteClusterExtensionRequest$ExtensionArn": "<p>The Amazon Resource Name (ARN) of the extension to delete.</p>",
+        "DeleteClusterExtensionResponse$ExtensionArn": "<p>The Amazon Resource Name (ARN) of the extension that is being deleted.</p>",
+        "DescribeClusterExtensionRequest$ExtensionArn": "<p>The Amazon Resource Name (ARN) of the extension to describe. <code>CreateClusterExtension</code> returns this ARN, and <code>ListClusterExtensions</code> lists it. If you delete an extension and create it again, the new extension has a new ARN.</p>",
+        "ExtensionDetails$ExtensionArn": "<p>The Amazon Resource Name (ARN) of the extension.</p>",
+        "ExtensionSummary$ExtensionArn": "<p>The Amazon Resource Name (ARN) of the extension.</p>",
+        "UpdateClusterExtensionRequest$ExtensionArn": "<p>The Amazon Resource Name (ARN) of the extension to update.</p>",
+        "UpdateClusterExtensionResponse$ExtensionArn": "<p>The Amazon Resource Name (ARN) of the extension that is being updated. To track the update, call <code>DescribeClusterExtension</code>.</p>"
+      }
+    },
+    "ExtensionConfigurationValues": {
+      "base": null,
+      "refs": {
+        "CreateClusterExtensionRequest$ConfigurationValues": "<p>The configuration settings for the extension, as a JSON object serialized as a string, for example <code>{\"metricsProvider\":{\"nodeMetrics\":{\"level\":\"ADVANCED\"}}}</code>. Each extension version defines which settings it accepts. SageMaker HyperPod validates the settings against that definition, and rejects the request if a setting is unknown or has an invalid value. Settings that you omit use the extension's default values. If you omit <code>ConfigurationValues</code>, all settings use their default values.</p>",
+        "ExtensionDetails$ConfigurationValues": "<p>The configuration of the extension, as a JSON object serialized as a string. The configuration includes the default value of every setting that you didn't specify.</p>",
+        "UpdateClusterExtensionRequest$ConfigurationValues": "<p>The configuration changes to apply, as a JSON object serialized as a string. Settings that you include are changed, settings that you omit are unchanged, and a setting with the value <code>null</code> returns to its default value. The resulting configuration must be valid for the target extension version. If you omit <code>ConfigurationValues</code>, the configuration is unchanged.</p>"
+      }
+    },
+    "ExtensionDetails": {
+      "base": "<p>Details of an extension installed on a SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "DescribeClusterExtensionResponse$ExtensionDetails": "<p>The details of the extension.</p>"
+      }
+    },
+    "ExtensionName": {
+      "base": null,
+      "refs": {
+        "CreateClusterExtensionRequest$ExtensionName": "<p>The name of the extension to install, for example <code>sagemaker-observability</code>.</p>",
+        "ExtensionDetails$ExtensionName": "<p>The name of the extension.</p>",
+        "ExtensionSummary$ExtensionName": "<p>The name of the extension.</p>"
+      }
+    },
+    "ExtensionNodeCount": {
+      "base": null,
+      "refs": {
+        "ExtensionNodeSummary$TotalCount": "<p>The number of nodes in your cluster that the extension targets. SageMaker HyperPod targets every running node in your cluster, including nodes that you add after you create the extension.</p>",
+        "ExtensionNodeSummary$ActiveCount": "<p>The number of nodes that are running the extension's current version and configuration. While SageMaker HyperPod creates or updates the extension, <code>ActiveCount</code> is lower than <code>TotalCount</code>.</p>"
+      }
+    },
+    "ExtensionNodeSummary": {
+      "base": "<p>A summary of an extension's installation across the nodes of a SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "DescribeClusterExtensionResponse$NodeSummary": "<p>A summary of how many nodes in your cluster the extension targets, and how many of them run the extension's current version and configuration.</p>"
+      }
+    },
+    "ExtensionStatus": {
+      "base": null,
+      "refs": {
+        "ExtensionDetails$Status": "<p>The status of the extension can be one of the following values:</p> <dl> <dt>Creating</dt> <dd> <p>SageMaker HyperPod is installing the extension on the cluster's nodes.</p> </dd> <dt>Active</dt> <dd> <p>The extension runs its current version and configuration on all of the cluster's nodes.</p> </dd> <dt>Updating</dt> <dd> <p>SageMaker HyperPod is applying a configuration change or version update to the cluster's nodes.</p> </dd> <dt>Degraded</dt> <dd> <p>The extension runs its current version and configuration on some of the cluster's nodes but not all of them. Or, at least one node recently reported that the extension is unhealthy.</p> </dd> <dt>CreateFailed</dt> <dd> <p>SageMaker HyperPod couldn't install the extension on any of the cluster's nodes.</p> </dd> <dt>UpdateFailed</dt> <dd> <p>SageMaker HyperPod couldn't apply the update on any of the cluster's nodes.</p> </dd> <dt>Deleting</dt> <dd> <p>SageMaker HyperPod is removing the extension from the cluster's nodes.</p> </dd> <dt>DeleteFailed</dt> <dd> <p>SageMaker HyperPod couldn't remove the extension from any of the cluster's nodes.</p> </dd> </dl>",
+        "ExtensionSummary$Status": "<p>The status of the extension. For the meaning of each status, see <code>ExtensionDetails</code>.</p>"
+      }
+    },
+    "ExtensionSummaries": {
+      "base": null,
+      "refs": {
+        "ListClusterExtensionsResponse$Extensions": "<p>The list of extensions installed on the cluster.</p>"
+      }
+    },
+    "ExtensionSummary": {
+      "base": "<p>A summary of an extension installed on a SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "ExtensionSummaries$member": null
+      }
+    },
+    "ExtensionVersion": {
+      "base": null,
+      "refs": {
+        "CreateClusterExtensionRequest$ExtensionVersion": "<p>The version of the extension to install, in <code>MAJOR.MINOR.PATCH</code> format, for example <code>1.0.0</code>. If you don't specify a version, SageMaker HyperPod installs the latest available version of the extension.</p>",
+        "ExtensionDetails$ExtensionVersion": "<p>The version of the extension. While SageMaker HyperPod creates or updates the extension, some nodes might still run a different version. To see how many nodes run this version, see <code>NodeSummary</code>.</p>",
+        "ExtensionSummary$ExtensionVersion": "<p>The version of the extension.</p>",
+        "UpdateClusterExtensionRequest$ExtensionVersion": "<p>The version to update the extension to, in <code>MAJOR.MINOR.PATCH</code> format. The version must be later than the extension's current version. If you omit this parameter, the extension keeps its current version.</p>"
+      }
+    },
     "FSxLustreConfig": {
       "base": "<p>Configuration settings for an Amazon FSx for Lustre file system to be used with the cluster.</p>",
       "refs": {
@@ -9173,6 +9296,12 @@
         "DescribeHubContentResponse$HubContentStatus": "<p>The status of the hub content.</p>",
         "HubContent$HubContentStatus": "<p>The status of the hub content.</p>",
         "HubContentInfo$HubContentStatus": "<p>The status of the hub content.</p>"
+      }
+    },
+    "HubContentStepMetadata": {
+      "base": "<p>The hub and the hub content that a HubContent step imported.</p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$HubContent": "<p>The metadata for the HubContent step execution.</p>"
       }
     },
     "HubContentSupportStatus": {
@@ -11514,6 +11643,14 @@
       "base": null,
       "refs": {}
     },
+    "ListClusterExtensionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListClusterExtensionsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListClusterNodesRequest": {
       "base": null,
       "refs": {}
@@ -12472,6 +12609,7 @@
         "ListAppsRequest$MaxResults": "<p>This parameter defines the maximum number of results that can be return in a single response. The <code>MaxResults</code> parameter is an upper bound, not a target. If there are more results available than the value specified, a <code>NextToken</code> is provided in the response. The <code>NextToken</code> indicates that the user should get the next set of results by providing this token as a part of a subsequent call. The default value for <code>MaxResults</code> is 10.</p>",
         "ListArtifactsRequest$MaxResults": "<p>The maximum number of artifacts to return in the response. The default value is 10.</p>",
         "ListAssociationsRequest$MaxResults": "<p>The maximum number of associations to return in the response. The default value is 10.</p>",
+        "ListClusterExtensionsRequest$MaxResults": "<p>The maximum number of extensions to return in the response. If you don't specify a value, SageMaker HyperPod returns up to 100 extensions.</p>",
         "ListClusterNodesRequest$MaxResults": "<p>The maximum number of nodes to return in the response.</p>",
         "ListClusterSchedulerConfigsRequest$MaxResults": "<p>The maximum number of cluster policies to list.</p>",
         "ListClustersRequest$MaxResults": "<p>Specifies the maximum number of clusters to evaluate for the operation (not necessarily the number of matching items). After SageMaker processes the number of clusters up to <code>MaxResults</code>, it stops the operation and returns the matching clusters up to that point. If all the matching clusters are desired, SageMaker will go through all the clusters until <code>NextToken</code> is empty.</p>",
@@ -14356,6 +14494,8 @@
         "ListCandidatesForAutoMLJobResponse$NextToken": "<p>If the previous response was truncated, you receive this token. Use it in your next request to receive the next set of results.</p>",
         "ListClusterEventsRequest$NextToken": "<p>A token to retrieve the next set of results. This token is obtained from the output of a previous <code>ListClusterEvents</code> call.</p>",
         "ListClusterEventsResponse$NextToken": "<p>A token to retrieve the next set of results. Include this token in subsequent <code>ListClusterEvents</code> calls to fetch more events.</p>",
+        "ListClusterExtensionsRequest$NextToken": "<p>If the result of the previous <code>ListClusterExtensions</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of extensions, use the token in the next request. When you use the <code>CreationTimeAfter</code> or <code>CreationTimeBefore</code> filters, a response can contain fewer extensions than <code>MaxResults</code>, or none, and still include a <code>NextToken</code>. Continue until the response doesn't include a <code>NextToken</code>.</p>",
+        "ListClusterExtensionsResponse$NextToken": "<p>The next token specified for listing extensions on a SageMaker HyperPod cluster.</p>",
         "ListClusterNodesRequest$NextToken": "<p>If the result of the previous <code>ListClusterNodes</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of cluster nodes, use the token in the next request.</p>",
         "ListClusterNodesResponse$NextToken": "<p>The next token specified for listing instances in a SageMaker HyperPod cluster.</p>",
         "ListClusterSchedulerConfigsRequest$NextToken": "<p>If the previous response was truncated, you will receive this token. Use it in your next request to receive the next set of results.</p>",
@@ -15561,6 +15701,12 @@
         "PipelineExecution$PipelineExperimentConfig": null
       }
     },
+    "PipelineManagedBy": {
+      "base": null,
+      "refs": {
+        "ListPipelinesRequest$ManagedBy": "<p>Filters the pipelines by who manages them. Specify <code>AWS</code> to return pipelines that AWS manages, or <code>CUSTOMER</code> to return pipelines that you created. If you don't specify a value, the response includes both.</p>"
+      }
+    },
     "PipelineName": {
       "base": null,
       "refs": {
@@ -15618,6 +15764,29 @@
         "SearchRecord$PipelineVersion": "<p>The version of the pipeline.</p>"
       }
     },
+    "PipelineVersionAlias": {
+      "base": null,
+      "refs": {
+        "DescribePipelineRequest$PipelineVersionAlias": "<p>The alias of the pipeline version to describe. You can't specify this with <code>PipelineVersionId</code>. If no version of the pipeline has this alias, the request fails with a <code>ResourceNotFound</code> error. If you specify neither, SageMaker describes the latest version of the pipeline.</p>",
+        "ListPipelineExecutionsRequest$PipelineVersionAlias": "<p>The alias of a pipeline version. The response includes only the executions of the version that has this alias when you make the request. If no version of the pipeline has this alias, the request fails with a <code>ResourceNotFound</code> error.</p>",
+        "PipelineVersionAliasList$member": null,
+        "StartPipelineExecutionRequest$PipelineVersionAlias": "<p>The alias of the pipeline version to start the execution from. You can't specify this with <code>PipelineVersionId</code>. If no version of the pipeline has this alias, the request fails with a <code>ResourceNotFound</code> error.</p>"
+      }
+    },
+    "PipelineVersionAliasList": {
+      "base": null,
+      "refs": {
+        "AliasOperations$Add": "<p>The aliases to add to the pipeline version. If you assigned an alias to another version of the same pipeline, you must remove it from that version before you add it here.</p>",
+        "AliasOperations$Remove": "<p>The aliases to remove from the pipeline version.</p>",
+        "CreatePipelineRequest$PipelineVersionAliases": "<p>The aliases to assign to the first version of the pipeline. You can use an alias instead of a pipeline version ID to start an execution, describe the pipeline, or list its executions. Each alias can contain 1-128 letters, numbers, periods (.), hyphens (-), and underscores (_), and can't consist of numbers only. An alias must be unique within the pipeline, and a version can have up to 10 aliases.</p>",
+        "DescribePipelineExecutionResponse$PipelineVersionAliases": "<p>The aliases currently assigned to the pipeline version that the execution ran.</p>",
+        "DescribePipelineResponse$PipelineVersionAliases": "<p>The aliases assigned to the pipeline version.</p>",
+        "PipelineExecutionSummary$PipelineVersionAliases": "<p>The aliases currently assigned to the pipeline version that the execution ran.</p>",
+        "PipelineVersion$PipelineVersionAliases": "<p>The aliases assigned to the pipeline version.</p>",
+        "PipelineVersionSummary$PipelineVersionAliases": "<p>The aliases assigned to the pipeline version.</p>",
+        "UpdatePipelineRequest$PipelineVersionAliases": "<p>The aliases to assign to the new pipeline version that this update creates. You can specify aliases only when the update changes the pipeline definition. To change the aliases of an existing version, use <code>UpdatePipelineVersion</code>.</p> <p>An alias must be unique within the pipeline. To move an alias from an existing version to the new version, first remove the alias from the existing version with <code>UpdatePipelineVersion</code>.</p>"
+      }
+    },
     "PipelineVersionDescription": {
       "base": null,
       "refs": {
@@ -15631,11 +15800,11 @@
       "base": null,
       "refs": {
         "DescribePipelineExecutionResponse$PipelineVersionId": "<p>The ID of the pipeline version.</p>",
-        "DescribePipelineRequest$PipelineVersionId": "<p>The ID of the pipeline version to describe.</p>",
+        "DescribePipelineRequest$PipelineVersionId": "<p>The ID of the pipeline version to describe. You can't specify this with <code>PipelineVersionAlias</code>.</p>",
         "PipelineExecution$PipelineVersionId": "<p>The ID of the pipeline version that started this execution.</p>",
         "PipelineVersion$PipelineVersionId": "<p>The ID of the pipeline version.</p>",
         "PipelineVersionSummary$PipelineVersionId": "<p>The ID of the pipeline version.</p>",
-        "StartPipelineExecutionRequest$PipelineVersionId": "<p>The ID of the pipeline version to start execution from.</p>",
+        "StartPipelineExecutionRequest$PipelineVersionId": "<p>The ID of the pipeline version to start execution from. You can't specify this with <code>PipelineVersionAlias</code>.</p>",
         "UpdatePipelineResponse$PipelineVersionId": "<p>The ID of the pipeline version.</p>",
         "UpdatePipelineVersionRequest$PipelineVersionId": "<p>The pipeline version ID to update.</p>",
         "UpdatePipelineVersionResponse$PipelineVersionId": "<p>The ID of the pipeline version.</p>"
@@ -17267,6 +17436,7 @@
         "DescribeNotebookInstanceOutput$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the instance. </p>",
         "DescribeOptimizationJobResponse$RoleArn": "<p>The ARN of the IAM role that you assigned to the optimization job.</p>",
         "DescribePartnerAppResponse$ExecutionRoleArn": "<p>The ARN of the IAM role associated with the SageMaker Partner AI App.</p>",
+        "DescribePipelineExecutionResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the execution uses. SageMaker returns this value only for executions of pipelines that AWS manages.</p>",
         "DescribePipelineResponse$RoleArn": "<p>The Amazon Resource Name (ARN) that the pipeline uses to execute.</p>",
         "DescribeProcessingJobResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker can assume to perform tasks on your behalf.</p>",
         "DescribeTrainingJobResponse$RoleArn": "<p>The Amazon Web Services Identity and Access Management (IAM) role configured for the training job. </p>",
@@ -17290,6 +17460,7 @@
         "RStudioServerProDomainSettingsForUpdate$DomainExecutionRoleArn": "<p>The execution role for the <code>RStudioServerPro</code> Domain-level app.</p>",
         "RedshiftDatasetDefinition$ClusterRoleArn": "<p>The IAM role attached to your Redshift cluster that Amazon SageMaker uses to generate datasets.</p>",
         "RenderUiTemplateRequest$RoleArn": "<p>The Amazon Resource Name (ARN) that has access to the S3 objects that are used by the template.</p>",
+        "StartPipelineExecutionRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the execution uses. You must specify this parameter when you start an execution of a pipeline that AWS manages. You can't specify it for a pipeline that you create, because its executions use the pipeline's role.</p>",
         "TimeSeriesForecastingSettings$AmazonForecastRoleArn": "<p>The IAM role that Canvas passes to Amazon Forecast for time series forecasting. By default, Canvas uses the execution role specified in the <code>UserProfile</code> that launches the Canvas application. If an execution role is not specified in the <code>UserProfile</code>, Canvas uses the execution role specified in the Domain that owns the <code>UserProfile</code>. To allow time series forecasting, this IAM role should have the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/security-iam-awsmanpol-canvas.html#security-iam-awsmanpol-AmazonSageMakerCanvasForecastAccess\"> AmazonSageMakerCanvasForecastAccess</a> policy attached and <code>forecast.amazonaws.com</code> added in the trust relationship as a service principal.</p>",
         "TrainingJob$RoleArn": "<p>The Amazon Web Services Identity and Access Management (IAM) role configured for the training job.</p>",
         "TrainingSessionDetail$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the training session.</p>",
@@ -18818,6 +18989,8 @@
         "CleanupFailure$ErrorMessage": "<p>A message describing why the Cleanup step could not delete the output resources associated with the upstream step.</p>",
         "CreatePartnerAppPresignedUrlResponse$Url": "<p>The presigned URL that you can use to access the SageMaker Partner AI App.</p>",
         "DescribePartnerAppResponse$BaseUrl": "<p>The URL of the SageMaker Partner AI App that the Application SDK uses to support in-app calls for the user.</p>",
+        "HubContentStepMetadata$HubArn": "<p>The Amazon Resource Name (ARN) of the hub that the step imported the content into.</p>",
+        "HubContentStepMetadata$HubContentArn": "<p>The Amazon Resource Name (ARN) of the hub content that was imported by this step execution.</p>",
         "InferenceComponentMetadata$Arn": "<p> The Amazon Resource Name (ARN) of the inference component. </p>",
         "MapString2048$key": null,
         "MapString2048$value": null
@@ -19105,6 +19278,7 @@
         "CreateArtifactRequest$Tags": "<p>A list of tags to apply to the artifact.</p>",
         "CreateAutoMLJobRequest$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web ServicesResources</a>. Tag keys must be unique per resource.</p>",
         "CreateAutoMLJobV2Request$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, such as by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web ServicesResources</a>. Tag keys must be unique per resource.</p>",
+        "CreateClusterExtensionRequest$Tags": "<p>Custom tags for managing the extension as an Amazon Web Services resource. You can add tags to your extension in the same way you add them in other Amazon Web Services services that support tagging. To learn more about tagging Amazon Web Services resources in general, see <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html\">Tagging Amazon Web Services Resources User Guide</a>. To use this operation to add tags when you create an extension, you must have the <code>sagemaker:AddTags</code> permission.</p>",
         "CreateClusterRequest$Tags": "<p>Custom tags for managing the SageMaker HyperPod cluster as an Amazon Web Services resource. You can add tags to your cluster in the same way you add them in other Amazon Web Services services that support tagging. To learn more about tagging Amazon Web Services resources in general, see <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html\">Tagging Amazon Web Services Resources User Guide</a>.</p>",
         "CreateClusterSchedulerConfigRequest$Tags": "<p>Tags of the cluster policy.</p>",
         "CreateCodeRepositoryInput$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p>",
@@ -19669,6 +19843,9 @@
         "Experiment$LastModifiedTime": "<p>When the experiment was last modified.</p>",
         "ExperimentSummary$CreationTime": "<p>When the experiment was created.</p>",
         "ExperimentSummary$LastModifiedTime": "<p>When the experiment was last modified.</p>",
+        "ExtensionDetails$CreationTime": "<p>The time when the extension was created.</p>",
+        "ExtensionDetails$LastModifiedTime": "<p>The time when the extension was last updated.</p>",
+        "ExtensionSummary$CreationTime": "<p>The time when the extension was created.</p>",
         "FeatureGroupSummary$CreationTime": "<p>A timestamp indicating the time of creation time of the <code>FeatureGroup</code>.</p>",
         "FlowDefinitionSummary$CreationTime": "<p>The timestamp when SageMaker created the flow definition.</p>",
         "GetDeviceFleetReportResponse$ReportGenerated": "<p>Timestamp of when the report was generated.</p>",
@@ -19736,6 +19913,8 @@
         "ListAutoMLJobsRequest$LastModifiedTimeBefore": "<p>Request a list of jobs, using a filter for time.</p>",
         "ListClusterEventsRequest$EventTimeAfter": "<p>The start of the time range for filtering events. Only events that occurred after this time are included in the results.</p>",
         "ListClusterEventsRequest$EventTimeBefore": "<p>The end of the time range for filtering events. Only events that occurred before this time are included in the results.</p>",
+        "ListClusterExtensionsRequest$CreationTimeAfter": "<p>A filter that returns extensions created at or after the specified time. Timestamps are formatted according to the ISO 8601 standard.</p>",
+        "ListClusterExtensionsRequest$CreationTimeBefore": "<p>A filter that returns extensions created at or before the specified time. The acceptable formats are the same as the timestamp formats for <code>CreationTimeAfter</code>.</p>",
         "ListClusterNodesRequest$CreationTimeAfter": "<p>A filter that returns nodes in a SageMaker HyperPod cluster created after the specified time. Timestamps are formatted according to the ISO 8601 standard. </p> <p>Acceptable formats include:</p> <ul> <li> <p> <code>YYYY-MM-DDThh:mm:ss.sssTZD</code> (UTC), for example, <code>2014-10-01T20:30:00.000Z</code> </p> </li> <li> <p> <code>YYYY-MM-DDThh:mm:ss.sssTZD</code> (with offset), for example, <code>2014-10-01T12:30:00.000-08:00</code> </p> </li> <li> <p> <code>YYYY-MM-DD</code>, for example, <code>2014-10-01</code> </p> </li> <li> <p>Unix time in seconds, for example, <code>1412195400</code>. This is also referred to as Unix Epoch time and represents the number of seconds since midnight, January 1, 1970 UTC.</p> </li> </ul> <p>For more information about the timestamp format, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-types.html#parameter-type-timestamp\">Timestamp</a> in the <i>Amazon Web Services Command Line Interface User Guide</i>.</p>",
         "ListClusterNodesRequest$CreationTimeBefore": "<p>A filter that returns nodes in a SageMaker HyperPod cluster created before the specified time. The acceptable formats are the same as the timestamp formats for <code>CreationTimeAfter</code>. For more information about the timestamp format, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-types.html#parameter-type-timestamp\">Timestamp</a> in the <i>Amazon Web Services Command Line Interface User Guide</i>.</p>",
         "ListClusterSchedulerConfigsRequest$CreatedAfter": "<p>Filter for after this creation time. The input for this parameter is a Unix timestamp. To convert a date and time into a Unix timestamp, see <a href=\"https://www.epochconverter.com/\">EpochConverter</a>.</p>",
@@ -21176,6 +21355,20 @@
       "refs": {}
     },
     "UpdateArtifactResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateClusterExtensionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateClusterExtensionRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "UpdateClusterExtensionRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide so that the request is idempotent. If you send the same update more than once, SageMaker HyperPod applies it once and doesn't return an error.</p>"
+      }
+    },
+    "UpdateClusterExtensionResponse": {
       "base": null,
       "refs": {}
     },

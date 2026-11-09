@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Ensures checksum mode member is set for requests whose responses contain modeled checksums.
+* `Aws\Aws` - Adds concise debug output for Command objects to prevent handler and service model internals from overwhelming var_dump() and print_r() output.
+* `Aws\Aws\DynamoDb` - Adds precise PHPStan types to DynamoDB Marshaler methods so marshaled items are compatible with generated client argument shapes.
+* `Aws\S3/S3Transfer` - Confines paths loaded from S3 resumable download files to the resume file directory while preserving explicitly configured download paths.
+* `Aws\TraceMiddleware` - Defer closing the `@http.debug` resource for successful streamed responses. Fixes "fprintf(): supplied resource is not a valid stream resource" errors when using the S3 stream wrapper with debug enabled.
+* `Aws\Signin` - Adds the CreateBearerToken API, which exchanges your IAM credentials for a bearer token that can be used to access supported AWS services.
+* `Aws\SageMaker` - Adds support for pipelines that AWS manages, filter ListPipelines by ManagedBy and run them with your own role via RoleArn on StartPipelineExecution. Adds pipeline version aliases to reference versions by name. Adds HubContent step metadata to ListPipelineExecutionSteps.
+* `Aws\BedrockAgentCore` - Adds the InvokeWebSearch API, which searches the web using the AWS-managed web search and returns ranked results with a text extract from each page. Results can be filtered by domain and by publication time.
+* `Aws\Evs` - Amazon EVS adds support for r7i.metal-24xl and r7i.metal-48xl EC2 bare metal instance types for self-deployed VMware Cloud Foundation environments. These diskless instance types use customer-connected external NFS storage, such as Amazon FSx for NetApp ONTAP, instead of local NVMe and vSAN.
+* `Aws\S3Control` - Adds support for cross-account access grants with InstanceScope parameter for GetDataAccess and ListCallerAccessGrants operations in S3 Access Grants.
+* `Aws\ElasticsearchService` - Adds cloned blue-green upgrades for Amazon OpenSearch Service domains. UpgradeElasticsearchDomain accepts DeploymentStrategyOptions to upgrade on a cloned cluster, the new UpdateClone API shifts search traffic, cuts over and sets retention, and DescribeDomainChangeProgress reports upgrade details.
+* `Aws\DataZone` - Adds support for Workday Data Connect and Workday Live Data Query connection types in Amazon DataZone connection APIs.
+* `Aws\Batch` - Adds support for additional Amazon EKS security context settings in AWS Batch. Pod-level settings include fsGroup, runAsUser, runAsGroup, runAsNonRoot, and seccompProfile. Container-level settings add Linux capabilities and seccompProfile to existing runAsUser, runAsGroup, and runAsNonRoot support.
+* `Aws\Glue` - We are releasing five new APIs to allow customers to enable Catalog-level data quality monitoring in AWS Glue Data Catalog, a new feature to perform data quality evaluation on collections of GDC tables selected by the customer, on a schedule or event-driven basis, using a custom or managed ruleset.
+* `Aws\ECS` - Amazon ECS Managed Instances now supports isolated and confidential tasks, which run in AWS Nitro Sandboxes. Configure them with trustedExecutionConfiguration in task definitions and nitroEnclavesEnabled in capacity providers.
+* `Aws\OpenSearchService` - Adds cloned blue-green upgrades for Amazon OpenSearch Service domains. UpgradeDomain accepts DeploymentStrategyOptions to upgrade on a cloned cluster, the new UpdateClone API shifts search traffic, cuts over and sets retention, and DescribeDomainChangeProgress reports the upgrade details.
+
 ## 3.403.1 - 2026-11-06
 
 * `Aws\SSM` - AWS Systems Manager now provides two new APIs - RegisterDefaultHostManagementConfiguration and DeregisterDefaultHostManagementConfiguration - along with a new DefaultHostManagementConfiguration CloudFormation resource type.

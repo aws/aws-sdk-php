@@ -1779,6 +1779,24 @@
       "type":"list",
       "member":{"shape":"EksContainerEnvironmentVariable"}
     },
+    "EksContainerLinuxCapabilities":{
+      "type":"structure",
+      "members":{
+        "add":{"shape":"EksContainerLinuxCapabilityList"},
+        "drop":{"shape":"EksContainerLinuxCapabilityList"}
+      }
+    },
+    "EksContainerLinuxCapability":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "EksContainerLinuxCapabilityList":{
+      "type":"list",
+      "member":{"shape":"EksContainerLinuxCapability"},
+      "max":64,
+      "min":0
+    },
     "EksContainerOverride":{
       "type":"structure",
       "members":{
@@ -1809,7 +1827,9 @@
         "privileged":{"shape":"Boolean"},
         "allowPrivilegeEscalation":{"shape":"Boolean"},
         "readOnlyRootFilesystem":{"shape":"Boolean"},
-        "runAsNonRoot":{"shape":"Boolean"}
+        "runAsNonRoot":{"shape":"Boolean"},
+        "capabilities":{"shape":"EksContainerLinuxCapabilities"},
+        "seccompProfile":{"shape":"EksSeccompProfile"}
       }
     },
     "EksContainerVolumeMount":{
@@ -1879,7 +1899,8 @@
         "initContainers":{"shape":"EksContainers"},
         "volumes":{"shape":"EksVolumes"},
         "metadata":{"shape":"EksMetadata"},
-        "shareProcessNamespace":{"shape":"Boolean"}
+        "shareProcessNamespace":{"shape":"Boolean"},
+        "securityContext":{"shape":"EksPodSecurityContext"}
       }
     },
     "EksPodPropertiesDetail":{
@@ -1895,7 +1916,8 @@
         "podName":{"shape":"String"},
         "nodeName":{"shape":"String"},
         "metadata":{"shape":"EksMetadata"},
-        "shareProcessNamespace":{"shape":"Boolean"}
+        "shareProcessNamespace":{"shape":"Boolean"},
+        "securityContext":{"shape":"EksPodSecurityContext"}
       }
     },
     "EksPodPropertiesOverride":{
@@ -1904,6 +1926,16 @@
         "containers":{"shape":"EksContainerOverrideList"},
         "initContainers":{"shape":"EksContainerOverrideList"},
         "metadata":{"shape":"EksMetadata"}
+      }
+    },
+    "EksPodSecurityContext":{
+      "type":"structure",
+      "members":{
+        "runAsUser":{"shape":"Long"},
+        "runAsGroup":{"shape":"Long"},
+        "runAsNonRoot":{"shape":"Boolean"},
+        "seccompProfile":{"shape":"EksSeccompProfile"},
+        "fsGroup":{"shape":"Long"}
       }
     },
     "EksProperties":{
@@ -1928,6 +1960,27 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"Quantity"}
+    },
+    "EksSeccompLocalhostProfile":{
+      "type":"string",
+      "max":4095,
+      "min":1
+    },
+    "EksSeccompProfile":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"EksSeccompProfileType"},
+        "localhostProfile":{"shape":"EksSeccompLocalhostProfile"}
+      }
+    },
+    "EksSeccompProfileType":{
+      "type":"string",
+      "enum":[
+        "RuntimeDefault",
+        "Localhost",
+        "Unconfined"
+      ]
     },
     "EksSecret":{
       "type":"structure",

@@ -3575,6 +3575,11 @@
           "shape":"AuditContext",
           "location":"querystring",
           "locationName":"auditContext"
+        },
+        "InstanceScope":{
+          "shape":"InstanceScope",
+          "location":"querystring",
+          "locationName":"instanceScope"
         }
       }
     },
@@ -3583,7 +3588,8 @@
       "members":{
         "Credentials":{"shape":"Credentials"},
         "MatchedGrantTarget":{"shape":"S3Prefix"},
-        "Grantee":{"shape":"Grantee"}
+        "Grantee":{"shape":"Grantee"},
+        "MatchedInstanceArn":{"shape":"AccessGrantsInstanceArn"}
       }
     },
     "GetJobTaggingRequest":{
@@ -3878,6 +3884,13 @@
         "Buckets":{"shape":"Buckets"},
         "Regions":{"shape":"Regions"}
       }
+    },
+    "InstanceScope":{
+      "type":"string",
+      "enum":[
+        "SELF",
+        "ALL"
+      ]
     },
     "InternalServiceException":{
       "type":"structure",
@@ -4636,7 +4649,8 @@
       "members":{
         "Permission":{"shape":"Permission"},
         "GrantScope":{"shape":"S3Prefix"},
-        "ApplicationArn":{"shape":"IdentityCenterApplicationArn"}
+        "ApplicationArn":{"shape":"IdentityCenterApplicationArn"},
+        "AccessGrantsInstanceArn":{"shape":"AccessGrantsInstanceArn"}
       }
     },
     "ListCallerAccessGrantsRequest":{
@@ -4669,6 +4683,11 @@
           "shape":"Boolean",
           "location":"querystring",
           "locationName":"allowedByApplication"
+        },
+        "InstanceScope":{
+          "shape":"InstanceScope",
+          "location":"querystring",
+          "locationName":"instanceScope"
         }
       }
     },

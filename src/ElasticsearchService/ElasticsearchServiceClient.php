@@ -396,6 +396,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result startElasticsearchServiceSoftwareUpdate(array{DomainName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise startElasticsearchServiceSoftwareUpdateAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise startElasticsearchServiceSoftwareUpdateAsync(array{DomainName?: string, ...} $args = [])
+ * @method \Aws\Result updateClone(array $args = [])
+ * @phpstan-method \Aws\Result updateClone(array{
+ *     DomainName?: string,
+ *     TrafficSplitOptions?: array{Strategy?: 'ShiftReadTrafficPercent', CloneReadTrafficPercent?: int, ...},
+ *     CutoverOptions?: array{Target?: 'ClonedCluster'|'PrimaryCluster', ...},
+ *     RetentionOptions?: array{RetentionInHours?: int, RetentionAction?: 'DeletePrimaryCluster'|'RollbackToPrimaryCluster', ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateCloneAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateCloneAsync(array{
+ *     DomainName?: string,
+ *     TrafficSplitOptions?: array{Strategy?: 'ShiftReadTrafficPercent', CloneReadTrafficPercent?: int, ...},
+ *     CutoverOptions?: array{Target?: 'ClonedCluster'|'PrimaryCluster', ...},
+ *     RetentionOptions?: array{RetentionInHours?: int, RetentionAction?: 'DeletePrimaryCluster'|'RollbackToPrimaryCluster', ...},
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateElasticsearchDomainConfig(array $args = [])
  * @phpstan-method \Aws\Result updateElasticsearchDomainConfig(array{
  *     DomainName?: string,
@@ -567,8 +583,28 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result upgradeElasticsearchDomain(array $args = [])
- * @phpstan-method \Aws\Result upgradeElasticsearchDomain(array{DomainName?: string, TargetVersion?: string, PerformCheckOnly?: bool, ...} $args = [])
+ * @phpstan-method \Aws\Result upgradeElasticsearchDomain(array{
+ *     DomainName?: string,
+ *     TargetVersion?: string,
+ *     PerformCheckOnly?: bool,
+ *     DeploymentStrategyOptions?: array{
+ *         DeploymentStrategy?: 'ClonedBlueGreen',
+ *         ClonedBlueGreenOptions?: array{RetentionOptions?: array, ...},
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise upgradeElasticsearchDomainAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise upgradeElasticsearchDomainAsync(array{DomainName?: string, TargetVersion?: string, PerformCheckOnly?: bool, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise upgradeElasticsearchDomainAsync(array{
+ *     DomainName?: string,
+ *     TargetVersion?: string,
+ *     PerformCheckOnly?: bool,
+ *     DeploymentStrategyOptions?: array{
+ *         DeploymentStrategy?: 'ClonedBlueGreen',
+ *         ClonedBlueGreenOptions?: array{RetentionOptions?: array, ...},
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
  */
 class ElasticsearchServiceClient extends AwsClient {}

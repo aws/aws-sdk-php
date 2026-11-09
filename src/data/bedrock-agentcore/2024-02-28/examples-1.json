@@ -1,4 +1,36 @@
 {
   "version": "1.0",
-  "examples": {}
+  "examples": {
+    "InvokeWebSearch": [
+      {
+        "input": {
+          "filters": {
+            "domainFilter": {
+              "include": [
+                "example.com"
+              ]
+            },
+            "publishedDateFilter": {
+              "publishedAfter": "2026-01-01T00:00:00Z"
+            }
+          },
+          "maxResults": 1,
+          "searchQuery": "Amazon Bedrock AgentCore web search",
+          "webSearchId": "web-search.v1"
+        },
+        "output": {
+          "results": [
+            {
+              "publishedAt": "2026-03-15T08:00:00Z",
+              "text": "Web search lets an agent find current information on the public web and cite its sources.",
+              "title": "Getting started with web search",
+              "url": "https://docs.example.com/web-search/getting-started"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Search the web for recent pages from one domain"
+      }
+    ]
+  }
 }

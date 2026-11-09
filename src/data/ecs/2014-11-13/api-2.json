@@ -1606,7 +1606,9 @@
         "v100",
         "a10g",
         "h100",
-        "t4g"
+        "t4g",
+        "l40s",
+        "l4"
       ]
     },
     "AcceleratorNameSet":{
@@ -1749,6 +1751,10 @@
     "Attachments":{
       "type":"list",
       "member":{"shape":"Attachment"}
+    },
+    "AttestationPolicyStatus":{
+      "type":"string",
+      "enum":["CONFIGURED"]
     },
     "Attribute":{
       "type":"structure",
@@ -4666,7 +4672,8 @@
         "instanceMetadataTagsPropagation":{"shape":"BoxedBoolean"},
         "instanceRequirements":{"shape":"InstanceRequirementsRequest"},
         "fipsEnabled":{"shape":"BoxedBoolean"},
-        "capacityReservations":{"shape":"CapacityReservationRequest"}
+        "capacityReservations":{"shape":"CapacityReservationRequest"},
+        "nitroEnclavesEnabled":{"shape":"BoxedBoolean"}
       }
     },
     "InstanceLaunchTemplateUpdate":{
@@ -4733,6 +4740,14 @@
         "host",
         "task",
         "none"
+      ]
+    },
+    "IsolationMode":{
+      "type":"string",
+      "enum":[
+        "SHARED",
+        "ISOLATED_SANDBOX",
+        "CONFIDENTIAL_SANDBOX"
       ]
     },
     "KernelCapabilities":{
@@ -5967,7 +5982,8 @@
         },
         "ephemeralStorage":{"shape":"EphemeralStorage"},
         "runtimePlatform":{"shape":"RuntimePlatform"},
-        "enableFaultInjection":{"shape":"BoxedBoolean"}
+        "enableFaultInjection":{"shape":"BoxedBoolean"},
+        "trustedExecutionConfiguration":{"shape":"TrustedExecutionConfiguration"}
       }
     },
     "RegisterTaskDefinitionResponse":{
@@ -6947,7 +6963,8 @@
         "taskDefinitionArn":{"shape":"String"},
         "version":{"shape":"Long"},
         "ephemeralStorage":{"shape":"EphemeralStorage"},
-        "fargateEphemeralStorage":{"shape":"TaskEphemeralStorage"}
+        "fargateEphemeralStorage":{"shape":"TaskEphemeralStorage"},
+        "trustedExecutionSummary":{"shape":"TrustedExecutionSummary"}
       }
     },
     "TaskDefinition":{
@@ -6978,7 +6995,8 @@
         "deleteRequestedAt":{"shape":"Timestamp"},
         "registeredBy":{"shape":"String"},
         "ephemeralStorage":{"shape":"EphemeralStorage"},
-        "enableFaultInjection":{"shape":"BoxedBoolean"}
+        "enableFaultInjection":{"shape":"BoxedBoolean"},
+        "trustedExecutionConfiguration":{"shape":"TrustedExecutionConfiguration"}
       }
     },
     "TaskDefinitionFamilyStatus":{
@@ -7223,6 +7241,22 @@
         "tcp",
         "udp"
       ]
+    },
+    "TrustedExecutionConfiguration":{
+      "type":"structure",
+      "required":["isolationMode"],
+      "members":{
+        "isolationMode":{"shape":"IsolationMode"},
+        "attestationPolicy":{"shape":"String"}
+      }
+    },
+    "TrustedExecutionSummary":{
+      "type":"structure",
+      "required":["isolationMode"],
+      "members":{
+        "isolationMode":{"shape":"IsolationMode"},
+        "attestationPolicyStatus":{"shape":"AttestationPolicyStatus"}
+      }
     },
     "Ulimit":{
       "type":"structure",

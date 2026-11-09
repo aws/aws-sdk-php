@@ -687,6 +687,26 @@ use Aws\AwsClient;
  *     AutoScaling?: array{Mode?: 'Disable'|'Enable', AutoScalerType?: 'Karpenter', ...},
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createClusterExtension(array $args = [])
+ * @phpstan-method \Aws\Result createClusterExtension(array{
+ *     ClusterArn?: string,
+ *     ExtensionName?: string,
+ *     ExtensionVersion?: string,
+ *     ConfigurationValues?: string,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ClientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createClusterExtensionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createClusterExtensionAsync(array{
+ *     ClusterArn?: string,
+ *     ExtensionName?: string,
+ *     ExtensionVersion?: string,
+ *     ConfigurationValues?: string,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ClientToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createClusterSchedulerConfig(array $args = [])
  * @phpstan-method \Aws\Result createClusterSchedulerConfig(array{
  *     Name?: string,
@@ -3196,6 +3216,7 @@ use Aws\AwsClient;
  *     RoleArn?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ParallelismConfiguration?: array{MaxParallelExecutionSteps?: int, ...},
+ *     PipelineVersionAliases?: list<string>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createPipelineAsync(array $args = [])
@@ -3209,6 +3230,7 @@ use Aws\AwsClient;
  *     RoleArn?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ParallelismConfiguration?: array{MaxParallelExecutionSteps?: int, ...},
+ *     PipelineVersionAliases?: list<string>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createPresignedDomainUrl(array $args = [])
@@ -3999,6 +4021,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteCluster(array{ClusterName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteClusterAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteClusterAsync(array{ClusterName?: string, ...} $args = [])
+ * @method \Aws\Result deleteClusterExtension(array $args = [])
+ * @phpstan-method \Aws\Result deleteClusterExtension(array{ClusterArn?: string, ExtensionArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteClusterExtensionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteClusterExtensionAsync(array{ClusterArn?: string, ExtensionArn?: string, ...} $args = [])
  * @method \Aws\Result deleteClusterSchedulerConfig(array $args = [])
  * @phpstan-method \Aws\Result deleteClusterSchedulerConfig(array{ClusterSchedulerConfigId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteClusterSchedulerConfigAsync(array $args = [])
@@ -4299,6 +4325,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeClusterEvent(array{EventId?: string, ClusterName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeClusterEventAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeClusterEventAsync(array{EventId?: string, ClusterName?: string, ...} $args = [])
+ * @method \Aws\Result describeClusterExtension(array $args = [])
+ * @phpstan-method \Aws\Result describeClusterExtension(array{ClusterArn?: string, ExtensionArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeClusterExtensionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeClusterExtensionAsync(array{ClusterArn?: string, ExtensionArn?: string, ...} $args = [])
  * @method \Aws\Result describeClusterNode(array $args = [])
  * @phpstan-method \Aws\Result describeClusterNode(array{ClusterName?: string, NodeId?: string, NodeLogicalId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeClusterNodeAsync(array $args = [])
@@ -4496,9 +4526,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describePartnerAppAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describePartnerAppAsync(array{Arn?: string, IncludeAvailableUpgrade?: bool, ...} $args = [])
  * @method \Aws\Result describePipeline(array $args = [])
- * @phpstan-method \Aws\Result describePipeline(array{PipelineName?: string, PipelineVersionId?: int, ...} $args = [])
+ * @phpstan-method \Aws\Result describePipeline(array{PipelineName?: string, PipelineVersionId?: int, PipelineVersionAlias?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describePipelineAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise describePipelineAsync(array{PipelineName?: string, PipelineVersionId?: int, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describePipelineAsync(array{PipelineName?: string, PipelineVersionId?: int, PipelineVersionAlias?: string, ...} $args = [])
  * @method \Aws\Result describePipelineDefinitionForExecution(array $args = [])
  * @phpstan-method \Aws\Result describePipelineDefinitionForExecution(array{PipelineExecutionArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describePipelineDefinitionForExecutionAsync(array $args = [])
@@ -4967,6 +4997,24 @@ use Aws\AwsClient;
  *     ResourceType?: 'Cluster'|'Instance'|'InstanceGroup',
  *     MaxResults?: int,
  *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listClusterExtensions(array $args = [])
+ * @phpstan-method \Aws\Result listClusterExtensions(array{
+ *     ClusterArn?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     CreationTimeAfter?: int|string|\DateTimeInterface,
+ *     CreationTimeBefore?: int|string|\DateTimeInterface,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listClusterExtensionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listClusterExtensionsAsync(array{
+ *     ClusterArn?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     CreationTimeAfter?: int|string|\DateTimeInterface,
+ *     CreationTimeBefore?: int|string|\DateTimeInterface,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listClusterNodes(array $args = [])
@@ -6292,6 +6340,7 @@ use Aws\AwsClient;
  *     SortOrder?: 'Ascending'|'Descending',
  *     NextToken?: string,
  *     MaxResults?: int,
+ *     PipelineVersionAlias?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listPipelineExecutionsAsync(array $args = [])
@@ -6303,6 +6352,7 @@ use Aws\AwsClient;
  *     SortOrder?: 'Ascending'|'Descending',
  *     NextToken?: string,
  *     MaxResults?: int,
+ *     PipelineVersionAlias?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listPipelineParametersForExecution(array $args = [])
@@ -6338,6 +6388,7 @@ use Aws\AwsClient;
  *     SortOrder?: 'Ascending'|'Descending',
  *     NextToken?: string,
  *     MaxResults?: int,
+ *     ManagedBy?: 'AWS'|'CUSTOMER',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listPipelinesAsync(array $args = [])
@@ -6349,6 +6400,7 @@ use Aws\AwsClient;
  *     SortOrder?: 'Ascending'|'Descending',
  *     NextToken?: string,
  *     MaxResults?: int,
+ *     ManagedBy?: 'AWS'|'CUSTOMER',
  *     ...,
  * } $args = [])
  * @method \Aws\Result listProcessingJobs(array $args = [])
@@ -6950,6 +7002,8 @@ use Aws\AwsClient;
  *     SelectiveExecutionConfig?: array{SourcePipelineExecutionArn?: string, SelectedSteps?: list<array>, ...},
  *     PipelineVersionId?: int,
  *     MlflowExperimentName?: string,
+ *     PipelineVersionAlias?: string,
+ *     RoleArn?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise startPipelineExecutionAsync(array $args = [])
@@ -6963,6 +7017,8 @@ use Aws\AwsClient;
  *     SelectiveExecutionConfig?: array{SourcePipelineExecutionArn?: string, SelectedSteps?: list<array>, ...},
  *     PipelineVersionId?: int,
  *     MlflowExperimentName?: string,
+ *     PipelineVersionAlias?: string,
+ *     RoleArn?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result startSession(array $args = [])
@@ -7269,6 +7325,24 @@ use Aws\AwsClient;
  *         Slurm?: array{SlurmConfigStrategy?: 'Managed'|'Merge'|'Overwrite', AccountingDatabase?: array, ...},
  *         ...,
  *     },
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateClusterExtension(array $args = [])
+ * @phpstan-method \Aws\Result updateClusterExtension(array{
+ *     ClusterArn?: string,
+ *     ExtensionArn?: string,
+ *     ExtensionVersion?: string,
+ *     ConfigurationValues?: string,
+ *     ClientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateClusterExtensionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateClusterExtensionAsync(array{
+ *     ClusterArn?: string,
+ *     ExtensionArn?: string,
+ *     ExtensionVersion?: string,
+ *     ConfigurationValues?: string,
+ *     ClientToken?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateClusterSchedulerConfig(array $args = [])
@@ -8338,6 +8412,7 @@ use Aws\AwsClient;
  *     PipelineDescription?: string,
  *     RoleArn?: string,
  *     ParallelismConfiguration?: array{MaxParallelExecutionSteps?: int, ...},
+ *     PipelineVersionAliases?: list<string>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePipelineAsync(array $args = [])
@@ -8349,6 +8424,7 @@ use Aws\AwsClient;
  *     PipelineDescription?: string,
  *     RoleArn?: string,
  *     ParallelismConfiguration?: array{MaxParallelExecutionSteps?: int, ...},
+ *     PipelineVersionAliases?: list<string>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updatePipelineExecution(array $args = [])
@@ -8373,6 +8449,7 @@ use Aws\AwsClient;
  *     PipelineVersionId?: int,
  *     PipelineVersionDisplayName?: string,
  *     PipelineVersionDescription?: string,
+ *     PipelineVersionAliasOperations?: array{Add?: list<string>, Remove?: list<string>, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePipelineVersionAsync(array $args = [])
@@ -8381,6 +8458,7 @@ use Aws\AwsClient;
  *     PipelineVersionId?: int,
  *     PipelineVersionDisplayName?: string,
  *     PipelineVersionDescription?: string,
+ *     PipelineVersionAliasOperations?: array{Add?: list<string>, Remove?: list<string>, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateProject(array $args = [])

@@ -5,6 +5,10 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Sign-In Service** service.
+ * @method \Aws\Result createBearerToken(array $args = [])
+ * @phpstan-method \Aws\Result createBearerToken(array{grantType?: string, resource?: string, durationSeconds?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise createBearerTokenAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createBearerTokenAsync(array{grantType?: string, resource?: string, durationSeconds?: int, ...} $args = [])
  * @method \Aws\Result createOAuth2Token(array $args = [])
  * @phpstan-method \Aws\Result createOAuth2Token(array{
  *     tokenInput?: array{

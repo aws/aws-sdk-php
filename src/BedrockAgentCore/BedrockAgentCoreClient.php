@@ -733,6 +733,30 @@ use Aws\AwsClient;
  *     actorId?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result invokeWebSearch(array $args = [])
+ * @phpstan-method \Aws\Result invokeWebSearch(array{
+ *     webSearchId?: string,
+ *     searchQuery?: string,
+ *     maxResults?: int,
+ *     filters?: array{
+ *         domainFilter?: array{include?: list<string>, exclude?: list<string>, ...},
+ *         publishedDateFilter?: array{publishedAfter?: int|string|\DateTimeInterface, publishedBefore?: int|string|\DateTimeInterface, ...},
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise invokeWebSearchAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise invokeWebSearchAsync(array{
+ *     webSearchId?: string,
+ *     searchQuery?: string,
+ *     maxResults?: int,
+ *     filters?: array{
+ *         domainFilter?: array{include?: list<string>, exclude?: list<string>, ...},
+ *         publishedDateFilter?: array{publishedAfter?: int|string|\DateTimeInterface, publishedBefore?: int|string|\DateTimeInterface, ...},
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listABTests(array $args = [])
  * @phpstan-method \Aws\Result listABTests(array{maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listABTestsAsync(array $args = [])

@@ -272,6 +272,20 @@
         {"shape":"ResourceLimitExceeded"}
       ]
     },
+    "CreateClusterExtension":{
+      "name":"CreateClusterExtension",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateClusterExtensionRequest"},
+      "output":{"shape":"CreateClusterExtensionResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
+      ]
+    },
     "CreateClusterSchedulerConfig":{
       "name":"CreateClusterSchedulerConfig",
       "http":{
@@ -1168,6 +1182,20 @@
         {"shape":"ResourceNotFound"}
       ]
     },
+    "DeleteClusterExtension":{
+      "name":"DeleteClusterExtension",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteClusterExtensionRequest"},
+      "output":{"shape":"DeleteClusterExtensionResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
+      ]
+    },
     "DeleteClusterSchedulerConfig":{
       "name":"DeleteClusterSchedulerConfig",
       "http":{
@@ -1901,6 +1929,19 @@
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
+    },
+    "DescribeClusterExtension":{
+      "name":"DescribeClusterExtension",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeClusterExtensionRequest"},
+      "output":{"shape":"DescribeClusterExtensionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ],
+      "readonly":true
     },
     "DescribeClusterNode":{
       "name":"DescribeClusterNode",
@@ -2909,6 +2950,19 @@
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
+    },
+    "ListClusterExtensions":{
+      "name":"ListClusterExtensions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListClusterExtensionsRequest"},
+      "output":{"shape":"ListClusterExtensionsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ],
+      "readonly":true
     },
     "ListClusterNodes":{
       "name":"ListClusterNodes",
@@ -4151,6 +4205,19 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFound"},
         {"shape":"ResourceLimitExceeded"}
+      ]
+    },
+    "UpdateClusterExtension":{
+      "name":"UpdateClusterExtension",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateClusterExtensionRequest"},
+      "output":{"shape":"UpdateClusterExtensionResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
       ]
     },
     "UpdateClusterSchedulerConfig":{
@@ -5702,6 +5769,13 @@
       "members":{
         "ValidationRole":{"shape":"RoleArn"},
         "ValidationProfiles":{"shape":"AlgorithmValidationProfiles"}
+      }
+    },
+    "AliasOperations":{
+      "type":"structure",
+      "members":{
+        "Add":{"shape":"PipelineVersionAliasList"},
+        "Remove":{"shape":"PipelineVersionAliasList"}
       }
     },
     "AmazonQSettings":{
@@ -10249,6 +10323,37 @@
         "AutoMLJobArn":{"shape":"AutoMLJobArn"}
       }
     },
+    "CreateClusterExtensionRequest":{
+      "type":"structure",
+      "required":[
+        "ClusterArn",
+        "ExtensionName"
+      ],
+      "members":{
+        "ClusterArn":{"shape":"ClusterArn"},
+        "ExtensionName":{"shape":"ExtensionName"},
+        "ExtensionVersion":{"shape":"ExtensionVersion"},
+        "ConfigurationValues":{"shape":"ExtensionConfigurationValues"},
+        "Tags":{"shape":"TagList"},
+        "ClientToken":{
+          "shape":"CreateClusterExtensionRequestClientTokenString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateClusterExtensionRequestClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":0,
+      "pattern":"[\\x21-\\x7E]+"
+    },
+    "CreateClusterExtensionResponse":{
+      "type":"structure",
+      "required":["ExtensionArn"],
+      "members":{
+        "ExtensionArn":{"shape":"ExtensionArn"}
+      }
+    },
     "CreateClusterRequest":{
       "type":"structure",
       "required":["ClusterName"],
@@ -11404,7 +11509,8 @@
         },
         "RoleArn":{"shape":"RoleArn"},
         "Tags":{"shape":"TagList"},
-        "ParallelismConfiguration":{"shape":"ParallelismConfiguration"}
+        "ParallelismConfiguration":{"shape":"ParallelismConfiguration"},
+        "PipelineVersionAliases":{"shape":"PipelineVersionAliasList"}
       }
     },
     "CreatePipelineResponse":{
@@ -12356,6 +12462,24 @@
       "members":{
         "SourceArn":{"shape":"AssociationEntityArn"},
         "DestinationArn":{"shape":"AssociationEntityArn"}
+      }
+    },
+    "DeleteClusterExtensionRequest":{
+      "type":"structure",
+      "required":[
+        "ClusterArn",
+        "ExtensionArn"
+      ],
+      "members":{
+        "ClusterArn":{"shape":"ClusterArn"},
+        "ExtensionArn":{"shape":"ExtensionArn"}
+      }
+    },
+    "DeleteClusterExtensionResponse":{
+      "type":"structure",
+      "required":["ExtensionArn"],
+      "members":{
+        "ExtensionArn":{"shape":"ExtensionArn"}
       }
     },
     "DeleteClusterRequest":{
@@ -13337,6 +13461,25 @@
       "type":"structure",
       "members":{
         "EventDetails":{"shape":"ClusterEventDetail"}
+      }
+    },
+    "DescribeClusterExtensionRequest":{
+      "type":"structure",
+      "required":[
+        "ClusterArn",
+        "ExtensionArn"
+      ],
+      "members":{
+        "ClusterArn":{"shape":"ClusterArn"},
+        "ExtensionArn":{"shape":"ExtensionArn"}
+      }
+    },
+    "DescribeClusterExtensionResponse":{
+      "type":"structure",
+      "required":["ExtensionDetails"],
+      "members":{
+        "ExtensionDetails":{"shape":"ExtensionDetails"},
+        "NodeSummary":{"shape":"ExtensionNodeSummary"}
       }
     },
     "DescribeClusterNodeRequest":{
@@ -14946,7 +15089,9 @@
         "ParallelismConfiguration":{"shape":"ParallelismConfiguration"},
         "SelectiveExecutionConfig":{"shape":"SelectiveExecutionConfig"},
         "PipelineVersionId":{"shape":"PipelineVersionId"},
-        "MLflowConfig":{"shape":"MLflowConfiguration"}
+        "MLflowConfig":{"shape":"MLflowConfiguration"},
+        "PipelineVersionAliases":{"shape":"PipelineVersionAliasList"},
+        "RoleArn":{"shape":"RoleArn"}
       }
     },
     "DescribePipelineRequest":{
@@ -14954,7 +15099,8 @@
       "required":["PipelineName"],
       "members":{
         "PipelineName":{"shape":"PipelineNameOrArn"},
-        "PipelineVersionId":{"shape":"PipelineVersionId"}
+        "PipelineVersionId":{"shape":"PipelineVersionId"},
+        "PipelineVersionAlias":{"shape":"PipelineVersionAlias"}
       }
     },
     "DescribePipelineResponse":{
@@ -14974,7 +15120,8 @@
         "LastModifiedBy":{"shape":"UserContext"},
         "ParallelismConfiguration":{"shape":"ParallelismConfiguration"},
         "PipelineVersionDisplayName":{"shape":"PipelineVersionName"},
-        "PipelineVersionDescription":{"shape":"PipelineVersionDescription"}
+        "PipelineVersionDescription":{"shape":"PipelineVersionDescription"},
+        "PipelineVersionAliases":{"shape":"PipelineVersionAliasList"}
       }
     },
     "DescribeProcessingJobRequest":{
@@ -16795,6 +16942,100 @@
         "TrainingPlanExtensions":{"shape":"TrainingPlanExtensions"}
       }
     },
+    "ExtensionArn":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:extension/(sagemaker|eks|pcs)-[a-z0-9-]+/[a-z0-9-]+/[a-z0-9]+"
+    },
+    "ExtensionConfigurationValues":{
+      "type":"string",
+      "max":10240,
+      "min":1
+    },
+    "ExtensionDetails":{
+      "type":"structure",
+      "required":[
+        "ClusterArn",
+        "ExtensionArn",
+        "ExtensionName",
+        "ExtensionVersion",
+        "Status"
+      ],
+      "members":{
+        "ClusterArn":{"shape":"ClusterArn"},
+        "ExtensionArn":{"shape":"ExtensionArn"},
+        "ExtensionName":{"shape":"ExtensionName"},
+        "ExtensionVersion":{"shape":"ExtensionVersion"},
+        "Status":{"shape":"ExtensionStatus"},
+        "ConfigurationValues":{"shape":"ExtensionConfigurationValues"},
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"}
+      }
+    },
+    "ExtensionName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-z]([a-z0-9]|-[a-z0-9])*"
+    },
+    "ExtensionNodeCount":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "ExtensionNodeSummary":{
+      "type":"structure",
+      "required":[
+        "TotalCount",
+        "ActiveCount"
+      ],
+      "members":{
+        "TotalCount":{"shape":"ExtensionNodeCount"},
+        "ActiveCount":{"shape":"ExtensionNodeCount"}
+      }
+    },
+    "ExtensionStatus":{
+      "type":"string",
+      "enum":[
+        "Creating",
+        "Active",
+        "CreateFailed",
+        "Updating",
+        "Deleting",
+        "DeleteFailed",
+        "Degraded",
+        "UpdateFailed"
+      ]
+    },
+    "ExtensionSummaries":{
+      "type":"list",
+      "member":{"shape":"ExtensionSummary"},
+      "max":100,
+      "min":0
+    },
+    "ExtensionSummary":{
+      "type":"structure",
+      "required":[
+        "ExtensionArn",
+        "ExtensionName",
+        "ExtensionVersion",
+        "Status"
+      ],
+      "members":{
+        "ExtensionArn":{"shape":"ExtensionArn"},
+        "ExtensionName":{"shape":"ExtensionName"},
+        "ExtensionVersion":{"shape":"ExtensionVersion"},
+        "Status":{"shape":"ExtensionStatus"},
+        "CreationTime":{"shape":"Timestamp"}
+      }
+    },
+    "ExtensionVersion":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[0-9]+\\.[0-9]+\\.[0-9]+"
+    },
     "FSxLustreConfig":{
       "type":"structure",
       "required":[
@@ -17781,6 +18022,13 @@
         "PendingImport",
         "PendingDelete"
       ]
+    },
+    "HubContentStepMetadata":{
+      "type":"structure",
+      "members":{
+        "HubArn":{"shape":"String2048"},
+        "HubContentArn":{"shape":"String2048"}
+      }
     },
     "HubContentSupportStatus":{
       "type":"string",
@@ -20654,6 +20902,25 @@
         "Events":{"shape":"ClusterEventSummaries"}
       }
     },
+    "ListClusterExtensionsRequest":{
+      "type":"structure",
+      "required":["ClusterArn"],
+      "members":{
+        "ClusterArn":{"shape":"ClusterArn"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "CreationTimeAfter":{"shape":"Timestamp"},
+        "CreationTimeBefore":{"shape":"Timestamp"}
+      }
+    },
+    "ListClusterExtensionsResponse":{
+      "type":"structure",
+      "required":["Extensions"],
+      "members":{
+        "Extensions":{"shape":"ExtensionSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListClusterNodesRequest":{
       "type":"structure",
       "required":["ClusterName"],
@@ -21916,7 +22183,8 @@
         "SortBy":{"shape":"SortPipelineExecutionsBy"},
         "SortOrder":{"shape":"SortOrder"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{"shape":"MaxResults"}
+        "MaxResults":{"shape":"MaxResults"},
+        "PipelineVersionAlias":{"shape":"PipelineVersionAlias"}
       }
     },
     "ListPipelineExecutionsResponse":{
@@ -21970,7 +22238,8 @@
         "SortBy":{"shape":"SortPipelinesBy"},
         "SortOrder":{"shape":"SortOrder"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{"shape":"MaxResults"}
+        "MaxResults":{"shape":"MaxResults"},
+        "ManagedBy":{"shape":"PipelineManagedBy"}
       }
     },
     "ListPipelinesResponse":{
@@ -25684,7 +25953,8 @@
         "Job":{"shape":"JobStepMetadata"},
         "Athena":{"shape":"AthenaStepMetadata"},
         "Cleanup":{"shape":"CleanupStepMetadata"},
-        "ForEach":{"shape":"ForEachStepMetadata"}
+        "ForEach":{"shape":"ForEachStepMetadata"},
+        "HubContent":{"shape":"HubContentStepMetadata"}
       }
     },
     "PipelineExecutionSummary":{
@@ -25695,7 +25965,8 @@
         "PipelineExecutionStatus":{"shape":"PipelineExecutionStatus"},
         "PipelineExecutionDescription":{"shape":"PipelineExecutionDescription"},
         "PipelineExecutionDisplayName":{"shape":"PipelineExecutionName"},
-        "PipelineExecutionFailureReason":{"shape":"String3072"}
+        "PipelineExecutionFailureReason":{"shape":"String3072"},
+        "PipelineVersionAliases":{"shape":"PipelineVersionAliasList"}
       }
     },
     "PipelineExecutionSummaryList":{
@@ -25710,6 +25981,13 @@
         "ExperimentName":{"shape":"ExperimentEntityName"},
         "TrialName":{"shape":"ExperimentEntityName"}
       }
+    },
+    "PipelineManagedBy":{
+      "type":"string",
+      "enum":[
+        "AWS",
+        "CUSTOMER"
+      ]
     },
     "PipelineName":{
       "type":"string",
@@ -25768,8 +26046,21 @@
         "LastModifiedBy":{"shape":"UserContext"},
         "LastExecutedPipelineExecutionArn":{"shape":"PipelineExecutionArn"},
         "LastExecutedPipelineExecutionDisplayName":{"shape":"PipelineExecutionName"},
-        "LastExecutedPipelineExecutionStatus":{"shape":"PipelineExecutionStatus"}
+        "LastExecutedPipelineExecutionStatus":{"shape":"PipelineExecutionStatus"},
+        "PipelineVersionAliases":{"shape":"PipelineVersionAliasList"}
       }
+    },
+    "PipelineVersionAlias":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9._\\-]{1,128}"
+    },
+    "PipelineVersionAliasList":{
+      "type":"list",
+      "member":{"shape":"PipelineVersionAlias"},
+      "max":10,
+      "min":0
     },
     "PipelineVersionDescription":{
       "type":"string",
@@ -25796,7 +26087,8 @@
         "CreationTime":{"shape":"Timestamp"},
         "PipelineVersionDescription":{"shape":"PipelineVersionDescription"},
         "PipelineVersionDisplayName":{"shape":"PipelineVersionName"},
-        "LastExecutionPipelineExecutionArn":{"shape":"PipelineExecutionArn"}
+        "LastExecutionPipelineExecutionArn":{"shape":"PipelineExecutionArn"},
+        "PipelineVersionAliases":{"shape":"PipelineVersionAliasList"}
       }
     },
     "PipelineVersionSummaryList":{
@@ -29372,7 +29664,9 @@
         "ParallelismConfiguration":{"shape":"ParallelismConfiguration"},
         "SelectiveExecutionConfig":{"shape":"SelectiveExecutionConfig"},
         "PipelineVersionId":{"shape":"PipelineVersionId"},
-        "MlflowExperimentName":{"shape":"MlflowExperimentEntityName"}
+        "MlflowExperimentName":{"shape":"MlflowExperimentEntityName"},
+        "PipelineVersionAlias":{"shape":"PipelineVersionAlias"},
+        "RoleArn":{"shape":"RoleArn"}
       }
     },
     "StartPipelineExecutionResponse":{
@@ -32015,6 +32309,36 @@
         "ArtifactArn":{"shape":"ArtifactArn"}
       }
     },
+    "UpdateClusterExtensionRequest":{
+      "type":"structure",
+      "required":[
+        "ClusterArn",
+        "ExtensionArn"
+      ],
+      "members":{
+        "ClusterArn":{"shape":"ClusterArn"},
+        "ExtensionArn":{"shape":"ExtensionArn"},
+        "ExtensionVersion":{"shape":"ExtensionVersion"},
+        "ConfigurationValues":{"shape":"ExtensionConfigurationValues"},
+        "ClientToken":{
+          "shape":"UpdateClusterExtensionRequestClientTokenString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateClusterExtensionRequestClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":0,
+      "pattern":"[\\x21-\\x7E]+"
+    },
+    "UpdateClusterExtensionResponse":{
+      "type":"structure",
+      "required":["ExtensionArn"],
+      "members":{
+        "ExtensionArn":{"shape":"ExtensionArn"}
+      }
+    },
     "UpdateClusterRequest":{
       "type":"structure",
       "required":["ClusterName"],
@@ -32709,7 +33033,8 @@
         "PipelineDefinitionS3Location":{"shape":"PipelineDefinitionS3Location"},
         "PipelineDescription":{"shape":"PipelineDescription"},
         "RoleArn":{"shape":"RoleArn"},
-        "ParallelismConfiguration":{"shape":"ParallelismConfiguration"}
+        "ParallelismConfiguration":{"shape":"ParallelismConfiguration"},
+        "PipelineVersionAliases":{"shape":"PipelineVersionAliasList"}
       }
     },
     "UpdatePipelineResponse":{
@@ -32729,7 +33054,8 @@
         "PipelineArn":{"shape":"PipelineArn"},
         "PipelineVersionId":{"shape":"PipelineVersionId"},
         "PipelineVersionDisplayName":{"shape":"PipelineVersionName"},
-        "PipelineVersionDescription":{"shape":"PipelineVersionDescription"}
+        "PipelineVersionDescription":{"shape":"PipelineVersionDescription"},
+        "PipelineVersionAliasOperations":{"shape":"AliasOperations"}
       }
     },
     "UpdatePipelineVersionResponse":{

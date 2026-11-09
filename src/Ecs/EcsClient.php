@@ -45,6 +45,7 @@ use Aws\AwsClient;
  *             instanceRequirements?: array,
  *             fipsEnabled?: bool,
  *             capacityReservations?: array,
+ *             nitroEnclavesEnabled?: bool,
  *             ...,
  *         },
  *         propagateTags?: 'CAPACITY_PROVIDER'|'NONE',
@@ -86,6 +87,7 @@ use Aws\AwsClient;
  *             instanceRequirements?: array,
  *             fipsEnabled?: bool,
  *             capacityReservations?: array,
+ *             nitroEnclavesEnabled?: bool,
  *             ...,
  *         },
  *         propagateTags?: 'CAPACITY_PROVIDER'|'NONE',
@@ -1175,6 +1177,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     enableFaultInjection?: bool,
+ *     trustedExecutionConfiguration?: array{isolationMode?: 'CONFIDENTIAL_SANDBOX'|'ISOLATED_SANDBOX'|'SHARED', attestationPolicy?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise registerTaskDefinitionAsync(array $args = [])
@@ -1254,6 +1257,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     enableFaultInjection?: bool,
+ *     trustedExecutionConfiguration?: array{isolationMode?: 'CONFIDENTIAL_SANDBOX'|'ISOLATED_SANDBOX'|'SHARED', attestationPolicy?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result runTask(array $args = [])

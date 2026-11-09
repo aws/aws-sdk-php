@@ -590,6 +590,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  *     Privilege?: 'Default'|'Minimal',
  *     TargetType?: 'Object',
  *     AuditContext?: string,
+ *     InstanceScope?: 'ALL'|'SELF',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise getDataAccessAsync(array $args = [])
@@ -601,6 +602,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  *     Privilege?: 'Default'|'Minimal',
  *     TargetType?: 'Object',
  *     AuditContext?: string,
+ *     InstanceScope?: 'ALL'|'SELF',
  *     ...,
  * } $args = [])
  * @method \Aws\Result getJobTagging(array $args = [])
@@ -706,6 +708,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  *     NextToken?: string,
  *     MaxResults?: int,
  *     AllowedByApplication?: bool,
+ *     InstanceScope?: 'ALL'|'SELF',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listCallerAccessGrantsAsync(array $args = [])
@@ -715,6 +718,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  *     NextToken?: string,
  *     MaxResults?: int,
  *     AllowedByApplication?: bool,
+ *     InstanceScope?: 'ALL'|'SELF',
  *     ...,
  * } $args = [])
  * @method \Aws\Result listJobs(array $args = [])

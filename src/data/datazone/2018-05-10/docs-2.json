@@ -21,7 +21,7 @@
     "CreateDataProduct": "<p>Creates a data product.</p> <p>A data product is a comprehensive package that combines data assets with their associated metadata, documentation, and access controls. It's designed to serve specific business needs or use cases, making it easier for users to find and consume data appropriately. Data products include important information about data quality, freshness, and usage guidelines, effectively bridging the gap between data producers and consumers while ensuring proper governance.</p> <p>Prerequisites:</p> <ul> <li> <p>The domain must exist and be accessible. </p> </li> <li> <p>The owning project must be valid and active.</p> </li> <li> <p>The name must be unique within the domain (no existing data product with the same name).</p> </li> <li> <p>User must have create permissions for data products in the project.</p> </li> </ul>",
     "CreateDataProductRevision": "<p>Creates a data product revision.</p> <p>Prerequisites:</p> <ul> <li> <p>The original data product must exist in the given domain. </p> </li> <li> <p>User must have permissions on the data product.</p> </li> <li> <p>The domain must be valid and accessible.</p> </li> <li> <p>The new revision name must comply with naming constraints (if required).</p> </li> </ul>",
     "CreateDataSource": "<p>Creates an Amazon DataZone data source.</p>",
-    "CreateDesignation": "<p>Creates a new user-defined designation with a Cedar permit policy. The designation defines a named role that can be assigned to project members.</p>",
+    "CreateDesignation": "<p>Creates a new user-defined designation with a Cedar permit policy. The designation defines a named role that can be assigned to project members through <code>CreateProjectMembership</code> or granted through <code>AddPolicyGrant</code>.</p>",
     "CreateDomain": "<p>Creates an Amazon DataZone domain.</p>",
     "CreateDomainUnit": "<p>Creates a domain unit in Amazon DataZone.</p>",
     "CreateEnvironment": "<p>Create an Amazon DataZone environment.</p>",
@@ -50,7 +50,7 @@
     "DeleteDataExportConfiguration": "<p>Deletes data export configuration for a domain.</p> <p>This operation does not delete the S3 table created by the PutDataExportConfiguration operation.</p> <p>To temporarily disable export without deleting the configuration, use the PutDataExportConfiguration operation with the <code>--no-enable-export</code> flag instead. This allows you to re-enable export for the same domain using the <code>--enable-export</code> flag without deleting S3 table.</p>",
     "DeleteDataProduct": "<p>Deletes a data product in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The data product must exist and not be deleted or archived. </p> </li> <li> <p>The user must have delete permissions for the data product.</p> </li> <li> <p>Domain and project must be active.</p> </li> </ul>",
     "DeleteDataSource": "<p>Deletes a data source in Amazon DataZone.</p>",
-    "DeleteDesignation": "<p>Deletes a designation. Managed designations cannot be deleted. This operation is idempotent.</p>",
+    "DeleteDesignation": "<p>Deletes a user-created designation. Managed designations cannot be deleted. The call fails if the designation has <code>deletionProtection</code> enabled or if any project member still holds it. This operation is idempotent.</p>",
     "DeleteDomain": "<p>Deletes a Amazon DataZone domain.</p>",
     "DeleteDomainUnit": "<p>Deletes a domain unit.</p>",
     "DeleteEnvironment": "<p>Deletes an environment in Amazon DataZone.</p>",
@@ -83,7 +83,7 @@
     "GetDataProduct": "<p>Gets the data product.</p> <p>Prerequisites:</p> <ul> <li> <p>The data product ID must exist. </p> </li> <li> <p>The domain must be valid and accessible.</p> </li> <li> <p>User must have read or discovery permissions for the data product.</p> </li> </ul>",
     "GetDataSource": "<p>Gets an Amazon DataZone data source.</p>",
     "GetDataSourceRun": "<p>Gets an Amazon DataZone data source run.</p>",
-    "GetDesignation": "<p>Gets the details of a designation, including its Cedar policy.</p>",
+    "GetDesignation": "<p>Gets the details of a designation, including its Cedar permit policy. Returns the full designation record for both system-managed and user-created designations.</p>",
     "GetDomain": "<p>Gets an Amazon DataZone domain.</p>",
     "GetDomainUnit": "<p>Gets the details of the specified domain unit.</p>",
     "GetEnvironment": "<p>Gets an Amazon DataZone environment.</p>",
@@ -123,7 +123,7 @@
     "ListDataSourceRunActivities": "<p>Lists data source run activities.</p>",
     "ListDataSourceRuns": "<p>Lists data source runs in Amazon DataZone.</p>",
     "ListDataSources": "<p>Lists data sources in Amazon DataZone.</p>",
-    "ListDesignations": "<p>Lists the designations in a domain. Returns system-managed designations first, followed by user-created designations sorted alphabetically by name.</p>",
+    "ListDesignations": "<p>Lists the designations in a domain. The response returns system-managed designations first, followed by user-created designations in alphabetical order by name. Results are paginated. Use <code>nextToken</code> to retrieve additional pages of results.</p>",
     "ListDomainUnitsForParent": "<p>Lists child domain units for the specified parent domain unit.</p>",
     "ListDomains": "<p>Lists Amazon DataZone domains.</p>",
     "ListEntityOwners": "<p>Lists the entity (domain units) owners.</p>",
@@ -178,7 +178,7 @@
     "UpdateAssetFilter": "<p>Updates an asset filter.</p> <p>Prerequisites:</p> <ul> <li> <p>The domain, asset, and asset filter identifier must all exist. </p> </li> <li> <p>The asset must contain the columns being referenced in the update.</p> </li> <li> <p>If applying a row filter, ensure the column referenced in the expression exists in the asset schema.</p> </li> </ul>",
     "UpdateConnection": "<p>Updates a connection. In Amazon DataZone, a connection enables you to connect your resources (domains, projects, and environments) to external resources and services.</p>",
     "UpdateDataSource": "<p>Updates the specified data source in Amazon DataZone.</p>",
-    "UpdateDesignation": "<p>Updates an existing designation. Managed designations cannot be modified.</p>",
+    "UpdateDesignation": "<p>Updates an existing user-created designation. Managed designations cannot be modified. Omit a field to leave its current value unchanged.</p>",
     "UpdateDomain": "<p>Updates a Amazon DataZone domain.</p>",
     "UpdateDomainUnit": "<p>Updates the domain unit.</p>",
     "UpdateEnvironment": "<p>Updates the specified environment in Amazon DataZone.</p>",
@@ -1105,8 +1105,8 @@
         "CreateConnectionInput$enableTrustedIdentityPropagation": "<p>Specifies whether the trusted identity propagation is enabled.</p>",
         "CreateDataSourceInput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
         "CreateDataSourceOutput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
-        "CreateDesignationInput$deletionProtection": "<p>Whether deletion protection is enabled for this designation. Defaults to true when omitted.</p>",
-        "CreateDesignationOutput$deletionProtection": "<p>Whether deletion protection is enabled for this designation. When true, DeleteDesignation is rejected until protection is disabled via UpdateDesignation.</p>",
+        "CreateDesignationInput$deletionProtection": "<p>Specifies whether deletion protection is enabled for this designation. Defaults to <code>true</code> when omitted. When enabled, <code>DeleteDesignation</code> is rejected until protection is disabled through <code>UpdateDesignation</code>.</p>",
+        "CreateDesignationOutput$deletionProtection": "<p>Specifies whether deletion protection is enabled for this designation. When <code>true</code>, <code>DeleteDesignation</code> is rejected until protection is disabled through <code>UpdateDesignation</code>.</p>",
         "CreateDomainUnitPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy grant is applied to child domain units.</p>",
         "CreateFormTypePolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy grant is applied to child domain units.</p>",
         "CreateGlossaryPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy grant is applied to child domain units.</p>",
@@ -1124,7 +1124,7 @@
         "DeleteDomainInput$cascadeDelete": "<p>Specifies whether to delete the domain along with all of its associated resources. When you use this parameter, Amazon DataZone deletes the domain and cleanly removes its associated resources without leaving orphaned resources behind. Amazon DataZone reports deletion progress in the <code>deleteProgress</code> field. Amazon DataZone reports any resources that it can't delete in the <code>failureReasons</code> field of the <code>GetDomain</code> response. You can't use this parameter together with <code>skipDeletionCheck</code>. If you don't specify a value, the default is <code>false</code>.</p>",
         "DeleteProjectInput$skipDeletionCheck": "<p>Specifies the optional flag to delete all child entities within the project.</p>",
         "Deployment$isDeploymentComplete": "<p>Specifies whether the last deployment of the environment is complete.</p>",
-        "DesignationSummary$deletionProtection": "<p>Whether deletion protection is enabled for this designation.</p>",
+        "DesignationSummary$deletionProtection": "<p>Specifies whether deletion protection is enabled for this designation. When <code>true</code>, <code>DeleteDesignation</code> is rejected until protection is disabled through <code>UpdateDesignation</code>.</p>",
         "DomainUnitFilterForProject$includeChildDomainUnits": "<p>Specifies whether to include child domain units.</p>",
         "DomainUnitTarget$includeChildDomainUnits": "<p>Specifies whether to apply a rule to the child domain units.</p>",
         "EnvironmentBlueprintConfigurationItem$allowUserProvidedConfigurations": "<p>Specifies whether user-provided resource configurations are allowed for the environment blueprint.</p>",
@@ -1134,7 +1134,7 @@
         "GetConnectionInput$withSecret": "<p>Specifies whether a connection has a secret.</p>",
         "GetDataExportConfigurationOutput$isExportEnabled": "<p>Specifies whether the export is enabled.</p>",
         "GetDataSourceOutput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
-        "GetDesignationOutput$deletionProtection": "<p>Whether deletion protection is enabled for this designation. When true, DeleteDesignation is rejected until protection is disabled via UpdateDesignation.</p>",
+        "GetDesignationOutput$deletionProtection": "<p>Specifies whether deletion protection is enabled for this designation. When <code>true</code>, <code>DeleteDesignation</code> is rejected until protection is disabled through <code>UpdateDesignation</code>.</p>",
         "GetEnvironmentBlueprintConfigurationOutput$allowUserProvidedConfigurations": "<p>Specifies whether user-provided resource configurations are allowed for the environment blueprint.</p>",
         "GetProjectProfileOutput$allowCustomProjectResourceTags": "<p>Specifies whether custom project resource tags are supported.</p>",
         "GetSubscriptionOutput$retainPermissions": "<p>The retain permissions of the subscription.</p>",
@@ -1176,8 +1176,8 @@
         "UpdateDataSourceInput$retainPermissionsOnRevokeFailure": "<p>Specifies that the granted permissions are retained in case of a self-subscribe functionality failure for a data source.</p>",
         "UpdateDataSourceOutput$publishOnImport": "<p>The publish on import setting to be updated as part of the <code>UpdateDataSource</code> action.</p>",
         "UpdateDataSourceOutput$retainPermissionsOnRevokeFailure": "<p>Specifies that the granted permissions are retained in case of a self-subscribe functionality failure for a data source.</p>",
-        "UpdateDesignationInput$deletionProtection": "<p>Whether deletion protection is enabled for this designation. Omit to keep the existing value.</p>",
-        "UpdateDesignationOutput$deletionProtection": "<p>Whether deletion protection is enabled for this designation. When true, DeleteDesignation is rejected until protection is disabled via UpdateDesignation.</p>",
+        "UpdateDesignationInput$deletionProtection": "<p>Specifies whether deletion protection is enabled for this designation. Omit to keep the existing value.</p>",
+        "UpdateDesignationOutput$deletionProtection": "<p>Specifies whether deletion protection is enabled for this designation. When <code>true</code>, <code>DeleteDesignation</code> is rejected until protection is disabled through <code>UpdateDesignation</code>.</p>",
         "UpdateProjectProfileInput$allowCustomProjectResourceTags": "<p>Specifies whether custom project resource tags are supported.</p>",
         "UpdateProjectProfileOutput$allowCustomProjectResourceTags": "<p>Specifies whether custom project resource tags are supported.</p>",
         "UpdateRuleInput$includeChildDomainUnits": "<p>Specifies whether to update this rule in the child domain units.</p>"
@@ -1208,11 +1208,11 @@
     "CedarDesignationPolicy": {
       "base": "<p>A Cedar permit policy that defines what actions designation holders can perform.</p>",
       "refs": {
-        "CreateDesignationInput$policy": "<p>The Cedar permit policy that defines what actions holders of this designation are allowed to perform.</p>",
-        "CreateDesignationOutput$policy": "<p>The Cedar permit policy that governs what actions holders of this designation are allowed to perform.</p>",
-        "GetDesignationOutput$policy": "<p>The Cedar permit policy that governs what actions holders of this designation are allowed to perform.</p>",
-        "UpdateDesignationInput$policy": "<p>The updated Cedar permit policy.</p>",
-        "UpdateDesignationOutput$policy": "<p>The Cedar permit policy that governs what actions holders of this designation are allowed to perform.</p>"
+        "CreateDesignationInput$policy": "<p>The Cedar permit policy that defines the actions holders of this designation are allowed to perform.</p>",
+        "CreateDesignationOutput$policy": "<p>The Cedar permit policy that governs the actions holders of this designation are allowed to perform.</p>",
+        "GetDesignationOutput$policy": "<p>The Cedar permit policy that governs the actions holders of this designation are allowed to perform.</p>",
+        "UpdateDesignationInput$policy": "<p>The updated Cedar permit policy. Omit to keep the existing policy.</p>",
+        "UpdateDesignationOutput$policy": "<p>The Cedar permit policy that governs the actions holders of this designation are allowed to perform.</p>"
       }
     },
     "CellInformation": {
@@ -2884,7 +2884,7 @@
       }
     },
     "DesignationSummary": {
-      "base": "<p>Summary representation of a designation returned by list operations.</p>",
+      "base": "<p>The summary representation of a designation returned by <code>ListDesignations</code>. The summary omits the Cedar permit policy. Call <code>GetDesignation</code> to retrieve the full designation record including the policy.</p>",
       "refs": {
         "DesignationSummaries$member": null
       }
@@ -2892,10 +2892,10 @@
     "DesignationType": {
       "base": "<p>The classification of a designation.</p>",
       "refs": {
-        "CreateDesignationOutput$designationType": "<p>The classification of this designation. MANAGED designations are system-defined and cannot be modified or deleted.</p>",
-        "DesignationSummary$designationType": "<p>The classification of this designation.</p>",
-        "GetDesignationOutput$designationType": "<p>The classification of this designation. MANAGED designations are system-defined and cannot be modified or deleted.</p>",
-        "UpdateDesignationOutput$designationType": "<p>The classification of this designation. MANAGED designations are system-defined and cannot be modified or deleted.</p>"
+        "CreateDesignationOutput$designationType": "<p>The classification of this designation. Valid values:</p> <ul> <li> <p> <code>MANAGED</code> — System-defined designations that cannot be modified or deleted.</p> </li> <li> <p> <code>USER_CREATED</code> — Designations created through <code>CreateDesignation</code>.</p> </li> </ul>",
+        "DesignationSummary$designationType": "<p>The classification of this designation. Valid values:</p> <ul> <li> <p> <code>MANAGED</code> — System-defined designation.</p> </li> <li> <p> <code>USER_CREATED</code> — User-created designation.</p> </li> </ul>",
+        "GetDesignationOutput$designationType": "<p>The classification of this designation. Valid values:</p> <ul> <li> <p> <code>MANAGED</code> — System-defined designations that cannot be modified or deleted.</p> </li> <li> <p> <code>USER_CREATED</code> — Designations created through <code>CreateDesignation</code>.</p> </li> </ul>",
+        "UpdateDesignationOutput$designationType": "<p>The classification of this designation. Valid values:</p> <ul> <li> <p> <code>MANAGED</code> — System-defined designations that cannot be modified or deleted.</p> </li> <li> <p> <code>USER_CREATED</code> — Designations created through <code>CreateDesignation</code>.</p> </li> </ul>"
       }
     },
     "DetailedGlossaryTerm": {

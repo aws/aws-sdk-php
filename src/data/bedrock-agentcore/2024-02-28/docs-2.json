@@ -42,6 +42,7 @@
     "InvokeBrowser": "<p>Invokes an operating system-level action on a browser session in Amazon Bedrock AgentCore. This operation provides direct OS-level control over browser sessions, enabling mouse actions, keyboard input, and screenshots that the WebSocket-based Chrome DevTools Protocol (CDP) cannot handle — such as interacting with print dialogs, context menus, and JavaScript alerts.</p> <p>You send a request with exactly one action in the <code>BrowserAction</code> union, and receive a corresponding result in the <code>BrowserActionResult</code> union.</p> <p>The following operations are related to <code>InvokeBrowser</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopBrowserSession.html\">StopBrowserSession</a> </p> </li> </ul>",
     "InvokeCodeInterpreter": "<p>Executes code within an active code interpreter session in Amazon Bedrock AgentCore. This operation processes the provided code, runs it in a secure environment, and returns the execution results including output, errors, and generated visualizations.</p> <p>To execute code, you must specify the code interpreter identifier, session ID, and the code to run in the arguments parameter. The operation returns a stream containing the execution results, which can include text output, error messages, and data visualizations.</p> <p>This operation is subject to request rate limiting based on your account's service quotas.</p> <p>The following operations are related to <code>InvokeCodeInterpreter</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
     "InvokeHarness": "<p>Operation to invoke a Harness.</p>",
+    "InvokeWebSearch": "<p>Searches the web and returns a ranked list of results. Each result includes a text extract from the page.</p> <p>You can filter the results by domain and by publication date.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:InvokeWebSearch</code> permission on the resource <code>arn:${Partition}:bedrock-agentcore:${Region}:aws:tool/web-search.v1</code>.</p>",
     "ListABTests": "<p>Lists all A/B tests in the account.</p>",
     "ListActors": "<p>Lists all actors in an AgentCore Memory resource. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListActors</code> permission.</p>",
     "ListBatchEvaluations": "<p>Lists all batch evaluations in the account, providing summary information about each evaluation's status and configuration.</p>",
@@ -1081,6 +1082,8 @@
         "PaymentSessionSummary$updatedAt": "<p>The timestamp when the session was last updated.</p>",
         "ProcessPaymentResponse$createdAt": "<p>The timestamp when the payment was created.</p>",
         "ProcessPaymentResponse$updatedAt": "<p>The timestamp when the payment was last updated.</p>",
+        "PublishedDateFilter$publishedAfter": "<p>The earliest publication time of the results, inclusive.</p>",
+        "PublishedDateFilter$publishedBefore": "<p>The latest publication time of the results, inclusive. A date without a time, such as one passed to the AWS CLI, means midnight UTC. To include a whole day, use the last second of that day, for example <code>2026-01-31T23:59:59Z</code>.</p>",
         "RegistryRecordSummary$createdAt": "<p> The date and time when the registry record was created.</p>",
         "RegistryRecordSummary$updatedAt": "<p> The date and time when the registry record was last updated.</p>",
         "SaveBrowserSessionProfileResponse$lastUpdatedAt": "<p>The timestamp when the browser profile was last updated. This value is in ISO 8601 format.</p>",
@@ -1088,7 +1091,8 @@
         "StartCodeInterpreterSessionResponse$createdAt": "<p>The time at which the code interpreter session was created.</p>",
         "StopBrowserSessionResponse$lastUpdatedAt": "<p>The time at which the browser session was last updated.</p>",
         "StopCodeInterpreterSessionResponse$lastUpdatedAt": "<p>The timestamp when the code interpreter session was last updated.</p>",
-        "UpdateBrowserStreamResponse$updatedAt": "<p>The time at which the browser stream was updated.</p>"
+        "UpdateBrowserStreamResponse$updatedAt": "<p>The time at which the browser stream was updated.</p>",
+        "WebSearchResult$publishedAt": "<p>The time the page was published. This field is absent when the publication time is not known.</p>"
       }
     },
     "DeleteABTestRequest": {
@@ -1180,6 +1184,25 @@
         "HarnessGeminiModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the Gemini model provider unchanged.</p>",
         "HarnessLiteLlmModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>",
         "HarnessOpenAiModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>"
+      }
+    },
+    "DomainFilter": {
+      "base": "<p>The domains to include in or exclude from the results. A root domain also matches its subdomains. For example, <code>example.com</code> also matches <code>docs.example.com</code>.</p>",
+      "refs": {
+        "WebSearchFilters$domainFilter": "<p>The domains to include in or exclude from the results.</p>"
+      }
+    },
+    "DomainList": {
+      "base": "<p>A list of domain names.</p>",
+      "refs": {
+        "DomainFilter$include": "<p>The domains to return results from. Results from other domains are not returned.</p>",
+        "DomainFilter$exclude": "<p>The domains to never return results from.</p>"
+      }
+    },
+    "DomainName": {
+      "base": "<p>A domain name, for example <code>example.com</code>.</p>",
+      "refs": {
+        "DomainList$member": null
       }
     },
     "DomainPattern": {
@@ -2604,6 +2627,7 @@
         "PaymentSessionSummary$expiryTimeInMinutes": "<p>The session expiry time in minutes.</p>",
         "RootCauseCluster$clusterId": "<p>The unique identifier of the root cause cluster.</p>",
         "RootCauseCluster$affectedSessionCount": "<p>The number of sessions affected by this root cause.</p>",
+        "ServiceUnavailableException$retryAfterSeconds": "<p>The number of seconds to wait before you retry the request.</p>",
         "TokenBalance$decimals": "<p>Number of decimal places for the token (e.g., 6 for USDC).</p>",
         "TokenUsage$inputTokens": "<p> The number of tokens consumed for input processing during the evaluation. Includes tokens from the evaluation prompt, agent traces, and any additional context provided to the evaluator model. </p>",
         "TokenUsage$outputTokens": "<p> The number of tokens generated by the evaluator model in its response. Includes tokens for the score, explanation, and any additional output produced during the evaluation process. </p>",
@@ -2797,6 +2821,26 @@
       "refs": {
         "InvokeHarnessResponse$stream": "<p>The streaming output from the harness invocation.</p>"
       }
+    },
+    "InvokeWebSearchInput": {
+      "base": "<p>Request for the <code>InvokeWebSearch</code> operation.</p>",
+      "refs": {}
+    },
+    "InvokeWebSearchInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "InvokeWebSearchInput$maxResults": "<p>The maximum number of results to return. Defaults to 25.</p>"
+      }
+    },
+    "InvokeWebSearchInputSearchQueryString": {
+      "base": null,
+      "refs": {
+        "InvokeWebSearchInput$searchQuery": "<p>The text to search for.</p>"
+      }
+    },
+    "InvokeWebSearchOutput": {
+      "base": "<p>Response for the <code>InvokeWebSearch</code> operation.</p>",
+      "refs": {}
     },
     "JwtKeyId": {
       "base": "<p>JWT Key ID (kid) from the JWT header.</p>",
@@ -4014,6 +4058,12 @@
         "ExternalProxy$credentials": "<p>Optional authentication credentials for the proxy server. If omitted, the proxy is accessed without authentication (useful for IP-allowlisted proxies).</p>"
       }
     },
+    "PublishedDateFilter": {
+      "base": "<p>A publication time range for the results. Both bounds are optional, and both are inclusive. If <code>publishedAfter</code> is later than <code>publishedBefore</code>, the request fails with a <code>ValidationException</code>.</p>",
+      "refs": {
+        "WebSearchFilters$publishedDateFilter": "<p>The publication time range of the results.</p>"
+      }
+    },
     "RecommendationArn": {
       "base": null,
       "refs": {
@@ -4577,6 +4627,10 @@
         "InvokeAgentRuntimeCommandStreamOutput$serviceQuotaExceededException": null
       }
     },
+    "ServiceUnavailableException": {
+      "base": "<p>The service can't handle the request right now. Retry the request. If the response includes <code>retryAfterSeconds</code>, wait that many seconds before you retry.</p>",
+      "refs": {}
+    },
     "SessionFilter": {
       "base": "<p>Contains filter criteria for listing sessions.</p>",
       "refs": {
@@ -4998,6 +5052,7 @@
         "SaveBrowserSessionProfileResponse$browserIdentifier": "<p>The unique identifier of the browser associated with the session from which the profile was saved.</p>",
         "ScreenshotResult$error": "<p>The error message. Present only when the action failed.</p>",
         "ServiceException$message": null,
+        "ServiceUnavailableException$message": "<p>A message that describes the error.</p>",
         "SessionMetadataShape$sessionId": "<p>The unique identifier of the session this metadata applies to.</p>",
         "SessionMetadataShape$testScenarioId": "<p>An optional test scenario identifier for categorizing and tracking evaluation results.</p>",
         "SessionTraceIds$sessionId": "<p>The unique identifier of the session that contains the traces to evaluate.</p>",
@@ -5034,7 +5089,10 @@
         "ValidationException$message": null,
         "ValidationExceptionField$name": "<p>The name of the field.</p>",
         "ValidationExceptionField$message": "<p>A message describing why this field failed validation.</p>",
-        "VariantResult$variantName": "<p>The name of the treatment variant.</p>"
+        "VariantResult$variantName": "<p>The name of the treatment variant.</p>",
+        "WebSearchResult$title": "<p>The title of the page.</p>",
+        "WebSearchResult$url": "<p>The URL of the page.</p>",
+        "WebSearchResult$text": "<p>A text extract from the page.</p>"
       }
     },
     "StringList": {
@@ -5643,6 +5701,30 @@
       "base": null,
       "refs": {
         "ViewPort$width": "<p>The width of the viewport in pixels. This value determines the horizontal dimension of the visible area. Valid values range from 800 to 1920 pixels.</p>"
+      }
+    },
+    "WebSearchFilters": {
+      "base": "<p>The filters to apply to a web search.</p>",
+      "refs": {
+        "InvokeWebSearchInput$filters": "<p>The filters to apply to the search results.</p>"
+      }
+    },
+    "WebSearchId": {
+      "base": "<p>The identifier of a web search tool, for example <code>web-search.v1</code>.</p>",
+      "refs": {
+        "InvokeWebSearchInput$webSearchId": "<p>The identifier of the web search tool to invoke. The Amazon Web Services-managed web search tool is <code>web-search.v1</code>.</p>"
+      }
+    },
+    "WebSearchResult": {
+      "base": "<p>A web search result.</p>",
+      "refs": {
+        "WebSearchResultList$member": null
+      }
+    },
+    "WebSearchResultList": {
+      "base": "<p>A list of web search results, in ranked order.</p>",
+      "refs": {
+        "InvokeWebSearchOutput$results": "<p>The search results, in ranked order.</p>"
       }
     },
     "WorkloadIdentityNameType": {
