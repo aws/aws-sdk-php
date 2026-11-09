@@ -38,15 +38,10 @@ $compatibleApiVersions = [
     ],
 ];
 
-// Create a list of possible namespaces so that we can include it in the
-// manifest.
-$possibleNamespaces = [];
-$skip = ['.', '..', 'Api', 'data', 'Multipart', 'Signature'];
-foreach (scandir(__DIR__ . '/../src') as $dir) {
-    if (!in_array($dir, $skip) && is_dir(__DIR__ . '/../src/' . $dir)) {
-        $possibleNamespaces[strtolower($dir)] = $dir;
-    }
-}
+require __DIR__ . '/NamespaceResolver.php';
+
+// Namespaces are derived from serviceId only; see NamespaceResolver.
+$namespaceResolver = new NamespaceResolver(__DIR__ . '/..');
 
 $manifest = [];
 foreach (glob(__DIR__ . '/../src/data/**/**/api-2.json') as $file) {
@@ -55,46 +50,28 @@ foreach (glob(__DIR__ . '/../src/data/**/**/api-2.json') as $file) {
     $identifier = $matches[1];
     $metadata = $model['metadata'] + ['compatibleApiVersions' => []];
     if (empty($manifest[$identifier])) {
-        // Calculate a namespace for the service.
-        $ns = isset($metadata['serviceAbbreviation'])
-            ? $metadata['serviceAbbreviation']
-            : $metadata['serviceFullName'];
-        $ns = str_replace(['Amazon', 'AWS', 'Beta', '(', ')', ' ', '/', '-'], '', $ns);
-
-        //check if it's a grandfathered namespace
-        $grandfatheredServices = json_decode(
-            file_get_contents(__DIR__ . '/../src/data/grandfathered-services.json'),
-            true
-        )['grandfathered-services'];
-        if (!in_array($ns, $grandfatheredServices)) {
-            $ns = str_replace(' ', '', ucwords($metadata['serviceId']));
-        }
-
-        if (!isset($possibleNamespaces[strtolower($ns)])) {
-            throw new \Exception('NS not found: ' . $ns);
-        }
-
-        $ns = $possibleNamespaces[strtolower($ns)];
-
-        $manifest[$identifier] = [
-            'namespace' => $ns,
-            'versions' => [],
-        ];
+        $manifest[$identifier] = ['versions' => []];
     }
 
     $manifest[$identifier]['versions'][$metadata['apiVersion']]
         = $metadata['apiVersion'];
 
-    $serviceIdentifier = isset($metadata['serviceId'])
-        ? str_replace(' ', '_', strtolower($metadata['serviceId']))
-        : '';
-
-    if (!empty($serviceIdentifier)) {
-        $manifest[$identifier]['serviceIdentifier'] = $serviceIdentifier;
-    }
+    // Some API versions released before 2017 carry no serviceId. The latest
+    // version of every service does, and all versions share one namespace,
+    // so the namespace and serviceIdentifier come from the latest version.
+    $manifest[$identifier]['metadataByVersion'][$metadata['apiVersion']] = $metadata;
 }
 
 foreach ($manifest as $identifier => &$metadata) {
+    $latest = max(array_keys($metadata['metadataByVersion']));
+    $latestMetadata = $metadata['metadataByVersion'][$latest];
+    unset($metadata['metadataByVersion']);
+
+    $metadata = ['namespace' => $namespaceResolver->resolve($latestMetadata)]
+        + $metadata;
+    $metadata['serviceIdentifier']
+        = str_replace(' ', '_', strtolower($latestMetadata['serviceId']));
+
     $metadata['versions']['latest'] = max(array_keys($metadata['versions']));
     foreach ($metadata['versions'] as $name => $version) {
         if (isset($compatibleApiVersions[$identifier][$name])) {
