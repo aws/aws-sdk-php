@@ -237,8 +237,10 @@ class SignatureV4Test extends TestCase
             'Europe/Berlin, 02:30 CEST, +1 hour' => ['Europe/Berlin', '2026-10-25T00:30:00Z', '+1 hour', 3600],
             // America/New_York falls back at 2026-11-01 02:00 EDT (06:00 UTC).
             'America/New_York, 01:50 EDT, +20 minutes' => ['America/New_York', '2026-11-01T05:50:00Z', '+20 minutes', 1200],
-            // Spring forward is not affected, but must stay correct.
+            // Spring forward, short span: not affected, but must stay correct.
             'Europe/Berlin, 01:50 CET, +15 minutes' => ['Europe/Berlin', '2027-03-28T00:50:00Z', '+15 minutes', 900],
+            // Spring forward, span crosses the gap at 02:00 CET: wall-clock addition gives 1800.
+            'Europe/Berlin, 01:30 CET, +90 minutes' => ['Europe/Berlin', '2027-03-28T00:30:00Z', '+90 minutes', 5400],
         ];
     }
 
