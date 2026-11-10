@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.403.3 - 2026-11-10
 
 * `Aws\Retries` - Retry settings from AWS_RETRY_MODE, AWS_MAX_ATTEMPTS and the shared config file are no longer ignored when a non-legacy defaults mode is configured.
 * `Aws\` - Fixed SignatureV4 presigned URLs and RDS and DSQL auth tokens getting an expiry one hour too long when a relative expiry such as '+15 minutes' crossed a daylight saving time change in the default timezone.
