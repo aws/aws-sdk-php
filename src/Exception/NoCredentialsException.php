@@ -8,6 +8,4 @@ namespace Aws\Exception;
  * A non-recoverable source error ({@see NonRecoverableCredentialsExceptionInterface}) is raised unchanged.
  * Every other initial-fetch failure becomes this error.
  */
-class NoCredentialsError extends CredentialsException
-{
-}
+class NoCredentialsException extends CredentialsException {}
