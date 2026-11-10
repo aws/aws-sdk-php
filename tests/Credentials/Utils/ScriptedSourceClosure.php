@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Test\Credentials;
+namespace Aws\Test\Credentials\Utils;
 
 use Aws\Credentials\Credentials;
 use GuzzleHttp\Promise\Create;

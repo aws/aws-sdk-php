@@ -8,6 +8,4 @@ namespace Aws\Exception;
  * The caching credential provider raises such an error to the caller
  * immediately and skips the refresh backoff.
  */
-interface NonRecoverableCredentialsExceptionInterface extends \Throwable
-{
-}
+interface NonRecoverableCredentialsExceptionInterface extends \Throwable {}

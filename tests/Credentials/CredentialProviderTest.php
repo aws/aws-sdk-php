@@ -11,8 +11,9 @@ use Aws\Credentials\CredentialSources;
 use Aws\Credentials\EcsCredentialProvider;
 use Aws\Credentials\InstanceProfileProvider;
 use Aws\Exception\CredentialsException;
-use Aws\Exception\NoCredentialsError;
+use Aws\Exception\NoCredentialsException;
 use Aws\Exception\NonRecoverableCredentialsException;
+use Aws\Exception\NonRecoverableCredentialsExceptionInterface;
 use Aws\History;
 use Aws\LruArrayCache;
 use Aws\Result;
@@ -20,6 +21,7 @@ use Aws\SSO\SSOClient;
 use Aws\Sts\StsClient;
 use Aws\Sts\Exception\StsException;
 use Aws\Token\SsoTokenProvider;
+use Aws\Test\Credentials\Utils\ScriptedSourceClosure;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\Create;
@@ -31,7 +33,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 // Shadows time() within Aws\Credentials for the memoize() refresh-lifecycle
 // tests via $_SERVER['aws_time'].
-require_once __DIR__ . '/CredentialsClockOverride.php';
+require_once __DIR__ . '/Utils/CredentialsClockOverride.php';
 
 #[CoversClass(CredentialProvider::class)]
 class CredentialProviderTest extends TestCase
@@ -2690,7 +2692,7 @@ EOT;
         }
     }
 
-    public function testMemoizeWrapsSynchronousInitialThrowAsNoCredentialsError(): void
+    public function testMemoizeWrapsSynchronousInitialThrowAsNoCredentialsException(): void
     {
         $error = new CredentialsException('source down');
         $provider = CredentialProvider::memoize(static function () use ($error) {
@@ -2699,8 +2701,8 @@ EOT;
 
         try {
             $provider()->wait();
-            $this->fail('Expected a NoCredentialsError.');
-        } catch (NoCredentialsError $e) {
+            $this->fail('Expected a NoCredentialsException.');
+        } catch (NoCredentialsException $e) {
             $this->assertSame($error, $e->getPrevious());
         }
     }
@@ -2992,8 +2994,8 @@ EOT;
 
         try {
             $provider()->wait();
-            $this->fail('Expected a NoCredentialsError.');
-        } catch (NoCredentialsError $e) {
+            $this->fail('Expected a NoCredentialsException.');
+        } catch (NoCredentialsException $e) {
             $this->assertStringContainsString('did not return credentials', $e->getMessage());
         }
 
@@ -4323,5 +4325,224 @@ EOT;
         
         $provider = CredentialProvider::login('default');
         $provider()->wait();
+    }
+
+    private const COMPLIANCE_BASE_TIME = 1000000000;
+
+    public static function credentialRefreshComplianceCases(): array
+    {
+        $path = __DIR__ . '/fixtures/credential-refresh-tests.json';
+        $cases = json_decode(file_get_contents($path), true);
+
+        $out = [];
+        foreach ($cases as $i => $case) {
+            $out[sprintf('#%02d %s', $i, $case['documentation'] ?? '')] = [$case];
+        }
+
+        return $out;
+    }
+
+    /**
+     * Runs the credential refresh spec test cases against memoize(). Configured
+     * windows and invalidation aren't supported, so those cases are skipped.
+     */
+    #[DataProvider('credentialRefreshComplianceCases')]
+    public function testCredentialRefreshCompliance(array $case): void
+    {
+        $given = $case['given'];
+
+        if (isset($given['configuredAdvisoryWindowSeconds'])) {
+            $this->markTestSkipped(
+                'Customer-configured advisory refresh windows are not supported.'
+            );
+        }
+        foreach ($case['steps'] as $step) {
+            if ($step['type'] === 'invalidate') {
+                $this->markTestSkipped(
+                    'Invalidation on authentication failure is not implemented '
+                    . 'in the closure-based design.'
+                );
+            }
+        }
+
+        // Swallow the E_USER_WARNING emitted on a failed refresh. Behavior is
+        // asserted separately.
+        set_error_handler(static function () { return true; }, E_USER_WARNING);
+        try {
+            $this->setComplianceNow(self::COMPLIANCE_BASE_TIME);
+
+            $source = new ScriptedSourceClosure();
+            $provider = CredentialProvider::memoize($source);
+
+            $this->seedComplianceState($provider, $source, $given);
+
+            foreach ($case['steps'] as $step) {
+                $this->runComplianceStep($provider, $source, $step);
+            }
+        } finally {
+            restore_error_handler();
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    /** Sets the time that time() returns inside Aws\Credentials during the test. */
+    private function setComplianceNow(int $now): void
+    {
+        $_SERVER['aws_time'] = $now;
+    }
+
+    private function complianceNow(): int
+    {
+        return $_SERVER['aws_time'];
+    }
+
+    private function seedComplianceState($provider, ScriptedSourceClosure $source, array $given): void
+    {
+        $state = $given['cachedCredentials'];
+        if ($state === 'none') {
+            return;
+        }
+
+        $lifetime = 3600; // advisory window 900s, mandatory 60s
+        $akid = $given['accessKeyId'] ?? 'AKID-SEED';
+        $source->queue($this->complianceFreshCreds($lifetime, $akid));
+        $provider()->wait();
+
+        switch ($state) {
+            case 'valid':
+                break;
+            case 'advisory':
+                $this->setComplianceNow($this->complianceNow() + $lifetime - 800); // inside 900s advisory, outside 60s mandatory
+                break;
+            case 'mandatory':
+                $this->setComplianceNow($this->complianceNow() + $lifetime - 30);  // inside 60s mandatory
+                break;
+            case 'expired':
+                $this->setComplianceNow($this->complianceNow() + $lifetime + 10);
+                break;
+            default:
+                $this->fail("Unknown cachedCredentials state: {$state}");
+        }
+
+        $source->resetContacted();
+    }
+
+    private function runComplianceStep($provider, ScriptedSourceClosure $source, array $step): void
+    {
+        if ($step['type'] === 'advanceTime') {
+            $this->setComplianceNow($this->complianceNow() + $step['seconds']);
+            return;
+        }
+        if ($step['type'] === 'getCredentials') {
+            $this->runComplianceGetCredentials($provider, $source, $step);
+            return;
+        }
+        $this->fail("Unknown step type: {$step['type']}");
+    }
+
+    private function runComplianceGetCredentials($provider, ScriptedSourceClosure $source, array $step): void
+    {
+        $expected = $step['expected'];
+
+        if (isset($step['response'])) {
+            $source->queue(
+                $this->complianceResponseFor($step['response'], $step['lifetimeSeconds'] ?? 3600)
+            );
+        }
+        $source->resetContacted();
+
+        $result = null;
+        $error = null;
+        try {
+            $result = $provider()->wait();
+        } catch (\Throwable $e) {
+            $error = $e;
+        }
+
+        $this->assertSame(
+            $expected['sourceContacted'],
+            $source->wasContacted(),
+            'sourceContacted mismatch'
+        );
+
+        switch ($expected['result']) {
+            case 'newCredentials':
+                $this->assertInstanceOf(Credentials::class, $result);
+                $this->assertTrue($source->lastReturnedIs($result), 'expected freshly returned credentials');
+                break;
+            case 'cachedCredentials':
+                $this->assertInstanceOf(Credentials::class, $result);
+                $this->assertFalse($source->lastReturnedIs($result), 'expected existing cached credentials');
+                break;
+            case 'noCredentialsError':
+                $this->assertInstanceOf(NoCredentialsException::class, $error);
+                break;
+            case 'nonRecoverableError':
+                $this->assertInstanceOf(NonRecoverableCredentialsExceptionInterface::class, $error);
+                break;
+            default:
+                $this->fail("Unknown expected result: {$expected['result']}");
+        }
+
+        if (isset($expected['advisoryWindowSeconds'])) {
+            $this->assertComplianceAdvisoryWindow($expected['advisoryWindowSeconds'], $result);
+        }
+    }
+
+    /**
+     * Checks the advisory window on a separate provider so the case under test
+     * isn't affected: no refresh 1 second before the window, a refresh 1 second
+     * after.
+     */
+    private function assertComplianceAdvisoryWindow(int $window, $creds): void
+    {
+        $lifetime = $creds->getExpiration() - $this->complianceNow();
+        $savedNow = $this->complianceNow();
+
+        $base = self::COMPLIANCE_BASE_TIME;
+        $expiration = $base + $lifetime;
+
+        $probeSource = new ScriptedSourceClosure();
+        $probeProvider = CredentialProvider::memoize($probeSource);
+
+        $this->setComplianceNow($base);
+        $probeSource->queue(new Credentials('AKID-PROBE', 'secret', 'token', $expiration));
+        $probeProvider()->wait();
+
+        // Just outside the window -> no source contact.
+        $this->setComplianceNow($expiration - $window - 1);
+        $probeSource->resetContacted();
+        $probeProvider()->wait();
+        $this->assertFalse($probeSource->wasContacted(), "expected no refresh just before the {$window}s advisory window");
+
+        // Just inside the window -> source contacted.
+        $this->setComplianceNow($expiration - $window + 1);
+        $probeSource->queue(new Credentials('AKID-PROBE2', 'secret', 'token', ($expiration - $window + 1) + 3600));
+        $probeSource->resetContacted();
+        $probeProvider()->wait();
+        $this->assertTrue($probeSource->wasContacted(), "expected a refresh just inside the {$window}s advisory window");
+
+        $this->setComplianceNow($savedNow);
+    }
+
+    private function complianceResponseFor(string $response, int $lifetime)
+    {
+        switch ($response) {
+            case 'freshCredentials':
+                return $this->complianceFreshCreds($lifetime, 'AKID-FRESH-' . uniqid());
+            case 'staleCredentials':
+                return new Credentials('AKID-STALE', 'secret', 'token', $this->complianceNow() - 1);
+            case 'error':
+                return Create::rejectionFor(new \RuntimeException('source unreachable'));
+            case 'nonRecoverableError':
+                return Create::rejectionFor(new NonRecoverableCredentialsException('reauthenticate required'));
+            default:
+                $this->fail("Unknown response type: {$response}");
+        }
+    }
+
+    private function complianceFreshCreds(int $lifetime, string $akid): Credentials
+    {
+        return new Credentials($akid, 'secret', 'token', $this->complianceNow() + $lifetime);
     }
 }

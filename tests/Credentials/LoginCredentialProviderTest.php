@@ -17,7 +17,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 // Allows Login and memoize tests to use a fixed clock.
-require_once __DIR__ . '/CredentialsClockOverride.php';
+require_once __DIR__ . '/Utils/CredentialsClockOverride.php';
 
 #[CoversClass(LoginCredentialProvider::class)]
 class LoginCredentialProviderTest extends TestCase
