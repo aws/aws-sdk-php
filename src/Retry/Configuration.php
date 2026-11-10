@@ -13,7 +13,7 @@ class Configuration implements ConfigurationInterface
         'adaptive'
     ];
 
-    public function __construct($mode = 'legacy', $maxAttempts = 3)
+    public function __construct($mode = 'standard', $maxAttempts = 3)
     {
         $mode = strtolower($mode);
         if (!in_array($mode, $this->validModes)) {
