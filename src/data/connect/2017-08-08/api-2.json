@@ -9141,7 +9141,8 @@
         "OutboundStrategy":{"shape":"OutboundStrategy"},
         "Attributes":{"shape":"Attributes"},
         "NextContacts":{"shape":"NextContacts"},
-        "GlobalResiliencyMetadata":{"shape":"GlobalResiliencyMetadata"}
+        "GlobalResiliencyMetadata":{"shape":"GlobalResiliencyMetadata"},
+        "ContactLens":{"shape":"ContactLens"}
       }
     },
     "ContactAnalysis":{
@@ -9159,6 +9160,13 @@
         "Arn":{"shape":"ARN"},
         "AnalyticsMode":{"shape":"AnalyticsMode"},
         "IsRedacted":{"shape":"NullableBoolean"}
+      }
+    },
+    "ContactAnalysisReferenceState":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"String"},
+        "StatusReason":{"shape":"String"}
       }
     },
     "ContactConfiguration":{
@@ -9634,6 +9642,51 @@
         "CUSTOMER"
       ]
     },
+    "ContactLens":{
+      "type":"structure",
+      "members":{
+        "ConversationalAnalytics":{"shape":"ConversationalAnalytics"}
+      }
+    },
+    "ContactLensAnalyticsModeList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "ContactLensChannelConfiguration":{
+      "type":"structure",
+      "members":{
+        "AnalyticsModes":{"shape":"ContactLensAnalyticsModeList"}
+      }
+    },
+    "ContactLensRedactionConfiguration":{
+      "type":"structure",
+      "members":{
+        "Behavior":{"shape":"String"},
+        "Policy":{"shape":"String"},
+        "Entities":{"shape":"ContactLensRedactionEntitiesList"},
+        "MaskMode":{"shape":"String"}
+      }
+    },
+    "ContactLensRedactionEntitiesList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "ContactLensSentimentConfiguration":{
+      "type":"structure",
+      "members":{
+        "Behavior":{"shape":"String"}
+      }
+    },
+    "ContactLensSummaryConfiguration":{
+      "type":"structure",
+      "members":{
+        "SummaryModes":{"shape":"ContactLensSummaryModeList"}
+      }
+    },
+    "ContactLensSummaryModeList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "ContactMediaProcessingFailureMode":{
       "type":"string",
       "enum":[
@@ -9876,6 +9929,28 @@
         "AndCondition":{"shape":"AttributeAndCondition"},
         "TagCondition":{"shape":"TagCondition"},
         "HierarchyGroupCondition":{"shape":"HierarchyGroupCondition"}
+      }
+    },
+    "ConversationalAnalytics":{
+      "type":"structure",
+      "members":{
+        "Configuration":{"shape":"ConversationalAnalyticsConfiguration"},
+        "ContactAnalysisReferenceState":{"shape":"ContactAnalysisReferenceState"}
+      }
+    },
+    "ConversationalAnalyticsConfiguration":{
+      "type":"structure",
+      "members":{
+        "Enabled":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "LanguageLocale":{"shape":"String"},
+        "LanguageLocales":{"shape":"LanguageLocales"},
+        "ChannelConfiguration":{"shape":"ContactLensChannelConfiguration"},
+        "RedactionConfiguration":{"shape":"ContactLensRedactionConfiguration"},
+        "SummaryConfiguration":{"shape":"ContactLensSummaryConfiguration"},
+        "SentimentConfiguration":{"shape":"ContactLensSentimentConfiguration"}
       }
     },
     "Count":{"type":"integer"},
@@ -17750,6 +17825,12 @@
       }
     },
     "LanguageLocale":{"type":"string"},
+    "LanguageLocales":{
+      "type":"list",
+      "member":{"shape":"LanguageLocale"},
+      "max":5,
+      "min":0
+    },
     "LargeNextToken":{
       "type":"string",
       "max":100000,

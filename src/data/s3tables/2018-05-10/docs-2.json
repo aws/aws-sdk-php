@@ -19,6 +19,7 @@
     "GetTable": "<p>Gets details about a table. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-tables.html\">S3 Tables</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTable</code> permission to use this operation. </p> </dd> </dl>",
     "GetTableBucket": "<p>Gets details on a table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-buckets-details.html\">Viewing details about an Amazon S3 table bucket</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableBucket</code> permission to use this operation. </p> </dd> </dl>",
     "GetTableBucketEncryption": "<p>Gets the encryption configuration for a table bucket.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableBucketEncryption</code> permission to use this operation.</p> </dd> </dl>",
+    "GetTableBucketLogging": "<p>Gets the server access logging configuration for a table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-server-logs.html\">Server access logging for table buckets</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableBucketLogging</code> permission to use this operation.</p> </dd> </dl>",
     "GetTableBucketMaintenanceConfiguration": "<p>Gets details about a maintenance configuration for a given table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-table-buckets-maintenance.html\">Amazon S3 table bucket maintenance</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableBucketMaintenanceConfiguration</code> permission to use this operation. </p> </dd> </dl>",
     "GetTableBucketMetricsConfiguration": "<p>Gets the metrics configuration for a table bucket.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableBucketMetricsConfiguration</code> permission to use this operation.</p> </dd> </dl>",
     "GetTableBucketPolicy": "<p>Gets details about a table bucket policy. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-bucket-policy.html#table-bucket-policy-get\">Viewing a table bucket policy</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableBucketPolicy</code> permission to use this operation. </p> </dd> </dl>",
@@ -41,6 +42,7 @@
     "ListTables": "<p>List tables in the given table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-tables.html\">S3 Tables</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:ListTables</code> permission to use this operation. </p> </dd> </dl>",
     "ListTagsForResource": "<p>Lists all of the tags applied to a specified Amazon S3 Tables resource. Each tag is a label consisting of a key and value pair. Tags can help you organize, track costs for, and control access to resources. </p> <note> <p>For a list of S3 resources that support tagging, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html#manage-tags\">Managing tags for Amazon S3 resources</a>.</p> </note> <dl> <dt>Permissions</dt> <dd> <p>For tables and table buckets, you must have the <code>s3tables:ListTagsForResource</code> permission to use this operation.</p> </dd> </dl>",
     "PutTableBucketEncryption": "<p>Sets the encryption configuration for a table bucket.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:PutTableBucketEncryption</code> permission to use this operation.</p> <note> <p>If you choose SSE-KMS encryption you must grant the S3 Tables maintenance principal access to your KMS key. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-kms-permissions.html\">Permissions requirements for S3 Tables SSE-KMS encryption</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> </note> </dd> </dl>",
+    "PutTableBucketLogging": "<p>Sets, updates, or removes the server access logging configuration for a table bucket. When logging is enabled, Amazon S3 delivers a record of the requests made to the table bucket and its tables to the target general purpose bucket that you specify. To disable logging, call this operation with an empty <code>tableBucketLoggingStatus</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-server-logs.html\">Server access logging for table buckets</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:PutTableBucketLogging</code> permission to use this operation.</p> </dd> </dl>",
     "PutTableBucketMaintenanceConfiguration": "<p>Creates a new maintenance configuration or replaces an existing maintenance configuration for a table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-table-buckets-maintenance.html\">Amazon S3 table bucket maintenance</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:PutTableBucketMaintenanceConfiguration</code> permission to use this operation. </p> </dd> </dl>",
     "PutTableBucketMetricsConfiguration": "<p>Sets the metrics configuration for a table bucket.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:PutTableBucketMetricsConfiguration</code> permission to use this operation.</p> </dd> </dl>",
     "PutTableBucketPolicy": "<p>Creates a new table bucket policy or replaces an existing table bucket policy for a table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-bucket-policy.html#table-bucket-policy-add\">Adding a table bucket policy</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:PutTableBucketPolicy</code> permission to use this operation. </p> </dd> </dl>",
@@ -270,6 +272,14 @@
       "refs": {}
     },
     "GetTableBucketEncryptionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTableBucketLoggingRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTableBucketLoggingResponse": {
       "base": null,
       "refs": {}
     },
@@ -666,6 +676,24 @@
       "base": null,
       "refs": {}
     },
+    "LoggingEnabled": {
+      "base": "<p>Describes where logs are stored and the prefix that Amazon S3 assigns to all log object keys for a table bucket.</p>",
+      "refs": {
+        "TableBucketLoggingStatus$loggingEnabled": "<p>Where logs for the table bucket are delivered and how the log objects are named. Must be populated to enable logging.</p>"
+      }
+    },
+    "LoggingTargetBucket": {
+      "base": null,
+      "refs": {
+        "LoggingEnabled$targetBucket": "<p>The name of the general purpose bucket that logs are delivered to. The bucket must be in the same Amazon Web Services Region and owned by the same Amazon Web Services account as the table bucket. The bucket can't use SSE-KMS or DSSE-KMS default encryption, can't have S3 Object Lock enabled, and can't have Requester Pays enabled. You can deliver logs from multiple table buckets to the same target bucket. In this case, choose a different <code>targetPrefix</code> for each table bucket so that you can tell their log objects apart.</p>"
+      }
+    },
+    "LoggingTargetPrefix": {
+      "base": null,
+      "refs": {
+        "LoggingEnabled$targetPrefix": "<p>The prefix for the keys of the log objects that are delivered to the target bucket.</p>"
+      }
+    },
     "Long": {
       "base": null,
       "refs": {
@@ -944,6 +972,18 @@
         "GetTableResponse$format": "<p>The format of the table.</p>"
       }
     },
+    "PartitionDateSource": {
+      "base": null,
+      "refs": {
+        "PartitionedPrefix$partitionDateSource": "<p>The date to use for the log object key partitions. Valid values are <code>EventTime</code>, the time that the requests in the log were made, and <code>DeliveryTime</code>, the time that the log was delivered.</p>"
+      }
+    },
+    "PartitionedPrefix": {
+      "base": "<p>Amazon S3 keys for log objects are partitioned in the following format: <code>[targetPrefix][SourceAccountId]/[SourceRegion]/[SourceTableBucket]/[YYYY]/[MM]/[DD]/[YYYY]-[MM]-[DD]-[hh]-[mm]-[ss]-[UniqueString]</code> </p>",
+      "refs": {
+        "TargetObjectKeyFormat$partitionedPrefix": "<p>Partitions log object keys by date.</p>"
+      }
+    },
     "PlanningStats": {
       "base": "<p>Statistics about the source and the partitions in a migration.</p>",
       "refs": {
@@ -963,6 +1003,10 @@
       }
     },
     "PutTableBucketEncryptionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutTableBucketLoggingRequest": {
       "base": null,
       "refs": {}
     },
@@ -1267,6 +1311,7 @@
         "DestinationTable$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket to create the table in.</p>",
         "GetNamespaceRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "GetTableBucketEncryptionRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
+        "GetTableBucketLoggingRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "GetTableBucketMaintenanceConfigurationRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket associated with the maintenance configuration.</p>",
         "GetTableBucketMaintenanceConfigurationResponse$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket associated with the maintenance configuration.</p>",
         "GetTableBucketMetricsConfigurationRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
@@ -1289,6 +1334,7 @@
         "ListTablesRequest$tableBucketARN": "<p>The Amazon resource Name (ARN) of the table bucket.</p>",
         "MigrationSummary$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket that contains the destination table.</p>",
         "PutTableBucketEncryptionRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
+        "PutTableBucketLoggingRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "PutTableBucketMaintenanceConfigurationRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket associated with the maintenance configuration.</p>",
         "PutTableBucketMetricsConfigurationRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "PutTableBucketPolicyRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
@@ -1312,6 +1358,13 @@
         "NamespaceSummary$tableBucketId": "<p>The system-assigned unique identifier for the table bucket that contains this namespace.</p>",
         "TableBucketSummary$tableBucketId": "<p>The system-assigned unique identifier for the table bucket.</p>",
         "TableSummary$tableBucketId": "<p>The unique identifier for the table bucket that contains this table.</p>"
+      }
+    },
+    "TableBucketLoggingStatus": {
+      "base": "<p>The server access logging status of a table bucket. To enable logging, specify <code>loggingEnabled</code>. To disable logging, specify an empty <code>TableBucketLoggingStatus</code>.</p>",
+      "refs": {
+        "GetTableBucketLoggingResponse$tableBucketLoggingStatus": "<p>The logging status of the table bucket. If logging is disabled, <code>loggingEnabled</code> is absent.</p>",
+        "PutTableBucketLoggingRequest$tableBucketLoggingStatus": "<p>The logging status to apply to the table bucket. To disable logging, specify an empty <code>tableBucketLoggingStatus</code>.</p>"
       }
     },
     "TableBucketMaintenanceConfiguration": {
@@ -1574,6 +1627,12 @@
         "DestinationTable$tags": "<p>The tags to add to the table. A tag is a key-value pair that you apply to your resources. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html\">Tagging for cost allocation or attribute-based access control (ABAC)</a>. If you specify tags, the migration role must have the <code>s3tables:TagResource</code> permission.</p>",
         "ListTagsForResourceResponse$tags": "<p>The user-defined tags that are applied to the resource. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html\">Tagging for cost allocation or attribute-based access control (ABAC)</a>.</p>",
         "TagResourceRequest$tags": "<p>The user-defined tag that you want to add to the specified S3 Tables resource. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html\">Tagging for cost allocation or attribute-based access control (ABAC)</a>.</p>"
+      }
+    },
+    "TargetObjectKeyFormat": {
+      "base": "<p>The key format of the log objects. Only <code>partitionedPrefix</code> is supported.</p>",
+      "refs": {
+        "LoggingEnabled$targetObjectKeyFormat": "<p>The key format of the log objects. Log object keys are always partitioned by date.</p>"
       }
     },
     "TooManyRequestsException": {

@@ -2783,7 +2783,8 @@
         "PriorityConfiguration":{"shape":"PriorityConfiguration"},
         "CustomEventData":{"shape":"QueueCustomEventData"},
         "NotificationTarget":{"shape":"QueueSnsArnStringModel"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "LogConfiguration":{"shape":"GameSessionQueueLogConfiguration"}
       }
     },
     "CreateGameSessionQueueOutput":{
@@ -3131,6 +3132,12 @@
     "DeleteVpcPeeringConnectionOutput":{
       "type":"structure",
       "members":{}
+    },
+    "DeliveryDestinationArnStringModel":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"^arn:[a-zA-Z0-9:/*._#-]+$"
     },
     "DeploymentConfiguration":{
       "type":"structure",
@@ -5061,7 +5068,8 @@
         "FilterConfiguration":{"shape":"FilterConfiguration"},
         "PriorityConfiguration":{"shape":"PriorityConfiguration"},
         "CustomEventData":{"shape":"QueueCustomEventData"},
-        "NotificationTarget":{"shape":"QueueSnsArnStringModel"}
+        "NotificationTarget":{"shape":"QueueSnsArnStringModel"},
+        "LogConfiguration":{"shape":"GameSessionQueueLogConfiguration"}
       }
     },
     "GameSessionQueueArn":{
@@ -5083,6 +5091,13 @@
     "GameSessionQueueList":{
       "type":"list",
       "member":{"shape":"GameSessionQueue"}
+    },
+    "GameSessionQueueLogConfiguration":{
+      "type":"structure",
+      "required":["DeliveryDestinations"],
+      "members":{
+        "DeliveryDestinations":{"shape":"LogDeliveryDestinationList"}
+      }
     },
     "GameSessionQueueName":{
       "type":"string",
@@ -5821,6 +5836,28 @@
         "S3BucketName":{"shape":"NonEmptyString"},
         "LogGroupArn":{"shape":"LogGroupArnStringModel"}
       }
+    },
+    "LogDeliveryDestination":{
+      "type":"structure",
+      "required":["LogDestination"],
+      "members":{
+        "LogDestination":{"shape":"LogDeliveryDestinationType"},
+        "DestinationArn":{"shape":"DeliveryDestinationArnStringModel"}
+      }
+    },
+    "LogDeliveryDestinationList":{
+      "type":"list",
+      "member":{"shape":"LogDeliveryDestination"},
+      "max":3,
+      "min":1
+    },
+    "LogDeliveryDestinationType":{
+      "type":"string",
+      "enum":[
+        "CLOUDWATCH",
+        "S3",
+        "FIREHOSE"
+      ]
     },
     "LogDestination":{
       "type":"string",
@@ -7208,7 +7245,9 @@
         "FilterConfiguration":{"shape":"FilterConfiguration"},
         "PriorityConfiguration":{"shape":"PriorityConfiguration"},
         "CustomEventData":{"shape":"QueueCustomEventData"},
-        "NotificationTarget":{"shape":"QueueSnsArnStringModel"}
+        "NotificationTarget":{"shape":"QueueSnsArnStringModel"},
+        "AddLogDeliveryDestinations":{"shape":"LogDeliveryDestinationList"},
+        "RemoveLogDeliveryDestinations":{"shape":"LogDeliveryDestinationList"}
       }
     },
     "UpdateGameSessionQueueOutput":{

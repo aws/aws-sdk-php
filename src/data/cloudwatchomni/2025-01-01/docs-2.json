@@ -35,6 +35,7 @@
     "GetOmniDashboard": "<p>Retrieves a dashboard by ID within a space.</p>",
     "GetSpace": "<p>Retrieves the details of a space by ID.</p>",
     "GetSpaceCredentialsForOrganization": "<p>Returns temporary credentials for a space in an organization member account. The credentials are valid for one hour.</p> <p>The caller must be the organization's management account or a delegated administrator with access to the target space. The target account must be an active member of the same organization as the domain, and the space must already exist.</p>",
+    "GetSpaceDataAccess": "<p>Returns temporary credentials for working with data in a space, limited to the actions you request.</p> <p>The credentials allow only the requested actions that can be granted in the space and that your access grants allow. Requested actions that cannot be conferred are ignored rather than rejected.</p>",
     "GetTelemetryQueryResults": "<p>Returns the results for the specified query.</p>",
     "GetView": "<p>Returns the definition and metadata of the specified view.</p>",
     "ListAccessGrants": "<p>Returns AccessGrants, with optional filtering by domain, space, principal, or permission. A grant is returned only when it matches every filter supplied. With no filters, returns the grants for the current account and Region.</p>",
@@ -398,7 +399,8 @@
     "AwsCredentials": {
       "base": "<p>A set of temporary AWS credentials.</p>",
       "refs": {
-        "GetSpaceCredentialsForOrganizationOutput$credentials": "<p>The temporary AWS credentials for the space.</p>"
+        "GetSpaceCredentialsForOrganizationOutput$credentials": "<p>The temporary AWS credentials for the space.</p>",
+        "GetSpaceDataAccessOutput$credentials": "<p>The temporary AWS credentials for the space.</p>"
       }
     },
     "Boolean": {
@@ -686,6 +688,48 @@
         "OmniDashboard$dashboardId": "<p>The unique ID of the dashboard.</p>",
         "OmniDashboardSummary$dashboardId": "<p>The unique ID of the dashboard.</p>",
         "UpdateOmniDashboardInput$dashboardId": "<p>The unique ID of the dashboard.</p>"
+      }
+    },
+    "DataAccessActionList": {
+      "base": "<p>The actions of one requested scope (1-50 entries), all with the same service prefix.</p>",
+      "refs": {
+        "DataAccessTarget$actions": "<p>The actions of one service, each with its service prefix, for example &quot;logs:StartQuery&quot;.</p>"
+      }
+    },
+    "DataAccessActionName": {
+      "base": "<p>An action to include in the credentials, with its service prefix, for example &quot;logs:StartQuery&quot;. Wildcards are not supported.</p>",
+      "refs": {
+        "DataAccessActionList$member": null
+      }
+    },
+    "DataAccessAuditContext": {
+      "base": "<p>Caller-supplied audit key-value pairs (at most 10 entries). Each key is 1-256 characters of letters, digits and _ . : / = + @ -. Each value is 1-256 printable characters: any character except a C0 or C1 control character (so no tab, carriage return or newline).</p>",
+      "refs": {
+        "GetSpaceDataAccessInput$auditContext": "<p>Caller-supplied key-value pairs that are recorded for auditing. They do not affect authorization or the permissions of the credentials.</p>"
+      }
+    },
+    "DataAccessAuditContextKeyString": {
+      "base": null,
+      "refs": {
+        "DataAccessAuditContext$key": null
+      }
+    },
+    "DataAccessAuditContextValueString": {
+      "base": null,
+      "refs": {
+        "DataAccessAuditContext$value": null
+      }
+    },
+    "DataAccessTarget": {
+      "base": "<p>One requested scope: an explicit list of actions for one service. All actions in an entry share one service prefix. The same service may appear in more than one entry.</p>",
+      "refs": {
+        "DataAccessTargetList$member": null
+      }
+    },
+    "DataAccessTargetList": {
+      "base": "<p>The scopes requested for one data credential (1-10 entries, at most 100 actions in total).</p>",
+      "refs": {
+        "GetSpaceDataAccessInput$targetScopes": "<p>The actions to include in the credentials, grouped by service.</p>"
       }
     },
     "DeepLinkCode": {
@@ -1059,6 +1103,20 @@
       "refs": {}
     },
     "GetSpaceCredentialsForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSpaceDataAccessInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSpaceDataAccessInputDurationSecondsInteger": {
+      "base": null,
+      "refs": {
+        "GetSpaceDataAccessInput$durationSeconds": "<p>The lifetime of the credentials, in seconds. Defaults to 3600.</p>"
+      }
+    },
+    "GetSpaceDataAccessOutput": {
       "base": null,
       "refs": {}
     },
@@ -1817,6 +1875,10 @@
         "QueryStatistics$partialResults": "<p>Information about whether the query returned partial results.</p>"
       }
     },
+    "PolicyTooLargeException": {
+      "base": "<p>The requested actions produce a credential that exceeds the maximum size. Request fewer actions.</p>",
+      "refs": {}
+    },
     "PrincipalId": {
       "base": "<p>Principal receiving a grant. One field spans every AccessGrantPrincipalType: an IAM principal ARN (IAM_USER / IAM_ROLE / IAM_ROOT), an IdC UUID (IDC_USER / IDC_GROUP), or a service-defined id for ACCESS_PROFILE, ALERT, or AGENT. Must begin with an alphanumeric character.</p> <p>Set to the reserved value ALL (case-sensitive) to apply the grant to every ALERT principal in the space. ALL is supported only for the ALERT principal type, and only on CUSTOM grants whose single action is AssumeAccessProfile.</p>",
       "refs": {
@@ -2145,6 +2207,7 @@
         "GetAccessProfileInput$spaceId": "<p>The unique ID of the space.</p>",
         "GetAlertInput$spaceId": "<p>The unique ID of the space.</p>",
         "GetOmniDashboardInput$spaceId": "<p>The unique ID of the space.</p>",
+        "GetSpaceDataAccessInput$spaceId": "<p>The unique ID of the space to return credentials for.</p>",
         "GetSpaceInput$spaceId": "<p>The unique ID of the space.</p>",
         "ListAccessGrantsInput$spaceId": "<p>Filter by space ID.</p>",
         "ListAccessProfilesInput$spaceId": "<p>The unique ID of the space.</p>",
@@ -2354,6 +2417,7 @@
         "OrganizationDomain$domainEndpointUrl": "<p>The HTTPS endpoint URL for accessing the organization domain.</p>",
         "OrganizationDomain$organizationId": "<p>The ID of the AWS Organization that owns the domain.</p>",
         "OrganizationDomain$region": "<p>The Region where this organization domain was created.</p>",
+        "PolicyTooLargeException$message": "<p>A description of the error.</p>",
         "PrincipalSearchResult$displayName": "<p>The display name of the principal.</p>",
         "PrincipalSearchResult$userName": "<p>The user name of the principal. Present for users only.</p>",
         "PrincipalSearchResult$description": "<p>An optional description of the principal.</p>",

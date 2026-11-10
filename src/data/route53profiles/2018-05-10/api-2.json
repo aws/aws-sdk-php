@@ -2,8 +2,8 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2018-05-10",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"route53profiles",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"Route 53 Profiles",
@@ -44,8 +44,8 @@
       "output":{"shape":"AssociateResourceToProfileResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"LimitExceededException"},
         {"shape":"InternalServiceErrorException"},
+        {"shape":"LimitExceededException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -118,8 +118,8 @@
       "output":{"shape":"DisassociateResourceFromProfileResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"LimitExceededException"},
         {"shape":"InternalServiceErrorException"},
+        {"shape":"LimitExceededException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -142,7 +142,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetProfileAssociation":{
       "name":"GetProfileAssociation",
@@ -158,7 +159,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetProfileResourceAssociation":{
       "name":"GetProfileResourceAssociation",
@@ -175,7 +177,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListProfileAssociations":{
       "name":"ListProfileAssociations",
@@ -192,7 +195,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InvalidNextTokenException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListProfileResourceAssociations":{
       "name":"ListProfileResourceAssociations",
@@ -211,7 +215,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InvalidNextTokenException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListProfiles":{
       "name":"ListProfiles",
@@ -228,7 +233,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InvalidNextTokenException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -245,7 +251,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -282,6 +289,27 @@
       ],
       "idempotent":true
     },
+    "UpdateProfileAssociation":{
+      "name":"UpdateProfileAssociation",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/profileassociation/{ProfileAssociationId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateProfileAssociationRequest"},
+      "output":{"shape":"UpdateProfileAssociationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceErrorException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "UpdateProfileResourceAssociation":{
       "name":"UpdateProfileResourceAssociation",
       "http":{
@@ -293,8 +321,8 @@
       "output":{"shape":"UpdateProfileResourceAssociationResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"LimitExceededException"},
         {"shape":"InternalServiceErrorException"},
+        {"shape":"LimitExceededException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -324,15 +352,16 @@
     "AssociateProfileRequest":{
       "type":"structure",
       "required":[
-        "Name",
         "ProfileId",
-        "ResourceId"
+        "ResourceId",
+        "Name"
       ],
       "members":{
-        "Name":{"shape":"Name"},
         "ProfileId":{"shape":"ResourceId"},
         "ResourceId":{"shape":"ResourceId"},
-        "Tags":{"shape":"TagList"}
+        "Name":{"shape":"Name"},
+        "Tags":{"shape":"TagList"},
+        "Priority":{"shape":"Priority"}
       }
     },
     "AssociateProfileResponse":{
@@ -344,14 +373,14 @@
     "AssociateResourceToProfileRequest":{
       "type":"structure",
       "required":[
-        "Name",
         "ProfileId",
-        "ResourceArn"
+        "ResourceArn",
+        "Name"
       ],
       "members":{
-        "Name":{"shape":"Name"},
         "ProfileId":{"shape":"ResourceId"},
         "ResourceArn":{"shape":"Arn"},
+        "Name":{"shape":"Name"},
         "ResourceProperties":{"shape":"ResourceProperties"}
       }
     },
@@ -371,15 +400,15 @@
     "CreateProfileRequest":{
       "type":"structure",
       "required":[
-        "ClientToken",
-        "Name"
+        "Name",
+        "ClientToken"
       ],
       "members":{
+        "Name":{"shape":"Name"},
         "ClientToken":{
           "shape":"CreatorRequestId",
           "idempotencyToken":true
         },
-        "Name":{"shape":"Name"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -518,7 +547,8 @@
       "members":{
         "Message":{"shape":"ExceptionMessage"}
       },
-      "exception":true
+      "exception":true,
+      "retryable":{"throttling":false}
     },
     "InvalidNextTokenException":{
       "type":"structure",
@@ -531,8 +561,8 @@
       "type":"structure",
       "required":["Message"],
       "members":{
-        "FieldName":{"shape":"String"},
-        "Message":{"shape":"ExceptionMessage"}
+        "Message":{"shape":"ExceptionMessage"},
+        "FieldName":{"shape":"String"}
       },
       "exception":true
     },
@@ -547,39 +577,16 @@
     "ListProfileAssociationsRequest":{
       "type":"structure",
       "members":{
-        "MaxResults":{
-          "shape":"MaxResults",
+        "ResourceId":{
+          "shape":"ResourceId",
           "location":"querystring",
-          "locationName":"maxResults"
-        },
-        "NextToken":{
-          "shape":"NextToken",
-          "location":"querystring",
-          "locationName":"nextToken"
+          "locationName":"resourceId"
         },
         "ProfileId":{
           "shape":"ResourceId",
           "location":"querystring",
           "locationName":"profileId"
         },
-        "ResourceId":{
-          "shape":"ResourceId",
-          "location":"querystring",
-          "locationName":"resourceId"
-        }
-      }
-    },
-    "ListProfileAssociationsResponse":{
-      "type":"structure",
-      "members":{
-        "NextToken":{"shape":"NextToken"},
-        "ProfileAssociations":{"shape":"ProfileAssociations"}
-      }
-    },
-    "ListProfileResourceAssociationsRequest":{
-      "type":"structure",
-      "required":["ProfileId"],
-      "members":{
         "MaxResults":{
           "shape":"MaxResults",
           "location":"querystring",
@@ -589,7 +596,20 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
-        },
+        }
+      }
+    },
+    "ListProfileAssociationsResponse":{
+      "type":"structure",
+      "members":{
+        "ProfileAssociations":{"shape":"ProfileAssociations"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListProfileResourceAssociationsRequest":{
+      "type":"structure",
+      "required":["ProfileId"],
+      "members":{
         "ProfileId":{
           "shape":"ResourceId",
           "location":"uri",
@@ -599,14 +619,29 @@
           "shape":"String",
           "location":"querystring",
           "locationName":"resourceType"
+        },
+        "ResourceArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"resourceArn"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
         }
       }
     },
     "ListProfileResourceAssociationsResponse":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"NextToken"},
-        "ProfileResourceAssociations":{"shape":"ProfileResourceAssociations"}
+        "ProfileResourceAssociations":{"shape":"ProfileResourceAssociations"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "ListProfilesRequest":{
@@ -627,8 +662,8 @@
     "ListProfilesResponse":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"NextToken"},
-        "ProfileSummaries":{"shape":"ProfileSummaryList"}
+        "ProfileSummaries":{"shape":"ProfileSummaryList"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -659,36 +694,43 @@
       "type":"string",
       "max":64,
       "min":0,
-      "pattern":"^(?!^[0-9]+$)([a-zA-Z0-9\\-_' ']+)$"
+      "pattern":"(?!^[0-9]+$)([a-zA-Z0-9\\-_' ']+)"
     },
     "NextToken":{"type":"string"},
+    "Priority":{
+      "type":"integer",
+      "box":true,
+      "max":9900,
+      "min":100
+    },
     "Profile":{
       "type":"structure",
       "members":{
-        "Arn":{"shape":"Arn"},
-        "ClientToken":{"shape":"CreatorRequestId"},
-        "CreationTime":{"shape":"Rfc3339Timestamp"},
         "Id":{"shape":"ResourceId"},
-        "ModificationTime":{"shape":"Rfc3339Timestamp"},
+        "Arn":{"shape":"Arn"},
         "Name":{"shape":"Name"},
         "OwnerId":{"shape":"AccountId"},
-        "ShareStatus":{"shape":"ShareStatus"},
         "Status":{"shape":"ProfileStatus"},
-        "StatusMessage":{"shape":"String"}
+        "StatusMessage":{"shape":"String"},
+        "ShareStatus":{"shape":"ShareStatus"},
+        "CreationTime":{"shape":"Rfc3339Timestamp"},
+        "ModificationTime":{"shape":"Rfc3339Timestamp"},
+        "ClientToken":{"shape":"CreatorRequestId"}
       }
     },
     "ProfileAssociation":{
       "type":"structure",
       "members":{
-        "CreationTime":{"shape":"Rfc3339Timestamp"},
         "Id":{"shape":"ResourceId"},
-        "ModificationTime":{"shape":"Rfc3339Timestamp"},
         "Name":{"shape":"Name"},
         "OwnerId":{"shape":"AccountId"},
         "ProfileId":{"shape":"ResourceId"},
         "ResourceId":{"shape":"ResourceId"},
         "Status":{"shape":"ProfileStatus"},
-        "StatusMessage":{"shape":"String"}
+        "StatusMessage":{"shape":"String"},
+        "CreationTime":{"shape":"Rfc3339Timestamp"},
+        "ModificationTime":{"shape":"Rfc3339Timestamp"},
+        "Priority":{"shape":"Priority"}
       }
     },
     "ProfileAssociations":{
@@ -698,17 +740,17 @@
     "ProfileResourceAssociation":{
       "type":"structure",
       "members":{
-        "CreationTime":{"shape":"Rfc3339Timestamp"},
         "Id":{"shape":"ResourceId"},
-        "ModificationTime":{"shape":"Rfc3339Timestamp"},
         "Name":{"shape":"Name"},
         "OwnerId":{"shape":"AccountId"},
         "ProfileId":{"shape":"ResourceId"},
         "ResourceArn":{"shape":"Arn"},
-        "ResourceProperties":{"shape":"ResourceProperties"},
         "ResourceType":{"shape":"String"},
+        "ResourceProperties":{"shape":"ResourceProperties"},
         "Status":{"shape":"ProfileStatus"},
-        "StatusMessage":{"shape":"String"}
+        "StatusMessage":{"shape":"String"},
+        "CreationTime":{"shape":"Rfc3339Timestamp"},
+        "ModificationTime":{"shape":"Rfc3339Timestamp"}
       }
     },
     "ProfileResourceAssociations":{
@@ -729,8 +771,8 @@
     "ProfileSummary":{
       "type":"structure",
       "members":{
-        "Arn":{"shape":"Arn"},
         "Id":{"shape":"ResourceId"},
+        "Arn":{"shape":"Arn"},
         "Name":{"shape":"Name"},
         "ShareStatus":{"shape":"ShareStatus"}
       }
@@ -823,8 +865,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -836,7 +877,8 @@
       "members":{
         "Message":{"shape":"ExceptionMessage"}
       },
-      "exception":true
+      "exception":true,
+      "retryable":{"throttling":true}
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -859,19 +901,38 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "UpdateProfileAssociationRequest":{
+      "type":"structure",
+      "required":["ProfileAssociationId"],
       "members":{
+        "ProfileAssociationId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"ProfileAssociationId"
+        },
+        "Name":{"shape":"Name"},
+        "Priority":{"shape":"Priority"}
+      }
+    },
+    "UpdateProfileAssociationResponse":{
+      "type":"structure",
+      "required":["ProfileAssociation"],
+      "members":{
+        "ProfileAssociation":{"shape":"ProfileAssociation"}
       }
     },
     "UpdateProfileResourceAssociationRequest":{
       "type":"structure",
       "required":["ProfileResourceAssociationId"],
       "members":{
-        "Name":{"shape":"Name"},
         "ProfileResourceAssociationId":{
           "shape":"ResourceId",
           "location":"uri",
           "locationName":"ProfileResourceAssociationId"
         },
+        "Name":{"shape":"Name"},
         "ResourceProperties":{"shape":"ResourceProperties"}
       }
     },

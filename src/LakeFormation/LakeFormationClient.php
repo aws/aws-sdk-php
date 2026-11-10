@@ -9,6 +9,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result addLFTagsToResource(array{
  *     CatalogId?: string,
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -32,6 +33,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     LFTags?: list<array{CatalogId?: string, TagKey?: string, TagValues?: list<string>, ...}>,
@@ -41,6 +43,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise addLFTagsToResourceAsync(array{
  *     CatalogId?: string,
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -64,6 +67,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     LFTags?: list<array{CatalogId?: string, TagKey?: string, TagValues?: list<string>, ...}>,
@@ -77,6 +81,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result attachRLSPolicy(array{
  *     Name?: string,
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -100,6 +105,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
@@ -111,6 +117,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise attachRLSPolicyAsync(array{
  *     Name?: string,
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -134,6 +141,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
@@ -148,9 +156,9 @@ use Aws\AwsClient;
  *         Id?: string,
  *         Principal?: array,
  *         Resource?: array,
- *         Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *         Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *         Condition?: array,
- *         PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *         PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *         ...,
  *     }>,
  *     ...,
@@ -162,9 +170,9 @@ use Aws\AwsClient;
  *         Id?: string,
  *         Principal?: array,
  *         Resource?: array,
- *         Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *         Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *         Condition?: array,
- *         PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *         PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *         ...,
  *     }>,
  *     ...,
@@ -176,9 +184,9 @@ use Aws\AwsClient;
  *         Id?: string,
  *         Principal?: array,
  *         Resource?: array,
- *         Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *         Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *         Condition?: array,
- *         PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *         PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *         ...,
  *     }>,
  *     ...,
@@ -190,9 +198,9 @@ use Aws\AwsClient;
  *         Id?: string,
  *         Principal?: array,
  *         Resource?: array,
- *         Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *         Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *         Condition?: array,
- *         PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *         PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *         ...,
  *     }>,
  *     ...,
@@ -277,6 +285,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result createLakeFormationOptIn(array{
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -300,6 +309,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     Condition?: array{Expression?: string, ...},
@@ -309,6 +319,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise createLakeFormationOptInAsync(array{
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -332,6 +343,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     Condition?: array{Expression?: string, ...},
@@ -371,6 +383,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteLakeFormationOptIn(array{
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -394,6 +407,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     Condition?: array{Expression?: string, ...},
@@ -403,6 +417,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteLakeFormationOptInAsync(array{
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -426,6 +441,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     Condition?: array{Expression?: string, ...},
@@ -473,6 +489,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result detachRLSPolicy(array{
  *     Name?: string,
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -496,6 +513,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
@@ -507,6 +525,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise detachRLSPolicyAsync(array{
  *     Name?: string,
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -530,6 +549,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
@@ -557,6 +577,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getEffectivePermissionsForPath(array{CatalogId?: string, ResourceArn?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getEffectivePermissionsForPathAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getEffectivePermissionsForPathAsync(array{CatalogId?: string, ResourceArn?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
+ * @method \Aws\Result getGlueFunctionSessionContext(array $args = [])
+ * @phpstan-method \Aws\Result getGlueFunctionSessionContext(array{UserDefinedFunctionArns?: list<string>, DurationSeconds?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getGlueFunctionSessionContextAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getGlueFunctionSessionContextAsync(array{UserDefinedFunctionArns?: list<string>, DurationSeconds?: int, ...} $args = [])
  * @method \Aws\Result getLFTag(array $args = [])
  * @phpstan-method \Aws\Result getLFTag(array{CatalogId?: string, TagKey?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getLFTagAsync(array $args = [])
@@ -581,6 +605,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getResourceLFTags(array{
  *     CatalogId?: string,
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -604,6 +629,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     ShowAssignedLFTags?: bool,
@@ -613,6 +639,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise getResourceLFTagsAsync(array{
  *     CatalogId?: string,
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -636,6 +663,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     ShowAssignedLFTags?: bool,
@@ -681,11 +709,15 @@ use Aws\AwsClient;
  *     CredentialsScope?: 'READ'|'READWRITE',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result getTemporaryGlueFunctionCredentials(array $args = [])
+ * @phpstan-method \Aws\Result getTemporaryGlueFunctionCredentials(array{UserDefinedFunctionArn?: string, AuditContext?: array{AdditionalAuditContext?: string, ...}, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getTemporaryGlueFunctionCredentialsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getTemporaryGlueFunctionCredentialsAsync(array{UserDefinedFunctionArn?: string, AuditContext?: array{AdditionalAuditContext?: string, ...}, ...} $args = [])
  * @method \Aws\Result getTemporaryGluePartitionCredentials(array $args = [])
  * @phpstan-method \Aws\Result getTemporaryGluePartitionCredentials(array{
  *     TableArn?: string,
  *     Partition?: array{Values?: list<string>, ...},
- *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *     DurationSeconds?: int,
  *     AuditContext?: array{AdditionalAuditContext?: string, ...},
  *     SupportedPermissionTypes?: list<'CELL_FILTER_PERMISSION'|'COLUMN_PERMISSION'|'NESTED_CELL_PERMISSION'|'NESTED_PERMISSION'>,
@@ -695,7 +727,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise getTemporaryGluePartitionCredentialsAsync(array{
  *     TableArn?: string,
  *     Partition?: array{Values?: list<string>, ...},
- *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *     DurationSeconds?: int,
  *     AuditContext?: array{AdditionalAuditContext?: string, ...},
  *     SupportedPermissionTypes?: list<'CELL_FILTER_PERMISSION'|'COLUMN_PERMISSION'|'NESTED_CELL_PERMISSION'|'NESTED_PERMISSION'>,
@@ -704,7 +736,7 @@ use Aws\AwsClient;
  * @method \Aws\Result getTemporaryGlueTableCredentials(array $args = [])
  * @phpstan-method \Aws\Result getTemporaryGlueTableCredentials(array{
  *     TableArn?: string,
- *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *     DurationSeconds?: int,
  *     AuditContext?: array{AdditionalAuditContext?: string, ...},
  *     SupportedPermissionTypes?: list<'CELL_FILTER_PERMISSION'|'COLUMN_PERMISSION'|'NESTED_CELL_PERMISSION'|'NESTED_PERMISSION'>,
@@ -722,7 +754,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getTemporaryGlueTableCredentialsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getTemporaryGlueTableCredentialsAsync(array{
  *     TableArn?: string,
- *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *     DurationSeconds?: int,
  *     AuditContext?: array{AdditionalAuditContext?: string, ...},
  *     SupportedPermissionTypes?: list<'CELL_FILTER_PERMISSION'|'COLUMN_PERMISSION'|'NESTED_CELL_PERMISSION'|'NESTED_PERMISSION'>,
@@ -750,6 +782,7 @@ use Aws\AwsClient;
  *     CatalogId?: string,
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -773,11 +806,12 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
- *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *     Condition?: array{Expression?: string, ...},
- *     PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *     PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise grantPermissionsAsync(array $args = [])
@@ -785,6 +819,7 @@ use Aws\AwsClient;
  *     CatalogId?: string,
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -808,11 +843,12 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
- *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *     Condition?: array{Expression?: string, ...},
- *     PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *     PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listDataCellsFilter(array $args = [])
@@ -841,6 +877,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listLakeFormationOptIns(array{
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -864,6 +901,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     MaxResults?: int,
@@ -874,6 +912,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise listLakeFormationOptInsAsync(array{
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -897,6 +936,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     MaxResults?: int,
@@ -907,8 +947,9 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listPermissions(array{
  *     CatalogId?: string,
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
- *     ResourceType?: 'CATALOG'|'DATABASE'|'DATA_LOCATION'|'LF_NAMED_TAG_EXPRESSION'|'LF_TAG'|'LF_TAG_POLICY'|'LF_TAG_POLICY_DATABASE'|'LF_TAG_POLICY_TABLE'|'TABLE',
+ *     ResourceType?: 'ANY_RESOURCE'|'CATALOG'|'DATABASE'|'DATA_LOCATION'|'LF_NAMED_TAG_EXPRESSION'|'LF_TAG'|'LF_TAG_POLICY'|'LF_TAG_POLICY_DATABASE'|'LF_TAG_POLICY_TABLE'|'TABLE'|'USER_DEFINED_FUNCTION',
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -932,6 +973,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     NextToken?: string,
@@ -943,8 +985,9 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise listPermissionsAsync(array{
  *     CatalogId?: string,
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
- *     ResourceType?: 'CATALOG'|'DATABASE'|'DATA_LOCATION'|'LF_NAMED_TAG_EXPRESSION'|'LF_TAG'|'LF_TAG_POLICY'|'LF_TAG_POLICY_DATABASE'|'LF_TAG_POLICY_TABLE'|'TABLE',
+ *     ResourceType?: 'ANY_RESOURCE'|'CATALOG'|'DATABASE'|'DATA_LOCATION'|'LF_NAMED_TAG_EXPRESSION'|'LF_TAG'|'LF_TAG_POLICY'|'LF_TAG_POLICY_DATABASE'|'LF_TAG_POLICY_TABLE'|'TABLE'|'USER_DEFINED_FUNCTION',
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -968,6 +1011,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     NextToken?: string,
@@ -982,6 +1026,7 @@ use Aws\AwsClient;
  * @method \Aws\Result listRLSPolicyAttachments(array $args = [])
  * @phpstan-method \Aws\Result listRLSPolicyAttachments(array{
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -1005,6 +1050,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
@@ -1016,6 +1062,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listRLSPolicyAttachmentsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listRLSPolicyAttachmentsAsync(array{
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -1039,6 +1086,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
@@ -1169,6 +1217,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result removeLFTagsFromResource(array{
  *     CatalogId?: string,
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -1192,6 +1241,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     LFTags?: list<array{CatalogId?: string, TagKey?: string, TagValues?: list<string>, ...}>,
@@ -1201,6 +1251,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise removeLFTagsFromResourceAsync(array{
  *     CatalogId?: string,
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -1224,6 +1275,7 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
  *     LFTags?: list<array{CatalogId?: string, TagKey?: string, TagValues?: list<string>, ...}>,
@@ -1234,6 +1286,7 @@ use Aws\AwsClient;
  *     CatalogId?: string,
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -1257,11 +1310,12 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
- *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *     Condition?: array{Expression?: string, ...},
- *     PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *     PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise revokePermissionsAsync(array $args = [])
@@ -1269,6 +1323,7 @@ use Aws\AwsClient;
  *     CatalogId?: string,
  *     Principal?: array{DataLakePrincipalIdentifier?: string, ...},
  *     Resource?: array{
+ *         AnyResource?: array{CatalogId?: string, ResourceType?: 'TABLE', ...},
  *         Catalog?: array{Id?: string, ...},
  *         Database?: array{CatalogId?: string, Name?: string, ...},
  *         Table?: array{CatalogId?: string, DatabaseName?: string, Name?: string, TableWildcard?: array, ...},
@@ -1292,11 +1347,12 @@ use Aws\AwsClient;
  *         },
  *         LFTagExpression?: array{CatalogId?: string, Name?: string, ...},
  *         RLSPolicy?: array{CatalogId?: string, Name?: string, ...},
+ *         UserDefinedFunction?: array{CatalogId?: string, DatabaseName?: string, Name?: string, UserDefinedFunctionWildcard?: array, ...},
  *         ...,
  *     },
- *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *     Permissions?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *     Condition?: array{Expression?: string, ...},
- *     PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
+ *     PermissionsWithGrantOption?: list<'ALL'|'ALTER'|'ASSOCIATE'|'CREATE_CATALOG'|'CREATE_DATABASE'|'CREATE_LF_TAG'|'CREATE_LF_TAG_EXPRESSION'|'CREATE_TABLE'|'DATA_LOCATION_ACCESS'|'DELETE'|'DESCRIBE'|'DROP'|'EXECUTE'|'GRANT_WITH_LF_TAG_EXPRESSION'|'INSERT'|'SELECT'|'SUPER_USER'>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result searchDatabasesByLFTags(array $args = [])

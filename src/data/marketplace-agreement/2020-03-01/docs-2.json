@@ -422,7 +422,7 @@
         "ExpectedCharge$amountAfterTax": "<p>The tax-inclusive amount the acceptor has to pay. The amount is only present for fixed charges.</p>",
         "FixedUpfrontPricingTerm$duration": "<p>Contract duration for the terms.</p>",
         "FixedUpfrontPricingTerm$price": "<p>Fixed amount to be charged to the customer when this term is accepted.</p>",
-        "FreeTrialPricingTerm$duration": "<p>Duration of the free trial period (5–31 days). </p>",
+        "FreeTrialPricingTerm$duration": "<p>Duration of the free trial period. The allowed duration depends on the product type. For SaaS products, the free trial lasts 7 to 90 days.</p>",
         "GrantItem$dimensionKey": "<p>Unique dimension key defined in the product document. Dimensions represent categories of capacity in a product and are specified when the product is listed in AWS Marketplace. </p>",
         "InvoicingEntity$legalName": "<p>Legal name of the entity issuing the invoice.</p>",
         "InvoicingEntity$branchName": "<p>The branch where the issuing entity is operating from.</p>",
@@ -769,6 +769,12 @@
       "base": "<p>Defines a short-term free pricing model where the buyers aren’t charged anything within a specified limit.</p>",
       "refs": {
         "AcceptedTerm$freeTrialPricingTerm": "<p>Defines a short-term free pricing model where the buyers aren’t charged anything within a specified limit.</p>"
+      }
+    },
+    "FreeTrialSummary": {
+      "base": "<p>Contains details about the free trial of an agreement, including when the free trial ends.</p>",
+      "refs": {
+        "DescribeAgreementOutput$freeTrialSummary": "<p>The free trial details of the agreement. This field is present only when the agreement includes a free trial.</p>"
       }
     },
     "GetAgreementCancellationRequestInput": {
@@ -1514,6 +1520,7 @@
         "AgreementViewSummary$startTime": "<p>The date and time when the agreement starts.</p>",
         "AgreementViewSummary$endTime": "<p>The date and time when the agreement ends. The field is <code>null</code> for pay-as-you-go agreements, which don’t have end dates.</p>",
         "AgreementViewSummary$lastUpdateTime": "<p>The date and time when the agreement was last updated. An agreement is updated when any of its attributes or accepted terms change. Amendments, renewals, and a party changing whether the agreement renews are all examples.</p> <p>Use the <code>BeforeLastUpdateTime</code> and <code>AfterLastUpdateTime</code> filters to search on this value, and <code>LastUpdateTime</code> as the <code>SortBy</code> value to sort by it. Sorting by <code>LastUpdateTime</code> is supported only when <code>PartyType</code> is <code>Proposer</code>.</p>",
+        "AgreementViewSummary$freeTrialEndTime": "<p>The date and time when the free trial of the agreement ends. This field is present only when the agreement includes a free trial.</p> <p>For an agreement that includes both a free trial and usage-based pricing, the agreement converts to paid usage at this time.</p>",
         "BillingAdjustmentSummary$createdAt": "<p>The date and time when the billing adjustment request was created.</p>",
         "BillingAdjustmentSummary$updatedAt": "<p>The date and time when the billing adjustment request was last updated.</p>",
         "CancelAgreementCancellationRequestOutput$createdAt": "<p>The date and time when the cancellation request was originally created.</p>",
@@ -1525,6 +1532,7 @@
         "DescribeAgreementOutput$endTime": "<p>The date and time when the agreement ends. The field is <code>null</code> for pay-as-you-go agreements, which don’t have end dates.</p>",
         "DescribeAgreementOutput$acceptanceTime": "<p>The date and time the offer was accepted or the agreement was created.</p> <note> <p> <code>AcceptanceTime</code> and <code>StartTime</code> can differ for future dated agreements (FDAs).</p> </note>",
         "ExpectedCharge$time": "<p>The date and time when the charge is due to be invoiced. This is available only when the charge date is known.</p>",
+        "FreeTrialSummary$trialEndTime": "<p>The date and time when the free trial ends. For an agreement that includes both a free trial and usage-based pricing, the agreement converts to paid usage at this time.</p>",
         "GetAgreementCancellationRequestOutput$createdAt": "<p>The date and time when the cancellation request was created.</p>",
         "GetAgreementCancellationRequestOutput$updatedAt": "<p>The date and time when the cancellation request was last updated.</p>",
         "GetAgreementPaymentRequestOutput$createdAt": "<p>The date and time when the payment request was created.</p>",

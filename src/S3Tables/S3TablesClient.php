@@ -125,6 +125,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getTableBucketEncryption(array{tableBucketARN?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getTableBucketEncryptionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getTableBucketEncryptionAsync(array{tableBucketARN?: string, ...} $args = [])
+ * @method \Aws\Result getTableBucketLogging(array $args = [])
+ * @phpstan-method \Aws\Result getTableBucketLogging(array{tableBucketARN?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getTableBucketLoggingAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getTableBucketLoggingAsync(array{tableBucketARN?: string, ...} $args = [])
  * @method \Aws\Result getTableBucketMaintenanceConfiguration(array $args = [])
  * @phpstan-method \Aws\Result getTableBucketMaintenanceConfiguration(array{tableBucketARN?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getTableBucketMaintenanceConfigurationAsync(array $args = [])
@@ -253,6 +257,24 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise putTableBucketEncryptionAsync(array{
  *     tableBucketARN?: string,
  *     encryptionConfiguration?: array{sseAlgorithm?: 'AES256'|'aws:kms', kmsKeyArn?: string, ...},
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result putTableBucketLogging(array $args = [])
+ * @phpstan-method \Aws\Result putTableBucketLogging(array{
+ *     tableBucketARN?: string,
+ *     tableBucketLoggingStatus?: array{
+ *         loggingEnabled?: array{targetBucket?: string, targetPrefix?: string, targetObjectKeyFormat?: array, ...},
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise putTableBucketLoggingAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putTableBucketLoggingAsync(array{
+ *     tableBucketARN?: string,
+ *     tableBucketLoggingStatus?: array{
+ *         loggingEnabled?: array{targetBucket?: string, targetPrefix?: string, targetObjectKeyFormat?: array, ...},
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result putTableBucketMaintenanceConfiguration(array $args = [])

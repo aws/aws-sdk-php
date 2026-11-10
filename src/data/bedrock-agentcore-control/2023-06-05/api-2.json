@@ -4002,6 +4002,12 @@
         "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
     },
+    "BuildLifecycleHooks":{
+      "type":"structure",
+      "members":{
+        "warmup":{"shape":"LifecycleHook"}
+      }
+    },
     "CapacityProviderArn":{
       "type":"string",
       "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:capacity-provider/[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10}"
@@ -4900,12 +4906,14 @@
         "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"},
         "protocolConfiguration":{"shape":"ProtocolConfiguration"},
         "lifecycleConfiguration":{"shape":"LifecycleConfiguration"},
+        "hooksConfiguration":{"shape":"RuntimeHooksConfiguration"},
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
         "filesystemConfigurations":{"shape":"FilesystemConfigurations"},
         "capacityProviderConfiguration":{"shape":"CapacityProviderConfiguration"},
         "tags":{"shape":"TagsMap"},
         "platformVersion":{"shape":"PlatformVersion"},
-        "allowedPorts":{"shape":"AllowedPorts"}
+        "allowedPorts":{"shape":"AllowedPorts"},
+        "resourceConfigurations":{"shape":"ResourceConfigurations"}
       }
     },
     "CreateAgentRuntimeResponse":{
@@ -5348,7 +5356,8 @@
         "interceptorConfigurations":{"shape":"GatewayInterceptorConfigurations"},
         "policyEngineConfiguration":{"shape":"GatewayPolicyEngineConfiguration"},
         "exceptionLevel":{"shape":"ExceptionLevel"},
-        "tags":{"shape":"TagsMap"}
+        "tags":{"shape":"TagsMap"},
+        "domainOverride":{"shape":"DomainOverride"}
       }
     },
     "CreateGatewayResponse":{
@@ -5384,7 +5393,8 @@
         "workloadIdentityDetails":{"shape":"WorkloadIdentityDetails"},
         "exceptionLevel":{"shape":"ExceptionLevel"},
         "webAclArn":{"shape":"WebAclArn"},
-        "wafConfiguration":{"shape":"WafConfiguration"}
+        "wafConfiguration":{"shape":"WafConfiguration"},
+        "domainOverride":{"shape":"DomainOverride"}
       }
     },
     "CreateGatewayRuleRequest":{
@@ -5587,7 +5597,7 @@
     "CreateMemoryInputEventExpiryDurationInteger":{
       "type":"integer",
       "box":true,
-      "max":365,
+      "max":3650,
       "min":3
     },
     "CreateMemoryOutput":{
@@ -7280,6 +7290,17 @@
       "document":true
     },
     "DomainName":{"type":"string"},
+    "DomainOverride":{
+      "type":"structure",
+      "required":["defaultDomain"],
+      "members":{
+        "defaultDomain":{
+          "shape":"PublicDomainName",
+          "locationName":"default"
+        },
+        "alternateDomains":{"shape":"PublicDomainNameList"}
+      }
+    },
     "Double":{
       "type":"double",
       "box":true
@@ -8373,6 +8394,7 @@
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "status":{"shape":"AgentRuntimeStatus"},
         "lifecycleConfiguration":{"shape":"LifecycleConfiguration"},
+        "hooksConfiguration":{"shape":"RuntimeHooksConfiguration"},
         "failureReason":{"shape":"String"},
         "description":{"shape":"Description"},
         "workloadIdentityDetails":{"shape":"WorkloadIdentityDetails"},
@@ -8385,7 +8407,8 @@
         "filesystemConfigurations":{"shape":"FilesystemConfigurations"},
         "capacityProviderConfiguration":{"shape":"CapacityProviderConfiguration"},
         "platformVersion":{"shape":"PlatformVersion"},
-        "allowedPorts":{"shape":"AllowedPorts"}
+        "allowedPorts":{"shape":"AllowedPorts"},
+        "resourceConfigurations":{"shape":"ResourceConfigurations"}
       }
     },
     "GetApiKeyCredentialProviderRequest":{
@@ -8857,7 +8880,8 @@
         "workloadIdentityDetails":{"shape":"WorkloadIdentityDetails"},
         "exceptionLevel":{"shape":"ExceptionLevel"},
         "webAclArn":{"shape":"WebAclArn"},
-        "wafConfiguration":{"shape":"WafConfiguration"}
+        "wafConfiguration":{"shape":"WafConfiguration"},
+        "domainOverride":{"shape":"DomainOverride"}
       }
     },
     "GetGatewayRuleRequest":{
@@ -10453,6 +10477,14 @@
       "value":{"shape":"HttpHeaderValue"},
       "sensitive":true
     },
+    "HttpPostLifecycleHookAction":{
+      "type":"structure",
+      "required":["path"],
+      "members":{
+        "path":{"shape":"LifecycleHookPath"},
+        "port":{"shape":"ServerPort"}
+      }
+    },
     "HttpQueryParameterName":{
       "type":"string",
       "max":40,
@@ -10978,6 +11010,26 @@
       "box":true,
       "max":1209600,
       "min":60
+    },
+    "LifecycleHook":{
+      "type":"structure",
+      "required":["action"],
+      "members":{
+        "action":{"shape":"LifecycleHookAction"}
+      }
+    },
+    "LifecycleHookAction":{
+      "type":"structure",
+      "members":{
+        "httpPost":{"shape":"HttpPostLifecycleHookAction"}
+      },
+      "union":true
+    },
+    "LifecycleHookPath":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"/[A-Za-z0-9._~/-]*"
     },
     "LimitEntries":{
       "type":"list",
@@ -12422,7 +12474,7 @@
     "MemoryEventExpiryDurationInteger":{
       "type":"integer",
       "box":true,
-      "max":365,
+      "max":3650,
       "min":1
     },
     "MemoryId":{
@@ -13844,6 +13896,18 @@
       "max":1,
       "min":1
     },
+    "PublicDomainName":{
+      "type":"string",
+      "max":253,
+      "min":1,
+      "pattern":"(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)(?:\\.(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?))+"
+    },
+    "PublicDomainNameList":{
+      "type":"list",
+      "member":{"shape":"PublicDomainName"},
+      "max":10,
+      "min":1
+    },
     "PutResourcePolicyRequest":{
       "type":"structure",
       "required":[
@@ -14185,11 +14249,24 @@
       "type":"string",
       "pattern":"arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:servicenetworkresourceassociation/snra-[0-9a-f]{17}"
     },
+    "ResourceConfiguration":{
+      "type":"structure",
+      "required":["minimumMemoryInMiB"],
+      "members":{
+        "minimumMemoryInMiB":{"shape":"Integer"}
+      }
+    },
     "ResourceConfigurationIdentifier":{
       "type":"string",
       "max":2048,
       "min":20,
       "pattern":"((rcfg-[0-9a-z]{17})|(arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:resourceconfiguration/rcfg-[0-9a-z]{17}))"
+    },
+    "ResourceConfigurations":{
+      "type":"list",
+      "member":{"shape":"ResourceConfiguration"},
+      "max":1,
+      "min":0
     },
     "ResourceGatewayArn":{
       "type":"string",
@@ -14393,6 +14470,12 @@
       "max":1024,
       "min":1,
       "pattern":"(([0-9]{12})\\.dkr\\.ecr\\.([a-z0-9-]+)\\.amazonaws\\.com(\\.cn)?|public\\.ecr\\.aws)/((?:[a-z0-9]+(?:[._-][a-z0-9]+)*/)*[a-z0-9]+(?:[._-][a-z0-9]+)*)(?::([^:@]{1,300}))?(?:@(.+))?"
+    },
+    "RuntimeHooksConfiguration":{
+      "type":"structure",
+      "members":{
+        "build":{"shape":"BuildLifecycleHooks"}
+      }
     },
     "RuntimeMetadataConfiguration":{
       "type":"structure",
@@ -15880,12 +15963,14 @@
         "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"},
         "protocolConfiguration":{"shape":"ProtocolConfiguration"},
         "lifecycleConfiguration":{"shape":"LifecycleConfiguration"},
+        "hooksConfiguration":{"shape":"RuntimeHooksConfiguration"},
         "metadataConfiguration":{"shape":"RuntimeMetadataConfiguration"},
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
         "filesystemConfigurations":{"shape":"FilesystemConfigurations"},
         "capacityProviderConfiguration":{"shape":"CapacityProviderConfiguration"},
         "platformVersion":{"shape":"PlatformVersion"},
         "allowedPorts":{"shape":"AllowedPorts"},
+        "resourceConfigurations":{"shape":"ResourceConfigurations"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -16241,7 +16326,8 @@
         "interceptorConfigurations":{"shape":"GatewayInterceptorConfigurations"},
         "policyEngineConfiguration":{"shape":"GatewayPolicyEngineConfiguration"},
         "exceptionLevel":{"shape":"ExceptionLevel"},
-        "wafConfiguration":{"shape":"WafConfiguration"}
+        "wafConfiguration":{"shape":"WafConfiguration"},
+        "domainOverride":{"shape":"DomainOverride"}
       }
     },
     "UpdateGatewayResponse":{
@@ -16277,7 +16363,8 @@
         "workloadIdentityDetails":{"shape":"WorkloadIdentityDetails"},
         "exceptionLevel":{"shape":"ExceptionLevel"},
         "webAclArn":{"shape":"WebAclArn"},
-        "wafConfiguration":{"shape":"WafConfiguration"}
+        "wafConfiguration":{"shape":"WafConfiguration"},
+        "domainOverride":{"shape":"DomainOverride"}
       }
     },
     "UpdateGatewayRuleRequest":{
@@ -16485,7 +16572,7 @@
     "UpdateMemoryInputEventExpiryDurationInteger":{
       "type":"integer",
       "box":true,
-      "max":365,
+      "max":3650,
       "min":3
     },
     "UpdateMemoryOutput":{

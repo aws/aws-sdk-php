@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Retries` - Retry settings from AWS_RETRY_MODE, AWS_MAX_ATTEMPTS and the shared config file are no longer ignored when a non-legacy defaults mode is configured.
+* `Aws\` - Fixed SignatureV4 presigned URLs and RDS and DSQL auth tokens getting an expiry one hour too long when a relative expiry such as '+15 minutes' crossed a daylight saving time change in the default timezone.
+* `Aws\Api` - Caches compiled REST request bindings (headers, query string, URI labels and payload) on each operation, reducing per-request serialization overhead for REST-JSON and REST-XML services. Request output is unchanged.
+* `Aws\Api` - Caches compiled HTTP success-response binding metadata for headers, status codes, and payload routing on each operation, reducing repeated model processing when parsing REST-JSON and REST-XML responses. Response output is unchanged.
+* `Aws\Build` - Derives client namespaces from the service model's serviceId instead of its display name.
+* `Aws\NetworkFirewall` - Firewall Policy V2 for Network Firewall
+* `Aws\Route53Profiles` - Adds support for having multiple profiles on one VPC. This is done using a priority system to handle conflicts on the dataplane.
+* `Aws\GameLift` - Amazon GameLift Servers adds game session placement insights. Logs show how the queue's priority configuration, along with player latency and cost data, are applied to each placement request. Use game session placement insights to diagnose why game session placements succeed, fail, or time out.
+* `Aws\Connect` - Amazon Connect now returns Contact Lens conversational analytics configuration in the DescribeContact API. Customers can retrieve a contact's analytics, redaction, summarization, and sentiment settings, consistent with the configuration already available in contact trace records and contact events.
+* `Aws\CloudWatchOmni` - Release of GetSpaceDataAccess API - Used to get temporary credentials, limited to the requested actions, for working with data in a space.
+* `Aws\ARCRegionSwitch` - Adds RetryableConflictException to UpdatePlan so AWS SDKs automatically retry updates that conflict with a concurrent change.
+* `Aws\S3Tables` - Adds support for server access logging for Amazon S3 table buckets with the new PutTableBucketLogging and GetTableBucketLogging APIs.
+* `Aws\LakeFormation` - Adds support for governing AWS Glue user-defined functions with Lake Formation permissions. This release adds the UserDefinedFunction and AnyResource resources, the EXECUTE permission, and the GetTemporaryGlueFunctionCredentials and GetGlueFunctionSessionContext APIs.
+* `Aws\BedrockAgentCoreControl` - Amazon Bedrock AgentCore Gateway now supports domainOverride so JWT-authorized gateways can advertise your public domain in OAuth discovery behind a proxy or custom domain. AgentCore Runtime adds warmup lifecycle hooks and specifying runtime memory via hooksConfiguration and resourceConfigurations.
+* `Aws\DeviceFarm` - Adds the NONE insights type to disable insights generation for a run, a testPackageArn field in run details, and a new artifact type for device connect command logs.
+* `Aws\PCS` - Added support for configuring AMIs, Amazon EC2 security groups, SSH key pairs, and launch template modes when creating or updating AWS PCS compute node groups.
+* `Aws\MarketplaceAgreement` - This release adds the freeTrialSummary.trialEndTime field to DescribeAgreement and the freeTrialEndTime field to SearchAgreements results, so you can see when an agreement's free trial ends.
+* `Aws\VerifiedPermissions` - Inconsequential changes to model formatting
+
 ## 3.403.2 - 2026-11-09
 
 * `Aws\` - Ensures checksum mode member is set for requests whose responses contain modeled checksums.

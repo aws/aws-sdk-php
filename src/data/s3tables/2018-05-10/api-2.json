@@ -329,6 +329,25 @@
       ],
       "readonly":true
     },
+    "GetTableBucketLogging":{
+      "name":"GetTableBucketLogging",
+      "http":{
+        "method":"GET",
+        "requestUri":"/buckets/{tableBucketARN}/logging",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTableBucketLoggingRequest"},
+      "output":{"shape":"GetTableBucketLoggingResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "readonly":true
+    },
     "GetTableBucketMaintenanceConfiguration":{
       "name":"GetTableBucketMaintenanceConfiguration",
       "http":{
@@ -740,6 +759,24 @@
         "responseCode":200
       },
       "input":{"shape":"PutTableBucketEncryptionRequest"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
+    },
+    "PutTableBucketLogging":{
+      "name":"PutTableBucketLogging",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/buckets/{tableBucketARN}/logging",
+        "responseCode":204
+      },
+      "input":{"shape":"PutTableBucketLoggingRequest"},
       "errors":[
         {"shape":"InternalServerErrorException"},
         {"shape":"ForbiddenException"},
@@ -1493,6 +1530,24 @@
       "required":["encryptionConfiguration"],
       "members":{
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
+      }
+    },
+    "GetTableBucketLoggingRequest":{
+      "type":"structure",
+      "required":["tableBucketARN"],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"uri",
+          "locationName":"tableBucketARN"
+        }
+      }
+    },
+    "GetTableBucketLoggingResponse":{
+      "type":"structure",
+      "required":["tableBucketLoggingStatus"],
+      "members":{
+        "tableBucketLoggingStatus":{"shape":"TableBucketLoggingStatus"}
       }
     },
     "GetTableBucketMaintenanceConfigurationRequest":{
@@ -2473,6 +2528,29 @@
         "tags":{"shape":"Tags"}
       }
     },
+    "LoggingEnabled":{
+      "type":"structure",
+      "required":[
+        "targetBucket",
+        "targetPrefix",
+        "targetObjectKeyFormat"
+      ],
+      "members":{
+        "targetBucket":{"shape":"LoggingTargetBucket"},
+        "targetPrefix":{"shape":"LoggingTargetPrefix"},
+        "targetObjectKeyFormat":{"shape":"TargetObjectKeyFormat"}
+      }
+    },
+    "LoggingTargetBucket":{
+      "type":"string",
+      "max":63,
+      "min":3
+    },
+    "LoggingTargetPrefix":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
     "Long":{
       "type":"long",
       "box":true
@@ -2745,6 +2823,20 @@
       "type":"string",
       "enum":["ICEBERG"]
     },
+    "PartitionDateSource":{
+      "type":"string",
+      "enum":[
+        "EventTime",
+        "DeliveryTime"
+      ]
+    },
+    "PartitionedPrefix":{
+      "type":"structure",
+      "required":["partitionDateSource"],
+      "members":{
+        "partitionDateSource":{"shape":"PartitionDateSource"}
+      }
+    },
     "PlanningStats":{
       "type":"structure",
       "members":{
@@ -2772,6 +2864,21 @@
           "locationName":"tableBucketARN"
         },
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
+      }
+    },
+    "PutTableBucketLoggingRequest":{
+      "type":"structure",
+      "required":[
+        "tableBucketARN",
+        "tableBucketLoggingStatus"
+      ],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"uri",
+          "locationName":"tableBucketARN"
+        },
+        "tableBucketLoggingStatus":{"shape":"TableBucketLoggingStatus"}
       }
     },
     "PutTableBucketMaintenanceConfigurationRequest":{
@@ -3226,6 +3333,12 @@
       "pattern":"(arn:aws[-a-z0-9]*:[a-z0-9]+:[-a-z0-9]*:[0-9]{12}:bucket/[a-z0-9_-]{3,63})"
     },
     "TableBucketId":{"type":"string"},
+    "TableBucketLoggingStatus":{
+      "type":"structure",
+      "members":{
+        "loggingEnabled":{"shape":"LoggingEnabled"}
+      }
+    },
     "TableBucketMaintenanceConfiguration":{
       "type":"map",
       "key":{"shape":"TableBucketMaintenanceType"},
@@ -3505,6 +3618,13 @@
       "type":"map",
       "key":{"shape":"TagKey"},
       "value":{"shape":"TagValue"}
+    },
+    "TargetObjectKeyFormat":{
+      "type":"structure",
+      "required":["partitionedPrefix"],
+      "members":{
+        "partitionedPrefix":{"shape":"PartitionedPrefix"}
+      }
     },
     "TooManyRequestsException":{
       "type":"structure",

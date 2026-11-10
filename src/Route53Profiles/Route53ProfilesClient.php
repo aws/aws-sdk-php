@@ -7,28 +7,30 @@ use Aws\AwsClient;
  * This client is used to interact with the **Route 53 Profiles** service.
  * @method \Aws\Result associateProfile(array $args = [])
  * @phpstan-method \Aws\Result associateProfile(array{
- *     Name?: string,
  *     ProfileId?: string,
  *     ResourceId?: string,
+ *     Name?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     Priority?: int,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise associateProfileAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise associateProfileAsync(array{
- *     Name?: string,
  *     ProfileId?: string,
  *     ResourceId?: string,
+ *     Name?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     Priority?: int,
  *     ...,
  * } $args = [])
  * @method \Aws\Result associateResourceToProfile(array $args = [])
- * @phpstan-method \Aws\Result associateResourceToProfile(array{Name?: string, ProfileId?: string, ResourceArn?: string, ResourceProperties?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result associateResourceToProfile(array{ProfileId?: string, ResourceArn?: string, Name?: string, ResourceProperties?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise associateResourceToProfileAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise associateResourceToProfileAsync(array{Name?: string, ProfileId?: string, ResourceArn?: string, ResourceProperties?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise associateResourceToProfileAsync(array{ProfileId?: string, ResourceArn?: string, Name?: string, ResourceProperties?: string, ...} $args = [])
  * @method \Aws\Result createProfile(array $args = [])
- * @phpstan-method \Aws\Result createProfile(array{ClientToken?: string, Name?: string, Tags?: list<array{Key?: string, Value?: string, ...}>, ...} $args = [])
+ * @phpstan-method \Aws\Result createProfile(array{Name?: string, ClientToken?: string, Tags?: list<array{Key?: string, Value?: string, ...}>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise createProfileAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise createProfileAsync(array{ClientToken?: string, Name?: string, Tags?: list<array{Key?: string, Value?: string, ...}>, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createProfileAsync(array{Name?: string, ClientToken?: string, Tags?: list<array{Key?: string, Value?: string, ...}>, ...} $args = [])
  * @method \Aws\Result deleteProfile(array $args = [])
  * @phpstan-method \Aws\Result deleteProfile(array{ProfileId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteProfileAsync(array $args = [])
@@ -54,13 +56,27 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getProfileResourceAssociationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getProfileResourceAssociationAsync(array{ProfileResourceAssociationId?: string, ...} $args = [])
  * @method \Aws\Result listProfileAssociations(array $args = [])
- * @phpstan-method \Aws\Result listProfileAssociations(array{MaxResults?: int, NextToken?: string, ProfileId?: string, ResourceId?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result listProfileAssociations(array{ResourceId?: string, ProfileId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listProfileAssociationsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listProfileAssociationsAsync(array{MaxResults?: int, NextToken?: string, ProfileId?: string, ResourceId?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listProfileAssociationsAsync(array{ResourceId?: string, ProfileId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \Aws\Result listProfileResourceAssociations(array $args = [])
- * @phpstan-method \Aws\Result listProfileResourceAssociations(array{MaxResults?: int, NextToken?: string, ProfileId?: string, ResourceType?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result listProfileResourceAssociations(array{
+ *     ProfileId?: string,
+ *     ResourceType?: string,
+ *     ResourceArn?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listProfileResourceAssociationsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listProfileResourceAssociationsAsync(array{MaxResults?: int, NextToken?: string, ProfileId?: string, ResourceType?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listProfileResourceAssociationsAsync(array{
+ *     ProfileId?: string,
+ *     ResourceType?: string,
+ *     ResourceArn?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listProfiles(array $args = [])
  * @phpstan-method \Aws\Result listProfiles(array{MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listProfilesAsync(array $args = [])
@@ -77,9 +93,13 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result untagResource(array{ResourceArn?: string, TagKeys?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise untagResourceAsync(array{ResourceArn?: string, TagKeys?: list<string>, ...} $args = [])
+ * @method \Aws\Result updateProfileAssociation(array $args = [])
+ * @phpstan-method \Aws\Result updateProfileAssociation(array{ProfileAssociationId?: string, Name?: string, Priority?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateProfileAssociationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateProfileAssociationAsync(array{ProfileAssociationId?: string, Name?: string, Priority?: int, ...} $args = [])
  * @method \Aws\Result updateProfileResourceAssociation(array $args = [])
- * @phpstan-method \Aws\Result updateProfileResourceAssociation(array{Name?: string, ProfileResourceAssociationId?: string, ResourceProperties?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result updateProfileResourceAssociation(array{ProfileResourceAssociationId?: string, Name?: string, ResourceProperties?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateProfileResourceAssociationAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise updateProfileResourceAssociationAsync(array{Name?: string, ProfileResourceAssociationId?: string, ResourceProperties?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateProfileResourceAssociationAsync(array{ProfileResourceAssociationId?: string, Name?: string, ResourceProperties?: string, ...} $args = [])
  */
 class Route53ProfilesClient extends AwsClient {}

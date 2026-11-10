@@ -1,15 +1,15 @@
 {
   "version": "2.0",
-  "service": "<p> With Amazon Route 53 Profiles you can share Route 53 configurations with VPCs and AWS accounts </p>",
+  "service": "<p> With Amazon Route 53 Profiles you can share Route 53 configurations with VPCs and Amazon Web Services accounts </p>",
   "operations": {
-    "AssociateProfile": "<p> Associates a Route 53 Profiles profile with a VPC. A VPC can have only one Profile associated with it, but a Profile can be associated with 1000 of VPCs (and you can request a higher quota). For more information, see <a href=\"https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/DNSLimitations.html#limits-api-entities\">https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/DNSLimitations.html#limits-api-entities</a>. </p>",
-    "AssociateResourceToProfile": "<p> Associates a DNS reource configuration to a Route 53 Profile. </p>",
+    "AssociateProfile": "<p> Associates a Route 53 Profiles profile with a VPC. A VPC can have up to two Profile associations. A Profile can be associated with up to 1,000 VPCs, and you can request a higher quota for the number of VPCs. For more information, see <a href=\"https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/DNSLimitations.html#limits-api-entities-route53-profiles\">Quotas on Route 53 Profiles</a>. </p> <p> Route 53 VPC Resolver evaluates the Profile associations for a VPC in priority order, starting with the lowest <code>Priority</code> value. If the VPC has no other Profile associations, you can omit <code>Priority</code>, and the association gets priority 100. When the VPC already has a Profile association, you must specify a <code>Priority</code>, and each Profile association for the VPC must have a unique priority. To change the priority of an existing association, use <code>UpdateProfileAssociation</code>. </p> <p>The request fails with a <code>ValidationException</code> in these cases:</p> <ul> <li> <p>You omit <code>Priority</code>, and the VPC already has a Profile association.</p> </li> <li> <p>Another Profile association for the VPC already uses the priority that you specify.</p> </li> <li> <p>The priority is outside the range 100–9900.</p> </li> <li> <p>The Profile is already associated with the VPC, and you specify a different <code>Name</code> or <code>Priority</code>. To change the priority, use <a href=\"https://docs.aws.amazon.com/Route53/latest/APIReference/API_route53profiles_UpdateProfileAssociation.html\">UpdateProfileAssociation</a>.</p> </li> </ul> <p> The request fails with a <code>LimitExceededException</code> if the VPC already has the maximum number of Profile associations. </p>",
+    "AssociateResourceToProfile": "<p> Associates a DNS resource configuration to a Route 53 Profile. </p>",
     "CreateProfile": "<p> Creates an empty Route 53 Profile. </p>",
     "DeleteProfile": "<p> Deletes the specified Route 53 Profile. Before you can delete a profile, you must first disassociate it from all VPCs. </p>",
     "DisassociateProfile": "<p> Dissociates a specified Route 53 Profile from the specified VPC. </p>",
     "DisassociateResourceFromProfile": "<p> Dissoaciated a specified resource, from the Route 53 Profile. </p>",
     "GetProfile": "<p> Returns information about a specified Route 53 Profile, such as whether whether the Profile is shared, and the current status of the Profile. </p>",
-    "GetProfileAssociation": "<p> Retrieves a Route 53 Profile association for a VPC. A VPC can have only one Profile association, but a Profile can be associated with up to 5000 VPCs. </p>",
+    "GetProfileAssociation": "<p> Retrieves a Route 53 Profile association for a VPC. A VPC can have up to two Profile associations, and a Profile can be associated with up to 1,000 VPCs. </p>",
     "GetProfileResourceAssociation": "<p> Returns information about a specified Route 53 Profile resource association. </p>",
     "ListProfileAssociations": "<p> Lists all the VPCs that the specified Route 53 Profile is associated with. </p>",
     "ListProfileResourceAssociations": "<p> Lists all the resource associations for the specified Route 53 Profile. </p>",
@@ -17,13 +17,13 @@
     "ListTagsForResource": "<p> Lists the tags that you associated with the specified resource. </p>",
     "TagResource": "<p> Adds one or more tags to a specified resource. </p>",
     "UntagResource": "<p> Removes one or more tags from a specified resource. </p>",
+    "UpdateProfileAssociation": "<p> Updates the name or priority of the specified Route 53 Profile association with a VPC. Route 53 VPC Resolver evaluates the Profile associations for a VPC in priority order, starting with the lowest value. Only the account that created the association can update it. </p> <p> When you change the priority, the association status is <code>UPDATING</code> until the change propagates, and then <code>COMPLETE</code>. While the status is <code>UPDATING</code>, Route 53 VPC Resolver might still use the previous priority for some queries. When the status is <code>COMPLETE</code>, the new priority applies to all queries from the VPC. </p> <p> The request fails with a <code>ValidationException</code> if another Profile association for the VPC already uses the priority that you specify, or if the priority is outside the range 100–9900. </p> <p> You can update an association whose status is <code>CREATING</code>, <code>UPDATING</code>, or <code>COMPLETE</code>. The request fails with a <code>ConflictException</code> if the association status is <code>DELETING</code>, <code>DELETED</code>, or <code>FAILED</code>, or if the account that owns the association is inactive. </p>",
     "UpdateProfileResourceAssociation": "<p> Updates the specified Route 53 Profile resourse association. </p>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p> The current account doesn't have the IAM permissions required to perform the specified operation. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountId": {
       "base": null,
@@ -36,8 +36,9 @@
     "Arn": {
       "base": null,
       "refs": {
-        "AssociateResourceToProfileRequest$ResourceArn": "<p> Amazon resource number, ARN, of the DNS resource. </p>",
+        "AssociateResourceToProfileRequest$ResourceArn": "<p> Amazon resource number, ARN, of the resource to associate. Either a private hosted zone, DNS Firewall rule group, Resolver rule, or an interface VPC endpoint. </p>",
         "DisassociateResourceFromProfileRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource. </p>",
+        "ListProfileResourceAssociationsRequest$ResourceArn": "<p> The Amazon Resource Name (ARN) of a resource. If you specify this parameter, only the association with that resource is returned. </p>",
         "ListTagsForResourceRequest$ResourceArn": "<p> The Amazon Resource Name (ARN) for the resource that you want to list the tags for. </p>",
         "Profile$Arn": "<p> The Amazon Resource Name (ARN) of the Profile. </p>",
         "ProfileResourceAssociation$ResourceArn": "<p> The Amazon Resource Name (ARN) of the resource association. </p>",
@@ -48,38 +49,31 @@
     },
     "AssociateProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateResourceToProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateResourceToProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ConflictException": {
       "base": "<p> The request you submitted conflicts with an existing request. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatorRequestId": {
       "base": null,
@@ -90,33 +84,27 @@
     },
     "DeleteProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateResourceFromProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateResourceFromProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExceptionMessage": {
       "base": null,
@@ -131,93 +119,75 @@
     },
     "GetProfileAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProfileAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProfileResourceAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProfileResourceAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalServiceErrorException": {
       "base": "<p> An internal server error occured. Retry your request. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidNextTokenException": {
       "base": "<p> The <code>NextToken</code> you provided isn;t valid. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidParameterException": {
       "base": "<p> One or more parameters in this request are not valid. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LimitExceededException": {
       "base": "<p> The request caused one or more limits to be exceeded. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProfileAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProfileAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProfileResourceAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProfileResourceAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProfilesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProfilesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResults": {
       "base": null,
@@ -237,6 +207,7 @@
         "ProfileAssociation$Name": "<p> Name of the Profile association. </p>",
         "ProfileResourceAssociation$Name": "<p> Name of the Profile resource association. </p>",
         "ProfileSummary$Name": "<p> Name of the Profile. </p>",
+        "UpdateProfileAssociationRequest$Name": "<p> The name of the Profile association. </p>",
         "UpdateProfileResourceAssociationRequest$Name": "<p> Name of the resource association. </p>"
       }
     },
@@ -251,6 +222,14 @@
         "ListProfilesResponse$NextToken": "<p> If more than <code>MaxResults</code> resource associations match the specified criteria, you can submit another <code>ListProfiles</code> request to get the next group of results. In the next request, specify the value of <code>NextToken</code> from the previous response. </p>"
       }
     },
+    "Priority": {
+      "base": null,
+      "refs": {
+        "AssociateProfileRequest$Priority": "<p> The priority of the Profile association. Route 53 VPC Resolver evaluates the Profile associations for a VPC in priority order, starting with the lowest value. </p> <p> When the VPC already has a Profile association, you must specify a priority that no other Profile association for the VPC uses. If you omit the priority for the first association with a VPC, the association gets priority 100. </p>",
+        "ProfileAssociation$Priority": "<p> The priority of the Profile association. Route 53 VPC Resolver evaluates the Profile associations for a VPC in priority order, starting with the lowest value. Associations created without a priority have priority 100. </p>",
+        "UpdateProfileAssociationRequest$Priority": "<p> The new priority of the Profile association. Route 53 VPC Resolver evaluates the Profile associations for a VPC in priority order, starting with the lowest value. </p> <p>The priority must be unique among the Profile associations for the VPC.</p>"
+      }
+    },
     "Profile": {
       "base": "<p> A complex type that includes settings for a Route 53 Profile. </p>",
       "refs": {
@@ -262,10 +241,11 @@
     "ProfileAssociation": {
       "base": "<p> An association between a Route 53 Profile and a VPC. </p>",
       "refs": {
-        "AssociateProfileResponse$ProfileAssociation": "<p> The association that you just created. The association has an ID that you can use to identify it in other requests, like update and delete. </p>",
+        "AssociateProfileResponse$ProfileAssociation": "<p> The association that you just created. The association has an ID that you can use to identify it in other requests, such as update and delete. </p>",
         "DisassociateProfileResponse$ProfileAssociation": "<p> Information about the <code>DisassociateProfile</code> request. </p>",
         "GetProfileAssociationResponse$ProfileAssociation": "<p> Information about the Profile association that you specified in a <code>GetProfileAssociation</code> request. </p>",
-        "ProfileAssociations$member": null
+        "ProfileAssociations$member": null,
+        "UpdateProfileAssociationResponse$ProfileAssociation": "<p> Information about the <code>UpdateProfileAssociation</code> request, including a status message. </p>"
       }
     },
     "ProfileAssociations": {
@@ -312,8 +292,7 @@
     },
     "ResourceExistsException": {
       "base": "<p> The resource you are trying to associate, has already been associated. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceId": {
       "base": null,
@@ -327,9 +306,9 @@
         "DisassociateResourceFromProfileRequest$ProfileId": "<p> The ID of the Profile. </p>",
         "GetProfileAssociationRequest$ProfileAssociationId": "<p> The identifier of the association you want to get information about. </p>",
         "GetProfileRequest$ProfileId": "<p> ID of the Profile. </p>",
-        "GetProfileResourceAssociationRequest$ProfileResourceAssociationId": "<p> <p>The ID of the profile resource association that you want to get information about.</p> </p>",
-        "ListProfileAssociationsRequest$ProfileId": "<p> ID of the Profile. </p>",
+        "GetProfileResourceAssociationRequest$ProfileResourceAssociationId": "<p> The ID of the profile resource association that you want to get information about. </p>",
         "ListProfileAssociationsRequest$ResourceId": "<p> ID of the VPC. </p>",
+        "ListProfileAssociationsRequest$ProfileId": "<p> ID of the Profile. </p>",
         "ListProfileResourceAssociationsRequest$ProfileId": "<p> The ID of the Profile. </p>",
         "Profile$Id": "<p> ID of the Profile. </p>",
         "ProfileAssociation$Id": "<p> ID of the Profile association. </p>",
@@ -338,13 +317,13 @@
         "ProfileResourceAssociation$Id": "<p> ID of the Profile resource association. </p>",
         "ProfileResourceAssociation$ProfileId": "<p> Profile ID of the Profile that the resources are associated with. </p>",
         "ProfileSummary$Id": "<p> ID of the Profile. </p>",
+        "UpdateProfileAssociationRequest$ProfileAssociationId": "<p> The ID of the Profile association to update. </p>",
         "UpdateProfileResourceAssociationRequest$ProfileResourceAssociationId": "<p> ID of the resource association. </p>"
       }
     },
     "ResourceNotFoundException": {
       "base": "<p> The resource you are associating is not found. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceProperties": {
       "base": null,
@@ -382,7 +361,7 @@
         "ListProfileResourceAssociationsRequest$ResourceType": "<p> ID of a resource if you want information on only one type. </p>",
         "Profile$StatusMessage": "<p> Status message that includes additiona information about the Profile. </p>",
         "ProfileAssociation$StatusMessage": "<p> Additional information about the Profile association. </p>",
-        "ProfileResourceAssociation$ResourceType": "<p> Resource type, such as a private hosted zone, or DNS Firewall rule group. </p>",
+        "ProfileResourceAssociation$ResourceType": "<p> Resource type, such as a private hosted zone, interface VPC endpoint, Resolver query log configuration, or DNS Firewall rule group. </p>",
         "ProfileResourceAssociation$StatusMessage": "<p> Additional information about the Profile resource association. </p>",
         "ResourceExistsException$Message": null,
         "ResourceExistsException$ResourceType": "<p> The resource type that caused the resource exists exception. </p>",
@@ -426,13 +405,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -443,33 +420,35 @@
     },
     "ThrottlingException": {
       "base": "<p> The request was throttled. Try again in a few minutes. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "UpdateProfileAssociationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProfileAssociationResponse": {
+      "base": null,
+      "refs": {}
     },
     "UpdateProfileResourceAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProfileResourceAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p> You have provided an invalid command. </p>",
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }

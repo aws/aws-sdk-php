@@ -45,11 +45,14 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \Aws\Result createComputeNodeGroup(array $args = [])
  * @phpstan-method \Aws\Result createComputeNodeGroup(array{
+ *     amiId?: string,
+ *     securityGroupIds?: list<string>,
+ *     sshKeyName?: string,
  *     clusterIdentifier?: string,
  *     computeNodeGroupName?: string,
- *     amiId?: string,
  *     subnetIds?: list<string>,
  *     purchaseOption?: 'CAPACITY_BLOCK'|'INTERRUPTIBLE_CAPACITY_RESERVATION'|'ONDEMAND'|'SPOT',
+ *     launchTemplateMode?: 'CUSTOM'|'MANAGED',
  *     customLaunchTemplate?: array{id?: string, version?: string, ...},
  *     iamInstanceProfileArn?: string,
  *     scalingConfiguration?: array{minInstanceCount?: int, maxInstanceCount?: int, ...},
@@ -72,11 +75,14 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createComputeNodeGroupAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createComputeNodeGroupAsync(array{
+ *     amiId?: string,
+ *     securityGroupIds?: list<string>,
+ *     sshKeyName?: string,
  *     clusterIdentifier?: string,
  *     computeNodeGroupName?: string,
- *     amiId?: string,
  *     subnetIds?: list<string>,
  *     purchaseOption?: 'CAPACITY_BLOCK'|'INTERRUPTIBLE_CAPACITY_RESERVATION'|'ONDEMAND'|'SPOT',
+ *     launchTemplateMode?: 'CUSTOM'|'MANAGED',
  *     customLaunchTemplate?: array{id?: string, version?: string, ...},
  *     iamInstanceProfileArn?: string,
  *     scalingConfiguration?: array{minInstanceCount?: int, maxInstanceCount?: int, ...},
@@ -203,10 +209,13 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \Aws\Result updateComputeNodeGroup(array $args = [])
  * @phpstan-method \Aws\Result updateComputeNodeGroup(array{
+ *     amiId?: string,
+ *     securityGroupIds?: list<string>,
+ *     sshKeyName?: string,
  *     clusterIdentifier?: string,
  *     computeNodeGroupIdentifier?: string,
- *     amiId?: string,
  *     subnetIds?: list<string>,
+ *     launchTemplateMode?: 'CUSTOM'|'MANAGED',
  *     customLaunchTemplate?: array{id?: string, version?: string, ...},
  *     purchaseOption?: 'CAPACITY_BLOCK'|'INTERRUPTIBLE_CAPACITY_RESERVATION'|'ONDEMAND'|'SPOT',
  *     spotOptions?: array{allocationStrategy?: 'capacity-optimized'|'lowest-price'|'price-capacity-optimized', ...},
@@ -228,10 +237,13 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateComputeNodeGroupAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateComputeNodeGroupAsync(array{
+ *     amiId?: string,
+ *     securityGroupIds?: list<string>,
+ *     sshKeyName?: string,
  *     clusterIdentifier?: string,
  *     computeNodeGroupIdentifier?: string,
- *     amiId?: string,
  *     subnetIds?: list<string>,
+ *     launchTemplateMode?: 'CUSTOM'|'MANAGED',
  *     customLaunchTemplate?: array{id?: string, version?: string, ...},
  *     purchaseOption?: 'CAPACITY_BLOCK'|'INTERRUPTIBLE_CAPACITY_RESERVATION'|'ONDEMAND'|'SPOT',
  *     spotOptions?: array{allocationStrategy?: 'capacity-optimized'|'lowest-price'|'price-capacity-optimized', ...},

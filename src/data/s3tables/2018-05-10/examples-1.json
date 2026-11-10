@@ -1,4 +1,69 @@
 {
   "version": "1.0",
-  "examples": {}
+  "examples": {
+    "GetTableBucketLogging": [
+      {
+        "input": {
+          "tableBucketARN": "arn:aws:s3tables:us-east-1:111122223333:bucket/amzn-s3-demo-table-bucket"
+        },
+        "output": {
+          "tableBucketLoggingStatus": {
+            "loggingEnabled": {
+              "targetBucket": "amzn-s3-demo-destination-bucket",
+              "targetObjectKeyFormat": {
+                "partitionedPrefix": {
+                  "partitionDateSource": "EventTime"
+                }
+              },
+              "targetPrefix": "logs/"
+            }
+          }
+        },
+        "description": "The following example gets the server access logging configuration of a table bucket that has logging enabled.",
+        "id": "example-1",
+        "title": "To get the server access logging configuration of a table bucket"
+      },
+      {
+        "input": {
+          "tableBucketARN": "arn:aws:s3tables:us-east-1:111122223333:bucket/amzn-s3-demo-table-bucket"
+        },
+        "output": {
+          "tableBucketLoggingStatus": {}
+        },
+        "description": "The following example gets the server access logging configuration of a table bucket that has logging disabled. The response has an empty logging status.",
+        "id": "example-2",
+        "title": "To get the server access logging configuration of a table bucket that has logging disabled"
+      }
+    ],
+    "PutTableBucketLogging": [
+      {
+        "input": {
+          "tableBucketARN": "arn:aws:s3tables:us-east-1:111122223333:bucket/amzn-s3-demo-table-bucket",
+          "tableBucketLoggingStatus": {
+            "loggingEnabled": {
+              "targetBucket": "amzn-s3-demo-destination-bucket",
+              "targetObjectKeyFormat": {
+                "partitionedPrefix": {
+                  "partitionDateSource": "EventTime"
+                }
+              },
+              "targetPrefix": "logs/"
+            }
+          }
+        },
+        "description": "The following example enables server access logging for a table bucket. Logs are delivered to the specified general purpose bucket, with object keys partitioned by the time of the logged events.",
+        "id": "example-1",
+        "title": "To enable server access logging for a table bucket"
+      },
+      {
+        "input": {
+          "tableBucketARN": "arn:aws:s3tables:us-east-1:111122223333:bucket/amzn-s3-demo-table-bucket",
+          "tableBucketLoggingStatus": {}
+        },
+        "description": "The following example disables server access logging for a table bucket by specifying an empty logging status.",
+        "id": "example-2",
+        "title": "To disable server access logging for a table bucket"
+      }
+    ]
+  }
 }

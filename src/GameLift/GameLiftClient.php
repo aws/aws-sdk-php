@@ -331,6 +331,7 @@ use Aws\AwsClient;
  *     CustomEventData?: string,
  *     NotificationTarget?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     LogConfiguration?: array{DeliveryDestinations?: list<array>, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createGameSessionQueueAsync(array $args = [])
@@ -344,6 +345,7 @@ use Aws\AwsClient;
  *     CustomEventData?: string,
  *     NotificationTarget?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     LogConfiguration?: array{DeliveryDestinations?: list<array>, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result createLocation(array $args = [])
@@ -1318,6 +1320,8 @@ use Aws\AwsClient;
  *     PriorityConfiguration?: array{PriorityOrder?: list<'COST'|'DESTINATION'|'LATENCY'|'LOCATION'>, LocationOrder?: list<string>, ...},
  *     CustomEventData?: string,
  *     NotificationTarget?: string,
+ *     AddLogDeliveryDestinations?: list<array{LogDestination?: 'CLOUDWATCH'|'FIREHOSE'|'S3', DestinationArn?: string, ...}>,
+ *     RemoveLogDeliveryDestinations?: list<array{LogDestination?: 'CLOUDWATCH'|'FIREHOSE'|'S3', DestinationArn?: string, ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateGameSessionQueueAsync(array $args = [])
@@ -1330,6 +1334,8 @@ use Aws\AwsClient;
  *     PriorityConfiguration?: array{PriorityOrder?: list<'COST'|'DESTINATION'|'LATENCY'|'LOCATION'>, LocationOrder?: list<string>, ...},
  *     CustomEventData?: string,
  *     NotificationTarget?: string,
+ *     AddLogDeliveryDestinations?: list<array{LogDestination?: 'CLOUDWATCH'|'FIREHOSE'|'S3', DestinationArn?: string, ...}>,
+ *     RemoveLogDeliveryDestinations?: list<array{LogDestination?: 'CLOUDWATCH'|'FIREHOSE'|'S3', DestinationArn?: string, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateMatchmakingConfiguration(array $args = [])

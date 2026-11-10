@@ -149,6 +149,23 @@
         {"shape":"InvalidOperationException"}
       ]
     },
+    "CreateFirewallPolicyV2":{
+      "name":"CreateFirewallPolicyV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateFirewallPolicyV2Request"},
+      "output":{"shape":"CreateFirewallPolicyV2Response"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InsufficientCapacityException"},
+        {"shape":"InvalidOperationException"}
+      ]
+    },
     "CreateProxy":{
       "name":"CreateProxy",
       "http":{
@@ -307,6 +324,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerError"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"InvalidOperationException"}
+      ]
+    },
+    "DeleteFirewallPolicyV2":{
+      "name":"DeleteFirewallPolicyV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteFirewallPolicyV2Request"},
+      "output":{"shape":"DeleteFirewallPolicyV2Response"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"InvalidOperationException"}
       ]
@@ -510,6 +544,21 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerError"}
+      ]
+    },
+    "DescribeFirewallPolicyV2":{
+      "name":"DescribeFirewallPolicyV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeFirewallPolicyV2Request"},
+      "output":{"shape":"DescribeFirewallPolicyV2Response"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "DescribeFlowOperation":{
@@ -797,6 +846,20 @@
         {"shape":"InvalidRequestException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerError"}
+      ]
+    },
+    "ListFirewallPoliciesV2":{
+      "name":"ListFirewallPoliciesV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListFirewallPoliciesV2Request"},
+      "output":{"shape":"ListFirewallPoliciesV2Response"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListFirewalls":{
@@ -1184,6 +1247,23 @@
         {"shape":"ResourceOwnerCheckException"}
       ]
     },
+    "UpdateFirewallPolicyV2":{
+      "name":"UpdateFirewallPolicyV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateFirewallPolicyV2Request"},
+      "output":{"shape":"UpdateFirewallPolicyV2Response"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidTokenException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidOperationException"}
+      ]
+    },
     "UpdateLoggingConfiguration":{
       "name":"UpdateLoggingConfiguration",
       "http":{
@@ -1376,6 +1456,7 @@
         "TransitGatewayAttachmentStatus":{"shape":"TransitGatewayAttachmentStatus"}
       }
     },
+    "AcceptPriorHooks":{"type":"boolean"},
     "ActionDefinition":{
       "type":"structure",
       "members":{
@@ -1387,6 +1468,15 @@
       "max":128,
       "min":1,
       "pattern":"^[a-zA-Z0-9]+$"
+    },
+    "ActionScope":{
+      "type":"string",
+      "enum":[
+        "FLOW",
+        "TX",
+        "HOOK",
+        "PACKET"
+      ]
     },
     "Address":{
       "type":"structure",
@@ -1406,6 +1496,7 @@
       "member":{"shape":"Address"}
     },
     "Age":{"type":"integer"},
+    "AlertEnabled":{"type":"boolean"},
     "AnalysisReport":{
       "type":"structure",
       "members":{
@@ -1597,6 +1688,7 @@
       "member":{"shape":"AzSubnet"}
     },
     "Boolean":{"type":"boolean"},
+    "BypassIPSEnabled":{"type":"boolean"},
     "ByteCount":{"type":"long"},
     "CIDRCount":{
       "type":"integer",
@@ -1761,6 +1853,32 @@
         "FirewallPolicyResponse":{"shape":"FirewallPolicyResponse"}
       }
     },
+    "CreateFirewallPolicyV2Request":{
+      "type":"structure",
+      "required":[
+        "FirewallPolicyV2Name",
+        "FirewallPolicyV2"
+      ],
+      "members":{
+        "FirewallPolicyV2Name":{"shape":"ResourceName"},
+        "FirewallPolicyV2":{"shape":"FirewallPolicyV2"},
+        "Description":{"shape":"Description"},
+        "Tags":{"shape":"TagList"},
+        "DryRun":{"shape":"Boolean"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
+      }
+    },
+    "CreateFirewallPolicyV2Response":{
+      "type":"structure",
+      "required":[
+        "UpdateToken",
+        "FirewallPolicyV2Response"
+      ],
+      "members":{
+        "UpdateToken":{"shape":"UpdateToken"},
+        "FirewallPolicyV2Response":{"shape":"FirewallPolicyV2Response"}
+      }
+    },
     "CreateFirewallRequest":{
       "type":"structure",
       "required":[
@@ -1908,6 +2026,8 @@
       "members":{
         "RuleGroupName":{"shape":"ResourceName"},
         "RuleGroup":{"shape":"RuleGroup"},
+        "FirewallRuleGroup":{"shape":"FirewallRuleGroup"},
+        "IpsRuleGroup":{"shape":"IpsRuleGroup"},
         "Rules":{"shape":"RulesString"},
         "Type":{"shape":"RuleGroupType"},
         "Description":{"shape":"Description"},
@@ -2036,6 +2156,20 @@
       "required":["FirewallPolicyResponse"],
       "members":{
         "FirewallPolicyResponse":{"shape":"FirewallPolicyResponse"}
+      }
+    },
+    "DeleteFirewallPolicyV2Request":{
+      "type":"structure",
+      "members":{
+        "FirewallPolicyV2Arn":{"shape":"ResourceArn"},
+        "FirewallPolicyV2Name":{"shape":"ResourceName"}
+      }
+    },
+    "DeleteFirewallPolicyV2Response":{
+      "type":"structure",
+      "required":["FirewallPolicyV2Response"],
+      "members":{
+        "FirewallPolicyV2Response":{"shape":"FirewallPolicyV2Response"}
       }
     },
     "DeleteFirewallRequest":{
@@ -2243,6 +2377,26 @@
         "FirewallPolicy":{"shape":"FirewallPolicy"}
       }
     },
+    "DescribeFirewallPolicyV2Request":{
+      "type":"structure",
+      "members":{
+        "FirewallPolicyV2Arn":{"shape":"ResourceArn"},
+        "FirewallPolicyV2Name":{"shape":"ResourceName"},
+        "RuleOutputFormat":{"shape":"RuleOutputFormat"}
+      }
+    },
+    "DescribeFirewallPolicyV2Response":{
+      "type":"structure",
+      "required":[
+        "UpdateToken",
+        "FirewallPolicyV2Response"
+      ],
+      "members":{
+        "UpdateToken":{"shape":"UpdateToken"},
+        "FirewallPolicyV2Response":{"shape":"FirewallPolicyV2Response"},
+        "FirewallPolicyV2":{"shape":"FirewallPolicyV2"}
+      }
+    },
     "DescribeFirewallRequest":{
       "type":"structure",
       "members":{
@@ -2430,7 +2584,8 @@
         "RuleGroupName":{"shape":"ResourceName"},
         "RuleGroupArn":{"shape":"ResourceArn"},
         "Type":{"shape":"RuleGroupType"},
-        "AnalyzeRuleGroup":{"shape":"Boolean"}
+        "AnalyzeRuleGroup":{"shape":"Boolean"},
+        "RuleOutputFormat":{"shape":"RuleOutputFormat"}
       }
     },
     "DescribeRuleGroupResponse":{
@@ -2442,6 +2597,8 @@
       "members":{
         "UpdateToken":{"shape":"UpdateToken"},
         "RuleGroup":{"shape":"RuleGroup"},
+        "FirewallRuleGroup":{"shape":"FirewallRuleGroup"},
+        "IpsRuleGroup":{"shape":"IpsRuleGroup"},
         "RuleGroupResponse":{"shape":"RuleGroupResponse"}
       }
     },
@@ -2661,6 +2818,10 @@
       "type":"list",
       "member":{"shape":"FirewallPolicyMetadata"}
     },
+    "FirewallPoliciesV2":{
+      "type":"list",
+      "member":{"shape":"FirewallPolicyV2Metadata"}
+    },
     "FirewallPolicy":{
       "type":"structure",
       "required":[
@@ -2741,6 +2902,165 @@
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
         "Errors":{"shape":"FirewallPolicyErrors"},
         "LastModifiedTime":{"shape":"LastUpdateTime"}
+      }
+    },
+    "FirewallPolicyV2":{
+      "type":"structure",
+      "members":{
+        "FirewallRuleGroupEntries":{"shape":"FirewallRuleGroupEntries"},
+        "IpsRuleGroupEntries":{"shape":"IpsRuleGroupEntries"},
+        "PolicyMode":{"shape":"PolicyMode"},
+        "FirewallDefaultAction":{"shape":"PolicyDefaultAction"},
+        "StatefulEngineOptions":{"shape":"StatefulEngineOptionsV2"},
+        "TLSInspectionConfigurationArn":{"shape":"ResourceArn"},
+        "PolicyVariables":{"shape":"PolicyVariables"},
+        "Route53ResolvedIPValidation":{"shape":"Route53ResolvedIPValidation"}
+      }
+    },
+    "FirewallPolicyV2Metadata":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"ResourceName"},
+        "Arn":{"shape":"ResourceArn"}
+      }
+    },
+    "FirewallPolicyV2Response":{
+      "type":"structure",
+      "required":[
+        "FirewallPolicyV2Name",
+        "FirewallPolicyV2Arn",
+        "FirewallPolicyV2Id"
+      ],
+      "members":{
+        "FirewallPolicyV2Name":{"shape":"ResourceName"},
+        "FirewallPolicyV2Arn":{"shape":"ResourceArn"},
+        "FirewallPolicyV2Id":{"shape":"ResourceId"},
+        "Description":{"shape":"Description"},
+        "FirewallPolicyV2Status":{"shape":"ResourceStatus"},
+        "StatusMessage":{"shape":"ResourceStatusMessage"},
+        "Tags":{"shape":"TagList"},
+        "ConsumedFirewallRuleCapacity":{"shape":"RuleCapacity"},
+        "ConsumedIpsRuleCapacity":{"shape":"RuleCapacity"},
+        "ConsumedIpsDomainCapacity":{"shape":"RuleCapacity"},
+        "NumberOfAssociations":{"shape":"NumberOfAssociations"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "Errors":{"shape":"FirewallPolicyErrors"},
+        "LastModifiedTime":{"shape":"LastUpdateTime"}
+      }
+    },
+    "FirewallRule":{
+      "type":"structure",
+      "required":[
+        "Action",
+        "ActionScope",
+        "Hook",
+        "Protocol"
+      ],
+      "members":{
+        "Action":{"shape":"FirewallRuleAction"},
+        "ActionScope":{"shape":"ActionScope"},
+        "Hook":{"shape":"HookKey"},
+        "Protocol":{"shape":"FirewallRuleProtocol"},
+        "SourceIPs":{"shape":"Source"},
+        "DestIPs":{"shape":"Destination"},
+        "SourcePorts":{"shape":"Port"},
+        "DestPorts":{"shape":"Port"},
+        "RuleOptions":{"shape":"RuleOptions"},
+        "AcceptPriorHooks":{"shape":"AcceptPriorHooks"},
+        "AlertEnabled":{"shape":"AlertEnabled"},
+        "BypassIPSEnabled":{"shape":"BypassIPSEnabled"},
+        "RuleMetadata":{"shape":"RuleMetadata"}
+      }
+    },
+    "FirewallRuleAction":{
+      "type":"string",
+      "enum":[
+        "ACCEPT",
+        "DROP",
+        "REJECT",
+        "REJECT_DST",
+        "REJECT_BOTH"
+      ]
+    },
+    "FirewallRuleGroup":{
+      "type":"structure",
+      "required":["RulesSource"],
+      "members":{
+        "RulesSource":{"shape":"FirewallRulesSource"},
+        "RuleVariables":{"shape":"RuleVariables"},
+        "ReferenceSets":{"shape":"ReferenceSets"}
+      }
+    },
+    "FirewallRuleGroupEntries":{
+      "type":"list",
+      "member":{"shape":"FirewallRuleGroupEntry"}
+    },
+    "FirewallRuleGroupEntry":{
+      "type":"structure",
+      "members":{
+        "Priority":{
+          "shape":"Priority",
+          "box":true
+        },
+        "ResourceArn":{"shape":"ResourceArn"},
+        "InlineRuleGroup":{"shape":"FirewallRuleGroup"}
+      }
+    },
+    "FirewallRuleProtocol":{
+      "type":"string",
+      "enum":[
+        "IP",
+        "TCP",
+        "UDP",
+        "ICMP",
+        "HTTP",
+        "FTP",
+        "TLS",
+        "SMB",
+        "DNS",
+        "DCERPC",
+        "SSH",
+        "SMTP",
+        "MSN",
+        "KRB5",
+        "IKEV2",
+        "TFTP",
+        "NTP",
+        "DHCP",
+        "HTTP2",
+        "QUIC",
+        "ICMPV4",
+        "ICMPV6",
+        "SCTP",
+        "IPV4",
+        "IPV6",
+        "DOH2",
+        "FTP_DATA",
+        "NFS",
+        "RDP",
+        "RFB",
+        "MQTT",
+        "PGSQL",
+        "SNMP",
+        "TELNET",
+        "WEBSOCKET",
+        "LDAP",
+        "POP3",
+        "MDNS",
+        "BITTORRENT_DHT",
+        "DNP3"
+      ]
+    },
+    "FirewallRules":{
+      "type":"list",
+      "member":{"shape":"FirewallRule"}
+    },
+    "FirewallRulesSource":{
+      "type":"structure",
+      "members":{
+        "RulesString":{"shape":"RulesString"},
+        "FirewallRules":{"shape":"FirewallRules"},
+        "RulesSourceList":{"shape":"RulesSourceList"}
       }
     },
     "FirewallStatus":{
@@ -2924,6 +3244,207 @@
         "Count":{"shape":"Count"}
       }
     },
+    "HookKey":{
+      "type":"string",
+      "enum":[
+        "TCP_ALL",
+        "TCP_FLOW_START",
+        "TCP_PRE_FLOW",
+        "TCP_PRE_STREAM",
+        "SCTP_ALL",
+        "SCTP_FLOW_START",
+        "SCTP_PRE_FLOW",
+        "SCTP_PRE_STREAM",
+        "IPV6_ALL",
+        "IPV6_FLOW_START",
+        "IPV6_PRE_FLOW",
+        "IPV6_PRE_STREAM",
+        "ICMPV6_ALL",
+        "ICMPV6_FLOW_START",
+        "ICMPV6_PRE_FLOW",
+        "ICMPV6_PRE_STREAM",
+        "UDP_ALL",
+        "UDP_FLOW_START",
+        "UDP_PRE_FLOW",
+        "UDP_PRE_STREAM",
+        "ICMP_ALL",
+        "ICMP_FLOW_START",
+        "ICMP_PRE_FLOW",
+        "ICMP_PRE_STREAM",
+        "ICMPV4_ALL",
+        "ICMPV4_FLOW_START",
+        "ICMPV4_PRE_FLOW",
+        "ICMPV4_PRE_STREAM",
+        "IP_ALL",
+        "IP_FLOW_START",
+        "IP_PRE_FLOW",
+        "IP_PRE_STREAM",
+        "IPV4_ALL",
+        "IPV4_FLOW_START",
+        "IPV4_PRE_FLOW",
+        "IPV4_PRE_STREAM",
+        "TLS_CLIENT_STARTED",
+        "TLS_CLIENT_HELLO",
+        "TLS_CLIENT_CERT",
+        "TLS_CLIENT_DATA",
+        "TLS_CLIENT_FINISHED",
+        "TLS_SERVER_STARTED",
+        "TLS_SERVER_HELLO",
+        "TLS_SERVER_CERT",
+        "TLS_SERVER_DATA",
+        "TLS_SERVER_FINISHED",
+        "HTTP1_REQUEST_STARTED",
+        "HTTP1_REQUEST_LINE",
+        "HTTP1_REQUEST_HEADERS",
+        "HTTP1_REQUEST_BODY",
+        "HTTP1_REQUEST_TRAILER",
+        "HTTP1_REQUEST_COMPLETE",
+        "HTTP1_RESPONSE_STARTED",
+        "HTTP1_RESPONSE_LINE",
+        "HTTP1_RESPONSE_HEADERS",
+        "HTTP1_RESPONSE_BODY",
+        "HTTP1_RESPONSE_TRAILER",
+        "HTTP1_RESPONSE_COMPLETE",
+        "HTTP2_STREAM_REQUEST_STARTED",
+        "HTTP2_STREAM_REQUEST_HEADERS",
+        "HTTP2_STREAM_REQUEST_DATA",
+        "HTTP2_STREAM_REQUEST_CLOSED",
+        "HTTP2_STREAM_REQUEST_COMPLETE",
+        "HTTP2_STREAM_RESPONSE_STARTED",
+        "HTTP2_STREAM_RESPONSE_HEADERS",
+        "HTTP2_STREAM_RESPONSE_DATA",
+        "HTTP2_STREAM_RESPONSE_CLOSED",
+        "HTTP2_STREAM_RESPONSE_COMPLETE",
+        "HTTP2_GLOBAL_REQUEST_STARTED",
+        "HTTP2_GLOBAL_REQUEST_COMPLETE",
+        "HTTP2_GLOBAL_RESPONSE_STARTED",
+        "HTTP2_GLOBAL_RESPONSE_COMPLETE",
+        "DOH2_STREAM_REQUEST_STARTED",
+        "DOH2_STREAM_REQUEST_HEADERS",
+        "DOH2_STREAM_REQUEST_DATA",
+        "DOH2_STREAM_REQUEST_CLOSED",
+        "DOH2_STREAM_REQUEST_COMPLETE",
+        "DOH2_STREAM_RESPONSE_STARTED",
+        "DOH2_STREAM_RESPONSE_HEADERS",
+        "DOH2_STREAM_RESPONSE_DATA",
+        "DOH2_STREAM_RESPONSE_CLOSED",
+        "DOH2_STREAM_RESPONSE_COMPLETE",
+        "DOH2_GLOBAL_REQUEST_STARTED",
+        "DOH2_GLOBAL_REQUEST_COMPLETE",
+        "DOH2_GLOBAL_RESPONSE_STARTED",
+        "DOH2_GLOBAL_RESPONSE_COMPLETE",
+        "DNS_REQUEST_STARTED",
+        "DNS_REQUEST_COMPLETE",
+        "DNS_RESPONSE_STARTED",
+        "DNS_RESPONSE_COMPLETE",
+        "SMTP_REQUEST_STARTED",
+        "SMTP_REQUEST_DATA",
+        "SMTP_REQUEST_COMPLETE",
+        "SMTP_RESPONSE_STARTED",
+        "SMTP_RESPONSE_DATA",
+        "SMTP_RESPONSE_COMPLETE",
+        "FTP_REQUEST_STARTED",
+        "FTP_REQUEST_COMPLETE",
+        "FTP_RESPONSE_STARTED",
+        "FTP_RESPONSE_COMPLETE",
+        "FTP_DATA_REQUEST_STARTED",
+        "FTP_DATA_REQUEST_COMPLETE",
+        "FTP_DATA_RESPONSE_STARTED",
+        "FTP_DATA_RESPONSE_COMPLETE",
+        "SMB_REQUEST_STARTED",
+        "SMB_REQUEST_COMPLETE",
+        "SMB_RESPONSE_STARTED",
+        "SMB_RESPONSE_COMPLETE",
+        "DCERPC_REQUEST_STARTED",
+        "DCERPC_REQUEST_COMPLETE",
+        "DCERPC_RESPONSE_STARTED",
+        "DCERPC_RESPONSE_COMPLETE",
+        "NFS_REQUEST_STARTED",
+        "NFS_REQUEST_COMPLETE",
+        "NFS_RESPONSE_STARTED",
+        "NFS_RESPONSE_COMPLETE",
+        "KRB5_REQUEST_STARTED",
+        "KRB5_REQUEST_COMPLETE",
+        "KRB5_RESPONSE_STARTED",
+        "KRB5_RESPONSE_COMPLETE",
+        "IKE_REQUEST_STARTED",
+        "IKE_REQUEST_COMPLETE",
+        "IKE_RESPONSE_STARTED",
+        "IKE_RESPONSE_COMPLETE",
+        "TFTP_REQUEST_STARTED",
+        "TFTP_REQUEST_COMPLETE",
+        "TFTP_RESPONSE_STARTED",
+        "TFTP_RESPONSE_COMPLETE",
+        "DHCP_REQUEST_STARTED",
+        "DHCP_REQUEST_COMPLETE",
+        "DHCP_RESPONSE_STARTED",
+        "DHCP_RESPONSE_COMPLETE",
+        "QUIC_REQUEST_STARTED",
+        "QUIC_REQUEST_COMPLETE",
+        "QUIC_RESPONSE_STARTED",
+        "QUIC_RESPONSE_COMPLETE",
+        "RDP_REQUEST_STARTED",
+        "RDP_REQUEST_COMPLETE",
+        "RDP_RESPONSE_STARTED",
+        "RDP_RESPONSE_COMPLETE",
+        "RFB_REQUEST_STARTED",
+        "RFB_REQUEST_COMPLETE",
+        "RFB_RESPONSE_STARTED",
+        "RFB_RESPONSE_COMPLETE",
+        "MQTT_REQUEST_STARTED",
+        "MQTT_REQUEST_COMPLETE",
+        "MQTT_RESPONSE_STARTED",
+        "MQTT_RESPONSE_COMPLETE",
+        "PGSQL_REQUEST_STARTED",
+        "PGSQL_REQUEST_COMPLETE",
+        "PGSQL_RESPONSE_STARTED",
+        "PGSQL_RESPONSE_COMPLETE",
+        "SNMP_REQUEST_STARTED",
+        "SNMP_REQUEST_COMPLETE",
+        "SNMP_RESPONSE_STARTED",
+        "SNMP_RESPONSE_COMPLETE",
+        "NTP_REQUEST_STARTED",
+        "NTP_REQUEST_COMPLETE",
+        "NTP_RESPONSE_STARTED",
+        "NTP_RESPONSE_COMPLETE",
+        "TELNET_REQUEST_STARTED",
+        "TELNET_REQUEST_COMPLETE",
+        "TELNET_RESPONSE_STARTED",
+        "TELNET_RESPONSE_COMPLETE",
+        "WEBSOCKET_REQUEST_STARTED",
+        "WEBSOCKET_REQUEST_COMPLETE",
+        "WEBSOCKET_RESPONSE_STARTED",
+        "WEBSOCKET_RESPONSE_COMPLETE",
+        "LDAP_REQUEST_STARTED",
+        "LDAP_REQUEST_COMPLETE",
+        "LDAP_RESPONSE_STARTED",
+        "LDAP_RESPONSE_COMPLETE",
+        "POP3_REQUEST_STARTED",
+        "POP3_REQUEST_COMPLETE",
+        "POP3_RESPONSE_STARTED",
+        "POP3_RESPONSE_COMPLETE",
+        "MDNS_REQUEST_STARTED",
+        "MDNS_REQUEST_COMPLETE",
+        "MDNS_RESPONSE_STARTED",
+        "MDNS_RESPONSE_COMPLETE",
+        "BITTORRENT_DHT_REQUEST_STARTED",
+        "BITTORRENT_DHT_REQUEST_COMPLETE",
+        "BITTORRENT_DHT_RESPONSE_STARTED",
+        "BITTORRENT_DHT_RESPONSE_COMPLETE",
+        "DNP3_REQUEST_STARTED",
+        "DNP3_REQUEST_COMPLETE",
+        "DNP3_RESPONSE_STARTED",
+        "DNP3_RESPONSE_COMPLETE",
+        "SSH_REQUEST_IN_PROGRESS",
+        "SSH_REQUEST_BANNER_WAIT_EOL",
+        "SSH_REQUEST_BANNER_DONE",
+        "SSH_REQUEST_FINISHED",
+        "SSH_RESPONSE_IN_PROGRESS",
+        "SSH_RESPONSE_BANNER_WAIT_EOL",
+        "SSH_RESPONSE_BANNER_DONE",
+        "SSH_RESPONSE_FINISHED"
+      ]
+    },
     "IPAddressType":{
       "type":"string",
       "enum":[
@@ -3025,6 +3546,39 @@
       },
       "exception":true
     },
+    "IpsRuleGroup":{
+      "type":"structure",
+      "required":["RulesSource"],
+      "members":{
+        "RulesSource":{"shape":"IpsRulesSource"},
+        "RuleVariables":{"shape":"RuleVariables"},
+        "ReferenceSets":{"shape":"ReferenceSets"}
+      }
+    },
+    "IpsRuleGroupEntries":{
+      "type":"list",
+      "member":{"shape":"IpsRuleGroupEntry"}
+    },
+    "IpsRuleGroupEntry":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"},
+        "InlineRuleGroup":{"shape":"IpsRuleGroup"},
+        "Override":{"shape":"IpsRuleGroupOverride"}
+      }
+    },
+    "IpsRuleGroupOverride":{
+      "type":"structure",
+      "members":{
+        "Action":{"shape":"OverrideAction"}
+      }
+    },
+    "IpsRulesSource":{
+      "type":"structure",
+      "members":{
+        "RulesString":{"shape":"RulesString"}
+      }
+    },
     "KeyId":{
       "type":"string",
       "max":2048,
@@ -3088,6 +3642,21 @@
       "members":{
         "NextToken":{"shape":"PaginationToken"},
         "FirewallPolicies":{"shape":"FirewallPolicies"}
+      }
+    },
+    "ListFirewallPoliciesV2Request":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"PaginationToken"},
+        "MaxResults":{"shape":"PaginationMaxResults"}
+      }
+    },
+    "ListFirewallPoliciesV2Response":{
+      "type":"structure",
+      "required":["FirewallPoliciesV2"],
+      "members":{
+        "NextToken":{"shape":"PaginationToken"},
+        "FirewallPoliciesV2":{"shape":"FirewallPoliciesV2"}
       }
     },
     "ListFirewallsRequest":{
@@ -3441,6 +4010,22 @@
         "CAPACITY_CONSTRAINED",
         "NOT_SUBSCRIBED",
         "DEPRECATED"
+      ]
+    },
+    "PolicyDefaultAction":{
+      "type":"string",
+      "enum":[
+        "DROP",
+        "ACCEPT",
+        "REJECT",
+        "ALERT"
+      ]
+    },
+    "PolicyMode":{
+      "type":"string",
+      "enum":[
+        "ENFORCE",
+        "MONITOR"
       ]
     },
     "PolicyString":{
@@ -3902,6 +4487,12 @@
         "Actions":{"shape":"StatelessActions"}
       }
     },
+    "RuleDescriptionText":{
+      "type":"string",
+      "max":512,
+      "pattern":"[\\s\\S]*"
+    },
+    "RuleEnabled":{"type":"boolean"},
     "RuleGroup":{
       "type":"structure",
       "required":["RulesSource"],
@@ -3959,7 +4550,9 @@
       "enum":[
         "STATELESS",
         "STATEFUL",
-        "STATEFUL_DOMAIN"
+        "STATEFUL_DOMAIN",
+        "FIREWALL",
+        "IPS"
       ]
     },
     "RuleGroups":{
@@ -3969,6 +4562,13 @@
     "RuleIdList":{
       "type":"list",
       "member":{"shape":"CollectionMember_String"}
+    },
+    "RuleMetadata":{
+      "type":"structure",
+      "members":{
+        "RuleEnabled":{"shape":"RuleEnabled"},
+        "RuleDescription":{"shape":"RuleDescriptionText"}
+      }
     },
     "RuleOption":{
       "type":"structure",
@@ -3987,6 +4587,13 @@
       "enum":[
         "DEFAULT_ACTION_ORDER",
         "STRICT_ORDER"
+      ]
+    },
+    "RuleOutputFormat":{
+      "type":"string",
+      "enum":[
+        "FIREWALL_RULES",
+        "RULES_STRING"
       ]
     },
     "RuleSummaries":{
@@ -4191,6 +4798,13 @@
         "FlowTimeouts":{"shape":"FlowTimeouts"}
       }
     },
+    "StatefulEngineOptionsV2":{
+      "type":"structure",
+      "members":{
+        "StreamExceptionPolicy":{"shape":"StreamExceptionPolicyV2"},
+        "FlowTimeouts":{"shape":"FlowTimeouts"}
+      }
+    },
     "StatefulRule":{
       "type":"structure",
       "required":[
@@ -4325,6 +4939,13 @@
       "enum":[
         "DROP",
         "CONTINUE",
+        "REJECT"
+      ]
+    },
+    "StreamExceptionPolicyV2":{
+      "type":"string",
+      "enum":[
+        "DROP",
         "REJECT"
       ]
     },
@@ -4793,6 +5414,33 @@
         "FirewallPolicyResponse":{"shape":"FirewallPolicyResponse"}
       }
     },
+    "UpdateFirewallPolicyV2Request":{
+      "type":"structure",
+      "required":[
+        "UpdateToken",
+        "FirewallPolicyV2"
+      ],
+      "members":{
+        "UpdateToken":{"shape":"UpdateToken"},
+        "FirewallPolicyV2Arn":{"shape":"ResourceArn"},
+        "FirewallPolicyV2Name":{"shape":"ResourceName"},
+        "FirewallPolicyV2":{"shape":"FirewallPolicyV2"},
+        "Description":{"shape":"Description"},
+        "DryRun":{"shape":"Boolean"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
+      }
+    },
+    "UpdateFirewallPolicyV2Response":{
+      "type":"structure",
+      "required":[
+        "UpdateToken",
+        "FirewallPolicyV2Response"
+      ],
+      "members":{
+        "UpdateToken":{"shape":"UpdateToken"},
+        "FirewallPolicyV2Response":{"shape":"FirewallPolicyV2Response"}
+      }
+    },
     "UpdateLoggingConfigurationRequest":{
       "type":"structure",
       "members":{
@@ -4950,6 +5598,8 @@
         "RuleGroupArn":{"shape":"ResourceArn"},
         "RuleGroupName":{"shape":"ResourceName"},
         "RuleGroup":{"shape":"RuleGroup"},
+        "FirewallRuleGroup":{"shape":"FirewallRuleGroup"},
+        "IpsRuleGroup":{"shape":"IpsRuleGroup"},
         "Rules":{"shape":"RulesString"},
         "Type":{"shape":"RuleGroupType"},
         "Description":{"shape":"Description"},

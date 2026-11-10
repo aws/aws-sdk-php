@@ -736,7 +736,8 @@
         "entitlements":{"shape":"EntitlementList"},
         "initialAgreementId":{"shape":"ResourceId"},
         "endTimeBehaviorType":{"shape":"EndTimeBehaviorType"},
-        "endTimeBehaviorReasonCode":{"shape":"EndTimeBehaviorReasonCode"}
+        "endTimeBehaviorReasonCode":{"shape":"EndTimeBehaviorReasonCode"},
+        "freeTrialEndTime":{"shape":"Timestamp"}
       }
     },
     "AgreementViewSummaryList":{
@@ -1149,7 +1150,8 @@
         "proposalSummary":{"shape":"ProposalSummary"},
         "status":{"shape":"AgreementStatus"},
         "initialAgreementId":{"shape":"ResourceId"},
-        "endTimeBehavior":{"shape":"EndTimeBehavior"}
+        "endTimeBehavior":{"shape":"EndTimeBehavior"},
+        "freeTrialSummary":{"shape":"FreeTrialSummary"}
       }
     },
     "Dimension":{
@@ -1311,6 +1313,12 @@
         "id":{"shape":"TermId"},
         "duration":{"shape":"BoundedString"},
         "grants":{"shape":"GrantList"}
+      }
+    },
+    "FreeTrialSummary":{
+      "type":"structure",
+      "members":{
+        "trialEndTime":{"shape":"Timestamp"}
       }
     },
     "GetAgreementCancellationRequestInput":{
@@ -1496,8 +1504,8 @@
     },
     "InvoiceId":{
       "type":"string",
-      "max":255,
-      "min":1
+      "max":1024,
+      "min":0
     },
     "InvoiceType":{
       "type":"string",

@@ -1260,7 +1260,8 @@
         "VIDEO",
         "CUSTOMER_ARTIFACT",
         "CUSTOMER_ARTIFACT_LOG",
-        "TESTSPEC_OUTPUT"
+        "TESTSPEC_OUTPUT",
+        "DEVICE_CONNECT_COMMAND_LOG"
       ]
     },
     "Artifacts":{
@@ -2178,7 +2179,10 @@
     },
     "InsightsType":{
       "type":"string",
-      "enum":["TEST_REPORT"]
+      "enum":[
+        "TEST_REPORT",
+        "NONE"
+      ]
     },
     "InsightsTypes":{
       "type":"list",
@@ -3133,6 +3137,7 @@
         "webUrl":{"shape":"String"},
         "skipAppResign":{"shape":"SkipAppResign"},
         "testSpecArn":{"shape":"AmazonResourceName"},
+        "testPackageArn":{"shape":"AmazonResourceName"},
         "deviceSelectionResult":{"shape":"DeviceSelectionResult"},
         "vpcConfig":{"shape":"VpcConfig"},
         "executionRoleArn":{"shape":"AmazonRoleResourceName"},

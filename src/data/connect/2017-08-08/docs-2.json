@@ -269,11 +269,11 @@
     "ListWorkspacePages": "<p>Lists the page configurations in a workspace, including the views assigned to each page.</p>",
     "ListWorkspaces": "<p>Lists the workspaces in an Amazon Connect instance.</p>",
     "MonitorContact": "<p>Initiates silent monitoring of a contact. The Contact Control Panel (CCP) of the user specified by <i>userId</i> will be set to silent monitoring mode on the contact.</p>",
-    "PauseContact": "<p>Allows pausing an ongoing task contact.</p>",
+    "PauseContact": "<p>Pauses an ongoing task or email contact.</p>",
     "PutUserStatus": "<p>Changes the current status of a user or agent in Connect Customer. If the agent is currently handling a contact, this sets the agent's next status.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/metrics-agent-status.html\">Agent status</a> and <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/set-next-status.html\">Set your next status</a> in the <i>Connect Customer Administrator Guide</i>.</p>",
     "ReleasePhoneNumber": "<p>Releases a phone number previously claimed to an Connect Customer instance or traffic distribution group. You can call this API only in the Amazon Web Services Region where the number was claimed.</p> <important> <p>To release phone numbers from a traffic distribution group, use the <code>ReleasePhoneNumber</code> API, not the Connect Customer admin website.</p> <p>After releasing a phone number, the phone number enters into a cooldown period for up to 180 days. It cannot be searched for or claimed again until the period has ended. If you accidentally release a phone number, contact Amazon Web Services Support.</p> </important> <p>If you plan to claim and release numbers frequently, contact us for a service quota exception. Otherwise, it is possible you will be blocked from claiming and releasing any more numbers until up to 180 days past the oldest number released has expired.</p> <p>By default you can claim and release up to 200% of your maximum number of active phone numbers. If you claim and release phone numbers using the UI or API during a rolling 180 day cycle that exceeds 200% of your phone number service level quota, you will be blocked from claiming any more numbers until 180 days past the oldest number released has expired. </p> <p>For example, if you already have 99 claimed numbers and a service level quota of 99 phone numbers, and in any 180 day period you release 99, claim 99, and then release 99, you will have exceeded the 200% limit. At that point you are blocked from claiming any more numbers until you open an Amazon Web Services support ticket.</p>",
     "ReplicateInstance": "<p>Replicates an Connect Customer instance in the specified Amazon Web Services Region and copies configuration information for Connect Customer resources across Amazon Web Services Regions. </p> <p>For more information about replicating an Connect Customer instance, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-replica-connect-instance.html\">Create a replica of your existing Connect Customer instance</a> in the <i>Connect Customer Administrator Guide</i>.</p>",
-    "ResumeContact": "<p>Allows resuming a task contact in a paused state.</p>",
+    "ResumeContact": "<p>Resumes a task or email contact in a paused state.</p>",
     "ResumeContactRecording": "<p>When a contact is being recorded, and the recording has been suspended using SuspendContactRecording, this API resumes recording whatever recording is selected in the flow configuration: call, screen, or both. If only call recording or only screen recording is enabled, then it would resume.</p> <p>Voice and screen recordings are supported.</p>",
     "SearchAgentStatuses": "<p>Searches AgentStatuses in an Connect Customer instance, with optional filtering.</p>",
     "SearchAvailablePhoneNumbers": "<p>Searches for available phone numbers that you can claim to your Connect Customer instance or traffic distribution group. If the provided <code>TargetArn</code> is a traffic distribution group, you can call this API in both Amazon Web Services Regions associated with the traffic distribution group.</p>",
@@ -2064,6 +2064,7 @@
         "AutoEvaluationConfiguration$Enabled": "<p>Whether automated evaluations are enabled.</p>",
         "AutoEvaluationDetails$AutoEvaluationEnabled": "<p>Whether automated evaluation is enabled.</p>",
         "ContactSearchSummaryAiAgentInfo$AiAgentEscalated": "<p>A boolean flag indicating whether the contact initially handled by this AI agent was escalated to a human agent.</p>",
+        "ConversationalAnalyticsConfiguration$Enabled": "<p>Specifies whether conversational analytics is enabled for the contact.</p>",
         "CreateDataTableAttributeRequest$Primary": "<p>Optional boolean that defaults to false. Determines if the value is used to identify a record in the table. Values for primary attributes must not be expressions.</p>",
         "DataTableAttribute$Primary": "<p>Boolean indicating whether this attribute is used as a primary key for record identification. Primary attributes must have unique value combinations and cannot contain expressions.</p>",
         "DataTableEvaluatedValue$Found": "<p>The value's found.</p>",
@@ -2582,6 +2583,12 @@
       "base": "<p>Information about a reference when the <code>referenceType</code> is <code>CONTACT_ANALYSIS</code>. Otherwise, null.</p>",
       "refs": {
         "ReferenceSummary$ContactAnalysis": null
+      }
+    },
+    "ContactAnalysisReferenceState": {
+      "base": "<p>The current processing state of conversational analytics for a contact, including the analysis status and, when applicable, the reason for that status.</p>",
+      "refs": {
+        "ConversationalAnalytics$ContactAnalysisReferenceState": "<p>The current state of conversational analytics processing for the contact.</p>"
       }
     },
     "ContactConfiguration": {
@@ -3181,6 +3188,54 @@
         "ListEvaluationFormAIVersionsRequest$ContactInteractionType": "<p>The contact interaction type for the evaluation form.</p>"
       }
     },
+    "ContactLens": {
+      "base": "<p>Information about the conversational analytics configuration applied to the contact. This field is present only for contacts where conversational analytics is enabled in the contact flow.</p>",
+      "refs": {
+        "Contact$ContactLens": "<p>Information about the conversational analytics configuration applied to the contact. This field is present only for contacts where conversational analytics is enabled in the contact flow.</p>"
+      }
+    },
+    "ContactLensAnalyticsModeList": {
+      "base": null,
+      "refs": {
+        "ContactLensChannelConfiguration$AnalyticsModes": "<p>The conversational analytics modes enabled for the channel. Valid values:</p> <ul> <li> <p> <code>RealTime</code> – Real-time analysis is enabled during the contact. Voice channel only.</p> </li> <li> <p> <code>PostContact</code> – Post-contact analysis is enabled after the contact ends. Voice channel only.</p> </li> <li> <p> <code>ContactLens</code> – Conversational analytics is enabled for the contact. Chat channel only.</p> </li> </ul>"
+      }
+    },
+    "ContactLensChannelConfiguration": {
+      "base": "<p>The per-channel conversational analytics configuration for a contact.</p>",
+      "refs": {
+        "ConversationalAnalyticsConfiguration$ChannelConfiguration": "<p>The per-channel conversational analytics settings for the contact.</p>"
+      }
+    },
+    "ContactLensRedactionConfiguration": {
+      "base": "<p>The redaction configuration for conversational analytics transcripts.</p>",
+      "refs": {
+        "ConversationalAnalyticsConfiguration$RedactionConfiguration": "<p>The redaction configuration for the contact transcript.</p>"
+      }
+    },
+    "ContactLensRedactionEntitiesList": {
+      "base": null,
+      "refs": {
+        "ContactLensRedactionConfiguration$Entities": "<p>The entity types to redact from the transcript (for example, <code>NAME</code>, <code>EMAIL</code>, <code>ADDRESS</code>).</p>"
+      }
+    },
+    "ContactLensSentimentConfiguration": {
+      "base": "<p>The conversational analytics sentiment analysis configuration for a contact.</p>",
+      "refs": {
+        "ConversationalAnalyticsConfiguration$SentimentConfiguration": "<p>The sentiment analysis configuration for the contact.</p>"
+      }
+    },
+    "ContactLensSummaryConfiguration": {
+      "base": "<p>The conversational analytics summary configuration for a contact.</p>",
+      "refs": {
+        "ConversationalAnalyticsConfiguration$SummaryConfiguration": "<p>The summary configuration for the contact.</p>"
+      }
+    },
+    "ContactLensSummaryModeList": {
+      "base": null,
+      "refs": {
+        "ContactLensSummaryConfiguration$SummaryModes": "<p>The conversational analytics summary modes enabled for the contact. Valid values: <code>PostContact</code> | <code>AutomatedInteraction</code> | <code>ContactChain</code>.</p>"
+      }
+    },
     "ContactMediaProcessingFailureMode": {
       "base": null,
       "refs": {
@@ -3407,6 +3462,18 @@
       "base": "<p>An object that can be used to specify Tag conditions or Hierarchy Group conditions inside the <code>SearchFilter</code>.</p> <p>This accepts an <code>OR</code> of <code>AND</code> (List of List) input where:</p> <ul> <li> <p>The top level list specifies conditions that need to be applied with <code>OR</code> operator</p> </li> <li> <p>The inner list specifies conditions that need to be applied with <code>AND</code> operator.</p> </li> </ul> <note> <p>Only one field can be populated. Maximum number of allowed Tag conditions is 25. Maximum number of allowed Hierarchy Group conditions is 20.</p> </note>",
       "refs": {
         "UserSearchFilter$UserAttributeFilter": "<p>An object that can be used to specify Tag conditions or Hierarchy Group conditions inside the SearchFilter.</p> <p>This accepts an <code>OR</code> of <code>AND</code> (List of List) input where:</p> <ul> <li> <p>The top level list specifies conditions that need to be applied with <code>OR</code> operator.</p> </li> <li> <p>The inner list specifies conditions that need to be applied with <code>AND</code> operator.</p> </li> </ul> <note> <p>Only one field can be populated. This object can’t be used along with TagFilter. Request can either contain TagFilter or UserAttributeFilter if SearchFilter is specified, combination of both is not supported and such request will throw AccessDeniedException.</p> </note>"
+      }
+    },
+    "ConversationalAnalytics": {
+      "base": "<p>Contains the conversational analytics configuration and state for a contact.</p>",
+      "refs": {
+        "ContactLens$ConversationalAnalytics": "<p>The conversational analytics configuration applied to the contact.</p>"
+      }
+    },
+    "ConversationalAnalyticsConfiguration": {
+      "base": "<p>The conversational analytics configuration settings for a contact.</p>",
+      "refs": {
+        "ConversationalAnalytics$Configuration": "<p>The conversational analytics settings that apply to the contact.</p>"
       }
     },
     "Count": {
@@ -8351,7 +8418,14 @@
     "LanguageLocale": {
       "base": null,
       "refs": {
-        "LanguageConfiguration$LanguageLocale": "<p>The language locale setting for conversational analytics.</p>"
+        "LanguageConfiguration$LanguageLocale": "<p>The language locale setting for conversational analytics.</p>",
+        "LanguageLocales$member": null
+      }
+    },
+    "LanguageLocales": {
+      "base": null,
+      "refs": {
+        "ConversationalAnalyticsConfiguration$LanguageLocales": "<p>The language locales that conversational analytics uses to analyze the contact (for example, <code>en-US</code> and <code>es-ES</code>).</p>"
       }
     },
     "LargeNextToken": {
@@ -10108,7 +10182,7 @@
       }
     },
     "NullableAdditionalRecipients": {
-      "base": "Additional recipients for UpdateContact, allowing an empty list to clear CC recipients.",
+      "base": "<p>The additional recipients of an outbound email that you can update. An empty list of <code>CcEmailAddresses</code> clears the existing CC recipients.</p>",
       "refs": {
         "UpdateContactRequest$AdditionalRecipients": "<p>The additional recipients of an outbound email. Use this field to update the CC email address recipients of a contact. An empty list clears the existing CC recipients.</p>"
       }
@@ -13944,7 +14018,17 @@
         "BatchUpdateDataTableValueFailureResult$Message": "<p>The result's message.</p>",
         "BooleanCondition$FieldName": "<p>A name of the property to be searched.</p>",
         "Contact$DisconnectReason": "<p>The disconnect reason for the contact. For a list and description of all the possible disconnect reasons by channel, see DisconnectReason under <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/ctr-data-model.html#ctr-ContactTraceRecord\">ContactTraceRecord</a> in the <i>Connect Customer Administrator Guide</i>. </p>",
+        "ContactAnalysisReferenceState$Status": "<p>The status of conversational analytics processing for the contact. Valid values:</p> <ul> <li> <p> <code>REQUESTED</code> – Analysis has been requested for the contact and has not finished.</p> </li> <li> <p> <code>COMPLETED</code> – Analysis finished successfully.</p> </li> <li> <p> <code>FAILED</code> – Analysis did not finish successfully. See <code>StatusReason</code> for the cause.</p> </li> </ul>",
+        "ContactAnalysisReferenceState$StatusReason": "<p>The reason for the current analysis status. This value is populated only when the status is <code>FAILED</code>.</p>",
         "ContactEvaluationAttributeValue$StringValue": "<p>A string value for the attribute.</p>",
+        "ContactLensAnalyticsModeList$member": null,
+        "ContactLensRedactionConfiguration$Behavior": "<p>Specifies whether redaction is enabled for sensitive data, such as personal information, in the conversational analytics output. Valid values:</p> <ul> <li> <p> <code>Enable</code> – Redaction is applied according to the other values in this object.</p> </li> <li> <p> <code>Disable</code> – Redaction is not applied, and all other values in this object are ignored.</p> </li> </ul>",
+        "ContactLensRedactionConfiguration$Policy": "<p>The redaction policy that determines which versions of the transcript are stored. Valid values:</p> <ul> <li> <p> <code>None</code> – No redaction is applied.</p> </li> <li> <p> <code>RedactedOnly</code> – Only the redacted transcript is stored.</p> </li> <li> <p> <code>RedactedAndOriginal</code> – Both the redacted and the original transcript are stored.</p> </li> </ul>",
+        "ContactLensRedactionConfiguration$MaskMode": "<p>How sensitive information is masked in the transcript. Valid values:</p> <ul> <li> <p> <code>PII</code> – All redacted entities are replaced with the <code>[PII]</code> string.</p> </li> <li> <p> <code>EntityType</code> – All redacted entities are replaced with the label of the entity. For example, when the <code>EMAIL</code> entity is configured for redaction, emails in the transcript are replaced with the <code>[EMAIL]</code> string.</p> </li> </ul>",
+        "ContactLensRedactionEntitiesList$member": null,
+        "ContactLensSentimentConfiguration$Behavior": "<p>Specifies whether sentiment analysis is enabled for the contact. The default value is <code>Disable</code>. Valid values:</p> <ul> <li> <p> <code>Enable</code> – Sentiment analysis is performed on the contact.</p> </li> <li> <p> <code>Disable</code> – Sentiment analysis is not performed on the contact.</p> </li> </ul>",
+        "ContactLensSummaryModeList$member": null,
+        "ConversationalAnalyticsConfiguration$LanguageLocale": "<p>The language locale that conversational analytics uses to analyze the contact (for example, <code>en-US</code>).</p>",
         "DataTableEvaluatedValue$EvaluatedValue": "<p>The value's evaluated value.</p>",
         "DataTableLockVersion$DataTable": "<p>The lock version for the data table itself. Used for optimistic locking and table versioning. Changes with each update to the table's metadata or structure.</p>",
         "DataTableLockVersion$Attribute": "<p>The lock version for a specific attribute. When the ValueLockLevel is ATTRIBUTE, this version changes when any value for the attribute changes. For other lock levels, it only changes when the attribute's properties are directly updated.</p>",

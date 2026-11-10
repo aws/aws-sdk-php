@@ -32,6 +32,7 @@
     "GetDataLakePrincipal": "<p>Returns the identity of the invoking principal.</p>",
     "GetDataLakeSettings": "<p>Retrieves the list of the data lake administrators of a Lake Formation-managed data lake. </p>",
     "GetEffectivePermissionsForPath": "<p>Returns the Lake Formation permissions for a specified table or database resource located at a path in Amazon S3. <code>GetEffectivePermissionsForPath</code> will not return databases and tables if the catalog is encrypted.</p>",
+    "GetGlueFunctionSessionContext": "<p>Returns a session context for one or more user-defined functions that an integrated analytics engine runs together in a job. You must have the <code>EXECUTE</code> permission on every function in the list.</p> <p>While the session context is in use, if you don't have full <code>SELECT</code> permission on a table, the job can read the table only if every function in the session has the <code>SELECT</code> permission on it. Lake Formation enforces this check.</p> <p>To use this operation, you must have the <code>lakeformation:GetDataAccess</code> permission.</p>",
     "GetLFTag": "<p>Returns an LF-tag definition.</p>",
     "GetLFTagExpression": "<p>Returns the details about the LF-Tag expression. The caller must be a data lake admin or must have <code>DESCRIBE</code> permission on the LF-Tag expression resource. </p>",
     "GetQueryState": "<p>Returns the state of a query previously submitted. Clients are expected to poll <code>GetQueryState</code> to monitor the current state of the planning before retrieving the work units. A query state is only visible to the principal that made the initial call to <code>StartQueryPlanning</code>.</p>",
@@ -40,6 +41,7 @@
     "GetResourceLFTags": "<p>Returns the LF-tags applied to a resource.</p>",
     "GetTableObjects": "<p>Returns the set of Amazon S3 objects that make up the specified governed table. A transaction ID or timestamp can be specified for time-travel queries.</p>",
     "GetTemporaryDataLocationCredentials": "<p>Allows a user or application in a secure environment to access data in a specific Amazon S3 location registered with Lake Formation by providing temporary scoped credentials that are limited to the requested data location and the caller's authorized access level.</p> <p> <code>GetDataAccess</code> is logged in CloudTrail whenever a principal requests temporary data location credentials to access data in a data lake location that is registered with Lake Formation.</p> <p> The API operation returns an error in the following scenarios:</p> <ul> <li> <p>The data location is not registered with Lake Formation. </p> </li> <li> <p>No Glue table is associated with the data location.</p> </li> <li> <p>The caller doesn't have required permissions on the associated table. The caller must have <code>SELECT</code> or <code>SUPER</code> permissions on the associated table, and credential vending for full table access must be enabled in the data lake settings. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/full-table-credential-vending.html\">Application integration for full table access</a>.</p> </li> <li> <p>The data location is in a different Amazon Web Services Region. Lake Formation doesn't support cross-Region access when vending credentials for a data location. Lake Formation only supports Amazon S3 paths registered within the same Region as the API call. </p> </li> </ul>",
+    "GetTemporaryGlueFunctionCredentials": "<p>Returns temporary credentials that you can use to download the artifacts of a user-defined function whose <code>GovernanceMode</code> is <code>LAKE_FORMATION</code>. Lake Formation assumes the role that you registered for the function's <code>ArtifactLocation</code>. The credentials have read-only access to that location in Amazon S3.</p> <p>To use this operation, you must have the <code>EXECUTE</code> permission on the function.</p>",
     "GetTemporaryGluePartitionCredentials": "<p>This API is identical to <code>GetTemporaryTableCredentials</code> except that this is used when the target Data Catalog resource is of type Partition. Lake Formation restricts the permission of the vended credentials with the same scope down policy which restricts access to a single Amazon S3 prefix.</p>",
     "GetTemporaryGlueTableCredentials": "<p>Allows a caller in a secure environment to assume a role with permission to access Amazon S3. In order to vend such credentials, Lake Formation assumes the role associated with a registered location, for example an Amazon S3 bucket, with a scope down policy which restricts the access to a single prefix.</p> <p>To call this API, the role that the service assumes must have <code>lakeformation:GetDataAccess</code> permission on the resource.</p>",
     "GetWorkUnitResults": "<p>Returns the work units resulting from the query. Work units can be executed in any order and in parallel. </p>",
@@ -81,6 +83,7 @@
       "base": null,
       "refs": {
         "AssumeDecoratedRoleWithSAMLResponse$AccessKeyId": "<p>The access key ID for the temporary credentials. (The access key consists of an access key ID and a secret key).</p>",
+        "GetTemporaryGlueFunctionCredentialsResponse$AccessKeyId": "<p>The access key ID for the temporary credentials.</p>",
         "GetTemporaryGluePartitionCredentialsResponse$AccessKeyId": "<p>The access key ID for the temporary credentials.</p>",
         "GetTemporaryGlueTableCredentialsResponse$AccessKeyId": "<p>The access key ID for the temporary credentials.</p>",
         "TemporaryCredentials$AccessKeyId": "<p>The access key ID for the temporary credentials.</p>"
@@ -124,6 +127,18 @@
       "base": "<p>A resource to be created or added already exists.</p>",
       "refs": {}
     },
+    "AnyResource": {
+      "base": "<p>Represents all resources of the specified type in a Data Catalog, including resources that are created after the grant.</p>",
+      "refs": {
+        "Resource$AnyResource": "<p>All resources of the specified type in a Data Catalog. When you grant or revoke permissions on this resource, the principal must be a user-defined function whose <code>GovernanceMode</code> is <code>LAKE_FORMATION</code>, and the Data Catalog must be in your account.</p>"
+      }
+    },
+    "AnyResourceSupportedTypes": {
+      "base": null,
+      "refs": {
+        "AnyResource$ResourceType": "<p>The type of resource that the grant covers. The only supported value is <code>TABLE</code>.</p>"
+      }
+    },
     "ApplicationArn": {
       "base": null,
       "refs": {
@@ -157,6 +172,7 @@
       "base": "<p>A structure used to include auditing information on the privileged API. </p>",
       "refs": {
         "GetTemporaryDataLocationCredentialsRequest$AuditContext": null,
+        "GetTemporaryGlueFunctionCredentialsRequest$AuditContext": "<p>Context for the request, such as the column names and query ID, that Lake Formation uses for auditing.</p>",
         "GetTemporaryGluePartitionCredentialsRequest$AuditContext": "<p>A structure representing context to access a resource (column names, query ID, etc).</p>",
         "GetTemporaryGlueTableCredentialsRequest$AuditContext": "<p>A structure representing context to access a resource (column names, query ID, etc).</p>"
       }
@@ -240,6 +256,7 @@
       "base": null,
       "refs": {
         "AddLFTagsToResourceRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
+        "AnyResource$CatalogId": "<p>The ID of the Data Catalog. By default, it's your account ID.</p>",
         "BatchGrantPermissionsRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "BatchRevokePermissionsRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "CatalogResource$Id": "<p>An identifier for the catalog resource.</p>",
@@ -293,7 +310,8 @@
         "UpdateLFTagRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "UpdateLakeFormationIdentityCenterConfigurationRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, view definitions, and other control information to manage your Lake Formation environment.</p>",
         "UpdateTableObjectsRequest$CatalogId": "<p>The catalog containing the governed table to update. Defaults to the caller’s account ID.</p>",
-        "UpdateTableStorageOptimizerRequest$CatalogId": "<p>The Catalog ID of the table.</p>"
+        "UpdateTableStorageOptimizerRequest$CatalogId": "<p>The Catalog ID of the table.</p>",
+        "UserDefinedFunctionResource$CatalogId": "<p>The ID of the Data Catalog. By default, it's your account ID.</p>"
       }
     },
     "CatalogResource": {
@@ -718,6 +736,8 @@
       "base": null,
       "refs": {
         "AssumeDecoratedRoleWithSAMLResponse$Expiration": "<p>The date and time when the temporary credentials expire.</p>",
+        "GetGlueFunctionSessionContextResponse$Expiration": "<p>The date and time when the session context expires.</p>",
+        "GetTemporaryGlueFunctionCredentialsResponse$Expiration": "<p>The date and time when the temporary credentials expire.</p>",
         "GetTemporaryGluePartitionCredentialsResponse$Expiration": "<p>The date and time when the temporary credentials expire.</p>",
         "GetTemporaryGlueTableCredentialsResponse$Expiration": "<p>The date and time when the temporary credentials expire.</p>",
         "TemporaryCredentials$Expiration": "<p>The date and time when the temporary credentials expire.</p>"
@@ -811,6 +831,14 @@
       "base": null,
       "refs": {}
     },
+    "GetGlueFunctionSessionContextRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetGlueFunctionSessionContextResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetLFTagExpressionRequest": {
       "base": null,
       "refs": {}
@@ -884,6 +912,14 @@
       "refs": {}
     },
     "GetTemporaryDataLocationCredentialsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTemporaryGlueFunctionCredentialsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTemporaryGlueFunctionCredentialsResponse": {
       "base": null,
       "refs": {}
     },
@@ -1280,7 +1316,9 @@
         "UpdateTableObjectsRequest$DatabaseName": "<p>The database containing the governed table to update.</p>",
         "UpdateTableObjectsRequest$TableName": "<p>The governed table to update.</p>",
         "UpdateTableStorageOptimizerRequest$DatabaseName": "<p>Name of the database where the table is present.</p>",
-        "UpdateTableStorageOptimizerRequest$TableName": "<p>Name of the table for which to enable the storage optimizer.</p>"
+        "UpdateTableStorageOptimizerRequest$TableName": "<p>Name of the table for which to enable the storage optimizer.</p>",
+        "UserDefinedFunctionResource$DatabaseName": "<p>The name of the database that contains the function.</p>",
+        "UserDefinedFunctionResource$Name": "<p>The name of the function.</p> <p>Exactly one of <code>UserDefinedFunctionResource$Name</code> or <code>UserDefinedFunctionResource$UserDefinedFunctionWildcard</code> is required.</p>"
       }
     },
     "NullableBoolean": {
@@ -1643,6 +1681,12 @@
         "RevokePermissionsRequest$Resource": "<p>The resource to which permissions are to be revoked.</p>"
       }
     },
+    "ResourceArnList": {
+      "base": null,
+      "refs": {
+        "GetGlueFunctionSessionContextRequest$UserDefinedFunctionArns": "<p>The ARNs of one or more user-defined functions to include in the session context, each in the format <code>arn:aws:glue:<i>region</i>:<i>account-id</i>:userDefinedFunction/<i>database-name</i>/<i>function-name</i> </code>.</p>"
+      }
+    },
     "ResourceArnString": {
       "base": null,
       "refs": {
@@ -1650,9 +1694,11 @@
         "DeregisterResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to deregister.</p>",
         "DescribeResourceRequest$ResourceArn": "<p>The resource ARN.</p>",
         "GetEffectivePermissionsForPathRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which you want to get permissions.</p>",
+        "GetTemporaryGlueFunctionCredentialsRequest$UserDefinedFunctionArn": "<p>The ARN of the user-defined function whose artifacts you want to download, in the format <code>arn:aws:glue:<i>region</i>:<i>account-id</i>:userDefinedFunction/<i>database-name</i>/<i>function-name</i> </code>.</p>",
         "GetTemporaryGluePartitionCredentialsRequest$TableArn": "<p>The ARN of the partitions' table.</p>",
         "GetTemporaryGlueTableCredentialsRequest$TableArn": "<p>The ARN identifying a table in the Data Catalog for the temporary credentials request.</p>",
         "RegisterResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to register.</p>",
+        "ResourceArnList$member": null,
         "ResourceInfo$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UpdateResourceRequest$ResourceArn": "<p>The resource ARN.</p>"
       }
@@ -1767,6 +1813,7 @@
       "base": null,
       "refs": {
         "AssumeDecoratedRoleWithSAMLResponse$SecretAccessKey": "<p>The secret key for the temporary credentials. (The access key consists of an access key ID and a secret key).</p>",
+        "GetTemporaryGlueFunctionCredentialsResponse$SecretAccessKey": "<p>The secret key for the temporary credentials.</p>",
         "GetTemporaryGluePartitionCredentialsResponse$SecretAccessKey": "<p>The secret key for the temporary credentials.</p>",
         "GetTemporaryGlueTableCredentialsResponse$SecretAccessKey": "<p>The secret key for the temporary credentials.</p>",
         "TemporaryCredentials$SecretAccessKey": "<p>The secret key for the temporary credentials.</p>"
@@ -1792,10 +1839,23 @@
         "ServiceIntegrationList$member": null
       }
     },
+    "SessionContextIdString": {
+      "base": null,
+      "refs": {
+        "GetGlueFunctionSessionContextResponse$SessionContextId": "<p>The ID of the session context.</p>"
+      }
+    },
+    "SessionDurationSecondInteger": {
+      "base": null,
+      "refs": {
+        "GetGlueFunctionSessionContextRequest$DurationSeconds": "<p>The number of seconds the session context is valid. The default is 86,400 (24 hours).</p>"
+      }
+    },
     "SessionTokenString": {
       "base": null,
       "refs": {
         "AssumeDecoratedRoleWithSAMLResponse$SessionToken": "<p>The session token for the temporary credentials.</p>",
+        "GetTemporaryGlueFunctionCredentialsResponse$SessionToken": "<p>The session token for the temporary credentials.</p>",
         "GetTemporaryGluePartitionCredentialsResponse$SessionToken": "<p>The session token for the temporary credentials.</p>",
         "GetTemporaryGlueTableCredentialsResponse$SessionToken": "<p>The session token for the temporary credentials.</p>",
         "TemporaryCredentials$SessionToken": "<p>The session token for the temporary credentials.</p>"
@@ -2154,6 +2214,18 @@
     "UpdateTableStorageOptimizerResponse": {
       "base": null,
       "refs": {}
+    },
+    "UserDefinedFunctionResource": {
+      "base": "<p>Identifies a user-defined function, or all user-defined functions in a database, as a resource that you can grant permissions on. You can grant permissions only on functions whose <code>GovernanceMode</code> is <code>LAKE_FORMATION</code>.</p>",
+      "refs": {
+        "Resource$UserDefinedFunction": "<p>The user-defined function that you want to grant or revoke permissions on. The function's <code>GovernanceMode</code> must be <code>LAKE_FORMATION</code>. You can grant the following permissions:</p> <ul> <li> <p> <code>EXECUTE</code> – Use the function in a job, and get credentials to download its artifacts.</p> </li> <li> <p> <code>DESCRIBE</code> – View the function's definition.</p> </li> <li> <p> <code>ALTER</code> – Update the function.</p> </li> <li> <p> <code>DROP</code> – Delete the function.</p> </li> <li> <p> <code>ALL</code> – All of the preceding permissions.</p> </li> </ul>"
+      }
+    },
+    "UserDefinedFunctionWildcard": {
+      "base": "<p>A wildcard object representing every user-defined function in a database.</p>",
+      "refs": {
+        "UserDefinedFunctionResource$UserDefinedFunctionWildcard": "<p>A wildcard object representing every user-defined function in the database, including functions created after the grant.</p> <p>Exactly one of <code>UserDefinedFunctionResource$Name</code> or <code>UserDefinedFunctionResource$UserDefinedFunctionWildcard</code> is required.</p>"
+      }
     },
     "ValueString": {
       "base": null,

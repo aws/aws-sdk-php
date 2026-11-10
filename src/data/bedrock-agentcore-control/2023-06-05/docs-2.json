@@ -952,6 +952,12 @@
         "BrowserSummaries$member": null
       }
     },
+    "BuildLifecycleHooks": {
+      "base": "<p>The lifecycle hooks that run when you create or update the AgentCore Runtime, before any sessions are created.</p>",
+      "refs": {
+        "RuntimeHooksConfiguration$build": "<p>The hooks that run when you create or update the AgentCore Runtime, before any sessions are created.</p>"
+      }
+    },
     "CapacityProviderArn": {
       "base": null,
       "refs": {
@@ -1992,7 +1998,7 @@
     "CreateMemoryInputEventExpiryDurationInteger": {
       "base": null,
       "refs": {
-        "CreateMemoryInput$eventExpiryDuration": "<p>The duration after which memory events expire. Specified as an ISO 8601 duration.</p>"
+        "CreateMemoryInput$eventExpiryDuration": "<p>The number of days after which memory events expire, between 7 and 3650 days.</p>"
       }
     },
     "CreateMemoryOutput": {
@@ -3040,6 +3046,16 @@
       "base": null,
       "refs": {
         "ManagedResourceDetails$domain": "<p>The domain associated with this managed resource.</p>"
+      }
+    },
+    "DomainOverride": {
+      "base": "<p>The public domain names for a gateway that clients reach through your own proxy or custom domain. When you configure a domain override, the gateway advertises these domains instead of the inbound Host header in the URLs that it returns for OAuth discovery, such as the protected resource metadata and the <code>WWW-Authenticate</code> challenge.</p>",
+      "refs": {
+        "CreateGatewayRequest$domainOverride": "<p>The public domain names that the gateway advertises in its OAuth discovery URLs instead of the inbound Host header. Specify this when clients reach the gateway through your own proxy or custom domain.</p>",
+        "CreateGatewayResponse$domainOverride": "<p>The public domain names that the gateway advertises in its OAuth discovery URLs instead of the inbound Host header.</p>",
+        "GetGatewayResponse$domainOverride": "<p>The public domain names that the gateway advertises in its OAuth discovery URLs instead of the inbound Host header.</p>",
+        "UpdateGatewayRequest$domainOverride": "<p>The updated public domain names that the gateway advertises in its OAuth discovery URLs instead of the inbound Host header. Specify this when clients reach the gateway through your own proxy or custom domain.</p>",
+        "UpdateGatewayResponse$domainOverride": "<p>The public domain names that the gateway advertises in its OAuth discovery URLs instead of the inbound Host header.</p>"
       }
     },
     "Double": {
@@ -4959,6 +4975,12 @@
         "HarnessRemoteMcpConfig$headers": "<p>Custom headers to include when connecting to the remote MCP server.</p>"
       }
     },
+    "HttpPostLifecycleHookAction": {
+      "base": "<p>A lifecycle hook action that sends an HTTP <code>POST</code> request to the agent's container. The path and port can't conflict with a path that your agent already serves for AgentCore Runtime, such as the protocol's invocation path or the health check path.</p>",
+      "refs": {
+        "LifecycleHookAction$httpPost": "<p>Sends an HTTP <code>POST</code> request to your agent's container on the specified port and path to run the hook. The hook succeeds if your container returns a <code>2xx</code> response. The hook fails if your container returns any other response or doesn't respond before the hook times out.</p>"
+      }
+    },
     "HttpQueryParameterName": {
       "base": null,
       "refs": {
@@ -5243,6 +5265,7 @@
         "HarnessSlidingWindowConfiguration$messagesCount": "<p>The number of recent messages to retain in the context window.</p>",
         "HarnessSummarizationConfiguration$preserveRecentMessages": "<p>The number of recent messages to preserve without summarization.</p>",
         "MessageBasedTrigger$messageCount": "<p>The number of messages that trigger memory processing.</p>",
+        "ResourceConfiguration$minimumMemoryInMiB": "<p>The minimum amount of memory, in mebibytes, to allocate to the AgentCore Runtime.</p>",
         "SelfManagedConfiguration$historicalContextWindowSize": "<p>The number of historical messages to include in processing context.</p>",
         "TimeBasedTrigger$idleSessionTimeout": "<p>Idle session timeout (seconds) that triggers memory processing.</p>",
         "TokenBasedTrigger$tokenCount": "<p>Number of tokens that trigger memory processing.</p>",
@@ -5488,6 +5511,24 @@
       "base": null,
       "refs": {
         "LifecycleConfiguration$maxLifetime": "<p>Maximum lifetime for the instance in seconds. Once reached, instances will be automatically terminated and replaced. Default: 28800 seconds (8 hours).</p>"
+      }
+    },
+    "LifecycleHook": {
+      "base": "<p>A lifecycle hook, which defines the action that AgentCore Runtime runs at a point in the runtime's lifecycle.</p>",
+      "refs": {
+        "BuildLifecycleHooks$warmup": "<p>The hook that warms up your agent before any sessions are created. Use this hook to load the resources that your sessions need, such as models, libraries, or caches. Your hook must complete within 120 seconds.</p>"
+      }
+    },
+    "LifecycleHookAction": {
+      "base": "<p>The action that a lifecycle hook runs. Specify exactly one member. Currently, <code>httpPost</code> is the only supported action.</p>",
+      "refs": {
+        "LifecycleHook$action": "<p>The action that AgentCore Runtime runs for the hook. Specify exactly one action.</p>"
+      }
+    },
+    "LifecycleHookPath": {
+      "base": "<p>The path for an HTTP <code>POST</code> lifecycle hook action. The path must begin with <code>/</code>, can contain up to 32 characters, and can contain only letters, numbers, and the characters <code>.</code>, <code>_</code>, <code>~</code>, <code>/</code>, and <code>-</code>.</p>",
+      "refs": {
+        "HttpPostLifecycleHookAction$path": "<p>The path in the agent's container that AgentCore Runtime sends the <code>POST</code> request to.</p>"
       }
     },
     "LimitEntries": {
@@ -7579,6 +7620,19 @@
         "ProviderPrefix$separator": "<p>The single character that separates the provider prefix from the model name (for example, <code>.</code>). The default is <code>.</code>.</p>"
       }
     },
+    "PublicDomainName": {
+      "base": null,
+      "refs": {
+        "DomainOverride$defaultDomain": "<p>The default public domain name for the gateway. The gateway advertises this domain when a request doesn't select a specific domain.</p>",
+        "PublicDomainNameList$member": null
+      }
+    },
+    "PublicDomainNameList": {
+      "base": null,
+      "refs": {
+        "DomainOverride$alternateDomains": "<p>Additional public domain names for the gateway, up to 10. Don't repeat the default domain or list a domain more than once. A request can select one of these domains, or the default domain, with the <code>x-amzn-bedrock-agentcore-gateway-domain</code> header. The gateway rejects a request that selects a domain that isn't configured.</p>"
+      }
+    },
     "PutResourcePolicyRequest": {
       "base": null,
       "refs": {}
@@ -7905,10 +7959,24 @@
         "ManagedResourceDetails$resourceAssociationArn": "<p>The ARN of the service network resource association.</p>"
       }
     },
+    "ResourceConfiguration": {
+      "base": "<p>The resource configuration for an AgentCore Runtime.</p>",
+      "refs": {
+        "ResourceConfigurations$member": null
+      }
+    },
     "ResourceConfigurationIdentifier": {
       "base": null,
       "refs": {
         "SelfManagedLatticeResource$resourceConfigurationIdentifier": "<p>The ARN or ID of the VPC Lattice resource configuration.</p>"
+      }
+    },
+    "ResourceConfigurations": {
+      "base": "<p>A list of resource configurations for an AgentCore Runtime. The list can contain at most one resource configuration.</p>",
+      "refs": {
+        "CreateAgentRuntimeRequest$resourceConfigurations": "<p>The resource configurations for the AgentCore Runtime, such as the minimum amount of memory to allocate to the runtime. You can specify at most one resource configuration.</p>",
+        "GetAgentRuntimeResponse$resourceConfigurations": "<p>The resource configurations for the AgentCore Runtime.</p>",
+        "UpdateAgentRuntimeRequest$resourceConfigurations": "<p>The updated resource configurations for the AgentCore Runtime. You can specify at most one resource configuration.</p>"
       }
     },
     "ResourceGatewayArn": {
@@ -8146,6 +8214,14 @@
       "base": null,
       "refs": {
         "ContainerConfiguration$containerUri": "<p>The ECR URI of the container.</p>"
+      }
+    },
+    "RuntimeHooksConfiguration": {
+      "base": "<p>The lifecycle hooks that AgentCore Runtime runs at fixed points in the runtime's lifecycle.</p>",
+      "refs": {
+        "CreateAgentRuntimeRequest$hooksConfiguration": "<p>The lifecycle hooks configuration for the AgentCore Runtime. Use lifecycle hooks to run actions in the agent's container at fixed points in the runtime's lifecycle, such as warming up the agent before sessions are created.</p>",
+        "GetAgentRuntimeResponse$hooksConfiguration": "<p>The lifecycle hooks configuration for the AgentCore Runtime.</p>",
+        "UpdateAgentRuntimeRequest$hooksConfiguration": "<p>The updated lifecycle hooks configuration for the AgentCore Runtime.</p>"
       }
     },
     "RuntimeMetadataConfiguration": {
@@ -8568,6 +8644,7 @@
     "ServerPort": {
       "base": "<p>A port between <code>8000</code> and <code>12000</code>. Port <code>8443</code> is reserved and cannot be used.</p>",
       "refs": {
+        "HttpPostLifecycleHookAction$port": "<p>The port in the agent's container that AgentCore Runtime sends the <code>POST</code> request to. If you don't specify a port, the default is the runtime's server port: the port in the protocol configuration if one is set, otherwise the protocol's default port.</p>",
         "ProtocolConfiguration$port": "<p>The port on which the agent server listens. The port must be between <code>8000</code> and <code>12000</code>, excluding the reserved port <code>8443</code>. When this field is omitted, the default is <code>8080</code> for <code>HTTP</code> and <code>AGUI</code>, <code>8000</code> for <code>MCP</code>, and <code>9000</code> for <code>A2A</code>.</p>"
       }
     },
@@ -9760,7 +9837,7 @@
     "UpdateMemoryInputEventExpiryDurationInteger": {
       "base": null,
       "refs": {
-        "UpdateMemoryInput$eventExpiryDuration": "<p>The number of days after which memory events will expire, between 7 and 365 days.</p>"
+        "UpdateMemoryInput$eventExpiryDuration": "<p>The number of days after which memory events expire, between 7 and 3650 days.</p>"
       }
     },
     "UpdateMemoryOutput": {

@@ -574,6 +574,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetSpaceDataAccess":{
+      "name":"GetSpaceDataAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetSpaceDataAccessInput"},
+      "output":{"shape":"GetSpaceDataAccessOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"PolicyTooLargeException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetTelemetryQueryResults":{
       "name":"GetTelemetryQueryResults",
       "http":{
@@ -1963,6 +1980,50 @@
       "min":36,
       "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     },
+    "DataAccessActionList":{
+      "type":"list",
+      "member":{"shape":"DataAccessActionName"},
+      "max":50,
+      "min":1
+    },
+    "DataAccessActionName":{
+      "type":"string",
+      "max":256,
+      "min":3,
+      "pattern":"[a-z0-9][a-z0-9-]*:[A-Za-z][A-Za-z0-9]*"
+    },
+    "DataAccessAuditContext":{
+      "type":"map",
+      "key":{"shape":"DataAccessAuditContextKeyString"},
+      "value":{"shape":"DataAccessAuditContextValueString"},
+      "max":10,
+      "min":0
+    },
+    "DataAccessAuditContextKeyString":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[A-Za-z0-9_.:/=+@-]+(?![\\s\\S]).*"
+    },
+    "DataAccessAuditContextValueString":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^\\u0000-\\u001F\\u007F-\\u009F]+(?![\\s\\S]).*"
+    },
+    "DataAccessTarget":{
+      "type":"structure",
+      "required":["actions"],
+      "members":{
+        "actions":{"shape":"DataAccessActionList"}
+      }
+    },
+    "DataAccessTargetList":{
+      "type":"list",
+      "member":{"shape":"DataAccessTarget"},
+      "max":10,
+      "min":1
+    },
     "DeepLinkCode":{
       "type":"string",
       "sensitive":true
@@ -2490,6 +2551,32 @@
       }
     },
     "GetSpaceCredentialsForOrganizationOutput":{
+      "type":"structure",
+      "required":["credentials"],
+      "members":{
+        "credentials":{"shape":"AwsCredentials"}
+      }
+    },
+    "GetSpaceDataAccessInput":{
+      "type":"structure",
+      "required":[
+        "spaceId",
+        "targetScopes"
+      ],
+      "members":{
+        "spaceId":{"shape":"SpaceId"},
+        "targetScopes":{"shape":"DataAccessTargetList"},
+        "durationSeconds":{"shape":"GetSpaceDataAccessInputDurationSecondsInteger"},
+        "auditContext":{"shape":"DataAccessAuditContext"}
+      }
+    },
+    "GetSpaceDataAccessInputDurationSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":3600,
+      "min":900
+    },
+    "GetSpaceDataAccessOutput":{
       "type":"structure",
       "required":["credentials"],
       "members":{
@@ -3517,6 +3604,18 @@
       "members":{
         "partialResultsDetected":{"shape":"Boolean"}
       }
+    },
+    "PolicyTooLargeException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
     },
     "PrincipalId":{
       "type":"string",

@@ -391,6 +391,10 @@
       "type":"string",
       "pattern":"ami-[a-z0-9]+"
     },
+    "AmiIdOrEmpty":{
+      "type":"string",
+      "pattern":"(ami-[a-z0-9]+)?"
+    },
     "Arn":{
       "type":"string",
       "max":1011,
@@ -541,12 +545,14 @@
         "modifiedAt",
         "status",
         "subnetIds",
-        "customLaunchTemplate",
         "iamInstanceProfileArn",
         "scalingConfiguration",
         "instanceConfigs"
       ],
       "members":{
+        "amiId":{"shape":"AmiId"},
+        "securityGroupIds":{"shape":"SecurityGroupIdList"},
+        "sshKeyName":{"shape":"KeyPairName"},
         "name":{"shape":"ComputeNodeGroupName"},
         "id":{"shape":"String"},
         "arn":{"shape":"String"},
@@ -554,9 +560,9 @@
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "modifiedAt":{"shape":"SyntheticTimestamp_date_time"},
         "status":{"shape":"ComputeNodeGroupStatus"},
-        "amiId":{"shape":"AmiId"},
         "subnetIds":{"shape":"SubnetIdList"},
         "purchaseOption":{"shape":"PurchaseOption"},
+        "launchTemplateMode":{"shape":"LaunchTemplateMode"},
         "customLaunchTemplate":{"shape":"CustomLaunchTemplate"},
         "iamInstanceProfileArn":{"shape":"InstanceProfileArn"},
         "scalingConfiguration":{"shape":"ScalingConfiguration"},
@@ -703,17 +709,19 @@
         "clusterIdentifier",
         "computeNodeGroupName",
         "subnetIds",
-        "customLaunchTemplate",
         "iamInstanceProfileArn",
         "scalingConfiguration",
         "instanceConfigs"
       ],
       "members":{
+        "amiId":{"shape":"AmiId"},
+        "securityGroupIds":{"shape":"SecurityGroupIdList"},
+        "sshKeyName":{"shape":"KeyPairName"},
         "clusterIdentifier":{"shape":"ClusterIdentifier"},
         "computeNodeGroupName":{"shape":"ComputeNodeGroupName"},
-        "amiId":{"shape":"AmiId"},
         "subnetIds":{"shape":"StringList"},
         "purchaseOption":{"shape":"PurchaseOption"},
+        "launchTemplateMode":{"shape":"LaunchTemplateMode"},
         "customLaunchTemplate":{"shape":"CustomLaunchTemplate"},
         "iamInstanceProfileArn":{"shape":"InstanceProfileArn"},
         "scalingConfiguration":{"shape":"ScalingConfigurationRequest"},
@@ -967,6 +975,23 @@
         "secretArn":{"shape":"String"},
         "secretVersion":{"shape":"String"}
       }
+    },
+    "KeyPairName":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "KeyPairNameOrEmpty":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
+    "LaunchTemplateMode":{
+      "type":"string",
+      "enum":[
+        "CUSTOM",
+        "MANAGED"
+      ]
     },
     "ListClustersRequest":{
       "type":"structure",
@@ -1392,6 +1417,10 @@
       "type":"list",
       "member":{"shape":"SecurityGroupId"}
     },
+    "SecurityGroupIdListOrEmpty":{
+      "type":"list",
+      "member":{"shape":"SecurityGroupId"}
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
@@ -1625,10 +1654,13 @@
         "computeNodeGroupIdentifier"
       ],
       "members":{
+        "amiId":{"shape":"AmiIdOrEmpty"},
+        "securityGroupIds":{"shape":"SecurityGroupIdListOrEmpty"},
+        "sshKeyName":{"shape":"KeyPairNameOrEmpty"},
         "clusterIdentifier":{"shape":"ClusterIdentifier"},
         "computeNodeGroupIdentifier":{"shape":"ComputeNodeGroupIdentifier"},
-        "amiId":{"shape":"AmiId"},
         "subnetIds":{"shape":"StringList"},
+        "launchTemplateMode":{"shape":"LaunchTemplateMode"},
         "customLaunchTemplate":{"shape":"CustomLaunchTemplate"},
         "purchaseOption":{"shape":"PurchaseOption"},
         "spotOptions":{"shape":"SpotOptions"},

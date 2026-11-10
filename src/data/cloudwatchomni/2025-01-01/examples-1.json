@@ -1199,6 +1199,41 @@
         "title": "Get space credentials for an organization member account"
       }
     ],
+    "GetSpaceDataAccess": [
+      {
+        "input": {
+          "auditContext": {
+            "source": "logs-console"
+          },
+          "durationSeconds": 3600,
+          "spaceId": "a1b2c3d4-5e6f-4a3b-8c9d-0e1f2a3b4c5d",
+          "targetScopes": [
+            {
+              "actions": [
+                "logs:StartQuery",
+                "logs:GetQueryResults"
+              ]
+            },
+            {
+              "actions": [
+                "cloudwatch:GetMetricData"
+              ]
+            }
+          ]
+        },
+        "output": {
+          "credentials": {
+            "accessKeyId": "ASIAIOSFODNN7EXAMPLE",
+            "expiration": "2026-10-20T19:22:31Z",
+            "secretAccessKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+            "sessionToken": "EXAMPLE-SESSION-TOKEN"
+          }
+        },
+        "description": "The following example requests credentials that allow running log queries and reading metric data in a space. Payloads are shown as JSON; on the wire they are CBOR-encoded.",
+        "id": "example-1",
+        "title": "Get data credentials for log queries"
+      }
+    ],
     "GetTelemetryQueryResults": [
       {
         "input": {

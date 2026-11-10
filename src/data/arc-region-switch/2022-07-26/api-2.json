@@ -308,7 +308,8 @@
       "input":{"shape":"UpdatePlanRequest"},
       "output":{"shape":"UpdatePlanResponse"},
       "errors":[
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"RetryableConflictException"}
       ],
       "staticContextParams":{
         "UseControlPlaneEndpoint":{"value":true}
@@ -1875,6 +1876,21 @@
     "Resources":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "RetryableConflictException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"},
+        "resourceId":{"shape":"String"},
+        "resourceType":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true,
+      "retryable":{"throttling":false}
     },
     "RoleArn":{"type":"string"},
     "Route53HealthCheck":{

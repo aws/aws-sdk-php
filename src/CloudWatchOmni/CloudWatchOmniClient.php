@@ -411,6 +411,22 @@ use Aws\AwsClient;
  *     credentialType?: 'SPACE_OPERATION',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result getSpaceDataAccess(array $args = [])
+ * @phpstan-method \Aws\Result getSpaceDataAccess(array{
+ *     spaceId?: string,
+ *     targetScopes?: list<array{actions?: list<string>, ...}>,
+ *     durationSeconds?: int,
+ *     auditContext?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise getSpaceDataAccessAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getSpaceDataAccessAsync(array{
+ *     spaceId?: string,
+ *     targetScopes?: list<array{actions?: list<string>, ...}>,
+ *     durationSeconds?: int,
+ *     auditContext?: array<string, string>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result getTelemetryQueryResults(array $args = [])
  * @phpstan-method \Aws\Result getTelemetryQueryResults(array{queryId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getTelemetryQueryResultsAsync(array $args = [])
