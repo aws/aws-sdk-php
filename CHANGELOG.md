@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.403.4 - 2026-11-11
 
 * `Aws\S3` - Adds support for configuring the multipart upload part size through the S3 Transfer `part_size` option.
 * `Aws\NetworkFirewall` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.0. The SDK will prioritize its most performant protocol.
