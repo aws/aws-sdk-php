@@ -2769,6 +2769,52 @@ EOT;
         $this->assertSame('testKey', $credentials->getAccessKeyId());
     }
 
+    public function testLoginUsesSignInRegionWithInvalidRegion(): void
+    {
+        $awsDir = $this->createAwsHome();
+
+        $ini = <<<EOT
+[profile testProfile]
+login_session = arn:aws:iam::123456789012:user/TestUser
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+        $this->createLoginTokenCache(
+            $awsDir,
+            'arn:aws:iam::123456789012:user/TestUser',
+            '+1 hour',
+            'eu-west-1'
+        );
+
+        // The invalid region is never used because the token has a signInRegion
+        $credentials = CredentialProvider::login(
+            'testProfile',
+            ['region' => 'bad region!']
+        )()->wait();
+
+        $this->assertSame('testKey', $credentials->getAccessKeyId());
+    }
+
+    public function testLoginWithoutSignInRegionFailsWithInvalidRegion(): void
+    {
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage('Unable to create the Sign-In service client');
+
+        $awsDir = $this->createAwsHome();
+
+        $ini = <<<EOT
+[profile testProfile]
+login_session = arn:aws:iam::123456789012:user/TestUser
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+        $this->createLoginTokenCache(
+            $awsDir,
+            'arn:aws:iam::123456789012:user/TestUser',
+            '+1 hour'
+        );
+
+        CredentialProvider::login('testProfile', ['region' => 'bad region!'])()->wait();
+    }
+
     public function testLoginHandlesInvalidProfileName(): void
     {
         $this->expectException(CredentialsException::class);

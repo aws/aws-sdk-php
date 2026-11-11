@@ -1818,10 +1818,8 @@ EOT;
 
         $this->assertInstanceOf(SigninClient::class, $client);
         $this->assertSame('eu-central-1', $client->getRegion());
-        $this->assertNotSame(
-            $reflection->getProperty('client')->getValue($provider),
-            $client
-        );
+        // The fallback client is never built
+        $this->assertNull($reflection->getProperty('client')->getValue($provider));
         // The regional client is reused
         $this->assertSame($client, $method->invoke($provider));
     }
@@ -1998,7 +1996,6 @@ EOT;
         // No in-code region, AWS_REGION, or profile region
         $provider = new LoginCredentialProvider('default');
         $reflection = new \ReflectionClass($provider);
-        $this->assertNull($reflection->getProperty('client')->getValue($provider));
 
         $seen = null;
         $capture = function (CommandInterface $c, RequestInterface $r) use (&$seen) {
@@ -2042,6 +2039,30 @@ EOT;
         $client = (new \ReflectionMethod($provider, 'getRefreshClient'))
             ->invoke($provider);
         $this->assertSame('eu-west-1', $client->getRegion());
+    }
+
+    public function testGetRefreshClientIgnoresInvalidFallbackRegionWithSignInRegion(): void
+    {
+        $awsDir = $this->createAwsHome();
+        $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
+        $this->createValidTokenCache(
+            $awsDir,
+            $loginSession,
+            ['signInRegion' => 'eu-west-1']
+        );
+        $this->createConfigFileWithoutRegion($awsDir, $loginSession);
+
+        $provider = new LoginCredentialProvider('default', 'bad region!');
+        $credentials = $provider()->wait();
+        $this->assertSame('testKey', $credentials->getAccessKeyId());
+
+        $client = (new \ReflectionMethod($provider, 'getRefreshClient'))
+            ->invoke($provider);
+        $this->assertSame('eu-west-1', $client->getRegion());
+        // The fallback client is never built
+        $this->assertNull(
+            (new \ReflectionProperty($provider, 'client'))->getValue($provider)
+        );
     }
 
     public function testExpiredTokenWithoutSignInRegionOrFallbackRegionFailsOnFirstCall(): void

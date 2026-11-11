@@ -3,6 +3,7 @@ namespace Aws\Credentials;
 
 use Aws\Configuration\ConfigurationResolver;
 use Aws\Exception\CredentialsException;
+use Aws\Exception\InvalidRegionException;
 use Aws\Signin\SigninClient;
 use Aws\Signin\Exception\SigninException;
 use GuzzleHttp\Promise;
@@ -56,7 +57,7 @@ final class LoginCredentialProvider
     /** @var string The profile name used for login session configuration */
     private string $profileName;
     
-    /** @var SigninClient|null The Signin client for the fallback region, if one was resolved */
+    /** @var SigninClient|null The Signin client for the fallback region, built when first needed */
     private ?SigninClient $client = null;
 
     /** @var string|null The fallback region resolved at construction, if any */
@@ -78,8 +79,8 @@ final class LoginCredentialProvider
      *                            `AWS_REGION`, then the profile specified for `login`.
      *                            A `signInRegion` in the cached token takes
      *                            precedence over this region. Without one, a
-     *                            region is required, and a missing region is
-     *                            reported on the first call.
+     *                            valid region is required, and a missing or
+     *                            invalid region is reported on the first call.
      */
     public function __construct(
         string $profileName,
@@ -94,9 +95,6 @@ final class LoginCredentialProvider
 
         $this->profileName = $profileName;
         $this->fallbackRegion = self::resolveFallbackRegion($profileName, $region);
-        if ($this->fallbackRegion !== null) {
-            $this->client = self::buildSigninClient($this->fallbackRegion);
-        }
         $this->tokenLocation = $this->resolveTokenLocation($profileName);
     }
 
@@ -115,10 +113,9 @@ final class LoginCredentialProvider
         return Promise\Coroutine::of(function () {
             if ($this->token === null) {
                 $token = $this->loadToken();
-                if (self::getSignInRegion($token) === null
-                    && $this->client === null
-                ) {
-                    throw self::missingRegionException();
+                // Without a signInRegion, refreshes need the fallback client
+                if (self::getSignInRegion($token) === null) {
+                    $this->getFallbackClient();
                 }
                 $this->token = $token;
             }
@@ -498,8 +495,8 @@ final class LoginCredentialProvider
      * otherwise.
      *
      * @return SigninClient
-     * @throws CredentialsException If the token has no `signInRegion` and no
-     *                              fallback region was resolved
+     * @throws CredentialsException If the token has no `signInRegion` and the
+     *                              fallback region is missing or invalid
      */
     private function getRefreshClient(): SigninClient
     {
@@ -508,11 +505,35 @@ final class LoginCredentialProvider
             return $this->regionalClients[$region] ??= self::buildSigninClient($region);
         }
 
-        if ($this->client === null) {
+        return $this->getFallbackClient();
+    }
+
+    /**
+     * Returns the SigninClient for the fallback region, building it on first use
+     *
+     * @return SigninClient
+     * @throws CredentialsException If the fallback region is missing or invalid
+     */
+    private function getFallbackClient(): SigninClient
+    {
+        if ($this->client !== null) {
+            return $this->client;
+        }
+
+        if ($this->fallbackRegion === null) {
             throw self::missingRegionException();
         }
 
-        return $this->client;
+        try {
+            return $this->client = self::buildSigninClient($this->fallbackRegion);
+        } catch (InvalidRegionException $e) {
+            throw new CredentialsException(
+                'Unable to create the Sign-In service client used for refreshing '
+                . 'Login credentials: ' . $e->getMessage(),
+                0,
+                $e
+            );
+        }
     }
 
     /**
