@@ -25,6 +25,7 @@ class Transfer implements PromisorInterface
     private $sourceMetadata;
     private $destination;
     private $concurrency;
+    private $partSize;
     private $mupThreshold;
     private $before;
     private $after;
@@ -61,6 +62,8 @@ class Transfer implements PromisorInterface
      *   be resolved from within the callback to short-circuit the promise.
      * - mup_threshold: (int) Size in bytes in which a multipart upload should
      *   be used instead of PutObject. Defaults to 20971520 (20 MB).
+     * - part_size: (int, default=int(5242880)) Part size, in bytes, to use when
+     *   doing a multipart upload. This must be between 5 MB and 5 GB, inclusive.
      * - concurrency: (int, default=5) Number of files to upload concurrently.
      *   The ideal concurrency value will vary based on the number of files
      *   being uploaded and the average size of each file. Generally speaking,
@@ -118,6 +121,15 @@ class Transfer implements PromisorInterface
         $this->concurrency = isset($options['concurrency'])
             ? $options['concurrency']
             : MultipartUploader::DEFAULT_CONCURRENCY;
+        $this->partSize = isset($options['part_size'])
+            ? $options['part_size']
+            : MultipartUploader::PART_MIN_SIZE;
+        if ($this->partSize < MultipartUploader::PART_MIN_SIZE
+            || $this->partSize > MultipartUploader::PART_MAX_SIZE
+        ) {
+            throw new \InvalidArgumentException('The part size must be no less '
+                . 'than 5 MB and no greater than 5 GB.');
+        }
         $this->mupThreshold = isset($options['mup_threshold'])
             ? $options['mup_threshold']
             : 16777216;
@@ -391,6 +403,7 @@ class Transfer implements PromisorInterface
             'before_upload'   => $this->before,
             'before_complete' => $this->before,
             'concurrency'     => $this->concurrency,
+            'part_size'       => $this->partSize,
             'add_content_md5' => $this->addContentMD5
         ]))->promise();
     }

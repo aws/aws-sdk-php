@@ -5,6 +5,7 @@ use Aws\CommandInterface;
 use Aws\HandlerList;
 use Aws\Middleware;
 use Aws\Result;
+use Aws\S3\MultipartUploader;
 use Aws\S3\S3Client;
 use Aws\S3\Transfer;
 use Aws\Test\UsesServiceTrait;
@@ -72,6 +73,25 @@ class TransferTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $s3 = $this->getTestClient('s3');
         new Transfer($s3, __DIR__, 's3://foo/bar', ['mup_threshold' => 10]);
+    }
+
+    #[DataProvider('invalidPartSizeProvider')]
+    public function testEnsuresPartSizeIsValid($partSize)
+    {
+        $this->expectExceptionMessage(
+            'The part size must be no less than 5 MB and no greater than 5 GB.'
+        );
+        $this->expectException(\InvalidArgumentException::class);
+        $s3 = $this->getTestClient('s3');
+        new Transfer($s3, __DIR__, 's3://foo/bar', ['part_size' => $partSize]);
+    }
+
+    public static function invalidPartSizeProvider()
+    {
+        return [
+            'less than minimum' => [MultipartUploader::PART_MIN_SIZE - 1],
+            'greater than maximum' => [MultipartUploader::PART_MAX_SIZE + 1],
+        ];
     }
 
     public function testEnsuresSourceIsValid()
@@ -277,6 +297,45 @@ class TransferTest extends TestCase
         $output = stream_get_contents($res);
         $normalizedFilename = str_replace('\\', '/', (string)$filename);
         $this->assertStringContainsString("Transferring $normalizedFilename -> s3://foo/bar/large.txt (UploadPart) : Part=1", $output);
+        $this->deleteDirectory($dir);
+    }
+
+    public function testMultipartForLargeFilesDoesUsePartSize()
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [
+            new Result(['UploadId' => '123']),
+            new Result(['ETag' => 'a']),
+            new Result(['ETag' => 'b']),
+            new Result(['UploadId' => '123']),
+        ]);
+
+        $partNumbers = [];
+        $s3->getHandlerList()->appendSign(Middleware::tap(
+            function (CommandInterface $cmd) use (&$partNumbers) {
+                if ($cmd->getName() === 'UploadPart') {
+                    $partNumbers[] = $cmd['PartNumber'];
+                }
+            }
+        ));
+
+        $dir = sys_get_temp_dir() . '/unittest-part-size';
+        $this->deleteDirectory($dir);
+        mkdir($dir);
+        $filename = $dir . '/large.txt';
+        $f = fopen($filename, 'w+');
+        $line = str_repeat('.', 1024);
+        for ($i = 0; $i < 20000; $i++) {
+            fwrite($f, $line);
+        }
+        fclose($f);
+
+        $t = new Transfer($s3, $dir, 's3://foo/bar', [
+            'part_size' => 1024 * 1024 * 10,
+        ]);
+
+        $t->transfer();
+        $this->assertSame([1, 2], $partNumbers);
         $this->deleteDirectory($dir);
     }
 
