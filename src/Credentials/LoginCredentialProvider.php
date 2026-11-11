@@ -38,6 +38,7 @@ final class LoginCredentialProvider
     private const KEY_SESSION_TOKEN = 'sessionToken';
     private const KEY_ACCOUNT_ID = 'accountId';
     private const KEY_EXPIRES_AT = 'expiresAt';
+    private const KEY_SIGN_IN_REGION = 'signInRegion';
     private const REQUIRED_CACHE_KEYS = [
         self::KEY_ACCESS_TOKEN,
         self::REQUEST_KEY_CLIENT_ID,
@@ -55,8 +56,14 @@ final class LoginCredentialProvider
     /** @var string The profile name used for login session configuration */
     private string $profileName;
     
-    /** @var SigninClient The Signin service client used for token refresh operations */
-    private SigninClient $client;
+    /** @var SigninClient|null The Signin client for the fallback region, if one was resolved */
+    private ?SigninClient $client = null;
+
+    /** @var string|null The fallback region resolved at construction, if any */
+    private ?string $fallbackRegion = null;
+
+    /** @var array<string, SigninClient> Signin clients keyed by a cached token's `signInRegion` */
+    private array $regionalClients = [];
     
     /** @var string The file path to the cached token location */
     private string $tokenLocation;
@@ -69,6 +76,10 @@ final class LoginCredentialProvider
      * @param string|null $region Region used for refresh requests. If not provided,
      *                            attempts will be made to resolve a region using
      *                            `AWS_REGION`, then the profile specified for `login`.
+     *                            A `signInRegion` in the cached token takes
+     *                            precedence over this region. Without one, a
+     *                            region is required, and a missing region is
+     *                            reported on the first call.
      */
     public function __construct(
         string $profileName,
@@ -82,7 +93,10 @@ final class LoginCredentialProvider
         }
 
         $this->profileName = $profileName;
-        $this->client = $this->createSigninClient($profileName, $region);
+        $this->fallbackRegion = self::resolveFallbackRegion($profileName, $region);
+        if ($this->fallbackRegion !== null) {
+            $this->client = self::buildSigninClient($this->fallbackRegion);
+        }
         $this->tokenLocation = $this->resolveTokenLocation($profileName);
     }
 
@@ -99,7 +113,15 @@ final class LoginCredentialProvider
     public function __invoke(): Promise\PromiseInterface
     {
         return Promise\Coroutine::of(function () {
-            $this->token ??= $this->loadToken();
+            if ($this->token === null) {
+                $token = $this->loadToken();
+                if (self::getSignInRegion($token) === null
+                    && $this->client === null
+                ) {
+                    throw self::missingRegionException();
+                }
+                $this->token = $token;
+            }
             $credentials = $this->token[self::KEY_ACCESS_TOKEN];
             
             if ($this->shouldRefresh($credentials)) {
@@ -149,7 +171,7 @@ final class LoginCredentialProvider
         }
 
         try {
-            $refreshed = (yield $this->client->createOAuth2TokenAsync([
+            $refreshed = (yield $this->getRefreshClient()->createOAuth2TokenAsync([
                 self::REQUEST_KEY_TOKEN_INPUT => [
                     self::REQUEST_KEY_CLIENT_ID => $this->token[self::REQUEST_KEY_CLIENT_ID],
                     self::REQUEST_KEY_GRANT_TYPE => self::GRANT_TYPE,
@@ -338,6 +360,10 @@ final class LoginCredentialProvider
      */
     private function handleRefreshException(\Exception $e): \Exception
     {
+        if ($e instanceof CredentialsException) {
+            return $e;
+        }
+
         if ($e instanceof SigninException) {
             trigger_error(
                 'Failed to refresh login credentials: ' . $e->getAwsErrorMessage(),
@@ -444,14 +470,15 @@ final class LoginCredentialProvider
     }
 
     /**
-     * Creates a SigninClient configured for DPoP authentication
+     * Resolves the fallback region for the Signin client from the region
+     * passed to the constructor, `AWS_REGION`, then the profile's `region`
      *
      * @param string $profile
-     * @param string|null $region The AWS region for the Signin service
+     * @param string|null $region The region passed to the constructor, if any
      *
-     * @return SigninClient A configured SigninClient instance with DPoP signature version
+     * @return string|null The resolved region, or null if none is configured
      */
-    private function createSigninClient(string $profile, ?string $region): SigninClient
+    private static function resolveFallbackRegion(string $profile, ?string $region): ?string
     {
         $resolvedRegion = $region
             ?? ConfigurationResolver::env(self::KEY_CLIENT_REGION)
@@ -462,17 +489,73 @@ final class LoginCredentialProvider
                 self::PROFILE_SECONDARY . $profile
             );
 
-        if (empty($resolvedRegion)) {
-            throw new CredentialsException(
-                'Unable to determine region for the Sign-In service client '
-                . ' used for refreshing Login credentials. You can provide a region in-code '
-                . 'when constructing the provider, by setting the AWS_REGION environment variable'
-                . ', or by setting a `region` in your specified profile.'
-            );
+        return empty($resolvedRegion) ? null : $resolvedRegion;
+    }
+
+    /**
+     * Returns the SigninClient to use for a token refresh. Uses a client for
+     * the cached token's `signInRegion` when present, and the fallback client
+     * otherwise.
+     *
+     * @return SigninClient
+     * @throws CredentialsException If the token has no `signInRegion` and no
+     *                              fallback region was resolved
+     */
+    private function getRefreshClient(): SigninClient
+    {
+        $region = self::getSignInRegion($this->token);
+        if ($region !== null && $region !== $this->fallbackRegion) {
+            return $this->regionalClients[$region] ??= self::buildSigninClient($region);
         }
 
+        if ($this->client === null) {
+            throw self::missingRegionException();
+        }
+
+        return $this->client;
+    }
+
+    /**
+     * Returns the token's `signInRegion` when it is a non-empty string
+     *
+     * @param array|null $token The loaded token data
+     *
+     * @return string|null
+     */
+    private static function getSignInRegion(?array $token): ?string
+    {
+        $region = $token[self::KEY_SIGN_IN_REGION] ?? null;
+        $region = is_string($region) ? trim($region) : '';
+
+        return $region === '' ? null : $region;
+    }
+
+    /**
+     * Builds the error for when no Sign-In region can be determined
+     *
+     * @return CredentialsException
+     */
+    private static function missingRegionException(): CredentialsException
+    {
+        return new CredentialsException(
+            'Unable to determine region for the Sign-In service client '
+            . ' used for refreshing Login credentials. You can provide a region in-code '
+            . 'when constructing the provider, by setting the AWS_REGION environment variable'
+            . ', or by setting a `region` in your specified profile.'
+        );
+    }
+
+    /**
+     * Builds a SigninClient configured for DPoP authentication
+     *
+     * @param string $region The AWS region for the Signin service
+     *
+     * @return SigninClient
+     */
+    private static function buildSigninClient(string $region): SigninClient
+    {
         return new SigninClient([
-            self::KEY_CLIENT_REGION => $resolvedRegion,
+            self::KEY_CLIENT_REGION => $region,
             self::KEY_CLIENT_SIGNATURE_VERSION => self::CLIENT_SIGNATURE_DPOP,
             self::KEY_CLIENT_CREDENTIALS => false
         ]);

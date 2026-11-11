@@ -9,6 +9,8 @@ use Aws\Exception\CredentialsException;
 use Aws\Result;
 use Aws\Signin\SigninClient;
 use Aws\Signin\Exception\SigninException;
+use GuzzleHttp\Promise;
+use Psr\Http\Message\RequestInterface;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -1279,9 +1281,12 @@ EOT;
 
         $provider = new LoginCredentialProvider('signin', 'us-west-2');
         if (!empty($mockApiCalls)) {
+            // `region` on a mocked request asserts the region the refresh is sent to
+            $mockRegion = $mockApiCalls[0]['request']['region'] ?? null;
             $mockClient = $this->getTestClient(
                 'Signin',
                 ['credentials' => false, 'signature_version' => 'dpop']
+                    + ($mockRegion !== null ? ['region' => $mockRegion] : [])
             );
 
             $mockResults = [];
@@ -1305,7 +1310,18 @@ EOT;
 
                 $reflection = new \ReflectionClass($provider);
                 $clientProperty = $reflection->getProperty('client');
-                $clientProperty->setValue($provider, $mockClient);
+                if ($mockRegion === null) {
+                    $clientProperty->setValue($provider, $mockClient);
+                } else {
+                    // The refresh must not use the fallback client
+                    $fallbackClient = $this->getMockBuilder(SigninClient::class)
+                        ->disableOriginalConstructor()
+                        ->getMock();
+                    $fallbackClient->expects($this->never())->method('__call');
+                    $clientProperty->setValue($provider, $fallbackClient);
+                    $reflection->getProperty('regionalClients')
+                        ->setValue($provider, [$mockRegion => $mockClient]);
+                }
             }
         }
 
@@ -1325,6 +1341,9 @@ EOT;
                     $this->assertEquals($outcome['sessionToken'], $credentials->getSecurityToken());
                     $this->assertEquals($outcome['accountId'], $credentials->getAccountId());
                     $this->assertEquals(CredentialSources::PROFILE_LOGIN, $credentials->getSource());
+                    if (!empty($mockApiCalls)) {
+                        $this->assertTrue($this->mockQueueEmpty());
+                    }
 
                     break;
 
@@ -1362,6 +1381,15 @@ EOT;
                                     $expectedContent['refreshToken'],
                                     $actualContent['refreshToken']
                                 );
+                            }
+
+                            if (isset($expectedContent['signInRegion'])) {
+                                $this->assertEquals(
+                                    $expectedContent['signInRegion'],
+                                    $actualContent['signInRegion']
+                                );
+                            } else {
+                                $this->assertArrayNotHasKey('signInRegion', $actualContent);
                             }
                         }
                     }
@@ -1730,5 +1758,340 @@ EOT;
         $cacheContent = json_decode(file_get_contents($tokenFile), true);
         $this->assertEquals('expiredKey', $cacheContent['accessToken']['accessKeyId']);
         $this->assertEquals('testRefresh', $cacheContent['refreshToken']); // Old refresh token
+    }
+
+    private function createExpiredTokenWithSignInRegion(
+        string $awsDir,
+        string $loginSession,
+        $signInRegion = null
+    ): string
+    {
+        $overrides = [
+            'accessToken' => [
+                'accessKeyId' => 'expiredKey',
+                'secretAccessKey' => 'expiredSecret',
+                'sessionToken' => 'expiredToken',
+                'accountId' => '123456789012',
+                'expiresAt' => gmdate('Y-m-d\TH:i:s\Z', time() - 3600)
+            ]
+        ];
+        if ($signInRegion !== null) {
+            $overrides['signInRegion'] = $signInRegion;
+        }
+
+        return $this->createValidTokenCache($awsDir, $loginSession, $overrides);
+    }
+
+    private static function refreshTokenOutput(): array
+    {
+        return [
+            'tokenOutput' => [
+                'refreshToken' => 'newRefresh',
+                'accessToken' => [
+                    'accessKeyId' => 'refreshedKey',
+                    'secretAccessKey' => 'refreshedSecret',
+                    'sessionToken' => 'refreshedToken',
+                ],
+                'expiresIn' => 3600
+            ]
+        ];
+    }
+
+    public function testGetRefreshClientUsesTokenSignInRegion(): void
+    {
+        $awsDir = $this->createAwsHome();
+        $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
+        $this->createValidTokenCache(
+            $awsDir,
+            $loginSession,
+            ['signInRegion' => 'eu-central-1']
+        );
+        $this->createConfigFile($awsDir, 'default', $loginSession);
+
+        $provider = new LoginCredentialProvider('default', 'us-west-2');
+        // Token is fresh, so no refresh request is sent
+        $provider()->wait();
+
+        $reflection = new \ReflectionClass($provider);
+        $method = $reflection->getMethod('getRefreshClient');
+        $client = $method->invoke($provider);
+
+        $this->assertInstanceOf(SigninClient::class, $client);
+        $this->assertSame('eu-central-1', $client->getRegion());
+        $this->assertNotSame(
+            $reflection->getProperty('client')->getValue($provider),
+            $client
+        );
+        // The regional client is reused
+        $this->assertSame($client, $method->invoke($provider));
+    }
+
+    public function testRefreshSendsRequestToSignInRegion(): void
+    {
+        $awsDir = $this->createAwsHome();
+        $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
+        $tokenFile = $this->createExpiredTokenWithSignInRegion(
+            $awsDir,
+            $loginSession,
+            'eu-central-1'
+        );
+        $this->createConfigFile($awsDir, 'default', $loginSession);
+
+        $seen = null;
+        $capture = function (CommandInterface $c, RequestInterface $r) use (&$seen) {
+            $seen = $r;
+            return Promise\Create::promiseFor(new Result(self::refreshTokenOutput()));
+        };
+        $regionalClient = $this->getTestClient('Signin', [
+            'region' => 'eu-central-1',
+            'credentials' => false,
+            'signature_version' => 'dpop',
+            'handler' => $capture
+        ]);
+
+        $defaultClient = $this->getMockBuilder(SigninClient::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $defaultClient->expects($this->never())->method('__call');
+
+        $provider = new LoginCredentialProvider('default', 'us-west-2');
+        $reflection = new \ReflectionClass($provider);
+        $reflection->getProperty('client')->setValue($provider, $defaultClient);
+        $reflection->getProperty('regionalClients')
+            ->setValue($provider, ['eu-central-1' => $regionalClient]);
+
+        $credentials = $provider()->wait();
+
+        $this->assertSame('refreshedKey', $credentials->getAccessKeyId());
+        $this->assertInstanceOf(RequestInterface::class, $seen);
+        $this->assertSame(
+            'eu-central-1.signin.aws.amazon.com',
+            $seen->getUri()->getHost()
+        );
+
+        $dpop = $seen->getHeaderLine('DPoP');
+        $parts = explode('.', $dpop);
+        $this->assertCount(3, $parts);
+        $payload = json_decode(
+            base64_decode(strtr($parts[1], '-_', '+/')),
+            true
+        );
+        $this->assertStringContainsString(
+            'eu-central-1.signin.aws.amazon.com',
+            $payload['htu']
+        );
+
+        // signInRegion is preserved in the cache file
+        $cache = json_decode(file_get_contents($tokenFile), true);
+        $this->assertSame('eu-central-1', $cache['signInRegion']);
+        $this->assertSame('newRefresh', $cache['refreshToken']);
+    }
+
+    public static function fallbackSignInRegionProvider(): array
+    {
+        // A missing signInRegion is covered by the shared test cases
+        return [
+            'empty' => [''],
+            'whitespace' => ['  '],
+            'non-string' => [123],
+            'same as fallback' => ['us-west-2'],
+        ];
+    }
+
+    #[DataProvider('fallbackSignInRegionProvider')]
+    public function testRefreshUsesDefaultClientWithoutDistinctSignInRegion(
+        $signInRegion
+    ): void
+    {
+        $awsDir = $this->createAwsHome();
+        $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
+        $tokenFile = $this->createExpiredTokenWithSignInRegion(
+            $awsDir,
+            $loginSession,
+            $signInRegion
+        );
+        $this->createConfigFile($awsDir, 'default', $loginSession);
+
+        $mockClient = $this->getTestClient(
+            'Signin',
+            ['credentials' => false, 'signature_version' => 'dpop']
+        );
+        $this->addMockResults($mockClient, [new Result(self::refreshTokenOutput())]);
+
+        $provider = new LoginCredentialProvider('default', 'us-west-2');
+        $reflection = new \ReflectionClass($provider);
+        $reflection->getProperty('client')->setValue($provider, $mockClient);
+
+        $credentials = $provider()->wait();
+
+        $this->assertSame('refreshedKey', $credentials->getAccessKeyId());
+        $this->assertSame(
+            [],
+            $reflection->getProperty('regionalClients')->getValue($provider)
+        );
+
+        $cache = json_decode(file_get_contents($tokenFile), true);
+        $this->assertSame($signInRegion, $cache['signInRegion']);
+    }
+
+    public function testInvalidSignInRegionContinuesWithExistingToken(): void
+    {
+        $awsDir = $this->createAwsHome();
+        $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
+        $this->createExpiredTokenWithSignInRegion(
+            $awsDir,
+            $loginSession,
+            'bad region!'
+        );
+        $this->createConfigFile($awsDir, 'default', $loginSession);
+
+        $defaultClient = $this->getMockBuilder(SigninClient::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $defaultClient->expects($this->never())->method('__call');
+
+        $provider = new LoginCredentialProvider('default', 'us-west-2');
+        $reflection = new \ReflectionClass($provider);
+        $reflection->getProperty('client')->setValue($provider, $defaultClient);
+
+        $notices = [];
+        set_error_handler(function ($no, $str) use (&$notices) {
+            $notices[] = [$no, $str];
+            return true;
+        }, E_USER_NOTICE);
+        try {
+            $credentials = $provider()->wait();
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertSame('expiredKey', $credentials->getAccessKeyId());
+        $this->assertNotEmpty($notices);
+        $this->assertStringContainsString(
+            'Continuing with existing token after refresh failure',
+            end($notices)[1]
+        );
+    }
+
+    private function createConfigFileWithoutRegion(
+        string $awsDir,
+        string $loginSession
+    ): void
+    {
+        file_put_contents(
+            $awsDir . '/config',
+            "[default]\nlogin_session = {$loginSession}\n"
+        );
+    }
+
+    public function testRefreshUsesSignInRegionWithoutFallbackRegion(): void
+    {
+        $awsDir = $this->createAwsHome();
+        $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
+        $this->createExpiredTokenWithSignInRegion(
+            $awsDir,
+            $loginSession,
+            'eu-west-1'
+        );
+        $this->createConfigFileWithoutRegion($awsDir, $loginSession);
+
+        // No in-code region, AWS_REGION, or profile region
+        $provider = new LoginCredentialProvider('default');
+        $reflection = new \ReflectionClass($provider);
+        $this->assertNull($reflection->getProperty('client')->getValue($provider));
+
+        $seen = null;
+        $capture = function (CommandInterface $c, RequestInterface $r) use (&$seen) {
+            $seen = $r;
+            return Promise\Create::promiseFor(new Result(self::refreshTokenOutput()));
+        };
+        $regionalClient = $this->getTestClient('Signin', [
+            'region' => 'eu-west-1',
+            'credentials' => false,
+            'signature_version' => 'dpop',
+            'handler' => $capture
+        ]);
+        $reflection->getProperty('regionalClients')
+            ->setValue($provider, ['eu-west-1' => $regionalClient]);
+
+        $credentials = $provider()->wait();
+
+        $this->assertSame('refreshedKey', $credentials->getAccessKeyId());
+        $this->assertInstanceOf(RequestInterface::class, $seen);
+        $this->assertSame(
+            'eu-west-1.signin.aws.amazon.com',
+            $seen->getUri()->getHost()
+        );
+    }
+
+    public function testGetRefreshClientBuildsSignInRegionClientWithoutFallbackRegion(): void
+    {
+        $awsDir = $this->createAwsHome();
+        $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
+        $this->createValidTokenCache(
+            $awsDir,
+            $loginSession,
+            ['signInRegion' => 'eu-west-1']
+        );
+        $this->createConfigFileWithoutRegion($awsDir, $loginSession);
+
+        $provider = new LoginCredentialProvider('default');
+        $credentials = $provider()->wait();
+        $this->assertSame('testKey', $credentials->getAccessKeyId());
+
+        $client = (new \ReflectionMethod($provider, 'getRefreshClient'))
+            ->invoke($provider);
+        $this->assertSame('eu-west-1', $client->getRegion());
+    }
+
+    public function testExpiredTokenWithoutSignInRegionOrFallbackRegionFailsOnFirstCall(): void
+    {
+        $awsDir = $this->createAwsHome();
+        $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
+        $this->createExpiredTokenWithSignInRegion($awsDir, $loginSession);
+        $this->createConfigFileWithoutRegion($awsDir, $loginSession);
+
+        $provider = new LoginCredentialProvider('default');
+
+        $notices = [];
+        set_error_handler(function ($no, $str) use (&$notices) {
+            $notices[] = $str;
+            return true;
+        }, E_USER_NOTICE);
+        try {
+            $provider()->wait();
+            $this->fail('Expected a CredentialsException');
+        } catch (CredentialsException $e) {
+            $this->assertStringContainsString(
+                'Unable to determine region for the Sign-In service client',
+                $e->getMessage()
+            );
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertSame([], $notices);
+    }
+
+    public function testFreshTokenWithoutSignInRegionOrFallbackRegionFailsOnFirstCall(): void
+    {
+        $awsDir = $this->createAwsHome();
+        $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
+        $this->createValidTokenCache($awsDir, $loginSession);
+        $this->createConfigFileWithoutRegion($awsDir, $loginSession);
+
+        $provider = new LoginCredentialProvider('default');
+
+        for ($i = 0; $i < 2; $i++) {
+            try {
+                $provider()->wait();
+                $this->fail('Expected a CredentialsException');
+            } catch (CredentialsException $e) {
+                $this->assertStringContainsString(
+                    'Unable to determine region for the Sign-In service client',
+                    $e->getMessage()
+                );
+            }
+        }
     }
 }

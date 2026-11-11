@@ -158,6 +158,47 @@ EOT;
         return $awsDir;
     }
 
+    /**
+     * Writes a Login token cache file for the given session.
+     */
+    private function createLoginTokenCache(
+        string $awsDir,
+        string $loginSession,
+        string $expiresIn,
+        ?string $signInRegion = null
+    ): string
+    {
+        $cacheDir = $awsDir . '/login/cache';
+        if (!is_dir($cacheDir)) {
+            mkdir($cacheDir, 0777, true);
+        }
+        $tokenFile = $cacheDir . '/' . hash('sha256', trim($loginSession)) . '.json';
+        $token = [
+            'accessToken' => [
+                'accessKeyId' => 'testKey',
+                'secretAccessKey' => 'testSecret',
+                'sessionToken' => 'testToken',
+                'accountId' => '123456789012',
+                'expiresAt' => (new DateTimeResult($expiresIn))->format('Y-m-d\TH:i:s\Z')
+            ],
+            'tokenType' => 'aws_sigv4',
+            'refreshToken' => 'testRefresh',
+            'idToken' => 'testId',
+            'clientId' => 'arn:aws:signin:::devtools/same-device',
+            'dpopKey' => "-----BEGIN EC PRIVATE KEY-----\n"
+                . "MHcCAQEEIFDZHUzOG1Pzq+6F0mjMlOSp1syN9LRPBuHMoCFXTcXhoAoGCCqGSM49\n"
+                . "AwEHoUQDQgAE9qhj+KtcdHj1kVgwxWWWw++tqoh7H7UHs7oXh8jBbgF47rrYGC+t\n"
+                . "djiIaHK3dBvvdE7MGj5HsepzLm3Kj91bqA==\n"
+                . "-----END EC PRIVATE KEY-----"
+        ];
+        if ($signInRegion !== null) {
+            $token['signInRegion'] = $signInRegion;
+        }
+        file_put_contents($tokenFile, json_encode($token));
+
+        return $tokenFile;
+    }
+
     private function createTempDir(string $prefix = 'aws_test_'): string
     {
         $dir = sys_get_temp_dir() . '/' . $prefix . uniqid('', true);
@@ -2625,6 +2666,12 @@ EOT;
 login_session = arn:aws:iam::123456789012:user/TestUser
 EOT;
         file_put_contents($awsDir . '/config', $ini);
+        // Fresh token without signInRegion still needs a region
+        $this->createLoginTokenCache(
+            $awsDir,
+            'arn:aws:iam::123456789012:user/TestUser',
+            '+1 hour'
+        );
         
         $provider = CredentialProvider::login('testProfile');
 
@@ -2684,6 +2731,12 @@ EOT;
 login_session = arn:aws:iam::123456789012:user/TestUser
 EOT;
         file_put_contents($awsDir . '/config', $ini);
+        // Fresh token without signInRegion still needs a region
+        $this->createLoginTokenCache(
+            $awsDir,
+            'arn:aws:iam::123456789012:user/TestUser',
+            '+1 hour'
+        );
         
         // Empty region should trigger "No region configured" error
         $provider = CredentialProvider::login(
@@ -2692,6 +2745,28 @@ EOT;
         );
 
         $provider()->wait();
+    }
+
+    public function testLoginUsesSignInRegionWithoutOtherRegion(): void
+    {
+        $awsDir = $this->createAwsHome();
+
+        $ini = <<<EOT
+[profile testProfile]
+login_session = arn:aws:iam::123456789012:user/TestUser
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+        $this->createLoginTokenCache(
+            $awsDir,
+            'arn:aws:iam::123456789012:user/TestUser',
+            '+1 hour',
+            'eu-west-1'
+        );
+
+        $credentials = CredentialProvider::login('testProfile')()->wait();
+
+        $this->assertSame(CredentialSources::PROFILE_LOGIN, $credentials->getSource());
+        $this->assertSame('testKey', $credentials->getAccessKeyId());
     }
 
     public function testLoginHandlesInvalidProfileName(): void
