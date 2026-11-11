@@ -4,8 +4,11 @@
     "apiVersion":"2018-06-27",
     "endpointPrefix":"textract",
     "jsonVersion":"1.1",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceFullName":"Amazon Textract",
     "serviceId":"Textract",
     "signatureVersion":"v4",
@@ -1281,6 +1284,7 @@
         "QuotaCode":{"shape":"String"},
         "ServiceCode":{"shape":"String"}
       },
+      "error":{"httpStatusCode":402},
       "exception":true
     },
     "IdList":{

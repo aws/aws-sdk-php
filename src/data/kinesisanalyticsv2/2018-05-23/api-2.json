@@ -165,6 +165,24 @@
         {"shape":"InvalidApplicationConfigurationException"}
       ]
     },
+    "CreateSnapshot":{
+      "name":"CreateSnapshot",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateSnapshotRequest"},
+      "output":{"shape":"CreateSnapshotResponse"},
+      "errors":[
+        {"shape":"ResourceInUseException"},
+        {"shape":"InvalidArgumentException"},
+        {"shape":"InvalidApplicationConfigurationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"TooManyTagsException"},
+        {"shape":"UnsupportedOperationException"}
+      ]
+    },
     "DeleteApplication":{
       "name":"DeleteApplication",
       "http":{
@@ -280,6 +298,22 @@
         {"shape":"InvalidApplicationConfigurationException"}
       ]
     },
+    "DeleteSnapshot":{
+      "name":"DeleteSnapshot",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteSnapshotRequest"},
+      "output":{"shape":"DeleteSnapshotResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"InvalidArgumentException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"UnsupportedOperationException"}
+      ]
+    },
     "DescribeApplication":{
       "name":"DescribeApplication",
       "http":{
@@ -336,6 +370,34 @@
         {"shape":"UnsupportedOperationException"}
       ]
     },
+    "DescribeSnapshot":{
+      "name":"DescribeSnapshot",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSnapshotRequest"},
+      "output":{"shape":"DescribeSnapshotResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidArgumentException"},
+        {"shape":"UnsupportedOperationException"}
+      ]
+    },
+    "DescribeSnapshotOperation":{
+      "name":"DescribeSnapshotOperation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSnapshotOperationRequest"},
+      "output":{"shape":"DescribeSnapshotOperationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidArgumentException"},
+        {"shape":"UnsupportedOperationException"}
+      ]
+    },
     "DiscoverInputSchema":{
       "name":"DiscoverInputSchema",
       "http":{
@@ -350,6 +412,40 @@
         {"shape":"ResourceProvisionedThroughputExceededException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"InvalidRequestException"},
+        {"shape":"UnsupportedOperationException"}
+      ]
+    },
+    "ExportSnapshot":{
+      "name":"ExportSnapshot",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ExportSnapshotRequest"},
+      "output":{"shape":"ExportSnapshotResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"InvalidArgumentException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"UnsupportedOperationException"}
+      ]
+    },
+    "ImportSnapshot":{
+      "name":"ImportSnapshot",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ImportSnapshotRequest"},
+      "output":{"shape":"ImportSnapshotResponse"},
+      "errors":[
+        {"shape":"ResourceInUseException"},
+        {"shape":"InvalidArgumentException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"UnsupportedOperationException"}
       ]
     },
@@ -406,6 +502,33 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "ListSnapshotOperations":{
+      "name":"ListSnapshotOperations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListSnapshotOperationsRequest"},
+      "output":{"shape":"ListSnapshotOperationsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidArgumentException"},
+        {"shape":"UnsupportedOperationException"}
+      ]
+    },
+    "ListSnapshots":{
+      "name":"ListSnapshots",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListSnapshotsRequest"},
+      "output":{"shape":"ListSnapshotsResponse"},
+      "errors":[
+        {"shape":"InvalidArgumentException"},
+        {"shape":"UnsupportedOperationException"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -450,7 +573,8 @@
         {"shape":"ResourceInUseException"},
         {"shape":"InvalidArgumentException"},
         {"shape":"InvalidApplicationConfigurationException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"UnsupportedOperationException"}
       ]
     },
     "StopApplication":{
@@ -518,7 +642,8 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidApplicationConfigurationException"},
-        {"shape":"LimitExceededException"}
+        {"shape":"LimitExceededException"},
+        {"shape":"UnsupportedOperationException"}
       ]
     },
     "UpdateApplicationMaintenanceConfiguration":{
@@ -838,6 +963,13 @@
       "min":1,
       "pattern":"[a-zA-Z0-9_.-]+"
     },
+    "ApplicationOperationDescription":{
+      "type":"structure",
+      "members":{
+        "ApplicationOperationId":{"shape":"OperationId"},
+        "ApplicationName":{"shape":"ApplicationName"}
+      }
+    },
     "ApplicationOperationInfo":{
       "type":"structure",
       "members":{
@@ -874,7 +1006,8 @@
       "required":["ApplicationRestoreType"],
       "members":{
         "ApplicationRestoreType":{"shape":"ApplicationRestoreType"},
-        "SnapshotName":{"shape":"SnapshotName"}
+        "SnapshotName":{"shape":"SnapshotName"},
+        "SnapshotArn":{"shape":"SnapshotArn"}
       }
     },
     "ApplicationRestoreType":{
@@ -889,21 +1022,24 @@
       "type":"structure",
       "required":["SnapshotsEnabled"],
       "members":{
-        "SnapshotsEnabled":{"shape":"BooleanObject"}
+        "SnapshotsEnabled":{"shape":"BooleanObject"},
+        "SnapshotMode":{"shape":"SnapshotMode"}
       }
     },
     "ApplicationSnapshotConfigurationDescription":{
       "type":"structure",
       "required":["SnapshotsEnabled"],
       "members":{
-        "SnapshotsEnabled":{"shape":"BooleanObject"}
+        "SnapshotsEnabled":{"shape":"BooleanObject"},
+        "SnapshotMode":{"shape":"SnapshotMode"}
       }
     },
     "ApplicationSnapshotConfigurationUpdate":{
       "type":"structure",
       "required":["SnapshotsEnabledUpdate"],
       "members":{
-        "SnapshotsEnabledUpdate":{"shape":"BooleanObject"}
+        "SnapshotsEnabledUpdate":{"shape":"BooleanObject"},
+        "SnapshotModeUpdate":{"shape":"SnapshotMode"}
       }
     },
     "ApplicationStatus":{
@@ -1248,6 +1384,34 @@
       "type":"structure",
       "members":{}
     },
+    "CreateSnapshotRequest":{
+      "type":"structure",
+      "required":[
+        "ApplicationName",
+        "SnapshotName"
+      ],
+      "members":{
+        "ApplicationName":{"shape":"ApplicationName"},
+        "SnapshotName":{"shape":"SnapshotV2Name"},
+        "SnapshotDescription":{"shape":"SnapshotV2Description"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "CreateSnapshotResponse":{
+      "type":"structure",
+      "required":[
+        "SnapshotArn",
+        "SnapshotStatus",
+        "SnapshotOperationId",
+        "SnapshotOperationStatus"
+      ],
+      "members":{
+        "SnapshotArn":{"shape":"SnapshotArn"},
+        "SnapshotStatus":{"shape":"SnapshotStatus"},
+        "SnapshotOperationId":{"shape":"SnapshotOperationId"},
+        "SnapshotOperationStatus":{"shape":"SnapshotOperationStatus"}
+      }
+    },
     "CustomArtifactConfiguration":{
       "type":"structure",
       "required":["ArtifactType"],
@@ -1416,6 +1580,32 @@
         "OperationId":{"shape":"OperationId"}
       }
     },
+    "DeleteSnapshotRequest":{
+      "type":"structure",
+      "required":[
+        "SnapshotName",
+        "SnapshotCreationTimestamp"
+      ],
+      "members":{
+        "SnapshotName":{"shape":"SnapshotV2Name"},
+        "SnapshotCreationTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "DeleteSnapshotResponse":{
+      "type":"structure",
+      "required":[
+        "SnapshotArn",
+        "SnapshotStatus",
+        "SnapshotOperationId",
+        "SnapshotOperationStatus"
+      ],
+      "members":{
+        "SnapshotArn":{"shape":"SnapshotArn"},
+        "SnapshotStatus":{"shape":"SnapshotStatus"},
+        "SnapshotOperationId":{"shape":"SnapshotOperationId"},
+        "SnapshotOperationStatus":{"shape":"SnapshotOperationStatus"}
+      }
+    },
     "DeployAsApplicationConfiguration":{
       "type":"structure",
       "required":["S3ContentLocation"],
@@ -1503,6 +1693,38 @@
         "ApplicationVersionDetail":{"shape":"ApplicationDetail"}
       }
     },
+    "DescribeSnapshotOperationRequest":{
+      "type":"structure",
+      "required":[
+        "SnapshotName",
+        "SnapshotOperationId"
+      ],
+      "members":{
+        "SnapshotName":{"shape":"SnapshotV2Name"},
+        "SnapshotOperationId":{"shape":"SnapshotOperationId"}
+      }
+    },
+    "DescribeSnapshotOperationResponse":{
+      "type":"structure",
+      "required":["SnapshotOperationInfoDetails"],
+      "members":{
+        "SnapshotOperationInfoDetails":{"shape":"SnapshotOperationInfoDetails"}
+      }
+    },
+    "DescribeSnapshotRequest":{
+      "type":"structure",
+      "required":["SnapshotName"],
+      "members":{
+        "SnapshotName":{"shape":"SnapshotV2Name"}
+      }
+    },
+    "DescribeSnapshotResponse":{
+      "type":"structure",
+      "required":["SnapshotInfoDetails"],
+      "members":{
+        "SnapshotInfoDetails":{"shape":"SnapshotInfoDetails"}
+      }
+    },
     "DestinationSchema":{
       "type":"structure",
       "required":["RecordFormatType"],
@@ -1528,6 +1750,14 @@
         "ParsedInputRecords":{"shape":"ParsedInputRecords"},
         "ProcessedInputRecords":{"shape":"ProcessedInputRecords"},
         "RawInputRecords":{"shape":"RawInputRecords"}
+      }
+    },
+    "EncryptionConfigurationDescription":{
+      "type":"structure",
+      "required":["KeyType"],
+      "members":{
+        "KeyId":{"shape":"KeyId"},
+        "KeyType":{"shape":"KeyType"}
       }
     },
     "EnvironmentProperties":{
@@ -1561,6 +1791,42 @@
       "type":"string",
       "max":512,
       "min":1
+    },
+    "ExportDestinationConfiguration":{
+      "type":"structure",
+      "required":[
+        "DestinationType",
+        "ExportRoleArn",
+        "DestinationS3PrefixLocation"
+      ],
+      "members":{
+        "DestinationType":{"shape":"StorageLocationType"},
+        "ExportRoleArn":{"shape":"RoleARN"},
+        "DestinationEncryptionConfiguration":{"shape":"SnapshotEncryptionConfiguration"},
+        "DestinationS3PrefixLocation":{"shape":"S3PrefixLocation"}
+      }
+    },
+    "ExportSnapshotRequest":{
+      "type":"structure",
+      "required":[
+        "SnapshotName",
+        "ExportDestinationConfiguration"
+      ],
+      "members":{
+        "SnapshotName":{"shape":"SnapshotV2Name"},
+        "ExportDestinationConfiguration":{"shape":"ExportDestinationConfiguration"}
+      }
+    },
+    "ExportSnapshotResponse":{
+      "type":"structure",
+      "required":[
+        "SnapshotOperationId",
+        "SnapshotOperationStatus"
+      ],
+      "members":{
+        "SnapshotOperationId":{"shape":"SnapshotOperationId"},
+        "SnapshotOperationStatus":{"shape":"SnapshotOperationStatus"}
+      }
     },
     "FileKey":{
       "type":"string",
@@ -1624,6 +1890,50 @@
       "max":50,
       "min":1,
       "pattern":"[a-zA-Z0-9_.-]+"
+    },
+    "ImportSnapshotRequest":{
+      "type":"structure",
+      "required":[
+        "SnapshotName",
+        "ImportSourceConfiguration"
+      ],
+      "members":{
+        "SnapshotName":{"shape":"SnapshotV2Name"},
+        "ImportSourceConfiguration":{"shape":"ImportSourceConfiguration"},
+        "DestinationEncryptionConfiguration":{"shape":"SnapshotEncryptionConfiguration"},
+        "SnapshotDescription":{"shape":"SnapshotV2Description"},
+        "SnapshotFormat":{"shape":"SnapshotFormat"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "ImportSnapshotResponse":{
+      "type":"structure",
+      "required":[
+        "SnapshotArn",
+        "SnapshotStatus",
+        "SnapshotOperationId",
+        "SnapshotOperationStatus"
+      ],
+      "members":{
+        "SnapshotArn":{"shape":"SnapshotArn"},
+        "SnapshotStatus":{"shape":"SnapshotStatus"},
+        "SnapshotOperationId":{"shape":"SnapshotOperationId"},
+        "SnapshotOperationStatus":{"shape":"SnapshotOperationStatus"}
+      }
+    },
+    "ImportSourceConfiguration":{
+      "type":"structure",
+      "required":[
+        "SourceType",
+        "ImportRoleArn",
+        "SourceS3PrefixLocation"
+      ],
+      "members":{
+        "SourceType":{"shape":"StorageLocationType"},
+        "ImportRoleArn":{"shape":"RoleARN"},
+        "SourceEncryptionConfiguration":{"shape":"SnapshotEncryptionConfiguration"},
+        "SourceS3PrefixLocation":{"shape":"S3PrefixLocation"}
+      }
     },
     "InAppStreamName":{
       "type":"string",
@@ -1808,6 +2118,11 @@
     "KeyId":{
       "type":"string",
       "max":2048,
+      "min":1
+    },
+    "KeyPrefix":{
+      "type":"string",
+      "max":200,
       "min":1
     },
     "KeyType":{
@@ -2020,10 +2335,58 @@
         "NextToken":{"shape":"ApplicationName"}
       }
     },
+    "ListSnapshotOperationsLimit":{
+      "type":"integer",
+      "max":50,
+      "min":1
+    },
+    "ListSnapshotOperationsRequest":{
+      "type":"structure",
+      "required":["SnapshotName"],
+      "members":{
+        "SnapshotName":{"shape":"SnapshotV2Name"},
+        "SnapshotOperation":{"shape":"SnapshotOperation"},
+        "SnapshotOperationStatus":{"shape":"SnapshotOperationStatus"},
+        "Limit":{"shape":"ListSnapshotOperationsLimit"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListSnapshotOperationsResponse":{
+      "type":"structure",
+      "required":["SnapshotOperationInfoList"],
+      "members":{
+        "SnapshotOperationInfoList":{"shape":"SnapshotOperationInfoList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListSnapshotsInputLimit":{
       "type":"integer",
       "max":50,
       "min":1
+    },
+    "ListSnapshotsLimit":{
+      "type":"integer",
+      "max":50,
+      "min":1
+    },
+    "ListSnapshotsRequest":{
+      "type":"structure",
+      "members":{
+        "SourceApplicationName":{"shape":"ApplicationName"},
+        "SnapshotInitiator":{"shape":"SnapshotInitiator"},
+        "SnapshotInitiatorOperation":{"shape":"SnapshotInitiatorOperation"},
+        "SnapshotStatus":{"shape":"SnapshotStatus"},
+        "Limit":{"shape":"ListSnapshotsLimit"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListSnapshotsResponse":{
+      "type":"structure",
+      "required":["SnapshotInfoList"],
+      "members":{
+        "SnapshotInfoList":{"shape":"SnapshotInfoList"},
+        "NextToken":{"shape":"NextToken"}
+      }
     },
     "ListTagsForResourceRequest":{
       "type":"structure",
@@ -2581,6 +2944,17 @@
         "ObjectVersionUpdate":{"shape":"ObjectVersion"}
       }
     },
+    "S3PrefixLocation":{
+      "type":"structure",
+      "required":[
+        "BucketARN",
+        "KeyPrefix"
+      ],
+      "members":{
+        "BucketARN":{"shape":"BucketARN"},
+        "KeyPrefix":{"shape":"KeyPrefix"}
+      }
+    },
     "S3ReferenceDataSource":{
       "type":"structure",
       "members":{
@@ -2627,6 +3001,11 @@
       "max":43200,
       "min":1800
     },
+    "SnapshotArn":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "SnapshotDetails":{
       "type":"structure",
       "required":[
@@ -2643,11 +3022,213 @@
         "ApplicationEncryptionConfigurationDescription":{"shape":"ApplicationEncryptionConfigurationDescription"}
       }
     },
+    "SnapshotEncryptionConfiguration":{
+      "type":"structure",
+      "required":["KeyType"],
+      "members":{
+        "KeyId":{"shape":"KeyId"},
+        "KeyType":{"shape":"KeyType"}
+      }
+    },
+    "SnapshotErrorInfo":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"SnapshotOperationErrorCode"},
+        "ErrorString":{"shape":"ErrorString"}
+      }
+    },
+    "SnapshotFormat":{
+      "type":"string",
+      "enum":["CANONICAL"]
+    },
+    "SnapshotInfo":{
+      "type":"structure",
+      "required":[
+        "SnapshotName",
+        "SnapshotArn",
+        "SnapshotStatus",
+        "SnapshotCreationTimestamp",
+        "SnapshotInitiator",
+        "SnapshotInitiatorOperation",
+        "SnapshotFormat"
+      ],
+      "members":{
+        "SnapshotName":{"shape":"SnapshotV2Name"},
+        "SnapshotArn":{"shape":"SnapshotArn"},
+        "SnapshotStatus":{"shape":"SnapshotStatus"},
+        "SnapshotCreationTimestamp":{"shape":"Timestamp"},
+        "SnapshotInitiator":{"shape":"SnapshotInitiator"},
+        "SnapshotInitiatorOperation":{"shape":"SnapshotInitiatorOperation"},
+        "SourceApplicationName":{"shape":"ApplicationName"},
+        "SnapshotFormat":{"shape":"SnapshotFormat"}
+      }
+    },
+    "SnapshotInfoDetails":{
+      "type":"structure",
+      "required":[
+        "SnapshotName",
+        "SnapshotArn",
+        "SnapshotStatus",
+        "SnapshotCreationTimestamp",
+        "SnapshotInitiator",
+        "SnapshotInitiatorOperation",
+        "SnapshotSourceDescription",
+        "SnapshotFormat"
+      ],
+      "members":{
+        "SnapshotName":{"shape":"SnapshotV2Name"},
+        "SnapshotArn":{"shape":"SnapshotArn"},
+        "SnapshotDescription":{"shape":"SnapshotV2Description"},
+        "SnapshotStatus":{"shape":"SnapshotStatus"},
+        "SnapshotCreationTimestamp":{"shape":"Timestamp"},
+        "RuntimeEnvironment":{"shape":"RuntimeEnvironment"},
+        "SnapshotSizeInBytes":{"shape":"SnapshotSizeInBytes"},
+        "SnapshotEncryptionConfigurationDescription":{"shape":"SnapshotEncryptionConfiguration"},
+        "SnapshotInitiator":{"shape":"SnapshotInitiator"},
+        "SnapshotInitiatorOperation":{"shape":"SnapshotInitiatorOperation"},
+        "SnapshotSourceDescription":{"shape":"SnapshotSourceDescription"},
+        "SnapshotFormat":{"shape":"SnapshotFormat"}
+      }
+    },
+    "SnapshotInfoList":{
+      "type":"list",
+      "member":{"shape":"SnapshotInfo"}
+    },
+    "SnapshotInitiator":{
+      "type":"string",
+      "enum":[
+        "USER",
+        "SYSTEM"
+      ]
+    },
+    "SnapshotInitiatorOperation":{
+      "type":"string",
+      "enum":[
+        "CreateSnapshot",
+        "ImportSnapshot",
+        "SystemCreateSnapshot"
+      ]
+    },
+    "SnapshotMode":{
+      "type":"string",
+      "enum":[
+        "APPLICATION_SNAPSHOTS_LEGACY",
+        "ENHANCED_SNAPSHOTS"
+      ]
+    },
     "SnapshotName":{
       "type":"string",
       "max":256,
       "min":1,
       "pattern":"[a-zA-Z0-9_.-]+"
+    },
+    "SnapshotOperation":{
+      "type":"string",
+      "enum":[
+        "CreateSnapshot",
+        "DeleteSnapshot",
+        "ImportSnapshot",
+        "ExportSnapshot",
+        "SystemCreateSnapshot"
+      ]
+    },
+    "SnapshotOperationErrorCode":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "SnapshotOperationFailureDetails":{
+      "type":"structure",
+      "members":{
+        "ErrorInfo":{"shape":"SnapshotErrorInfo"}
+      }
+    },
+    "SnapshotOperationId":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "SnapshotOperationInfo":{
+      "type":"structure",
+      "required":[
+        "SnapshotOperationId",
+        "SnapshotOperation",
+        "SnapshotOperationStatus"
+      ],
+      "members":{
+        "SnapshotOperationId":{"shape":"SnapshotOperationId"},
+        "SnapshotOperation":{"shape":"SnapshotOperation"},
+        "SnapshotOperationStatus":{"shape":"SnapshotOperationStatus"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"}
+      }
+    },
+    "SnapshotOperationInfoDetails":{
+      "type":"structure",
+      "required":[
+        "SnapshotOperationId",
+        "SnapshotOperation",
+        "SnapshotOperationStatus",
+        "SnapshotArn"
+      ],
+      "members":{
+        "SnapshotOperationId":{"shape":"SnapshotOperationId"},
+        "SnapshotOperation":{"shape":"SnapshotOperation"},
+        "SnapshotOperationStatus":{"shape":"SnapshotOperationStatus"},
+        "SnapshotArn":{"shape":"SnapshotArn"},
+        "SourceEncryptionConfigurationDescription":{"shape":"EncryptionConfigurationDescription"},
+        "DestinationEncryptionConfigurationDescription":{"shape":"EncryptionConfigurationDescription"},
+        "SnapshotSourceLocationDescription":{"shape":"SnapshotOperationLocationDescription"},
+        "SnapshotDestinationLocationDescription":{"shape":"SnapshotOperationLocationDescription"},
+        "ApplicationOperationDescription":{"shape":"ApplicationOperationDescription"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "SnapshotOperationFailureDetails":{"shape":"SnapshotOperationFailureDetails"}
+      }
+    },
+    "SnapshotOperationInfoList":{
+      "type":"list",
+      "member":{"shape":"SnapshotOperationInfo"}
+    },
+    "SnapshotOperationLocationDescription":{
+      "type":"structure",
+      "required":[
+        "LocationType",
+        "S3PrefixLocation"
+      ],
+      "members":{
+        "LocationType":{"shape":"StorageLocationType"},
+        "S3PrefixLocation":{"shape":"SnapshotOperationS3PrefixLocation"}
+      }
+    },
+    "SnapshotOperationS3PrefixLocation":{
+      "type":"structure",
+      "required":[
+        "BucketARN",
+        "KeyPrefix"
+      ],
+      "members":{
+        "BucketARN":{"shape":"BucketARN"},
+        "KeyPrefix":{"shape":"KeyPrefix"},
+        "ExportedPrefix":{"shape":"KeyPrefix"}
+      }
+    },
+    "SnapshotOperationStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "SUCCESSFUL",
+        "FAILED",
+        "CANCELLED"
+      ]
+    },
+    "SnapshotSizeInBytes":{"type":"long"},
+    "SnapshotSourceDescription":{
+      "type":"structure",
+      "members":{
+        "S3PrefixLocation":{"shape":"S3PrefixLocation"},
+        "SourceApplicationDescription":{"shape":"SourceApplicationDescription"}
+      }
     },
     "SnapshotStatus":{
       "type":"string",
@@ -2661,6 +3242,31 @@
     "SnapshotSummaries":{
       "type":"list",
       "member":{"shape":"SnapshotDetails"}
+    },
+    "SnapshotV2Description":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"[^\\u0000-\\u001F\\u007F]*"
+    },
+    "SnapshotV2Name":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.-]+"
+    },
+    "SourceApplicationDescription":{
+      "type":"structure",
+      "required":[
+        "ApplicationName",
+        "ApplicationCreationTimestamp",
+        "ApplicationVersionId"
+      ],
+      "members":{
+        "ApplicationName":{"shape":"ApplicationName"},
+        "ApplicationCreationTimestamp":{"shape":"Timestamp"},
+        "ApplicationVersionId":{"shape":"ApplicationVersionId"}
+      }
     },
     "SourceSchema":{
       "type":"structure",
@@ -2740,6 +3346,10 @@
       "members":{
         "OperationId":{"shape":"OperationId"}
       }
+    },
+    "StorageLocationType":{
+      "type":"string",
+      "enum":["S3"]
     },
     "SubnetId":{"type":"string"},
     "SubnetIds":{

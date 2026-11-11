@@ -106,6 +106,12 @@
       "max":2147483647,
       "min":0
     },
+    "AllocatedUsageQuantityAsDecimalString":{
+      "type":"string",
+      "max":17,
+      "min":1,
+      "pattern":"^(0|[1-9][0-9]{0,9})(\\.[0-9]{1,6})?$"
+    },
     "BatchMeterUsageRequest":{
       "type":"structure",
       "required":["UsageRecords"],
@@ -273,7 +279,13 @@
         "ProductCode":{"shape":"ProductCode"},
         "Timestamp":{"shape":"Timestamp"},
         "UsageDimension":{"shape":"UsageDimension"},
-        "UsageQuantity":{"shape":"UsageQuantity"},
+        "UsageQuantity":{
+          "shape":"UsageQuantity",
+          "deprecated":true,
+          "deprecatedMessage":"Use UsageQuantityAsDecimal instead.",
+          "deprecatedSince":"2026-10-20"
+        },
+        "UsageQuantityAsDecimal":{"shape":"UsageQuantityAsDecimalString"},
         "DryRun":{"shape":"Boolean"},
         "UsageAllocations":{"shape":"UsageAllocations"},
         "ClientToken":{
@@ -393,9 +405,14 @@
     },
     "UsageAllocation":{
       "type":"structure",
-      "required":["AllocatedUsageQuantity"],
       "members":{
-        "AllocatedUsageQuantity":{"shape":"AllocatedUsageQuantity"},
+        "AllocatedUsageQuantity":{
+          "shape":"AllocatedUsageQuantity",
+          "deprecated":true,
+          "deprecatedMessage":"Use AllocatedUsageQuantityAsDecimal instead.",
+          "deprecatedSince":"2026-10-20"
+        },
+        "AllocatedUsageQuantityAsDecimal":{"shape":"AllocatedUsageQuantityAsDecimalString"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -416,6 +433,12 @@
       "max":2147483647,
       "min":0
     },
+    "UsageQuantityAsDecimalString":{
+      "type":"string",
+      "max":17,
+      "min":1,
+      "pattern":"^(0|[1-9][0-9]{0,9})(\\.[0-9]{1,6})?$"
+    },
     "UsageRecord":{
       "type":"structure",
       "required":[
@@ -426,7 +449,13 @@
         "Timestamp":{"shape":"Timestamp"},
         "CustomerIdentifier":{"shape":"CustomerIdentifier"},
         "Dimension":{"shape":"UsageDimension"},
-        "Quantity":{"shape":"UsageQuantity"},
+        "Quantity":{
+          "shape":"UsageQuantity",
+          "deprecated":true,
+          "deprecatedMessage":"Use QuantityAsDecimal instead.",
+          "deprecatedSince":"2026-10-20"
+        },
+        "QuantityAsDecimal":{"shape":"UsageQuantityAsDecimalString"},
         "UsageAllocations":{"shape":"UsageAllocations"},
         "CustomerAWSAccountId":{"shape":"CustomerAWSAccountId"},
         "LicenseArn":{"shape":"LicenseArn"}

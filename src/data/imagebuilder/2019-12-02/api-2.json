@@ -2602,7 +2602,7 @@
     },
     "FilterValue":{
       "type":"string",
-      "pattern":"^[0-9a-zA-Z./_ :,{}\"-]{1,1024}$"
+      "pattern":"^[0-9a-zA-Z./_ :,{}\"*-]{1,1024}$"
     },
     "FilterValues":{
       "type":"list",
@@ -3203,8 +3203,7 @@
     },
     "ImageScanFindingsList":{
       "type":"list",
-      "member":{"shape":"ImageScanFinding"},
-      "max":25
+      "member":{"shape":"ImageScanFinding"}
     },
     "ImageScanState":{
       "type":"structure",
@@ -4800,7 +4799,7 @@
     },
     "RestrictedInteger":{
       "type":"integer",
-      "max":25,
+      "max":100,
       "min":1
     },
     "RetryImageRequest":{

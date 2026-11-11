@@ -1,12 +1,6 @@
 {
     "version": "1.1",
     "parameters": {
-        "Region": {
-            "builtIn": "AWS::Region",
-            "required": false,
-            "documentation": "The AWS region used to dispatch the request.",
-            "type": "string"
-        },
         "UseDualStack": {
             "builtIn": "AWS::UseDualStack",
             "required": true,
@@ -25,6 +19,12 @@
             "builtIn": "SDK::Endpoint",
             "required": false,
             "documentation": "Override the endpoint used to send this request",
+            "type": "string"
+        },
+        "Region": {
+            "builtIn": "AWS::Region",
+            "required": false,
+            "documentation": "The AWS region used to dispatch the request.",
             "type": "string"
         }
     },
@@ -101,51 +101,6 @@
                 },
                 true
             ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "PartitionResult"
-                        },
-                        "name"
-                    ]
-                },
-                "aws"
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "PartitionResult"
-                        },
-                        "name"
-                    ]
-                },
-                "aws-cn"
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "PartitionResult"
-                        },
-                        "name"
-                    ]
-                },
-                "aws-us-gov"
-            ]
         }
     ],
     "results": [
@@ -201,24 +156,6 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://servicediscovery.{Region}.amazonaws.com",
-                "properties": {},
-                "headers": {}
-            },
-            "type": "endpoint"
-        },
-        {
-            "conditions": [],
-            "endpoint": {
-                "url": "https://servicediscovery.{Region}.amazonaws.com.cn",
-                "properties": {},
-                "headers": {}
-            },
-            "type": "endpoint"
-        },
-        {
-            "conditions": [],
-            "endpoint": {
                 "url": "https://servicediscovery.{Region}.{PartitionResult#dualStackDnsSuffix}",
                 "properties": {},
                 "headers": {}
@@ -246,6 +183,6 @@
         }
     ],
     "root": 2,
-    "nodeCount": 16,
-    "nodes": "/////wAAAAH/////AAAAAAAAAA8AAAADAAAAAQAAAAQF9eENAAAAAgAAAAUF9eENAAAAAwAAAAsAAAAGAAAABAAAAAcF9eEMAAAABQAAAAgF9eELAAAABwX14QgAAAAJAAAACAX14QkAAAAKAAAACQX14QgF9eEKAAAABAAAAA0AAAAMAAAABgX14QYF9eEHAAAABQAAAA4F9eEFAAAABgX14QQF9eEFAAAAAwX14QEAAAAQAAAABAX14QIF9eED"
+    "nodeCount": 13,
+    "nodes": "/////wAAAAH/////AAAAAAAAAAwAAAADAAAAAQAAAAQF9eELAAAAAgAAAAUF9eELAAAAAwAAAAgAAAAGAAAABAAAAAcF9eEKAAAABQX14QgF9eEJAAAABAAAAAoAAAAJAAAABgX14QYF9eEHAAAABQAAAAsF9eEFAAAABgX14QQF9eEFAAAAAwX14QEAAAANAAAABAX14QIF9eED"
 }

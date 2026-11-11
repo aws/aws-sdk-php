@@ -4,8 +4,11 @@
     "apiVersion":"2017-11-27",
     "endpointPrefix":"comprehend",
     "jsonVersion":"1.1",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceFullName":"Amazon Comprehend",
     "serviceId":"Comprehend",
     "signatureVersion":"v4",
@@ -1574,6 +1577,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "Block":{
@@ -1711,6 +1715,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "ContainsPiiEntitiesRequest":{
@@ -3192,6 +3197,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
     },
@@ -3200,6 +3206,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "InvalidRequestDetail":{
@@ -3224,6 +3231,7 @@
         "Reason":{"shape":"InvalidRequestReason"},
         "Detail":{"shape":"InvalidRequestDetail"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "InvalidRequestReason":{
@@ -3247,6 +3255,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "JobStatus":{
@@ -3310,6 +3319,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "LabelDelimiter":{
@@ -4006,6 +4016,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "ResourceLimitExceededException":{
@@ -4013,6 +4024,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "ResourceNotFoundException":{
@@ -4020,6 +4032,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "ResourceUnavailableException":{
@@ -4027,6 +4040,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "S3Uri":{
@@ -4702,6 +4716,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "Timestamp":{"type":"timestamp"},
@@ -4710,6 +4725,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":429},
       "exception":true
     },
     "TooManyTagKeysException":{
@@ -4717,6 +4733,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "TooManyTagsException":{
@@ -4724,6 +4741,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "TopicsDetectionJobFilter":{
@@ -4788,6 +4806,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "UntagResourceRequest":{

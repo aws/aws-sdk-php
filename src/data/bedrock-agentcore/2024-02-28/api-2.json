@@ -4334,8 +4334,17 @@
       "required":["url"],
       "members":{
         "url":{"shape":"HarnessRemoteMcpUrl"},
-        "headers":{"shape":"HttpHeadersMap"}
+        "headers":{"shape":"HttpHeadersMap"},
+        "outboundAuth":{"shape":"HarnessRemoteMcpOutboundAuth"}
       }
+    },
+    "HarnessRemoteMcpOutboundAuth":{
+      "type":"structure",
+      "members":{
+        "awsIam":{"shape":"IamCredentialProvider"},
+        "none":{"shape":"Unit"}
+      },
+      "union":true
     },
     "HarnessRemoteMcpUrl":{
       "type":"string",
@@ -4655,6 +4664,26 @@
     "HttpResponseCode":{
       "type":"integer",
       "box":true
+    },
+    "IamCredentialProvider":{
+      "type":"structure",
+      "required":["service"],
+      "members":{
+        "service":{"shape":"IamCredentialProviderServiceString"},
+        "region":{"shape":"IamCredentialProviderRegionString"}
+      }
+    },
+    "IamCredentialProviderRegionString":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-]+"
+    },
+    "IamCredentialProviderServiceString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9._-]+"
     },
     "IgnoredReferenceInputField":{
       "type":"string",

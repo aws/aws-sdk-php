@@ -220,6 +220,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
@@ -258,7 +259,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -352,7 +354,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -456,6 +459,24 @@
       },
       "input":{"shape":"GetLayoutRequest"},
       "output":{"shape":"GetLayoutResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "GetMergeCasesStatus":{
+      "name":"GetMergeCasesStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{domainId}/cases/{caseId}/merge-status",
+        "responseCode":200
+      },
+      "input":{"shape":"GetMergeCasesStatusRequest"},
+      "output":{"shape":"GetMergeCasesStatusResponse"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -698,6 +719,25 @@
       ],
       "readonly":true
     },
+    "StartMergeCases":{
+      "name":"StartMergeCases",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{domainId}/cases/{caseId}/merge",
+        "responseCode":200
+      },
+      "input":{"shape":"StartMergeCasesRequest"},
+      "output":{"shape":"StartMergeCasesResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -746,7 +786,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
       ]
     },
     "UpdateCaseRule":{
@@ -823,6 +864,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
@@ -884,7 +926,8 @@
         "relatedItemType":{"shape":"RelatedItemType"},
         "performedTime":{"shape":"AuditEventDateTime"},
         "fields":{"shape":"AuditEventFieldList"},
-        "performedBy":{"shape":"AuditEventPerformedBy"}
+        "performedBy":{"shape":"AuditEventPerformedBy"},
+        "mergeMetadata":{"shape":"AuditMergeMetadata"}
       }
     },
     "AuditEventDateTime":{
@@ -949,8 +992,27 @@
         "Case.Updated",
         "RelatedItem.Created",
         "RelatedItem.Deleted",
-        "RelatedItem.Updated"
+        "RelatedItem.Updated",
+        "Case.Merged"
       ]
+    },
+    "AuditMergeMetadata":{
+      "type":"structure",
+      "required":[
+        "mergeEventId",
+        "primaryCaseId",
+        "secondaryCaseId"
+      ],
+      "members":{
+        "mergeEventId":{"shape":"AuditMergeMetadataMergeEventIdString"},
+        "primaryCaseId":{"shape":"CaseId"},
+        "secondaryCaseId":{"shape":"CaseId"}
+      }
+    },
+    "AuditMergeMetadataMergeEventIdString":{
+      "type":"string",
+      "max":500,
+      "min":1
     },
     "BasicLayout":{
       "type":"structure",
@@ -1331,6 +1393,10 @@
       "max":500,
       "min":1,
       "pattern":"[A-Za-z0-9\\-._/:#=+-]*"
+    },
+    "CaseIdList":{
+      "type":"list",
+      "member":{"shape":"CaseId"}
     },
     "CaseIdentifier":{
       "type":"structure",
@@ -2161,6 +2227,10 @@
         "id":{"shape":"FieldId"}
       }
     },
+    "FieldIdentifierList":{
+      "type":"list",
+      "member":{"shape":"FieldIdentifier"}
+    },
     "FieldIdentifierUnion":{
       "type":"structure",
       "members":{
@@ -2311,6 +2381,21 @@
       "type":"string",
       "max":4100,
       "min":0
+    },
+    "FieldsConfiguration":{
+      "type":"structure",
+      "required":[
+        "fieldIds",
+        "sourceCaseId"
+      ],
+      "members":{
+        "fieldIds":{"shape":"FieldIdentifierList"},
+        "sourceCaseId":{"shape":"CaseId"}
+      }
+    },
+    "FieldsConfigurationList":{
+      "type":"list",
+      "member":{"shape":"FieldsConfiguration"}
     },
     "FileArn":{
       "type":"string",
@@ -2545,6 +2630,34 @@
         "deleted":{"shape":"Deleted"},
         "createdTime":{"shape":"CreatedTime"},
         "lastModifiedTime":{"shape":"LastModifiedTime"}
+      }
+    },
+    "GetMergeCasesStatusRequest":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "caseId"
+      ],
+      "members":{
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        },
+        "caseId":{
+          "shape":"CaseId",
+          "location":"uri",
+          "locationName":"caseId"
+        }
+      }
+    },
+    "GetMergeCasesStatusResponse":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"MergeStatus"},
+        "primaryCaseId":{"shape":"CaseId"},
+        "secondaryCaseIds":{"shape":"CaseIdList"}
       }
     },
     "GetTemplateRequest":{
@@ -2952,6 +3065,13 @@
       "max":100,
       "min":1
     },
+    "MergeStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "COMPLETED"
+      ]
+    },
     "MutableTagKey":{
       "type":"string",
       "max":128,
@@ -3130,6 +3250,15 @@
         "custom":{"shape":"CustomUpdateContent"}
       },
       "union":true
+    },
+    "RelatedItemsConfiguration":{
+      "type":"structure",
+      "members":{
+        "comment":{"shape":"Boolean"},
+        "connectCase":{"shape":"Boolean"},
+        "contact":{"shape":"Boolean"},
+        "custom":{"shape":"Boolean"}
+      }
     },
     "RequiredCaseRule":{
       "type":"structure",
@@ -3537,6 +3666,40 @@
         "fieldId":{"shape":"FieldId"},
         "sortOrder":{"shape":"Order"}
       }
+    },
+    "StartMergeCasesRequest":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "caseId",
+        "secondaryCaseIds"
+      ],
+      "members":{
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        },
+        "caseId":{
+          "shape":"CaseId",
+          "location":"uri",
+          "locationName":"caseId"
+        },
+        "secondaryCaseIds":{"shape":"StartMergeCasesRequestSecondaryCaseIdsList"},
+        "fieldsConfiguration":{"shape":"FieldsConfigurationList"},
+        "relatedItemsConfiguration":{"shape":"RelatedItemsConfiguration"},
+        "performedBy":{"shape":"UserUnion"}
+      }
+    },
+    "StartMergeCasesRequestSecondaryCaseIdsList":{
+      "type":"list",
+      "member":{"shape":"CaseId"},
+      "max":1,
+      "min":1
+    },
+    "StartMergeCasesResponse":{
+      "type":"structure",
+      "members":{}
     },
     "String":{"type":"string"},
     "TagFilter":{

@@ -273,6 +273,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getLayout(array{domainId?: string, layoutId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getLayoutAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getLayoutAsync(array{domainId?: string, layoutId?: string, ...} $args = [])
+ * @method \Aws\Result getMergeCasesStatus(array $args = [])
+ * @phpstan-method \Aws\Result getMergeCasesStatus(array{domainId?: string, caseId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getMergeCasesStatusAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getMergeCasesStatusAsync(array{domainId?: string, caseId?: string, ...} $args = [])
  * @method \Aws\Result getTemplate(array $args = [])
  * @phpstan-method \Aws\Result getTemplate(array{domainId?: string, templateId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getTemplateAsync(array $args = [])
@@ -407,6 +411,26 @@ use Aws\AwsClient;
  *     maxResults?: int,
  *     nextToken?: string,
  *     filters?: list<array{contact?: array, comment?: array, file?: array, sla?: array, connectCase?: array, custom?: array, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result startMergeCases(array $args = [])
+ * @phpstan-method \Aws\Result startMergeCases(array{
+ *     domainId?: string,
+ *     caseId?: string,
+ *     secondaryCaseIds?: list<string>,
+ *     fieldsConfiguration?: list<array{fieldIds?: list<array>, sourceCaseId?: string, ...}>,
+ *     relatedItemsConfiguration?: array{comment?: bool, connectCase?: bool, contact?: bool, custom?: bool, ...},
+ *     performedBy?: array{userArn?: string, customEntity?: string, ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise startMergeCasesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startMergeCasesAsync(array{
+ *     domainId?: string,
+ *     caseId?: string,
+ *     secondaryCaseIds?: list<string>,
+ *     fieldsConfiguration?: list<array{fieldIds?: list<array>, sourceCaseId?: string, ...}>,
+ *     relatedItemsConfiguration?: array{comment?: bool, connectCase?: bool, contact?: bool, custom?: bool, ...},
+ *     performedBy?: array{userArn?: string, customEntity?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result tagResource(array $args = [])

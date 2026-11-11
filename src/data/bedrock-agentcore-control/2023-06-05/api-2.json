@@ -6167,6 +6167,7 @@
         "customClaims":{"shape":"CustomClaimValidationsType"},
         "privateEndpoint":{"shape":"PrivateEndpoint"},
         "privateEndpointOverrides":{"shape":"PrivateEndpointOverrides"},
+        "certificateConfigurations":{"shape":"CertificateConfigurationList"},
         "allowedWorkloadConfiguration":{"shape":"AllowedWorkloadConfiguration"}
       }
     },
@@ -6201,7 +6202,8 @@
         "clientAuthenticationMethod":{"shape":"ClientAuthenticationMethodType"},
         "privateKeyJwtConfig":{"shape":"PrivateKeyJwtConfig"},
         "privateEndpoint":{"shape":"PrivateEndpoint"},
-        "privateEndpointOverrides":{"shape":"PrivateEndpointOverrides"}
+        "privateEndpointOverrides":{"shape":"PrivateEndpointOverrides"},
+        "certificateConfigurations":{"shape":"CertificateConfigurationList"}
       }
     },
     "CustomOauth2ProviderConfigOutput":{
@@ -6214,6 +6216,7 @@
         "clientAuthenticationMethod":{"shape":"ClientAuthenticationMethodType"},
         "privateEndpoint":{"shape":"PrivateEndpoint"},
         "privateEndpointOverrides":{"shape":"PrivateEndpointOverrides"},
+        "certificateConfigurations":{"shape":"CertificateConfigurationList"},
         "privateKeyJwtConfig":{"shape":"PrivateKeyJwtConfig"}
       }
     },
@@ -10175,8 +10178,17 @@
       "required":["url"],
       "members":{
         "url":{"shape":"HarnessRemoteMcpUrl"},
-        "headers":{"shape":"HttpHeadersMap"}
+        "headers":{"shape":"HttpHeadersMap"},
+        "outboundAuth":{"shape":"HarnessRemoteMcpOutboundAuth"}
       }
+    },
+    "HarnessRemoteMcpOutboundAuth":{
+      "type":"structure",
+      "members":{
+        "awsIam":{"shape":"IamCredentialProvider"},
+        "none":{"shape":"Unit"}
+      },
+      "union":true
     },
     "HarnessRemoteMcpUrl":{
       "type":"string",

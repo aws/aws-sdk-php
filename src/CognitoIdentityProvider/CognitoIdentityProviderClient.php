@@ -186,6 +186,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result adminListUserAuthEvents(array{UserPoolId?: string, Username?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise adminListUserAuthEventsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise adminListUserAuthEventsAsync(array{UserPoolId?: string, Username?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result adminListUserSessions(array $args = [])
+ * @phpstan-method \Aws\Result adminListUserSessions(array{UserPoolId?: string, Username?: string, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise adminListUserSessionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise adminListUserSessionsAsync(array{UserPoolId?: string, Username?: string, NextToken?: string, ...} $args = [])
  * @method \Aws\Result adminRemoveUserFromGroup(array $args = [])
  * @phpstan-method \Aws\Result adminRemoveUserFromGroup(array{UserPoolId?: string, Username?: string, GroupName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise adminRemoveUserFromGroupAsync(array $args = [])
@@ -230,6 +234,22 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     ClientMetadata?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result adminRevokeUserSession(array $args = [])
+ * @phpstan-method \Aws\Result adminRevokeUserSession(array{
+ *     UserPoolId?: string,
+ *     Username?: string,
+ *     SessionId?: string,
+ *     RevokeAssociatedSessions?: 'LINKED'|'NONE',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise adminRevokeUserSessionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise adminRevokeUserSessionAsync(array{
+ *     UserPoolId?: string,
+ *     Username?: string,
+ *     SessionId?: string,
+ *     RevokeAssociatedSessions?: 'LINKED'|'NONE',
  *     ...,
  * } $args = [])
  * @method \Aws\Result adminSetUserMFAPreference(array $args = [])
@@ -1004,10 +1024,18 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getUserAuthFactors(array{AccessToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getUserAuthFactorsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getUserAuthFactorsAsync(array{AccessToken?: string, ...} $args = [])
+ * @method \Aws\Result getUserPoolClientSessionConfiguration(array $args = [])
+ * @phpstan-method \Aws\Result getUserPoolClientSessionConfiguration(array{UserPoolId?: string, ClientId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getUserPoolClientSessionConfigurationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getUserPoolClientSessionConfigurationAsync(array{UserPoolId?: string, ClientId?: string, ...} $args = [])
  * @method \Aws\Result getUserPoolMfaConfig(array $args = [])
  * @phpstan-method \Aws\Result getUserPoolMfaConfig(array{UserPoolId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getUserPoolMfaConfigAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getUserPoolMfaConfigAsync(array{UserPoolId?: string, ...} $args = [])
+ * @method \Aws\Result getUserPoolSessionConfiguration(array $args = [])
+ * @phpstan-method \Aws\Result getUserPoolSessionConfiguration(array{UserPoolId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getUserPoolSessionConfigurationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getUserPoolSessionConfigurationAsync(array{UserPoolId?: string, ...} $args = [])
  * @method \Aws\Result globalSignOut(array $args = [])
  * @phpstan-method \Aws\Result globalSignOut(array{AccessToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise globalSignOutAsync(array $args = [])
@@ -1078,6 +1106,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listUserPools(array{NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listUserPoolsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listUserPoolsAsync(array{NextToken?: string, MaxResults?: int, ...} $args = [])
+ * @method \Aws\Result listUserSessions(array $args = [])
+ * @phpstan-method \Aws\Result listUserSessions(array{AccessToken?: string, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listUserSessionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listUserSessionsAsync(array{AccessToken?: string, NextToken?: string, ...} $args = [])
  * @method \Aws\Result listUsers(array $args = [])
  * @phpstan-method \Aws\Result listUsers(array{
  *     UserPoolId?: string,
@@ -1147,9 +1179,25 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result revokeToken(array $args = [])
- * @phpstan-method \Aws\Result revokeToken(array{Token?: string, ClientId?: string, ClientSecret?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result revokeToken(array{
+ *     Token?: string,
+ *     ClientId?: string,
+ *     ClientSecret?: string,
+ *     RevokeAssociatedSessions?: 'LINKED'|'NONE',
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise revokeTokenAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise revokeTokenAsync(array{Token?: string, ClientId?: string, ClientSecret?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise revokeTokenAsync(array{
+ *     Token?: string,
+ *     ClientId?: string,
+ *     ClientSecret?: string,
+ *     RevokeAssociatedSessions?: 'LINKED'|'NONE',
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result revokeUserSession(array $args = [])
+ * @phpstan-method \Aws\Result revokeUserSession(array{AccessToken?: string, SessionId?: string, RevokeAssociatedSessions?: 'LINKED'|'NONE', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise revokeUserSessionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise revokeUserSessionAsync(array{AccessToken?: string, SessionId?: string, RevokeAssociatedSessions?: 'LINKED'|'NONE', ...} $args = [])
  * @method \Aws\Result setLogDeliveryConfiguration(array $args = [])
  * @phpstan-method \Aws\Result setLogDeliveryConfiguration(array{
  *     UserPoolId?: string,
@@ -1260,6 +1308,10 @@ use Aws\AwsClient;
  *     AccessToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result setUserPoolClientSessionConfiguration(array $args = [])
+ * @phpstan-method \Aws\Result setUserPoolClientSessionConfiguration(array{UserPoolId?: string, ClientId?: string, SSOSession?: array{MaxValidityMinutes?: int, ...}, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise setUserPoolClientSessionConfigurationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise setUserPoolClientSessionConfigurationAsync(array{UserPoolId?: string, ClientId?: string, SSOSession?: array{MaxValidityMinutes?: int, ...}, ...} $args = [])
  * @method \Aws\Result setUserPoolMfaConfig(array $args = [])
  * @phpstan-method \Aws\Result setUserPoolMfaConfig(array{
  *     UserPoolId?: string,
@@ -1296,6 +1348,20 @@ use Aws\AwsClient;
  *         FactorConfiguration?: 'MULTI_FACTOR_WITH_USER_VERIFICATION'|'SINGLE_FACTOR',
  *         ...,
  *     },
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result setUserPoolSessionConfiguration(array $args = [])
+ * @phpstan-method \Aws\Result setUserPoolSessionConfiguration(array{
+ *     UserPoolId?: string,
+ *     UserSessionTracking?: 'DISABLED'|'ENABLED',
+ *     TokenSession?: array{MaxPerUser?: int, ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise setUserPoolSessionConfigurationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise setUserPoolSessionConfigurationAsync(array{
+ *     UserPoolId?: string,
+ *     UserSessionTracking?: 'DISABLED'|'ENABLED',
+ *     TokenSession?: array{MaxPerUser?: int, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result setUserSettings(array $args = [])

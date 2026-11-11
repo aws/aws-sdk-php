@@ -968,13 +968,21 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \Aws\Result putConnector(array $args = [])
  * @phpstan-method \Aws\Result putConnector(array{
- *     ConnectorConfiguration?: array{azure?: array{tenantIdentifier?: string, clientIdentifier?: string, ...}, ...},
+ *     ConnectorConfiguration?: array{
+ *         azure?: array{tenantIdentifier?: string, clientIdentifier?: string, ...},
+ *         gcp?: array{gcpOrganizationId?: string, serviceAccountEmail?: string, workloadIdentityPoolProvider?: string, ...},
+ *         ...,
+ *     },
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise putConnectorAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise putConnectorAsync(array{
- *     ConnectorConfiguration?: array{azure?: array{tenantIdentifier?: string, clientIdentifier?: string, ...}, ...},
+ *     ConnectorConfiguration?: array{
+ *         azure?: array{tenantIdentifier?: string, clientIdentifier?: string, ...},
+ *         gcp?: array{gcpOrganizationId?: string, serviceAccountEmail?: string, workloadIdentityPoolProvider?: string, ...},
+ *         ...,
+ *     },
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])

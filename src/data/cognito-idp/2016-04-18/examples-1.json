@@ -62,6 +62,72 @@
         "title": "An AdminCreateUser request for for a test user named John."
       }
     ],
+    "AdminListUserSessions": [
+      {
+        "input": {
+          "UserPoolId": "us-east-1_EXAMPLE",
+          "Username": "testuser"
+        },
+        "output": {
+          "Sessions": [
+            {
+              "ClientId": "1example23456789",
+              "CreateDate": 1792454400.117,
+              "DeviceType": "Chrome 125 / macOS 15.0",
+              "IsCurrentSession": false,
+              "LastActiveDate": 1792540800.234,
+              "LastIPAddress": "192.0.2.42",
+              "LastLocation": {
+                "City": "Seattle",
+                "Country": "United States"
+              },
+              "OriginSessionId": "ssoq4r8s2t6u9v3w7x1y5z0a2b4c",
+              "SessionId": "tkna7b3c9d2e5f8g1h4j6k0m2n5p",
+              "SessionType": "TOKEN"
+            },
+            {
+              "ClientId": "1example23456789",
+              "CreateDate": 1792368000.351,
+              "DeviceType": "Chrome 125 / macOS 15.0",
+              "IsCurrentSession": false,
+              "LastActiveDate": 1792537200.468,
+              "LastIPAddress": "192.0.2.42",
+              "LastLocation": {
+                "City": "Seattle",
+                "Country": "United States"
+              },
+              "SessionId": "ssoq4r8s2t6u9v3w7x1y5z0a2b4c",
+              "SessionType": "SSO"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example lists the active sessions for the user testuser. The response contains one token session that originated from an SSO session, and the SSO session it came through.",
+        "id": "example-list-the-active-sessions-of-a-user-as-an-administrator-1792540804000",
+        "title": "Example list the active sessions of a user as an administrator"
+      }
+    ],
+    "AdminRevokeUserSession": [
+      {
+        "input": {
+          "RevokeAssociatedSessions": "LINKED",
+          "SessionId": "tknm5k9p2q7r4s8t1v6w3x0y5z2b",
+          "UserPoolId": "us-east-1_EXAMPLE",
+          "Username": "testuser"
+        },
+        "output": {},
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example revokes a token session for the user testuser and cascades the revocation to the parent SSO session that the token session came through.",
+        "id": "example-revoke-a-user-session-as-an-administrator-1792540806000",
+        "title": "Example revoke a user session as an administrator"
+      }
+    ],
     "CreateUserPool": [
       {
         "input": {
@@ -758,6 +824,49 @@
         "title": "Example get a provisioned limit"
       }
     ],
+    "GetUserPoolClientSessionConfiguration": [
+      {
+        "input": {
+          "ClientId": "1example23456789",
+          "UserPoolId": "us-east-1_EXAMPLE"
+        },
+        "output": {
+          "ClientId": "1example23456789",
+          "SSOSession": {
+            "MaxValidityMinutes": 43200
+          },
+          "UserPoolId": "us-east-1_EXAMPLE"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example returns the per-client session configuration, showing an SSO session validity of 43200 minutes (30 days).",
+        "id": "example-get-the-session-configuration-of-an-app-client-1792540803000",
+        "title": "Example get the session configuration of an app client"
+      }
+    ],
+    "GetUserPoolSessionConfiguration": [
+      {
+        "input": {
+          "UserPoolId": "us-east-1_EXAMPLE"
+        },
+        "output": {
+          "TokenSession": {
+            "MaxPerUser": 20
+          },
+          "UserPoolId": "us-east-1_EXAMPLE",
+          "UserSessionTracking": "ENABLED"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example returns the pool-level session configuration, showing that session tracking is enabled with a maximum of 20 concurrent token sessions per user.",
+        "id": "example-get-the-session-configuration-of-a-user-pool-1792540801000",
+        "title": "Example get the session configuration of a user pool"
+      }
+    ],
     "InitiateAuth": [
       {
         "input": {
@@ -824,6 +933,52 @@
         "description": "The following example lists the replicas of a user pool that has a replica in the ap-south-1 Region.",
         "id": "example-list-the-replicas-of-a-user-pool-1745281209294",
         "title": "Example list the replicas of a user pool"
+      }
+    ],
+    "ListUserSessions": [
+      {
+        "input": {
+          "AccessToken": "eyJra456defEXAMPLE"
+        },
+        "output": {
+          "Sessions": [
+            {
+              "ClientId": "1example23456789",
+              "CreateDate": 1792454400.117,
+              "DeviceType": "Chrome 125 / macOS 15.0",
+              "IsCurrentSession": true,
+              "LastActiveDate": 1792540800.234,
+              "LastIPAddress": "192.0.2.42",
+              "LastLocation": {
+                "City": "Seattle",
+                "Country": "United States"
+              },
+              "SessionId": "tknb8c4d0e6f2g8h4j0k6m2n8p4q",
+              "SessionType": "TOKEN"
+            },
+            {
+              "ClientId": "1example23456789",
+              "CreateDate": 1792195200.351,
+              "DeviceType": "Chrome 125 / Windows 11",
+              "IsCurrentSession": false,
+              "LastActiveDate": 1792281600.468,
+              "LastIPAddress": "198.51.100.17",
+              "LastLocation": {
+                "City": "Portland",
+                "Country": "United States"
+              },
+              "SessionId": "tknm5k9p2q7r4s8t1v6w3x0y5z2b",
+              "SessionType": "TOKEN"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example lists the active sessions for the user who owns the provided access token. The IsCurrentSession field identifies the session that the access token belongs to.",
+        "id": "example-list-a-users-own-active-sessions-1792540805000",
+        "title": "Example list a user's own active sessions"
       }
     ],
     "ListUsers": [
@@ -901,6 +1056,73 @@
         "description": "This request submits a value for all possible parameters for ListUsers. By iterating the PaginationToken, you can page through and collect all users in a user pool.",
         "id": "a-listusers-request-for-the-next-3-users-whose-email-address-starts-with-testuser-1689977648246",
         "title": "A ListUsers request for the next 3 users whose email address starts with \"testuser.\""
+      }
+    ],
+    "RevokeUserSession": [
+      {
+        "input": {
+          "AccessToken": "eyJra456defEXAMPLE",
+          "RevokeAssociatedSessions": "NONE",
+          "SessionId": "tknm5k9p2q7r4s8t1v6w3x0y5z2b"
+        },
+        "output": {},
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example revokes a single token session that belongs to the user who owns the provided access token, such as signing out a lost or stolen device. Only the targeted session is revoked.",
+        "id": "example-revoke-one-of-a-users-own-sessions-1792540807000",
+        "title": "Example revoke one of a user's own sessions"
+      }
+    ],
+    "SetUserPoolClientSessionConfiguration": [
+      {
+        "input": {
+          "ClientId": "1example23456789",
+          "SSOSession": {
+            "MaxValidityMinutes": 43200
+          },
+          "UserPoolId": "us-east-1_EXAMPLE"
+        },
+        "output": {
+          "ClientId": "1example23456789",
+          "SSOSession": {
+            "MaxValidityMinutes": 43200
+          },
+          "UserPoolId": "us-east-1_EXAMPLE"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example configures an app client to silently reuse an SSO session for up to 43200 minutes (30 days) since the last authentication before requiring the user to sign in again.",
+        "id": "example-set-the-sso-session-validity-for-an-app-client-1792540802000",
+        "title": "Example set the SSO session validity for an app client"
+      }
+    ],
+    "SetUserPoolSessionConfiguration": [
+      {
+        "input": {
+          "TokenSession": {
+            "MaxPerUser": 20
+          },
+          "UserPoolId": "us-east-1_EXAMPLE",
+          "UserSessionTracking": "ENABLED"
+        },
+        "output": {
+          "TokenSession": {
+            "MaxPerUser": 20
+          },
+          "UserPoolId": "us-east-1_EXAMPLE",
+          "UserSessionTracking": "ENABLED"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example enables server-side session tracking for a user pool and sets the pool-wide maximum to 20 concurrent token sessions per user.",
+        "id": "example-enable-session-tracking-for-a-user-pool-1792540800000",
+        "title": "Example enable session tracking for a user pool"
       }
     ],
     "UpdateProvisionedLimit": [

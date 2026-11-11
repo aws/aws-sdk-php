@@ -4,14 +4,18 @@
     "apiVersion":"2015-07-09",
     "endpointPrefix":"codepipeline",
     "jsonVersion":"1.1",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceAbbreviation":"CodePipeline",
     "serviceFullName":"AWS CodePipeline",
     "serviceId":"CodePipeline",
     "signatureVersion":"v4",
     "targetPrefix":"CodePipeline_20150709",
     "uid":"codepipeline-2015-07-09",
+    "xmlNamespace":"http://codepipeline.amazonaws.com/doc/2015-07-09/",
     "auth":["aws.auth#sigv4"]
   },
   "operations":{
@@ -1407,6 +1411,7 @@
       "members":{
         "message":{"shape":"Message"}
       },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "ContinuationToken":{

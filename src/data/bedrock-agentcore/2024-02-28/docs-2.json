@@ -2145,6 +2145,12 @@
         "HarnessToolConfiguration$remoteMcp": "<p>Configuration for remote MCP server.</p>"
       }
     },
+    "HarnessRemoteMcpOutboundAuth": {
+      "base": "<p>Authentication method for calling a remote MCP server.</p>",
+      "refs": {
+        "HarnessRemoteMcpConfig$outboundAuth": "<p>How the harness authenticates to this MCP server. Defaults to no authentication.</p>"
+      }
+    },
     "HarnessRemoteMcpUrl": {
       "base": null,
       "refs": {
@@ -2412,6 +2418,24 @@
         "InvokeAgentRuntimeCommandResponse$statusCode": "<p>The HTTP status code of the response. A status code of 200 indicates a successful operation. Other status codes indicate various error conditions.</p>",
         "InvokeAgentRuntimeResponse$statusCode": "<p>The HTTP status code of the response. A status code of 200 indicates a successful operation. Other status codes indicate various error conditions.</p>",
         "StopRuntimeSessionResponse$statusCode": "<p>The status code of the request to stop the session.</p>"
+      }
+    },
+    "IamCredentialProvider": {
+      "base": "<p>An IAM credential provider for authenticating requests. This structure contains the configuration for authenticating with a target endpoint using IAM credentials and SigV4 signing.</p>",
+      "refs": {
+        "HarnessRemoteMcpOutboundAuth$awsIam": "<p>Sign requests to the remote MCP server with Signature Version 4 (SigV4) using the harness execution role. If you don't specify a Region, the harness Region is used.</p>"
+      }
+    },
+    "IamCredentialProviderRegionString": {
+      "base": null,
+      "refs": {
+        "IamCredentialProvider$region": "<p>The Amazon Web Services Region used for SigV4 signing. If not specified, defaults to the Region of the resource that makes the request.</p>"
+      }
+    },
+    "IamCredentialProviderServiceString": {
+      "base": null,
+      "refs": {
+        "IamCredentialProvider$service": "<p>The name of the Amazon Web Services service used for SigV4 signing. This value identifies the service to authenticate with when sending requests to the target endpoint.</p>"
       }
     },
     "IgnoredReferenceInputField": {
@@ -5512,7 +5536,8 @@
       "base": null,
       "refs": {
         "HarnessGatewayOutboundAuth$awsIam": "<p>SigV4-sign requests using the agent's execution role.</p>",
-        "HarnessGatewayOutboundAuth$none": "<p>No authentication.</p>"
+        "HarnessGatewayOutboundAuth$none": "<p>No authentication.</p>",
+        "HarnessRemoteMcpOutboundAuth$none": "<p>No authentication.</p>"
       }
     },
     "UpdateABTestRequest": {

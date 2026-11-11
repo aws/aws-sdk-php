@@ -146,7 +146,7 @@ use Aws\AwsClient;
  *         FlinkApplicationConfiguration?: array{CheckpointConfiguration?: array, MonitoringConfiguration?: array, ParallelismConfiguration?: array, ...},
  *         EnvironmentProperties?: array{PropertyGroups?: list<array>, ...},
  *         ApplicationCodeConfiguration?: array{CodeContent?: array, CodeContentType?: 'PLAINTEXT'|'ZIPFILE', ...},
- *         ApplicationSnapshotConfiguration?: array{SnapshotsEnabled?: bool, ...},
+ *         ApplicationSnapshotConfiguration?: array{SnapshotsEnabled?: bool, SnapshotMode?: 'APPLICATION_SNAPSHOTS_LEGACY'|'ENHANCED_SNAPSHOTS', ...},
  *         ApplicationSystemRollbackConfiguration?: array{RollbackEnabled?: bool, ...},
  *         VpcConfigurations?: list<array>,
  *         ZeppelinApplicationConfiguration?: array{
@@ -175,7 +175,7 @@ use Aws\AwsClient;
  *         FlinkApplicationConfiguration?: array{CheckpointConfiguration?: array, MonitoringConfiguration?: array, ParallelismConfiguration?: array, ...},
  *         EnvironmentProperties?: array{PropertyGroups?: list<array>, ...},
  *         ApplicationCodeConfiguration?: array{CodeContent?: array, CodeContentType?: 'PLAINTEXT'|'ZIPFILE', ...},
- *         ApplicationSnapshotConfiguration?: array{SnapshotsEnabled?: bool, ...},
+ *         ApplicationSnapshotConfiguration?: array{SnapshotsEnabled?: bool, SnapshotMode?: 'APPLICATION_SNAPSHOTS_LEGACY'|'ENHANCED_SNAPSHOTS', ...},
  *         ApplicationSystemRollbackConfiguration?: array{RollbackEnabled?: bool, ...},
  *         VpcConfigurations?: list<array>,
  *         ZeppelinApplicationConfiguration?: array{
@@ -211,6 +211,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result createApplicationSnapshot(array{ApplicationName?: string, SnapshotName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise createApplicationSnapshotAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createApplicationSnapshotAsync(array{ApplicationName?: string, SnapshotName?: string, ...} $args = [])
+ * @method \Aws\Result createSnapshot(array $args = [])
+ * @phpstan-method \Aws\Result createSnapshot(array{
+ *     ApplicationName?: string,
+ *     SnapshotName?: string,
+ *     SnapshotDescription?: string,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createSnapshotAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createSnapshotAsync(array{
+ *     ApplicationName?: string,
+ *     SnapshotName?: string,
+ *     SnapshotDescription?: string,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result deleteApplication(array $args = [])
  * @phpstan-method \Aws\Result deleteApplication(array{ApplicationName?: string, CreateTimestamp?: int|string|\DateTimeInterface, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteApplicationAsync(array $args = [])
@@ -273,6 +289,10 @@ use Aws\AwsClient;
  *     ConditionalToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result deleteSnapshot(array $args = [])
+ * @phpstan-method \Aws\Result deleteSnapshot(array{SnapshotName?: string, SnapshotCreationTimestamp?: int|string|\DateTimeInterface, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteSnapshotAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteSnapshotAsync(array{SnapshotName?: string, SnapshotCreationTimestamp?: int|string|\DateTimeInterface, ...} $args = [])
  * @method \Aws\Result describeApplication(array $args = [])
  * @phpstan-method \Aws\Result describeApplication(array{ApplicationName?: string, IncludeAdditionalDetails?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeApplicationAsync(array $args = [])
@@ -289,6 +309,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeApplicationVersion(array{ApplicationName?: string, ApplicationVersionId?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeApplicationVersionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeApplicationVersionAsync(array{ApplicationName?: string, ApplicationVersionId?: int, ...} $args = [])
+ * @method \Aws\Result describeSnapshot(array $args = [])
+ * @phpstan-method \Aws\Result describeSnapshot(array{SnapshotName?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeSnapshotAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeSnapshotAsync(array{SnapshotName?: string, ...} $args = [])
+ * @method \Aws\Result describeSnapshotOperation(array $args = [])
+ * @phpstan-method \Aws\Result describeSnapshotOperation(array{SnapshotName?: string, SnapshotOperationId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeSnapshotOperationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeSnapshotOperationAsync(array{SnapshotName?: string, SnapshotOperationId?: string, ...} $args = [])
  * @method \Aws\Result discoverInputSchema(array $args = [])
  * @phpstan-method \Aws\Result discoverInputSchema(array{
  *     ResourceARN?: string,
@@ -305,6 +333,62 @@ use Aws\AwsClient;
  *     InputStartingPositionConfiguration?: array{InputStartingPosition?: 'LAST_STOPPED_POINT'|'NOW'|'TRIM_HORIZON', ...},
  *     S3Configuration?: array{BucketARN?: string, FileKey?: string, ...},
  *     InputProcessingConfiguration?: array{InputLambdaProcessor?: array{ResourceARN?: string, ...}, ...},
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result exportSnapshot(array $args = [])
+ * @phpstan-method \Aws\Result exportSnapshot(array{
+ *     SnapshotName?: string,
+ *     ExportDestinationConfiguration?: array{
+ *         DestinationType?: 'S3',
+ *         ExportRoleArn?: string,
+ *         DestinationEncryptionConfiguration?: array{KeyId?: string, KeyType?: 'AWS_OWNED_KEY'|'CUSTOMER_MANAGED_KEY', ...},
+ *         DestinationS3PrefixLocation?: array{BucketARN?: string, KeyPrefix?: string, ...},
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise exportSnapshotAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise exportSnapshotAsync(array{
+ *     SnapshotName?: string,
+ *     ExportDestinationConfiguration?: array{
+ *         DestinationType?: 'S3',
+ *         ExportRoleArn?: string,
+ *         DestinationEncryptionConfiguration?: array{KeyId?: string, KeyType?: 'AWS_OWNED_KEY'|'CUSTOMER_MANAGED_KEY', ...},
+ *         DestinationS3PrefixLocation?: array{BucketARN?: string, KeyPrefix?: string, ...},
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result importSnapshot(array $args = [])
+ * @phpstan-method \Aws\Result importSnapshot(array{
+ *     SnapshotName?: string,
+ *     ImportSourceConfiguration?: array{
+ *         SourceType?: 'S3',
+ *         ImportRoleArn?: string,
+ *         SourceEncryptionConfiguration?: array{KeyId?: string, KeyType?: 'AWS_OWNED_KEY'|'CUSTOMER_MANAGED_KEY', ...},
+ *         SourceS3PrefixLocation?: array{BucketARN?: string, KeyPrefix?: string, ...},
+ *         ...,
+ *     },
+ *     DestinationEncryptionConfiguration?: array{KeyId?: string, KeyType?: 'AWS_OWNED_KEY'|'CUSTOMER_MANAGED_KEY', ...},
+ *     SnapshotDescription?: string,
+ *     SnapshotFormat?: 'CANONICAL',
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise importSnapshotAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise importSnapshotAsync(array{
+ *     SnapshotName?: string,
+ *     ImportSourceConfiguration?: array{
+ *         SourceType?: 'S3',
+ *         ImportRoleArn?: string,
+ *         SourceEncryptionConfiguration?: array{KeyId?: string, KeyType?: 'AWS_OWNED_KEY'|'CUSTOMER_MANAGED_KEY', ...},
+ *         SourceS3PrefixLocation?: array{BucketARN?: string, KeyPrefix?: string, ...},
+ *         ...,
+ *     },
+ *     DestinationEncryptionConfiguration?: array{KeyId?: string, KeyType?: 'AWS_OWNED_KEY'|'CUSTOMER_MANAGED_KEY', ...},
+ *     SnapshotDescription?: string,
+ *     SnapshotFormat?: 'CANONICAL',
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listApplicationOperations(array $args = [])
@@ -337,6 +421,44 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listApplications(array{Limit?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listApplicationsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listApplicationsAsync(array{Limit?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result listSnapshotOperations(array $args = [])
+ * @phpstan-method \Aws\Result listSnapshotOperations(array{
+ *     SnapshotName?: string,
+ *     SnapshotOperation?: 'CreateSnapshot'|'DeleteSnapshot'|'ExportSnapshot'|'ImportSnapshot'|'SystemCreateSnapshot',
+ *     SnapshotOperationStatus?: 'CANCELLED'|'FAILED'|'IN_PROGRESS'|'SUCCESSFUL',
+ *     Limit?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listSnapshotOperationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listSnapshotOperationsAsync(array{
+ *     SnapshotName?: string,
+ *     SnapshotOperation?: 'CreateSnapshot'|'DeleteSnapshot'|'ExportSnapshot'|'ImportSnapshot'|'SystemCreateSnapshot',
+ *     SnapshotOperationStatus?: 'CANCELLED'|'FAILED'|'IN_PROGRESS'|'SUCCESSFUL',
+ *     Limit?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listSnapshots(array $args = [])
+ * @phpstan-method \Aws\Result listSnapshots(array{
+ *     SourceApplicationName?: string,
+ *     SnapshotInitiator?: 'SYSTEM'|'USER',
+ *     SnapshotInitiatorOperation?: 'CreateSnapshot'|'ImportSnapshot'|'SystemCreateSnapshot',
+ *     SnapshotStatus?: 'CREATING'|'DELETING'|'FAILED'|'READY',
+ *     Limit?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listSnapshotsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listSnapshotsAsync(array{
+ *     SourceApplicationName?: string,
+ *     SnapshotInitiator?: 'SYSTEM'|'USER',
+ *     SnapshotInitiatorOperation?: 'CreateSnapshot'|'ImportSnapshot'|'SystemCreateSnapshot',
+ *     SnapshotStatus?: 'CREATING'|'DELETING'|'FAILED'|'READY',
+ *     Limit?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @phpstan-method \Aws\Result listTagsForResource(array{ResourceARN?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
@@ -354,6 +476,7 @@ use Aws\AwsClient;
  *         ApplicationRestoreConfiguration?: array{
  *             ApplicationRestoreType?: 'RESTORE_FROM_CUSTOM_SNAPSHOT'|'RESTORE_FROM_LATEST_SNAPSHOT'|'SKIP_RESTORE_FROM_SNAPSHOT',
  *             SnapshotName?: string,
+ *             SnapshotArn?: string,
  *             ...,
  *         },
  *         ...,
@@ -369,6 +492,7 @@ use Aws\AwsClient;
  *         ApplicationRestoreConfiguration?: array{
  *             ApplicationRestoreType?: 'RESTORE_FROM_CUSTOM_SNAPSHOT'|'RESTORE_FROM_LATEST_SNAPSHOT'|'SKIP_RESTORE_FROM_SNAPSHOT',
  *             SnapshotName?: string,
+ *             SnapshotArn?: string,
  *             ...,
  *         },
  *         ...,
@@ -401,7 +525,11 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         EnvironmentPropertyUpdates?: array{PropertyGroups?: list<array>, ...},
- *         ApplicationSnapshotConfigurationUpdate?: array{SnapshotsEnabledUpdate?: bool, ...},
+ *         ApplicationSnapshotConfigurationUpdate?: array{
+ *             SnapshotsEnabledUpdate?: bool,
+ *             SnapshotModeUpdate?: 'APPLICATION_SNAPSHOTS_LEGACY'|'ENHANCED_SNAPSHOTS',
+ *             ...,
+ *         },
  *         ApplicationSystemRollbackConfigurationUpdate?: array{RollbackEnabledUpdate?: bool, ...},
  *         VpcConfigurationUpdates?: list<array>,
  *         ZeppelinApplicationConfigurationUpdate?: array{
@@ -420,6 +548,7 @@ use Aws\AwsClient;
  *         ApplicationRestoreConfiguration?: array{
  *             ApplicationRestoreType?: 'RESTORE_FROM_CUSTOM_SNAPSHOT'|'RESTORE_FROM_LATEST_SNAPSHOT'|'SKIP_RESTORE_FROM_SNAPSHOT',
  *             SnapshotName?: string,
+ *             SnapshotArn?: string,
  *             ...,
  *         },
  *         ...,
@@ -443,7 +572,11 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         EnvironmentPropertyUpdates?: array{PropertyGroups?: list<array>, ...},
- *         ApplicationSnapshotConfigurationUpdate?: array{SnapshotsEnabledUpdate?: bool, ...},
+ *         ApplicationSnapshotConfigurationUpdate?: array{
+ *             SnapshotsEnabledUpdate?: bool,
+ *             SnapshotModeUpdate?: 'APPLICATION_SNAPSHOTS_LEGACY'|'ENHANCED_SNAPSHOTS',
+ *             ...,
+ *         },
  *         ApplicationSystemRollbackConfigurationUpdate?: array{RollbackEnabledUpdate?: bool, ...},
  *         VpcConfigurationUpdates?: list<array>,
  *         ZeppelinApplicationConfigurationUpdate?: array{
@@ -462,6 +595,7 @@ use Aws\AwsClient;
  *         ApplicationRestoreConfiguration?: array{
  *             ApplicationRestoreType?: 'RESTORE_FROM_CUSTOM_SNAPSHOT'|'RESTORE_FROM_LATEST_SNAPSHOT'|'SKIP_RESTORE_FROM_SNAPSHOT',
  *             SnapshotName?: string,
+ *             SnapshotArn?: string,
  *             ...,
  *         },
  *         ...,

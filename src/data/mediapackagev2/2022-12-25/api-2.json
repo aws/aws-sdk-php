@@ -867,6 +867,7 @@
         "ProgramInformation":{"shape":"DashProgramInformation"},
         "DvbSettings":{"shape":"DashDvbSettings"},
         "Compactness":{"shape":"DashCompactness"},
+        "BandwidthReportingMode":{"shape":"DashBandwidthReportingMode"},
         "AudioTimelinePattern":{"shape":"DashAudioTimelinePattern"},
         "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"},
         "UriPathType":{"shape":"UriPathType"},
@@ -1161,6 +1162,13 @@
         "FixedAvailabilityStartTime":{"shape":"SyntheticTimestamp_date_time"}
       },
       "union":true
+    },
+    "DashBandwidthReportingMode":{
+      "type":"string",
+      "enum":[
+        "AVERAGE",
+        "MAX"
+      ]
     },
     "DashBaseUrl":{
       "type":"structure",
@@ -1752,6 +1760,7 @@
         "ProgramInformation":{"shape":"DashProgramInformation"},
         "DvbSettings":{"shape":"DashDvbSettings"},
         "Compactness":{"shape":"DashCompactness"},
+        "BandwidthReportingMode":{"shape":"DashBandwidthReportingMode"},
         "AudioTimelinePattern":{"shape":"DashAudioTimelinePattern"},
         "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"},
         "UriPathType":{"shape":"UriPathType"},

@@ -2398,7 +2398,8 @@
     "ConnectorConfiguration":{
       "type":"structure",
       "members":{
-        "azure":{"shape":"AzureConnectorConfiguration"}
+        "azure":{"shape":"AzureConnectorConfiguration"},
+        "gcp":{"shape":"GcpConnectorConfiguration"}
       }
     },
     "ConnectorFilter":{
@@ -2435,7 +2436,6 @@
         "arn",
         "name",
         "provider",
-        "tenantIdentifier",
         "createdTime"
       ],
       "members":{
@@ -2443,6 +2443,8 @@
         "name":{"shape":"ConnectorName"},
         "provider":{"shape":"Provider"},
         "tenantIdentifier":{"shape":"AzureTenantIdentifier"},
+        "gcpOrganizationId":{"shape":"GcpOrganizationId"},
+        "serviceAccountEmail":{"shape":"GcpServiceAccountEmail"},
         "createdTime":{"shape":"Date"}
       }
     },
@@ -3323,6 +3325,35 @@
       "member":{"shape":"String"},
       "max":10,
       "min":0
+    },
+    "GcpConnectorConfiguration":{
+      "type":"structure",
+      "required":[
+        "serviceAccountEmail",
+        "workloadIdentityPoolProvider"
+      ],
+      "members":{
+        "gcpOrganizationId":{"shape":"GcpOrganizationId"},
+        "serviceAccountEmail":{"shape":"GcpServiceAccountEmail"},
+        "workloadIdentityPoolProvider":{"shape":"GcpWorkloadIdentityPoolProvider"}
+      }
+    },
+    "GcpOrganizationId":{
+      "type":"string",
+      "max":20,
+      "min":1
+    },
+    "GcpServiceAccountEmail":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-z][a-z0-9\\-]*@[a-z][a-z0-9\\-]*[a-z0-9]\\.iam\\.gserviceaccount\\.com$"
+    },
+    "GcpWorkloadIdentityPoolProvider":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"^projects/[0-9]+/locations/global/workloadIdentityPools/[^/]+/providers/[^/]+$"
     },
     "GetAggregateComplianceDetailsByConfigRuleRequest":{
       "type":"structure",
@@ -4471,7 +4502,10 @@
     },
     "Provider":{
       "type":"string",
-      "enum":["AZURE"]
+      "enum":[
+        "AZURE",
+        "GCP"
+      ]
     },
     "PutAggregationAuthorizationRequest":{
       "type":"structure",

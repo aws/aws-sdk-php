@@ -1200,7 +1200,7 @@
           "shape":"BooleanType",
           "box":true
         },
-        "ApiRestrictSourceVpcs":{"shape":"VpcIdList"},
+        "ApiRestrictSourceVpcs":{"shape":"VpcArnList"},
         "ApiAllowSourceIps":{"shape":"IpCidrList"},
         "ScimAllowSourceIps":{"shape":"IpCidrList"}
       }
@@ -1213,7 +1213,7 @@
           "shape":"BooleanType",
           "box":true
         },
-        "ApiRestrictSourceVpcs":{"shape":"VpcIdList"},
+        "ApiRestrictSourceVpcs":{"shape":"VpcArnList"},
         "ApiAllowSourceIps":{"shape":"IpCidrList"},
         "ScimAllowSourceIps":{"shape":"IpCidrList"}
       }
@@ -1512,17 +1512,17 @@
         "KMS_DISABLED"
       ]
     },
-    "VpcIdList":{
+    "VpcArn":{
+      "type":"string",
+      "max":128,
+      "min":12,
+      "pattern":"(arn:aws(-[a-z]{1,5}){0,3}:ec2:[a-z]{2,4}(-[a-z]{1,10}){1,3}-[0-9]{1,2}:[0-9]{12}:vpc/)?vpc-([0-9a-f]){8}(([0-9a-f]){9})?"
+    },
+    "VpcArnList":{
       "type":"list",
-      "member":{"shape":"VpcIdType"},
+      "member":{"shape":"VpcArn"},
       "max":50,
       "min":1
-    },
-    "VpcIdType":{
-      "type":"string",
-      "max":21,
-      "min":12,
-      "pattern":"vpc-([0-9a-f]){8}(([0-9a-f]){9})?"
     }
   }
 }

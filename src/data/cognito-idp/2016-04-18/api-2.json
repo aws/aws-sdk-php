@@ -403,6 +403,25 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "AdminListUserSessions":{
+      "name":"AdminListUserSessions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AdminListUserSessionsRequest"},
+      "output":{"shape":"AdminListUserSessionsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"UserNotFoundException"},
+        {"shape":"OperationNotEnabledException"},
+        {"shape":"InternalErrorException"}
+      ],
+      "readonly":true
+    },
     "AdminRemoveUserFromGroup":{
       "name":"AdminRemoveUserFromGroup",
       "http":{
@@ -477,6 +496,24 @@
         {"shape":"UserNotConfirmedException"},
         {"shape":"SoftwareTokenMFANotFoundException"},
         {"shape":"OperationNotEnabledException"}
+      ]
+    },
+    "AdminRevokeUserSession":{
+      "name":"AdminRevokeUserSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AdminRevokeUserSessionRequest"},
+      "output":{"shape":"AdminRevokeUserSessionResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"UserNotFoundException"},
+        {"shape":"OperationNotEnabledException"},
+        {"shape":"InternalErrorException"}
       ]
     },
     "AdminSetUserMFAPreference":{
@@ -1705,6 +1742,24 @@
       "authtype":"none",
       "auth":["smithy.api#noAuth"]
     },
+    "GetUserPoolClientSessionConfiguration":{
+      "name":"GetUserPoolClientSessionConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetUserPoolClientSessionConfigurationRequest"},
+      "output":{"shape":"GetUserPoolClientSessionConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"OperationNotEnabledException"}
+      ],
+      "readonly":true
+    },
     "GetUserPoolMfaConfig":{
       "name":"GetUserPoolMfaConfig",
       "http":{
@@ -1720,6 +1775,24 @@
         {"shape":"NotAuthorizedException"},
         {"shape":"InternalErrorException"}
       ]
+    },
+    "GetUserPoolSessionConfiguration":{
+      "name":"GetUserPoolSessionConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetUserPoolSessionConfigurationRequest"},
+      "output":{"shape":"GetUserPoolSessionConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"OperationNotEnabledException"}
+      ],
+      "readonly":true
     },
     "GlobalSignOut":{
       "name":"GlobalSignOut",
@@ -1965,6 +2038,30 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "ListUserSessions":{
+      "name":"ListUserSessions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListUserSessionsRequest"},
+      "output":{"shape":"ListUserSessionsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"PasswordResetRequiredException"},
+        {"shape":"UserNotFoundException"},
+        {"shape":"UserNotConfirmedException"},
+        {"shape":"OperationNotEnabledException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"ForbiddenException"}
+      ],
+      "authtype":"none",
+      "readonly":true,
+      "auth":["smithy.api#noAuth"]
+    },
     "ListUsers":{
       "name":"ListUsers",
       "http":{
@@ -2107,6 +2204,29 @@
       "authtype":"none",
       "auth":["smithy.api#noAuth"]
     },
+    "RevokeUserSession":{
+      "name":"RevokeUserSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RevokeUserSessionRequest"},
+      "output":{"shape":"RevokeUserSessionResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"PasswordResetRequiredException"},
+        {"shape":"UserNotFoundException"},
+        {"shape":"UserNotConfirmedException"},
+        {"shape":"OperationNotEnabledException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"ForbiddenException"}
+      ],
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
+    },
     "SetLogDeliveryConfiguration":{
       "name":"SetLogDeliveryConfiguration",
       "http":{
@@ -2183,6 +2303,25 @@
       "authtype":"none",
       "auth":["smithy.api#noAuth"]
     },
+    "SetUserPoolClientSessionConfiguration":{
+      "name":"SetUserPoolClientSessionConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SetUserPoolClientSessionConfigurationRequest"},
+      "output":{"shape":"SetUserPoolClientSessionConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"FeatureUnavailableInTierException"},
+        {"shape":"OperationNotEnabledException"}
+      ]
+    },
     "SetUserPoolMfaConfig":{
       "name":"SetUserPoolMfaConfig",
       "http":{
@@ -2202,6 +2341,25 @@
         {"shape":"OperationNotEnabledException"},
         {"shape":"InternalErrorException"},
         {"shape":"FeatureUnavailableInTierException"}
+      ]
+    },
+    "SetUserPoolSessionConfiguration":{
+      "name":"SetUserPoolSessionConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SetUserPoolSessionConfigurationRequest"},
+      "output":{"shape":"SetUserPoolSessionConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"FeatureUnavailableInTierException"},
+        {"shape":"OperationNotEnabledException"}
       ]
     },
     "SetUserSettings":{
@@ -3139,6 +3297,25 @@
         "NextToken":{"shape":"PaginationKey"}
       }
     },
+    "AdminListUserSessionsRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "Username"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "Username":{"shape":"UsernameType"},
+        "NextToken":{"shape":"PaginationKey"}
+      }
+    },
+    "AdminListUserSessionsResponse":{
+      "type":"structure",
+      "members":{
+        "Sessions":{"shape":"SessionsListType"},
+        "NextToken":{"shape":"PaginationKey"}
+      }
+    },
     "AdminRemoveUserFromGroupRequest":{
       "type":"structure",
       "required":[
@@ -3195,6 +3372,24 @@
         "AuthenticationResult":{"shape":"AuthenticationResultType"},
         "AvailableChallenges":{"shape":"AvailableChallengeListType"}
       }
+    },
+    "AdminRevokeUserSessionRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "Username",
+        "SessionId"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "Username":{"shape":"UsernameType"},
+        "SessionId":{"shape":"SessionIdType"},
+        "RevokeAssociatedSessions":{"shape":"RevokeAssociatedSessionsType"}
+      }
+    },
+    "AdminRevokeUserSessionResponse":{
+      "type":"structure",
+      "members":{}
     },
     "AdminSetUserMFAPreferenceRequest":{
       "type":"structure",
@@ -3698,6 +3893,13 @@
       "type":"string",
       "max":2048,
       "min":1
+    },
+    "ClientSSOSessionConfigType":{
+      "type":"structure",
+      "required":["MaxValidityMinutes"],
+      "members":{
+        "MaxValidityMinutes":{"shape":"SSOSessionMaxValidityMinutesType"}
+      }
     },
     "ClientSecretDescriptorListType":{
       "type":"list",
@@ -5166,6 +5368,25 @@
         "ConfiguredUserAuthFactors":{"shape":"ConfiguredUserAuthFactorsListType"}
       }
     },
+    "GetUserPoolClientSessionConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "ClientId"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "ClientId":{"shape":"ClientIdType"}
+      }
+    },
+    "GetUserPoolClientSessionConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "SSOSession":{"shape":"ClientSSOSessionConfigType"}
+      }
+    },
     "GetUserPoolMfaConfigRequest":{
       "type":"structure",
       "required":["UserPoolId"],
@@ -5181,6 +5402,21 @@
         "EmailMfaConfiguration":{"shape":"EmailMfaConfigType"},
         "MfaConfiguration":{"shape":"UserPoolMfaType"},
         "WebAuthnConfiguration":{"shape":"WebAuthnConfigurationType"}
+      }
+    },
+    "GetUserPoolSessionConfigurationRequest":{
+      "type":"structure",
+      "required":["UserPoolId"],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"}
+      }
+    },
+    "GetUserPoolSessionConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "UserSessionTracking":{"shape":"UserSessionTrackingType"},
+        "TokenSession":{"shape":"UserPoolTokenSessionConfigType"}
       }
     },
     "GetUserRequest":{
@@ -5718,6 +5954,21 @@
         "NextToken":{"shape":"PaginationKeyType"}
       }
     },
+    "ListUserSessionsRequest":{
+      "type":"structure",
+      "required":["AccessToken"],
+      "members":{
+        "AccessToken":{"shape":"TokenModelType"},
+        "NextToken":{"shape":"PaginationKey"}
+      }
+    },
+    "ListUserSessionsResponse":{
+      "type":"structure",
+      "members":{
+        "Sessions":{"shape":"SessionsListType"},
+        "NextToken":{"shape":"PaginationKey"}
+      }
+    },
     "ListUsersInGroupRequest":{
       "type":"structure",
       "required":[
@@ -5858,6 +6109,11 @@
         "CreationDate":{"shape":"DateType"},
         "LastModifiedDate":{"shape":"DateType"}
       }
+    },
+    "MaxSessionsPerUserType":{
+      "type":"integer",
+      "max":100,
+      "min":1
     },
     "MessageActionType":{
       "type":"string",
@@ -6311,6 +6567,13 @@
       "max":60,
       "min":0
     },
+    "RevokeAssociatedSessionsType":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "LINKED"
+      ]
+    },
     "RevokeTokenRequest":{
       "type":"structure",
       "required":[
@@ -6320,10 +6583,27 @@
       "members":{
         "Token":{"shape":"TokenModelType"},
         "ClientId":{"shape":"ClientIdType"},
-        "ClientSecret":{"shape":"ClientSecretType"}
+        "ClientSecret":{"shape":"ClientSecretType"},
+        "RevokeAssociatedSessions":{"shape":"RevokeAssociatedSessionsType"}
       }
     },
     "RevokeTokenResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "RevokeUserSessionRequest":{
+      "type":"structure",
+      "required":[
+        "AccessToken",
+        "SessionId"
+      ],
+      "members":{
+        "AccessToken":{"shape":"TokenModelType"},
+        "SessionId":{"shape":"SessionIdType"},
+        "RevokeAssociatedSessions":{"shape":"RevokeAssociatedSessionsType"}
+      }
+    },
+    "RevokeUserSessionResponse":{
       "type":"structure",
       "members":{}
     },
@@ -6397,6 +6677,11 @@
         "Enabled":{"shape":"BooleanType"},
         "PreferredMfa":{"shape":"BooleanType"}
       }
+    },
+    "SSOSessionMaxValidityMinutesType":{
+      "type":"integer",
+      "max":129600,
+      "min":0
     },
     "SchemaAttributeType":{
       "type":"structure",
@@ -6480,11 +6765,73 @@
       },
       "exception":true
     },
+    "SessionDescriptionType":{
+      "type":"structure",
+      "members":{
+        "SessionId":{"shape":"SessionIdType"},
+        "SessionType":{"shape":"SessionTypeType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "CreateDate":{"shape":"DateType"},
+        "LastActiveDate":{"shape":"DateType"},
+        "DeviceType":{"shape":"SessionDeviceType"},
+        "LastIPAddress":{"shape":"SessionIpAddressType"},
+        "LastLocation":{"shape":"SessionLocationType"},
+        "OriginSessionId":{"shape":"SessionIdType"},
+        "IsCurrentSession":{"shape":"WrappedBooleanType"}
+      }
+    },
+    "SessionDeviceType":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "SessionIdType":{
+      "type":"string",
+      "max":28,
+      "min":28,
+      "pattern":"^(tkn|sso)[a-z0-9]{25}$"
+    },
+    "SessionIpAddressType":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "sensitive":true
+    },
+    "SessionLocationCityType":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
+    "SessionLocationCountryType":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
+    "SessionLocationType":{
+      "type":"structure",
+      "members":{
+        "City":{"shape":"SessionLocationCityType"},
+        "Country":{"shape":"SessionLocationCountryType"}
+      }
+    },
     "SessionType":{
       "type":"string",
       "max":4096,
       "min":20,
       "sensitive":true
+    },
+    "SessionTypeType":{
+      "type":"string",
+      "enum":[
+        "TOKEN",
+        "SSO"
+      ]
+    },
+    "SessionsListType":{
+      "type":"list",
+      "member":{"shape":"SessionDescriptionType"},
+      "max":125,
+      "min":0
     },
     "SetLogDeliveryConfigurationRequest":{
       "type":"structure",
@@ -6553,6 +6900,27 @@
       "type":"structure",
       "members":{}
     },
+    "SetUserPoolClientSessionConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "ClientId",
+        "SSOSession"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "SSOSession":{"shape":"ClientSSOSessionConfigType"}
+      }
+    },
+    "SetUserPoolClientSessionConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "SSOSession":{"shape":"ClientSSOSessionConfigType"}
+      }
+    },
     "SetUserPoolMfaConfigRequest":{
       "type":"structure",
       "required":["UserPoolId"],
@@ -6573,6 +6941,27 @@
         "EmailMfaConfiguration":{"shape":"EmailMfaConfigType"},
         "MfaConfiguration":{"shape":"UserPoolMfaType"},
         "WebAuthnConfiguration":{"shape":"WebAuthnConfigurationType"}
+      }
+    },
+    "SetUserPoolSessionConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "UserSessionTracking",
+        "TokenSession"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "UserSessionTracking":{"shape":"UserSessionTrackingType"},
+        "TokenSession":{"shape":"UserPoolTokenSessionConfigType"}
+      }
+    },
+    "SetUserPoolSessionConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "UserSessionTracking":{"shape":"UserSessionTrackingType"},
+        "TokenSession":{"shape":"UserPoolTokenSessionConfigType"}
       }
     },
     "SetUserSettingsRequest":{
@@ -7512,6 +7901,13 @@
         "PLUS"
       ]
     },
+    "UserPoolTokenSessionConfigType":{
+      "type":"structure",
+      "required":["MaxPerUser"],
+      "members":{
+        "MaxPerUser":{"shape":"MaxSessionsPerUserType"}
+      }
+    },
     "UserPoolType":{
       "type":"structure",
       "members":{
@@ -7557,6 +7953,13 @@
         "IssuerConfiguration":{"shape":"IssuerConfigurationType"},
         "AcrConfiguration":{"shape":"AcrConfigurationType"}
       }
+    },
+    "UserSessionTrackingType":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "UserStatusType":{
       "type":"string",

@@ -4,8 +4,11 @@
     "apiVersion":"2017-10-26",
     "endpointPrefix":"transcribe",
     "jsonVersion":"1.1",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceFullName":"Amazon Transcribe Service",
     "serviceId":"Transcribe",
     "signatureVersion":"v4",
@@ -677,6 +680,7 @@
       "members":{
         "Message":{"shape":"FailureReason"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "BaseModelName":{
@@ -845,6 +849,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "ContentRedaction":{
@@ -1226,6 +1231,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
     },
@@ -1432,6 +1438,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":429},
       "exception":true
     },
     "ListCallAnalyticsCategoriesRequest":{
@@ -1875,6 +1882,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "OutputBucketName":{

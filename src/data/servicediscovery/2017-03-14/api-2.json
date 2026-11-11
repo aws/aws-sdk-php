@@ -4,8 +4,11 @@
     "apiVersion":"2017-03-14",
     "endpointPrefix":"servicediscovery",
     "jsonVersion":"1.1",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceAbbreviation":"ServiceDiscovery",
     "serviceFullName":"AWS Cloud Map",
     "serviceId":"ServiceDiscovery",
@@ -565,6 +568,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "CustomHealthStatus":{
@@ -724,6 +728,7 @@
         "Message":{"shape":"ErrorMessage"},
         "DuplicateOperationId":{"shape":"OperationId"}
       },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "ErrorMessage":{"type":"string"},
@@ -939,6 +944,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "InstanceSummary":{
@@ -958,6 +964,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "ListInstancesRequest":{
@@ -1063,6 +1070,7 @@
         "CreatorRequestId":{"shape":"ResourceId"},
         "NamespaceId":{"shape":"ResourceId"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "NamespaceFilter":{
@@ -1115,6 +1123,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "NamespaceProperties":{
@@ -1203,6 +1212,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "OperationStatus":{
@@ -1361,6 +1371,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":429},
       "exception":true
     },
     "ResourceCount":{"type":"integer"},
@@ -1377,6 +1388,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "ResourceLimitExceeded":{
@@ -1384,6 +1396,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "ResourceNotFoundException":{
@@ -1391,6 +1404,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "ResourcePath":{
@@ -1446,6 +1460,7 @@
         "ServiceId":{"shape":"ResourceId"},
         "ServiceArn":{"shape":"Arn"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "ServiceAttributeKey":{
@@ -1475,6 +1490,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "ServiceAttributesMap":{
@@ -1524,6 +1540,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "ServiceSummariesList":{
@@ -1614,6 +1631,7 @@
         "Message":{"shape":"ErrorMessage"},
         "ResourceName":{"shape":"AmazonResourceName"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "UntagResourceRequest":{
