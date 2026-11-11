@@ -4,9 +4,15 @@ namespace Aws\Credentials;
 use Aws;
 use Aws\Api\DateTimeResult;
 use Aws\CacheInterface;
+use Aws\Exception\AwsException;
 use Aws\Exception\CredentialsException;
+use Aws\Exception\NoCredentialsException;
+use Aws\Exception\NonRecoverableCredentialsException;
+use Aws\Exception\NonRecoverableCredentialsExceptionInterface;
+use Aws\Exception\TokenException;
 use Aws\Sts\StsClient;
 use GuzzleHttp\Promise;
+use GuzzleHttp\Promise\PromiseInterface;
 /**
  * Credential providers are functions that accept no arguments and return a
  * promise that is fulfilled with an {@see \Aws\Credentials\CredentialsInterface}
@@ -57,6 +63,14 @@ class CredentialProvider
     public const FALLBACK_REGION = 'us-east-1';
     public const REFRESH_WINDOW = 60;
 
+    // memoize() refresh settings, in seconds.
+    private const MANDATORY_REFRESH_WINDOW = 60;
+    private const MIN_BACKOFF = 60;
+    private const MIN_BACKOFF_UPPER = 90;
+    private const MAX_BACKOFF = 600;
+    private const MIN_ERROR_CACHE = 1;
+    private const MAX_ERROR_CACHE = 5;
+
     /**
      * Create a default credential provider that
      * first checks for environment variables,
@@ -81,13 +95,13 @@ class CredentialProvider
     public static function defaultProvider(array $config = [])
     {
         $cacheable = [
-            'web_identity',
-            'sso',
-            'login',
-            'process_credentials',
-            'process_config',
-            'ecs',
-            'instance'
+            'web_identity' => true,
+            'sso' => true,
+            'login' => true,
+            'process_credentials' => false,
+            'process_config' => false,
+            'ecs' => true,
+            'instance' => true
         ];
 
         $profileName = getenv(self::ENV_PROFILE) ?: 'default';
@@ -126,12 +140,23 @@ class CredentialProvider
         if (isset($config['credentials'])
             && $config['credentials'] instanceof CacheInterface
         ) {
-            foreach ($cacheable as $provider) {
-                if (isset($defaultChain[$provider])) {
+            foreach ($cacheable as $provider => $usesLifecycleCache) {
+                if (!isset($defaultChain[$provider])) {
+                    continue;
+                }
+
+                $cacheKey = 'aws_cached_' . $provider . '_credentials';
+                if ($usesLifecycleCache) {
+                    $defaultChain[$provider] = self::cacheCredentials(
+                        $defaultChain[$provider],
+                        $config['credentials'],
+                        $cacheKey
+                    );
+                } else {
                     $defaultChain[$provider] = self::cache(
                         $defaultChain[$provider],
                         $config['credentials'],
-                        'aws_cached_' . $provider . '_credentials'
+                        $cacheKey
                     );
                 }
             }
@@ -180,24 +205,34 @@ class CredentialProvider
             $parent = array_shift($links);
             $promise = $parent();
             while ($next = array_shift($links)) {
-                if ($next instanceof InstanceProfileProvider
-                    && $previousCreds instanceof Credentials
+                $promise = $promise->otherwise(function ($reason) use (
+                    $next,
+                    $previousCreds
                 ) {
-                    $promise = $promise->otherwise(
-                        function () use ($next, $previousCreds) {return $next($previousCreds);}
-                    );
-                } else {
-                    $promise = $promise->otherwise($next);
-                }
+                    if ($next instanceof InstanceProfileProvider
+                        && $previousCreds instanceof Credentials
+                    ) {
+                        return $next($previousCreds);
+                    }
+                    return $next($reason);
+                });
             }
             return $promise;
         };
     }
 
     /**
-     * Wraps a credential provider and caches previously provided credentials.
+     * Wraps a credential provider and caches the credentials it returns.
      *
-     * Ensures that cached credentials are refreshed when they expire.
+     * Refreshes the credentials before they expire, using two windows: an
+     * advisory window sized to the credential lifetime, and a 60-second
+     * mandatory window. When a refresh fails, keeps the cached credentials
+     * (even past expiry) and waits a jittered backoff before retrying. The
+     * backoff scales with the credentials remaining lifetime (1 to 10
+     * minutes), so credentials near expiry are retried sooner. The target
+     * service decides whether to accept them.
+     *
+     * State is held in closure-scoped static variables.
      *
      * @param callable $provider Credentials provider function to wrap.
      *
@@ -206,44 +241,318 @@ class CredentialProvider
     public static function memoize(callable $provider)
     {
         return function () use ($provider) {
-            static $result;
-            static $isConstant;
+            // Lifecycle state, persisted across calls.
+            static $cached;
+            static $isConstant = false;
+            static $advisoryWindow;
+            static $nextRefreshAllowedAt;
+            static $cachedError;
+            static $cachedErrorExpiresAt;
+            static $fetchPromise;
+            static $refreshPromise;
 
-            // Constant credentials will be returned constantly.
+            $now = time();
+
+            // Constant credentials (no expiration) never need refreshing.
             if ($isConstant) {
-                return $result;
+                return Promise\Create::promiseFor($cached);
             }
 
-            // Create the initial promise that will be used as the cached value
-            // until it expires.
-            if (null === $result) {
-                $result = $provider();
+            if ($cached !== null) {
+                $remaining = $cached->getExpiration() - $now;
+
+                // State 2: valid credentials, outside every window.
+                if ($remaining > $advisoryWindow) {
+                    return Promise\Create::promiseFor($cached);
+                }
+
+                // Backoff gate: a previous refresh failed and the backoff
+                // has not elapsed.
+                if ($nextRefreshAllowedAt !== null && $now < $nextRefreshAllowedAt) {
+                    return Promise\Create::promiseFor($cached);
+                }
             }
 
-            // Return credentials that could expire and refresh when needed.
-            return $result
-                ->then(function (CredentialsInterface $creds) use ($provider, &$isConstant, &$result) {
-                    // Determine if these are constant credentials.
-                    if (!$creds->getExpiration()) {
-                        $isConstant = true;
+            // Everything below only runs when a fetch or refresh is needed.
+
+            // Handles credentials returned by the source (fresh or stale).
+            $onSourceCredentials = static function (
+                CredentialsInterface $creds,
+                bool $isInitial
+            ) use (
+                &$cached,
+                &$isConstant,
+                &$advisoryWindow,
+                &$nextRefreshAllowedAt,
+                &$cachedError,
+                &$cachedErrorExpiresAt
+            ) {
+                $now = time();
+
+                // Constant credentials: cache and return as-is.
+                if (!$creds->getExpiration()) {
+                    $isConstant = true;
+                    $cached = $creds;
+                    $cachedError = null;
+                    $cachedErrorExpiresAt = null;
+                    return $creds;
+                }
+
+                // Response with already-expired credentials.
+                if ($creds->getExpiration() <= $now) {
+                    if ($isInitial) {
+                        // Initial fetch: nothing is cached to fall back on, so
+                        // return the expired credentials instead of raising and
+                        // let the service decide.
+                        $cached = $creds;
+                        $advisoryWindow = self::advisoryWindow($creds, $now);
+                        $cachedError = null;
+                        $cachedErrorExpiresAt = null;
                         return $creds;
                     }
+                    $backoff = self::refreshBackoff($cached, $now);
+                    $nextRefreshAllowedAt = $now + $backoff;
+                    self::warnRefreshFailed(
+                        'Credential source returned expired credentials',
+                        $backoff
+                    );
+                    return $cached;
+                }
 
-                    // Check if credentials are expired or will expire in 1 minute
-                    $needsRefresh = $creds->getExpiration() - time() <= self::REFRESH_WINDOW;
+                // Success: replace cache, recompute window, clear failure state.
+                $cached = $creds;
+                $advisoryWindow = self::advisoryWindow($creds, $now);
+                $nextRefreshAllowedAt = null;
+                $cachedError = null;
+                $cachedErrorExpiresAt = null;
+                return $creds;
+            };
 
-                    // Refresh if expired or expiring soon
-                    if (!$needsRefresh && !$creds->isExpired()) {
-                        return $creds;
-                    }
+            // State 1: no credentials yet. Concurrent callers share one fetch.
+            // A cached non-recoverable error is re-raised without calling the
+            // source.
+            if ($cached === null) {
+                if ($cachedError !== null && $now < $cachedErrorExpiresAt) {
+                    return Promise\Create::rejectionFor($cachedError);
+                }
+                if ($fetchPromise !== null) {
+                    return $fetchPromise;
+                }
 
-                    // Refresh the result and forward the promise.
-                    return $result = $provider($creds);
-                })
-                ->otherwise(function($reason) use (&$result) {
-                    // Cleanup rejected promise.
-                    $result = null;
+                $fetchPromise = self::callSource($provider)
+                    ->then(
+                        function ($creds) use (&$fetchPromise, $onSourceCredentials) {
+                            $fetchPromise = null;
+                            if (!$creds instanceof CredentialsInterface) {
+                                return new Promise\RejectedPromise(
+                                    new NoCredentialsException(
+                                        'Could not load credentials: the credential '
+                                        . 'source did not return credentials.'
+                                    )
+                                );
+                            }
+                            return $onSourceCredentials($creds, true);
+                        },
+                        function ($reason) use (
+                            &$fetchPromise,
+                            &$cachedError,
+                            &$cachedErrorExpiresAt
+                        ) {
+                            $fetchPromise = null;
+                            if ($reason instanceof NonRecoverableCredentialsExceptionInterface) {
+                                $cachedError = $reason;
+                                $cachedErrorExpiresAt = self::errorCacheExpiry(time());
+                                return new Promise\RejectedPromise($reason);
+                            }
+                            $message = $reason instanceof \Throwable
+                                ? 'Could not load credentials: ' . $reason->getMessage()
+                                : (string) $reason;
+                            $previous = $reason instanceof \Throwable ? $reason : null;
+                            return new Promise\RejectedPromise(
+                                new NoCredentialsException($message, 0, $previous)
+                            );
+                        }
+                    );
+
+                return $fetchPromise;
+            }
+
+            // States 3 to 5. Within the mandatory window (or expired) the
+            // caller waits for the refresh. Otherwise it is an advisory
+            // refresh and the caller gets the cached credentials if one is
+            // already in flight.
+            if ($refreshPromise !== null) {
+                return $remaining <= self::MANDATORY_REFRESH_WINDOW
+                    ? $refreshPromise
+                    : Promise\Create::promiseFor($cached);
+            }
+
+            if ($cachedError !== null && $now < $cachedErrorExpiresAt) {
+                return Promise\Create::rejectionFor($cachedError);
+            }
+
+            // Refresh failure handler. Non-recoverable errors are cached briefly
+            // and re-raised. Any other failure backs off, logs, and keeps the
+            // cached credentials.
+            $onRefreshFailure = static function ($reason) use (
+                &$cached,
+                &$nextRefreshAllowedAt,
+                &$cachedError,
+                &$cachedErrorExpiresAt
+            ) {
+                $now = time();
+
+                if ($reason instanceof NonRecoverableCredentialsExceptionInterface) {
+                    $cachedError = $reason;
+                    $cachedErrorExpiresAt = self::errorCacheExpiry($now);
                     return new Promise\RejectedPromise($reason);
+                }
+
+                $backoff = self::refreshBackoff($cached, $now);
+                $nextRefreshAllowedAt = $now + $backoff;
+                $error = $reason instanceof \Throwable
+                    ? $reason->getMessage()
+                    : (string) $reason;
+                self::warnRefreshFailed($error, $backoff);
+                return $cached;
+            };
+
+            $refreshPromise = self::callSource($provider, $cached)
+                ->then(
+                    function ($creds) use (
+                        &$refreshPromise,
+                        $onSourceCredentials,
+                        $onRefreshFailure
+                    ) {
+                        $refreshPromise = null;
+                        if (!$creds instanceof CredentialsInterface) {
+                            return $onRefreshFailure(new CredentialsException(
+                                'The credential source did not return credentials.'
+                            ));
+                        }
+                        return $onSourceCredentials($creds, false);
+                    },
+                    function ($reason) use (&$refreshPromise, $onRefreshFailure) {
+                        $refreshPromise = null;
+                        return $onRefreshFailure($reason);
+                    }
+                );
+
+            return $refreshPromise;
+        };
+    }
+
+    /**
+     * Calls the credential source. A source that throws is treated the same
+     * as one that returns a rejected promise.
+     */
+    private static function callSource(callable $provider, ...$args): PromiseInterface
+    {
+        try {
+            return Promise\Create::promiseFor($provider(...$args));
+        } catch (\Throwable $e) {
+            return Promise\Create::rejectionFor($e);
+        }
+    }
+
+    /**
+     * Returns the advisory refresh window, sized to the credential lifetime.
+     */
+    private static function advisoryWindow(CredentialsInterface $creds, int $now): int
+    {
+        $lifetime = $creds->getExpiration() - $now;
+        if ($lifetime <= 1200) {   // <= 20 min
+            return 300;             // 5 min
+        }
+        if ($lifetime < 5400) {    // > 20 and < 90 min
+            return 900;             // 15 min
+        }
+        return 3600;                // >= 90 min -> 60 min
+    }
+
+    /**
+     * Returns a random delay before retrying a failed refresh. The upper bound
+     * is half the remaining lifetime, kept between 90 seconds and 10 minutes.
+     */
+    private static function refreshBackoff(CredentialsInterface $cached, int $now): int
+    {
+        $remaining = max($cached->getExpiration() - $now, 0);
+        $upper = max(
+            self::MIN_BACKOFF_UPPER,
+            min((int) ($remaining / 2), self::MAX_BACKOFF)
+        );
+        return mt_rand(self::MIN_BACKOFF, $upper);
+    }
+
+    /**
+     * Returns when a cached non-recoverable error expires.
+     */
+    private static function errorCacheExpiry(int $now): int
+    {
+        return $now + mt_rand(self::MIN_ERROR_CACHE, self::MAX_ERROR_CACHE);
+    }
+
+    private static function warnRefreshFailed($error, $backoff)
+    {
+        $message = "Credential refresh failed: {$error}. The SDK will "
+            . "continue using cached credentials. A refresh of these "
+            . "credentials will be attempted again after {$backoff} seconds.";
+
+        try {
+            trigger_error($message, E_USER_WARNING);
+        } catch (\Throwable $e) {
+            error_log($message);
+        }
+    }
+
+    /**
+     * Loads stored credentials once so later refreshes reach the source.
+     *
+     * @param callable $provider Credentials provider function to wrap
+     * @param CacheInterface $cache Cache to store credentials
+     * @param string $cacheKey Cache key to use
+     *
+     * @return callable
+     */
+    private static function cacheCredentials(
+        callable $provider,
+        CacheInterface $cache,
+        $cacheKey
+    ) {
+        return function () use ($provider, $cache, $cacheKey) {
+            static $initialized = false;
+
+            if (!$initialized) {
+                $found = $cache->get($cacheKey);
+                if ($found instanceof CredentialsInterface) {
+                    $initialized = true;
+                    return Promise\Create::promiseFor($found);
+                }
+            }
+
+            $isInitial = !$initialized;
+            return $provider()
+                ->then(function (CredentialsInterface $creds) use (
+                    &$initialized,
+                    $cache,
+                    $cacheKey,
+                    $isInitial
+                ) {
+                    $initialized = true;
+
+                    if (!$isInitial && $creds->isExpired()) {
+                        return new Promise\RejectedPromise(
+                            new CredentialsException(
+                                'Credential source returned expired credentials'
+                            )
+                        );
+                    }
+
+                    // Keep the last successful credentials available after
+                    // their expiration so a later process can recover them.
+                    $cache->set($cacheKey, $creds, 0);
+
+                    return $creds;
                 });
         };
     }
@@ -809,10 +1118,27 @@ class CredentialProvider
             $stsClient = self::createDefaultStsClient($sourceCredentials, $region);
         }
 
-        $result = $stsClient->assumeRole([
-            'RoleArn' => $roleArn,
-            'RoleSessionName' => $roleSessionName
-        ]);
+        try {
+            $result = $stsClient->assumeRole([
+                'RoleArn' => $roleArn,
+                'RoleSessionName' => $roleSessionName
+            ]);
+        } catch (AwsException $e) {
+            $isNonRecoverable = in_array(
+                $e->getAwsErrorCode(),
+                NonRecoverableCredentialsException::STS_NON_RECOVERABLE_ERROR_CODES,
+                true
+            );
+            if ($isNonRecoverable) {
+                throw new NonRecoverableCredentialsException(
+                    'Error in retrieving assume role credentials.',
+                    0,
+                    $e
+                );
+            }
+            throw $e;
+        }
+
         $credentials = $stsClient->createCredentials(
             $result,
             CredentialSources::STS_ASSUME_ROLE
@@ -940,6 +1266,23 @@ class CredentialProvider
     }
 
     /**
+     * Builds a rejected promise carrying a non-recoverable credentials error,
+     * used for failures that require customer action (e.g., an expired or
+     * invalid cached SSO token). The caching layer raises these immediately
+     * without applying the refresh backoff.
+     *
+     * @param string $msg
+     *
+     * @return Promise\RejectedPromise
+     */
+    private static function rejectNonRecoverable($msg)
+    {
+        return new Promise\RejectedPromise(
+            new NonRecoverableCredentialsException($msg)
+        );
+    }
+
+    /**
      * Locates shared configuration file by first checking for AWS_CONFIG,
      * then falling back to the default location.  Returns the path of the
      * resolved configuration file.
@@ -1014,7 +1357,21 @@ class CredentialProvider
             $filename,
             $ssoOidcClient
         );
-        $token = $tokenPromise()->wait();
+        try {
+            $token = $tokenPromise()->wait();
+        } catch (TokenException $e) {
+            // The cached SSO token is missing, expired, or malformed, detected
+            // client-side before calling GetRoleCredentials.
+            return new Promise\RejectedPromise(
+                new NonRecoverableCredentialsException(
+                    "Unable to load SSO token for profile {$ssoProfileName}; "
+                    . "the SSO token is missing, expired, or invalid. "
+                    . "Please run `aws sso login`.",
+                    0,
+                    $e
+                )
+            );
+        }
         $ssoCredentials = CredentialProvider::getCredentialsFromSsoService(
             $ssoProfile,
             $ssoSession['sso_region'],
@@ -1062,22 +1419,22 @@ class CredentialProvider
             . ".json";
 
         if (!@is_readable($tokenLocation)) {
-            return self::reject("Unable to read token file at $tokenLocation");
+            return self::rejectNonRecoverable("Unable to read token file at $tokenLocation");
         }
         $tokenData = json_decode(file_get_contents($tokenLocation), true);
         if (empty($tokenData['accessToken']) || empty($tokenData['expiresAt'])) {
-            return self::reject(
+            return self::rejectNonRecoverable(
                 "Token file at {$tokenLocation} must contain an access token and an expiration"
             );
         }
         try {
             $expiration = (new DateTimeResult($tokenData['expiresAt']))->getTimestamp();
         } catch (\Exception $e) {
-            return self::reject("Cached SSO credentials returned an invalid expiration");
+            return self::rejectNonRecoverable("Cached SSO credentials returned an invalid expiration");
         }
         $now = time();
         if ($expiration < $now) {
-            return self::reject("Cached SSO credentials returned expired credentials");
+            return self::rejectNonRecoverable("Cached SSO credentials returned expired credentials");
         }
         $ssoCredentials = CredentialProvider::getCredentialsFromSsoService(
             $ssoProfile,
@@ -1114,11 +1471,24 @@ class CredentialProvider
         } else {
             $ssoClient = $config['ssoClient'];
         }
-        $ssoResponse = $ssoClient->getRoleCredentials([
-            'accessToken' => $accessToken,
-            'accountId' => $ssoProfile['sso_account_id'],
-            'roleName' => $ssoProfile['sso_role_name']
-        ]);
+        $ssoResponse = null;
+        try {
+            $ssoResponse = $ssoClient->getRoleCredentials([
+                'accessToken' => $accessToken,
+                'accountId' => $ssoProfile['sso_account_id'],
+                'roleName' => $ssoProfile['sso_role_name']
+            ]);
+        } catch (AwsException $e) {
+            if ($e->getAwsErrorCode() === 'UnauthorizedException') {
+                throw new NonRecoverableCredentialsException(
+                    "SSO GetRoleCredentials was unauthorized; the SSO token is "
+                    . "invalid or expired. Please run `aws sso login`.",
+                    0,
+                    $e
+                );
+            }
+            throw $e;
+        }
 
         $ssoCredentials = $ssoResponse['roleCredentials'];
         return $ssoCredentials;

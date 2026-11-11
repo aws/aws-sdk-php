@@ -119,11 +119,7 @@ class InstanceProfileProvider
                         ]
                     ));
                 } catch (TransferException $e) {
-                    if ($this->getExceptionStatusCode($e) === 500
-                        && $previousCredentials instanceof Credentials
-                    ) {
-                        goto generateCredentials;
-                    } elseif ($this->shouldFallbackToIMDSv1()
+                    if ($this->shouldFallbackToIMDSv1()
                         && (!method_exists($e, 'getResponse')
                         || empty($e->getResponse())
                         || !in_array(
@@ -198,14 +194,9 @@ class InstanceProfileProvider
                         )
                     );
                 } catch (TransferException $e) {
-                    // 401 indicates insecure flow not supported, switch to
-                    // attempting secure mode for subsequent calls
-                    if (($this->getExceptionStatusCode($e) === 500
-                            || strpos($e->getMessage(), "cURL error 28") !== false)
-                        && $previousCredentials instanceof Credentials
-                    ) {
-                        goto generateCredentials;
-                    } elseif (!empty($this->getExceptionStatusCode($e))
+                    // A 401 indicates the insecure flow is not supported, so
+                    // switch to secure mode for subsequent calls.
+                    if (!empty($this->getExceptionStatusCode($e))
                         && $this->getExceptionStatusCode($e) === 401
                     ) {
                         $this->secureMode = true;
@@ -218,25 +209,19 @@ class InstanceProfileProvider
                 }
                 $this->attempts++;
             }
-            generateCredentials:
 
-            if (!isset($result)) {
-                $credentials = $previousCredentials;
-            } else {
-                $credentials = new Credentials(
-                    $result['AccessKeyId'],
-                    $result['SecretAccessKey'],
-                    $result['Token'],
-                    strtotime($result['Expiration']),
-                    $result['AccountId'] ?? null,
-                    CredentialSources::IMDS
-                );
-            }
+            $credentials = new Credentials(
+                $result['AccessKeyId'],
+                $result['SecretAccessKey'],
+                $result['Token'],
+                strtotime($result['Expiration']),
+                $result['AccountId'] ?? null,
+                CredentialSources::IMDS
+            );
 
-            if ($credentials->isExpired()) {
-                $credentials->extendExpiration();
-            }
-
+            // Static stability is owned by the caching layer (memoize), not by
+            // this provider. On failure the provider rejects and memoize retains
+            // the cached credentials and applies the refresh backoff.
             yield $credentials;
         });
     }
