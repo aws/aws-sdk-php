@@ -669,15 +669,19 @@ function parse_ini_section_with_subsections($filename, $section_name) {
                     break;
                 }
 
-                if (strpos($line, ' = ') !== false) {
-                    list($key, $value) = explode(' = ', $line, 2);
+                // Whitespace around "=" is optional. A line with no value
+                // after "=" starts a new subsection.
+                $parts = explode('=', $line, 2);
+                $key = trim($parts[0]);
+                $value = isset($parts[1]) ? trim($parts[1]) : '';
+                if ($value !== '') {
                     if (empty($current_subsection)) {
                         $config[$key] = $value;
                     } else {
                         $config[$current_subsection][$key] = $value;
                     }
                 } else {
-                    $current_subsection = trim(str_replace('=', '', $line));
+                    $current_subsection = $key;
                     $config[$current_subsection] = [];
                 }
             }
