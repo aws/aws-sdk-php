@@ -126,6 +126,22 @@
         {"shape":"UnauthenticatedException"}
       ]
     },
+    "CheckSubdomainAvailability":{
+      "name":"CheckSubdomainAvailability",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CheckSubdomainAvailabilityRequest"},
+      "output":{"shape":"CheckSubdomainAvailabilityResult"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"UnauthenticatedException"}
+      ]
+    },
     "CloseInstancePublicPorts":{
       "name":"CloseInstancePublicPorts",
       "http":{
@@ -602,6 +618,23 @@
         {"shape":"UnauthenticatedException"}
       ]
     },
+    "CreateSubdomain":{
+      "name":"CreateSubdomain",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateSubdomainRequest"},
+      "output":{"shape":"CreateSubdomainResult"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"NotFoundException"},
+        {"shape":"OperationFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"UnauthenticatedException"}
+      ]
+    },
     "DeleteAlarm":{
       "name":"DeleteAlarm",
       "http":{
@@ -983,6 +1016,23 @@
         {"shape":"AccessDeniedException"},
         {"shape":"AccountSetupInProgressException"},
         {"shape":"RegionSetupInProgressException"},
+        {"shape":"UnauthenticatedException"}
+      ]
+    },
+    "DeleteSubdomain":{
+      "name":"DeleteSubdomain",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteSubdomainRequest"},
+      "output":{"shape":"DeleteSubdomainResult"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"NotFoundException"},
+        {"shape":"OperationFailureException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"UnauthenticatedException"}
       ]
     },
@@ -2341,6 +2391,22 @@
         {"shape":"UnauthenticatedException"}
       ]
     },
+    "GetSubdomains":{
+      "name":"GetSubdomains",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetSubdomainsRequest"},
+      "output":{"shape":"GetSubdomainsResult"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"UnauthenticatedException"}
+      ]
+    },
     "ImportKeyPair":{
       "name":"ImportKeyPair",
       "http":{
@@ -2980,6 +3046,23 @@
         {"shape":"RegionSetupInProgressException"},
         {"shape":"UnauthenticatedException"}
       ]
+    },
+    "UpdateSubdomainAssociation":{
+      "name":"UpdateSubdomainAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateSubdomainAssociationRequest"},
+      "output":{"shape":"UpdateSubdomainAssociationResult"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"NotFoundException"},
+        {"shape":"OperationFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"UnauthenticatedException"}
+      ]
     }
   },
   "shapes":{
@@ -3611,6 +3694,22 @@
       "type":"list",
       "member":{"shape":"CertificateSummary"}
     },
+    "CheckSubdomainAvailabilityRequest":{
+      "type":"structure",
+      "required":["subdomainName"],
+      "members":{
+        "subdomainName":{"shape":"string"},
+        "reserve":{"shape":"boolean"}
+      }
+    },
+    "CheckSubdomainAvailabilityResult":{
+      "type":"structure",
+      "members":{
+        "available":{"shape":"boolean"},
+        "reservationExpiresAt":{"shape":"IsoDate"},
+        "subdomainName":{"shape":"string"}
+      }
+    },
     "CloseInstancePublicPortsRequest":{
       "type":"structure",
       "required":[
@@ -4227,7 +4326,8 @@
         "defaultRootObject":{"shape":"string"},
         "customErrorResponses":{"shape":"DistributionCustomErrorResponseList"},
         "enableWaf":{"shape":"boolean"},
-        "wafRules":{"shape":"WafRuleList"}
+        "wafRules":{"shape":"WafRuleList"},
+        "subdomainName":{"shape":"string"}
       }
     },
     "CreateDistributionResult":{
@@ -4490,6 +4590,21 @@
       "type":"structure",
       "members":{
         "operations":{"shape":"OperationList"}
+      }
+    },
+    "CreateSubdomainRequest":{
+      "type":"structure",
+      "required":["subdomainName"],
+      "members":{
+        "subdomainName":{"shape":"string"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "CreateSubdomainResult":{
+      "type":"structure",
+      "members":{
+        "subdomain":{"shape":"Subdomain"},
+        "operation":{"shape":"Operation"}
       }
     },
     "Currency":{
@@ -4789,6 +4904,20 @@
       "type":"structure",
       "members":{
         "operations":{"shape":"OperationList"}
+      }
+    },
+    "DeleteSubdomainRequest":{
+      "type":"structure",
+      "required":["subdomainName"],
+      "members":{
+        "subdomainName":{"shape":"string"}
+      }
+    },
+    "DeleteSubdomainResult":{
+      "type":"structure",
+      "members":{
+        "subdomain":{"shape":"Subdomain"},
+        "operation":{"shape":"Operation"}
       }
     },
     "DestinationInfo":{
@@ -6211,6 +6340,20 @@
         "nextPageToken":{"shape":"string"}
       }
     },
+    "GetSubdomainsRequest":{
+      "type":"structure",
+      "members":{
+        "subdomainName":{"shape":"string"},
+        "pageToken":{"shape":"string"}
+      }
+    },
+    "GetSubdomainsResult":{
+      "type":"structure",
+      "members":{
+        "subdomains":{"shape":"SubdomainList"},
+        "nextPageToken":{"shape":"string"}
+      }
+    },
     "HeaderEnum":{
       "type":"string",
       "enum":[
@@ -6711,8 +6854,31 @@
         "viewerMinimumTlsProtocolVersion":{"shape":"string"},
         "defaultRootObject":{"shape":"string"},
         "customErrorResponses":{"shape":"DistributionCustomErrorResponseList"},
-        "waf":{"shape":"WafConfig"}
+        "waf":{"shape":"WafConfig"},
+        "subdomain":{"shape":"LightsailDistributionSubdomain"}
       }
+    },
+    "LightsailDistributionSubdomain":{
+      "type":"structure",
+      "required":[
+        "name",
+        "state"
+      ],
+      "members":{
+        "name":{"shape":"string"},
+        "state":{"shape":"LightsailDistributionSubdomainStateEnum"},
+        "errorCode":{"shape":"string"},
+        "errorDetails":{"shape":"string"}
+      }
+    },
+    "LightsailDistributionSubdomainStateEnum":{
+      "type":"string",
+      "enum":[
+        "Creating",
+        "Attaching",
+        "Attached",
+        "Error"
+      ]
     },
     "LoadBalancer":{
       "type":"structure",
@@ -7272,7 +7438,10 @@
         "StartGUISession",
         "StopGUISession",
         "SetupInstanceHttps",
-        "GetProfile"
+        "GetProfile",
+        "CreateSubdomain",
+        "UpdateSubdomainAssociation",
+        "DeleteSubdomain"
       ]
     },
     "Origin":{
@@ -7907,7 +8076,8 @@
         "ContactMethod",
         "Distribution",
         "Certificate",
-        "Bucket"
+        "Bucket",
+        "Subdomain"
       ]
     },
     "ResourcesBudgetEstimate":{
@@ -8232,6 +8402,56 @@
       "max":256,
       "min":1
     },
+    "Subdomain":{
+      "type":"structure",
+      "members":{
+        "subdomainName":{"shape":"string"},
+        "arn":{"shape":"NonEmptyString"},
+        "fqdn":{"shape":"string"},
+        "depth":{"shape":"integer"},
+        "state":{"shape":"SubdomainState"},
+        "attachedResource":{"shape":"SubdomainAttachableResource"},
+        "attachingResource":{"shape":"SubdomainAttachableResource"},
+        "location":{"shape":"ResourceLocation"},
+        "createdAt":{"shape":"IsoDate"},
+        "parentFqdn":{"shape":"string"},
+        "children":{"shape":"SubdomainList"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "SubdomainAssociationAction":{
+      "type":"string",
+      "enum":[
+        "ASSOCIATE",
+        "DISASSOCIATE",
+        "TRANSFER"
+      ]
+    },
+    "SubdomainAttachableResource":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"NonEmptyString"},
+        "name":{"shape":"ResourceName"},
+        "attachedAt":{"shape":"IsoDate"}
+      }
+    },
+    "SubdomainList":{
+      "type":"list",
+      "member":{"shape":"Subdomain"}
+    },
+    "SubdomainState":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATE_FAILED",
+        "UNATTACHED",
+        "ATTACHING",
+        "ATTACHED",
+        "DETACHING",
+        "TRANSFERRING",
+        "IMPLICIT"
+      ]
+    },
     "SubjectAlternativeNameList":{
       "type":"list",
       "member":{"shape":"DomainName"}
@@ -8539,6 +8759,25 @@
       "type":"structure",
       "members":{
         "operations":{"shape":"OperationList"}
+      }
+    },
+    "UpdateSubdomainAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "subdomainName",
+        "action"
+      ],
+      "members":{
+        "subdomainName":{"shape":"string"},
+        "action":{"shape":"SubdomainAssociationAction"},
+        "targetResourceArn":{"shape":"string"}
+      }
+    },
+    "UpdateSubdomainAssociationResult":{
+      "type":"structure",
+      "members":{
+        "subdomain":{"shape":"Subdomain"},
+        "operation":{"shape":"Operation"}
       }
     },
     "ViewerMinimumTlsProtocolVersionEnum":{

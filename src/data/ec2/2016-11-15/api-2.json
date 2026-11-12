@@ -1036,6 +1036,15 @@
       "input":{"shape":"CreateManagedPrefixListRequest"},
       "output":{"shape":"CreateManagedPrefixListResult"}
     },
+    "CreateMetricCategory":{
+      "name":"CreateMetricCategory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateMetricCategoryRequest"},
+      "output":{"shape":"CreateMetricCategoryResult"}
+    },
     "CreateNatGateway":{
       "name":"CreateNatGateway",
       "http":{
@@ -1920,6 +1929,15 @@
       },
       "input":{"shape":"DeleteManagedPrefixListRequest"},
       "output":{"shape":"DeleteManagedPrefixListResult"}
+    },
+    "DeleteMetricCategory":{
+      "name":"DeleteMetricCategory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteMetricCategoryRequest"},
+      "output":{"shape":"DeleteMetricCategoryResult"}
     },
     "DeleteNatGateway":{
       "name":"DeleteNatGateway",
@@ -3435,6 +3453,15 @@
       },
       "input":{"shape":"DescribeManagedPrefixListsRequest"},
       "output":{"shape":"DescribeManagedPrefixListsResult"}
+    },
+    "DescribeMetricCategories":{
+      "name":"DescribeMetricCategories",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeMetricCategoriesRequest"},
+      "output":{"shape":"DescribeMetricCategoriesResult"}
     },
     "DescribeMovingAddresses":{
       "name":"DescribeMovingAddresses",
@@ -6142,6 +6169,15 @@
       "input":{"shape":"ModifyManagedResourceVisibilityRequest"},
       "output":{"shape":"ModifyManagedResourceVisibilityResult"}
     },
+    "ModifyMetricCategory":{
+      "name":"ModifyMetricCategory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyMetricCategoryRequest"},
+      "output":{"shape":"ModifyMetricCategoryResult"}
+    },
     "ModifyNetworkInterfaceAttribute":{
       "name":"ModifyNetworkInterfaceAttribute",
       "http":{
@@ -7729,6 +7765,14 @@
         "ElasticFileSystem":{
           "shape":"VpcEncryptionControlExclusionState",
           "locationName":"elasticFileSystem"
+        },
+        "GlobalAccelerator":{
+          "shape":"VpcEncryptionControlExclusionState",
+          "locationName":"globalAccelerator"
+        },
+        "ApiGatewayV2":{
+          "shape":"VpcEncryptionControlExclusionState",
+          "locationName":"apiGatewayV2"
         }
       }
     },
@@ -15808,6 +15852,34 @@
         }
       }
     },
+    "CreateMetricCategoryRequest":{
+      "type":"structure",
+      "required":["Metrics"],
+      "members":{
+        "Metrics":{
+          "shape":"MetricCategoryMetricNameList",
+          "locationName":"Metric"
+        },
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CreateMetricCategoryResult":{
+      "type":"structure",
+      "members":{
+        "MetricCategory":{
+          "shape":"MetricCategory",
+          "locationName":"metricCategory"
+        }
+      }
+    },
     "CreateNatGatewayRequest":{
       "type":"structure",
       "members":{
@@ -19010,6 +19082,23 @@
         "PrefixList":{
           "shape":"ManagedPrefixList",
           "locationName":"prefixList"
+        }
+      }
+    },
+    "DeleteMetricCategoryRequest":{
+      "type":"structure",
+      "required":["MetricCategoryId"],
+      "members":{
+        "MetricCategoryId":{"shape":"MetricCategoryId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteMetricCategoryResult":{
+      "type":"structure",
+      "members":{
+        "MetricCategoryId":{
+          "shape":"MetricCategoryId",
+          "locationName":"metricCategoryId"
         }
       }
     },
@@ -23614,6 +23703,40 @@
         "PrefixLists":{
           "shape":"ManagedPrefixListSet",
           "locationName":"prefixListSet"
+        }
+      }
+    },
+    "DescribeMetricCategoriesMaxResults":{
+      "type":"integer",
+      "max":100,
+      "min":5
+    },
+    "DescribeMetricCategoriesRequest":{
+      "type":"structure",
+      "members":{
+        "MetricCategoryIds":{
+          "shape":"MetricCategoryIdList",
+          "locationName":"MetricCategoryId"
+        },
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"DescribeMetricCategoriesMaxResults"},
+        "NextToken":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeMetricCategoriesResult":{
+      "type":"structure",
+      "members":{
+        "MetricCategories":{
+          "shape":"MetricCategoryList",
+          "locationName":"metricCategorySet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
         }
       }
     },
@@ -43486,13 +43609,21 @@
         "Enabled":{
           "shape":"Boolean",
           "locationName":"enabled"
+        },
+        "MetricCategoryIds":{
+          "shape":"MetricCategoryIdList",
+          "locationName":"metricCategoryIdSet"
         }
       }
     },
     "LaunchTemplatesMonitoringRequest":{
       "type":"structure",
       "members":{
-        "Enabled":{"shape":"Boolean"}
+        "Enabled":{"shape":"Boolean"},
+        "MetricCategoryIds":{
+          "shape":"MetricCategoryIdList",
+          "locationName":"MetricCategoryId"
+        }
       }
     },
     "LicenseConfiguration":{
@@ -44771,6 +44902,46 @@
         "spot-inst-az-fulfillment-rate"
       ]
     },
+    "MetricCategory":{
+      "type":"structure",
+      "members":{
+        "MetricCategoryId":{
+          "shape":"MetricCategoryId",
+          "locationName":"metricCategoryId"
+        },
+        "Metrics":{
+          "shape":"MetricCategoryMetricNameList",
+          "locationName":"metricSet"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "MetricCategoryId":{"type":"string"},
+    "MetricCategoryIdList":{
+      "type":"list",
+      "member":{
+        "shape":"MetricCategoryId",
+        "locationName":"item"
+      }
+    },
+    "MetricCategoryList":{
+      "type":"list",
+      "member":{
+        "shape":"MetricCategory",
+        "locationName":"item"
+      }
+    },
+    "MetricCategoryMetricName":{"type":"string"},
+    "MetricCategoryMetricNameList":{
+      "type":"list",
+      "member":{
+        "shape":"MetricCategoryMetricName",
+        "locationName":"item"
+      }
+    },
     "MetricDataResult":{
       "type":"structure",
       "members":{
@@ -44923,7 +45094,9 @@
         "VpcPeering":{"shape":"VpcEncryptionControlExclusionStateInput"},
         "Lambda":{"shape":"VpcEncryptionControlExclusionStateInput"},
         "VpcLattice":{"shape":"VpcEncryptionControlExclusionStateInput"},
-        "ElasticFileSystem":{"shape":"VpcEncryptionControlExclusionStateInput"}
+        "ElasticFileSystem":{"shape":"VpcEncryptionControlExclusionStateInput"},
+        "GlobalAccelerator":{"shape":"VpcEncryptionControlExclusionStateInput"},
+        "ApiGatewayV2":{"shape":"VpcEncryptionControlExclusionStateInput"}
       }
     },
     "ModifyAccountVpcEncryptionControlResult":{
@@ -46047,6 +46220,30 @@
         }
       }
     },
+    "ModifyMetricCategoryRequest":{
+      "type":"structure",
+      "required":[
+        "MetricCategoryId",
+        "Metrics"
+      ],
+      "members":{
+        "MetricCategoryId":{"shape":"MetricCategoryId"},
+        "Metrics":{
+          "shape":"MetricCategoryMetricNameList",
+          "locationName":"Metric"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "ModifyMetricCategoryResult":{
+      "type":"structure",
+      "members":{
+        "MetricCategory":{
+          "shape":"MetricCategory",
+          "locationName":"metricCategory"
+        }
+      }
+    },
     "ModifyNetworkInterfaceAttributeRequest":{
       "type":"structure",
       "required":["NetworkInterfaceId"],
@@ -46936,7 +47133,9 @@
         "VpcPeeringExclusion":{"shape":"VpcEncryptionControlExclusionStateInput"},
         "LambdaExclusion":{"shape":"VpcEncryptionControlExclusionStateInput"},
         "VpcLatticeExclusion":{"shape":"VpcEncryptionControlExclusionStateInput"},
-        "ElasticFileSystemExclusion":{"shape":"VpcEncryptionControlExclusionStateInput"}
+        "ElasticFileSystemExclusion":{"shape":"VpcEncryptionControlExclusionStateInput"},
+        "GlobalAcceleratorExclusion":{"shape":"VpcEncryptionControlExclusionStateInput"},
+        "ApiGatewayV2Exclusion":{"shape":"VpcEncryptionControlExclusionStateInput"}
       }
     },
     "ModifyVpcEncryptionControlResult":{
@@ -47328,6 +47527,10 @@
           "shape":"InstanceIdStringList",
           "locationName":"InstanceId"
         },
+        "MetricCategoryIds":{
+          "shape":"MetricCategoryIdList",
+          "locationName":"MetricCategoryId"
+        },
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -47346,6 +47549,10 @@
     "Monitoring":{
       "type":"structure",
       "members":{
+        "MetricCategoryIds":{
+          "shape":"MetricCategoryIdList",
+          "locationName":"metricCategoryIdSet"
+        },
         "State":{
           "shape":"MonitoringState",
           "locationName":"state"
@@ -53025,7 +53232,8 @@
         "ipam-pool-allocation",
         "capacity-reservation-cancellation-quote",
         "application-status-check",
-        "capacity-reservation-modification-quote"
+        "capacity-reservation-modification-quote",
+        "metric-category"
       ]
     },
     "ResourceTypeOption":{
@@ -54346,6 +54554,10 @@
       "type":"structure",
       "required":["Enabled"],
       "members":{
+        "MetricCategoryIds":{
+          "shape":"MetricCategoryIdList",
+          "locationName":"MetricCategoryId"
+        },
         "Enabled":{
           "shape":"Boolean",
           "locationName":"enabled"
@@ -60939,6 +61151,10 @@
           "shape":"InstanceIdStringList",
           "locationName":"InstanceId"
         },
+        "MetricCategoryIds":{
+          "shape":"MetricCategoryIdList",
+          "locationName":"MetricCategoryId"
+        },
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -63218,7 +63434,9 @@
         "VpcPeeringExclusion":{"shape":"VpcEncryptionControlExclusionStateInput"},
         "LambdaExclusion":{"shape":"VpcEncryptionControlExclusionStateInput"},
         "VpcLatticeExclusion":{"shape":"VpcEncryptionControlExclusionStateInput"},
-        "ElasticFileSystemExclusion":{"shape":"VpcEncryptionControlExclusionStateInput"}
+        "ElasticFileSystemExclusion":{"shape":"VpcEncryptionControlExclusionStateInput"},
+        "GlobalAcceleratorExclusion":{"shape":"VpcEncryptionControlExclusionStateInput"},
+        "ApiGatewayV2Exclusion":{"shape":"VpcEncryptionControlExclusionStateInput"}
       }
     },
     "VpcEncryptionControlExclusion":{
@@ -63284,6 +63502,14 @@
         "ElasticFileSystem":{
           "shape":"VpcEncryptionControlExclusion",
           "locationName":"elasticFileSystem"
+        },
+        "GlobalAccelerator":{
+          "shape":"VpcEncryptionControlExclusion",
+          "locationName":"globalAccelerator"
+        },
+        "ApiGatewayV2":{
+          "shape":"VpcEncryptionControlExclusion",
+          "locationName":"apiGatewayV2"
         }
       }
     },

@@ -49,7 +49,7 @@
     "GetFindings": "<p>Describes Amazon GuardDuty findings specified by finding IDs.</p>",
     "GetFindingsStatistics": "<p>Lists GuardDuty findings statistics for the specified detector ID.</p> <p>You must provide either <code>findingStatisticTypes</code> or <code>groupBy</code> parameter, and not both. You can use the <code>maxResults</code> and <code>orderBy</code> parameters only when using <code>groupBy</code>.</p> <p>There might be regional differences because some flags might not be available in all the Regions where GuardDuty is currently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
     "GetIPSet": "<p>Retrieves the IPSet specified by the <code>ipSetId</code>.</p>",
-    "GetInvestigation": "<p>This API is currently available as a preview. This feature is available in the following Amazon Web Services Regions: US East (N. Virginia), US East (Ohio), US West (Oregon), Canada (Central), Europe (Frankfurt), Europe (Ireland), Europe (London), Europe (Paris), Europe (Stockholm), and Asia Pacific (Tokyo).</p> <p>Retrieves the results and status of a specific GuardDuty investigation.</p> <p>An administrator account can retrieve any investigation within the organization. Member accounts can only retrieve investigations that belong to them.</p>",
+    "GetInvestigation": "<p>This API is currently available as a preview. This feature is available in the following Amazon Web Services Regions: US East (N. Virginia), US East (Ohio), US West (Oregon), Canada (Central), Europe (Frankfurt), Europe (Ireland), Europe (London), Europe (Paris), Europe (Stockholm), and Asia Pacific (Tokyo).</p> <p>Retrieves the results and status of a specific GuardDuty investigation.</p> <p>GuardDuty returns the results, including the summary and the scope of the investigation, only when the investigation status is <code>COMPLETED</code>. By default, GuardDuty returns the summary as text in <code>Summary</code>. To return a typed summary in <code>SummaryData</code> instead, set <code>SummaryFormat</code> to <code>STRUCTURED</code>.</p> <p>An administrator account can retrieve any investigation within the organization. Member accounts can only retrieve investigations that belong to them.</p>",
     "GetInvitationsCount": "<p>Returns the count of all GuardDuty membership invitations that were sent to the current member account except the currently accepted invitation.</p>",
     "GetMalwareProtectionPlan": "<p>Retrieves the Malware Protection plan details associated with a Malware Protection plan ID.</p>",
     "GetMalwareScan": "<p>Retrieves the detailed information for a specific malware scan. Each member account can view the malware scan details for their own account. An administrator can view malware scan details for all accounts in the organization.</p> <p>There might be regional differences because some data sources might not be available in all the Amazon Web Services Regions where GuardDuty is presently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
@@ -72,7 +72,8 @@
     "ListFilters": "<p>Returns a paginated list of the current filters.</p>",
     "ListFindings": "<p>Lists GuardDuty findings for the specified detector ID.</p> <p>There might be regional differences because some flags might not be available in all the Regions where GuardDuty is currently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
     "ListIPSets": "<p>Lists the IPSets of the GuardDuty service specified by the detector ID. If you use this operation from a member account, the IPSets returned are the IPSets from the associated administrator account.</p>",
-    "ListInvestigations": "<p>This API is currently available as a preview. This feature is available in the following Amazon Web Services Regions: US East (N. Virginia), US East (Ohio), US West (Oregon), Canada (Central), Europe (Frankfurt), Europe (Ireland), Europe (London), Europe (Paris), Europe (Stockholm), and Asia Pacific (Tokyo).</p> <p>Returns a list of investigations associated with the specified GuardDuty detector.</p> <p>An administrator account sees all investigations across the organization. Member accounts see only the investigations that belong to them.</p>",
+    "ListInvestigationRecords": "<p>This API is currently available as a preview. This feature is available in the following Amazon Web Services Regions: US East (N. Virginia), US East (Ohio), US West (Oregon), Canada (Central), Europe (Frankfurt), Europe (Ireland), Europe (London), Europe (Paris), Europe (Stockholm), and Asia Pacific (Tokyo).</p> <p>Returns the records for a specific GuardDuty investigation. Each record is one step in the reasoning that GuardDuty followed to reach the results of the investigation.</p> <p>An administrator account can list the records of any investigation within the organization. Member accounts can only list the records of investigations that belong to them.</p>",
+    "ListInvestigations": "<p>This API is currently available as a preview. This feature is available in the following Amazon Web Services Regions: US East (N. Virginia), US East (Ohio), US West (Oregon), Canada (Central), Europe (Frankfurt), Europe (Ireland), Europe (London), Europe (Paris), Europe (Stockholm), and Asia Pacific (Tokyo).</p> <p>Returns a list of investigations associated with the specified GuardDuty detector. You can filter the investigations by status, risk level, confidence, finding ID, and investigation type, and sort them by start time, end time, status, risk level, or confidence.</p> <p>An administrator account sees all investigations across the organization. Member accounts see only the investigations that belong to them.</p>",
     "ListInvitations": "<p>Lists all GuardDuty membership invitations that were sent to the current Amazon Web Services account.</p>",
     "ListMalwareProtectionPlans": "<p>Lists the Malware Protection plan IDs associated with the protected resources in your Amazon Web Services account.</p>",
     "ListMalwareScans": "<p>Returns a list of malware scans. Each member account can view the malware scans for their own accounts. An administrator can view the malware scans for all of its members' accounts.</p>",
@@ -150,6 +151,24 @@
         "User$Account": "<p>Contains information about the Amazon Web Services account within which the activity took place. This is not necessarily the account that owns the user identity.</p>"
       }
     },
+    "AccountAffectedResource": {
+      "base": "<p>Contains the number of findings associated with a resource.</p>",
+      "refs": {
+        "AccountAffectedResources$member": null
+      }
+    },
+    "AccountAffectedResources": {
+      "base": null,
+      "refs": {
+        "AccountAnalysis$AffectedResources": "<p>The resources in the account that are associated with findings.</p>"
+      }
+    },
+    "AccountAnalysis": {
+      "base": "<p>Contains an analysis of the findings in an Amazon Web Services account.</p>",
+      "refs": {
+        "InvestigationSummaryData$AccountAnalysis": "<p>For an <code>ACCOUNT</code> investigation, an analysis of the findings in the investigated account.</p>"
+      }
+    },
     "AccountDetail": {
       "base": "<p>Contains information about the account.</p>",
       "refs": {
@@ -189,6 +208,8 @@
         "DnsRequestAction$VpcOwnerAccountId": "<p>The Amazon Web Services account ID that owns the VPC through which the DNS request was made.</p>",
         "GetIPSetResponse$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter. This field appears in the response only if it was provided during IPSet creation or update.</p>",
         "GetThreatIntelSetResponse$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter. This field appears in the response only if it was provided during ThreatIntelSet creation or update.</p>",
+        "InvestigationScope$AccountId": "<p>The ID of the Amazon Web Services account that the investigation analyzed. Set only when <code>InvestigationType</code> is <code>ACCOUNT</code>.</p>",
+        "InvestigationScope$AdminAccountId": "<p>The ID of the administrator account of the organization that the investigation analyzed. Set only when <code>InvestigationType</code> is <code>ORGANIZATION</code>.</p>",
         "Invitation$AccountId": "<p>The ID of the account that the invitation was sent from.</p>",
         "Master$AccountId": "<p>The ID of the account used as the administrator account.</p>",
         "Member$AccountId": "<p>The ID of the member account.</p>",
@@ -224,16 +245,41 @@
         "PermissionConfiguration$AccountLevelPermissions": "<p>Contains information about the account level permissions on the S3 bucket.</p>"
       }
     },
+    "AccountOverview": {
+      "base": "<p>Contains overview information about an account, including its findings and, for an organization, its member accounts.</p>",
+      "refs": {
+        "ObservationRecord$AccountOverview": "<p>Overview information about an account. Set when <code>ObservationType</code> is <code>ACCOUNT_OVERVIEW</code>.</p>"
+      }
+    },
     "AccountStatistics": {
       "base": "<p>Represents a list of map of accounts with the number of findings associated with each account.</p>",
       "refs": {
         "GroupedByAccount$member": null
       }
     },
+    "AccountSummaries": {
+      "base": null,
+      "refs": {
+        "OrganizationAnalysis$AccountBreakdown": "<p>The accounts in the organization that have findings, with the number of findings in each.</p>"
+      }
+    },
+    "AccountSummary": {
+      "base": "<p>Contains the number of findings in an Amazon Web Services account.</p>",
+      "refs": {
+        "AccountSummaries$member": null
+      }
+    },
     "Action": {
       "base": "<p>Contains information about actions.</p>",
       "refs": {
         "Service$Action": "<p>Information about the activity that is described in a finding.</p>"
+      }
+    },
+    "ActionPriority": {
+      "base": null,
+      "refs": {
+        "CountermeasureAction$Priority": "<p>The priority of the action. Possible values are <code>IMMEDIATE</code>, <code>SHORT_TERM</code>, and <code>STRATEGIC</code>.</p>",
+        "Recommendation$Priority": "<p>The priority of the recommendation. Possible values are <code>IMMEDIATE</code>, <code>SHORT_TERM</code>, and <code>STRATEGIC</code>.</p>"
       }
     },
     "Activities": {
@@ -252,6 +298,14 @@
       "base": "<p>The type of an observed activity.</p>",
       "refs": {
         "Activity$Type": "<p>The type of the observed activity.</p>"
+      }
+    },
+    "ActivityWindow": {
+      "base": "<p>Contains the time range during which activity was observed.</p>",
+      "refs": {
+        "FindingDetail$ActivityWindow": "<p>The time range of the activity that the finding describes.</p>",
+        "RdsLoginActivity$ActivityWindow": "<p>The time range of the login activity.</p>",
+        "S3Activity$ActivityWindow": "<p>The time range of the activity.</p>"
       }
     },
     "Actor": {
@@ -320,6 +374,12 @@
         "GetAdministratorAccountResponse$Administrator": "<p>The administrator account details.</p>"
       }
     },
+    "AffectedResource": {
+      "base": "<p>Contains information about a resource that an action applies to.</p>",
+      "refs": {
+        "RemediationAffectedResources$member": null
+      }
+    },
     "AffectedResources": {
       "base": null,
       "refs": {
@@ -330,6 +390,18 @@
       "base": "<p>Information about the installed GuardDuty security agent.</p>",
       "refs": {
         "CoverageEc2InstanceDetails$AgentDetails": "<p>Information about the installed security agent.</p>"
+      }
+    },
+    "AnalysisRecord": {
+      "base": "<p>Contains an assessment that GuardDuty derived from the data during an investigation, such as a threat assessment, a comparison against normal behavior, or a process lineage. The record contains at most one of the payload members, the one that corresponds to <code>AnalysisType</code>. <code>Indicators</code> can accompany any analysis type.</p>",
+      "refs": {
+        "SupportingData$Analysis": "<p>Details about an assessment that GuardDuty derived from the data. Set for <code>ANALYSIS</code> records.</p>"
+      }
+    },
+    "AnalysisType": {
+      "base": null,
+      "refs": {
+        "AnalysisRecord$AnalysisType": "<p>The kind of analysis. The value identifies the payload member that can be set: <code>REPUTATION</code>, <code>THREAT_ASSESSMENT</code>, and <code>RDS_THREAT_ASSESSMENT</code> (<code>ThreatAssessment</code>); <code>KUBERNETES_POLICY_VIOLATION</code> (<code>KubernetesPolicyViolation</code>); <code>S3_EXPOSURE</code>, <code>S3_ACTOR_CONTEXT</code>, and <code>S3_PEN_TEST</code> (<code>S3Analysis</code>); <code>PROCESS_LINEAGE</code> (<code>Processes</code>); and <code>TREND</code> and <code>BASELINE</code> (<code>AccountAnalysis</code>).</p>"
       }
     },
     "Anomaly": {
@@ -405,6 +477,12 @@
         "ApiCall$UserAgent": "<p>User agent in the request to the API operation</p>"
       }
     },
+    "ArchiveDistribution": {
+      "base": "<p>Contains the number and percentage of archived and unarchived findings.</p>",
+      "refs": {
+        "Distribution$Archive": "<p>The number and percentage of archived and unarchived findings.</p>"
+      }
+    },
     "ArchiveFindingsRequest": {
       "base": null,
       "refs": {}
@@ -458,6 +536,37 @@
         "ListCustomDetectionRuleAssociationsResponse$RuleAssociations": "<p>A list of custom detection rule association summaries.</p>"
       }
     },
+    "Attack": {
+      "base": "<p>Contains a MITRE ATT&amp;CK tactic and technique observed during an attack, with the findings that are associated with them.</p>",
+      "refs": {
+        "Attacks$member": null
+      }
+    },
+    "AttackPhase": {
+      "base": "<p>Contains information about one phase of an attack.</p>",
+      "refs": {
+        "AttackPhases$member": null
+      }
+    },
+    "AttackPhaseName": {
+      "base": null,
+      "refs": {
+        "AttackPhase$Phase": "<p>The MITRE ATT&amp;CK tactic of the phase. Possible values are <code>Reconnaissance</code>, <code>Resource Development</code>, <code>Initial Access</code>, <code>Execution</code>, <code>Persistence</code>, <code>Privilege Escalation</code>, <code>Defense Evasion</code>, <code>Credential Access</code>, <code>Discovery</code>, <code>Lateral Movement</code>, <code>Collection</code>, <code>Command and Control</code>, <code>Exfiltration</code>, and <code>Impact</code>.</p>",
+        "TacticCoverage$Phase": "<p>The name of the tactic. Possible values are <code>Reconnaissance</code>, <code>Resource Development</code>, <code>Initial Access</code>, <code>Execution</code>, <code>Persistence</code>, <code>Privilege Escalation</code>, <code>Defense Evasion</code>, <code>Credential Access</code>, <code>Discovery</code>, <code>Lateral Movement</code>, <code>Collection</code>, <code>Command and Control</code>, <code>Exfiltration</code>, and <code>Impact</code>.</p>"
+      }
+    },
+    "AttackPhases": {
+      "base": null,
+      "refs": {
+        "ThreatAssessment$AttackProgression": "<p>The phases of the attack, in terms of MITRE ATT&amp;CK tactics.</p>"
+      }
+    },
+    "Attacks": {
+      "base": null,
+      "refs": {
+        "AttackPhase$Attacks": "<p>The MITRE ATT&amp;CK tactics and techniques observed in this phase, with the findings that are associated with them.</p>"
+      }
+    },
     "AutoEnableMembers": {
       "base": null,
       "refs": {
@@ -486,6 +595,12 @@
     "BadRequestException": {
       "base": "<p>A bad request exception object.</p>",
       "refs": {}
+    },
+    "Baseline": {
+      "base": "<p>Contains a comparison of findings against the normal behavior of an account.</p>",
+      "refs": {
+        "InvestigationAccountAnalysis$Baseline": "<p>A comparison of findings against normal behavior. Set when <code>AnalysisType</code> is <code>BASELINE</code>.</p>"
+      }
     },
     "BedrockGuardrail": {
       "base": "<p>Contains information about a Bedrock guardrail associated with a finding.</p>",
@@ -618,6 +733,13 @@
       "base": "<p>Contains information about the city associated with the IP address.</p>",
       "refs": {
         "RemoteIpDetails$City": "<p>The city information of the remote IP address.</p>"
+      }
+    },
+    "CliCommands": {
+      "base": null,
+      "refs": {
+        "CountermeasureAction$CliCommands": "<p>CLI commands that you can run to carry out the action.</p>",
+        "Recommendation$CliCommands": "<p>CLI commands that you can run to carry out the recommendation.</p>"
       }
     },
     "ClientToken": {
@@ -765,6 +887,69 @@
         "RecoveryPoint$ContinuousScanDetails": "<p>Contains information about the time range within the continuous backup in Amazon Web Services Backup to scan.</p>"
       }
     },
+    "CorrelatedFinding": {
+      "base": "<p>Contains information about a group of correlated findings that have the same finding type.</p>",
+      "refs": {
+        "CorrelatedFindings$member": null
+      }
+    },
+    "CorrelatedFindings": {
+      "base": null,
+      "refs": {
+        "RelatedFindings$Correlated": "<p>The findings that GuardDuty correlated with the investigated activity, grouped by finding type.</p>"
+      }
+    },
+    "CorrelationReason": {
+      "base": null,
+      "refs": {
+        "CorrelationReasons$member": null
+      }
+    },
+    "CorrelationReasons": {
+      "base": null,
+      "refs": {
+        "CorrelatedFinding$CorrelationReasons": "<p>The reasons why GuardDuty correlated the findings. Possible values are <code>HIGH_SEVERITY</code>, <code>SAME_RESOURCE</code>, and <code>SAME_BEHAVIOR</code>. A value can appear more than once.</p>"
+      }
+    },
+    "Count": {
+      "base": null,
+      "refs": {
+        "AccountOverview$TotalMemberAccounts": "<p>The total number of member accounts.</p>",
+        "AccountOverview$TotalFindings": "<p>The total number of findings.</p>",
+        "AccountOverview$AffectedAccountCount": "<p>The number of accounts that have findings.</p>",
+        "ArchiveDistribution$ArchivedCount": "<p>The number of archived findings.</p>",
+        "ArchiveDistribution$UnarchivedCount": "<p>The number of unarchived findings.</p>",
+        "Baseline$TotalFindings": "<p>The total number of findings.</p>",
+        "CorrelatedFinding$Count": "<p>The number of correlated findings of this type. This value can be greater than the number of IDs in <code>FindingIds</code>.</p>",
+        "Distribution$TotalFindings": "<p>The total number of findings in the breakdown.</p>",
+        "FetchResult$TotalCount": "<p>The total number of items that were returned. This value can be greater than the number of identifiers in <code>ItemIds</code>.</p>",
+        "FindingTypeClassification$Count": "<p>The number of findings of this type.</p>",
+        "InvestigationMalwareScan$FilesScanned": "<p>The number of files that the scan scanned.</p>",
+        "InvestigationMalwareScan$VolumesScanned": "<p>The number of volumes that the scan scanned.</p>",
+        "InvestigationMalwareScan$InfectedFileCount": "<p>The number of infected files.</p>",
+        "InvestigationMalwareScan$UniqueThreatCount": "<p>The number of unique threats that the scan detected.</p>",
+        "InvestigationMalwareScan$TotalInfectedItems": "<p>The total number of infected items.</p>",
+        "KubernetesApiCall$EventCount": "<p>The number of matching API calls.</p>",
+        "MalwareThreat$InfectedFileCount": "<p>The number of files that the threat infected.</p>",
+        "MemberAccountRanking$FindingCount": "<p>The number of findings in the account.</p>",
+        "NetworkAnomaly$TargetHostCount": "<p>The number of target hosts.</p>",
+        "NetworkCounts$RequestCount": "<p>The number of requests.</p>",
+        "NetworkCounts$TotalAttempts": "<p>The total number of connection attempts.</p>",
+        "NetworkCounts$SuspiciousAttempts": "<p>The number of connection attempts that were suspicious.</p>",
+        "NetworkCounts$ResetAttempts": "<p>The number of connection attempts that were reset.</p>",
+        "NetworkPorts$PortCount": "<p>The number of ports that the activity involved.</p>",
+        "NetworkTraffic$BytesSent": "<p>The number of bytes sent.</p>",
+        "NetworkTraffic$BytesReceived": "<p>The number of bytes received.</p>",
+        "ObservedFindingType$Count": "<p>The number of findings of this type.</p>",
+        "RdsLoginActivity$LoginCount": "<p>The number of login attempts.</p>",
+        "RepresentativeFinding$FindingCount": "<p>The number of findings for the resource.</p>",
+        "ResourceDistribution$Count": "<p>The number of findings for the resource.</p>",
+        "S3Activity$EventCount": "<p>The number of events.</p>",
+        "SignalGroup$Count": "<p>The number of signals in the group.</p>",
+        "Trend$TotalFindings": "<p>The total number of findings in the period.</p>",
+        "TypeDistribution$Count": "<p>The number of findings of this type.</p>"
+      }
+    },
     "CountByCoverageStatus": {
       "base": null,
       "refs": {
@@ -781,6 +966,30 @@
       "base": null,
       "refs": {
         "FindingStatistics$CountBySeverity": "<p>Represents a list of map of severity to count statistics for a set of findings.</p>"
+      }
+    },
+    "Countermeasure": {
+      "base": "<p>Contains the actions that you can take for one defensive tactic.</p>",
+      "refs": {
+        "Countermeasures$member": null
+      }
+    },
+    "CountermeasureAction": {
+      "base": "<p>Contains an action that you can take to respond to a threat.</p>",
+      "refs": {
+        "CountermeasureActions$member": null
+      }
+    },
+    "CountermeasureActions": {
+      "base": null,
+      "refs": {
+        "Countermeasure$Actions": "<p>The actions for the defensive tactic.</p>"
+      }
+    },
+    "Countermeasures": {
+      "base": null,
+      "refs": {
+        "InvestigationSummaryData$Countermeasures": "<p>For a <code>FINDING</code> investigation, actions that you can take to respond to the threat, grouped by defensive tactic.</p>"
       }
     },
     "Country": {
@@ -1104,6 +1313,12 @@
         "S3BucketDetail$DefaultServerSideEncryption": "<p>Describes the server side encryption method used in the S3 bucket.</p>"
       }
     },
+    "DefenseTactic": {
+      "base": null,
+      "refs": {
+        "Countermeasure$DefenseTactic": "<p>The defensive tactic. Possible values are <code>Isolate</code>, <code>Evict</code>, <code>Restore</code>, <code>Harden</code>, and <code>Detect</code>.</p>"
+      }
+    },
     "DeleteCustomDetectionRuleAssociationRequest": {
       "base": null,
       "refs": {}
@@ -1252,6 +1467,12 @@
       "base": "<p>Contains information about the detected behavior.</p>",
       "refs": {
         "Service$Detection": "<p>Contains information about the detected unusual behavior.</p>"
+      }
+    },
+    "DetectionCoverage": {
+      "base": "<p>Contains information about your detection coverage, such as the status of protection plans and foundational data sources.</p>",
+      "refs": {
+        "ObservationRecord$DetectionCoverage": "<p>Details about your detection coverage. Set when <code>ObservationType</code> is <code>DETECTION_COVERAGE</code>.</p>"
       }
     },
     "DetectionRuleAccountIds": {
@@ -1476,6 +1697,7 @@
       "refs": {
         "AcceptAdministratorInvitationRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty member account.</p>",
         "AcceptInvitationRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty member account.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
+        "AccountOverview$DetectorId": "<p>The ID of the detector of the account.</p>",
         "ArchiveFindingsRequest$DetectorId": "<p>The ID of the detector that specifies the GuardDuty service whose findings you want to archive.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "CoverageResource$DetectorId": "<p>The unique ID of the GuardDuty detector associated with the resource.</p>",
         "CreateDetectorResponse$DetectorId": "<p>The unique ID of the created detector.</p>",
@@ -1527,6 +1749,7 @@
         "ListFiltersRequest$DetectorId": "<p>The unique ID of the detector that is associated with the filter.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "ListFindingsRequest$DetectorId": "<p>The ID of the detector that specifies the GuardDuty service whose findings you want to list.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "ListIPSetsRequest$DetectorId": "<p>The unique ID of the detector that is associated with IPSet.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
+        "ListInvestigationRecordsRequest$DetectorId": "<p>The unique ID of the GuardDuty detector associated with the investigation.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "ListInvestigationsRequest$DetectorId": "<p>The unique ID of the GuardDuty detector whose investigations you want to list.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "ListMembersRequest$DetectorId": "<p>The unique ID of the detector that is associated with the member.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "ListPublishingDestinationsRequest$DetectorId": "<p>The detector ID for which you want to retrieve the publishing destination.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
@@ -1597,6 +1820,30 @@
       "base": null,
       "refs": {}
     },
+    "Disposition": {
+      "base": null,
+      "refs": {
+        "CountermeasureAction$Disposition": "<p>The outcome of the action. Possible values are <code>Isolated</code>, <code>Blocked</code>, <code>Deleted</code>, <code>Access Revoked</code>, and <code>Logged</code>.</p>"
+      }
+    },
+    "Distribution": {
+      "base": "<p>Contains a breakdown of findings along a dimension, such as severity or finding type.</p>",
+      "refs": {
+        "ObservationRecord$Distribution": "<p>A breakdown of findings along one dimension. Set when <code>ObservationType</code> is <code>DISTRIBUTION</code>.</p>"
+      }
+    },
+    "DistributionDimension": {
+      "base": null,
+      "refs": {
+        "Distribution$Dimension": "<p>The dimension of the breakdown. The value identifies the breakdown that the record describes: <code>SEVERITY</code> (<code>SeverityBreakdown</code>), <code>TYPE</code> (<code>FindingTypes</code> or <code>TopFindingTypes</code>), <code>RESOURCE</code> (<code>Resources</code>), <code>ATTACK_VECTOR</code> (<code>AttackVectors</code>), and <code>ARCHIVE</code> (<code>Archive</code>).</p>"
+      }
+    },
+    "DnsContext": {
+      "base": "<p>Contains DNS details about network activity.</p>",
+      "refs": {
+        "NetworkActivity$Dns": "<p>DNS details about the network activity.</p>"
+      }
+    },
     "DnsRequestAction": {
       "base": "<p>Contains information about the DNS_REQUEST action described in this finding.</p>",
       "refs": {
@@ -1617,6 +1864,7 @@
         "Finding$Severity": "<p>The severity of the finding.</p>",
         "GeoLocation$Lat": "<p>The latitude information of the remote IP address.</p>",
         "GeoLocation$Lon": "<p>The longitude information of the remote IP address.</p>",
+        "InvestigationMalwareScan$GigabytesScanned": "<p>The amount of data that the scan scanned, in GB.</p>",
         "NetworkGeoLocation$Latitude": "<p>The latitude information of the endpoint location.</p>",
         "NetworkGeoLocation$Longitude": "<p>The longitude information of the endpoint location.</p>",
         "SeverityStatistics$Severity": "<p>The severity level associated with each finding type.</p>",
@@ -1790,6 +2038,15 @@
         "Signal$EndpointIds": "<p>Information about the endpoint IDs associated with this signal.</p>"
       }
     },
+    "Enrichment": {
+      "base": "<p>Contains additional context about activity, such as geolocation and threat intelligence information. Not every member is set.</p>",
+      "refs": {
+        "KubernetesActivity$Enrichment": "<p>Additional context about the API call, such as geolocation information.</p>",
+        "NetworkActivity$Enrichment": "<p>Additional context about the network activity, such as geolocation and threat intelligence information.</p>",
+        "RdsLoginActivity$Enrichment": "<p>Additional context about the login activity, such as geolocation information.</p>",
+        "S3Activity$Enrichment": "<p>Additional context about the activity, such as geolocation information.</p>"
+      }
+    },
     "Eq": {
       "base": null,
       "refs": {
@@ -1800,7 +2057,8 @@
       "base": null,
       "refs": {
         "Condition$Equals": "<p>Represents an <i>equal</i> <b/> condition to be applied to a single field when querying for findings.</p> <p>Max values: 50</p>",
-        "CoverageFilterCondition$Equals": "<p>Represents an equal condition that is applied to a single field while retrieving the coverage details.</p>"
+        "CoverageFilterCondition$Equals": "<p>Represents an equal condition that is applied to a single field while retrieving the coverage details.</p>",
+        "InvestigationFilterCondition$Equals": "<p>The values to match. An investigation matches if its attribute value equals any of the specified values.</p>"
       }
     },
     "Evidence": {
@@ -1840,16 +2098,132 @@
         "DetectorAdditionalConfigurationResult$Status": "<p>Status of the additional configuration.</p>",
         "DetectorFeatureConfiguration$Status": "<p>The status of the feature.</p>",
         "DetectorFeatureConfigurationResult$Status": "<p>Indicates the status of the feature that is enabled for the detector.</p>",
+        "InvestigationDetectorFeatureConfiguration$Status": "<p>The status of the feature. Possible values are <code>ENABLED</code> and <code>DISABLED</code>.</p>",
         "MemberAdditionalConfiguration$Status": "<p>Status of the additional configuration.</p>",
         "MemberAdditionalConfigurationResult$Status": "<p>Indicates the status of the additional configuration that is set for the member account.</p>",
         "MemberFeaturesConfiguration$Status": "<p>The status of the feature.</p>",
-        "MemberFeaturesConfigurationResult$Status": "<p>Indicates the status of the feature that is enabled for the detector.</p>"
+        "MemberFeaturesConfigurationResult$Status": "<p>Indicates the status of the feature that is enabled for the detector.</p>",
+        "ProtectionPlan$Status": "<p>The status of the protection plan. Possible values are <code>ENABLED</code> and <code>DISABLED</code>.</p>"
       }
     },
     "Feedback": {
       "base": null,
       "refs": {
         "UpdateFindingsFeedbackRequest$Feedback": "<p>The feedback for the finding.</p>"
+      }
+    },
+    "FetchCriteria": {
+      "base": null,
+      "refs": {
+        "FetchQuery$Criteria": "<p>The filter criteria that GuardDuty applied to the request.</p>"
+      }
+    },
+    "FetchCriterion": {
+      "base": "<p>Contains a filter condition that GuardDuty applied when it retrieved data.</p>",
+      "refs": {
+        "FetchCriteria$member": null
+      }
+    },
+    "FetchCriterionCondition": {
+      "base": null,
+      "refs": {
+        "FetchCriterion$Condition": "<p>The comparison operator of the condition. Possible values are <code>EQUALS</code>, <code>NOT_EQUALS</code>, <code>GREATER_THAN</code>, <code>GREATER_THAN_OR_EQUAL</code>, <code>LESS_THAN</code>, and <code>LESS_THAN_OR_EQUAL</code>.</p>"
+      }
+    },
+    "FetchDetectorFeatures": {
+      "base": null,
+      "refs": {
+        "FetchResult$Features": "<p>The configuration of the detector features that GuardDuty retrieved.</p>"
+      }
+    },
+    "FetchDurationInMinutes": {
+      "base": null,
+      "refs": {
+        "FetchTimeWindow$DurationInMinutes": "<p>The length of the time range, in minutes. Valid values are 1 to 120.</p>"
+      }
+    },
+    "FetchFieldName": {
+      "base": null,
+      "refs": {
+        "FetchCriterion$Field": "<p>The name of the field that the condition applies to.</p>"
+      }
+    },
+    "FetchFieldValue": {
+      "base": null,
+      "refs": {
+        "FetchFieldValues$member": null
+      }
+    },
+    "FetchFieldValues": {
+      "base": null,
+      "refs": {
+        "FetchCriterion$Values": "<p>The values that the field is compared against. Numeric and Boolean values are represented as strings.</p>"
+      }
+    },
+    "FetchItemId": {
+      "base": null,
+      "refs": {
+        "FetchItemIds$member": null
+      }
+    },
+    "FetchItemIds": {
+      "base": null,
+      "refs": {
+        "FetchResult$ItemIds": "<p>The identifiers of the items that were returned, such as finding IDs, event IDs, signal IDs, or account IDs, depending on <code>FetchType</code>. The list contains at most 50 identifiers; <code>TotalCount</code> can be larger.</p>"
+      }
+    },
+    "FetchLearnMoreLink": {
+      "base": null,
+      "refs": {
+        "FetchLearnMoreLinks$member": null
+      }
+    },
+    "FetchLearnMoreLinks": {
+      "base": null,
+      "refs": {
+        "FindingTypeDocumentation$LearnMoreLinks": "<p>Links to more information about the finding type.</p>"
+      }
+    },
+    "FetchQuery": {
+      "base": "<p>Contains the parameters of a request that GuardDuty made to retrieve data during an investigation. The members that are set depend on the <code>FetchType</code> of the record.</p>",
+      "refs": {
+        "FetchRecord$Query": "<p>The request that GuardDuty made. Not every record includes a query.</p>"
+      }
+    },
+    "FetchRecord": {
+      "base": "<p>Contains information about data that GuardDuty retrieved during an investigation, including what GuardDuty requested and what it received.</p>",
+      "refs": {
+        "SupportingData$Fetch": "<p>Details about data that GuardDuty retrieved. Set for <code>FETCH</code> records.</p>"
+      }
+    },
+    "FetchResult": {
+      "base": "<p>Contains the data that GuardDuty received in response to a request during an investigation. The members that are set depend on the <code>FetchType</code> of the record.</p>",
+      "refs": {
+        "FetchRecord$Result": "<p>The data that GuardDuty received in response to the request. Not every record includes a result.</p>"
+      }
+    },
+    "FetchRowLimit": {
+      "base": null,
+      "refs": {
+        "FetchQuery$RowLimit": "<p>The maximum number of rows that GuardDuty requested. Valid values are 1 to 1,000.</p>"
+      }
+    },
+    "FetchTimeWindow": {
+      "base": "<p>Contains the time range of the data that GuardDuty requested. The range is defined by a start time and a duration.</p>",
+      "refs": {
+        "FetchQuery$TimeWindow": "<p>The time range of the data that GuardDuty requested.</p>"
+      }
+    },
+    "FetchType": {
+      "base": null,
+      "refs": {
+        "FetchRecord$FetchType": "<p>The kind of data that GuardDuty retrieved. The value determines which members of <code>Query</code> and <code>Result</code> can be set. Possible values:</p> <ul> <li> <p> <code>FINDINGS</code> – GuardDuty findings.</p> </li> <li> <p> <code>DETECTOR</code> – The configuration of a GuardDuty detector.</p> </li> <li> <p> <code>REPUTATION</code> – Reputation information about a threat indicator, such as an IP address, a domain, or a file hash.</p> </li> <li> <p> <code>FINDING_TYPE_DOCUMENTATION</code> – The documentation for a finding type.</p> </li> <li> <p> <code>CLOUD_TRAIL_RAW_EVENTS</code> – Amazon Web Services CloudTrail events.</p> </li> <li> <p> <code>RUNTIME_SIGNALS</code> – Runtime signals.</p> </li> <li> <p> <code>MEMBER_ACCOUNTS</code> – A list of member accounts.</p> </li> </ul>"
+      }
+    },
+    "FetchVerdict": {
+      "base": null,
+      "refs": {
+        "FetchResult$Verdict": "<p>The reputation verdict for the threat indicator. Possible values are <code>THREAT</code>, <code>BENIGN</code>, and <code>NEUTRAL</code>. If the lookup returned more than one result, the verdict describes the first result.</p>"
       }
     },
     "FilePaths": {
@@ -1951,10 +2325,24 @@
         "UpdateFilterRequest$FindingCriteria": "<p>Represents the criteria to be used in the filter for querying findings. The following fields are available for filtering:</p> <ul> <li> <p>accountId</p> </li> <li> <p>arn</p> </li> <li> <p>associatedAttackSequenceArn</p> </li> <li> <p>confidence</p> </li> <li> <p>createdAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>id</p> </li> <li> <p>partition</p> </li> <li> <p>region</p> </li> <li> <p>resource.accessKeyDetails.accessKeyId</p> </li> <li> <p>resource.accessKeyDetails.principalId</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.accessKeyId</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.accountId</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.arn</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.principalId</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.sessionContext.attributes.mfaAuthenticated</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.sessionContext.ec2RoleDelivery</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.sessionContext.invokedBy</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.sessionContext.sessionIssuer.accountId</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.sessionContext.sessionIssuer.arn</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.sessionContext.sessionIssuer.principalId</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.sessionContext.sessionIssuer.type</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.sessionContext.sessionIssuer.userName</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.sessionContext.sourceIdentity</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.sessionContext.webIdFederationData.attributes</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.sessionContext.webIdFederationData.federatedProvider</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.type</p> </li> <li> <p>resource.accessKeyDetails.userIdentity.userName</p> </li> <li> <p>resource.accessKeyDetails.userName</p> </li> <li> <p>resource.accessKeyDetails.userType</p> </li> <li> <p>resource.bedrockGuardrailDetails.guardrailArn</p> </li> <li> <p>resource.bedrockGuardrailDetails.guardrailVersion</p> </li> <li> <p>resource.containerDetails.containerRuntime</p> </li> <li> <p>resource.containerDetails.id</p> </li> <li> <p>resource.containerDetails.image</p> </li> <li> <p>resource.containerDetails.imagePrefix</p> </li> <li> <p>resource.containerDetails.name</p> </li> <li> <p>resource.containerDetails.securityContext.allowPrivilegeEscalation</p> </li> <li> <p>resource.containerDetails.securityContext.privileged</p> </li> <li> <p>resource.containerDetails.volumeMounts.mountPath</p> </li> <li> <p>resource.containerDetails.volumeMounts.name</p> </li> <li> <p>resource.ebsSnapshotDetails.snapshotArn</p> </li> <li> <p>resource.ebsVolumeDetails.scannedVolumeDetails.deviceName</p> </li> <li> <p>resource.ebsVolumeDetails.scannedVolumeDetails.encryptionType</p> </li> <li> <p>resource.ebsVolumeDetails.scannedVolumeDetails.kmsKeyArn</p> </li> <li> <p>resource.ebsVolumeDetails.scannedVolumeDetails.snapshotArn</p> </li> <li> <p>resource.ebsVolumeDetails.scannedVolumeDetails.volumeArn</p> </li> <li> <p>resource.ebsVolumeDetails.scannedVolumeDetails.volumeSizeInGB</p> </li> <li> <p>resource.ebsVolumeDetails.scannedVolumeDetails.volumeType</p> </li> <li> <p>resource.ebsVolumeDetails.skippedVolumeDetails.deviceName</p> </li> <li> <p>resource.ebsVolumeDetails.skippedVolumeDetails.encryptionType</p> </li> <li> <p>resource.ebsVolumeDetails.skippedVolumeDetails.kmsKeyArn</p> </li> <li> <p>resource.ebsVolumeDetails.skippedVolumeDetails.snapshotArn</p> </li> <li> <p>resource.ebsVolumeDetails.skippedVolumeDetails.volumeArn</p> </li> <li> <p>resource.ebsVolumeDetails.skippedVolumeDetails.volumeSizeInGB</p> </li> <li> <p>resource.ebsVolumeDetails.skippedVolumeDetails.volumeType</p> </li> <li> <p>resource.ec2ImageDetails.imageArn</p> </li> <li> <p>resource.ecsClusterDetails.activeServicesCount</p> </li> <li> <p>resource.ecsClusterDetails.arn</p> </li> <li> <p>resource.ecsClusterDetails.name</p> </li> <li> <p>resource.ecsClusterDetails.registeredContainerInstancesCount</p> </li> <li> <p>resource.ecsClusterDetails.runningTasksCount</p> </li> <li> <p>resource.ecsClusterDetails.status</p> </li> <li> <p>resource.ecsClusterDetails.tags.key</p> </li> <li> <p>resource.ecsClusterDetails.tags.value</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.arn</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.containers.containerRuntime</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.containers.id</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.containers.image</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.containers.imagePrefix</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.containers.name</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.containers.securityContext.allowPrivilegeEscalation</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.containers.securityContext.privileged</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.containers.volumeMounts.mountPath</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.containers.volumeMounts.name</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.createdAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.definitionArn</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.group</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.launchType</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.startedAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.startedBy</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.tags.key</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.tags.value</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.version</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.volumes.hostPath.path</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.volumes.name</p> </li> <li> <p>resource.eksClusterDetails.arn</p> </li> <li> <p>resource.eksClusterDetails.createdAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>resource.eksClusterDetails.name</p> </li> <li> <p>resource.eksClusterDetails.status</p> </li> <li> <p>resource.eksClusterDetails.tags.key</p> </li> <li> <p>resource.eksClusterDetails.tags.value</p> </li> <li> <p>resource.eksClusterDetails.vpcId</p> </li> <li> <p>resource.instanceDetails.availabilityZone</p> </li> <li> <p>resource.instanceDetails.iamInstanceProfile.arn</p> </li> <li> <p>resource.instanceDetails.iamInstanceProfile.id</p> </li> <li> <p>resource.instanceDetails.imageDescription</p> </li> <li> <p>resource.instanceDetails.imageId</p> </li> <li> <p>resource.instanceDetails.instanceId</p> </li> <li> <p>resource.instanceDetails.instanceState</p> </li> <li> <p>resource.instanceDetails.instanceType</p> </li> <li> <p>resource.instanceDetails.launchTime</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.ipv6Addresses</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.networkInterfaceId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.privateDnsName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.privateIpAddress</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.privateIpAddresses.privateDnsName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.privateIpAddresses.privateIpAddress</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.publicDnsName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.publicIp</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.securityGroups.groupId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.securityGroups.groupName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.subnetId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.vpcId</p> </li> <li> <p>resource.instanceDetails.outpostArn</p> </li> <li> <p>resource.instanceDetails.platform</p> </li> <li> <p>resource.instanceDetails.productCodes.productCodeId</p> </li> <li> <p>resource.instanceDetails.productCodes.productCodeType</p> </li> <li> <p>resource.instanceDetails.tags.key</p> </li> <li> <p>resource.instanceDetails.tags.value</p> </li> <li> <p>resource.kubernetesDetails.kubernetesUserDetails.groups</p> </li> <li> <p>resource.kubernetesDetails.kubernetesUserDetails.impersonatedUser.groups</p> </li> <li> <p>resource.kubernetesDetails.kubernetesUserDetails.impersonatedUser.username</p> </li> <li> <p>resource.kubernetesDetails.kubernetesUserDetails.sessionName</p> </li> <li> <p>resource.kubernetesDetails.kubernetesUserDetails.uid</p> </li> <li> <p>resource.kubernetesDetails.kubernetesUserDetails.username</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.containers.containerRuntime</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.containers.id</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.containers.image</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.containers.imagePrefix</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.containers.name</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.containers.securityContext.allowPrivilegeEscalation</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.containers.securityContext.privileged</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.containers.volumeMounts.mountPath</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.containers.volumeMounts.name</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.hostIpc</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.hostNetwork</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.hostPid</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.name</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.namespace</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.serviceAccountName</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.type</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.uid</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.volumes.hostPath.path</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.volumes.name</p> </li> <li> <p>resource.lambdaDetails.description</p> </li> <li> <p>resource.lambdaDetails.functionArn</p> </li> <li> <p>resource.lambdaDetails.functionName</p> </li> <li> <p>resource.lambdaDetails.functionVersion</p> </li> <li> <p>resource.lambdaDetails.lastModifiedAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>resource.lambdaDetails.revisionId</p> </li> <li> <p>resource.lambdaDetails.role</p> </li> <li> <p>resource.lambdaDetails.tags.key</p> </li> <li> <p>resource.lambdaDetails.tags.value</p> </li> <li> <p>resource.lambdaDetails.vpcConfig.securityGroups.groupId</p> </li> <li> <p>resource.lambdaDetails.vpcConfig.securityGroups.groupName</p> </li> <li> <p>resource.lambdaDetails.vpcConfig.subnetIds</p> </li> <li> <p>resource.lambdaDetails.vpcConfig.vpcId</p> </li> <li> <p>resource.rdsDbInstanceDetails.dbClusterIdentifier</p> </li> <li> <p>resource.rdsDbInstanceDetails.dbInstanceArn</p> </li> <li> <p>resource.rdsDbInstanceDetails.dbInstanceIdentifier</p> </li> <li> <p>resource.rdsDbInstanceDetails.dbSecurityGroups.name</p> </li> <li> <p>resource.rdsDbInstanceDetails.dbSecurityGroups.status</p> </li> <li> <p>resource.rdsDbInstanceDetails.dbiResourceId</p> </li> <li> <p>resource.rdsDbInstanceDetails.engine</p> </li> <li> <p>resource.rdsDbInstanceDetails.engineVersion</p> </li> <li> <p>resource.rdsDbInstanceDetails.iamDatabaseAuthenticationEnabled</p> </li> <li> <p>resource.rdsDbInstanceDetails.publiclyAccessible</p> </li> <li> <p>resource.rdsDbInstanceDetails.vpcId</p> </li> <li> <p>resource.rdsDbInstanceDetails.vpcSecurityGroups.status</p> </li> <li> <p>resource.rdsDbInstanceDetails.vpcSecurityGroups.vpcSecurityGroupId</p> </li> <li> <p>resource.rdsDbUserDetails.application</p> </li> <li> <p>resource.rdsDbUserDetails.authMethod</p> </li> <li> <p>resource.rdsDbUserDetails.database</p> </li> <li> <p>resource.rdsDbUserDetails.ssl</p> </li> <li> <p>resource.rdsDbUserDetails.user</p> </li> <li> <p>resource.rdsLimitlessDbDetails.dbClusterIdentifier</p> </li> <li> <p>resource.rdsLimitlessDbDetails.dbShardGroupArn</p> </li> <li> <p>resource.rdsLimitlessDbDetails.dbShardGroupIdentifier</p> </li> <li> <p>resource.rdsLimitlessDbDetails.dbShardGroupResourceId</p> </li> <li> <p>resource.rdsLimitlessDbDetails.engine</p> </li> <li> <p>resource.rdsLimitlessDbDetails.engineVersion</p> </li> <li> <p>resource.rdsLimitlessDbDetails.tags.key</p> </li> <li> <p>resource.rdsLimitlessDbDetails.tags.value</p> </li> <li> <p>resource.recoveryPointDetails.backupVaultName</p> </li> <li> <p>resource.recoveryPointDetails.recoveryPointArn</p> </li> <li> <p>resource.resourceType</p> </li> <li> <p>resource.s3BucketDetails.arn</p> </li> <li> <p>resource.s3BucketDetails.createdAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>resource.s3BucketDetails.defaultServerSideEncryption.encryptionType</p> </li> <li> <p>resource.s3BucketDetails.defaultServerSideEncryption.kmsMasterKeyArn</p> </li> <li> <p>resource.s3BucketDetails.name</p> </li> <li> <p>resource.s3BucketDetails.owner.id</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.effectivePermission</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.permissionConfiguration.accountLevelPermissions.blockPublicAccess.blockPublicAcls</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.permissionConfiguration.accountLevelPermissions.blockPublicAccess.blockPublicPolicy</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.permissionConfiguration.accountLevelPermissions.blockPublicAccess.ignorePublicAcls</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.permissionConfiguration.accountLevelPermissions.blockPublicAccess.restrictPublicBuckets</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.permissionConfiguration.bucketLevelPermissions.accessControlList.allowsPublicReadAccess</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.permissionConfiguration.bucketLevelPermissions.accessControlList.allowsPublicWriteAccess</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.permissionConfiguration.bucketLevelPermissions.blockPublicAccess.blockPublicAcls</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.permissionConfiguration.bucketLevelPermissions.blockPublicAccess.blockPublicPolicy</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.permissionConfiguration.bucketLevelPermissions.blockPublicAccess.ignorePublicAcls</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.permissionConfiguration.bucketLevelPermissions.blockPublicAccess.restrictPublicBuckets</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.permissionConfiguration.bucketLevelPermissions.bucketPolicy.allowsPublicReadAccess</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.permissionConfiguration.bucketLevelPermissions.bucketPolicy.allowsPublicWriteAccess</p> </li> <li> <p>resource.s3BucketDetails.s3ObjectDetails.eTag</p> </li> <li> <p>resource.s3BucketDetails.s3ObjectDetails.hash</p> </li> <li> <p>resource.s3BucketDetails.s3ObjectDetails.key</p> </li> <li> <p>resource.s3BucketDetails.s3ObjectDetails.objectArn</p> </li> <li> <p>resource.s3BucketDetails.s3ObjectDetails.versionId</p> </li> <li> <p>resource.s3BucketDetails.tags.key</p> </li> <li> <p>resource.s3BucketDetails.tags.value</p> </li> <li> <p>resource.s3BucketDetails.type</p> </li> <li> <p>schemaVersion</p> </li> <li> <p>service.action.actionType</p> </li> <li> <p>service.action.awsApiCallAction.api</p> </li> <li> <p>service.action.awsApiCallAction.callerType</p> </li> <li> <p>service.action.awsApiCallAction.domainDetails.domain</p> </li> <li> <p>service.action.awsApiCallAction.errorCode</p> </li> <li> <p>service.action.awsApiCallAction.remoteAccountDetails.accountId</p> </li> <li> <p>service.action.awsApiCallAction.remoteAccountDetails.affiliated</p> </li> <li> <p>service.action.awsApiCallAction.remoteAccountDetails.awsServiceName</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.city.cityName</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.country.countryCode</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.geoLocation.lat</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.geoLocation.lon</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.ipAddressV6</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.isp</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.org</p> </li> <li> <p>service.action.awsApiCallAction.serviceName</p> </li> <li> <p>service.action.awsApiCallAction.userAgent</p> </li> <li> <p>service.action.dnsRequestAction.blocked</p> </li> <li> <p>service.action.dnsRequestAction.domain</p> </li> <li> <p>service.action.dnsRequestAction.domainWithSuffix</p> </li> <li> <p>service.action.dnsRequestAction.protocol</p> </li> <li> <p>service.action.dnsRequestAction.vpcOwnerAccountId</p> </li> <li> <p>service.action.kubernetesApiCallAction.namespace</p> </li> <li> <p>service.action.kubernetesApiCallAction.parameters</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.city.cityName</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.country.countryCode</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.geoLocation.lat</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.geoLocation.lon</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.ipAddressV6</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.organization.isp</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.organization.org</p> </li> <li> <p>service.action.kubernetesApiCallAction.requestUri</p> </li> <li> <p>service.action.kubernetesApiCallAction.resource</p> </li> <li> <p>service.action.kubernetesApiCallAction.resourceName</p> </li> <li> <p>service.action.kubernetesApiCallAction.sourceIPs</p> </li> <li> <p>service.action.kubernetesApiCallAction.statusCode</p> </li> <li> <p>service.action.kubernetesApiCallAction.subresource</p> </li> <li> <p>service.action.kubernetesApiCallAction.userAgent</p> </li> <li> <p>service.action.kubernetesApiCallAction.verb</p> </li> <li> <p>service.action.kubernetesPermissionCheckedDetails.allowed</p> </li> <li> <p>service.action.kubernetesPermissionCheckedDetails.namespace</p> </li> <li> <p>service.action.kubernetesPermissionCheckedDetails.resource</p> </li> <li> <p>service.action.kubernetesPermissionCheckedDetails.verb</p> </li> <li> <p>service.action.kubernetesRoleBindingDetails.kind</p> </li> <li> <p>service.action.kubernetesRoleBindingDetails.name</p> </li> <li> <p>service.action.kubernetesRoleBindingDetails.roleRefKind</p> </li> <li> <p>service.action.kubernetesRoleBindingDetails.roleRefName</p> </li> <li> <p>service.action.kubernetesRoleBindingDetails.uid</p> </li> <li> <p>service.action.kubernetesRoleDetails.kind</p> </li> <li> <p>service.action.kubernetesRoleDetails.name</p> </li> <li> <p>service.action.kubernetesRoleDetails.uid</p> </li> <li> <p>service.action.networkConnectionAction.blocked</p> </li> <li> <p>service.action.networkConnectionAction.connectionDirection</p> </li> <li> <p>service.action.networkConnectionAction.localIpDetails.ipAddressV4</p> </li> <li> <p>service.action.networkConnectionAction.localIpDetails.ipAddressV6</p> </li> <li> <p>service.action.networkConnectionAction.localNetworkInterface</p> </li> <li> <p>service.action.networkConnectionAction.localPortDetails.port</p> </li> <li> <p>service.action.networkConnectionAction.localPortDetails.portName</p> </li> <li> <p>service.action.networkConnectionAction.protocol</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.city.cityName</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.country.countryCode</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.geoLocation.lat</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.geoLocation.lon</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.ipAddressV6</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.isp</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.org</p> </li> <li> <p>service.action.networkConnectionAction.remotePortDetails.port</p> </li> <li> <p>service.action.networkConnectionAction.remotePortDetails.portName</p> </li> <li> <p>service.action.portProbeAction.blocked</p> </li> <li> <p>service.action.portProbeAction.portProbeDetails.localIpDetails.ipAddressV4</p> </li> <li> <p>service.action.portProbeAction.portProbeDetails.localIpDetails.ipAddressV6</p> </li> <li> <p>service.action.portProbeAction.portProbeDetails.localPortDetails.port</p> </li> <li> <p>service.action.portProbeAction.portProbeDetails.localPortDetails.portName</p> </li> <li> <p>service.action.portProbeAction.portProbeDetails.remoteIpDetails.city.cityName</p> </li> <li> <p>service.action.portProbeAction.portProbeDetails.remoteIpDetails.country.countryCode</p> </li> <li> <p>service.action.portProbeAction.portProbeDetails.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.portProbeAction.portProbeDetails.remoteIpDetails.geoLocation.lat</p> </li> <li> <p>service.action.portProbeAction.portProbeDetails.remoteIpDetails.geoLocation.lon</p> </li> <li> <p>service.action.portProbeAction.portProbeDetails.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.portProbeAction.portProbeDetails.remoteIpDetails.ipAddressV6</p> </li> <li> <p>service.action.portProbeAction.portProbeDetails.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.portProbeAction.portProbeDetails.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.portProbeAction.portProbeDetails.remoteIpDetails.organization.isp</p> </li> <li> <p>service.action.portProbeAction.portProbeDetails.remoteIpDetails.organization.org</p> </li> <li> <p>service.action.rdsLoginAttemptAction.loginAttributes.application</p> </li> <li> <p>service.action.rdsLoginAttemptAction.loginAttributes.failedLoginAttempts</p> </li> <li> <p>service.action.rdsLoginAttemptAction.loginAttributes.successfulLoginAttempts</p> </li> <li> <p>service.action.rdsLoginAttemptAction.loginAttributes.user</p> </li> <li> <p>service.action.rdsLoginAttemptAction.remoteIpDetails.city.cityName</p> </li> <li> <p>service.action.rdsLoginAttemptAction.remoteIpDetails.country.countryCode</p> </li> <li> <p>service.action.rdsLoginAttemptAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.rdsLoginAttemptAction.remoteIpDetails.geoLocation.lat</p> </li> <li> <p>service.action.rdsLoginAttemptAction.remoteIpDetails.geoLocation.lon</p> </li> <li> <p>service.action.rdsLoginAttemptAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.rdsLoginAttemptAction.remoteIpDetails.ipAddressV6</p> </li> <li> <p>service.action.rdsLoginAttemptAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.rdsLoginAttemptAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.rdsLoginAttemptAction.remoteIpDetails.organization.isp</p> </li> <li> <p>service.action.rdsLoginAttemptAction.remoteIpDetails.organization.org</p> </li> <li> <p>service.additionalInfo.agentDetails.agentId</p> </li> <li> <p>service.additionalInfo.agentDetails.agentVersion</p> </li> <li> <p>service.additionalInfo.anomalies.anomalousAPIs</p> </li> <li> <p>service.additionalInfo.authenticationMethod</p> </li> <li> <p>service.additionalInfo.averagePacketSizeIn</p> </li> <li> <p>service.additionalInfo.averagePacketSizeOut</p> </li> <li> <p>service.additionalInfo.context</p> </li> <li> <p>service.additionalInfo.domain</p> </li> <li> <p>service.additionalInfo.inBytes</p> </li> <li> <p>service.additionalInfo.localNetworkInterfaceOwner</p> </li> <li> <p>service.additionalInfo.localPort</p> </li> <li> <p>service.additionalInfo.outBytes</p> </li> <li> <p>service.additionalInfo.packetsIn</p> </li> <li> <p>service.additionalInfo.packetsOut</p> </li> <li> <p>service.additionalInfo.policyArn</p> </li> <li> <p>service.additionalInfo.policyName</p> </li> <li> <p>service.additionalInfo.remotePort</p> </li> <li> <p>service.additionalInfo.sample</p> </li> <li> <p>service.additionalInfo.scannedPort</p> </li> <li> <p>service.additionalInfo.threatFileSha256</p> </li> <li> <p>service.additionalInfo.threatListName</p> </li> <li> <p>service.additionalInfo.threatName</p> </li> <li> <p>service.additionalInfo.totalBytesIn</p> </li> <li> <p>service.additionalInfo.totalBytesOut</p> </li> <li> <p>service.additionalInfo.type</p> </li> <li> <p>service.additionalInfo.unusual.asnOrg</p> </li> <li> <p>service.additionalInfo.unusual.port</p> </li> <li> <p>service.additionalInfo.unusualProtocol</p> </li> <li> <p>service.additionalInfo.userAgent.fullUserAgent</p> </li> <li> <p>service.additionalInfo.userAgent.userAgentCategory</p> </li> <li> <p>service.additionalInfo.value</p> </li> <li> <p>service.additionalInfo.vpcOwnerAccountId</p> </li> <li> <p>service.archived</p> </li> <li> <p>service.count</p> </li> <li> <p>service.detection.sequence.actors.id</p> </li> <li> <p>service.detection.sequence.actors.process.name</p> </li> <li> <p>service.detection.sequence.actors.process.path</p> </li> <li> <p>service.detection.sequence.actors.process.sha256</p> </li> <li> <p>service.detection.sequence.actors.session.createdTime</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.detection.sequence.actors.session.issuer</p> </li> <li> <p>service.detection.sequence.actors.session.mfaStatus</p> </li> <li> <p>service.detection.sequence.actors.session.uid</p> </li> <li> <p>service.detection.sequence.actors.user.account.account</p> </li> <li> <p>service.detection.sequence.actors.user.account.uid</p> </li> <li> <p>service.detection.sequence.actors.user.credentialUid</p> </li> <li> <p>service.detection.sequence.actors.user.name</p> </li> <li> <p>service.detection.sequence.actors.user.type</p> </li> <li> <p>service.detection.sequence.actors.user.uid</p> </li> <li> <p>service.detection.sequence.additionalSequenceTypes</p> </li> <li> <p>service.detection.sequence.description</p> </li> <li> <p>service.detection.sequence.endpoints.autonomousSystem.name</p> </li> <li> <p>service.detection.sequence.endpoints.autonomousSystem.number</p> </li> <li> <p>service.detection.sequence.endpoints.connection.direction</p> </li> <li> <p>service.detection.sequence.endpoints.domain</p> </li> <li> <p>service.detection.sequence.endpoints.id</p> </li> <li> <p>service.detection.sequence.endpoints.ip</p> </li> <li> <p>service.detection.sequence.endpoints.location.city</p> </li> <li> <p>service.detection.sequence.endpoints.location.country</p> </li> <li> <p>service.detection.sequence.endpoints.location.lat</p> </li> <li> <p>service.detection.sequence.endpoints.location.lon</p> </li> <li> <p>service.detection.sequence.endpoints.port</p> </li> <li> <p>service.detection.sequence.resources.accountId</p> </li> <li> <p>service.detection.sequence.resources.cloudPartition</p> </li> <li> <p>service.detection.sequence.resources.data.accessKey.principalId</p> </li> <li> <p>service.detection.sequence.resources.data.accessKey.userName</p> </li> <li> <p>service.detection.sequence.resources.data.accessKey.userType</p> </li> <li> <p>service.detection.sequence.resources.data.autoscalingAutoScalingGroup.ec2InstanceUids</p> </li> <li> <p>service.detection.sequence.resources.data.cloudformationStack.ec2InstanceUids</p> </li> <li> <p>service.detection.sequence.resources.data.container.image</p> </li> <li> <p>service.detection.sequence.resources.data.container.imageUid</p> </li> <li> <p>service.detection.sequence.resources.data.ec2Image.ec2InstanceUids</p> </li> <li> <p>service.detection.sequence.resources.data.ec2Instance.availabilityZone</p> </li> <li> <p>service.detection.sequence.resources.data.ec2Instance.ec2NetworkInterfaceUids</p> </li> <li> <p>service.detection.sequence.resources.data.ec2Instance.iamInstanceProfile.arn</p> </li> <li> <p>service.detection.sequence.resources.data.ec2Instance.iamInstanceProfile.id</p> </li> <li> <p>service.detection.sequence.resources.data.ec2Instance.imageDescription</p> </li> <li> <p>service.detection.sequence.resources.data.ec2Instance.instanceState</p> </li> <li> <p>service.detection.sequence.resources.data.ec2Instance.instanceType</p> </li> <li> <p>service.detection.sequence.resources.data.ec2Instance.outpostArn</p> </li> <li> <p>service.detection.sequence.resources.data.ec2Instance.platform</p> </li> <li> <p>service.detection.sequence.resources.data.ec2Instance.productCodes.productCodeId</p> </li> <li> <p>service.detection.sequence.resources.data.ec2Instance.productCodes.productCodeType</p> </li> <li> <p>service.detection.sequence.resources.data.ec2LaunchTemplate.ec2InstanceUids</p> </li> <li> <p>service.detection.sequence.resources.data.ec2LaunchTemplate.version</p> </li> <li> <p>service.detection.sequence.resources.data.ec2NetworkInterface.ipv6Addresses</p> </li> <li> <p>service.detection.sequence.resources.data.ec2NetworkInterface.privateIpAddresses.privateDnsName</p> </li> <li> <p>service.detection.sequence.resources.data.ec2NetworkInterface.privateIpAddresses.privateIpAddress</p> </li> <li> <p>service.detection.sequence.resources.data.ec2NetworkInterface.publicIp</p> </li> <li> <p>service.detection.sequence.resources.data.ec2NetworkInterface.securityGroups.groupId</p> </li> <li> <p>service.detection.sequence.resources.data.ec2NetworkInterface.securityGroups.groupName</p> </li> <li> <p>service.detection.sequence.resources.data.ec2NetworkInterface.subNetId</p> </li> <li> <p>service.detection.sequence.resources.data.ec2NetworkInterface.vpcId</p> </li> <li> <p>service.detection.sequence.resources.data.ec2Vpc.ec2InstanceUids</p> </li> <li> <p>service.detection.sequence.resources.data.ecsCluster.ec2InstanceUids</p> </li> <li> <p>service.detection.sequence.resources.data.ecsCluster.status</p> </li> <li> <p>service.detection.sequence.resources.data.ecsTask.containerUids</p> </li> <li> <p>service.detection.sequence.resources.data.ecsTask.createdAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.detection.sequence.resources.data.ecsTask.launchType</p> </li> <li> <p>service.detection.sequence.resources.data.ecsTask.taskDefinitionArn</p> </li> <li> <p>service.detection.sequence.resources.data.eksCluster.arn</p> </li> <li> <p>service.detection.sequence.resources.data.eksCluster.createdAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.detection.sequence.resources.data.eksCluster.ec2InstanceUids</p> </li> <li> <p>service.detection.sequence.resources.data.eksCluster.status</p> </li> <li> <p>service.detection.sequence.resources.data.eksCluster.vpcId</p> </li> <li> <p>service.detection.sequence.resources.data.iamInstanceProfile.ec2InstanceUids</p> </li> <li> <p>service.detection.sequence.resources.data.iamInstanceProfile.id</p> </li> <li> <p>service.detection.sequence.resources.data.kubernetesWorkload.containerUids</p> </li> <li> <p>service.detection.sequence.resources.data.kubernetesWorkload.namespace</p> </li> <li> <p>service.detection.sequence.resources.data.kubernetesWorkload.type</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.accountPublicAccess.publicAclAccess</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.accountPublicAccess.publicAclIgnoreBehavior</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.accountPublicAccess.publicBucketRestrictBehavior</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.accountPublicAccess.publicPolicyAccess</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.bucketPublicAccess.publicAclAccess</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.bucketPublicAccess.publicAclIgnoreBehavior</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.bucketPublicAccess.publicBucketRestrictBehavior</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.bucketPublicAccess.publicPolicyAccess</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.createdAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.effectivePermission</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.encryptionKeyArn</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.encryptionType</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.ownerId</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.publicReadAccess</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.publicWriteAccess</p> </li> <li> <p>service.detection.sequence.resources.data.s3Bucket.s3ObjectUids</p> </li> <li> <p>service.detection.sequence.resources.data.s3Object.eTag</p> </li> <li> <p>service.detection.sequence.resources.data.s3Object.key</p> </li> <li> <p>service.detection.sequence.resources.data.s3Object.versionId</p> </li> <li> <p>service.detection.sequence.resources.name</p> </li> <li> <p>service.detection.sequence.resources.region</p> </li> <li> <p>service.detection.sequence.resources.resourceType</p> </li> <li> <p>service.detection.sequence.resources.service</p> </li> <li> <p>service.detection.sequence.resources.tags.key</p> </li> <li> <p>service.detection.sequence.resources.tags.value</p> </li> <li> <p>service.detection.sequence.resources.uid</p> </li> <li> <p>service.detection.sequence.sequenceIndicators.key</p> </li> <li> <p>service.detection.sequence.sequenceIndicators.title</p> </li> <li> <p>service.detection.sequence.sequenceIndicators.values</p> </li> <li> <p>service.detection.sequence.signals.actorIds</p> </li> <li> <p>service.detection.sequence.signals.count</p> </li> <li> <p>service.detection.sequence.signals.createdAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.detection.sequence.signals.description</p> </li> <li> <p>service.detection.sequence.signals.endpointIds</p> </li> <li> <p>service.detection.sequence.signals.firstSeenAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.detection.sequence.signals.lastSeenAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.detection.sequence.signals.name</p> </li> <li> <p>service.detection.sequence.signals.resourceUids</p> </li> <li> <p>service.detection.sequence.signals.severity</p> </li> <li> <p>service.detection.sequence.signals.signalIndicators.key</p> </li> <li> <p>service.detection.sequence.signals.signalIndicators.title</p> </li> <li> <p>service.detection.sequence.signals.signalIndicators.values</p> </li> <li> <p>service.detection.sequence.signals.type</p> </li> <li> <p>service.detection.sequence.signals.uid</p> </li> <li> <p>service.detection.sequence.signals.updatedAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.detection.sequence.uid</p> </li> <li> <p>service.detectorId</p> </li> <li> <p>service.ebsVolumeScanDetails.scanCompletedAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.highestSeverityThreatDetails.count</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.highestSeverityThreatDetails.severity</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.highestSeverityThreatDetails.threatName</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.scannedItemCount.files</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.scannedItemCount.totalGb</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.scannedItemCount.volumes</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.itemCount</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.shortened</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.filePaths.fileName</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.filePaths.filePath</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.filePaths.hash</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.filePaths.volumeArn</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.itemCount</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.name</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.severity</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.uniqueThreatNameCount</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatsDetectedItemCount.files</p> </li> <li> <p>service.ebsVolumeScanDetails.scanId</p> </li> <li> <p>service.ebsVolumeScanDetails.scanStartedAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.ebsVolumeScanDetails.scanType</p> </li> <li> <p>service.ebsVolumeScanDetails.sources</p> </li> <li> <p>service.ebsVolumeScanDetails.triggerFindingId</p> </li> <li> <p>service.eventFirstSeen</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.eventLastSeen</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.evidence.threatIntelligenceDetails.threatFileSha256</p> </li> <li> <p>service.evidence.threatIntelligenceDetails.threatListName</p> </li> <li> <p>service.evidence.threatIntelligenceDetails.threatNames</p> </li> <li> <p>service.featureName</p> </li> <li> <p>service.malwareScanDetails.scanCategory</p> </li> <li> <p>service.malwareScanDetails.scanConfiguration.incrementalScanDetails.baselineResourceArn</p> </li> <li> <p>service.malwareScanDetails.scanConfiguration.triggerType</p> </li> <li> <p>service.malwareScanDetails.scanId</p> </li> <li> <p>service.malwareScanDetails.scanType</p> </li> <li> <p>service.malwareScanDetails.threats.count</p> </li> <li> <p>service.malwareScanDetails.threats.hash</p> </li> <li> <p>service.malwareScanDetails.threats.itemDetails.additionalInfo.deviceName</p> </li> <li> <p>service.malwareScanDetails.threats.itemDetails.additionalInfo.versionId</p> </li> <li> <p>service.malwareScanDetails.threats.itemDetails.hash</p> </li> <li> <p>service.malwareScanDetails.threats.itemDetails.itemPath</p> </li> <li> <p>service.malwareScanDetails.threats.itemDetails.resourceArn</p> </li> <li> <p>service.malwareScanDetails.threats.itemPaths.hash</p> </li> <li> <p>service.malwareScanDetails.threats.itemPaths.nestedItemPath</p> </li> <li> <p>service.malwareScanDetails.threats.name</p> </li> <li> <p>service.malwareScanDetails.threats.source</p> </li> <li> <p>service.malwareScanDetails.uniqueThreatCount</p> </li> <li> <p>service.resourceRole</p> </li> <li> <p>service.runtimeDetails.context.addressFamily</p> </li> <li> <p>service.runtimeDetails.context.commandLineExample</p> </li> <li> <p>service.runtimeDetails.context.fileOperation</p> </li> <li> <p>service.runtimeDetails.context.filePath</p> </li> <li> <p>service.runtimeDetails.context.fileSystemType</p> </li> <li> <p>service.runtimeDetails.context.flags</p> </li> <li> <p>service.runtimeDetails.context.ianaProtocolNumber</p> </li> <li> <p>service.runtimeDetails.context.ldPreloadValue</p> </li> <li> <p>service.runtimeDetails.context.libraryPath</p> </li> <li> <p>service.runtimeDetails.context.memoryRegions</p> </li> <li> <p>service.runtimeDetails.context.modifiedAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.euid</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.executablePath</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.executableSha256</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.lineage.euid</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.lineage.executablePath</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.lineage.name</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.lineage.namespacePid</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.lineage.parentUuid</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.lineage.pid</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.lineage.startTime</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.lineage.userId</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.lineage.uuid</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.name</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.namespacePid</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.parentUuid</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.pid</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.pwd</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.startTime</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.user</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.userId</p> </li> <li> <p>service.runtimeDetails.context.modifyingProcess.uuid</p> </li> <li> <p>service.runtimeDetails.context.moduleFilePath</p> </li> <li> <p>service.runtimeDetails.context.moduleName</p> </li> <li> <p>service.runtimeDetails.context.moduleSha256</p> </li> <li> <p>service.runtimeDetails.context.mountSource</p> </li> <li> <p>service.runtimeDetails.context.mountTarget</p> </li> <li> <p>service.runtimeDetails.context.relatedFilePaths</p> </li> <li> <p>service.runtimeDetails.context.releaseAgentPath</p> </li> <li> <p>service.runtimeDetails.context.runcBinaryPath</p> </li> <li> <p>service.runtimeDetails.context.scriptPath</p> </li> <li> <p>service.runtimeDetails.context.serviceName</p> </li> <li> <p>service.runtimeDetails.context.shellHistoryFilePath</p> </li> <li> <p>service.runtimeDetails.context.socketPath</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.euid</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.executablePath</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.executableSha256</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.lineage.euid</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.lineage.executablePath</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.lineage.name</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.lineage.namespacePid</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.lineage.parentUuid</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.lineage.pid</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.lineage.startTime</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.lineage.userId</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.lineage.uuid</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.name</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.namespacePid</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.parentUuid</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.pid</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.pwd</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.startTime</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.user</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.userId</p> </li> <li> <p>service.runtimeDetails.context.targetProcess.uuid</p> </li> <li> <p>service.runtimeDetails.context.threatFilePath</p> </li> <li> <p>service.runtimeDetails.context.toolCategory</p> </li> <li> <p>service.runtimeDetails.context.toolName</p> </li> <li> <p>service.runtimeDetails.process.euid</p> </li> <li> <p>service.runtimeDetails.process.executablePath</p> </li> <li> <p>service.runtimeDetails.process.executableSha256</p> </li> <li> <p>service.runtimeDetails.process.lineage.euid</p> </li> <li> <p>service.runtimeDetails.process.lineage.executablePath</p> </li> <li> <p>service.runtimeDetails.process.lineage.name</p> </li> <li> <p>service.runtimeDetails.process.lineage.namespacePid</p> </li> <li> <p>service.runtimeDetails.process.lineage.parentUuid</p> </li> <li> <p>service.runtimeDetails.process.lineage.pid</p> </li> <li> <p>service.runtimeDetails.process.lineage.startTime</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.runtimeDetails.process.lineage.userId</p> </li> <li> <p>service.runtimeDetails.process.lineage.uuid</p> </li> <li> <p>service.runtimeDetails.process.name</p> </li> <li> <p>service.runtimeDetails.process.namespacePid</p> </li> <li> <p>service.runtimeDetails.process.parentUuid</p> </li> <li> <p>service.runtimeDetails.process.pid</p> </li> <li> <p>service.runtimeDetails.process.pwd</p> </li> <li> <p>service.runtimeDetails.process.startTime</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> <li> <p>service.runtimeDetails.process.user</p> </li> <li> <p>service.runtimeDetails.process.userId</p> </li> <li> <p>service.runtimeDetails.process.uuid</p> </li> <li> <p>service.serviceName</p> </li> <li> <p>service.userFeedback</p> </li> <li> <p>severity</p> <p>To configure severity based filters, use the following for the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_FindingCriteria.html\">FindingCriteria</a> condition:</p> <ul> <li> <p> <b>Low</b>: <code>[\"1\", \"2\", \"3\"]</code> </p> </li> <li> <p> <b>Medium</b>: <code>[\"4\", \"5\", \"6\"]</code> </p> </li> <li> <p> <b>High</b>: <code>[\"7\", \"8\"]</code> </p> </li> <li> <p> <b>Critical</b>: <code>[\"9\", \"10\"]</code> </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings-severity.html\">Findings severity levels</a> in the <i>Amazon GuardDuty User Guide</i>.</p> </li> <li> <p>type</p> </li> <li> <p>updatedAt</p> <p>Type: Timestamp in Unix Epoch millisecond format. Ex: 1486685375000</p> </li> </ul>"
       }
     },
+    "FindingDetail": {
+      "base": "<p>Contains details about a GuardDuty finding.</p>",
+      "refs": {
+        "ObservationRecord$FindingDetail": "<p>Details about a GuardDuty finding. Set when <code>ObservationType</code> is <code>FINDING_DETAIL</code>.</p>"
+      }
+    },
     "FindingId": {
       "base": null,
       "refs": {
-        "FindingIds$member": null
+        "FetchQuery$FindingId": "<p>The ID of the finding that GuardDuty retrieved.</p>",
+        "FindingDetail$FindingId": "<p>The ID of the finding.</p>",
+        "FindingIds$member": null,
+        "FindingReference$Uid": "<p>The ID of the finding.</p>",
+        "InvestigationMalwareScan$TriggerFindingId": "<p>The ID of the finding that initiated the scan.</p>",
+        "InvestigationScope$FindingId": "<p>The ID of the finding that the investigation analyzed. Set only when <code>InvestigationType</code> is <code>FINDING</code>.</p>",
+        "InvestigationSummary$FindingId": "<p>For a <code>FINDING</code> investigation, the ID of the finding that the investigation analyzed. GuardDuty sets this field when the investigation completes.</p>",
+        "RelatedFindingIds$member": null,
+        "RepresentativeFinding$FindingId": "<p>The ID of the representative finding.</p>"
       }
     },
     "FindingIds": {
@@ -1973,6 +2361,19 @@
         "CreateDetectorRequest$FindingPublishingFrequency": "<p>A value that specifies how frequently updated findings are exported.</p>",
         "GetDetectorResponse$FindingPublishingFrequency": "<p>The publishing frequency of the finding.</p>",
         "UpdateDetectorRequest$FindingPublishingFrequency": "<p>An enum value that specifies how frequently findings are exported, such as to CloudWatch Events.</p>"
+      }
+    },
+    "FindingReference": {
+      "base": "<p>Contains a reference to a GuardDuty finding.</p>",
+      "refs": {
+        "FindingReferences$member": null
+      }
+    },
+    "FindingReferences": {
+      "base": null,
+      "refs": {
+        "Attack$Findings": "<p>The findings associated with the tactic and technique.</p>",
+        "Process$Findings": "<p>The findings associated with this process.</p>"
       }
     },
     "FindingResourceType": {
@@ -2003,8 +2404,55 @@
       "base": null,
       "refs": {
         "AdditionalSequenceTypes$member": null,
+        "CorrelatedFinding$FindingType": "<p>The finding type of the group.</p>",
+        "FetchQuery$FindingType": "<p>The finding type whose documentation GuardDuty retrieved.</p>",
         "Finding$Type": "<p>The type of finding.</p>",
-        "FindingTypes$member": null
+        "FindingDetail$FindingType": "<p>The type of the finding.</p>",
+        "FindingTypeClassification$FindingType": "<p>The finding type.</p>",
+        "FindingTypes$member": null,
+        "ObservedFindingType$FindingType": "<p>The finding type.</p>",
+        "SignalGroup$FindingType": "<p>The finding type of the group.</p>",
+        "TypeDistribution$FindingType": "<p>The finding type.</p>"
+      }
+    },
+    "FindingTypeClassification": {
+      "base": "<p>Contains information about how a finding type compares with normal behavior.</p>",
+      "refs": {
+        "FindingTypeClassifications$member": null
+      }
+    },
+    "FindingTypeClassifications": {
+      "base": null,
+      "refs": {
+        "Baseline$BaselineFindings": "<p>The finding types that are consistent with normal behavior.</p>",
+        "Baseline$AnomalousFindings": "<p>The finding types that deviate from normal behavior.</p>"
+      }
+    },
+    "FindingTypeCount": {
+      "base": "<p>Contains the number of findings of a finding type.</p>",
+      "refs": {
+        "FindingTypeCounts$member": null
+      }
+    },
+    "FindingTypeCounts": {
+      "base": null,
+      "refs": {
+        "Distribution$TopFindingTypes": "<p>The finding types that have the most findings, with counts.</p>",
+        "FindingsSummary$TopFindingTypes": "<p>The finding types that have the most findings, with counts.</p>",
+        "OrganizationFindingsSummary$TopFindingTypes": "<p>The finding types that have the most findings, with counts.</p>"
+      }
+    },
+    "FindingTypeDocumentation": {
+      "base": "<p>Contains information about a finding type from the GuardDuty documentation.</p>",
+      "refs": {
+        "FetchResult$Documentation": "<p>The documentation for the finding type that GuardDuty retrieved.</p>"
+      }
+    },
+    "FindingTypeNames": {
+      "base": null,
+      "refs": {
+        "TacticCoverage$FindingTypes": "<p>The finding types associated with the tactic.</p>",
+        "TechniqueCoverage$FindingTypes": "<p>The finding types associated with the technique.</p>"
       }
     },
     "FindingTypeStatistics": {
@@ -2025,6 +2473,12 @@
         "GetFindingsResponse$Findings": "<p>A list of findings.</p>"
       }
     },
+    "FindingsSummary": {
+      "base": "<p>Contains a summary of findings.</p>",
+      "refs": {
+        "AccountAnalysis$FindingsSummary": "<p>A summary of the findings in the account.</p>"
+      }
+    },
     "FlagsList": {
       "base": null,
       "refs": {
@@ -2035,6 +2489,12 @@
       "base": "<p>Contains information on the status of VPC flow logs as a data source.</p>",
       "refs": {
         "DataSourceConfigurationsResult$FlowLogs": "<p>An object that contains information on the status of VPC flow logs as a data source.</p>"
+      }
+    },
+    "FoundationalDataSources": {
+      "base": null,
+      "refs": {
+        "DetectionCoverage$FoundationalDataSources": "<p>The foundational data sources, such as <code>CLOUD_TRAIL</code>, <code>DNS_LOGS</code>, and <code>FLOW_LOGS</code>.</p>"
       }
     },
     "FreeTrialFeatureConfigurationResult": {
@@ -2377,6 +2837,13 @@
         "Indicator$Key": "<p>Specific indicator keys observed in the attack sequence. For description of the valid values for key, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings-summary.html#guardduty-extended-threat-detection-attack-sequence-finding-details\">Attack sequence finding details</a> in the <i>Amazon GuardDuty User Guide</i>.</p>"
       }
     },
+    "IndicatorValue": {
+      "base": null,
+      "refs": {
+        "FetchQuery$Indicator": "<p>The threat indicator that GuardDuty looked up, such as an IP address, a domain, or a file hash.</p>",
+        "InvestigationIndicator$Value": "<p>The value of the indicator.</p>"
+      }
+    },
     "IndicatorValueString": {
       "base": null,
       "refs": {
@@ -2411,22 +2878,28 @@
     "Integer": {
       "base": null,
       "refs": {
+        "AccountAffectedResource$FindingCount": "<p>The number of findings associated with the resource.</p>",
         "AccountStatistics$TotalFindings": "<p>The total number of findings associated with an account.</p>",
+        "AccountSummary$FindingCount": "<p>The number of findings in the account.</p>",
         "AutonomousSystem$Number": "<p>The unique number that identifies the Autonomous System (AS).</p>",
         "Condition$Gt": "<p>Represents a <i>greater than</i> condition to be applied to a single field when querying for findings.</p>",
         "Condition$Gte": "<p>Represents a <i>greater than or equal</i> condition to be applied to a single field when querying for findings.</p>",
         "Condition$Lt": "<p>Represents a <i>less than</i> condition to be applied to a single field when querying for findings.</p>",
         "Condition$Lte": "<p>Represents a <i>less than or equal</i> condition to be applied to a single field when querying for findings.</p>",
         "CountBySeverity$value": null,
+        "CountermeasureAction$DispositionId": "<p>The numeric identifier of the action's disposition.</p>",
         "DataSourceFreeTrial$FreeTrialDaysRemaining": "<p>A value that specifies the number of days left to use each enabled data source.</p>",
         "DateStatistics$TotalFindings": "<p>The total number of findings that were generated per severity level on each date.</p>",
         "EcsClusterDetails$ActiveServicesCount": "<p>The number of services that are running on the cluster in an ACTIVE state.</p>",
         "EcsClusterDetails$RegisteredContainerInstancesCount": "<p>The number of container instances registered into the cluster.</p>",
         "EcsClusterDetails$RunningTasksCount": "<p>The number of tasks in the cluster that are in the RUNNING state.</p>",
+        "FindingTypeCount$Count": "<p>The number of findings of this type.</p>",
         "FindingTypeStatistics$TotalFindings": "<p>The total number of findings associated with generated for each distinct finding type.</p>",
+        "FindingsSummary$TotalFindings": "<p>The total number of findings.</p>",
         "FreeTrialFeatureConfigurationResult$FreeTrialDaysRemaining": "<p>The number of the remaining free trial days for the feature.</p>",
         "GetInvitationsCountResponse$InvitationsCount": "<p>The number of received invitations.</p>",
         "HighestSeverityThreatDetails$Count": "<p>Total number of infected files with the highest severity threat detected.</p>",
+        "KubernetesApiCall$StatusCode": "<p>The status code of the API call.</p>",
         "KubernetesApiCallAction$StatusCode": "<p>The resulting HTTP response code of the Kubernetes API call action.</p>",
         "LineageObject$NamespacePid": "<p>The process ID of the child process.</p>",
         "LineageObject$UserId": "<p>The user ID of the user that executed the process.</p>",
@@ -2436,9 +2909,14 @@
         "LoginAttribute$FailedLoginAttempts": "<p>Represents the sum of failed (unsuccessful) login attempts made to establish a connection to the database instance.</p>",
         "LoginAttribute$SuccessfulLoginAttempts": "<p>Represents the sum of successful connections (a correct combination of login attributes) made to the database instance by the actor.</p>",
         "MalwareScanDetails$UniqueThreatCount": "<p>The number of unique malware threats detected during the scan.</p>",
+        "MemberAccountRanking$Rank": "<p>The position of the account in the ranking.</p>",
+        "NetworkAnomaly$ProfileAgeDays": "<p>The number of days of activity that the normal behavior is based on.</p>",
         "NetworkEndpoint$Port": "<p>The port number associated with the network endpoint.</p>",
         "OrganizationFeatureStatistics$EnabledAccountsCount": "<p>Total number of accounts that have enabled a specific feature.</p>",
         "OrganizationFeatureStatisticsAdditionalConfiguration$EnabledAccountsCount": "<p>Total number of accounts that have enabled the additional configuration.</p>",
+        "OrganizationFindingsSummary$TotalFindings": "<p>The total number of findings across the organization.</p>",
+        "OrganizationFindingsSummary$TotalAccountCount": "<p>The total number of accounts in the organization.</p>",
+        "OrganizationFindingsSummary$AffectedAccountCount": "<p>The number of accounts that have findings.</p>",
         "OrganizationStatistics$TotalAccountsCount": "<p>Total number of accounts in your Amazon Web Services organization.</p>",
         "OrganizationStatistics$MemberAccountsCount": "<p>Total number of accounts in your Amazon Web Services organization that are associated with GuardDuty.</p>",
         "OrganizationStatistics$ActiveAccountsCount": "<p>Total number of active accounts in your Amazon Web Services organization that are associated with GuardDuty.</p>",
@@ -2455,11 +2933,19 @@
         "ScannedItemCount$Files": "<p>Number of files scanned.</p>",
         "ScannedItemCount$Volumes": "<p>Total number of scanned volumes.</p>",
         "Service$Count": "<p>The total count of the occurrences of this finding type.</p>",
+        "SeverityBreakdown$Critical": "<p>The number of findings that have Critical severity.</p>",
+        "SeverityBreakdown$High": "<p>The number of findings that have High severity.</p>",
+        "SeverityBreakdown$Medium": "<p>The number of findings that have Medium severity.</p>",
+        "SeverityBreakdown$Low": "<p>The number of findings that have Low severity.</p>",
+        "SeverityBreakdown$Info": "<p>The number of findings that have Info severity.</p>",
         "SeverityStatistics$TotalFindings": "<p>The total number of findings associated with this severity.</p>",
         "Signal$Count": "<p>The number of times this signal was observed.</p>",
+        "TacticCoverage$FindingCount": "<p>The number of findings associated with the tactic.</p>",
+        "TechniqueCoverage$FindingCount": "<p>The number of findings associated with the technique.</p>",
         "ThreatDetectedByName$ItemCount": "<p>Total number of infected files identified.</p>",
         "ThreatDetectedByName$UniqueThreatNameCount": "<p>Total number of unique threats by name identified, as part of the malware scan.</p>",
         "ThreatsDetectedItemCount$Files": "<p>Total number of infected files.</p>",
+        "TimeWindowGroup$FindingCount": "<p>The number of findings in the time window.</p>",
         "VolumeDetail$VolumeSizeInGB": "<p>EBS volume size in GB.</p>"
       }
     },
@@ -2479,10 +2965,78 @@
         "GetInvestigationResponse$Investigation": "<p>The details and results of the requested investigation.</p>"
       }
     },
+    "InvestigationAccountAnalysis": {
+      "base": "<p>Contains an analysis of the findings in an account. Either <code>Trend</code> or <code>Baseline</code> is set, depending on the <code>AnalysisType</code> of the record.</p>",
+      "refs": {
+        "AnalysisRecord$AccountAnalysis": "<p>An analysis of the findings in an account over time. Set when <code>AnalysisType</code> is <code>TREND</code> or <code>BASELINE</code>.</p>"
+      }
+    },
+    "InvestigationActor": {
+      "base": "<p>Contains information about the identity that performed an activity.</p>",
+      "refs": {
+        "S3Activity$Actor": "<p>The identity that performed the activity.</p>"
+      }
+    },
+    "InvestigationCriterion": {
+      "base": null,
+      "refs": {
+        "InvestigationFilterCriteria$Criterion": "<p>A map of investigation attributes to the conditions that they must match. When you specify more than one attribute, an investigation must match the conditions for every attribute. Valid attributes and values:</p> <ul> <li> <p> <code>STATUS</code> – <code>RUNNING</code>, <code>COMPLETED</code>, and <code>FAILED</code>.</p> </li> <li> <p> <code>RISK_LEVEL</code> – <code>Info</code>, <code>Low</code>, <code>Medium</code>, <code>High</code>, and <code>Critical</code>.</p> </li> <li> <p> <code>CONFIDENCE</code> – <code>Unknown</code>, <code>Low</code>, <code>Medium</code>, and <code>High</code>.</p> </li> <li> <p> <code>FINDING_ID</code> – A finding ID, which is 32 lowercase hexadecimal characters.</p> </li> <li> <p> <code>INVESTIGATION_TYPE</code> – <code>FINDING</code>, <code>ACCOUNT</code>, and <code>ORGANIZATION</code>.</p> </li> </ul> <p>Values are case sensitive. GuardDuty sets the risk level, confidence, and investigation type of an investigation only when the investigation completes.</p>"
+      }
+    },
+    "InvestigationDetectorFeature": {
+      "base": null,
+      "refs": {
+        "FoundationalDataSources$member": null,
+        "InvestigationDetectorFeatureConfiguration$Name": "<p>The name of the feature. Possible values are <code>CLOUD_TRAIL</code>, <code>DNS_LOGS</code>, <code>FLOW_LOGS</code>, <code>S3_DATA_EVENTS</code>, <code>EKS_AUDIT_LOGS</code>, <code>EBS_MALWARE_PROTECTION</code>, <code>RDS_LOGIN_EVENTS</code>, <code>EKS_RUNTIME_MONITORING</code>, <code>EKS_ADDON_MANAGEMENT</code>, <code>LAMBDA_NETWORK_LOGS</code>, <code>RUNTIME_MONITORING</code>, <code>ECS_FARGATE_AGENT_MANAGEMENT</code>, and <code>EC2_AGENT_MANAGEMENT</code>.</p>",
+        "ProtectionPlan$Name": "<p>The name of the protection plan. Possible values are <code>CLOUD_TRAIL</code>, <code>DNS_LOGS</code>, <code>FLOW_LOGS</code>, <code>S3_DATA_EVENTS</code>, <code>EKS_AUDIT_LOGS</code>, <code>EBS_MALWARE_PROTECTION</code>, <code>RDS_LOGIN_EVENTS</code>, <code>EKS_RUNTIME_MONITORING</code>, <code>EKS_ADDON_MANAGEMENT</code>, <code>LAMBDA_NETWORK_LOGS</code>, <code>RUNTIME_MONITORING</code>, <code>ECS_FARGATE_AGENT_MANAGEMENT</code>, and <code>EC2_AGENT_MANAGEMENT</code>.</p>"
+      }
+    },
+    "InvestigationDetectorFeatureConfiguration": {
+      "base": "<p>Contains information about the configuration of a detector feature. Each member is optional.</p>",
+      "refs": {
+        "FetchDetectorFeatures$member": null
+      }
+    },
+    "InvestigationEc2Instance": {
+      "base": "<p>Contains details about an Amazon EC2 instance.</p>",
+      "refs": {
+        "InvestigationResourceData$Ec2Instance": "<p>Details about an Amazon EC2 instance.</p>"
+      }
+    },
+    "InvestigationEcsCluster": {
+      "base": "<p>Contains details about an Amazon ECS cluster.</p>",
+      "refs": {
+        "InvestigationResourceData$EcsCluster": "<p>Details about an Amazon ECS cluster.</p>"
+      }
+    },
+    "InvestigationEksCluster": {
+      "base": "<p>Contains details about an Amazon EKS cluster.</p>",
+      "refs": {
+        "InvestigationResourceData$EksCluster": "<p>Details about an Amazon EKS cluster.</p>"
+      }
+    },
     "InvestigationErrorDetails": {
       "base": null,
       "refs": {
         "Investigation$Error": "<p>Details about the error if the investigation status is <code>FAILED</code>.</p>"
+      }
+    },
+    "InvestigationFilterCondition": {
+      "base": "<p>Contains the values that an investigation attribute must match. Specify <code>Equals</code>, <code>NotEquals</code>, or both, each with at least one value. If you specify both, an investigation must match both conditions.</p>",
+      "refs": {
+        "InvestigationCriterion$value": null
+      }
+    },
+    "InvestigationFilterCriteria": {
+      "base": "<p>Contains the criteria used to filter investigations.</p>",
+      "refs": {
+        "ListInvestigationsRequest$FilterCriteria": "<p>The criteria used to filter investigations. GuardDuty returns only the investigations that match all of the specified criteria.</p>"
+      }
+    },
+    "InvestigationFilterCriterionKey": {
+      "base": null,
+      "refs": {
+        "InvestigationCriterion$key": null
       }
     },
     "InvestigationId": {
@@ -2491,13 +3045,85 @@
         "CreateInvestigationResponse$InvestigationId": "<p>The unique identifier of the newly created investigation.</p>",
         "GetInvestigationRequest$InvestigationId": "<p>The unique identifier of the investigation to retrieve.</p>",
         "Investigation$InvestigationId": "<p>The unique identifier of the investigation.</p>",
-        "InvestigationSummary$InvestigationId": "<p>The unique identifier of the investigation.</p>"
+        "InvestigationSummary$InvestigationId": "<p>The unique identifier of the investigation.</p>",
+        "ListInvestigationRecordsRequest$InvestigationId": "<p>The unique identifier of the investigation whose records you want to list.</p>",
+        "ListInvestigationRecordsResponse$InvestigationId": "<p>The unique identifier of the investigation.</p>"
+      }
+    },
+    "InvestigationIndicator": {
+      "base": "<p>Contains a threat indicator, such as an IP address, a domain, or a file hash.</p>",
+      "refs": {
+        "InvestigationIndicators$member": null
+      }
+    },
+    "InvestigationIndicatorType": {
+      "base": null,
+      "refs": {
+        "FetchQuery$IndicatorType": "<p>The type of the threat indicator. Possible values are <code>IP</code>, <code>DOMAIN</code>, and <code>FILE</code>.</p>",
+        "InvestigationIndicator$Type": "<p>The type of the indicator. Possible values are <code>IP</code>, <code>DOMAIN</code>, and <code>FILE</code>.</p>"
+      }
+    },
+    "InvestigationIndicators": {
+      "base": null,
+      "refs": {
+        "AnalysisRecord$Indicators": "<p>The threat indicators associated with the analysis, such as an IP address, a domain, or a file hash.</p>",
+        "ObservationRecord$Indicators": "<p>The threat indicators associated with the observation, such as an IP address, a domain, or a file hash.</p>"
+      }
+    },
+    "InvestigationKubernetesWorkload": {
+      "base": "<p>Contains details about a Kubernetes workload.</p>",
+      "refs": {
+        "KubernetesActivity$Workload": "<p>The Kubernetes workload that is associated with the anomaly.</p>"
+      }
+    },
+    "InvestigationMalwareScan": {
+      "base": "<p>Contains details about a malware scan.</p>",
+      "refs": {
+        "ObservationRecord$MalwareScan": "<p>Details about a malware scan. Set when <code>ObservationType</code> is <code>MALWARE_SCAN</code>.</p>"
       }
     },
     "InvestigationMetadata": {
       "base": "<p>Contains metadata about the product and version that produced an investigation.</p>",
       "refs": {
         "Investigation$Metadata": "<p>Metadata about the product and version that produced the investigation.</p>"
+      }
+    },
+    "InvestigationObservations": {
+      "base": null,
+      "refs": {
+        "KeyObservations$Observations": "<p>The individual key observations.</p>"
+      }
+    },
+    "InvestigationRecord": {
+      "base": "<p>Contains information about one step in the reasoning that GuardDuty followed during an investigation.</p>",
+      "refs": {
+        "Records$member": null
+      }
+    },
+    "InvestigationResource": {
+      "base": "<p>Contains information about an Amazon Web Services resource that is relevant to an investigation.</p>",
+      "refs": {
+        "ObservationRecord$Resource": "<p>Details about an affected resource. Set when <code>ObservationType</code> is <code>RESOURCE</code>.</p>"
+      }
+    },
+    "InvestigationResourceData": {
+      "base": "<p>Contains details that are specific to the type of a resource. The member that is set matches the <code>ResourceType</code> of the resource, except that <code>RdsDbInstance</code> and <code>RdsDbUser</code> can be set together.</p>",
+      "refs": {
+        "InvestigationResource$Data": "<p>Details that are specific to the type of the resource.</p>"
+      }
+    },
+    "InvestigationResourceType": {
+      "base": null,
+      "refs": {
+        "AccountAffectedResource$Type": "<p>The type of the resource. Possible values are <code>EC2_INSTANCE</code>, <code>EBS_VOLUME</code>, <code>S3_BUCKET</code>, <code>IAM_ROLE</code>, <code>IAM_USER</code>, <code>IAM_ACCESS_KEY</code>, <code>LAMBDA_FUNCTION</code>, <code>EKS_CLUSTER</code>, <code>ECS_CLUSTER</code>, <code>KUBERNETES_WORKLOAD</code>, <code>RDS_INSTANCE</code>, <code>RDS_DB_USER</code>, and <code>EC2_SECURITY_GROUP</code>.</p>",
+        "AffectedResource$Type": "<p>The type of the resource. Possible values are <code>EC2_INSTANCE</code>, <code>EBS_VOLUME</code>, <code>S3_BUCKET</code>, <code>IAM_ROLE</code>, <code>IAM_USER</code>, <code>IAM_ACCESS_KEY</code>, <code>LAMBDA_FUNCTION</code>, <code>EKS_CLUSTER</code>, <code>ECS_CLUSTER</code>, <code>KUBERNETES_WORKLOAD</code>, <code>RDS_INSTANCE</code>, <code>RDS_DB_USER</code>, and <code>EC2_SECURITY_GROUP</code>.</p>",
+        "InvestigationResource$ResourceType": "<p>The type of the resource. Possible values are <code>EC2_INSTANCE</code>, <code>EBS_VOLUME</code>, <code>S3_BUCKET</code>, <code>IAM_ROLE</code>, <code>IAM_USER</code>, <code>IAM_ACCESS_KEY</code>, <code>LAMBDA_FUNCTION</code>, <code>EKS_CLUSTER</code>, <code>ECS_CLUSTER</code>, <code>KUBERNETES_WORKLOAD</code>, <code>RDS_INSTANCE</code>, <code>RDS_DB_USER</code>, and <code>EC2_SECURITY_GROUP</code>.</p>"
+      }
+    },
+    "InvestigationScope": {
+      "base": "<p>Contains information about what an investigation analyzed. Only the identifier that matches <code>InvestigationType</code> is set.</p>",
+      "refs": {
+        "Investigation$Scope": "<p>Information about what the investigation analyzed, including the investigation type, the finding, account, or organization that was analyzed, and, for <code>ACCOUNT</code> and <code>ORGANIZATION</code> investigations, the time window over which the investigation queried data. Returned only when the investigation status is <code>COMPLETED</code>.</p>"
       }
     },
     "InvestigationSortCriteria": {
@@ -2516,7 +3142,8 @@
       "base": null,
       "refs": {
         "Investigation$Status": "<p>The current status of the investigation. Possible values are <code>RUNNING</code>, <code>COMPLETED</code>, and <code>FAILED</code>.</p>",
-        "InvestigationSummary$Status": "<p>The current status of the investigation.</p>"
+        "InvestigationSummary$Status": "<p>The current status of the investigation.</p>",
+        "ListInvestigationRecordsResponse$Status": "<p>The current status of the investigation. Possible values are <code>RUNNING</code>, <code>COMPLETED</code>, and <code>FAILED</code>. Records are returned only when the status is <code>COMPLETED</code>. If the status is <code>RUNNING</code> or <code>FAILED</code>, the response contains an empty list of records and no <code>NextToken</code>.</p>"
       }
     },
     "InvestigationSummaries": {
@@ -2531,10 +3158,68 @@
         "InvestigationSummaries$member": null
       }
     },
+    "InvestigationSummaryData": {
+      "base": "<p>Contains the structured summary of a GuardDuty investigation. The fields that are present depend on the investigation type.</p>",
+      "refs": {
+        "Investigation$SummaryData": "<p>A structured summary of the investigation results. GuardDuty returns this field only when you set <code>SummaryFormat</code> to <code>STRUCTURED</code>, the investigation status is <code>COMPLETED</code>, and the summary is available in a structured form. When this field is returned, <code>Summary</code> isn't returned.</p>"
+      }
+    },
+    "InvestigationSummaryText": {
+      "base": null,
+      "refs": {
+        "Investigation$Summary": "<p>A summary of the investigation results as text, up to 262,144 characters. Returned only when the investigation status is <code>COMPLETED</code>. When you set <code>SummaryFormat</code> to <code>STRUCTURED</code>, the summary is returned in <code>SummaryData</code> instead, unless it isn't available in a structured form, in which case it's returned in this field.</p>"
+      }
+    },
+    "InvestigationText": {
+      "base": null,
+      "refs": {
+        "DetectionCoverage$CoverageGaps": "<p>A description of the gaps in detection coverage. A record doesn't include both <code>CoverageGaps</code> and <code>KeyObservation</code>.</p>",
+        "DetectionCoverage$KeyObservation": "<p>A key observation about detection coverage.</p>",
+        "FindingTypeClassification$Classification": "<p>The classification of the finding type.</p>",
+        "FindingTypeClassification$Description": "<p>A description of the classification.</p>",
+        "FindingTypeDocumentation$Description": "<p>A short description of the finding type.</p>",
+        "FindingTypeDocumentation$FullDescription": "<p>The full description of the finding type.</p>",
+        "FindingTypeDocumentation$Remediation": "<p>The recommended steps to remediate the finding type.</p>",
+        "InvestigationThreatAssessment$Classification": "<p>The classification of the threat.</p>",
+        "InvestigationThreatAssessment$Assessment": "<p>The assessment of the threat.</p>",
+        "InvestigationThreatAssessment$AuthenticationContext": "<p>Context about how the identity involved in the activity authenticated.</p>",
+        "InvestigationThreatAssessment$RdsControlPlaneActivity": "<p>An assessment of Amazon RDS control plane activity that is related to the threat.</p>",
+        "InvestigationThreatAssessment$IpAccountActivity": "<p>An assessment of the activity from the IP address in the account.</p>",
+        "InvestigationThreatAssessment$CredentialCompromise": "<p>An assessment of whether credentials were compromised.</p>",
+        "KubernetesAnomaly$UnusualBehavior": "<p>A description of the unusual behavior.</p>",
+        "KubernetesAnomaly$BaselineContext": "<p>A description of the normal behavior that the activity was compared against.</p>",
+        "KubernetesPolicyViolation$ExposureVector": "<p>How the misconfiguration exposes the resource.</p>",
+        "KubernetesPolicyViolation$MisconfigurationImpact": "<p>The potential impact of the misconfiguration.</p>",
+        "MemberAccountRanking$RiskRationale": "<p>The reason for the assessed risk level.</p>",
+        "RdsLoginActivity$AnomalyContext": "<p>An explanation of how the login activity deviates from normal behavior.</p>",
+        "RepresentativeFinding$RiskRationale": "<p>The reason for the assessed risk level.</p>",
+        "RuntimeSignals$KeyObservation": "<p>A key observation about the runtime signals.</p>",
+        "S3Activity$SessionAssessment": "<p>An assessment of the session in which the activity occurred.</p>",
+        "S3Analysis$BlockPublicAccessSettings": "<p>A description of the Amazon S3 Block Public Access settings.</p>",
+        "S3Analysis$Exposure": "<p>An assessment of the exposure of the Amazon S3 resource.</p>",
+        "S3Analysis$ActorAssessment": "<p>An assessment of the identity that performed the activity.</p>",
+        "S3Analysis$S3ApiActivity": "<p>A description of the Amazon S3 API activity.</p>",
+        "S3Analysis$SourceContext": "<p>Context about the source of the activity.</p>",
+        "S3Analysis$AuthorizationAssessment": "<p>An assessment of whether the activity was authorized.</p>"
+      }
+    },
+    "InvestigationThreatAssessment": {
+      "base": "<p>Contains a threat assessment. The members that are set depend on the <code>AnalysisType</code> of the record.</p>",
+      "refs": {
+        "AnalysisRecord$ThreatAssessment": "<p>A threat assessment. Set when <code>AnalysisType</code> is <code>REPUTATION</code>, <code>THREAT_ASSESSMENT</code>, or <code>RDS_THREAT_ASSESSMENT</code>.</p>"
+      }
+    },
     "InvestigationTitle": {
       "base": null,
       "refs": {
         "InvestigationSummary$Title": "<p>A short title summarizing the investigation.</p>"
+      }
+    },
+    "InvestigationType": {
+      "base": null,
+      "refs": {
+        "InvestigationScope$InvestigationType": "<p>The type of investigation. Possible values:</p> <ul> <li> <p> <code>FINDING</code> – An investigation of a specific GuardDuty finding.</p> </li> <li> <p> <code>ACCOUNT</code> – An investigation of the threat posture of an Amazon Web Services account.</p> </li> <li> <p> <code>ORGANIZATION</code> – An investigation of your organization's threat posture.</p> </li> </ul>",
+        "InvestigationSummary$InvestigationType": "<p>The type of investigation. Possible values are <code>FINDING</code>, <code>ACCOUNT</code>, and <code>ORGANIZATION</code>. GuardDuty sets this field when the investigation completes.</p>"
       }
     },
     "Invitation": {
@@ -2614,6 +3299,30 @@
         "Threat$ItemPaths": "<p>Information about the nested item path and hash of the protected resource.</p>"
       }
     },
+    "KeyObservations": {
+      "base": "<p>Contains the key observations of an investigation.</p>",
+      "refs": {
+        "InvestigationSummaryData$KeyObservations": "<p>The key observations of the investigation.</p>"
+      }
+    },
+    "KubernetesActivity": {
+      "base": "<p>Contains details about Kubernetes activity. A record contains either <code>ApiCall</code> and <code>Enrichment</code>, or <code>Anomaly</code> and <code>Workload</code>.</p>",
+      "refs": {
+        "ObservationRecord$KubernetesActivity": "<p>Details about Kubernetes activity. Set when <code>ObservationType</code> is <code>KUBERNETES_ACTIVITY</code>.</p>"
+      }
+    },
+    "KubernetesAnomaly": {
+      "base": "<p>Contains details about anomalous Kubernetes behavior.</p>",
+      "refs": {
+        "KubernetesActivity$Anomaly": "<p>Details about anomalous Kubernetes behavior.</p>"
+      }
+    },
+    "KubernetesApiCall": {
+      "base": "<p>Contains details about a Kubernetes API call.</p>",
+      "refs": {
+        "KubernetesActivity$ApiCall": "<p>Details about a Kubernetes API call.</p>"
+      }
+    },
     "KubernetesApiCallAction": {
       "base": "<p>Information about the Kubernetes API call action described in this finding.</p>",
       "refs": {
@@ -2662,6 +3371,12 @@
         "Action$KubernetesPermissionCheckedDetails": "<p>Information whether the user has the permission to use a specific Kubernetes API.</p>"
       }
     },
+    "KubernetesPolicyViolation": {
+      "base": "<p>Contains an assessment of a Kubernetes policy violation.</p>",
+      "refs": {
+        "AnalysisRecord$KubernetesPolicyViolation": "<p>An assessment of a Kubernetes policy violation. Set when <code>AnalysisType</code> is <code>KUBERNETES_POLICY_VIOLATION</code>.</p>"
+      }
+    },
     "KubernetesResourcesTypes": {
       "base": null,
       "refs": {
@@ -2702,6 +3417,12 @@
       "base": "<p>Information about the Lambda function involved in the finding.</p>",
       "refs": {
         "Resource$LambdaDetails": "<p>Contains information about the Lambda function that was involved in a finding.</p>"
+      }
+    },
+    "LambdaFunction": {
+      "base": "<p>Contains details about an Lambda function.</p>",
+      "refs": {
+        "InvestigationResourceData$LambdaFunction": "<p>Details about an Lambda function.</p>"
       }
     },
     "LaunchTemplateVersion": {
@@ -2783,6 +3504,14 @@
       "refs": {}
     },
     "ListIPSetsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListInvestigationRecordsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListInvestigationRecordsResponse": {
       "base": null,
       "refs": {}
     },
@@ -3068,6 +3797,7 @@
       "base": null,
       "refs": {
         "GetMalwareScanResponse$ScanType": "<p>A value representing the initiator of the scan.</p>",
+        "InvestigationMalwareScan$ScanType": "<p>The type of the scan. Possible values are <code>BACKUP_INITIATED</code>, <code>ON_DEMAND</code>, and <code>GUARDDUTY_INITIATED</code>.</p>",
         "MalwareScan$ScanType": "<p>An enum value representing the type of scan that was initiated.</p>",
         "MalwareScanDetails$ScanType": "<p>The type of malware scan performed.</p>"
       }
@@ -3088,6 +3818,18 @@
       "base": null,
       "refs": {
         "ListMalwareScansResponse$Scans": "<p>The list of malware scans associated with the provided input parameters.</p>"
+      }
+    },
+    "MalwareThreat": {
+      "base": "<p>Contains information about a threat that a malware scan detected.</p>",
+      "refs": {
+        "MalwareThreats$member": null
+      }
+    },
+    "MalwareThreats": {
+      "base": null,
+      "refs": {
+        "InvestigationMalwareScan$Threats": "<p>The threats that the scan detected.</p>"
       }
     },
     "ManagedBy": {
@@ -3141,6 +3883,7 @@
         "ListFiltersRequest$MaxResults": "<p>You can use this parameter to indicate the maximum number of items that you want in the response. The default value is 50. The maximum value is 50.</p>",
         "ListFindingsRequest$MaxResults": "<p>You can use this parameter to indicate the maximum number of items you want in the response. The default value is 50. The maximum value is 50.</p>",
         "ListIPSetsRequest$MaxResults": "<p>You can use this parameter to indicate the maximum number of items you want in the response. The default value is 50. The maximum value is 50.</p>",
+        "ListInvestigationRecordsRequest$MaxResults": "<p>The maximum number of records to return in a single response. Valid values are 1 to 50. The default value is 20. A response can contain fewer records than this value, or no records, and still include a <code>NextToken</code>.</p>",
         "ListInvestigationsRequest$MaxResults": "<p>You can use this parameter to indicate the maximum number of items you want in the response. The default value is 50.</p>",
         "ListInvitationsRequest$MaxResults": "<p>You can use this parameter to indicate the maximum number of items that you want in the response. The default value is 50. The maximum value is 50.</p>",
         "ListMalwareScansRequest$MaxResults": "<p>You can use this parameter to indicate the maximum number of items that you want in the response. The default value is 50. The maximum value is 50.</p>",
@@ -3162,6 +3905,18 @@
       "base": "<p>Contains information about the member account. </p>",
       "refs": {
         "Members$member": null
+      }
+    },
+    "MemberAccountRanking": {
+      "base": "<p>Contains information about the position of a member account in a ranking.</p>",
+      "refs": {
+        "MemberAccountRankings$member": null
+      }
+    },
+    "MemberAccountRankings": {
+      "base": null,
+      "refs": {
+        "AccountOverview$AccountRankings": "<p>A ranking of member accounts.</p>"
       }
     },
     "MemberAdditionalConfiguration": {
@@ -3237,6 +3992,18 @@
         "RuntimeContext$MemoryRegions": "<p>Specifies the Region of a process's address space such as stack and heap.</p>"
       }
     },
+    "MetadataRecord": {
+      "base": "<p>Contains operational details about an investigation, such as how long it took.</p>",
+      "refs": {
+        "SupportingData$Metadata": "<p>Operational details about the investigation. Set for <code>METADATA</code> records.</p>"
+      }
+    },
+    "MetadataTotalTimeMilliseconds": {
+      "base": null,
+      "refs": {
+        "MetadataRecord$TotalTimeMilliseconds": "<p>The total time that the investigation took, in milliseconds.</p>"
+      }
+    },
     "MfaStatus": {
       "base": null,
       "refs": {
@@ -3255,6 +4022,19 @@
       "refs": {
         "RuleDetail$Technique": "<p>The MITRE ATT&amp;CK technique associated with the rule.</p>",
         "RuleSummary$Technique": "<p>The MITRE ATT&amp;CK technique associated with the rule.</p>"
+      }
+    },
+    "MitreTechniqueIds": {
+      "base": null,
+      "refs": {
+        "CountermeasureAction$Mitigates": "<p>The MITRE ATT&amp;CK technique IDs that the action mitigates, such as <code>T1059.004</code>.</p>"
+      }
+    },
+    "MitreThreatId": {
+      "base": null,
+      "refs": {
+        "MitreTechniqueIds$member": null,
+        "ThreatReference$Uid": "<p>The MITRE ATT&amp;CK identifier of the tactic or technique, such as <code>TA0002</code> or <code>T1059.004</code>.</p>"
       }
     },
     "ModelDetail": {
@@ -3292,10 +4072,28 @@
         "UpdateTrustedEntitySetRequest$Name": "<p>A user-friendly name to identify the trusted entity set.</p> <p>The name of your list can include lowercase letters, uppercase letters, numbers, dash (-), and underscore (_).</p>"
       }
     },
+    "Narrative": {
+      "base": null,
+      "refs": {
+        "InvestigationRecord$Narrative": "<p>A plain-text explanation of the step. A narrative can span several paragraphs. Not every record includes a narrative.</p>"
+      }
+    },
     "Neq": {
       "base": null,
       "refs": {
         "Condition$Neq": "<p>Represents the <i>not equal</i> condition to be applied to a single field when querying for findings.</p> <p>Max values: 50</p>"
+      }
+    },
+    "NetworkActivity": {
+      "base": "<p>Contains details about network activity.</p>",
+      "refs": {
+        "ObservationRecord$NetworkActivity": "<p>Details about network activity. Set when <code>ObservationType</code> is <code>NETWORK_ACTIVITY</code>.</p>"
+      }
+    },
+    "NetworkAnomaly": {
+      "base": "<p>Contains information about how network activity deviates from normal behavior.</p>",
+      "refs": {
+        "NetworkActivity$Anomaly": "<p>Details about how the network activity deviates from normal behavior.</p>"
       }
     },
     "NetworkConnection": {
@@ -3308,6 +4106,12 @@
       "base": "<p>Contains information about the NETWORK_CONNECTION action described in the finding.</p>",
       "refs": {
         "Action$NetworkConnectionAction": "<p>Information about the NETWORK_CONNECTION action described in this finding.</p>"
+      }
+    },
+    "NetworkCounts": {
+      "base": "<p>Contains counts that describe network activity, such as the number of requests or connection attempts.</p>",
+      "refs": {
+        "NetworkActivity$Counts": "<p>Counts that describe the network activity, such as the number of requests or connection attempts.</p>"
       }
     },
     "NetworkDirection": {
@@ -3346,9 +4150,23 @@
         "InstanceDetails$NetworkInterfaces": "<p>The elastic network interface information of the EC2 instance.</p>"
       }
     },
+    "NetworkPorts": {
+      "base": "<p>Contains information about the ports that network activity involved. A port value can be a single port, a range such as <code>51000-51010</code>, or a comma-separated list such as <code>443,8080</code>.</p>",
+      "refs": {
+        "NetworkActivity$Ports": "<p>The ports that the network activity involved.</p>"
+      }
+    },
+    "NetworkTraffic": {
+      "base": "<p>Contains the amount of data that network activity transferred.</p>",
+      "refs": {
+        "NetworkActivity$Traffic": "<p>The amount of data that the network activity transferred.</p>"
+      }
+    },
     "NextToken": {
       "base": null,
       "refs": {
+        "ListInvestigationRecordsRequest$NextToken": "<p>You can use this parameter when paginating results. Set the value of this parameter to null on your first call to the list action. For subsequent calls to the action, fill nextToken in the request with the value of NextToken from the previous response to continue listing data. Use the same <code>InvestigationId</code> and <code>RecordTypes</code> values that you used in the previous request.</p> <p>If you specify this parameter for an investigation whose status isn't <code>COMPLETED</code>, the operation returns a <code>BadRequestException</code>. A <code>NextToken</code> expires 24 hours after it's returned.</p>",
+        "ListInvestigationRecordsResponse$NextToken": "<p>The pagination parameter to be used on the next list operation to retrieve more items. If this value is absent, there are no more records to retrieve.</p>",
         "ListInvestigationsRequest$NextToken": "<p>You can use this parameter when paginating results. Set the value of this parameter to null on your first call to the list action. For subsequent calls to the action, fill nextToken in the request with the value of NextToken from the previous response to continue listing data.</p>",
         "ListInvestigationsResponse$NextToken": "<p>The pagination parameter to be used on the next list operation to retrieve more items.</p>"
       }
@@ -3392,7 +4210,8 @@
       "base": null,
       "refs": {
         "Condition$NotEquals": "<p>Represents a <i>not equal</i> <b/> condition to be applied to a single field when querying for findings.</p> <p>Max values: 50</p>",
-        "CoverageFilterCondition$NotEquals": "<p>Represents a not equal condition that is applied to a single field while retrieving the coverage details.</p>"
+        "CoverageFilterCondition$NotEquals": "<p>Represents a not equal condition that is applied to a single field while retrieving the coverage details.</p>",
+        "InvestigationFilterCondition$NotEquals": "<p>The values to exclude. An investigation matches only if its attribute value doesn't equal any of the specified values. An investigation that has no value for the attribute also matches.</p>"
       }
     },
     "NotMatch": {
@@ -3413,16 +4232,40 @@
         "Observations$Number": "<p>The numeric values that were unusual.</p>"
       }
     },
+    "ObservationRecord": {
+      "base": "<p>Contains a fact that GuardDuty noted about your environment during an investigation, such as the affected resource, the activity on that resource, or your detection coverage. The record contains at most one of the payload members, the one that matches <code>ObservationType</code>. <code>Indicators</code> can accompany any observation type.</p>",
+      "refs": {
+        "SupportingData$Observation": "<p>Details about a fact that GuardDuty noted about your environment. Set for <code>OBSERVATION</code> records.</p>"
+      }
+    },
     "ObservationTexts": {
       "base": null,
       "refs": {
         "Observations$Text": "<p>The text that was unusual.</p>"
       }
     },
+    "ObservationType": {
+      "base": null,
+      "refs": {
+        "ObservationRecord$ObservationType": "<p>The kind of observation. The value identifies the payload member that can be set: <code>FINDING_DETAIL</code> (<code>FindingDetail</code>), <code>RESOURCE</code> (<code>Resource</code>), <code>NETWORK_ACTIVITY</code> (<code>NetworkActivity</code>), <code>RDS_LOGIN_ACTIVITY</code> (<code>RdsLoginActivity</code>), <code>S3_ACTIVITY</code> (<code>S3Activity</code>), <code>KUBERNETES_ACTIVITY</code> (<code>KubernetesActivity</code>), <code>MALWARE_SCAN</code> (<code>MalwareScan</code>), <code>RELATED_FINDINGS</code> (<code>RelatedFindings</code>), <code>DETECTION_COVERAGE</code> (<code>DetectionCoverage</code>), <code>ACCOUNT_OVERVIEW</code> (<code>AccountOverview</code>), <code>RECOMMENDATION</code> (<code>Recommendations</code>), <code>RUNTIME_SIGNALS</code> (<code>RuntimeSignals</code>), <code>DISTRIBUTION</code> (<code>Distribution</code>), and <code>REPRESENTATIVE_RESOURCE</code> (<code>RepresentativeResources</code>).</p>"
+      }
+    },
     "Observations": {
       "base": "<p>Contains information about the observed behavior.</p>",
       "refs": {
         "AnomalyObject$Observations": "<p>The recorded value.</p>"
+      }
+    },
+    "ObservedFindingType": {
+      "base": "<p>Contains information about a finding type that GuardDuty observed.</p>",
+      "refs": {
+        "ObservedFindingTypes$member": null
+      }
+    },
+    "ObservedFindingTypes": {
+      "base": null,
+      "refs": {
+        "RelatedFindings$Observed": "<p>Other finding types that GuardDuty observed, with counts. These entries don't include finding IDs.</p>"
       }
     },
     "OrderBy": {
@@ -3491,6 +4334,12 @@
       "base": null,
       "refs": {
         "OrganizationFeatureConfiguration$AdditionalConfiguration": "<p>The additional information that will be configured for the organization.</p>"
+      }
+    },
+    "OrganizationAnalysis": {
+      "base": "<p>Contains an analysis of the findings across an organization.</p>",
+      "refs": {
+        "InvestigationSummaryData$OrganizationAnalysis": "<p>For an <code>ORGANIZATION</code> investigation, an analysis of the findings across the organization.</p>"
       }
     },
     "OrganizationDataSourceConfigurations": {
@@ -3571,6 +4420,12 @@
         "DescribeOrganizationConfigurationResponse$Features": "<p>A list of features that are configured for this organization.</p>"
       }
     },
+    "OrganizationFindingsSummary": {
+      "base": "<p>Contains a summary of findings across an organization.</p>",
+      "refs": {
+        "OrganizationAnalysis$FindingsSummary": "<p>A summary of the findings across the organization.</p>"
+      }
+    },
     "OrganizationKubernetesAuditLogsConfiguration": {
       "base": "<p>Organization-wide Kubernetes audit logs configuration.</p>",
       "refs": {
@@ -3643,6 +4498,15 @@
         "S3BucketDetail$Owner": "<p>The owner of the S3 bucket.</p>"
       }
     },
+    "Percentage": {
+      "base": null,
+      "refs": {
+        "ArchiveDistribution$ArchivedPercentage": "<p>The percentage of findings that are archived, from 0 to 100.</p>",
+        "ArchiveDistribution$UnarchivedPercentage": "<p>The percentage of findings that are unarchived, from 0 to 100.</p>",
+        "FindingTypeClassification$Percentage": "<p>The percentage of findings that are of this type, from 0 to 100.</p>",
+        "TypeDistribution$Percentage": "<p>The percentage of findings that are of this type, from 0 to 100.</p>"
+      }
+    },
     "PermissionConfiguration": {
       "base": "<p>Contains information about how permissions are configured for the S3 bucket.</p>",
       "refs": {
@@ -3694,6 +4558,12 @@
         "NetworkInterface$PrivateIpAddresses": "<p>Other private IP address information of the EC2 instance.</p>"
       }
     },
+    "Process": {
+      "base": "<p>Contains information about a process in a process lineage. <code>ParentUuid</code> links each process to its parent process.</p>",
+      "refs": {
+        "Processes$member": null
+      }
+    },
     "ProcessDetails": {
       "base": "<p>Information about the observed process.</p>",
       "refs": {
@@ -3718,6 +4588,12 @@
       "base": null,
       "refs": {
         "ActorProcess$Sha256": "<p>The SHA256 hash of the process executable file, which can be used for identification and verification purposes.</p>"
+      }
+    },
+    "Processes": {
+      "base": null,
+      "refs": {
+        "AnalysisRecord$Processes": "<p>The processes in a process lineage. Set when <code>AnalysisType</code> is <code>PROCESS_LINEAGE</code>.</p>"
       }
     },
     "Product": {
@@ -3749,6 +4625,18 @@
       "base": null,
       "refs": {
         "AnomalyObject$ProfileType": "<p>The type of behavior of the profile.</p>"
+      }
+    },
+    "ProtectionPlan": {
+      "base": "<p>Contains information about the status of a protection plan.</p>",
+      "refs": {
+        "ProtectionPlans$member": null
+      }
+    },
+    "ProtectionPlans": {
+      "base": null,
+      "refs": {
+        "DetectionCoverage$ProtectionPlans": "<p>The protection plans and their status.</p>"
       }
     },
     "PublicAccess": {
@@ -3792,10 +4680,28 @@
         "Destination$Status": "<p>The status of the publishing destination.</p>"
       }
     },
+    "QueryTimeWindow": {
+      "base": "<p>Contains the start and end of a time window.</p>",
+      "refs": {
+        "InvestigationScope$QueryTimeWindow": "<p>The time window over which the investigation queried data, set only when <code>InvestigationType</code> is <code>ACCOUNT</code> or <code>ORGANIZATION</code>.</p>"
+      }
+    },
+    "RdsDbInstance": {
+      "base": "<p>Contains details about an Amazon RDS database instance.</p>",
+      "refs": {
+        "InvestigationResourceData$RdsDbInstance": "<p>Details about an Amazon RDS database instance.</p>"
+      }
+    },
     "RdsDbInstanceDetails": {
       "base": "<p>Contains information about the resource type <code>RDSDBInstance</code> involved in a GuardDuty finding.</p>",
       "refs": {
         "Resource$RdsDbInstanceDetails": "<p>Contains information about the database instance to which an anomalous login attempt was made.</p>"
+      }
+    },
+    "RdsDbUser": {
+      "base": "<p>Contains details about the user that logged in to an Amazon RDS database instance.</p>",
+      "refs": {
+        "InvestigationResourceData$RdsDbUser": "<p>Details about the user that logged in to an Amazon RDS database instance.</p>"
       }
     },
     "RdsDbUserDetails": {
@@ -3810,10 +4716,66 @@
         "Resource$RdsLimitlessDbDetails": "<p>Contains information about the RDS Limitless database that was involved in a GuardDuty finding.</p>"
       }
     },
+    "RdsLoginActivity": {
+      "base": "<p>Contains details about login activity on an Amazon RDS database.</p>",
+      "refs": {
+        "ObservationRecord$RdsLoginActivity": "<p>Details about login activity on an Amazon RDS database. Set when <code>ObservationType</code> is <code>RDS_LOGIN_ACTIVITY</code>.</p>"
+      }
+    },
     "RdsLoginAttemptAction": {
       "base": "<p>Indicates that a login attempt was made to the potentially compromised database from a remote IP address.</p>",
       "refs": {
         "Action$RdsLoginAttemptAction": "<p>Information about <code>RDS_LOGIN_ATTEMPT</code> action described in this finding.</p>"
+      }
+    },
+    "Recommendation": {
+      "base": "<p>Contains a recommended action.</p>",
+      "refs": {
+        "Recommendations$member": null
+      }
+    },
+    "RecommendationCategory": {
+      "base": null,
+      "refs": {
+        "Recommendation$Category": "<p>The category of the recommendation. Possible values are <code>ENABLE_PROTECTION</code>, <code>FURTHER_INVESTIGATION</code>, <code>SUPPRESSION_RULE</code>, <code>HARDENING</code>, and <code>MONITORING</code>.</p>"
+      }
+    },
+    "Recommendations": {
+      "base": null,
+      "refs": {
+        "InvestigationSummaryData$Recommendations": "<p>For an <code>ACCOUNT</code> or <code>ORGANIZATION</code> investigation, the recommended actions.</p>",
+        "ObservationRecord$Recommendations": "<p>Recommended actions. Set when <code>ObservationType</code> is <code>RECOMMENDATION</code>.</p>"
+      }
+    },
+    "RecordId": {
+      "base": null,
+      "refs": {
+        "InvestigationRecord$RecordId": "<p>The unique identifier of the record.</p>"
+      }
+    },
+    "RecordTitle": {
+      "base": null,
+      "refs": {
+        "InvestigationRecord$Title": "<p>A short title that describes the step.</p>"
+      }
+    },
+    "RecordType": {
+      "base": null,
+      "refs": {
+        "InvestigationRecord$Type": "<p>The type of the record. Possible values:</p> <ul> <li> <p> <code>UPDATE</code> – A progress milestone, such as the request that started the investigation or a response from GuardDuty.</p> </li> <li> <p> <code>FETCH</code> – Data that GuardDuty retrieved for the investigation, such as a finding, a detector configuration, or a list of your member accounts. The record includes what GuardDuty requested and what it received.</p> </li> <li> <p> <code>OBSERVATION</code> – A fact that GuardDuty noted about your environment, such as the affected resource, the activity on that resource, or your detection coverage.</p> </li> <li> <p> <code>ANALYSIS</code> – An assessment that GuardDuty derived from the data, such as a threat assessment, a comparison against normal behavior, or a process lineage.</p> </li> <li> <p> <code>METADATA</code> – Operational details about the investigation itself, such as how long the investigation took.</p> </li> </ul>",
+        "RecordTypes$member": null
+      }
+    },
+    "RecordTypes": {
+      "base": null,
+      "refs": {
+        "ListInvestigationRecordsRequest$RecordTypes": "<p>The types of records to return. Possible values are <code>UPDATE</code>, <code>FETCH</code>, <code>OBSERVATION</code>, <code>ANALYSIS</code>, and <code>METADATA</code>. If you don't specify this parameter, GuardDuty returns records of all types.</p>"
+      }
+    },
+    "Records": {
+      "base": null,
+      "refs": {
+        "ListInvestigationRecordsResponse$Records": "<p>The records for the investigation, in the order that GuardDuty created them, oldest first. This list can contain fewer records than <code>MaxResults</code>, or no records, even when more records are available. To check for more records, use <code>NextToken</code>.</p>"
       }
     },
     "RecoveryPoint": {
@@ -3832,6 +4794,24 @@
       "base": null,
       "refs": {
         "RuntimeContext$RelatedFilePaths": "<p>All file paths modified by the same process that triggered the finding, up to a maximum of 25 paths.</p>"
+      }
+    },
+    "RelatedFindingIds": {
+      "base": null,
+      "refs": {
+        "CorrelatedFinding$FindingIds": "<p>A sample of the IDs of the findings in the group.</p>"
+      }
+    },
+    "RelatedFindings": {
+      "base": "<p>Contains information about findings that are related to the investigated activity.</p>",
+      "refs": {
+        "ObservationRecord$RelatedFindings": "<p>Details about findings that are related to the investigated activity. Set when <code>ObservationType</code> is <code>RELATED_FINDINGS</code>.</p>"
+      }
+    },
+    "RemediationAffectedResources": {
+      "base": null,
+      "refs": {
+        "CountermeasureAction$AffectedResources": "<p>The resources that the action applies to.</p>"
       }
     },
     "RemoteAccountDetails": {
@@ -3856,6 +4836,24 @@
         "NetworkConnectionAction$RemotePortDetails": "<p>The remote port information of the connection.</p>"
       }
     },
+    "RepresentativeFinding": {
+      "base": "<p>Contains a representative finding for an affected resource. GuardDuty selects one finding for each affected resource, based on severity.</p>",
+      "refs": {
+        "RepresentativeFindings$member": null
+      }
+    },
+    "RepresentativeFindings": {
+      "base": null,
+      "refs": {
+        "ObservationRecord$RepresentativeResources": "<p>Representative findings for the affected resources, one finding for each resource. Set when <code>ObservationType</code> is <code>REPRESENTATIVE_RESOURCE</code>.</p>"
+      }
+    },
+    "Reputation": {
+      "base": "<p>Contains reputation information about a threat indicator.</p>",
+      "refs": {
+        "InvestigationThreatAssessment$Reputation": "<p>Reputation information about a threat indicator. Set when <code>AnalysisType</code> is <code>REPUTATION</code>.</p>"
+      }
+    },
     "Resource": {
       "base": "<p>Contains information about the Amazon Web Services resource associated with the activity that prompted GuardDuty to generate a finding.</p>",
       "refs": {
@@ -3878,6 +4876,18 @@
       "base": "<p>Represents the resources that were scanned in the scan entry.</p>",
       "refs": {
         "Scan$ResourceDetails": "<p>Represents the resources that were scanned in the scan entry.</p>"
+      }
+    },
+    "ResourceDistribution": {
+      "base": "<p>Contains the number of findings for a resource.</p>",
+      "refs": {
+        "ResourceDistributions$member": null
+      }
+    },
+    "ResourceDistributions": {
+      "base": null,
+      "refs": {
+        "Distribution$Resources": "<p>The findings broken down by affected resource.</p>"
       }
     },
     "ResourceList": {
@@ -3931,7 +4941,9 @@
       "base": null,
       "refs": {
         "Investigation$RiskLevel": "<p>The assessed risk level of the investigated threat. Possible values are <code>Info</code>, <code>Low</code>, <code>Medium</code>, <code>High</code>, and <code>Critical</code>.</p>",
-        "InvestigationSummary$RiskLevel": "<p>The assessed risk level of the investigated threat.</p>"
+        "InvestigationSummary$RiskLevel": "<p>The assessed risk level of the investigated threat.</p>",
+        "MemberAccountRanking$RiskLevel": "<p>The assessed risk level of the account. Possible values are <code>Info</code>, <code>Low</code>, <code>Medium</code>, <code>High</code>, and <code>Critical</code>.</p>",
+        "RepresentativeFinding$RiskLevel": "<p>The assessed risk level of the resource. Possible values are <code>Info</code>, <code>Low</code>, <code>Medium</code>, <code>High</code>, and <code>Critical</code>.</p>"
       }
     },
     "RuleDefinition": {
@@ -4018,6 +5030,24 @@
         "Service$RuntimeDetails": "<p>Information about the process and any required context values for a specific finding</p>"
       }
     },
+    "RuntimeSignals": {
+      "base": "<p>Contains a summary of runtime signals.</p>",
+      "refs": {
+        "ObservationRecord$RuntimeSignals": "<p>A summary of runtime signals. Set when <code>ObservationType</code> is <code>RUNTIME_SIGNALS</code>.</p>"
+      }
+    },
+    "S3Activity": {
+      "base": "<p>Contains details about Amazon S3 activity.</p>",
+      "refs": {
+        "ObservationRecord$S3Activity": "<p>Details about Amazon S3 activity. Set when <code>ObservationType</code> is <code>S3_ACTIVITY</code>.</p>"
+      }
+    },
+    "S3Analysis": {
+      "base": "<p>Contains an analysis of Amazon S3 activity or exposure. The members that can be set depend on <code>AnalysisType</code>: <code>S3_EXPOSURE</code> (<code>FindingSubtype</code>, <code>EffectivePermission</code>, <code>BlockPublicAccessSettings</code>, and <code>Exposure</code>), <code>S3_ACTOR_CONTEXT</code> (<code>UserAgent</code>, <code>UserAgentClassification</code>, <code>SourceIp</code>, <code>IpReputation</code>, and <code>ActorAssessment</code>), and <code>S3_PEN_TEST</code> (<code>UserAgent</code>, <code>S3ApiActivity</code>, <code>SourceContext</code>, and <code>AuthorizationAssessment</code>).</p>",
+      "refs": {
+        "AnalysisRecord$S3Analysis": "<p>An analysis of Amazon S3 activity or exposure. Set when <code>AnalysisType</code> is <code>S3_EXPOSURE</code>, <code>S3_ACTOR_CONTEXT</code>, or <code>S3_PEN_TEST</code>.</p>"
+      }
+    },
     "S3Bucket": {
       "base": "<p>Contains information about the Amazon S3 bucket policies and encryption.</p>",
       "refs": {
@@ -4088,6 +5118,7 @@
       "base": null,
       "refs": {
         "GetMalwareScanResponse$ScanCategory": "<p>The category of the malware scan, indicating the type of scan performed.</p>",
+        "InvestigationMalwareScan$ScanCategory": "<p>The category of the scan. Possible values are <code>FULL_SCAN</code> and <code>INCREMENTAL_SCAN</code>.</p>",
         "MalwareScanDetails$ScanCategory": "<p>The category of the malware scan.</p>"
       }
     },
@@ -4290,6 +5321,7 @@
     "SensitiveString": {
       "base": null,
       "refs": {
+        "InvestigationEc2Instance$PrivateIpAddress": "<p>The private IP address of the instance.</p>",
         "LocalIpDetails$IpAddressV4": "<p>The IPv4 local address of the connection.</p>",
         "LocalIpDetails$IpAddressV6": "<p>The IPv6 local address of the connection.</p>",
         "NetworkInterface$PrivateIpAddress": "<p>The private IP address of the EC2 instance.</p>",
@@ -4335,10 +5367,51 @@
         "KubernetesUserDetails$SessionName": "<p>Entity that assumes the IAM role when Kubernetes RBAC permissions are assigned to that role.</p>"
       }
     },
+    "SeverityBreakdown": {
+      "base": "<p>Contains the number of findings at each severity level.</p>",
+      "refs": {
+        "Distribution$SeverityBreakdown": "<p>The number of findings at each severity level.</p>",
+        "FindingsSummary$SeverityBreakdown": "<p>The number of findings at each severity level.</p>",
+        "OrganizationFindingsSummary$SeverityBreakdown": "<p>The number of findings at each severity level across the organization.</p>"
+      }
+    },
+    "SeverityScore": {
+      "base": null,
+      "refs": {
+        "CorrelatedFinding$SeverityMax": "<p>The highest severity score among the findings in the group, from 0 to 10.</p>",
+        "ObservedFindingType$SeverityMax": "<p>The highest severity score among the findings of this type, from 0 to 10.</p>",
+        "SignalGroup$Severity": "<p>The severity score of the signals in the group, from 0 to 10.</p>"
+      }
+    },
     "SeverityStatistics": {
       "base": "<p>Information about severity level for each finding type.</p>",
       "refs": {
         "GroupedBySeverity$member": null
+      }
+    },
+    "SharedBehavior": {
+      "base": "<p>Contains information about a behavior that related findings share.</p>",
+      "refs": {
+        "SharedBehaviors$member": null
+      }
+    },
+    "SharedBehaviors": {
+      "base": null,
+      "refs": {
+        "CorrelatedFinding$SharedBehaviors": "<p>The behaviors that the findings in the group share with the investigated activity.</p>"
+      }
+    },
+    "SharedResource": {
+      "base": "<p>Contains information about a resource that related findings share.</p>",
+      "refs": {
+        "SharedResources$member": null
+      }
+    },
+    "SharedResources": {
+      "base": null,
+      "refs": {
+        "CorrelatedFinding$SharedResources": "<p>The resources that the findings in the group share with the investigated activity.</p>",
+        "ObservedFindingType$SharedResources": "<p>The resources that the findings of this type share with the investigated activity.</p>"
       }
     },
     "Signal": {
@@ -4351,6 +5424,18 @@
       "base": null,
       "refs": {
         "Signal$Description": "<p>The description of the signal.</p>"
+      }
+    },
+    "SignalGroup": {
+      "base": "<p>Contains information about a group of runtime signals that have the same finding type.</p>",
+      "refs": {
+        "SignalGroups$member": null
+      }
+    },
+    "SignalGroups": {
+      "base": null,
+      "refs": {
+        "RuntimeSignals$SignalGroups": "<p>The runtime signals, grouped by finding type.</p>"
       }
     },
     "SignalType": {
@@ -4434,8 +5519,14 @@
         "AccessKeyDetails$UserType": "<p>The type of the user.</p>",
         "Account$Uid": "<p>The Amazon Web Services account ID within which the activity took place. This may differ from the account that owns the user identity.</p>",
         "Account$Name": "<p>Name of the member's Amazon Web Services account.</p>",
+        "AccountAffectedResource$Identifier": "<p>The identifier of the resource.</p>",
         "AccountFreeTrialInfo$AccountId": "<p>The account identifier of the GuardDuty member account.</p>",
+        "AccountOverview$AccountId": "<p>The Amazon Web Services account ID.</p>",
+        "AccountOverview$AccountStatus": "<p>The status of the account.</p>",
+        "AccountOverview$Region": "<p>The Amazon Web Services Region of the detector.</p>",
+        "AccountOverview$DelegatedAdminAccountId": "<p>The account ID of the GuardDuty delegated administrator account.</p>",
         "AccountStatistics$AccountId": "<p>The ID of the Amazon Web Services account.</p>",
+        "AccountSummary$AccountId": "<p>The ID of the Amazon Web Services account.</p>",
         "Action$ActionType": "<p>The GuardDuty finding activity type.</p>",
         "Actor$Id": "<p>ID of the threat actor.</p>",
         "ActorIds$member": null,
@@ -4445,12 +5536,16 @@
         "Administrator$InvitationId": "<p>The value that is used to validate the administrator account to the member account.</p>",
         "Administrator$RelationshipStatus": "<p>The status of the relationship between the administrator and member accounts.</p>",
         "Administrator$InvitedAt": "<p>The timestamp when the invitation was sent.</p>",
+        "AffectedResource$Identifier": "<p>The identifier of the resource.</p>",
+        "AffectedResource$Arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "AffectedResources$key": null,
         "AffectedResources$value": null,
         "AgentDetails$Version": "<p>Version of the installed GuardDuty security agent.</p>",
         "AnomalyProfileFeatures$key": null,
         "AnomalyProfiles$key": null,
         "AnomalyUnusualBehaviorFeature$key": null,
+        "Attack$Version": "<p>The version of the attack framework that the tactic and technique classification uses.</p>",
+        "AttackPhase$Description": "<p>A description of the activity in this phase.</p>",
         "AutonomousSystem$Name": "<p>Name associated with the Autonomous System (AS).</p>",
         "AwsApiCallAction$Api": "<p>The Amazon Web Services API name.</p>",
         "AwsApiCallAction$CallerType": "<p>The Amazon Web Services API caller type.</p>",
@@ -4461,6 +5556,7 @@
         "BadRequestException$Type": "<p>The error type.</p>",
         "Behavior$key": null,
         "City$CityName": "<p>The city name of the remote IP address.</p>",
+        "CliCommands$member": null,
         "CloudDetails$Region": "<p>The Amazon Web Services Region in which the investigated resource resides.</p>",
         "CloudDetails$Account": "<p>The Amazon Web Services account ID of the investigated resource.</p>",
         "ConflictException$Message": "<p>The error message.</p>",
@@ -4472,6 +5568,10 @@
         "Container$ImagePrefix": "<p>Part of the image name before the last slash. For example, imagePrefix for public.ecr.aws/amazonlinux/amazonlinux:latest would be public.ecr.aws/amazonlinux. If the image name is relative and does not have a slash, this field is empty.</p>",
         "ContainerFindingResource$Image": "<p>The container image information, including the image name and tag used to run the container that was involved in the finding.</p>",
         "CountBySeverity$key": null,
+        "Countermeasure$Description": "<p>A description of the countermeasure.</p>",
+        "CountermeasureAction$Title": "<p>A short title for the action.</p>",
+        "CountermeasureAction$Description": "<p>A description of the action.</p>",
+        "CountermeasureAction$DefenseTechnique": "<p>The defensive technique that the action applies.</p>",
         "Country$CountryCode": "<p>The country code of the remote IP address.</p>",
         "Country$CountryName": "<p>The country name of the remote IP address.</p>",
         "CoverageEc2InstanceDetails$InstanceId": "<p>The Amazon EC2 instance ID.</p>",
@@ -4511,6 +5611,9 @@
         "DetectionRuleOrgConfiguration$StatusReason": "<p>The reason for the current configuration status.</p>",
         "DetectionRuleOrgConfigurationSummary$StatusReason": "<p>The reason for the current configuration status.</p>",
         "DisableOrganizationAdminAccountRequest$AdminAccountId": "<p>The Amazon Web Services Account ID for the organizations account to be disabled as a GuardDuty delegated administrator.</p>",
+        "DnsContext$DomainSuffix": "<p>The suffix of the domain that was queried.</p>",
+        "DnsContext$OtherDomains": "<p>Other domains that were queried.</p>",
+        "DnsContext$ResolverHistory": "<p>The DNS resolution history for the domain.</p>",
         "DnsRequestAction$Domain": "<p>The domain information for the DNS query.</p>",
         "DnsRequestAction$Protocol": "<p>The network connection protocol observed in the activity that prompted GuardDuty to generate the finding.</p>",
         "DnsRequestAction$DomainWithSuffix": "<p>The second and top level domain involved in the activity that potentially prompted GuardDuty to generate this finding. For a list of top-level and second-level domains, see <a href=\"https://publicsuffix.org/\">public suffix list</a>.</p>",
@@ -4548,8 +5651,13 @@
         "EksClusterDetails$Status": "<p>The EKS cluster status.</p>",
         "EnableOrganizationAdminAccountRequest$AdminAccountId": "<p>The Amazon Web Services account ID for the organization account to be enabled as a GuardDuty delegated administrator.</p>",
         "EndpointIds$member": null,
+        "Enrichment$CountryName": "<p>The name of the country associated with the activity.</p>",
+        "Enrichment$AsnOrg": "<p>The name of the organization that owns the autonomous system number (ASN).</p>",
+        "Enrichment$ThreatListName": "<p>The name of the threat list that contains the indicator.</p>",
+        "Enrichment$ThreatName": "<p>The name of the threat.</p>",
         "Eq$member": null,
         "Equals$member": null,
+        "FetchQuery$AccountId": "<p>The Amazon Web Services account ID that the request was made for.</p>",
         "Finding$AccountId": "<p>The ID of the account in which the finding was generated.</p>",
         "Finding$Arn": "<p>The ARN of the finding.</p>",
         "Finding$CreatedAt": "<p>The time and date when the finding was created.</p>",
@@ -4562,6 +5670,14 @@
         "Finding$UpdatedAt": "<p>The time and date when the finding was last updated.</p>",
         "Finding$AssociatedAttackSequenceArn": "<p>Amazon Resource Name (ARN) associated with the attack sequence finding.</p>",
         "Finding$CustomDetectionRuleName": "<p>The name of the custom detection rule that generated this finding.</p>",
+        "FindingDetail$Severity": "<p>The severity of the finding.</p>",
+        "FindingDetail$AccountId": "<p>The ID of the Amazon Web Services account in which the finding was generated.</p>",
+        "FindingDetail$Region": "<p>The Amazon Web Services Region in which the finding was generated.</p>",
+        "FindingReference$FindingType": "<p>The type of the finding.</p>",
+        "FindingTypeCount$FindingType": "<p>The finding type.</p>",
+        "FindingTypeDocumentation$Severity": "<p>The severity of the finding type, as stated in the documentation.</p>",
+        "FindingTypeDocumentation$Feature": "<p>The label that the documentation uses for the GuardDuty capability associated with the finding type. This value isn't a detector feature name.</p>",
+        "FindingTypeNames$member": null,
         "FindingTypeStatistics$FindingType": "<p>Name of the finding type.</p>",
         "FlagsList$member": null,
         "GetDetectorResponse$CreatedAt": "<p>The timestamp of when the detector was created.</p>",
@@ -4600,9 +5716,44 @@
         "InstanceDetails$Platform": "<p>The platform of the EC2 instance.</p>",
         "InternalServerErrorException$Message": "<p>The error message.</p>",
         "InternalServerErrorException$Type": "<p>The error type.</p>",
-        "Investigation$Summary": "<p>A structured summary of the investigation findings, including affected resources, threat assessment, and recommended remediation steps.</p>",
+        "InvestigationActor$AccessKeyId": "<p>The access key ID that the identity used.</p>",
+        "InvestigationActor$PrincipalId": "<p>The ID of the principal.</p>",
+        "InvestigationActor$UserName": "<p>The name of the user.</p>",
+        "InvestigationActor$UserType": "<p>The type of the identity, such as <code>IAMUser</code>, <code>AssumedRole</code>, or <code>Root</code>.</p>",
+        "InvestigationActor$UserAgent": "<p>The user agent that the identity used.</p>",
+        "InvestigationEc2Instance$InstanceId": "<p>The ID of the instance.</p>",
+        "InvestigationEc2Instance$InstanceType": "<p>The instance type.</p>",
+        "InvestigationEc2Instance$InstanceState": "<p>The state of the instance.</p>",
+        "InvestigationEc2Instance$AvailabilityZone": "<p>The Availability Zone of the instance.</p>",
+        "InvestigationEc2Instance$PublicIp": "<p>The public IP address of the instance.</p>",
+        "InvestigationEc2Instance$VpcId": "<p>The ID of the VPC in which the instance runs.</p>",
+        "InvestigationEc2Instance$SubnetId": "<p>The ID of the subnet in which the instance runs.</p>",
+        "InvestigationEc2Instance$ImageId": "<p>The ID of the Amazon Machine Image (AMI) that was used to launch the instance.</p>",
+        "InvestigationEcsCluster$Name": "<p>The name of the cluster.</p>",
+        "InvestigationEcsCluster$Arn": "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
+        "InvestigationEcsCluster$Status": "<p>The status of the cluster.</p>",
+        "InvestigationEksCluster$Name": "<p>The name of the cluster.</p>",
+        "InvestigationEksCluster$Arn": "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
+        "InvestigationEksCluster$Status": "<p>The status of the cluster.</p>",
+        "InvestigationEksCluster$VpcId": "<p>The ID of the VPC that is associated with the cluster.</p>",
+        "InvestigationKubernetesWorkload$WorkloadType": "<p>The type of the workload.</p>",
+        "InvestigationKubernetesWorkload$WorkloadName": "<p>The name of the workload.</p>",
+        "InvestigationKubernetesWorkload$Containers": "<p>The containers in the workload.</p>",
+        "InvestigationKubernetesWorkload$Volumes": "<p>The volumes of the workload.</p>",
+        "InvestigationKubernetesWorkload$SecurityContext": "<p>The security context of the workload.</p>",
+        "InvestigationMalwareScan$ScanId": "<p>The ID of the scan.</p>",
+        "InvestigationMalwareScan$EngineSources": "<p>The scan engines that the scan used.</p>",
+        "InvestigationMalwareScan$ResourceType": "<p>The type of the scanned resource.</p>",
+        "InvestigationMalwareScan$ResourceIdentifier": "<p>The identifier of the scanned resource.</p>",
+        "InvestigationMalwareScan$HighestSeverity": "<p>The highest severity among the threats that the scan detected.</p>",
+        "InvestigationMalwareScan$HighestSeverityThreatName": "<p>The name of the threat that has the highest severity.</p>",
         "InvestigationMetadata$Version": "<p>The version of the investigation engine that produced the results.</p>",
+        "InvestigationObservations$member": null,
+        "InvestigationResource$Uid": "<p>The unique identifier of the resource. This is the Amazon Resource Name (ARN) of the resource when it's available. Otherwise, it's the name or ID of the resource.</p>",
+        "InvestigationResource$Name": "<p>The name of the resource.</p>",
         "InvestigationSummary$AccountId": "<p>The Amazon Web Services account ID associated with the investigation.</p>",
+        "InvestigationSummary$AdminAccountId": "<p>For an <code>ORGANIZATION</code> investigation, the ID of the administrator account of the organization that the investigation analyzed. GuardDuty sets this field when the investigation completes.</p>",
+        "InvestigationSummaryData$FindingType": "<p>For a <code>FINDING</code> investigation, the type of the finding that the investigation analyzed.</p>",
         "Invitation$InvitationId": "<p>The ID of the invitation. This value is used to validate the inviter account to the member account.</p>",
         "Invitation$RelationshipStatus": "<p>The status of the relationship between the inviter and invitee accounts.</p>",
         "Invitation$InvitedAt": "<p>The timestamp when the invitation was sent.</p>",
@@ -4613,6 +5764,21 @@
         "ItemDetails$Hash": "<p>The hash value of the infected item.</p>",
         "ItemPath$NestedItemPath": "<p>The nested item path where the infected file was found.</p>",
         "ItemPath$Hash": "<p>The hash value of the infected resource.</p>",
+        "KeyObservations$Title": "<p>A short title for the key observations.</p>",
+        "KeyObservations$Narrative": "<p>A narrative explanation of the key observations.</p>",
+        "KubernetesAnomaly$AnomalyScore": "<p>The anomaly score of the behavior.</p>",
+        "KubernetesAnomaly$TrainingPeriod": "<p>The period over which the normal behavior was established.</p>",
+        "KubernetesApiCall$ClusterName": "<p>The name of the cluster.</p>",
+        "KubernetesApiCall$Username": "<p>The Kubernetes user name of the caller.</p>",
+        "KubernetesApiCall$UserGroups": "<p>The Kubernetes groups of the caller.</p>",
+        "KubernetesApiCall$UserId": "<p>The ID of the caller.</p>",
+        "KubernetesApiCall$Verb": "<p>The Kubernetes API verb, such as <code>get</code> or <code>create</code>.</p>",
+        "KubernetesApiCall$ResourceType": "<p>The type of the Kubernetes resource.</p>",
+        "KubernetesApiCall$ResourceName": "<p>The name of the Kubernetes resource.</p>",
+        "KubernetesApiCall$Namespace": "<p>The Kubernetes namespace of the resource.</p>",
+        "KubernetesApiCall$RequestUri": "<p>The URI of the request.</p>",
+        "KubernetesApiCall$SourceIps": "<p>The source IP addresses of the API call.</p>",
+        "KubernetesApiCall$UserAgent": "<p>The user agent of the caller.</p>",
         "KubernetesApiCallAction$RequestUri": "<p>The Kubernetes API request URI.</p>",
         "KubernetesApiCallAction$Verb": "<p>The Kubernetes API request HTTP verb.</p>",
         "KubernetesApiCallAction$Resource": "<p>The resource component in the Kubernetes API call action.</p>",
@@ -4624,6 +5790,10 @@
         "KubernetesPermissionCheckedDetails$Verb": "<p>The verb component of the Kubernetes API call. For example, when you check whether or not you have the permission to call the <code>CreatePod</code> API, the verb component will be <code>Create</code>.</p>",
         "KubernetesPermissionCheckedDetails$Resource": "<p>The Kubernetes resource with which your Kubernetes API call will interact.</p>",
         "KubernetesPermissionCheckedDetails$Namespace": "<p>The namespace where the Kubernetes API action will take place.</p>",
+        "KubernetesPolicyViolation$ViolationType": "<p>The type of the violation.</p>",
+        "KubernetesPolicyViolation$AffectedResource": "<p>The Kubernetes resource that the violation affects.</p>",
+        "KubernetesPolicyViolation$Subject": "<p>The Kubernetes subject, such as a user, a group, or a service account, that the violation involves.</p>",
+        "KubernetesPolicyViolation$GrantedAccess": "<p>The access that the violation grants.</p>",
         "KubernetesRoleBindingDetails$Kind": "<p>The kind of the role. For role binding, this value will be <code>RoleBinding</code>.</p>",
         "KubernetesRoleBindingDetails$Name": "<p>The name of the <code>RoleBinding</code>.</p>",
         "KubernetesRoleBindingDetails$Uid": "<p>The unique identifier of the role binding.</p>",
@@ -4646,6 +5816,13 @@
         "LambdaDetails$RevisionId": "<p>The revision ID of the Lambda function version.</p>",
         "LambdaDetails$FunctionVersion": "<p>The version of the Lambda function.</p>",
         "LambdaDetails$Role": "<p>The execution role of the Lambda function.</p>",
+        "LambdaFunction$FunctionName": "<p>The name of the function.</p>",
+        "LambdaFunction$FunctionArn": "<p>The Amazon Resource Name (ARN) of the function.</p>",
+        "LambdaFunction$FunctionVersion": "<p>The version of the function.</p>",
+        "LambdaFunction$Role": "<p>The execution role of the function.</p>",
+        "LambdaFunction$Description": "<p>The description of the function.</p>",
+        "LambdaFunction$RevisionId": "<p>The revision ID of the function version.</p>",
+        "LambdaFunction$VpcConfigurationSummary": "<p>A summary of the VPC configuration of the function, as a single string.</p>",
         "LineageObject$Name": "<p>The name of the process.</p>",
         "LineageObject$Uuid": "<p>The unique ID assigned to the process by GuardDuty.</p>",
         "LineageObject$ExecutablePath": "<p>The absolute path of the process executable file.</p>",
@@ -4694,6 +5871,9 @@
         "MalwareProtectionPlanStatusReason$Message": "<p>Issue message that specifies the reason. For information about potential troubleshooting steps, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/troubleshoot-s3-malware-protection-status-errors.html\">Troubleshooting Malware Protection for S3 status issues</a> in the <i>Amazon GuardDuty User Guide</i>.</p>",
         "MalwareProtectionPlanSummary$MalwareProtectionPlanId": "<p>A unique identifier associated with Malware Protection plan.</p>",
         "MalwareScanDetails$ScanId": "<p>The unique identifier for the malware scan.</p>",
+        "MalwareThreat$Name": "<p>The name of the threat.</p>",
+        "MalwareThreat$Severity": "<p>The severity of the threat.</p>",
+        "MalwareThreat$SampleFiles": "<p>Examples of files that the threat infected.</p>",
         "Master$InvitationId": "<p>The value used to validate the administrator account to the member account.</p>",
         "Master$RelationshipStatus": "<p>The status of the relationship between the administrator and member accounts.</p>",
         "Master$InvitedAt": "<p>The timestamp when the invitation was sent.</p>",
@@ -4702,8 +5882,20 @@
         "Member$InvitedAt": "<p>The timestamp when the invitation was sent.</p>",
         "Member$UpdatedAt": "<p>The last-updated timestamp of the member.</p>",
         "Member$AdministratorId": "<p>The administrator account ID.</p>",
+        "MemberAccountRanking$AccountId": "<p>The Amazon Web Services account ID of the member account.</p>",
         "MemoryRegionsList$member": null,
         "Neq$member": null,
+        "NetworkActivity$Protocol": "<p>The network protocol of the activity.</p>",
+        "NetworkActivity$Direction": "<p>The direction of the network connection, such as inbound or outbound.</p>",
+        "NetworkActivity$Method": "<p>The method that the network activity used.</p>",
+        "NetworkActivity$Blocked": "<p>Indicates whether the network connection was blocked.</p>",
+        "NetworkActivity$Platform": "<p>The platform on which the network activity was observed.</p>",
+        "NetworkAnomaly$BaselineBytes": "<p>The amount of data that is typical for the normal behavior.</p>",
+        "NetworkAnomaly$Deviation": "<p>How much the activity deviates from normal behavior.</p>",
+        "NetworkAnomaly$RemoteService": "<p>The remote service that the activity involved.</p>",
+        "NetworkAnomaly$RemoteRegion": "<p>The Region of the remote endpoint.</p>",
+        "NetworkAnomaly$Duration": "<p>The duration of the activity.</p>",
+        "NetworkAnomaly$ResetRatio": "<p>The ratio of connection attempts that were reset.</p>",
         "NetworkConnectionAction$ConnectionDirection": "<p>The network connection direction.</p>",
         "NetworkConnectionAction$Protocol": "<p>The network connection protocol.</p>",
         "NetworkConnectionAction$LocalNetworkInterface": "<p>The EC2 instance's local elastic network interface utilized for the connection.</p>",
@@ -4718,6 +5910,11 @@
         "NetworkInterface$PublicIp": "<p>The public IP address of the EC2 instance.</p>",
         "NetworkInterface$SubnetId": "<p>The subnet ID of the EC2 instance.</p>",
         "NetworkInterface$VpcId": "<p>The VPC ID of the EC2 instance.</p>",
+        "NetworkPorts$TargetPort": "<p>The port on the target of the activity.</p>",
+        "NetworkPorts$RemotePort": "<p>The port on the remote host.</p>",
+        "NetworkPorts$ResolverPort": "<p>The port of the DNS resolver.</p>",
+        "NetworkPorts$Ports": "<p>The ports that the activity involved.</p>",
+        "NetworkPorts$PortsUsed": "<p>The ports that the activity used.</p>",
         "NotEquals$member": null,
         "ObservationTexts$member": null,
         "Organization$Asn": "<p>The Autonomous System Number (ASN) of the internet provider of the remote IP address.</p>",
@@ -4726,6 +5923,10 @@
         "Organization$Org": "<p>The name of the internet provider.</p>",
         "Owner$Id": "<p>The canonical user ID of the bucket owner. For information about locating your canonical user ID see <a href=\"https://docs.aws.amazon.com/general/latest/gr/acct-identifiers.html#FindingCanonicalId\">Finding Your Account Canonical User ID.</a> </p>",
         "PrivateIpAddressDetails$PrivateDnsName": "<p>The private DNS name of the EC2 instance.</p>",
+        "Process$Uuid": "<p>The unique identifier of the process.</p>",
+        "Process$Name": "<p>The name of the process.</p>",
+        "Process$Path": "<p>The path of the process executable.</p>",
+        "Process$ParentUuid": "<p>The unique identifier of the parent process. Not set for the root process.</p>",
         "ProcessDetails$Name": "<p>The name of the process.</p>",
         "ProcessDetails$ExecutablePath": "<p>The absolute path of the process executable file.</p>",
         "ProcessDetails$ExecutableSha256": "<p>The <code>SHA256</code> hash of the process executable.</p>",
@@ -4738,12 +5939,23 @@
         "ProductCode$Code": "<p>The product code information.</p>",
         "ProductCode$ProductType": "<p>The product code type.</p>",
         "PublicAccess$EffectivePermission": "<p>Describes the effective permission on this bucket after factoring all attached policies.</p>",
+        "RdsDbInstance$DbInstanceIdentifier": "<p>The identifier of the database instance.</p>",
+        "RdsDbInstance$DbClusterIdentifier": "<p>The identifier of the database cluster that contains the instance.</p>",
+        "RdsDbInstance$DbInstanceArn": "<p>The Amazon Resource Name (ARN) of the database instance.</p>",
+        "RdsDbInstance$DbiResourceId": "<p>The unique resource ID of the database instance.</p>",
+        "RdsDbInstance$Engine": "<p>The database engine of the instance.</p>",
+        "RdsDbInstance$EngineVersion": "<p>The version of the database engine.</p>",
         "RdsDbInstanceDetails$DbInstanceIdentifier": "<p>The identifier associated to the database instance that was involved in the finding.</p>",
         "RdsDbInstanceDetails$Engine": "<p>The database engine of the database instance involved in the finding.</p>",
         "RdsDbInstanceDetails$EngineVersion": "<p>The version of the database engine that was involved in the finding.</p>",
         "RdsDbInstanceDetails$DbClusterIdentifier": "<p>The identifier of the database cluster that contains the database instance ID involved in the finding.</p>",
         "RdsDbInstanceDetails$DbInstanceArn": "<p>The Amazon Resource Name (ARN) that identifies the database instance involved in the finding.</p>",
         "RdsDbInstanceDetails$DbiResourceId": "<p>The unique ID of the database resource involved in the activity that prompted GuardDuty to generate the finding.</p>",
+        "RdsDbUser$User": "<p>The user name that was used to log in.</p>",
+        "RdsDbUser$Application": "<p>The name of the application that was used to log in.</p>",
+        "RdsDbUser$Database": "<p>The name of the database that the user logged in to.</p>",
+        "RdsDbUser$AuthMethod": "<p>The authentication method that the user used.</p>",
+        "RdsDbUser$Ssl": "<p>The version of Secure Sockets Layer (SSL) that the connection used.</p>",
         "RdsDbUserDetails$User": "<p>The user name used in the anomalous login attempt.</p>",
         "RdsDbUserDetails$Application": "<p>The application name used in the anomalous login attempt.</p>",
         "RdsDbUserDetails$Database": "<p>The name of the database instance involved in the anomalous login attempt.</p>",
@@ -4755,6 +5967,10 @@
         "RdsLimitlessDbDetails$Engine": "<p>The database engine of the database instance involved in the finding.</p>",
         "RdsLimitlessDbDetails$EngineVersion": "<p>The version of the database engine.</p>",
         "RdsLimitlessDbDetails$DbClusterIdentifier": "<p>The name of the database cluster that is a part of the Limitless Database.</p>",
+        "RdsLoginActivity$Outcome": "<p>The outcome of the login attempts.</p>",
+        "RdsLoginActivity$Rate": "<p>The rate of the login attempts.</p>",
+        "Recommendation$Title": "<p>A short title for the recommendation.</p>",
+        "Recommendation$Rationale": "<p>The reason for the recommendation.</p>",
         "RecoveryPoint$BackupVaultName": "<p>The name of the Amazon Web Services Backup vault that contains the name of the recovery point to be scanned.</p>",
         "RecoveryPointDetails$RecoveryPointArn": "<p>The Amazon Resource Name (ARN) of the recovery point.</p>",
         "RecoveryPointDetails$BackupVaultName": "<p>The name of the backup vault containing the recovery point.</p>",
@@ -4762,7 +5978,14 @@
         "RemoteAccountDetails$AccountId": "<p>The Amazon Web Services account ID of the remote API caller.</p>",
         "RemoteAccountDetails$AwsServiceName": "<p>If the remote account belongs to an Amazon Web Services service, this field indicates which service the remote account belongs to.</p>",
         "RemotePortDetails$PortName": "<p>The port name of the remote connection.</p>",
+        "RepresentativeFinding$ResourceType": "<p>The type of the affected resource.</p>",
+        "RepresentativeFinding$Identifier": "<p>The identifier of the affected resource.</p>",
+        "Reputation$FindingTimeDisposition": "<p>The reputation of the indicator at the time of the finding.</p>",
+        "Reputation$CurrentDisposition": "<p>The current reputation of the indicator.</p>",
+        "Reputation$ReputationComparison": "<p>A comparison of the reputation at the time of the finding with the current reputation.</p>",
         "Resource$ResourceType": "<p>The type of Amazon Web Services resource.</p>",
+        "ResourceDistribution$ResourceType": "<p>The display name of the resource type, such as <code>Instance</code>.</p>",
+        "ResourceDistribution$Identifier": "<p>The identifier of the resource.</p>",
         "ResourceList$member": null,
         "ResourceNotFoundException$Message": "<p>The error message.</p>",
         "ResourceNotFoundException$Type": "<p>The error type.</p>",
@@ -4797,6 +6020,17 @@
         "RuntimeContext$ThreatFilePath": "<p>The suspicious file path for which the threat intelligence details were found.</p>",
         "RuntimeContext$FileOperation": "<p>Represents the type of file operation that triggered the finding, such as Write, Delete, Rename, Link, or Symlink.</p>",
         "RuntimeContext$FilePath": "<p>The path of the sensitive file that was modified. Modification includes write, delete, rename, link, or symlink operations. This field is indexed for filtering.</p>",
+        "S3Activity$Api": "<p>The Amazon S3 API operation that was called.</p>",
+        "S3Activity$AffectedBucket": "<p>The name of the affected bucket, or <code>account-wide</code> if the activity isn't limited to one bucket.</p>",
+        "S3Activity$OtherS3Activity": "<p>Other Amazon S3 activity that is related to the observation.</p>",
+        "S3Activity$NonS3Activity": "<p>Related activity on Amazon Web Services services other than Amazon S3.</p>",
+        "S3Activity$SourceIp": "<p>The source address of the activity, or a description of the source.</p>",
+        "S3Analysis$FindingSubtype": "<p>The subtype of the finding.</p>",
+        "S3Analysis$EffectivePermission": "<p>The effective permission of the Amazon S3 resource.</p>",
+        "S3Analysis$UserAgent": "<p>The user agent of the caller.</p>",
+        "S3Analysis$UserAgentClassification": "<p>The classification of the user agent.</p>",
+        "S3Analysis$SourceIp": "<p>The source address of the activity, or a description of the source.</p>",
+        "S3Analysis$IpReputation": "<p>The reputation of the source IP address.</p>",
         "S3Bucket$OwnerId": "<p>The owner ID of the associated S3Amazon S3bucket.</p>",
         "S3Bucket$EncryptionType": "<p>The type of encryption used for the Amazon S3 buckets and its objects. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html\">Protecting data with server-side encryption</a> in the <i>Amazon S3 User Guide</i>.</p>",
         "S3Bucket$EncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the encryption key that is used to encrypt the Amazon S3 bucket and its objects.</p>",
@@ -4836,6 +6070,10 @@
         "Session$Uid": "<p>The unique identifier of the session.</p>",
         "Session$Issuer": "<p>Identifier of the session issuer.</p> <p>In Amazon Web Services CloudTrail, you can find this value as <code>userIdentity.sessionContext.sessionIssuer.arn</code>.</p>",
         "SessionNameList$member": null,
+        "SharedBehavior$Path": "<p>The JSON path of the finding attribute that matched.</p>",
+        "SharedBehavior$Value": "<p>The value that matched.</p>",
+        "SharedResource$ResourceType": "<p>The type of the resource. This value isn't limited to the resource types of <code>InvestigationResource</code>.</p>",
+        "SharedResource$Identifier": "<p>The identifier of the resource.</p>",
         "Signal$Uid": "<p>The unique identifier of the signal.</p>",
         "Signal$Name": "<p>The name of the signal. For example, when signal type is <code>FINDING</code>, the signal name is the name of the finding.</p>",
         "SortCriteria$AttributeName": "<p>Represents the finding attribute, such as <code>accountId</code>, that sorts the findings.</p>",
@@ -4847,14 +6085,17 @@
         "Threat$Name": "<p>Name of the detected threat that caused GuardDuty to generate this finding.</p>",
         "Threat$Source": "<p>Source of the threat that generated this finding.</p>",
         "Threat$Hash": "<p>The hash identifier of the detected malware threat.</p>",
+        "ThreatAssessment$ThreatActorProfile": "<p>A description of the likely threat actor.</p>",
         "ThreatEntitySetIds$member": null,
         "ThreatIntelSetIds$member": null,
         "ThreatIntelligenceDetail$ThreatListName": "<p>The name of the threat intelligence list that triggered the finding.</p>",
         "ThreatIntelligenceDetail$ThreatFileSha256": "<p>SHA256 of the file that generated the finding.</p>",
         "ThreatNames$member": null,
+        "ThreatReference$Name": "<p>The name of the tactic or technique.</p>",
         "Total$Amount": "<p>The total usage.</p>",
         "Total$Unit": "<p>The currency unit that the amount is given in.</p>",
         "TrustedEntitySetIds$member": null,
+        "TypeDistribution$DominantSeverity": "<p>The most common severity among findings of this type.</p>",
         "UnprocessedAccount$Result": "<p>A reason why the account hasn't been processed.</p>",
         "UpdateFilterRequest$FilterName": "<p>The name of the filter.</p>",
         "UpdateIPSetRequest$IpSetId": "<p>The unique ID that specifies the IPSet that you want to update.</p>",
@@ -4885,6 +6126,31 @@
       "base": null,
       "refs": {
         "VpcConfig$SubnetIds": "<p>The identifiers of the subnets that are associated with your Lambda function.</p>"
+      }
+    },
+    "SummaryFormat": {
+      "base": null,
+      "refs": {
+        "GetInvestigationRequest$SummaryFormat": "<p>The format in which to return the investigation summary. Possible values:</p> <ul> <li> <p> <code>STRING</code> – (Default) Returns the summary as text in <code>Summary</code>.</p> </li> <li> <p> <code>STRUCTURED</code> – Returns a typed summary in <code>SummaryData</code>.</p> </li> </ul> <p>GuardDuty returns a summary only when the investigation status is <code>COMPLETED</code>.</p>"
+      }
+    },
+    "SupportingData": {
+      "base": "<p>Contains the structured details for an investigation record. Only the member that matches the record type is set.</p>",
+      "refs": {
+        "InvestigationRecord$SupportingData": "<p>The structured details for the step. The member that is set matches the record type. <code>UPDATE</code> records never include supporting data, and records of other types don't always include it.</p>"
+      }
+    },
+    "TacticCoverage": {
+      "base": "<p>Contains information about the findings associated with a MITRE ATT&amp;CK tactic.</p>",
+      "refs": {
+        "TacticCoverages$member": null
+      }
+    },
+    "TacticCoverages": {
+      "base": null,
+      "refs": {
+        "AccountAnalysis$TacticCoverage": "<p>The findings in the account, mapped to MITRE ATT&amp;CK tactics and techniques.</p>",
+        "Distribution$AttackVectors": "<p>The findings broken down by MITRE ATT&amp;CK tactic.</p>"
       }
     },
     "Tag": {
@@ -4961,10 +6227,34 @@
         "S3BucketDetail$Tags": "<p>All tags attached to the S3 bucket</p>"
       }
     },
+    "TechniqueCoverage": {
+      "base": "<p>Contains information about the findings associated with a MITRE ATT&amp;CK technique.</p>",
+      "refs": {
+        "TechniqueCoverages$member": null
+      }
+    },
+    "TechniqueCoverages": {
+      "base": null,
+      "refs": {
+        "TacticCoverage$Techniques": "<p>The MITRE ATT&amp;CK techniques within the tactic that are associated with findings.</p>"
+      }
+    },
     "Threat": {
       "base": "<p>Information about the detected threats associated with the generated finding.</p>",
       "refs": {
         "Threats$member": null
+      }
+    },
+    "ThreatAssessment": {
+      "base": "<p>Contains an assessment of the threat that a <code>FINDING</code> investigation identified.</p>",
+      "refs": {
+        "InvestigationSummaryData$ThreatAssessment": "<p>For a <code>FINDING</code> investigation, an assessment of the threat, including how the attack progressed.</p>"
+      }
+    },
+    "ThreatConfidence": {
+      "base": null,
+      "refs": {
+        "InvestigationThreatAssessment$ThreatConfidence": "<p>The confidence in the threat assessment. Possible values are <code>VERY_HIGH</code>, <code>HIGH</code>, <code>MEDIUM</code>, and <code>LOW</code>.</p>"
       }
     },
     "ThreatDetectedByName": {
@@ -5029,6 +6319,14 @@
         "ThreatIntelligenceDetail$ThreatNames": "<p>A list of names of the threats in the threat intelligence list that triggered the finding.</p>"
       }
     },
+    "ThreatReference": {
+      "base": "<p>Contains a reference to a MITRE ATT&amp;CK tactic or technique.</p>",
+      "refs": {
+        "Attack$Tactic": "<p>The MITRE ATT&amp;CK tactic.</p>",
+        "Attack$Technique": "<p>The MITRE ATT&amp;CK technique.</p>",
+        "TechniqueCoverage$Technique": "<p>The technique.</p>"
+      }
+    },
     "Threats": {
       "base": null,
       "refs": {
@@ -5041,10 +6339,32 @@
         "ScanDetections$ThreatsDetectedItemCount": "<p>Total number of infected files.</p>"
       }
     },
+    "TimeGranularity": {
+      "base": null,
+      "refs": {
+        "Trend$Granularity": "<p>The length of each time window in the trend. Possible values are <code>DAY</code>, <code>WEEK</code>, and <code>MONTH</code>.</p>"
+      }
+    },
+    "TimeWindowGroup": {
+      "base": "<p>Contains the number of findings in a time window.</p>",
+      "refs": {
+        "TimeWindowGroups$member": null
+      }
+    },
+    "TimeWindowGroups": {
+      "base": null,
+      "refs": {
+        "FindingsSummary$ByTimeWindow": "<p>The number of findings in each time window.</p>",
+        "OrganizationFindingsSummary$ByTimeWindow": "<p>The number of findings in each time window.</p>",
+        "Trend$ByTimeWindow": "<p>The number of findings in each time window.</p>"
+      }
+    },
     "Timestamp": {
       "base": null,
       "refs": {
         "AccountStatistics$LastGeneratedAt": "<p>The timestamp at which the finding for this account was last generated.</p>",
+        "ActivityWindow$FirstSeenAt": "<p>The timestamp at which the activity was first observed.</p>",
+        "ActivityWindow$LastSeenAt": "<p>The timestamp at which the activity was last observed.</p>",
         "AssociationDetail$CreatedAt": "<p>The timestamp when the association was created.</p>",
         "AssociationDetail$UpdatedAt": "<p>The timestamp when the association was last updated.</p>",
         "AssociationDetail$ExpiresAt": "<p>The timestamp when the association expires.</p>",
@@ -5071,6 +6391,7 @@
         "EcsTaskDetails$StartedAt": "<p>The Unix timestamp for the time when the task started.</p>",
         "EksCluster$CreatedAt": "<p>The timestamp indicating when the Amazon EKS cluster was created, in UTC format.</p>",
         "EksClusterDetails$CreatedAt": "<p>The timestamp when the EKS cluster was created.</p>",
+        "FetchTimeWindow$StartedAt": "<p>The timestamp at which the time range starts.</p>",
         "FindingTypeStatistics$LastGeneratedAt": "<p>The timestamp at which this finding type was last generated in your environment.</p>",
         "GetFilterResponse$CreatedAt": "<p>The timestamp when the filter was created. This field is not available for filters that were created before the lifecycle metadata feature was enabled (legacy filters).</p>",
         "GetFilterResponse$UpdatedAt": "<p>The timestamp when the filter was last updated. For legacy filters, this field is present only after the filter has been updated at least once since the lifecycle metadata feature was enabled.</p>",
@@ -5083,9 +6404,15 @@
         "GetTrustedEntitySetResponse$UpdatedAt": "<p>The timestamp when the associated trusted entity set was updated.</p>",
         "Investigation$StartTime": "<p>The timestamp at which the investigation started.</p>",
         "Investigation$EndTime": "<p>The timestamp at which the investigation completed.</p>",
+        "InvestigationDetectorFeatureConfiguration$UpdatedAt": "<p>The timestamp at which the feature configuration was last updated.</p>",
+        "InvestigationEc2Instance$LaunchedAt": "<p>The timestamp at which the instance was launched.</p>",
+        "InvestigationMalwareScan$ScanStartedAt": "<p>The timestamp at which the scan started.</p>",
+        "InvestigationMalwareScan$ScanCompletedAt": "<p>The timestamp at which the scan completed.</p>",
+        "InvestigationRecord$CreatedAt": "<p>The timestamp at which GuardDuty created the record.</p>",
         "InvestigationSummary$StartTime": "<p>The timestamp at which the investigation started.</p>",
         "InvestigationSummary$EndTime": "<p>The timestamp at which the investigation completed.</p>",
         "LambdaDetails$LastModifiedAt": "<p>The timestamp when the Lambda function was last modified. This field is in the UTC date string format <code>(2023-03-22T19:37:20.168Z)</code>.</p>",
+        "LambdaFunction$UpdatedAt": "<p>The timestamp at which the function was last updated.</p>",
         "LineageObject$StartTime": "<p>The time when the process started. This is in UTC format.</p>",
         "MalwareScan$ScanStartedAt": "<p>The timestamp representing when the malware scan was started.</p>",
         "MalwareScan$ScanCompletedAt": "<p>The timestamp representing when the malware scan was completed.</p>",
@@ -5093,6 +6420,8 @@
         "MemberFeaturesConfigurationResult$UpdatedAt": "<p>The timestamp at which the feature object was updated.</p>",
         "OrganizationDetails$UpdatedAt": "<p>The timestamp at which the organization statistics was last updated. This is in UTC format.</p>",
         "ProcessDetails$StartTime": "<p>The time when the process started. This is in UTC format.</p>",
+        "QueryTimeWindow$StartTime": "<p>The timestamp at which the time window starts.</p>",
+        "QueryTimeWindow$EndTime": "<p>The timestamp at which the time window ends.</p>",
         "ResourceStatistics$LastGeneratedAt": "<p>The timestamp at which the statistics for this resource was last generated.</p>",
         "RuleDetail$CreatedAt": "<p>The timestamp when the rule was created.</p>",
         "RuleDetail$UpdatedAt": "<p>The timestamp when the rule was last updated.</p>",
@@ -5110,7 +6439,11 @@
         "Signal$CreatedAt": "<p>The timestamp when the first finding or activity related to this signal was observed.</p>",
         "Signal$UpdatedAt": "<p>The timestamp when this signal was last observed.</p>",
         "Signal$FirstSeenAt": "<p>The timestamp when the first finding or activity related to this signal was observed.</p>",
-        "Signal$LastSeenAt": "<p>The timestamp when the last finding or activity related to this signal was observed.</p>"
+        "Signal$LastSeenAt": "<p>The timestamp when the last finding or activity related to this signal was observed.</p>",
+        "TimeWindowGroup$StartTime": "<p>The timestamp at which the time window starts.</p>",
+        "TimeWindowGroup$EndTime": "<p>The timestamp at which the time window ends.</p>",
+        "Trend$StartedAt": "<p>The timestamp at which the period of the trend starts.</p>",
+        "Trend$EndedAt": "<p>The timestamp at which the period of the trend ends.</p>"
       }
     },
     "Total": {
@@ -5121,6 +6454,12 @@
         "UsageFeatureResult$Total": null,
         "UsageResourceResult$Total": "<p>Represents the sum total of usage for the specified resource type.</p>",
         "UsageTopAccountResult$Total": null
+      }
+    },
+    "Trend": {
+      "base": "<p>Contains information about the number of findings over time.</p>",
+      "refs": {
+        "InvestigationAccountAnalysis$Trend": "<p>The trend of findings over time. Set when <code>AnalysisType</code> is <code>TREND</code>.</p>"
       }
     },
     "TriggerDetails": {
@@ -5168,6 +6507,18 @@
       "base": null,
       "refs": {
         "GetTrustedEntitySetResponse$Status": "<p>The status of the associated trusted entity set.</p>"
+      }
+    },
+    "TypeDistribution": {
+      "base": "<p>Contains the number and percentage of findings of a finding type.</p>",
+      "refs": {
+        "TypeDistributions$member": null
+      }
+    },
+    "TypeDistributions": {
+      "base": null,
+      "refs": {
+        "Distribution$FindingTypes": "<p>The findings broken down by finding type, with counts and percentages.</p>"
       }
     },
     "UnarchiveFindingsRequest": {

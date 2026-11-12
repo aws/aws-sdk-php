@@ -1,6 +1,26 @@
 {
   "version": "1.0",
   "examples": {
+    "AssociateCrossAccountReplica": [
+      {
+        "input": {
+          "CrossAccountReplicaARN": "arn:aws:secretsmanager:us-west-2:222222222222:secret:MyReplicaSecret-a1b2c3",
+          "SecretId": "MyTestDatabaseSecret"
+        },
+        "output": {
+          "ARN": "arn:aws:secretsmanager:us-west-2:123456789012:secret:MyTestDatabaseSecret-a1b2c3",
+          "CrossAccountReplicaARN": "arn:aws:secretsmanager:us-west-2:222222222222:secret:MyReplicaSecret-a1b2c3",
+          "ReplicationStatus": "InProgress"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example links a primary secret to a replica secret in another AWS account and starts replication. The replica secret was previously created in the other account using CreateSecret with the CrossAccountPrimaryARN set to this primary secret.",
+        "id": "to-associate-a-cross-account-replica-1523996473658",
+        "title": "To replicate a secret to another account"
+      }
+    ],
     "BatchGetSecretValue": [
       {
         "input": {
@@ -92,6 +112,24 @@
         "description": "The following example shows how to create a secret. The credentials stored in the encrypted secret value are retrieved from a file on disk named mycreds.json.",
         "id": "to-create-a-basic-secret-1523996473658",
         "title": "To create a basic secret"
+      },
+      {
+        "input": {
+          "CrossAccountPrimaryARN": "arn:aws:secretsmanager:us-west-2:123456789012:secret:MyTestDatabaseSecret-a1b2c3",
+          "KmsKeyId": "arn:aws:kms:us-west-2:222222222222:key/EXAMPLE1-90ab-cdef-fedc-ba987EXAMPLE",
+          "Name": "MyReplicaSecret"
+        },
+        "output": {
+          "ARN": "arn:aws:secretsmanager:us-west-2:222222222222:secret:MyReplicaSecret-a1b2c3",
+          "Name": "MyReplicaSecret"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example creates a secret that receives replicated data from a primary secret in another AWS account, by setting the CrossAccountPrimaryARN parameter. After creating the replica, link it to the primary secret from the primary account with AssociateCrossAccountReplica.",
+        "id": "to-create-a-cross-account-replica-secret-1523996473659",
+        "title": "To create a cross-account replica secret"
       }
     ],
     "DeleteResourcePolicy": [
@@ -101,7 +139,8 @@
         },
         "output": {
           "ARN": "arn:aws:secretsmanager:us-west-2:123456789012:secret:MyTestDatabaseSecret-a1b2c3",
-          "Name": "MyTestDatabaseSecret"
+          "Name": "MyTestDatabaseSecret",
+          "PolicyName": "default"
         },
         "comments": {
           "input": {},
@@ -181,6 +220,25 @@
         "title": "To retrieve the details of a secret"
       }
     ],
+    "DisassociateCrossAccountReplica": [
+      {
+        "input": {
+          "CrossAccountReplicaARN": "arn:aws:secretsmanager:us-west-2:222222222222:secret:MyReplicaSecret-a1b2c3",
+          "SecretId": "MyTestDatabaseSecret"
+        },
+        "output": {
+          "ARN": "arn:aws:secretsmanager:us-west-2:123456789012:secret:MyTestDatabaseSecret-a1b2c3",
+          "CrossAccountReplicaARN": "arn:aws:secretsmanager:us-west-2:222222222222:secret:MyReplicaSecret-a1b2c3"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example, called from the primary account, removes the link between a primary secret and its cross-account replica and stops replication. The replica secret remains in the other account, now with a replication status of Detached.",
+        "id": "to-disassociate-a-cross-account-replica-1523996473658",
+        "title": "To stop replicating a secret to another account from the primary account"
+      }
+    ],
     "GetRandomPassword": [
       {
         "input": {
@@ -208,6 +266,7 @@
         "output": {
           "ARN": "arn:aws:secretsmanager:us-west-2:123456789012:secret:MyTestDatabaseSecret-a1b2c3",
           "Name": "MyTestDatabaseSecret",
+          "PolicyName": "default",
           "ResourcePolicy": "{\n\"Version\":\"2012-10-17\",\n\"Statement\":[{\n\"Effect\":\"Allow\",\n\"Principal\":{\n\"AWS\":\"arn:aws:iam::123456789012:root\"\n},\n\"Action\":\"secretsmanager:GetSecretValue\",\n\"Resource\":\"*\"\n}]\n}"
         },
         "comments": {
@@ -241,6 +300,27 @@
         "description": "The following example shows how to retrieve a secret string value.",
         "id": "to-retrieve-the-encrypted-secret-value-of-a-secret-1524000702484",
         "title": "To retrieve the encrypted secret value of a secret"
+      }
+    ],
+    "ListResourcePolicies": [
+      {
+        "input": {
+          "SecretId": "MyTestDatabaseSecret"
+        },
+        "output": {
+          "ResourcePolicies": [
+            {
+              "PolicyName": "default"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example shows how to list the resource-based policies attached to a secret.",
+        "id": "to-list-the-resource-policies-for-a-secret-1523996473658",
+        "title": "To list the resource-based policies attached to a secret"
       }
     ],
     "ListSecretVersionIds": [
@@ -328,7 +408,8 @@
         },
         "output": {
           "ARN": "arn:aws:secretsmanager:us-west-2:123456789012:secret:MyTestDatabaseSecret-a1b2c3",
-          "Name": "MyTestDatabaseSecret"
+          "Name": "MyTestDatabaseSecret",
+          "PolicyName": "default"
         },
         "comments": {
           "input": {},
@@ -450,6 +531,23 @@
         "description": "The following example requests an immediate invocation of the secret's Lambda rotation function. It assumes that the specified secret already has rotation configured. The rotation function runs asynchronously in the background.",
         "id": "to-request-an-immediate-rotation-for-a-secret-1524001949004",
         "title": "To request an immediate rotation for a secret"
+      }
+    ],
+    "StopReplicationToReplica": [
+      {
+        "input": {
+          "SecretId": "arn:aws:secretsmanager:us-west-2:222222222222:secret:MyReplicaSecret-a1b2c3"
+        },
+        "output": {
+          "ARN": "arn:aws:secretsmanager:us-west-2:222222222222:secret:MyReplicaSecret-a1b2c3"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example, called from the replica account, unlinks a cross-account replica secret from its primary secret in another account and stops replication. The secret remains in the replica account as a standalone secret.",
+        "id": "to-stop-replication-to-a-cross-account-replica-1523996473658",
+        "title": "To stop cross-account replication from the replica account"
       }
     ],
     "TagResource": [

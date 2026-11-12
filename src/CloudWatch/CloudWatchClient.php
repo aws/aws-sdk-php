@@ -66,6 +66,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteInsightRules(array{RuleNames?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteInsightRulesAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteInsightRulesAsync(array{RuleNames?: list<string>, ...} $args = [])
+ * @method \Aws\Result deleteMetricDataQueryDefinition(array $args = [])
+ * @phpstan-method \Aws\Result deleteMetricDataQueryDefinition(array{Id?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteMetricDataQueryDefinitionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteMetricDataQueryDefinitionAsync(array{Id?: string, ...} $args = [])
  * @method \Aws\Result deleteMetricStream(array $args = [])
  * @phpstan-method \Aws\Result deleteMetricStream(array{Name?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteMetricStreamAsync(array $args = [])
@@ -272,6 +276,10 @@ use Aws\AwsClient;
  *     LabelOptions?: array{Timezone?: string, ...},
  *     ...,
  * } $args = [])
+ * @method \Aws\Result getMetricDataQueryDefinition(array $args = [])
+ * @phpstan-method \Aws\Result getMetricDataQueryDefinition(array{Id?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getMetricDataQueryDefinitionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getMetricDataQueryDefinitionAsync(array{Id?: string, ...} $args = [])
  * @method \Aws\Result getMetricStatistics(array $args = [])
  * @phpstan-method \Aws\Result getMetricStatistics(array{
  *     Namespace?: string,
@@ -338,6 +346,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listManagedInsightRules(array{ResourceARN?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listManagedInsightRulesAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listManagedInsightRulesAsync(array{ResourceARN?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
+ * @method \Aws\Result listMetricDataQueryDefinitions(array $args = [])
+ * @phpstan-method \Aws\Result listMetricDataQueryDefinitions(array{MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listMetricDataQueryDefinitionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listMetricDataQueryDefinitionsAsync(array{MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \Aws\Result listMetricStreams(array $args = [])
  * @phpstan-method \Aws\Result listMetricStreams(array{NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listMetricStreamsAsync(array $args = [])
@@ -702,6 +714,24 @@ use Aws\AwsClient;
  *     }>,
  *     EntityMetricData?: list<array{Entity?: array, MetricData?: list<array>, ...}>,
  *     StrictEntityValidation?: bool,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result putMetricDataQueryDefinition(array $args = [])
+ * @phpstan-method \Aws\Result putMetricDataQueryDefinition(array{
+ *     Id?: string,
+ *     Path?: string,
+ *     Expression?: string,
+ *     Type?: 'METRIC_MATH'|'PROMQL'|'SQL',
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise putMetricDataQueryDefinitionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putMetricDataQueryDefinitionAsync(array{
+ *     Id?: string,
+ *     Path?: string,
+ *     Expression?: string,
+ *     Type?: 'METRIC_MATH'|'PROMQL'|'SQL',
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result putMetricStream(array $args = [])

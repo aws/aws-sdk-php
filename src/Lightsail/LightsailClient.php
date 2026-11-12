@@ -29,6 +29,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result attachStaticIp(array{staticIpName?: string, instanceName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise attachStaticIpAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise attachStaticIpAsync(array{staticIpName?: string, instanceName?: string, ...} $args = [])
+ * @method \Aws\Result checkSubdomainAvailability(array $args = [])
+ * @phpstan-method \Aws\Result checkSubdomainAvailability(array{subdomainName?: string, reserve?: bool, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise checkSubdomainAvailabilityAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise checkSubdomainAvailabilityAsync(array{subdomainName?: string, reserve?: bool, ...} $args = [])
  * @method \Aws\Result closeInstancePublicPorts(array $args = [])
  * @phpstan-method \Aws\Result closeInstancePublicPorts(array{
  *     portInfo?: array{
@@ -355,6 +359,7 @@ use Aws\AwsClient;
  *     customErrorResponses?: list<array{errorCode?: int, responseCode?: string, responsePagePath?: string, errorCachingMinTTL?: int, ...}>,
  *     enableWaf?: bool,
  *     wafRules?: list<array{name?: string, atpConfig?: array, acfpConfig?: array, botControlConfig?: array, ...}>,
+ *     subdomainName?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createDistributionAsync(array $args = [])
@@ -395,6 +400,7 @@ use Aws\AwsClient;
  *     customErrorResponses?: list<array{errorCode?: int, responseCode?: string, responsePagePath?: string, errorCachingMinTTL?: int, ...}>,
  *     enableWaf?: bool,
  *     wafRules?: list<array{name?: string, atpConfig?: array, acfpConfig?: array, botControlConfig?: array, ...}>,
+ *     subdomainName?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createDomain(array $args = [])
@@ -647,6 +653,10 @@ use Aws\AwsClient;
  *     tags?: list<array{key?: string, value?: string, ...}>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createSubdomain(array $args = [])
+ * @phpstan-method \Aws\Result createSubdomain(array{subdomainName?: string, tags?: list<array{key?: string, value?: string, ...}>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise createSubdomainAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createSubdomainAsync(array{subdomainName?: string, tags?: list<array{key?: string, value?: string, ...}>, ...} $args = [])
  * @method \Aws\Result deleteAlarm(array $args = [])
  * @phpstan-method \Aws\Result deleteAlarm(array{alarmName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAlarmAsync(array $args = [])
@@ -765,6 +775,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteRelationalDatabaseSnapshot(array{relationalDatabaseSnapshotName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteRelationalDatabaseSnapshotAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteRelationalDatabaseSnapshotAsync(array{relationalDatabaseSnapshotName?: string, ...} $args = [])
+ * @method \Aws\Result deleteSubdomain(array $args = [])
+ * @phpstan-method \Aws\Result deleteSubdomain(array{subdomainName?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteSubdomainAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteSubdomainAsync(array{subdomainName?: string, ...} $args = [])
  * @method \Aws\Result detachCertificateFromDistribution(array $args = [])
  * @phpstan-method \Aws\Result detachCertificateFromDistribution(array{distributionName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise detachCertificateFromDistributionAsync(array $args = [])
@@ -1239,6 +1253,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getStaticIps(array{pageToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getStaticIpsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getStaticIpsAsync(array{pageToken?: string, ...} $args = [])
+ * @method \Aws\Result getSubdomains(array $args = [])
+ * @phpstan-method \Aws\Result getSubdomains(array{subdomainName?: string, pageToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getSubdomainsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getSubdomainsAsync(array{subdomainName?: string, pageToken?: string, ...} $args = [])
  * @method \Aws\Result importKeyPair(array $args = [])
  * @phpstan-method \Aws\Result importKeyPair(array{keyPairName?: string, publicKeyBase64?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise importKeyPairAsync(array $args = [])
@@ -1365,7 +1383,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise sendContactMethodVerificationAsync(array{protocol?: 'Email', ...} $args = [])
  * @method \Aws\Result setIpAddressType(array $args = [])
  * @phpstan-method \Aws\Result setIpAddressType(array{
- *     resourceType?: 'Alarm'|'Bucket'|'Certificate'|'CloudFormationStackRecord'|'ContactMethod'|'ContainerService'|'Disk'|'DiskSnapshot'|'Distribution'|'Domain'|'ExportSnapshotRecord'|'Instance'|'InstanceSnapshot'|'KeyPair'|'LoadBalancer'|'LoadBalancerTlsCertificate'|'PeeredVpc'|'RelationalDatabase'|'RelationalDatabaseSnapshot'|'StaticIp',
+ *     resourceType?: 'Alarm'|'Bucket'|'Certificate'|'CloudFormationStackRecord'|'ContactMethod'|'ContainerService'|'Disk'|'DiskSnapshot'|'Distribution'|'Domain'|'ExportSnapshotRecord'|'Instance'|'InstanceSnapshot'|'KeyPair'|'LoadBalancer'|'LoadBalancerTlsCertificate'|'PeeredVpc'|'RelationalDatabase'|'RelationalDatabaseSnapshot'|'StaticIp'|'Subdomain',
  *     resourceName?: string,
  *     ipAddressType?: 'dualstack'|'ipv4'|'ipv6',
  *     acceptBundleUpdate?: bool,
@@ -1373,7 +1391,7 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise setIpAddressTypeAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise setIpAddressTypeAsync(array{
- *     resourceType?: 'Alarm'|'Bucket'|'Certificate'|'CloudFormationStackRecord'|'ContactMethod'|'ContainerService'|'Disk'|'DiskSnapshot'|'Distribution'|'Domain'|'ExportSnapshotRecord'|'Instance'|'InstanceSnapshot'|'KeyPair'|'LoadBalancer'|'LoadBalancerTlsCertificate'|'PeeredVpc'|'RelationalDatabase'|'RelationalDatabaseSnapshot'|'StaticIp',
+ *     resourceType?: 'Alarm'|'Bucket'|'Certificate'|'CloudFormationStackRecord'|'ContactMethod'|'ContainerService'|'Disk'|'DiskSnapshot'|'Distribution'|'Domain'|'ExportSnapshotRecord'|'Instance'|'InstanceSnapshot'|'KeyPair'|'LoadBalancer'|'LoadBalancerTlsCertificate'|'PeeredVpc'|'RelationalDatabase'|'RelationalDatabaseSnapshot'|'StaticIp'|'Subdomain',
  *     resourceName?: string,
  *     ipAddressType?: 'dualstack'|'ipv4'|'ipv6',
  *     acceptBundleUpdate?: bool,
@@ -1687,5 +1705,9 @@ use Aws\AwsClient;
  *     }>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result updateSubdomainAssociation(array $args = [])
+ * @phpstan-method \Aws\Result updateSubdomainAssociation(array{subdomainName?: string, action?: 'ASSOCIATE'|'DISASSOCIATE'|'TRANSFER', targetResourceArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateSubdomainAssociationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateSubdomainAssociationAsync(array{subdomainName?: string, action?: 'ASSOCIATE'|'DISASSOCIATE'|'TRANSFER', targetResourceArn?: string, ...} $args = [])
  */
 class LightsailClient extends AwsClient {}

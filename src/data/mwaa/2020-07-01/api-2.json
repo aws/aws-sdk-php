@@ -327,7 +327,9 @@
         "Schedulers":{"shape":"Schedulers"},
         "EndpointManagement":{"shape":"EndpointManagement"},
         "MinWebservers":{"shape":"MinWebservers"},
-        "MaxWebservers":{"shape":"MaxWebservers"}
+        "MaxWebservers":{"shape":"MaxWebservers"},
+        "IdentityCenterConfiguration":{"shape":"IdentityCenterConfiguration"},
+        "Teams":{"shape":"TeamMap"}
       }
     },
     "CreateEnvironmentOutput":{
@@ -443,7 +445,9 @@
         "CeleryExecutorQueue":{"shape":"CeleryExecutorQueue"},
         "EndpointManagement":{"shape":"EndpointManagement"},
         "MinWebservers":{"shape":"MinWebservers"},
-        "MaxWebservers":{"shape":"MaxWebservers"}
+        "MaxWebservers":{"shape":"MaxWebservers"},
+        "IdentityCenterConfiguration":{"shape":"IdentityCenterConfiguration"},
+        "Teams":{"shape":"TeamMap"}
       }
     },
     "EnvironmentArn":{
@@ -520,6 +524,25 @@
       "max":1224,
       "min":1,
       "pattern":"arn:aws(-[a-z]+)?:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+"
+    },
+    "IdentityCenterConfiguration":{
+      "type":"structure",
+      "members":{
+        "StartUrl":{"shape":"IdentityCenterStartUrl"},
+        "IdentityStoreId":{"shape":"IdentityCenterIdentityStoreId"}
+      }
+    },
+    "IdentityCenterIdentityStoreId":{
+      "type":"string",
+      "max":36,
+      "min":1,
+      "pattern":".*d-[0-9a-f]{10}$|^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}.*"
+    },
+    "IdentityCenterStartUrl":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"https://.+"
     },
     "Integer":{
       "type":"integer",
@@ -926,6 +949,36 @@
       "min":1,
       "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
     },
+    "TeamConfig":{
+      "type":"structure",
+      "required":[
+        "SourceBucketArn",
+        "DagS3Path"
+      ],
+      "members":{
+        "SourceBucketArn":{"shape":"S3BucketArn"},
+        "DagS3Path":{"shape":"RelativePath"}
+      }
+    },
+    "TeamMap":{
+      "type":"map",
+      "key":{"shape":"TeamNameString"},
+      "value":{"shape":"TeamConfig"},
+      "max":20,
+      "min":1
+    },
+    "TeamNameList":{
+      "type":"list",
+      "member":{"shape":"TeamNameString"},
+      "max":20,
+      "min":1
+    },
+    "TeamNameString":{
+      "type":"string",
+      "max":50,
+      "min":3,
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9_-]*"
+    },
     "Timestamp":{"type":"timestamp"},
     "Token":{
       "type":"string",
@@ -1017,7 +1070,9 @@
         "StartupScriptS3Path":{"shape":"RelativePath"},
         "StartupScriptS3ObjectVersion":{"shape":"S3ObjectVersion"},
         "WebserverAccessMode":{"shape":"WebserverAccessMode"},
-        "WeeklyMaintenanceWindowStart":{"shape":"WeeklyMaintenanceWindowStart"}
+        "WeeklyMaintenanceWindowStart":{"shape":"WeeklyMaintenanceWindowStart"},
+        "IdentityCenterConfiguration":{"shape":"IdentityCenterConfiguration"},
+        "Teams":{"shape":"UpdateTeamsInput"}
       }
     },
     "UpdateEnvironmentOutput":{
@@ -1053,6 +1108,13 @@
         "PENDING",
         "FAILED"
       ]
+    },
+    "UpdateTeamsInput":{
+      "type":"structure",
+      "members":{
+        "AddOrUpdate":{"shape":"TeamMap"},
+        "Remove":{"shape":"TeamNameList"}
+      }
     },
     "ValidationException":{
       "type":"structure",

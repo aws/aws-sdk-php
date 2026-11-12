@@ -5,6 +5,22 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Secrets Manager** service.
+ * @method \Aws\Result associateCrossAccountReplica(array $args = [])
+ * @phpstan-method \Aws\Result associateCrossAccountReplica(array{
+ *     SecretId?: string,
+ *     CrossAccountReplicaARN?: string,
+ *     ReplicaRestriction?: 'NoRestriction'|'SameOrg',
+ *     ReplicationRoleARN?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise associateCrossAccountReplicaAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise associateCrossAccountReplicaAsync(array{
+ *     SecretId?: string,
+ *     CrossAccountReplicaARN?: string,
+ *     ReplicaRestriction?: 'NoRestriction'|'SameOrg',
+ *     ReplicationRoleARN?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result batchGetSecretValue(array $args = [])
  * @phpstan-method \Aws\Result batchGetSecretValue(array{
  *     SecretIdList?: list<string>,
@@ -45,6 +61,7 @@ use Aws\AwsClient;
  *     AddReplicaRegions?: list<array{Region?: string, KmsKeyId?: string, ...}>,
  *     ForceOverwriteReplicaSecret?: bool,
  *     Type?: string,
+ *     CrossAccountPrimaryARN?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createSecretAsync(array $args = [])
@@ -59,12 +76,13 @@ use Aws\AwsClient;
  *     AddReplicaRegions?: list<array{Region?: string, KmsKeyId?: string, ...}>,
  *     ForceOverwriteReplicaSecret?: bool,
  *     Type?: string,
+ *     CrossAccountPrimaryARN?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result deleteResourcePolicy(array $args = [])
- * @phpstan-method \Aws\Result deleteResourcePolicy(array{SecretId?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result deleteResourcePolicy(array{SecretId?: string, PolicyName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteResourcePolicyAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise deleteResourcePolicyAsync(array{SecretId?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteResourcePolicyAsync(array{SecretId?: string, PolicyName?: string, ...} $args = [])
  * @method \Aws\Result deleteSecret(array $args = [])
  * @phpstan-method \Aws\Result deleteSecret(array{SecretId?: string, RecoveryWindowInDays?: int, ForceDeleteWithoutRecovery?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteSecretAsync(array $args = [])
@@ -73,6 +91,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeSecret(array{SecretId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeSecretAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeSecretAsync(array{SecretId?: string, ...} $args = [])
+ * @method \Aws\Result disassociateCrossAccountReplica(array $args = [])
+ * @phpstan-method \Aws\Result disassociateCrossAccountReplica(array{SecretId?: string, CrossAccountReplicaARN?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateCrossAccountReplicaAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise disassociateCrossAccountReplicaAsync(array{SecretId?: string, CrossAccountReplicaARN?: string, ...} $args = [])
  * @method \Aws\Result getRandomPassword(array $args = [])
  * @phpstan-method \Aws\Result getRandomPassword(array{
  *     PasswordLength?: int,
@@ -98,13 +120,17 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result getResourcePolicy(array $args = [])
- * @phpstan-method \Aws\Result getResourcePolicy(array{SecretId?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result getResourcePolicy(array{SecretId?: string, PolicyName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getResourcePolicyAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise getResourcePolicyAsync(array{SecretId?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getResourcePolicyAsync(array{SecretId?: string, PolicyName?: string, ...} $args = [])
  * @method \Aws\Result getSecretValue(array $args = [])
  * @phpstan-method \Aws\Result getSecretValue(array{SecretId?: string, VersionId?: string, VersionStage?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getSecretValueAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getSecretValueAsync(array{SecretId?: string, VersionId?: string, VersionStage?: string, ...} $args = [])
+ * @method \Aws\Result listResourcePolicies(array $args = [])
+ * @phpstan-method \Aws\Result listResourcePolicies(array{SecretId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listResourcePoliciesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listResourcePoliciesAsync(array{SecretId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \Aws\Result listSecretVersionIds(array $args = [])
  * @phpstan-method \Aws\Result listSecretVersionIds(array{SecretId?: string, MaxResults?: int, NextToken?: string, IncludeDeprecated?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listSecretVersionIdsAsync(array $args = [])
@@ -138,9 +164,9 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result putResourcePolicy(array $args = [])
- * @phpstan-method \Aws\Result putResourcePolicy(array{SecretId?: string, ResourcePolicy?: string, BlockPublicPolicy?: bool, ...} $args = [])
+ * @phpstan-method \Aws\Result putResourcePolicy(array{SecretId?: string, ResourcePolicy?: string, PolicyName?: string, BlockPublicPolicy?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise putResourcePolicyAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise putResourcePolicyAsync(array{SecretId?: string, ResourcePolicy?: string, BlockPublicPolicy?: bool, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putResourcePolicyAsync(array{SecretId?: string, ResourcePolicy?: string, PolicyName?: string, BlockPublicPolicy?: bool, ...} $args = [])
  * @method \Aws\Result putSecretValue(array $args = [])
  * @phpstan-method \Aws\Result putSecretValue(array{
  *     SecretId?: string,

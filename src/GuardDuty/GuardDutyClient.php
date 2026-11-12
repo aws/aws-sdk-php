@@ -422,9 +422,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getIPSetAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getIPSetAsync(array{DetectorId?: string, IpSetId?: string, ...} $args = [])
  * @method \Aws\Result getInvestigation(array $args = [])
- * @phpstan-method \Aws\Result getInvestigation(array{DetectorId?: string, InvestigationId?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result getInvestigation(array{DetectorId?: string, InvestigationId?: string, SummaryFormat?: 'STRING'|'STRUCTURED', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getInvestigationAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise getInvestigationAsync(array{DetectorId?: string, InvestigationId?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getInvestigationAsync(array{DetectorId?: string, InvestigationId?: string, SummaryFormat?: 'STRING'|'STRUCTURED', ...} $args = [])
  * @method \Aws\Result getInvitationsCount(array $args = [])
  * @phpstan-method \Aws\Result getInvitationsCount(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getInvitationsCountAsync(array $args = [])
@@ -597,9 +597,28 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listIPSets(array{DetectorId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listIPSetsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listIPSetsAsync(array{DetectorId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result listInvestigationRecords(array $args = [])
+ * @phpstan-method \Aws\Result listInvestigationRecords(array{
+ *     DetectorId?: string,
+ *     InvestigationId?: string,
+ *     RecordTypes?: list<'ANALYSIS'|'FETCH'|'METADATA'|'OBSERVATION'|'UPDATE'>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listInvestigationRecordsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listInvestigationRecordsAsync(array{
+ *     DetectorId?: string,
+ *     InvestigationId?: string,
+ *     RecordTypes?: list<'ANALYSIS'|'FETCH'|'METADATA'|'OBSERVATION'|'UPDATE'>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listInvestigations(array $args = [])
  * @phpstan-method \Aws\Result listInvestigations(array{
  *     DetectorId?: string,
+ *     FilterCriteria?: array{Criterion?: array<string, array>, ...},
  *     SortCriteria?: array{AttributeName?: 'CONFIDENCE'|'END_TIME'|'RISK_LEVEL'|'START_TIME'|'STATUS', OrderBy?: 'ASC'|'DESC', ...},
  *     MaxResults?: int,
  *     NextToken?: string,
@@ -608,6 +627,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listInvestigationsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listInvestigationsAsync(array{
  *     DetectorId?: string,
+ *     FilterCriteria?: array{Criterion?: array<string, array>, ...},
  *     SortCriteria?: array{AttributeName?: 'CONFIDENCE'|'END_TIME'|'RISK_LEVEL'|'START_TIME'|'STATUS', OrderBy?: 'ASC'|'DESC', ...},
  *     MaxResults?: int,
  *     NextToken?: string,

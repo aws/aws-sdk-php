@@ -21,7 +21,7 @@
     "DeleteInputSecurityGroup": "Deletes an Input Security Group",
     "DeleteMultiplex": "Delete a multiplex. The multiplex must be idle.",
     "DeleteMultiplexProgram": "Delete a program from a multiplex.",
-    "DeleteReservation": "Delete an expired reservation.",
+    "DeleteReservation": "Delete an expired reservation, or cancel an active reservation during the calendar month (UTC) in which you purchased it. You can't cancel an active reservation that you purchased in an earlier month, including one that renewed automatically. You also can't cancel an active reservation during the last hour of the month, from 23:00 UTC on the last day of the month.",
     "DeleteSchedule": "Delete all schedule actions on a channel.",
     "DeleteTags": "Removes tags for a resource",
     "DescribeAccountConfiguration": "Describe account configuration",
@@ -7892,6 +7892,12 @@
       "base": "Perceptual Filter Strength",
       "refs": {
         "PerceptualFilterSettings$Strength": "Selects the perceptual noise filter strength. Strength 1 (perceptual lite) is the recommended default and adds\napproximately 30% of an AVC encode of compute on the highest rendition. Strength 2 adds approximately 60% of an\nAVC encode of compute and can introduce slight softening on noisy content."
+      }
+    },
+    "MediaPackageV2CaptionLanguageSetting": {
+      "base": "Media Package V2 Caption Language Setting",
+      "refs": {
+        "MediaPackageV2GroupSettings$CaptionLanguageSetting": "Applies only to 608 Embedded output captions. Controls the CLOSED-CAPTIONS signaling that MediaPackage v2 writes into the HLS manifest it delivers.\nauto: The default. If captionLanguageMappings is non-empty, the HLS manifest includes a CLOSED-CAPTIONS line for each mapped caption channel. If captionLanguageMappings is empty, the HLS manifest omits any CLOSED-CAPTIONS line.\nnone: The HLS manifest carries CLOSED-CAPTIONS=NONE on each EXT-X-STREAM-INF tag, which signals to players that the stream has no closed captions, so they stop offering a CC track. The API rejects none combined with a non-empty captionLanguageMappings."
       }
     }
   },

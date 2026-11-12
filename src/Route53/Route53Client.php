@@ -180,6 +180,28 @@ use Psr\Http\Message\RequestInterface;
  * @phpstan-method \Aws\Result createQueryLoggingConfig(array{HostedZoneId?: string, CloudWatchLogsLogGroupArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise createQueryLoggingConfigAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createQueryLoggingConfigAsync(array{HostedZoneId?: string, CloudWatchLogsLogGroupArn?: string, ...} $args = [])
+ * @method \Aws\Result createResourceRecordSetProtections(array $args = [])
+ * @phpstan-method \Aws\Result createResourceRecordSetProtections(array{
+ *     HostedZoneId?: string,
+ *     Protections?: list<array{
+ *         RecordName?: string,
+ *         RecordType?: 'A'|'AAAA'|'CAA'|'CNAME'|'DS'|'HTTPS'|'MX'|'NAPTR'|'NS'|'PTR'|'SOA'|'SPF'|'SRV'|'SSHFP'|'SVCB'|'TLSA'|'TXT',
+ *         Comment?: string,
+ *         ...,
+ *     }>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createResourceRecordSetProtectionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createResourceRecordSetProtectionsAsync(array{
+ *     HostedZoneId?: string,
+ *     Protections?: list<array{
+ *         RecordName?: string,
+ *         RecordType?: 'A'|'AAAA'|'CAA'|'CNAME'|'DS'|'HTTPS'|'MX'|'NAPTR'|'NS'|'PTR'|'SOA'|'SPF'|'SRV'|'SSHFP'|'SVCB'|'TLSA'|'TXT',
+ *         Comment?: string,
+ *         ...,
+ *     }>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createReusableDelegationSet(array $args = [])
  * @phpstan-method \Aws\Result createReusableDelegationSet(array{CallerReference?: string, HostedZoneId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise createReusableDelegationSetAsync(array $args = [])
@@ -254,6 +276,26 @@ use Psr\Http\Message\RequestInterface;
  * @phpstan-method \Aws\Result deleteQueryLoggingConfig(array{Id?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteQueryLoggingConfigAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteQueryLoggingConfigAsync(array{Id?: string, ...} $args = [])
+ * @method \Aws\Result deleteResourceRecordSetProtections(array $args = [])
+ * @phpstan-method \Aws\Result deleteResourceRecordSetProtections(array{
+ *     HostedZoneId?: string,
+ *     Protections?: list<array{
+ *         RecordName?: string,
+ *         RecordType?: 'A'|'AAAA'|'CAA'|'CNAME'|'DS'|'HTTPS'|'MX'|'NAPTR'|'NS'|'PTR'|'SOA'|'SPF'|'SRV'|'SSHFP'|'SVCB'|'TLSA'|'TXT',
+ *         ...,
+ *     }>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteResourceRecordSetProtectionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteResourceRecordSetProtectionsAsync(array{
+ *     HostedZoneId?: string,
+ *     Protections?: list<array{
+ *         RecordName?: string,
+ *         RecordType?: 'A'|'AAAA'|'CAA'|'CNAME'|'DS'|'HTTPS'|'MX'|'NAPTR'|'NS'|'PTR'|'SOA'|'SPF'|'SRV'|'SSHFP'|'SVCB'|'TLSA'|'TXT',
+ *         ...,
+ *     }>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result deleteReusableDelegationSet(array $args = [])
  * @phpstan-method \Aws\Result deleteReusableDelegationSet(array{Id?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteReusableDelegationSetAsync(array $args = [])
@@ -454,6 +496,24 @@ use Psr\Http\Message\RequestInterface;
  * @phpstan-method \Aws\Result listQueryLoggingConfigs(array{HostedZoneId?: string, NextToken?: string, MaxResults?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listQueryLoggingConfigsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listQueryLoggingConfigsAsync(array{HostedZoneId?: string, NextToken?: string, MaxResults?: string, ...} $args = [])
+ * @method \Aws\Result listResourceRecordSetProtections(array $args = [])
+ * @phpstan-method \Aws\Result listResourceRecordSetProtections(array{
+ *     HostedZoneId?: string,
+ *     StartRecordName?: string,
+ *     StartRecordType?: 'A'|'AAAA'|'CAA'|'CNAME'|'DS'|'HTTPS'|'MX'|'NAPTR'|'NS'|'PTR'|'SOA'|'SPF'|'SRV'|'SSHFP'|'SVCB'|'TLSA'|'TXT',
+ *     MaxResults?: string,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listResourceRecordSetProtectionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listResourceRecordSetProtectionsAsync(array{
+ *     HostedZoneId?: string,
+ *     StartRecordName?: string,
+ *     StartRecordType?: 'A'|'AAAA'|'CAA'|'CNAME'|'DS'|'HTTPS'|'MX'|'NAPTR'|'NS'|'PTR'|'SOA'|'SPF'|'SRV'|'SSHFP'|'SVCB'|'TLSA'|'TXT',
+ *     MaxResults?: string,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listResourceRecordSets(array $args = [])
  * @phpstan-method \Aws\Result listResourceRecordSets(array{
  *     HostedZoneId?: string,

@@ -2,6 +2,7 @@
   "version": "2.0",
   "service": "<p>Amazon Managed Workflows for Apache Airflow Serverless provides a managed workflow orchestration platform for running Apache Airflow workflows in a serverless environment. You can use Amazon Managed Workflows for Apache Airflow Serverless to create, manage, and run data processing workflows without managing the underlying infrastructure, Airflow clusters, metadata databases, or scheduling overhead. The service provides secure multi-tenant run environments with automatic scaling, comprehensive logging, and integration with multiple Amazon Web Services services for orchestrating complex analytics workloads.</p>",
   "operations": {
+    "CreateAirflowUiUrl": "<p>Creates a launch URL that opens the Apache Airflow UI for your workflows in Amazon Managed Workflows for Apache Airflow Serverless. The UI shows the workflows in your account in the current AWS Region. To start a UI session, open the URL in a browser before it expires.</p> <p>The UI runs with the permissions of the IAM identity that you use to call this operation. You see only the workflows, workflow runs, and logs that the identity can read, and you can start a workflow run only if the identity has permission to start one.</p> <p>The UI session uses the caller's permissions. The session works only from the network address that opened the URL. It ends at <code>SessionExpiresAt</code> or when you sign out from the UI.</p>",
     "CreateWorkflow": "<p>Creates a new workflow in Amazon Managed Workflows for Apache Airflow Serverless. This operation initializes a workflow with the specified configuration including the workflow definition, execution role, and optional settings for encryption, logging, and networking. You must provide the workflow definition as a YAML file stored in Amazon S3 that defines the DAG structure using supported Amazon Web Services operators. Amazon Managed Workflows for Apache Airflow Serverless automatically creates the first version of the workflow and sets up the necessary execution environment with multi-tenant isolation and security controls.</p>",
     "DeleteWorkflow": "<p>Deletes a workflow and all its versions. This operation permanently removes the workflow and cannot be undone. Amazon Managed Workflows for Apache Airflow Serverless ensures that all associated resources are properly cleaned up, including stopping any running executions, removing scheduled triggers, and cleaning up execution history. The deletion process respects the multi-tenant isolation boundaries and ensures that no residual data or configurations remain that could affect other customers or workflows.</p>",
     "GetTaskInstance": "<p>Retrieves detailed information about a specific task instance within a workflow run. Task instances represent individual tasks that are executed as part of a workflow in the Amazon Managed Workflows for Apache Airflow Serverless environment. Each task instance runs in an isolated ECS container with dedicated resources and security boundaries. The service tracks task execution state, retry attempts, and provides detailed timing and error information for troubleshooting and monitoring purposes.</p>",
@@ -23,6 +24,12 @@
       "base": "<p>You do not have sufficient permission to perform this action.</p>",
       "refs": {}
     },
+    "AuthorizedUrlString": {
+      "base": null,
+      "refs": {
+        "CreateAirflowUiUrlResponse$AuthorizedUrl": "<p>The launch URL that opens the Airflow UI. Open it in a browser before <code>UrlExpiresAt</code>. The UI session uses the permissions of the identity that called this operation.</p>"
+      }
+    },
     "Code": {
       "base": "<p>Specifies the Amazon S3 location of code artifacts that workflows use during execution.</p>",
       "refs": {
@@ -33,6 +40,14 @@
     },
     "ConflictException": {
       "base": "<p>You cannot create a resource that already exists, or the resource is in a state that prevents the requested operation.</p>",
+      "refs": {}
+    },
+    "CreateAirflowUiUrlRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAirflowUiUrlResponse": {
+      "base": null,
       "refs": {}
     },
     "CreateWorkflowRequest": {
@@ -134,6 +149,12 @@
         "ThrottlingException$Message": null,
         "ValidationException$Message": null,
         "ValidationExceptionField$Message": "<p>A message that describes why the field failed validation.</p>"
+      }
+    },
+    "ExpiresInSecondsInteger": {
+      "base": null,
+      "refs": {
+        "CreateAirflowUiUrlRequest$ExpiresInSeconds": "<p>Specifies the number of seconds that the launch URL stays valid. This value limits only the time to open the URL, not the length of the UI session. The default is 300.</p>"
       }
     },
     "GenericMap": {
@@ -384,9 +405,9 @@
       }
     },
     "ScheduleConfiguration": {
-      "base": "<p>The configuration to use to schedule automated workflow execution using cron expressions. Amazon Managed Workflows for Apache Airflow Serverless integrates with EventBridge Scheduler to provide cost-effective, timezone-aware scheduling capabilities. The service supports both time-based and event-based scheduling (event-based scheduling available post-GA). When a workflow definition includes scheduling information, Amazon Managed Workflows for Apache Airflow Serverless automatically configures the appropriate triggers and ensures only one version of a workflow has an active schedule at any time.</p>",
+      "base": "<p>Contains the configuration used to schedule automated workflow execution. Only one version of a workflow can have an active schedule at any time.</p>",
       "refs": {
-        "GetWorkflowResponse$ScheduleConfiguration": "<p>The schedule configuration for the workflow, including cron expressions for automated execution. Amazon Managed Workflows for Apache Airflow Serverless uses EventBridge Scheduler for cost-effective, timezone-aware scheduling. When a workflow includes schedule information in its YAML definition, the service automatically configures the appropriate triggers for automated execution. Only one version of a workflow can have an active schedule at any given time.</p>",
+        "GetWorkflowResponse$ScheduleConfiguration": "<p>The schedule configuration for the workflow. Only one version of a workflow can have an active schedule at any given time.</p>",
         "WorkflowVersionSummary$ScheduleConfiguration": "<p>The schedule configuration for this workflow version.</p>"
       }
     },
@@ -405,6 +426,18 @@
     "ServiceQuotaExceededException": {
       "base": "<p>The request exceeds the service quota for Amazon Managed Workflows for Apache Airflow Serverless resources. This can occur when you attempt to create more workflows than allowed, exceed concurrent workflow run limits, or surpass task execution limits. Amazon Managed Workflows for Apache Airflow Serverless implements admission control using DynamoDB-based counters to manage resource utilization across the multi-tenant environment. Contact Amazon Web Services Support to request quota increases if you need higher limits for your use case.</p>",
       "refs": {}
+    },
+    "SessionDurationInSecondsInteger": {
+      "base": null,
+      "refs": {
+        "CreateAirflowUiUrlRequest$SessionDurationInSeconds": "<p>Specifies the number of seconds that the UI session lasts, starting from when you call this operation. The default is 43200 (12 hours).</p>"
+      }
+    },
+    "SessionIdString": {
+      "base": null,
+      "refs": {
+        "CreateAirflowUiUrlResponse$SessionId": "<p>The URL starts a UI session that has this identifier.</p>"
+      }
     },
     "StartWorkflowRunRequest": {
       "base": null,
@@ -444,7 +477,7 @@
         "ObjectMap$key": null,
         "ResourceNotFoundException$ResourceId": "<p>The unique identifier of the resource.</p>",
         "ResourceNotFoundException$ResourceType": "<p>The type of the resource.</p>",
-        "ScheduleConfiguration$CronExpression": "<p>A cron expression that defines when the workflow is automatically executed. Uses standard cron syntax.</p>",
+        "ScheduleConfiguration$CronExpression": "<p>The schedule expression that determines when the workflow runs, as specified in the <code>schedule</code> parameter of the workflow's YAML definition. You can specify one of the following types of schedule expressions:</p> <ul> <li> <p>Apache Airflow cron expression – Five fields, such as <code>0 12 1 * *</code>.</p> </li> <li> <p>Apache Airflow schedule preset – <code>@hourly</code>, <code>@daily</code>, <code>@weekly</code>, <code>@monthly</code>, <code>@yearly</code>, or <code>@annually</code>.</p> </li> <li> <p>EventBridge Scheduler rate expression – For example, <code>rate(5 minutes)</code>. Supported units are minutes, hours, and days.</p> </li> <li> <p>EventBridge Scheduler cron expression – Six fields, such as <code>cron(0 12 * * ? *)</code>.</p> </li> </ul> <p>In a cron expression, specify either a day-of-month or a day-of-week, not both.</p>",
         "ServiceQuotaExceededException$ResourceId": "<p>The unique identifier of the resource.</p>",
         "ServiceQuotaExceededException$ResourceType": "<p>The type of resource affected.</p>",
         "ServiceQuotaExceededException$ServiceCode": "<p>The code for the service.</p>",
@@ -542,6 +575,8 @@
     "TimestampValue": {
       "base": null,
       "refs": {
+        "CreateAirflowUiUrlResponse$UrlExpiresAt": "<p>The launch URL stops being valid at this time. The value is in ISO 8601 date-time format.</p>",
+        "CreateAirflowUiUrlResponse$SessionExpiresAt": "<p>The UI session ends at this time. The value is in ISO 8601 date-time format. After this time, create a new URL to open the UI again.</p>",
         "CreateWorkflowResponse$CreatedAt": "<p>The timestamp when the workflow was created, in ISO 8601 date-time format.</p>",
         "GetTaskInstanceResponse$ModifiedAt": "<p>The timestamp when the task instance was last modified, in ISO 8601 date-time format.</p>",
         "GetTaskInstanceResponse$EndedAt": "<p>The timestamp when the task instance completed execution, in ISO 8601 date-time format. This value is null if the task is not complete.</p>",

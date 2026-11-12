@@ -49,6 +49,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "AssociateVirtualMachinesToCloudVmCluster":{
+      "name":"AssociateVirtualMachinesToCloudVmCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateVirtualMachinesToCloudVmClusterInput"},
+      "output":{"shape":"AssociateVirtualMachinesToCloudVmClusterOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "AssociateVirtualMachinesToExadbVmCluster":{
       "name":"AssociateVirtualMachinesToExadbVmCluster",
       "http":{
@@ -418,6 +435,23 @@
       },
       "input":{"shape":"DisassociateIamRoleFromResourceInput"},
       "output":{"shape":"DisassociateIamRoleFromResourceOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "DisassociateVirtualMachinesFromCloudVmCluster":{
+      "name":"DisassociateVirtualMachinesFromCloudVmCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateVirtualMachinesFromCloudVmClusterInput"},
+      "output":{"shape":"DisassociateVirtualMachinesFromCloudVmClusterOutput"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -1286,6 +1320,24 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "UpdateCloudAutonomousVmCluster":{
+      "name":"UpdateCloudAutonomousVmCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateCloudAutonomousVmClusterInput"},
+      "output":{"shape":"UpdateCloudAutonomousVmClusterOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "UpdateCloudExadataInfrastructure":{
       "name":"UpdateCloudExadataInfrastructure",
       "http":{
@@ -1294,6 +1346,40 @@
       },
       "input":{"shape":"UpdateCloudExadataInfrastructureInput"},
       "output":{"shape":"UpdateCloudExadataInfrastructureOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "UpdateCloudExadataInfrastructureStorageCapacity":{
+      "name":"UpdateCloudExadataInfrastructureStorageCapacity",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateCloudExadataInfrastructureStorageCapacityInput"},
+      "output":{"shape":"UpdateCloudExadataInfrastructureStorageCapacityOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "UpdateCloudVmCluster":{
+      "name":"UpdateCloudVmCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateCloudVmClusterInput"},
+      "output":{"shape":"UpdateCloudVmClusterOutput"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -1471,6 +1557,27 @@
     "AssociateIamRoleToResourceOutput":{
       "type":"structure",
       "members":{}
+    },
+    "AssociateVirtualMachinesToCloudVmClusterInput":{
+      "type":"structure",
+      "required":[
+        "cloudVmClusterId",
+        "dbServers"
+      ],
+      "members":{
+        "cloudVmClusterId":{"shape":"ResourceId"},
+        "dbServers":{"shape":"StringList"}
+      }
+    },
+    "AssociateVirtualMachinesToCloudVmClusterOutput":{
+      "type":"structure",
+      "required":["cloudVmClusterId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "cloudVmClusterId":{"shape":"String"}
+      }
     },
     "AssociateVirtualMachinesToExadbVmClusterInput":{
       "type":"structure",
@@ -2022,6 +2129,7 @@
         "memorySizeInGBs":{"shape":"Integer"},
         "nodeCount":{"shape":"Integer"},
         "nonProvisionableAutonomousContainerDatabases":{"shape":"Integer"},
+        "ocpusLowestScaledValue":{"shape":"Integer"},
         "provisionableAutonomousContainerDatabases":{"shape":"Integer"},
         "provisionedAutonomousContainerDatabases":{"shape":"Integer"},
         "provisionedCpus":{"shape":"Float"},
@@ -2095,6 +2203,7 @@
         "memorySizeInGBs":{"shape":"Integer"},
         "nodeCount":{"shape":"Integer"},
         "nonProvisionableAutonomousContainerDatabases":{"shape":"Integer"},
+        "ocpusLowestScaledValue":{"shape":"Integer"},
         "provisionableAutonomousContainerDatabases":{"shape":"Integer"},
         "provisionedAutonomousContainerDatabases":{"shape":"Integer"},
         "provisionedCpus":{"shape":"Float"},
@@ -3627,6 +3736,27 @@
     "DisassociateIamRoleFromResourceOutput":{
       "type":"structure",
       "members":{}
+    },
+    "DisassociateVirtualMachinesFromCloudVmClusterInput":{
+      "type":"structure",
+      "required":[
+        "cloudVmClusterId",
+        "dbServers"
+      ],
+      "members":{
+        "cloudVmClusterId":{"shape":"ResourceId"},
+        "dbServers":{"shape":"StringList"}
+      }
+    },
+    "DisassociateVirtualMachinesFromCloudVmClusterOutput":{
+      "type":"structure",
+      "required":["cloudVmClusterId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "cloudVmClusterId":{"shape":"String"}
+      }
     },
     "DisassociateVirtualMachinesFromExadbVmClusterInput":{
       "type":"structure",
@@ -5413,7 +5543,7 @@
       "type":"string",
       "max":18,
       "min":1,
-      "pattern":"(?:(?:\\d|[01]?\\d\\d|2[0-4]\\d|25[0-5])\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d|\\d)\\/(?:[1-2][0-9]|3[0-2]|[1-9])"
+      "pattern":"(?:(?:\\d|[01]?\\d\\d|2[0-4]\\d|25[0-5])\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d|\\d)\\/(?:[1-2][0-9]|3[0-2]|[0-9])"
     },
     "PeeredCidrList":{
       "type":"list",
@@ -6125,12 +6255,59 @@
         "statusReason":{"shape":"String"}
       }
     },
+    "UpdateCloudAutonomousVmClusterInput":{
+      "type":"structure",
+      "required":["cloudAutonomousVmClusterId"],
+      "members":{
+        "cloudAutonomousVmClusterId":{"shape":"ResourceId"},
+        "autonomousDataStorageSizeInTBs":{"shape":"UpdateCloudAutonomousVmClusterInputAutonomousDataStorageSizeInTBsDouble"},
+        "cpuCoreCountPerNode":{"shape":"UpdateCloudAutonomousVmClusterInputCpuCoreCountPerNodeInteger"},
+        "description":{"shape":"UpdateCloudAutonomousVmClusterInputDescriptionString"},
+        "displayName":{"shape":"ResourceDisplayName"},
+        "licenseModel":{"shape":"LicenseModel"},
+        "maintenanceWindow":{"shape":"MaintenanceWindow"},
+        "totalContainerDatabases":{"shape":"UpdateCloudAutonomousVmClusterInputTotalContainerDatabasesInteger"}
+      }
+    },
+    "UpdateCloudAutonomousVmClusterInputAutonomousDataStorageSizeInTBsDouble":{
+      "type":"double",
+      "box":true,
+      "min":0
+    },
+    "UpdateCloudAutonomousVmClusterInputCpuCoreCountPerNodeInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "UpdateCloudAutonomousVmClusterInputDescriptionString":{
+      "type":"string",
+      "max":400,
+      "min":1
+    },
+    "UpdateCloudAutonomousVmClusterInputTotalContainerDatabasesInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "UpdateCloudAutonomousVmClusterOutput":{
+      "type":"structure",
+      "required":["cloudAutonomousVmClusterId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "cloudAutonomousVmClusterId":{"shape":"String"}
+      }
+    },
     "UpdateCloudExadataInfrastructureInput":{
       "type":"structure",
       "required":["cloudExadataInfrastructureId"],
       "members":{
         "cloudExadataInfrastructureId":{"shape":"ResourceIdOrArn"},
-        "maintenanceWindow":{"shape":"MaintenanceWindow"}
+        "displayName":{"shape":"ResourceDisplayName"},
+        "computeCount":{"shape":"Integer"},
+        "maintenanceWindow":{"shape":"MaintenanceWindow"},
+        "storageCount":{"shape":"Integer"}
       }
     },
     "UpdateCloudExadataInfrastructureOutput":{
@@ -6141,6 +6318,74 @@
         "status":{"shape":"ResourceStatus"},
         "statusReason":{"shape":"String"},
         "cloudExadataInfrastructureId":{"shape":"String"}
+      }
+    },
+    "UpdateCloudExadataInfrastructureStorageCapacityInput":{
+      "type":"structure",
+      "required":["cloudExadataInfrastructureId"],
+      "members":{
+        "cloudExadataInfrastructureId":{"shape":"ResourceIdOrArn"}
+      }
+    },
+    "UpdateCloudExadataInfrastructureStorageCapacityOutput":{
+      "type":"structure",
+      "required":["cloudExadataInfrastructureId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "cloudExadataInfrastructureId":{"shape":"String"}
+      }
+    },
+    "UpdateCloudVmClusterInput":{
+      "type":"structure",
+      "required":["cloudVmClusterId"],
+      "members":{
+        "cloudVmClusterId":{"shape":"ResourceId"},
+        "cpuCoreCount":{"shape":"UpdateCloudVmClusterInputCpuCoreCountInteger"},
+        "dataCollectionOptions":{"shape":"DataCollectionOptions"},
+        "dataStorageSizeInTBs":{"shape":"UpdateCloudVmClusterInputDataStorageSizeInTBsDouble"},
+        "dbNodeStorageSizeInGBs":{"shape":"UpdateCloudVmClusterInputDbNodeStorageSizeInGBsInteger"},
+        "displayName":{"shape":"ResourceDisplayName"},
+        "sshPublicKeys":{"shape":"StringList"},
+        "licenseModel":{"shape":"LicenseModel"},
+        "memorySizeInGBs":{"shape":"UpdateCloudVmClusterInputMemorySizeInGBsInteger"},
+        "storageSizeInGBs":{"shape":"UpdateCloudVmClusterInputStorageSizeInGBsInteger"}
+      }
+    },
+    "UpdateCloudVmClusterInputCpuCoreCountInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "UpdateCloudVmClusterInputDataStorageSizeInTBsDouble":{
+      "type":"double",
+      "box":true,
+      "min":0
+    },
+    "UpdateCloudVmClusterInputDbNodeStorageSizeInGBsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "UpdateCloudVmClusterInputMemorySizeInGBsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "UpdateCloudVmClusterInputStorageSizeInGBsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "UpdateCloudVmClusterOutput":{
+      "type":"structure",
+      "required":["cloudVmClusterId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "cloudVmClusterId":{"shape":"String"}
       }
     },
     "UpdateExadbVmClusterInput":{
