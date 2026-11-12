@@ -248,7 +248,7 @@ class DecodingEventStreamIterator implements Iterator
     private function uintToInt($val, $size)
     {
         $signedCap = pow(2, $size - 1);
-        if ($val > $signedCap) {
+        if ($size < 64 && $val >= $signedCap) {
             $val -= (2 * $signedCap);
         }
         return $val;
@@ -327,7 +327,7 @@ class DecodingEventStreamIterator implements Iterator
     {
         list($val, $bytes) = $this->decodeInt64();
         return [
-            DateTimeResult::createFromFormat('U.u', $val / 1000),
+            DateTimeResult::createFromFormat('U.u', sprintf('%.6F', $val / 1000)),
             $bytes
         ];
     }

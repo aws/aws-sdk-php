@@ -2,6 +2,7 @@
 
 namespace Aws\Test\Api\Parser;
 
+use Aws\Api\DateTimeResult;
 use Aws\Api\Parser\DecodingEventStreamIterator;
 use Aws\Api\Parser\Exception\ParserException;
 use GuzzleHttp\Psr7;
@@ -13,6 +14,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(DecodingEventStreamIterator::class)]
 class DecodingEventStreamIteratorTest extends TestCase
 {
+    use EventStreamMessageTrait;
+
     public static function complianceTests(): \Generator
     {
         $dataFilesIterator = \Aws\recursive_dir_iterator(
@@ -128,5 +131,50 @@ class DecodingEventStreamIteratorTest extends TestCase
                 ''
             );
         }
+    }
+
+    #[DataProvider('timestampHeaderProvider')]
+    public function testDecodesWholeSecondTimestampHeader(
+        int $milliseconds,
+        string $expected
+    ): void {
+        $events = new DecodingEventStreamIterator(Psr7\Utils::streamFor(
+            self::eventStreamMessage(self::eventStreamHeader('time', 8, pack('J', $milliseconds)))
+        ));
+        $value = $events->current()['headers']['time'];
+
+        $this->assertInstanceOf(DateTimeResult::class, $value);
+        $this->assertSame($expected, $value->format('Y-m-d\TH:i:s.uP'));
+        $this->assertSame('+00:00', $value->getTimezone()->getName());
+    }
+
+    public static function timestampHeaderProvider(): array
+    {
+        return [
+            'whole second' => [1609502096000, '2021-01-01T11:54:56.000000+00:00'],
+            'fraction of a second' => [1609502096500, '2021-01-01T11:54:56.500000+00:00'],
+        ];
+    }
+
+    public function testDecodesSignedHeaderMinimums(): void
+    {
+        $events = new DecodingEventStreamIterator(Psr7\Utils::streamFor(self::eventStreamMessage(
+            self::eventStreamHeader('byte', 2, "\x80")
+            . self::eventStreamHeader('short', 3, "\x80\x00")
+            . self::eventStreamHeader('integer', 4, "\x80\x00\x00\x00")
+            . self::eventStreamHeader('long', 5, pack('J', PHP_INT_MAX))
+            . self::eventStreamHeader('byteMax', 2, "\x7f")
+            . self::eventStreamHeader('shortMax', 3, "\x7f\xff")
+            . self::eventStreamHeader('integerMax', 4, "\x7f\xff\xff\xff")
+        )));
+        $headers = $events->current()['headers'];
+
+        $this->assertSame(-128, $headers['byte']);
+        $this->assertSame(-32768, $headers['short']);
+        $this->assertSame(-2147483648, $headers['integer']);
+        $this->assertSame(PHP_INT_MAX, $headers['long']);
+        $this->assertSame(127, $headers['byteMax']);
+        $this->assertSame(32767, $headers['shortMax']);
+        $this->assertSame(2147483647, $headers['integerMax']);
     }
 }

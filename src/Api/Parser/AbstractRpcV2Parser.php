@@ -62,13 +62,20 @@ abstract class AbstractRpcV2Parser extends AbstractParser
         $outputShape = $operation->getOutput();
         foreach ($outputShape->getMembers() as $memberName => $memberProps) {
             if (!empty($memberProps['eventstream'])) {
-                return new Result([
-                    $memberName => new EventParsingIterator(
-                        $response->getBody(),
-                        $outputShape->getMember($memberName),
-                        $this
-                    )
-                ]);
+                $iterator = new EventParsingIterator(
+                    $response->getBody(),
+                    $outputShape->getMember($memberName),
+                    $this,
+                    $outputShape
+                );
+                // Members beside the stream arrive in the initial-response
+                // event, so the first message is read here, before the
+                // Result is returned.
+                $initial = count($outputShape->getMembers()) > 1
+                    ? $iterator->readInitialResponse()
+                    : [];
+
+                return new Result(array_merge($initial, [$memberName => $iterator]));
             }
         }
 

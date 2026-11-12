@@ -103,6 +103,16 @@ class NonSeekableStreamDecodingEventStreamIterator extends DecodingEventStreamIt
     #[\ReturnTypeWillChange]
     public function rewind()
     {
+        $byte = $this->stream->read(1);
+        if ($byte === '' && $this->stream->eof()) {
+            $this->currentEvent = null;
+            return;
+        }
+
+        if ($byte !== '') {
+            $this->tempBuffer[] = $byte;
+        }
+
         $this->currentEvent = $this->parseEvent();
     }
 

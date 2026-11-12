@@ -23,14 +23,30 @@ class EventParsingIterator implements Iterator
     /** @var AbstractParser */
     private $parser;
 
+    /** @var StructureShape|null */
+    private $outputShape;
+
+    /** @var bool true when readInitialResponse() has read the first message */
+    private $primed = false;
+
+    /**
+     * @param StreamInterface $stream
+     * @param StructureShape $shape the event stream shape
+     * @param AbstractParser $parser
+     * @param StructureShape|null $outputShape the operation output shape. When
+     *        set, the initial response and modeled exceptions are parsed with
+     *        the parser against the model.
+     */
     public function __construct(
         StreamInterface $stream,
         StructureShape $shape,
-        AbstractParser $parser
+        AbstractParser $parser,
+        ?StructureShape $outputShape = null
     ) {
         $this->decodingIterator = $this->chooseDecodingIterator($stream);
         $this->shape = $shape;
         $this->parser = $parser;
+        $this->outputShape = $outputShape;
     }
 
     /**
@@ -83,7 +99,42 @@ class EventParsingIterator implements Iterator
     #[\ReturnTypeWillChange]
     public function rewind()
     {
+        if ($this->primed) {
+            // readInitialResponse() already read the first message.
+            $this->primed = false;
+            return;
+        }
+
         $this->decodingIterator->rewind();
+    }
+
+    /**
+     * Reads the first message from the stream. When it is an initial-response
+     * event, returns its members; otherwise returns an empty array and leaves
+     * the message as the first item of the iteration.
+     *
+     * @return array
+     *
+     * @throws ParserException when the first message cannot be read or decoded
+     */
+    public function readInitialResponse(): array
+    {
+        $this->decodingIterator->rewind();
+        $this->primed = true;
+        if (!$this->decodingIterator->valid()) {
+            return [];
+        }
+
+        $event = $this->decodingIterator->current();
+        $messageType = $event['headers'][':message-type'] ?? '';
+        $eventType = $event['headers'][':event-type'] ?? null;
+        if (($messageType === '' || $messageType === 'event')
+            && $eventType === 'initial-response'
+        ) {
+            return $this->parseInitialResponseEvent($event['payload'])['initial-response'] ?? [];
+        }
+
+        return [];
     }
 
     /**
@@ -163,6 +214,8 @@ class EventParsingIterator implements Iterator
             if (isset($memberProps['eventpayload'])) {
                 if ($memberShape->getType() === 'blob') {
                     $parsedPayload[$memberName] = $payload;
+                } elseif ($memberShape->getType() === 'string') {
+                    $parsedPayload[$memberName] = (string) $payload;
                 } else {
                     $parsedPayload[$memberName] = $this->parser->parseMemberFromStream(
                         $payload,
@@ -194,18 +247,61 @@ class EventParsingIterator implements Iterator
         );
     }
 
-    private function parseException(array $event) {
-        $payload = $event['payload']?->getContents();
-        $parsedPayload = json_decode($payload, true);
+    private function parseException(array $event)
+    {
+        if ($this->outputShape !== null) {
+            $this->parseModeledException($event);
+        } else {
+            $payload = $event['payload']?->getContents();
+            $parsedPayload = json_decode($payload, true);
 
-        throw new EventStreamDataException(
-            $event['headers'][':exception-type'] ?? 'Unknown',
-            $parsedPayload['message'] ?? $payload,
-        );
+            throw new EventStreamDataException(
+                $event['headers'][':exception-type'] ?? 'Unknown',
+                $parsedPayload['message'] ?? $payload,
+            );
+        }
+    }
+
+    private function parseModeledException(array $event): never
+    {
+        $code = $event['headers'][':exception-type'] ?? 'Unknown';
+        $data = [];
+        if (isset($event['headers'][':exception-type']) && $this->shape->hasMember($code)) {
+            $data = $this->parser->parseMemberFromStream(
+                $event['payload'],
+                $this->shape->getMember($code),
+                null
+            ) ?? [];
+        }
+
+        $message = '';
+        foreach ($data as $name => $value) {
+            if (strcasecmp($name, 'message') === 0) {
+                $message = (string) $value;
+                break;
+            }
+        }
+
+        throw new EventStreamDataException($code, $message, $data);
     }
 
     private function parseInitialResponseEvent($payload): array
     {
-        return ['initial-response' => json_decode($payload, true)];
+        if ($this->outputShape === null) {
+            return ['initial-response' => json_decode($payload, true)];
+        }
+
+        $members = $this->parser->parseMemberFromStream(
+            $payload,
+            $this->outputShape,
+            null
+        ) ?? [];
+        foreach ($this->outputShape->getMembers() as $name => $member) {
+            if (!empty($member['eventstream'])) {
+                unset($members[$name]);
+            }
+        }
+
+        return ['initial-response' => $members];
     }
 }

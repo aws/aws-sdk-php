@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Api\Serializer;
 
+use Aws\Api\Operation;
 use Aws\Api\Service;
 
 use Aws\Api\Shape;
@@ -33,6 +34,7 @@ abstract class AbstractRpcV2Serializer
     protected const HEADER_SMITHY_PROTOCOL = 'Smithy-Protocol';
     protected const HEADER_CONTENT_TYPE = 'Content-Type';
     protected const HEADER_ACCEPT = 'Accept';
+    private const EVENT_STREAM_CONTENT_TYPE = 'application/vnd.amazon.eventstream';
 
     /** @var array  */
     protected static array $defaultHeaders;
@@ -73,6 +75,9 @@ abstract class AbstractRpcV2Serializer
         $commandName = $command->getName();
         $operation = $this->api->getOperation($commandName);
         $headers = static::$defaultHeaders;
+        if ($this->hasEventStreamOutput($operation)) {
+            $headers[self::HEADER_ACCEPT] = self::EVENT_STREAM_CONTENT_TYPE;
+        }
 
         // Operations with no defined input type must not contain bodies
         // Content-Type must not be set
@@ -195,6 +200,25 @@ abstract class AbstractRpcV2Serializer
             default:
                 return $value;
         }
+    }
+
+    /**
+     * Requests with an event stream response send the event stream media
+     * type as Accept (Smithy RPC v2 CBOR specification, "Requests").
+     *
+     * @param Operation $operation
+     *
+     * @return bool
+     */
+    private function hasEventStreamOutput(Operation $operation): bool
+    {
+        foreach ($operation->getOutput()->getMembers() as $member) {
+            if (!empty($member['eventstream'])) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

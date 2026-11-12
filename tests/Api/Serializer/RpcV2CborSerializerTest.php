@@ -563,4 +563,76 @@ class RpcV2CborSerializerTest extends TestCase
         );
         $this->assertSame([(string) strlen((string) $request->getBody())], $request->getHeader('Content-Length'));
     }
+
+    #[DataProvider('acceptHeaderProvider')]
+    public function testSetsEventStreamAcceptForEventStreamOutput(
+        string $operation,
+        string $expectedAccept
+    ): void {
+        $service = new Service(
+            [
+                'metadata' => [
+                    'targetPrefix' => 'TestService',
+                    'protocol' => 'smithy-rpc-v2-cbor',
+                    'serviceIdentifier' => 'testservice',
+                ],
+                'operations' => [
+                    'StreamOperation' => [
+                        'http' => ['method' => 'POST'],
+                        'input' => ['shape' => 'StreamInput'],
+                        'output' => ['shape' => 'StreamOutput'],
+                    ],
+                    'PlainOperation' => [
+                        'http' => ['method' => 'POST'],
+                        'input' => ['shape' => 'StreamInput'],
+                        'output' => ['shape' => 'PlainOutput'],
+                    ],
+                ],
+                'shapes' => [
+                    'StreamInput' => [
+                        'type' => 'structure',
+                        'members' => ['sessionId' => ['shape' => 'StringShape']],
+                    ],
+                    'StreamOutput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'sessionId' => ['shape' => 'StringShape'],
+                            'stream' => ['shape' => 'EventStream'],
+                        ],
+                    ],
+                    'PlainOutput' => [
+                        'type' => 'structure',
+                        'members' => ['sessionId' => ['shape' => 'StringShape']],
+                    ],
+                    'EventStream' => [
+                        'type' => 'structure',
+                        'eventstream' => true,
+                        'members' => ['dataEvent' => ['shape' => 'DataEvent']],
+                    ],
+                    'DataEvent' => [
+                        'type' => 'structure',
+                        'event' => true,
+                        'members' => ['value' => ['shape' => 'StringShape']],
+                    ],
+                    'StringShape' => ['type' => 'string'],
+                ],
+            ],
+            function () {
+            }
+        );
+        $serializer = new RpcV2CborSerializer($service, 'http://example.com');
+        $request = $serializer(new Command($operation, ['sessionId' => 'session-1']));
+
+        $this->assertSame($expectedAccept, $request->getHeaderLine('Accept'));
+        $this->assertSame('application/cbor', $request->getHeaderLine('Content-Type'));
+        $this->assertSame('rpc-v2-cbor', $request->getHeaderLine('Smithy-Protocol'));
+    }
+
+    public static function acceptHeaderProvider(): array
+    {
+        return [
+            'event stream output' => ['StreamOperation', 'application/vnd.amazon.eventstream'],
+            'other output' => ['PlainOperation', 'application/cbor'],
+        ];
+    }
 }

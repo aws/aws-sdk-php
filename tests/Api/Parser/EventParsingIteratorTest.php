@@ -2,12 +2,15 @@
 
 namespace Aws\Test\Api\Parser;
 
+use Aws\Api\Cbor\CborEncoder;
 use Aws\Api\DateTimeResult;
+use Aws\Api\Parser\AbstractParser;
 use Aws\Api\Parser\AbstractRestParser;
 use Aws\Api\Parser\EventParsingIterator;
 use Aws\Api\Parser\Exception\ParserException;
 use Aws\Api\Parser\RestJsonParser;
 use Aws\Api\Parser\RestXmlParser;
+use Aws\Api\Parser\RpcV2CborParser;
 use Aws\Api\Service;
 use Aws\Api\ShapeMap;
 use Aws\Api\StructureShape;
@@ -21,6 +24,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(EventParsingIterator::class)]
 class EventParsingIteratorTest extends TestCase
 {
+    use EventStreamMessageTrait;
+
     const PROTOCOL_XML = 'XML';
     const PROTOCOL_JSON = 'JSON';
     const EVENT_STREAM_SHAPE =  __DIR__ . '/../eventstream_fixtures/eventstream_shape.json';
@@ -421,5 +426,353 @@ EOF],
                 'expected_exception_message' => 'Invalid request exception!',
             ]
         ];
+    }
+
+    #[DataProvider('stringPayloadParserProvider')]
+    public function testStringEventPayloadIsText(AbstractParser $parser): void
+    {
+        $shape = new StructureShape([
+            'type' => 'structure',
+            'eventstream' => true,
+            'members' => [
+                'textEvent' => [
+                    'type' => 'structure',
+                    'event' => true,
+                    'members' => [
+                        'text' => ['type' => 'string', 'eventpayload' => true],
+                    ],
+                ],
+            ],
+        ], new ShapeMap([]));
+        $message = self::stringHeaderMessage(
+            [':message-type' => 'event', ':event-type' => 'textEvent', ':content-type' => 'text/plain'],
+            'hello, world'
+        );
+        $iterator = new EventParsingIterator(Psr7\Utils::streamFor($message), $shape, $parser);
+
+        $this->assertSame(['textEvent' => ['text' => 'hello, world']], $iterator->current());
+    }
+
+    public static function stringPayloadParserProvider(): array
+    {
+        return [
+            'json' => [self::createRestParser(self::PROTOCOL_JSON)],
+            'cbor' => [new RpcV2CborParser(new Service([], function () {
+                return [];
+            }))],
+        ];
+    }
+
+    #[DataProvider('seekableProvider')]
+    public function testCborImplicitPayloadIsDecodedAgainstEventShape(bool $seekable): void
+    {
+        $encoder = new CborEncoder();
+        $payload = $encoder->encode([
+            'strings' => ['a', 'b'],
+            'counts' => ['x' => 1, 'y' => 2],
+            'nested' => ['name' => 'inner', 'values' => ['v']],
+            'time' => ['__cbor_timestamp' => 1609502096.5],
+            'data' => ['__cbor_bytes' => "\x00\x01binary"],
+            'flag' => true,
+            'count' => 3,
+        ]);
+        $events = $this->collectCborEvents($seekable, [self::cborEvent('valuesEvent', $payload)]);
+
+        $this->assertCount(1, $events);
+        $values = $events[0]['valuesEvent'];
+        $this->assertSame(['a', 'b'], $values['strings']);
+        $this->assertSame(['x' => 1, 'y' => 2], $values['counts']);
+        $this->assertSame(['name' => 'inner', 'values' => ['v']], $values['nested']);
+        $this->assertInstanceOf(DateTimeResult::class, $values['time']);
+        $this->assertSame('1609502096.500000', $values['time']->format('U.u'));
+        $this->assertSame("\x00\x01binary", $values['data']);
+        $this->assertTrue($values['flag']);
+        $this->assertSame(3, $values['count']);
+    }
+
+    public function testCborStructureAndUnionEventPayload(): void
+    {
+        $encoder = new CborEncoder();
+        $events = $this->collectCborEvents(true, [
+            self::cborEvent('structPayloadEvent', $encoder->encode(['name' => 'n', 'values' => ['a']])),
+            self::cborEvent(
+                'unionPayloadEvent',
+                $encoder->encode(['__type' => 'smithy.example#Choice', 'stringValue' => 's'])
+            ),
+        ]);
+
+        $this->assertSame([
+            ['structPayloadEvent' => ['payload' => ['name' => 'n', 'values' => ['a']]]],
+            ['unionPayloadEvent' => ['payload' => ['stringValue' => 's']]],
+        ], $events);
+    }
+
+    #[DataProvider('cborInitialResponseProvider')]
+    public function testCborInitialResponseIsDecodedAgainstOutputShape(
+        bool $seekable,
+        string $payload,
+        array $expected
+    ): void {
+        $events = $this->collectCborEvents($seekable, [self::cborEvent('initial-response', $payload)]);
+
+        $this->assertCount(1, $events);
+        $initial = $events[0]['initial-response'];
+        if (isset($expected['startedAt'])) {
+            $this->assertInstanceOf(DateTimeResult::class, $initial['startedAt']);
+            $this->assertSame($expected['startedAt'], $initial['startedAt']->format('U'));
+            unset($initial['startedAt'], $expected['startedAt']);
+        }
+        $this->assertSame($expected, $initial);
+    }
+
+    public static function cborInitialResponseProvider(): \Generator
+    {
+        $encoder = new CborEncoder();
+        $members = $encoder->encode([
+            'sessionId' => 'session-1',
+            'timeout' => 30,
+            'startedAt' => ['__cbor_timestamp' => 1609502096.0],
+            'unmodeled' => 'dropped',
+        ]);
+        $withStream = $encoder->encode(['sessionId' => 'session-1', 'stream' => ['x' => 1]]);
+        foreach ([[true, 'seekable'], [false, 'non-seekable']] as [$seekable, $label]) {
+            yield "members, $label" => [
+                $seekable,
+                $members,
+                ['sessionId' => 'session-1', 'timeout' => 30, 'startedAt' => '1609502096'],
+            ];
+            yield "empty map, $label" => [$seekable, $encoder->encodeEmptyMap(), []];
+            yield "empty payload, $label" => [$seekable, '', []];
+            yield "stream member in the payload, $label" => [$seekable, $withStream, ['sessionId' => 'session-1']];
+        }
+    }
+
+    #[DataProvider('modeledExceptionProvider')]
+    public function testCborModeledExceptionCarriesMessageAndMembers(
+        string $exceptionType,
+        string $messageMember
+    ): void {
+        $encoder = new CborEncoder();
+        $payload = $encoder->encode([$messageMember => 'the request failed', 'code' => 57]);
+
+        try {
+            $this->collectCborEvents(true, [self::cborException($exceptionType, $payload)]);
+            $this->fail('An exception event must throw.');
+        } catch (EventStreamDataException $e) {
+            $this->assertSame($exceptionType, $e->getAwsErrorCode());
+            $this->assertSame('the request failed', $e->getAwsErrorMessage());
+            $this->assertSame('the request failed', $e->getMessage());
+            $this->assertTrue($e->hasKey('code'));
+            $this->assertSame(57, $e->get('code'));
+            $this->assertSame('the request failed', $e->get($messageMember));
+        }
+    }
+
+    public static function modeledExceptionProvider(): array
+    {
+        return [
+            'message member' => ['modeledError', 'message'],
+            'Message member' => ['capitalMessageError', 'Message'],
+        ];
+    }
+
+    public function testCborUnknownExceptionTypeKeepsCode(): void
+    {
+        $encoder = new CborEncoder();
+        $payload = $encoder->encode(['message' => 'not modeled']);
+
+        try {
+            $this->collectCborEvents(true, [self::cborException('otherError', $payload)]);
+            $this->fail('An exception event must throw.');
+        } catch (EventStreamDataException $e) {
+            $this->assertSame('otherError', $e->getAwsErrorCode());
+            $this->assertSame('', $e->getAwsErrorMessage());
+            $this->assertFalse($e->hasKey('message'));
+            $this->assertNull($e->get('message'));
+        }
+    }
+
+    #[DataProvider('seekableProvider')]
+    public function testReadInitialResponseLeavesOtherFirstMessage(bool $seekable): void
+    {
+        $encoder = new CborEncoder();
+        $iterator = self::createCborIterator($seekable, implode('', [
+            self::cborEvent('structPayloadEvent', $encoder->encode(['name' => 'first'])),
+            self::cborException('modeledError', $encoder->encode(['message' => 'after the event'])),
+        ]));
+
+        $this->assertSame([], $iterator->readInitialResponse());
+
+        $events = [];
+        try {
+            foreach ($iterator as $event) {
+                $events[] = $event;
+            }
+            $this->fail('The exception event must throw.');
+        } catch (EventStreamDataException $e) {
+            $this->assertSame('after the event', $e->getAwsErrorMessage());
+        }
+        $this->assertSame([['structPayloadEvent' => ['payload' => ['name' => 'first']]]], $events);
+    }
+
+    public static function seekableProvider(): array
+    {
+        return ['seekable' => [true], 'non-seekable' => [false]];
+    }
+
+    /**
+     * A service with an rpcv2Cbor operation that has an output event stream.
+     *
+     * @return Service
+     */
+    private static function cborService(): Service
+    {
+        return new Service([
+            'metadata' => ['protocol' => 'smithy-rpc-v2-cbor', 'targetPrefix' => 'StreamService'],
+            'operations' => [
+                'StreamOperation' => [
+                    'http' => ['method' => 'POST', 'requestUri' => '/'],
+                    'output' => ['shape' => 'StreamOutput'],
+                ],
+            ],
+            'shapes' => [
+                'StreamOutput' => [
+                    'type' => 'structure',
+                    'members' => [
+                        'sessionId' => ['shape' => 'String'],
+                        'timeout' => ['shape' => 'Integer'],
+                        'startedAt' => ['shape' => 'Timestamp'],
+                        'stream' => ['shape' => 'EventStream'],
+                    ],
+                ],
+                'EventStream' => [
+                    'type' => 'structure',
+                    'eventstream' => true,
+                    'members' => [
+                        'valuesEvent' => ['shape' => 'ValuesEvent'],
+                        'structPayloadEvent' => ['shape' => 'StructPayloadEvent'],
+                        'unionPayloadEvent' => ['shape' => 'UnionPayloadEvent'],
+                        'modeledError' => ['shape' => 'ModeledError'],
+                        'capitalMessageError' => ['shape' => 'CapitalMessageError'],
+                    ],
+                ],
+                'ValuesEvent' => [
+                    'type' => 'structure',
+                    'event' => true,
+                    'members' => [
+                        'strings' => ['shape' => 'StringList'],
+                        'counts' => ['shape' => 'IntegerMap'],
+                        'nested' => ['shape' => 'Nested'],
+                        'time' => ['shape' => 'Timestamp'],
+                        'data' => ['shape' => 'Blob'],
+                        'flag' => ['shape' => 'Boolean'],
+                        'count' => ['shape' => 'Integer'],
+                    ],
+                ],
+                'StructPayloadEvent' => [
+                    'type' => 'structure',
+                    'event' => true,
+                    'members' => ['payload' => ['shape' => 'Nested', 'eventpayload' => true]],
+                ],
+                'UnionPayloadEvent' => [
+                    'type' => 'structure',
+                    'event' => true,
+                    'members' => ['payload' => ['shape' => 'Choice', 'eventpayload' => true]],
+                ],
+                'ModeledError' => [
+                    'type' => 'structure',
+                    'exception' => true,
+                    'members' => [
+                        'message' => ['shape' => 'String'],
+                        'code' => ['shape' => 'Integer'],
+                    ],
+                ],
+                'CapitalMessageError' => [
+                    'type' => 'structure',
+                    'exception' => true,
+                    'members' => [
+                        'Message' => ['shape' => 'String'],
+                        'code' => ['shape' => 'Integer'],
+                    ],
+                ],
+                'Nested' => [
+                    'type' => 'structure',
+                    'members' => [
+                        'name' => ['shape' => 'String'],
+                        'values' => ['shape' => 'StringList'],
+                    ],
+                ],
+                'Choice' => [
+                    'type' => 'structure',
+                    'union' => true,
+                    'members' => [
+                        'stringValue' => ['shape' => 'String'],
+                        'intValue' => ['shape' => 'Integer'],
+                    ],
+                ],
+                'StringList' => ['type' => 'list', 'member' => ['shape' => 'String']],
+                'IntegerMap' => ['type' => 'map', 'key' => ['shape' => 'String'], 'value' => ['shape' => 'Integer']],
+                'String' => ['type' => 'string'],
+                'Integer' => ['type' => 'integer'],
+                'Boolean' => ['type' => 'boolean'],
+                'Blob' => ['type' => 'blob'],
+                'Timestamp' => ['type' => 'timestamp'],
+            ],
+        ], function () {
+            return [];
+        });
+    }
+
+    /**
+     * Creates a shape-aware iterator over the given messages and collects its items.
+     *
+     * @param bool $seekable
+     * @param string[] $messages
+     *
+     * @return array
+     */
+    private function collectCborEvents(bool $seekable, array $messages): array
+    {
+        $iterator = self::createCborIterator($seekable, implode('', $messages));
+        $events = [];
+        foreach ($iterator as $event) {
+            $events[] = $event;
+        }
+
+        return $events;
+    }
+
+    private static function createCborIterator(bool $seekable, string $bytes): EventParsingIterator
+    {
+        $service = self::cborService();
+        $output = $service->getOperation('StreamOperation')->getOutput();
+        $stream = Psr7\Utils::streamFor($bytes);
+
+        return new EventParsingIterator(
+            $seekable ? $stream : new Psr7\NoSeekStream($stream),
+            $output->getMember('stream'),
+            new RpcV2CborParser($service),
+            $output
+        );
+    }
+
+    private static function cborEvent(string $eventType, string $payload): string
+    {
+        return self::stringHeaderMessage(
+            [':message-type' => 'event', ':event-type' => $eventType, ':content-type' => 'application/cbor'],
+            $payload
+        );
+    }
+
+    private static function cborException(string $exceptionType, string $payload): string
+    {
+        return self::stringHeaderMessage(
+            [
+                ':message-type' => 'exception',
+                ':exception-type' => $exceptionType,
+                ':content-type' => 'application/cbor',
+            ],
+            $payload
+        );
     }
 }

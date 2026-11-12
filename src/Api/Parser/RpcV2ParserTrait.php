@@ -79,13 +79,13 @@ trait RpcV2ParserTrait
      * Parses CBOR-encoded response data from RPC V2 CBOR services.
      *
      * @param StreamInterface $stream
-     * @param ResponseInterface $response
+     * @param ResponseInterface|null $response null for an event stream payload
      *
      * @return mixed
      */
     protected function parseCbor(
         StreamInterface $stream,
-        ResponseInterface $response
+        ?ResponseInterface $response
     ): mixed
     {
         try {

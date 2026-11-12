@@ -15,4 +15,19 @@ class EventStreamDataExceptionTest extends TestCase
         $this->assertSame('Code', $e->getAwsErrorCode());
         $this->assertSame('This is a message.', $e->getAwsErrorMessage());
     }
+
+    public function testCarriesModeledMembers()
+    {
+        $e = new EventStreamDataException('Code', 'A message.', ['message' => 'A message.', 'code' => 57]);
+        $this->assertSame('Code', $e->getAwsErrorCode());
+        $this->assertSame('A message.', $e->getAwsErrorMessage());
+        $this->assertTrue($e->hasKey('code'));
+        $this->assertSame(57, $e->get('code'));
+        $this->assertFalse($e->hasKey('other'));
+        $this->assertNull($e->get('other'));
+
+        $twoArguments = new EventStreamDataException('Code', 'A message.');
+        $this->assertFalse($twoArguments->hasKey('code'));
+        $this->assertNull($twoArguments->get('code'));
+    }
 }

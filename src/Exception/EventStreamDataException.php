@@ -8,12 +8,43 @@ class EventStreamDataException extends \RuntimeException
 {
     private $errorCode;
     private $errorMessage;
+    private $data;
 
-    public function __construct($code, $message)
+    /**
+     * @param string $code the exception type of the event
+     * @param string $message
+     * @param array $data the modeled members of the exception event
+     */
+    public function __construct($code, $message, array $data = [])
     {
         $this->errorCode = $code;
         $this->errorMessage = $message;
+        $this->data = $data;
         parent::__construct($message);
+    }
+
+    /**
+     * Check if a modeled member of the exception event is set.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasKey($name)
+    {
+        return isset($this->data[$name]);
+    }
+
+    /**
+     * Get a modeled member of the exception event.
+     *
+     * @param string $key
+     *
+     * @return mixed|null
+     */
+    public function get($key)
+    {
+        return $this->data[$key] ?? null;
     }
 
     /**
