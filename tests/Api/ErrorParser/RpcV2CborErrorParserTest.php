@@ -4,8 +4,12 @@ namespace Aws\Test\Api\ErrorParser;
 use Aws\Api\Cbor\CborEncoder;
 use Aws\Api\ErrorParser\RpcV2CborErrorParser;
 use Aws\Test\TestServiceTrait;
+use GuzzleHttp\Psr7\FnStream;
+use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -252,6 +256,122 @@ class RpcV2CborErrorParserTest extends TestCase
                     'body' => [],
                 ]
             ],
+            'Error code in CBOR body of unknown size' => [
+                new Response(
+                    400,
+                    ['x-amzn-requestid' => 'xyz'],
+                    self::bodyOfUnknownSize($encoder->encode([
+                        '__type' => 'BadRequestException',
+                        'message' => 'lorem ipsum',
+                    ]))
+                ),
+                null,
+                $parser,
+                [
+                    'code' => 'BadRequestException',
+                    'message' => 'lorem ipsum',
+                    'type' => 'client',
+                    'request_id' => 'xyz',
+                    'parsed' => [
+                        '__type' => 'BadRequestException',
+                        'message' => 'lorem ipsum',
+                    ],
+                    'body' => [],
+                ]
+            ],
+            'Modeled exception with service, body of unknown size' => [
+                new Response(
+                    400,
+                    [
+                        'TestHeader' => 'foo-header',
+                        'x-meta-foo' => 'foo-meta',
+                        'x-meta-bar' => 'bar-meta',
+                        'x-amzn-requestid' => 'xyz',
+                    ],
+                    self::bodyOfUnknownSize($encoder->encode([
+                        '__type' => 'TestException',
+                        'TestString' => 'foo',
+                        'TestInt' => 123,
+                        'NotModeled' => 'bar',
+                    ]))
+                ),
+                $command,
+                $parserWithService,
+                [
+                    'code' => 'TestException',
+                    'type' => 'client',
+                    'request_id' => 'xyz',
+                    'parsed' => [
+                        '__type' => 'TestException',
+                        'teststring' => 'foo',
+                        'testint' => 123,
+                        'notmodeled' => 'bar',
+                    ],
+                    'body' => [
+                        'TestString' => 'foo',
+                        'TestInt' => 123,
+                        'TestHeaderMember' => 'foo-header',
+                        'TestHeaders' => [
+                            'foo' => 'foo-meta',
+                            'bar' => 'bar-meta',
+                        ],
+                        'TestStatus' => 400,
+                    ],
+                    'message' => null,
+                    'error_shape' => $errorShape,
+                ]
+            ],
+            'Empty body of unknown size' => [
+                new Response(
+                    400,
+                    ['x-amzn-requestid' => 'xyz'],
+                    self::bodyOfUnknownSize('')
+                ),
+                null,
+                $parser,
+                [
+                    'code' => null,
+                    'message' => null,
+                    'type' => 'client',
+                    'request_id' => 'xyz',
+                    'parsed' => null,
+                    'body' => [],
+                ]
+            ],
+            'CBOR body that is a string' => [
+                new Response(
+                    400,
+                    ['x-amzn-requestid' => 'xyz'],
+                    $encoder->encode('lorem ipsum')
+                ),
+                null,
+                $parser,
+                [
+                    'code' => null,
+                    'message' => null,
+                    'type' => 'client',
+                    'request_id' => 'xyz',
+                    'parsed' => null,
+                    'body' => [],
+                ]
+            ],
+            'CBOR body that is a string, of unknown size' => [
+                new Response(
+                    400,
+                    ['x-amzn-requestid' => 'xyz'],
+                    self::bodyOfUnknownSize($encoder->encode('lorem ipsum'))
+                ),
+                null,
+                $parser,
+                [
+                    'code' => null,
+                    'message' => null,
+                    'type' => 'client',
+                    'request_id' => 'xyz',
+                    'parsed' => null,
+                    'body' => [],
+                ]
+            ],
             'Zero values in headers (should be preserved)' => [
                 new Response(
                     400,
@@ -387,6 +507,22 @@ class RpcV2CborErrorParserTest extends TestCase
                 ]
             ],
         ];
+    }
+
+    /**
+     * A body that does not know its size and cannot seek, as when the HTTP
+     * handler streams the response.
+     */
+    private static function bodyOfUnknownSize(string $bytes): StreamInterface
+    {
+        return FnStream::decorate(
+            new NoSeekStream(Utils::streamFor($bytes)),
+            [
+                'getSize' => static function (): ?int {
+                    return null;
+                },
+            ]
+        );
     }
 
     public function testHandlesNullValues(): void

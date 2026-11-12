@@ -89,9 +89,13 @@ abstract class AbstractRpcV2ErrorParser extends AbstractErrorParser
 
         $parsedBody = null;
         $body = $response->getBody();
-        if ($body->getSize()) {
-            //TODO handle unseekable streams with CachingStream
-            $parsedBody = array_change_key_case($this->parseBody($body, $response));
+        // A streamed body does not know its size, so only a size of 0 is
+        // known to be empty.
+        if ($body->getSize() !== 0) {
+            $parsed = $this->parseBody($body, $response);
+            if (is_array($parsed)) {
+                $parsedBody = array_change_key_case($parsed);
+            }
         }
 
         if (!$errorCode && $parsedBody) {
