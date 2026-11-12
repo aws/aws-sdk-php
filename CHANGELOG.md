@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.403.5 - 2026-11-12
 
 * `Aws\` - Parses the shared config file once per client construction instead of once for each setting resolved through `ConfigurationResolver`.
 * `Aws\Credentials` - Adds configurable allowlists for retryable exceptions and HTTP status codes to `EcsCredentialProvider`.
