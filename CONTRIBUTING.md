@@ -1,184 +1,101 @@
-# Contributing to the AWS SDK for PHP
+# Contributing to the AWS SDK for PHP V4
 
-Thank you for your interest in contributing to the AWS SDK for PHP! We work hard to 
-provide a high-quality and useful SDK for our AWS services, and we greatly value 
-feedback and contributions from our community. Whether it's a new feature, 
-correction, or additional documentation, we welcome your pull requests. Please submit 
-your [issues][] or [pull requests][pull-requests] through GitHub.
+The AWS SDK for PHP welcomes corrections, additional use cases, and design
+feedback from the PHP community. Read this document before submitting an
+issue, discussion, or pull request.
 
-Jump To:
+## Development status
 
-* [Bug Reports](#Bug-Reports)
-* [Feature Requests](#Feature-Requests)
-* [Code Contributions](#Code-Contributions)
-* [Security issue notifications](#Security-Issue-Notifications)
+V4 is in development. The `v4` branch publishes design documentation and
+illustrative examples. V3 remains the installable, supported SDK. Proposed V4
+APIs may change before release.
 
-## How to contribute
+Pull requests targeting `v4` must remain limited to documentation and the
+governance or automation needed to maintain that documentation. Implementation
+code, package metadata, generated service code, and executable examples are
+outside this branch's scope.
 
-*Before you send us a pull request, please be sure that:*
+## Choose the correct branch and channel
 
-1. You're working from the latest source on the master branch.
-2. You check existing open, and recently closed, pull requests to be sure that 
-   someone else hasn't already addressed the problem.
-3. You create an issue before working on a contribution that will take a significant 
-   amount of your time.
+### V3 bugs and feature requests
 
-*Creating a Pull Request*
+V3 remains the supported SDK. Report V3 bugs and feature requests through
+[GitHub Issues](https://github.com/aws/aws-sdk-php/issues), and target V3 pull
+requests to the `master` branch.
 
-1. Fork the repository.
-2. In your fork, make your change in a branch that's based on this repo's master branch.
-3. Commit the change to your fork, using a clear and descriptive commit message.
-4. Create a pull request, answering any questions in the pull request form.
+Before reporting a V3 bug, search existing issues and try the latest V3
+release when possible. Include expected and actual behavior, relevant
+environment details, logs or stack traces, and a minimal reproduction.
 
-For contributions that will take a significant amount of time, open a new issue to pitch 
-your idea before you get started. Explain the problem and describe the content you want to 
-see added to the documentation. Let us know if you'll write it yourself or if you'd like us 
-to help. We'll discuss your proposal with you and let you know whether we're likely to 
-accept it.   
+Do not use the documentation-only `v4` branch to report or fix V3
+implementation bugs.
 
-## Bug Reports
+### V4 design feedback
 
-Bug reports are accepted through the [Issues][] page.
+Use [GitHub Discussions](https://github.com/aws/aws-sdk-php/discussions) for
+V4 API design feedback and real-world use cases. Include:
 
-Before Submitting:
+- The application or library use case.
+- How the proposal would be used in PHP code.
+- What is clearer or harder than the equivalent V3 workflow.
+- Framework, testing, deployment, concurrency, or static-analysis constraints.
+- A suggested alternative when possible.
 
-* Do a search through the existing issues to make sure it has not already been reported. 
-   If it has, comment your experience or +1 so we prioritize it.
-* If possible, upgrade to the latest release of the SDK. It's possible the bug has 
-   already been fixed in the latest version.
+See [docs/feedback.md](docs/feedback.md) for the active design questions. Open
+an issue when the problem is an error or omission in the preview documentation.
 
-Writing the Bug Report:
+## Documentation contributions
 
-Please ensure that your bug report has the following:
+Small corrections are welcome. Before starting a substantial contribution:
 
-* A short, descriptive title. Ideally, other community members should be able to get a 
-   good idea of the issue just from reading the title.
-* A detailed description of the problem you're experiencing. This should include:
-    * Expected behavior of the SDK and the actual behavior exhibited.
-    * Any details of your application environment that may be relevant.
-    * Debug information, stack trace or logs.
-*  If you are able to create one, include a Minimal Working Example that reproduces the issue.
-* Use [Markdown][] to make the report easier to read; i.e. use code blocks when pasting a 
-   code snippet.
+1. Search existing issues, discussions, and pull requests.
+2. Start a discussion describing the problem and proposed change.
+3. Wait for maintainer feedback before investing significant time.
+4. Keep the pull request focused on one design topic.
+5. Clearly distinguish proposed V4 behavior from released V3 behavior.
+6. Target the pull request to the `v4` branch.
 
-## Feature Requests
+Maintainers review contributions for alignment with the goals and scope of the
+preview.
 
-Open an [issue][issues] with the following:
+## Contributor License Agreement
 
-* A short, descriptive title. Ideally, other community members should be able to get a 
-   good idea of the feature just from reading the title.
-* A detailed description of the the proposed feature. 
-    * Why it should be added to the SDK.
-    * If possible, example code to illustrate how it should work.
-* Use [Markdown][] to make the request easier to read;
-* If you intend to implement this feature, indicate that you'd like to the issue to be
-   assigned to you.
+Substantial external contributions require a Contributor License Agreement
+(CLA) when requested by AWS. Maintainers will provide the applicable
+instructions during review. A contribution that requires a CLA cannot be
+accepted until the agreement has been completed.
 
+## AI-assisted submissions
 
-## Code Contributions
+AI-assisted development is permitted, subject to these requirements:
 
-Code contributions to the SDK are done through [Pull Requests][pull-requests]. The list below 
-are guidelines to use when submitting pull requests. These are the 
-same set of guidelines that the core contributors use when submitting changes, and 
-we ask the same of all community contributions as well:
-
-1. The SDK is released under the [Apache license][license]. Any code you submit
-   will be released under that license. For substantial contributions, we may
-   ask you to sign a [Contributor License Agreement (CLA)][cla].
-2. We follow all of the relevant PSR recommendations from the [PHP Framework
-   Interop Group][php-fig]. Please submit code that follows these standards.
-   The [PHP CS Fixer][cs-fixer] tool can be helpful for formatting your code.
-3. We maintain a high percentage of code coverage in our unit tests. If you make
-   changes to the code, please add, update, and/or remove tests as appropriate.
-   Tests are run via `make test` command.
-4. Static code analysis with [PHPStan][phpstan] is automatically run on the `src` 
-   directory for submitted pull requests. If there is a case that needs to be
-   ignored by static analysis, please update the `ignoreErrors` section in the
-   `phpstan.neon` config file in your PR, and point out why this case warrants
-   ignoring.
-5. We may choose not to accept pull requests that change files in the `src/data`
-   directory, since we generate these files based on our internal knowledge of
-   the AWS services. Please check in with us ahead of time if you find a mistake
-   or missing feature that would affect those files.
-6. If your code does not conform to the PSR standards, does not include adequate
-   tests, or does not contain a changelog document, we may ask you to update
-   your pull requests before we accept them. We also reserve the right to deny
-   any pull requests that do not align with our standards or goals.
-7. If you would like to implement support for a significant feature that is not
-   yet available in the SDK, please talk to us beforehand to avoid any
-   duplication of effort.
-8. We greatly appreciate contributions to our User Guide. The docs are written
-   as a [Sphinx][] website formatted with [reStructuredText][] (very similar to
-   Markdown). The User Guide is located in another repository. Please go to the 
-   [awsdocs/aws-php-developers-guide](https://github.com/awsdocs/aws-php-developers-guide/).  
-   repository to suggest edits for the User Guide.
-9. If you are working on the SDK, make sure to check out the `Makefile` for some
-   of the common tasks that we have to do.
-
-## Automated Tools
-
-The use of AI tooling for assisted development work is accepted and encouraged
-in this repository, but due to the volume of submissions we ask that you observe
-the following rules:
-
-- All issue and pull request submissions to this repository that are sourced by
-  AI must first be reviewed by a human before submitting to the repository.
-  Items reviewed in this way must include a statement like "generated by AI
-  tools, and reviewed by <person>"
-- Please ensure that your submissions are actually improvements. While we are
-  grateful for any proposed fixes, even if they are very small, behavior that
-  looks like creating nuisance PRs or artificially inflating submission counts
-  is not acceptable.
-- We may close issues or pull requests, or limit your ability to interact with
-  this repository, for behavior that in our estimation violates these rules or
-  any of the other rules in this repository's
-  [Code of Conduct](CODE_OF_CONDUCT.md)
+- A human must review every AI-assisted issue, discussion, and pull request
+  before it is submitted.
+- The submission must disclose the assistance with a statement such as
+  `AI-assisted and reviewed by <person>`.
+- The submitter remains responsible for accuracy, relevance, licensing,
+  security, and compliance with this repository's contribution guidelines.
+- Submissions must provide a genuine improvement. Nuisance submissions or
+  attempts to inflate contribution counts may be closed, and repeated abuse
+  may result in interaction limits.
 
 ## Security issue notifications
-If you discover a potential security issue in this project we ask that you notify AWS/Amazon Security via our [vulnerability reporting page](http://aws.amazon.com/security/vulnerability-reporting/). Please do **not** create a public github issue.
 
-### Changelog Documents
+Report potential security issues privately by following
+[SECURITY.md](SECURITY.md). Do not open a public issue, discussion, or pull
+request for a suspected vulnerability.
 
-A changelog document is a small JSON blob placed in the `.changes/nextrelease`
-folder. It should be named clearly and uniquely, akin to a branch name. It
-consists of a type, category, and description as follows:
+## Licensing
 
-```json
-[
-    {
-        "type": "feature|enhancement|bugfix",
-        "category": "Target of Update",
-        "description": "English language simple description of your update."
-    }
-]
-```
+This project is licensed under the [Apache License 2.0](LICENSE). By submitting
+a contribution, you agree that it may be distributed under the same license
+and that you have the right to provide it under those terms.
 
-#### Changelog Types
+## Code of Conduct
 
-* `feature` - For major additive features, internal changes that have
-outward impact, or updates to the SDK foundations. This will result in a minor
-version change.
-* `enhancement` - For minor additive features or incremental sized changes.
-This will result in a patch version change.
-* `bugfix` - For minor changes that resolve an issue. This will result in a
-patch version change.
-* `documentation` - For updates to guides and documentation files only. This will
-result in a patch version change.
-
-#### Changelog Categories
-
-A changelog document's `category` field should correspond to a Service subfolder
-of the `src` directory. If your update is for core components of the SDK, the
-category field should exist with the value set to an empty string `""`.
-
-[issues]: https://github.com/aws/aws-sdk-php/issues
-[pull-requests]: https://github.com/aws/aws-sdk-php/pulls
-[license]: http://aws.amazon.com/apache2.0/
-[cla]: https://github.com/aws/aws-cla/blob/master/amazon-single-contribution-license.txt
-[php-fig]: http://php-fig.org
-[cs-fixer]: http://cs.sensiolabs.org/
-[phpstan]: https://github.com/phpstan/phpstan
-[sphinx]: http://sphinx-doc.org/
-[restructuredtext]: http://sphinx-doc.org/rest.html
-[docs-readme]: https://github.com/awsdocs/aws-php-developers-guide/blob/master/README.rst
-[markdown]: https://en.wikipedia.org/wiki/Markdown
+This project has adopted the
+[Amazon Open Source Code of Conduct](https://aws.github.io/code-of-conduct).
+See the
+[Code of Conduct FAQ](https://aws.github.io/code-of-conduct-faq), or contact
+[opensource-codeofconduct@amazon.com](mailto:opensource-codeofconduct@amazon.com)
+with questions.
