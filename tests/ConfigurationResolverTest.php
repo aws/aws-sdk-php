@@ -330,6 +330,122 @@ EOT;
         $this->assertNull($result);
     }
 
+    public function testReadsIniFileOnEveryCallOutsideCacheScope()
+    {
+        $dir = $this->clearEnv();
+        putenv('HOME=' . dirname($dir));
+
+        file_put_contents($dir . '/config', $this->stringIniFile);
+        $this->assertSame(
+            'standard',
+            ConfigurationResolver::ini(self::$configurationKey, 'string')
+        );
+
+        file_put_contents($dir . '/config', $this->intIniFile);
+        $this->assertSame(
+            15,
+            ConfigurationResolver::ini(self::$configurationKey, 'int')
+        );
+        unlink($dir . '/config');
+    }
+
+    public function testReusesParsedIniFileWithinCacheScope()
+    {
+        $dir = $this->clearEnv();
+        putenv('HOME=' . dirname($dir));
+        file_put_contents($dir . '/config', $this->stringIniFile);
+
+        $results = ConfigurationResolver::withIniCache(function () use ($dir) {
+            $first = ConfigurationResolver::ini(self::$configurationKey, 'string');
+            unlink($dir . '/config');
+            $second = ConfigurationResolver::ini(self::$configurationKey, 'string');
+
+            return [$first, $second];
+        });
+
+        $this->assertSame(['standard', 'standard'], $results);
+        $this->assertNull(
+            ConfigurationResolver::ini(self::$configurationKey, 'string')
+        );
+    }
+
+    public function testCacheScopeKeepsFilesSeparate()
+    {
+        $dir = $this->clearEnv();
+        file_put_contents($dir . '/string_config', $this->stringIniFile);
+        file_put_contents($dir . '/int_config', $this->intIniFile);
+
+        $results = ConfigurationResolver::withIniCache(function () use ($dir) {
+            return [
+                ConfigurationResolver::ini(
+                    self::$configurationKey,
+                    'string',
+                    null,
+                    $dir . '/string_config'
+                ),
+                ConfigurationResolver::ini(
+                    self::$configurationKey,
+                    'int',
+                    null,
+                    $dir . '/int_config'
+                ),
+            ];
+        });
+
+        $this->assertSame(['standard', 15], $results);
+        unlink($dir . '/string_config');
+        unlink($dir . '/int_config');
+    }
+
+    public function testNestedCacheScopesKeepCacheUntilOutermostReturns()
+    {
+        $dir = $this->clearEnv();
+        putenv('HOME=' . dirname($dir));
+        file_put_contents($dir . '/config', $this->stringIniFile);
+
+        $result = ConfigurationResolver::withIniCache(function () use ($dir) {
+            ConfigurationResolver::withIniCache(function () {
+                return ConfigurationResolver::ini(self::$configurationKey, 'string');
+            });
+            unlink($dir . '/config');
+
+            return ConfigurationResolver::ini(self::$configurationKey, 'string');
+        });
+
+        $this->assertSame('standard', $result);
+        $this->assertNull(
+            ConfigurationResolver::ini(self::$configurationKey, 'string')
+        );
+    }
+
+    public function testDiscardsCacheWhenCallableThrows()
+    {
+        $dir = $this->clearEnv();
+        putenv('HOME=' . dirname($dir));
+        file_put_contents($dir . '/config', $this->stringIniFile);
+
+        try {
+            ConfigurationResolver::withIniCache(function () {
+                ConfigurationResolver::ini(self::$configurationKey, 'string');
+                throw new \RuntimeException('boom');
+            });
+            $this->fail('Expected the exception to propagate.');
+        } catch (\RuntimeException $e) {
+            $this->assertSame('boom', $e->getMessage());
+        }
+
+        ConfigurationResolver::withIniCache(function () {
+            return ConfigurationResolver::ini(self::$configurationKey, 'string');
+        });
+        file_put_contents($dir . '/config', $this->intIniFile);
+
+        $this->assertSame(
+            15,
+            ConfigurationResolver::ini(self::$configurationKey, 'int')
+        );
+        unlink($dir . '/config');
+    }
+
     public function testGetsHomeDirectoryForWindowsUsers()
     {
         putenv('HOME=');
