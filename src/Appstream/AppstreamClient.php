@@ -332,6 +332,15 @@ use Aws\AwsClient;
  *     SoftwaresToInstall?: list<string>,
  *     SoftwaresToUninstall?: list<string>,
  *     DisableIMDSV1?: bool,
+ *     AgentAccessConfig?: array{
+ *         Settings?: list<array>,
+ *         S3BucketArn?: string,
+ *         ScreenshotsUploadEnabled?: bool,
+ *         ScreenResolution?: 'W_1280xH_720',
+ *         ScreenImageFormat?: 'JPEG'|'PNG',
+ *         UserControlMode?: 'DISABLED'|'VIEW_ONLY'|'VIEW_STOP',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createImageBuilderAsync(array $args = [])
@@ -353,6 +362,15 @@ use Aws\AwsClient;
  *     SoftwaresToInstall?: list<string>,
  *     SoftwaresToUninstall?: list<string>,
  *     DisableIMDSV1?: bool,
+ *     AgentAccessConfig?: array{
+ *         Settings?: list<array>,
+ *         S3BucketArn?: string,
+ *         ScreenshotsUploadEnabled?: bool,
+ *         ScreenResolution?: 'W_1280xH_720',
+ *         ScreenImageFormat?: 'JPEG'|'PNG',
+ *         UserControlMode?: 'DISABLED'|'VIEW_ONLY'|'VIEW_STOP',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result createImageBuilderStreamingURL(array $args = [])
@@ -437,6 +455,8 @@ use Aws\AwsClient;
  *         Settings?: list<array>,
  *         S3BucketArn?: string,
  *         ScreenshotsUploadEnabled?: bool,
+ *         ReplaySessionEnabled?: bool,
+ *         KmsKeyArn?: string,
  *         ScreenResolution?: 'W_1280xH_720',
  *         ScreenImageFormat?: 'JPEG'|'PNG',
  *         UserControlMode?: 'DISABLED'|'VIEW_ONLY'|'VIEW_STOP',
@@ -475,6 +495,8 @@ use Aws\AwsClient;
  *         Settings?: list<array>,
  *         S3BucketArn?: string,
  *         ScreenshotsUploadEnabled?: bool,
+ *         ReplaySessionEnabled?: bool,
+ *         KmsKeyArn?: string,
  *         ScreenResolution?: 'W_1280xH_720',
  *         ScreenImageFormat?: 'JPEG'|'PNG',
  *         UserControlMode?: 'DISABLED'|'VIEW_ONLY'|'VIEW_STOP',
@@ -999,6 +1021,40 @@ use Aws\AwsClient;
  *     DisableIMDSV1?: bool,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result updateImageBuilder(array $args = [])
+ * @phpstan-method \Aws\Result updateImageBuilder(array{
+ *     Name?: string,
+ *     Description?: string,
+ *     DisplayName?: string,
+ *     AgentAccessConfig?: array{
+ *         Settings?: list<array>,
+ *         S3BucketArn?: string,
+ *         ScreenshotsUploadEnabled?: bool,
+ *         ScreenResolution?: 'W_1280xH_720',
+ *         ScreenImageFormat?: 'JPEG'|'PNG',
+ *         UserControlMode?: 'DISABLED'|'VIEW_ONLY'|'VIEW_STOP',
+ *         ...,
+ *     },
+ *     AttributesToDelete?: list<'AGENT_ACCESS_CONFIG'>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateImageBuilderAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateImageBuilderAsync(array{
+ *     Name?: string,
+ *     Description?: string,
+ *     DisplayName?: string,
+ *     AgentAccessConfig?: array{
+ *         Settings?: list<array>,
+ *         S3BucketArn?: string,
+ *         ScreenshotsUploadEnabled?: bool,
+ *         ScreenResolution?: 'W_1280xH_720',
+ *         ScreenImageFormat?: 'JPEG'|'PNG',
+ *         UserControlMode?: 'DISABLED'|'VIEW_ONLY'|'VIEW_STOP',
+ *         ...,
+ *     },
+ *     AttributesToDelete?: list<'AGENT_ACCESS_CONFIG'>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateImagePermissions(array $args = [])
  * @phpstan-method \Aws\Result updateImagePermissions(array{
  *     Name?: string,
@@ -1028,7 +1084,7 @@ use Aws\AwsClient;
  *     DeleteStorageConnectors?: bool,
  *     RedirectURL?: string,
  *     FeedbackURL?: string,
- *     AttributesToDelete?: list<'ACCESS_ENDPOINTS'|'AGENT_ACCESS_CONFIG'|'CONTENT_REDIRECTION'|'EMBED_HOST_DOMAINS'|'FEEDBACK_URL'|'IAM_ROLE_ARN'|'REDIRECT_URL'|'STORAGE_CONNECTORS'|'STORAGE_CONNECTOR_AUTHENTICATION'|'STORAGE_CONNECTOR_GOOGLE_DRIVE'|'STORAGE_CONNECTOR_HOMEFOLDERS'|'STORAGE_CONNECTOR_ONE_DRIVE'|'STREAMING_EXPERIENCE_SETTINGS'|'THEME_NAME'|'USER_SETTINGS'>,
+ *     AttributesToDelete?: list<'ACCESS_ENDPOINTS'|'AGENT_ACCESS_CONFIG'|'AGENT_ACCESS_CONFIG_KMS_KEY_ARN'|'CONTENT_REDIRECTION'|'EMBED_HOST_DOMAINS'|'FEEDBACK_URL'|'IAM_ROLE_ARN'|'REDIRECT_URL'|'STORAGE_CONNECTORS'|'STORAGE_CONNECTOR_AUTHENTICATION'|'STORAGE_CONNECTOR_GOOGLE_DRIVE'|'STORAGE_CONNECTOR_HOMEFOLDERS'|'STORAGE_CONNECTOR_ONE_DRIVE'|'STREAMING_EXPERIENCE_SETTINGS'|'THEME_NAME'|'USER_SETTINGS'>,
  *     UserSettings?: list<array{
  *         Action?: 'AUTO_TIME_ZONE_REDIRECTION'|'CLIPBOARD_COPY_FROM_LOCAL_DEVICE'|'CLIPBOARD_COPY_TO_LOCAL_DEVICE'|'DOMAIN_PASSWORD_SIGNIN'|'DOMAIN_SMART_CARD_SIGNIN'|'FILE_DOWNLOAD'|'FILE_UPLOAD'|'PRINTING_TO_LOCAL_DEVICE',
  *         Permission?: 'DISABLED'|'ENABLED',
@@ -1044,6 +1100,8 @@ use Aws\AwsClient;
  *         Settings?: list<array>,
  *         S3BucketArn?: string,
  *         ScreenshotsUploadEnabled?: bool,
+ *         ReplaySessionEnabled?: bool,
+ *         KmsKeyArn?: string,
  *         ScreenResolution?: 'W_1280xH_720',
  *         ScreenImageFormat?: 'JPEG'|'PNG',
  *         UserControlMode?: 'DISABLED'|'VIEW_ONLY'|'VIEW_STOP',
@@ -1067,7 +1125,7 @@ use Aws\AwsClient;
  *     DeleteStorageConnectors?: bool,
  *     RedirectURL?: string,
  *     FeedbackURL?: string,
- *     AttributesToDelete?: list<'ACCESS_ENDPOINTS'|'AGENT_ACCESS_CONFIG'|'CONTENT_REDIRECTION'|'EMBED_HOST_DOMAINS'|'FEEDBACK_URL'|'IAM_ROLE_ARN'|'REDIRECT_URL'|'STORAGE_CONNECTORS'|'STORAGE_CONNECTOR_AUTHENTICATION'|'STORAGE_CONNECTOR_GOOGLE_DRIVE'|'STORAGE_CONNECTOR_HOMEFOLDERS'|'STORAGE_CONNECTOR_ONE_DRIVE'|'STREAMING_EXPERIENCE_SETTINGS'|'THEME_NAME'|'USER_SETTINGS'>,
+ *     AttributesToDelete?: list<'ACCESS_ENDPOINTS'|'AGENT_ACCESS_CONFIG'|'AGENT_ACCESS_CONFIG_KMS_KEY_ARN'|'CONTENT_REDIRECTION'|'EMBED_HOST_DOMAINS'|'FEEDBACK_URL'|'IAM_ROLE_ARN'|'REDIRECT_URL'|'STORAGE_CONNECTORS'|'STORAGE_CONNECTOR_AUTHENTICATION'|'STORAGE_CONNECTOR_GOOGLE_DRIVE'|'STORAGE_CONNECTOR_HOMEFOLDERS'|'STORAGE_CONNECTOR_ONE_DRIVE'|'STREAMING_EXPERIENCE_SETTINGS'|'THEME_NAME'|'USER_SETTINGS'>,
  *     UserSettings?: list<array{
  *         Action?: 'AUTO_TIME_ZONE_REDIRECTION'|'CLIPBOARD_COPY_FROM_LOCAL_DEVICE'|'CLIPBOARD_COPY_TO_LOCAL_DEVICE'|'DOMAIN_PASSWORD_SIGNIN'|'DOMAIN_SMART_CARD_SIGNIN'|'FILE_DOWNLOAD'|'FILE_UPLOAD'|'PRINTING_TO_LOCAL_DEVICE',
  *         Permission?: 'DISABLED'|'ENABLED',
@@ -1083,6 +1141,8 @@ use Aws\AwsClient;
  *         Settings?: list<array>,
  *         S3BucketArn?: string,
  *         ScreenshotsUploadEnabled?: bool,
+ *         ReplaySessionEnabled?: bool,
+ *         KmsKeyArn?: string,
  *         ScreenResolution?: 'W_1280xH_720',
  *         ScreenImageFormat?: 'JPEG'|'PNG',
  *         UserControlMode?: 'DISABLED'|'VIEW_ONLY'|'VIEW_STOP',

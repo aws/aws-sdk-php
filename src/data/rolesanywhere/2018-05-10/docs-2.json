@@ -38,6 +38,23 @@
       "base": "<p>You do not have sufficient access to perform this action.</p>",
       "refs": {}
     },
+    "AliasName": {
+      "base": null,
+      "refs": {
+        "CreateProfileRequest$aliasName": "<p>An alias for the profile. When you set an alias, the response includes the alias ARN of the profile in <code>aliasArn</code>.</p> <p>An alias name contains 1 to 256 characters. It must begin with a letter (A-Z or a-z). It can contain only letters (A-Z and a-z), numbers (0-9), underscores (_), hyphens (-), and forward slashes (/). A forward slash can appear only between two other characters, so an alias name can't end with a forward slash or contain two in a row. Alias names that begin with <code>aws/</code>, in any combination of uppercase and lowercase letters, are reserved. Alias names are case sensitive.</p> <p>The alias name must be unique among resources of the same type in your account and Region. If another resource of the same type already has the alias, the request fails with a <code>ValidationException</code>. An invalid or reserved alias name also causes a <code>ValidationException</code>.</p> <p>If you omit this parameter or specify an empty string, the resource is created without an alias.</p>",
+        "CreateTrustAnchorRequest$aliasName": "<p>An alias for the trust anchor. When you set an alias, the response includes the alias ARN of the trust anchor in <code>aliasArn</code>.</p> <p>An alias name contains 1 to 256 characters. It must begin with a letter (A-Z or a-z). It can contain only letters (A-Z and a-z), numbers (0-9), underscores (_), hyphens (-), and forward slashes (/). A forward slash can appear only between two other characters, so an alias name can't end with a forward slash or contain two in a row. Alias names that begin with <code>aws/</code>, in any combination of uppercase and lowercase letters, are reserved. Alias names are case sensitive.</p> <p>The alias name must be unique among resources of the same type in your account and Region. If another resource of the same type already has the alias, the request fails with a <code>ValidationException</code>. An invalid or reserved alias name also causes a <code>ValidationException</code>.</p> <p>If you omit this parameter or specify an empty string, the resource is created without an alias.</p>",
+        "CrlDetail$aliasName": "<p>The alias of the certificate revocation list (CRL). Present only if the CRL has an alias.</p>",
+        "CrlDetail$previousAliasName": "<p>The alias that the resource had before the update request. IAM Roles Anywhere returns this value only in the response to an update request that changed or removed an existing alias. It isn't returned when the alias was unchanged, when the resource had no alias before the request, or by other operations.</p>",
+        "ImportCrlRequest$aliasName": "<p>An alias for the certificate revocation list (CRL). When you set an alias, the response includes the alias ARN of the CRL in <code>aliasArn</code>.</p> <p>An alias name contains 1 to 256 characters. It must begin with a letter (A-Z or a-z). It can contain only letters (A-Z and a-z), numbers (0-9), underscores (_), hyphens (-), and forward slashes (/). A forward slash can appear only between two other characters, so an alias name can't end with a forward slash or contain two in a row. Alias names that begin with <code>aws/</code>, in any combination of uppercase and lowercase letters, are reserved. Alias names are case sensitive.</p> <p>The alias name must be unique among resources of the same type in your account and Region. If another resource of the same type already has the alias, the request fails with a <code>ValidationException</code>. An invalid or reserved alias name also causes a <code>ValidationException</code>.</p> <p>If you omit this parameter or specify an empty string, the resource is created without an alias.</p>",
+        "ProfileDetail$aliasName": "<p>The alias of the profile. Present only if the profile has an alias.</p>",
+        "ProfileDetail$previousAliasName": "<p>The alias that the resource had before the update request. IAM Roles Anywhere returns this value only in the response to an update request that changed or removed an existing alias. It isn't returned when the alias was unchanged, when the resource had no alias before the request, or by other operations.</p>",
+        "TrustAnchorDetail$aliasName": "<p>The alias of the trust anchor. Present only if the trust anchor has an alias.</p>",
+        "TrustAnchorDetail$previousAliasName": "<p>The alias that the resource had before the update request. IAM Roles Anywhere returns this value only in the response to an update request that changed or removed an existing alias. It isn't returned when the alias was unchanged, when the resource had no alias before the request, or by other operations.</p>",
+        "UpdateCrlRequest$aliasName": "<p>The alias for the certificate revocation list (CRL).</p> <p>You can use this parameter in the following ways:</p> <ul> <li> <p>To set or change the alias, specify the new alias name. After the change, the previous alias ARN no longer identifies the resource. You can then assign the previous alias to another resource of the same type. A change can take a short time to take effect for requests that use an alias ARN.</p> </li> <li> <p>To remove the alias, specify an empty string.</p> </li> <li> <p>To keep the current alias, omit this parameter.</p> </li> </ul> <p>An alias name contains 1 to 256 characters. It must begin with a letter (A-Z or a-z). It can contain only letters (A-Z and a-z), numbers (0-9), underscores (_), hyphens (-), and forward slashes (/). A forward slash can appear only between two other characters, so an alias name can't end with a forward slash or contain two in a row. Alias names that begin with <code>aws/</code>, in any combination of uppercase and lowercase letters, are reserved. Alias names are case sensitive.</p> <p>The alias name must be unique among resources of the same type in your account and Region. If another resource of the same type already has the alias, the request fails with a <code>ValidationException</code>. An invalid or reserved alias name also causes a <code>ValidationException</code>.</p>",
+        "UpdateProfileRequest$aliasName": "<p>The alias for the profile.</p> <p>You can use this parameter in the following ways:</p> <ul> <li> <p>To set or change the alias, specify the new alias name. After the change, the previous alias ARN no longer identifies the resource. You can then assign the previous alias to another resource of the same type. A change can take a short time to take effect for requests that use an alias ARN.</p> </li> <li> <p>To remove the alias, specify an empty string.</p> </li> <li> <p>To keep the current alias, omit this parameter.</p> </li> </ul> <p>An alias name contains 1 to 256 characters. It must begin with a letter (A-Z or a-z). It can contain only letters (A-Z and a-z), numbers (0-9), underscores (_), hyphens (-), and forward slashes (/). A forward slash can appear only between two other characters, so an alias name can't end with a forward slash or contain two in a row. Alias names that begin with <code>aws/</code>, in any combination of uppercase and lowercase letters, are reserved. Alias names are case sensitive.</p> <p>The alias name must be unique among resources of the same type in your account and Region. If another resource of the same type already has the alias, the request fails with a <code>ValidationException</code>. An invalid or reserved alias name also causes a <code>ValidationException</code>.</p>",
+        "UpdateTrustAnchorRequest$aliasName": "<p>The alias for the trust anchor.</p> <p>You can use this parameter in the following ways:</p> <ul> <li> <p>To set or change the alias, specify the new alias name. After the change, the previous alias ARN no longer identifies the resource. You can then assign the previous alias to another resource of the same type. A change can take a short time to take effect for requests that use an alias ARN.</p> </li> <li> <p>To remove the alias, specify an empty string.</p> </li> <li> <p>To keep the current alias, omit this parameter.</p> </li> </ul> <p>An alias name contains 1 to 256 characters. It must begin with a letter (A-Z or a-z). It can contain only letters (A-Z and a-z), numbers (0-9), underscores (_), hyphens (-), and forward slashes (/). A forward slash can appear only between two other characters, so an alias name can't end with a forward slash or contain two in a row. Alias names that begin with <code>aws/</code>, in any combination of uppercase and lowercase letters, are reserved. Alias names are case sensitive.</p> <p>The alias name must be unique among resources of the same type in your account and Region. If another resource of the same type already has the alias, the request fails with a <code>ValidationException</code>. An invalid or reserved alias name also causes a <code>ValidationException</code>.</p>"
+      }
+    },
     "AmazonResourceName": {
       "base": null,
       "refs": {
@@ -124,6 +141,12 @@
         "CredentialSummaries$member": null
       }
     },
+    "CrlAliasArn": {
+      "base": null,
+      "refs": {
+        "CrlDetail$aliasArn": "<p>The alias ARN of the certificate revocation list (CRL), in the form <code>arn:<i>partition</i>:rolesanywhere:<i>region</i>:<i>account</i>:alias/crl/<i>alias-name</i> </code>. Present only if the CRL has an alias.</p> <p>You can use the alias ARN in place of the resource ID or ARN in the request parameters whose descriptions say that they accept an alias ARN. Don't use the alias ARN in Identity and Access Management (IAM) policies. A policy statement that names an alias ARN doesn't apply to the resource that holds the alias. Write policies with the ARN that contains the resource ID instead.</p>"
+      }
+    },
     "CrlDetail": {
       "base": "<p>The state of the certificate revocation list (CRL) after a read or write operation.</p>",
       "refs": {
@@ -139,6 +162,19 @@
       "base": null,
       "refs": {
         "ListCrlsResponse$crls": "<p>A list of certificate revocation lists (CRL). </p>"
+      }
+    },
+    "CrlIdentifier": {
+      "base": null,
+      "refs": {
+        "ScalarCrlRequest$crlId": "<p>The certificate revocation list (CRL) to act on. You can specify one of the following:</p> <ul> <li> <p>The CRL ID.</p> </li> <li> <p>The CRL ARN.</p> </li> <li> <p>The alias ARN of the CRL.</p> </li> </ul> <p>An ARN must be for a CRL in your account and Region.</p>",
+        "UpdateCrlRequest$crlId": "<p>The certificate revocation list (CRL) to act on. You can specify one of the following:</p> <ul> <li> <p>The CRL ID.</p> </li> <li> <p>The CRL ARN.</p> </li> <li> <p>The alias ARN of the CRL.</p> </li> </ul> <p>An ARN must be for a CRL in your account and Region.</p>"
+      }
+    },
+    "CrlResourceArn": {
+      "base": null,
+      "refs": {
+        "CrlDetail$crlArn": "<p>The ARN of the certificate revocation list (CRL).</p>"
       }
     },
     "DeleteAttributeMappingRequest": {
@@ -335,10 +371,10 @@
         "PutNotificationSettingsRequest$notificationSettings": "<p>A list of notification settings to be associated to the trust anchor.</p>"
       }
     },
-    "ProfileArn": {
+    "ProfileAliasArn": {
       "base": null,
       "refs": {
-        "ProfileDetail$profileArn": "<p>The ARN of the profile.</p>"
+        "ProfileDetail$aliasArn": "<p>The alias ARN of the profile, in the form <code>arn:<i>partition</i>:rolesanywhere:<i>region</i>:<i>account</i>:alias/profile/<i>alias-name</i> </code>. Present only if the profile has an alias.</p> <p>You can use the alias ARN in place of the resource ID or ARN in the request parameters whose descriptions say that they accept an alias ARN. Don't use the alias ARN in Identity and Access Management (IAM) policies. A policy statement that names an alias ARN doesn't apply to the resource that holds the alias. Write policies with the ARN that contains the resource ID instead.</p>"
       }
     },
     "ProfileDetail": {
@@ -358,6 +394,21 @@
       "base": null,
       "refs": {
         "ListProfilesResponse$profiles": "<p>A list of profiles.</p>"
+      }
+    },
+    "ProfileIdentifier": {
+      "base": null,
+      "refs": {
+        "DeleteAttributeMappingRequest$profileId": "<p>The profile to act on. You can specify one of the following:</p> <ul> <li> <p>The profile ID.</p> </li> <li> <p>The profile ARN.</p> </li> <li> <p>The alias ARN of the profile.</p> </li> </ul> <p>An ARN must be for a profile in your account and Region.</p>",
+        "PutAttributeMappingRequest$profileId": "<p>The profile to act on. You can specify one of the following:</p> <ul> <li> <p>The profile ID.</p> </li> <li> <p>The profile ARN.</p> </li> <li> <p>The alias ARN of the profile.</p> </li> </ul> <p>An ARN must be for a profile in your account and Region.</p>",
+        "ScalarProfileRequest$profileId": "<p>The profile to act on. You can specify one of the following:</p> <ul> <li> <p>The profile ID.</p> </li> <li> <p>The profile ARN.</p> </li> <li> <p>The alias ARN of the profile.</p> </li> </ul> <p>An ARN must be for a profile in your account and Region.</p>",
+        "UpdateProfileRequest$profileId": "<p>The profile to act on. You can specify one of the following:</p> <ul> <li> <p>The profile ID.</p> </li> <li> <p>The profile ARN.</p> </li> <li> <p>The alias ARN of the profile.</p> </li> </ul> <p>An ARN must be for a profile in your account and Region.</p>"
+      }
+    },
+    "ProfileResourceArn": {
+      "base": null,
+      "refs": {
+        "ProfileDetail$profileArn": "<p>The ARN of the profile.</p>"
       }
     },
     "PutAttributeMappingRequest": {
@@ -469,9 +520,7 @@
         "CredentialSummary$serialNumber": "<p>The serial number of the certificate.</p>",
         "CredentialSummary$issuer": "<p>The fully qualified domain name of the issuing certificate for the presented end-entity certificate.</p>",
         "CredentialSummary$x509CertificateData": "<p>The PEM-encoded data of the certificate.</p>",
-        "CrlDetail$crlArn": "<p>The ARN of the certificate revocation list (CRL).</p>",
         "CrlDetail$name": "<p>The name of the certificate revocation list (CRL).</p>",
-        "CrlDetail$trustAnchorArn": "<p>The ARN of the TrustAnchor the certificate revocation list (CRL) will provide revocation for. </p>",
         "ListCrlsResponse$nextToken": "<p>A token that indicates where the output should continue from, if a previous request did not show all results. To get the next results, make the request again with this value.</p>",
         "ListProfilesResponse$nextToken": "<p>A token that indicates where the output should continue from, if a previous request did not show all results. To get the next results, make the request again with this value.</p>",
         "ListSubjectsResponse$nextToken": "<p>A token that indicates where the output should continue from, if a previous request did not show all results. To get the next results, make the request again with this value.</p>",
@@ -487,7 +536,6 @@
         "SubjectSummary$subjectArn": "<p>The ARN of the resource.</p>",
         "SubjectSummary$x509Subject": "<p>The x509 principal identifier of the authenticating certificate.</p>",
         "TooManyTagsException$message": null,
-        "TrustAnchorDetail$trustAnchorArn": "<p>The ARN of the trust anchor.</p>",
         "ValidationException$message": null
       }
     },
@@ -579,10 +627,10 @@
       "base": "<p>Too many tags.</p>",
       "refs": {}
     },
-    "TrustAnchorArn": {
+    "TrustAnchorAliasArn": {
       "base": null,
       "refs": {
-        "ImportCrlRequest$trustAnchorArn": "<p>The ARN of the TrustAnchor the certificate revocation list (CRL) will provide revocation for.</p>"
+        "TrustAnchorDetail$aliasArn": "<p>The alias ARN of the trust anchor, in the form <code>arn:<i>partition</i>:rolesanywhere:<i>region</i>:<i>account</i>:alias/trust-anchor/<i>alias-name</i> </code>. Present only if the trust anchor has an alias.</p> <p>You can use the alias ARN in place of the resource ID or ARN in the request parameters whose descriptions say that they accept an alias ARN. Don't use the alias ARN in Identity and Access Management (IAM) policies. A policy statement that names an alias ARN doesn't apply to the resource that holds the alias. Write policies with the ARN that contains the resource ID instead.</p>"
       }
     },
     "TrustAnchorDetail": {
@@ -602,6 +650,26 @@
       "base": null,
       "refs": {
         "ListTrustAnchorsResponse$trustAnchors": "<p>A list of trust anchors.</p>"
+      }
+    },
+    "TrustAnchorIdentifier": {
+      "base": null,
+      "refs": {
+        "ScalarTrustAnchorRequest$trustAnchorId": "<p>The trust anchor to act on. You can specify one of the following:</p> <ul> <li> <p>The trust anchor ID.</p> </li> <li> <p>The trust anchor ARN.</p> </li> <li> <p>The alias ARN of the trust anchor.</p> </li> </ul> <p>An ARN must be for a trust anchor in your account and Region.</p>",
+        "UpdateTrustAnchorRequest$trustAnchorId": "<p>The trust anchor to act on. You can specify one of the following:</p> <ul> <li> <p>The trust anchor ID.</p> </li> <li> <p>The trust anchor ARN.</p> </li> <li> <p>The alias ARN of the trust anchor.</p> </li> </ul> <p>An ARN must be for a trust anchor in your account and Region.</p>"
+      }
+    },
+    "TrustAnchorIdentifierArn": {
+      "base": null,
+      "refs": {
+        "ImportCrlRequest$trustAnchorArn": "<p>The ARN of the trust anchor that the certificate revocation list (CRL) provides revocation for. Specify the trust anchor ARN that contains the trust anchor ID. This parameter doesn't support alias ARNs. If you specify an alias ARN, the request fails with <code>ResourceNotFoundException</code>.</p>"
+      }
+    },
+    "TrustAnchorResourceArn": {
+      "base": null,
+      "refs": {
+        "CrlDetail$trustAnchorArn": "<p>The ARN of the TrustAnchor the certificate revocation list (CRL) will provide revocation for. </p>",
+        "TrustAnchorDetail$trustAnchorArn": "<p>The ARN of the trust anchor.</p>"
       }
     },
     "TrustAnchorType": {
@@ -652,21 +720,13 @@
       "base": null,
       "refs": {
         "CrlDetail$crlId": "<p>The unique identifier of the certificate revocation list (CRL).</p>",
-        "DeleteAttributeMappingRequest$profileId": "<p>The unique identifier of the profile.</p>",
         "ProfileDetail$profileId": "<p>The unique identifier of the profile.</p>",
-        "PutAttributeMappingRequest$profileId": "<p>The unique identifier of the profile.</p>",
         "PutNotificationSettingsRequest$trustAnchorId": "<p>The unique identifier of the trust anchor.</p>",
         "ResetNotificationSettingsRequest$trustAnchorId": "<p>The unique identifier of the trust anchor.</p>",
-        "ScalarCrlRequest$crlId": "<p>The unique identifier of the certificate revocation list (CRL).</p>",
-        "ScalarProfileRequest$profileId": "<p>The unique identifier of the profile.</p>",
         "ScalarSubjectRequest$subjectId": "<p>The unique identifier of the subject. </p>",
-        "ScalarTrustAnchorRequest$trustAnchorId": "<p>The unique identifier of the trust anchor.</p>",
         "SubjectDetail$subjectId": "<p>The id of the resource</p>",
         "SubjectSummary$subjectId": "<p>The id of the resource.</p>",
-        "TrustAnchorDetail$trustAnchorId": "<p>The unique identifier of the trust anchor.</p>",
-        "UpdateCrlRequest$crlId": "<p>The unique identifier of the certificate revocation list (CRL).</p>",
-        "UpdateProfileRequest$profileId": "<p>The unique identifier of the profile.</p>",
-        "UpdateTrustAnchorRequest$trustAnchorId": "<p>The unique identifier of the trust anchor.</p>"
+        "TrustAnchorDetail$trustAnchorId": "<p>The unique identifier of the trust anchor.</p>"
       }
     },
     "ValidationException": {

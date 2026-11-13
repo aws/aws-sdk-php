@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2021-06-30",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"scheduler",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon EventBridge Scheduler",
     "serviceId":"Scheduler",
     "signatureVersion":"v4",
@@ -26,8 +27,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
     },
@@ -59,6 +60,7 @@
       "input":{"shape":"DeleteScheduleInput"},
       "output":{"shape":"DeleteScheduleOutput"},
       "errors":[
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
@@ -95,11 +97,13 @@
       "input":{"shape":"GetScheduleInput"},
       "output":{"shape":"GetScheduleOutput"},
       "errors":[
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetScheduleGroup":{
       "name":"GetScheduleGroup",
@@ -115,7 +119,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListScheduleGroups":{
       "name":"ListScheduleGroups",
@@ -130,7 +135,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSchedules":{
       "name":"ListSchedules",
@@ -146,7 +152,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -162,7 +169,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -209,6 +217,7 @@
       "input":{"shape":"UpdateScheduleInput"},
       "output":{"shape":"UpdateScheduleOutput"},
       "errors":[
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
@@ -237,9 +246,9 @@
       "type":"structure",
       "required":["Subnets"],
       "members":{
-        "AssignPublicIp":{"shape":"AssignPublicIp"},
+        "Subnets":{"shape":"Subnets"},
         "SecurityGroups":{"shape":"SecurityGroups"},
-        "Subnets":{"shape":"Subnets"}
+        "AssignPublicIp":{"shape":"AssignPublicIp"}
       }
     },
     "CapacityProvider":{
@@ -257,9 +266,9 @@
       "type":"structure",
       "required":["capacityProvider"],
       "members":{
-        "base":{"shape":"CapacityProviderStrategyItemBase"},
         "capacityProvider":{"shape":"CapacityProvider"},
-        "weight":{"shape":"CapacityProviderStrategyItemWeight"}
+        "weight":{"shape":"CapacityProviderStrategyItemWeight"},
+        "base":{"shape":"CapacityProviderStrategyItemBase"}
       }
     },
     "CapacityProviderStrategyItemBase":{
@@ -276,7 +285,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-_]+$"
+      "pattern":"[a-zA-Z0-9-_]+"
     },
     "ConflictException":{
       "type":"structure",
@@ -294,16 +303,16 @@
       "type":"structure",
       "required":["Name"],
       "members":{
-        "ClientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true
-        },
         "Name":{
           "shape":"ScheduleGroupName",
           "location":"uri",
           "locationName":"Name"
         },
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "CreateScheduleGroupOutput":{
@@ -316,32 +325,32 @@
     "CreateScheduleInput":{
       "type":"structure",
       "required":[
-        "FlexibleTimeWindow",
         "Name",
         "ScheduleExpression",
-        "Target"
+        "Target",
+        "FlexibleTimeWindow"
       ],
       "members":{
-        "ActionAfterCompletion":{"shape":"ActionAfterCompletion"},
-        "ClientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true
-        },
-        "Description":{"shape":"Description"},
-        "EndDate":{"shape":"EndDate"},
-        "FlexibleTimeWindow":{"shape":"FlexibleTimeWindow"},
-        "GroupName":{"shape":"ScheduleGroupName"},
-        "KmsKeyArn":{"shape":"KmsKeyArn"},
         "Name":{
           "shape":"Name",
           "location":"uri",
           "locationName":"Name"
         },
+        "GroupName":{"shape":"ScheduleGroupName"},
         "ScheduleExpression":{"shape":"ScheduleExpression"},
-        "ScheduleExpressionTimezone":{"shape":"ScheduleExpressionTimezone"},
         "StartDate":{"shape":"StartDate"},
+        "EndDate":{"shape":"EndDate"},
+        "Description":{"shape":"Description"},
+        "ScheduleExpressionTimezone":{"shape":"ScheduleExpressionTimezone"},
         "State":{"shape":"ScheduleState"},
-        "Target":{"shape":"Target"}
+        "KmsKeyArn":{"shape":"KmsKeyArn"},
+        "Target":{"shape":"Target"},
+        "FlexibleTimeWindow":{"shape":"FlexibleTimeWindow"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "ActionAfterCompletion":{"shape":"ActionAfterCompletion"}
       }
     },
     "CreateScheduleOutput":{
@@ -362,56 +371,54 @@
       "type":"string",
       "max":1600,
       "min":1,
-      "pattern":"^arn:aws(-[a-z]+)?:sqs:[a-z0-9\\-]+:\\d{12}:[a-zA-Z0-9\\-_]+$"
+      "pattern":"arn:aws[a-z-]*:sqs:[a-z0-9\\-]+:\\d{12}:[a-zA-Z0-9\\-_]+"
     },
     "DeleteScheduleGroupInput":{
       "type":"structure",
       "required":["Name"],
       "members":{
+        "Name":{
+          "shape":"ScheduleGroupName",
+          "location":"uri",
+          "locationName":"Name"
+        },
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true,
           "location":"querystring",
           "locationName":"clientToken"
-        },
-        "Name":{
-          "shape":"ScheduleGroupName",
-          "location":"uri",
-          "locationName":"Name"
         }
       }
     },
     "DeleteScheduleGroupOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteScheduleInput":{
       "type":"structure",
       "required":["Name"],
       "members":{
-        "ClientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true,
-          "location":"querystring",
-          "locationName":"clientToken"
+        "Name":{
+          "shape":"Name",
+          "location":"uri",
+          "locationName":"Name"
         },
         "GroupName":{
           "shape":"ScheduleGroupName",
           "location":"querystring",
           "locationName":"groupName"
         },
-        "Name":{
-          "shape":"Name",
-          "location":"uri",
-          "locationName":"Name"
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
     "DeleteScheduleOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Description":{
       "type":"string",
@@ -427,20 +434,20 @@
       "type":"structure",
       "required":["TaskDefinitionArn"],
       "members":{
+        "TaskDefinitionArn":{"shape":"TaskDefinitionArn"},
+        "TaskCount":{"shape":"TaskCount"},
+        "LaunchType":{"shape":"LaunchType"},
+        "NetworkConfiguration":{"shape":"NetworkConfiguration"},
+        "PlatformVersion":{"shape":"PlatformVersion"},
+        "Group":{"shape":"Group"},
         "CapacityProviderStrategy":{"shape":"CapacityProviderStrategy"},
         "EnableECSManagedTags":{"shape":"EnableECSManagedTags"},
         "EnableExecuteCommand":{"shape":"EnableExecuteCommand"},
-        "Group":{"shape":"Group"},
-        "LaunchType":{"shape":"LaunchType"},
-        "NetworkConfiguration":{"shape":"NetworkConfiguration"},
         "PlacementConstraints":{"shape":"PlacementConstraints"},
         "PlacementStrategy":{"shape":"PlacementStrategies"},
-        "PlatformVersion":{"shape":"PlatformVersion"},
         "PropagateTags":{"shape":"PropagateTags"},
         "ReferenceId":{"shape":"ReferenceId"},
-        "Tags":{"shape":"Tags"},
-        "TaskCount":{"shape":"TaskCount"},
-        "TaskDefinitionArn":{"shape":"TaskDefinitionArn"}
+        "Tags":{"shape":"Tags"}
       }
     },
     "EnableECSManagedTags":{
@@ -452,6 +459,23 @@
       "box":true
     },
     "EndDate":{"type":"timestamp"},
+    "EventBridgeMetadataKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[^/]+"
+    },
+    "EventBridgeMetadataMap":{
+      "type":"map",
+      "key":{"shape":"EventBridgeMetadataKey"},
+      "value":{"shape":"EventBridgeMetadataValue"},
+      "max":100,
+      "min":0
+    },
+    "EventBridgeMetadataValue":{
+      "type":"string",
+      "min":1
+    },
     "EventBridgeParameters":{
       "type":"structure",
       "required":[
@@ -463,12 +487,29 @@
         "Source":{"shape":"Source"}
       }
     },
+    "EventBridgePutEventsV2Parameters":{
+      "type":"structure",
+      "required":[
+        "DetailType",
+        "Source"
+      ],
+      "members":{
+        "DetailType":{"shape":"DetailType"},
+        "Source":{"shape":"Source"}
+      }
+    },
+    "EventBridgePutRawEventsParameters":{
+      "type":"structure",
+      "members":{
+        "Metadata":{"shape":"EventBridgeMetadataMap"}
+      }
+    },
     "FlexibleTimeWindow":{
       "type":"structure",
       "required":["Mode"],
       "members":{
-        "MaximumWindowInMinutes":{"shape":"MaximumWindowInMinutes"},
-        "Mode":{"shape":"FlexibleTimeWindowMode"}
+        "Mode":{"shape":"FlexibleTimeWindowMode"},
+        "MaximumWindowInMinutes":{"shape":"MaximumWindowInMinutes"}
       }
     },
     "FlexibleTimeWindowMode":{
@@ -493,46 +534,46 @@
       "type":"structure",
       "members":{
         "Arn":{"shape":"ScheduleGroupArn"},
-        "CreationDate":{"shape":"CreationDate"},
-        "LastModificationDate":{"shape":"LastModificationDate"},
         "Name":{"shape":"ScheduleGroupName"},
-        "State":{"shape":"ScheduleGroupState"}
+        "State":{"shape":"ScheduleGroupState"},
+        "CreationDate":{"shape":"CreationDate"},
+        "LastModificationDate":{"shape":"LastModificationDate"}
       }
     },
     "GetScheduleInput":{
       "type":"structure",
       "required":["Name"],
       "members":{
-        "GroupName":{
-          "shape":"ScheduleGroupName",
-          "location":"querystring",
-          "locationName":"groupName"
-        },
         "Name":{
           "shape":"Name",
           "location":"uri",
           "locationName":"Name"
+        },
+        "GroupName":{
+          "shape":"ScheduleGroupName",
+          "location":"querystring",
+          "locationName":"groupName"
         }
       }
     },
     "GetScheduleOutput":{
       "type":"structure",
       "members":{
-        "ActionAfterCompletion":{"shape":"ActionAfterCompletion"},
         "Arn":{"shape":"ScheduleArn"},
-        "CreationDate":{"shape":"CreationDate"},
-        "Description":{"shape":"Description"},
-        "EndDate":{"shape":"EndDate"},
-        "FlexibleTimeWindow":{"shape":"FlexibleTimeWindow"},
         "GroupName":{"shape":"ScheduleGroupName"},
-        "KmsKeyArn":{"shape":"KmsKeyArn"},
-        "LastModificationDate":{"shape":"LastModificationDate"},
         "Name":{"shape":"Name"},
         "ScheduleExpression":{"shape":"ScheduleExpression"},
-        "ScheduleExpressionTimezone":{"shape":"ScheduleExpressionTimezone"},
         "StartDate":{"shape":"StartDate"},
+        "EndDate":{"shape":"EndDate"},
+        "Description":{"shape":"Description"},
+        "ScheduleExpressionTimezone":{"shape":"ScheduleExpressionTimezone"},
         "State":{"shape":"ScheduleState"},
-        "Target":{"shape":"Target"}
+        "CreationDate":{"shape":"CreationDate"},
+        "LastModificationDate":{"shape":"LastModificationDate"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"},
+        "Target":{"shape":"Target"},
+        "FlexibleTimeWindow":{"shape":"FlexibleTimeWindow"},
+        "ActionAfterCompletion":{"shape":"ActionAfterCompletion"}
       }
     },
     "Group":{
@@ -561,7 +602,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-[a-z]+)?:kms:[a-z0-9\\-]+:\\d{12}:(key|alias)\\/[0-9a-zA-Z-_]*$"
+      "pattern":"arn:aws[a-z-]*:kms:[a-z0-9\\-]+:\\d{12}:(key|alias)\\/[0-9a-zA-Z-_]*"
     },
     "LastModificationDate":{"type":"timestamp"},
     "LaunchType":{
@@ -575,11 +616,6 @@
     "ListScheduleGroupsInput":{
       "type":"structure",
       "members":{
-        "MaxResults":{
-          "shape":"MaxResults",
-          "location":"querystring",
-          "locationName":"MaxResults"
-        },
         "NamePrefix":{
           "shape":"ScheduleGroupNamePrefix",
           "location":"querystring",
@@ -589,6 +625,11 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
         }
       }
     },
@@ -608,25 +649,25 @@
           "location":"querystring",
           "locationName":"ScheduleGroup"
         },
-        "MaxResults":{
-          "shape":"MaxResults",
-          "location":"querystring",
-          "locationName":"MaxResults"
-        },
         "NamePrefix":{
           "shape":"NamePrefix",
           "location":"querystring",
           "locationName":"NamePrefix"
+        },
+        "State":{
+          "shape":"ScheduleState",
+          "location":"querystring",
+          "locationName":"State"
         },
         "NextToken":{
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"NextToken"
         },
-        "State":{
-          "shape":"ScheduleState",
+        "MaxResults":{
+          "shape":"MaxResults",
           "location":"querystring",
-          "locationName":"State"
+          "locationName":"MaxResults"
         }
       }
     },
@@ -688,13 +729,13 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[0-9a-zA-Z-_.]+$"
+      "pattern":"[0-9a-zA-Z-_.]+"
     },
     "NamePrefix":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[0-9a-zA-Z-_.]+$"
+      "pattern":"[0-9a-zA-Z-_.]+"
     },
     "NetworkConfiguration":{
       "type":"structure",
@@ -710,8 +751,8 @@
     "PlacementConstraint":{
       "type":"structure",
       "members":{
-        "expression":{"shape":"PlacementConstraintExpression"},
-        "type":{"shape":"PlacementConstraintType"}
+        "type":{"shape":"PlacementConstraintType"},
+        "expression":{"shape":"PlacementConstraintExpression"}
       }
     },
     "PlacementConstraintExpression":{
@@ -741,8 +782,8 @@
     "PlacementStrategy":{
       "type":"structure",
       "members":{
-        "field":{"shape":"PlacementStrategyField"},
-        "type":{"shape":"PlacementStrategyType"}
+        "type":{"shape":"PlacementStrategyType"},
+        "field":{"shape":"PlacementStrategyField"}
       }
     },
     "PlacementStrategyField":{
@@ -795,7 +836,7 @@
       "type":"string",
       "max":1600,
       "min":1,
-      "pattern":"^arn:aws(-[a-z]+)?:iam::\\d{12}:role\\/[\\w+=,.@\\/-]+$"
+      "pattern":"arn:aws[a-z-]*:iam::\\d{12}:role\\/[\\w+=,.@\\/-]+"
     },
     "SageMakerPipelineParameter":{
       "type":"structure",
@@ -818,7 +859,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[A-Za-z0-9\\-_]*$"
+      "pattern":"[A-Za-z0-9\\-_]*"
     },
     "SageMakerPipelineParameterValue":{
       "type":"string",
@@ -835,7 +876,7 @@
       "type":"string",
       "max":1224,
       "min":1,
-      "pattern":"^arn:aws(-[a-z]+)?:scheduler:[a-z0-9\\-]+:\\d{12}:schedule\\/[0-9a-zA-Z-_.]+\\/[0-9a-zA-Z-_.]+$"
+      "pattern":"arn:aws[a-z-]*:scheduler:[a-z0-9\\-]+:\\d{12}:schedule\\/[0-9a-zA-Z-_.]+\\/[0-9a-zA-Z-_.]+"
     },
     "ScheduleExpression":{
       "type":"string",
@@ -851,7 +892,7 @@
       "type":"string",
       "max":1224,
       "min":1,
-      "pattern":"^arn:aws(-[a-z]+)?:scheduler:[a-z0-9\\-]+:\\d{12}:schedule-group\\/[0-9a-zA-Z-_.]+$"
+      "pattern":"arn:aws[a-z-]*:scheduler:[a-z0-9\\-]+:\\d{12}:schedule-group\\/[0-9a-zA-Z-_.]+"
     },
     "ScheduleGroupList":{
       "type":"list",
@@ -861,13 +902,13 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[0-9a-zA-Z-_.]+$"
+      "pattern":"[0-9a-zA-Z-_.]+"
     },
     "ScheduleGroupNamePrefix":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[0-9a-zA-Z-_.]+$"
+      "pattern":"[0-9a-zA-Z-_.]+"
     },
     "ScheduleGroupState":{
       "type":"string",
@@ -880,10 +921,10 @@
       "type":"structure",
       "members":{
         "Arn":{"shape":"ScheduleGroupArn"},
-        "CreationDate":{"shape":"CreationDate"},
-        "LastModificationDate":{"shape":"LastModificationDate"},
         "Name":{"shape":"ScheduleGroupName"},
-        "State":{"shape":"ScheduleGroupState"}
+        "State":{"shape":"ScheduleGroupState"},
+        "CreationDate":{"shape":"CreationDate"},
+        "LastModificationDate":{"shape":"LastModificationDate"}
       }
     },
     "ScheduleList":{
@@ -901,11 +942,11 @@
       "type":"structure",
       "members":{
         "Arn":{"shape":"ScheduleArn"},
-        "CreationDate":{"shape":"CreationDate"},
-        "GroupName":{"shape":"ScheduleGroupName"},
-        "LastModificationDate":{"shape":"LastModificationDate"},
         "Name":{"shape":"Name"},
+        "GroupName":{"shape":"ScheduleGroupName"},
         "State":{"shape":"ScheduleState"},
+        "CreationDate":{"shape":"CreationDate"},
+        "LastModificationDate":{"shape":"LastModificationDate"},
         "Target":{"shape":"TargetSummary"}
       }
     },
@@ -936,7 +977,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^(?=[/\\.\\-_A-Za-z0-9]+)((?!aws\\.).*)|(\\$(\\.[\\w_-]+(\\[(\\d+|\\*)\\])*)*)$"
+      "pattern":"(?=[/\\.\\-_A-Za-z0-9]+)((?!aws\\.).*)|(\\$(\\.[\\w_-]+(\\[(\\d+|\\*)\\])*)*)"
     },
     "SqsParameters":{
       "type":"structure",
@@ -994,7 +1035,7 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"^arn:aws(-[a-z]+)?:scheduler:[a-z0-9\\-]+:\\d{12}:schedule-group\\/[0-9a-zA-Z-_.]+$"
+      "pattern":"arn:aws[a-z-]*:scheduler:[a-z0-9\\-]+:\\d{12}:schedule-group\\/[0-9a-zA-Z-_.]+"
     },
     "TagResourceInput":{
       "type":"structure",
@@ -1013,8 +1054,7 @@
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1035,13 +1075,15 @@
       ],
       "members":{
         "Arn":{"shape":"TargetArn"},
+        "RoleArn":{"shape":"RoleArn"},
         "DeadLetterConfig":{"shape":"DeadLetterConfig"},
+        "RetryPolicy":{"shape":"RetryPolicy"},
+        "Input":{"shape":"TargetInput"},
         "EcsParameters":{"shape":"EcsParameters"},
         "EventBridgeParameters":{"shape":"EventBridgeParameters"},
-        "Input":{"shape":"TargetInput"},
+        "EventBridgePutEventsV2Parameters":{"shape":"EventBridgePutEventsV2Parameters"},
+        "EventBridgePutRawEventsParameters":{"shape":"EventBridgePutRawEventsParameters"},
         "KinesisParameters":{"shape":"KinesisParameters"},
-        "RetryPolicy":{"shape":"RetryPolicy"},
-        "RoleArn":{"shape":"RoleArn"},
         "SageMakerPipelineParameters":{"shape":"SageMakerPipelineParameters"},
         "SqsParameters":{"shape":"SqsParameters"}
       }
@@ -1111,38 +1153,37 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateScheduleInput":{
       "type":"structure",
       "required":[
-        "FlexibleTimeWindow",
         "Name",
         "ScheduleExpression",
-        "Target"
+        "Target",
+        "FlexibleTimeWindow"
       ],
       "members":{
-        "ActionAfterCompletion":{"shape":"ActionAfterCompletion"},
-        "ClientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true
-        },
-        "Description":{"shape":"Description"},
-        "EndDate":{"shape":"EndDate"},
-        "FlexibleTimeWindow":{"shape":"FlexibleTimeWindow"},
-        "GroupName":{"shape":"ScheduleGroupName"},
-        "KmsKeyArn":{"shape":"KmsKeyArn"},
         "Name":{
           "shape":"Name",
           "location":"uri",
           "locationName":"Name"
         },
+        "GroupName":{"shape":"ScheduleGroupName"},
         "ScheduleExpression":{"shape":"ScheduleExpression"},
-        "ScheduleExpressionTimezone":{"shape":"ScheduleExpressionTimezone"},
         "StartDate":{"shape":"StartDate"},
+        "EndDate":{"shape":"EndDate"},
+        "Description":{"shape":"Description"},
+        "ScheduleExpressionTimezone":{"shape":"ScheduleExpressionTimezone"},
         "State":{"shape":"ScheduleState"},
-        "Target":{"shape":"Target"}
+        "KmsKeyArn":{"shape":"KmsKeyArn"},
+        "Target":{"shape":"Target"},
+        "FlexibleTimeWindow":{"shape":"FlexibleTimeWindow"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "ActionAfterCompletion":{"shape":"ActionAfterCompletion"}
       }
     },
     "UpdateScheduleOutput":{

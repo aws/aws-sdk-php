@@ -78,7 +78,9 @@
     "RecordHandlerProgress": "<p>Reports progress of a resource handler to CloudFormation.</p> <p>Reserved for use by the <a href=\"https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/what-is-cloudformation-cli.html\">CloudFormation CLI</a>. Don't use this API in your code.</p>",
     "RegisterPublisher": "<p>Registers your account as a publisher of public extensions in the CloudFormation registry. Public extensions are available for use by all CloudFormation users. This publisher ID applies to your account in all Amazon Web Services Regions.</p> <p>For information about requirements for registering as a public extension publisher, see <a href=\"https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/publish-extension.html#publish-extension-prereqs\">Prerequisite: Registering your account to publish CloudFormation extensions</a> in the <i>CloudFormation Command Line Interface (CLI) User Guide</i>.</p> <p/>",
     "RegisterType": "<p>Registers an extension with the CloudFormation service. Registering an extension makes it available for use in CloudFormation templates in your Amazon Web Services account, and includes:</p> <ul> <li> <p>Validating the extension schema.</p> </li> <li> <p>Determining which handlers, if any, have been specified for the extension.</p> </li> <li> <p>Making the extension available for use in your account.</p> </li> </ul> <p>For more information about how to develop extensions and ready them for registration, see <a href=\"https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/resource-types.html\">Creating resource types using the CloudFormation CLI</a> in the <i>CloudFormation Command Line Interface (CLI) User Guide</i>.</p> <p>You can have a maximum of 50 resource extension versions registered at a time. This maximum is per account and per Region. Use <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_DeregisterType.html\">DeregisterType</a> to deregister specific extension versions if necessary.</p> <p>Once you have initiated a registration request using <a>RegisterType</a>, you can use <a>DescribeTypeRegistration</a> to monitor the progress of the registration request.</p> <p>Once you have registered a private extension in your account and Region, use <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_SetTypeConfiguration.html\">SetTypeConfiguration</a> to specify configuration properties for the extension. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry-set-configuration.html\">Edit configuration data for extensions in your account</a> in the <i>CloudFormation User Guide</i>.</p>",
+    "RemoveAlias": "<p>Removes an alias from a stack. After the alias is removed successfully, it can no longer be used to reference the stack in API calls.</p>",
     "RollbackStack": "<p>When specifying <code>RollbackStack</code>, you preserve the state of previously provisioned resources when an operation fails. You can check the status of the stack through the <a>DescribeStacks</a> operation.</p> <p>Rolls back the specified stack to the last known stable state from <code>CREATE_FAILED</code> or <code>UPDATE_FAILED</code> stack statuses.</p> <p>This operation will delete a stack if it doesn't contain a last known stable state. A last known stable state includes any status in a <code>*_COMPLETE</code>. This includes the following stack statuses.</p> <ul> <li> <p> <code>CREATE_COMPLETE</code> </p> </li> <li> <p> <code>UPDATE_COMPLETE</code> </p> </li> <li> <p> <code>UPDATE_ROLLBACK_COMPLETE</code> </p> </li> <li> <p> <code>IMPORT_COMPLETE</code> </p> </li> <li> <p> <code>IMPORT_ROLLBACK_COMPLETE</code> </p> </li> </ul>",
+    "SetAlias": "<p>Assigns an alias to an existing stack. An alias is an alternative name for a stack that can be used in place of the stack name in any CloudFormation API call that accepts the <code>StackName</code> parameter. This enables you to effectively rename a stack without recreating it.</p> <p>After setting an alias, both the original stack name and the alias resolve to the same stack. Setting an alias does not change the stack's ARN, physical resource IDs, or any deployed resources.</p> <note> <p>Each stack can have at most one alias. To change a stack's alias, first remove the existing alias using <a>RemoveAlias</a>, then set a new one.</p> </note>",
     "SetStackPolicy": "<p>Sets a stack policy for a specified stack.</p>",
     "SetTypeConfiguration": "<p>Specifies the configuration data for a CloudFormation extension, such as a resource or Hook, in the given account and Region.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry-set-configuration.html\">Edit configuration data for extensions in your account</a> in the <i>CloudFormation User Guide</i>.</p> <p>To view the current configuration data for an extension, refer to the <code>ConfigurationSchema</code> element of <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_DescribeType.html\">DescribeType</a>.</p> <important> <p>It's strongly recommended that you use dynamic references to restrict sensitive configuration definitions, such as third-party credentials. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/dynamic-references.html\">Specify values stored in other services using dynamic references</a> in the <i>CloudFormation User Guide</i>.</p> </important> <p>For more information about setting the configuration data for resource types, see <a href=\"https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/resource-type-model.html#resource-type-howto-configuration\">Defining the account-level configuration of an extension</a> in the <i>CloudFormation Command Line Interface (CLI) User Guide</i>. For more information about setting the configuration data for Hooks, see the <a href=\"https://docs.aws.amazon.com/cloudformation-cli/latest/hooks-userguide/what-is-cloudformation-hooks.html\">CloudFormation Hooks User Guide</a>.</p>",
     "SetTypeDefaultVersion": "<p>Specify the default version of an extension. The default version of an extension will be used in CloudFormation operations.</p>",
@@ -196,6 +198,14 @@
       "base": null,
       "refs": {
         "ResourceTargetDefinition$AfterValueFrom": "<p>Indicates the source of the after value. Valid value:</p> <ul> <li> <p> <code>TEMPLATE</code> – The after value comes from the new template.</p> </li> </ul> <p>Only present for drift-aware change sets.</p>"
+      }
+    },
+    "AliasName": {
+      "base": null,
+      "refs": {
+        "RemoveAliasInput$AliasName": "<p>The alias name to remove.</p>",
+        "SetAliasInput$AliasName": "<p>The alias to assign to the stack. The alias can then be used in place of the stack name in any API call that accepts <code>StackName</code>.</p> <p>The name must be unique within the same account and Region. It cannot match an existing stack name or another active alias.</p> <note> <p>An alias name can contain only alphanumeric characters (case-sensitive) and hyphens. It must start with an alphabetic character and can't be longer than 128 characters.</p> </note>",
+        "Stack$AliasName": "<p>The alias assigned to the stack, if one has been set. An alias is an alternative name that can be used in place of the stack name in any CloudFormation API call that accepts the <code>StackName</code> parameter.</p>"
       }
     },
     "AllowedValue": {
@@ -2532,6 +2542,10 @@
         "Annotation$StatusMessage": "<p>The explanation for the specific status assigned to this Hook invocation. For example, \"Bucket does not block public access\".</p>"
       }
     },
+    "RemoveAliasInput": {
+      "base": "<p>The input for the <a>RemoveAlias</a> action.</p>",
+      "refs": {}
+    },
     "Replacement": {
       "base": null,
       "refs": {
@@ -3083,6 +3097,10 @@
         "ResourceChange$Scope": "<p>For the <code>Modify</code> action, indicates which resource attribute is triggering this update, such as a change in the resource attribute's <code>Metadata</code>, <code>Properties</code>, or <code>Tags</code>.</p>"
       }
     },
+    "SetAliasInput": {
+      "base": "<p>The input for the <a>SetAlias</a> action.</p>",
+      "refs": {}
+    },
     "SetStackPolicyInput": {
       "base": "<p>The input for the <a>SetStackPolicy</a> action.</p>",
       "refs": {}
@@ -3329,6 +3347,7 @@
         "Imports$member": null,
         "ListStackResourcesInput$StackName": "<p>The name or the unique stack ID that is associated with the stack, which aren't always interchangeable:</p> <ul> <li> <p>Running stacks: You can specify either the stack's name or its unique stack ID.</p> </li> <li> <p>Deleted stacks: You must specify the unique stack ID.</p> </li> </ul>",
         "ResourceLocation$StackName": "<p>The name associated with the stack.</p>",
+        "SetAliasInput$StackName": "<p>The name or unique stack ID of the stack to assign an alias to.</p>",
         "SetStackPolicyInput$StackName": "<p>The name or unique stack ID that you want to associate a policy with.</p>",
         "Stack$StackName": "<p>The name associated with the stack.</p>",
         "StackDefinition$StackName": "<p>The name associated with the stack.</p>",

@@ -1462,6 +1462,26 @@
         "UpdateEventSourceMappingRequest$FunctionResponseTypes": "<p>(Kinesis, DynamoDB Streams, Amazon MSK, self-managed Apache Kafka, and Amazon SQS) A list of current response type enums applied to the event source mapping.</p>"
       }
     },
+    "FunctionRuntimeAlias": {
+      "base": null,
+      "refs": {
+        "FunctionRuntimeConfig$RuntimeAlias": "<p>The name of the customer-managed runtime alias that your function uses. A runtime alias is a name that points to a runtime version.</p>"
+      }
+    },
+    "FunctionRuntimeArn": {
+      "base": null,
+      "refs": {
+        "FunctionRuntimeConfig$RuntimeArn": "<p>The Amazon Resource Name (ARN) of the customer-managed runtime that your function uses.</p>"
+      }
+    },
+    "FunctionRuntimeConfig": {
+      "base": "<p>The customer-managed runtime configuration for your function. Specifies the customer-managed runtime and the runtime alias that your function uses.</p>",
+      "refs": {
+        "CreateFunctionRequest$RuntimeConfig": "<p>The customer-managed runtime configuration for your function. Specifies the customer-managed runtime and the runtime alias that your function uses.</p>",
+        "FunctionConfiguration$RuntimeConfig": "<p>The customer-managed runtime configuration for your function. Specifies the customer-managed runtime and the runtime alias that your function uses.</p>",
+        "UpdateFunctionConfigurationRequest$RuntimeConfig": "<p>The customer-managed runtime configuration for your function. Specifies the customer-managed runtime and the runtime alias that your function uses.</p>"
+      }
+    },
     "FunctionScalingConfig": {
       "base": "<p>Configuration that defines the scaling behavior for a Lambda Managed Instances function, including the minimum and maximum number of execution environments that can be provisioned.</p>",
       "refs": {
@@ -1963,7 +1983,7 @@
     "KafkaEventSourceMappingConsumptionMode": {
       "base": null,
       "refs": {
-        "SelfManagedKafkaEventSourceConfig$ConsumptionMode": "<p>The mode that Lambda uses to consume records from your self-managed Apache Kafka topic. The default is <code>Stream</code>.</p> <ul> <li> <p> <code>Stream</code> – Lambda consumes records using a Kafka consumer group and preserves the order of records within each partition. This is the default when you omit <code>ConsumptionMode</code>.</p> </li> <li> <p> <code>Queue</code> – Lambda consumes records using a Kafka share group. Multiple consumers can process records from the same partitions concurrently. Queue mode does not preserve per-partition order. Queue mode requires an Apache Kafka cluster running version 4.2 or later with share groups enabled.</p> </li> </ul> <p>You cannot change <code>ConsumptionMode</code> after you create the event source mapping. To use a different consumption mode, create a new event source mapping.</p> <p>When <code>ConsumptionMode</code> is <code>Queue</code>, the <code>StartingPosition</code>, <code>StartingPositionTimestamp</code>, and <code>MaximumBatchingWindowInSeconds</code> parameters are not supported.</p>"
+        "SelfManagedKafkaEventSourceConfig$ConsumptionMode": "<p>The mode that Lambda uses to consume records from your self-managed Apache Kafka topic. Valid values are the following:</p> <ul> <li> <p> <code>Stream</code> (default) – Lambda consumes records using a Kafka consumer group and preserves the order of records within each partition.</p> </li> <li> <p> <code>Queue</code> – Lambda consumes records using a Kafka share group. Multiple consumers can process records from the same partition concurrently, so Lambda doesn't preserve per-partition order. To use Queue mode, your cluster must run Apache Kafka version 4.2 or later with share groups enabled.</p> </li> </ul> <p>If you omit this parameter, Lambda uses <code>Stream</code>.</p> <p>You cannot change <code>ConsumptionMode</code> after you create the event source mapping. To use a different consumption mode, create a new event source mapping.</p> <p>When <code>ConsumptionMode</code> is <code>Queue</code>, the <code>StartingPosition</code>, <code>StartingPositionTimestamp</code>, and <code>MaximumBatchingWindowInSeconds</code> parameters are not supported.</p>"
       }
     },
     "KafkaSchemaRegistryAccessConfig": {
@@ -2057,11 +2077,16 @@
     "LayerName": {
       "base": null,
       "refs": {
+        "LayersListItem$LayerName": "<p>The name of the layer.</p>"
+      }
+    },
+    "LayerNameOrArn": {
+      "base": null,
+      "refs": {
         "AddLayerVersionPermissionRequest$LayerName": "<p>The name or Amazon Resource Name (ARN) of the layer.</p>",
         "DeleteLayerVersionRequest$LayerName": "<p>The name or Amazon Resource Name (ARN) of the layer.</p>",
         "GetLayerVersionPolicyRequest$LayerName": "<p>The name or Amazon Resource Name (ARN) of the layer.</p>",
         "GetLayerVersionRequest$LayerName": "<p>The name or Amazon Resource Name (ARN) of the layer.</p>",
-        "LayersListItem$LayerName": "<p>The name of the layer.</p>",
         "ListLayerVersionsRequest$LayerName": "<p>The name or Amazon Resource Name (ARN) of the layer.</p>",
         "PublishLayerVersionRequest$LayerName": "<p>The name or Amazon Resource Name (ARN) of the layer.</p>",
         "RemoveLayerVersionPermissionRequest$LayerName": "<p>The name or Amazon Resource Name (ARN) of the layer.</p>"
@@ -2425,9 +2450,9 @@
     "MaximumRetryAttemptsEventSourceMapping": {
       "base": null,
       "refs": {
-        "CreateEventSourceMappingRequest$MaximumRetryAttempts": "<p>(Kinesis, DynamoDB Streams, Amazon MSK, and self-managed Apache Kafka) Discard records after the specified number of retries. The default value is infinite (-1). When set to infinite (-1), failed records are retried until the record expires.</p> <p>For Kafka <code>Stream</code> consumption mode, the default is <code>-1</code> (infinite retries; capped at 10 when an on-failure destination is configured). For Kafka <code>Queue</code> consumption mode, the default is <code>0</code>, and if no on-failure destination is configured the Kafka broker performs retries.</p>",
+        "CreateEventSourceMappingRequest$MaximumRetryAttempts": "<p>(Kinesis, DynamoDB Streams, Amazon MSK, and self-managed Apache Kafka) Discard records after the specified number of retries. The default value is infinite (-1). When set to infinite (-1), failed records are retried until the record expires.</p> <p>For Kafka event source mappings with <code>ConsumptionMode</code> set to <code>Queue</code>, the value -1 (infinite retries) is not supported and the default is 0 (no retries). Lambda releases failed records back to the broker, which redelivers them up to the share group's <code>group.share.delivery.count.limit</code>.</p>",
         "EventSourceMappingConfiguration$MaximumRetryAttempts": "<p>(Kinesis, DynamoDB Streams, Amazon MSK, and self-managed Apache Kafka) Discard records after the specified number of retries. The default value is -1, which sets the maximum number of retries to infinite. When MaximumRetryAttempts is infinite, Lambda retries failed records until the record expires in the event source.</p>",
-        "UpdateEventSourceMappingRequest$MaximumRetryAttempts": "<p>(Kinesis, DynamoDB Streams, Amazon MSK, and self-managed Apache Kafka) Discard records after the specified number of retries. The default value is infinite (-1). When set to infinite (-1), failed records are retried until the record expires.</p> <p>For Kafka <code>Stream</code> consumption mode, the default is <code>-1</code> (infinite retries; capped at 10 when an on-failure destination is configured). For Kafka <code>Queue</code> consumption mode, the default is <code>0</code>, and if no on-failure destination is configured the Kafka broker performs retries.</p>"
+        "UpdateEventSourceMappingRequest$MaximumRetryAttempts": "<p>(Kinesis, DynamoDB Streams, Amazon MSK, and self-managed Apache Kafka) Discard records after the specified number of retries. The default value is infinite (-1). When set to infinite (-1), failed records are retried until the record expires.</p> <p>For Kafka event source mappings with <code>ConsumptionMode</code> set to <code>Queue</code>, the value -1 (infinite retries) is not supported and the default is 0 (no retries). Lambda releases failed records back to the broker, which redelivers them up to the share group's <code>group.share.delivery.count.limit</code>.</p>"
       }
     },
     "MemorySize": {
@@ -3015,6 +3040,10 @@
         "UpdateFunctionConfigurationRequest$Runtime": "<p>The identifier of the function's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html\"> runtime</a>. Runtime is required if the deployment package is a .zip file archive. Specifying a runtime results in an error if you're deploying a function using a container image.</p> <p>The following list includes deprecated runtimes. Lambda blocks creating new functions and updating existing functions shortly after each runtime is deprecated. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtime-deprecation-levels\">Runtime use after deprecation</a>.</p> <p>For a list of all currently supported runtimes, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtimes-supported\">Supported runtimes</a>.</p>"
       }
     },
+    "RuntimeAliasDeletedException": {
+      "base": "<p>The runtime alias for your function is no longer available. Update your function to use an available runtime alias.</p>",
+      "refs": {}
+    },
     "RuntimeVersionArn": {
       "base": null,
       "refs": {
@@ -3029,6 +3058,10 @@
       "refs": {
         "FunctionConfiguration$RuntimeVersionConfig": "<p>The ARN of the runtime and any errors that occured.</p>"
       }
+    },
+    "RuntimeVersionDeletedException": {
+      "base": "<p>The runtime version used by your function is no longer available. Update your function to use an available runtime version or runtime alias.</p>",
+      "refs": {}
     },
     "RuntimeVersionError": {
       "base": "<p>Any error returned when the runtime version information for the function could not be retrieved.</p>",
@@ -3511,6 +3544,10 @@
         "ResourceNotFoundException$Message": null,
         "ResourceNotReadyException$Type": "<p>The exception type.</p>",
         "ResourceNotReadyException$message": "<p>The exception message.</p>",
+        "RuntimeAliasDeletedException$Type": "<p>Indicates the exception type for a deleted runtime alias.</p>",
+        "RuntimeAliasDeletedException$message": null,
+        "RuntimeVersionDeletedException$Type": "<p>Indicates the exception type for a deleted runtime version.</p>",
+        "RuntimeVersionDeletedException$message": null,
         "RuntimeVersionError$ErrorCode": "<p>The error code.</p>",
         "S3FilesMountConnectivityException$Type": "<p>The exception type.</p>",
         "S3FilesMountConnectivityException$Message": "<p>The exception message.</p>",

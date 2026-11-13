@@ -163,8 +163,9 @@
     "DescribeAutoMLJobV2": "<p>Returns information about an AutoML job created by calling <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJobV2.html\">CreateAutoMLJobV2</a> or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJob.html\">CreateAutoMLJob</a>.</p>",
     "DescribeCluster": "<p>Retrieves information of a SageMaker HyperPod cluster.</p>",
     "DescribeClusterEvent": "<p>Retrieves detailed information about a specific event for a given HyperPod cluster. This functionality is only supported when the <code>NodeProvisioningMode</code> is set to <code>Continuous</code>.</p>",
-    "DescribeClusterExtension": "<p>Retrieves information about an extension installed on a SageMaker HyperPod cluster. The information includes the extension's version, configuration, and status, and a summary of how many cluster nodes are running the current version and configuration of the extension.</p>",
+    "DescribeClusterExtension": "<p>Retrieves information about an extension installed on a SageMaker HyperPod cluster. The information includes the extension's version, configuration, and status, and a summary of how many cluster nodes are running the current version and configuration of the extension. If the extension has problems on some nodes, the response also lists the problems and how many nodes each one affects.</p>",
     "DescribeClusterNode": "<p>Retrieves information of a node (also called a <i>instance</i> interchangeably) of a SageMaker HyperPod cluster.</p>",
+    "DescribeClusterOperation": "<p>Retrieves detailed information about a specific operation for a given HyperPod cluster, such as a scaling operation or a deep health check. Use the <code>OperationId</code> returned by the <code>ListClusterOperations</code> operation to identify the operation to describe.</p>",
     "DescribeClusterSchedulerConfig": "<p>Description of the cluster policy. This policy is used for task prioritization and fair-share allocation. This helps prioritize critical workloads and distributes idle compute across entities.</p>",
     "DescribeCodeRepository": "<p>Gets details about the specified Git repository.</p>",
     "DescribeCompilationJob": "<p>Returns information about a model compilation job.</p> <p>To create a model compilation job, use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateCompilationJob.html\">CreateCompilationJob</a>. To get information about multiple model compilation jobs, use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListCompilationJobs.html\">ListCompilationJobs</a>.</p>",
@@ -254,8 +255,10 @@
     "ListAutoMLJobs": "<p>Request a list of jobs.</p>",
     "ListCandidatesForAutoMLJob": "<p>List the candidates created for the job.</p>",
     "ListClusterEvents": "<p>Retrieves a list of event summaries for a specified HyperPod cluster. The operation supports filtering, sorting, and pagination of results. This functionality is only supported when the <code>NodeProvisioningMode</code> is set to <code>Continuous</code>.</p>",
+    "ListClusterExtensionVersions": "<p>Lists the versions of an extension that you can install on a SageMaker HyperPod cluster, from the highest version to the lowest. Use a version from this list as the <code>ExtensionVersion</code> in <code>CreateClusterExtension</code> or <code>UpdateClusterExtension</code>.</p> <p>The list contains only versions that you can install. Versions that SageMaker HyperPod no longer offers for new installations don't appear. If SageMaker HyperPod doesn't offer an extension with the name that you specify, the response contains an empty list.</p>",
     "ListClusterExtensions": "<p>Lists the extensions installed on a SageMaker HyperPod cluster.</p>",
     "ListClusterNodes": "<p>Retrieves the list of instances (also called <i>nodes</i> interchangeably) in a SageMaker HyperPod cluster.</p>",
+    "ListClusterOperations": "<p>Retrieves a list of operation summaries for a specified HyperPod cluster, such as scaling operations and deep health checks. The operation supports filtering, sorting, and pagination of results.</p>",
     "ListClusterSchedulerConfigs": "<p>List the cluster policy configurations.</p>",
     "ListClusters": "<p>Retrieves the list of SageMaker HyperPod clusters.</p>",
     "ListCodeRepositories": "<p>Gets a list of the Git repositories in your account.</p>",
@@ -374,7 +377,7 @@
     "UpdateAppImageConfig": "<p>Updates the properties of an AppImageConfig.</p>",
     "UpdateArtifact": "<p>Updates an artifact.</p>",
     "UpdateCluster": "<p>Updates a SageMaker HyperPod cluster.</p>",
-    "UpdateClusterExtension": "<p>Updates the configuration or the version of an extension installed on a SageMaker HyperPod cluster. SageMaker HyperPod applies the change to every node in the cluster. You can change the configuration, the version, or both in one request.</p> <ul> <li> <p> <b>Configuration:</b> You can change settings by sending <code>ConfigurationValues</code>. Settings that you include are changed. Settings that you omit keep their current values. A setting with the value <code>null</code> is removed and returns to its default value.</p> </li> <li> <p> <b>Version:</b> You can update to a later version. You can't update to an earlier version. To use an earlier version, delete the extension and create it again with that version.</p> </li> </ul> <p>You can't update an extension while it is being deleted.</p>",
+    "UpdateClusterExtension": "<p>Updates the configuration or the version of an extension installed on a SageMaker HyperPod cluster. SageMaker HyperPod applies the change to every node in the cluster. You can change the configuration, the version, or both in one request.</p> <ul> <li> <p> <b>Configuration:</b> You can change settings by sending <code>ConfigurationValues</code>. Settings that you include are changed. Settings that you omit keep their current values. A setting with the value <code>null</code> is removed and returns to its default value.</p> </li> <li> <p> <b>Version:</b> You can update to a later version. You can't update to an earlier version. To use an earlier version, delete the extension and create it again with that version.</p> </li> </ul> <p>To retry the operation on nodes where it failed, fix the cause that <code>DescribeClusterExtension</code> reports in <code>Health</code>, and then send an <code>UpdateClusterExtension</code> request that doesn't change the version or the configuration.</p> <p>You can't update an extension while it is being deleted.</p>",
     "UpdateClusterSchedulerConfig": "<p>Update the cluster policy configuration.</p>",
     "UpdateClusterSoftware": "<p>Updates the platform software of a SageMaker HyperPod cluster for security patching. To learn how to use this API, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-operate.html#sagemaker-hyperpod-operate-cli-command-update-cluster-software\">Update the SageMaker HyperPod platform software of a cluster</a>.</p> <important> <p>The <code>UpgradeClusterSoftware</code> API call may impact your SageMaker HyperPod cluster uptime and availability. Plan accordingly to mitigate potential disruptions to your workloads.</p> </important>",
     "UpdateCodeRepository": "<p>Updates the specified Git repository with the specified values.</p>",
@@ -3353,6 +3356,7 @@
         "AttachClusterNodeVolumeResponse$ClusterArn": "<p> The Amazon Resource Name (ARN) of your SageMaker HyperPod cluster where the volume attachment operation was performed. </p>",
         "ClusterEventDetail$ClusterArn": "<p>The Amazon Resource Name (ARN) of the HyperPod cluster associated with the event.</p>",
         "ClusterEventSummary$ClusterArn": "<p>The Amazon Resource Name (ARN) of the HyperPod cluster associated with the event.</p>",
+        "ClusterOperationSummary$ClusterArn": "<p>The Amazon Resource Name (ARN) of the HyperPod cluster associated with the operation.</p>",
         "ClusterSchedulerConfigSummary$ClusterArn": "<p>ARN of the cluster.</p>",
         "ClusterSummary$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster.</p>",
         "ComputeQuotaSummary$ClusterArn": "<p>ARN of the cluster.</p>",
@@ -3363,6 +3367,7 @@
         "DeleteClusterExtensionRequest$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster on which the extension is installed.</p>",
         "DeleteClusterResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster to delete.</p>",
         "DescribeClusterExtensionRequest$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster on which the extension is installed.</p>",
+        "DescribeClusterOperationResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the HyperPod cluster associated with the operation.</p>",
         "DescribeClusterResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster.</p>",
         "DescribeClusterSchedulerConfigResponse$ClusterArn": "<p>ARN of the cluster where the cluster policy is applied.</p>",
         "DescribeComputeQuotaResponse$ClusterArn": "<p>ARN of the cluster.</p>",
@@ -3468,6 +3473,13 @@
       "refs": {
         "ClusterFsxLustreConfig$DnsName": "<p>The DNS name of the Amazon FSx for Lustre file system.</p>",
         "ClusterFsxOpenZfsConfig$DnsName": "<p>The DNS name of the Amazon FSx for OpenZFS file system.</p>"
+      }
+    },
+    "ClusterDrainPolicy": {
+      "base": "<p>Specifies how pods are evicted from an instance before it is patched with the <code>DrainFirst</code> strategy. By default, evictions respect Kubernetes Pod Disruption Budgets.</p>",
+      "refs": {
+        "ClusterAutoPatchConfig$DrainPolicy": "<p>The policy that controls how pods are evicted from an instance before it is patched. Valid only when <code>PatchingStrategy</code> is <code>DrainFirst</code>.</p>",
+        "ClusterAutoPatchConfigDetails$DrainPolicy": "<p>The policy that controls how pods are evicted from an instance before it is patched. Applies only when <code>PatchingStrategy</code> is <code>DrainFirst</code>.</p>"
       }
     },
     "ClusterEbsVolumeConfig": {
@@ -3840,9 +3852,11 @@
         "DeleteClusterRequest$ClusterName": "<p>The string name or the Amazon Resource Name (ARN) of the SageMaker HyperPod cluster to delete.</p>",
         "DescribeClusterEventRequest$ClusterName": "<p>The name or Amazon Resource Name (ARN) of the HyperPod cluster associated with the event.</p>",
         "DescribeClusterNodeRequest$ClusterName": "<p>The string name or the Amazon Resource Name (ARN) of the SageMaker HyperPod cluster in which the node is.</p>",
+        "DescribeClusterOperationRequest$ClusterName": "<p>The name or Amazon Resource Name (ARN) of the HyperPod cluster associated with the operation.</p>",
         "DescribeClusterRequest$ClusterName": "<p>The string name or the Amazon Resource Name (ARN) of the SageMaker HyperPod cluster.</p>",
         "ListClusterEventsRequest$ClusterName": "<p>The name or Amazon Resource Name (ARN) of the HyperPod cluster for which to list events.</p>",
         "ListClusterNodesRequest$ClusterName": "<p>The string name or the Amazon Resource Name (ARN) of the SageMaker HyperPod cluster in which you want to retrieve the list of nodes.</p>",
+        "ListClusterOperationsRequest$ClusterName": "<p>The name or Amazon Resource Name (ARN) of the HyperPod cluster for which to list operations.</p>",
         "StartClusterHealthCheckRequest$ClusterName": "<p>The string name or the Amazon Resource Name (ARN) of the SageMaker HyperPod cluster.</p>",
         "UpdateClusterRequest$ClusterName": "<p>Specify the name of the SageMaker HyperPod cluster you want to update.</p>",
         "UpdateClusterSoftwareRequest$ClusterName": "<p>Specify the name or the Amazon Resource Name (ARN) of the SageMaker HyperPod cluster you want to update for security patching.</p>"
@@ -3975,6 +3989,91 @@
         "ClusterCapacityRequirements$OnDemand": "<p>Configuration options specific to On-Demand instances.</p>"
       }
     },
+    "ClusterOnDrainTimeout": {
+      "base": "<p>The action to take if the pods on an instance don't drain within the configured timeout. Valid values are <code>Skip</code> and <code>Force</code>.</p>",
+      "refs": {
+        "ClusterDrainPolicy$OnDrainTimeout": "<p>The action to take if the pods on an instance don't drain within <code>DrainTimeoutInSeconds</code>. The default is <code>Skip</code>.</p> <ul> <li> <p> <code>Skip</code>: Doesn't patch the instance. The instance is uncordoned and remains on the previous AMI version. This can leave the instance group partially patched. You can then use UpdateClusterSoftware with the desired ImageReleaseVersion to manually update the remaining instances.</p> </li> <li> <p> <code>Force</code>: Deletes the remaining pods without respecting Pod Disruption Budgets, and then patches the instance.</p> </li> </ul>"
+      }
+    },
+    "ClusterOperationCount": {
+      "base": null,
+      "refs": {
+        "ClusterOperationScalingConfiguration$CurrentCount": "<p>The number of instances that were in the instance group at the time of the operation.</p>",
+        "ClusterOperationScalingConfiguration$TargetCount": "<p>The target number of instances for the instance group.</p>",
+        "ClusterOperationScalingConfiguration$MinCount": "<p>The minimum number of instances that must be available in the instance group of a HyperPod cluster before it transitions to <code>InService</code> status. </p>"
+      }
+    },
+    "ClusterOperationId": {
+      "base": null,
+      "refs": {
+        "ClusterEventDetail$OperationId": "<p>The unique identifier (UUID) of the cluster operation that the event is associated with, such as a scaling operation. This field is not returned when the event is not associated with an operation.</p>",
+        "ClusterEventSummary$OperationId": "<p>The unique identifier (UUID) of the cluster operation that the event is associated with, such as a scaling operation. This field is not returned when the event is not associated with an operation.</p>",
+        "ClusterOperationSummary$OperationId": "<p>The unique identifier (UUID) of the operation.</p>",
+        "DescribeClusterOperationRequest$OperationId": "<p>The unique identifier (UUID) of the operation to describe. This ID can be obtained from the <code>ListClusterOperations</code> operation.</p>",
+        "DescribeClusterOperationResponse$OperationId": "<p>The unique identifier (UUID) of the operation.</p>",
+        "ListClusterEventsRequest$OperationId": "<p>The unique identifier (UUID) of a cluster operation for which to filter events. If specified, only events associated with this operation are returned. This ID can be obtained from the <code>ListClusterOperations</code> operation.</p>"
+      }
+    },
+    "ClusterOperationMaxResults": {
+      "base": null,
+      "refs": {
+        "ListClusterOperationsRequest$MaxResults": "<p>The maximum number of operations to return in the response. Valid range is 1 to 100.</p>"
+      }
+    },
+    "ClusterOperationScalingConfiguration": {
+      "base": "<p>A point-in-time snapshot of an instance group's scaling configuration. This structure represents both the original configuration before the operation and the desired configuration requested by the operation.</p>",
+      "refs": {
+        "ClusterOperationScalingDetails$Original": "<p>The scaling configuration of the instance group before the scaling operation was applied, including its current, target, and minimum instance counts.</p>",
+        "ClusterOperationScalingDetails$Desired": "<p>The desired scaling configuration of the instance group for the scaling operation, including its target and minimum instance counts.</p>"
+      }
+    },
+    "ClusterOperationScalingDetails": {
+      "base": "<p>The scaling details for a single instance group that is affected by a cluster operation.</p>",
+      "refs": {
+        "ClusterOperationScalingDetailsList$member": null
+      }
+    },
+    "ClusterOperationScalingDetailsList": {
+      "base": null,
+      "refs": {
+        "DescribeClusterOperationResponse$ScalingDetails": "<p>The per-instance-group scaling details for the operation. This field is populated when the operation <code>Type</code> is <code>Scaling</code>.</p>"
+      }
+    },
+    "ClusterOperationSortBy": {
+      "base": null,
+      "refs": {
+        "ListClusterOperationsRequest$SortBy": "<p>The field to use for sorting the operation list. Currently, the only supported value is <code>CreationTime</code>.</p>"
+      }
+    },
+    "ClusterOperationStatus": {
+      "base": null,
+      "refs": {
+        "ClusterOperationScalingDetails$Status": "<p>The status of the scaling operation for this instance group. Valid values are <code>InProgress</code>, <code>Superseded</code>, or <code>Done</code>.</p>",
+        "ClusterOperationSummary$Status": "<p>The current status of the operation. Valid values are <code>InProgress</code>, <code>Superseded</code>, or <code>Done</code>.</p>",
+        "DescribeClusterOperationResponse$Status": "<p>The current status of the operation. Valid values are <code>InProgress</code>, <code>Superseded</code>, or <code>Done</code>.</p>",
+        "ListClusterOperationsRequest$Status": "<p>The operation status to filter by. If specified, only operations with this status are returned. Valid values are <code>InProgress</code>, <code>Superseded</code>, or <code>Done</code>.</p>"
+      }
+    },
+    "ClusterOperationSummaries": {
+      "base": null,
+      "refs": {
+        "ListClusterOperationsResponse$ClusterOperationSummaries": "<p>A list of operation summaries matching the specified criteria.</p>"
+      }
+    },
+    "ClusterOperationSummary": {
+      "base": "<p>A summary of an operation performed on a HyperPod cluster.</p>",
+      "refs": {
+        "ClusterOperationSummaries$member": null
+      }
+    },
+    "ClusterOperationType": {
+      "base": null,
+      "refs": {
+        "ClusterOperationSummary$Type": "<p>The type of the operation. Valid values are <code>Scaling</code> or <code>DeepHealthCheck</code>.</p>",
+        "DescribeClusterOperationResponse$Type": "<p>The type of the operation. Valid values are <code>Scaling</code> or <code>DeepHealthCheck</code>.</p>",
+        "ListClusterOperationsRequest$Type": "<p>The operation type to filter by. If specified, only operations of this type are returned. Valid values are <code>Scaling</code> or <code>DeepHealthCheck</code>.</p>"
+      }
+    },
     "ClusterOrchestrator": {
       "base": "<p>The type of orchestrator used for the SageMaker HyperPod cluster.</p>",
       "refs": {
@@ -4022,10 +4121,10 @@
       }
     },
     "ClusterPatchingStrategy": {
-      "base": "<p>The strategy for applying automatic patches to instances.</p> <ul> <li> <p> <code>WhenIdle</code>: Cordons all instances and patches each instance as it becomes idle (no running jobs). Each instance is uncordoned immediately after patching and becomes available for new jobs. If instances do not become idle, they remain on the previous AMI version. You can then use UpdateClusterSoftware with the desired ImageReleaseVersion to manually update the remaining instances.</p> </li> <li> <p> <code>WhenAllIdle</code>: Cordons all instances and waits for all to become idle before patching. All instances are uncordoned after patching completes. If not all instances become idle, no patching occurs and all instances remain on the previous AMI version.</p> </li> </ul>",
+      "base": "<p>The strategy for applying automatic patches to instances.</p> <ul> <li> <p> <code>WhenIdle</code>: Cordons all instances and patches each instance as it becomes idle (no running jobs). Each instance is uncordoned immediately after patching and becomes available for new jobs. If instances do not become idle, they remain on the previous AMI version. You can then use UpdateClusterSoftware with the desired ImageReleaseVersion to manually update the remaining instances.</p> </li> <li> <p> <code>WhenAllIdle</code>: Cordons all instances and waits for all to become idle before patching. All instances are uncordoned after patching completes. If not all instances become idle, no patching occurs and all instances remain on the previous AMI version.</p> </li> <li> <p> <code>DrainFirst</code>: Designed for workloads that never become idle, such as inference. Cordons instances, evicts the running pods, and then patches each instance in batches. Each instance is uncordoned after patching. Use <code>DrainPolicy</code> to control how long to wait for pods to drain and what happens if the drain times out. Requires <code>MaximumBatchSize</code> in <code>DeploymentConfig</code>. Available only for clusters that use Amazon EKS as the orchestrator.</p> </li> </ul>",
       "refs": {
-        "ClusterAutoPatchConfig$PatchingStrategy": "<p>The strategy for applying patches to instances in the group.</p> <ul> <li> <p> <code>WhenIdle</code>: Cordons all instances and patches each instance as it becomes idle (no running jobs). Each instance is uncordoned immediately after patching and becomes available for new jobs. If instances do not become idle, they remain on the previous AMI version. You can then use UpdateClusterSoftware with the desired ImageReleaseVersion to manually update the remaining instances.</p> </li> <li> <p> <code>WhenAllIdle</code>: Cordons all instances and waits for all to become idle before patching. All instances are uncordoned after patching completes. If not all instances become idle, no patching occurs and all instances remain on the previous AMI version.</p> </li> </ul>",
-        "ClusterAutoPatchConfigDetails$PatchingStrategy": "<p>The strategy used for applying patches to instances in the group.</p> <ul> <li> <p> <code>WhenIdle</code>: Cordons all instances and patches each instance as it becomes idle (no running jobs). Each instance is uncordoned immediately after patching and becomes available for new jobs. If instances do not become idle, they remain on the previous AMI version. You can then use UpdateClusterSoftware with the desired ImageReleaseVersion to manually update the remaining instances.</p> </li> <li> <p> <code>WhenAllIdle</code>: Cordons all instances and waits for all to become idle before patching. All instances are uncordoned after patching completes. If not all instances become idle, no patching occurs and all instances remain on the previous AMI version.</p> </li> </ul>"
+        "ClusterAutoPatchConfig$PatchingStrategy": "<p>The strategy for applying patches to instances in the group.</p> <ul> <li> <p> <code>WhenIdle</code>: Cordons all instances and patches each instance as it becomes idle (no running jobs). Each instance is uncordoned immediately after patching and becomes available for new jobs. If instances do not become idle, they remain on the previous AMI version. You can then use UpdateClusterSoftware with the desired ImageReleaseVersion to manually update the remaining instances.</p> </li> <li> <p> <code>WhenAllIdle</code>: Cordons all instances and waits for all to become idle before patching. All instances are uncordoned after patching completes. If not all instances become idle, no patching occurs and all instances remain on the previous AMI version.</p> </li> <li> <p> <code>DrainFirst</code>: Designed for workloads that never become idle, such as inference. Cordons instances, evicts the running pods, and then patches each instance in batches. Each instance is uncordoned after patching. Use <code>DrainPolicy</code> to control how long to wait for pods to drain and what happens if the drain times out. Requires <code>MaximumBatchSize</code> in <code>DeploymentConfig</code>. Available only for clusters that use Amazon EKS as the orchestrator.</p> </li> </ul>",
+        "ClusterAutoPatchConfigDetails$PatchingStrategy": "<p>The strategy used for applying patches to instances in the group.</p> <ul> <li> <p> <code>WhenIdle</code>: Cordons all instances and patches each instance as it becomes idle (no running jobs). Each instance is uncordoned immediately after patching and becomes available for new jobs. If instances do not become idle, they remain on the previous AMI version. You can then use UpdateClusterSoftware with the desired ImageReleaseVersion to manually update the remaining instances.</p> </li> <li> <p> <code>WhenAllIdle</code>: Cordons all instances and waits for all to become idle before patching. All instances are uncordoned after patching completes. If not all instances become idle, no patching occurs and all instances remain on the previous AMI version.</p> </li> <li> <p> <code>DrainFirst</code>: Designed for workloads that never become idle, such as inference. Cordons instances, evicts the running pods, and then patches each instance in batches. Each instance is uncordoned after patching. Use <code>DrainPolicy</code> to control how long to wait for pods to drain and what happens if the drain times out. Requires <code>MaximumBatchSize</code> in <code>DeploymentConfig</code>. Available only for clusters that use Amazon EKS as the orchestrator.</p> </li> </ul>"
       }
     },
     "ClusterPrivateDnsHostname": {
@@ -5680,6 +5779,7 @@
     "DeepHealthCheckConfigurations": {
       "base": null,
       "refs": {
+        "DescribeClusterOperationResponse$DeepHealthCheckDetails": "<p>The deep health check details for the operation. This field is populated when the operation <code>Type</code> is <code>DeepHealthCheck</code>.</p>",
         "StartClusterHealthCheckRequest$DeepHealthCheckConfigurations": "<p>A list of configurations containing instance group names, EC2 instance IDs, and deep health checks to perform.</p>"
       }
     },
@@ -6290,6 +6390,14 @@
       "refs": {}
     },
     "DescribeClusterNodeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeClusterOperationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeClusterOperationResponse": {
       "base": null,
       "refs": {}
     },
@@ -7195,6 +7303,12 @@
       "base": null,
       "refs": {
         "TrialComponentParameterValue$NumberValue": "<p>The numeric value of a numeric hyperparameter. If you specify a value for this parameter, you can't specify the <code>StringValue</code> parameter.</p>"
+      }
+    },
+    "DrainTimeoutInSecondsValue": {
+      "base": null,
+      "refs": {
+        "ClusterDrainPolicy$DrainTimeoutInSeconds": "<p>The maximum time, in seconds, to wait for the pods on an instance to drain. Valid values are from 0 to 5400 (90 minutes). The default is 3600 (1 hour).</p>"
       }
     },
     "DriftCheckBaselines": {
@@ -8319,19 +8433,51 @@
         "DescribeClusterExtensionResponse$ExtensionDetails": "<p>The details of the extension.</p>"
       }
     },
+    "ExtensionHealth": {
+      "base": "<p>Contains information about the problems that affect an extension on the nodes of a SageMaker HyperPod cluster, including how many nodes each problem affects. <code>DescribeClusterExtension</code> returns <code>ExtensionHealth</code> only when at least one node has a problem.</p>",
+      "refs": {
+        "DescribeClusterExtensionResponse$Health": "<p>The problems that affect the extension on the cluster's nodes, grouped by cause, with the number of nodes that each problem affects. Use it to find out why <code>ActiveCount</code> is lower than <code>TotalCount</code>, or why the status is <code>Degraded</code>, <code>CreateFailed</code>, or <code>UpdateFailed</code>. SageMaker HyperPod omits <code>Health</code> when no node has a problem. Nodes where SageMaker HyperPod hasn't finished installing or updating the extension aren't counted in any issue, unless an earlier attempt failed on them.</p>"
+      }
+    },
+    "ExtensionHealthIssue": {
+      "base": "<p>Information about a problem that affects an extension on one or more nodes of a SageMaker HyperPod cluster, including the number of nodes that it affects.</p>",
+      "refs": {
+        "ExtensionHealthIssues$member": null
+      }
+    },
+    "ExtensionHealthIssueCode": {
+      "base": null,
+      "refs": {
+        "ExtensionHealthIssue$Code": "<p>A code that describes the type of issue.</p>"
+      }
+    },
+    "ExtensionHealthIssueMessage": {
+      "base": null,
+      "refs": {
+        "ExtensionHealthIssue$Message": "<p>A description of the problem, for example the setting or component to check. Every node with the same problem has the same message.</p>"
+      }
+    },
+    "ExtensionHealthIssues": {
+      "base": null,
+      "refs": {
+        "ExtensionHealth$Issues": "<p>The problems that affect the extension, grouped by cause, from the problem that affects the most nodes to the one that affects the fewest. SageMaker HyperPod counts each node in at most one issue. The list contains at most 20 issues. If more than 20 different problems exist, the list shows the 19 that affect the most nodes, and the 20th issue has the code <code>Other</code> and counts the nodes that the remaining problems affect.</p>"
+      }
+    },
     "ExtensionName": {
       "base": null,
       "refs": {
         "CreateClusterExtensionRequest$ExtensionName": "<p>The name of the extension to install, for example <code>sagemaker-observability</code>.</p>",
         "ExtensionDetails$ExtensionName": "<p>The name of the extension.</p>",
-        "ExtensionSummary$ExtensionName": "<p>The name of the extension.</p>"
+        "ExtensionSummary$ExtensionName": "<p>The name of the extension.</p>",
+        "ListClusterExtensionVersionsRequest$ExtensionName": "<p>The name of the extension whose versions you want to list, for example <code>sagemaker-observability</code>.</p>"
       }
     },
     "ExtensionNodeCount": {
       "base": null,
       "refs": {
+        "ExtensionHealthIssue$NodeCount": "<p>The number of nodes that have this problem.</p>",
         "ExtensionNodeSummary$TotalCount": "<p>The number of nodes in your cluster that the extension targets. SageMaker HyperPod targets every running node in your cluster, including nodes that you add after you create the extension.</p>",
-        "ExtensionNodeSummary$ActiveCount": "<p>The number of nodes that are running the extension's current version and configuration. While SageMaker HyperPod creates or updates the extension, <code>ActiveCount</code> is lower than <code>TotalCount</code>.</p>"
+        "ExtensionNodeSummary$ActiveCount": "<p>The number of nodes that are running the extension's current version and configuration. Nodes that report the extension as unhealthy aren't counted. While SageMaker HyperPod creates or updates the extension, <code>ActiveCount</code> is lower than <code>TotalCount</code>. To see why nodes aren't counted, see <code>Health</code> in <code>DescribeClusterExtension</code>.</p>"
       }
     },
     "ExtensionNodeSummary": {
@@ -8365,7 +8511,20 @@
         "CreateClusterExtensionRequest$ExtensionVersion": "<p>The version of the extension to install, in <code>MAJOR.MINOR.PATCH</code> format, for example <code>1.0.0</code>. If you don't specify a version, SageMaker HyperPod installs the latest available version of the extension.</p>",
         "ExtensionDetails$ExtensionVersion": "<p>The version of the extension. While SageMaker HyperPod creates or updates the extension, some nodes might still run a different version. To see how many nodes run this version, see <code>NodeSummary</code>.</p>",
         "ExtensionSummary$ExtensionVersion": "<p>The version of the extension.</p>",
+        "ExtensionVersionSummary$ExtensionVersion": "<p>The version of the extension, in <code>MAJOR.MINOR.PATCH</code> format, for example <code>1.0.0</code>.</p>",
         "UpdateClusterExtensionRequest$ExtensionVersion": "<p>The version to update the extension to, in <code>MAJOR.MINOR.PATCH</code> format. The version must be later than the extension's current version. If you omit this parameter, the extension keeps its current version.</p>"
+      }
+    },
+    "ExtensionVersionSummaries": {
+      "base": null,
+      "refs": {
+        "ListClusterExtensionVersionsResponse$ExtensionVersions": "<p>The versions of the extension that you can install, from the highest version to the lowest.</p>"
+      }
+    },
+    "ExtensionVersionSummary": {
+      "base": "<p>A version of an extension that you can install on a SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "ExtensionVersionSummaries$member": null
       }
     },
     "FSxLustreConfig": {
@@ -9889,6 +10048,13 @@
         "IdleSettings$MinIdleTimeoutInMinutes": "<p>The minimum value in minutes that custom idle shutdown can be set to by the user.</p>",
         "IdleSettings$MaxIdleTimeoutInMinutes": "<p>The maximum value in minutes that custom idle shutdown can be set to by the user.</p>",
         "SpaceIdleSettings$IdleTimeoutInMinutes": "<p>The time that SageMaker waits after the application becomes idle before shutting it down.</p>"
+      }
+    },
+    "IdleWaitWindowInSecondsValue": {
+      "base": null,
+      "refs": {
+        "ClusterAutoPatchConfig$IdleWaitWindowInSeconds": "<p>The maximum time, in seconds, that automatic patching waits for instances to become idle after a scheduled patch starts. Automatic patching uncordons instances that don't become idle within this window, and they remain on the previous AMI version. Valid values are from 3600 (1 hour) to 2160000 (25 days). The default is 86400 (24 hours). This setting applies only to the <code>WhenIdle</code> and <code>WhenAllIdle</code> strategies.</p>",
+        "ClusterAutoPatchConfigDetails$IdleWaitWindowInSeconds": "<p>The maximum time, in seconds, that automatic patching waits for instances to become idle after a scheduled patch starts. Automatic patching uncordons instances that don't become idle within this window, and they remain on the previous AMI version. The default is 86400 (24 hours).</p>"
       }
     },
     "Image": {
@@ -11643,6 +11809,14 @@
       "base": null,
       "refs": {}
     },
+    "ListClusterExtensionVersionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListClusterExtensionVersionsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListClusterExtensionsRequest": {
       "base": null,
       "refs": {}
@@ -11656,6 +11830,14 @@
       "refs": {}
     },
     "ListClusterNodesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListClusterOperationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListClusterOperationsResponse": {
       "base": null,
       "refs": {}
     },
@@ -12609,6 +12791,7 @@
         "ListAppsRequest$MaxResults": "<p>This parameter defines the maximum number of results that can be return in a single response. The <code>MaxResults</code> parameter is an upper bound, not a target. If there are more results available than the value specified, a <code>NextToken</code> is provided in the response. The <code>NextToken</code> indicates that the user should get the next set of results by providing this token as a part of a subsequent call. The default value for <code>MaxResults</code> is 10.</p>",
         "ListArtifactsRequest$MaxResults": "<p>The maximum number of artifacts to return in the response. The default value is 10.</p>",
         "ListAssociationsRequest$MaxResults": "<p>The maximum number of associations to return in the response. The default value is 10.</p>",
+        "ListClusterExtensionVersionsRequest$MaxResults": "<p>The maximum number of versions to return in the response. If you don't specify a value, SageMaker HyperPod returns up to 100 versions.</p>",
         "ListClusterExtensionsRequest$MaxResults": "<p>The maximum number of extensions to return in the response. If you don't specify a value, SageMaker HyperPod returns up to 100 extensions.</p>",
         "ListClusterNodesRequest$MaxResults": "<p>The maximum number of nodes to return in the response.</p>",
         "ListClusterSchedulerConfigsRequest$MaxResults": "<p>The maximum number of cluster policies to list.</p>",
@@ -14494,10 +14677,14 @@
         "ListCandidatesForAutoMLJobResponse$NextToken": "<p>If the previous response was truncated, you receive this token. Use it in your next request to receive the next set of results.</p>",
         "ListClusterEventsRequest$NextToken": "<p>A token to retrieve the next set of results. This token is obtained from the output of a previous <code>ListClusterEvents</code> call.</p>",
         "ListClusterEventsResponse$NextToken": "<p>A token to retrieve the next set of results. Include this token in subsequent <code>ListClusterEvents</code> calls to fetch more events.</p>",
+        "ListClusterExtensionVersionsRequest$NextToken": "<p>If the result of the previous <code>ListClusterExtensionVersions</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of versions, use the token in the next request.</p>",
+        "ListClusterExtensionVersionsResponse$NextToken": "<p>If the response is truncated, a token that you can use in the next request to retrieve the next set of versions.</p>",
         "ListClusterExtensionsRequest$NextToken": "<p>If the result of the previous <code>ListClusterExtensions</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of extensions, use the token in the next request. When you use the <code>CreationTimeAfter</code> or <code>CreationTimeBefore</code> filters, a response can contain fewer extensions than <code>MaxResults</code>, or none, and still include a <code>NextToken</code>. Continue until the response doesn't include a <code>NextToken</code>.</p>",
         "ListClusterExtensionsResponse$NextToken": "<p>The next token specified for listing extensions on a SageMaker HyperPod cluster.</p>",
         "ListClusterNodesRequest$NextToken": "<p>If the result of the previous <code>ListClusterNodes</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of cluster nodes, use the token in the next request.</p>",
         "ListClusterNodesResponse$NextToken": "<p>The next token specified for listing instances in a SageMaker HyperPod cluster.</p>",
+        "ListClusterOperationsRequest$NextToken": "<p>A token to retrieve the next set of results. This token is obtained from the output of a previous <code>ListClusterOperations</code> call.</p>",
+        "ListClusterOperationsResponse$NextToken": "<p>A token to retrieve the next set of results. Include this token in subsequent <code>ListClusterOperations</code> calls to fetch more operations.</p>",
         "ListClusterSchedulerConfigsRequest$NextToken": "<p>If the previous response was truncated, you will receive this token. Use it in your next request to receive the next set of results.</p>",
         "ListClusterSchedulerConfigsResponse$NextToken": "<p>If the previous response was truncated, you will receive this token. Use it in your next request to receive the next set of results.</p>",
         "ListClustersRequest$NextToken": "<p>Set the next token to retrieve the list of SageMaker HyperPod clusters.</p>",
@@ -18269,6 +18456,7 @@
         "ListAssociationsRequest$SortOrder": "<p>The sort order. The default value is <code>Descending</code>.</p>",
         "ListClusterEventsRequest$SortOrder": "<p>The order in which to sort the results. Valid values are <code>Ascending</code> or <code>Descending</code> (the default is <code>Descending</code>).</p>",
         "ListClusterNodesRequest$SortOrder": "<p>The sort order for results. The default value is <code>Ascending</code>.</p>",
+        "ListClusterOperationsRequest$SortOrder": "<p>The order in which to sort the results. Valid values are <code>Ascending</code> or <code>Descending</code> (the default is <code>Descending</code>).</p>",
         "ListClusterSchedulerConfigsRequest$SortOrder": "<p>The order of the list. By default, listed in <code>Descending</code> order according to by <code>SortBy</code>. To change the list order, you can specify <code>SortOrder</code> to be <code>Ascending</code>.</p>",
         "ListClustersRequest$SortOrder": "<p>The sort order for results. The default value is <code>Ascending</code>.</p>",
         "ListCompilationJobsRequest$SortOrder": "<p>The sort order for results. The default is <code>Ascending</code>.</p>",
@@ -18833,6 +19021,7 @@
         "ClusterNodeDetails$InstanceId": "<p>The ID of the instance.</p>",
         "ClusterNodeSummary$InstanceId": "<p>The ID of the instance.</p>",
         "ClusterNodeSummary$NodeLogicalId": "<p>A unique identifier for the node that persists throughout its lifecycle, from provisioning request to termination. This identifier can be used to track the node even before it has an assigned <code>InstanceId</code>. This field is only included when <code>IncludeNodeLogicalIds</code> is set to <code>True</code> in the <code>ListClusterNodes</code> request.</p>",
+        "ClusterOperationScalingDetails$InstanceGroupName": "<p>The name of the instance group being scaled.</p>",
         "CreateModelPackageInput$Domain": "<p>The machine learning domain of your model package and its components. Common machine learning domains include computer vision and natural language processing.</p>",
         "CreateModelPackageInput$Task": "<p>The machine learning task your model package accomplishes. Common machine learning tasks include object detection and image classification. The following tasks are supported by Inference Recommender: <code>\"IMAGE_CLASSIFICATION\"</code> | <code>\"OBJECT_DETECTION\"</code> | <code>\"TEXT_GENERATION\"</code> |<code>\"IMAGE_SEGMENTATION\"</code> | <code>\"FILL_MASK\"</code> | <code>\"CLASSIFICATION\"</code> | <code>\"REGRESSION\"</code> | <code>\"OTHER\"</code>.</p> <p>Specify \"OTHER\" if none of the tasks listed fit your use case.</p>",
         "CustomizedMetricSpecification$MetricName": "<p>The name of the customized metric.</p>",
@@ -19684,6 +19873,7 @@
         "ClusterNodeDetails$LastSoftwareUpdateTime": "<p>The time when the cluster was last updated.</p>",
         "ClusterNodeSummary$LaunchTime": "<p>The time when the instance is launched.</p>",
         "ClusterNodeSummary$LastSoftwareUpdateTime": "<p>The time when SageMaker last updated the software of the instances in the cluster.</p>",
+        "ClusterOperationSummary$CreationTime": "<p>The timestamp when the operation was created.</p>",
         "ClusterPatchSchedule$NextPatchDate": "<p>The date and time of the next scheduled automatic patch. The system sets this automatically when a patch is detected. Use this field to reschedule the patch to a different date.</p>",
         "ClusterPatchScheduleDetails$NextPatchDate": "<p>The date and time of the next scheduled automatic patch.</p>",
         "ClusterSchedulerConfigSummary$CreationTime": "<p>Creation time of the cluster policy.</p>",
@@ -19721,6 +19911,7 @@
         "DescribeAutoMLJobV2Response$CreationTime": "<p>Returns the creation time of the AutoML job V2.</p>",
         "DescribeAutoMLJobV2Response$EndTime": "<p>Returns the end time of the AutoML job V2.</p>",
         "DescribeAutoMLJobV2Response$LastModifiedTime": "<p>Returns the job's last modified time.</p>",
+        "DescribeClusterOperationResponse$CreationTime": "<p>The timestamp when the operation was created.</p>",
         "DescribeClusterResponse$CreationTime": "<p>The time when the SageMaker Cluster is created.</p>",
         "DescribeClusterSchedulerConfigResponse$CreationTime": "<p>Creation time of the cluster policy.</p>",
         "DescribeClusterSchedulerConfigResponse$LastModifiedTime": "<p>Last modified time of the cluster policy.</p>",
@@ -19917,6 +20108,8 @@
         "ListClusterExtensionsRequest$CreationTimeBefore": "<p>A filter that returns extensions created at or before the specified time. The acceptable formats are the same as the timestamp formats for <code>CreationTimeAfter</code>.</p>",
         "ListClusterNodesRequest$CreationTimeAfter": "<p>A filter that returns nodes in a SageMaker HyperPod cluster created after the specified time. Timestamps are formatted according to the ISO 8601 standard. </p> <p>Acceptable formats include:</p> <ul> <li> <p> <code>YYYY-MM-DDThh:mm:ss.sssTZD</code> (UTC), for example, <code>2014-10-01T20:30:00.000Z</code> </p> </li> <li> <p> <code>YYYY-MM-DDThh:mm:ss.sssTZD</code> (with offset), for example, <code>2014-10-01T12:30:00.000-08:00</code> </p> </li> <li> <p> <code>YYYY-MM-DD</code>, for example, <code>2014-10-01</code> </p> </li> <li> <p>Unix time in seconds, for example, <code>1412195400</code>. This is also referred to as Unix Epoch time and represents the number of seconds since midnight, January 1, 1970 UTC.</p> </li> </ul> <p>For more information about the timestamp format, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-types.html#parameter-type-timestamp\">Timestamp</a> in the <i>Amazon Web Services Command Line Interface User Guide</i>.</p>",
         "ListClusterNodesRequest$CreationTimeBefore": "<p>A filter that returns nodes in a SageMaker HyperPod cluster created before the specified time. The acceptable formats are the same as the timestamp formats for <code>CreationTimeAfter</code>. For more information about the timestamp format, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-types.html#parameter-type-timestamp\">Timestamp</a> in the <i>Amazon Web Services Command Line Interface User Guide</i>.</p>",
+        "ListClusterOperationsRequest$CreationTimeAfter": "<p>The start of the time range for filtering operations. Only operations created after this time are included in the results.</p>",
+        "ListClusterOperationsRequest$CreationTimeBefore": "<p>The end of the time range for filtering operations. Only operations created before this time are included in the results.</p>",
         "ListClusterSchedulerConfigsRequest$CreatedAfter": "<p>Filter for after this creation time. The input for this parameter is a Unix timestamp. To convert a date and time into a Unix timestamp, see <a href=\"https://www.epochconverter.com/\">EpochConverter</a>.</p>",
         "ListClusterSchedulerConfigsRequest$CreatedBefore": "<p>Filter for before this creation time. The input for this parameter is a Unix timestamp. To convert a date and time into a Unix timestamp, see <a href=\"https://www.epochconverter.com/\">EpochConverter</a>.</p>",
         "ListClustersRequest$CreationTimeAfter": "<p>Set a start time for the time range during which you want to list SageMaker HyperPod clusters. Timestamps are formatted according to the ISO 8601 standard. </p> <p>Acceptable formats include:</p> <ul> <li> <p> <code>YYYY-MM-DDThh:mm:ss.sssTZD</code> (UTC), for example, <code>2014-10-01T20:30:00.000Z</code> </p> </li> <li> <p> <code>YYYY-MM-DDThh:mm:ss.sssTZD</code> (with offset), for example, <code>2014-10-01T12:30:00.000-08:00</code> </p> </li> <li> <p> <code>YYYY-MM-DD</code>, for example, <code>2014-10-01</code> </p> </li> <li> <p>Unix time in seconds, for example, <code>1412195400</code>. This is also referred to as Unix Epoch time and represents the number of seconds since midnight, January 1, 1970 UTC.</p> </li> </ul> <p>For more information about the timestamp format, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-types.html#parameter-type-timestamp\">Timestamp</a> in the <i>Amazon Web Services Command Line Interface User Guide</i>.</p>",

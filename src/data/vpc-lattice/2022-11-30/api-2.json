@@ -1447,7 +1447,7 @@
     },
     "AuthPolicyString":{
       "type":"string",
-      "max":36864,
+      "max":102400,
       "min":0
     },
     "AuthType":{
@@ -4688,7 +4688,8 @@
           "location":"uri",
           "locationName":"resourceGatewayIdentifier"
         },
-        "securityGroupIds":{"shape":"UpdateResourceGatewayRequestSecurityGroupIdsList"}
+        "securityGroupIds":{"shape":"UpdateResourceGatewayRequestSecurityGroupIdsList"},
+        "resourceConfigDnsResolution":{"shape":"ResourceConfigDnsResolution"}
       }
     },
     "UpdateResourceGatewayRequestSecurityGroupIdsList":{
@@ -4707,7 +4708,8 @@
         "vpcId":{"shape":"VpcId"},
         "subnetIds":{"shape":"SubnetList"},
         "securityGroupIds":{"shape":"SecurityGroupList"},
-        "ipAddressType":{"shape":"IpAddressType"}
+        "ipAddressType":{"shape":"IpAddressType"},
+        "resourceConfigDnsResolution":{"shape":"ResourceConfigDnsResolution"}
       }
     },
     "UpdateRuleRequest":{

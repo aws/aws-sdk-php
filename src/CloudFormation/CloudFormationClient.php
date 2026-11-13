@@ -1018,6 +1018,10 @@ use Aws\AwsClient;
  *     ClientRequestToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result removeAlias(array $args = [])
+ * @phpstan-method \Aws\Result removeAlias(array{AliasName?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise removeAliasAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise removeAliasAsync(array{AliasName?: string, ...} $args = [])
  * @method \Aws\Result rollbackStack(array $args = [])
  * @phpstan-method \Aws\Result rollbackStack(array{
  *     StackName?: string,
@@ -1036,6 +1040,10 @@ use Aws\AwsClient;
  *     DeploymentConfig?: array{Mode?: 'EXPRESS'|'STANDARD', DisableRollback?: bool, ...},
  *     ...,
  * } $args = [])
+ * @method \Aws\Result setAlias(array $args = [])
+ * @phpstan-method \Aws\Result setAlias(array{StackName?: string, AliasName?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise setAliasAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise setAliasAsync(array{StackName?: string, AliasName?: string, ...} $args = [])
  * @method \Aws\Result setStackPolicy(array $args = [])
  * @phpstan-method \Aws\Result setStackPolicy(array{StackName?: string, StackPolicyBody?: string, StackPolicyURL?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise setStackPolicyAsync(array $args = [])

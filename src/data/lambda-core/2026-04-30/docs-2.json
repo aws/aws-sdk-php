@@ -1,13 +1,29 @@
 {
   "version": "2.0",
-  "service": "<p><fullname>Lambda</fullname> <p> <b>Overview</b> </p> <p>AWS Lambda Core is a set of APIs for managing shared infrastructure resources used by Lambda. The Lambda Core API provides operations for creating and managing network connectors that enable Lambda compute resources to access resources in your Amazon Virtual Private Cloud (Amazon VPC).</p> <p>Network connectors provision elastic network interfaces (ENIs) in your VPC subnets, providing a managed network path from Lambda compute environments to private resources such as Amazon RDS databases, Amazon ElastiCache clusters, and internal APIs. You create a network connector once and attach it to one or more Lambda compute resources at run time.</p> <p>The <i>Lambda Core API Reference</i> provides information about each of the API methods, including details about the parameters in each API request and response.</p> <p/> <p>You can use Software Development Kits (SDKs), Integrated Development Environment (IDE) Toolkits, and command line tools to access the API. For installation instructions, see <a href=\"http://aws.amazon.com/tools/\">Tools for Amazon Web Services</a>.</p> <p>For a list of Region-specific endpoints that Lambda supports, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/lambda-service.html\">Lambda endpoints and quotas</a> in the <i>Amazon Web Services General Reference.</i> </p> <p>When making the API calls, you will need to authenticate your request by providing a signature. Lambda supports signature version 4. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version 4 signing process</a> in the <i>Amazon Web Services General Reference.</i> </p></p>",
+  "service": "<p><fullname>Lambda</fullname> <p> <b>Overview</b> </p> <p>Lambda Core is a set of APIs for managing shared infrastructure resources used by Lambda. The Lambda Core API provides operations for:</p> <ol> <li> <p>Creating and managing network connectors that enable Lambda MicroVMs and Lambda Web Functions to access resources in your Amazon Virtual Private Cloud (Amazon VPC).</p> </li> <li> <p>Creating customer-managed runtimes which can be used with Lambda Event Functions.</p> </li> </ol> <p>Network connectors provision elastic network interfaces (ENIs) in your VPC subnets, providing a managed network path from Lambda compute environments to private resources such as Amazon RDS databases, Amazon ElastiCache clusters, and internal APIs. You create a network connector once and attach it to one or more Lambda MicroVMs or Lambda Web Functions at run time.</p> <p>A customer-managed runtime is a Lambda runtime that you create and manage as a standalone resource. Lambda Event Functions can use your customer-managed runtime instead of using one of the built-in Lambda-managed runtimes. Customer-managed runtimes enable you to create customized runtimes for your workloads, and give you control over runtime updates and the deprecation lifecycle.</p> <p>The <i>Lambda Core API Reference</i> provides information about each of the API methods, including details about the parameters in each API request and response.</p> <p>You can use Software Development Kits (SDKs), Integrated Development Environment (IDE) Toolkits, and command line tools to access the API. For installation instructions, see <a href=\"http://aws.amazon.com/tools/\">Tools for Amazon Web Services</a>.</p> <p>For a list of Region-specific endpoints that Lambda supports, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/lambda-service.html\">Lambda endpoints and quotas</a> in the <i>Amazon Web Services General Reference.</i> </p> <p>When making the API calls, you will need to authenticate your request by providing a signature. Lambda supports signature version 4. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version 4 signing process</a> in the <i>Amazon Web Services General Reference.</i> </p></p>",
   "operations": {
     "CreateNetworkConnector": "<p>Creates a network connector that enables Lambda compute resources to route outbound traffic through your Amazon VPC. The network connector provisions elastic network interfaces (ENIs) in the subnets you specify, providing a managed network path to private resources such as databases, caches, and internal APIs.</p> <p>This operation is asynchronous. The network connector starts in <code>PENDING</code> state while ENIs are provisioned in your VPC (provisioning typically takes up to 10 minutes). Use <code>GetNetworkConnector</code> to poll the connector state until it reaches <code>ACTIVE</code>. Once active, you can attach the connector to supported Lambda compute resources — such as MicroVMs and WebFunctions — at run time. For how to attach a connector, see the documentation for the specific compute type.</p> <p>This operation is idempotent when you provide a <code>ClientToken</code> — if you retry a request that completed successfully using the same client token, the operation returns the existing connector without creating a duplicate.</p>",
+    "CreateRuntime": "<p>Creates a customer-managed runtime, a resource providing a centrally managed execution environment for your Lambda functions. The runtime resource is the parent of the runtime version and runtime alias child resources.</p>",
+    "CreateRuntimeAlias": "<p>Creates a new customer-managed runtime alias. The alias is a named pointer to a runtime version. Functions consume the customer-managed runtime through the runtime alias.</p>",
+    "CreateRuntimeVersion": "<p>Creates a new runtime version. A runtime version defines the function execution environment by referencing a container image. Runtime versions are immutable. To update the runtime, create a new runtime version and migrate functions by updating the runtime aliases to point to the new runtime version.</p>",
     "DeleteNetworkConnector": "<p>Initiates deletion of a network connector. The connector transitions to <code>DELETING</code> state while elastic network interfaces are cleaned up asynchronously. After deletion completes, subsequent calls to <code>GetNetworkConnector</code> return <code>ResourceNotFoundException</code>.</p> <p>This operation is idempotent — calling delete on a connector that is already deleting or has been deleted succeeds without error. You can delete connectors in <code>ACTIVE</code> or <code>FAILED</code> states. Before deleting a connector, ensure that no Lambda compute resources are using it, as they will lose VPC egress connectivity immediately.</p> <p>Deleting with an unqualified identifier removes the connector and all of its versions. To remove a single historical version, supply its version-qualified ARN; the connector and its remaining versions are unaffected. You can't delete the latest version on its own — delete the connector to remove it.</p>",
+    "DeleteRuntime": "<p>Schedules a customer-managed runtime to be deleted. Runtimes scheduled for deletion enter the PENDING_DELETION state and can be restored during the scheduled deletion window. Runtime versions and aliases must be deleted or scheduled for deletion before deleting the runtime. Function invokes fail for functions using runtime versions or aliases that are deleted or pending deletion.</p>",
+    "DeleteRuntimeAlias": "<p>Schedules a runtime alias to be deleted. Runtime aliases scheduled for deletion enter the PENDING_DELETION state and can be restored during the scheduled deletion window. Function invokes fail for functions using runtime aliases that are deleted or pending deletion.</p>",
+    "DeleteRuntimeVersion": "<p>Schedules a runtime version to be deleted. Runtime versions scheduled for deletion enter the PENDING_DELETION state and can be restored during the scheduled deletion window. Function invokes fail for functions using a runtime version that is deleted or pending deletion.</p>",
     "GetNetworkConnector": "<p>Retrieves the current configuration, state, and metadata of a network connector. The <code>Identifier</code> parameter accepts the connector ID, name, or full ARN. Use this operation to poll connector state after creation or update, or to inspect the current VPC configuration and any failure reasons.</p> <p>The response includes the full connector configuration, current state, and — if the connector has been updated — the <code>LastUpdateStatus</code> and <code>LastUpdateStatusReasonCode</code> fields that indicate whether the most recent update succeeded or failed.</p>",
+    "GetRuntime": "<p>Retrieves the configuration and metadata of a runtime.</p>",
+    "GetRuntimeAlias": "<p>Retrieves the configuration, state, and metadata of a runtime alias.</p>",
+    "GetRuntimeVersion": "<p>Retrieves the configuration, state, and metadata of a runtime version.</p>",
     "ListNetworkConnectorVersions": "<p>Returns a paginated list of the versions of a network connector. Each configuration update creates a new immutable version; this operation lists those versions for the connector you specify. You can optionally filter results by version state. Use the <code>Marker</code> parameter from a previous response to retrieve the next page of results.</p> <p>Each item in the response includes the version-qualified ARN, version number, current state, and last modified timestamp for that version. To retrieve the current (latest) configuration of the connector, use <code>GetNetworkConnector</code>; to inspect a specific version, call <code>GetNetworkConnector</code> with a version-qualified identifier.</p>",
     "ListNetworkConnectors": "<p>Returns a paginated list of network connectors in your account for the current Region. You can optionally filter results by connector state. Use the <code>Marker</code> parameter from a previous response to retrieve the next page of results.</p> <p>Each item in the response includes the connector ARN, name, ID, type, current state, and last modified timestamp. To retrieve full configuration details for a specific connector, use <code>GetNetworkConnector</code>.</p>",
-    "UpdateNetworkConnector": "<p>Updates the VPC configuration or operator role of an existing network connector. You can modify the subnet IDs, security group IDs, network protocol, or operator role. The connector must be in <code>ACTIVE</code> state to accept updates.</p> <p>This operation is asynchronous. The connector remains in <code>ACTIVE</code> state during the update — existing workloads that reference this connector are not disrupted. Use <code>GetNetworkConnector</code> to monitor the <code>LastUpdateStatus</code> field, which transitions through <code>InProgress</code> to <code>Successful</code> or <code>Failed</code>. If the update fails, the <code>LastUpdateStatusReasonCode</code> field provides a specific error code for troubleshooting. This operation is idempotent when you provide a <code>ClientToken</code>.</p> <p>Each successful configuration change creates a new immutable version. A connector can have a limited number of versions; once that limit is reached, further updates fail with <code>NetworkConnectorLimitExceededException</code> until you delete older versions.</p>"
+    "ListRuntimeAliases": "<p>Returns a paginated list of aliases for the specified runtime.</p>",
+    "ListRuntimeVersions": "<p>Returns a paginated list of versions for the specified runtime.</p>",
+    "ListRuntimes": "<p>Returns a paginated list of runtimes in your account for the current Region.</p>",
+    "RestoreRuntime": "<p>Cancels a pending scheduled deletion, returning the resource to the ACTIVE state. Scope is determined by the RuntimeName path parameter plus an optional, mutually exclusive RuntimeVersion or RuntimeAlias query parameter: with neither, the runtime itself is restored; with RuntimeVersion, the named runtime version; with RuntimeAlias, the named runtime alias. Restoring a resource that is already ACTIVE is a no-op success. Restore only works while the target is PENDING_DELETION; once the scheduled deletion has begun executing (DELETING) or has completed, the call fails.</p>",
+    "UpdateNetworkConnector": "<p>Updates the VPC configuration or operator role of an existing network connector. You can modify the subnet IDs, security group IDs, network protocol, or operator role. The connector must be in <code>ACTIVE</code> state to accept updates.</p> <p>This operation is asynchronous. The connector remains in <code>ACTIVE</code> state during the update — existing workloads that reference this connector are not disrupted. Use <code>GetNetworkConnector</code> to monitor the <code>LastUpdateStatus</code> field, which transitions through <code>InProgress</code> to <code>Successful</code> or <code>Failed</code>. If the update fails, the <code>LastUpdateStatusReasonCode</code> field provides a specific error code for troubleshooting. This operation is idempotent when you provide a <code>ClientToken</code>.</p> <p>Each successful configuration change creates a new immutable version. A connector can have a limited number of versions; once that limit is reached, further updates fail with <code>NetworkConnectorLimitExceededException</code> until you delete older versions.</p>",
+    "UpdateRuntime": "<p>Updates the properties of an existing customer-managed runtime, such as its description, license information, or lifecycle information.</p>",
+    "UpdateRuntimeAlias": "<p>Updates an existing runtime alias to point to a different runtime version or to change its description or lifecycle information.</p>",
+    "UpdateRuntimeVersion": "<p>Updates the runtime version release notes. The runtime version must be in the ACTIVE state. The runtime version image is immutable. To change the runtime contents, create a new runtime version.</p>"
   },
   "shapes": {
     "AssociatedComputeResourceTypesList": {
@@ -16,11 +32,35 @@
         "NetworkConnectorVpcEgressConfiguration$AssociatedComputeResourceTypes": "<p>The types of Lambda compute resources that can use this connector. Valid values are <code>MicroVm</code> and <code>WebFunction</code>. Specify exactly one value.</p>"
       }
     },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "CreateRuntimeVersionRequest$DryRun": "<p>When set to true, the request is validated without creating a new runtime version. Use this to check that the request would succeed. No runtime version is created and no changes are made.</p>"
+      }
+    },
     "ClientTokenString": {
       "base": null,
       "refs": {
         "CreateNetworkConnectorRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request with the same client token, the API returns the existing connector without creating a duplicate.</p>",
         "UpdateNetworkConnectorRequest$ClientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the update request.</p>"
+      }
+    },
+    "Compatibility": {
+      "base": "<p>Defines the compatibility matrix for a runtime version, indicating supported integration models, architectures, and feature availability.</p>",
+      "refs": {
+        "CreateRuntimeVersionResponse$Compatibility": "<p>The compatibility matrix of the runtime version.</p>",
+        "GetRuntimeAliasResponse$Compatibility": "<p>The compatibility matrix of the runtime version the alias points to.</p>",
+        "GetRuntimeVersionResponse$Compatibility": "<p>The compatibility matrix of the runtime version.</p>",
+        "RuntimeAliasInfo$Compatibility": "<p>The compatibility matrix of the runtime version the alias points to.</p>",
+        "RuntimeVersionInfo$Compatibility": "<p>The compatibility matrix of the runtime version.</p>",
+        "UpdateRuntimeAliasResponse$Compatibility": "<p>The compatibility matrix of the runtime version the alias points to.</p>",
+        "UpdateRuntimeVersionResponse$Compatibility": "<p>The compatibility matrix of the runtime version.</p>"
+      }
+    },
+    "CompatibilityPolicy": {
+      "base": "<p>Indicates whether a runtime version supports a feature.</p>",
+      "refs": {
+        "Compatibility$ManagedInstances": "<p>Whether the runtime version is compatible with managed instances.</p>"
       }
     },
     "ComputeResourceType": {
@@ -46,11 +86,77 @@
       "base": null,
       "refs": {}
     },
+    "CreateRuntimeAliasRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRuntimeAliasResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRuntimeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRuntimeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRuntimeVersionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRuntimeVersionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteNetworkConnectorRequest": {
       "base": null,
       "refs": {}
     },
     "DeleteNetworkConnectorResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRuntimeAliasRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRuntimeAliasRequestRecoveryWindowInDaysInteger": {
+      "base": null,
+      "refs": {
+        "DeleteRuntimeAliasRequest$RecoveryWindowInDays": "<p>Optional. The waiting period, in days (7-30), before the runtime alias is permanently deleted.</p>"
+      }
+    },
+    "DeleteRuntimeAliasResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRuntimeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRuntimeRequestRecoveryWindowInDaysInteger": {
+      "base": null,
+      "refs": {
+        "DeleteRuntimeRequest$RecoveryWindowInDays": "<p>Optional. The waiting period, in days (7-30), before the runtime is permanently deleted.</p>"
+      }
+    },
+    "DeleteRuntimeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRuntimeVersionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRuntimeVersionRequestRecoveryWindowInDaysInteger": {
+      "base": null,
+      "refs": {
+        "DeleteRuntimeVersionRequest$RecoveryWindowInDays": "<p>Optional. The waiting period, in days (7-30), before the runtime version is permanently deleted.</p>"
+      }
+    },
+    "DeleteRuntimeVersionResponse": {
       "base": null,
       "refs": {}
     },
@@ -61,6 +167,42 @@
     "GetNetworkConnectorResponse": {
       "base": null,
       "refs": {}
+    },
+    "GetRuntimeAliasRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRuntimeAliasResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRuntimeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRuntimeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRuntimeVersionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRuntimeVersionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "IntegrationModel": {
+      "base": "<p>Supported integration model for a runtime.</p>",
+      "refs": {
+        "IntegrationModelList$member": "<p>A supported integration model.</p>"
+      }
+    },
+    "IntegrationModelList": {
+      "base": "<p>A list of supported integration models.</p>",
+      "refs": {
+        "Compatibility$IntegrationModels": "<p>Supported integration models for the runtime version.</p>"
+      }
     },
     "InvalidParameterValueException": {
       "base": "<p>One of the parameters in the request is not valid. Check the error message for details about which parameter failed validation.</p>",
@@ -79,6 +221,48 @@
       "refs": {}
     },
     "ListNetworkConnectorsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRuntimeAliasesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRuntimeAliasesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRuntimeAliasesRequest$MaxResults": "<p>The maximum number of runtime aliases to return per page. Valid range: 1 to 100.</p>"
+      }
+    },
+    "ListRuntimeAliasesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRuntimeVersionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRuntimeVersionsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRuntimeVersionsRequest$MaxResults": "<p>The maximum number of runtime versions to return per page. Valid range: 1 to 100.</p>"
+      }
+    },
+    "ListRuntimeVersionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRuntimesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRuntimesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRuntimesRequest$MaxResults": "<p>The maximum number of runtimes to return per page. Valid range: 1 to 100.</p>"
+      }
+    },
+    "ListRuntimesResponse": {
       "base": null,
       "refs": {}
     },
@@ -301,40 +485,360 @@
         "NetworkConnectorVpcEgressConfiguration$NetworkProtocol": "<p>The network protocol for the connector. Specify <code>IPv4</code> for IPv4-only networking, or <code>DualStack</code> for both IPv4 and IPv6.</p>"
       }
     },
+    "Platform": {
+      "base": "<p>Describes a single OCI platform (CPU architecture and operating system) available for a runtime version.</p>",
+      "refs": {
+        "PlatformList$member": "<p>A platform available for the runtime version.</p>"
+      }
+    },
+    "PlatformList": {
+      "base": "<p>The list of platforms available for a runtime version.</p>",
+      "refs": {
+        "CreateRuntimeVersionResponse$Platforms": "<p>The platforms (architecture and OS combinations) available for the runtime version.</p>",
+        "GetRuntimeVersionResponse$Platforms": "<p>The platforms (architecture and OS combinations) available for the runtime version.</p>",
+        "UpdateRuntimeVersionResponse$Platforms": "<p>The platforms (architecture and OS combinations) available for the runtime version.</p>"
+      }
+    },
     "ResourceConflictException": {
-      "base": "<p>The request could not be completed due to a conflict with the current state of the resource. For example, attempting to update a connector that is not in <code>ACTIVE</code> state.</p>",
+      "base": "<p>The request could not be completed due to a conflict with the current state of the resource. For example, attempting to modify a resource that is not in a state that permits the operation.</p>",
       "refs": {}
     },
     "ResourceNotFoundException": {
-      "base": "<p>The specified network connector does not exist. Verify the identifier (ID, name, or ARN) and Region.</p>",
+      "base": "<p>The specified resource does not exist. Verify the identifier and Region.</p>",
       "refs": {}
+    },
+    "RestoreRuntimeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RestoreRuntimeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "RuntimeAliasDescription": {
+      "base": "<p>A description of the runtime alias.</p>",
+      "refs": {
+        "CreateRuntimeAliasRequest$Description": "<p>A description of the runtime alias.</p>",
+        "CreateRuntimeAliasResponse$Description": "<p>A description of the runtime alias.</p>",
+        "GetRuntimeAliasResponse$Description": "<p>A description of the runtime alias.</p>",
+        "RuntimeAliasInfo$Description": "<p>A description of the runtime alias.</p>",
+        "UpdateRuntimeAliasRequest$Description": "<p>A description of the runtime alias.</p>",
+        "UpdateRuntimeAliasResponse$Description": "<p>A description of the runtime alias.</p>"
+      }
+    },
+    "RuntimeAliasInfo": {
+      "base": "<p>Summary information about a runtime alias returned by ListRuntimeAliases.</p>",
+      "refs": {
+        "RuntimeAliasList$member": "<p>Summary information about a runtime alias.</p>"
+      }
+    },
+    "RuntimeAliasList": {
+      "base": "<p>A list of runtime alias summaries.</p>",
+      "refs": {
+        "ListRuntimeAliasesResponse$Items": "<p>The list of runtime aliases for the current page of results.</p>"
+      }
+    },
+    "RuntimeAliasName": {
+      "base": "<p>The name of a runtime alias.</p>",
+      "refs": {
+        "CreateRuntimeAliasRequest$Name": "<p>The name to assign to the new runtime alias.</p>",
+        "CreateRuntimeAliasResponse$Name": "<p>The name of the runtime alias.</p>",
+        "DeleteRuntimeAliasRequest$Name": "<p>The name of the runtime alias to delete.</p>",
+        "GetRuntimeAliasRequest$Name": "<p>The name of the runtime alias to retrieve.</p>",
+        "GetRuntimeAliasResponse$Name": "<p>The name of the runtime alias.</p>",
+        "RestoreRuntimeRequest$RuntimeAlias": "<p>Optional. Restores the named RuntimeAlias under RuntimeName. Mutually exclusive with RuntimeVersion; supplying both is rejected with InvalidParameterValueException.</p>",
+        "RestoreRuntimeResponse$RuntimeAlias": "<p>Echoed back only when the request supplied a RuntimeAlias qualifier.</p>",
+        "RuntimeAliasInfo$Name": "<p>The name of the runtime alias.</p>",
+        "UpdateRuntimeAliasRequest$Name": "<p>The name of the runtime alias to update.</p>",
+        "UpdateRuntimeAliasResponse$Name": "<p>The name of the runtime alias.</p>"
+      }
+    },
+    "RuntimeAliasState": {
+      "base": "<p>The state of a runtime alias.</p>",
+      "refs": {
+        "CreateRuntimeAliasResponse$State": "<p>The current state of the runtime alias.</p>",
+        "GetRuntimeAliasResponse$State": "<p>The current state of the runtime alias.</p>",
+        "RuntimeAliasInfo$State": "<p>The current state of the runtime alias.</p>",
+        "UpdateRuntimeAliasResponse$State": "<p>The current state of the runtime alias.</p>"
+      }
+    },
+    "RuntimeArchitecture": {
+      "base": "<p>Supported CPU architecture for a runtime.</p>",
+      "refs": {
+        "RuntimeArchitectureList$member": "<p>A supported CPU architecture.</p>"
+      }
+    },
+    "RuntimeArchitectureList": {
+      "base": "<p>A list of supported CPU architectures.</p>",
+      "refs": {
+        "Compatibility$Architectures": "<p>Supported architectures for the runtime version.</p>"
+      }
+    },
+    "RuntimeArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of a runtime resource.</p>",
+      "refs": {
+        "CreateRuntimeAliasResponse$Arn": "<p>The Amazon Resource Name (ARN) of the runtime alias.</p>",
+        "CreateRuntimeAliasResponse$RuntimeVersionArn": "<p>The Amazon Resource Name (ARN) of the runtime version the alias points to.</p>",
+        "CreateRuntimeResponse$Arn": "<p>The Amazon Resource Name (ARN) of the runtime.</p>",
+        "CreateRuntimeVersionResponse$Arn": "<p>The Amazon Resource Name (ARN) of the runtime version.</p>",
+        "GetRuntimeAliasResponse$Arn": "<p>The Amazon Resource Name (ARN) of the runtime alias.</p>",
+        "GetRuntimeAliasResponse$RuntimeVersionArn": "<p>The Amazon Resource Name (ARN) of the runtime version the alias points to.</p>",
+        "GetRuntimeResponse$Arn": "<p>The Amazon Resource Name (ARN) of the runtime.</p>",
+        "GetRuntimeVersionResponse$Arn": "<p>The Amazon Resource Name (ARN) of the runtime version.</p>",
+        "RestoreRuntimeResponse$Arn": "<p>The fully qualified ARN of the resource that was restored (runtime, version, or alias).</p>",
+        "RuntimeAliasInfo$Arn": "<p>The Amazon Resource Name (ARN) of the runtime alias.</p>",
+        "RuntimeAliasInfo$RuntimeVersionArn": "<p>The Amazon Resource Name (ARN) of the runtime version the alias points to.</p>",
+        "RuntimeInfo$Arn": "<p>The Amazon Resource Name (ARN) of the runtime.</p>",
+        "RuntimeVersionInfo$Arn": "<p>The Amazon Resource Name (ARN) of the runtime version.</p>",
+        "UpdateRuntimeAliasResponse$Arn": "<p>The Amazon Resource Name (ARN) of the runtime alias.</p>",
+        "UpdateRuntimeAliasResponse$RuntimeVersionArn": "<p>The Amazon Resource Name (ARN) of the runtime version the alias points to.</p>",
+        "UpdateRuntimeResponse$Arn": "<p>The Amazon Resource Name (ARN) of the runtime.</p>",
+        "UpdateRuntimeVersionResponse$Arn": "<p>The Amazon Resource Name (ARN) of the runtime version.</p>"
+      }
+    },
+    "RuntimeDescription": {
+      "base": "<p>A description of the runtime.</p>",
+      "refs": {
+        "CreateRuntimeRequest$Description": "<p>A description of the runtime.</p>",
+        "CreateRuntimeResponse$Description": "<p>The description of the runtime.</p>",
+        "GetRuntimeResponse$Description": "<p>The description of the runtime.</p>",
+        "RuntimeInfo$Description": "<p>The description of the runtime.</p>",
+        "UpdateRuntimeRequest$Description": "<p>The updated description of the runtime.</p>",
+        "UpdateRuntimeResponse$Description": "<p>The description of the runtime.</p>"
+      }
+    },
+    "RuntimeIdentifier": {
+      "base": "<p>The identifier for a runtime. This can be either the runtime name or the fully qualified runtime ARN.</p>",
+      "refs": {
+        "CreateRuntimeAliasRequest$RuntimeName": "<p>The name or ARN of the runtime to create an alias for.</p>",
+        "CreateRuntimeVersionRequest$RuntimeName": "<p>The name or ARN of the runtime to create a version for.</p>",
+        "DeleteRuntimeAliasRequest$RuntimeName": "<p>The name or ARN of the runtime.</p>",
+        "DeleteRuntimeRequest$RuntimeName": "<p>The name or ARN of the runtime to delete.</p>",
+        "DeleteRuntimeVersionRequest$RuntimeName": "<p>The name or ARN of the runtime.</p>",
+        "GetRuntimeAliasRequest$RuntimeName": "<p>The name or ARN of the runtime.</p>",
+        "GetRuntimeRequest$RuntimeName": "<p>The name or ARN of the runtime to retrieve.</p>",
+        "GetRuntimeVersionRequest$RuntimeName": "<p>The name or ARN of the runtime.</p>",
+        "ListRuntimeAliasesRequest$RuntimeName": "<p>The name or ARN of the runtime whose aliases to list.</p>",
+        "ListRuntimeVersionsRequest$RuntimeName": "<p>The name or ARN of the runtime whose versions to list.</p>",
+        "RestoreRuntimeRequest$RuntimeName": "<p>The name or ARN of the runtime to restore. When RuntimeVersion or RuntimeAlias is specified, the runtime that owns the runtime version or runtime alias to restore.</p>",
+        "RestoreRuntimeResponse$RuntimeName": "<p>The name or ARN of the runtime.</p>",
+        "UpdateRuntimeAliasRequest$RuntimeName": "<p>The name or ARN of the runtime.</p>",
+        "UpdateRuntimeAliasResponse$RuntimeName": "<p>The name of the runtime.</p>",
+        "UpdateRuntimeRequest$RuntimeName": "<p>The name or ARN of the runtime to update.</p>",
+        "UpdateRuntimeVersionRequest$RuntimeName": "<p>The name or ARN of the runtime.</p>"
+      }
+    },
+    "RuntimeInfo": {
+      "base": "<p>Summary information about a runtime returned by ListRuntimes.</p>",
+      "refs": {
+        "RuntimeList$member": "<p>Summary information about a runtime.</p>"
+      }
+    },
+    "RuntimeLicenseInfo": {
+      "base": "<p>The license information for the runtime.</p>",
+      "refs": {
+        "CreateRuntimeRequest$LicenseInfo": "<p>The license information for the runtime.</p>",
+        "CreateRuntimeResponse$LicenseInfo": "<p>The license information for the runtime.</p>",
+        "GetRuntimeResponse$LicenseInfo": "<p>The license information for the runtime.</p>",
+        "RuntimeInfo$LicenseInfo": "<p>The license information for the runtime.</p>",
+        "UpdateRuntimeRequest$LicenseInfo": "<p>The updated license information for the runtime.</p>",
+        "UpdateRuntimeResponse$LicenseInfo": "<p>The license information for the runtime.</p>"
+      }
+    },
+    "RuntimeLifecycleDate": {
+      "base": "<p>A UTC calendar date, yyyy-mm-dd.</p>",
+      "refs": {
+        "RuntimeReleaseLifecycle$DeprecationDate": "<p>The date (UTC) on which the runtime or alias becomes deprecated.</p>",
+        "RuntimeReleaseLifecycle$FunctionCreateBlockDate": "<p>The date (UTC) on which creating new functions that use this runtime or alias is blocked.</p>",
+        "RuntimeReleaseLifecycle$FunctionUpdateBlockDate": "<p>The date (UTC) on which updating existing functions that use this runtime or alias is blocked.</p>"
+      }
+    },
+    "RuntimeList": {
+      "base": "<p>A list of runtime summaries.</p>",
+      "refs": {
+        "ListRuntimesResponse$Items": "<p>The list of runtimes for the current page of results.</p>"
+      }
+    },
+    "RuntimeName": {
+      "base": "<p>The name of a runtime. Must be 2 to 128 characters.</p>",
+      "refs": {
+        "CreateRuntimeRequest$Name": "<p>The name of the runtime to create.</p>",
+        "CreateRuntimeResponse$Name": "<p>The name of the runtime.</p>",
+        "GetRuntimeResponse$Name": "<p>The name of the runtime.</p>",
+        "RuntimeInfo$Name": "<p>The name of the runtime.</p>",
+        "UpdateRuntimeResponse$Name": "<p>The name of the runtime.</p>"
+      }
+    },
+    "RuntimeReleaseLifecycle": {
+      "base": "<p>The runtime lifecycle for the runtime or alias. Optional. Used to schedule runtime deprecation. Omitting or providing an empty object removes the existing lifecycle.</p>",
+      "refs": {
+        "CreateRuntimeAliasRequest$ReleaseLifecycle": "<p>The runtime lifecycle for the alias. By default, this is inherited from the runtime lifecycle. Optionally, you can override the lifecycle information at the alias level, if required.</p>",
+        "CreateRuntimeAliasResponse$ReleaseLifecycle": "<p>The runtime lifecycle for the alias. By default, this is inherited from the runtime lifecycle. Optionally, you can override the lifecycle information at the alias level, if required.</p>",
+        "CreateRuntimeRequest$ReleaseLifecycle": "<p>The runtime lifecycle for the runtime (optional). Use this to schedule runtime deprecation.</p>",
+        "CreateRuntimeResponse$ReleaseLifecycle": "<p>The runtime lifecycle for the runtime. Used to schedule runtime deprecation.</p>",
+        "GetRuntimeAliasResponse$ReleaseLifecycle": "<p>The runtime lifecycle for the alias. By default, this is inherited from the runtime lifecycle. Optionally, you can override the lifecycle information at the alias level, if required.</p>",
+        "GetRuntimeResponse$ReleaseLifecycle": "<p>The runtime lifecycle for the runtime. Used to schedule runtime deprecation.</p>",
+        "RuntimeAliasInfo$ReleaseLifecycle": "<p>The lifecycle for the alias. By default, this is inherited from the runtime lifecycle. Optionally, you can override the lifecycle information at the alias level, if required.</p>",
+        "RuntimeInfo$ReleaseLifecycle": "<p>The runtime lifecycle for the runtime. Used to schedule runtime deprecation.</p>",
+        "UpdateRuntimeAliasRequest$ReleaseLifecycle": "<p>The lifecycle for the alias. By default, this is inherited from the runtime lifecycle. Optionally, you can override the lifecycle information at the alias level, if required. Omitting or providing an empty object removes the existing lifecycle override.</p>",
+        "UpdateRuntimeAliasResponse$ReleaseLifecycle": "<p>The runtime lifecycle for the alias. By default, this is inherited from the runtime lifecycle. Optionally, you can override the lifecycle information at the alias level, if required.</p>",
+        "UpdateRuntimeRequest$ReleaseLifecycle": "<p>The runtime lifecycle for the runtime. Optional. Used to schedule runtime deprecation. Omitting or providing an empty object removes the existing lifecycle.</p>",
+        "UpdateRuntimeResponse$ReleaseLifecycle": "<p>The runtime lifecycle for the runtime. Used to schedule runtime deprecation.</p>"
+      }
+    },
+    "RuntimeReleaseState": {
+      "base": "<p>The release state declared by a runtime publisher for a runtime or runtime alias.</p>",
+      "refs": {
+        "RuntimeReleaseLifecycle$ReleaseState": "<p>Optional, with no default applied. DEPRECATED requires a DeprecationDate on or before today (UTC); PREVIEW and GA require a later one, or none. Reads report DEPRECATED once DeprecationDate is reached.</p>"
+      }
+    },
+    "RuntimeState": {
+      "base": "<p>The state of the runtime. The state is automatically managed by the service and indicates the current status of the runtime.</p>",
+      "refs": {
+        "GetRuntimeResponse$State": "<p>The current state of the runtime.</p>",
+        "RestoreRuntimeResponse$State": "<p>The state of the restored resource, ACTIVE on success.</p>",
+        "RuntimeInfo$State": "<p>The current state of the runtime.</p>"
+      }
+    },
+    "RuntimeTimestamp": {
+      "base": "<p>A timestamp, represented as a string.</p>",
+      "refs": {
+        "CreateRuntimeAliasResponse$Created": "<p>The date and time when the runtime alias was created.</p>",
+        "CreateRuntimeAliasResponse$LastModified": "<p>The date and time when the runtime alias was last modified.</p>",
+        "CreateRuntimeResponse$Created": "<p>The date and time when the runtime was created.</p>",
+        "CreateRuntimeResponse$LastModified": "<p>The date and time when the runtime was last modified.</p>",
+        "CreateRuntimeVersionResponse$Created": "<p>The date and time when the runtime version was created.</p>",
+        "CreateRuntimeVersionResponse$LastModified": "<p>The date and time when the runtime version was last modified.</p>",
+        "GetRuntimeAliasResponse$PendingDeletionAt": "<p>Present only when State is PENDING_DELETION. The date and time at which the runtime alias will be permanently deleted.</p>",
+        "GetRuntimeAliasResponse$Created": "<p>The date and time when the runtime alias was created.</p>",
+        "GetRuntimeAliasResponse$LastModified": "<p>The date and time when the runtime alias was last modified.</p>",
+        "GetRuntimeResponse$PendingDeletionAt": "<p>Present only when State is PENDING_DELETION. The date and time at which the runtime will be permanently deleted.</p>",
+        "GetRuntimeResponse$Created": "<p>The date and time when the runtime was created.</p>",
+        "GetRuntimeResponse$LastModified": "<p>The date and time when the runtime was last modified.</p>",
+        "GetRuntimeVersionResponse$PendingDeletionAt": "<p>Present only when State is PENDING_DELETION. The date and time at which the runtime version will be permanently deleted.</p>",
+        "GetRuntimeVersionResponse$Created": "<p>The date and time when the runtime version was created.</p>",
+        "GetRuntimeVersionResponse$LastModified": "<p>The date and time when the runtime version was last modified.</p>",
+        "RestoreRuntimeResponse$LastModified": "<p>The date and time when the restored resource was last modified.</p>",
+        "RuntimeAliasInfo$PendingDeletionAt": "<p>Present only when State is PENDING_DELETION. The date and time at which the runtime alias will be permanently deleted.</p>",
+        "RuntimeAliasInfo$Created": "<p>The date and time when the runtime alias was created.</p>",
+        "RuntimeAliasInfo$LastModified": "<p>The date and time when the runtime alias was last modified.</p>",
+        "RuntimeInfo$PendingDeletionAt": "<p>Present only when State is PENDING_DELETION. The date and time at which the runtime will be permanently deleted.</p>",
+        "RuntimeInfo$Created": "<p>The date and time when the runtime was created.</p>",
+        "RuntimeInfo$LastModified": "<p>The date and time when the runtime was last modified.</p>",
+        "RuntimeVersionInfo$PendingDeletionAt": "<p>Present only when State is PENDING_DELETION. The date and time at which the runtime version will be permanently deleted.</p>",
+        "RuntimeVersionInfo$Created": "<p>The date and time when the runtime version was created.</p>",
+        "RuntimeVersionInfo$LastModified": "<p>The date and time when the runtime version was last modified.</p>",
+        "UpdateRuntimeAliasResponse$Created": "<p>The date and time when the runtime alias was created.</p>",
+        "UpdateRuntimeAliasResponse$LastModified": "<p>The date and time when the runtime alias was last modified.</p>",
+        "UpdateRuntimeResponse$Created": "<p>The date and time when the runtime was created.</p>",
+        "UpdateRuntimeResponse$LastModified": "<p>The date and time when the runtime was last modified.</p>",
+        "UpdateRuntimeVersionResponse$Created": "<p>The date and time when the runtime version was created.</p>",
+        "UpdateRuntimeVersionResponse$LastModified": "<p>The date and time when the runtime version was last modified.</p>"
+      }
+    },
+    "RuntimeVersionInfo": {
+      "base": "<p>Summary information about a runtime version returned by ListRuntimeVersions.</p>",
+      "refs": {
+        "RuntimeVersionList$member": "<p>Summary information about a runtime version.</p>"
+      }
+    },
+    "RuntimeVersionList": {
+      "base": "<p>A list of runtime version summaries.</p>",
+      "refs": {
+        "ListRuntimeVersionsResponse$Items": "<p>The list of runtime versions for the current page of results.</p>"
+      }
+    },
+    "RuntimeVersionName": {
+      "base": "<p>The name of a runtime version.</p>",
+      "refs": {
+        "CreateRuntimeAliasRequest$RuntimeVersion": "<p>The name of the runtime version the alias points to.</p>",
+        "CreateRuntimeAliasResponse$RuntimeVersion": "<p>The name of the runtime version the alias points to.</p>",
+        "CreateRuntimeVersionRequest$Name": "<p>The name to assign to the new runtime version.</p>",
+        "CreateRuntimeVersionResponse$Name": "<p>The name of the runtime version.</p>",
+        "DeleteRuntimeVersionRequest$Name": "<p>The name of the runtime version to delete.</p>",
+        "GetRuntimeAliasResponse$RuntimeVersion": "<p>The name of the runtime version the alias points to.</p>",
+        "GetRuntimeVersionRequest$Name": "<p>The name of the runtime version to retrieve.</p>",
+        "GetRuntimeVersionResponse$Name": "<p>The name of the runtime version.</p>",
+        "RestoreRuntimeRequest$RuntimeVersion": "<p>Optional. Restores the named RuntimeVersion under RuntimeName. Mutually exclusive with RuntimeAlias; supplying both is rejected with InvalidParameterValueException.</p>",
+        "RestoreRuntimeResponse$RuntimeVersion": "<p>Echoed back only when the request supplied a RuntimeVersion qualifier.</p>",
+        "RuntimeAliasInfo$RuntimeVersion": "<p>The name of the runtime version the alias points to.</p>",
+        "RuntimeVersionInfo$Name": "<p>The name of the runtime version.</p>",
+        "UpdateRuntimeAliasRequest$RuntimeVersion": "<p>The name of the runtime version the alias should point to.</p>",
+        "UpdateRuntimeAliasResponse$RuntimeVersion": "<p>The name of the runtime version the alias points to.</p>",
+        "UpdateRuntimeVersionRequest$Name": "<p>The name of the runtime version to update.</p>",
+        "UpdateRuntimeVersionResponse$Name": "<p>The name of the runtime version.</p>"
+      }
+    },
+    "RuntimeVersionState": {
+      "base": "<p>The state of a runtime version.</p>",
+      "refs": {
+        "CreateRuntimeVersionResponse$State": "<p>The current state of the runtime version.</p>",
+        "GetRuntimeVersionResponse$State": "<p>The current state of the runtime version.</p>",
+        "RuntimeVersionInfo$State": "<p>The current state of the runtime version.</p>",
+        "UpdateRuntimeVersionResponse$State": "<p>The current state of the runtime version.</p>"
+      }
     },
     "ServiceException": {
       "base": "<p>An internal service error occurred. Retry the request with exponential backoff.</p>",
       "refs": {}
     },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request would exceed a service quota for your account. Request a quota increase or reduce the number of resources in use, then retry the request.</p>",
+      "refs": {}
+    },
     "String": {
       "base": null,
       "refs": {
+        "CreateRuntimeVersionRequest$ImageUri": "<p>The URI of the container image used to define the function execution environment for this runtime version.</p>",
+        "CreateRuntimeVersionRequest$ReleaseNotes": "<p>The release notes to associate with the runtime version.</p>",
+        "CreateRuntimeVersionResponse$ResolvedUri": "<p>The resolved image URI of the runtime version.</p>",
+        "CreateRuntimeVersionResponse$ReleaseNotes": "<p>The release notes associated with the runtime version.</p>",
         "GetNetworkConnectorResponse$StateReason": "<p>A human-readable explanation of the current state, populated when the state is <code>FAILED</code> or <code>DELETE_FAILED</code>.</p>",
+        "GetRuntimeResponse$Id": "<p>The unique identifier of the runtime.</p>",
+        "GetRuntimeVersionResponse$ResolvedUri": "<p>The resolved image URI of the runtime version.</p>",
+        "GetRuntimeVersionResponse$ReleaseNotes": "<p>The release notes associated with the runtime version.</p>",
         "InvalidParameterValueException$Type": "<p>The exception type.</p>",
-        "InvalidParameterValueException$message": null,
+        "InvalidParameterValueException$message": "<p>The error message that describes the exception.</p>",
         "ListNetworkConnectorVersionsRequest$Marker": "<p>The pagination token from a previous <code>ListNetworkConnectorVersions</code> response. Use this value to retrieve the next page of results.</p>",
         "ListNetworkConnectorVersionsResponse$NextMarker": "<p>The pagination token to include in a subsequent request to retrieve the next page. This value is null when there are no more results.</p>",
         "ListNetworkConnectorsRequest$Marker": "<p>The pagination token from a previous <code>ListNetworkConnectors</code> response. Use this value to retrieve the next page of results.</p>",
         "ListNetworkConnectorsResponse$NextMarker": "<p>The pagination token to include in a subsequent request to retrieve the next page. This value is null when there are no more results.</p>",
+        "ListRuntimeAliasesRequest$NextToken": "<p>The pagination token from a previous response. Use it to retrieve the next page of results.</p>",
+        "ListRuntimeAliasesResponse$NextToken": "<p>The pagination token to include in a subsequent request to retrieve the next page of results.</p>",
+        "ListRuntimeVersionsRequest$NextToken": "<p>The pagination token from a previous response. Use it to retrieve the next page of results.</p>",
+        "ListRuntimeVersionsResponse$NextToken": "<p>The pagination token to include in a subsequent request to retrieve the next page of results.</p>",
+        "ListRuntimesRequest$NextToken": "<p>The pagination token from a previous response. Use it to retrieve the next page of results.</p>",
+        "ListRuntimesResponse$NextToken": "<p>The pagination token to include in a subsequent request to retrieve the next page of results.</p>",
         "NetworkConnectorLimitExceededException$Type": "<p>The exception type.</p>",
         "NetworkConnectorLimitExceededException$message": "<p>The account has reached the maximum number of network connectors allowed.</p>",
         "NetworkConnectorVersionSummary$StateReason": "<p>A human-readable explanation of the current state, populated when the state is <code>FAILED</code>.</p>",
+        "Platform$Architecture": "<p>The CPU architecture of the platform, for example x86_64 or arm64.</p>",
+        "Platform$Os": "<p>The operating system of the platform.</p>",
+        "Platform$Digest": "<p>The content digest of the platform-specific image.</p>",
         "ResourceConflictException$Type": "<p>The exception type.</p>",
-        "ResourceConflictException$message": null,
+        "ResourceConflictException$message": "<p>The error message that describes the exception.</p>",
         "ResourceNotFoundException$Type": "<p>The exception type.</p>",
-        "ResourceNotFoundException$Message": null,
+        "ResourceNotFoundException$Message": "<p>The error message that describes the exception.</p>",
+        "RuntimeVersionInfo$ResolvedUri": "<p>The resolved image URI of the runtime version.</p>",
+        "RuntimeVersionInfo$ReleaseNotes": "<p>The release notes associated with the runtime version.</p>",
         "ServiceException$Type": "<p>The exception type.</p>",
-        "ServiceException$Message": null,
+        "ServiceException$Message": "<p>The error message that describes the exception.</p>",
+        "ServiceQuotaExceededException$Type": "<p>The exception type.</p>",
+        "ServiceQuotaExceededException$Message": "<p>The error message that describes the exception.</p>",
+        "TagMap$key": "<p>A tag key.</p>",
+        "TagMap$value": "<p>A tag value.</p>",
         "TooManyRequestsException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request.</p>",
         "TooManyRequestsException$Type": "<p>The exception type.</p>",
-        "TooManyRequestsException$message": null
+        "TooManyRequestsException$message": "<p>The error message that describes the exception.</p>",
+        "UpdateRuntimeVersionRequest$ReleaseNotes": "<p>The release notes to associate with the runtime version.</p>",
+        "UpdateRuntimeVersionResponse$ResolvedUri": "<p>The resolved image URI of the runtime version.</p>",
+        "UpdateRuntimeVersionResponse$ReleaseNotes": "<p>The release notes associated with the runtime version.</p>"
+      }
+    },
+    "TagMap": {
+      "base": "<p>A map of tag keys to tag values to associate with the resource.</p>",
+      "refs": {
+        "CreateRuntimeRequest$Tags": "<p>A map of tag keys and values to associate with the runtime.</p>"
       }
     },
     "ThrottleReason": {
@@ -352,6 +856,30 @@
       "refs": {}
     },
     "UpdateNetworkConnectorResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRuntimeAliasRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRuntimeAliasResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRuntimeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRuntimeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRuntimeVersionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRuntimeVersionResponse": {
       "base": null,
       "refs": {}
     }

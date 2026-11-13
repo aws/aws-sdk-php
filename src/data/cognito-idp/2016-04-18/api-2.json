@@ -3925,6 +3925,13 @@
       "pattern":"[\\w+]+",
       "sensitive":true
     },
+    "ClientTypeType":{
+      "type":"string",
+      "enum":[
+        "REGULAR",
+        "DCR"
+      ]
+    },
     "CloudWatchLogsConfigurationType":{
       "type":"structure",
       "members":{
@@ -4344,6 +4351,7 @@
         "AdminCreateUserConfig":{"shape":"AdminCreateUserConfigType"},
         "Schema":{"shape":"SchemaAttributesListType"},
         "UserPoolAddOns":{"shape":"UserPoolAddOnsType"},
+        "DcrConfiguration":{"shape":"DcrConfigurationType"},
         "UsernameConfiguration":{"shape":"UsernameConfigurationType"},
         "AccountRecoverySetting":{"shape":"AccountRecoverySettingType"},
         "UserPoolTier":{"shape":"UserPoolTierType"},
@@ -4409,6 +4417,16 @@
       "enum":["V1_0"]
     },
     "DateType":{"type":"timestamp"},
+    "DcrConfigurationType":{
+      "type":"structure",
+      "members":{
+        "EnableStatus":{"shape":"StatusType"},
+        "OpenDcrEnabled":{"shape":"BooleanType"},
+        "AuthenticatedGrantTypes":{"shape":"OAuthFlowsType"},
+        "OpenDcrGrantTypes":{"shape":"OAuthFlowsType"},
+        "AllowedScopes":{"shape":"ScopeListType"}
+      }
+    },
     "DefaultEmailOptionType":{
       "type":"string",
       "enum":[
@@ -5914,7 +5932,8 @@
       "members":{
         "UserPoolId":{"shape":"UserPoolIdType"},
         "MaxResults":{"shape":"QueryLimit"},
-        "NextToken":{"shape":"PaginationKey"}
+        "NextToken":{"shape":"PaginationKey"},
+        "ClientType":{"shape":"ClientTypeType"}
       }
     },
     "ListUserPoolClientsResponse":{
@@ -6490,6 +6509,10 @@
       "min":1,
       "pattern":"[\\x21\\x23-\\x5B\\x5D-\\x7E]+"
     },
+    "ResourceServerManagedByType":{
+      "type":"string",
+      "enum":["COGNITO"]
+    },
     "ResourceServerNameType":{
       "type":"string",
       "max":256,
@@ -6529,7 +6552,8 @@
         "UserPoolId":{"shape":"UserPoolIdType"},
         "Identifier":{"shape":"ResourceServerIdentifierType"},
         "Name":{"shape":"ResourceServerNameType"},
-        "Scopes":{"shape":"ResourceServerScopeListType"}
+        "Scopes":{"shape":"ResourceServerScopeListType"},
+        "ManagedBy":{"shape":"ResourceServerManagedByType"}
       }
     },
     "ResourceServersListType":{
@@ -7644,6 +7668,7 @@
         "UserPoolTags":{"shape":"UserPoolTagsType"},
         "AdminCreateUserConfig":{"shape":"AdminCreateUserConfigType"},
         "UserPoolAddOns":{"shape":"UserPoolAddOnsType"},
+        "DcrConfiguration":{"shape":"DcrConfigurationType"},
         "AccountRecoverySetting":{"shape":"AccountRecoverySettingType"},
         "PoolName":{"shape":"UserPoolNameType"},
         "UserPoolTier":{"shape":"UserPoolTierType"},
@@ -7814,7 +7839,8 @@
         "EnableTokenRevocation":{"shape":"WrappedBooleanType"},
         "EnablePropagateAdditionalUserContextData":{"shape":"WrappedBooleanType"},
         "AuthSessionValidity":{"shape":"AuthSessionValidityType"},
-        "RefreshTokenRotation":{"shape":"RefreshTokenRotationType"}
+        "RefreshTokenRotation":{"shape":"RefreshTokenRotationType"},
+        "ClientType":{"shape":"ClientTypeType"}
       }
     },
     "UserPoolDescriptionType":{
@@ -7945,6 +7971,7 @@
         "CustomDomain":{"shape":"DomainType"},
         "AdminCreateUserConfig":{"shape":"AdminCreateUserConfigType"},
         "UserPoolAddOns":{"shape":"UserPoolAddOnsType"},
+        "DcrConfiguration":{"shape":"DcrConfigurationType"},
         "UsernameConfiguration":{"shape":"UsernameConfigurationType"},
         "Arn":{"shape":"ArnType"},
         "AccountRecoverySetting":{"shape":"AccountRecoverySettingType"},

@@ -2439,9 +2439,25 @@
       "type":"boolean",
       "box":true
     },
+    "CalculatedAttributes":{
+      "type":"map",
+      "key":{"shape":"MessageTemplateAttributeKey"},
+      "value":{"shape":"MessageTemplateAttributeValue"},
+      "max":100,
+      "min":0,
+      "sensitive":true
+    },
     "CaseArn":{
       "type":"string",
       "pattern":"arn:[a-z-]*?:cases:[a-z0-9-]*?:[0-9]{12}:domain/.{1,500}/case/[A-Za-z0-9\\-._/:#=+-]{1,500}"
+    },
+    "CaseAttributes":{
+      "type":"map",
+      "key":{"shape":"MessageTemplateAttributeKey"},
+      "value":{"shape":"MessageTemplateAttributeValue"},
+      "max":220,
+      "min":0,
+      "sensitive":true
     },
     "CaseSummarizationAIAgentConfiguration":{
       "type":"structure",
@@ -3378,7 +3394,9 @@
         "billingPostalCode":{"shape":"MessageTemplateAttributeValue"},
         "billingProvince":{"shape":"MessageTemplateAttributeValue"},
         "billingState":{"shape":"MessageTemplateAttributeValue"},
-        "custom":{"shape":"CustomAttributes"}
+        "custom":{"shape":"CustomAttributes"},
+        "recommendations":{"shape":"ProfileRecommendations"},
+        "calculatedAttributes":{"shape":"CalculatedAttributes"}
       }
     },
     "DataDetails":{
@@ -5878,7 +5896,8 @@
         "SYSTEM",
         "AGENT",
         "CUSTOMER_PROFILE",
-        "CUSTOM"
+        "CUSTOM",
+        "CASE"
       ]
     },
     "MessageTemplateAttributeTypeList":{
@@ -5897,7 +5916,8 @@
         "systemAttributes":{"shape":"SystemAttributes"},
         "agentAttributes":{"shape":"AgentAttributes"},
         "customerProfileAttributes":{"shape":"CustomerProfileAttributes"},
-        "customAttributes":{"shape":"CustomAttributes"}
+        "customAttributes":{"shape":"CustomAttributes"},
+        "caseAttributes":{"shape":"CaseAttributes"}
       }
     },
     "MessageTemplateBodyContentProvider":{
@@ -6456,6 +6476,47 @@
       "max":1,
       "min":0,
       "sensitive":true
+    },
+    "ProfileCatalogItem":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"MessageTemplateAttributeValue"},
+        "name":{"shape":"MessageTemplateAttributeValue"},
+        "code":{"shape":"MessageTemplateAttributeValue"},
+        "type":{"shape":"MessageTemplateAttributeValue"},
+        "category":{"shape":"MessageTemplateAttributeValue"},
+        "description":{"shape":"MessageTemplateAttributeValue"},
+        "additionalInformation":{"shape":"MessageTemplateAttributeValue"},
+        "imageLink":{"shape":"MessageTemplateAttributeValue"},
+        "link":{"shape":"MessageTemplateAttributeValue"},
+        "createdAt":{"shape":"MessageTemplateAttributeValue"},
+        "updatedAt":{"shape":"MessageTemplateAttributeValue"},
+        "price":{"shape":"MessageTemplateAttributeValue"},
+        "attributes":{"shape":"ProfileCatalogItemAttributes"}
+      }
+    },
+    "ProfileCatalogItemAttributes":{
+      "type":"map",
+      "key":{"shape":"MessageTemplateAttributeKey"},
+      "value":{"shape":"MessageTemplateAttributeValue"}
+    },
+    "ProfileRecommendation":{
+      "type":"structure",
+      "members":{
+        "score":{"shape":"ProfileRecommendationScore"},
+        "catalogItem":{"shape":"ProfileCatalogItem"}
+      }
+    },
+    "ProfileRecommendationScore":{
+      "type":"double",
+      "min":0.0,
+      "sensitive":true
+    },
+    "ProfileRecommendations":{
+      "type":"list",
+      "member":{"shape":"ProfileRecommendation"},
+      "max":50,
+      "min":0
     },
     "PushADMMessageTemplateContent":{
       "type":"structure",

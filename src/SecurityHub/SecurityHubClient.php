@@ -1472,7 +1472,7 @@ use Aws\AwsClient;
  *     Filters?: array{
  *         ConfigurationPolicyId?: string,
  *         AssociationType?: 'APPLIED'|'INHERITED',
- *         AssociationStatus?: 'FAILED'|'PENDING'|'SUCCESS',
+ *         AssociationStatus?: 'DISABLED'|'FAILED'|'PENDING'|'SUCCESS',
  *         ...,
  *     },
  *     ...,
@@ -1484,7 +1484,7 @@ use Aws\AwsClient;
  *     Filters?: array{
  *         ConfigurationPolicyId?: string,
  *         AssociationType?: 'APPLIED'|'INHERITED',
- *         AssociationStatus?: 'FAILED'|'PENDING'|'SUCCESS',
+ *         AssociationStatus?: 'DISABLED'|'FAILED'|'PENDING'|'SUCCESS',
  *         ...,
  *     },
  *     ...,
@@ -2261,7 +2261,7 @@ use Aws\AwsClient;
  *     AutoEnableStandards?: 'DEFAULT'|'NONE',
  *     OrganizationConfiguration?: array{
  *         ConfigurationType?: 'CENTRAL'|'LOCAL',
- *         Status?: 'ENABLED'|'FAILED'|'PENDING',
+ *         Status?: 'DISABLED'|'ENABLED'|'FAILED'|'PENDING',
  *         StatusMessage?: string,
  *         ...,
  *     },
@@ -2273,7 +2273,7 @@ use Aws\AwsClient;
  *     AutoEnableStandards?: 'DEFAULT'|'NONE',
  *     OrganizationConfiguration?: array{
  *         ConfigurationType?: 'CENTRAL'|'LOCAL',
- *         Status?: 'ENABLED'|'FAILED'|'PENDING',
+ *         Status?: 'DISABLED'|'ENABLED'|'FAILED'|'PENDING',
  *         StatusMessage?: string,
  *         ...,
  *     },

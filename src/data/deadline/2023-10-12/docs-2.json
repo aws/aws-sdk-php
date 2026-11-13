@@ -33,7 +33,7 @@
     "CreateQueueFleetAssociation": "<p>Creates an association between a queue and a fleet.</p>",
     "CreateQueueLimitAssociation": "<p>Associates a limit with a particular queue. After the limit is associated, all workers for jobs that specify the limit associated with the queue are subject to the limit. You can't associate two limits with the same <code>amountRequirementName</code> to the same queue.</p>",
     "CreateStorageProfile": "<p>Creates a storage profile that specifies the operating system, file type, and file location of resources used on a farm.</p>",
-    "CreateWorker": "<p>Creates a worker. A worker tells your instance how much processing power (vCPU), and memory (GiB) you’ll need to assemble the digital assets held within a particular instance. You can specify certain instance types to use, or let the worker know which instances types to exclude.</p> <p>Deadline Cloud limits the number of workers to less than or equal to the fleet's maximum worker count. The service maintains eventual consistency for the worker count. If you make multiple rapid calls to <code>CreateWorker</code> before the field updates, you might exceed your fleet's maximum worker count. For example, if your <code>maxWorkerCount</code> is 10 and you currently have 9 workers, making two quick <code>CreateWorker</code> calls might successfully create 2 workers instead of 1, resulting in 11 total workers.</p>",
+    "CreateWorker": "<p>Creates a worker. A worker tells your instance how much processing power (vCPU), and memory (GiB) you'll need to assemble the digital assets held within a particular instance. You can specify certain instance types to use, or let the worker know which instances types to exclude.</p> <p>Deadline Cloud limits the number of workers to less than or equal to the fleet's maximum worker count. The service maintains eventual consistency for the worker count. If you make multiple rapid calls to <code>CreateWorker</code> before the field updates, you might exceed your fleet's maximum worker count. For example, if your <code>maxWorkerCount</code> is 10 and you currently have 9 workers, making two quick <code>CreateWorker</code> calls might successfully create 2 workers instead of 1, resulting in 11 total workers.</p>",
     "DeleteBudget": "<p>Deletes a budget.</p>",
     "DeleteFarm": "<p>Deletes a farm.</p>",
     "DeleteFleet": "<p>Deletes a fleet.</p>",
@@ -132,7 +132,7 @@
   },
   "shapes": {
     "AcceleratorCapabilities": {
-      "base": "<p>Provides information about the GPU accelerators used for jobs processed by a fleet.</p> <important> <p>Accelerator capabilities cannot be used with wait-and-save fleets. If you specify accelerator capabilities, you must use either spot or on-demand instance market options.</p> </important> <note> <p>Each accelerator type maps to specific EC2 instance families:</p> <ul> <li> <p> <code>t4</code>: Uses G4dn instance family</p> </li> <li> <p> <code>a10g</code>: Uses G5 instance family</p> </li> <li> <p> <code>l4</code>: Uses G6 and Gr6 instance families</p> </li> <li> <p> <code>l40s</code>: Uses G6e instance family</p> </li> <li> <p> <code>rtx-pro-server-6000</code>: Uses G7e instance family</p> </li> </ul> </note>",
+      "base": "<p>Provides information about the GPU accelerators used for jobs processed by a fleet.</p> <important> <p>Accelerator capabilities cannot be used with wait-and-save fleets. If you specify accelerator capabilities, you must use either spot or on-demand instance market options.</p> </important> <note> <p>Each accelerator type maps to specific EC2 instance families:</p> <ul> <li> <p> <code>t4</code>: Uses G4dn instance family</p> </li> <li> <p> <code>a10g</code>: Uses G5 instance family</p> </li> <li> <p> <code>l4</code>: Uses G6, G6f, Gr6, and Gr6f instance families</p> </li> <li> <p> <code>l40s</code>: Uses G6e instance family</p> </li> <li> <p> <code>rtx-pro-server-6000</code>: Uses G7e instance family</p> </li> <li> <p> <code>rtx-pro-4500</code>: Uses G7 instance family</p> </li> </ul> </note>",
       "refs": {
         "ServiceManagedEc2InstanceCapabilities$acceleratorCapabilities": "<p>Describes the GPU accelerator capabilities required for worker host instances in this fleet.</p>"
       }
@@ -147,13 +147,13 @@
     "AcceleratorName": {
       "base": null,
       "refs": {
-        "AcceleratorSelection$name": "<p>The name of the chip used by the GPU accelerator.</p> <p>The available GPU accelerators are:</p> <ul> <li> <p> <code>t4</code> - NVIDIA T4 Tensor Core GPU (16 GiB memory)</p> </li> <li> <p> <code>a10g</code> - NVIDIA A10G Tensor Core GPU (24 GiB memory)</p> </li> <li> <p> <code>l4</code> - NVIDIA L4 Tensor Core GPU (24 GiB memory)</p> </li> <li> <p> <code>l40s</code> - NVIDIA L40S Tensor Core GPU (48 GiB memory)</p> </li> <li> <p> <code>rtx-pro-server-6000</code> - NVIDIA RTX PRO Server 6000 GPU (96 GiB memory)</p> </li> </ul>"
+        "AcceleratorSelection$name": "<p>The name of the chip used by the GPU accelerator.</p> <p>The available GPU accelerators are:</p> <ul> <li> <p> <code>t4</code> - NVIDIA T4 Tensor Core GPU (16 GiB memory)</p> </li> <li> <p> <code>a10g</code> - NVIDIA A10G Tensor Core GPU (24 GiB memory)</p> </li> <li> <p> <code>l4</code> - NVIDIA L4 Tensor Core GPU (24 GiB memory)</p> </li> <li> <p> <code>l40s</code> - NVIDIA L40S Tensor Core GPU (48 GiB memory)</p> </li> <li> <p> <code>rtx-pro-server-6000</code> - NVIDIA RTX PRO Server 6000 GPU (96 GiB memory)</p> </li> <li> <p> <code>rtx-pro-4500</code> - NVIDIA RTX PRO 4500 GPU (32 GiB memory)</p> </li> </ul>"
       }
     },
     "AcceleratorRuntime": {
       "base": null,
       "refs": {
-        "AcceleratorSelection$runtime": "<p>Specifies the runtime driver to use for the GPU accelerator. You must use the same runtime for all GPUs in a fleet. </p> <p>You can choose from the following runtimes:</p> <ul> <li> <p> <code>latest</code> - Use the latest runtime available for the chip. If you specify <code>latest</code> and a new version of the runtime is released, the new version of the runtime is used.</p> </li> <li> <p> <code>grid:r580</code> - <a href=\"https://docs.nvidia.com/vgpu/19.0/index.html\">NVIDIA vGPU software 19</a> </p> </li> </ul> <p>If you don't specify a runtime, Amazon Web Services Deadline Cloud uses <code>latest</code> as the default. However, if you have multiple accelerators and specify <code>latest</code> for some and leave others blank, Amazon Web Services Deadline Cloud raises an exception.</p> <important> <p>All accelerator types support <code>grid:r580</code>.</p> <p>All accelerators in a fleet must use the same runtime version. You cannot mix different runtime versions within a single fleet.</p> </important> <note> <p>When you specify <code>latest</code>, it resolves to <code>grid:r580</code> for all currently supported accelerators.</p> </note>"
+        "AcceleratorSelection$runtime": "<p>Specifies the runtime driver to use for the GPU accelerator. You must use the same runtime for all GPUs in a fleet. </p> <p>You can choose from the following runtimes:</p> <ul> <li> <p> <code>latest</code> - Use the latest runtime available for the chip. If you specify <code>latest</code> and a new version of the runtime is released, the new version of the runtime is used.</p> </li> <li> <p> <code>grid:r595</code> - <a href=\"https://docs.nvidia.com/vgpu/20.0/index.html\">NVIDIA vGPU software 20</a> </p> </li> <li> <p> <code>grid:r580</code> - <a href=\"https://docs.nvidia.com/vgpu/19.0/index.html\">NVIDIA vGPU software 19</a> </p> </li> </ul> <p>If you don't specify a runtime, Amazon Web Services Deadline Cloud uses <code>latest</code> as the default. However, if you have multiple accelerators and specify <code>latest</code> for some and leave others blank, Amazon Web Services Deadline Cloud raises an exception.</p> <important> <p>All accelerator types support <code>grid:r595</code> and <code>grid:r580</code>.</p> <p>All accelerators in a fleet must use the same runtime version. You cannot mix different runtime versions within a single fleet.</p> </important> <note> <p>When you specify <code>latest</code>, it resolves to <code>grid:r595</code> for all currently supported accelerators.</p> </note>"
       }
     },
     "AcceleratorSelection": {
@@ -892,10 +892,10 @@
     "BudgetStatus": {
       "base": null,
       "refs": {
-        "BudgetSummary$status": "<p>The status of the budget.</p> <ul> <li> <p> <code>ACTIVE</code>–The budget is being evaluated.</p> </li> <li> <p> <code>INACTIVE</code>–The budget is inactive. This can include Expired, Canceled, or deleted Deleted statuses.</p> </li> </ul>",
-        "GetBudgetResponse$status": "<p>The status of the budget.</p> <ul> <li> <p> <code>ACTIVE</code>–Get a budget being evaluated.</p> </li> <li> <p> <code>INACTIVE</code>–Get an inactive budget. This can include expired, canceled, or deleted statuses.</p> </li> </ul>",
+        "BudgetSummary$status": "<p>The status of the budget.</p> <ul> <li> <p> <code>ACTIVE</code> - The budget is being evaluated.</p> </li> <li> <p> <code>INACTIVE</code> - The budget is inactive. This can include Expired, Canceled, or deleted Deleted statuses.</p> </li> </ul>",
+        "GetBudgetResponse$status": "<p>The status of the budget.</p> <ul> <li> <p> <code>ACTIVE</code> - Get a budget being evaluated.</p> </li> <li> <p> <code>INACTIVE</code> - Get an inactive budget. This can include expired, canceled, or deleted statuses.</p> </li> </ul>",
         "ListBudgetsRequest$status": "<p>The status to list for the budgets.</p>",
-        "UpdateBudgetRequest$status": "<p>Updates the status of the budget.</p> <ul> <li> <p> <code>ACTIVE</code>–The budget is being evaluated.</p> </li> <li> <p> <code>INACTIVE</code>–The budget is inactive. This can include Expired, Canceled, or deleted Deleted statuses.</p> </li> </ul>"
+        "UpdateBudgetRequest$status": "<p>Updates the status of the budget.</p> <ul> <li> <p> <code>ACTIVE</code> - The budget is being evaluated.</p> </li> <li> <p> <code>INACTIVE</code> - The budget is inactive. This can include Expired, Canceled, or deleted Deleted statuses.</p> </li> </ul>"
       }
     },
     "BudgetSummaries": {
@@ -953,10 +953,10 @@
     "ComparisonOperator": {
       "base": null,
       "refs": {
-        "DateTimeFilterExpression$operator": "<p>The type of comparison to use to filter the results.</p>",
+        "DateTimeFilterExpression$operator": "<p>The type of comparison to use to filter the results. <code>NOT_EQUAL</code>, <code>ANY_EQUALS</code>, and <code>ALL_NOT_EQUALS</code> aren't supported.</p>",
         "ParameterFilterExpression$operator": "<p>The type of comparison to use to filter results.</p>",
-        "StringFilterExpression$operator": "<p>The type of comparison to use for this search.</p>",
-        "StringListFilterExpression$operator": "<p>The type of comparison to use for this search.</p>"
+        "StringFilterExpression$operator": "<p>The type of comparison to use for this search. Only <code>EQUAL</code> and <code>NOT_EQUAL</code> are supported.</p>",
+        "StringListFilterExpression$operator": "<p>The type of comparison to use for this search. Only <code>ANY_EQUALS</code> and <code>ALL_NOT_EQUALS</code> are supported.</p>"
       }
     },
     "CompletedStatus": {
@@ -1524,12 +1524,12 @@
     "EndedAt": {
       "base": null,
       "refs": {
-        "BatchGetJobItem$endedAt": "<p>The date and time the resource ended running.</p>",
+        "BatchGetJobItem$endedAt": "<p>The date and time the resource ended running. Returned only when the job has finished.</p>",
         "BatchGetSessionActionItem$endedAt": "<p>The date and time the resource ended running.</p>",
         "BatchGetSessionItem$endedAt": "<p>The date and time the resource ended running.</p>",
         "BatchGetStepItem$endedAt": "<p>The date and time the resource ended running.</p>",
         "BatchGetTaskItem$endedAt": "<p>The date and time the resource ended running.</p>",
-        "GetJobResponse$endedAt": "<p>The date and time the resource ended running.</p>",
+        "GetJobResponse$endedAt": "<p>The date and time the resource ended running. Returned only when the job has finished.</p>",
         "GetSessionActionResponse$endedAt": "<p>The date and time the resource ended running.</p>",
         "GetSessionResponse$endedAt": "<p>The date and time the resource ended running.</p>",
         "GetStepResponse$endedAt": "<p>The date and time the resource ended running.</p>",
@@ -1888,7 +1888,7 @@
         "CreateFleetRequest$configuration": "<p>The configuration settings for the fleet. Customer managed fleets are self-managed. Service managed Amazon EC2 fleets are managed by Deadline Cloud.</p>",
         "FleetSummary$configuration": "<p>The configuration details for the fleet.</p>",
         "GetFleetResponse$configuration": "<p>The configuration setting for the fleet.</p>",
-        "UpdateFleetRequest$configuration": "<p>The fleet configuration to update.</p>"
+        "UpdateFleetRequest$configuration": "<p>The fleet configuration to update. The new configuration replaces the existing one, so include every setting you want to keep. Settings that you omit revert to their defaults.</p>"
       }
     },
     "FleetId": {
@@ -3686,7 +3686,7 @@
       "base": null,
       "refs": {
         "GetQueueFleetAssociationResponse$status": "<p>The status of the queue-fleet association.</p>",
-        "QueueFleetAssociationSummary$status": "<p>The status of task scheduling in the queue-fleet association.</p> <ul> <li> <p> <code>ACTIVE</code>–Association is active.</p> </li> <li> <p> <code>STOP_SCHEDULING_AND_COMPLETE_TASKS</code>–Association has stopped scheduling new tasks and is completing current tasks.</p> </li> <li> <p> <code>STOP_SCHEDULING_AND_CANCEL_TASKS</code>–Association has stopped scheduling new tasks and is canceling current tasks.</p> </li> <li> <p> <code>STOPPED</code>–Association has been stopped.</p> </li> </ul>"
+        "QueueFleetAssociationSummary$status": "<p>The status of task scheduling in the queue-fleet association.</p> <ul> <li> <p> <code>ACTIVE</code> - Association is active.</p> </li> <li> <p> <code>STOP_SCHEDULING_AND_COMPLETE_TASKS</code> - Association has stopped scheduling new tasks and is completing current tasks.</p> </li> <li> <p> <code>STOP_SCHEDULING_AND_CANCEL_TASKS</code> - Association has stopped scheduling new tasks and is canceling current tasks.</p> </li> <li> <p> <code>STOPPED</code> - Association has been stopped.</p> </li> </ul>"
       }
     },
     "QueueFleetAssociationSummaries": {
@@ -3828,8 +3828,8 @@
     "QueueStatus": {
       "base": null,
       "refs": {
-        "GetQueueResponse$status": "<p>The status of the queue.</p> <ul> <li> <p> <code>ACTIVE</code>–The queue is active.</p> </li> <li> <p> <code>SCHEDULING</code>–The queue is scheduling.</p> </li> <li> <p> <code>SCHEDULING_BLOCKED</code>–The queue scheduling is blocked. See the provided reason.</p> </li> </ul>",
-        "ListQueuesRequest$status": "<p>The status of the queues listed.</p> <ul> <li> <p> <code>ACTIVE</code>–The queues are active.</p> </li> <li> <p> <code>SCHEDULING</code>–The queues are scheduling.</p> </li> <li> <p> <code>SCHEDULING_BLOCKED</code>–The queue scheduling is blocked for these queues.</p> </li> </ul>",
+        "GetQueueResponse$status": "<p>The status of the queue.</p> <ul> <li> <p> <code>ACTIVE</code> - The queue is active.</p> </li> <li> <p> <code>SCHEDULING</code> - The queue is scheduling.</p> </li> <li> <p> <code>SCHEDULING_BLOCKED</code> - The queue scheduling is blocked. See the provided reason.</p> </li> </ul>",
+        "ListQueuesRequest$status": "<p>The status of the queues listed.</p> <ul> <li> <p> <code>ACTIVE</code> - The queues are active.</p> </li> <li> <p> <code>SCHEDULING</code> - The queues are scheduling.</p> </li> <li> <p> <code>SCHEDULING_BLOCKED</code> - The queue scheduling is blocked for these queues.</p> </li> </ul>",
         "QueueSummary$status": "<p>That status of the queue.</p>"
       }
     },
@@ -4459,12 +4459,12 @@
     "StartedAt": {
       "base": null,
       "refs": {
-        "BatchGetJobItem$startedAt": "<p>The date and time the resource started running.</p>",
+        "BatchGetJobItem$startedAt": "<p>The date and time the resource started running. Requeuing the job doesn't change this value.</p>",
         "BatchGetSessionActionItem$startedAt": "<p>The date and time the resource started running.</p>",
         "BatchGetSessionItem$startedAt": "<p>The date and time the resource started running.</p>",
         "BatchGetStepItem$startedAt": "<p>The date and time the resource started running.</p>",
         "BatchGetTaskItem$startedAt": "<p>The date and time the resource started running.</p>",
-        "GetJobResponse$startedAt": "<p>The date and time the resource started running.</p>",
+        "GetJobResponse$startedAt": "<p>The date and time the resource started running. Requeuing the job doesn't change this value.</p>",
         "GetSessionActionResponse$startedAt": "<p>The date and time the resource started running.</p>",
         "GetSessionResponse$startedAt": "<p>The date and time the resource started running.</p>",
         "GetStepResponse$startedAt": "<p>The date and time the resource started running.</p>",
@@ -5057,10 +5057,10 @@
         "GetJobResponse$taskRunStatus": "<p>The task run status for the job.</p>",
         "GetStepResponse$taskRunStatus": "<p>The task run status for the job.</p>",
         "GetTaskResponse$runStatus": "<p>The run status for the task.</p>",
-        "JobSearchSummary$taskRunStatus": "<p>The task run status for the job.</p> <ul> <li> <p> <code>PENDING</code>–pending and waiting for resources.</p> </li> <li> <p> <code>READY</code>–ready to be processed.</p> </li> <li> <p> <code>ASSIGNED</code>–assigned and will run next on a worker.</p> </li> <li> <p> <code>SCHEDULED</code>–scheduled to be run on a worker.</p> </li> <li> <p> <code>INTERRUPTING</code>–being interrupted.</p> </li> <li> <p> <code>RUNNING</code>–running on a worker.</p> </li> <li> <p> <code>SUSPENDED</code>–the task is suspended.</p> </li> <li> <p> <code>CANCELED</code>–the task has been canceled.</p> </li> <li> <p> <code>FAILED</code>–the task has failed.</p> </li> <li> <p> <code>SUCCEEDED</code>–the task has succeeded.</p> </li> </ul>",
-        "JobSummary$taskRunStatus": "<p>The task run status for the job.</p> <ul> <li> <p> <code>PENDING</code>–pending and waiting for resources.</p> </li> <li> <p> <code>READY</code>–ready to be processed.</p> </li> <li> <p> <code>ASSIGNED</code>–assigned and will run next on a worker.</p> </li> <li> <p> <code>SCHEDULED</code>–scheduled to be run on a worker.</p> </li> <li> <p> <code>INTERRUPTING</code>–being interrupted.</p> </li> <li> <p> <code>RUNNING</code>–running on a worker.</p> </li> <li> <p> <code>SUSPENDED</code>–the task is suspended.</p> </li> <li> <p> <code>CANCELED</code>–the task has been canceled.</p> </li> <li> <p> <code>FAILED</code>–the task has failed.</p> </li> <li> <p> <code>SUCCEEDED</code>–the task has succeeded.</p> </li> </ul>",
-        "StepSearchSummary$taskRunStatus": "<p>The task run status for the job.</p> <ul> <li> <p> <code>PENDING</code>–pending and waiting for resources.</p> </li> <li> <p> <code>READY</code>–ready to be processed.</p> </li> <li> <p> <code>ASSIGNED</code>–assigned and will run next on a worker.</p> </li> <li> <p> <code>SCHEDULED</code>–scheduled to be run on a worker.</p> </li> <li> <p> <code>INTERRUPTING</code>–being interrupted.</p> </li> <li> <p> <code>RUNNING</code>–running on a worker.</p> </li> <li> <p> <code>SUSPENDED</code>–the task is suspended.</p> </li> <li> <p> <code>CANCELED</code>–the task has been canceled.</p> </li> <li> <p> <code>FAILED</code>–the task has failed.</p> </li> <li> <p> <code>SUCCEEDED</code>–the task has succeeded.</p> </li> </ul>",
-        "StepSummary$taskRunStatus": "<p>The task run status for the job.</p> <ul> <li> <p> <code>PENDING</code>–pending and waiting for resources.</p> </li> <li> <p> <code>READY</code>–ready to process.</p> </li> <li> <p> <code>ASSIGNED</code>–assigned and will run next on a worker.</p> </li> <li> <p> <code>SCHEDULED</code>–scheduled to run on a worker.</p> </li> <li> <p> <code>INTERRUPTING</code>–being interrupted.</p> </li> <li> <p> <code>RUNNING</code>–running on a worker.</p> </li> <li> <p> <code>SUSPENDED</code>–the task is suspended.</p> </li> <li> <p> <code>CANCELED</code>–the task has been canceled.</p> </li> <li> <p> <code>FAILED</code>–the task has failed.</p> </li> <li> <p> <code>SUCCEEDED</code>–the task has succeeded.</p> </li> </ul>",
+        "JobSearchSummary$taskRunStatus": "<p>The task run status for the job.</p> <ul> <li> <p> <code>PENDING</code> - pending and waiting for resources.</p> </li> <li> <p> <code>READY</code> - ready to be processed.</p> </li> <li> <p> <code>ASSIGNED</code> - assigned and will run next on a worker.</p> </li> <li> <p> <code>SCHEDULED</code> - scheduled to be run on a worker.</p> </li> <li> <p> <code>INTERRUPTING</code> - being interrupted.</p> </li> <li> <p> <code>RUNNING</code> - running on a worker.</p> </li> <li> <p> <code>SUSPENDED</code> - the task is suspended.</p> </li> <li> <p> <code>CANCELED</code> - the task has been canceled.</p> </li> <li> <p> <code>FAILED</code> - the task has failed.</p> </li> <li> <p> <code>SUCCEEDED</code> - the task has succeeded.</p> </li> </ul>",
+        "JobSummary$taskRunStatus": "<p>The task run status for the job.</p> <ul> <li> <p> <code>PENDING</code> - pending and waiting for resources.</p> </li> <li> <p> <code>READY</code> - ready to be processed.</p> </li> <li> <p> <code>ASSIGNED</code> - assigned and will run next on a worker.</p> </li> <li> <p> <code>SCHEDULED</code> - scheduled to be run on a worker.</p> </li> <li> <p> <code>INTERRUPTING</code> - being interrupted.</p> </li> <li> <p> <code>RUNNING</code> - running on a worker.</p> </li> <li> <p> <code>SUSPENDED</code> - the task is suspended.</p> </li> <li> <p> <code>CANCELED</code> - the task has been canceled.</p> </li> <li> <p> <code>FAILED</code> - the task has failed.</p> </li> <li> <p> <code>SUCCEEDED</code> - the task has succeeded.</p> </li> </ul>",
+        "StepSearchSummary$taskRunStatus": "<p>The task run status for the job.</p> <ul> <li> <p> <code>PENDING</code> - pending and waiting for resources.</p> </li> <li> <p> <code>READY</code> - ready to be processed.</p> </li> <li> <p> <code>ASSIGNED</code> - assigned and will run next on a worker.</p> </li> <li> <p> <code>SCHEDULED</code> - scheduled to be run on a worker.</p> </li> <li> <p> <code>INTERRUPTING</code> - being interrupted.</p> </li> <li> <p> <code>RUNNING</code> - running on a worker.</p> </li> <li> <p> <code>SUSPENDED</code> - the task is suspended.</p> </li> <li> <p> <code>CANCELED</code> - the task has been canceled.</p> </li> <li> <p> <code>FAILED</code> - the task has failed.</p> </li> <li> <p> <code>SUCCEEDED</code> - the task has succeeded.</p> </li> </ul>",
+        "StepSummary$taskRunStatus": "<p>The task run status for the job.</p> <ul> <li> <p> <code>PENDING</code> - pending and waiting for resources.</p> </li> <li> <p> <code>READY</code> - ready to process.</p> </li> <li> <p> <code>ASSIGNED</code> - assigned and will run next on a worker.</p> </li> <li> <p> <code>SCHEDULED</code> - scheduled to run on a worker.</p> </li> <li> <p> <code>INTERRUPTING</code> - being interrupted.</p> </li> <li> <p> <code>RUNNING</code> - running on a worker.</p> </li> <li> <p> <code>SUSPENDED</code> - the task is suspended.</p> </li> <li> <p> <code>CANCELED</code> - the task has been canceled.</p> </li> <li> <p> <code>FAILED</code> - the task has failed.</p> </li> <li> <p> <code>SUCCEEDED</code> - the task has succeeded.</p> </li> </ul>",
         "TaskRunStatusCounts$key": null,
         "TaskSearchSummary$runStatus": "<p>The run status of the task.</p>",
         "TaskSummary$runStatus": "<p>The run status of the task.</p>"
@@ -5324,7 +5324,7 @@
     "UpdatedAt": {
       "base": null,
       "refs": {
-        "BatchGetJobItem$updatedAt": "<p>The date and time the resource was updated.</p>",
+        "BatchGetJobItem$updatedAt": "<p>The date and time the resource was updated. Task status changes don't update this value.</p>",
         "BatchGetSessionItem$updatedAt": "<p>The date and time the resource was updated.</p>",
         "BatchGetStepItem$updatedAt": "<p>The date and time the resource was updated.</p>",
         "BatchGetTaskItem$updatedAt": "<p>The date and time the resource was updated.</p>",
@@ -5336,7 +5336,7 @@
         "GetBudgetResponse$queueStoppedAt": "<p>The date and time the queue stopped.</p>",
         "GetFarmResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
         "GetFleetResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
-        "GetJobResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
+        "GetJobResponse$updatedAt": "<p>The date and time the resource was updated. Task status changes don't update this value.</p>",
         "GetLimitResponse$updatedAt": "<p>The Unix timestamp of the date and time that the limit was last updated.</p>",
         "GetMonitorResponse$updatedAt": "<p>The UNIX timestamp of the last date and time that the monitor was updated.</p>",
         "GetQueueEnvironmentResponse$updatedAt": "<p>The date and time the resource was updated.</p>",

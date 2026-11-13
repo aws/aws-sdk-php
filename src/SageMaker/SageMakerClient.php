@@ -4333,6 +4333,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeClusterNode(array{ClusterName?: string, NodeId?: string, NodeLogicalId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeClusterNodeAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeClusterNodeAsync(array{ClusterName?: string, NodeId?: string, NodeLogicalId?: string, ...} $args = [])
+ * @method \Aws\Result describeClusterOperation(array $args = [])
+ * @phpstan-method \Aws\Result describeClusterOperation(array{ClusterName?: string, OperationId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeClusterOperationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeClusterOperationAsync(array{ClusterName?: string, OperationId?: string, ...} $args = [])
  * @method \Aws\Result describeClusterSchedulerConfig(array $args = [])
  * @phpstan-method \Aws\Result describeClusterSchedulerConfig(array{ClusterSchedulerConfigId?: string, ClusterSchedulerConfigVersion?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeClusterSchedulerConfigAsync(array $args = [])
@@ -4981,6 +4985,7 @@ use Aws\AwsClient;
  *     SortBy?: 'EventTime',
  *     SortOrder?: 'Ascending'|'Descending',
  *     ResourceType?: 'Cluster'|'Instance'|'InstanceGroup',
+ *     OperationId?: string,
  *     MaxResults?: int,
  *     NextToken?: string,
  *     ...,
@@ -4995,10 +5000,15 @@ use Aws\AwsClient;
  *     SortBy?: 'EventTime',
  *     SortOrder?: 'Ascending'|'Descending',
  *     ResourceType?: 'Cluster'|'Instance'|'InstanceGroup',
+ *     OperationId?: string,
  *     MaxResults?: int,
  *     NextToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listClusterExtensionVersions(array $args = [])
+ * @phpstan-method \Aws\Result listClusterExtensionVersions(array{ExtensionName?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listClusterExtensionVersionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listClusterExtensionVersionsAsync(array{ExtensionName?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \Aws\Result listClusterExtensions(array $args = [])
  * @phpstan-method \Aws\Result listClusterExtensions(array{
  *     ClusterArn?: string,
@@ -5041,6 +5051,32 @@ use Aws\AwsClient;
  *     SortBy?: 'CREATION_TIME'|'NAME',
  *     SortOrder?: 'Ascending'|'Descending',
  *     IncludeNodeLogicalIds?: bool,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listClusterOperations(array $args = [])
+ * @phpstan-method \Aws\Result listClusterOperations(array{
+ *     ClusterName?: string,
+ *     Status?: 'Done'|'InProgress'|'Superseded',
+ *     Type?: 'DeepHealthCheck'|'Scaling',
+ *     CreationTimeAfter?: int|string|\DateTimeInterface,
+ *     CreationTimeBefore?: int|string|\DateTimeInterface,
+ *     SortBy?: 'CreationTime',
+ *     SortOrder?: 'Ascending'|'Descending',
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listClusterOperationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listClusterOperationsAsync(array{
+ *     ClusterName?: string,
+ *     Status?: 'Done'|'InProgress'|'Superseded',
+ *     Type?: 'DeepHealthCheck'|'Scaling',
+ *     CreationTimeAfter?: int|string|\DateTimeInterface,
+ *     CreationTimeBefore?: int|string|\DateTimeInterface,
+ *     SortBy?: 'CreationTime',
+ *     SortOrder?: 'Ascending'|'Descending',
+ *     MaxResults?: int,
+ *     NextToken?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listClusterSchedulerConfigs(array $args = [])

@@ -208,6 +208,13 @@ use Aws\AwsClient;
  *             Targets?: array,
  *             ...,
  *         },
+ *         GcpConfiguration?: array{
+ *             OrganizationId?: string,
+ *             WorkloadIdentityPoolProvider?: string,
+ *             ServiceAccountEmail?: string,
+ *             Targets?: array,
+ *             ...,
+ *         },
  *         ...,
  *     },
  *     ConfigConnectorArn?: string,
@@ -225,6 +232,13 @@ use Aws\AwsClient;
  *             TenantDisplayName?: string,
  *             ApplicationId?: string,
  *             ApplicationDisplayName?: string,
+ *             Targets?: array,
+ *             ...,
+ *         },
+ *         GcpConfiguration?: array{
+ *             OrganizationId?: string,
+ *             WorkloadIdentityPoolProvider?: string,
+ *             ServiceAccountEmail?: string,
  *             Targets?: array,
  *             ...,
  *         },
@@ -1310,14 +1324,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listCloudConnectors(array{
  *     MaxResults?: int,
  *     NextToken?: string,
- *     Filters?: list<array{FilterKey?: 'SubscriptionId'|'TenantId', FilterValues?: list<string>, ...}>,
+ *     Filters?: list<array{FilterKey?: 'OrganizationId'|'ProjectId'|'SubscriptionId'|'TenantId', FilterValues?: list<string>, ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listCloudConnectorsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listCloudConnectorsAsync(array{
  *     MaxResults?: int,
  *     NextToken?: string,
- *     Filters?: list<array{FilterKey?: 'SubscriptionId'|'TenantId', FilterValues?: list<string>, ...}>,
+ *     Filters?: list<array{FilterKey?: 'OrganizationId'|'ProjectId'|'SubscriptionId'|'TenantId', FilterValues?: list<string>, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listCommandInvocations(array $args = [])
@@ -2261,6 +2275,13 @@ use Aws\AwsClient;
  *             Targets?: array,
  *             ...,
  *         },
+ *         GcpConfiguration?: array{
+ *             OrganizationId?: string,
+ *             WorkloadIdentityPoolProvider?: string,
+ *             ServiceAccountEmail?: string,
+ *             Targets?: array,
+ *             ...,
+ *         },
  *         ...,
  *     },
  *     Description?: string,
@@ -2276,6 +2297,13 @@ use Aws\AwsClient;
  *             TenantDisplayName?: string,
  *             ApplicationId?: string,
  *             ApplicationDisplayName?: string,
+ *             Targets?: array,
+ *             ...,
+ *         },
+ *         GcpConfiguration?: array{
+ *             OrganizationId?: string,
+ *             WorkloadIdentityPoolProvider?: string,
+ *             ServiceAccountEmail?: string,
  *             Targets?: array,
  *             ...,
  *         },

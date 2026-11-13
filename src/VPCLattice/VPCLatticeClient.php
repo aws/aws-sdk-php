@@ -654,9 +654,19 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateResourceGateway(array $args = [])
- * @phpstan-method \Aws\Result updateResourceGateway(array{resourceGatewayIdentifier?: string, securityGroupIds?: list<string>, ...} $args = [])
+ * @phpstan-method \Aws\Result updateResourceGateway(array{
+ *     resourceGatewayIdentifier?: string,
+ *     securityGroupIds?: list<string>,
+ *     resourceConfigDnsResolution?: 'IN_VPC'|'PUBLIC',
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateResourceGatewayAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise updateResourceGatewayAsync(array{resourceGatewayIdentifier?: string, securityGroupIds?: list<string>, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateResourceGatewayAsync(array{
+ *     resourceGatewayIdentifier?: string,
+ *     securityGroupIds?: list<string>,
+ *     resourceConfigDnsResolution?: 'IN_VPC'|'PUBLIC',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateRule(array $args = [])
  * @phpstan-method \Aws\Result updateRule(array{
  *     serviceIdentifier?: string,

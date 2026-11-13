@@ -30,6 +30,7 @@
     "AssociateIpamByoasn": "<p>Associates your Autonomous System Number (ASN) with a BYOIP CIDR that you own in the same Amazon Web Services Region. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/tutorials-byoasn.html\">Tutorial: Bring your ASN to IPAM</a> in the <i>Amazon VPC IPAM guide</i>.</p> <p>After the association succeeds, the ASN is eligible for advertisement. You can view the association with <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeByoipCidrs.html\">DescribeByoipCidrs</a>. You can advertise the CIDR with <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AdvertiseByoipCidr.html\">AdvertiseByoipCidr</a>.</p>",
     "AssociateIpamResourceDiscovery": "<p>Associates an IPAM resource discovery with an Amazon VPC IPAM. A resource discovery is an IPAM component that enables IPAM to manage and monitor resources that belong to the owning account.</p>",
     "AssociateNatGatewayAddress": "<p>Associates Elastic IP addresses (EIPs) and private IPv4 addresses with a public NAT gateway. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html\">Work with NAT gateways</a> in the <i>Amazon VPC User Guide</i>.</p> <p>By default, you can associate up to 2 Elastic IP addresses per public NAT gateway. You can increase the limit by requesting a quota adjustment. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-eips\">Elastic IP address quotas</a> in the <i>Amazon VPC User Guide</i>.</p> <important> <p>When you associate an EIP or secondary EIPs with a public NAT gateway, the network border group of the EIPs must match the network border group of the Availability Zone (AZ) that the public NAT gateway is in. If it's not the same, the EIP will fail to associate. You can see the network border group for the subnet's AZ by viewing the details of the subnet. Similarly, you can view the network border group of an EIP by viewing the details of the EIP address. For more information about network border groups and EIPs, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/WorkWithEIPs.html\">Allocate an Elastic IP address</a> in the <i>Amazon VPC User Guide</i>. </p> </important>",
+    "AssociateNetworkingFlexCostAllocationPolicy": "<p>Associates a flex cost allocation policy with one or more network resources. You can associate the policy directly with specific resources by resource ID, or you can associate it with a scope of resources in an account, Amazon VPC, or subnet.</p> <p>The following limits apply:</p> <ul> <li> <p>A request can associate up to 20 resources.</p> </li> <li> <p>A policy can have up to 100 active associations.</p> </li> <li> <p>A network resource can have only one active association, across all policies. If a resource is already associated, the response includes it in the failures with the code <code>ResourceAlreadyAssociated</code>.</p> </li> </ul>",
     "AssociateRouteServer": "<p>Associates a route server with a VPC to enable dynamic route updates.</p> <p>A route server association is the connection established between a route server and a VPC.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/dynamic-routing-route-server.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "AssociateRouteTable": "<p>Associates a subnet in your VPC or an internet gateway or virtual private gateway attached to your VPC with a route table in your VPC. This association causes traffic from the subnet or gateway to be routed according to the routes in the route table. The action returns an association ID, which you need in order to disassociate the route table later. A route table can be associated with multiple subnets.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html\">Route tables</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "AssociateSecurityGroupVpc": "<p>Associates a security group with another VPC in the same Region. This enables you to use the same security group with network interfaces and instances in the specified VPC.</p> <note> <ul> <li> <p>The VPC you want to associate the security group with must be in the same Region.</p> </li> <li> <p>You can associate the security group with another VPC if your account owns the VPC or if the VPC was shared with you.</p> </li> <li> <p>You must own the security group.</p> </li> <li> <p>You cannot use this feature with default security groups.</p> </li> <li> <p>You cannot use this feature with the default VPC.</p> </li> </ul> </note>",
@@ -124,6 +125,7 @@
     "CreateNetworkInsightsPath": "<p>Creates a path to analyze for reachability.</p> <p>Reachability Analyzer enables you to analyze and debug network reachability between two resources in your virtual private cloud (VPC). For more information, see the <a href=\"https://docs.aws.amazon.com/vpc/latest/reachability/\">Reachability Analyzer Guide</a>.</p>",
     "CreateNetworkInterface": "<p>Creates a network interface in the specified subnet.</p> <p>The number of IP addresses you can assign to a network interface varies by instance type.</p> <p>For more information about network interfaces, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html\">Elastic network interfaces</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "CreateNetworkInterfacePermission": "<p>Grants an Amazon Web Services-authorized account permission to attach the specified network interface to an instance in their account.</p> <p>You can grant permission to a single Amazon Web Services account only, and only one account at a time.</p>",
+    "CreateNetworkingFlexCostAllocationPolicy": "<p>Creates a flex cost allocation policy for Networking Flexible Cost Allocation (FCA), a feature of Amazon Virtual Private Cloud (Amazon VPC). The policy allocates the charges of a shared networking resource at the reporting granularity that you specify. You can create a policy for one of the following resource types: NAT gateways, Amazon VPC peering connections, or EC2 instances. Policies can allocate data transfer charges for all three types, and data processing charges for NAT gateways.</p> <p>You can have up to 100 policies per account in each Amazon Web Services Region, plus one additional policy per network resource type created by a declarative policy, for a maximum of 103 policies in an Amazon Web Services Region.</p>",
     "CreatePlacementGroup": "<p>Creates a placement group in which to launch instances. The strategy of the placement group determines how the instances are organized within the group. </p> <p>A <code>cluster</code> placement group is a logical grouping of instances within a single Availability Zone that benefit from low network latency, high network throughput. A <code>spread</code> placement group places instances on distinct hardware. A <code>partition</code> placement group places groups of instances in different partitions, where instances in one partition do not share the same hardware with instances in another partition. A <code>precision-time</code> placement group places instances on supported hardware with direct access to high-precision time sources in Amazon Web Services infrastructure.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html\">Placement groups</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "CreatePublicIpv4Pool": "<p>Creates a public IPv4 address pool. A public IPv4 pool is an EC2 IP address pool required for the public IPv4 CIDRs that you own and bring to Amazon Web Services to manage with IPAM. IPv6 addresses you bring to Amazon Web Services, however, use IPAM pools only. To monitor the status of pool creation, use <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribePublicIpv4Pools.html\">DescribePublicIpv4Pools</a>.</p>",
     "CreateReplaceRootVolumeTask": "<p>Replaces the EBS-backed root volume for a <code>running</code> instance with a new volume that is restored to the original root volume's launch state, that is restored to a specific snapshot taken from the original root volume, that is restored from an AMI that has the same key characteristics as that of the instance, or that is replaced by a specified volume.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/replace-root.html\">Replace a root volume</a> in the <i>Amazon EC2 User Guide</i>.</p>",
@@ -226,6 +228,7 @@
     "DeleteNetworkInsightsPath": "<p>Deletes the specified path.</p>",
     "DeleteNetworkInterface": "<p>Deletes the specified network interface. You must detach the network interface before you can delete it.</p>",
     "DeleteNetworkInterfacePermission": "<p>Deletes a permission for a network interface. By default, you cannot delete the permission if the account for which you're removing the permission has attached the network interface to an instance. However, you can force delete the permission, regardless of any attachment.</p>",
+    "DeleteNetworkingFlexCostAllocationPolicies": "<p>Deletes one or more flex cost allocation policies.</p>",
     "DeletePlacementGroup": "<p>Deletes the specified placement group. You must terminate all instances in the placement group before you can delete the placement group. You cannot delete a placement group that is a parent of a cluster placement group. Delete the cluster placement groups first. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html\">Placement groups</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DeletePublicIpv4Pool": "<p>Delete a public IPv4 pool. A public IPv4 pool is an EC2 IP address pool required for the public IPv4 CIDRs that you own and bring to Amazon Web Services to manage with IPAM. IPv6 addresses you bring to Amazon Web Services, however, use IPAM pools only.</p>",
     "DeleteQueuedReservedInstances": "<p>Deletes the queued purchases for the specified Reserved Instances.</p>",
@@ -397,7 +400,9 @@
     "DescribeNetworkInsightsPaths": "<p>Describes one or more of your paths.</p>",
     "DescribeNetworkInterfaceAttribute": "<p>Describes a network interface attribute. You can specify only one attribute at a time.</p>",
     "DescribeNetworkInterfacePermissions": "<p>Describes the permissions for your network interfaces. </p>",
-    "DescribeNetworkInterfaces": "<p>Describes the specified network interfaces or all your network interfaces.</p> <p>If you have a large number of network interfaces, the operation fails unless you use pagination or one of the following filters: <code>group-id</code>, <code>mac-address</code>, <code>private-dns-name</code>, <code>private-ip-address</code>, <code>subnet-id</code>, or <code>vpc-id</code>.</p> <important> <p>We strongly recommend using only paginated requests. Unpaginated requests are susceptible to throttling and timeouts.</p> </important>",
+    "DescribeNetworkInterfaces": "<p>Describes the specified network interfaces or all your network interfaces.</p> <p>If you have a large number of network interfaces, the operation fails unless you use pagination or one of the following filters: <code>attachment.instance-id</code>, <code>group-id</code>, <code>mac-address</code>, <code>private-dns-name</code>, <code>private-ip-address</code>, <code>subnet-id</code>, or <code>vpc-id</code>.</p> <important> <p>We strongly recommend using only paginated requests. Unpaginated requests are susceptible to throttling and timeouts.</p> </important>",
+    "DescribeNetworkingFlexCostAllocationPolicies": "<p>Describes one or more of your flex cost allocation policies. We recommend using pagination to ensure that the operation returns quickly and successfully.</p>",
+    "DescribeNetworkingFlexCostAllocationPolicyAssociations": "<p>Describes the associations between your flex cost allocation policies and network resources. We recommend using pagination to ensure that the operation returns quickly and successfully.</p>",
     "DescribeOutpostLags": "<p>Describes the Outposts link aggregation groups (LAGs).</p> <note> <p>LAGs are only available for second-generation Outposts racks at this time.</p> </note>",
     "DescribePlacementGroups": "<p>Describes the specified placement groups or all of your placement groups.</p> <note> <p>To describe a specific placement group that is <i>shared</i> with your account, you must specify the ID of the placement group using the <code>GroupId</code> parameter. Specifying the name of a <i>shared</i> placement group using the <code>GroupNames</code> parameter will result in an error.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html\">Placement groups</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DescribePrefixLists": "<p>Describes available Amazon Web Services services in a prefix list format, which includes the prefix list name and prefix list ID of the service and the IP address range for the service.</p>",
@@ -518,6 +523,7 @@
     "DisassociateIpamByoasn": "<p>Remove the association between your Autonomous System Number (ASN) and your BYOIP CIDR. You may want to use this action to disassociate an ASN from a CIDR or if you want to swap ASNs. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/tutorials-byoasn.html\">Tutorial: Bring your ASN to IPAM</a> in the <i>Amazon VPC IPAM guide</i>.</p>",
     "DisassociateIpamResourceDiscovery": "<p>Disassociates a resource discovery from an Amazon VPC IPAM. A resource discovery is an IPAM component that enables IPAM to manage and monitor resources that belong to the owning account.</p>",
     "DisassociateNatGatewayAddress": "<p>Disassociates secondary Elastic IP addresses (EIPs) from a public NAT gateway. You cannot disassociate your primary EIP. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html#nat-gateway-edit-secondary\">Edit secondary IP address associations</a> in the <i>Amazon VPC User Guide</i>.</p> <p>While disassociating is in progress, you cannot associate/disassociate additional EIPs while the connections are being drained. You are, however, allowed to delete the NAT gateway.</p> <p>An EIP is released only at the end of MaxDrainDurationSeconds. It stays associated and supports the existing connections but does not support any new connections (new connections are distributed across the remaining associated EIPs). As the existing connections drain out, the EIPs (and the corresponding private IP addresses mapped to them) are released.</p>",
+    "DisassociateNetworkingFlexCostAllocationPolicy": "<p>Disassociates a flex cost allocation policy from one or more network resources.</p>",
     "DisassociateRouteServer": "<p>Disassociates a route server from a VPC.</p> <p>A route server association is the connection established between a route server and a VPC.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/dynamic-routing-route-server.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "DisassociateRouteTable": "<p>Disassociates a subnet or gateway from a route table.</p> <p>After you perform this action, the subnet no longer uses the routes in the route table. Instead, it uses the routes in the VPC's main route table. For more information about route tables, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html\">Route tables</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "DisassociateSecurityGroupVpc": "<p>Disassociates a security group from a VPC. You cannot disassociate the security group if any Elastic network interfaces in the associated VPC are still associated with the security group. Note that the disassociation is asynchronous and you can check the status of the request with <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeSecurityGroupVpcAssociations.html\">DescribeSecurityGroupVpcAssociations</a>.</p>",
@@ -577,7 +583,7 @@
     "GetEbsDefaultKmsKeyId": "<p>Describes the default KMS key for EBS encryption by default for your account in this Region.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html\">Amazon EBS encryption</a> in the <i>Amazon EBS User Guide</i>.</p>",
     "GetEbsEncryptionByDefault": "<p>Describes whether EBS encryption by default is enabled for your account in the current Region.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html\">Amazon EBS encryption</a> in the <i>Amazon EBS User Guide</i>.</p>",
     "GetEnabledIpamPolicy": "<p>Gets the enabled IPAM policy.</p> <p>An IPAM policy is a set of rules that define how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services resources. Each rule maps an Amazon Web Services service to IPAM pools that the service will use to get IP addresses. A single policy can have multiple rules and be applied to multiple Amazon Web Services Regions. If the IPAM pool run out of addresses then the services fallback to Amazon-provided IP addresses. A policy can be applied to an individual Amazon Web Services account or an entity within Amazon Web Services Organizations.</p>",
-    "GetFlowLogsIntegrationTemplate": "<p>Generates a CloudFormation template that streamlines and automates the integration of VPC flow logs with Amazon Athena. This make it easier for you to query and gain insights from VPC flow logs data. Based on the information that you provide, we configure resources in the template to do the following:</p> <ul> <li> <p>Create a table in Athena that maps fields to a custom log format</p> </li> <li> <p>Create a Lambda function that updates the table with new partitions on a daily, weekly, or monthly basis</p> </li> <li> <p>Create a table partitioned between two timestamps in the past</p> </li> <li> <p>Create a set of named queries in Athena that you can use to get started quickly</p> </li> </ul> <note> <p> <code>GetFlowLogsIntegrationTemplate</code> does not support integration between Amazon Web Services Transit Gateway Flow Logs and Amazon Athena.</p> </note>",
+    "GetFlowLogsIntegrationTemplate": "<p>Generates a CloudFormation template that streamlines and automates the integration of VPC flow logs with Amazon Athena. This make it easier for you to query and gain insights from VPC flow logs data. Based on the information that you provide, we configure resources in the template to do the following:</p> <ul> <li> <p>Create a table in Athena that maps fields to a custom log format</p> </li> <li> <p>Create a Lambda function that updates the table with new partitions on a daily, weekly, or monthly basis</p> </li> <li> <p>Create a table partitioned between two timestamps in the past</p> </li> <li> <p>Create a set of named queries in Athena that you can use to get started quickly</p> </li> </ul> <note> <p> <code>GetFlowLogsIntegrationTemplate</code> does not support integration between Amazon Web Services Transit Gateway Flow Logs or Amazon Web Services Cloud WAN Flow Logs and Amazon Athena.</p> </note>",
     "GetGroupsForCapacityReservation": "<p>Lists the resource groups to which a Capacity Reservation has been added.</p>",
     "GetHostReservationPurchasePreview": "<p>Preview a reservation purchase with configurations that match those of your Dedicated Host. You must have active Dedicated Hosts in your account before you purchase a reservation.</p> <p>This is a preview of the <a>PurchaseHostReservation</a> action and does not result in the offering being purchased.</p>",
     "GetImageAncestry": "<p>Retrieves the ancestry chain of the specified AMI, tracing its lineage back to the root AMI. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-ancestry.html\">AMI ancestry</a> in <i>Amazon EC2 User Guide</i>.</p>",
@@ -612,6 +618,7 @@
     "GetManagedResourceVisibility": "<p>Retrieves the managed resource visibility configuration for the account. The response indicates whether managed resources are hidden or visible by default.</p>",
     "GetNetworkInsightsAccessScopeAnalysisFindings": "<p>Gets the findings for the specified Network Access Scope analysis.</p>",
     "GetNetworkInsightsAccessScopeContent": "<p>Gets the content for the specified Network Access Scope.</p>",
+    "GetNetworkingFlexCostAllocationPolicyVersions": "<p>Retrieves the versions of a flex cost allocation policy.</p>",
     "GetPasswordData": "<p>Retrieves the encrypted administrator password for a running Windows instance.</p> <p>The Windows password is generated at boot by the <code>EC2Config</code> service or <code>EC2Launch</code> scripts (Windows Server 2016 and later). This usually only happens the first time an instance is launched. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingConfig_WinAMI.html\">EC2Config</a> and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2launch.html\">EC2Launch</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>For the <code>EC2Config</code> service, the password is not generated for rebundled AMIs unless <code>Ec2SetPassword</code> is enabled before bundling.</p> <p>The password is encrypted using the key pair that you specified when you launched the instance. You must provide the corresponding key pair file.</p> <p>When you launch an instance, password generation and encryption may take a few minutes. If you try to retrieve the password before it's available, the output returns an empty string. We recommend that you wait up to 15 minutes after launching an instance before trying to retrieve the generated password.</p>",
     "GetReservedInstancesExchangeQuote": "<p>Returns a quote and exchange information for exchanging one or more specified Convertible Reserved Instances for a new Convertible Reserved Instance. If the exchange cannot be performed, the reason is returned in the response. Use <a>AcceptReservedInstancesExchangeQuote</a> to perform the exchange.</p>",
     "GetRouteServerAssociations": "<p>Gets information about the associations for the specified route server.</p> <p>A route server association is the connection established between a route server and a VPC.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/dynamic-routing-route-server.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
@@ -692,6 +699,7 @@
     "ModifyManagedResourceVisibility": "<p>Modifies the managed resource visibility configuration for the account. Use this operation to control whether managed resources are hidden or visible by default. Visibility settings are account-wide and affect all IAM principals uniformly. Hidden resources remain fully operational and billable.</p>",
     "ModifyMetricCategory": "<p>Modifies the metrics in the specified metric category. The metrics that you specify replace the existing metrics.</p> <p>Instances that are associated with the metric category are updated asynchronously.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-detailed-monitoring.html#detailed-monitoring-metric-categories\">Use metric categories for additional metrics</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "ModifyNetworkInterfaceAttribute": "<p>Modifies the specified network interface attribute. You can specify only one attribute at a time. You can use this action to attach and detach security groups from an existing EC2 instance.</p>",
+    "ModifyNetworkingFlexCostAllocationPolicy": "<p>Modifies a flex cost allocation policy. Changing a policy document or <code>ShowBackEnabled</code> creates a new version of the policy. Changing only the description doesn't create a new version.</p> <p>A policy can have up to 100 versions. Versions are never removed, so after a policy reaches 100 versions, you can't change its policy document or <code>ShowBackEnabled</code>. Policies that are managed by a declarative policy aren't subject to this limit.</p>",
     "ModifyPrivateDnsNameOptions": "<p>Modifies the options for instance hostnames for the specified instance.</p>",
     "ModifyPublicIpDnsNameOptions": "<p>Modify public hostname options for a network interface. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-naming.html\">EC2 instance hostnames, DNS names, and domains</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "ModifyReservedInstances": "<p>Modifies the configuration of your Reserved Instances, such as the Availability Zone, instance count, or instance type. The Reserved Instances to be modified must be identical, except for Availability Zone, network platform, and instance type.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-modifying.html\">Modify Reserved Instances</a> in the <i>Amazon EC2 User Guide</i>.</p>",
@@ -1894,6 +1902,16 @@
       "refs": {
       }
     },
+    "AssociateNetworkingFlexCostAllocationPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssociateNetworkingFlexCostAllocationPolicyResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "AssociateRouteServerRequest": {
       "base": null,
       "refs": {
@@ -2672,6 +2690,7 @@
         "AssociateIpamByoasnRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateIpamResourceDiscoveryRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateNatGatewayAddressRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "AssociateNetworkingFlexCostAllocationPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateRouteServerRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateRouteTableRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateSecurityGroupVpcRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2816,6 +2835,8 @@
         "CreateNetworkInterfacePermissionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateNetworkInterfaceRequest$EnablePrimaryIpv6": "<p>If you’re creating a network interface in a dual-stack or IPv6-only subnet, you have the option to assign a primary IPv6 IP address. A primary IPv6 address is an IPv6 GUA address associated with an ENI that you have enabled to use a primary IPv6 address. Use this option if the instance that this ENI will be attached to relies on its IPv6 address not changing. Amazon Web Services will automatically assign an IPv6 address associated with the ENI attached to your instance to be the primary IPv6 address. Once you enable an IPv6 GUA address to be a primary IPv6, you cannot disable it. When you enable an IPv6 GUA address to be a primary IPv6, the first IPv6 GUA will be made the primary IPv6 address until the instance is terminated or the network interface is detached. If you have multiple IPv6 addresses associated with an ENI attached to your instance and you enable a primary IPv6 address, the first IPv6 GUA address associated with the ENI becomes the primary IPv6 address.</p>",
         "CreateNetworkInterfaceRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateNetworkingFlexCostAllocationPolicyRequest$ShowBackEnabled": "<p>Specifies whether showback reporting is enabled for the policy.</p> <p>Default: <code>true</code> </p>",
+        "CreateNetworkingFlexCostAllocationPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreatePlacementGroupRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreatePublicIpv4PoolRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateReplaceRootVolumeTaskRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2939,6 +2960,7 @@
         "DeleteNetworkInterfacePermissionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteNetworkInterfacePermissionResult$Return": "<p>Is <code>true</code> if the request succeeds and an error otherwise.</p>",
         "DeleteNetworkInterfaceRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteNetworkingFlexCostAllocationPoliciesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeletePlacementGroupRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeletePublicIpv4PoolRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeletePublicIpv4PoolResult$ReturnValue": "<p>Information about the result of deleting the public IPv4 pool.</p>",
@@ -3124,6 +3146,8 @@
         "DescribeNetworkInterfaceAttributeResult$AssociatePublicIpAddress": "<p>Indicates whether to assign a public IPv4 address to a network interface. This option can be enabled for any network interface but will only apply to the primary network interface (eth0).</p>",
         "DescribeNetworkInterfacesRequest$IncludeManagedResources": "<p>Indicates whether to include managed resources in the output. If this parameter is set to <code>true</code>, the output includes resources that are managed by Amazon Web Services services, even if managed resource visibility is set to hidden.</p>",
         "DescribeNetworkInterfacesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeNetworkingFlexCostAllocationPoliciesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeNetworkingFlexCostAllocationPolicyAssociationsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeOutpostLagsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribePlacementGroupsRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribePrefixListsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3265,6 +3289,7 @@
         "DisassociateIpamByoasnRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateIpamResourceDiscoveryRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateNatGatewayAddressRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DisassociateNetworkingFlexCostAllocationPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateRouteServerRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateRouteTableRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateSecurityGroupVpcRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3335,6 +3360,8 @@
         "FleetData$ReplaceUnhealthyInstances": "<p>Indicates whether EC2 Fleet should replace unhealthy Spot Instances. Supported only for fleets of type <code>maintain</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-ec2-fleet.html#ec2-fleet-health-checks\">EC2 Fleet health checks</a> in the <i>Amazon EC2 User Guide</i>.</p>",
         "FleetEbsBlockDeviceRequest$Encrypted": "<p>Indicates whether the encryption state of an EBS volume is changed while being restored from a backing snapshot. The effect of setting the encryption state to <code>true</code> depends on the volume origin (new or from a snapshot), starting encryption state, ownership, and whether encryption by default is enabled. For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html\">Amazon EBS encryption</a> in the <i>Amazon EBS User Guide</i>.</p> <p>In no case can you remove encryption from an encrypted volume.</p> <p>Encrypted volumes can only be attached to instances that support Amazon EBS encryption. For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption-requirements.html#ebs-encryption_supported_instances\">Supported instance types</a>.</p> <p>This parameter is not returned by <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeImageAttribute\">DescribeImageAttribute</a>.</p> <p>For <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage\">CreateImage</a> and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RegisterImage\">RegisterImage</a>, whether you can include this parameter, and the allowed values differ depending on the type of block device mapping you are creating.</p> <ul> <li> <p>If you are creating a block device mapping for a <b>new (empty) volume</b>, you can include this parameter, and specify either <code>true</code> for an encrypted volume, or <code>false</code> for an unencrypted volume. If you omit this parameter, it defaults to <code>false</code> (unencrypted).</p> </li> <li> <p>If you are creating a block device mapping from an <b>existing encrypted or unencrypted snapshot</b>, you must omit this parameter. If you include this parameter, the request will fail, regardless of the value that you specify.</p> </li> <li> <p>If you are creating a block device mapping from an <b>existing unencrypted volume</b>, you can include this parameter, but you must specify <code>false</code>. If you specify <code>true</code>, the request will fail. In this case, we recommend that you omit the parameter.</p> </li> <li> <p>If you are creating a block device mapping from an <b>existing encrypted volume</b>, you can include this parameter, and specify either <code>true</code> or <code>false</code>. However, if you specify <code>false</code>, the parameter is ignored and the block device mapping is always encrypted. In this case, we recommend that you omit the parameter.</p> </li> </ul>",
         "FleetEbsBlockDeviceRequest$DeleteOnTermination": "<p>Indicates whether the EBS volume is deleted on instance termination. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/preserving-volumes-on-termination.html\">Preserve data when an instance is terminated</a> in the <i>Amazon EC2 User Guide</i>.</p>",
+        "FlexCostAllocationPolicyDescription$ShowBackEnabled": "<p>Indicates whether showback reporting is enabled for the policy.</p>",
+        "FlexCostAllocationPolicyVersion$ShowBackEnabled": "<p>Indicates whether showback reporting is enabled for this version of the policy.</p>",
         "FpgaImage$Public": "<p>Indicates whether the AFI is public.</p>",
         "FpgaImage$DataRetentionSupport": "<p>Indicates whether data retention support is enabled for the AFI.</p>",
         "GetActiveVpnTunnelStatusRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request.</p>",
@@ -3396,6 +3423,7 @@
         "GetManagedResourceVisibilityRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetNetworkInsightsAccessScopeAnalysisFindingsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetNetworkInsightsAccessScopeContentRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "GetNetworkingFlexCostAllocationPolicyVersionsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetPasswordDataRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetReservedInstancesExchangeQuoteRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetReservedInstancesExchangeQuoteResult$IsValidExchange": "<p>If <code>true</code>, the exchange is valid. If <code>false</code>, the exchange cannot be completed.</p>",
@@ -3579,6 +3607,8 @@
         "ModifyNetworkInterfaceAttributeRequest$EnablePrimaryIpv6": "<p>If you’re modifying a network interface in a dual-stack or IPv6-only subnet, you have the option to assign a primary IPv6 IP address. A primary IPv6 address is an IPv6 GUA address associated with an ENI that you have enabled to use a primary IPv6 address. Use this option if the instance that this ENI will be attached to relies on its IPv6 address not changing. Amazon Web Services will automatically assign an IPv6 address associated with the ENI attached to your instance to be the primary IPv6 address. Once you enable an IPv6 GUA address to be a primary IPv6, you cannot disable it. When you enable an IPv6 GUA address to be a primary IPv6, the first IPv6 GUA will be made the primary IPv6 address until the instance is terminated or the network interface is detached. If you have multiple IPv6 addresses associated with an ENI attached to your instance and you enable a primary IPv6 address, the first IPv6 GUA address associated with the ENI becomes the primary IPv6 address.</p>",
         "ModifyNetworkInterfaceAttributeRequest$AssociatePublicIpAddress": "<p>Indicates whether to assign a public IPv4 address to a network interface. This option can be enabled for any network interface but will only apply to the primary network interface (eth0).</p>",
         "ModifyNetworkInterfaceAttributeRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "ModifyNetworkingFlexCostAllocationPolicyRequest$ShowBackEnabled": "<p>Specifies whether showback reporting is enabled for the policy. If you omit this parameter, the current setting is unchanged.</p>",
+        "ModifyNetworkingFlexCostAllocationPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyPrivateDnsNameOptionsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyPrivateDnsNameOptionsRequest$EnableResourceNameDnsARecord": "<p>Indicates whether to respond to DNS queries for instance hostnames with DNS A records.</p>",
         "ModifyPrivateDnsNameOptionsRequest$EnableResourceNameDnsAAAARecord": "<p>Indicates whether to respond to DNS queries for instance hostnames with DNS AAAA records.</p>",
@@ -5586,7 +5616,7 @@
     "CopySnapshotRequestPSU": {
       "base": null,
       "refs": {
-        "CopySnapshotRequest$PresignedUrl": "<p>When you copy an encrypted source snapshot using the Amazon EC2 Query API, you must supply a pre-signed URL. This parameter is optional for unencrypted snapshots. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html\">Query requests</a>.</p> <p>The <code>PresignedUrl</code> should use the snapshot source endpoint, the <code>CopySnapshot</code> action, and include the <code>SourceRegion</code>, <code>SourceSnapshotId</code>, and <code>DestinationRegion</code> parameters. The <code>PresignedUrl</code> must be signed using Amazon Web Services Signature Version 4. Because EBS snapshots are stored in Amazon S3, the signing algorithm for this parameter uses the same logic that is described in <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html\"> Authenticating Requests: Using Query Parameters (Amazon Web Services Signature Version 4)</a> in the <i>Amazon S3 API Reference</i>. An invalid or improperly signed <code>PresignedUrl</code> will cause the copy operation to fail asynchronously, and the snapshot will move to an <code>error</code> state.</p>"
+        "CopySnapshotRequest$PresignedUrl": "<p>Deprecated.</p>"
       }
     },
     "CopySnapshotResult": {
@@ -6260,6 +6290,16 @@
       }
     },
     "CreateNetworkInterfaceResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateNetworkingFlexCostAllocationPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateNetworkingFlexCostAllocationPolicyResult": {
       "base": null,
       "refs": {
       }
@@ -7047,6 +7087,8 @@
         "CreateCapacityReservationRequest$EndDate": "<p>The date and time at which the Capacity Reservation expires. When a Capacity Reservation expires, the reserved capacity is released and you can no longer launch instances into it. The Capacity Reservation's state changes to <code>expired</code> when it reaches its end date and time.</p> <p>You must provide an <code>EndDate</code> value if <code>EndDateType</code> is <code>limited</code>. Omit <code>EndDate</code> if <code>EndDateType</code> is <code>unlimited</code>.</p> <p>If the <code>EndDateType</code> is <code>limited</code>, the Capacity Reservation is cancelled within an hour from the specified time. For example, if you specify 5/31/2019, 13:30:55, the Capacity Reservation is guaranteed to end between 13:30:55 and 14:30:55 on 5/31/2019.</p> <p>If you are requesting a future-dated Capacity Reservation, you can't specify an end date and time that is within the commitment duration.</p>",
         "CreateFleetRequest$ValidFrom": "<p>The start date and time of the request, in UTC format (for example, <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z). The default is to start fulfilling the request immediately.</p>",
         "CreateFleetRequest$ValidUntil": "<p>The end date and time of the request, in UTC format (for example, <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z). At this point, no new EC2 Fleet requests are placed or able to fulfill the request. If no value is specified, the request remains until you cancel it.</p>",
+        "CreateNetworkingFlexCostAllocationPolicyResult$CreatedAt": "<p>The date and time when the policy was created.</p>",
+        "CreateNetworkingFlexCostAllocationPolicyResult$ExpectedEffectiveAt": "<p>The date and time when the policy is expected to apply to network traffic.</p>",
         "DescribeFleetHistoryRequest$StartTime": "<p>The start date and time for the events, in UTC format (for example, <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z).</p>",
         "DescribeFleetHistoryResult$LastEvaluatedTime": "<p>The last date and time for the events, in UTC format (for example, <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z). All records up to this time were retrieved.</p> <p>If <code>nextToken</code> indicates that there are more items, this value is not present.</p>",
         "DescribeFleetHistoryResult$StartTime": "<p>The start date and time for the events, in UTC format (for example, <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z).</p>",
@@ -7060,6 +7102,13 @@
         "FleetData$CreateTime": "<p>The creation date and time of the EC2 Fleet.</p>",
         "FleetData$ValidFrom": "<p>The start date and time of the request, in UTC format (for example, <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z). The default is to start fulfilling the request immediately. </p>",
         "FleetData$ValidUntil": "<p>The end date and time of the request, in UTC format (for example, <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z). At this point, no new instance requests are placed or able to fulfill the request. The default end date is 7 days from the current date. </p>",
+        "FlexCostAllocationPolicyAssociationDescription$AssociatedAt": "<p>The date and time when the association was created.</p>",
+        "FlexCostAllocationPolicyAssociationDescription$ExpectedEffectiveAt": "<p>The date and time when the association is expected to apply to network traffic.</p>",
+        "FlexCostAllocationPolicyDescription$VersionExpectedEffectiveAt": "<p>The date and time when the latest version of the policy is expected to apply to network traffic. The policy configuration in this response is from the latest version.</p>",
+        "FlexCostAllocationPolicyDescription$PolicyCreatedAt": "<p>The date and time when the policy was created.</p>",
+        "FlexCostAllocationPolicyDescription$UpdatedAt": "<p>The date and time when the policy was last updated.</p>",
+        "FlexCostAllocationPolicyVersion$ExpectedEffectiveAt": "<p>The date and time when this version of the policy is expected to apply to network traffic.</p>",
+        "FlexCostAllocationPolicyVersion$CreatedAt": "<p>The date and time when this version of the policy was created.</p>",
         "FpgaImage$CreateTime": "<p>The date and time the AFI was created.</p>",
         "FpgaImage$UpdateTime": "<p>The time of the most recent update to the AFI.</p>",
         "GetConsoleOutputResult$Timestamp": "<p>The time at which the output was last updated.</p>",
@@ -7085,6 +7134,8 @@
         "LaunchTemplateVersion$CreateTime": "<p>The time the version was created.</p>",
         "ModifyCapacityReservationRequest$EndDate": "<p>The date and time at which the Capacity Reservation expires. When a Capacity Reservation expires, the reserved capacity is released and you can no longer launch instances into it. The Capacity Reservation's state changes to <code>expired</code> when it reaches its end date and time.</p> <p>The Capacity Reservation is cancelled within an hour from the specified time. For example, if you specify 5/31/2019, 13:30:55, the Capacity Reservation is guaranteed to end between 13:30:55 and 14:30:55 on 5/31/2019.</p> <p>You must provide an <code>EndDate</code> value if <code>EndDateType</code> is <code>limited</code>. Omit <code>EndDate</code> if <code>EndDateType</code> is <code>unlimited</code>.</p>",
         "ModifyInstanceEventStartTimeRequest$NotBefore": "<p>The new date and time when the event will take place.</p>",
+        "ModifyNetworkingFlexCostAllocationPolicyResult$UpdatedAt": "<p>The date and time when the policy was updated.</p>",
+        "ModifyNetworkingFlexCostAllocationPolicyResult$VersionExpectedEffectiveAt": "<p>The date and time when the new version of the policy is expected to apply to network traffic.</p>",
         "NatGateway$CreateTime": "<p>The date and time the NAT gateway was created.</p>",
         "NatGateway$DeleteTime": "<p>The date and time the NAT gateway was deleted, if applicable.</p>",
         "NetworkInterfaceAttachment$AttachTime": "<p>The timestamp indicating when the attachment initiated.</p>",
@@ -7780,6 +7831,16 @@
     },
     "DeleteNetworkInterfaceRequest": {
       "base": "<p>Contains the parameters for DeleteNetworkInterface.</p>",
+      "refs": {
+      }
+    },
+    "DeleteNetworkingFlexCostAllocationPoliciesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteNetworkingFlexCostAllocationPoliciesResult": {
+      "base": null,
       "refs": {
       }
     },
@@ -9049,6 +9110,13 @@
       "refs": {
       }
     },
+    "DescribeFlexCostAllocationPoliciesMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeNetworkingFlexCostAllocationPoliciesRequest$MaxResults": "<p>The maximum number of results to return in a single call. The range is 5 to 1000. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p> <p>Default: 100</p>",
+        "DescribeNetworkingFlexCostAllocationPolicyAssociationsRequest$MaxResults": "<p>The maximum number of results to return in a single call. The range is 5 to 1000. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p> <p>Default: 100</p>"
+      }
+    },
     "DescribeFlowLogsRequest": {
       "base": null,
       "refs": {
@@ -9875,6 +9943,26 @@
       }
     },
     "DescribeNetworkInterfacesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeNetworkingFlexCostAllocationPoliciesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeNetworkingFlexCostAllocationPoliciesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeNetworkingFlexCostAllocationPolicyAssociationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeNetworkingFlexCostAllocationPolicyAssociationsResult": {
       "base": null,
       "refs": {
       }
@@ -11388,6 +11476,16 @@
       "refs": {
       }
     },
+    "DisassociateNetworkingFlexCostAllocationPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisassociateNetworkingFlexCostAllocationPolicyResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DisassociateRouteServerRequest": {
       "base": null,
       "refs": {
@@ -12786,6 +12884,8 @@
         "DescribeNetworkInsightsPathsRequest$Filters": "<p>The filters. The following are the possible values:</p> <ul> <li> <p>destination - The ID of the resource.</p> </li> <li> <p>filter-at-source.source-address - The source IPv4 address at the source.</p> </li> <li> <p>filter-at-source.source-port-range - The source port range at the source.</p> </li> <li> <p>filter-at-source.destination-address - The destination IPv4 address at the source.</p> </li> <li> <p>filter-at-source.destination-port-range - The destination port range at the source.</p> </li> <li> <p>filter-at-destination.source-address - The source IPv4 address at the destination.</p> </li> <li> <p>filter-at-destination.source-port-range - The source port range at the destination.</p> </li> <li> <p>filter-at-destination.destination-address - The destination IPv4 address at the destination.</p> </li> <li> <p>filter-at-destination.destination-port-range - The destination port range at the destination.</p> </li> <li> <p>protocol - The protocol.</p> </li> <li> <p>source - The ID of the resource.</p> </li> </ul>",
         "DescribeNetworkInterfacePermissionsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>network-interface-permission.network-interface-permission-id</code> - The ID of the permission.</p> </li> <li> <p> <code>network-interface-permission.network-interface-id</code> - The ID of the network interface.</p> </li> <li> <p> <code>network-interface-permission.aws-account-id</code> - The Amazon Web Services account ID.</p> </li> <li> <p> <code>network-interface-permission.aws-service</code> - The Amazon Web Services service.</p> </li> <li> <p> <code>network-interface-permission.permission</code> - The type of permission (<code>INSTANCE-ATTACH</code> | <code>EIP-ASSOCIATE</code>).</p> </li> </ul>",
         "DescribeNetworkInterfacesRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>association.allocation-id</code> - The allocation ID returned when you allocated the Elastic IP address (IPv4) for your network interface.</p> </li> <li> <p> <code>association.association-id</code> - The association ID returned when the network interface was associated with an IPv4 address.</p> </li> <li> <p> <code>addresses.association.owner-id</code> - The owner ID of the addresses associated with the network interface.</p> </li> <li> <p> <code>addresses.association.public-ip</code> - The association ID returned when the network interface was associated with the Elastic IP address (IPv4).</p> </li> <li> <p> <code>addresses.primary</code> - Whether the private IPv4 address is the primary IP address associated with the network interface. </p> </li> <li> <p> <code>addresses.private-ip-address</code> - The private IPv4 addresses associated with the network interface.</p> </li> <li> <p> <code>association.ip-owner-id</code> - The owner of the Elastic IP address (IPv4) associated with the network interface.</p> </li> <li> <p> <code>association.public-ip</code> - The address of the Elastic IP address (IPv4) bound to the network interface.</p> </li> <li> <p> <code>association.public-dns-name</code> - The public DNS name for the network interface (IPv4).</p> </li> <li> <p> <code>attachment.attach-time</code> - The time that the network interface was attached to an instance.</p> </li> <li> <p> <code>attachment.attachment-id</code> - The ID of the interface attachment.</p> </li> <li> <p> <code>attachment.delete-on-termination</code> - Indicates whether the attachment is deleted when an instance is terminated.</p> </li> <li> <p> <code>attachment.device-index</code> - The device index to which the network interface is attached.</p> </li> <li> <p> <code>attachment.instance-id</code> - The ID of the instance to which the network interface is attached.</p> </li> <li> <p> <code>attachment.instance-owner-id</code> - The owner ID of the instance to which the network interface is attached.</p> </li> <li> <p> <code>attachment.status</code> - The status of the attachment (<code>attaching</code> | <code>attached</code> | <code>detaching</code> | <code>detached</code>).</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone of the network interface.</p> </li> <li> <p> <code>availability-zone-id</code> - The ID of the Availability Zone of the network interface.</p> </li> <li> <p> <code>description</code> - The description of the network interface.</p> </li> <li> <p> <code>group-id</code> - The ID of a security group associated with the network interface.</p> </li> <li> <p> <code>ipv6-addresses.ipv6-address</code> - An IPv6 address associated with the network interface.</p> </li> <li> <p> <code>interface-type</code> - The type of network interface (<code>api_gateway_managed</code> | <code>aws_codestar_connections_managed</code> | <code>branch</code> | <code>ec2_instance_connect_endpoint</code> | <code>efa</code> | <code>efa-only</code> | <code>efs</code> | <code>evs</code> | <code>gateway_load_balancer</code> | <code>gateway_load_balancer_endpoint</code> | <code>global_accelerator_managed</code> | <code>interface</code> | <code>iot_rules_managed</code> | <code>lambda</code> | <code>load_balancer</code> | <code>nat_gateway</code> | <code>network_load_balancer</code> | <code>quicksight</code> | <code>transit_gateway</code> | <code>trunk</code> | <code>vpc_endpoint</code>).</p> </li> <li> <p> <code>mac-address</code> - The MAC address of the network interface.</p> </li> <li> <p> <code>network-interface-id</code> - The ID of the network interface.</p> </li> <li> <p> <code>operator.managed</code> - A Boolean that indicates whether this is a managed network interface.</p> </li> <li> <p> <code>operator.principal</code> - The principal that manages the network interface. Only valid for managed network interfaces, where <code>managed</code> is <code>true</code>.</p> </li> <li> <p> <code>owner-id</code> - The Amazon Web Services account ID of the network interface owner.</p> </li> <li> <p> <code>private-dns-name</code> - The private DNS name of the network interface (IPv4).</p> </li> <li> <p> <code>private-ip-address</code> - The private IPv4 address or addresses of the network interface.</p> </li> <li> <p> <code>requester-id</code> - The alias or Amazon Web Services account ID of the principal or service that created the network interface.</p> </li> <li> <p> <code>requester-managed</code> - Indicates whether the network interface is being managed by an Amazon Web Services service (for example, Amazon Web Services Management Console, Auto Scaling, and so on).</p> </li> <li> <p> <code>source-dest-check</code> - Indicates whether the network interface performs source/destination checking. A value of <code>true</code> means checking is enabled, and <code>false</code> means checking is disabled. The value must be <code>false</code> for the network interface to perform network address translation (NAT) in your VPC. </p> </li> <li> <p> <code>status</code> - The status of the network interface. If the network interface is not attached to an instance, the status is <code>available</code>; if a network interface is attached to an instance the status is <code>in-use</code>.</p> </li> <li> <p> <code>subnet-id</code> - The ID of the subnet for the network interface.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC for the network interface.</p> </li> </ul>",
+        "DescribeNetworkingFlexCostAllocationPoliciesRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>fca-policy-id</code> - The ID of the policy.</p> </li> <li> <p> <code>managed-by</code> - The entity that manages the policy (<code>account</code> | <code>declarative-policy</code>).</p> </li> <li> <p> <code>network-resource-type</code> - The type of network resource that the policy applies to (<code>natgw</code> | <code>ec2</code> | <code>pcx</code>).</p> </li> <li> <p> <code>showback-enabled</code> - Indicates whether showback reporting is enabled for the policy (<code>true</code> | <code>false</code>).</p> </li> </ul>",
+        "DescribeNetworkingFlexCostAllocationPolicyAssociationsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>fca-policy-id</code> - The ID of the policy.</p> </li> <li> <p> <code>managed-by</code> - The entity that manages the association (<code>account</code> | <code>declarative-policy</code>).</p> </li> <li> <p> <code>resource-id</code> - The ID of the associated network resource.</p> </li> </ul>",
         "DescribeOutpostLagsRequest$Filters": "<p>The filters to use for narrowing down the request. The following filters are supported:</p> <ul> <li> <p> <code>service-link-virtual-interface-id</code> - The ID of the service link virtual interface.</p> </li> <li> <p> <code>service-link-virtual-interface-arn</code> - The ARN of the service link virtual interface.</p> </li> <li> <p> <code>outpost-id</code> - The Outpost ID.</p> </li> <li> <p> <code>outpost-arn</code> - The Outpost ARN.</p> </li> <li> <p> <code>owner-id</code> - The ID of the Amazon Web Services account that owns the service link virtual interface.</p> </li> <li> <p> <code>vlan</code> - The ID of the address pool.</p> </li> <li> <p> <code>local-address</code> - The local address.</p> </li> <li> <p> <code>peer-address</code> - The peer address.</p> </li> <li> <p> <code>peer-bgp-asn</code> - The peer BGP ASN.</p> </li> <li> <p> <code>outpost-lag-id</code> - The Outpost LAG ID.</p> </li> <li> <p> <code>configuration-state</code> - The configuration state of the service link virtual interface.</p> </li> </ul>",
         "DescribePlacementGroupsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>group-name</code> - The name of the placement group.</p> </li> <li> <p> <code>group-arn</code> - The Amazon Resource Name (ARN) of the placement group.</p> </li> <li> <p> <code>spread-level</code> - The spread level for the placement group (<code>host</code> | <code>rack</code>). </p> </li> <li> <p> <code>state</code> - The state of the placement group (<code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>).</p> </li> <li> <p> <code>strategy</code> - The strategy of the placement group (<code>cluster</code> | <code>spread</code> | <code>partition</code> | <code>precision-time</code>).</p> </li> <li> <p> <code>tag:&lt;key&gt;</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources that have a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
         "DescribePrefixListsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>prefix-list-id</code>: The ID of a prefix list.</p> </li> <li> <p> <code>prefix-list-name</code>: The name of a prefix list.</p> </li> </ul>",
@@ -12837,7 +12937,7 @@
         "DescribeVerifiedAccessInstanceLoggingConfigurationsRequest$Filters": "<p>One or more filters. Filter names and values are case-sensitive.</p>",
         "DescribeVerifiedAccessInstancesRequest$Filters": "<p>One or more filters. Filter names and values are case-sensitive.</p>",
         "DescribeVerifiedAccessTrustProvidersRequest$Filters": "<p>One or more filters. Filter names and values are case-sensitive.</p>",
-        "DescribeVolumeStatusRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>action.code</code> - The action code for the event (for example, <code>enable-volume-io</code>).</p> </li> <li> <p> <code>action.description</code> - A description of the action.</p> </li> <li> <p> <code>action.event-id</code> - The event ID associated with the action.</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone of the instance.</p> </li> <li> <p> <code>event.description</code> - A description of the event.</p> </li> <li> <p> <code>event.event-id</code> - The event ID.</p> </li> <li> <p> <code>event.event-type</code> - The event type (for <code>io-enabled</code>: <code>passed</code> | <code>failed</code>; for <code>io-performance</code>: <code>io-performance:degraded</code> | <code>io-performance:severely-degraded</code> | <code>io-performance:stalled</code>).</p> </li> <li> <p> <code>event.not-after</code> - The latest end time for the event.</p> </li> <li> <p> <code>event.not-before</code> - The earliest start time for the event.</p> </li> <li> <p> <code>volume-status.details-name</code> - The cause for <code>volume-status.status</code> (<code>io-enabled</code> | <code>io-performance</code>).</p> </li> <li> <p> <code>volume-status.details-status</code> - The status of <code>volume-status.details-name</code> (for <code>io-enabled</code>: <code>passed</code> | <code>failed</code>; for <code>io-performance</code>: <code>normal</code> | <code>degraded</code> | <code>severely-degraded</code> | <code>stalled</code>).</p> </li> <li> <p> <code>volume-status.status</code> - The status of the volume (<code>ok</code> | <code>impaired</code> | <code>warning</code> | <code>insufficient-data</code>).</p> </li> </ul>",
+        "DescribeVolumeStatusRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>action.code</code> - The action code for the event (for example, <code>enable-volume-io</code>).</p> </li> <li> <p> <code>action.description</code> - A description of the action.</p> </li> <li> <p> <code>action.event-id</code> - The event ID associated with the action.</p> </li> <li> <p> <code>attachment-status.instance-id</code> - The ID of the instance that the volume is attached to.</p> </li> <li> <p> <code>attachment-status.io-performance</code> - The I/O performance status of the volume's attachment to the instance.</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone of the instance.</p> </li> <li> <p> <code>event.description</code> - A description of the event.</p> </li> <li> <p> <code>event.event-id</code> - The event ID.</p> </li> <li> <p> <code>event.event-type</code> - The event type (for <code>io-enabled</code>: <code>passed</code> | <code>failed</code>; for <code>io-performance</code>: <code>io-performance:degraded</code> | <code>io-performance:severely-degraded</code> | <code>io-performance:stalled</code>).</p> </li> <li> <p> <code>event.not-after</code> - The latest end time for the event.</p> </li> <li> <p> <code>event.not-before</code> - The earliest start time for the event.</p> </li> <li> <p> <code>volume-status.details-name</code> - The cause for <code>volume-status.status</code> (<code>io-enabled</code> | <code>io-performance</code>).</p> </li> <li> <p> <code>volume-status.details-status</code> - The status of <code>volume-status.details-name</code> (for <code>io-enabled</code>: <code>passed</code> | <code>failed</code>; for <code>io-performance</code>: <code>normal</code> | <code>degraded</code> | <code>severely-degraded</code> | <code>stalled</code>).</p> </li> <li> <p> <code>volume-status.status</code> - The status of the volume (<code>ok</code> | <code>impaired</code> | <code>warning</code> | <code>insufficient-data</code>).</p> </li> </ul>",
         "DescribeVolumesModificationsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>modification-state</code> - The current modification state (modifying | optimizing | completed | failed).</p> </li> <li> <p> <code>original-iops</code> - The original IOPS rate of the volume.</p> </li> <li> <p> <code>original-size</code> - The original size of the volume, in GiB.</p> </li> <li> <p> <code>original-volume-type</code> - The original volume type of the volume (standard | io1 | io2 | gp2 | sc1 | st1).</p> </li> <li> <p> <code>originalMultiAttachEnabled</code> - Indicates whether Multi-Attach support was enabled (true | false).</p> </li> <li> <p> <code>start-time</code> - The modification start time.</p> </li> <li> <p> <code>target-iops</code> - The target IOPS rate of the volume.</p> </li> <li> <p> <code>target-size</code> - The target size of the volume, in GiB.</p> </li> <li> <p> <code>target-volume-type</code> - The target volume type of the volume (standard | io1 | io2 | gp2 | sc1 | st1).</p> </li> <li> <p> <code>targetMultiAttachEnabled</code> - Indicates whether Multi-Attach support is to be enabled (true | false).</p> </li> <li> <p> <code>volume-id</code> - The ID of the volume.</p> </li> </ul>",
         "DescribeVolumesRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>attachment.attach-time</code> - The time stamp when the attachment initiated.</p> </li> <li> <p> <code>attachment.delete-on-termination</code> - Whether the volume is deleted on instance termination.</p> </li> <li> <p> <code>attachment.device</code> - The device name specified in the block device mapping (for example, <code>/dev/sda1</code>).</p> </li> <li> <p> <code>attachment.instance-id</code> - The ID of the instance the volume is attached to.</p> </li> <li> <p> <code>attachment.status</code> - The attachment state (<code>attaching</code> | <code>attached</code> | <code>detaching</code>).</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone in which the volume was created.</p> </li> <li> <p> <code>availability-zone-id</code> - The ID of the Availability Zone in which the volume was created.</p> </li> <li> <p> <code>create-time</code> - The time stamp when the volume was created.</p> </li> <li> <p> <code>encrypted</code> - Indicates whether the volume is encrypted (<code>true</code> | <code>false</code>)</p> </li> <li> <p> <code>fast-restored</code> - Indicates whether the volume was created from a snapshot that is enabled for fast snapshot restore (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>multi-attach-enabled</code> - Indicates whether the volume is enabled for Multi-Attach (<code>true</code> | <code>false</code>)</p> </li> <li> <p> <code>operator.managed</code> - A Boolean that indicates whether this is a managed volume.</p> </li> <li> <p> <code>operator.principal</code> - The principal that manages the volume. Only valid for managed volumes, where <code>managed</code> is <code>true</code>.</p> </li> <li> <p> <code>size</code> - The size of the volume, in GiB.</p> </li> <li> <p> <code>snapshot-id</code> - The snapshot from which the volume was created.</p> </li> <li> <p> <code>status</code> - The state of the volume (<code>creating</code> | <code>available</code> | <code>in-use</code> | <code>deleting</code> | <code>deleted</code> | <code>error</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>volume-id</code> - The volume ID.</p> </li> <li> <p> <code>volume-type</code> - The Amazon EBS volume type (<code>gp2</code> | <code>gp3</code> | <code>io1</code> | <code>io2</code> | <code>st1</code> | <code>sc1</code>| <code>standard</code>)</p> </li> </ul>",
         "DescribeVpcBlockPublicAccessExclusionsRequest$Filters": "<p>Filters for the request:</p> <ul> <li> <p> <code>resource-arn</code> - The Amazon Resource Name (ARN) of a exclusion.</p> </li> <li> <p> <code>internet-gateway-exclusion-mode</code> - The mode of a VPC BPA exclusion. Possible values: <code>allow-bidirectional | allow-egress</code>.</p> </li> <li> <p> <code>state</code> - The state of VPC BPA. Possible values: <code>create-in-progress | create-complete | update-in-progress | update-complete | delete-in-progress | deleted-complete | disable-in-progress | disable-complete</code> </p> </li> <li> <p> <code>tag</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>tag-value</code>: The value of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific value, regardless of the tag key.</p> </li> </ul>",
@@ -13176,6 +13276,238 @@
         "CreateFleetRequest$Type": "<p>The fleet type. The default value is <code>maintain</code>.</p> <ul> <li> <p> <code>maintain</code> - The EC2 Fleet places an asynchronous request for your desired capacity, and continues to maintain your desired Spot capacity by replenishing interrupted Spot Instances.</p> </li> <li> <p> <code>request</code> - The EC2 Fleet places an asynchronous one-time request for your desired capacity, but does submit Spot requests in alternative capacity pools if Spot capacity is unavailable, and does not maintain Spot capacity if Spot Instances are interrupted.</p> </li> <li> <p> <code>instant</code> - The EC2 Fleet places a synchronous one-time request for your desired capacity, and returns errors for any instances that could not be launched.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet-request-type.html\">EC2 Fleet request types</a> in the <i>Amazon EC2 User Guide</i>.</p>",
         "FleetData$Type": "<p>The type of request. Indicates whether the EC2 Fleet only <code>requests</code> the target capacity, or also attempts to <code>maintain</code> it. If you request a certain target capacity, EC2 Fleet only places the required requests; it does not attempt to replenish instances if capacity is diminished, and it does not submit requests in alternative capacity pools if capacity is unavailable. To maintain a certain target capacity, EC2 Fleet places the required requests to meet this target capacity. It also automatically replenishes any interrupted Spot Instances. Default: <code>maintain</code>.</p>",
         "SpotFleetRequestConfigData$Type": "<p>The type of request. Indicates whether the Spot Fleet only requests the target capacity or also attempts to maintain it. When this value is <code>request</code>, the Spot Fleet only places the required requests. It does not attempt to replenish Spot Instances if capacity is diminished, nor does it submit requests in alternative Spot pools if capacity is not available. When this value is <code>maintain</code>, the Spot Fleet maintains the target capacity. The Spot Fleet places the required requests to meet capacity and automatically replenishes any interrupted instances. Default: <code>maintain</code>. <code>instant</code> is listed but is not used by Spot Fleet.</p>"
+      }
+    },
+    "FlexCostAllocationAssociationMode": {
+      "base": "<p>The mode of a policy association. Valid values:</p> <ul> <li> <p> <code>direct</code> - The policy is associated with specific resources by resource ID.</p> </li> <li> <p> <code>scope</code> - The policy is associated with a scope of resources.</p> </li> </ul>",
+      "refs": {
+        "FlexCostAllocationPolicyAssociationDescription$AssociationMode": "<p>The mode of the association. Valid values:</p> <ul> <li> <p> <code>direct</code> - The policy is associated with specific resources by resource ID.</p> </li> <li> <p> <code>scope</code> - The policy is associated with a scope of resources in an account, Amazon VPC, or subnet.</p> </li> </ul>"
+      }
+    },
+    "FlexCostAllocationCidrLabel": {
+      "base": null,
+      "refs": {
+        "FlexCostAllocationCidrMapping$CidrLabel": "<p>The label to assign to the CIDR range. The label can be up to 64 characters long. It can contain letters, numbers, hyphens (<code>-</code>), and underscores (<code>_</code>), and must start with a letter or a number. This parameter is required.</p>"
+      }
+    },
+    "FlexCostAllocationCidrMapping": {
+      "base": "<p>Maps a CIDR range to a label for cost allocation reporting.</p>",
+      "refs": {
+        "FlexCostAllocationCidrMappingList$member": null
+      }
+    },
+    "FlexCostAllocationCidrMappingCidrRangeString": {
+      "base": null,
+      "refs": {
+        "FlexCostAllocationCidrMapping$CidrRange": "<p>The CIDR range. This parameter is required.</p>"
+      }
+    },
+    "FlexCostAllocationCidrMappingList": {
+      "base": null,
+      "refs": {
+        "FlexCostAllocationCidrRangeSpecifications$Prefixes": "<p>The CIDR range to label mappings. You can specify from 1 to 100 mappings. This parameter is required.</p>"
+      }
+    },
+    "FlexCostAllocationCidrRangeSpecifications": {
+      "base": "<p>Specifies the CIDR ranges and labels to use for cost allocation when the reporting granularity is <code>cidr</code>.</p>",
+      "refs": {
+        "InstanceFlexCostAllocationPolicyDocument$CidrRangeSpecifications": "<p>The CIDR range mappings to use for cost allocation. Specify this value when <code>ReportingGranularity</code> is <code>cidr</code>, and omit it otherwise.</p>",
+        "NatFlexCostAllocationPolicyDocument$CidrRangeSpecifications": "<p>The CIDR range mappings to use for cost allocation. Specify this value when <code>ReportingGranularity</code> is <code>cidr</code>, and omit it otherwise.</p>",
+        "PcxFlexCostAllocationPolicyDocument$CidrRangeSpecifications": "<p>The CIDR range mappings to use for cost allocation. Specify this value when <code>ReportingGranularity</code> is <code>cidr</code>, and omit it otherwise.</p>"
+      }
+    },
+    "FlexCostAllocationCidrRangeSpecificationsPrefixesTypeString": {
+      "base": null,
+      "refs": {
+        "FlexCostAllocationCidrRangeSpecifications$PrefixesType": "<p>The type of prefixes to use. This parameter is required. Valid values are <code>source-prefixes</code> and <code>destination-prefixes</code>.</p>"
+      }
+    },
+    "FlexCostAllocationCostDimension": {
+      "base": "<p>A cost dimension used for allocation. Valid values are <code>data-transfer</code> and <code>data-processing</code>. <code>data-processing</code> is valid only in a <code>NatFcaPolicyDocument</code>.</p>",
+      "refs": {
+        "FlexCostAllocationCostDimensionList$member": null
+      }
+    },
+    "FlexCostAllocationCostDimensionList": {
+      "base": null,
+      "refs": {
+        "InstanceFlexCostAllocationPolicyDocument$Dimensions": "<p>The cost dimensions to report. This parameter is required. The only valid value is <code>data-transfer</code>.</p>",
+        "NatFlexCostAllocationPolicyDocument$Dimensions": "<p>The cost dimensions to report. This parameter is required. Valid values are <code>data-transfer</code> and <code>data-processing</code>.</p>",
+        "PcxFlexCostAllocationPolicyDocument$Dimensions": "<p>The cost dimensions to report. This parameter is required. The only valid value is <code>data-transfer</code>.</p>"
+      }
+    },
+    "FlexCostAllocationNetworkResourceId": {
+      "base": null,
+      "refs": {
+        "FlexCostAllocationNetworkResourceIdList$member": null
+      }
+    },
+    "FlexCostAllocationNetworkResourceIdList": {
+      "base": null,
+      "refs": {
+        "AssociateNetworkingFlexCostAllocationPolicyRequest$NetworkResourceIds": "<p>The IDs of the network resources to associate with the policy. You can specify from 1 to 20 resource IDs.</p> <p>You must specify <code>NetworkResourceIds</code>, <code>NetworkResourceScope</code>, or both. A request can include at most 20 distinct resources in total.</p>"
+      }
+    },
+    "FlexCostAllocationNetworkResourceScope": {
+      "base": "<p>Specifies a scope of network resources for a scope-based policy association.</p>",
+      "refs": {
+        "AssociateNetworkingFlexCostAllocationPolicyRequest$NetworkResourceScope": "<p>The scope of network resources to associate with the policy. Use a scope to associate the policy with the resources in an account, Amazon VPC, or subnet.</p> <p>You must specify <code>NetworkResourceScope</code>, <code>NetworkResourceIds</code>, or both.</p>"
+      }
+    },
+    "FlexCostAllocationNetworkResourceScopeIdList": {
+      "base": null,
+      "refs": {
+        "FlexCostAllocationNetworkResourceScope$ResourceIds": "<p>The IDs of the resources owned by you that define the scope. You can specify from 1 to 20 IDs. This parameter is required.</p>"
+      }
+    },
+    "FlexCostAllocationNetworkResourceScopeType": {
+      "base": "<p>The type of scope used for a scope-based policy association. Valid values are <code>account</code>, <code>vpc</code>, and <code>subnet</code>.</p>",
+      "refs": {
+        "FlexCostAllocationNetworkResourceScope$ResourceType": "<p>The type of scope. This parameter is required. Valid values are <code>account</code>, <code>vpc</code>, and <code>subnet</code>.</p>"
+      }
+    },
+    "FlexCostAllocationNetworkResourceType": {
+      "base": "<p>The type of network resource that a flex cost allocation policy applies to. Valid values are <code>natgw</code> (NAT gateway), <code>pcx</code> (Amazon VPC peering connection), and <code>ec2</code> (EC2 instance).</p>",
+      "refs": {
+        "CreateNetworkingFlexCostAllocationPolicyRequest$NetworkResourceType": "<p>The type of network resource that the policy applies to. This parameter is required. Valid values are <code>natgw</code> (NAT gateway), <code>pcx</code> (Amazon VPC peering connection), and <code>ec2</code> (EC2 instance).</p> <p>Specify the policy document that matches the resource type: <code>NatFcaPolicyDocument</code> for <code>natgw</code>, <code>InstanceFcaPolicyDocument</code> for <code>ec2</code>, or <code>PcxFcaPolicyDocument</code> for <code>pcx</code>. Don't specify a policy document for a different resource type.</p>",
+        "FlexCostAllocationPolicyDescription$NetworkResourceType": "<p>The type of network resource that the policy applies to.</p>",
+        "FlexCostAllocationPolicyVersion$NetworkResourceType": "<p>The type of network resource that the policy applies to.</p>"
+      }
+    },
+    "FlexCostAllocationOperationFailure": {
+      "base": "<p>Describes a policy, association, or network resource that a Networking Flexible Cost Allocation operation failed to process.</p>",
+      "refs": {
+        "FlexCostAllocationOperationFailureList$member": null
+      }
+    },
+    "FlexCostAllocationOperationFailureList": {
+      "base": null,
+      "refs": {
+        "AssociateNetworkingFlexCostAllocationPolicyResult$FcaPolicyAssociationFailures": "<p>Information about the network resources that could not be associated with the policy.</p>",
+        "DeleteNetworkingFlexCostAllocationPoliciesResult$Failed": "<p>Information about the policies that could not be deleted.</p>",
+        "DisassociateNetworkingFlexCostAllocationPolicyResult$FcaPolicyDisassociationFailures": "<p>Information about the policy associations that could not be removed.</p>"
+      }
+    },
+    "FlexCostAllocationPolicyArn": {
+      "base": null,
+      "refs": {
+        "CreateNetworkingFlexCostAllocationPolicyResult$FcaPolicyArn": "<p>The Amazon Resource Name (ARN) of the flex cost allocation policy.</p>",
+        "FlexCostAllocationPolicyDescription$FcaPolicyArn": "<p>The Amazon Resource Name (ARN) of the policy.</p>"
+      }
+    },
+    "FlexCostAllocationPolicyAssociationDescription": {
+      "base": "<p>Describes an association between a flex cost allocation policy and a network resource.</p>",
+      "refs": {
+        "FlexCostAllocationPolicyAssociationSet$member": null
+      }
+    },
+    "FlexCostAllocationPolicyAssociationId": {
+      "base": null,
+      "refs": {
+        "FlexCostAllocationPolicyAssociationDescription$FcaPolicyAssociationId": "<p>The ID of the policy association.</p>",
+        "FlexCostAllocationPolicyAssociationIdList$member": null,
+        "FlexCostAllocationPolicyDisassociateAssociationIdList$member": null
+      }
+    },
+    "FlexCostAllocationPolicyAssociationIdList": {
+      "base": null,
+      "refs": {
+        "DescribeNetworkingFlexCostAllocationPolicyAssociationsRequest$FcaPolicyAssociationIds": "<p>The IDs of the policy associations to describe.</p>",
+        "DisassociateNetworkingFlexCostAllocationPolicyResult$FcaPolicyDisassociations": "<p>The IDs of the policy associations that were removed.</p>"
+      }
+    },
+    "FlexCostAllocationPolicyAssociationSet": {
+      "base": null,
+      "refs": {
+        "AssociateNetworkingFlexCostAllocationPolicyResult$FcaPolicyAssociations": "<p>Information about the policy associations that were created.</p>",
+        "DescribeNetworkingFlexCostAllocationPolicyAssociationsResult$FcaPolicyAssociations": "<p>Information about the policy associations.</p>"
+      }
+    },
+    "FlexCostAllocationPolicyDescription": {
+      "base": "<p>Describes a flex cost allocation policy.</p>",
+      "refs": {
+        "FlexCostAllocationPolicySet$member": null
+      }
+    },
+    "FlexCostAllocationPolicyDisassociateAssociationIdList": {
+      "base": null,
+      "refs": {
+        "DisassociateNetworkingFlexCostAllocationPolicyRequest$FcaPolicyAssociationIds": "<p>The IDs of the policy associations to remove. You can specify up to 100 association IDs. This parameter is required.</p>"
+      }
+    },
+    "FlexCostAllocationPolicyId": {
+      "base": null,
+      "refs": {
+        "AssociateNetworkingFlexCostAllocationPolicyRequest$FcaPolicyId": "<p>The ID of the flex cost allocation policy to associate. This parameter is required.</p>",
+        "CreateNetworkingFlexCostAllocationPolicyResult$FcaPolicyId": "<p>The ID of the flex cost allocation policy.</p>",
+        "FlexCostAllocationPolicyAssociationDescription$FcaPolicyId": "<p>The ID of the policy.</p>",
+        "FlexCostAllocationPolicyDescription$FcaPolicyId": "<p>The ID of the policy.</p>",
+        "FlexCostAllocationPolicyIdList$member": null,
+        "FlexCostAllocationPolicyIdSet$member": null,
+        "FlexCostAllocationPolicyVersion$FcaPolicyId": "<p>The ID of the policy.</p>",
+        "GetNetworkingFlexCostAllocationPolicyVersionsRequest$FcaPolicyId": "<p>The ID of the flex cost allocation policy. This parameter is required.</p>",
+        "ModifyNetworkingFlexCostAllocationPolicyRequest$FcaPolicyId": "<p>The ID of the flex cost allocation policy to modify. This parameter is required.</p>",
+        "ModifyNetworkingFlexCostAllocationPolicyResult$FcaPolicyId": "<p>The ID of the flex cost allocation policy.</p>"
+      }
+    },
+    "FlexCostAllocationPolicyIdList": {
+      "base": null,
+      "refs": {
+        "DeleteNetworkingFlexCostAllocationPoliciesRequest$FcaPolicyIds": "<p>The IDs of the flex cost allocation policies to delete. You can specify up to 50 policy IDs. This parameter is required.</p>",
+        "DeleteNetworkingFlexCostAllocationPoliciesResult$Successful": "<p>The IDs of the policies that were successfully deleted.</p>"
+      }
+    },
+    "FlexCostAllocationPolicyIdSet": {
+      "base": null,
+      "refs": {
+        "DescribeNetworkingFlexCostAllocationPoliciesRequest$FcaPolicyIds": "<p>The IDs of the flex cost allocation policies to describe.</p>"
+      }
+    },
+    "FlexCostAllocationPolicySet": {
+      "base": null,
+      "refs": {
+        "DescribeNetworkingFlexCostAllocationPoliciesResult$FlexCostAllocationPolicies": "<p>Information about the flex cost allocation policies.</p>"
+      }
+    },
+    "FlexCostAllocationPolicyVersion": {
+      "base": "<p>Describes a version of a flex cost allocation policy.</p>",
+      "refs": {
+        "FlexCostAllocationPolicyVersionSet$member": null
+      }
+    },
+    "FlexCostAllocationPolicyVersionNumber": {
+      "base": null,
+      "refs": {
+        "FlexCostAllocationPolicyDescription$LatestVersion": "<p>The number of the latest version of the policy.</p>",
+        "FlexCostAllocationPolicyVersion$Version": "<p>The version number.</p>",
+        "FlexCostAllocationVersionsToIncludeList$member": null,
+        "ModifyNetworkingFlexCostAllocationPolicyResult$Version": "<p>The version number of the policy that this modification created.</p>"
+      }
+    },
+    "FlexCostAllocationPolicyVersionSet": {
+      "base": null,
+      "refs": {
+        "GetNetworkingFlexCostAllocationPolicyVersionsResult$FcaPolicyVersions": "<p>Information about the policy versions.</p>"
+      }
+    },
+    "FlexCostAllocationReportingGranularity": {
+      "base": "<p>The resource granularity level at which networking costs are allocated. Valid values are <code>eni</code>, <code>ec2</code>, <code>subnet</code>, <code>vpc</code>, <code>account</code>, <code>peering-id</code>, and <code>cidr</code>.</p> <p>Which values you can use depends on the policy document. <code>peering-id</code> is valid only in a <code>PcxFcaPolicyDocument</code>.</p>",
+      "refs": {
+        "FlexCostAllocationReportingGranularityList$member": null
+      }
+    },
+    "FlexCostAllocationReportingGranularityList": {
+      "base": null,
+      "refs": {
+        "InstanceFlexCostAllocationPolicyDocument$ReportingGranularity": "<p>The resource granularity level at which networking costs are allocated. This parameter is required. Specify exactly one value. Valid values are <code>eni</code>, <code>ec2</code>, <code>subnet</code>, <code>vpc</code>, <code>account</code>, and <code>cidr</code>.</p>",
+        "NatFlexCostAllocationPolicyDocument$ReportingGranularity": "<p>The resource granularity level at which networking costs are allocated. This parameter is required. Specify exactly one value. Valid values are <code>eni</code>, <code>ec2</code>, <code>subnet</code>, <code>vpc</code>, <code>account</code>, and <code>cidr</code>.</p>",
+        "PcxFlexCostAllocationPolicyDocument$ReportingGranularity": "<p>The resource granularity level at which networking costs are allocated. This parameter is required. Specify exactly one value. Valid values are <code>eni</code>, <code>ec2</code>, <code>subnet</code>, <code>vpc</code>, <code>account</code>, <code>peering-id</code>, and <code>cidr</code>.</p>"
+      }
+    },
+    "FlexCostAllocationVersionsToIncludeList": {
+      "base": null,
+      "refs": {
+        "GetNetworkingFlexCostAllocationPolicyVersionsRequest$VersionsToInclude": "<p>The policy versions to include in the results.</p>"
       }
     },
     "FlexibleEnaQueuesSupport": {
@@ -13955,6 +14287,16 @@
       }
     },
     "GetNetworkInsightsAccessScopeContentResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetNetworkingFlexCostAllocationPolicyVersionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetNetworkingFlexCostAllocationPolicyVersionsResult": {
       "base": null,
       "refs": {
       }
@@ -15727,6 +16069,15 @@
         "ModifyDefaultCreditSpecificationResult$InstanceFamilyCreditSpecification": "<p>The default credit option for CPU usage of the instance family.</p>"
       }
     },
+    "InstanceFlexCostAllocationPolicyDocument": {
+      "base": "<p>Describes the cost allocation policy document for EC2 instances.</p>",
+      "refs": {
+        "CreateNetworkingFlexCostAllocationPolicyRequest$InstanceFcaPolicyDocument": "<p>The policy document that defines cost allocation for EC2 instances. Provide this document when <code>NetworkResourceType</code> is <code>ec2</code>.</p>",
+        "FlexCostAllocationPolicyDescription$InstanceFcaPolicyDocument": "<p>The policy document that defines cost allocation for EC2 instances.</p>",
+        "FlexCostAllocationPolicyVersion$InstanceFcaPolicyDocument": "<p>The policy document that defines cost allocation for EC2 instances.</p>",
+        "ModifyNetworkingFlexCostAllocationPolicyRequest$InstanceFcaPolicyDocument": "<p>The updated policy document that defines cost allocation for EC2 instances.</p>"
+      }
+    },
     "InstanceGeneration": {
       "base": null,
       "refs": {
@@ -16557,7 +16908,7 @@
         "CreateClientVpnEndpointRequest$VpnPort": "<p>The port number to assign to the Client VPN endpoint for TCP and UDP traffic.</p> <p>Valid Values: <code>443</code> | <code>1194</code> </p> <p>Default Value: <code>443</code> </p>",
         "CreateClientVpnEndpointRequest$SessionTimeoutHours": "<p>The maximum VPN session duration time in hours.</p> <p>Valid values: <code>8 | 10 | 12 | 24</code> </p> <p>Default value: <code>24</code> </p>",
         "CreateCustomerGatewayRequest$BgpAsn": "<p>For customer gateway devices that support BGP, specify the device's ASN. You must specify either <code>BgpAsn</code> or <code>BgpAsnExtended</code> when creating the customer gateway. If the ASN is larger than <code>2,147,483,647</code>, you must use <code>BgpAsnExtended</code>.</p> <p>Default: 65000</p> <p>Valid values: <code>1</code> to <code>2,147,483,647</code> </p>",
-        "CreateFlowLogsRequest$MaxAggregationInterval": "<p>The maximum interval of time during which a flow of packets is captured and aggregated into a flow log record. The possible values are 60 seconds (1 minute) or 600 seconds (10 minutes). This parameter must be 60 seconds for transit gateway resource types.</p> <p>When a network interface is attached to a <a href=\"https://docs.aws.amazon.com/ec2/latest/instancetypes/ec2-nitro-instances.html\">Nitro-based instance</a>, the aggregation interval is always 60 seconds or less, regardless of the value that you specify.</p> <p>Default: 600</p>",
+        "CreateFlowLogsRequest$MaxAggregationInterval": "<p>The maximum interval of time during which a flow of packets is captured and aggregated into a flow log record. The possible values are 60 seconds (1 minute) or 600 seconds (10 minutes). This parameter must be 60 seconds for transit gateway and Cloud WAN resource types.</p> <p>When a network interface is attached to a <a href=\"https://docs.aws.amazon.com/ec2/latest/instancetypes/ec2-nitro-instances.html\">Nitro-based instance</a>, the aggregation interval is always 60 seconds or less, regardless of the value that you specify.</p> <p>Default: 600</p>",
         "CreateInterruptibleCapacityReservationAllocationRequest$InstanceCount": "<p> The number of instances to allocate from your source reservation. You can only allocate available instances (also called unused capacity). </p>",
         "CreateInterruptibleCapacityReservationAllocationResult$TargetInstanceCount": "<p> The number of instances allocated to the interruptible reservation. </p>",
         "CreateLocalGatewayVirtualInterfaceGroupRequest$LocalBgpAsn": "<p>The Autonomous System Number(ASN) for the local Border Gateway Protocol (BGP).</p>",
@@ -17411,7 +17762,7 @@
     "IpamInternetRegistryAssociationState": {
       "base": "<p>The state of an IPAM internet registry association.</p>",
       "refs": {
-        "IpamInternetRegistryAssociation$State": "<p>The state of the internet registry association. Valid values: <code>pending-activation</code> | <code>pending-enable</code> | <code>create-in-progress</code> | <code>create-failed</code> | <code>enable-in-progress</code> | <code>enable-complete</code> | <code>enable-failed</code> | <code>delete-in-progress</code> | <code>delete-complete</code> | <code>delete-failed</code>.</p>"
+        "IpamInternetRegistryAssociation$State": "<p>The state of the internet registry association. Valid values: <code>pending-enable</code> | <code>create-in-progress</code> | <code>create-failed</code> | <code>enable-in-progress</code> | <code>enable-complete</code> | <code>enable-failed</code> | <code>disable-in-progress</code> | <code>disable-complete</code> | <code>disable-failed</code> | <code>delete-in-progress</code> | <code>delete-complete</code> | <code>delete-failed</code>.</p>"
       }
     },
     "IpamManagementState": {
@@ -18191,7 +18542,7 @@
     "IpamRoutingPolicyRegistrationState": {
       "base": "<p>The state of a routing policy registration.</p>",
       "refs": {
-        "IpamRoutingPolicyRegistration$State": "<p>The state of the routing policy registration. Valid values: <code>pending-activate</code> | <code>activate-failed</code> | <code>create-in-progress</code> | <code>create-complete</code> | <code>update-in-progress</code> | <code>update-complete</code> | <code>delete-in-progress</code> | <code>delete-complete</code>.</p>"
+        "IpamRoutingPolicyRegistration$State": "<p>The state of the routing policy registration. Valid values: <code>pending-activate</code> | <code>activate-failed</code> | <code>create-in-progress</code> | <code>create-complete</code> | <code>update-in-progress</code> | <code>update-complete</code> | <code>delete-in-progress</code> | <code>delete-complete</code> | <code>disable-complete</code>.</p>"
       }
     },
     "IpamRpkiStatus": {
@@ -19727,6 +20078,8 @@
       "base": null,
       "refs": {
         "AccountVpcEncryptionControl$ManagedBy": "<p>The entity that manages the account-level VPC Encryption Control configuration.</p>",
+        "FlexCostAllocationPolicyAssociationDescription$ManagedBy": "<p>The entity that manages the association. Valid values are:</p> <ul> <li> <p> <code>account</code> - The account that owns the association created it.</p> </li> <li> <p> <code>declarative-policy</code> - An Amazon Web Services Organizations declarative policy created the association. You can't remove the association.</p> </li> </ul>",
+        "FlexCostAllocationPolicyDescription$ManagedBy": "<p>The entity that manages the policy. Valid values are:</p> <ul> <li> <p> <code>account</code> - The account that owns the policy created it.</p> </li> <li> <p> <code>declarative-policy</code> - An Amazon Web Services Organizations declarative policy created the policy. You can't modify or delete the policy.</p> </li> </ul>",
         "GetAllowedImagesSettingsResult$ManagedBy": "<p>The entity that manages the Allowed AMIs settings. Possible values include:</p> <ul> <li> <p> <code>account</code> - The Allowed AMIs settings is managed by the account.</p> </li> <li> <p> <code>declarative-policy</code> - The Allowed AMIs settings is managed by a declarative policy and can't be modified by the account.</p> </li> </ul>",
         "GetImageBlockPublicAccessStateResult$ManagedBy": "<p>The entity that manages the state for block public access for AMIs. Possible values include:</p> <ul> <li> <p> <code>account</code> - The state is managed by the account.</p> </li> <li> <p> <code>declarative-policy</code> - The state is managed by a declarative policy and can't be modified by the account.</p> </li> </ul>",
         "GetSerialConsoleAccessStatusResult$ManagedBy": "<p>The entity that manages access to the serial console. Possible values include:</p> <ul> <li> <p> <code>account</code> - Access is managed by the account.</p> </li> <li> <p> <code>declarative-policy</code> - Access is managed by a declarative policy and can't be modified by the account.</p> </li> </ul>",
@@ -20792,6 +21145,16 @@
       "refs": {
       }
     },
+    "ModifyNetworkingFlexCostAllocationPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyNetworkingFlexCostAllocationPolicyResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ModifyPrivateDnsNameOptionsRequest": {
       "base": null,
       "refs": {
@@ -21359,6 +21722,15 @@
       "refs": {
         "TransitGatewayOptions$MulticastSupport": "<p>Indicates whether multicast is enabled on the transit gateway</p>",
         "TransitGatewayRequestOptions$MulticastSupport": "<p>Indicates whether multicast is enabled on the transit gateway</p>"
+      }
+    },
+    "NatFlexCostAllocationPolicyDocument": {
+      "base": "<p>Describes the cost allocation policy document for NAT gateways.</p>",
+      "refs": {
+        "CreateNetworkingFlexCostAllocationPolicyRequest$NatFcaPolicyDocument": "<p>The policy document that defines cost allocation for NAT gateways. Provide this document when <code>NetworkResourceType</code> is <code>natgw</code>.</p>",
+        "FlexCostAllocationPolicyDescription$NatFcaPolicyDocument": "<p>The policy document that defines cost allocation for NAT gateways.</p>",
+        "FlexCostAllocationPolicyVersion$NatFcaPolicyDocument": "<p>The policy document that defines cost allocation for NAT gateways.</p>",
+        "ModifyNetworkingFlexCostAllocationPolicyRequest$NatFcaPolicyDocument": "<p>The updated policy document that defines cost allocation for NAT gateways.</p>"
       }
     },
     "NatGateway": {
@@ -22092,6 +22464,10 @@
         "DescribeNetworkInsightsAccessScopesRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeNetworkInsightsAnalysesRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeNetworkInsightsPathsRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeNetworkingFlexCostAllocationPoliciesRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeNetworkingFlexCostAllocationPoliciesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "DescribeNetworkingFlexCostAllocationPolicyAssociationsRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeNetworkingFlexCostAllocationPolicyAssociationsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribePublicIpv4PoolsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeReplaceRootVolumeTasksRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
         "DescribeTrafficMirrorFilterRulesRequest$NextToken": "<p>The token for the next page of results.</p>",
@@ -22489,6 +22865,15 @@
       "base": "<p>Describes the data that identifies an Amazon FPGA image (AFI) on the PCI bus.</p>",
       "refs": {
         "FpgaImage$PciId": "<p>Information about the PCI bus.</p>"
+      }
+    },
+    "PcxFlexCostAllocationPolicyDocument": {
+      "base": "<p>Describes the cost allocation policy document for Amazon VPC peering connections.</p>",
+      "refs": {
+        "CreateNetworkingFlexCostAllocationPolicyRequest$PcxFcaPolicyDocument": "<p>The policy document that defines cost allocation for Amazon VPC peering connections. Provide this document when <code>NetworkResourceType</code> is <code>pcx</code>.</p>",
+        "FlexCostAllocationPolicyDescription$PcxFcaPolicyDocument": "<p>The policy document that defines cost allocation for Amazon VPC peering connections.</p>",
+        "FlexCostAllocationPolicyVersion$PcxFcaPolicyDocument": "<p>The policy document that defines cost allocation for Amazon VPC peering connections.</p>",
+        "ModifyNetworkingFlexCostAllocationPolicyRequest$PcxFcaPolicyDocument": "<p>The updated policy document that defines cost allocation for Amazon VPC peering connections.</p>"
       }
     },
     "PeakBandwidthInGbps": {
@@ -24638,8 +25023,8 @@
     "Rir": {
       "base": "<p>The Regional Internet Registry (RIR).</p>",
       "refs": {
-        "CreateIpamInternetRegistryAssociationRequest$Rir": "<p>The Regional Internet Registry to associate with. Possible values:</p> <ul> <li> <p> <code>ripe</code> - RIPE NCC (Europe, the Middle East, and Central Asia).</p> </li> <li> <p> <code>apnic</code> - APNIC (Asia Pacific).</p> </li> <li> <p> <code>arin</code> - ARIN (North America).</p> </li> <li> <p> <code>lacnic</code> - LACNIC (Latin America and the Caribbean).</p> </li> </ul>",
-        "IpamInternetRegistryAssociation$Rir": "<p>The Regional Internet Registry. Possible values:</p> <ul> <li> <p> <code>ripe</code> - RIPE NCC (Europe, the Middle East, and Central Asia).</p> </li> <li> <p> <code>apnic</code> - APNIC (Asia Pacific).</p> </li> <li> <p> <code>arin</code> - ARIN (North America).</p> </li> <li> <p> <code>lacnic</code> - LACNIC (Latin America and the Caribbean).</p> </li> </ul>"
+        "CreateIpamInternetRegistryAssociationRequest$Rir": "<p>The internet registry to associate with. Possible values:</p> <ul> <li> <p> <code>ripe</code> - RIPE NCC (Europe, the Middle East, and Central Asia).</p> </li> <li> <p> <code>apnic</code> - APNIC (Asia Pacific).</p> </li> <li> <p> <code>arin</code> - ARIN (North America).</p> </li> <li> <p> <code>lacnic</code> - LACNIC (Latin America and the Caribbean).</p> </li> <li> <p> <code>nicbr</code> - NIC.br (Brazil).</p> </li> </ul>",
+        "IpamInternetRegistryAssociation$Rir": "<p>The internet registry. Possible values:</p> <ul> <li> <p> <code>ripe</code> - RIPE NCC (Europe, the Middle East, and Central Asia).</p> </li> <li> <p> <code>apnic</code> - APNIC (Asia Pacific).</p> </li> <li> <p> <code>arin</code> - ARIN (North America).</p> </li> <li> <p> <code>lacnic</code> - LACNIC (Latin America and the Caribbean).</p> </li> <li> <p> <code>nicbr</code> - NIC.br (Brazil).</p> </li> </ul>"
       }
     },
     "RoleId": {
@@ -26647,6 +27032,7 @@
         "AssociateIpamByoasnRequest$Asn": "<p>A public 2-byte or 4-byte ASN.</p>",
         "AssociateIpamByoasnRequest$Cidr": "<p>The BYOIP CIDR you want to associate with an ASN.</p>",
         "AssociateIpamResourceDiscoveryRequest$ClientToken": "<p>A client token.</p>",
+        "AssociateNetworkingFlexCostAllocationPolicyRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "AssociateRouteTableResult$AssociationId": "<p>The route table association ID. This ID is required for disassociating the route table.</p>",
         "AssociateSubnetCidrBlockRequest$Ipv6CidrBlock": "<p>The IPv6 CIDR block for your subnet.</p>",
         "AssociateSubnetCidrBlockResult$SubnetId": "<p>The ID of the subnet.</p>",
@@ -26893,7 +27279,7 @@
         "CopyImageResult$ImageId": "<p>The ID of the new AMI.</p>",
         "CopySnapshotRequest$Description": "<p>A description for the EBS snapshot.</p>",
         "CopySnapshotRequest$DestinationOutpostArn": "<p>The Amazon Resource Name (ARN) of the Outpost to which to copy the snapshot.</p> <note> <p>Only supported when copying a snapshot to an Outpost.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/snapshots-outposts.html#copy-snapshots\"> Copy snapshots from an Amazon Web Services Region to an Outpost</a> in the <i>Amazon EBS User Guide</i>.</p>",
-        "CopySnapshotRequest$DestinationRegion": "<p>The destination Region to use in the <code>PresignedUrl</code> parameter of a snapshot copy operation. This parameter is only valid for specifying the destination Region in a <code>PresignedUrl</code> parameter, where it is required.</p> <p>The snapshot copy is sent to the regional endpoint that you sent the HTTP request to (for example, <code>ec2.us-east-1.amazonaws.com</code>). With the CLI, this is specified using the <code>--region</code> parameter or the default Region in your Amazon Web Services configuration file.</p>",
+        "CopySnapshotRequest$DestinationRegion": "<p>Deprecated.</p>",
         "CopySnapshotRequest$SourceRegion": "<p>The ID of the Region that contains the snapshot to be copied.</p>",
         "CopySnapshotRequest$SourceSnapshotId": "<p>The ID of the EBS snapshot to copy.</p>",
         "CopySnapshotRequest$DestinationAvailabilityZone": "<p>The Local Zone, for example, <code>cn-north-1-pkx-1a</code> to which to copy the snapshot.</p> <note> <p>Only supported when copying a snapshot to a Local Zone.</p> </note>",
@@ -26940,7 +27326,7 @@
         "CreateFlowLogsRequest$DeliverCrossAccountRole": "<p>The ARN of the IAM role that allows Amazon EC2 to publish flow logs across accounts.</p>",
         "CreateFlowLogsRequest$LogGroupName": "<p>The name of a new or existing CloudWatch Logs log group where Amazon EC2 publishes your flow logs.</p> <p>This parameter is valid only if the destination type is <code>cloud-watch-logs</code>.</p>",
         "CreateFlowLogsRequest$LogDestination": "<p>The destination for the flow log data. The meaning of this parameter depends on the destination type.</p> <ul> <li> <p>If the destination type is <code>cloud-watch-logs</code>, specify the ARN of a CloudWatch Logs log group. For example:</p> <p>arn:aws:logs:<i>region</i>:<i>account_id</i>:log-group:<i>my_group</i> </p> <p>Alternatively, use the <code>LogGroupName</code> parameter.</p> </li> <li> <p>If the destination type is <code>s3</code>, specify the ARN of an S3 bucket. For example:</p> <p>arn:aws:s3:::<i>my_bucket</i>/<i>my_subfolder</i>/</p> <p>The subfolder is optional. Note that you can't use <code>AWSLogs</code> as a subfolder name.</p> </li> <li> <p>If the destination type is <code>kinesis-data-firehose</code>, specify the ARN of a Kinesis Data Firehose delivery stream. For example:</p> <p>arn:aws:firehose:<i>region</i>:<i>account_id</i>:deliverystream:<i>my_stream</i> </p> </li> </ul>",
-        "CreateFlowLogsRequest$LogFormat": "<p>The fields to include in the flow log record. List the fields in the order in which they should appear. If you omit this parameter, the flow log is created using the default format. If you specify this parameter, you must include at least one field. For more information about the available fields, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/flow-log-records.html\">Flow log records</a> in the <i>Amazon VPC User Guide</i> or <a href=\"https://docs.aws.amazon.com/vpc/latest/tgw/tgw-flow-logs.html#flow-log-records\">Transit Gateway Flow Log records</a> in the <i>Amazon Web Services Transit Gateway Guide</i>.</p> <p>Specify the fields using the <code>${field-id}</code> format, separated by spaces.</p>",
+        "CreateFlowLogsRequest$LogFormat": "<p>The fields to include in the flow log record. List the fields in the order in which they should appear. If you omit this parameter, the flow log is created using the default format. If you specify this parameter, you must include at least one field. For more information about the available fields, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/flow-log-records.html\">Flow log records</a> in the <i>Amazon VPC User Guide</i>, <a href=\"https://docs.aws.amazon.com/vpc/latest/tgw/tgw-flow-logs.html#flow-log-records\">Transit Gateway Flow Log records</a> in the <i>Amazon Web Services Transit Gateway Guide</i>, or <a href=\"https://docs.aws.amazon.com/network-manager/latest/cloudwan/cwan-flow-logs.html\">Cloud WAN Flow Log records</a> in the <i>Amazon Web Services Cloud WAN User Guide</i>.</p> <p>Specify the fields using the <code>${field-id}</code> format, separated by spaces.</p>",
         "CreateFlowLogsResult$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "CreateFpgaImageRequest$Description": "<p>A description for the AFI.</p>",
         "CreateFpgaImageRequest$Name": "<p>A name for the AFI.</p>",
@@ -27004,6 +27390,8 @@
         "CreateNetworkInterfaceRequest$Description": "<p>A description for the network interface.</p>",
         "CreateNetworkInterfaceRequest$PrivateIpAddress": "<p>The primary private IPv4 address of the network interface. If you don't specify an IPv4 address, Amazon EC2 selects one for you from the subnet's IPv4 CIDR range. If you specify an IP address, you cannot indicate any IP addresses specified in <code>privateIpAddresses</code> as primary (only one IP address can be designated as primary).</p>",
         "CreateNetworkInterfaceResult$ClientToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "CreateNetworkingFlexCostAllocationPolicyRequest$Description": "<p>A description for the policy. The description can be up to 1024 characters long.</p>",
+        "CreateNetworkingFlexCostAllocationPolicyRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreatePlacementGroupRequest$GroupName": "<p>A name for the placement group. Must be unique within the scope of your account for the Region.</p> <p>Constraints: Up to 255 ASCII characters</p>",
         "CreatePublicIpv4PoolRequest$NetworkBorderGroup": "<p>The Availability Zone (AZ) or Local Zone (LZ) network border group that the resource that the IP address is assigned to is in. Defaults to an AZ network border group. For more information on available Local Zones, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html#byoip-zone-avail\">Local Zone availability</a> in the <i>Amazon EC2 User Guide</i>.</p>",
         "CreateReplaceRootVolumeTaskRequest$ClientToken": "<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request. If you do not specify a client token, a randomly generated token is used for the request to ensure idempotency. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -27632,6 +28020,15 @@
         "FleetLaunchTemplateSpecification$LaunchTemplateId": "<p>The ID of the launch template.</p> <p>You must specify the <code>LaunchTemplateId</code> or the <code>LaunchTemplateName</code>, but not both.</p>",
         "FleetLaunchTemplateSpecification$Version": "<p>The launch template version number, <code>$Latest</code>, or <code>$Default</code>. You must specify a value, otherwise the request fails.</p> <p>If the value is <code>$Latest</code>, Amazon EC2 uses the latest version of the launch template.</p> <p>If the value is <code>$Default</code>, Amazon EC2 uses the default version of the launch template.</p>",
         "FleetLaunchTemplateSpecificationRequest$Version": "<p>The launch template version number, <code>$Latest</code>, or <code>$Default</code>. You must specify a value, otherwise the request fails.</p> <p>If the value is <code>$Latest</code>, Amazon EC2 uses the latest version of the launch template.</p> <p>If the value is <code>$Default</code>, Amazon EC2 uses the default version of the launch template.</p>",
+        "FlexCostAllocationNetworkResourceScopeIdList$member": null,
+        "FlexCostAllocationOperationFailure$ResourceId": "<p>The ID of the resource that could not be processed.</p>",
+        "FlexCostAllocationOperationFailure$FailureCode": "<p>The code that identifies the type of failure. Possible values are:</p> <ul> <li> <p> <code>ResourceNotFound</code> - (<code>DeleteNetworkingFlexCostAllocationPolicies</code>) The policy doesn't exist or isn't owned by your account.</p> </li> <li> <p> <code>InvalidResourceState</code> - (<code>DeleteNetworkingFlexCostAllocationPolicies</code>) The policy has active associations.</p> </li> <li> <p> <code>InvalidResource</code> - (<code>AssociateNetworkingFlexCostAllocationPolicy</code>) The resource ID is malformed, the resource type doesn't match the policy, or the scope is an account other than yours. (<code>DisassociateNetworkingFlexCostAllocationPolicy</code>) The association doesn't exist or was already removed.</p> </li> <li> <p> <code>ResourceAlreadyAssociated</code> - (<code>AssociateNetworkingFlexCostAllocationPolicy</code>) The resource already has an active association.</p> </li> <li> <p> <code>InternalError</code> - An internal error occurred. Retry the request.</p> </li> </ul>",
+        "FlexCostAllocationOperationFailure$FailureReason": "<p>The reason for the failure.</p>",
+        "FlexCostAllocationPolicyAssociationDescription$NetworkResourceId": "<p>The ID of the associated network resource.</p>",
+        "FlexCostAllocationPolicyAssociationDescription$OwnerAccount": "<p>The ID of the account that owns the association.</p>",
+        "FlexCostAllocationPolicyDescription$OwnerAccount": "<p>The ID of the account that owns the policy.</p>",
+        "FlexCostAllocationPolicyDescription$Description": "<p>The description of the policy.</p>",
+        "FlexCostAllocationPolicyVersion$Description": "<p>The description of this version of the policy.</p>",
         "FlowLog$DeliverLogsErrorMessage": "<p>Information about the error that occurred. <code>Rate limited</code> indicates that CloudWatch Logs throttling has been applied for one or more network interfaces, or that you've reached the limit on the number of log groups that you can create. <code>Access error</code> indicates that the IAM role associated with the flow log does not have sufficient permissions to publish to CloudWatch Logs. <code>Unknown error</code> indicates an internal error.</p>",
         "FlowLog$DeliverLogsPermissionArn": "<p>The ARN of the IAM role allows the service to publish logs to CloudWatch Logs.</p>",
         "FlowLog$DeliverCrossAccountRole": "<p>The ARN of the IAM role that allows the service to publish flow logs across accounts.</p>",
@@ -28293,6 +28690,8 @@
         "ModifyLaunchTemplateRequest$DefaultVersion": "<p>The version number of the launch template to set as the default version.</p>",
         "ModifyLocalGatewayRouteRequest$DestinationCidrBlock": "<p>The CIDR block used for destination matches. The value that you provide must match the CIDR of an existing route in the table.</p>",
         "ModifyManagedPrefixListRequest$PrefixListName": "<p>A name for the prefix list.</p>",
+        "ModifyNetworkingFlexCostAllocationPolicyRequest$Description": "<p>A description for the policy. The description can be up to 1024 characters long.</p>",
+        "ModifyNetworkingFlexCostAllocationPolicyRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "ModifyReservedInstancesRequest$ClientToken": "<p>A unique, case-sensitive token you provide to ensure idempotency of your modification request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring Idempotency</a>.</p>",
         "ModifyReservedInstancesResult$ReservedInstancesModificationId": "<p>The ID for the modification.</p>",
         "ModifySnapshotTierResult$SnapshotId": "<p>The ID of the snapshot.</p>",
@@ -29683,6 +30082,7 @@
         "ExportImageTask$Tags": "<p>Any tags assigned to the export image task.</p>",
         "ExportTask$Tags": "<p>The tags for the export task.</p>",
         "FleetData$Tags": "<p>The tags for an EC2 Fleet resource.</p>",
+        "FlexCostAllocationPolicyDescription$Tags": "<p>The tags assigned to the policy.</p>",
         "FlowLog$Tags": "<p>The tags for the flow log.</p>",
         "FpgaImage$Tags": "<p>Any tags assigned to the AFI.</p>",
         "Host$Tags": "<p>Any tags assigned to the Dedicated Host.</p>",
@@ -29865,6 +30265,7 @@
         "CreateNetworkInsightsAccessScopeRequest$TagSpecifications": "<p>The tags to apply.</p>",
         "CreateNetworkInsightsPathRequest$TagSpecifications": "<p>The tags to add to the path.</p>",
         "CreateNetworkInterfaceRequest$TagSpecifications": "<p>The tags to apply to the new network interface.</p>",
+        "CreateNetworkingFlexCostAllocationPolicyRequest$TagSpecifications": "<p>The tags to assign to the policy.</p>",
         "CreatePlacementGroupRequest$TagSpecifications": "<p>The tags to apply to the new placement group.</p>",
         "CreatePublicIpv4PoolRequest$TagSpecifications": "<p>The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p>",
         "CreateReplaceRootVolumeTaskRequest$TagSpecifications": "<p>The tags to apply to the root volume replacement task.</p>",
@@ -30377,7 +30778,7 @@
     "TrafficType": {
       "base": null,
       "refs": {
-        "CreateFlowLogsRequest$TrafficType": "<p>The type of traffic to monitor (accepted traffic, rejected traffic, or all traffic). This parameter is not supported for transit gateway resource types. It is required for the other resource types.</p>",
+        "CreateFlowLogsRequest$TrafficType": "<p>The type of traffic to monitor (accepted traffic, rejected traffic, or all traffic). This parameter is not supported for transit gateway or Cloud WAN resource types. It is required for the other resource types.</p>",
         "FlowLog$TrafficType": "<p>The type of traffic captured for the flow log.</p>"
       }
     },

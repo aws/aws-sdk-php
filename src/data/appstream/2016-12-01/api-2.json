@@ -1274,6 +1274,24 @@
         {"shape":"OperationNotPermittedException"}
       ]
     },
+    "UpdateImageBuilder":{
+      "name":"UpdateImageBuilder",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateImageBuilderRequest"},
+      "output":{"shape":"UpdateImageBuilderResult"},
+      "errors":[
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"IncompatibleImageException"},
+        {"shape":"InvalidAccountStatusException"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"RequestLimitExceededException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "UpdateImagePermissions":{
       "name":"UpdateImagePermissions",
       "http":{
@@ -1405,6 +1423,8 @@
         "Settings":{"shape":"AgentAccessSettingList"},
         "S3BucketArn":{"shape":"S3BucketArn"},
         "ScreenshotsUploadEnabled":{"shape":"BooleanObject"},
+        "ReplaySessionEnabled":{"shape":"BooleanObject"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"},
         "ScreenResolution":{"shape":"ScreenResolution"},
         "ScreenImageFormat":{"shape":"ScreenImageFormat"},
         "UserControlMode":{"shape":"UserControlMode"}
@@ -1416,6 +1436,8 @@
         "Settings":{"shape":"AgentAccessSettingList"},
         "S3BucketArn":{"shape":"S3BucketArn"},
         "ScreenshotsUploadEnabled":{"shape":"BooleanObject"},
+        "ReplaySessionEnabled":{"shape":"BooleanObject"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"},
         "ScreenResolution":{"shape":"ScreenResolution"},
         "ScreenImageFormat":{"shape":"ScreenImageFormat"},
         "UserControlMode":{"shape":"UserControlMode"}
@@ -2116,7 +2138,8 @@
         "RootVolumeConfig":{"shape":"VolumeConfig"},
         "SoftwaresToInstall":{"shape":"StringList"},
         "SoftwaresToUninstall":{"shape":"StringList"},
-        "DisableIMDSV1":{"shape":"BooleanObject"}
+        "DisableIMDSV1":{"shape":"BooleanObject"},
+        "AgentAccessConfig":{"shape":"ImageBuilderAgentAccessConfig"}
       }
     },
     "CreateImageBuilderResult":{
@@ -3290,8 +3313,45 @@
         "AccessEndpoints":{"shape":"AccessEndpointList"},
         "RootVolumeConfig":{"shape":"VolumeConfig"},
         "LatestAppstreamAgentVersion":{"shape":"LatestAppstreamAgentVersion"},
-        "DisableIMDSV1":{"shape":"BooleanObject"}
+        "DisableIMDSV1":{"shape":"BooleanObject"},
+        "AgentAccessConfig":{"shape":"ImageBuilderAgentAccessConfig"}
       }
+    },
+    "ImageBuilderAgentAccessConfig":{
+      "type":"structure",
+      "required":[
+        "Settings",
+        "ScreenResolution",
+        "ScreenImageFormat"
+      ],
+      "members":{
+        "Settings":{"shape":"AgentAccessSettingList"},
+        "S3BucketArn":{"shape":"S3BucketArn"},
+        "ScreenshotsUploadEnabled":{"shape":"BooleanObject"},
+        "ScreenResolution":{"shape":"ScreenResolution"},
+        "ScreenImageFormat":{"shape":"ScreenImageFormat"},
+        "UserControlMode":{"shape":"UserControlMode"}
+      }
+    },
+    "ImageBuilderAgentAccessConfigForUpdate":{
+      "type":"structure",
+      "members":{
+        "Settings":{"shape":"AgentAccessSettingList"},
+        "S3BucketArn":{"shape":"S3BucketArn"},
+        "ScreenshotsUploadEnabled":{"shape":"BooleanObject"},
+        "ScreenResolution":{"shape":"ScreenResolution"},
+        "ScreenImageFormat":{"shape":"ScreenImageFormat"},
+        "UserControlMode":{"shape":"UserControlMode"}
+      }
+    },
+    "ImageBuilderAttribute":{
+      "type":"string",
+      "enum":["AGENT_ACCESS_CONFIG"]
+    },
+    "ImageBuilderAttributes":{
+      "type":"list",
+      "member":{"shape":"ImageBuilderAttribute"},
+      "max":2
     },
     "ImageBuilderList":{
       "type":"list",
@@ -3448,6 +3508,10 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "KmsKeyArn":{
+      "type":"string",
+      "pattern":"^arn:aws(?:\\-cn|\\-iso\\-b|\\-iso|\\-us\\-gov)?:kms:[a-z0-9\\-]+:\\d{12}:key/[A-Za-z0-9\\-]+$"
     },
     "LastReportGenerationExecutionError":{
       "type":"structure",
@@ -3920,7 +3984,8 @@
         "STREAMING_EXPERIENCE_SETTINGS",
         "CONTENT_REDIRECTION",
         "AGENT_ACCESS_CONFIG",
-        "STORAGE_CONNECTOR_AUTHENTICATION"
+        "STORAGE_CONNECTOR_AUTHENTICATION",
+        "AGENT_ACCESS_CONFIG_KMS_KEY_ARN"
       ]
     },
     "StackAttributes":{
@@ -4337,6 +4402,23 @@
       "type":"structure",
       "members":{
         "Fleet":{"shape":"Fleet"}
+      }
+    },
+    "UpdateImageBuilderRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"Name"},
+        "Description":{"shape":"Description"},
+        "DisplayName":{"shape":"DisplayName"},
+        "AgentAccessConfig":{"shape":"ImageBuilderAgentAccessConfigForUpdate"},
+        "AttributesToDelete":{"shape":"ImageBuilderAttributes"}
+      }
+    },
+    "UpdateImageBuilderResult":{
+      "type":"structure",
+      "members":{
+        "ImageBuilder":{"shape":"ImageBuilder"}
       }
     },
     "UpdateImagePermissionsRequest":{

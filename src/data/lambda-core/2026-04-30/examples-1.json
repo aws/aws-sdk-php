@@ -1,4 +1,397 @@
 {
   "version": "1.0",
-  "examples": {}
+  "examples": {
+    "CreateRuntime": [
+      {
+        "input": {
+          "Description": "PHP 8 custom runtime",
+          "LicenseInfo": "MIT",
+          "Name": "php8",
+          "Tags": {
+            "team": "runtimes"
+          }
+        },
+        "output": {
+          "Arn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8",
+          "Created": "2026-10-01T12:00:00.000Z",
+          "Description": "PHP 8 custom runtime",
+          "LastModified": "2026-10-01T12:00:00.000Z",
+          "LicenseInfo": "MIT",
+          "Name": "php8"
+        },
+        "description": "Creates a customer-managed runtime resource.",
+        "id": "example-1",
+        "title": "Create a runtime"
+      }
+    ],
+    "CreateRuntimeAlias": [
+      {
+        "input": {
+          "Description": "Points at the newest published version",
+          "Name": "latest",
+          "RuntimeName": "php8",
+          "RuntimeVersion": "v1"
+        },
+        "output": {
+          "Arn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8/alias/latest",
+          "Created": "2026-10-01T12:00:00.000Z",
+          "Description": "Points at the newest published version",
+          "LastModified": "2026-10-01T12:00:00.000Z",
+          "Name": "latest",
+          "RuntimeVersion": "v1",
+          "RuntimeVersionArn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8/version/v1",
+          "State": "CREATING"
+        },
+        "description": "Creates an alias that points at a published runtime version.",
+        "id": "example-1",
+        "title": "Create a runtime alias"
+      }
+    ],
+    "CreateRuntimeVersion": [
+      {
+        "input": {
+          "ImageUri": "123456789012.dkr.ecr.us-west-2.amazonaws.com/php8:latest",
+          "Name": "v1",
+          "ReleaseNotes": "Initial release",
+          "RuntimeName": "php8"
+        },
+        "output": {
+          "Arn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8/version/v1",
+          "Compatibility": {
+            "Architectures": [
+              "arm64",
+              "x86_64"
+            ],
+            "IntegrationModels": [
+              "RuntimeAPI"
+            ],
+            "ManagedInstances": "Supported"
+          },
+          "Created": "2026-10-01T12:00:00.000Z",
+          "LastModified": "2026-10-01T12:00:00.000Z",
+          "Name": "v1",
+          "Platforms": [
+            {
+              "Architecture": "arm64",
+              "Digest": "sha256:1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+              "Os": "linux"
+            }
+          ],
+          "ReleaseNotes": "Initial release",
+          "ResolvedUri": "123456789012.dkr.ecr.us-west-2.amazonaws.com/php8@sha256:1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+          "State": "CREATING"
+        },
+        "description": "Creates a new runtime version from a container image.",
+        "id": "example-1",
+        "title": "Create a runtime version"
+      }
+    ],
+    "DeleteRuntime": [
+      {
+        "input": {
+          "RuntimeName": "php8"
+        },
+        "output": {},
+        "description": "Schedules a customer-managed runtime to be deleted.",
+        "id": "example-1",
+        "title": "Delete a runtime"
+      }
+    ],
+    "DeleteRuntimeAlias": [
+      {
+        "input": {
+          "Name": "latest",
+          "RuntimeName": "php8"
+        },
+        "output": {},
+        "description": "Schedules a runtime alias to be deleted.",
+        "id": "example-1",
+        "title": "Delete a runtime alias"
+      }
+    ],
+    "DeleteRuntimeVersion": [
+      {
+        "input": {
+          "Name": "v1",
+          "RuntimeName": "php8"
+        },
+        "output": {},
+        "description": "Schedules a runtime version to be deleted.",
+        "id": "example-1",
+        "title": "Delete a runtime version"
+      }
+    ],
+    "GetRuntime": [
+      {
+        "input": {
+          "RuntimeName": "php8"
+        },
+        "output": {
+          "Arn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8",
+          "Created": "2026-10-01T12:00:00.000Z",
+          "Description": "PHP 8 custom runtime",
+          "LastModified": "2026-10-02T09:30:00.000Z",
+          "LicenseInfo": "MIT",
+          "Name": "php8",
+          "ReleaseLifecycle": {
+            "ReleaseState": "GA"
+          }
+        },
+        "description": "Retrieves the metadata for a runtime by name.",
+        "id": "example-1",
+        "title": "Get a runtime"
+      }
+    ],
+    "GetRuntimeAlias": [
+      {
+        "input": {
+          "Name": "latest",
+          "RuntimeName": "php8"
+        },
+        "output": {
+          "Arn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8/alias/latest",
+          "Compatibility": {
+            "Architectures": [
+              "arm64",
+              "x86_64"
+            ],
+            "IntegrationModels": [
+              "RuntimeAPI"
+            ],
+            "ManagedInstances": "Supported"
+          },
+          "Created": "2026-10-01T12:00:00.000Z",
+          "Description": "Points at the newest published version",
+          "LastModified": "2026-10-02T09:30:00.000Z",
+          "Name": "latest",
+          "ReleaseLifecycle": {
+            "ReleaseState": "GA"
+          },
+          "RuntimeVersion": "v1",
+          "RuntimeVersionArn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8/version/v1",
+          "State": "ACTIVE"
+        },
+        "description": "Retrieves an alias, including the version it currently points at and its compatibility matrix.",
+        "id": "example-1",
+        "title": "Get a runtime alias"
+      }
+    ],
+    "GetRuntimeVersion": [
+      {
+        "input": {
+          "Name": "v1",
+          "RuntimeName": "php8"
+        },
+        "output": {
+          "Arn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8/version/v1",
+          "Compatibility": {
+            "Architectures": [
+              "arm64",
+              "x86_64"
+            ],
+            "IntegrationModels": [
+              "RuntimeAPI"
+            ],
+            "ManagedInstances": "Supported"
+          },
+          "Created": "2026-10-01T12:00:00.000Z",
+          "LastModified": "2026-10-01T12:00:00.000Z",
+          "Name": "v1",
+          "Platforms": [
+            {
+              "Architecture": "arm64",
+              "Digest": "sha256:1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+              "Os": "linux"
+            },
+            {
+              "Architecture": "x86_64",
+              "Digest": "sha256:2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c",
+              "Os": "linux"
+            }
+          ],
+          "ReleaseNotes": "Initial release",
+          "ResolvedUri": "123456789012.dkr.ecr.us-west-2.amazonaws.com/php8@sha256:1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+          "State": "ACTIVE"
+        },
+        "description": "Retrieves a runtime version, including its resolved image URI, per-architecture platforms, and compatibility matrix.",
+        "id": "example-1",
+        "title": "Get a runtime version"
+      }
+    ],
+    "ListRuntimeAliases": [
+      {
+        "input": {
+          "MaxResults": 10,
+          "RuntimeName": "php8"
+        },
+        "output": {
+          "Items": [
+            {
+              "Arn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8/alias/latest",
+              "Created": "2026-10-01T12:00:00.000Z",
+              "Description": "Points at the newest published version",
+              "LastModified": "2026-10-02T09:30:00.000Z",
+              "Name": "latest",
+              "RuntimeVersion": "v1",
+              "RuntimeVersionArn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8/version/v1",
+              "State": "ACTIVE"
+            }
+          ]
+        },
+        "description": "Lists the aliases defined on a runtime.",
+        "id": "example-1",
+        "title": "List runtime aliases"
+      }
+    ],
+    "ListRuntimeVersions": [
+      {
+        "input": {
+          "MaxResults": 10,
+          "RuntimeName": "php8"
+        },
+        "output": {
+          "Items": [
+            {
+              "Arn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8/version/v1",
+              "Created": "2026-10-01T12:00:00.000Z",
+              "LastModified": "2026-10-01T12:00:00.000Z",
+              "Name": "v1",
+              "ReleaseNotes": "Initial release",
+              "ResolvedUri": "123456789012.dkr.ecr.us-west-2.amazonaws.com/php8@sha256:1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+              "State": "ACTIVE"
+            }
+          ]
+        },
+        "description": "Lists the versions published for a runtime.",
+        "id": "example-1",
+        "title": "List runtime versions"
+      }
+    ],
+    "ListRuntimes": [
+      {
+        "input": {
+          "MaxResults": 10
+        },
+        "output": {
+          "Items": [
+            {
+              "Arn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8",
+              "Created": "2026-10-01T12:00:00.000Z",
+              "Description": "PHP 8 custom runtime",
+              "LastModified": "2026-10-02T09:30:00.000Z",
+              "LicenseInfo": "MIT",
+              "Name": "php8",
+              "ReleaseLifecycle": {
+                "ReleaseState": "GA"
+              }
+            }
+          ]
+        },
+        "description": "Lists the runtimes in the account and region.",
+        "id": "example-1",
+        "title": "List runtimes"
+      }
+    ],
+    "RestoreRuntime": [
+      {
+        "input": {
+          "RuntimeAlias": "release",
+          "RuntimeName": "php8"
+        },
+        "output": {
+          "Arn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8/alias/release",
+          "LastModified": "2026-10-02T19:40:00.000Z",
+          "RuntimeAlias": "release",
+          "RuntimeName": "php8",
+          "State": "ACTIVE"
+        },
+        "description": "Cancels a pending deletion for an alias, returning it to ACTIVE.",
+        "id": "example-1",
+        "title": "Restore a runtime alias that is scheduled for deletion"
+      },
+      {
+        "input": {
+          "RuntimeName": "php8"
+        },
+        "output": {
+          "Arn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8",
+          "LastModified": "2026-10-02T19:41:00.000Z",
+          "RuntimeName": "php8",
+          "State": "ACTIVE"
+        },
+        "description": "Cancels a pending deletion for the runtime, returning it to ACTIVE.",
+        "id": "example-2",
+        "title": "Restore a customer-managed runtime that is scheduled for deletion"
+      }
+    ],
+    "UpdateRuntime": [
+      {
+        "input": {
+          "Description": "PHP 8 custom runtime (updated)",
+          "ReleaseLifecycle": {
+            "ReleaseState": "GA"
+          },
+          "RuntimeName": "php8"
+        },
+        "output": {
+          "Arn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8",
+          "Created": "2026-10-01T12:00:00.000Z",
+          "Description": "PHP 8 custom runtime (updated)",
+          "LastModified": "2026-10-02T09:30:00.000Z",
+          "LicenseInfo": "MIT",
+          "Name": "php8",
+          "ReleaseLifecycle": {
+            "ReleaseState": "GA"
+          }
+        },
+        "description": "Updates a runtime's description and declares it generally available.",
+        "id": "example-1",
+        "title": "Update a runtime"
+      }
+    ],
+    "UpdateRuntimeAlias": [
+      {
+        "input": {
+          "Name": "latest",
+          "RuntimeName": "php8",
+          "RuntimeVersion": "v2"
+        },
+        "output": {
+          "Arn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8/alias/latest",
+          "Created": "2026-10-01T12:00:00.000Z",
+          "Description": "Points at the newest published version",
+          "LastModified": "2026-10-03T08:15:00.000Z",
+          "Name": "latest",
+          "RuntimeName": "php8",
+          "RuntimeVersion": "v2",
+          "RuntimeVersionArn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8/version/v2",
+          "State": "UPDATING"
+        },
+        "description": "Repoints an alias at a different runtime version.",
+        "id": "example-1",
+        "title": "Update a runtime alias"
+      }
+    ],
+    "UpdateRuntimeVersion": [
+      {
+        "input": {
+          "Name": "v1",
+          "ReleaseNotes": "Patched OpenSSL to 3.0.14",
+          "RuntimeName": "php8"
+        },
+        "output": {
+          "Arn": "arn:aws:lambda:us-west-2:123456789012:runtime/php8/version/v1",
+          "Created": "2026-10-01T12:00:00.000Z",
+          "LastModified": "2026-10-03T08:15:00.000Z",
+          "Name": "v1",
+          "ReleaseNotes": "Patched OpenSSL to 3.0.14",
+          "ResolvedUri": "123456789012.dkr.ecr.us-west-2.amazonaws.com/php8@sha256:1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+          "State": "ACTIVE"
+        },
+        "description": "Updates the release notes of an ACTIVE runtime version.",
+        "id": "example-1",
+        "title": "Update a runtime version's release notes"
+      }
+    ]
+  }
 }

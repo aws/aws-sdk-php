@@ -4340,6 +4340,14 @@
       "type":"string",
       "pattern":"[a-zA-Z0-9_-]+"
     },
+    "MSTeamsBidirectionalConfiguration":{
+      "type":"structure",
+      "required":["roleArn"],
+      "members":{
+        "roleArn":{"shape":"RoleArn"},
+        "enabled":{"shape":"Boolean"}
+      }
+    },
     "MSTeamsChannel":{
       "type":"structure",
       "required":[
@@ -4366,7 +4374,8 @@
       "members":{
         "teamId":{"shape":"Guid"},
         "teamName":{"shape":"String"},
-        "transmissionTarget":{"shape":"MSTeamsTransmissionTarget"}
+        "transmissionTarget":{"shape":"MSTeamsTransmissionTarget"},
+        "bidirectional":{"shape":"MSTeamsBidirectionalConfiguration"}
       }
     },
     "MSTeamsTransmissionTarget":{

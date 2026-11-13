@@ -295,7 +295,7 @@ use Aws\Middleware;
  * @method \Aws\Result createFunction(array $args = [])
  * @phpstan-method \Aws\Result createFunction(array{
  *     FunctionName?: string,
- *     Runtime?: 'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
+ *     Runtime?: 'custom'|'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
  *     Role?: string,
  *     Handler?: string,
  *     Code?: array{
@@ -345,12 +345,13 @@ use Aws\Middleware;
  *         ...,
  *     },
  *     DurableConfig?: array{KMSKeyArn?: string, RetentionPeriodInDays?: int, ExecutionTimeout?: int, ...},
+ *     RuntimeConfig?: array{RuntimeArn?: string, RuntimeAlias?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createFunctionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createFunctionAsync(array{
  *     FunctionName?: string,
- *     Runtime?: 'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
+ *     Runtime?: 'custom'|'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
  *     Role?: string,
  *     Handler?: string,
  *     Code?: array{
@@ -400,6 +401,7 @@ use Aws\Middleware;
  *         ...,
  *     },
  *     DurableConfig?: array{KMSKeyArn?: string, RetentionPeriodInDays?: int, ExecutionTimeout?: int, ...},
+ *     RuntimeConfig?: array{RuntimeArn?: string, RuntimeAlias?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result createFunctionUrlConfig(array $args = [])
@@ -705,7 +707,7 @@ use Aws\Middleware;
  * @method \Aws\Result listLayerVersions(array $args = [])
  * @phpstan-method \Aws\Result listLayerVersions(array{
  *     CompatibleArchitecture?: 'arm64'|'x86_64',
- *     CompatibleRuntime?: 'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
+ *     CompatibleRuntime?: 'custom'|'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
  *     LayerName?: string,
  *     Marker?: string,
  *     MaxItems?: int,
@@ -714,7 +716,7 @@ use Aws\Middleware;
  * @method \GuzzleHttp\Promise\Promise listLayerVersionsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listLayerVersionsAsync(array{
  *     CompatibleArchitecture?: 'arm64'|'x86_64',
- *     CompatibleRuntime?: 'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
+ *     CompatibleRuntime?: 'custom'|'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
  *     LayerName?: string,
  *     Marker?: string,
  *     MaxItems?: int,
@@ -723,7 +725,7 @@ use Aws\Middleware;
  * @method \Aws\Result listLayers(array $args = [])
  * @phpstan-method \Aws\Result listLayers(array{
  *     CompatibleArchitecture?: 'arm64'|'x86_64',
- *     CompatibleRuntime?: 'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
+ *     CompatibleRuntime?: 'custom'|'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
  *     Marker?: string,
  *     MaxItems?: int,
  *     ...,
@@ -731,7 +733,7 @@ use Aws\Middleware;
  * @method \GuzzleHttp\Promise\Promise listLayersAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listLayersAsync(array{
  *     CompatibleArchitecture?: 'arm64'|'x86_64',
- *     CompatibleRuntime?: 'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
+ *     CompatibleRuntime?: 'custom'|'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
  *     Marker?: string,
  *     MaxItems?: int,
  *     ...,
@@ -761,7 +763,7 @@ use Aws\Middleware;
  *         ...,
  *     },
  *     CompatibleArchitectures?: list<'arm64'|'x86_64'>,
- *     CompatibleRuntimes?: list<'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0'>,
+ *     CompatibleRuntimes?: list<'custom'|'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0'>,
  *     LicenseInfo?: string,
  *     ...,
  * } $args = [])
@@ -778,7 +780,7 @@ use Aws\Middleware;
  *         ...,
  *     },
  *     CompatibleArchitectures?: list<'arm64'|'x86_64'>,
- *     CompatibleRuntimes?: list<'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0'>,
+ *     CompatibleRuntimes?: list<'custom'|'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0'>,
  *     LicenseInfo?: string,
  *     ...,
  * } $args = [])
@@ -1114,7 +1116,7 @@ use Aws\Middleware;
  *     MemorySize?: int,
  *     VpcConfig?: array{SubnetIds?: list<string>, SecurityGroupIds?: list<string>, Ipv6AllowedForDualStack?: bool, ...},
  *     Environment?: array{Variables?: array<string, string>, ...},
- *     Runtime?: 'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
+ *     Runtime?: 'custom'|'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
  *     DeadLetterConfig?: array{TargetArn?: string, ...},
  *     KMSKeyArn?: string,
  *     TracingConfig?: array{Mode?: 'Active'|'PassThrough', ...},
@@ -1141,6 +1143,7 @@ use Aws\Middleware;
  *         ...,
  *     },
  *     DurableConfig?: array{KMSKeyArn?: string, RetentionPeriodInDays?: int, ExecutionTimeout?: int, ...},
+ *     RuntimeConfig?: array{RuntimeArn?: string, RuntimeAlias?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFunctionConfigurationAsync(array $args = [])
@@ -1153,7 +1156,7 @@ use Aws\Middleware;
  *     MemorySize?: int,
  *     VpcConfig?: array{SubnetIds?: list<string>, SecurityGroupIds?: list<string>, Ipv6AllowedForDualStack?: bool, ...},
  *     Environment?: array{Variables?: array<string, string>, ...},
- *     Runtime?: 'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
+ *     Runtime?: 'custom'|'dotnet10'|'dotnet6'|'dotnet8'|'dotnetcore1.0'|'dotnetcore2.0'|'dotnetcore2.1'|'dotnetcore3.1'|'go1.x'|'java11'|'java11.al2023'|'java17'|'java17.al2023'|'java21'|'java25'|'java8'|'java8.al2'|'java8.al2023'|'nodejs'|'nodejs10.x'|'nodejs12.x'|'nodejs14.x'|'nodejs16.x'|'nodejs18.x'|'nodejs20.x'|'nodejs22.x'|'nodejs24.x'|'nodejs26.x'|'nodejs4.3'|'nodejs4.3-edge'|'nodejs6.10'|'nodejs8.10'|'provided'|'provided.al2'|'provided.al2023'|'python2.7'|'python3.10'|'python3.11'|'python3.12'|'python3.13'|'python3.14'|'python3.15'|'python3.6'|'python3.7'|'python3.8'|'python3.9'|'ruby2.5'|'ruby2.7'|'ruby3.2'|'ruby3.3'|'ruby3.4'|'ruby4.0',
  *     DeadLetterConfig?: array{TargetArn?: string, ...},
  *     KMSKeyArn?: string,
  *     TracingConfig?: array{Mode?: 'Active'|'PassThrough', ...},
@@ -1180,6 +1183,7 @@ use Aws\Middleware;
  *         ...,
  *     },
  *     DurableConfig?: array{KMSKeyArn?: string, RetentionPeriodInDays?: int, ExecutionTimeout?: int, ...},
+ *     RuntimeConfig?: array{RuntimeArn?: string, RuntimeAlias?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateFunctionEventInvokeConfig(array $args = [])

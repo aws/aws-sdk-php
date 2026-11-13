@@ -516,6 +516,7 @@
         "AgentSpacePreferences$value": null,
         "CapabilityConfiguration$enabled": "<p>Whether the capability is enabled.</p>",
         "MCPServerOAuth3LOConfig$supportCodeChallenge": "<p>Whether the service supports PKCE (Proof Key for Code Exchange) for enhanced security during the OAuth flow.</p>",
+        "MSTeamsBidirectionalConfiguration$enabled": "<p>Specifies whether bidirectional communication is enabled for this association. If you set this value to <code>true</code>, you can mention the agent in the configured Microsoft Teams channel and it responds in that channel. If you omit this parameter or set it to <code>false</code>, the agent only sends one-way notifications.</p>",
         "SendMessageContentBlockStopEvent$last": "<p>Whether this is the final content block in the response</p>",
         "SlackBidirectionalConfiguration$enabled": "<p>Whether bidirectional communication is enabled for this association. When you set this value to true, you can mention the agent in a configured Slack channel and it responds in that channel. When you omit this value or set it to false, the agent ignores mentions and only sends notifications.</p>",
         "Task$hasLinkedTasks": "<p>Indicates if this task has other tasks linked to it</p>",
@@ -1909,6 +1910,12 @@
         "MCPToolsList$member": null
       }
     },
+    "MSTeamsBidirectionalConfiguration": {
+      "base": "<p>Configuration for bidirectional communication with a Microsoft Teams channel. When enabled, the agent receives and responds to mentions in the configured channel in addition to sending notifications.</p>",
+      "refs": {
+        "MSTeamsConfiguration$bidirectional": "<p>The bidirectional communication configuration for the Microsoft Teams integration. Provide this configuration with <code>enabled</code> set to <code>true</code> to allow users to interact with the agent directly from Microsoft Teams.</p>"
+      }
+    },
     "MSTeamsChannel": {
       "base": "<p>Represents a channel in a Microsoft Teams team that the DevOps Agent service can send notifications to.</p>",
       "refs": {
@@ -2704,6 +2711,7 @@
         "GitHubConfiguration$runtimeRoleArn": "<p>Optional role ARN that AIDevOps assumes at runtime for automatic verification testing and VPC connectivity on this association.</p>",
         "GitLabConfiguration$runtimeRoleArn": "<p>Optional role ARN that AIDevOps assumes at runtime for automatic verification testing and VPC connectivity on this association.</p>",
         "MCPServerSigV4AuthorizationConfig$mcpRoleArn": "<p>IAM role ARN to assume for SigV4 signing. Optional — when omitted, credentials are resolved at runtime via a monitor account association.</p>",
+        "MSTeamsBidirectionalConfiguration$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the agent assumes to exchange messages with the Microsoft Teams team for this association.</p>",
         "PrivateNetworkAccess$runtimeRoleArn": "<p>Role ARN that AWS DevOps Agent assumes at runtime to connect to your VPC.</p>",
         "RegisteredAzureIdentityDetails$webIdentityRoleArn": "<p>The role ARN to be assumed by DevOps Agent for requesting Web Identity Token.</p>",
         "RegisteredMCPServerSigV4Details$mcpRoleArn": null,

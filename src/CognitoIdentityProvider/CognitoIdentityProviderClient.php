@@ -619,6 +619,14 @@ use Aws\AwsClient;
  *         AdvancedSecurityAdditionalFlows?: array{CustomAuthMode?: 'AUDIT'|'ENFORCED', ...},
  *         ...,
  *     },
+ *     DcrConfiguration?: array{
+ *         EnableStatus?: 'Disabled'|'Enabled',
+ *         OpenDcrEnabled?: bool,
+ *         AuthenticatedGrantTypes?: list<'client_credentials'|'code'|'implicit'>,
+ *         OpenDcrGrantTypes?: list<'client_credentials'|'code'|'implicit'>,
+ *         AllowedScopes?: list<string>,
+ *         ...,
+ *     },
  *     UsernameConfiguration?: array{CaseSensitive?: bool, ...},
  *     AccountRecoverySetting?: array{RecoveryMechanisms?: list<array>, ...},
  *     UserPoolTier?: 'ESSENTIALS'|'LITE'|'PLUS',
@@ -726,6 +734,14 @@ use Aws\AwsClient;
  *     UserPoolAddOns?: array{
  *         AdvancedSecurityMode?: 'AUDIT'|'ENFORCED'|'OFF',
  *         AdvancedSecurityAdditionalFlows?: array{CustomAuthMode?: 'AUDIT'|'ENFORCED', ...},
+ *         ...,
+ *     },
+ *     DcrConfiguration?: array{
+ *         EnableStatus?: 'Disabled'|'Enabled',
+ *         OpenDcrEnabled?: bool,
+ *         AuthenticatedGrantTypes?: list<'client_credentials'|'code'|'implicit'>,
+ *         OpenDcrGrantTypes?: list<'client_credentials'|'code'|'implicit'>,
+ *         AllowedScopes?: list<string>,
  *         ...,
  *     },
  *     UsernameConfiguration?: array{CaseSensitive?: bool, ...},
@@ -1095,9 +1111,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listUserPoolClientSecretsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listUserPoolClientSecretsAsync(array{UserPoolId?: string, ClientId?: string, NextToken?: string, ...} $args = [])
  * @method \Aws\Result listUserPoolClients(array $args = [])
- * @phpstan-method \Aws\Result listUserPoolClients(array{UserPoolId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result listUserPoolClients(array{UserPoolId?: string, MaxResults?: int, NextToken?: string, ClientType?: 'DCR'|'REGULAR', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listUserPoolClientsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listUserPoolClientsAsync(array{UserPoolId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listUserPoolClientsAsync(array{UserPoolId?: string, MaxResults?: int, NextToken?: string, ClientType?: 'DCR'|'REGULAR', ...} $args = [])
  * @method \Aws\Result listUserPoolReplicas(array $args = [])
  * @phpstan-method \Aws\Result listUserPoolReplicas(array{UserPoolId?: string, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listUserPoolReplicasAsync(array $args = [])
@@ -1651,6 +1667,14 @@ use Aws\AwsClient;
  *         AdvancedSecurityAdditionalFlows?: array{CustomAuthMode?: 'AUDIT'|'ENFORCED', ...},
  *         ...,
  *     },
+ *     DcrConfiguration?: array{
+ *         EnableStatus?: 'Disabled'|'Enabled',
+ *         OpenDcrEnabled?: bool,
+ *         AuthenticatedGrantTypes?: list<'client_credentials'|'code'|'implicit'>,
+ *         OpenDcrGrantTypes?: list<'client_credentials'|'code'|'implicit'>,
+ *         AllowedScopes?: list<string>,
+ *         ...,
+ *     },
  *     AccountRecoverySetting?: array{RecoveryMechanisms?: list<array>, ...},
  *     PoolName?: string,
  *     UserPoolTier?: 'ESSENTIALS'|'LITE'|'PLUS',
@@ -1746,6 +1770,14 @@ use Aws\AwsClient;
  *     UserPoolAddOns?: array{
  *         AdvancedSecurityMode?: 'AUDIT'|'ENFORCED'|'OFF',
  *         AdvancedSecurityAdditionalFlows?: array{CustomAuthMode?: 'AUDIT'|'ENFORCED', ...},
+ *         ...,
+ *     },
+ *     DcrConfiguration?: array{
+ *         EnableStatus?: 'Disabled'|'Enabled',
+ *         OpenDcrEnabled?: bool,
+ *         AuthenticatedGrantTypes?: list<'client_credentials'|'code'|'implicit'>,
+ *         OpenDcrGrantTypes?: list<'client_credentials'|'code'|'implicit'>,
+ *         AllowedScopes?: list<string>,
  *         ...,
  *     },
  *     AccountRecoverySetting?: array{RecoveryMechanisms?: list<array>, ...},
