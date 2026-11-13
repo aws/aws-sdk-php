@@ -3,12 +3,16 @@ namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Cbor\CborEncoder;
 use Aws\Api\DateTimeResult;
+use Aws\Api\Parser\EventParsingIterator;
 use Aws\Api\Parser\Exception\ParserException;
 use Aws\Api\Parser\RpcV2CborParser;
 use Aws\Api\Service;
 use Aws\CommandInterface;
+use Aws\Result;
 use DateTimeImmutable;
+use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -17,6 +21,8 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class RpcV2CborParserTest extends TestCase
 {
+    use EventStreamMessageTrait;
+
     private CborEncoder $encoder;
 
     protected function set_up(): void
@@ -631,5 +637,115 @@ class RpcV2CborParserTest extends TestCase
                 'expectedMessage' => null
             ],
         ];
+    }
+
+    #[DataProvider('eventStreamBodyProvider')]
+    public function testEventStreamOutputPutsInitialResponseOnResult(bool $seekable): void
+    {
+        $body = self::cborEvent('initial-response', $this->encoder->encode([
+            'sessionId' => 'session-1',
+            'timeout' => 30,
+            'startedAt' => ['__cbor_timestamp' => 1609502096.0],
+        ])) . self::cborEvent('dataEvent', $this->encoder->encode(['value' => 'v1']));
+        $result = $this->parseEventStreamResponse($seekable, $body);
+
+        $this->assertSame('session-1', $result['sessionId']);
+        $this->assertSame(30, $result['timeout']);
+        $this->assertInstanceOf(DateTimeResult::class, $result['startedAt']);
+        $this->assertSame('1609502096', $result['startedAt']->format('U'));
+        $this->assertInstanceOf(EventParsingIterator::class, $result['stream']);
+
+        $events = [];
+        foreach ($result['stream'] as $event) {
+            $events[] = $event;
+        }
+        $this->assertCount(2, $events);
+        $this->assertSame('session-1', $events[0]['initial-response']['sessionId']);
+        $this->assertSame(30, $events[0]['initial-response']['timeout']);
+        $this->assertSame(['dataEvent' => ['value' => 'v1']], $events[1]);
+    }
+
+    #[DataProvider('eventStreamBodyProvider')]
+    public function testEventStreamOutputWithoutInitialResponseMessage(bool $seekable): void
+    {
+        $body = self::cborEvent('dataEvent', $this->encoder->encode(['value' => 'v1']));
+        $result = $this->parseEventStreamResponse($seekable, $body);
+
+        $this->assertSame(['stream'], array_keys($result->toArray()));
+        $events = [];
+        foreach ($result['stream'] as $event) {
+            $events[] = $event;
+        }
+        $this->assertSame([['dataEvent' => ['value' => 'v1']]], $events);
+
+        $empty = $this->parseEventStreamResponse($seekable, '');
+        $this->assertSame(['stream'], array_keys($empty->toArray()));
+        $events = [];
+        foreach ($empty['stream'] as $event) {
+            $events[] = $event;
+        }
+        $this->assertSame([], $events);
+    }
+
+    public static function eventStreamBodyProvider(): array
+    {
+        return ['seekable body' => [true], 'non-seekable body' => [false]];
+    }
+
+    private function parseEventStreamResponse(bool $seekable, string $body): Result
+    {
+        $service = new Service([
+            'metadata' => [
+                'protocol' => 'smithy-rpc-v2-cbor',
+                'serviceIdentifier' => 'testservice',
+            ],
+            'operations' => [
+                'StreamOperation' => [
+                    'http' => ['method' => 'POST'],
+                    'output' => ['shape' => 'StreamOutput'],
+                ],
+            ],
+            'shapes' => [
+                'StreamOutput' => [
+                    'type' => 'structure',
+                    'members' => [
+                        'sessionId' => ['shape' => 'StringShape'],
+                        'timeout' => ['shape' => 'IntegerShape'],
+                        'startedAt' => ['shape' => 'TimestampShape'],
+                        'stream' => ['shape' => 'EventStream'],
+                    ],
+                ],
+                'EventStream' => [
+                    'type' => 'structure',
+                    'eventstream' => true,
+                    'members' => ['dataEvent' => ['shape' => 'DataEvent']],
+                ],
+                'DataEvent' => [
+                    'type' => 'structure',
+                    'event' => true,
+                    'members' => ['value' => ['shape' => 'StringShape']],
+                ],
+                'StringShape' => ['type' => 'string'],
+                'IntegerShape' => ['type' => 'integer'],
+                'TimestampShape' => ['type' => 'timestamp'],
+            ],
+        ], function () {
+        });
+        $stream = Utils::streamFor($body);
+        $response = new Response(
+            200,
+            ['Smithy-Protocol' => 'rpc-v2-cbor'],
+            $seekable ? $stream : new NoSeekStream($stream)
+        );
+
+        return (new RpcV2CborParser($service))($this->createCommand('StreamOperation'), $response);
+    }
+
+    private static function cborEvent(string $eventType, string $payload): string
+    {
+        return self::stringHeaderMessage(
+            [':message-type' => 'event', ':event-type' => $eventType, ':content-type' => 'application/cbor'],
+            $payload
+        );
     }
 }

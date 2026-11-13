@@ -184,4 +184,57 @@ EOF;
             ];
         }
     }
+
+    public function testEmptyFirstReadIsNotBuffered(): void
+    {
+        $encodedEvent = <<<EOF
+AAAAhQAAAExjTu0wDTptZXNzYWdlLXR5cGUHAAVldmVudAs6ZXZlbnQtdHlwZQcABnBlcnNvbg06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbnsibmFtZSI6ImZvbyIsImxhc3ROYW1lIjo
+iZnV6eiIsImFnZSI6Mjh9+hfixw==
+EOF;
+        $eventStream = Utils::streamFor(base64_decode($encodedEvent));
+        $firstRead = true;
+        $stream = $this->createMock(StreamInterface::class);
+        $stream->method('isSeekable')->willReturn(false);
+        $stream->method('eof')->willReturnCallback(function () use ($eventStream) {
+            return $eventStream->eof();
+        });
+        $stream->method('read')->willReturnCallback(function ($length) use ($eventStream, &$firstRead) {
+            if ($firstRead) {
+                // The first read gives no data, but the stream is not at its end.
+                $firstRead = false;
+                return '';
+            }
+
+            return $eventStream->read($length);
+        });
+        $iterator = new NonSeekableStreamDecodingEventStreamIterator($stream);
+        $events = [];
+        foreach ($iterator as $event) {
+            $events[] = $event;
+        }
+
+        $this->assertCount(1, $events);
+        $this->assertSame('person', $events[0]['headers'][':event-type']);
+    }
+
+    #[DataProvider('emptyStreamProvider')]
+    public function testEmptyStreamHasNoEvents(StreamInterface $stream): void
+    {
+        $iterator = new NonSeekableStreamDecodingEventStreamIterator($stream);
+        $events = [];
+        foreach ($iterator as $event) {
+            $events[] = $event;
+        }
+
+        $this->assertSame([], $events);
+        $this->assertFalse($iterator->valid());
+    }
+
+    public static function emptyStreamProvider(): array
+    {
+        return [
+            'no seek stream' => [new NoSeekStream(Utils::streamFor(''))],
+            'buffer stream' => [new BufferStream()],
+        ];
+    }
 }
