@@ -418,6 +418,13 @@ class ClientResolver
      */
     public function resolve(array $args, HandlerList $list)
     {
+        return ConfigurationResolver::withIniCache(
+            fn() => $this->resolveArgs($args, $list)
+        );
+    }
+
+    private function resolveArgs(array $args, HandlerList $list)
+    {
         $args['config'] = [];
         foreach ($this->argDefinitions as $key => $a) {
             // Add defaults, validate required values, and skip if not set.

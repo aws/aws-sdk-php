@@ -1660,7 +1660,8 @@
         "PRE_SESSION_INITIALIZATION",
         "PRE_ADS_REQUEST",
         "POST_ADS_RESPONSE",
-        "PRE_MANIFEST_INSERTION"
+        "PRE_MANIFEST_INSERTION",
+        "POST_ORIGIN_RESPONSE"
       ]
     },
     "FillPolicy":{
@@ -1686,6 +1687,7 @@
         "ConcurrentExecutorConfiguration":{"shape":"ConcurrentExecutorConfiguration"},
         "SequentialExecutorConfiguration":{"shape":"SequentialExecutorConfiguration"},
         "VastRequestConfiguration":{"shape":"VastRequestConfiguration"},
+        "HlsTagProcessorConfiguration":{"shape":"HlsTagProcessorConfiguration"},
         "Tags":{
           "shape":"__mapOf__string",
           "locationName":"tags"
@@ -1714,7 +1716,8 @@
         "CUSTOM_OUTPUT",
         "CONCURRENT_EXECUTOR",
         "SEQUENTIAL_EXECUTOR",
-        "VAST_REQUEST"
+        "VAST_REQUEST",
+        "HLS_TAG_PROCESSOR"
       ]
     },
     "GetChannelPolicyRequest":{
@@ -1799,6 +1802,7 @@
         "ConcurrentExecutorConfiguration":{"shape":"ConcurrentExecutorConfiguration"},
         "SequentialExecutorConfiguration":{"shape":"SequentialExecutorConfiguration"},
         "VastRequestConfiguration":{"shape":"VastRequestConfiguration"},
+        "HlsTagProcessorConfiguration":{"shape":"HlsTagProcessorConfiguration"},
         "Tags":{
           "shape":"__mapOf__string",
           "locationName":"tags"
@@ -1902,6 +1906,23 @@
       "members":{
         "ManifestWindowSeconds":{"shape":"__integer"},
         "AdMarkupType":{"shape":"adMarkupTypes"}
+      }
+    },
+    "HlsTagName":{
+      "type":"string",
+      "enum":["EXT-X-DATERANGE"]
+    },
+    "HlsTagProcessorConfiguration":{
+      "type":"structure",
+      "required":[
+        "Runtime",
+        "TagFilter"
+      ],
+      "members":{
+        "Runtime":{"shape":"RuntimeType"},
+        "Output":{"shape":"__mapOf__string"},
+        "TagFilter":{"shape":"TagFilterList"},
+        "RunCondition":{"shape":"__string"}
       }
     },
     "HttpConfiguration":{
@@ -2321,7 +2342,9 @@
         "ERROR_BUMPER_START_INTERPOLATION",
         "ERROR_BUMPER_END_INTERPOLATION",
         "PRE_SESSION_INIT_HOOK_ERROR",
-        "PRE_SESSION_INIT_FUNCTION_ERROR"
+        "PRE_SESSION_INIT_FUNCTION_ERROR",
+        "POST_ORIGIN_RESPONSE_HOOK_ERROR",
+        "POST_ORIGIN_RESPONSE_FUNCTION_ERROR"
       ]
     },
     "ManifestServiceInteractionLog":{
@@ -2335,7 +2358,9 @@
       "type":"string",
       "enum":[
         "PRE_SESSION_INIT_HOOK_SUMMARY",
-        "PRE_SESSION_INIT_FUNCTION_COMPLETED"
+        "PRE_SESSION_INIT_FUNCTION_COMPLETED",
+        "POST_ORIGIN_RESPONSE_HOOK_SUMMARY",
+        "POST_ORIGIN_RESPONSE_FUNCTION_COMPLETED"
       ]
     },
     "MaxResults":{
@@ -2547,6 +2572,7 @@
         "ConcurrentExecutorConfiguration":{"shape":"ConcurrentExecutorConfiguration"},
         "SequentialExecutorConfiguration":{"shape":"SequentialExecutorConfiguration"},
         "VastRequestConfiguration":{"shape":"VastRequestConfiguration"},
+        "HlsTagProcessorConfiguration":{"shape":"HlsTagProcessorConfiguration"},
         "Tags":{
           "shape":"__mapOf__string",
           "locationName":"tags"
@@ -2569,6 +2595,7 @@
         "ConcurrentExecutorConfiguration":{"shape":"ConcurrentExecutorConfiguration"},
         "SequentialExecutorConfiguration":{"shape":"SequentialExecutorConfiguration"},
         "VastRequestConfiguration":{"shape":"VastRequestConfiguration"},
+        "HlsTagProcessorConfiguration":{"shape":"HlsTagProcessorConfiguration"},
         "Tags":{
           "shape":"__mapOf__string",
           "locationName":"tags"
@@ -2896,6 +2923,11 @@
       "type":"map",
       "key":{"shape":"__string"},
       "value":{"shape":"__string"}
+    },
+    "TagFilterList":{
+      "type":"list",
+      "member":{"shape":"HlsTagName"},
+      "min":1
     },
     "TagResourceRequest":{
       "type":"structure",

@@ -3,7 +3,6 @@ namespace Aws\Handler\Guzzle;
 
 use Aws\Handler\HttpHandlerError;
 use Aws\Handler\HttpTransportSharing;
-use GuzzleHttp\Utils;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -49,7 +48,7 @@ class GuzzleHandler
         $request = $request->withHeader(
             'User-Agent',
             $request->getHeaderLine('User-Agent')
-                . ' ' . Utils::defaultUserAgent()
+                . ' GuzzleHttp/' . ClientInterface::MAJOR_VERSION
         );
 
         return $this->client->sendAsync($request, $this->parseOptions($options))

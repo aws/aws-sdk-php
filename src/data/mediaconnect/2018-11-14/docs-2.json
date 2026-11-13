@@ -100,6 +100,13 @@
     "UpdateSourceEndpoint": "<p>Updates the configuration of a source endpoint.</p>"
   },
   "shapes": {
+    "ActionString": {
+      "base": null,
+      "refs": {
+        "PidMapRule$Action": "<p>The action to apply to the elementary streams that match this rule.</p>",
+        "SingleProgramTransportStreamPidMapConfiguration$DefaultAction": "<p>The action to apply to an elementary stream that doesn't match any rule.</p>"
+      }
+    },
     "AddBridgeFlowSourceRequest": {
       "base": "<p> Add a flow source to an existing bridge. </p>",
       "refs": {
@@ -261,6 +268,18 @@
         "__listOfAudioMonitoringSetting$member": null
       }
     },
+    "AutoPidMapConfiguration": {
+      "base": "<p>The configuration settings for automatic Packet ID (PID) assignment. These settings apply to any PID mapping rule that uses the <code>auto</code> action, including the default action.</p>",
+      "refs": {
+        "SingleProgramTransportStreamPidMapConfiguration$Auto": "<p>The settings for automatic Packet ID (PID) assignment. The default start PID is 512, with 32 PIDs per program.</p>"
+      }
+    },
+    "AutoPidMapConfigurationPidsPerProgramInteger": {
+      "base": null,
+      "refs": {
+        "AutoPidMapConfiguration$PidsPerProgram": "<p>The number of PIDs in the range for automatic PID assignment.</p>"
+      }
+    },
     "AutomaticEncryptionKeyConfiguration": {
       "base": "<p>Configuration settings for automatic encryption key management, where MediaConnect handles key creation and rotation.</p>",
       "refs": {
@@ -273,6 +292,12 @@
       "base": "<p>The configuration for automatic endpoint encryption. In this mode, MediaConnect determines the encryption key when the endpoint connects. This type does not require any additional settings.</p>",
       "refs": {
         "EndpointEncryptionConfiguration$Automatic": "<p>The configuration for automatic encryption, where MediaConnect determines the encryption key when the endpoint connects.</p>"
+      }
+    },
+    "AutomaticRtmpPushNamingConfiguration": {
+      "base": "<p>The automatic RTMP naming configuration, where MediaConnect generates the application and stream names. This type does not require any additional settings.</p>",
+      "refs": {
+        "RtmpPushNamingConfiguration$Automatic": "<p>The naming configuration where MediaConnect generates the application and stream names.</p>"
       }
     },
     "BadRequestException": {
@@ -514,6 +539,7 @@
       "base": "<p>The color signaling of the video stream.</p>",
       "refs": {
         "NdiMediaStreamInfo$Color": "<p> The color signaling of the video stream. Used when the <code>streamType</code> is <code>Video</code>. </p>",
+        "RtmpMediaStreamInfo$Color": "<p>The color signaling of the video stream. Used when the <code>streamType</code> is <code>VIDEO</code>.</p>",
         "TransportStream$Color": "<p>The color signaling of the video stream.</p>"
       }
     },
@@ -1163,6 +1189,18 @@
         "FabricConfiguration$RecoveryLatencyMode": "<p>The recovery latency mode for the router fabric connection. Valid values include the following:</p> <ul> <li> <p> <code>BALANCED</code> (default) – Optimizes for stream quality.</p> </li> <li> <p> <code>LOW_LATENCY</code> – Reduces latency at the potential cost of stream quality under adverse network conditions.</p> </li> </ul>"
       }
     },
+    "FabricSwitchingConfiguration": {
+      "base": "<p>The configuration settings for switching between router inputs.</p>",
+      "refs": {
+        "FabricConfiguration$SwitchingConfiguration": "<p>The configuration settings for the switching mode.</p>"
+      }
+    },
+    "FabricSwitchingMode": {
+      "base": null,
+      "refs": {
+        "FabricConfiguration$SwitchingMode": "<p>The switching mode that the router output uses when it switches to a new router input. Valid values include the following:</p> <ul> <li> <p> <code>IMMEDIATE</code> (default) – Switches to the new router input immediately.</p> </li> <li> <p> <code>KEY_FRAME</code> – Waits for a key frame on the new router input before it switches.</p> </li> </ul> <p>If you specify it, it must match the switching configuration.</p>"
+      }
+    },
     "FailoverConfig": {
       "base": "<p> The settings for source failover.</p>",
       "refs": {
@@ -1313,6 +1351,7 @@
       "base": "<p> The frame resolution used by the video stream.</p>",
       "refs": {
         "NdiMediaStreamInfo$FrameResolution": "<p> The width and height dimensions of the video frame in pixels. Used when the <code>streamType</code> is <code>Video</code>. </p>",
+        "RtmpMediaStreamInfo$FrameResolution": "<p>The width and height dimensions of the video frame in pixels. Used when the <code>streamType</code> is <code>VIDEO</code>.</p>",
         "TransportStream$FrameResolution": "<p>The frame resolution used by the video stream. </p>"
       }
     },
@@ -1440,6 +1479,12 @@
       "base": null,
       "refs": {}
     },
+    "ImmediateFabricSwitchingConfiguration": {
+      "base": "<p>The switching configuration where the router output switches to the new router input immediately. This type does not require any additional settings.</p>",
+      "refs": {
+        "FabricSwitchingConfiguration$Immediate": "<p>The switching configuration where the router output switches to the new router input immediately.</p>"
+      }
+    },
     "IngressGatewayBridge": {
       "base": "<p>Create a bridge with the ingress bridge type. An ingress bridge is a ground-to-cloud bridge. The content originates at your premises and is delivered to the cloud. </p>",
       "refs": {
@@ -1529,6 +1574,10 @@
         "RouterInput$MaximumRoutedOutputs": "<p>The maximum number of outputs that can be simultaneously routed to this input.</p>",
         "RouterNetworkInterface$AssociatedOutputCount": "<p>The number of router outputs associated with the network interface.</p>",
         "RouterNetworkInterface$AssociatedInputCount": "<p>The number of router inputs associated with the network interface.</p>",
+        "RtmpMediaStreamInfo$StreamId": "<p>A unique identifier for the stream.</p>",
+        "RtmpMediaStreamInfo$Channels": "<p>The number of audio channels in the stream. Used when the <code>streamType</code> is <code>AUDIO</code>.</p>",
+        "RtmpMediaStreamInfo$SampleRate": "<p>The number of audio samples captured per second. Used when the <code>streamType</code> is <code>AUDIO</code>.</p>",
+        "RtmpMediaStreamInfo$SampleSize": "<p>The sample bit size used by the audio stream. Used when the <code>streamType</code> is <code>AUDIO</code>.</p>",
         "SetSourceRequest$IngestPort": "<p> The port that the flow will be listening on for incoming content.</p>",
         "SetSourceRequest$MaxBitrate": "<p> The smoothing max bitrate (in bps) for RIST, RTP, and RTP-FEC streams.</p>",
         "SetSourceRequest$MaxLatency": "<p> The maximum latency in milliseconds. This parameter applies only to RIST-based and Zixi-based streams.</p>",
@@ -1599,6 +1648,18 @@
     "InternalServerErrorException": {
       "base": "<p>The server encountered an internal error and is unable to complete the request. </p>",
       "refs": {}
+    },
+    "KeyFrameFabricSwitchingConfiguration": {
+      "base": "<p>The switching configuration where the router output waits for a key frame on the new router input before it switches.</p>",
+      "refs": {
+        "FabricSwitchingConfiguration$KeyFrame": "<p>The switching configuration where the router output waits for a key frame on the new router input before it switches.</p>"
+      }
+    },
+    "KeyFrameFabricSwitchingConfigurationKeyFrameWaitMillisecondsLong": {
+      "base": null,
+      "refs": {
+        "KeyFrameFabricSwitchingConfiguration$KeyFrameWaitMilliseconds": "<p>The maximum time, in milliseconds, that the router output waits for a key frame on the new input before it switches. Set this value to at least the GOP (Group of Pictures) duration of your content, which your upstream encoder determines. If the wait time is shorter than the GOP duration, MediaConnect makes a best effort to switch without a key frame. The default is 3000.</p>"
+      }
     },
     "KeyType": {
       "base": null,
@@ -1908,6 +1969,12 @@
       "refs": {
         "RouterInput$MaintenanceType": "<p>The type of maintenance configuration applied to this router input.</p>",
         "RouterOutput$MaintenanceType": "<p>The type of maintenance configuration applied to this router output.</p>"
+      }
+    },
+    "ManualRtmpPushNamingConfiguration": {
+      "base": "<p>The manual RTMP naming configuration, where you specify the application and stream names.</p>",
+      "refs": {
+        "RtmpPushNamingConfiguration$Manual": "<p>The naming configuration where you specify the application and stream names.</p>"
       }
     },
     "MaxResults": {
@@ -2239,6 +2306,41 @@
         "ResourceShareDetails$Owned": "<p>The sharing details for an endpoint that this account owns and shares with other accounts through RAM.</p>"
       }
     },
+    "Passthrough": {
+      "base": "<p>The configuration that passes through the value from the source. This type does not require any additional settings.</p>",
+      "refs": {
+        "ProgramClockReferencePidConfiguration$Passthrough": "<p>The PCR PID configuration that passes through the PCR PID from the source.</p>",
+        "ProgramMapTablePidConfiguration$Passthrough": "<p>The PMT PID configuration that passes through the PMT PID from the source.</p>",
+        "ProgramNumberConfiguration$Passthrough": "<p>The program number configuration that passes through the program number from the source.</p>",
+        "TransportStreamIdConfiguration$Passthrough": "<p>The TSID configuration that passes through the TSID from the source.</p>"
+      }
+    },
+    "Pid": {
+      "base": null,
+      "refs": {
+        "AutoPidMapConfiguration$StartPid": "<p>The first PID in the range for automatic PID assignment.</p>",
+        "ProgramClockReferencePidConfiguration$Set": "<p>The PCR PID to use for the router output. MediaConnect applies this value only when the PCR is carried on its own PID. If the PCR is carried on an elementary stream, this value has no effect. If you also set the PMT PID, the two values must be different.</p>",
+        "ProgramMapTablePidConfiguration$Set": "<p>The PMT PID to use for the router output. If you also set the PCR PID, the two values must be different.</p>"
+      }
+    },
+    "PidMapRule": {
+      "base": "<p>A rule that selects elementary streams and specifies the action to apply to them.</p>",
+      "refs": {
+        "PidMapRules$member": null
+      }
+    },
+    "PidMapRuleMatchExpressionString": {
+      "base": null,
+      "refs": {
+        "PidMapRule$MatchExpression": "<p>An expression that selects the elementary streams that this rule applies to.</p>"
+      }
+    },
+    "PidMapRules": {
+      "base": null,
+      "refs": {
+        "SingleProgramTransportStreamPidMapConfiguration$Rules": "<p>The ordered list of up to 32 rules that determine the action for each elementary stream. MediaConnect applies the first rule that matches.</p>"
+      }
+    },
     "PreferredDayTimeMaintenanceConfiguration": {
       "base": "<p>Configuration for preferred day and time maintenance settings.</p>",
       "refs": {
@@ -2250,6 +2352,30 @@
       "refs": {
         "Offering$PriceUnits": "<p> The unit of measurement that is used for billing. This value, in combination with pricePerUnit, makes up the rate.</p>",
         "Reservation$PriceUnits": "<p> The unit of measurement that is used for billing. This value, in combination with pricePerUnit, makes up the rate. MediaConnect defines this value in the offering.</p>"
+      }
+    },
+    "ProgramClockReferencePidConfiguration": {
+      "base": "<p>The configuration settings for the Program Clock Reference (PCR) Packet ID (PID).</p>",
+      "refs": {
+        "SingleProgramTransportStreamPidMapConfiguration$ProgramClockReferencePid": "<p>The Program Clock Reference (PCR) PID settings for the router output. By default, the router output passes through the PCR PID from the source.</p>"
+      }
+    },
+    "ProgramMapTablePidConfiguration": {
+      "base": "<p>The configuration settings for the Program Map Table (PMT) Packet ID (PID).</p>",
+      "refs": {
+        "SingleProgramTransportStreamPidMapConfiguration$ProgramMapTablePid": "<p>The Program Map Table (PMT) PID settings for the router output. By default, the router output passes through the PMT PID from the source.</p>"
+      }
+    },
+    "ProgramNumberConfiguration": {
+      "base": "<p>The configuration settings for the program number.</p>",
+      "refs": {
+        "SingleProgramTransportStreamPidMapConfiguration$ProgramNumber": "<p>The program number settings for the router output. By default, the router output passes through the program number from the source.</p>"
+      }
+    },
+    "ProgramNumberConfigurationSetInteger": {
+      "base": null,
+      "refs": {
+        "ProgramNumberConfiguration$Set": "<p>The program number to use for the router output.</p>"
       }
     },
     "Protocol": {
@@ -3023,6 +3149,14 @@
         "RouterOutputSourceEndpointAssociatedResourceDetails$Messages": "<p>The status messages for the router output.</p>"
       }
     },
+    "RouterOutputProcessors": {
+      "base": "<p>The processor settings for a router output.</p>",
+      "refs": {
+        "CreateRouterOutputRequest$Processors": "<p>The processor settings for the router output.</p>",
+        "RouterOutput$Processors": "<p>The processor settings for the router output.</p>",
+        "UpdateRouterOutputRequest$Processors": "<p>The updated processor settings for the router output. When you update the processors, include every setting that you want to keep. MediaConnect resets the settings that you don't specify to their defaults.</p>"
+      }
+    },
     "RouterOutputProtocol": {
       "base": null,
       "refs": {
@@ -3126,6 +3260,59 @@
         "RouterOutputFilter$RoutingScopes": "<p>Filter criteria to list router outputs based on their routing scope.</p>"
       }
     },
+    "RtmpMediaInfo": {
+      "base": "<p>Metadata about the audio and video media that is part of the RTMP source content. This includes details about the individual streams.</p>",
+      "refs": {
+        "RtmpSourceMetadataInfo$MediaInfo": "<p>Information about the audio and video streams that are part of the RTMP source.</p>"
+      }
+    },
+    "RtmpMediaStreamInfo": {
+      "base": "<p>Information about a single audio or video stream that is part of an RTMP source. This includes details about the stream type, codec, resolution, frame rate, audio channels, and sample rate.</p>",
+      "refs": {
+        "RtmpMediaStreamInfoList$member": null
+      }
+    },
+    "RtmpMediaStreamInfoList": {
+      "base": null,
+      "refs": {
+        "RtmpMediaInfo$Streams": "<p>A list of the individual audio and video streams that make up the RTMP source. This includes details about each stream's codec, resolution, frame rate, audio channels, and other parameters.</p>"
+      }
+    },
+    "RtmpPushNamingConfiguration": {
+      "base": "<p>The configuration settings for the RTMP (Real-Time Messaging Protocol) application and stream names.</p>",
+      "refs": {
+        "RtmpPushRouterInputConfiguration$NamingConfiguration": "<p>The configuration settings for the application and stream names.</p>",
+        "SetRtmpPushSourceSettings$NamingConfiguration": "<p>The configuration settings for the application and stream names.</p>"
+      }
+    },
+    "RtmpPushNamingType": {
+      "base": null,
+      "refs": {
+        "RtmpPushRouterInputConfiguration$NamingType": "<p>The naming type. If you specify it, it must match the naming configuration.</p>",
+        "RtmpPushSourceSettings$NamingType": "<p>The naming type that the source uses. With <code>AUTOMATIC</code> naming, MediaConnect generates the application and stream names.</p>"
+      }
+    },
+    "RtmpPushOutputSettings": {
+      "base": "<p>The settings for an output that pushes a stream to a destination using the RTMP (Real-Time Messaging Protocol) protocol, or RTMPS (RTMP over TLS) when TLS encryption is specified. These settings include the application and stream names, and optional TLS encryption configuration.</p>",
+      "refs": {
+        "AddOutputRequest$RtmpPushSettings": "<p>The settings for an output that pushes a stream to a destination using the RTMP (Real-Time Messaging Protocol) protocol, or RTMPS (RTMP over TLS) when TLS encryption is specified.</p>",
+        "Transport$RtmpPushOutputSettings": "<p>The settings for an output that pushes a stream to a destination using the RTMP (Real-Time Messaging Protocol) protocol, or RTMPS (RTMP over TLS) when TLS encryption is specified.</p>",
+        "UpdateFlowOutputRequest$RtmpPushSettings": "<p>The settings for an output that pushes a stream to a destination using the RTMP (Real-Time Messaging Protocol) protocol, or RTMPS (RTMP over TLS) when TLS encryption is specified.</p>"
+      }
+    },
+    "RtmpPushRouterInputConfiguration": {
+      "base": "<p>The configuration settings for a router input using the RTMP (Real-Time Messaging Protocol) protocol.</p>",
+      "refs": {
+        "FailoverRouterInputProtocolConfiguration$RtmpPush": "<p>The configuration settings for a failover router input that uses the RTMP protocol.</p>",
+        "RouterInputProtocolConfiguration$RtmpPush": "<p>The configuration settings for a router input that uses the RTMP protocol.</p>"
+      }
+    },
+    "RtmpPushRouterInputConfigurationPortInteger": {
+      "base": null,
+      "refs": {
+        "RtmpPushRouterInputConfiguration$Port": "<p>The port number for the RTMP protocol. The only valid value is <code>1935</code>.</p>"
+      }
+    },
     "RtmpPushRouterOutputConfiguration": {
       "base": "<p>The configuration settings for a router output that pushes a stream to a destination using the RTMP (Real-Time Messaging Protocol) protocol, or RTMPS (RTMP over TLS) when TLS encryption is specified. These settings include the destination address and port, the application and stream names, and optional TLS encryption configuration.</p>",
       "refs": {
@@ -3136,6 +3323,26 @@
       "base": null,
       "refs": {
         "RtmpPushRouterOutputConfiguration$DestinationPort": "<p>The TCP port on the destination RTMP server. For RTMP, valid values range from <code>1024</code> to <code>65535</code>. For RTMPS (RTMP over TLS), valid values are <code>443</code> or <code>1024</code> to <code>65535</code>. RTMP typically uses port <code>1935</code>, and RTMPS typically uses port <code>443</code>.</p>"
+      }
+    },
+    "RtmpPushSourceSettings": {
+      "base": "<p>The settings for the RTMP (Real-Time Messaging Protocol) source.</p>",
+      "refs": {
+        "Transport$RtmpPushSourceSettings": "<p>The settings for the RTMP (Real-Time Messaging Protocol) source.</p>"
+      }
+    },
+    "RtmpPushStreamDetails": {
+      "base": "<p>Configuration details for an RTMP (Real-Time Messaging Protocol) router input stream, including the application and stream names.</p>",
+      "refs": {
+        "FailoverRouterInputIndexedStreamDetails$RtmpPush": "<p>The RTMP stream details for this indexed stream, including the application and stream names.</p>",
+        "StandardRouterInputStreamDetails$RtmpPush": "<p>The RTMP stream details for the standard router input stream, including the application and stream names.</p>"
+      }
+    },
+    "RtmpSourceMetadataInfo": {
+      "base": "<p>Information about the RTMP (Real-Time Messaging Protocol) source. This includes the application name, the stream name, and metadata about the audio and video streams.</p>",
+      "refs": {
+        "DescribeFlowSourceMetadataResponse$RtmpInfo": "<p>The RTMP (Real-Time Messaging Protocol) specific information about the flow's source. This includes the application name, the stream name, and the associated audio and video streams.</p>",
+        "RouterInputMetadata$RtmpInfo": "<p>The RTMP (Real-Time Messaging Protocol) specific information about the router input's source. This includes the application name, the stream name, and the associated audio and video streams.</p>"
       }
     },
     "RtpRouterInputConfiguration": {
@@ -3193,7 +3400,9 @@
       "refs": {
         "Fmtp$ScanMode": "<p>The type of compression that was used to smooth the video’s appearance. </p>",
         "FmtpRequest$ScanMode": "<p> The type of compression that was used to smooth the video’s appearance.</p>",
-        "NdiMediaStreamInfo$ScanMode": "<p> The method used to display video frames. Used when the <code>streamType</code> is <code>Video</code>.</p>"
+        "NdiMediaStreamInfo$ScanMode": "<p> The method used to display video frames. Used when the <code>streamType</code> is <code>Video</code>.</p>",
+        "RtmpMediaStreamInfo$ScanMode": "<p>The method used to display video frames. Used when the <code>streamType</code> is <code>VIDEO</code>.</p>",
+        "TransportStream$ScanMode": "<p>The scan mode used by the video stream.</p>"
       }
     },
     "SecretArn": {
@@ -3235,6 +3444,13 @@
         "SetGatewayBridgeSourceRequest$BridgeArn": "<p> The ARN of the bridge feeding this flow.</p>"
       }
     },
+    "SetRtmpPushSourceSettings": {
+      "base": "<p>The settings for the RTMP (Real-Time Messaging Protocol) source.</p>",
+      "refs": {
+        "SetSourceRequest$RtmpPushSettings": "<p>The settings for the RTMP (Real-Time Messaging Protocol) source.</p>",
+        "UpdateFlowSourceRequest$RtmpPushSettings": "<p>The settings for the RTMP (Real-Time Messaging Protocol) source.</p>"
+      }
+    },
     "SetSourceRequest": {
       "base": "<p> The settings for the source of the flow.</p>",
       "refs": {
@@ -3258,6 +3474,12 @@
       "base": "<p>Detects silent audio in the router input's source content and reports it through a CloudWatch metric, an EventBridge event, and a router input message.</p>",
       "refs": {
         "ContentQualityAnalysisFeatureConfiguration$SilentAudio": "<p>Settings for silent audio detection.</p>"
+      }
+    },
+    "SingleProgramTransportStreamPidMapConfiguration": {
+      "base": "<p>The configuration settings for remapping the identification numbers of elementary streams and program identifiers of a single-program transport stream.</p>",
+      "refs": {
+        "RouterOutputProcessors$SingleProgramTransportStreamPidMap": "<p>The configuration settings for remapping the identification numbers of elementary streams and program identifiers of a single-program transport stream.</p>"
       }
     },
     "Source": {
@@ -3411,6 +3633,12 @@
         "SourceEndpointFilter$SourceTypes": "<p>Filters the results to source endpoints of the specified types.</p>"
       }
     },
+    "SourceMediaStreamType": {
+      "base": null,
+      "refs": {
+        "RtmpMediaStreamInfo$StreamType": "<p>The type of stream (for example, <code>VIDEO</code> or <code>AUDIO</code>).</p>"
+      }
+    },
     "SourcePriority": {
       "base": "<p> The priority you want to assign to a source. You can have a primary stream and a backup stream or two equally prioritized streams. </p>",
       "refs": {
@@ -3428,6 +3656,7 @@
       "base": "<p>The configuration settings for a router input using the SRT (Secure Reliable Transport) protocol in caller mode, including the source address and port, minimum latency, stream ID, and decryption key configuration.</p>",
       "refs": {
         "FailoverRouterInputProtocolConfiguration$SrtCaller": null,
+        "MergeRouterInputProtocolConfiguration$SrtCaller": null,
         "RouterInputProtocolConfiguration$SrtCaller": null
       }
     },
@@ -3515,6 +3744,7 @@
       "base": "<p>The configuration settings for a router input using the SRT (Secure Reliable Transport) protocol in listener mode, including the port, minimum latency, and decryption key configuration.</p>",
       "refs": {
         "FailoverRouterInputProtocolConfiguration$SrtListener": null,
+        "MergeRouterInputProtocolConfiguration$SrtListener": null,
         "RouterInputProtocolConfiguration$SrtListener": null
       }
     },
@@ -3972,6 +4202,8 @@
         "Maintenance$MaintenanceDeadline": "<p> The Maintenance has to be performed before this deadline in ISO UTC format. Example: 2021-01-30T08:30:00Z.</p>",
         "Maintenance$MaintenanceScheduledDate": "<p> A scheduled date in ISO UTC format when the maintenance will happen. Use YYYY-MM-DD format. Example: 2021-01-30.</p>",
         "Maintenance$MaintenanceStartHour": "<p> UTC time when the maintenance will happen. Use 24-hour HH:MM format. Minutes must be 00. Example: 13:00. The default value is 02:00.</p>",
+        "ManualRtmpPushNamingConfiguration$ApplicationName": "<p>The name of the RTMP application. Together with the stream name, the application name forms the RTMP URL path, in the pattern <code>rtmp://ingestAddress/applicationName/streamName</code>.</p>",
+        "ManualRtmpPushNamingConfiguration$StreamName": "<p>The name of the RTMP stream. The stream name forms the final segment of the RTMP URL path.</p>",
         "MediaLiveChannelRouterInputConfiguration$MediaLiveChannelOutputName": "<p>The name of the MediaLive channel output to connect to this router input.</p>",
         "MediaStream$Description": "<p> A description that can help you quickly identify what your media stream is used for.</p>",
         "MediaStream$MediaStreamName": "<p> A name that helps you distinguish one media stream from another. </p>",
@@ -4069,9 +4301,20 @@
         "RouterOutputMessage$Message": "<p>The message text associated with the router output message.</p>",
         "RouterOutputServiceQuotaExceededException$Message": null,
         "RouterOutputSourceEndpointAssociatedResourceDetails$Name": "<p>The name of the router output.</p>",
+        "RtmpMediaStreamInfo$Codec": "<p>The codec used for the stream.</p>",
+        "RtmpMediaStreamInfo$FrameRate": "<p>The number of video frames displayed per second. Used when the <code>streamType</code> is <code>VIDEO</code>.</p>",
+        "RtmpMediaStreamInfo$Language": "<p>The language of the audio stream. Used when the <code>streamType</code> is <code>AUDIO</code>.</p>",
+        "RtmpPushOutputSettings$ApplicationName": "<p>The name of the RTMP application on the destination server. Together with the stream name, the application name forms the RTMP URL path, in the pattern <code>rtmp://destinationAddress/applicationName/streamName</code>.</p>",
+        "RtmpPushOutputSettings$StreamName": "<p>The name of the RTMP stream that the output publishes to the destination application. The stream name forms the final segment of the RTMP URL path.</p>",
         "RtmpPushRouterOutputConfiguration$DestinationAddress": "<p>The IP address or hostname of the destination RTMP server that the router output pushes the stream to. Provide only the server address; specify the application and stream names separately.</p>",
         "RtmpPushRouterOutputConfiguration$ApplicationName": "<p>The name of the RTMP application on the destination server. Together with the stream name, the application name forms the RTMP URL path, in the pattern <code>rtmp://destinationAddress/applicationName/streamName</code>.</p>",
         "RtmpPushRouterOutputConfiguration$StreamName": "<p>The name of the RTMP stream that the output publishes to the destination application. The stream name forms the final segment of the RTMP URL path.</p>",
+        "RtmpPushSourceSettings$ApplicationName": "<p>The name of the RTMP application. Together with the stream name, the application name forms the RTMP URL path, in the pattern <code>rtmp://ingestAddress/applicationName/streamName</code>.</p>",
+        "RtmpPushSourceSettings$StreamName": "<p>The name of the RTMP stream. The stream name forms the final segment of the RTMP URL path.</p>",
+        "RtmpPushStreamDetails$ApplicationName": "<p>The name of the RTMP application.</p>",
+        "RtmpPushStreamDetails$StreamName": "<p>The name of the RTMP stream.</p>",
+        "RtmpSourceMetadataInfo$ApplicationName": "<p>The name of the RTMP application.</p>",
+        "RtmpSourceMetadataInfo$StreamName": "<p>The name of the RTMP stream.</p>",
         "RtpRouterOutputConfiguration$DestinationAddress": "<p>The destination IP address for the RTP protocol in the router output configuration.</p>",
         "RtpStandardDestinationEndpointConfiguration$DestinationAddress": "<p>The IP address on which the destination endpoint receives content.</p>",
         "ServiceUnavailableException$Message": null,
@@ -4137,6 +4380,7 @@
         "TransportStream$Codec": "<p> The codec used by the stream.</p>",
         "TransportStream$FrameRate": "<p> The frame rate used by the video stream.</p>",
         "TransportStream$StreamType": "<p> The Stream Type as it is reported in the Program Map Table.</p>",
+        "TransportStream$Language": "<p>The language of the elementary stream.</p>",
         "TransportStreamProgram$ProgramName": "<p> The program name as it is reported in the Program Association Table.</p>",
         "UntagGlobalResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the global resource to remove tags from.</p>",
         "UntagResourceRequest$ResourceArn": "<p> The Amazon Resource Name (ARN) of the resource that you want to untag. </p>",
@@ -4282,6 +4526,7 @@
     "TlsEncryption": {
       "base": "<p>The Transport Layer Security (TLS) encryption settings used to establish a secure connection to a destination.</p>",
       "refs": {
+        "RtmpPushOutputSettings$TlsEncryption": "<p>The TLS encryption settings for the output. When you specify these settings, the output uses RTMPS (RTMP over TLS) to establish a secure, encrypted connection to the destination server.</p>",
         "RtmpPushRouterOutputConfiguration$TlsEncryption": "<p>The TLS encryption settings for the output. When you specify these settings, the output uses RTMPS (RTMP over TLS) to establish a secure, encrypted connection to the destination server.</p>"
       }
     },
@@ -4319,6 +4564,18 @@
       "base": "<p> The metadata of an elementary transport stream.</p>",
       "refs": {
         "__listOfTransportStream$member": null
+      }
+    },
+    "TransportStreamIdConfiguration": {
+      "base": "<p>The configuration settings for the transport stream ID (TSID).</p>",
+      "refs": {
+        "SingleProgramTransportStreamPidMapConfiguration$TransportStreamId": "<p>The transport stream ID (TSID) settings for the router output. By default, the router output passes through the TSID from the source.</p>"
+      }
+    },
+    "TransportStreamIdConfigurationSetInteger": {
+      "base": null,
+      "refs": {
+        "TransportStreamIdConfiguration$Set": "<p>The TSID to use for the router output.</p>"
       }
     },
     "TransportStreamProgram": {

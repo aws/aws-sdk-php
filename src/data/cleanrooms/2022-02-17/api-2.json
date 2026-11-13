@@ -7899,7 +7899,8 @@
       ],
       "members":{
         "message":{"shape":"String"},
-        "code":{"shape":"String"}
+        "code":{"shape":"String"},
+        "retry":{"shape":"RetryInfo"}
       }
     },
     "ProtectedJobIdentifier":{
@@ -8168,7 +8169,8 @@
       ],
       "members":{
         "message":{"shape":"String"},
-        "code":{"shape":"String"}
+        "code":{"shape":"String"},
+        "retry":{"shape":"RetryInfo"}
       }
     },
     "ProtectedQueryIdentifier":{
@@ -8424,6 +8426,12 @@
         "CSV",
         "PARQUET"
       ]
+    },
+    "RetryInfo":{
+      "type":"structure",
+      "members":{
+        "retryable":{"shape":"Boolean"}
+      }
     },
     "RoleArn":{
       "type":"string",

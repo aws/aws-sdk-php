@@ -4,6 +4,7 @@
   "operations": {
     "AcceptMarketplaceRegistration": "<p>Registers the Amazon Web Services Marketplace token for your Amazon Web Services account to activate your Oracle Database@Amazon Web Services subscription.</p>",
     "AssociateIamRoleToResource": "<p>Associates an Amazon Web Services Identity and Access Management (IAM) service role with a specified resource to enable Amazon Web Services service integration.</p>",
+    "AssociateVirtualMachinesToCloudVmCluster": "<p>Adds virtual machines to the specified VM cluster.</p>",
     "AssociateVirtualMachinesToExadbVmCluster": "<p>Adds virtual machines to the specified Exascale VM cluster.</p>",
     "CreateAutonomousDatabase": "<p>Creates a new Autonomous Database.</p>",
     "CreateAutonomousDatabaseBackup": "<p>Creates a new backup of the specified Autonomous Database.</p>",
@@ -25,6 +26,7 @@
     "DeleteOdbNetwork": "<p>Deletes the specified ODB network.</p>",
     "DeleteOdbPeeringConnection": "<p>Deletes an ODB peering connection.</p> <p>When you delete an ODB peering connection, the underlying VPC peering connection is also deleted.</p>",
     "DisassociateIamRoleFromResource": "<p>Disassociates an Amazon Web Services Identity and Access Management (IAM) service role from a specified resource to disable Amazon Web Services service integration.</p>",
+    "DisassociateVirtualMachinesFromCloudVmCluster": "<p>Removes virtual machines from the specified VM cluster.</p>",
     "DisassociateVirtualMachinesFromExadbVmCluster": "<p>Removes virtual machines from the specified Exascale VM cluster.</p>",
     "FailoverAutonomousDatabase": "<p>Initiates a failover of the specified Autonomous Database to a standby peer database.</p>",
     "GetAutonomousDatabase": "<p>Gets information about a specific Autonomous Database.</p>",
@@ -77,7 +79,10 @@
     "UntagResource": "<p>Removes tags from the specified resource.</p>",
     "UpdateAutonomousDatabase": "<p>Updates the properties of an Autonomous Database.</p>",
     "UpdateAutonomousDatabaseBackup": "<p>Updates the properties of an Autonomous Database backup.</p>",
+    "UpdateCloudAutonomousVmCluster": "<p>Updates the properties of the specified Autonomous VM cluster.</p>",
     "UpdateCloudExadataInfrastructure": "<p>Updates the properties of an Exadata infrastructure resource.</p>",
+    "UpdateCloudExadataInfrastructureStorageCapacity": "<p>Adds storage capacity to the specified Exadata infrastructure.</p>",
+    "UpdateCloudVmCluster": "<p>Updates the properties of the specified VM cluster.</p>",
     "UpdateExadbVmCluster": "<p>Updates the specified Exascale VM cluster.</p>",
     "UpdateExascaleCloudExadataInfrastructure": "<p>Configures or updates the Exascale storage on an Exadata infrastructure. After you configure Exascale storage, you can create Exascale storage vaults on the infrastructure and VM clusters that use Exascale storage.</p>",
     "UpdateExascaleDbStorageVault": "<p>Updates the specified Exascale storage vault.</p>",
@@ -157,6 +162,14 @@
       }
     },
     "AssociateIamRoleToResourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateVirtualMachinesToCloudVmClusterInput": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateVirtualMachinesToCloudVmClusterOutput": {
       "base": null,
       "refs": {}
     },
@@ -1075,6 +1088,7 @@
         "CreateExadbVmClusterInput$dataCollectionOptions": "<p>The set of preferences for the various diagnostic collection options for the Exascale VM cluster.</p>",
         "ExadbVmCluster$dataCollectionOptions": "<p>The set of diagnostic collection options enabled for the Exascale VM cluster.</p>",
         "ExadbVmClusterSummary$dataCollectionOptions": "<p>The set of diagnostic collection options enabled for the Exascale VM cluster.</p>",
+        "UpdateCloudVmClusterInput$dataCollectionOptions": "<p>The set of preferences for the diagnostic collection options for the VM cluster.</p>",
         "UpdateExadbVmClusterInput$dataCollectionOptions": "<p>The set of preferences for the various diagnostic collection options for the Exascale VM cluster.</p>"
       }
     },
@@ -1366,6 +1380,14 @@
       }
     },
     "DisassociateIamRoleFromResourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateVirtualMachinesFromCloudVmClusterInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateVirtualMachinesFromCloudVmClusterOutput": {
       "base": null,
       "refs": {}
     },
@@ -1861,6 +1883,7 @@
         "CloudAutonomousVmCluster$memorySizeInGBs": "<p>The total amount of memory allocated to the Autonomous VM cluster, in gigabytes (GB).</p>",
         "CloudAutonomousVmCluster$nodeCount": "<p>The number of database server nodes in the Autonomous VM cluster.</p>",
         "CloudAutonomousVmCluster$nonProvisionableAutonomousContainerDatabases": "<p>The number of Autonomous CDBs that can't be provisioned because of resource constraints.</p>",
+        "CloudAutonomousVmCluster$ocpusLowestScaledValue": "<p>The minimum value to which you can scale down the number of CPU cores.</p>",
         "CloudAutonomousVmCluster$provisionableAutonomousContainerDatabases": "<p>The number of Autonomous CDBs that can be provisioned in the Autonomous VM cluster.</p>",
         "CloudAutonomousVmCluster$provisionedAutonomousContainerDatabases": "<p>The number of Autonomous CDBs currently provisioned in the Autonomous VM cluster.</p>",
         "CloudAutonomousVmCluster$scanListenerPortNonTls": "<p>The SCAN listener port for non-TLS (TCP) protocol. The default is 1521.</p>",
@@ -1875,6 +1898,7 @@
         "CloudAutonomousVmClusterSummary$memorySizeInGBs": "<p>The total amount of memory allocated to the Autonomous VM cluster, in GB.</p>",
         "CloudAutonomousVmClusterSummary$nodeCount": "<p>The number of database server nodes in the Autonomous VM cluster.</p>",
         "CloudAutonomousVmClusterSummary$nonProvisionableAutonomousContainerDatabases": "<p>The number of Autonomous CDBs that can't be provisioned because of resource constraints.</p>",
+        "CloudAutonomousVmClusterSummary$ocpusLowestScaledValue": "<p>The minimum value to which you can scale down the number of CPU cores.</p>",
         "CloudAutonomousVmClusterSummary$provisionableAutonomousContainerDatabases": "<p>The number of Autonomous CDBs that you can provision in the Autonomous VM cluster.</p>",
         "CloudAutonomousVmClusterSummary$provisionedAutonomousContainerDatabases": "<p>The number of Autonomous Container Databases currently provisioned in the Autonomous VM cluster.</p>",
         "CloudAutonomousVmClusterSummary$scanListenerPortNonTls": "<p>The SCAN listener port for non-TLS (TCP) protocol.</p>",
@@ -2011,6 +2035,8 @@
         "ResourcePoolSummary$totalComputeCapacity": "<p>The total compute capacity of the resource pool.</p>",
         "ResourcePoolSummary$availableComputeCapacity": "<p>The available compute capacity in the resource pool.</p>",
         "ThrottlingException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request after being throttled.</p>",
+        "UpdateCloudExadataInfrastructureInput$computeCount": "<p>The number of database servers for the Exadata infrastructure.</p>",
+        "UpdateCloudExadataInfrastructureInput$storageCount": "<p>The number of storage servers to activate for the Exadata infrastructure.</p>",
         "UpdateExascaleCloudExadataInfrastructureInput$totalStorageSizeInGBs": "<p>The total amount of Exascale storage, in gigabytes (GB), to configure on the Exadata infrastructure.</p>",
         "UpdateExascaleCloudExadataInfrastructureInput$totalVmStorageSizeInGBs": "<p>The total amount of Exascale storage, in gigabytes (GB), to allocate for VM storage on the Exadata infrastructure. VM clusters that store their VM file systems or VM backups in Exascale storage use this capacity.</p>",
         "WeeksOfMonth$member": null
@@ -2066,6 +2092,8 @@
         "ExadbVmCluster$licenseModel": "<p>The Oracle license model applied to the Exascale VM cluster.</p>",
         "ExadbVmClusterSummary$licenseModel": "<p>The Oracle license model applied to the Exascale VM cluster.</p>",
         "UpdateAutonomousDatabaseInput$licenseModel": "<p>The Oracle license model to apply to the Autonomous Database.</p>",
+        "UpdateCloudAutonomousVmClusterInput$licenseModel": "<p>The Oracle license model to apply to the Autonomous VM cluster.</p>",
+        "UpdateCloudVmClusterInput$licenseModel": "<p>The Oracle license model to apply to the VM cluster.</p>",
         "UpdateExadbVmClusterInput$licenseModel": "<p>The Oracle license model to apply to the Exascale VM cluster.</p>"
       }
     },
@@ -2586,7 +2614,8 @@
         "CloudExadataInfrastructureSummary$maintenanceWindow": "<p>The scheduling details for the maintenance window. Patching and system updates take place during the maintenance window.</p>",
         "CreateCloudAutonomousVmClusterInput$maintenanceWindow": "<p>The scheduling details for the maintenance window. Patching and system updates take place during the maintenance window.</p>",
         "CreateCloudExadataInfrastructureInput$maintenanceWindow": "<p>The maintenance window configuration for the Exadata Cloud infrastructure.</p> <p>This allows you to define when maintenance operations such as patching and updates can be performed on the infrastructure.</p>",
-        "UpdateCloudExadataInfrastructureInput$maintenanceWindow": null
+        "UpdateCloudAutonomousVmClusterInput$maintenanceWindow": "<p>The scheduling details for the maintenance window. Patching and system updates take place during the maintenance window.</p>",
+        "UpdateCloudExadataInfrastructureInput$maintenanceWindow": "<p>The maintenance window configuration for the Exadata Cloud infrastructure.</p> <p>This allows you to define when maintenance operations such as patching and updates can be performed on the infrastructure.</p>"
       }
     },
     "MaintenanceWindowCustomActionTimeoutInMinsInteger": {
@@ -3067,6 +3096,9 @@
         "ExadbVmCluster$displayName": "<p>The user-friendly name for the Exascale VM cluster.</p>",
         "ExadbVmClusterSummary$displayName": "<p>The user-friendly name for the Exascale VM cluster.</p>",
         "UpdateAutonomousDatabaseInput$displayName": "<p>The new user-friendly name for the Autonomous Database.</p>",
+        "UpdateCloudAutonomousVmClusterInput$displayName": "<p>A new user-friendly name for the Autonomous VM cluster.</p>",
+        "UpdateCloudExadataInfrastructureInput$displayName": "<p>A new user-friendly name for the Exadata infrastructure.</p>",
+        "UpdateCloudVmClusterInput$displayName": "<p>A new user-friendly name for the VM cluster.</p>",
         "UpdateExadbVmClusterInput$displayName": "<p>A new user-friendly name for the Exascale VM cluster.</p>",
         "UpdateExascaleDbStorageVaultInput$displayName": "<p>A new user-friendly name for the Exascale storage vault.</p>",
         "UpdateOdbNetworkInput$displayName": "<p>The new user-friendly name of the ODB network.</p>",
@@ -3076,6 +3108,7 @@
     "ResourceId": {
       "base": null,
       "refs": {
+        "AssociateVirtualMachinesToCloudVmClusterInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster to add virtual machines to.</p>",
         "AutonomousDatabase$odbNetworkId": "<p>The unique identifier of the ODB network associated with the Autonomous Database.</p>",
         "AutonomousDatabaseBackup$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup.</p>",
         "AutonomousDatabaseBackup$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that the backup was created from.</p>",
@@ -3101,6 +3134,7 @@
         "DeleteAutonomousDatabaseBackupInput$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup to delete.</p>",
         "DeleteCloudAutonomousVmClusterInput$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster to delete.</p>",
         "DeleteCloudVmClusterInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster to delete.</p>",
+        "DisassociateVirtualMachinesFromCloudVmClusterInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster to remove virtual machines from.</p>",
         "ExascaleDbStorageVault$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure that hosts the Exascale storage vault. This value is present only for vaults on dedicated Exadata infrastructure.</p>",
         "ExascaleDbStorageVaultSummary$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure that hosts the Exascale storage vault. This value is present only for vaults on dedicated Exadata infrastructure.</p>",
         "GetAutonomousDatabaseBackupInput$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup to retrieve information about.</p>",
@@ -3124,7 +3158,9 @@
         "StopDbNodeInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster that contains the DB node to stop. You must specify either this parameter or <code>exadbVmClusterId</code>.</p>",
         "StopDbNodeInput$exadbVmClusterId": "<p>The unique identifier of the Exascale VM cluster that contains the DB node to stop. You must specify either this parameter or <code>cloudVmClusterId</code>.</p>",
         "StopDbNodeInput$dbNodeId": "<p>The unique identifier of the DB node to stop.</p>",
-        "UpdateAutonomousDatabaseBackupInput$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup to update.</p>"
+        "UpdateAutonomousDatabaseBackupInput$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup to update.</p>",
+        "UpdateCloudAutonomousVmClusterInput$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster to update.</p>",
+        "UpdateCloudVmClusterInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster to update.</p>"
       }
     },
     "ResourceIdList": {
@@ -3217,6 +3253,7 @@
         "UpdateAutonomousDatabaseInput$peerDbId": "<p>The unique identifier of the peer Autonomous Database.</p>",
         "UpdateAutonomousDatabaseInput$resourcePoolLeaderId": "<p>The unique identifier of the resource pool leader Autonomous Database.</p>",
         "UpdateCloudExadataInfrastructureInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure to update.</p>",
+        "UpdateCloudExadataInfrastructureStorageCapacityInput$cloudExadataInfrastructureId": "<p>The unique identifier or Amazon Resource Name (ARN) of the Exadata infrastructure to update.</p>",
         "UpdateExadbVmClusterInput$exadbVmClusterId": "<p>The unique identifier of the Exascale VM cluster to update.</p>",
         "UpdateExascaleCloudExadataInfrastructureInput$cloudExadataInfrastructureId": "<p>The unique identifier or Amazon Resource Name (ARN) of the Exadata infrastructure to update.</p>",
         "UpdateExascaleDbStorageVaultInput$exascaleDbStorageVaultId": "<p>The unique identifier of the Exascale storage vault to update.</p>",
@@ -3240,6 +3277,7 @@
     "ResourceStatus": {
       "base": null,
       "refs": {
+        "AssociateVirtualMachinesToCloudVmClusterOutput$status": "<p>The current status of the VM cluster.</p>",
         "AssociateVirtualMachinesToExadbVmClusterOutput$status": "<p>The current status of the Exascale VM cluster.</p>",
         "AutonomousVirtualMachineSummary$status": "<p>The current status of the Autonomous VM.</p>",
         "CloudAutonomousVmCluster$status": "<p>The current state of the Autonomous VM cluster. Possible values include <code>CREATING</code>, <code>AVAILABLE</code>, <code>UPDATING</code>, <code>DELETING</code>, <code>DELETED</code>, <code>FAILED</code>.</p>",
@@ -3258,6 +3296,7 @@
         "CreateOdbPeeringConnectionOutput$status": "<p>The status of the ODB peering connection.</p>",
         "DbServer$status": "<p>The current status of the database server.</p>",
         "DbServerSummary$status": "<p>The current status of the database server.</p>",
+        "DisassociateVirtualMachinesFromCloudVmClusterOutput$status": "<p>The current status of the VM cluster.</p>",
         "DisassociateVirtualMachinesFromExadbVmClusterOutput$status": "<p>The current status of the Exascale VM cluster.</p>",
         "ExadbVmCluster$status": "<p>The current status of the Exascale VM cluster.</p>",
         "ExadbVmClusterSummary$status": "<p>The current status of the Exascale VM cluster.</p>",
@@ -3269,7 +3308,10 @@
         "OdbPeeringConnection$status": "<p>The status of the ODB peering connection.</p>",
         "OdbPeeringConnectionSummary$status": "<p>The status of the ODB peering connection.</p>",
         "UpdateAutonomousDatabaseBackupOutput$status": "<p>The current status of the Autonomous Database backup.</p>",
+        "UpdateCloudAutonomousVmClusterOutput$status": "<p>The current status of the Autonomous VM cluster.</p>",
         "UpdateCloudExadataInfrastructureOutput$status": "<p>The current status of the Exadata infrastructure after the update operation.</p>",
+        "UpdateCloudExadataInfrastructureStorageCapacityOutput$status": "<p>The current status of the Exadata infrastructure.</p>",
+        "UpdateCloudVmClusterOutput$status": "<p>The current status of the VM cluster.</p>",
         "UpdateExadbVmClusterOutput$status": "<p>The current status of the Exascale VM cluster.</p>",
         "UpdateExascaleCloudExadataInfrastructureOutput$status": "<p>The current status of the Exadata infrastructure after the update operation.</p>",
         "UpdateExascaleDbStorageVaultOutput$status": "<p>The current status of the Exascale storage vault.</p>",
@@ -3457,6 +3499,9 @@
       "refs": {
         "AcceptMarketplaceRegistrationInput$marketplaceRegistrationToken": "<p>The registration token that's generated by Amazon Web Services Marketplace and sent to Oracle Database@Amazon Web Services.</p>",
         "AccessDeniedException$message": null,
+        "AssociateVirtualMachinesToCloudVmClusterOutput$displayName": "<p>The user-friendly name for the VM cluster.</p>",
+        "AssociateVirtualMachinesToCloudVmClusterOutput$statusReason": "<p>Additional information about the current status of the VM cluster, if applicable.</p>",
+        "AssociateVirtualMachinesToCloudVmClusterOutput$cloudVmClusterId": "<p>The unique identifier of the VM cluster.</p>",
         "AssociateVirtualMachinesToExadbVmClusterOutput$displayName": "<p>The user-friendly name for the Exascale VM cluster.</p>",
         "AssociateVirtualMachinesToExadbVmClusterOutput$statusReason": "<p>Additional information about the status of the Exascale VM cluster.</p>",
         "AssociateVirtualMachinesToExadbVmClusterOutput$exadbVmClusterId": "<p>The unique identifier of the Exascale VM cluster.</p>",
@@ -3719,6 +3764,9 @@
         "DbServerSummary$shape": "<p>The hardware system model of the Exadata infrastructure that the database server is hosted on. The shape determines the amount of CPU, storage, and memory resources available.</p>",
         "DbSystemShapeSummary$shapeFamily": "<p>The family of the shape.</p>",
         "DbSystemShapeSummary$name": "<p>The name of the shape.</p>",
+        "DisassociateVirtualMachinesFromCloudVmClusterOutput$displayName": "<p>The user-friendly name for the VM cluster.</p>",
+        "DisassociateVirtualMachinesFromCloudVmClusterOutput$statusReason": "<p>Additional information about the current status of the VM cluster, if applicable.</p>",
+        "DisassociateVirtualMachinesFromCloudVmClusterOutput$cloudVmClusterId": "<p>The unique identifier of the VM cluster.</p>",
         "DisassociateVirtualMachinesFromExadbVmClusterOutput$displayName": "<p>The user-friendly name for the Exascale VM cluster.</p>",
         "DisassociateVirtualMachinesFromExadbVmClusterOutput$statusReason": "<p>Additional information about the status of the Exascale VM cluster.</p>",
         "DisassociateVirtualMachinesFromExadbVmClusterOutput$exadbVmClusterId": "<p>The unique identifier of the Exascale VM cluster.</p>",
@@ -3894,9 +3942,18 @@
         "UpdateAutonomousDatabaseOutput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that was updated.</p>",
         "UpdateAutonomousDatabaseOutput$displayName": "<p>The user-friendly name of the Autonomous Database that was updated.</p>",
         "UpdateAutonomousDatabaseOutput$statusReason": "<p>Additional information about the current status of the Autonomous Database, if applicable.</p>",
+        "UpdateCloudAutonomousVmClusterOutput$displayName": "<p>The user-friendly name of the updated Autonomous VM cluster.</p>",
+        "UpdateCloudAutonomousVmClusterOutput$statusReason": "<p>Additional information about the current status of the Autonomous VM cluster, if applicable.</p>",
+        "UpdateCloudAutonomousVmClusterOutput$cloudAutonomousVmClusterId": "<p>The unique identifier of the updated Autonomous VM cluster.</p>",
         "UpdateCloudExadataInfrastructureOutput$displayName": "<p>The user-friendly name of the updated Exadata infrastructure.</p>",
         "UpdateCloudExadataInfrastructureOutput$statusReason": "<p>Additional information about the status of the Exadata infrastructure after the update operation.</p>",
         "UpdateCloudExadataInfrastructureOutput$cloudExadataInfrastructureId": "<p>The unique identifier of the updated Exadata infrastructure.</p>",
+        "UpdateCloudExadataInfrastructureStorageCapacityOutput$displayName": "<p>The user-friendly name of the updated Exadata infrastructure.</p>",
+        "UpdateCloudExadataInfrastructureStorageCapacityOutput$statusReason": "<p>Additional information about the current status of the Exadata infrastructure, if applicable.</p>",
+        "UpdateCloudExadataInfrastructureStorageCapacityOutput$cloudExadataInfrastructureId": "<p>The unique identifier of the updated Exadata infrastructure.</p>",
+        "UpdateCloudVmClusterOutput$displayName": "<p>The user-friendly name of the updated VM cluster.</p>",
+        "UpdateCloudVmClusterOutput$statusReason": "<p>Additional information about the current status of the VM cluster, if applicable.</p>",
+        "UpdateCloudVmClusterOutput$cloudVmClusterId": "<p>The unique identifier of the updated VM cluster.</p>",
         "UpdateExadbVmClusterOutput$displayName": "<p>The user-friendly name for the Exascale VM cluster.</p>",
         "UpdateExadbVmClusterOutput$statusReason": "<p>Additional information about the status of the Exascale VM cluster.</p>",
         "UpdateExadbVmClusterOutput$exadbVmClusterId": "<p>The unique identifier of the Exascale VM cluster.</p>",
@@ -3921,6 +3978,7 @@
     "StringList": {
       "base": null,
       "refs": {
+        "AssociateVirtualMachinesToCloudVmClusterInput$dbServers": "<p>The list of database server IDs for the virtual machines to add to the VM cluster.</p>",
         "AutonomousDatabase$availableUpgradeVersions": "<p>The list of Oracle Database software versions to which the Autonomous Database can be upgraded.</p>",
         "AutonomousDatabase$allowlistedIps": "<p>The list of IP addresses that are allowed to access the Autonomous Database.</p>",
         "AutonomousDatabase$standbyAllowlistedIps": "<p>The list of IP addresses that are allowed to access the standby Autonomous Database.</p>",
@@ -3951,6 +4009,7 @@
         "DbServerSummary$vmClusterIds": "<p>The IDs of the VM clusters that are associated with the database server.</p>",
         "DbServerSummary$autonomousVmClusterIds": "<p>A list of identifiers for the Autonomous VM clusters.</p>",
         "DbServerSummary$autonomousVirtualMachineIds": "<p>A list of unique identifiers for the Autonomous VMs.</p>",
+        "DisassociateVirtualMachinesFromCloudVmClusterInput$dbServers": "<p>The list of database server IDs for the virtual machines to remove from the VM cluster.</p>",
         "ExadbVmCluster$scanIpIds": "<p>The OCID of the SCAN IP addresses that are associated with the Exascale VM cluster.</p>",
         "ExadbVmCluster$sshPublicKeys": "<p>The public key portion of one or more key pairs used for SSH access to the Exascale VM cluster.</p>",
         "ExadbVmCluster$vipIds": "<p>The virtual IP (VIP) addresses associated with the Exascale VM cluster. One VIP address is assigned per node to support failover. If a node fails, its VIP is reassigned to another active node in the cluster.</p>",
@@ -3968,6 +4027,7 @@
         "SystemVersionSummary$systemVersions": "<p>The Exadata system versions that are compatible with the specified Exadata shape and GI version.</p>",
         "UpdateAutonomousDatabaseInput$standbyAllowlistedIps": "<p>The list of IP addresses that are allowed to access the standby Autonomous Database.</p>",
         "UpdateAutonomousDatabaseInput$allowlistedIps": "<p>The list of IP addresses that are allowed to access the Autonomous Database.</p>",
+        "UpdateCloudVmClusterInput$sshPublicKeys": "<p>The public key portion of one or more key pairs used for SSH access to the VM cluster.</p>",
         "UpdateExadbVmClusterInput$sshPublicKeys": "<p>The public key portion of one or more key pairs used for SSH access to the Exascale VM cluster.</p>",
         "UpdateOdbNetworkInput$peeredCidrsToBeAdded": "<p>The list of CIDR ranges from the peered VPC that allow access to the ODB network.</p>",
         "UpdateOdbNetworkInput$peeredCidrsToBeRemoved": "<p>The list of CIDR ranges from the peered VPC to remove from the ODB network.</p>",
@@ -4248,11 +4308,89 @@
       "base": null,
       "refs": {}
     },
+    "UpdateCloudAutonomousVmClusterInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCloudAutonomousVmClusterInputAutonomousDataStorageSizeInTBsDouble": {
+      "base": null,
+      "refs": {
+        "UpdateCloudAutonomousVmClusterInput$autonomousDataStorageSizeInTBs": "<p>The data storage size to allocate for Autonomous Databases in the Autonomous VM cluster, in terabytes (TB).</p>"
+      }
+    },
+    "UpdateCloudAutonomousVmClusterInputCpuCoreCountPerNodeInteger": {
+      "base": null,
+      "refs": {
+        "UpdateCloudAutonomousVmClusterInput$cpuCoreCountPerNode": "<p>The number of CPU cores to enable per node in the Autonomous VM cluster. If you don't specify a value, the existing number of CPU cores per node is retained.</p>"
+      }
+    },
+    "UpdateCloudAutonomousVmClusterInputDescriptionString": {
+      "base": null,
+      "refs": {
+        "UpdateCloudAutonomousVmClusterInput$description": "<p>A user-provided description of the Autonomous VM cluster.</p>"
+      }
+    },
+    "UpdateCloudAutonomousVmClusterInputTotalContainerDatabasesInteger": {
+      "base": null,
+      "refs": {
+        "UpdateCloudAutonomousVmClusterInput$totalContainerDatabases": "<p>The total number of Autonomous Container Databases that can be created in the Autonomous VM cluster.</p>"
+      }
+    },
+    "UpdateCloudAutonomousVmClusterOutput": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateCloudExadataInfrastructureInput": {
       "base": null,
       "refs": {}
     },
     "UpdateCloudExadataInfrastructureOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCloudExadataInfrastructureStorageCapacityInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCloudExadataInfrastructureStorageCapacityOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCloudVmClusterInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCloudVmClusterInputCpuCoreCountInteger": {
+      "base": null,
+      "refs": {
+        "UpdateCloudVmClusterInput$cpuCoreCount": "<p>The number of CPU cores to enable on the VM cluster. If you don't specify a value, the existing number of CPU cores is retained.</p>"
+      }
+    },
+    "UpdateCloudVmClusterInputDataStorageSizeInTBsDouble": {
+      "base": null,
+      "refs": {
+        "UpdateCloudVmClusterInput$dataStorageSizeInTBs": "<p>The size of the data disk group, in terabytes (TB), to allocate for the VM cluster.</p>"
+      }
+    },
+    "UpdateCloudVmClusterInputDbNodeStorageSizeInGBsInteger": {
+      "base": null,
+      "refs": {
+        "UpdateCloudVmClusterInput$dbNodeStorageSizeInGBs": "<p>The amount of local node storage, in gigabytes (GB), to allocate for the VM cluster.</p>"
+      }
+    },
+    "UpdateCloudVmClusterInputMemorySizeInGBsInteger": {
+      "base": null,
+      "refs": {
+        "UpdateCloudVmClusterInput$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GB), to allocate for the VM cluster.</p>"
+      }
+    },
+    "UpdateCloudVmClusterInputStorageSizeInGBsInteger": {
+      "base": null,
+      "refs": {
+        "UpdateCloudVmClusterInput$storageSizeInGBs": "<p>The amount of local node storage, in gigabytes (GB), to allocate to the VM cluster.</p>"
+      }
+    },
+    "UpdateCloudVmClusterOutput": {
       "base": null,
       "refs": {}
     },

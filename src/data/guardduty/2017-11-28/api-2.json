@@ -1037,6 +1037,22 @@
         {"shape":"InternalServerErrorException"}
       ]
     },
+    "ListInvestigationRecords":{
+      "name":"ListInvestigationRecords",
+      "http":{
+        "method":"POST",
+        "requestUri":"/detector/{DetectorId}/investigation/records",
+        "responseCode":200
+      },
+      "input":{"shape":"ListInvestigationRecordsRequest"},
+      "output":{"shape":"ListInvestigationRecordsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListInvestigations":{
       "name":"ListInvestigations",
       "http":{
@@ -1646,6 +1662,46 @@
         }
       }
     },
+    "AccountAffectedResource":{
+      "type":"structure",
+      "members":{
+        "Identifier":{
+          "shape":"String",
+          "locationName":"identifier"
+        },
+        "Type":{
+          "shape":"InvestigationResourceType",
+          "locationName":"type"
+        },
+        "FindingCount":{
+          "shape":"Integer",
+          "locationName":"findingCount"
+        }
+      }
+    },
+    "AccountAffectedResources":{
+      "type":"list",
+      "member":{"shape":"AccountAffectedResource"},
+      "max":50,
+      "min":0
+    },
+    "AccountAnalysis":{
+      "type":"structure",
+      "members":{
+        "FindingsSummary":{
+          "shape":"FindingsSummary",
+          "locationName":"findingsSummary"
+        },
+        "TacticCoverage":{
+          "shape":"TacticCoverages",
+          "locationName":"tacticCoverage"
+        },
+        "AffectedResources":{
+          "shape":"AccountAffectedResources",
+          "locationName":"affectedResources"
+        }
+      }
+    },
     "AccountDetail":{
       "type":"structure",
       "required":[
@@ -1712,6 +1768,47 @@
         }
       }
     },
+    "AccountOverview":{
+      "type":"structure",
+      "members":{
+        "AccountId":{
+          "shape":"String",
+          "locationName":"accountId"
+        },
+        "AccountStatus":{
+          "shape":"String",
+          "locationName":"accountStatus"
+        },
+        "DetectorId":{
+          "shape":"DetectorId",
+          "locationName":"detectorId"
+        },
+        "Region":{
+          "shape":"String",
+          "locationName":"region"
+        },
+        "DelegatedAdminAccountId":{
+          "shape":"String",
+          "locationName":"delegatedAdminAccountId"
+        },
+        "TotalMemberAccounts":{
+          "shape":"Count",
+          "locationName":"totalMemberAccounts"
+        },
+        "TotalFindings":{
+          "shape":"Count",
+          "locationName":"totalFindings"
+        },
+        "AffectedAccountCount":{
+          "shape":"Count",
+          "locationName":"affectedAccountCount"
+        },
+        "AccountRankings":{
+          "shape":"MemberAccountRankings",
+          "locationName":"accountRankings"
+        }
+      }
+    },
     "AccountStatistics":{
       "type":"structure",
       "members":{
@@ -1726,6 +1823,25 @@
         "TotalFindings":{
           "shape":"Integer",
           "locationName":"totalFindings"
+        }
+      }
+    },
+    "AccountSummaries":{
+      "type":"list",
+      "member":{"shape":"AccountSummary"},
+      "max":20,
+      "min":0
+    },
+    "AccountSummary":{
+      "type":"structure",
+      "members":{
+        "AccountId":{
+          "shape":"String",
+          "locationName":"accountId"
+        },
+        "FindingCount":{
+          "shape":"Integer",
+          "locationName":"findingCount"
         }
       }
     },
@@ -1774,6 +1890,14 @@
         }
       }
     },
+    "ActionPriority":{
+      "type":"string",
+      "enum":[
+        "IMMEDIATE",
+        "SHORT_TERM",
+        "STRATEGIC"
+      ]
+    },
     "Activities":{
       "type":"list",
       "member":{"shape":"Activity"},
@@ -1797,6 +1921,19 @@
     "ActivityType":{
       "type":"string",
       "enum":["API_CALL"]
+    },
+    "ActivityWindow":{
+      "type":"structure",
+      "members":{
+        "FirstSeenAt":{
+          "shape":"Timestamp",
+          "locationName":"firstSeenAt"
+        },
+        "LastSeenAt":{
+          "shape":"Timestamp",
+          "locationName":"lastSeenAt"
+        }
+      }
     },
     "Actor":{
       "type":"structure",
@@ -1932,6 +2069,23 @@
         }
       }
     },
+    "AffectedResource":{
+      "type":"structure",
+      "members":{
+        "Identifier":{
+          "shape":"String",
+          "locationName":"identifier"
+        },
+        "Type":{
+          "shape":"InvestigationResourceType",
+          "locationName":"type"
+        },
+        "Arn":{
+          "shape":"String",
+          "locationName":"arn"
+        }
+      }
+    },
     "AffectedResources":{
       "type":"map",
       "key":{"shape":"String"},
@@ -1945,6 +2099,55 @@
           "locationName":"version"
         }
       }
+    },
+    "AnalysisRecord":{
+      "type":"structure",
+      "required":["AnalysisType"],
+      "members":{
+        "AnalysisType":{
+          "shape":"AnalysisType",
+          "locationName":"analysisType"
+        },
+        "ThreatAssessment":{
+          "shape":"InvestigationThreatAssessment",
+          "locationName":"threatAssessment"
+        },
+        "KubernetesPolicyViolation":{
+          "shape":"KubernetesPolicyViolation",
+          "locationName":"kubernetesPolicyViolation"
+        },
+        "S3Analysis":{
+          "shape":"S3Analysis",
+          "locationName":"s3Analysis"
+        },
+        "Processes":{
+          "shape":"Processes",
+          "locationName":"processes"
+        },
+        "AccountAnalysis":{
+          "shape":"InvestigationAccountAnalysis",
+          "locationName":"accountAnalysis"
+        },
+        "Indicators":{
+          "shape":"InvestigationIndicators",
+          "locationName":"indicators"
+        }
+      }
+    },
+    "AnalysisType":{
+      "type":"string",
+      "enum":[
+        "REPUTATION",
+        "THREAT_ASSESSMENT",
+        "RDS_THREAT_ASSESSMENT",
+        "KUBERNETES_POLICY_VIOLATION",
+        "S3_EXPOSURE",
+        "S3_ACTOR_CONTEXT",
+        "S3_PEN_TEST",
+        "PROCESS_LINEAGE",
+        "TREND",
+        "BASELINE"
+      ]
     },
     "Anomaly":{
       "type":"structure",
@@ -2044,6 +2247,27 @@
       "type":"string",
       "max":1024,
       "min":0
+    },
+    "ArchiveDistribution":{
+      "type":"structure",
+      "members":{
+        "ArchivedCount":{
+          "shape":"Count",
+          "locationName":"archivedCount"
+        },
+        "UnarchivedCount":{
+          "shape":"Count",
+          "locationName":"unarchivedCount"
+        },
+        "ArchivedPercentage":{
+          "shape":"Percentage",
+          "locationName":"archivedPercentage"
+        },
+        "UnarchivedPercentage":{
+          "shape":"Percentage",
+          "locationName":"unarchivedPercentage"
+        }
+      }
     },
     "ArchiveFindingsRequest":{
       "type":"structure",
@@ -2171,6 +2395,75 @@
       "type":"list",
       "member":{"shape":"AssociationSummary"}
     },
+    "Attack":{
+      "type":"structure",
+      "members":{
+        "Tactic":{
+          "shape":"ThreatReference",
+          "locationName":"tactic"
+        },
+        "Technique":{
+          "shape":"ThreatReference",
+          "locationName":"technique"
+        },
+        "Findings":{
+          "shape":"FindingReferences",
+          "locationName":"findings"
+        },
+        "Version":{
+          "shape":"String",
+          "locationName":"version"
+        }
+      }
+    },
+    "AttackPhase":{
+      "type":"structure",
+      "members":{
+        "Phase":{
+          "shape":"AttackPhaseName",
+          "locationName":"phase"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "Attacks":{
+          "shape":"Attacks",
+          "locationName":"attacks"
+        }
+      }
+    },
+    "AttackPhaseName":{
+      "type":"string",
+      "enum":[
+        "Reconnaissance",
+        "Resource Development",
+        "Initial Access",
+        "Execution",
+        "Persistence",
+        "Privilege Escalation",
+        "Defense Evasion",
+        "Credential Access",
+        "Discovery",
+        "Lateral Movement",
+        "Collection",
+        "Command and Control",
+        "Exfiltration",
+        "Impact"
+      ]
+    },
+    "AttackPhases":{
+      "type":"list",
+      "member":{"shape":"AttackPhase"},
+      "max":20,
+      "min":0
+    },
+    "Attacks":{
+      "type":"list",
+      "member":{"shape":"Attack"},
+      "max":25,
+      "min":0
+    },
     "AutoEnableMembers":{
       "type":"string",
       "enum":[
@@ -2263,6 +2556,23 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "Baseline":{
+      "type":"structure",
+      "members":{
+        "TotalFindings":{
+          "shape":"Count",
+          "locationName":"totalFindings"
+        },
+        "BaselineFindings":{
+          "shape":"FindingTypeClassifications",
+          "locationName":"baselineFindings"
+        },
+        "AnomalousFindings":{
+          "shape":"FindingTypeClassifications",
+          "locationName":"anomalousFindings"
+        }
+      }
     },
     "BedrockGuardrail":{
       "type":"structure",
@@ -2433,6 +2743,12 @@
           "locationName":"cityName"
         }
       }
+    },
+    "CliCommands":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":20,
+      "min":0
     },
     "ClientToken":{
       "type":"string",
@@ -2736,6 +3052,64 @@
         }
       }
     },
+    "CorrelatedFinding":{
+      "type":"structure",
+      "members":{
+        "FindingType":{
+          "shape":"FindingType",
+          "locationName":"findingType"
+        },
+        "Count":{
+          "shape":"Count",
+          "locationName":"count"
+        },
+        "SeverityMax":{
+          "shape":"SeverityScore",
+          "locationName":"severityMax"
+        },
+        "CorrelationReasons":{
+          "shape":"CorrelationReasons",
+          "locationName":"correlationReasons"
+        },
+        "FindingIds":{
+          "shape":"RelatedFindingIds",
+          "locationName":"findingIds"
+        },
+        "SharedResources":{
+          "shape":"SharedResources",
+          "locationName":"sharedResources"
+        },
+        "SharedBehaviors":{
+          "shape":"SharedBehaviors",
+          "locationName":"sharedBehaviors"
+        }
+      }
+    },
+    "CorrelatedFindings":{
+      "type":"list",
+      "member":{"shape":"CorrelatedFinding"},
+      "max":8,
+      "min":0
+    },
+    "CorrelationReason":{
+      "type":"string",
+      "enum":[
+        "HIGH_SEVERITY",
+        "SAME_RESOURCE",
+        "SAME_BEHAVIOR"
+      ]
+    },
+    "CorrelationReasons":{
+      "type":"list",
+      "member":{"shape":"CorrelationReason"},
+      "max":10,
+      "min":0
+    },
+    "Count":{
+      "type":"long",
+      "box":true,
+      "min":0
+    },
     "CountByCoverageStatus":{
       "type":"map",
       "key":{"shape":"CoverageStatus"},
@@ -2750,6 +3124,76 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"Integer"}
+    },
+    "Countermeasure":{
+      "type":"structure",
+      "members":{
+        "DefenseTactic":{
+          "shape":"DefenseTactic",
+          "locationName":"defenseTactic"
+        },
+        "Actions":{
+          "shape":"CountermeasureActions",
+          "locationName":"actions"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        }
+      }
+    },
+    "CountermeasureAction":{
+      "type":"structure",
+      "members":{
+        "Title":{
+          "shape":"String",
+          "locationName":"title"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "Priority":{
+          "shape":"ActionPriority",
+          "locationName":"priority"
+        },
+        "DefenseTechnique":{
+          "shape":"String",
+          "locationName":"defenseTechnique"
+        },
+        "Mitigates":{
+          "shape":"MitreTechniqueIds",
+          "locationName":"mitigates"
+        },
+        "CliCommands":{
+          "shape":"CliCommands",
+          "locationName":"cliCommands"
+        },
+        "DispositionId":{
+          "shape":"Integer",
+          "locationName":"dispositionId"
+        },
+        "Disposition":{
+          "shape":"Disposition",
+          "locationName":"disposition"
+        },
+        "AffectedResources":{
+          "shape":"RemediationAffectedResources",
+          "locationName":"affectedResources"
+        }
+      }
+    },
+    "CountermeasureActions":{
+      "type":"list",
+      "member":{"shape":"CountermeasureAction"},
+      "max":25,
+      "min":0
+    },
+    "Countermeasures":{
+      "type":"list",
+      "member":{"shape":"Countermeasure"},
+      "max":20,
+      "min":0
     },
     "Country":{
       "type":"structure",
@@ -3776,6 +4220,16 @@
         }
       }
     },
+    "DefenseTactic":{
+      "type":"string",
+      "enum":[
+        "Isolate",
+        "Evict",
+        "Restore",
+        "Harden",
+        "Detect"
+      ]
+    },
     "DeleteCustomDetectionRuleAssociationRequest":{
       "type":"structure",
       "required":[
@@ -4244,6 +4698,27 @@
         "Sequence":{
           "shape":"Sequence",
           "locationName":"sequence"
+        }
+      }
+    },
+    "DetectionCoverage":{
+      "type":"structure",
+      "members":{
+        "ProtectionPlans":{
+          "shape":"ProtectionPlans",
+          "locationName":"protectionPlans"
+        },
+        "FoundationalDataSources":{
+          "shape":"FoundationalDataSources",
+          "locationName":"foundationalDataSources"
+        },
+        "CoverageGaps":{
+          "shape":"InvestigationText",
+          "locationName":"coverageGaps"
+        },
+        "KeyObservation":{
+          "shape":"InvestigationText",
+          "locationName":"keyObservation"
         }
       }
     },
@@ -4724,6 +5199,81 @@
         }
       }
     },
+    "Disposition":{
+      "type":"string",
+      "enum":[
+        "Isolated",
+        "Blocked",
+        "Deleted",
+        "Access Revoked",
+        "Logged"
+      ]
+    },
+    "Distribution":{
+      "type":"structure",
+      "required":["Dimension"],
+      "members":{
+        "Dimension":{
+          "shape":"DistributionDimension",
+          "locationName":"dimension"
+        },
+        "TotalFindings":{
+          "shape":"Count",
+          "locationName":"totalFindings"
+        },
+        "SeverityBreakdown":{
+          "shape":"SeverityBreakdown",
+          "locationName":"severityBreakdown"
+        },
+        "FindingTypes":{
+          "shape":"TypeDistributions",
+          "locationName":"findingTypes"
+        },
+        "TopFindingTypes":{
+          "shape":"FindingTypeCounts",
+          "locationName":"topFindingTypes"
+        },
+        "Resources":{
+          "shape":"ResourceDistributions",
+          "locationName":"resources"
+        },
+        "AttackVectors":{
+          "shape":"TacticCoverages",
+          "locationName":"attackVectors"
+        },
+        "Archive":{
+          "shape":"ArchiveDistribution",
+          "locationName":"archive"
+        }
+      }
+    },
+    "DistributionDimension":{
+      "type":"string",
+      "enum":[
+        "SEVERITY",
+        "TYPE",
+        "RESOURCE",
+        "ATTACK_VECTOR",
+        "ARCHIVE"
+      ]
+    },
+    "DnsContext":{
+      "type":"structure",
+      "members":{
+        "DomainSuffix":{
+          "shape":"String",
+          "locationName":"domainSuffix"
+        },
+        "OtherDomains":{
+          "shape":"String",
+          "locationName":"otherDomains"
+        },
+        "ResolverHistory":{
+          "shape":"String",
+          "locationName":"resolverHistory"
+        }
+      }
+    },
     "DnsRequestAction":{
       "type":"structure",
       "members":{
@@ -5185,6 +5735,27 @@
       "max":400,
       "min":0
     },
+    "Enrichment":{
+      "type":"structure",
+      "members":{
+        "CountryName":{
+          "shape":"String",
+          "locationName":"countryName"
+        },
+        "AsnOrg":{
+          "shape":"String",
+          "locationName":"asnOrg"
+        },
+        "ThreatListName":{
+          "shape":"String",
+          "locationName":"threatListName"
+        },
+        "ThreatName":{
+          "shape":"String",
+          "locationName":"threatName"
+        }
+      }
+    },
     "Eq":{
       "type":"list",
       "member":{"shape":"String"}
@@ -5242,6 +5813,213 @@
       "enum":[
         "USEFUL",
         "NOT_USEFUL"
+      ]
+    },
+    "FetchCriteria":{
+      "type":"list",
+      "member":{"shape":"FetchCriterion"},
+      "max":20,
+      "min":0
+    },
+    "FetchCriterion":{
+      "type":"structure",
+      "required":[
+        "Field",
+        "Condition"
+      ],
+      "members":{
+        "Field":{
+          "shape":"FetchFieldName",
+          "locationName":"field"
+        },
+        "Condition":{
+          "shape":"FetchCriterionCondition",
+          "locationName":"condition"
+        },
+        "Values":{
+          "shape":"FetchFieldValues",
+          "locationName":"values"
+        }
+      }
+    },
+    "FetchCriterionCondition":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "NOT_EQUALS",
+        "GREATER_THAN",
+        "GREATER_THAN_OR_EQUAL",
+        "LESS_THAN",
+        "LESS_THAN_OR_EQUAL"
+      ]
+    },
+    "FetchDetectorFeatures":{
+      "type":"list",
+      "member":{"shape":"InvestigationDetectorFeatureConfiguration"},
+      "max":50,
+      "min":0
+    },
+    "FetchDurationInMinutes":{
+      "type":"integer",
+      "box":true,
+      "max":120,
+      "min":1
+    },
+    "FetchFieldName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "FetchFieldValue":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "FetchFieldValues":{
+      "type":"list",
+      "member":{"shape":"FetchFieldValue"},
+      "max":20,
+      "min":0
+    },
+    "FetchItemId":{
+      "type":"string",
+      "max":300,
+      "min":1
+    },
+    "FetchItemIds":{
+      "type":"list",
+      "member":{"shape":"FetchItemId"},
+      "max":50,
+      "min":0
+    },
+    "FetchLearnMoreLink":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
+    "FetchLearnMoreLinks":{
+      "type":"list",
+      "member":{"shape":"FetchLearnMoreLink"},
+      "max":10,
+      "min":0
+    },
+    "FetchQuery":{
+      "type":"structure",
+      "members":{
+        "Criteria":{
+          "shape":"FetchCriteria",
+          "locationName":"criteria"
+        },
+        "TimeWindow":{
+          "shape":"FetchTimeWindow",
+          "locationName":"timeWindow"
+        },
+        "RowLimit":{
+          "shape":"FetchRowLimit",
+          "locationName":"rowLimit"
+        },
+        "AccountId":{
+          "shape":"String",
+          "locationName":"accountId"
+        },
+        "Indicator":{
+          "shape":"IndicatorValue",
+          "locationName":"indicator"
+        },
+        "IndicatorType":{
+          "shape":"InvestigationIndicatorType",
+          "locationName":"indicatorType"
+        },
+        "FindingType":{
+          "shape":"FindingType",
+          "locationName":"findingType"
+        },
+        "FindingId":{
+          "shape":"FindingId",
+          "locationName":"findingId"
+        }
+      }
+    },
+    "FetchRecord":{
+      "type":"structure",
+      "required":["FetchType"],
+      "members":{
+        "FetchType":{
+          "shape":"FetchType",
+          "locationName":"fetchType"
+        },
+        "Query":{
+          "shape":"FetchQuery",
+          "locationName":"query"
+        },
+        "Result":{
+          "shape":"FetchResult",
+          "locationName":"result"
+        }
+      }
+    },
+    "FetchResult":{
+      "type":"structure",
+      "members":{
+        "ItemIds":{
+          "shape":"FetchItemIds",
+          "locationName":"itemIds"
+        },
+        "TotalCount":{
+          "shape":"Count",
+          "locationName":"totalCount"
+        },
+        "Features":{
+          "shape":"FetchDetectorFeatures",
+          "locationName":"features"
+        },
+        "Verdict":{
+          "shape":"FetchVerdict",
+          "locationName":"verdict"
+        },
+        "Documentation":{
+          "shape":"FindingTypeDocumentation",
+          "locationName":"documentation"
+        }
+      }
+    },
+    "FetchRowLimit":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "FetchTimeWindow":{
+      "type":"structure",
+      "members":{
+        "StartedAt":{
+          "shape":"Timestamp",
+          "locationName":"startedAt"
+        },
+        "DurationInMinutes":{
+          "shape":"FetchDurationInMinutes",
+          "locationName":"durationInMinutes"
+        }
+      }
+    },
+    "FetchType":{
+      "type":"string",
+      "enum":[
+        "FINDINGS",
+        "DETECTOR",
+        "REPUTATION",
+        "FINDING_TYPE_DOCUMENTATION",
+        "CLOUD_TRAIL_RAW_EVENTS",
+        "RUNTIME_SIGNALS",
+        "MEMBER_ACCOUNTS"
+      ]
+    },
+    "FetchVerdict":{
+      "type":"string",
+      "enum":[
+        "THREAT",
+        "BENIGN",
+        "NEUTRAL"
       ]
     },
     "FilePaths":{
@@ -5435,6 +6213,35 @@
         }
       }
     },
+    "FindingDetail":{
+      "type":"structure",
+      "members":{
+        "FindingId":{
+          "shape":"FindingId",
+          "locationName":"findingId"
+        },
+        "FindingType":{
+          "shape":"FindingType",
+          "locationName":"findingType"
+        },
+        "Severity":{
+          "shape":"String",
+          "locationName":"severity"
+        },
+        "AccountId":{
+          "shape":"String",
+          "locationName":"accountId"
+        },
+        "Region":{
+          "shape":"String",
+          "locationName":"region"
+        },
+        "ActivityWindow":{
+          "shape":"ActivityWindow",
+          "locationName":"activityWindow"
+        }
+      }
+    },
     "FindingId":{
       "type":"string",
       "max":300,
@@ -5453,6 +6260,25 @@
         "ONE_HOUR",
         "SIX_HOURS"
       ]
+    },
+    "FindingReference":{
+      "type":"structure",
+      "members":{
+        "FindingType":{
+          "shape":"String",
+          "locationName":"findingType"
+        },
+        "Uid":{
+          "shape":"FindingId",
+          "locationName":"uid"
+        }
+      }
+    },
+    "FindingReferences":{
+      "type":"list",
+      "member":{"shape":"FindingReference"},
+      "max":100,
+      "min":0
     },
     "FindingResourceType":{
       "type":"string",
@@ -5531,6 +6357,91 @@
       "max":100,
       "min":1
     },
+    "FindingTypeClassification":{
+      "type":"structure",
+      "members":{
+        "FindingType":{
+          "shape":"FindingType",
+          "locationName":"findingType"
+        },
+        "Classification":{
+          "shape":"InvestigationText",
+          "locationName":"classification"
+        },
+        "Count":{
+          "shape":"Count",
+          "locationName":"count"
+        },
+        "Percentage":{
+          "shape":"Percentage",
+          "locationName":"percentage"
+        },
+        "Description":{
+          "shape":"InvestigationText",
+          "locationName":"description"
+        }
+      }
+    },
+    "FindingTypeClassifications":{
+      "type":"list",
+      "member":{"shape":"FindingTypeClassification"},
+      "max":50,
+      "min":0
+    },
+    "FindingTypeCount":{
+      "type":"structure",
+      "members":{
+        "FindingType":{
+          "shape":"String",
+          "locationName":"findingType"
+        },
+        "Count":{
+          "shape":"Integer",
+          "locationName":"count"
+        }
+      }
+    },
+    "FindingTypeCounts":{
+      "type":"list",
+      "member":{"shape":"FindingTypeCount"},
+      "max":50,
+      "min":0
+    },
+    "FindingTypeDocumentation":{
+      "type":"structure",
+      "members":{
+        "Description":{
+          "shape":"InvestigationText",
+          "locationName":"description"
+        },
+        "Severity":{
+          "shape":"String",
+          "locationName":"severity"
+        },
+        "Feature":{
+          "shape":"String",
+          "locationName":"feature"
+        },
+        "FullDescription":{
+          "shape":"InvestigationText",
+          "locationName":"fullDescription"
+        },
+        "Remediation":{
+          "shape":"InvestigationText",
+          "locationName":"remediation"
+        },
+        "LearnMoreLinks":{
+          "shape":"FetchLearnMoreLinks",
+          "locationName":"learnMoreLinks"
+        }
+      }
+    },
+    "FindingTypeNames":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":50,
+      "min":0
+    },
     "FindingTypeStatistics":{
       "type":"structure",
       "members":{
@@ -5560,6 +6471,27 @@
       "max":50,
       "min":0
     },
+    "FindingsSummary":{
+      "type":"structure",
+      "members":{
+        "TotalFindings":{
+          "shape":"Integer",
+          "locationName":"totalFindings"
+        },
+        "SeverityBreakdown":{
+          "shape":"SeverityBreakdown",
+          "locationName":"severityBreakdown"
+        },
+        "TopFindingTypes":{
+          "shape":"FindingTypeCounts",
+          "locationName":"topFindingTypes"
+        },
+        "ByTimeWindow":{
+          "shape":"TimeWindowGroups",
+          "locationName":"byTimeWindow"
+        }
+      }
+    },
     "FlagsList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -5573,6 +6505,12 @@
           "locationName":"status"
         }
       }
+    },
+    "FoundationalDataSources":{
+      "type":"list",
+      "member":{"shape":"InvestigationDetectorFeature"},
+      "max":20,
+      "min":0
     },
     "FreeTrialFeatureConfigurationResult":{
       "type":"structure",
@@ -6024,6 +6962,11 @@
           "shape":"InvestigationId",
           "location":"uri",
           "locationName":"InvestigationId"
+        },
+        "SummaryFormat":{
+          "shape":"SummaryFormat",
+          "location":"querystring",
+          "locationName":"summaryFormat"
         }
       }
     },
@@ -6785,6 +7728,12 @@
         "SENSITIVE_DATA"
       ]
     },
+    "IndicatorValue":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "sensitive":true
+    },
     "IndicatorValueString":{
       "type":"string",
       "max":256,
@@ -6935,8 +7884,16 @@
           "locationName":"confidence"
         },
         "Summary":{
-          "shape":"String",
+          "shape":"InvestigationSummaryText",
           "locationName":"summary"
+        },
+        "SummaryData":{
+          "shape":"InvestigationSummaryData",
+          "locationName":"summaryData"
+        },
+        "Scope":{
+          "shape":"InvestigationScope",
+          "locationName":"scope"
         },
         "StartTime":{
           "shape":"Timestamp",
@@ -6952,16 +7909,339 @@
         }
       }
     },
+    "InvestigationAccountAnalysis":{
+      "type":"structure",
+      "members":{
+        "Trend":{
+          "shape":"Trend",
+          "locationName":"trend"
+        },
+        "Baseline":{
+          "shape":"Baseline",
+          "locationName":"baseline"
+        }
+      }
+    },
+    "InvestigationActor":{
+      "type":"structure",
+      "members":{
+        "AccessKeyId":{
+          "shape":"String",
+          "locationName":"accessKeyId"
+        },
+        "PrincipalId":{
+          "shape":"String",
+          "locationName":"principalId"
+        },
+        "UserName":{
+          "shape":"String",
+          "locationName":"userName"
+        },
+        "UserType":{
+          "shape":"String",
+          "locationName":"userType"
+        },
+        "UserAgent":{
+          "shape":"String",
+          "locationName":"userAgent"
+        }
+      }
+    },
+    "InvestigationCriterion":{
+      "type":"map",
+      "key":{"shape":"InvestigationFilterCriterionKey"},
+      "value":{"shape":"InvestigationFilterCondition"}
+    },
+    "InvestigationDetectorFeature":{
+      "type":"string",
+      "enum":[
+        "CLOUD_TRAIL",
+        "DNS_LOGS",
+        "FLOW_LOGS",
+        "S3_DATA_EVENTS",
+        "EKS_AUDIT_LOGS",
+        "EBS_MALWARE_PROTECTION",
+        "RDS_LOGIN_EVENTS",
+        "EKS_RUNTIME_MONITORING",
+        "EKS_ADDON_MANAGEMENT",
+        "LAMBDA_NETWORK_LOGS",
+        "RUNTIME_MONITORING",
+        "ECS_FARGATE_AGENT_MANAGEMENT",
+        "EC2_AGENT_MANAGEMENT"
+      ]
+    },
+    "InvestigationDetectorFeatureConfiguration":{
+      "type":"structure",
+      "members":{
+        "Name":{
+          "shape":"InvestigationDetectorFeature",
+          "locationName":"name"
+        },
+        "Status":{
+          "shape":"FeatureStatus",
+          "locationName":"status"
+        },
+        "UpdatedAt":{
+          "shape":"Timestamp",
+          "locationName":"updatedAt"
+        }
+      }
+    },
+    "InvestigationEc2Instance":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{
+          "shape":"String",
+          "locationName":"instanceId"
+        },
+        "InstanceType":{
+          "shape":"String",
+          "locationName":"instanceType"
+        },
+        "InstanceState":{
+          "shape":"String",
+          "locationName":"instanceState"
+        },
+        "AvailabilityZone":{
+          "shape":"String",
+          "locationName":"availabilityZone"
+        },
+        "PrivateIpAddress":{
+          "shape":"SensitiveString",
+          "locationName":"privateIpAddress"
+        },
+        "PublicIp":{
+          "shape":"String",
+          "locationName":"publicIp"
+        },
+        "VpcId":{
+          "shape":"String",
+          "locationName":"vpcId"
+        },
+        "SubnetId":{
+          "shape":"String",
+          "locationName":"subnetId"
+        },
+        "ImageId":{
+          "shape":"String",
+          "locationName":"imageId"
+        },
+        "LaunchedAt":{
+          "shape":"Timestamp",
+          "locationName":"launchedAt"
+        }
+      }
+    },
+    "InvestigationEcsCluster":{
+      "type":"structure",
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "Arn":{
+          "shape":"String",
+          "locationName":"arn"
+        },
+        "Status":{
+          "shape":"String",
+          "locationName":"status"
+        }
+      }
+    },
+    "InvestigationEksCluster":{
+      "type":"structure",
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "Arn":{
+          "shape":"String",
+          "locationName":"arn"
+        },
+        "Status":{
+          "shape":"String",
+          "locationName":"status"
+        },
+        "VpcId":{
+          "shape":"String",
+          "locationName":"vpcId"
+        }
+      }
+    },
     "InvestigationErrorDetails":{
       "type":"string",
       "max":2048,
       "min":0
+    },
+    "InvestigationFilterCondition":{
+      "type":"structure",
+      "members":{
+        "Equals":{
+          "shape":"Equals",
+          "locationName":"equals"
+        },
+        "NotEquals":{
+          "shape":"NotEquals",
+          "locationName":"notEquals"
+        }
+      }
+    },
+    "InvestigationFilterCriteria":{
+      "type":"structure",
+      "members":{
+        "Criterion":{
+          "shape":"InvestigationCriterion",
+          "locationName":"criterion"
+        }
+      }
+    },
+    "InvestigationFilterCriterionKey":{
+      "type":"string",
+      "enum":[
+        "STATUS",
+        "RISK_LEVEL",
+        "CONFIDENCE",
+        "FINDING_ID",
+        "INVESTIGATION_TYPE"
+      ]
     },
     "InvestigationId":{
       "type":"string",
       "max":64,
       "min":1,
       "pattern":"[a-fA-F0-9\\-]+"
+    },
+    "InvestigationIndicator":{
+      "type":"structure",
+      "required":["Value"],
+      "members":{
+        "Value":{
+          "shape":"IndicatorValue",
+          "locationName":"value"
+        },
+        "Type":{
+          "shape":"InvestigationIndicatorType",
+          "locationName":"type"
+        }
+      }
+    },
+    "InvestigationIndicatorType":{
+      "type":"string",
+      "enum":[
+        "IP",
+        "DOMAIN",
+        "FILE"
+      ]
+    },
+    "InvestigationIndicators":{
+      "type":"list",
+      "member":{"shape":"InvestigationIndicator"},
+      "max":20,
+      "min":0
+    },
+    "InvestigationKubernetesWorkload":{
+      "type":"structure",
+      "members":{
+        "WorkloadType":{
+          "shape":"String",
+          "locationName":"workloadType"
+        },
+        "WorkloadName":{
+          "shape":"String",
+          "locationName":"workloadName"
+        },
+        "Containers":{
+          "shape":"String",
+          "locationName":"containers"
+        },
+        "Volumes":{
+          "shape":"String",
+          "locationName":"volumes"
+        },
+        "SecurityContext":{
+          "shape":"String",
+          "locationName":"securityContext"
+        }
+      }
+    },
+    "InvestigationMalwareScan":{
+      "type":"structure",
+      "members":{
+        "ScanId":{
+          "shape":"String",
+          "locationName":"scanId"
+        },
+        "ScanType":{
+          "shape":"MalwareProtectionScanType",
+          "locationName":"scanType"
+        },
+        "ScanCategory":{
+          "shape":"ScanCategory",
+          "locationName":"scanCategory"
+        },
+        "TriggerFindingId":{
+          "shape":"FindingId",
+          "locationName":"triggerFindingId"
+        },
+        "EngineSources":{
+          "shape":"String",
+          "locationName":"engineSources"
+        },
+        "ScanStartedAt":{
+          "shape":"Timestamp",
+          "locationName":"scanStartedAt"
+        },
+        "ScanCompletedAt":{
+          "shape":"Timestamp",
+          "locationName":"scanCompletedAt"
+        },
+        "FilesScanned":{
+          "shape":"Count",
+          "locationName":"filesScanned"
+        },
+        "GigabytesScanned":{
+          "shape":"Double",
+          "locationName":"gigabytesScanned"
+        },
+        "VolumesScanned":{
+          "shape":"Count",
+          "locationName":"volumesScanned"
+        },
+        "InfectedFileCount":{
+          "shape":"Count",
+          "locationName":"infectedFileCount"
+        },
+        "ResourceType":{
+          "shape":"String",
+          "locationName":"resourceType"
+        },
+        "ResourceIdentifier":{
+          "shape":"String",
+          "locationName":"resourceIdentifier"
+        },
+        "HighestSeverity":{
+          "shape":"String",
+          "locationName":"highestSeverity"
+        },
+        "HighestSeverityThreatName":{
+          "shape":"String",
+          "locationName":"highestSeverityThreatName"
+        },
+        "UniqueThreatCount":{
+          "shape":"Count",
+          "locationName":"uniqueThreatCount"
+        },
+        "TotalInfectedItems":{
+          "shape":"Count",
+          "locationName":"totalInfectedItems"
+        },
+        "Threats":{
+          "shape":"MalwareThreats",
+          "locationName":"threats"
+        }
+      }
     },
     "InvestigationMetadata":{
       "type":"structure",
@@ -6977,6 +8257,144 @@
         "Product":{
           "shape":"Product",
           "locationName":"product"
+        }
+      }
+    },
+    "InvestigationObservations":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":25,
+      "min":0
+    },
+    "InvestigationRecord":{
+      "type":"structure",
+      "required":[
+        "RecordId",
+        "Type",
+        "Title",
+        "CreatedAt"
+      ],
+      "members":{
+        "RecordId":{
+          "shape":"RecordId",
+          "locationName":"recordId"
+        },
+        "Type":{
+          "shape":"RecordType",
+          "locationName":"type"
+        },
+        "Title":{
+          "shape":"RecordTitle",
+          "locationName":"title"
+        },
+        "Narrative":{
+          "shape":"Narrative",
+          "locationName":"narrative"
+        },
+        "CreatedAt":{
+          "shape":"Timestamp",
+          "locationName":"createdAt"
+        },
+        "SupportingData":{
+          "shape":"SupportingData",
+          "locationName":"supportingData"
+        }
+      }
+    },
+    "InvestigationResource":{
+      "type":"structure",
+      "required":[
+        "Uid",
+        "ResourceType"
+      ],
+      "members":{
+        "Uid":{
+          "shape":"String",
+          "locationName":"uid"
+        },
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "ResourceType":{
+          "shape":"InvestigationResourceType",
+          "locationName":"resourceType"
+        },
+        "Data":{
+          "shape":"InvestigationResourceData",
+          "locationName":"data"
+        }
+      }
+    },
+    "InvestigationResourceData":{
+      "type":"structure",
+      "members":{
+        "Ec2Instance":{
+          "shape":"InvestigationEc2Instance",
+          "locationName":"ec2Instance"
+        },
+        "LambdaFunction":{
+          "shape":"LambdaFunction",
+          "locationName":"lambdaFunction"
+        },
+        "RdsDbInstance":{
+          "shape":"RdsDbInstance",
+          "locationName":"rdsDbInstance"
+        },
+        "RdsDbUser":{
+          "shape":"RdsDbUser",
+          "locationName":"rdsDbUser"
+        },
+        "EksCluster":{
+          "shape":"InvestigationEksCluster",
+          "locationName":"eksCluster"
+        },
+        "EcsCluster":{
+          "shape":"InvestigationEcsCluster",
+          "locationName":"ecsCluster"
+        }
+      }
+    },
+    "InvestigationResourceType":{
+      "type":"string",
+      "enum":[
+        "EC2_INSTANCE",
+        "EBS_VOLUME",
+        "S3_BUCKET",
+        "IAM_ROLE",
+        "IAM_USER",
+        "IAM_ACCESS_KEY",
+        "LAMBDA_FUNCTION",
+        "EKS_CLUSTER",
+        "ECS_CLUSTER",
+        "KUBERNETES_WORKLOAD",
+        "RDS_INSTANCE",
+        "RDS_DB_USER",
+        "EC2_SECURITY_GROUP"
+      ]
+    },
+    "InvestigationScope":{
+      "type":"structure",
+      "members":{
+        "InvestigationType":{
+          "shape":"InvestigationType",
+          "locationName":"investigationType"
+        },
+        "FindingId":{
+          "shape":"FindingId",
+          "locationName":"findingId"
+        },
+        "AccountId":{
+          "shape":"AccountId",
+          "locationName":"accountId"
+        },
+        "AdminAccountId":{
+          "shape":"AccountId",
+          "locationName":"adminAccountId"
+        },
+        "QueryTimeWindow":{
+          "shape":"QueryTimeWindow",
+          "locationName":"queryTimeWindow"
         }
       }
     },
@@ -7046,9 +8464,21 @@
           "shape":"InvestigationTitle",
           "locationName":"title"
         },
+        "InvestigationType":{
+          "shape":"InvestigationType",
+          "locationName":"investigationType"
+        },
+        "FindingId":{
+          "shape":"FindingId",
+          "locationName":"findingId"
+        },
         "AccountId":{
           "shape":"String",
           "locationName":"accountId"
+        },
+        "AdminAccountId":{
+          "shape":"String",
+          "locationName":"adminAccountId"
         },
         "StartTime":{
           "shape":"Timestamp",
@@ -7060,10 +8490,98 @@
         }
       }
     },
+    "InvestigationSummaryData":{
+      "type":"structure",
+      "members":{
+        "FindingType":{
+          "shape":"String",
+          "locationName":"findingType"
+        },
+        "ThreatAssessment":{
+          "shape":"ThreatAssessment",
+          "locationName":"threatAssessment"
+        },
+        "Countermeasures":{
+          "shape":"Countermeasures",
+          "locationName":"countermeasures"
+        },
+        "AccountAnalysis":{
+          "shape":"AccountAnalysis",
+          "locationName":"accountAnalysis"
+        },
+        "OrganizationAnalysis":{
+          "shape":"OrganizationAnalysis",
+          "locationName":"organizationAnalysis"
+        },
+        "KeyObservations":{
+          "shape":"KeyObservations",
+          "locationName":"keyObservations"
+        },
+        "Recommendations":{
+          "shape":"Recommendations",
+          "locationName":"recommendations"
+        }
+      }
+    },
+    "InvestigationSummaryText":{
+      "type":"string",
+      "max":262144,
+      "min":0
+    },
+    "InvestigationText":{
+      "type":"string",
+      "max":4096,
+      "min":0
+    },
+    "InvestigationThreatAssessment":{
+      "type":"structure",
+      "members":{
+        "Reputation":{
+          "shape":"Reputation",
+          "locationName":"reputation"
+        },
+        "ThreatConfidence":{
+          "shape":"ThreatConfidence",
+          "locationName":"threatConfidence"
+        },
+        "Classification":{
+          "shape":"InvestigationText",
+          "locationName":"classification"
+        },
+        "Assessment":{
+          "shape":"InvestigationText",
+          "locationName":"assessment"
+        },
+        "AuthenticationContext":{
+          "shape":"InvestigationText",
+          "locationName":"authenticationContext"
+        },
+        "RdsControlPlaneActivity":{
+          "shape":"InvestigationText",
+          "locationName":"rdsControlPlaneActivity"
+        },
+        "IpAccountActivity":{
+          "shape":"InvestigationText",
+          "locationName":"ipAccountActivity"
+        },
+        "CredentialCompromise":{
+          "shape":"InvestigationText",
+          "locationName":"credentialCompromise"
+        }
+      }
+    },
     "InvestigationTitle":{
       "type":"string",
       "max":1024,
       "min":0
+    },
+    "InvestigationType":{
+      "type":"string",
+      "enum":[
+        "FINDING",
+        "ACCOUNT",
+        "ORGANIZATION"
+      ]
     },
     "Invitation":{
       "type":"structure",
@@ -7213,6 +8731,122 @@
       "type":"list",
       "member":{"shape":"ItemPath"}
     },
+    "KeyObservations":{
+      "type":"structure",
+      "members":{
+        "Title":{
+          "shape":"String",
+          "locationName":"title"
+        },
+        "Narrative":{
+          "shape":"String",
+          "locationName":"narrative"
+        },
+        "Observations":{
+          "shape":"InvestigationObservations",
+          "locationName":"observations"
+        }
+      }
+    },
+    "KubernetesActivity":{
+      "type":"structure",
+      "members":{
+        "ApiCall":{
+          "shape":"KubernetesApiCall",
+          "locationName":"apiCall"
+        },
+        "Anomaly":{
+          "shape":"KubernetesAnomaly",
+          "locationName":"anomaly"
+        },
+        "Workload":{
+          "shape":"InvestigationKubernetesWorkload",
+          "locationName":"workload"
+        },
+        "Enrichment":{
+          "shape":"Enrichment",
+          "locationName":"enrichment"
+        }
+      }
+    },
+    "KubernetesAnomaly":{
+      "type":"structure",
+      "members":{
+        "UnusualBehavior":{
+          "shape":"InvestigationText",
+          "locationName":"unusualBehavior"
+        },
+        "BaselineContext":{
+          "shape":"InvestigationText",
+          "locationName":"baselineContext"
+        },
+        "AnomalyScore":{
+          "shape":"String",
+          "locationName":"anomalyScore"
+        },
+        "TrainingPeriod":{
+          "shape":"String",
+          "locationName":"trainingPeriod"
+        }
+      }
+    },
+    "KubernetesApiCall":{
+      "type":"structure",
+      "members":{
+        "ClusterName":{
+          "shape":"String",
+          "locationName":"clusterName"
+        },
+        "Username":{
+          "shape":"String",
+          "locationName":"username"
+        },
+        "UserGroups":{
+          "shape":"String",
+          "locationName":"userGroups"
+        },
+        "UserId":{
+          "shape":"String",
+          "locationName":"userId"
+        },
+        "Verb":{
+          "shape":"String",
+          "locationName":"verb"
+        },
+        "ResourceType":{
+          "shape":"String",
+          "locationName":"resourceType"
+        },
+        "ResourceName":{
+          "shape":"String",
+          "locationName":"resourceName"
+        },
+        "Namespace":{
+          "shape":"String",
+          "locationName":"namespace"
+        },
+        "RequestUri":{
+          "shape":"String",
+          "locationName":"requestUri"
+        },
+        "StatusCode":{
+          "shape":"Integer",
+          "locationName":"statusCode"
+        },
+        "SourceIps":{
+          "shape":"String",
+          "locationName":"sourceIPs"
+        },
+        "UserAgent":{
+          "shape":"String",
+          "locationName":"userAgent"
+        },
+        "EventCount":{
+          "shape":"Count",
+          "locationName":"eventCount"
+        }
+      }
+    },
     "KubernetesApiCallAction":{
       "type":"structure",
       "members":{
@@ -7342,6 +8976,35 @@
         "Allowed":{
           "shape":"Boolean",
           "locationName":"allowed"
+        }
+      }
+    },
+    "KubernetesPolicyViolation":{
+      "type":"structure",
+      "members":{
+        "ViolationType":{
+          "shape":"String",
+          "locationName":"violationType"
+        },
+        "AffectedResource":{
+          "shape":"String",
+          "locationName":"affectedResource"
+        },
+        "Subject":{
+          "shape":"String",
+          "locationName":"subject"
+        },
+        "GrantedAccess":{
+          "shape":"String",
+          "locationName":"grantedAccess"
+        },
+        "ExposureVector":{
+          "shape":"InvestigationText",
+          "locationName":"exposureVector"
+        },
+        "MisconfigurationImpact":{
+          "shape":"InvestigationText",
+          "locationName":"misconfigurationImpact"
         }
       }
     },
@@ -7525,6 +9188,43 @@
         "Tags":{
           "shape":"Tags",
           "locationName":"tags"
+        }
+      }
+    },
+    "LambdaFunction":{
+      "type":"structure",
+      "members":{
+        "FunctionName":{
+          "shape":"String",
+          "locationName":"functionName"
+        },
+        "FunctionArn":{
+          "shape":"String",
+          "locationName":"functionArn"
+        },
+        "FunctionVersion":{
+          "shape":"String",
+          "locationName":"functionVersion"
+        },
+        "Role":{
+          "shape":"String",
+          "locationName":"role"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "RevisionId":{
+          "shape":"String",
+          "locationName":"revisionId"
+        },
+        "UpdatedAt":{
+          "shape":"Timestamp",
+          "locationName":"updatedAt"
+        },
+        "VpcConfigurationSummary":{
+          "shape":"String",
+          "locationName":"vpcConfigurationSummary"
         }
       }
     },
@@ -7863,6 +9563,62 @@
         }
       }
     },
+    "ListInvestigationRecordsRequest":{
+      "type":"structure",
+      "required":[
+        "DetectorId",
+        "InvestigationId"
+      ],
+      "members":{
+        "DetectorId":{
+          "shape":"DetectorId",
+          "location":"uri",
+          "locationName":"DetectorId"
+        },
+        "InvestigationId":{
+          "shape":"InvestigationId",
+          "locationName":"investigationId"
+        },
+        "RecordTypes":{
+          "shape":"RecordTypes",
+          "locationName":"recordTypes"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListInvestigationRecordsResponse":{
+      "type":"structure",
+      "required":[
+        "InvestigationId",
+        "Status",
+        "Records"
+      ],
+      "members":{
+        "InvestigationId":{
+          "shape":"InvestigationId",
+          "locationName":"investigationId"
+        },
+        "Status":{
+          "shape":"InvestigationStatus",
+          "locationName":"status"
+        },
+        "Records":{
+          "shape":"Records",
+          "locationName":"records"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
     "ListInvestigationsRequest":{
       "type":"structure",
       "required":["DetectorId"],
@@ -7871,6 +9627,10 @@
           "shape":"DetectorId",
           "location":"uri",
           "locationName":"DetectorId"
+        },
+        "FilterCriteria":{
+          "shape":"InvestigationFilterCriteria",
+          "locationName":"filterCriteria"
         },
         "SortCriteria":{
           "shape":"InvestigationSortCriteria",
@@ -8537,6 +10297,33 @@
       "type":"list",
       "member":{"shape":"MalwareScan"}
     },
+    "MalwareThreat":{
+      "type":"structure",
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "Severity":{
+          "shape":"String",
+          "locationName":"severity"
+        },
+        "InfectedFileCount":{
+          "shape":"Count",
+          "locationName":"infectedFileCount"
+        },
+        "SampleFiles":{
+          "shape":"String",
+          "locationName":"sampleFiles"
+        }
+      }
+    },
+    "MalwareThreats":{
+      "type":"list",
+      "member":{"shape":"MalwareThreat"},
+      "max":50,
+      "min":0
+    },
     "ManagedBy":{
       "type":"string",
       "enum":["GUARDDUTY_POLICY"]
@@ -8640,6 +10427,37 @@
           "locationName":"administratorId"
         }
       }
+    },
+    "MemberAccountRanking":{
+      "type":"structure",
+      "members":{
+        "Rank":{
+          "shape":"Integer",
+          "locationName":"rank"
+        },
+        "AccountId":{
+          "shape":"String",
+          "locationName":"accountId"
+        },
+        "FindingCount":{
+          "shape":"Count",
+          "locationName":"findingCount"
+        },
+        "RiskLevel":{
+          "shape":"RiskLevel",
+          "locationName":"riskLevel"
+        },
+        "RiskRationale":{
+          "shape":"InvestigationText",
+          "locationName":"riskRationale"
+        }
+      }
+    },
+    "MemberAccountRankings":{
+      "type":"list",
+      "member":{"shape":"MemberAccountRanking"},
+      "max":10,
+      "min":0
     },
     "MemberAdditionalConfiguration":{
       "type":"structure",
@@ -8772,6 +10590,20 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "MetadataRecord":{
+      "type":"structure",
+      "members":{
+        "TotalTimeMilliseconds":{
+          "shape":"MetadataTotalTimeMilliseconds",
+          "locationName":"totalTimeMilliseconds"
+        }
+      }
+    },
+    "MetadataTotalTimeMilliseconds":{
+      "type":"long",
+      "box":true,
+      "min":0
+    },
     "MfaStatus":{
       "type":"string",
       "enum":[
@@ -8788,6 +10620,16 @@
       "type":"string",
       "max":255,
       "min":1
+    },
+    "MitreTechniqueIds":{
+      "type":"list",
+      "member":{"shape":"MitreThreatId"},
+      "max":20,
+      "min":0
+    },
+    "MitreThreatId":{
+      "type":"string",
+      "pattern":"(TA|T)\\d{4}(\\.\\d{3})?"
     },
     "ModelDetail":{
       "type":"structure",
@@ -8812,9 +10654,100 @@
       "max":300,
       "min":1
     },
+    "Narrative":{
+      "type":"string",
+      "max":4096,
+      "min":0
+    },
     "Neq":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "NetworkActivity":{
+      "type":"structure",
+      "members":{
+        "Protocol":{
+          "shape":"String",
+          "locationName":"protocol"
+        },
+        "Direction":{
+          "shape":"String",
+          "locationName":"direction"
+        },
+        "Method":{
+          "shape":"String",
+          "locationName":"method"
+        },
+        "Blocked":{
+          "shape":"String",
+          "locationName":"blocked"
+        },
+        "Platform":{
+          "shape":"String",
+          "locationName":"platform"
+        },
+        "Ports":{
+          "shape":"NetworkPorts",
+          "locationName":"ports"
+        },
+        "Traffic":{
+          "shape":"NetworkTraffic",
+          "locationName":"traffic"
+        },
+        "Anomaly":{
+          "shape":"NetworkAnomaly",
+          "locationName":"anomaly"
+        },
+        "Dns":{
+          "shape":"DnsContext",
+          "locationName":"dns"
+        },
+        "Counts":{
+          "shape":"NetworkCounts",
+          "locationName":"counts"
+        },
+        "Enrichment":{
+          "shape":"Enrichment",
+          "locationName":"enrichment"
+        }
+      }
+    },
+    "NetworkAnomaly":{
+      "type":"structure",
+      "members":{
+        "BaselineBytes":{
+          "shape":"String",
+          "locationName":"baselineBytes"
+        },
+        "Deviation":{
+          "shape":"String",
+          "locationName":"deviation"
+        },
+        "ProfileAgeDays":{
+          "shape":"Integer",
+          "locationName":"profileAgeDays"
+        },
+        "RemoteService":{
+          "shape":"String",
+          "locationName":"remoteService"
+        },
+        "RemoteRegion":{
+          "shape":"String",
+          "locationName":"remoteRegion"
+        },
+        "Duration":{
+          "shape":"String",
+          "locationName":"duration"
+        },
+        "ResetRatio":{
+          "shape":"String",
+          "locationName":"resetRatio"
+        },
+        "TargetHostCount":{
+          "shape":"Count",
+          "locationName":"targetHostCount"
+        }
+      }
     },
     "NetworkConnection":{
       "type":"structure",
@@ -8860,6 +10793,27 @@
         "RemotePortDetails":{
           "shape":"RemotePortDetails",
           "locationName":"remotePortDetails"
+        }
+      }
+    },
+    "NetworkCounts":{
+      "type":"structure",
+      "members":{
+        "RequestCount":{
+          "shape":"Count",
+          "locationName":"requestCount"
+        },
+        "TotalAttempts":{
+          "shape":"Count",
+          "locationName":"totalAttempts"
+        },
+        "SuspiciousAttempts":{
+          "shape":"Count",
+          "locationName":"suspiciousAttempts"
+        },
+        "ResetAttempts":{
+          "shape":"Count",
+          "locationName":"resetAttempts"
         }
       }
     },
@@ -8986,6 +10940,48 @@
       "type":"list",
       "member":{"shape":"NetworkInterface"}
     },
+    "NetworkPorts":{
+      "type":"structure",
+      "members":{
+        "TargetPort":{
+          "shape":"String",
+          "locationName":"targetPort"
+        },
+        "RemotePort":{
+          "shape":"String",
+          "locationName":"remotePort"
+        },
+        "ResolverPort":{
+          "shape":"String",
+          "locationName":"resolverPort"
+        },
+        "Ports":{
+          "shape":"String",
+          "locationName":"ports"
+        },
+        "PortsUsed":{
+          "shape":"String",
+          "locationName":"portsUsed"
+        },
+        "PortCount":{
+          "shape":"Count",
+          "locationName":"portCount"
+        }
+      }
+    },
+    "NetworkTraffic":{
+      "type":"structure",
+      "members":{
+        "BytesSent":{
+          "shape":"Count",
+          "locationName":"bytesSent"
+        },
+        "BytesReceived":{
+          "shape":"Count",
+          "locationName":"bytesReceived"
+        }
+      }
+    },
     "NextToken":{
       "type":"string",
       "max":2048,
@@ -9021,9 +11017,98 @@
       "type":"list",
       "member":{"shape":"Long"}
     },
+    "ObservationRecord":{
+      "type":"structure",
+      "required":["ObservationType"],
+      "members":{
+        "ObservationType":{
+          "shape":"ObservationType",
+          "locationName":"observationType"
+        },
+        "FindingDetail":{
+          "shape":"FindingDetail",
+          "locationName":"findingDetail"
+        },
+        "Resource":{
+          "shape":"InvestigationResource",
+          "locationName":"resource"
+        },
+        "NetworkActivity":{
+          "shape":"NetworkActivity",
+          "locationName":"networkActivity"
+        },
+        "RdsLoginActivity":{
+          "shape":"RdsLoginActivity",
+          "locationName":"rdsLoginActivity"
+        },
+        "S3Activity":{
+          "shape":"S3Activity",
+          "locationName":"s3Activity"
+        },
+        "KubernetesActivity":{
+          "shape":"KubernetesActivity",
+          "locationName":"kubernetesActivity"
+        },
+        "MalwareScan":{
+          "shape":"InvestigationMalwareScan",
+          "locationName":"malwareScan"
+        },
+        "RelatedFindings":{
+          "shape":"RelatedFindings",
+          "locationName":"relatedFindings"
+        },
+        "DetectionCoverage":{
+          "shape":"DetectionCoverage",
+          "locationName":"detectionCoverage"
+        },
+        "AccountOverview":{
+          "shape":"AccountOverview",
+          "locationName":"accountOverview"
+        },
+        "Recommendations":{
+          "shape":"Recommendations",
+          "locationName":"recommendations"
+        },
+        "RuntimeSignals":{
+          "shape":"RuntimeSignals",
+          "locationName":"runtimeSignals"
+        },
+        "Distribution":{
+          "shape":"Distribution",
+          "locationName":"distribution"
+        },
+        "RepresentativeResources":{
+          "shape":"RepresentativeFindings",
+          "locationName":"representativeResources"
+        },
+        "Indicators":{
+          "shape":"InvestigationIndicators",
+          "locationName":"indicators"
+        }
+      }
+    },
     "ObservationTexts":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "ObservationType":{
+      "type":"string",
+      "enum":[
+        "FINDING_DETAIL",
+        "RESOURCE",
+        "NETWORK_ACTIVITY",
+        "RDS_LOGIN_ACTIVITY",
+        "S3_ACTIVITY",
+        "KUBERNETES_ACTIVITY",
+        "MALWARE_SCAN",
+        "RELATED_FINDINGS",
+        "DETECTION_COVERAGE",
+        "ACCOUNT_OVERVIEW",
+        "RECOMMENDATION",
+        "RUNTIME_SIGNALS",
+        "DISTRIBUTION",
+        "REPRESENTATIVE_RESOURCE"
+      ]
     },
     "Observations":{
       "type":"structure",
@@ -9037,6 +11122,33 @@
           "locationName":"number"
         }
       }
+    },
+    "ObservedFindingType":{
+      "type":"structure",
+      "members":{
+        "FindingType":{
+          "shape":"FindingType",
+          "locationName":"findingType"
+        },
+        "Count":{
+          "shape":"Count",
+          "locationName":"count"
+        },
+        "SeverityMax":{
+          "shape":"SeverityScore",
+          "locationName":"severityMax"
+        },
+        "SharedResources":{
+          "shape":"SharedResources",
+          "locationName":"sharedResources"
+        }
+      }
+    },
+    "ObservedFindingTypes":{
+      "type":"list",
+      "member":{"shape":"ObservedFindingType"},
+      "max":50,
+      "min":0
     },
     "OrderBy":{
       "type":"string",
@@ -9129,6 +11241,19 @@
     "OrganizationAdditionalConfigurations":{
       "type":"list",
       "member":{"shape":"OrganizationAdditionalConfiguration"}
+    },
+    "OrganizationAnalysis":{
+      "type":"structure",
+      "members":{
+        "FindingsSummary":{
+          "shape":"OrganizationFindingsSummary",
+          "locationName":"findingsSummary"
+        },
+        "AccountBreakdown":{
+          "shape":"AccountSummaries",
+          "locationName":"accountBreakdown"
+        }
+      }
     },
     "OrganizationDataSourceConfigurations":{
       "type":"structure",
@@ -9276,6 +11401,35 @@
       "type":"list",
       "member":{"shape":"OrganizationFeatureConfigurationResult"}
     },
+    "OrganizationFindingsSummary":{
+      "type":"structure",
+      "members":{
+        "TotalFindings":{
+          "shape":"Integer",
+          "locationName":"totalFindings"
+        },
+        "SeverityBreakdown":{
+          "shape":"SeverityBreakdown",
+          "locationName":"severityBreakdown"
+        },
+        "TopFindingTypes":{
+          "shape":"FindingTypeCounts",
+          "locationName":"topFindingTypes"
+        },
+        "ByTimeWindow":{
+          "shape":"TimeWindowGroups",
+          "locationName":"byTimeWindow"
+        },
+        "TotalAccountCount":{
+          "shape":"Integer",
+          "locationName":"totalAccountCount"
+        },
+        "AffectedAccountCount":{
+          "shape":"Integer",
+          "locationName":"affectedAccountCount"
+        }
+      }
+    },
     "OrganizationKubernetesAuditLogsConfiguration":{
       "type":"structure",
       "required":["AutoEnable"],
@@ -9406,6 +11560,12 @@
         }
       }
     },
+    "Percentage":{
+      "type":"double",
+      "box":true,
+      "max":100,
+      "min":0
+    },
     "PermissionConfiguration":{
       "type":"structure",
       "members":{
@@ -9474,6 +11634,32 @@
     "PrivateIpAddresses":{
       "type":"list",
       "member":{"shape":"PrivateIpAddressDetails"}
+    },
+    "Process":{
+      "type":"structure",
+      "required":["Uuid"],
+      "members":{
+        "Uuid":{
+          "shape":"String",
+          "locationName":"uuid"
+        },
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "Path":{
+          "shape":"String",
+          "locationName":"path"
+        },
+        "ParentUuid":{
+          "shape":"String",
+          "locationName":"parentUuid"
+        },
+        "Findings":{
+          "shape":"FindingReferences",
+          "locationName":"findings"
+        }
+      }
     },
     "ProcessDetails":{
       "type":"structure",
@@ -9547,6 +11733,12 @@
       "max":1024,
       "min":0
     },
+    "Processes":{
+      "type":"list",
+      "member":{"shape":"Process"},
+      "max":100,
+      "min":0
+    },
     "Product":{
       "type":"structure",
       "required":["Name"],
@@ -9595,6 +11787,25 @@
         "FREQUENCY",
         "VOLUME"
       ]
+    },
+    "ProtectionPlan":{
+      "type":"structure",
+      "members":{
+        "Name":{
+          "shape":"InvestigationDetectorFeature",
+          "locationName":"name"
+        },
+        "Status":{
+          "shape":"FeatureStatus",
+          "locationName":"status"
+        }
+      }
+    },
+    "ProtectionPlans":{
+      "type":"list",
+      "member":{"shape":"ProtectionPlan"},
+      "max":20,
+      "min":0
     },
     "PublicAccess":{
       "type":"structure",
@@ -9662,6 +11873,48 @@
       "max":300,
       "min":1
     },
+    "QueryTimeWindow":{
+      "type":"structure",
+      "members":{
+        "StartTime":{
+          "shape":"Timestamp",
+          "locationName":"startTime"
+        },
+        "EndTime":{
+          "shape":"Timestamp",
+          "locationName":"endTime"
+        }
+      }
+    },
+    "RdsDbInstance":{
+      "type":"structure",
+      "members":{
+        "DbInstanceIdentifier":{
+          "shape":"String",
+          "locationName":"dbInstanceIdentifier"
+        },
+        "DbClusterIdentifier":{
+          "shape":"String",
+          "locationName":"dbClusterIdentifier"
+        },
+        "DbInstanceArn":{
+          "shape":"String",
+          "locationName":"dbInstanceArn"
+        },
+        "DbiResourceId":{
+          "shape":"String",
+          "locationName":"dbiResourceId"
+        },
+        "Engine":{
+          "shape":"String",
+          "locationName":"engine"
+        },
+        "EngineVersion":{
+          "shape":"String",
+          "locationName":"engineVersion"
+        }
+      }
+    },
     "RdsDbInstanceDetails":{
       "type":"structure",
       "members":{
@@ -9692,6 +11945,31 @@
         "Tags":{
           "shape":"Tags",
           "locationName":"tags"
+        }
+      }
+    },
+    "RdsDbUser":{
+      "type":"structure",
+      "members":{
+        "User":{
+          "shape":"String",
+          "locationName":"user"
+        },
+        "Application":{
+          "shape":"String",
+          "locationName":"application"
+        },
+        "Database":{
+          "shape":"String",
+          "locationName":"database"
+        },
+        "AuthMethod":{
+          "shape":"String",
+          "locationName":"authMethod"
+        },
+        "Ssl":{
+          "shape":"String",
+          "locationName":"ssl"
         }
       }
     },
@@ -9753,6 +12031,35 @@
         }
       }
     },
+    "RdsLoginActivity":{
+      "type":"structure",
+      "members":{
+        "Outcome":{
+          "shape":"String",
+          "locationName":"outcome"
+        },
+        "Rate":{
+          "shape":"String",
+          "locationName":"rate"
+        },
+        "AnomalyContext":{
+          "shape":"InvestigationText",
+          "locationName":"anomalyContext"
+        },
+        "LoginCount":{
+          "shape":"Count",
+          "locationName":"loginCount"
+        },
+        "ActivityWindow":{
+          "shape":"ActivityWindow",
+          "locationName":"activityWindow"
+        },
+        "Enrichment":{
+          "shape":"Enrichment",
+          "locationName":"enrichment"
+        }
+      }
+    },
     "RdsLoginAttemptAction":{
       "type":"structure",
       "members":{
@@ -9762,6 +12069,79 @@
         },
         "LoginAttributes":{"shape":"LoginAttributes"}
       }
+    },
+    "Recommendation":{
+      "type":"structure",
+      "members":{
+        "Title":{
+          "shape":"String",
+          "locationName":"title"
+        },
+        "Rationale":{
+          "shape":"String",
+          "locationName":"rationale"
+        },
+        "Category":{
+          "shape":"RecommendationCategory",
+          "locationName":"category"
+        },
+        "Priority":{
+          "shape":"ActionPriority",
+          "locationName":"priority"
+        },
+        "CliCommands":{
+          "shape":"CliCommands",
+          "locationName":"cliCommands"
+        }
+      }
+    },
+    "RecommendationCategory":{
+      "type":"string",
+      "enum":[
+        "ENABLE_PROTECTION",
+        "FURTHER_INVESTIGATION",
+        "SUPPRESSION_RULE",
+        "HARDENING",
+        "MONITORING"
+      ]
+    },
+    "Recommendations":{
+      "type":"list",
+      "member":{"shape":"Recommendation"},
+      "max":25,
+      "min":0
+    },
+    "RecordId":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "RecordTitle":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "RecordType":{
+      "type":"string",
+      "enum":[
+        "OBSERVATION",
+        "ANALYSIS",
+        "UPDATE",
+        "FETCH",
+        "METADATA"
+      ]
+    },
+    "RecordTypes":{
+      "type":"list",
+      "member":{"shape":"RecordType"},
+      "max":10,
+      "min":1
+    },
+    "Records":{
+      "type":"list",
+      "member":{"shape":"InvestigationRecord"},
+      "max":50,
+      "min":0
     },
     "RecoveryPoint":{
       "type":"structure",
@@ -9799,6 +12179,31 @@
       "member":{"shape":"String"},
       "max":25,
       "min":1
+    },
+    "RelatedFindingIds":{
+      "type":"list",
+      "member":{"shape":"FindingId"},
+      "max":50,
+      "min":0
+    },
+    "RelatedFindings":{
+      "type":"structure",
+      "members":{
+        "Correlated":{
+          "shape":"CorrelatedFindings",
+          "locationName":"correlated"
+        },
+        "Observed":{
+          "shape":"ObservedFindingTypes",
+          "locationName":"observed"
+        }
+      }
+    },
+    "RemediationAffectedResources":{
+      "type":"list",
+      "member":{"shape":"AffectedResource"},
+      "max":50,
+      "min":0
     },
     "RemoteAccountDetails":{
       "type":"structure",
@@ -9856,6 +12261,58 @@
         "PortName":{
           "shape":"String",
           "locationName":"portName"
+        }
+      }
+    },
+    "RepresentativeFinding":{
+      "type":"structure",
+      "members":{
+        "ResourceType":{
+          "shape":"String",
+          "locationName":"resourceType"
+        },
+        "Identifier":{
+          "shape":"String",
+          "locationName":"identifier"
+        },
+        "FindingId":{
+          "shape":"FindingId",
+          "locationName":"findingId"
+        },
+        "FindingCount":{
+          "shape":"Count",
+          "locationName":"findingCount"
+        },
+        "RiskLevel":{
+          "shape":"RiskLevel",
+          "locationName":"riskLevel"
+        },
+        "RiskRationale":{
+          "shape":"InvestigationText",
+          "locationName":"riskRationale"
+        }
+      }
+    },
+    "RepresentativeFindings":{
+      "type":"list",
+      "member":{"shape":"RepresentativeFinding"},
+      "max":20,
+      "min":0
+    },
+    "Reputation":{
+      "type":"structure",
+      "members":{
+        "FindingTimeDisposition":{
+          "shape":"String",
+          "locationName":"findingTimeDisposition"
+        },
+        "CurrentDisposition":{
+          "shape":"String",
+          "locationName":"currentDisposition"
+        },
+        "ReputationComparison":{
+          "shape":"String",
+          "locationName":"reputationComparison"
         }
       }
     },
@@ -10021,6 +12478,29 @@
           "locationName":"instanceArn"
         }
       }
+    },
+    "ResourceDistribution":{
+      "type":"structure",
+      "members":{
+        "ResourceType":{
+          "shape":"String",
+          "locationName":"resourceType"
+        },
+        "Identifier":{
+          "shape":"String",
+          "locationName":"identifier"
+        },
+        "Count":{
+          "shape":"Count",
+          "locationName":"count"
+        }
+      }
+    },
+    "ResourceDistributions":{
+      "type":"list",
+      "member":{"shape":"ResourceDistribution"},
+      "max":50,
+      "min":0
     },
     "ResourceList":{
       "type":"list",
@@ -10463,6 +12943,117 @@
         "Context":{
           "shape":"RuntimeContext",
           "locationName":"context"
+        }
+      }
+    },
+    "RuntimeSignals":{
+      "type":"structure",
+      "members":{
+        "SignalGroups":{
+          "shape":"SignalGroups",
+          "locationName":"signalGroups"
+        },
+        "KeyObservation":{
+          "shape":"InvestigationText",
+          "locationName":"keyObservation"
+        }
+      }
+    },
+    "S3Activity":{
+      "type":"structure",
+      "members":{
+        "Api":{
+          "shape":"String",
+          "locationName":"api"
+        },
+        "AffectedBucket":{
+          "shape":"String",
+          "locationName":"affectedBucket"
+        },
+        "OtherS3Activity":{
+          "shape":"String",
+          "locationName":"otherS3Activity"
+        },
+        "NonS3Activity":{
+          "shape":"String",
+          "locationName":"nonS3Activity"
+        },
+        "SessionAssessment":{
+          "shape":"InvestigationText",
+          "locationName":"sessionAssessment"
+        },
+        "EventCount":{
+          "shape":"Count",
+          "locationName":"eventCount"
+        },
+        "Actor":{
+          "shape":"InvestigationActor",
+          "locationName":"actor"
+        },
+        "SourceIp":{
+          "shape":"String",
+          "locationName":"sourceIp"
+        },
+        "Enrichment":{
+          "shape":"Enrichment",
+          "locationName":"enrichment"
+        },
+        "ActivityWindow":{
+          "shape":"ActivityWindow",
+          "locationName":"activityWindow"
+        }
+      }
+    },
+    "S3Analysis":{
+      "type":"structure",
+      "members":{
+        "FindingSubtype":{
+          "shape":"String",
+          "locationName":"findingSubtype"
+        },
+        "EffectivePermission":{
+          "shape":"String",
+          "locationName":"effectivePermission"
+        },
+        "BlockPublicAccessSettings":{
+          "shape":"InvestigationText",
+          "locationName":"blockPublicAccessSettings"
+        },
+        "Exposure":{
+          "shape":"InvestigationText",
+          "locationName":"exposure"
+        },
+        "UserAgent":{
+          "shape":"String",
+          "locationName":"userAgent"
+        },
+        "UserAgentClassification":{
+          "shape":"String",
+          "locationName":"userAgentClassification"
+        },
+        "SourceIp":{
+          "shape":"String",
+          "locationName":"sourceIp"
+        },
+        "IpReputation":{
+          "shape":"String",
+          "locationName":"ipReputation"
+        },
+        "ActorAssessment":{
+          "shape":"InvestigationText",
+          "locationName":"actorAssessment"
+        },
+        "S3ApiActivity":{
+          "shape":"InvestigationText",
+          "locationName":"s3ApiActivity"
+        },
+        "SourceContext":{
+          "shape":"InvestigationText",
+          "locationName":"sourceContext"
+        },
+        "AuthorizationAssessment":{
+          "shape":"InvestigationText",
+          "locationName":"authorizationAssessment"
         }
       }
     },
@@ -11248,6 +13839,37 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "SeverityBreakdown":{
+      "type":"structure",
+      "members":{
+        "Critical":{
+          "shape":"Integer",
+          "locationName":"critical"
+        },
+        "High":{
+          "shape":"Integer",
+          "locationName":"high"
+        },
+        "Medium":{
+          "shape":"Integer",
+          "locationName":"medium"
+        },
+        "Low":{
+          "shape":"Integer",
+          "locationName":"low"
+        },
+        "Info":{
+          "shape":"Integer",
+          "locationName":"info"
+        }
+      }
+    },
+    "SeverityScore":{
+      "type":"double",
+      "box":true,
+      "max":10,
+      "min":0
+    },
     "SeverityStatistics":{
       "type":"structure",
       "members":{
@@ -11264,6 +13886,44 @@
           "locationName":"totalFindings"
         }
       }
+    },
+    "SharedBehavior":{
+      "type":"structure",
+      "members":{
+        "Path":{
+          "shape":"String",
+          "locationName":"path"
+        },
+        "Value":{
+          "shape":"String",
+          "locationName":"value"
+        }
+      }
+    },
+    "SharedBehaviors":{
+      "type":"list",
+      "member":{"shape":"SharedBehavior"},
+      "max":20,
+      "min":0
+    },
+    "SharedResource":{
+      "type":"structure",
+      "members":{
+        "ResourceType":{
+          "shape":"String",
+          "locationName":"resourceType"
+        },
+        "Identifier":{
+          "shape":"String",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "SharedResources":{
+      "type":"list",
+      "member":{"shape":"SharedResource"},
+      "max":20,
+      "min":0
     },
     "Signal":{
       "type":"structure",
@@ -11343,6 +14003,29 @@
     "SignalDescription":{
       "type":"string",
       "max":2000,
+      "min":0
+    },
+    "SignalGroup":{
+      "type":"structure",
+      "members":{
+        "FindingType":{
+          "shape":"FindingType",
+          "locationName":"findingType"
+        },
+        "Severity":{
+          "shape":"SeverityScore",
+          "locationName":"severity"
+        },
+        "Count":{
+          "shape":"Count",
+          "locationName":"count"
+        }
+      }
+    },
+    "SignalGroups":{
+      "type":"list",
+      "member":{"shape":"SignalGroup"},
+      "max":50,
       "min":0
     },
     "SignalType":{
@@ -11491,6 +14174,62 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "SummaryFormat":{
+      "type":"string",
+      "enum":[
+        "STRING",
+        "STRUCTURED"
+      ]
+    },
+    "SupportingData":{
+      "type":"structure",
+      "members":{
+        "Fetch":{
+          "shape":"FetchRecord",
+          "locationName":"fetch"
+        },
+        "Analysis":{
+          "shape":"AnalysisRecord",
+          "locationName":"analysis"
+        },
+        "Observation":{
+          "shape":"ObservationRecord",
+          "locationName":"observation"
+        },
+        "Metadata":{
+          "shape":"MetadataRecord",
+          "locationName":"metadata"
+        }
+      },
+      "union":true
+    },
+    "TacticCoverage":{
+      "type":"structure",
+      "members":{
+        "Phase":{
+          "shape":"AttackPhaseName",
+          "locationName":"phase"
+        },
+        "FindingCount":{
+          "shape":"Integer",
+          "locationName":"findingCount"
+        },
+        "FindingTypes":{
+          "shape":"FindingTypeNames",
+          "locationName":"findingTypes"
+        },
+        "Techniques":{
+          "shape":"TechniqueCoverages",
+          "locationName":"techniques"
+        }
+      }
+    },
+    "TacticCoverages":{
+      "type":"list",
+      "member":{"shape":"TacticCoverage"},
+      "max":20,
+      "min":0
+    },
     "Tag":{
       "type":"structure",
       "members":{
@@ -11554,6 +14293,29 @@
       "type":"list",
       "member":{"shape":"Tag"}
     },
+    "TechniqueCoverage":{
+      "type":"structure",
+      "members":{
+        "Technique":{
+          "shape":"ThreatReference",
+          "locationName":"technique"
+        },
+        "FindingCount":{
+          "shape":"Integer",
+          "locationName":"findingCount"
+        },
+        "FindingTypes":{
+          "shape":"FindingTypeNames",
+          "locationName":"findingTypes"
+        }
+      }
+    },
+    "TechniqueCoverages":{
+      "type":"list",
+      "member":{"shape":"TechniqueCoverage"},
+      "max":50,
+      "min":0
+    },
     "Threat":{
       "type":"structure",
       "members":{
@@ -11582,6 +14344,28 @@
           "locationName":"itemDetails"
         }
       }
+    },
+    "ThreatAssessment":{
+      "type":"structure",
+      "members":{
+        "AttackProgression":{
+          "shape":"AttackPhases",
+          "locationName":"attackProgression"
+        },
+        "ThreatActorProfile":{
+          "shape":"String",
+          "locationName":"threatActorProfile"
+        }
+      }
+    },
+    "ThreatConfidence":{
+      "type":"string",
+      "enum":[
+        "VERY_HIGH",
+        "HIGH",
+        "MEDIUM",
+        "LOW"
+      ]
     },
     "ThreatDetectedByName":{
       "type":"structure",
@@ -11695,6 +14479,19 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "ThreatReference":{
+      "type":"structure",
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "Uid":{
+          "shape":"MitreThreatId",
+          "locationName":"uid"
+        }
+      }
+    },
     "Threats":{
       "type":"list",
       "member":{"shape":"Threat"}
@@ -11708,6 +14505,37 @@
         }
       }
     },
+    "TimeGranularity":{
+      "type":"string",
+      "enum":[
+        "DAY",
+        "WEEK",
+        "MONTH"
+      ]
+    },
+    "TimeWindowGroup":{
+      "type":"structure",
+      "members":{
+        "StartTime":{
+          "shape":"Timestamp",
+          "locationName":"startTime"
+        },
+        "EndTime":{
+          "shape":"Timestamp",
+          "locationName":"endTime"
+        },
+        "FindingCount":{
+          "shape":"Integer",
+          "locationName":"findingCount"
+        }
+      }
+    },
+    "TimeWindowGroups":{
+      "type":"list",
+      "member":{"shape":"TimeWindowGroup"},
+      "max":100,
+      "min":0
+    },
     "Timestamp":{"type":"timestamp"},
     "Total":{
       "type":"structure",
@@ -11719,6 +14547,31 @@
         "Unit":{
           "shape":"String",
           "locationName":"unit"
+        }
+      }
+    },
+    "Trend":{
+      "type":"structure",
+      "members":{
+        "Granularity":{
+          "shape":"TimeGranularity",
+          "locationName":"granularity"
+        },
+        "StartedAt":{
+          "shape":"Timestamp",
+          "locationName":"startTime"
+        },
+        "EndedAt":{
+          "shape":"Timestamp",
+          "locationName":"endTime"
+        },
+        "TotalFindings":{
+          "shape":"Count",
+          "locationName":"totalFindings"
+        },
+        "ByTimeWindow":{
+          "shape":"TimeWindowGroups",
+          "locationName":"byTimeWindow"
         }
       }
     },
@@ -11788,6 +14641,33 @@
       ],
       "max":300,
       "min":1
+    },
+    "TypeDistribution":{
+      "type":"structure",
+      "members":{
+        "FindingType":{
+          "shape":"FindingType",
+          "locationName":"findingType"
+        },
+        "Count":{
+          "shape":"Count",
+          "locationName":"count"
+        },
+        "Percentage":{
+          "shape":"Percentage",
+          "locationName":"percentage"
+        },
+        "DominantSeverity":{
+          "shape":"String",
+          "locationName":"dominantSeverity"
+        }
+      }
+    },
+    "TypeDistributions":{
+      "type":"list",
+      "member":{"shape":"TypeDistribution"},
+      "max":50,
+      "min":0
     },
     "UnarchiveFindingsRequest":{
       "type":"structure",

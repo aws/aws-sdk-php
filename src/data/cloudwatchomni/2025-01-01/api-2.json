@@ -3151,6 +3151,13 @@
       "max":50,
       "min":0
     },
+    "MetricAggregationTemporality":{
+      "type":"string",
+      "enum":[
+        "delta",
+        "cumulative"
+      ]
+    },
     "MetricMetadata":{
       "type":"structure",
       "members":{
@@ -3158,7 +3165,9 @@
         "preferredStat":{"shape":"String"},
         "metricType":{"shape":"String"},
         "attributes":{"shape":"MetadataAttributeMap"},
-        "semantics":{"shape":"MetricSemantics"}
+        "semantics":{"shape":"MetricSemantics"},
+        "aggregationTemporality":{"shape":"MetricAggregationTemporality"},
+        "monotonicity":{"shape":"MetricMonotonicity"}
       }
     },
     "MetricMetadataList":{
@@ -3166,6 +3175,13 @@
       "member":{"shape":"MetricMetadata"},
       "max":50,
       "min":0
+    },
+    "MetricMonotonicity":{
+      "type":"string",
+      "enum":[
+        "monotonic",
+        "non_monotonic"
+      ]
     },
     "MetricSemantics":{
       "type":"structure",

@@ -663,6 +663,13 @@ use Aws\AwsClient;
  *     InstanceArn?: string,
  *     EncryptionConfiguration?: array{KeyType?: 'AWS_OWNED_KMS_KEY'|'CUSTOMER_MANAGED_KEY', KmsKeyArn?: string, ...},
  *     PermissionSetsEnabled?: bool,
+ *     NetworkConfiguration?: array{
+ *         VpceAccessRequired?: bool,
+ *         RestrictSourceVpcs?: list<string>,
+ *         AllowSourceIps?: list<string>,
+ *         ExcludeApplicationArns?: list<string>,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateInstanceAsync(array $args = [])
@@ -671,6 +678,13 @@ use Aws\AwsClient;
  *     InstanceArn?: string,
  *     EncryptionConfiguration?: array{KeyType?: 'AWS_OWNED_KMS_KEY'|'CUSTOMER_MANAGED_KEY', KmsKeyArn?: string, ...},
  *     PermissionSetsEnabled?: bool,
+ *     NetworkConfiguration?: array{
+ *         VpceAccessRequired?: bool,
+ *         RestrictSourceVpcs?: list<string>,
+ *         AllowSourceIps?: list<string>,
+ *         ExcludeApplicationArns?: list<string>,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateInstanceAccessControlAttributeConfiguration(array $args = [])

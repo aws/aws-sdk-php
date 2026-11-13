@@ -985,6 +985,62 @@
         "description": "The following example returns context graph nodes matching the filter and traverses one hop out to their direct dependencies, over a one-hour window. Payloads are shown as JSON; on the wire they are CBOR-encoded.",
         "id": "example-1",
         "title": "Query a service and its immediate dependencies"
+      },
+      {
+        "input": {
+          "depth": 0,
+          "endTime": "2026-09-16T01:00:00Z",
+          "includeMetadata": true,
+          "maxResults": 1,
+          "nodeFilters": {
+            "nodeId": "svc:checkout-service"
+          },
+          "startTime": "2026-09-16T00:00:00Z"
+        },
+        "output": {
+          "nodes": [
+            {
+              "metadata": {
+                "metrics": [
+                  {
+                    "name": "traces.span.metrics.calls",
+                    "aggregationTemporality": "cumulative",
+                    "attributes": {
+                      "@instrumentation.@name": "otel.cloudwatch.spanmetrics",
+                      "@resource.service.name": "checkout-service",
+                      "@resource.service.namespace": "ecommerce"
+                    },
+                    "metricType": "sum",
+                    "monotonicity": "monotonic",
+                    "semantics": {
+                      "unit": "{request}"
+                    }
+                  }
+                ]
+              },
+              "name": "checkout-service",
+              "firstObservedAt": "2026-09-16T00:03:00Z",
+              "lastObservedAt": "2026-09-16T00:58:00Z",
+              "nodeId": "svc:checkout-service",
+              "nodeProperties": {
+                "cloudProvider": "aws",
+                "namespace": "ecommerce",
+                "region": "us-east-1",
+                "sourceAccountId": "123456789012"
+              },
+              "nodeType": "SERVICE",
+              "signalTypes": [
+                "METRICS"
+              ],
+              "sources": [
+                "TELEMETRY"
+              ]
+            }
+          ]
+        },
+        "description": "The following example returns aggregation metadata for a metric stream observed on a service over a one-hour window. The metric attributes identify its producing service and instrumentation scope; additional data point dimensions can identify multiple time series. Payloads are shown as JSON; on the wire they are CBOR-encoded.",
+        "id": "example-2",
+        "title": "Return metric aggregation metadata"
       }
     ],
     "GetDomain": [

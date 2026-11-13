@@ -978,6 +978,7 @@
         "ModelTrainingPaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for model training costs (<code>TRUE</code>) or has not configured the collaboration member to pay for model training costs (<code>FALSE</code>).</p> <p>One or more members can be configured as payer candidates for model training costs.</p> <p>If the collaboration creator hasn't specified anyone as the member paying for model training costs, then the member who can query is the default payer.</p>",
         "ProtectedQueryS3OutputConfiguration$singleFileOutput": "<p>Indicates whether files should be output as a single file (<code>TRUE</code>) or output as multiple files (<code>FALSE</code>). This parameter is only supported for analyses with the Spark analytics engine.</p>",
         "QueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query compute costs (<code>FALSE</code>).</p> <p>One or more members can be configured as payer candidates for query compute costs.</p> <p>If the collaboration creator hasn't specified anyone as the member paying for query compute costs, then the member who can query is the default payer.</p>",
+        "RetryInfo$retryable": "<p>Specifies whether running the same request again might succeed. <code>true</code> means that the failure was transient. <code>false</code> means that running the same request again is not expected to succeed.</p>",
         "SyntheticDataColumnProperties$isPredictiveValue": "<p>Indicates if this column contains predictive values that should be treated as target variables in machine learning models. This affects how the synthetic data generation preserves statistical relationships.</p>",
         "SyntheticDataGenerationPaymentConfig$isResponsible": "<p>Indicates who is responsible for paying for synthetic data generation.</p>"
       }
@@ -3845,7 +3846,7 @@
       }
     },
     "ProtectedJobError": {
-      "base": "<p>The protected job error.</p>",
+      "base": "<p>Details of the error that caused the protected job to fail.</p>",
       "refs": {
         "ProtectedJob$error": "<p> The error from the protected job.</p>"
       }
@@ -4056,7 +4057,7 @@
       }
     },
     "ProtectedQueryError": {
-      "base": "<p>Details of errors thrown by the protected query.</p>",
+      "base": "<p>Details of the error that caused the protected query to fail.</p>",
       "refs": {
         "ProtectedQuery$error": "<p>An error thrown by the protected query.</p>"
       }
@@ -4299,6 +4300,13 @@
       "refs": {
         "ProtectedJobS3OutputConfigurationInput$resultFormat": "<p>The file format of the protected job results. If you don't specify a format, results are written as CSV.</p>",
         "ProtectedQueryS3OutputConfiguration$resultFormat": "<p>Intended file format of the result.</p>"
+      }
+    },
+    "RetryInfo": {
+      "base": "<p>Contains information about whether running a failed protected query or protected job again might succeed.</p>",
+      "refs": {
+        "ProtectedJobError$retry": "<p>Contains information about whether running the same protected job again might succeed.</p>",
+        "ProtectedQueryError$retry": "<p>Contains information about whether running the same protected query again might succeed.</p>"
       }
     },
     "RoleArn": {
@@ -4591,11 +4599,11 @@
         "IdMappingTableInputSource$idNamespaceAssociationId": "<p>The unique identifier of the ID namespace association.</p>",
         "IntermediateTable$statusReason": "<p>The reason for the current status of the intermediate table.</p>",
         "InternalServerException$message": null,
-        "ProtectedJobError$message": "<p> The message for the protected job error.</p>",
-        "ProtectedJobError$code": "<p> The error code for the protected job.</p>",
+        "ProtectedJobError$message": "<p>A description of why the protected job failed.</p>",
+        "ProtectedJobError$code": "<p>A code that identifies the category of the failure. Valid values are:</p> <ul> <li> <p> <code>MALFORMED_SCRIPT</code> – The job script or its execution environment is not valid (code, imports, entry point, virtual environment, or dependencies).</p> </li> <li> <p> <code>RESOURCE_NOT_FOUND</code> – A referenced resource doesn't exist.</p> </li> <li> <p> <code>INVALID_RESOURCE</code> – A referenced resource exists, but you can't use it because its configuration, state, or data is not valid.</p> </li> <li> <p> <code>RESOURCE_ACCESS_DENIED</code> – A required permission is missing for a data source or resource.</p> </li> <li> <p> <code>INSUFFICIENT_COMPUTE</code> – The job exceeded the available compute (memory, disk, or time).</p> </li> <li> <p> <code>TRANSIENT_ERROR</code> – A temporary condition caused the failure, such as throttling or a network interruption.</p> </li> <li> <p> <code>INTERNAL_ERROR</code> – Clean Rooms encountered an unexpected error. If the error persists, contact AWS Support.</p> </li> <li> <p> <code>UNKNOWN_ERROR</code> – The failure couldn't be classified.</p> </li> </ul> <p>For more information about error codes, see <a href=\"https://docs.aws.amazon.com/clean-rooms/latest/userguide/error-codes.html\">https://docs.aws.amazon.com/clean-rooms/latest/userguide/error-codes.html</a> in the Clean Rooms User Guide.</p>",
         "ProtectedJobS3Output$location": "<p> The S3 location for the protected job output.</p>",
-        "ProtectedQueryError$message": "<p>A description of why the query failed.</p>",
-        "ProtectedQueryError$code": "<p>An error code for the error.</p>",
+        "ProtectedQueryError$message": "<p>A description of why the protected query failed.</p>",
+        "ProtectedQueryError$code": "<p>A code that identifies the category of the failure. Valid values are:</p> <ul> <li> <p> <code>MALFORMED_QUERY</code> – The query is not valid (syntax, semantics, columns, or an unsupported operation).</p> </li> <li> <p> <code>RESOURCE_NOT_FOUND</code> – A referenced resource doesn't exist.</p> </li> <li> <p> <code>INVALID_RESOURCE</code> – A referenced resource exists, but you can't use it because its configuration, state, or data is not valid.</p> </li> <li> <p> <code>RESOURCE_ACCESS_DENIED</code> – A required permission is missing for a data source or resource.</p> </li> <li> <p> <code>INSUFFICIENT_COMPUTE</code> – The query exceeded the available compute (memory, disk, or time).</p> </li> <li> <p> <code>TRANSIENT_ERROR</code> – A temporary condition caused the failure, such as throttling or a network interruption.</p> </li> <li> <p> <code>INTERNAL_ERROR</code> – Clean Rooms encountered an unexpected error. If the error persists, contact AWS Support.</p> </li> <li> <p> <code>UNKNOWN_ERROR</code> – The failure couldn't be classified.</p> </li> </ul> <p>For more information about error codes, see <a href=\"https://docs.aws.amazon.com/clean-rooms/latest/userguide/error-codes.html\">https://docs.aws.amazon.com/clean-rooms/latest/userguide/error-codes.html</a> in the Clean Rooms User Guide.</p>",
         "ProtectedQueryS3Output$location": "<p>The S3 location of the result.</p>",
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$resourceId": "<p>The Id of the missing resource.</p>",

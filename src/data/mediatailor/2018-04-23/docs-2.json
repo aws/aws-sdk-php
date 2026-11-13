@@ -598,10 +598,10 @@
     "FunctionMapping": {
       "base": null,
       "refs": {
-        "GetPlaybackConfigurationResponse$FunctionMapping": "<p>A map of lifecycle hook event names to function identifiers. The function mapping specifies which function MediaTailor executes at each lifecycle hook during ad insertion. Valid keys are <code>PRE_SESSION_INITIALIZATION</code>, <code>PRE_ADS_REQUEST</code>, <code>POST_ADS_RESPONSE</code>, and <code>PRE_MANIFEST_INSERTION</code>. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-hooks.html\">Functions lifecycle hooks</a> in the <i>MediaTailor User Guide</i>.</p>",
-        "PlaybackConfiguration$FunctionMapping": "<p>A map of lifecycle hook event names to function identifiers. The function mapping specifies which function MediaTailor executes at each lifecycle hook during ad insertion. Valid keys are <code>PRE_SESSION_INITIALIZATION</code>, <code>PRE_ADS_REQUEST</code>, <code>POST_ADS_RESPONSE</code>, and <code>PRE_MANIFEST_INSERTION</code>. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-hooks.html\">Functions lifecycle hooks</a> in the <i>MediaTailor User Guide</i>.</p>",
-        "PutPlaybackConfigurationRequest$FunctionMapping": "<p>A map of lifecycle hook event names to function identifiers. The function mapping specifies which function MediaTailor executes at each lifecycle hook during ad insertion. Valid keys are <code>PRE_SESSION_INITIALIZATION</code>, <code>PRE_ADS_REQUEST</code>, <code>POST_ADS_RESPONSE</code>, and <code>PRE_MANIFEST_INSERTION</code>. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-hooks.html\">Functions lifecycle hooks</a> in the <i>MediaTailor User Guide</i>.</p>",
-        "PutPlaybackConfigurationResponse$FunctionMapping": "<p>A map of lifecycle hook event names to function identifiers. The function mapping specifies which function MediaTailor executes at each lifecycle hook during ad insertion. Valid keys are <code>PRE_SESSION_INITIALIZATION</code>, <code>PRE_ADS_REQUEST</code>, <code>POST_ADS_RESPONSE</code>, and <code>PRE_MANIFEST_INSERTION</code>. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-hooks.html\">Functions lifecycle hooks</a> in the <i>MediaTailor User Guide</i>.</p>"
+        "GetPlaybackConfigurationResponse$FunctionMapping": "<p>A map of lifecycle hook event names to function identifiers. The function mapping specifies which function MediaTailor executes at each lifecycle hook during ad insertion. Valid keys are <code>PRE_SESSION_INITIALIZATION</code>, <code>POST_ORIGIN_RESPONSE</code>, <code>PRE_ADS_REQUEST</code>, <code>POST_ADS_RESPONSE</code>, and <code>PRE_MANIFEST_INSERTION</code>. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-hooks.html\">Functions lifecycle hooks</a> in the <i>MediaTailor User Guide</i>.</p>",
+        "PlaybackConfiguration$FunctionMapping": "<p>A map of lifecycle hook event names to function identifiers. The function mapping specifies which function MediaTailor executes at each lifecycle hook during ad insertion. Valid keys are <code>PRE_SESSION_INITIALIZATION</code>, <code>POST_ORIGIN_RESPONSE</code>, <code>PRE_ADS_REQUEST</code>, <code>POST_ADS_RESPONSE</code>, and <code>PRE_MANIFEST_INSERTION</code>. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-hooks.html\">Functions lifecycle hooks</a> in the <i>MediaTailor User Guide</i>.</p>",
+        "PutPlaybackConfigurationRequest$FunctionMapping": "<p>A map of lifecycle hook event names to function identifiers. The function mapping specifies which function MediaTailor executes at each lifecycle hook during ad insertion. Valid keys are <code>PRE_SESSION_INITIALIZATION</code>, <code>POST_ORIGIN_RESPONSE</code>, <code>PRE_ADS_REQUEST</code>, <code>POST_ADS_RESPONSE</code>, and <code>PRE_MANIFEST_INSERTION</code>. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-hooks.html\">Functions lifecycle hooks</a> in the <i>MediaTailor User Guide</i>.</p>",
+        "PutPlaybackConfigurationResponse$FunctionMapping": "<p>A map of lifecycle hook event names to function identifiers. The function mapping specifies which function MediaTailor executes at each lifecycle hook during ad insertion. Valid keys are <code>PRE_SESSION_INITIALIZATION</code>, <code>POST_ORIGIN_RESPONSE</code>, <code>PRE_ADS_REQUEST</code>, <code>POST_ADS_RESPONSE</code>, and <code>PRE_MANIFEST_INSERTION</code>. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-hooks.html\">Functions lifecycle hooks</a> in the <i>MediaTailor User Guide</i>.</p>"
       }
     },
     "FunctionRef": {
@@ -615,7 +615,7 @@
       "refs": {
         "Function$FunctionType": "<p>The type of the function.</p>",
         "GetFunctionResponse$FunctionType": "<p>The type of the function.</p>",
-        "PutFunctionRequest$FunctionType": "<p>The type of the function, which determines what the function can do at runtime. Valid values:</p> <ul> <li> <p> <code>CUSTOM_OUTPUT</code> – Evaluates expressions and produces output bindings with no external calls.</p> </li> <li> <p> <code>HTTP_REQUEST</code> – Makes an HTTP call to an external service and evaluates output expressions that can reference the response.</p> </li> <li> <p> <code>AWS_SERVICE_REQUEST</code> – Makes an authenticated request to a supported AWS service API and evaluates output expressions that can reference the response.</p> </li> <li> <p> <code>VAST_REQUEST</code> – Calls a VAST endpoint, parses the response as VAST, and makes the parsed ads available to output expressions.</p> </li> <li> <p> <code>SEQUENTIAL_EXECUTOR</code> – Runs a sequence of child functions in order, passing data between steps through temporary data.</p> </li> <li> <p> <code>CONCURRENT_EXECUTOR</code> – Runs a set of child functions in parallel, up to a maximum concurrency, and combines their output when all functions complete.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-types.html\">Function types and composition</a> in the <i>MediaTailor User Guide</i>.</p>",
+        "PutFunctionRequest$FunctionType": "<p>The type of the function, which determines what the function can do at runtime. Valid values:</p> <ul> <li> <p> <code>CUSTOM_OUTPUT</code> – Evaluates expressions and produces output bindings with no external calls.</p> </li> <li> <p> <code>HTTP_REQUEST</code> – Makes an HTTP call to an external service and evaluates output expressions that can reference the response.</p> </li> <li> <p> <code>AWS_SERVICE_REQUEST</code> – Makes an authenticated request to a supported AWS service API and evaluates output expressions that can reference the response.</p> </li> <li> <p> <code>HLS_TAG_PROCESSOR</code> – Reads and changes HLS tags in the origin manifest at the <code>POST_ORIGIN_RESPONSE</code> lifecycle hook.</p> </li> <li> <p> <code>VAST_REQUEST</code> – Calls a VAST endpoint, parses the response as VAST, and makes the parsed ads available to output expressions.</p> </li> <li> <p> <code>SEQUENTIAL_EXECUTOR</code> – Runs a sequence of child functions in order, passing data between steps through temporary data.</p> </li> <li> <p> <code>CONCURRENT_EXECUTOR</code> – Runs a set of child functions in parallel, up to a maximum concurrency, and combines their output when all functions complete.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-types.html\">Function types and composition</a> in the <i>MediaTailor User Guide</i>.</p>",
         "PutFunctionResponse$FunctionType": "<p>The type of the function.</p>"
       }
     },
@@ -672,6 +672,21 @@
       "refs": {
         "RequestOutputItem$HlsPlaylistSettings": "<p>HLS playlist configuration parameters.</p>",
         "ResponseOutputItem$HlsPlaylistSettings": "<p>HLS manifest configuration settings.</p>"
+      }
+    },
+    "HlsTagName": {
+      "base": "<p>The name of an HLS tag that an <code>HLS_TAG_PROCESSOR</code> function can match. The only supported value is <code>EXT-X-DATERANGE</code>.</p>",
+      "refs": {
+        "TagFilterList$member": null
+      }
+    },
+    "HlsTagProcessorConfiguration": {
+      "base": "<p>The configuration for an <code>HLS_TAG_PROCESSOR</code> function. Specifies the HLS tags that trigger evaluation, an optional run condition, and output expressions. Each evaluation must update, remove, or pass through the matching tag and can also write player session parameters or temporary values. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-types-hls-tag-processor.html\">HLS_TAG_PROCESSOR</a> in the <i>MediaTailor User Guide</i>.</p>",
+      "refs": {
+        "Function$HlsTagProcessorConfiguration": "<p>The configuration for an <code>HLS_TAG_PROCESSOR</code> function.</p>",
+        "GetFunctionResponse$HlsTagProcessorConfiguration": "<p>The configuration for an <code>HLS_TAG_PROCESSOR</code> function.</p>",
+        "PutFunctionRequest$HlsTagProcessorConfiguration": "<p>The configuration for an <code>HLS_TAG_PROCESSOR</code> function. Specifies the runtime, tag filter, optional run condition, and output expressions. Required when <code>FunctionType</code> is <code>HLS_TAG_PROCESSOR</code>.</p>",
+        "PutFunctionResponse$HlsTagProcessorConfiguration": "<p>The configuration for an <code>HLS_TAG_PROCESSOR</code> function.</p>"
       }
     },
     "HttpConfiguration": {
@@ -1133,6 +1148,7 @@
         "AwsServiceRequestConfiguration$Runtime": "<p>The expression language used to evaluate expressions in the function configuration. The only supported value is <code>JSONata</code>.</p>",
         "ConcurrentExecutorConfiguration$Runtime": "<p>The expression language used to evaluate expressions in the function configuration. Set this to <code>JSONata</code>.</p>",
         "CustomOutputConfiguration$Runtime": "<p>The expression language used to evaluate expressions in the function configuration. Set this to <code>JSONata</code>.</p>",
+        "HlsTagProcessorConfiguration$Runtime": "<p>The expression language used to evaluate expressions in the function configuration. The only supported value is <code>JSONATA</code>.</p>",
         "HttpRequestConfiguration$Runtime": "<p>The expression language used to evaluate expressions in the function configuration. Set this to <code>JSONata</code>.</p>",
         "SequentialExecutorConfiguration$Runtime": "<p>The expression language used to evaluate expressions in the function configuration. Set this to <code>JSONata</code>.</p>",
         "VastRequestConfiguration$Runtime": "<p>The expression language used to evaluate expressions in the function configuration. Set this to <code>JSONata</code>.</p>"
@@ -1254,6 +1270,12 @@
       "base": null,
       "refs": {
         "HttpRequest$Headers": "<p>Custom HTTP headers to include in requests to the ad decision server. Specify headers as key-value pairs. This value is only eligible for <code>POST</code> requests.</p>"
+      }
+    },
+    "TagFilterList": {
+      "base": null,
+      "refs": {
+        "HlsTagProcessorConfiguration$TagFilter": "<p>A list of HLS tag names that trigger function evaluation. Specify <code>[\"EXT-X-DATERANGE\"]</code>.</p>"
       }
     },
     "TagResourceRequest": {
@@ -1662,6 +1684,7 @@
         "GetFunctionResponse$Tags": "<p>The tags assigned to the function. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "GetPlaybackConfigurationResponse$Tags": "<p>The tags assigned to the playback configuration. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "GetPrefetchScheduleResponse$Tags": "<p>The tags assigned to the prefetch schedule. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
+        "HlsTagProcessorConfiguration$Output": "<p>A map of output bindings that MediaTailor evaluates for each HLS tag that matches <code>TagFilter</code> and, when specified, passes <code>RunCondition</code>. The required <code>tag</code> binding must return exactly one tag action: <code>$updateTag</code>, <code>$removeTag</code>, or <code>$passthroughTag</code>. Optional <code>player_params.&lt;name&gt;</code> bindings write strings, numbers, or booleans that persist for the player session. Optional <code>temp.&lt;name&gt;</code> bindings hold any JSON value for the current invocation and are not persisted. For more information about expression syntax, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-jsonata.html\">JSONata expression reference</a> in the <i>MediaTailor User Guide</i>.</p>",
         "HttpRequestConfiguration$Output": "<p>A map of output bindings. Each key is a namespaced output path (such as <code>player_params.device_type</code> or <code>temp.identity</code>), and each value is an expression that MediaTailor evaluates at runtime. Output expressions in an <code>HTTP_REQUEST</code> function can reference the <code>response</code> object returned by the HTTP call. For more information about expression syntax, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-jsonata.html\">JSONata expression reference</a> in the <i>MediaTailor User Guide</i>.</p>",
         "HttpRequestConfiguration$Headers": "<p>A map of HTTP header names to expression values. MediaTailor evaluates each header value expression at runtime and includes the result in the outbound HTTP request. Maximum 50 headers.</p>",
         "ListTagsForResourceResponse$Tags": "<p>The tags associated with this resource. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
@@ -1834,6 +1857,7 @@
         "GetPrefetchScheduleResponse$StreamId": "<p>An optional stream identifier that you can specify in order to prefetch for multiple streams that use the same playback configuration.</p>",
         "HlsConfiguration$ManifestEndpointPrefix": "<p>The URL that MediaTailor generates to initiate a playback session for devices that support Apple HLS. The session uses server-side reporting.</p>",
         "HlsConfiguration$DualStackManifestEndpointPrefix": "<p>The dual-stack (IPv4 and IPv6) URL that MediaTailor generates to initiate a playback session for devices that support Apple HLS. The session uses server-side reporting.</p>",
+        "HlsTagProcessorConfiguration$RunCondition": "<p>JSONata expression that must evaluate to true for the processor to run.</p>",
         "HttpConfiguration$BaseUrl": "<p>The base URL for the source location host server. This string must include the protocol, such as <b>https://</b>.</p>",
         "HttpPackageConfiguration$Path": "<p>The relative path to the URL for this VOD source. This is combined with <code>SourceLocation::HttpConfiguration::BaseUrl</code> to form a valid URL.</p>",
         "HttpPackageConfiguration$SourceGroup": "<p>The name of the source group. This has to match one of the <code>Channel::Outputs::SourceGroup</code>.</p>",

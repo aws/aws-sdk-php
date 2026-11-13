@@ -15,6 +15,22 @@
     "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "AssociateCrossAccountReplica":{
+      "name":"AssociateCrossAccountReplica",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateCrossAccountReplicaRequest"},
+      "output":{"shape":"AssociateCrossAccountReplicaResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalServiceError"}
+      ]
+    },
     "BatchGetSecretValue":{
       "name":"BatchGetSecretValue",
       "http":{
@@ -112,6 +128,21 @@
         {"shape":"InvalidParameterException"}
       ]
     },
+    "DisassociateCrossAccountReplica":{
+      "name":"DisassociateCrossAccountReplica",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateCrossAccountReplicaRequest"},
+      "output":{"shape":"DisassociateCrossAccountReplicaResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalServiceError"}
+      ]
+    },
     "GetRandomPassword":{
       "name":"GetRandomPassword",
       "http":{
@@ -155,6 +186,22 @@
         {"shape":"InvalidRequestException"},
         {"shape":"DecryptionFailure"},
         {"shape":"InternalServiceError"}
+      ]
+    },
+    "ListResourcePolicies":{
+      "name":"ListResourcePolicies",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListResourcePoliciesRequest"},
+      "output":{"shape":"ListResourcePoliciesResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"}
       ]
     },
     "ListSecretVersionIds":{
@@ -398,6 +445,27 @@
       "member":{"shape":"ReplicaRegionType"},
       "min":1
     },
+    "AssociateCrossAccountReplicaRequest":{
+      "type":"structure",
+      "required":[
+        "SecretId",
+        "CrossAccountReplicaARN"
+      ],
+      "members":{
+        "SecretId":{"shape":"SecretIdType"},
+        "CrossAccountReplicaARN":{"shape":"SecretARNType"},
+        "ReplicaRestriction":{"shape":"ReplicaRestrictionType"},
+        "ReplicationRoleARN":{"shape":"RoleARNType"}
+      }
+    },
+    "AssociateCrossAccountReplicaResponse":{
+      "type":"structure",
+      "members":{
+        "ARN":{"shape":"SecretARNType"},
+        "CrossAccountReplicaARN":{"shape":"SecretARNType"},
+        "ReplicationStatus":{"shape":"StatusType"}
+      }
+    },
     "AutomaticallyRotateAfterDaysType":{
       "type":"long",
       "max":1000,
@@ -460,7 +528,8 @@
         "Tags":{"shape":"TagListType"},
         "AddReplicaRegions":{"shape":"AddReplicaRegionListType"},
         "ForceOverwriteReplicaSecret":{"shape":"BooleanType"},
-        "Type":{"shape":"MedeaTypeType"}
+        "Type":{"shape":"MedeaTypeType"},
+        "CrossAccountPrimaryARN":{"shape":"SecretARNType"}
       }
     },
     "CreateSecretResponse":{
@@ -473,6 +542,29 @@
       }
     },
     "CreatedDateType":{"type":"timestamp"},
+    "CrossAccountPrimaryType":{
+      "type":"structure",
+      "members":{
+        "PrimarySecretARN":{"shape":"SecretARNType"},
+        "ReplicationStatus":{"shape":"StatusType"},
+        "StatusMessage":{"shape":"StatusMessageType"}
+      }
+    },
+    "CrossAccountReplicaEntry":{
+      "type":"structure",
+      "members":{
+        "ReplicaSecretARN":{"shape":"SecretARNType"},
+        "ReplicationRoleARN":{"shape":"RoleARNType"},
+        "ReplicationStatus":{"shape":"StatusType"},
+        "StatusMessage":{"shape":"StatusMessageType"}
+      }
+    },
+    "CrossAccountReplicaListType":{
+      "type":"list",
+      "member":{"shape":"CrossAccountReplicaEntry"},
+      "max":100,
+      "min":1
+    },
     "DecryptionFailure":{
       "type":"structure",
       "members":{
@@ -484,14 +576,16 @@
       "type":"structure",
       "required":["SecretId"],
       "members":{
-        "SecretId":{"shape":"SecretIdType"}
+        "SecretId":{"shape":"SecretIdType"},
+        "PolicyName":{"shape":"ResourcePolicyNameType"}
       }
     },
     "DeleteResourcePolicyResponse":{
       "type":"structure",
       "members":{
         "ARN":{"shape":"SecretARNType"},
-        "Name":{"shape":"NameType"}
+        "Name":{"shape":"NameType"},
+        "PolicyName":{"shape":"ResourcePolicyNameType"}
       }
     },
     "DeleteSecretRequest":{
@@ -570,12 +664,32 @@
           "box":true
         },
         "PrimaryRegion":{"shape":"RegionType"},
-        "ReplicationStatus":{"shape":"ReplicationStatusListType"}
+        "ReplicationStatus":{"shape":"ReplicationStatusListType"},
+        "CrossAccountPrimary":{"shape":"CrossAccountPrimaryType"},
+        "CrossAccountReplicas":{"shape":"CrossAccountReplicaListType"}
       }
     },
     "DescriptionType":{
       "type":"string",
       "max":2048
+    },
+    "DisassociateCrossAccountReplicaRequest":{
+      "type":"structure",
+      "required":[
+        "SecretId",
+        "CrossAccountReplicaARN"
+      ],
+      "members":{
+        "SecretId":{"shape":"SecretIdType"},
+        "CrossAccountReplicaARN":{"shape":"SecretARNType"}
+      }
+    },
+    "DisassociateCrossAccountReplicaResponse":{
+      "type":"structure",
+      "members":{
+        "ARN":{"shape":"SecretARNType"},
+        "CrossAccountReplicaARN":{"shape":"SecretARNType"}
+      }
     },
     "DurationType":{
       "type":"string",
@@ -701,7 +815,8 @@
       "type":"structure",
       "required":["SecretId"],
       "members":{
-        "SecretId":{"shape":"SecretIdType"}
+        "SecretId":{"shape":"SecretIdType"},
+        "PolicyName":{"shape":"ResourcePolicyNameType"}
       }
     },
     "GetResourcePolicyResponse":{
@@ -709,7 +824,8 @@
       "members":{
         "ARN":{"shape":"SecretARNType"},
         "Name":{"shape":"NameType"},
-        "ResourcePolicy":{"shape":"NonEmptyResourcePolicyType"}
+        "ResourcePolicy":{"shape":"NonEmptyResourcePolicyType"},
+        "PolicyName":{"shape":"ResourcePolicyNameType"}
       }
     },
     "GetSecretValueRequest":{
@@ -784,6 +900,26 @@
         "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "ListResourcePoliciesRequest":{
+      "type":"structure",
+      "required":["SecretId"],
+      "members":{
+        "SecretId":{"shape":"SecretIdType"},
+        "MaxResults":{
+          "shape":"MaxResultsType",
+          "box":true
+        },
+        "NextToken":{"shape":"NextTokenType"}
+      }
+    },
+    "ListResourcePoliciesResponse":{
+      "type":"structure",
+      "required":["ResourcePolicies"],
+      "members":{
+        "ResourcePolicies":{"shape":"ResourcePolicySummaryListType"},
+        "NextToken":{"shape":"NextTokenType"}
+      }
     },
     "ListSecretVersionIdsRequest":{
       "type":"structure",
@@ -906,6 +1042,7 @@
       "members":{
         "SecretId":{"shape":"SecretIdType"},
         "ResourcePolicy":{"shape":"NonEmptyResourcePolicyType"},
+        "PolicyName":{"shape":"ResourcePolicyNameType"},
         "BlockPublicPolicy":{
           "shape":"BooleanType",
           "box":true
@@ -916,7 +1053,8 @@
       "type":"structure",
       "members":{
         "ARN":{"shape":"SecretARNType"},
-        "Name":{"shape":"NameType"}
+        "Name":{"shape":"NameType"},
+        "PolicyName":{"shape":"ResourcePolicyNameType"}
       }
     },
     "PutSecretValueRequest":{
@@ -986,6 +1124,13 @@
         "KmsKeyId":{"shape":"KmsKeyIdType"}
       }
     },
+    "ReplicaRestrictionType":{
+      "type":"string",
+      "enum":[
+        "SameOrg",
+        "NoRestriction"
+      ]
+    },
     "ReplicateSecretToRegionsRequest":{
       "type":"structure",
       "required":[
@@ -1033,6 +1178,24 @@
         "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "ResourcePolicyNameType":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[0-9A-Za-z\\-\\_]+"
+    },
+    "ResourcePolicySummary":{
+      "type":"structure",
+      "members":{
+        "PolicyName":{"shape":"ResourcePolicyNameType"}
+      }
+    },
+    "ResourcePolicySummaryListType":{
+      "type":"list",
+      "member":{"shape":"ResourcePolicySummary"},
+      "max":100,
+      "min":0
     },
     "RestoreSecretRequest":{
       "type":"structure",
@@ -1276,7 +1439,9 @@
       "enum":[
         "InSync",
         "Failed",
-        "InProgress"
+        "InProgress",
+        "Pending",
+        "Detached"
       ]
     },
     "StopReplicationToReplicaRequest":{

@@ -661,7 +661,7 @@ use Aws\AwsClient;
  *     EstimatedInstanceWarmup?: int,
  *     TargetTrackingConfiguration?: array{
  *         PredefinedMetricSpecification?: array{
- *             PredefinedMetricType?: 'ALBRequestCountPerTarget'|'ASGAverageCPUUtilization'|'ASGAverageNetworkIn'|'ASGAverageNetworkOut',
+ *             PredefinedMetricType?: 'ALBRequestCountPerTarget'|'ASGAverageCPUUtilization'|'ASGAverageCPUUtilizationHighResolution'|'ASGAverageNetworkIn'|'ASGAverageNetworkOut',
  *             ResourceLabel?: string,
  *             ...,
  *         },
@@ -705,7 +705,7 @@ use Aws\AwsClient;
  *     EstimatedInstanceWarmup?: int,
  *     TargetTrackingConfiguration?: array{
  *         PredefinedMetricSpecification?: array{
- *             PredefinedMetricType?: 'ALBRequestCountPerTarget'|'ASGAverageCPUUtilization'|'ASGAverageNetworkIn'|'ASGAverageNetworkOut',
+ *             PredefinedMetricType?: 'ALBRequestCountPerTarget'|'ASGAverageCPUUtilization'|'ASGAverageCPUUtilizationHighResolution'|'ASGAverageNetworkIn'|'ASGAverageNetworkOut',
  *             ResourceLabel?: string,
  *             ...,
  *         },

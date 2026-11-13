@@ -15,6 +15,23 @@
     "uid":"mwaa-serverless-2024-07-26"
   },
   "operations":{
+    "CreateAirflowUiUrl":{
+      "name":"CreateAirflowUiUrl",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateAirflowUiUrlRequest"},
+      "output":{"shape":"CreateAirflowUiUrlResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "CreateWorkflow":{
       "name":"CreateWorkflow",
       "http":{
@@ -294,6 +311,12 @@
       },
       "exception":true
     },
+    "AuthorizedUrlString":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "sensitive":true
+    },
     "Code":{
       "type":"structure",
       "members":{
@@ -314,6 +337,28 @@
         "ResourceType":{"shape":"String"}
       },
       "exception":true
+    },
+    "CreateAirflowUiUrlRequest":{
+      "type":"structure",
+      "members":{
+        "ExpiresInSeconds":{"shape":"ExpiresInSecondsInteger"},
+        "SessionDurationInSeconds":{"shape":"SessionDurationInSecondsInteger"}
+      }
+    },
+    "CreateAirflowUiUrlResponse":{
+      "type":"structure",
+      "required":[
+        "AuthorizedUrl",
+        "SessionId",
+        "UrlExpiresAt",
+        "SessionExpiresAt"
+      ],
+      "members":{
+        "AuthorizedUrl":{"shape":"AuthorizedUrlString"},
+        "SessionId":{"shape":"SessionIdString"},
+        "UrlExpiresAt":{"shape":"TimestampValue"},
+        "SessionExpiresAt":{"shape":"TimestampValue"}
+      }
     },
     "CreateWorkflowRequest":{
       "type":"structure",
@@ -442,6 +487,12 @@
       "max":2048,
       "min":1,
       "pattern":".*"
+    },
+    "ExpiresInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":300,
+      "min":5
     },
     "GenericMap":{
       "type":"map",
@@ -813,6 +864,19 @@
         "QuotaCode":{"shape":"String"}
       },
       "exception":true
+    },
+    "SessionDurationInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":43200,
+      "min":1
+    },
+    "SessionIdString":{
+      "type":"string",
+      "max":32,
+      "min":32,
+      "pattern":"[a-z0-9]{32}",
+      "sensitive":true
     },
     "StartWorkflowRunRequest":{
       "type":"structure",

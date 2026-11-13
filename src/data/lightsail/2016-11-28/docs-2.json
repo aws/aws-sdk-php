@@ -8,6 +8,7 @@
     "AttachInstancesToLoadBalancer": "<p>Attaches one or more Lightsail instances to a load balancer.</p> <p>After some time, the instances are attached to the load balancer and the health check status is available.</p> <p>The <code>attach instances to load balancer</code> operation supports tag-based access control via resource tags applied to the resource identified by <code>load balancer name</code>. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Lightsail Developer Guide</a>.</p>",
     "AttachLoadBalancerTlsCertificate": "<p>Attaches a Transport Layer Security (TLS) certificate to your load balancer. TLS is just an updated, more secure version of Secure Socket Layer (SSL).</p> <p>Once you create and validate your certificate, you can attach it to your load balancer. You can also use this API to rotate the certificates on your account. Use the <code>AttachLoadBalancerTlsCertificate</code> action with the non-attached certificate, and it will replace the existing one and become the attached certificate.</p> <p>The <code>AttachLoadBalancerTlsCertificate</code> operation supports tag-based access control via resource tags applied to the resource identified by <code>load balancer name</code>. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Amazon Lightsail Developer Guide</a>.</p>",
     "AttachStaticIp": "<p>Attaches a static IP address to a specific Amazon Lightsail instance.</p>",
+    "CheckSubdomainAvailability": "<p>Checks whether a Lightsail subdomain is available to create. Optionally, reserves the subdomain for your account for 15 minutes.</p> <p>If you don't reserve the subdomain, another account can create it before you do.</p>",
     "CloseInstancePublicPorts": "<p>Closes ports for a specific Amazon Lightsail instance.</p> <p>The <code>CloseInstancePublicPorts</code> action supports tag-based access control via resource tags applied to the resource identified by <code>instanceName</code>. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Amazon Lightsail Developer Guide</a>.</p>",
     "CopySnapshot": "<p>Copies a manual snapshot of an instance or disk as another manual snapshot, or copies an automatic snapshot of an instance or disk as a manual snapshot. This operation can also be used to copy a manual or automatic snapshot of an instance or a disk from one Amazon Web Services Region to another in Amazon Lightsail.</p> <p>When copying a <i>manual snapshot</i>, be sure to define the <code>source region</code>, <code>source snapshot name</code>, and <code>target snapshot name</code> parameters.</p> <p>When copying an <i>automatic snapshot</i>, be sure to define the <code>source region</code>, <code>source resource name</code>, <code>target snapshot name</code>, and either the <code>restore date</code> or the <code>use latest restorable auto snapshot</code> parameters.</p>",
     "CreateBucket": "<p>Creates an Amazon Lightsail bucket.</p> <p>A bucket is a cloud storage resource available in the Lightsail object storage service. Use buckets to store objects such as data and its descriptive metadata. For more information about buckets, see <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/buckets-in-amazon-lightsail\">Buckets in Amazon Lightsail</a> in the <i>Amazon Lightsail Developer Guide</i>.</p>",
@@ -34,6 +35,7 @@
     "CreateRelationalDatabase": "<p>Creates a new database in Amazon Lightsail.</p> <p>The <code>create relational database</code> operation supports tag-based access control via request tags. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Amazon Lightsail Developer Guide</a>.</p>",
     "CreateRelationalDatabaseFromSnapshot": "<p>Creates a new database from an existing database snapshot in Amazon Lightsail.</p> <p>You can create a new database from a snapshot in if something goes wrong with your original database, or to change it to a different plan, such as a high availability or standard plan.</p> <p>The <code>create relational database from snapshot</code> operation supports tag-based access control via request tags and resource tags applied to the resource identified by relationalDatabaseSnapshotName. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Amazon Lightsail Developer Guide</a>.</p>",
     "CreateRelationalDatabaseSnapshot": "<p>Creates a snapshot of your database in Amazon Lightsail. You can use snapshots for backups, to make copies of a database, and to save data before deleting a database.</p> <p>The <code>create relational database snapshot</code> operation supports tag-based access control via request tags. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Amazon Lightsail Developer Guide</a>.</p>",
+    "CreateSubdomain": "<p>Creates a Lightsail subdomain, such as <code>mysite</code>, with the web address <code>mysite.amazonlightsail.com</code>. After the subdomain is created, use the <code>UpdateSubdomainAssociation</code> action to associate it with a Lightsail resource.</p> <p>When you create a nested subdomain, such as <code>blog.mysite</code>, and you don't already have the top-level subdomain (<code>mysite</code>), Lightsail adds the top-level subdomain to your account in the <code>IMPLICIT</code> state.</p> <p>You can have up to 30 subdomains in your account. Nested subdomains, subdomains in the <code>CREATE_FAILED</code> state, and deleted subdomains that other accounts can't create yet count toward this quota. Subdomains in the <code>IMPLICIT</code> state don't count toward this quota.</p>",
     "DeleteAlarm": "<p>Deletes an alarm.</p> <p>An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-alarms\">Alarms in Amazon Lightsail</a>.</p>",
     "DeleteAutoSnapshot": "<p>Deletes an automatic snapshot of an instance or disk. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots\">Amazon Lightsail Developer Guide</a>.</p>",
     "DeleteBucket": "<p>Deletes a Amazon Lightsail bucket.</p> <note> <p>When you delete your bucket, the bucket name is released and can be reused for a new bucket in your account or another Amazon Web Services account.</p> </note>",
@@ -55,6 +57,7 @@
     "DeleteLoadBalancerTlsCertificate": "<p>Deletes an SSL/TLS certificate associated with a Lightsail load balancer.</p> <p>The <code>DeleteLoadBalancerTlsCertificate</code> operation supports tag-based access control via resource tags applied to the resource identified by <code>load balancer name</code>. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Amazon Lightsail Developer Guide</a>.</p>",
     "DeleteRelationalDatabase": "<p>Deletes a database in Amazon Lightsail.</p> <p>The <code>delete relational database</code> operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Amazon Lightsail Developer Guide</a>.</p>",
     "DeleteRelationalDatabaseSnapshot": "<p>Deletes a database snapshot in Amazon Lightsail.</p> <p>The <code>delete relational database snapshot</code> operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Amazon Lightsail Developer Guide</a>.</p>",
+    "DeleteSubdomain": "<p>Deletes a Lightsail subdomain.</p> <p>The subdomain must be in the <code>UNATTACHED</code> or <code>CREATE_FAILED</code> state. To delete a subdomain that's associated with a resource, first disassociate it by using the <code>UpdateSubdomainAssociation</code> action.</p> <p>When you delete a top-level subdomain that has nested subdomains, the nested subdomains continue to work, and the top-level subdomain changes to the <code>IMPLICIT</code> state.</p> <note> <p>After you delete a subdomain that was associated with a resource, the subdomain isn't available to other accounts for at least 30 days.</p> </note>",
     "DetachCertificateFromDistribution": "<p>Detaches an SSL/TLS certificate from your Amazon Lightsail content delivery network (CDN) distribution.</p> <p>After the certificate is detached, your distribution stops accepting traffic for all of the domains that are associated with the certificate.</p>",
     "DetachDisk": "<p>Detaches a stopped block storage disk from a Lightsail instance. Make sure to unmount any file systems on the device within your operating system before stopping the instance and detaching the disk.</p> <p>The <code>detach disk</code> operation supports tag-based access control via resource tags applied to the resource identified by <code>disk name</code>. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Amazon Lightsail Developer Guide</a>.</p>",
     "DetachInstancesFromLoadBalancer": "<p>Detaches the specified instances from a Lightsail load balancer.</p> <p>This operation waits until the instances are no longer needed before they are detached from the load balancer.</p> <p>The <code>detach instances from load balancer</code> operation supports tag-based access control via resource tags applied to the resource identified by <code>load balancer name</code>. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Amazon Lightsail Developer Guide</a>.</p>",
@@ -90,7 +93,7 @@
     "GetDistributionBundles": "<p>Returns the bundles that can be applied to your Amazon Lightsail content delivery network (CDN) distributions.</p> <p>A distribution bundle specifies the monthly network transfer quota and monthly cost of your distribution.</p>",
     "GetDistributionLatestCacheReset": "<p>Returns the timestamp and status of the last cache reset of a specific Amazon Lightsail content delivery network (CDN) distribution.</p>",
     "GetDistributionMetricData": "<p>Returns the data points of a specific metric for an Amazon Lightsail content delivery network (CDN) distribution.</p> <p>Metrics report the utilization of your resources, and the error counts generated by them. Monitor and collect metric data regularly to maintain the reliability, availability, and performance of your resources.</p>",
-    "GetDistributions": "<p>Returns information about one or more of your Amazon Lightsail content delivery network (CDN) distributions.</p>",
+    "GetDistributions": "<p>Returns information about one or more of your Amazon Lightsail content delivery network (CDN) distributions.</p> <note> <p>The <code>defaultRootObject</code> and <code>customErrorResponses</code> values are returned only when you specify <code>distributionName</code> to retrieve a single distribution. When you call <code>GetDistributions</code> without a distribution name to list all distributions, these two fields aren't included in the response.</p> </note>",
     "GetDomain": "<p>Returns information about a specific domain recordset.</p>",
     "GetDomains": "<p>Returns a list of all domains in the user's account.</p>",
     "GetExportSnapshotRecords": "<p>Returns all export snapshot records created as a result of the <code>export snapshot</code> operation.</p> <p>An export snapshot record can be used to create a new Amazon EC2 instance and its related resources with the <a href=\"https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateCloudFormationStack.html\">CreateCloudFormationStack</a> action.</p>",
@@ -129,6 +132,7 @@
     "GetSetupHistory": "<p>Returns detailed information for five of the most recent <code>SetupInstanceHttps</code> requests that were ran on the target instance.</p>",
     "GetStaticIp": "<p>Returns information about an Amazon Lightsail static IP.</p>",
     "GetStaticIps": "<p>Returns information about all static IPs in the user's account.</p>",
+    "GetSubdomains": "<p>Returns information about one or more of your Lightsail subdomains.</p> <p>When you don't specify a subdomain, the response lists your top-level subdomains, and each top-level subdomain includes its nested subdomains.</p> <p>The results are paginated. To get the next page of results, use the <code>pageToken</code> parameter.</p>",
     "ImportKeyPair": "<p>Imports a public SSH key from a specific key pair.</p>",
     "IsVpcPeered": "<p>Returns a Boolean value indicating whether your Lightsail VPC is peered.</p>",
     "OpenInstancePublicPorts": "<p>Opens ports for a specific Amazon Lightsail instance, and specifies the IP addresses allowed to connect to the instance through the ports, and the protocol.</p> <p>The <code>OpenInstancePublicPorts</code> action supports tag-based access control via resource tags applied to the resource identified by <code>instanceName</code>. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Amazon Lightsail Developer Guide</a>.</p>",
@@ -163,7 +167,8 @@
     "UpdateInstanceMetadataOptions": "<p>Modifies the Amazon Lightsail instance metadata parameters on a running or stopped instance. When you modify the parameters on a running instance, the <code>GetInstance</code> or <code>GetInstances</code> API operation initially responds with a state of <code>pending</code>. After the parameter modifications are successfully applied, the state changes to <code>applied</code> in subsequent <code>GetInstance</code> or <code>GetInstances</code> API calls. For more information, see <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-instance-metadata-service\">Use IMDSv2 with an Amazon Lightsail instance</a> in the <i>Amazon Lightsail Developer Guide</i>.</p>",
     "UpdateLoadBalancerAttribute": "<p>Updates the specified attribute for a load balancer. You can only update one attribute at a time.</p> <p>The <code>update load balancer attribute</code> operation supports tag-based access control via resource tags applied to the resource identified by <code>load balancer name</code>. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Amazon Lightsail Developer Guide</a>.</p>",
     "UpdateRelationalDatabase": "<p>Allows the update of one or more attributes of a database in Amazon Lightsail.</p> <p>Updates are applied immediately, or in cases where the updates could result in an outage, are applied during the database's predefined maintenance window.</p> <p>The <code>update relational database</code> operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Amazon Lightsail Developer Guide</a>.</p>",
-    "UpdateRelationalDatabaseParameters": "<p>Allows the update of one or more parameters of a database in Amazon Lightsail.</p> <p>Parameter updates don't cause outages; therefore, their application is not subject to the preferred maintenance window. However, there are two ways in which parameter updates are applied: <code>dynamic</code> or <code>pending-reboot</code>. Parameters marked with a <code>dynamic</code> apply type are applied immediately. Parameters marked with a <code>pending-reboot</code> apply type are applied only after the database is rebooted using the <code>reboot relational database</code> operation.</p> <p>The <code>update relational database parameters</code> operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Amazon Lightsail Developer Guide</a>.</p>"
+    "UpdateRelationalDatabaseParameters": "<p>Allows the update of one or more parameters of a database in Amazon Lightsail.</p> <p>Parameter updates don't cause outages; therefore, their application is not subject to the preferred maintenance window. However, there are two ways in which parameter updates are applied: <code>dynamic</code> or <code>pending-reboot</code>. Parameters marked with a <code>dynamic</code> apply type are applied immediately. Parameters marked with a <code>pending-reboot</code> apply type are applied only after the database is rebooted using the <code>reboot relational database</code> operation.</p> <p>The <code>update relational database parameters</code> operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags\">Amazon Lightsail Developer Guide</a>.</p>",
+    "UpdateSubdomainAssociation": "<p>Associates a Lightsail subdomain with a resource, disassociates it from a resource, or moves it from one resource to another resource.</p> <p>Currently, you can associate a subdomain only with a Lightsail content delivery network (CDN) distribution. A resource can be associated with only one subdomain at a time.</p> <p>When you associate a subdomain with a distribution, Lightsail attaches the subdomain's certificate to the distribution. You can't associate a subdomain with a distribution that uses a custom domain, which is a distribution that has a Lightsail certificate attached.</p> <p>You can transfer each subdomain to another resource only once in a 24-hour period.</p> <p>The update is asynchronous. The response returns the subdomain in the <code>ATTACHING</code>, <code>DETACHING</code>, or <code>TRANSFERRING</code> state, and an operation. To check when the update is complete, use the <code>GetSubdomains</code> action.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -676,6 +681,14 @@
       "refs": {
         "GetCertificatesResult$certificates": "<p>An object that describes certificates.</p>"
       }
+    },
+    "CheckSubdomainAvailabilityRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CheckSubdomainAvailabilityResult": {
+      "base": null,
+      "refs": {}
     },
     "CloseInstancePublicPortsRequest": {
       "base": null,
@@ -1210,6 +1223,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateSubdomainRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSubdomainResult": {
+      "base": null,
+      "refs": {}
+    },
     "Currency": {
       "base": null,
       "refs": {
@@ -1384,6 +1405,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteSubdomainRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSubdomainResult": {
+      "base": null,
+      "refs": {}
+    },
     "DestinationInfo": {
       "base": "<p>Describes the destination of a record.</p>",
       "refs": {
@@ -1523,7 +1552,7 @@
       "base": null,
       "refs": {
         "CreateDistributionRequest$customErrorResponses": "<p>An array of objects that describe the custom error responses for the distribution. With a custom error response, you can specify the page to return when the origin responds with a given HTTP error code. You can also specify the HTTP status code to send to the viewer.</p>",
-        "LightsailDistribution$customErrorResponses": "<p>An array of objects that describe the custom error responses configured for the distribution.</p>",
+        "LightsailDistribution$customErrorResponses": "<p>An array of objects that describe the custom error responses configured for the distribution.</p> <p>This value is returned only when you specify <code>distributionName</code> in your <code>GetDistributions</code> request. It isn't included in the response when you list all of your distributions.</p>",
         "UpdateDistributionRequest$customErrorResponses": "<p>An array of objects that describe the custom error responses for the distribution. With a custom error response, you can specify the page to return when the origin responds with a given HTTP error code. You can also specify the HTTP status code to send to the viewer.</p>"
       }
     },
@@ -2257,6 +2286,14 @@
       "base": null,
       "refs": {}
     },
+    "GetSubdomainsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSubdomainsResult": {
+      "base": null,
+      "refs": {}
+    },
     "HeaderEnum": {
       "base": null,
       "refs": {
@@ -2607,6 +2644,7 @@
         "Certificate$notBefore": "<p>The timestamp when the certificate is first valid.</p>",
         "Certificate$notAfter": "<p>The timestamp when the certificate expires.</p>",
         "Certificate$revokedAt": "<p>The timestamp when the certificate was revoked. This value is present only when the certificate status is <code>REVOKED</code>.</p>",
+        "CheckSubdomainAvailabilityResult$reservationExpiresAt": "<p>The timestamp when the reservation of the subdomain expires.</p> <p>The expiry is returned only when your account holds an active reservation for the subdomain.</p>",
         "CloudFormationStackRecord$createdAt": "<p>The date when the CloudFormation stack record was created.</p>",
         "ContactMethod$createdAt": "<p>The timestamp when the contact method was created.</p>",
         "ContainerImage$createdAt": "<p>The timestamp when the container image was created.</p>",
@@ -2666,6 +2704,8 @@
         "SetupExecutionDetails$dateTime": "<p>The timestamp for when the request was run.</p>",
         "SetupHistoryResource$createdAt": "<p>The timestamp for when the resource was created.</p>",
         "StaticIp$createdAt": "<p>The timestamp when the static IP was created (<code>1479735304.222</code>).</p>",
+        "Subdomain$createdAt": "<p>The timestamp when the subdomain was created.</p>",
+        "SubdomainAttachableResource$attachedAt": "<p>The timestamp when the subdomain was associated with the resource.</p>",
         "TimePeriod$start": "<p>The beginning of the time period. The start date is inclusive. For example, if <code>start</code> is <code>2017-01-01</code>, Lightsail for Research retrieves cost and usage data starting at <code>2017-01-01</code> up to the end date. The start date must be equal to or no later than the current date to avoid a validation error.</p>",
         "TimePeriod$end": "<p>The end of the time period. The end date is exclusive. For example, if <code>end</code> is <code>2017-05-01</code>, Lightsail for Research retrieves cost and usage data from the start date up to, but not including, <code>2017-05-01</code>.</p>"
       }
@@ -2701,6 +2741,18 @@
       "refs": {
         "CreateDistributionResult$distribution": "<p>An object that describes the distribution created.</p>",
         "DistributionList$member": null
+      }
+    },
+    "LightsailDistributionSubdomain": {
+      "base": "<p>Describes the Lightsail subdomain of a distribution. The distribution is reachable at the subdomain's web address, which is the subdomain followed by <code>amazonlightsail.com</code>.</p>",
+      "refs": {
+        "LightsailDistribution$subdomain": "<p>An object that describes the Lightsail subdomain that's associated with the distribution, or is being associated with it.</p>"
+      }
+    },
+    "LightsailDistributionSubdomainStateEnum": {
+      "base": null,
+      "refs": {
+        "LightsailDistributionSubdomain$state": "<p>The state of the subdomain for the distribution.</p> <p>The following states are possible:</p> <ul> <li> <p> <code>Creating</code> – The subdomain is being created.</p> </li> <li> <p> <code>Attaching</code> – The subdomain is being associated with the distribution.</p> </li> <li> <p> <code>Attached</code> – The subdomain is associated with the distribution.</p> </li> <li> <p> <code>Error</code> – The subdomain couldn't be created or associated with the distribution. For more information, see the <code>errorCode</code> and <code>errorDetails</code> parameters.</p> </li> </ul>"
       }
     },
     "LoadBalancer": {
@@ -3073,6 +3125,8 @@
         "SetupHistory$operationId": "<p>A GUID that's used to identify the operation.</p>",
         "SetupHistoryResource$arn": "<p>The Amazon Resource Name (ARN) of the Lightsail resource.</p>",
         "StaticIp$arn": "<p>The Amazon Resource Name (ARN) of the static IP (<code>arn:aws:lightsail:us-east-2:123456789101:StaticIp/9cbb4a9e-f8e3-4dfe-b57e-12345EXAMPLE</code>).</p>",
+        "Subdomain$arn": "<p>The Amazon Resource Name (ARN) of the subdomain.</p> <p>If you create a subdomain with a depth of 2, such as <code>blog.mysite</code>, without first creating the subdomain with a depth of 1 (<code>mysite</code>), Lightsail holds <code>mysite</code> for your account in the <code>IMPLICIT</code> state. It doesn't have an ARN until you create a subdomain with that name.</p>",
+        "SubdomainAttachableResource$arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UpdateBucketBundleRequest$bundleId": "<p>The ID of the new bundle to apply to the bucket.</p> <p>Use the <a href=\"https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetBucketBundles.html\">GetBucketBundles</a> action to get a list of bundle IDs that you can specify.</p>",
         "UpdateBucketRequest$versioning": "<p>Specifies whether to enable or suspend versioning of objects in the bucket.</p> <p>The following options can be specified:</p> <ul> <li> <p> <code>Enabled</code> - Enables versioning of objects in the specified bucket.</p> </li> <li> <p> <code>Suspended</code> - Suspends versioning of objects in the specified bucket. Existing object versions are retained.</p> </li> </ul>"
       }
@@ -3105,10 +3159,12 @@
         "CreateDomainEntryResult$operation": "<p>An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
         "CreateDomainResult$operation": "<p>An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
         "CreateKeyPairResult$operation": "<p>An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
+        "CreateSubdomainResult$operation": "<p>An object that describes the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
         "DeleteDistributionResult$operation": "<p>An object that describes the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
         "DeleteDomainEntryResult$operation": "<p>An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
         "DeleteDomainResult$operation": "<p>An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
         "DeleteKeyPairResult$operation": "<p>An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
+        "DeleteSubdomainResult$operation": "<p>An object that describes the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
         "DetachCertificateFromDistributionResult$operation": "<p>An object that describes the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
         "GetOperationResult$operation": "<p>An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
         "ImportKeyPairResult$operation": "<p>An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
@@ -3120,7 +3176,8 @@
         "UnpeerVpcResult$operation": "<p>An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
         "UpdateDistributionBundleResult$operation": "<p>An object that describes the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
         "UpdateDistributionResult$operation": "<p>An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
-        "UpdateInstanceMetadataOptionsResult$operation": "<p>An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>"
+        "UpdateInstanceMetadataOptionsResult$operation": "<p>An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>",
+        "UpdateSubdomainAssociationResult$operation": "<p>An object that describes the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.</p>"
       }
     },
     "OperationFailureException": {
@@ -3650,7 +3707,8 @@
         "RelationalDatabase$location": "<p>The Region name and Availability Zone where the database is located.</p>",
         "RelationalDatabaseSnapshot$location": "<p>The Region name and Availability Zone where the database snapshot is located.</p>",
         "SetupHistoryResource$location": null,
-        "StaticIp$location": "<p>The region and Availability Zone where the static IP was created.</p>"
+        "StaticIp$location": "<p>The region and Availability Zone where the static IP was created.</p>",
+        "Subdomain$location": "<p>An object that describes the location of the subdomain, such as the AWS Region.</p>"
       }
     },
     "ResourceName": {
@@ -3811,6 +3869,7 @@
         "StopInstanceRequest$instanceName": "<p>The name of the instance (a virtual private server) to stop.</p>",
         "StopRelationalDatabaseRequest$relationalDatabaseName": "<p>The name of your database to stop.</p>",
         "StopRelationalDatabaseRequest$relationalDatabaseSnapshotName": "<p>The name of your new database snapshot to be created before stopping your database.</p>",
+        "SubdomainAttachableResource$name": "<p>The name of the resource.</p>",
         "TagResourceRequest$resourceName": "<p>The name of the resource to which you are adding tags.</p>",
         "TestAlarmRequest$alarmName": "<p>The name of the alarm to test.</p>",
         "UntagResourceRequest$resourceName": "<p>The name of the resource from which you are removing a tag.</p>",
@@ -4133,6 +4192,41 @@
         "UpdateLoadBalancerAttributeRequest$attributeValue": "<p>The value that you want to specify for the attribute name.</p> <p>The following values are supported depending on what you specify for the <code>attributeName</code> request parameter:</p> <ul> <li> <p>If you specify <code>HealthCheckPath</code> for the <code>attributeName</code> request parameter, then the <code>attributeValue</code> request parameter must be the path to ping on the target (for example, <code>/weather/us/wa/seattle</code>).</p> </li> <li> <p>If you specify <code>SessionStickinessEnabled</code> for the <code>attributeName</code> request parameter, then the <code>attributeValue</code> request parameter must be <code>true</code> to activate session stickiness or <code>false</code> to deactivate session stickiness.</p> </li> <li> <p>If you specify <code>SessionStickiness_LB_CookieDurationSeconds</code> for the <code>attributeName</code> request parameter, then the <code>attributeValue</code> request parameter must be an interger that represents the cookie duration in seconds.</p> </li> <li> <p>If you specify <code>HttpsRedirectionEnabled</code> for the <code>attributeName</code> request parameter, then the <code>attributeValue</code> request parameter must be <code>true</code> to activate HTTP to HTTPS redirection or <code>false</code> to deactivate HTTP to HTTPS redirection.</p> </li> <li> <p>If you specify <code>TlsPolicyName</code> for the <code>attributeName</code> request parameter, then the <code>attributeValue</code> request parameter must be the name of the TLS policy.</p> <p>Use the <a href=\"https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetLoadBalancerTlsPolicies.html\">GetLoadBalancerTlsPolicies</a> action to get a list of TLS policy names that you can specify.</p> </li> </ul>"
       }
     },
+    "Subdomain": {
+      "base": "<p>Describes a Lightsail subdomain. A subdomain is the name that you choose, such as <code>mysite</code> or <code>blog.mysite</code>. Its web address is the subdomain followed by <code>amazonlightsail.com</code>, such as <code>blog.mysite.amazonlightsail.com</code>. You can associate a subdomain with a Lightsail resource to make the resource reachable at the web address.</p>",
+      "refs": {
+        "CreateSubdomainResult$subdomain": "<p>An object that describes the subdomain that was created.</p>",
+        "DeleteSubdomainResult$subdomain": "<p>An object that describes the top-level subdomain in the <code>IMPLICIT</code> state.</p> <p>This parameter is returned only when you delete a top-level subdomain that has nested subdomains.</p>",
+        "SubdomainList$member": null,
+        "UpdateSubdomainAssociationResult$subdomain": "<p>An object that describes the subdomain that was updated.</p>"
+      }
+    },
+    "SubdomainAssociationAction": {
+      "base": null,
+      "refs": {
+        "UpdateSubdomainAssociationRequest$action": "<p>The association change to make.</p> <p>The following actions are possible:</p> <ul> <li> <p> <code>ASSOCIATE</code> – Associates the subdomain with the resource that you specify in the <code>targetResourceArn</code> parameter. The subdomain must be in the <code>UNATTACHED</code> state.</p> </li> <li> <p> <code>DISASSOCIATE</code> – Disassociates the subdomain from its current resource. The subdomain must be in the <code>ATTACHED</code> state.</p> </li> <li> <p> <code>TRANSFER</code> – Moves the subdomain from its current resource to the resource that you specify in the <code>targetResourceArn</code> parameter. The subdomain must be in the <code>ATTACHED</code> state. You can transfer each subdomain only once in a 24-hour period.</p> </li> </ul>"
+      }
+    },
+    "SubdomainAttachableResource": {
+      "base": "<p>Describes a Lightsail resource that a subdomain is associated with, or is being associated with.</p>",
+      "refs": {
+        "Subdomain$attachedResource": "<p>An object that describes the resource that the subdomain is associated with.</p> <p>When the subdomain is in the <code>TRANSFERRING</code> state, this is the resource that the subdomain is being moved from.</p>",
+        "Subdomain$attachingResource": "<p>An object that describes the resource that the subdomain is being associated with.</p> <p>This parameter is returned only when the subdomain is in the <code>ATTACHING</code> or <code>TRANSFERRING</code> state.</p>"
+      }
+    },
+    "SubdomainList": {
+      "base": null,
+      "refs": {
+        "GetSubdomainsResult$subdomains": "<p>An array of objects that describe your subdomains.</p>",
+        "Subdomain$children": "<p>An array of objects that describe the nested subdomains of the subdomain.</p> <p>This parameter is returned only by the <code>GetSubdomains</code> action when you don't specify a subdomain.</p>"
+      }
+    },
+    "SubdomainState": {
+      "base": null,
+      "refs": {
+        "Subdomain$state": "<p>The state of the subdomain.</p> <p>The following states are possible:</p> <ul> <li> <p> <code>CREATING</code> – The subdomain is being created.</p> </li> <li> <p> <code>CREATE_FAILED</code> – The subdomain couldn't be created. Delete the subdomain, and then create it again if the name is still available.</p> </li> <li> <p> <code>UNATTACHED</code> – The subdomain is ready, and isn't associated with a resource.</p> </li> <li> <p> <code>ATTACHING</code> – The subdomain is being associated with a resource.</p> </li> <li> <p> <code>ATTACHED</code> – The subdomain is associated with a resource, and routes traffic to it.</p> </li> <li> <p> <code>DETACHING</code> – The subdomain is being disassociated from a resource.</p> </li> <li> <p> <code>TRANSFERRING</code> – The subdomain is being moved from one resource to another resource.</p> </li> <li> <p> <code>IMPLICIT</code> – The subdomain is the parent of one or more nested subdomains that you created, but you didn't create the parent subdomain itself. You can't associate or delete a subdomain in this state. To use it, create it with the <code>CreateSubdomain</code> action.</p> </li> </ul>"
+      }
+    },
     "SubjectAlternativeNameList": {
       "base": null,
       "refs": {
@@ -4186,6 +4280,7 @@
         "CreateRelationalDatabaseFromSnapshotRequest$tags": "<p>The tag keys and optional values to add to the resource during create.</p> <p>Use the <code>TagResource</code> action to tag a resource after it's created.</p>",
         "CreateRelationalDatabaseRequest$tags": "<p>The tag keys and optional values to add to the resource during create.</p> <p>Use the <code>TagResource</code> action to tag a resource after it's created.</p>",
         "CreateRelationalDatabaseSnapshotRequest$tags": "<p>The tag keys and optional values to add to the resource during create.</p> <p>Use the <code>TagResource</code> action to tag a resource after it's created.</p>",
+        "CreateSubdomainRequest$tags": "<p>The tag keys and optional values to add to the subdomain during create.</p> <p>Use the <code>TagResource</code> action to tag a resource after it's created.</p>",
         "Disk$tags": "<p>The tag keys and optional values for the resource. For more information about tags in Lightsail, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags\">Amazon Lightsail Developer Guide</a>.</p>",
         "DiskSnapshot$tags": "<p>The tag keys and optional values for the resource. For more information about tags in Lightsail, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags\">Amazon Lightsail Developer Guide</a>.</p>",
         "Domain$tags": "<p>The tag keys and optional values for the resource. For more information about tags in Lightsail, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags\">Amazon Lightsail Developer Guide</a>.</p>",
@@ -4198,6 +4293,7 @@
         "PutAlarmRequest$tags": "<p>The tag keys and optional values to add to the alarm during create.</p> <p>Use the <code>TagResource</code> action to tag a resource after it's created.</p>",
         "RelationalDatabase$tags": "<p>The tag keys and optional values for the resource. For more information about tags in Lightsail, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags\">Amazon Lightsail Developer Guide</a>.</p>",
         "RelationalDatabaseSnapshot$tags": "<p>The tag keys and optional values for the resource. For more information about tags in Lightsail, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags\">Amazon Lightsail Developer Guide</a>.</p>",
+        "Subdomain$tags": "<p>The tag keys and optional values for the subdomain. For more information about tags in Lightsail, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags\">Lightsail Developer Guide</a>.</p> <p>This parameter is returned only by the <code>GetSubdomains</code> action when you specify a subdomain.</p>",
         "TagResourceRequest$tags": "<p>The tag key and optional value.</p>"
       }
     },
@@ -4350,6 +4446,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateSubdomainAssociationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSubdomainAssociationResult": {
+      "base": null,
+      "refs": {}
+    },
     "ViewerMinimumTlsProtocolVersionEnum": {
       "base": null,
       "refs": {
@@ -4434,6 +4538,8 @@
         "BucketAccessLogConfig$enabled": "<p>A Boolean value that indicates whether bucket access logging is enabled for the bucket.</p>",
         "BucketBundle$isActive": "<p>Indicates whether the bundle is active. Use for a new or existing bucket.</p>",
         "Bundle$isActive": "<p>A Boolean value indicating whether the bundle is active.</p>",
+        "CheckSubdomainAvailabilityRequest$reserve": "<p>Specifies whether to reserve the subdomain for your account if it's available. A reservation holds the subdomain for 15 minutes so that other accounts can't create it. Checking the subdomain again doesn't extend the reservation.</p> <p>For a nested subdomain, such as <code>blog.mysite</code>, the top-level subdomain (<code>mysite</code>) is reserved.</p> <p>You can have up to 5 active reservations at a time.</p>",
+        "CheckSubdomainAvailabilityResult$available": "<p>A Boolean value that indicates whether the subdomain is available to create.</p>",
         "ContainerService$isDisabled": "<p>A Boolean value indicating whether the container service is disabled.</p>",
         "ContainerServiceECRImagePullerRole$isActive": "<p>A Boolean value that indicates whether the role is activated.</p>",
         "ContainerServiceECRImagePullerRoleRequest$isActive": "<p>A Boolean value that indicates whether to activate the role.</p>",
@@ -4588,6 +4694,7 @@
         "RelationalDatabaseHardware$cpuCount": "<p>The number of vCPUs for the database.</p>",
         "RelationalDatabaseHardware$diskSizeInGb": "<p>The size of the disk for the database.</p>",
         "RelationalDatabaseSnapshot$sizeInGb": "<p>The size of the disk in GB (for example, <code>32</code>) for the database snapshot.</p>",
+        "Subdomain$depth": "<p>The number of labels in the subdomain. A top-level subdomain, such as <code>mysite</code>, has a depth of <code>1</code>. A nested subdomain, such as <code>blog.mysite</code>, has a depth of <code>2</code>.</p>",
         "UpdateInstanceMetadataOptionsRequest$httpPutResponseHopLimit": "<p>The desired HTTP PUT response hop limit for instance metadata requests. A larger number means that the instance metadata requests can travel farther. If no parameter is specified, the existing state is maintained.</p>",
         "WafStatusCodeList$member": null
       }
@@ -4640,6 +4747,8 @@
         "Bundle$name": "<p>A friendly name for the bundle (<code>Micro</code>).</p>",
         "CacheBehaviorPerPath$path": "<p>The path to a directory or file to cached, or not cache. Use an asterisk symbol to specify wildcard directories (<code>path/to/assets/*</code>), and file types (<code>*.html, *jpg, *js</code>). Directories and file paths are case-sensitive.</p> <p>Examples:</p> <ul> <li> <p>Specify the following to cache all files in the document root of an Apache web server running on a Lightsail instance.</p> <p> <code>var/www/html/</code> </p> </li> <li> <p>Specify the following file to cache only the index page in the document root of an Apache web server.</p> <p> <code>var/www/html/index.html</code> </p> </li> <li> <p>Specify the following to cache only the .html files in the document root of an Apache web server.</p> <p> <code>var/www/html/*.html</code> </p> </li> <li> <p>Specify the following to cache only the .jpg, .png, and .gif files in the images sub-directory of the document root of an Apache web server.</p> <p> <code>var/www/html/images/*.jpg</code> </p> <p> <code>var/www/html/images/*.png</code> </p> <p> <code>var/www/html/images/*.gif</code> </p> <p>Specify the following to cache all files in the images sub-directory of the document root of an Apache web server.</p> <p> <code>var/www/html/images/</code> </p> </li> </ul>",
         "Certificate$supportCode": "<p>The support code. Include this code in your email to support when you have questions about your Lightsail certificate. This code enables our support team to look up your Lightsail information more easily.</p>",
+        "CheckSubdomainAvailabilityRequest$subdomainName": "<p>The subdomain to check (for example, <code>mysite</code> or <code>blog.mysite</code>).</p> <p>A subdomain can contain one or two labels separated by a period (<code>.</code>). Each label must start and end with a lowercase letter or a number, and can contain only lowercase letters, numbers, and hyphens (<code>-</code>). The name can be up to 39 characters long, including periods. Labels that start with <code>xn--</code> aren't supported, and some names are reserved.</p> <p>Specify only the subdomain. A web address, such as <code>mysite.amazonlightsail.com</code>, isn't accepted.</p>",
+        "CheckSubdomainAvailabilityResult$subdomainName": "<p>The subdomain that was checked.</p>",
         "ContactMethod$supportCode": "<p>The support code. Include this code in your email to support when you have questions about your Lightsail contact method. This code enables our support team to look up your Lightsail information more easily.</p>",
         "Container$image": "<p>The name of the image used for the container.</p> <p>Container images sourced from your Lightsail container service, that are registered and stored on your service, start with a colon (<code>:</code>). For example, if your container service name is <code>container-service-1</code>, the container image label is <code>mystaticsite</code>, and you want to use the third (<code>3</code>) version of the registered container image, then you should specify <code>:container-service-1.mystaticsite.3</code>. To use the latest version of a container image, specify <code>latest</code> instead of a version number (for example, <code>:container-service-1.mystaticsite.latest</code>). Lightsail will automatically use the highest numbered version of the registered container image.</p> <p>Container images sourced from a public registry like Docker Hub don't start with a colon. For example, <code>nginx:latest</code> or <code>nginx</code>.</p>",
         "ContainerImage$image": "<p>The name of the container image.</p>",
@@ -4668,6 +4777,7 @@
         "CreateDiskFromSnapshotRequest$restoreDate": "<p>The date of the automatic snapshot to use for the new disk. Use the <code>get auto snapshots</code> operation to identify the dates of the available automatic snapshots.</p> <p>Constraints:</p> <ul> <li> <p>Must be specified in <code>YYYY-MM-DD</code> format.</p> </li> <li> <p>This parameter cannot be defined together with the <code>use latest restorable auto snapshot</code> parameter. The <code>restore date</code> and <code>use latest restorable auto snapshot</code> parameters are mutually exclusive.</p> </li> <li> <p>Define this parameter only when creating a new disk from an automatic snapshot. For more information, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots\">Amazon Lightsail Developer Guide</a>.</p> </li> </ul>",
         "CreateDistributionRequest$bundleId": "<p>The bundle ID to use for the distribution.</p> <p>A distribution bundle describes the specifications of your distribution, such as the monthly cost and monthly network transfer quota.</p> <p>Use the <code>GetDistributionBundles</code> action to get a list of distribution bundle IDs that you can specify.</p>",
         "CreateDistributionRequest$defaultRootObject": "<p>The object (for example, <code>index.html</code>) that the distribution returns when a viewer requests the root URL of the distribution (<code>/</code>) instead of a specific object. The object that you specify must be available from the origin.</p>",
+        "CreateDistributionRequest$subdomainName": "<p>The Lightsail subdomain to create and associate with the distribution (for example, <code>mysite</code>, for the web address <code>mysite.amazonlightsail.com</code>).</p> <p>After the distribution is deployed, Lightsail creates the subdomain and associates it with the distribution. If Lightsail can't create or associate the subdomain, it still creates the distribution, but the <code>CreateDistribution</code> operation fails and the <code>state</code> of the distribution's <code>subdomain</code> is <code>Error</code>. To check the status, use the <code>subdomain</code> parameter of the distribution.</p>",
         "CreateGUISessionAccessDetailsResult$failureReason": "<p>The reason the operation failed.</p>",
         "CreateInstancesFromSnapshotRequest$availabilityZone": "<p>The Availability Zone where you want to create your instances. Use the following formatting: <code>us-east-2a</code> (case sensitive). You can get a list of Availability Zones by using the <a href=\"http://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRegions.html\">get regions</a> operation. Be sure to add the <code>include Availability Zones</code> parameter to your request.</p>",
         "CreateInstancesFromSnapshotRequest$userData": "<p>You can create a launch script that configures a server with additional user data. For example, <code>apt-get -y update</code>.</p> <note> <p>Depending on the machine image you choose, the command to get software on your instance varies. Amazon Linux and CentOS use <code>yum</code>, Debian and Ubuntu use <code>apt-get</code>, and FreeBSD uses <code>pkg</code>. For a complete list, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/compare-options-choose-lightsail-instance-image\">Amazon Lightsail Developer Guide</a>.</p> </note>",
@@ -4686,8 +4796,10 @@
         "CreateRelationalDatabaseRequest$masterUsername": "<p>The name for the master user.</p> <p> <b>MySQL</b> </p> <p>Constraints:</p> <ul> <li> <p>Required for MySQL.</p> </li> <li> <p>Must be 1 to 16 letters or numbers. Can contain underscores.</p> </li> <li> <p>First character must be a letter.</p> </li> <li> <p>Can't be a reserved word for the chosen database engine.</p> <p>For more information about reserved words in MySQL 5.6 or 5.7, see the Keywords and Reserved Words articles for <a href=\"https://dev.mysql.com/doc/refman/5.6/en/keywords.html\">MySQL 5.6</a>, <a href=\"https://dev.mysql.com/doc/refman/5.7/en/keywords.html\">MySQL 5.7</a>, or <a href=\"https://dev.mysql.com/doc/refman/8.0/en/keywords.html\">MySQL 8.0</a>.</p> </li> </ul> <p> <b>PostgreSQL</b> </p> <p>Constraints:</p> <ul> <li> <p>Required for PostgreSQL.</p> </li> <li> <p>Must be 1 to 63 letters or numbers. Can contain underscores.</p> </li> <li> <p>First character must be a letter.</p> </li> <li> <p>Can't be a reserved word for the chosen database engine.</p> <p>For more information about reserved words in MySQL 5.6 or 5.7, see the Keywords and Reserved Words articles for <a href=\"https://www.postgresql.org/docs/9.6/sql-keywords-appendix.html\">PostgreSQL 9.6</a>, <a href=\"https://www.postgresql.org/docs/10/sql-keywords-appendix.html\">PostgreSQL 10</a>, <a href=\"https://www.postgresql.org/docs/11/sql-keywords-appendix.html\">PostgreSQL 11</a>, and <a href=\"https://www.postgresql.org/docs/12/sql-keywords-appendix.html\">PostgreSQL 12</a>.</p> </li> </ul>",
         "CreateRelationalDatabaseRequest$preferredBackupWindow": "<p>The daily time range during which automated backups are created for your new database if automated backups are enabled.</p> <p>The default is a 30-minute window selected at random from an 8-hour block of time for each AWS Region. For more information about the preferred backup window time blocks for each region, see the <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupWindow\">Working With Backups</a> guide in the Amazon Relational Database Service documentation.</p> <p>Constraints:</p> <ul> <li> <p>Must be in the <code>hh24:mi-hh24:mi</code> format.</p> <p>Example: <code>16:00-16:30</code> </p> </li> <li> <p>Specified in Coordinated Universal Time (UTC).</p> </li> <li> <p>Must not conflict with the preferred maintenance window.</p> </li> <li> <p>Must be at least 30 minutes.</p> </li> </ul>",
         "CreateRelationalDatabaseRequest$preferredMaintenanceWindow": "<p>The weekly time range during which system maintenance can occur on your new database.</p> <p>The default is a 30-minute window selected at random from an 8-hour block of time for each AWS Region, occurring on a random day of the week.</p> <p>Constraints:</p> <ul> <li> <p>Must be in the <code>ddd:hh24:mi-ddd:hh24:mi</code> format.</p> </li> <li> <p>Valid days: Mon, Tue, Wed, Thu, Fri, Sat, Sun.</p> </li> <li> <p>Must be at least 30 minutes.</p> </li> <li> <p>Specified in Coordinated Universal Time (UTC).</p> </li> <li> <p>Example: <code>Tue:17:00-Tue:17:30</code> </p> </li> </ul>",
+        "CreateSubdomainRequest$subdomainName": "<p>The subdomain to create (for example, <code>mysite</code> or <code>blog.mysite</code>).</p> <p>A subdomain can contain one or two labels separated by a period (<code>.</code>). Each label must start and end with a lowercase letter or a number, and can contain only lowercase letters, numbers, and hyphens (<code>-</code>). The name can be up to 39 characters long, including periods. Labels that start with <code>xn--</code> aren't supported, and some names are reserved.</p> <p>Specify only the subdomain. A web address, such as <code>mysite.amazonlightsail.com</code>, isn't accepted.</p> <p>To create a nested subdomain, you must own the top-level subdomain or be able to create it.</p>",
         "DeleteContainerImageRequest$image": "<p>The name of the container image to delete from the container service.</p> <p>Use the <code>GetContainerImages</code> action to get the name of the container images that are registered to a container service.</p> <note> <p>Container images sourced from your Lightsail container service, that are registered and stored on your service, start with a colon (<code>:</code>). For example, <code>:container-service-1.mystaticwebsite.1</code>. Container images sourced from a public registry like Docker Hub don't start with a colon. For example, <code>nginx:latest</code> or <code>nginx</code>.</p> </note>",
         "DeleteKeyPairRequest$expectedFingerprint": "<p>The RSA fingerprint of the Lightsail default key pair to delete.</p> <note> <p>The <code>expectedFingerprint</code> parameter is required only when specifying to delete a Lightsail default key pair.</p> </note>",
+        "DeleteSubdomainRequest$subdomainName": "<p>The subdomain to delete (for example, <code>mysite</code> or <code>blog.mysite</code>), not its web address.</p>",
         "Disk$supportCode": "<p>The support code. Include this code in your email to support when you have questions about an instance or another resource in Lightsail. This code enables our support team to look up your Lightsail information more easily.</p>",
         "Disk$path": "<p>The disk path.</p>",
         "Disk$attachmentState": "<p>(Discontinued) The attachment state of the disk.</p> <note> <p>In releases prior to November 14, 2017, this parameter returned <code>attached</code> for system disks in the API response. It is now discontinued, but still included in the response. Use <code>isAttached</code> instead.</p> </note>",
@@ -4767,6 +4879,9 @@
         "GetRelationalDatabasesResult$nextPageToken": "<p>The token to advance to the next page of results from your request.</p> <p>A next page token is not returned if there are no more results to display.</p> <p>To get the next page of results, perform another <code>GetRelationalDatabases</code> request and specify the next page token using the <code>pageToken</code> parameter.</p>",
         "GetStaticIpsRequest$pageToken": "<p>The token to advance to the next page of results from your request.</p> <p>To get a page token, perform an initial <code>GetStaticIps</code> request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.</p>",
         "GetStaticIpsResult$nextPageToken": "<p>The token to advance to the next page of results from your request.</p> <p>A next page token is not returned if there are no more results to display.</p> <p>To get the next page of results, perform another <code>GetStaticIps</code> request and specify the next page token using the <code>pageToken</code> parameter.</p>",
+        "GetSubdomainsRequest$subdomainName": "<p>The subdomain for which to return information (for example, <code>mysite</code> or <code>blog.mysite</code>), not its web address.</p> <p>When omitted, the response includes all of your subdomains.</p> <p>You can't specify this parameter together with the <code>pageToken</code> parameter.</p>",
+        "GetSubdomainsRequest$pageToken": "<p>The token to advance to the next page of results from your request.</p> <p>To get a page token, perform an initial <code>GetSubdomains</code> request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.</p>",
+        "GetSubdomainsResult$nextPageToken": "<p>The token to advance to the next page of results from your request.</p> <p>A next page token is not returned if there are no more results to display.</p> <p>To get the next page of results, perform another <code>GetSubdomains</code> request and specify the next page token using the <code>pageToken</code> parameter.</p>",
         "HostKeyAttributes$algorithm": "<p>The SSH host key algorithm or the RDP certificate format.</p> <p>For SSH host keys, the algorithm may be <code>ssh-rsa</code>, <code>ecdsa-sha2-nistp256</code>, <code>ssh-ed25519</code>, etc. For RDP certificates, the algorithm is always <code>x509-cert</code>.</p>",
         "HostKeyAttributes$publicKey": "<p>The public SSH host key or the RDP certificate.</p>",
         "HostKeyAttributes$fingerprintSHA1": "<p>The SHA-1 fingerprint of the returned SSH host key or RDP certificate.</p> <ul> <li> <p>Example of an SHA-1 SSH fingerprint:</p> <p> <code>SHA1:1CHH6FaAaXjtFOsR/t83vf91SR0</code> </p> </li> <li> <p>Example of an SHA-1 RDP fingerprint:</p> <p> <code>af:34:51:fe:09:f0:e0:da:b8:4e:56:ca:60:c2:10:ff:38:06:db:45</code> </p> </li> </ul>",
@@ -4794,7 +4909,10 @@
         "LightsailDistribution$bundleId": "<p>The ID of the bundle currently applied to the distribution.</p>",
         "LightsailDistribution$originPublicDNS": "<p>The public DNS of the origin.</p>",
         "LightsailDistribution$viewerMinimumTlsProtocolVersion": "<p>The minimum TLS protocol version that the distribution can use to communicate with viewers.</p>",
-        "LightsailDistribution$defaultRootObject": "<p>The object (for example, <code>index.html</code>) that the distribution returns when a viewer requests the root URL of the distribution (<code>/</code>) instead of a specific object.</p>",
+        "LightsailDistribution$defaultRootObject": "<p>The object (for example, <code>index.html</code>) that the distribution returns when a viewer requests the root URL of the distribution (<code>/</code>) instead of a specific object.</p> <p>This value is returned only when you specify <code>distributionName</code> in your <code>GetDistributions</code> request. It isn't included in the response when you list all of your distributions.</p>",
+        "LightsailDistributionSubdomain$name": "<p>The subdomain (for example, <code>mysite</code>), not its web address.</p>",
+        "LightsailDistributionSubdomain$errorCode": "<p>The error code that describes why the subdomain is in the <code>Error</code> state.</p>",
+        "LightsailDistributionSubdomain$errorDetails": "<p>The details of the error that caused the subdomain to be in the <code>Error</code> state.</p>",
         "LoadBalancer$supportCode": "<p>The support code. Include this code in your email to support when you have questions about your Lightsail load balancer. This code enables our support team to look up your Lightsail information more easily.</p>",
         "LoadBalancerConfigurationOptions$value": null,
         "LoadBalancerTlsCertificate$supportCode": "<p>The support code. Include this code in your email to support when you have questions about your Lightsail load balancer or SSL/TLS certificate. This code enables our support team to look up your Lightsail information more easily.</p>",
@@ -4862,6 +4980,9 @@
         "StopInstanceOnIdleRequest$threshold": "<p>The value to compare with the duration.</p>",
         "StopInstanceOnIdleRequest$duration": "<p>The amount of idle time in minutes after which your virtual computer will automatically stop.</p>",
         "StringList$member": null,
+        "Subdomain$subdomainName": "<p>The subdomain (for example, <code>mysite</code> or <code>blog.mysite</code>). To get the web address, use the <code>fqdn</code> parameter.</p>",
+        "Subdomain$fqdn": "<p>The web address of the subdomain, which is the subdomain followed by <code>amazonlightsail.com</code> (for example, <code>blog.mysite.amazonlightsail.com</code>).</p>",
+        "Subdomain$parentFqdn": "<p>The web address of the parent subdomain (for example, <code>mysite.amazonlightsail.com</code> for <code>blog.mysite</code>).</p> <p>This parameter isn't returned for a subdomain with a depth of 1.</p>",
         "UnauthenticatedException$code": null,
         "UnauthenticatedException$docs": null,
         "UnauthenticatedException$message": null,
@@ -4872,6 +4993,8 @@
         "UpdateRelationalDatabaseRequest$preferredMaintenanceWindow": "<p>The weekly time range during which system maintenance can occur on your database.</p> <p>The default is a 30-minute window selected at random from an 8-hour block of time for each Amazon Web Services Region, occurring on a random day of the week.</p> <p>Constraints:</p> <ul> <li> <p>Must be in the <code>ddd:hh24:mi-ddd:hh24:mi</code> format.</p> </li> <li> <p>Valid days: Mon, Tue, Wed, Thu, Fri, Sat, Sun.</p> </li> <li> <p>Must be at least 30 minutes.</p> </li> <li> <p>Specified in Coordinated Universal Time (UTC).</p> </li> <li> <p>Example: <code>Tue:17:00-Tue:17:30</code> </p> </li> </ul>",
         "UpdateRelationalDatabaseRequest$caCertificateIdentifier": "<p>Indicates the certificate that needs to be associated with the database.</p>",
         "UpdateRelationalDatabaseRequest$relationalDatabaseBlueprintId": "<p>This parameter is used to update the major version of the database. Enter the <code>blueprintId</code> for the major version that you want to update to.</p> <p>Use the <a href=\"https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRelationalDatabaseBlueprints.html\">GetRelationalDatabaseBlueprints</a> action to get a list of available blueprint IDs.</p>",
+        "UpdateSubdomainAssociationRequest$subdomainName": "<p>The subdomain to update (for example, <code>mysite</code> or <code>blog.mysite</code>), not its web address.</p>",
+        "UpdateSubdomainAssociationRequest$targetResourceArn": "<p>The Amazon Resource Name (ARN) of the resource to associate the subdomain with. The resource must be in your account.</p> <p>This parameter is required when the <code>action</code> is <code>ASSOCIATE</code> or <code>TRANSFER</code>. It's ignored when the <code>action</code> is <code>DISASSOCIATE</code>.</p>",
         "WafAcfpConfig$creationPath": "<p>The path of the endpoint that accepts completed account creation forms (for example, <code>/signup/submit</code>). This endpoint must accept <code>POST</code> requests.</p> <p>Constraints:</p> <ul> <li> <p>Must start with a forward slash (<code>/</code>).</p> </li> <li> <p>Must contain from 1 to 256 characters.</p> </li> </ul>",
         "WafAcfpConfig$registrationPagePath": "<p>The path of the page that displays the account creation form (for example, <code>/signup</code>).</p> <p>Constraints:</p> <ul> <li> <p>Must start with a forward slash (<code>/</code>).</p> </li> <li> <p>Must contain from 1 to 256 characters.</p> </li> </ul>",
         "WafAtpConfig$loginPath": "<p>The path of the login endpoint of your application (for example, <code>/login</code>). Login paths that start with the path that you specify are a match.</p> <p>Constraints:</p> <ul> <li> <p>Must start with a forward slash (<code>/</code>).</p> </li> <li> <p>Must contain from 1 to 256 characters.</p> </li> </ul>",

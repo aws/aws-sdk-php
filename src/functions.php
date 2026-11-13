@@ -1,8 +1,8 @@
 <?php
 namespace Aws;
 
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\FnStream;
-use GuzzleHttp\Utils;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use GuzzleHttp\Promise\FulfilledPromise;
@@ -290,7 +290,7 @@ function default_http_handler(?string $transportSharing = null)
  */
 function default_user_agent()
 {
-    return Utils::defaultUserAgent();
+    return 'GuzzleHttp/' . ClientInterface::MAJOR_VERSION;
 }
 
 /**

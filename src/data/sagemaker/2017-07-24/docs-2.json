@@ -9824,7 +9824,7 @@
     "IamIdentity": {
       "base": "<p>The IAM Identity details associated with the user. These details are associated with model package groups, model packages and project entities only.</p>",
       "refs": {
-        "UserContext$IamIdentity": "<p>The IAM Identity details associated with the user. These details are associated with model package groups, model packages, and project entities only.</p>"
+        "UserContext$IamIdentity": "<p>The IAM Identity details associated with the user. These details are associated with model package groups, model packages, project entities, hubs, and hub content only.</p>"
       }
     },
     "IamPolicyConstraints": {
@@ -15704,7 +15704,7 @@
     "PipelineManagedBy": {
       "base": null,
       "refs": {
-        "ListPipelinesRequest$ManagedBy": "<p>Filters the pipelines by who manages them. Specify <code>AWS</code> to return pipelines that AWS manages, or <code>CUSTOMER</code> to return pipelines that you created. If you don't specify a value, the response includes both.</p>"
+        "ListPipelinesRequest$ManagedBy": "<p>Filters the pipelines by who manages them. Specify <code>AWS</code> to return pipelines that Amazon Web Services manages, or <code>CUSTOMER</code> to return pipelines that you created. If you don't specify a value, the response includes both.</p>"
       }
     },
     "PipelineName": {
@@ -17436,7 +17436,7 @@
         "DescribeNotebookInstanceOutput$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the instance. </p>",
         "DescribeOptimizationJobResponse$RoleArn": "<p>The ARN of the IAM role that you assigned to the optimization job.</p>",
         "DescribePartnerAppResponse$ExecutionRoleArn": "<p>The ARN of the IAM role associated with the SageMaker Partner AI App.</p>",
-        "DescribePipelineExecutionResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the execution uses. SageMaker returns this value only for executions of pipelines that AWS manages.</p>",
+        "DescribePipelineExecutionResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the execution uses. SageMaker returns this value only for executions of pipelines that Amazon Web Services manages.</p>",
         "DescribePipelineResponse$RoleArn": "<p>The Amazon Resource Name (ARN) that the pipeline uses to execute.</p>",
         "DescribeProcessingJobResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker can assume to perform tasks on your behalf.</p>",
         "DescribeTrainingJobResponse$RoleArn": "<p>The Amazon Web Services Identity and Access Management (IAM) role configured for the training job. </p>",
@@ -17460,7 +17460,7 @@
         "RStudioServerProDomainSettingsForUpdate$DomainExecutionRoleArn": "<p>The execution role for the <code>RStudioServerPro</code> Domain-level app.</p>",
         "RedshiftDatasetDefinition$ClusterRoleArn": "<p>The IAM role attached to your Redshift cluster that Amazon SageMaker uses to generate datasets.</p>",
         "RenderUiTemplateRequest$RoleArn": "<p>The Amazon Resource Name (ARN) that has access to the S3 objects that are used by the template.</p>",
-        "StartPipelineExecutionRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the execution uses. You must specify this parameter when you start an execution of a pipeline that AWS manages. You can't specify it for a pipeline that you create, because its executions use the pipeline's role.</p>",
+        "StartPipelineExecutionRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the execution uses. You must specify this parameter when you start an execution of a pipeline that Amazon Web Services manages. You can't specify it for a pipeline that you create, because its executions use the pipeline's role.</p>",
         "TimeSeriesForecastingSettings$AmazonForecastRoleArn": "<p>The IAM role that Canvas passes to Amazon Forecast for time series forecasting. By default, Canvas uses the execution role specified in the <code>UserProfile</code> that launches the Canvas application. If an execution role is not specified in the <code>UserProfile</code>, Canvas uses the execution role specified in the Domain that owns the <code>UserProfile</code>. To allow time series forecasting, this IAM role should have the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/security-iam-awsmanpol-canvas.html#security-iam-awsmanpol-AmazonSageMakerCanvasForecastAccess\"> AmazonSageMakerCanvasForecastAccess</a> policy attached and <code>forecast.amazonaws.com</code> added in the trust relationship as a service principal.</p>",
         "TrainingJob$RoleArn": "<p>The Amazon Web Services Identity and Access Management (IAM) role configured for the training job.</p>",
         "TrainingSessionDetail$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the training session.</p>",
@@ -21748,6 +21748,10 @@
         "DescribeContextResponse$LastModifiedBy": null,
         "DescribeExperimentResponse$CreatedBy": "<p>Who created the experiment.</p>",
         "DescribeExperimentResponse$LastModifiedBy": "<p>Who last modified the experiment.</p>",
+        "DescribeHubContentResponse$CreatedBy": "<p>Information about the user who created the hub content.</p>",
+        "DescribeHubContentResponse$LastModifiedBy": "<p>Information about the user who last modified the hub content.</p>",
+        "DescribeHubResponse$CreatedBy": "<p>Information about the user who created the hub.</p>",
+        "DescribeHubResponse$LastModifiedBy": "<p>Information about the user who last modified the hub.</p>",
         "DescribeLineageGroupResponse$CreatedBy": null,
         "DescribeLineageGroupResponse$LastModifiedBy": null,
         "DescribeMlflowAppResponse$CreatedBy": null,
@@ -21771,6 +21775,8 @@
         "DescribeTrialResponse$LastModifiedBy": "<p>Who last modified the trial.</p>",
         "Experiment$CreatedBy": "<p>Who created the experiment.</p>",
         "Experiment$LastModifiedBy": null,
+        "HubContent$CreatedBy": "<p>Information about the user who created the hub content.</p>",
+        "HubContent$LastModifiedBy": "<p>Information about the user who last modified the hub content.</p>",
         "ModelCard$CreatedBy": null,
         "ModelCard$LastModifiedBy": null,
         "ModelDashboardModelCard$CreatedBy": null,

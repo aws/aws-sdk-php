@@ -227,6 +227,27 @@
         {"shape":"InsufficientCloudWatchLogsResourcePolicy"}
       ]
     },
+    "CreateResourceRecordSetProtections":{
+      "name":"CreateResourceRecordSetProtections",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2013-04-01/hostedzone/{Id}/rrsetprotection"
+      },
+      "input":{
+        "shape":"CreateResourceRecordSetProtectionsRequest",
+        "locationName":"CreateResourceRecordSetProtectionsRequest",
+        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"}
+      },
+      "output":{"shape":"CreateResourceRecordSetProtectionsResponse"},
+      "errors":[
+        {"shape":"InvalidInput"},
+        {"shape":"InvalidResourceRecordSetProtectionBatch"},
+        {"shape":"NoSuchHostedZone"},
+        {"shape":"ProtectionAlreadyExists"},
+        {"shape":"LimitsExceeded"},
+        {"shape":"PriorRequestNotComplete"}
+      ]
+    },
     "CreateReusableDelegationSet":{
       "name":"CreateReusableDelegationSet",
       "http":{
@@ -424,6 +445,25 @@
         {"shape":"ConcurrentModification"},
         {"shape":"NoSuchQueryLoggingConfig"},
         {"shape":"InvalidInput"}
+      ]
+    },
+    "DeleteResourceRecordSetProtections":{
+      "name":"DeleteResourceRecordSetProtections",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2013-04-01/hostedzone/{Id}/rrsetprotection/delete"
+      },
+      "input":{
+        "shape":"DeleteResourceRecordSetProtectionsRequest",
+        "locationName":"DeleteResourceRecordSetProtectionsRequest",
+        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"}
+      },
+      "output":{"shape":"DeleteResourceRecordSetProtectionsResponse"},
+      "errors":[
+        {"shape":"InvalidInput"},
+        {"shape":"InvalidResourceRecordSetProtectionBatch"},
+        {"shape":"NoSuchHostedZone"},
+        {"shape":"PriorRequestNotComplete"}
       ]
     },
     "DeleteReusableDelegationSet":{
@@ -889,6 +929,20 @@
         {"shape":"InvalidInput"},
         {"shape":"InvalidPaginationToken"},
         {"shape":"NoSuchHostedZone"}
+      ]
+    },
+    "ListResourceRecordSetProtections":{
+      "name":"ListResourceRecordSetProtections",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2013-04-01/hostedzone/{Id}/rrsetprotection"
+      },
+      "input":{"shape":"ListResourceRecordSetProtectionsRequest"},
+      "output":{"shape":"ListResourceRecordSetProtectionsResponse"},
+      "errors":[
+        {"shape":"InvalidInput"},
+        {"shape":"NoSuchHostedZone"},
+        {"shape":"InvalidPaginationToken"}
       ]
     },
     "ListResourceRecordSets":{
@@ -1820,6 +1874,25 @@
         }
       }
     },
+    "CreateResourceRecordSetProtectionsRequest":{
+      "type":"structure",
+      "required":[
+        "HostedZoneId",
+        "Protections"
+      ],
+      "members":{
+        "HostedZoneId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "Protections":{"shape":"ResourceRecordSetProtectionConfigBatch"}
+      }
+    },
+    "CreateResourceRecordSetProtectionsResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "CreateReusableDelegationSetRequest":{
       "type":"structure",
       "required":["CallerReference"],
@@ -2150,6 +2223,25 @@
       }
     },
     "DeleteQueryLoggingConfigResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteResourceRecordSetProtectionsRequest":{
+      "type":"structure",
+      "required":[
+        "HostedZoneId",
+        "Protections"
+      ],
+      "members":{
+        "HostedZoneId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "Protections":{"shape":"ResourceRecordSetProtectionKeyBatch"}
+      }
+    },
+    "DeleteResourceRecordSetProtectionsResponse":{
       "type":"structure",
       "members":{}
     },
@@ -3117,6 +3209,16 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "InvalidResourceRecordSetProtectionBatch":{
+      "type":"structure",
+      "required":["Errors"],
+      "members":{
+        "Message":{"shape":"ErrorMessage"},
+        "Errors":{"shape":"ProtectionErrors"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
     "InvalidSigningStatus":{
       "type":"structure",
       "members":{
@@ -3528,6 +3630,45 @@
       "required":["QueryLoggingConfigs"],
       "members":{
         "QueryLoggingConfigs":{"shape":"QueryLoggingConfigs"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListResourceRecordSetProtectionsRequest":{
+      "type":"structure",
+      "required":["HostedZoneId"],
+      "members":{
+        "HostedZoneId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "StartRecordName":{
+          "shape":"DNSName",
+          "location":"querystring",
+          "locationName":"name"
+        },
+        "StartRecordType":{
+          "shape":"RRType",
+          "location":"querystring",
+          "locationName":"type"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxresults"
+        },
+        "NextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nexttoken"
+        }
+      }
+    },
+    "ListResourceRecordSetProtectionsResponse":{
+      "type":"structure",
+      "required":["ResourceRecordSetProtections"],
+      "members":{
+        "ResourceRecordSetProtections":{"shape":"ResourceRecordSetProtections"},
         "NextToken":{"shape":"PaginationToken"}
       }
     },
@@ -4070,6 +4211,39 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "ProtectionAlreadyExists":{
+      "type":"structure",
+      "required":["Errors"],
+      "members":{
+        "Message":{"shape":"ErrorMessage"},
+        "Errors":{"shape":"ProtectionErrors"}
+      },
+      "error":{"httpStatusCode":409},
+      "exception":true
+    },
+    "ProtectionError":{
+      "type":"structure",
+      "required":[
+        "RecordName",
+        "RecordType",
+        "Code",
+        "Message"
+      ],
+      "members":{
+        "RecordName":{"shape":"DNSName"},
+        "RecordType":{"shape":"RRType"},
+        "Code":{"shape":"ProtectionErrorCode"},
+        "Message":{"shape":"ErrorMessage"}
+      }
+    },
+    "ProtectionErrorCode":{"type":"string"},
+    "ProtectionErrors":{
+      "type":"list",
+      "member":{
+        "shape":"ProtectionError",
+        "locationName":"ProtectionError"
+      }
+    },
     "PublicZoneVPCAssociation":{
       "type":"structure",
       "members":{
@@ -4229,6 +4403,64 @@
       "min":1
     },
     "ResourceRecordSetMultiValueAnswer":{"type":"boolean"},
+    "ResourceRecordSetProtection":{
+      "type":"structure",
+      "required":[
+        "RecordName",
+        "RecordType"
+      ],
+      "members":{
+        "RecordName":{"shape":"DNSName"},
+        "RecordType":{"shape":"RRType"},
+        "Comment":{"shape":"ResourceDescription"}
+      }
+    },
+    "ResourceRecordSetProtectionConfig":{
+      "type":"structure",
+      "required":[
+        "RecordName",
+        "RecordType"
+      ],
+      "members":{
+        "RecordName":{"shape":"DNSName"},
+        "RecordType":{"shape":"RRType"},
+        "Comment":{"shape":"ResourceDescription"}
+      }
+    },
+    "ResourceRecordSetProtectionConfigBatch":{
+      "type":"list",
+      "member":{
+        "shape":"ResourceRecordSetProtectionConfig",
+        "locationName":"ResourceRecordSetProtectionConfig"
+      },
+      "min":1
+    },
+    "ResourceRecordSetProtectionKey":{
+      "type":"structure",
+      "required":[
+        "RecordName",
+        "RecordType"
+      ],
+      "members":{
+        "RecordName":{"shape":"DNSName"},
+        "RecordType":{"shape":"RRType"}
+      }
+    },
+    "ResourceRecordSetProtectionKeyBatch":{
+      "type":"list",
+      "member":{
+        "shape":"ResourceRecordSetProtectionKey",
+        "locationName":"ResourceRecordSetProtectionKey"
+      },
+      "min":1
+    },
+    "ResourceRecordSetProtections":{
+      "type":"list",
+      "member":{
+        "shape":"ResourceRecordSetProtection",
+        "locationName":"ResourceRecordSetProtection"
+      }
+    },
     "ResourceRecordSetRegion":{
       "type":"string",
       "enum":[

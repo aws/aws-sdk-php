@@ -77,7 +77,7 @@
     "TagResource": "<p>Associates a set of tags with a specified resource.</p>",
     "UntagResource": "<p>Disassociates a set of tags from a specified resource.</p>",
     "UpdateApplication": "<p>Updates application properties. </p>",
-    "UpdateInstance": "<p>Update the details for the instance of IAM Identity Center that is owned by the Amazon Web Services account.</p> <p>In a single <code>UpdateInstance</code> request, you can perform only one of the following operations:</p> <ul> <li> <p>Update the encryption configuration of the instance by specifying <code>EncryptionConfiguration</code>.</p> </li> <li> <p>Enable permission sets for the instance by specifying <code>PermissionSetsEnabled</code>.</p> </li> </ul> <p>If you specify both <code>EncryptionConfiguration</code> and <code>PermissionSetsEnabled</code> in a request, the request returns a <code>ValidationException</code>. To perform both operations, call <code>UpdateInstance</code> separately for each. You can make the two calls in parallel.</p>",
+    "UpdateInstance": "<p>Update the details for the instance of IAM Identity Center that is owned by the Amazon Web Services account.</p> <p>In a single <code>UpdateInstance</code> request, you can perform only one of the following operations:</p> <ul> <li> <p>Update the encryption configuration of the instance by specifying <code>EncryptionConfiguration</code>.</p> </li> <li> <p>Enable permission sets for the instance by specifying <code>PermissionSetsEnabled</code>.</p> </li> <li> <p>Update the network configuration of the instance by specifying <code>NetworkConfiguration</code>.</p> </li> </ul> <p>A request that specifies more than one of <code>EncryptionConfiguration</code>, <code>PermissionSetsEnabled</code>, and <code>NetworkConfiguration</code> returns a <code>ValidationException</code>. To perform more than one of these operations, call <code>UpdateInstance</code> separately for each. The calls can be made in parallel.</p>",
     "UpdateInstanceAccessControlAttributeConfiguration": "<p>Updates the IAM Identity Center identity store attributes that you can use with the IAM Identity Center instance for attributes-based access control (ABAC). When using an external identity provider as an identity source, you can pass attributes through the SAML assertion as an alternative to configuring attributes from the IAM Identity Center identity store. If a SAML assertion passes any of these attributes, IAM Identity Center replaces the attribute value with the value from the IAM Identity Center identity store. For more information about ABAC, see <a href=\"/singlesignon/latest/userguide/abac.html\">Attribute-Based Access Control</a> in the <i>IAM Identity Center User Guide</i>.</p>",
     "UpdatePermissionSet": "<p>Updates an existing permission set.</p>",
     "UpdateTrustedTokenIssuer": "<p>Updates the name of the trusted token issuer, or the path of a source attribute or destination attribute for a trusted token issuer configuration.</p> <note> <p>Updating this trusted token issuer configuration might cause users to lose access to any applications that are configured to use the trusted token issuer.</p> </note>"
@@ -258,6 +258,12 @@
         "UpdateApplicationRequest$ApplicationArn": "<p>Specifies the ARN of the application. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>"
       }
     },
+    "ApplicationArnList": {
+      "base": null,
+      "refs": {
+        "NetworkConfigurationInfo$ExcludeApplicationArns": "<p>Exempts the applications that you specify from the network access control, so that access to them is unchanged. You can specify both Amazon Web Services managed applications and customer managed applications, and you can use wildcards. These applications are not restricted by <code>RestrictSourceVpcs</code> or <code>AllowSourceIps</code>. If you don't specify this value, the controls apply to all applications.</p>"
+      }
+    },
     "ApplicationAssignment": {
       "base": "<p>A structure that describes an assignment of a principal to an application.</p>",
       "refs": {
@@ -428,7 +434,8 @@
       "base": null,
       "refs": {
         "DescribeInstanceResponse$PermissionSetsEnabled": "<p>Indicates whether permission sets are enabled for this Identity Center instance.</p>",
-        "UpdateInstanceRequest$PermissionSetsEnabled": "<p>Enables permission sets for this Identity Center instance. The only accepted value is <code>true </code>. After permission sets are enabled, they cannot be disabled.</p> <note> <p>You can't set <code>EncryptionConfiguration</code> and <code>PermissionSetsEnabled</code> in the same request. To configure both, make two separate <code>UpdateInstance</code> calls. You can make these calls in parallel.</p> </note>"
+        "NetworkConfigurationInfo$VpceAccessRequired": "<p>Specifies whether access to your Identity Center instance and to applications must originate from a VPC endpoint. When this value is <code>true</code> and no other field is specified, access is allowed from any VPC in your organization, or from any VPC in the Amazon Web Services account for an account instance, and applies to all applications. When this value is <code>false</code>, no network access control is enforced and the values of <code>RestrictSourceVpcs</code>, <code>AllowSourceIps</code>, and <code>ExcludeApplicationArns</code> are cleared.</p>",
+        "UpdateInstanceRequest$PermissionSetsEnabled": "<p>Enables permission sets for this Identity Center instance. The only accepted value is <code>true </code>. After permission sets are enabled, they cannot be disabled.</p>"
       }
     },
     "ClaimAttributePath": {
@@ -761,7 +768,7 @@
     "EncryptionConfiguration": {
       "base": "<p> A structure that specifies the KMS key type and KMS key ARN used to encrypt data in your IAM Identity Center instance.</p>",
       "refs": {
-        "UpdateInstanceRequest$EncryptionConfiguration": "<p>Specifies the encryption configuration for your IAM Identity Center instance. You can use this to configure customer managed KMS keys or Amazon Web Services owned KMS keys for encrypting your instance data.</p>"
+        "UpdateInstanceRequest$EncryptionConfiguration": "<p>Specifies the encryption configuration for your IAM Identity Center instance. You can use this to configure customer managed KMS keys or Amazon Web Services owned KMS keys for encrypting your instance data.</p> <note> <p>You can't set more than one of <code>EncryptionConfiguration</code>, <code>PermissionSetsEnabled</code>, and <code>NetworkConfiguration</code> in the same request. To configure more than one of them, make a separate <code>UpdateInstance</code> call for each. These calls can be made in parallel.</p> </note>"
       }
     },
     "EncryptionConfigurationDetails": {
@@ -775,6 +782,12 @@
       "refs": {
         "ApplicationProvider$FederationProtocol": "<p>The protocol that the application provider uses to perform federation.</p>",
         "DescribeApplicationProviderResponse$FederationProtocol": "<p>The protocol used to federate to the application provider.</p>"
+      }
+    },
+    "FirstOrThirdPartyApplicationArnType": {
+      "base": null,
+      "refs": {
+        "ApplicationArnList$member": null
       }
     },
     "GetApplicationAccessScopeRequest": {
@@ -1004,6 +1017,18 @@
     "InternalServerException": {
       "base": "<p>The request processing has failed because of an unknown error, exception, or failure with an internal server.</p>",
       "refs": {}
+    },
+    "IpCidrList": {
+      "base": null,
+      "refs": {
+        "NetworkConfigurationInfo$AllowSourceIps": "<p>Allows access from the IPv4 or IPv6 CIDR blocks that you specify, in addition to the VPCs allowed by <code>RestrictSourceVpcs</code>. If you don't specify this value, no additional IP address ranges are allowed.</p>"
+      }
+    },
+    "IpCidrType": {
+      "base": null,
+      "refs": {
+        "IpCidrList$member": null
+      }
     },
     "IsPrimaryRegion": {
       "base": null,
@@ -1301,6 +1326,13 @@
         "DescribeInstanceResponse$Name": "<p>Specifies the instance name.</p>",
         "InstanceMetadata$Name": "<p>The name of the Identity Center instance.</p>",
         "UpdateInstanceRequest$Name": "<p>Updates the instance name.</p>"
+      }
+    },
+    "NetworkConfigurationInfo": {
+      "base": "<p>The network access controls for your Identity Center instance. These controls restrict which networks can reach your instance and applications.</p>",
+      "refs": {
+        "DescribeInstanceResponse$NetworkConfigurationDetails": "<p>The network access controls configured for your Identity Center instance, including whether VPC endpoint access is required, and any VPC, IP address range, or application controls applied to instance traffic. Present only after a network configuration has been set on the instance.</p>",
+        "UpdateInstanceRequest$NetworkConfiguration": "<p>Specifies the network access controls for your Identity Center instance. Use this to require that access to your instance and to applications originates from VPC endpoints, and to optionally restrict which VPCs are permitted, allow specific IP address ranges that bypass the VPC endpoint requirement, or exempt specific applications from the controls.</p> <p>If you omit <code>NetworkConfiguration</code>, the stored network configuration is preserved. If you specify <code>NetworkConfiguration</code>, it replaces the stored network configuration in its entirety. Any list that you omit from the object, or include as an empty list, is cleared.</p>"
       }
     },
     "OidcJwtConfiguration": {
@@ -2020,6 +2052,18 @@
       "base": null,
       "refs": {
         "ValidationException$Reason": "<p>The reason for the validation exception.</p>"
+      }
+    },
+    "VpcArn": {
+      "base": null,
+      "refs": {
+        "VpcArnList$member": null
+      }
+    },
+    "VpcArnList": {
+      "base": null,
+      "refs": {
+        "NetworkConfigurationInfo$RestrictSourceVpcs": "<p>Limits access to the VPC endpoints in the VPCs that you specify. These VPCs must be in your organization, or in the Amazon Web Services account for an account instance. If you don't specify this value, access is allowed from any VPC in your organization or Amazon Web Services account.</p>"
       }
     }
   }

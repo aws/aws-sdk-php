@@ -13,6 +13,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result associateIamRoleToResource(array{iamRoleArn?: string, awsIntegration?: 'KmsTde', resourceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise associateIamRoleToResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise associateIamRoleToResourceAsync(array{iamRoleArn?: string, awsIntegration?: 'KmsTde', resourceArn?: string, ...} $args = [])
+ * @method \Aws\Result associateVirtualMachinesToCloudVmCluster(array $args = [])
+ * @phpstan-method \Aws\Result associateVirtualMachinesToCloudVmCluster(array{cloudVmClusterId?: string, dbServers?: list<string>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise associateVirtualMachinesToCloudVmClusterAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise associateVirtualMachinesToCloudVmClusterAsync(array{cloudVmClusterId?: string, dbServers?: list<string>, ...} $args = [])
  * @method \Aws\Result associateVirtualMachinesToExadbVmCluster(array $args = [])
  * @phpstan-method \Aws\Result associateVirtualMachinesToExadbVmCluster(array{exadbVmClusterId?: string, desiredNodeCount?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise associateVirtualMachinesToExadbVmClusterAsync(array $args = [])
@@ -643,6 +647,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result disassociateIamRoleFromResource(array{iamRoleArn?: string, awsIntegration?: 'KmsTde', resourceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateIamRoleFromResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise disassociateIamRoleFromResourceAsync(array{iamRoleArn?: string, awsIntegration?: 'KmsTde', resourceArn?: string, ...} $args = [])
+ * @method \Aws\Result disassociateVirtualMachinesFromCloudVmCluster(array $args = [])
+ * @phpstan-method \Aws\Result disassociateVirtualMachinesFromCloudVmCluster(array{cloudVmClusterId?: string, dbServers?: list<string>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateVirtualMachinesFromCloudVmClusterAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise disassociateVirtualMachinesFromCloudVmClusterAsync(array{cloudVmClusterId?: string, dbServers?: list<string>, ...} $args = [])
  * @method \Aws\Result disassociateVirtualMachinesFromExadbVmCluster(array $args = [])
  * @phpstan-method \Aws\Result disassociateVirtualMachinesFromExadbVmCluster(array{exadbVmClusterId?: string, dbNodeIds?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateVirtualMachinesFromExadbVmClusterAsync(array $args = [])
@@ -1061,9 +1069,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateAutonomousDatabaseBackup(array{autonomousDatabaseBackupId?: string, retentionPeriodInDays?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAutonomousDatabaseBackupAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateAutonomousDatabaseBackupAsync(array{autonomousDatabaseBackupId?: string, retentionPeriodInDays?: int, ...} $args = [])
- * @method \Aws\Result updateCloudExadataInfrastructure(array $args = [])
- * @phpstan-method \Aws\Result updateCloudExadataInfrastructure(array{
- *     cloudExadataInfrastructureId?: string,
+ * @method \Aws\Result updateCloudAutonomousVmCluster(array $args = [])
+ * @phpstan-method \Aws\Result updateCloudAutonomousVmCluster(array{
+ *     cloudAutonomousVmClusterId?: string,
+ *     autonomousDataStorageSizeInTBs?: float,
+ *     cpuCoreCountPerNode?: int,
+ *     description?: string,
+ *     displayName?: string,
+ *     licenseModel?: 'BRING_YOUR_OWN_LICENSE'|'LICENSE_INCLUDED',
  *     maintenanceWindow?: array{
  *         customActionTimeoutInMins?: int,
  *         daysOfWeek?: list<array>,
@@ -1077,11 +1090,59 @@ use Aws\AwsClient;
  *         weeksOfMonth?: list<int>,
  *         ...,
  *     },
+ *     totalContainerDatabases?: int,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateCloudAutonomousVmClusterAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateCloudAutonomousVmClusterAsync(array{
+ *     cloudAutonomousVmClusterId?: string,
+ *     autonomousDataStorageSizeInTBs?: float,
+ *     cpuCoreCountPerNode?: int,
+ *     description?: string,
+ *     displayName?: string,
+ *     licenseModel?: 'BRING_YOUR_OWN_LICENSE'|'LICENSE_INCLUDED',
+ *     maintenanceWindow?: array{
+ *         customActionTimeoutInMins?: int,
+ *         daysOfWeek?: list<array>,
+ *         hoursOfDay?: list<int>,
+ *         isCustomActionTimeoutEnabled?: bool,
+ *         leadTimeInWeeks?: int,
+ *         months?: list<array>,
+ *         patchingMode?: 'NONROLLING'|'ROLLING',
+ *         preference?: 'CUSTOM_PREFERENCE'|'NO_PREFERENCE',
+ *         skipRu?: bool,
+ *         weeksOfMonth?: list<int>,
+ *         ...,
+ *     },
+ *     totalContainerDatabases?: int,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateCloudExadataInfrastructure(array $args = [])
+ * @phpstan-method \Aws\Result updateCloudExadataInfrastructure(array{
+ *     cloudExadataInfrastructureId?: string,
+ *     displayName?: string,
+ *     computeCount?: int,
+ *     maintenanceWindow?: array{
+ *         customActionTimeoutInMins?: int,
+ *         daysOfWeek?: list<array>,
+ *         hoursOfDay?: list<int>,
+ *         isCustomActionTimeoutEnabled?: bool,
+ *         leadTimeInWeeks?: int,
+ *         months?: list<array>,
+ *         patchingMode?: 'NONROLLING'|'ROLLING',
+ *         preference?: 'CUSTOM_PREFERENCE'|'NO_PREFERENCE',
+ *         skipRu?: bool,
+ *         weeksOfMonth?: list<int>,
+ *         ...,
+ *     },
+ *     storageCount?: int,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateCloudExadataInfrastructureAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateCloudExadataInfrastructureAsync(array{
  *     cloudExadataInfrastructureId?: string,
+ *     displayName?: string,
+ *     computeCount?: int,
  *     maintenanceWindow?: array{
  *         customActionTimeoutInMins?: int,
  *         daysOfWeek?: list<array>,
@@ -1095,6 +1156,39 @@ use Aws\AwsClient;
  *         weeksOfMonth?: list<int>,
  *         ...,
  *     },
+ *     storageCount?: int,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateCloudExadataInfrastructureStorageCapacity(array $args = [])
+ * @phpstan-method \Aws\Result updateCloudExadataInfrastructureStorageCapacity(array{cloudExadataInfrastructureId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateCloudExadataInfrastructureStorageCapacityAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateCloudExadataInfrastructureStorageCapacityAsync(array{cloudExadataInfrastructureId?: string, ...} $args = [])
+ * @method \Aws\Result updateCloudVmCluster(array $args = [])
+ * @phpstan-method \Aws\Result updateCloudVmCluster(array{
+ *     cloudVmClusterId?: string,
+ *     cpuCoreCount?: int,
+ *     dataCollectionOptions?: array{isDiagnosticsEventsEnabled?: bool, isHealthMonitoringEnabled?: bool, isIncidentLogsEnabled?: bool, ...},
+ *     dataStorageSizeInTBs?: float,
+ *     dbNodeStorageSizeInGBs?: int,
+ *     displayName?: string,
+ *     sshPublicKeys?: list<string>,
+ *     licenseModel?: 'BRING_YOUR_OWN_LICENSE'|'LICENSE_INCLUDED',
+ *     memorySizeInGBs?: int,
+ *     storageSizeInGBs?: int,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateCloudVmClusterAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateCloudVmClusterAsync(array{
+ *     cloudVmClusterId?: string,
+ *     cpuCoreCount?: int,
+ *     dataCollectionOptions?: array{isDiagnosticsEventsEnabled?: bool, isHealthMonitoringEnabled?: bool, isIncidentLogsEnabled?: bool, ...},
+ *     dataStorageSizeInTBs?: float,
+ *     dbNodeStorageSizeInGBs?: int,
+ *     displayName?: string,
+ *     sshPublicKeys?: list<string>,
+ *     licenseModel?: 'BRING_YOUR_OWN_LICENSE'|'LICENSE_INCLUDED',
+ *     memorySizeInGBs?: int,
+ *     storageSizeInGBs?: int,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateExadbVmCluster(array $args = [])

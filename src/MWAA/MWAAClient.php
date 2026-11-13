@@ -43,6 +43,8 @@ use Aws\AwsClient;
  *     EndpointManagement?: 'CUSTOMER'|'SERVICE',
  *     MinWebservers?: int,
  *     MaxWebservers?: int,
+ *     IdentityCenterConfiguration?: array{StartUrl?: string, IdentityStoreId?: string, ...},
+ *     Teams?: array<string, array{SourceBucketArn?: string, DagS3Path?: string, ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createEnvironmentAsync(array $args = [])
@@ -79,6 +81,8 @@ use Aws\AwsClient;
  *     EndpointManagement?: 'CUSTOMER'|'SERVICE',
  *     MinWebservers?: int,
  *     MaxWebservers?: int,
+ *     IdentityCenterConfiguration?: array{StartUrl?: string, IdentityStoreId?: string, ...},
+ *     Teams?: array<string, array{SourceBucketArn?: string, DagS3Path?: string, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createWebLoginToken(array $args = [])
@@ -187,6 +191,8 @@ use Aws\AwsClient;
  *     StartupScriptS3ObjectVersion?: string,
  *     WebserverAccessMode?: 'PRIVATE_ONLY'|'PUBLIC_AND_PRIVATE'|'PUBLIC_ONLY',
  *     WeeklyMaintenanceWindowStart?: string,
+ *     IdentityCenterConfiguration?: array{StartUrl?: string, IdentityStoreId?: string, ...},
+ *     Teams?: array{AddOrUpdate?: array<string, array>, Remove?: list<string>, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateEnvironmentAsync(array $args = [])
@@ -221,6 +227,8 @@ use Aws\AwsClient;
  *     StartupScriptS3ObjectVersion?: string,
  *     WebserverAccessMode?: 'PRIVATE_ONLY'|'PUBLIC_AND_PRIVATE'|'PUBLIC_ONLY',
  *     WeeklyMaintenanceWindowStart?: string,
+ *     IdentityCenterConfiguration?: array{StartUrl?: string, IdentityStoreId?: string, ...},
+ *     Teams?: array{AddOrUpdate?: array<string, array>, Remove?: list<string>, ...},
  *     ...,
  * } $args = [])
  */
