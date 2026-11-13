@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.403.6 - 2026-11-13
 
 * `Aws\` - Builds the Guzzle user agent from `ClientInterface::MAJOR_VERSION` instead of `Utils::defaultUserAgent()`, which Guzzle 8.5 deprecates.
 * `Aws\IAM` - Minor documentation updates only
