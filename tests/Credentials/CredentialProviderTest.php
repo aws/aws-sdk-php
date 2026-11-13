@@ -1493,6 +1493,67 @@ EOT;
         $this->assertFalse($creds->isExpired());
     }
 
+    #[DataProvider('sourceProfileProvider')]
+    public function testResolvesSourceProfileCredentialsByType(
+        string $source,
+        string $expectedMessage
+    ): void {
+        $awsDir = $this->createAwsHome();
+        file_put_contents($awsDir . '/config', <<<EOT
+[profile assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+source_profile = src
+region = us-east-1
+[profile src]
+$source
+EOT
+        );
+
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage($expectedMessage);
+        CredentialProvider::ini('profile assume', $awsDir . '/config')()->wait();
+    }
+
+    public static function sourceProfileProvider(): array
+    {
+        return [
+            'credential_process' => [
+                'credential_process = echo {}',
+                'credential_process does not return valid credentials',
+            ],
+            'sso_session' => [
+                'sso_session = missing',
+                'Could not find sso-session missing',
+            ],
+            'login_session' => [
+                'login_session = arn:aws:iam::012345678910:user/test',
+                "Failed to initialize login credential provider for profile 'src'",
+            ],
+        ];
+    }
+
+    public function testResolvesProcessSourceProfileFromConfigWithCredentialsFile(): void
+    {
+        $awsDir = $this->createAwsHome();
+        file_put_contents($awsDir . '/credentials', <<<EOT
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+source_profile = src
+region = us-east-1
+EOT
+        );
+        file_put_contents($awsDir . '/config', <<<EOT
+[profile src]
+credential_process = echo {}
+EOT
+        );
+        putenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG=1');
+
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage('credential_process does not return valid credentials');
+        CredentialProvider::ini('assume')()->wait();
+    }
+
     public function testAssumeRoleInConfigFromSourceInCredentials(): void
     {
         $awsDir = $this->createAwsHome();
