@@ -603,7 +603,7 @@ class CredentialProvider
             if (!@is_readable($filename)) {
                 return self::reject("Cannot read process credentials from $filename");
             }
-            $data = \Aws\parse_ini_file($filename, true, INI_SCANNER_RAW);
+            $data = self::loadProfiles($filename);
             if ($data === false) {
                 return self::reject("Invalid credentials file: $filename");
             }
@@ -767,6 +767,11 @@ class CredentialProvider
         $sourceProfileName = "";
         if (!empty($roleProfile['source_profile'])) {
             $sourceProfileName = $roleProfile['source_profile'];
+            if (!isset($profiles[$sourceProfileName])
+                && isset($profiles['profile ' . $sourceProfileName])
+            ) {
+                $sourceProfileName = 'profile ' . $sourceProfileName;
+            }
             if (!isset($profiles[$sourceProfileName])) {
                 return self::reject("source_profile " . $sourceProfileName
                     . " using profile " . $profileName . " does not exist"
@@ -791,9 +796,21 @@ class CredentialProvider
             $config['preferStaticCredentials'] = true;
             $sourceCredentials = null;
             if (!empty($roleProfile['source_profile'])){
-                $sourceCredentials = call_user_func(
-                    CredentialProvider::ini($sourceProfileName, $filename, $config)
-                )->wait();
+                $source = $profiles[$sourceProfileName];
+                $sourceProvider = match (true) {
+                    isset($source['aws_access_key_id']),
+                    isset($source['role_arn']) => self::ini($sourceProfileName, $filename, $config),
+                    isset($source['credential_process']) => self::process($sourceProfileName, $filename),
+                    isset($source['sso_session']),
+                    isset($source['sso_start_url']) => self::sso(
+                        $roleProfile['source_profile'],
+                        self::getConfigFileName(),
+                        $config
+                    ),
+                    isset($source['login_session']) => self::login($roleProfile['source_profile'], $config),
+                    default => self::ini($sourceProfileName, $filename, $config),
+                };
+                $sourceCredentials = $sourceProvider()->wait();
             } else {
                 $sourceCredentials = self::getCredentialsFromSource(
                     $profileName,
