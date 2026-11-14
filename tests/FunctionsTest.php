@@ -631,6 +631,31 @@ EOT
                         'endpoint_url' => 'https://exmaple.com',
                     ]
                 ]
+            ],
+            'optional whitespace around equals sign' => [
+                <<<EOT
+[services my-services]
+s3=
+  endpoint_url=http://localhost:4567
+dynamodb =
+  endpoint_url =http://localhost:8000
+sqs =
+  endpoint_url= http://localhost:9324/?foo=bar
+[default]
+foo_key = bar
+EOT
+                ,
+                [
+                    's3' => [
+                        'endpoint_url' => 'http://localhost:4567'
+                    ],
+                    'dynamodb' => [
+                        'endpoint_url' => 'http://localhost:8000'
+                    ],
+                    'sqs' => [
+                        'endpoint_url' => 'http://localhost:9324/?foo=bar'
+                    ]
+                ]
             ]
         ];
     }
