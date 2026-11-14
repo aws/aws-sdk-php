@@ -460,6 +460,59 @@ class ResultPaginatorTest extends TestCase
         $this->assertEquals(3, $requestCount);
     }
 
+    #[DataProvider('getRepeatedForwardTokenCases')]
+    public function testAsyncStopsAtRepeatedForwardToken(
+        array $args,
+        array $results,
+        array $expectedTokens,
+        array $expectedEvents
+    ): void {
+        $client = $this->getTestClient('logs');
+        $tokens = [];
+        $this->addMockResults($client, array_map(function (array $page) use (&$tokens) {
+            return static function (CommandInterface $command) use (&$tokens, $page) {
+                $tokens[] = $command['nextToken'];
+                return new Result($page);
+            };
+        }, $results));
+        $paginator = $client->getPaginator('GetLogEvents', $args + [
+            'logGroupName' => 'group',
+            'logStreamName' => 'stream',
+            'startFromHead' => true,
+        ]);
+
+        $events = [];
+        $lastResult = $paginator->each(function (Result $page) use (&$events) {
+            $events[] = $page['events'];
+        })->wait();
+
+        $this->assertSame($expectedTokens, $tokens);
+        $this->assertSame($expectedEvents, $events);
+        $this->assertSame([], $lastResult['events']);
+    }
+
+    public static function getRepeatedForwardTokenCases(): array
+    {
+        $firstPage = ['nextForwardToken' => 'f/1', 'events' => [['message' => 'first']]];
+        $terminalPage = ['nextForwardToken' => 'f/1', 'events' => []];
+        $unexpectedPage = ['events' => [['message' => 'unexpected']]];
+
+        return [
+            'token from the preceding page' => [
+                [],
+                [$firstPage, $terminalPage, $unexpectedPage],
+                [null, 'f/1'],
+                [$firstPage['events'], []],
+            ],
+            'token supplied by the caller' => [
+                ['nextToken' => 'f/1'],
+                [$terminalPage, $unexpectedPage],
+                ['f/1'],
+                [[]],
+            ],
+        ];
+    }
+
     public function testAppendsMetricsCaptureMiddleware()
     {
         $client = new S3Client([

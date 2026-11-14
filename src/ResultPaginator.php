@@ -74,10 +74,21 @@ class ResultPaginator implements \Iterator
     {
         return Promise\Coroutine::of(function () use ($handleResult) {
             $nextToken = null;
+            $tokenKey = $this->config['output_token'] === 'nextForwardToken'
+                ? $this->config['input_token']
+                : null;
             do {
                 $command = $this->createNextCommand($this->args, $nextToken);
                 $result = (yield $this->client->executeAsync($command));
                 $nextToken = $this->determineNextToken($result);
+
+                // A repeated forward token marks the end of the stream.
+                if ($tokenKey !== null && isset($nextToken[$tokenKey])
+                    && $nextToken[$tokenKey] === $command[$tokenKey]
+                ) {
+                    $nextToken = null;
+                }
+
                 $retVal = $handleResult($result);
                 if ($retVal !== null) {
                     yield Promise\Create::promiseFor($retVal);
