@@ -2034,43 +2034,52 @@ EOT;
         $this->assertSame($signInRegion, $cache['signInRegion']);
     }
 
-    public function testInvalidSignInRegionContinuesWithExistingToken(): void
+    public function testInvalidSignInRegionKeepsExistingCredentialsThroughMemoize(): void
     {
+        $now = 1792065600;
+        $_SERVER['aws_time'] = $now;
         $awsDir = $this->createAwsHome();
         $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
-        $this->createExpiredTokenWithSignInRegion(
-            $awsDir,
-            $loginSession,
-            'bad region!'
-        );
         $this->createConfigFile($awsDir, 'default', $loginSession);
+        $this->createValidTokenCache($awsDir, $loginSession, [
+            'signInRegion' => 'bad region!',
+            'accessToken' => [
+                'accessKeyId' => 'existingKey',
+                'secretAccessKey' => 'existingSecret',
+                'sessionToken' => 'existingToken',
+                'accountId' => '123456789012',
+                'expiresAt' => gmdate('Y-m-d\TH:i:s\Z', $now + 600)
+            ]
+        ]);
 
         $defaultClient = $this->getMockBuilder(SigninClient::class)
             ->disableOriginalConstructor()
             ->getMock();
         $defaultClient->expects($this->never())->method('__call');
 
-        $provider = new LoginCredentialProvider('default', 'us-west-2');
-        $reflection = new \ReflectionClass($provider);
-        $reflection->getProperty('client')->setValue($provider, $defaultClient);
+        $loginProvider = new LoginCredentialProvider('default', 'us-west-2');
+        $reflection = new \ReflectionClass($loginProvider);
+        $reflection->getProperty('client')->setValue($loginProvider, $defaultClient);
+        $provider = CredentialProvider::memoize($loginProvider);
+        $provider()->wait();
 
-        $notices = [];
-        set_error_handler(function ($no, $str) use (&$notices) {
-            $notices[] = [$no, $str];
+        $warnings = [];
+        set_error_handler(static function ($errno, $message) use (&$warnings) {
+            if ($errno === E_USER_WARNING) {
+                $warnings[] = $message;
+            }
             return true;
-        }, E_USER_NOTICE);
+        });
         try {
+            $_SERVER['aws_time'] = $now + 430;
             $credentials = $provider()->wait();
         } finally {
             restore_error_handler();
         }
 
-        $this->assertSame('expiredKey', $credentials->getAccessKeyId());
-        $this->assertNotEmpty($notices);
-        $this->assertStringContainsString(
-            'Continuing with existing token after refresh failure',
-            end($notices)[1]
-        );
+        $this->assertSame('existingKey', $credentials->getAccessKeyId());
+        $this->assertCount(1, $warnings);
+        $this->assertStringContainsString('Credential refresh failed', $warnings[0]);
     }
 
     private function createConfigFileWithoutRegion(
