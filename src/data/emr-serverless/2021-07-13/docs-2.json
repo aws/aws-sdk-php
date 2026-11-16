@@ -165,6 +165,7 @@
         "AutoStartConfig$enabled": "<p>Enables the application to automatically start on job submission. Defaults to true.</p>",
         "AutoStopConfig$enabled": "<p>Enables the application to automatically stop after a certain amount of time being idle. Defaults to true.</p>",
         "CloudWatchLoggingConfiguration$enabled": "<p>Enables CloudWatch logging.</p>",
+        "FlexExecution$enabled": "<p>Enables Amazon EMR Serverless Flex capacity for the job run and defaults to false. If set to true, the job run uses Flex capacity.</p>",
         "GetDashboardForJobRunRequest$accessSystemProfileLogs": "<p>Allows access to system profile logs for Lake Formation-enabled jobs. Default is false.</p>",
         "GetResourceDashboardRequest$accessSystemProfileLogs": "<p>Allows access to system profile logs for Lake Formation-enabled sessions. Default is false.</p>",
         "IdentityCenterConfiguration$userBackgroundSessionsEnabled": "<p>Enables user background sessions for this application so Livy sessions can continue running after users log out of their interactive notebook or their Identity Center sessions expire.</p>",
@@ -397,6 +398,15 @@
       "base": null,
       "refs": {
         "SparkSubmit$entryPoint": "<p>The entry point for the Spark submit job run.</p>"
+      }
+    },
+    "FlexExecution": {
+      "base": "<p>The Amazon EMR Serverless Flex settings for the job run.</p>",
+      "refs": {
+        "JobRun$flexExecution": "<p>The Amazon EMR Serverless Flex settings for the job run.</p>",
+        "JobRunAttemptSummary$flexExecution": "<p>The Amazon EMR Serverless Flex settings for the job run attempt.</p>",
+        "JobRunSummary$flexExecution": "<p>The Amazon EMR Serverless Flex settings for the job run.</p>",
+        "StartJobRunRequest$flexExecution": "<p>The Amazon EMR Serverless Flex settings for the job run. If you don't specify these settings, the job run doesn't use Flex capacity.</p>"
       }
     },
     "GetApplicationRequest": {

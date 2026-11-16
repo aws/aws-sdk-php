@@ -1,5 +1,39 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Fixed asynchronous pagination continuing after a service returns the same forward token that was sent in the request.
+* `Aws\` - Fixes parsing of the `services` section of the shared config file so that settings written without spaces around the equals sign, such as `endpoint_url=http://localhost:4567`, are no longer ignored.
+* `Aws\` - Fixed `smithy-rpc-v2-cbor` error parsing when the response body does not know its size, as with a streamed response: the error code, message and modeled members are now parsed. An error body that decodes to a string or a number no longer throws a `TypeError`.
+* `Aws\` - Fixed `smithy-rpc-v2-cbor` event stream output: event, initial-response and exception payloads are now decoded as CBOR against the model, initial-response members are now set on the result, and requests now send `Accept: application/vnd.amazon.eventstream`. Also fixed event stream decoding for all protocols: an empty non-seekable stream no longer throws, a whole-second timestamp header no longer decodes to `false`, a string `@eventPayload` member no longer throws, and signed header minimums decode correctly.
+* `Aws\` - Fixed assume role profiles to resolve a `source_profile` that uses `credential_process`, `sso_session` or `login_session`, and to find a `source_profile` defined as `[profile name]` in the shared config file.
+* `Aws\Health` - Adds resource tags functionality to the AWS Health service
+* `Aws\IoTWireless` - Updated CreateDeviceProfile to accept MaxEirp values up to 36 dBm in LoRaWANDeviceProfile. Previously the maximum value was 15.
+* `Aws\OpenSearchMemory` - Initial release of Amazon OpenSearch Memory, which gives AI agents persistent memory. Store conversation and document events in a Space, have memories extracted from them automatically, and retrieve them with semantic, lexical, or hybrid search.
+* `Aws\WellArchitected` - This release adds AWS Organizations integration, on-demand reports, recommendation and profile sharing, and automated basic profiles to the Well-Architected Agent.
+* `Aws\CognitoIdentityProvider` - Implement OAuth 2.0 Token Exchange (RFC 8693) for Cognito User Pools, enabling services to exchange a user's existing token for a new token that is appropriately scoped and audience-bound for a specific downstream service.
+* `Aws\IAMToolbox` - AWS IAM adds the GetRequestAuthorizationPolicy operation, per-check authorization results (checks) and extra policy metadata for resource-based policies (policySource) in GetRequestAuthorizationDetails for Access Troubleshooter.
+* `Aws\DSQL` - Added support for Amazon Aurora DSQL advanced monitoring metric groups, which publish detailed database metrics and logs to Amazon CloudWatch Database Insights. Adds the metricGroups parameter to CreateCluster, UpdateCluster, and GetCluster.
+* `Aws\NetworkFlowMonitor` - This release adds Performance Monitors to Amazon CloudWatch Network Monitoring. Without installing an agent, they track traffic in the VPCs you select and report an impact score (None, Low, Medium, or High) showing whether the AWS network is degrading your workloads.
+* `Aws\Lambda` - Adds support for GPU instances on Lambda Managed Instances in the CreateFunction and UpdateFunctionConfiguration APIs. Lambda Event Functions on Lambda Managed Instances can now set the accelerator memory using the new AcceleratorConfig parameter and run on capacity providers with GPU instances.
+* `Aws\EMRServerless` - Amazon EMR Serverless now supports Flex, a new execution option for running data processing jobs on spare compute capacity at a discount.
+* `Aws\SageMaker` - Amazon SageMaker adds Synthetic Data Generation, Auto-labeling, Data Quality Evaluation, and Data Transformation capabilities, Cross-Region Inference Routing, KV Aware routing for realtime inference endpoints.
+* `Aws\WorkSpaces` - Adds the WorkspaceOsUserMode parameter to RegisterWorkspaceDirectory and DescribeWorkspaceDirectories, so customers can register an IAM Identity Center directory whose WorkSpaces use local operating system users instead of joining a domain.
+* `Aws\LambdaCore` - Lambda network connectors now support service-managed Elastic IP addresses. This enables traffic routed through a connector to reach the public internet without a NAT gateway.
+* `Aws\S3Vectors` - Amazon S3 Vectors now supports hybrid search, providing metadata text search along with vector search.
+* `Aws\NetworkManager` - Context Sharing with Firewalls
+* `Aws\EC2` - Adds a new Transit Gateway Attachment type called Network Function. Launches associated KMS Keys for EBS Snapshots - associated KMS keys enable customers to share and copy snapshots encrypted with AWS Managed Keys across AWS accounts.
+* `Aws\ECR` - ECR feature support for replicating image deletion and untagging.
+* `Aws\SageMakerInferenceRouterRuntime` - Amazon SageMaker adds cross-region inference routing with new runtime APIs that intelligently route inference requests across endpoints in multiple AWS regions.
+* `Aws\DynamoDBStreams` - Generate account-based endpoints for DynamoDB Streams requests when the account ID is available
+* `Aws\ECS` - Amazon ECS gateway connectors now support a configurable deregistration delay (0-3600 seconds, default 300 seconds).
+* `Aws\ConnectHealth` - Adds dataset APIs and async medical coding jobs that can use a customer dataset (preview). Ambient listening sessions add medical coding job details and real-time periodontal chart and checklist events (preview). SubmitFeedback compares human-approved and AI-generated artifacts (preview).
+* `Aws\Connect` - Adds the DeleteAllEntitySessions API, which signs a user out of all of their active sessions in an Amazon Connect instance.
+* `Aws\NetworkFirewall` - Adds support for context-aware stateful rule groups, letting rules reference AWS resource IDs through ContextSets sourced from a Network Manager context store.
+* `Aws\ConnectScheduling` - This release adds APIs for Amazon Connect Scheduling. Use them to create, get, approve, reject, and cancel agent time off requests, and to set agent time off balances.
+* `Aws\KMS` - AWS KMS now supports sharing KMS keys across AWS accounts using AWS Resource Access Manager (AWS RAM). This release adds the optional ResourceOwners parameter to ListKeys, which lists keys owned by the caller's account (SELF), keys shared with the account through AWS RAM, or both.
+* `Aws\Athena` - Adds an optional AttributesToGet parameter to ListDatabases and ListTableMetadata to return only requested database or table names (and table types) from the AWS Glue Data Catalog, reducing response time for large catalogs.
+
 ## 3.403.6 - 2026-11-13
 
 * `Aws\` - Builds the Guzzle user agent from `ClientInterface::MAJOR_VERSION` instead of `Utils::defaultUserAgent()`, which Guzzle 8.5 deprecates.

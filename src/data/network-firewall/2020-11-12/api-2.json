@@ -655,6 +655,20 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListContextStores":{
+      "name":"ListContextStores",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListContextStoresRequest"},
+      "output":{"shape":"ListContextStoresResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListFirewallPolicies":{
       "name":"ListFirewallPolicies",
       "http":{
@@ -724,6 +738,21 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServerError"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListResourcesInContextStore":{
+      "name":"ListResourcesInContextStore",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListResourcesInContextStoreRequest"},
+      "output":{"shape":"ListResourcesInContextStoreResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerError"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -1334,6 +1363,7 @@
         "READY"
       ]
     },
+    "AttachmentType":{"type":"string"},
     "AvailabilityZone":{"type":"string"},
     "AvailabilityZoneId":{"type":"string"},
     "AvailabilityZoneMapping":{
@@ -1476,6 +1506,80 @@
       "enum":[
         "ECS",
         "EKS"
+      ]
+    },
+    "ContextDefinition":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "ContextDefinitionList":{
+      "type":"list",
+      "member":{"shape":"ContextDefinition"},
+      "max":1000,
+      "min":1
+    },
+    "ContextFilters":{
+      "type":"structure",
+      "members":{
+        "Region":{"shape":"Region"},
+        "ResourceType":{"shape":"ResourceType"}
+      }
+    },
+    "ContextSet":{
+      "type":"structure",
+      "required":["Definition"],
+      "members":{
+        "Definition":{"shape":"ContextDefinitionList"}
+      }
+    },
+    "ContextSets":{
+      "type":"map",
+      "key":{"shape":"RuleVariableName"},
+      "value":{"shape":"ContextSet"},
+      "max":100,
+      "min":0
+    },
+    "ContextStore":{
+      "type":"structure",
+      "required":[
+        "ContextStoreId",
+        "ContextStoreOwnerAccountId"
+      ],
+      "members":{
+        "ContextStoreId":{"shape":"ContextStoreId"},
+        "ContextStoreOwnerAccountId":{"shape":"AWSAccountId"}
+      }
+    },
+    "ContextStoreId":{"type":"string"},
+    "ContextStoreSyncState":{
+      "type":"structure",
+      "members":{
+        "SyncStatus":{"shape":"ContextStoreSyncStatus"},
+        "StatusMessage":{"shape":"StatusMessage"}
+      }
+    },
+    "ContextStoreSyncStatus":{
+      "type":"string",
+      "enum":[
+        "SYNCING",
+        "PARTIALLY_RESOLVED",
+        "FULLY_RESOLVED",
+        "SYNC_FAILED",
+        "UNRESOLVED"
+      ]
+    },
+    "ContextStores":{
+      "type":"list",
+      "member":{"shape":"ContextStore"}
+    },
+    "ContextType":{
+      "type":"string",
+      "enum":[
+        "ResourceId",
+        "SegmentId",
+        "Subnet",
+        "Attachment"
       ]
     },
     "Count":{"type":"integer"},
@@ -2290,6 +2394,8 @@
         "NatGatewayCreateMappings":{"shape":"NatGatewayCreateMappingsList"},
         "ProxySettings":{"shape":"ProxySettings"},
         "VpcEndpoint":{"shape":"VpcEndpoint"},
+        "ContextStoreId":{"shape":"ContextStoreId"},
+        "ContextStoreOwnerAccountId":{"shape":"AWSAccountId"},
         "TransparentFilteringNatScope":{"shape":"TransparentFilteringNatScope"}
       }
     },
@@ -2561,7 +2667,8 @@
         "ConfigurationSyncStateSummary":{"shape":"ConfigurationSyncState"},
         "SyncStates":{"shape":"SyncStates"},
         "CapacityUsageSummary":{"shape":"CapacityUsageSummary"},
-        "TransitGatewayAttachmentSyncState":{"shape":"TransitGatewayAttachmentSyncState"}
+        "TransitGatewayAttachmentSyncState":{"shape":"TransitGatewayAttachmentSyncState"},
+        "ContextStoreSyncState":{"shape":"ContextStoreSyncState"}
       }
     },
     "FirewallStatusValue":{
@@ -3116,6 +3223,21 @@
         "NextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListContextStoresRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"PaginationToken"},
+        "MaxResults":{"shape":"PaginationMaxResults"}
+      }
+    },
+    "ListContextStoresResponse":{
+      "type":"structure",
+      "required":["ContextStores"],
+      "members":{
+        "NextToken":{"shape":"PaginationToken"},
+        "ContextStores":{"shape":"ContextStores"}
+      }
+    },
     "ListFirewallPoliciesRequest":{
       "type":"structure",
       "members":{
@@ -3211,6 +3333,24 @@
       "type":"structure",
       "members":{
         "FlowOperations":{"shape":"FlowOperations"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListResourcesInContextStoreRequest":{
+      "type":"structure",
+      "required":["ContextStoreId"],
+      "members":{
+        "ContextStoreId":{"shape":"ContextStoreId"},
+        "Filters":{"shape":"ContextFilters"},
+        "MaxResults":{"shape":"PaginationMaxResults"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListResourcesInContextStoreResponse":{
+      "type":"structure",
+      "required":["ResourceContexts"],
+      "members":{
+        "ResourceContexts":{"shape":"ResourceContexts"},
         "NextToken":{"shape":"PaginationToken"}
       }
     },
@@ -3580,6 +3720,7 @@
         "DETACH_FAILED"
       ]
     },
+    "PublicId":{"type":"string"},
     "PublishMetricAction":{
       "type":"structure",
       "required":["Dimensions"],
@@ -3608,6 +3749,10 @@
         "IPSetReferences":{"shape":"IPSetReferenceMap"}
       }
     },
+    "Region":{
+      "type":"string",
+      "pattern":"^[a-z]{2}(-[a-z]+)+-\\d+$"
+    },
     "RejectNetworkFirewallTransitGatewayAttachmentRequest":{
       "type":"structure",
       "required":["TransitGatewayAttachmentId"],
@@ -3632,6 +3777,21 @@
       "max":256,
       "min":1,
       "pattern":"^arn:aws.*"
+    },
+    "ResourceContext":{
+      "type":"structure",
+      "required":["PublicId"],
+      "members":{
+        "ContextType":{"shape":"ContextType"},
+        "Region":{"shape":"Region"},
+        "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "AttachmentType":{"shape":"AttachmentType"},
+        "PublicId":{"shape":"PublicId"}
+      }
+    },
+    "ResourceContexts":{
+      "type":"list",
+      "member":{"shape":"ResourceContext"}
     },
     "ResourceId":{
       "type":"string",
@@ -3688,6 +3848,15 @@
       "type":"string",
       "max":8192,
       "min":1
+    },
+    "ResourceType":{
+      "type":"string",
+      "enum":[
+        "SecurityGroup",
+        "VPC",
+        "Subnet",
+        "TGWAttachment"
+      ]
     },
     "RevocationCheckAction":{
       "type":"string",
@@ -3865,7 +4034,8 @@
       "type":"structure",
       "members":{
         "IPSets":{"shape":"IPSets"},
-        "PortSets":{"shape":"PortSets"}
+        "PortSets":{"shape":"PortSets"},
+        "ContextSets":{"shape":"ContextSets"}
       }
     },
     "RulesSource":{

@@ -48,6 +48,28 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "CreateAgentBasicProfile":{
+      "name":"CreateAgentBasicProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/api/v1/agent-basic-profile",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateAgentBasicProfileRequest"},
+      "output":{"shape":"CreateAgentBasicProfileResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
     "CreateAgentContext":{
       "name":"CreateAgentContext",
       "http":{
@@ -87,6 +109,51 @@
         {"shape":"ConflictException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
+    "CreateAgentOrganizationalProfile":{
+      "name":"CreateAgentOrganizationalProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/api/v1/agent-organizational-profiles",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateAgentOrganizationalProfileRequest"},
+      "output":{"shape":"CreateAgentOrganizationalProfileResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
+    "CreateAgentOrganizationalReport":{
+      "name":"CreateAgentOrganizationalReport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/api/v1/agent-organizational-reports",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateAgentOrganizationalReportRequest"},
+      "output":{"shape":"CreateAgentOrganizationalReportResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
       ],
       "idempotent":true,
@@ -328,6 +395,27 @@
         "SubServiceType":{"value":"AGENT"}
       }
     },
+    "DeleteAgentOrganizationalReport":{
+      "name":"DeleteAgentOrganizationalReport",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/api/v1/agent-organizational-reports/{reportId}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteAgentOrganizationalReportRequest"},
+      "output":{"shape":"DeleteAgentOrganizationalReportResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
     "DeleteAgentProfile":{
       "name":"DeleteAgentProfile",
       "http":{
@@ -342,6 +430,48 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
+    "DeleteAgentProfilePolicy":{
+      "name":"DeleteAgentProfilePolicy",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/api/v1/agent-profiles/{profileArn}/policy",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteAgentProfilePolicyRequest"},
+      "output":{"shape":"DeleteAgentProfilePolicyResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
+    "DeleteAgentRecommendationPolicy":{
+      "name":"DeleteAgentRecommendationPolicy",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/api/v1/agent-recommendations/{recommendationArn}/policy",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteAgentRecommendationPolicyRequest"},
+      "output":{"shape":"DeleteAgentRecommendationPolicyResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ],
@@ -579,6 +709,68 @@
         "SubServiceType":{"value":"AGENT"}
       }
     },
+    "GetAgentOrganizationalReport":{
+      "name":"GetAgentOrganizationalReport",
+      "http":{
+        "method":"GET",
+        "requestUri":"/api/v1/agent-organizational-reports/{reportId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAgentOrganizationalReportRequest"},
+      "output":{"shape":"GetAgentOrganizationalReportResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
+    "GetAgentOrganizationalReportData":{
+      "name":"GetAgentOrganizationalReportData",
+      "http":{
+        "method":"GET",
+        "requestUri":"/api/v1/agent-organizational-reports/{reportId}/data",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAgentOrganizationalReportDataRequest"},
+      "output":{"shape":"GetAgentOrganizationalReportDataResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
+    "GetAgentPreferences":{
+      "name":"GetAgentPreferences",
+      "http":{
+        "method":"GET",
+        "requestUri":"/api/v1/agent-preferences",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAgentPreferencesRequest"},
+      "output":{"shape":"GetAgentPreferencesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
     "GetAgentProfile":{
       "name":"GetAgentProfile",
       "http":{
@@ -588,6 +780,27 @@
       },
       "input":{"shape":"GetAgentProfileRequest"},
       "output":{"shape":"GetAgentProfileResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
+    "GetAgentProfilePolicy":{
+      "name":"GetAgentProfilePolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/api/v1/agent-profiles/{profileArn}/policy",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAgentProfilePolicyRequest"},
+      "output":{"shape":"GetAgentProfilePolicyResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
@@ -630,6 +843,27 @@
       },
       "input":{"shape":"GetAgentRecommendationGenerationRequest"},
       "output":{"shape":"GetAgentRecommendationGenerationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
+    "GetAgentRecommendationPolicy":{
+      "name":"GetAgentRecommendationPolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/api/v1/agent-recommendations/{recommendationArn}/policy",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAgentRecommendationPolicyRequest"},
+      "output":{"shape":"GetAgentRecommendationPolicyResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
@@ -926,6 +1160,26 @@
       },
       "input":{"shape":"ListAgentGoalsRequest"},
       "output":{"shape":"ListAgentGoalsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
+    "ListAgentOrganizationalReports":{
+      "name":"ListAgentOrganizationalReports",
+      "http":{
+        "method":"GET",
+        "requestUri":"/api/v1/agent-organizational-reports",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAgentOrganizationalReportsRequest"},
+      "output":{"shape":"ListAgentOrganizationalReportsResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
@@ -1333,6 +1587,48 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "PutAgentPreferences":{
+      "name":"PutAgentPreferences",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/api/v1/agent-preferences",
+        "responseCode":200
+      },
+      "input":{"shape":"PutAgentPreferencesRequest"},
+      "output":{"shape":"PutAgentPreferencesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
+    "PutAgentProfilePolicy":{
+      "name":"PutAgentProfilePolicy",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/api/v1/agent-profiles/{profileArn}/policy",
+        "responseCode":200
+      },
+      "input":{"shape":"PutAgentProfilePolicyRequest"},
+      "output":{"shape":"PutAgentProfilePolicyResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
     "PutAgentRecommendationFeedback":{
       "name":"PutAgentRecommendationFeedback",
       "http":{
@@ -1350,6 +1646,47 @@
         {"shape":"ThrottlingException"}
       ],
       "idempotent":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
+    "PutAgentRecommendationPolicy":{
+      "name":"PutAgentRecommendationPolicy",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/api/v1/agent-recommendations/{recommendationArn}/policy",
+        "responseCode":200
+      },
+      "input":{"shape":"PutAgentRecommendationPolicyRequest"},
+      "output":{"shape":"PutAgentRecommendationPolicyResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
+    "SendAgentOrganizationalReportDataToS3":{
+      "name":"SendAgentOrganizationalReportDataToS3",
+      "http":{
+        "method":"POST",
+        "requestUri":"/api/v1/agent-organizational-reports/{reportId}/send-to-s3",
+        "responseCode":200
+      },
+      "input":{"shape":"SendAgentOrganizationalReportDataToS3Request"},
+      "output":{"shape":"SendAgentOrganizationalReportDataToS3Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
       "staticContextParams":{
         "SubServiceType":{"value":"AGENT"}
       }
@@ -1446,6 +1783,27 @@
         "SubServiceType":{"value":"AGENT"}
       }
     },
+    "UpdateAgentOrganizationalProfile":{
+      "name":"UpdateAgentOrganizationalProfile",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/api/v1/agent-organizational-profiles/{profileArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateAgentOrganizationalProfileRequest"},
+      "output":{"shape":"UpdateAgentOrganizationalProfileResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "SubServiceType":{"value":"AGENT"}
+      }
+    },
     "UpdateAgentProfile":{
       "name":"UpdateAgentProfile",
       "http":{
@@ -1459,6 +1817,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ],
@@ -1818,9 +2177,6 @@
       "type":"structure",
       "required":[
         "name",
-        "pillars",
-        "executionRoleArn",
-        "aggregationConfiguration",
         "arn",
         "createdBy",
         "createdAt"
@@ -1832,17 +2188,18 @@
         "businessOverview":{"shape":"AgentProfileSummaryBusinessOverviewString"},
         "pillars":{"shape":"Pillars"},
         "deletionProtection":{"shape":"Boolean"},
+        "profileType":{"shape":"ProfileType"},
         "executionRoleArn":{"shape":"RoleArn"},
         "aggregationConfiguration":{"shape":"AggregationConfigurations"},
         "arn":{"shape":"AgentProfileArn"},
         "eligibleForScheduledGeneration":{"shape":"Boolean"},
         "eligibleForArchitectureGeneration":{"shape":"Boolean"},
         "fieldErrors":{"shape":"FieldErrors"},
-        "tags":{"shape":"Tags"},
         "createdBy":{"shape":"AgentProfileSummaryCreatedByString"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "lastModifiedBy":{"shape":"AgentProfileSummaryLastModifiedByString"},
-        "lastModifiedAt":{"shape":"SyntheticTimestamp_date_time"}
+        "lastModifiedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "organizationalAggregationConfiguration":{"shape":"OrganizationalAggregationConfiguration"}
       }
     },
     "AgentProfileSummaryBusinessOverviewString":{
@@ -1910,7 +2267,12 @@
         "createdBy":{"shape":"AgentRecommendationGenerationSummaryCreatedByString"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "lastModifiedBy":{"shape":"AgentRecommendationGenerationSummaryLastModifiedByString"},
-        "lastModifiedAt":{"shape":"SyntheticTimestamp_date_time"}
+        "lastModifiedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "generationType":{"shape":"GenerationType"},
+        "generationRecommendationTypes":{"shape":"GenerationRecommendationTypes"},
+        "startedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "endedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "errorDetails":{"shape":"ErrorDetails"}
       }
     },
     "AgentRecommendationGenerationSummaryCreatedByString":{
@@ -1945,7 +2307,8 @@
         "createdBy":{"shape":"AgentRecommendationItemSummaryCreatedByString"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "lastModifiedBy":{"shape":"AgentRecommendationItemSummaryLastModifiedByString"},
-        "lastModifiedAt":{"shape":"SyntheticTimestamp_date_time"}
+        "lastModifiedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "autoRemediation":{"shape":"AutoRemediation"}
       }
     },
     "AgentRecommendationItemSummaryCreatedByString":{
@@ -2083,7 +2446,7 @@
     "AggregationConfigurations":{
       "type":"list",
       "member":{"shape":"AggregationConfiguration"},
-      "max":100,
+      "max":1000,
       "min":0
     },
     "Answer":{
@@ -2179,6 +2542,23 @@
         },
         "ProfileArns":{"shape":"ProfileArns"}
       }
+    },
+    "AutoRemediation":{
+      "type":"structure",
+      "members":{
+        "deepLink":{"shape":"AutoRemediationDeepLinkString"},
+        "cliCommand":{"shape":"AutoRemediationCliCommandString"}
+      }
+    },
+    "AutoRemediationCliCommandString":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
+    "AutoRemediationDeepLinkString":{
+      "type":"string",
+      "max":2048,
+      "min":1
     },
     "AwsAccountId":{
       "type":"string",
@@ -2451,6 +2831,7 @@
         "awsServices":{"shape":"ContextContentAwsServicesList"},
         "resourceTypes":{"shape":"ContextContentResourceTypesList"},
         "resourceTags":{"shape":"ContextContentResourceTagsList"},
+        "organizationalUnitIds":{"shape":"ContextContentOrganizationalUnitIdsList"},
         "applicationOverview":{"shape":"ContextContentApplicationOverviewString"},
         "industry":{"shape":"ContextContentIndustryString"},
         "applicationType":{"shape":"ApplicationType"},
@@ -2510,6 +2891,18 @@
       "min":0,
       "pattern":"(?:(?!\\$\\{[a-zA-Z]+:)[\\P{C}\\r\\n])*",
       "sensitive":true
+    },
+    "ContextContentOrganizationalUnitIdsList":{
+      "type":"list",
+      "member":{"shape":"ContextContentOrganizationalUnitIdsListMemberString"},
+      "max":2500,
+      "min":0
+    },
+    "ContextContentOrganizationalUnitIdsListMemberString":{
+      "type":"string",
+      "max":68,
+      "min":1,
+      "pattern":"(ou-[a-z0-9]{4,32}-[a-z0-9]{8,32}|r-[a-z0-9]{4,32})"
     },
     "ContextContentRegionsList":{
       "type":"list",
@@ -2619,6 +3012,60 @@
       "box":true,
       "min":0
     },
+    "CoverageSummary":{
+      "type":"structure",
+      "required":[
+        "totalAccountsInScope",
+        "accountsWithProfile",
+        "accountsWithoutProfile",
+        "failedAccountCount",
+        "totalProfiles",
+        "totalRecommendations"
+      ],
+      "members":{
+        "totalAccountsInScope":{"shape":"Long"},
+        "accountsWithProfile":{"shape":"Long"},
+        "accountsWithoutProfile":{"shape":"Long"},
+        "failedAccountCount":{"shape":"Long"},
+        "totalProfiles":{"shape":"Long"},
+        "totalRecommendations":{"shape":"Long"},
+        "recommendationCountByPillar":{"shape":"PillarCountList"},
+        "recommendationCountByPriority":{"shape":"PriorityCountList"},
+        "failedAccounts":{"shape":"FailedAccountList"},
+        "failedOrganizationalUnits":{"shape":"FailedOrganizationalUnitList"}
+      }
+    },
+    "CreateAgentBasicProfileRequest":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "CreateAgentBasicProfileResponse":{
+      "type":"structure",
+      "required":[
+        "createdBy",
+        "createdAt",
+        "arn"
+      ],
+      "members":{
+        "createdBy":{"shape":"CreateAgentBasicProfileResponseCreatedByString"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "lastModifiedBy":{"shape":"CreateAgentBasicProfileResponseLastModifiedByString"},
+        "lastModifiedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "arn":{"shape":"AgentProfileArn"}
+      }
+    },
+    "CreateAgentBasicProfileResponseCreatedByString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "CreateAgentBasicProfileResponseLastModifiedByString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "CreateAgentContextRequest":{
       "type":"structure",
       "required":[
@@ -2709,6 +3156,155 @@
       "required":["goal"],
       "members":{
         "goal":{"shape":"GoalSummary"}
+      }
+    },
+    "CreateAgentOrganizationalProfileRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "pillars"
+      ],
+      "members":{
+        "name":{"shape":"CreateAgentOrganizationalProfileRequestNameString"},
+        "displayName":{"shape":"CreateAgentOrganizationalProfileRequestDisplayNameString"},
+        "description":{"shape":"CreateAgentOrganizationalProfileRequestDescriptionString"},
+        "businessOverview":{"shape":"CreateAgentOrganizationalProfileRequestBusinessOverviewString"},
+        "pillars":{"shape":"Pillars"},
+        "deletionProtection":{"shape":"Boolean"},
+        "clientToken":{
+          "shape":"CreateAgentOrganizationalProfileRequestClientTokenString",
+          "idempotencyToken":true
+        },
+        "organizationalAggregationConfiguration":{"shape":"OrganizationalAggregationConfiguration"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "CreateAgentOrganizationalProfileRequestBusinessOverviewString":{
+      "type":"string",
+      "max":512,
+      "min":0,
+      "pattern":"(?:(?!\\$\\{[a-zA-Z]+:)[\\P{C}])*",
+      "sensitive":true
+    },
+    "CreateAgentOrganizationalProfileRequestClientTokenString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\x21-\\x7E]+"
+    },
+    "CreateAgentOrganizationalProfileRequestDescriptionString":{
+      "type":"string",
+      "max":512,
+      "min":0,
+      "pattern":"(?:(?!\\$\\{[a-zA-Z]+:)[\\P{C}])*",
+      "sensitive":true
+    },
+    "CreateAgentOrganizationalProfileRequestDisplayNameString":{
+      "type":"string",
+      "max":128,
+      "min":3,
+      "pattern":"(?:(?!\\$\\{[a-zA-Z]+:)[\\P{C}])+",
+      "sensitive":true
+    },
+    "CreateAgentOrganizationalProfileRequestNameString":{
+      "type":"string",
+      "max":128,
+      "min":3,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "CreateAgentOrganizationalProfileResponse":{
+      "type":"structure",
+      "required":[
+        "name",
+        "pillars",
+        "organizationId",
+        "arn",
+        "createdBy",
+        "createdAt"
+      ],
+      "members":{
+        "name":{"shape":"CreateAgentOrganizationalProfileResponseNameString"},
+        "displayName":{"shape":"CreateAgentOrganizationalProfileResponseDisplayNameString"},
+        "description":{"shape":"CreateAgentOrganizationalProfileResponseDescriptionString"},
+        "businessOverview":{"shape":"CreateAgentOrganizationalProfileResponseBusinessOverviewString"},
+        "pillars":{"shape":"Pillars"},
+        "deletionProtection":{"shape":"Boolean"},
+        "organizationId":{"shape":"String"},
+        "organizationalAggregationConfiguration":{"shape":"OrganizationalAggregationConfiguration"},
+        "arn":{"shape":"AgentProfileArn"},
+        "eligibleForScheduledGeneration":{"shape":"Boolean"},
+        "eligibleForArchitectureGeneration":{"shape":"Boolean"},
+        "fieldErrors":{"shape":"FieldErrors"},
+        "tags":{"shape":"Tags"},
+        "createdBy":{"shape":"CreateAgentOrganizationalProfileResponseCreatedByString"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "lastModifiedBy":{"shape":"CreateAgentOrganizationalProfileResponseLastModifiedByString"},
+        "lastModifiedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "CreateAgentOrganizationalProfileResponseBusinessOverviewString":{
+      "type":"string",
+      "max":512,
+      "min":0,
+      "pattern":"(?:(?!\\$\\{[a-zA-Z]+:)[\\P{C}])*",
+      "sensitive":true
+    },
+    "CreateAgentOrganizationalProfileResponseCreatedByString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "CreateAgentOrganizationalProfileResponseDescriptionString":{
+      "type":"string",
+      "max":512,
+      "min":0,
+      "pattern":"(?:(?!\\$\\{[a-zA-Z]+:)[\\P{C}])*",
+      "sensitive":true
+    },
+    "CreateAgentOrganizationalProfileResponseDisplayNameString":{
+      "type":"string",
+      "max":128,
+      "min":3,
+      "pattern":"(?:(?!\\$\\{[a-zA-Z]+:)[\\P{C}])+",
+      "sensitive":true
+    },
+    "CreateAgentOrganizationalProfileResponseLastModifiedByString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "CreateAgentOrganizationalProfileResponseNameString":{
+      "type":"string",
+      "max":128,
+      "min":3,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "CreateAgentOrganizationalReportRequest":{
+      "type":"structure",
+      "members":{
+        "clientToken":{
+          "shape":"CreateAgentOrganizationalReportRequestClientTokenString",
+          "idempotencyToken":true
+        },
+        "label":{"shape":"ReportLabel"},
+        "filters":{"shape":"OrganizationalReportFilters"}
+      }
+    },
+    "CreateAgentOrganizationalReportRequestClientTokenString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\x21-\\x7E]+"
+    },
+    "CreateAgentOrganizationalReportResponse":{
+      "type":"structure",
+      "required":[
+        "reportId",
+        "state"
+      ],
+      "members":{
+        "reportId":{"shape":"UUID"},
+        "state":{"shape":"OrganizationalReportState"}
       }
     },
     "CreateAgentProfileRequest":{
@@ -3185,6 +3781,36 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteAgentOrganizationalReportRequest":{
+      "type":"structure",
+      "required":["reportId"],
+      "members":{
+        "reportId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"reportId"
+        }
+      }
+    },
+    "DeleteAgentOrganizationalReportResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteAgentProfilePolicyRequest":{
+      "type":"structure",
+      "required":["profileArn"],
+      "members":{
+        "profileArn":{
+          "shape":"AgentProfileArn",
+          "location":"uri",
+          "locationName":"profileArn"
+        }
+      }
+    },
+    "DeleteAgentProfilePolicyResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteAgentProfileRequest":{
       "type":"structure",
       "required":["profileArn"],
@@ -3197,6 +3823,21 @@
       }
     },
     "DeleteAgentProfileResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteAgentRecommendationPolicyRequest":{
+      "type":"structure",
+      "required":["recommendationArn"],
+      "members":{
+        "recommendationArn":{
+          "shape":"AgentRecommendationArn",
+          "location":"uri",
+          "locationName":"recommendationArn"
+        }
+      }
+    },
+    "DeleteAgentRecommendationPolicyResponse":{
       "type":"structure",
       "members":{}
     },
@@ -3493,6 +4134,40 @@
         "LensJSON":{"shape":"LensJSON"}
       }
     },
+    "FailedAccount":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "reason"
+      ],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "reason":{"shape":"String"}
+      }
+    },
+    "FailedAccountList":{
+      "type":"list",
+      "member":{"shape":"FailedAccount"},
+      "max":1000,
+      "min":0
+    },
+    "FailedOrganizationalUnit":{
+      "type":"structure",
+      "required":[
+        "organizationalUnitId",
+        "reason"
+      ],
+      "members":{
+        "organizationalUnitId":{"shape":"OrganizationalUnitId"},
+        "reason":{"shape":"String"}
+      }
+    },
+    "FailedOrganizationalUnitList":{
+      "type":"list",
+      "member":{"shape":"FailedOrganizationalUnit"},
+      "max":1000,
+      "min":0
+    },
     "FeedbackCategory":{
       "type":"string",
       "enum":[
@@ -3526,6 +4201,12 @@
       "max":9999,
       "min":1
     },
+    "GenerationRecommendationTypes":{
+      "type":"list",
+      "member":{"shape":"RecommendationType"},
+      "max":3,
+      "min":0
+    },
     "GenerationStatus":{
       "type":"string",
       "enum":[
@@ -3533,6 +4214,14 @@
         "IN_PROGRESS",
         "COMPLETED",
         "ERROR"
+      ]
+    },
+    "GenerationType":{
+      "type":"string",
+      "enum":[
+        "ONDEMAND",
+        "SCHEDULED",
+        "BASIC"
       ]
     },
     "GetAgentContextRequest":{
@@ -3587,6 +4276,100 @@
         "goal":{"shape":"GoalSummary"}
       }
     },
+    "GetAgentOrganizationalReportDataRequest":{
+      "type":"structure",
+      "required":[
+        "reportId",
+        "format"
+      ],
+      "members":{
+        "reportId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"reportId"
+        },
+        "format":{
+          "shape":"OrganizationalReportFormat",
+          "location":"querystring",
+          "locationName":"format"
+        }
+      }
+    },
+    "GetAgentOrganizationalReportDataResponse":{
+      "type":"structure",
+      "required":[
+        "downloadUrl",
+        "expiresAt"
+      ],
+      "members":{
+        "downloadUrl":{"shape":"String"},
+        "expiresAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "GetAgentOrganizationalReportRequest":{
+      "type":"structure",
+      "required":["reportId"],
+      "members":{
+        "reportId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"reportId"
+        }
+      }
+    },
+    "GetAgentOrganizationalReportResponse":{
+      "type":"structure",
+      "required":[
+        "reportId",
+        "ownerAccountId",
+        "organizationId",
+        "state",
+        "createdAt"
+      ],
+      "members":{
+        "reportId":{"shape":"UUID"},
+        "ownerAccountId":{"shape":"AccountId"},
+        "organizationId":{"shape":"String"},
+        "label":{"shape":"ReportLabel"},
+        "state":{"shape":"OrganizationalReportState"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "filters":{"shape":"OrganizationalReportFilters"},
+        "coverageSummary":{"shape":"CoverageSummary"}
+      }
+    },
+    "GetAgentPreferencesRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "GetAgentPreferencesResponse":{
+      "type":"structure",
+      "required":["preferences"],
+      "members":{
+        "preferences":{"shape":"PreferenceEntries"}
+      }
+    },
+    "GetAgentProfilePolicyRequest":{
+      "type":"structure",
+      "required":["profileArn"],
+      "members":{
+        "profileArn":{
+          "shape":"AgentProfileArn",
+          "location":"uri",
+          "locationName":"profileArn"
+        }
+      }
+    },
+    "GetAgentProfilePolicyResponse":{
+      "type":"structure",
+      "required":[
+        "profileArn",
+        "policy"
+      ],
+      "members":{
+        "profileArn":{"shape":"AgentProfileArn"},
+        "policy":{"shape":"ResourcePolicy"}
+      }
+    },
     "GetAgentProfileRequest":{
       "type":"structure",
       "required":["profileArn"],
@@ -3602,9 +4385,6 @@
       "type":"structure",
       "required":[
         "name",
-        "pillars",
-        "executionRoleArn",
-        "aggregationConfiguration",
         "arn",
         "createdBy",
         "createdAt"
@@ -3616,6 +4396,7 @@
         "businessOverview":{"shape":"GetAgentProfileResponseBusinessOverviewString"},
         "pillars":{"shape":"Pillars"},
         "deletionProtection":{"shape":"Boolean"},
+        "profileType":{"shape":"ProfileType"},
         "executionRoleArn":{"shape":"RoleArn"},
         "aggregationConfiguration":{"shape":"AggregationConfigurations"},
         "arn":{"shape":"AgentProfileArn"},
@@ -3626,7 +4407,8 @@
         "createdBy":{"shape":"GetAgentProfileResponseCreatedByString"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "lastModifiedBy":{"shape":"GetAgentProfileResponseLastModifiedByString"},
-        "lastModifiedAt":{"shape":"SyntheticTimestamp_date_time"}
+        "lastModifiedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "organizationalAggregationConfiguration":{"shape":"OrganizationalAggregationConfiguration"}
       }
     },
     "GetAgentProfileResponseBusinessOverviewString":{
@@ -3704,12 +4486,14 @@
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "lastModifiedBy":{"shape":"GetAgentRecommendationGenerationResponseLastModifiedByString"},
         "lastModifiedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "additionalContext":{"shape":"Document"},
-        "scope":{"shape":"Scope"},
+        "generationType":{"shape":"GenerationType"},
+        "generationRecommendationTypes":{"shape":"GenerationRecommendationTypes"},
         "startedAt":{"shape":"SyntheticTimestamp_date_time"},
         "endedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "progress":{"shape":"Progress"},
-        "errorDetails":{"shape":"ErrorDetails"}
+        "errorDetails":{"shape":"ErrorDetails"},
+        "additionalContext":{"shape":"SensitiveDocument"},
+        "scope":{"shape":"Scope"},
+        "progress":{"shape":"Progress"}
       }
     },
     "GetAgentRecommendationGenerationResponseCreatedByString":{
@@ -3721,6 +4505,28 @@
       "type":"string",
       "max":128,
       "min":1
+    },
+    "GetAgentRecommendationPolicyRequest":{
+      "type":"structure",
+      "required":["recommendationArn"],
+      "members":{
+        "recommendationArn":{
+          "shape":"AgentRecommendationArn",
+          "location":"uri",
+          "locationName":"recommendationArn"
+        }
+      }
+    },
+    "GetAgentRecommendationPolicyResponse":{
+      "type":"structure",
+      "required":[
+        "recommendationArn",
+        "policy"
+      ],
+      "members":{
+        "recommendationArn":{"shape":"AgentRecommendationArn"},
+        "policy":{"shape":"ResourcePolicy"}
+      }
     },
     "GetAgentRecommendationRequest":{
       "type":"structure",
@@ -4704,6 +5510,50 @@
       "min":1,
       "pattern":"[A-Za-z0-9+\\/=_-]+"
     },
+    "ListAgentOrganizationalReportsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"ListAgentOrganizationalReportsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"ListAgentOrganizationalReportsRequestNextTokenString",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "state":{
+          "shape":"OrganizationalReportState",
+          "location":"querystring",
+          "locationName":"state"
+        }
+      }
+    },
+    "ListAgentOrganizationalReportsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListAgentOrganizationalReportsRequestNextTokenString":{
+      "type":"string",
+      "min":1,
+      "pattern":"[A-Za-z0-9+\\/=_-]+"
+    },
+    "ListAgentOrganizationalReportsResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"OrganizationalReportSummaryList"},
+        "nextToken":{"shape":"ListAgentOrganizationalReportsResponseNextTokenString"}
+      }
+    },
+    "ListAgentOrganizationalReportsResponseNextTokenString":{
+      "type":"string",
+      "min":1,
+      "pattern":"[A-Za-z0-9+\\/=_-]+"
+    },
     "ListAgentProfilesRequest":{
       "type":"structure",
       "members":{
@@ -5642,6 +6492,10 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "Long":{
+      "type":"long",
+      "box":true
+    },
     "MaxSelectedProfileChoices":{
       "type":"integer",
       "box":true,
@@ -5723,6 +6577,124 @@
         "DISABLED"
       ]
     },
+    "OrganizationalAccountEntry":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "regions"
+      ],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "regions":{"shape":"Regions"}
+      }
+    },
+    "OrganizationalAccountEntryList":{
+      "type":"list",
+      "member":{"shape":"OrganizationalAccountEntry"},
+      "max":2500,
+      "min":0
+    },
+    "OrganizationalAggregationConfiguration":{
+      "type":"structure",
+      "members":{
+        "organizationalUnits":{"shape":"OrganizationalUnitEntryList"},
+        "accounts":{"shape":"OrganizationalAccountEntryList"}
+      }
+    },
+    "OrganizationalNodeId":{
+      "type":"string",
+      "max":68,
+      "min":1,
+      "pattern":"(r-[a-z0-9]{4,32}|ou-[a-z0-9]{4,32}-[a-z0-9]{8,32})"
+    },
+    "OrganizationalReportAccountIdList":{
+      "type":"list",
+      "member":{"shape":"AccountId"},
+      "max":10000,
+      "min":0
+    },
+    "OrganizationalReportFilters":{
+      "type":"structure",
+      "members":{
+        "accountIds":{"shape":"OrganizationalReportAccountIdList"},
+        "organizationalUnitIds":{"shape":"OrganizationalUnitIdList"},
+        "pillars":{"shape":"PillarList"},
+        "recommendationTypes":{"shape":"RecommendationTypeList"},
+        "statuses":{"shape":"RecommendationStatusList"},
+        "priorities":{"shape":"PriorityList"},
+        "createdAtRange":{"shape":"TimeWindow"},
+        "updatedAtRange":{"shape":"TimeWindow"}
+      }
+    },
+    "OrganizationalReportFormat":{
+      "type":"string",
+      "enum":[
+        "CSV",
+        "JSON",
+        "PARQUET"
+      ]
+    },
+    "OrganizationalReportState":{
+      "type":"string",
+      "enum":[
+        "DISCOVERING",
+        "SNAPSHOTTING",
+        "AGGREGATING",
+        "COMPRESSING",
+        "COMPLETED",
+        "FAILED",
+        "DELETING"
+      ]
+    },
+    "OrganizationalReportSummary":{
+      "type":"structure",
+      "required":[
+        "reportId",
+        "ownerAccountId",
+        "organizationId",
+        "state",
+        "createdAt"
+      ],
+      "members":{
+        "reportId":{"shape":"UUID"},
+        "ownerAccountId":{"shape":"AccountId"},
+        "organizationId":{"shape":"String"},
+        "label":{"shape":"ReportLabel"},
+        "state":{"shape":"OrganizationalReportState"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "OrganizationalReportSummaryList":{
+      "type":"list",
+      "member":{"shape":"OrganizationalReportSummary"}
+    },
+    "OrganizationalUnitEntry":{
+      "type":"structure",
+      "required":[
+        "organizationalUnitId",
+        "regions"
+      ],
+      "members":{
+        "organizationalUnitId":{"shape":"OrganizationalNodeId"},
+        "regions":{"shape":"Regions"}
+      }
+    },
+    "OrganizationalUnitEntryList":{
+      "type":"list",
+      "member":{"shape":"OrganizationalUnitEntry"},
+      "max":2500,
+      "min":0
+    },
+    "OrganizationalUnitId":{
+      "type":"string",
+      "pattern":"ou-[0-9a-z]{4,32}-[a-z0-9]{8,32}"
+    },
+    "OrganizationalUnitIdList":{
+      "type":"list",
+      "member":{"shape":"OrganizationalUnitId"},
+      "max":10000,
+      "min":0
+    },
     "PermissionType":{
       "type":"string",
       "enum":[
@@ -5739,6 +6711,23 @@
         "PERFORMANCE",
         "OPERATIONAL_EXCELLENCE"
       ]
+    },
+    "PillarCount":{
+      "type":"structure",
+      "required":[
+        "pillar",
+        "count"
+      ],
+      "members":{
+        "pillar":{"shape":"Pillar"},
+        "count":{"shape":"Long"}
+      }
+    },
+    "PillarCountList":{
+      "type":"list",
+      "member":{"shape":"PillarCount"},
+      "max":10,
+      "min":0
     },
     "PillarDifference":{
       "type":"structure",
@@ -5772,6 +6761,12 @@
     "PillarItems":{
       "type":"list",
       "member":{"shape":"PillarItem"}
+    },
+    "PillarList":{
+      "type":"list",
+      "member":{"shape":"Pillar"},
+      "max":10,
+      "min":0
     },
     "PillarMetric":{
       "type":"structure",
@@ -5815,6 +6810,63 @@
       "max":5,
       "min":1
     },
+    "PreferenceEntries":{
+      "type":"list",
+      "member":{"shape":"PreferenceEntry"}
+    },
+    "PreferenceEntry":{
+      "type":"structure",
+      "required":[
+        "key",
+        "status"
+      ],
+      "members":{
+        "key":{"shape":"PreferenceKey"},
+        "status":{"shape":"PreferenceStatus"},
+        "detail":{"shape":"PreferenceEntryDetailString"}
+      }
+    },
+    "PreferenceEntryDetailString":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "PreferenceKey":{
+      "type":"string",
+      "enum":["ORG_INTEGRATION"]
+    },
+    "PreferenceState":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "PreferenceStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED",
+        "FAILED"
+      ]
+    },
+    "PreferenceUpdate":{
+      "type":"structure",
+      "required":[
+        "key",
+        "state"
+      ],
+      "members":{
+        "key":{"shape":"PreferenceKey"},
+        "state":{"shape":"PreferenceState"}
+      }
+    },
+    "PreferenceUpdates":{
+      "type":"list",
+      "member":{"shape":"PreferenceUpdate"},
+      "max":50,
+      "min":1
+    },
     "Priority":{
       "type":"string",
       "enum":[
@@ -5822,6 +6874,29 @@
         "MEDIUM",
         "LOW"
       ]
+    },
+    "PriorityCount":{
+      "type":"structure",
+      "required":[
+        "priority",
+        "count"
+      ],
+      "members":{
+        "priority":{"shape":"Priority"},
+        "count":{"shape":"Long"}
+      }
+    },
+    "PriorityCountList":{
+      "type":"list",
+      "member":{"shape":"PriorityCount"},
+      "max":10,
+      "min":0
+    },
+    "PriorityList":{
+      "type":"list",
+      "member":{"shape":"Priority"},
+      "max":10,
+      "min":0
     },
     "Profile":{
       "type":"structure",
@@ -5994,6 +7069,14 @@
       "type":"list",
       "member":{"shape":"ProfileTemplateChoice"}
     },
+    "ProfileType":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "BASIC",
+        "ORGANIZATIONAL"
+      ]
+    },
     "ProfileVersion":{
       "type":"string",
       "max":32,
@@ -6012,6 +7095,36 @@
         "totalSteps":{"shape":"Integer"},
         "completionPercentage":{"shape":"Double"}
       }
+    },
+    "PutAgentPreferencesRequest":{
+      "type":"structure",
+      "required":["preferences"],
+      "members":{
+        "preferences":{"shape":"PreferenceUpdates"}
+      }
+    },
+    "PutAgentPreferencesResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "PutAgentProfilePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "profileArn",
+        "policy"
+      ],
+      "members":{
+        "profileArn":{
+          "shape":"AgentProfileArn",
+          "location":"uri",
+          "locationName":"profileArn"
+        },
+        "policy":{"shape":"ResourcePolicy"}
+      }
+    },
+    "PutAgentProfilePolicyResponse":{
+      "type":"structure",
+      "members":{}
     },
     "PutAgentRecommendationFeedbackRequest":{
       "type":"structure",
@@ -6034,9 +7147,29 @@
       "type":"string",
       "max":4096,
       "min":1,
-      "pattern":"[\\P{C}]+"
+      "pattern":"(?:(?!\\$\\{[a-zA-Z]+:)[\\P{C}\\r\\n])+",
+      "sensitive":true
     },
     "PutAgentRecommendationFeedbackResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "PutAgentRecommendationPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "recommendationArn",
+        "policy"
+      ],
+      "members":{
+        "recommendationArn":{
+          "shape":"AgentRecommendationArn",
+          "location":"uri",
+          "locationName":"recommendationArn"
+        },
+        "policy":{"shape":"ResourcePolicy"}
+      }
+    },
+    "PutAgentRecommendationPolicyResponse":{
       "type":"structure",
       "members":{}
     },
@@ -6167,6 +7300,12 @@
         "COMPLETED"
       ]
     },
+    "RecommendationStatusList":{
+      "type":"list",
+      "member":{"shape":"RecommendationStatus"},
+      "max":10,
+      "min":0
+    },
     "RecommendationType":{
       "type":"string",
       "enum":[
@@ -6175,10 +7314,16 @@
         "APPLICATION"
       ]
     },
+    "RecommendationTypeList":{
+      "type":"list",
+      "member":{"shape":"RecommendationType"},
+      "max":10,
+      "min":0
+    },
     "RecommendationTypes":{
       "type":"list",
       "member":{"shape":"RecommendationType"},
-      "max":1,
+      "max":2,
       "min":1
     },
     "RecommendedFixStep":{
@@ -6264,6 +7409,11 @@
         "JSON"
       ]
     },
+    "ReportLabel":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
     "ResourceArn":{
       "type":"string",
       "max":250,
@@ -6285,7 +7435,7 @@
     },
     "ResourceLinkUrlString":{
       "type":"string",
-      "max":500,
+      "max":16384,
       "min":10
     },
     "ResourceLinks":{
@@ -6311,6 +7461,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ResourcePolicy":{
+      "type":"string",
+      "max":51200,
+      "min":1,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+"
     },
     "ReviewTemplate":{
       "type":"structure",
@@ -6487,6 +7643,17 @@
       "min":0,
       "pattern":"arn:([a-z\\-]+):iam::\\d{12}:role/(service-role/)?[a-zA-Z0-9+=,.@\\-_]+"
     },
+    "S3BucketArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:[^:]+:s3:::.+"
+    },
+    "S3ObjectKey":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "Scope":{
       "type":"structure",
       "required":["pillars"],
@@ -6523,6 +7690,38 @@
     "SelectedQuestionIds":{
       "type":"list",
       "member":{"shape":"SelectedQuestionId"}
+    },
+    "SendAgentOrganizationalReportDataToS3Request":{
+      "type":"structure",
+      "required":[
+        "reportId",
+        "format",
+        "bucketArn",
+        "objectKey"
+      ],
+      "members":{
+        "reportId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"reportId"
+        },
+        "format":{"shape":"OrganizationalReportFormat"},
+        "bucketArn":{"shape":"S3BucketArn"},
+        "objectKey":{"shape":"S3ObjectKey"}
+      }
+    },
+    "SendAgentOrganizationalReportDataToS3Response":{
+      "type":"structure",
+      "required":["deliveredTo"],
+      "members":{
+        "deliveredTo":{"shape":"String"}
+      }
+    },
+    "SensitiveDocument":{
+      "type":"structure",
+      "members":{},
+      "document":true,
+      "sensitive":true
     },
     "ServiceCode":{"type":"string"},
     "ServiceQuotaExceededException":{
@@ -6630,8 +7829,7 @@
       "type":"structure",
       "required":[
         "profileArn",
-        "types",
-        "scope"
+        "types"
       ],
       "members":{
         "profileArn":{
@@ -6641,7 +7839,7 @@
         },
         "types":{"shape":"RecommendationTypes"},
         "name":{"shape":"StartAgentRecommendationGenerationRequestNameString"},
-        "additionalContext":{"shape":"Document"},
+        "additionalContext":{"shape":"SensitiveDocument"},
         "scope":{"shape":"Scope"}
       }
     },
@@ -6826,6 +8024,13 @@
       },
       "exception":true
     },
+    "TimeWindow":{
+      "type":"structure",
+      "members":{
+        "from":{"shape":"SyntheticTimestamp_date_time"},
+        "to":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
     "Timestamp":{"type":"timestamp"},
     "TradeOff":{
       "type":"structure",
@@ -7001,6 +8206,120 @@
         "goal":{"shape":"GoalSummary"}
       }
     },
+    "UpdateAgentOrganizationalProfileRequest":{
+      "type":"structure",
+      "required":["profileArn"],
+      "members":{
+        "clientToken":{
+          "shape":"UpdateAgentOrganizationalProfileRequestClientTokenString",
+          "idempotencyToken":true
+        },
+        "profileArn":{
+          "shape":"AgentProfileArn",
+          "location":"uri",
+          "locationName":"profileArn"
+        },
+        "displayName":{"shape":"UpdateAgentOrganizationalProfileRequestDisplayNameString"},
+        "description":{"shape":"UpdateAgentOrganizationalProfileRequestDescriptionString"},
+        "businessOverview":{"shape":"UpdateAgentOrganizationalProfileRequestBusinessOverviewString"},
+        "pillars":{"shape":"Pillars"},
+        "deletionProtection":{"shape":"Boolean"},
+        "organizationalAggregationConfiguration":{"shape":"OrganizationalAggregationConfiguration"}
+      }
+    },
+    "UpdateAgentOrganizationalProfileRequestBusinessOverviewString":{
+      "type":"string",
+      "max":512,
+      "min":0,
+      "pattern":"[\\P{C}]*",
+      "sensitive":true
+    },
+    "UpdateAgentOrganizationalProfileRequestClientTokenString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\x21-\\x7E]+"
+    },
+    "UpdateAgentOrganizationalProfileRequestDescriptionString":{
+      "type":"string",
+      "max":512,
+      "min":0,
+      "pattern":"[\\P{C}]*",
+      "sensitive":true
+    },
+    "UpdateAgentOrganizationalProfileRequestDisplayNameString":{
+      "type":"string",
+      "max":128,
+      "min":3,
+      "pattern":"[\\P{C}]+",
+      "sensitive":true
+    },
+    "UpdateAgentOrganizationalProfileResponse":{
+      "type":"structure",
+      "required":[
+        "name",
+        "pillars",
+        "organizationId",
+        "arn",
+        "createdBy",
+        "createdAt"
+      ],
+      "members":{
+        "name":{"shape":"UpdateAgentOrganizationalProfileResponseNameString"},
+        "displayName":{"shape":"UpdateAgentOrganizationalProfileResponseDisplayNameString"},
+        "description":{"shape":"UpdateAgentOrganizationalProfileResponseDescriptionString"},
+        "businessOverview":{"shape":"UpdateAgentOrganizationalProfileResponseBusinessOverviewString"},
+        "pillars":{"shape":"Pillars"},
+        "deletionProtection":{"shape":"Boolean"},
+        "organizationId":{"shape":"String"},
+        "organizationalAggregationConfiguration":{"shape":"OrganizationalAggregationConfiguration"},
+        "arn":{"shape":"AgentProfileArn"},
+        "eligibleForScheduledGeneration":{"shape":"Boolean"},
+        "eligibleForArchitectureGeneration":{"shape":"Boolean"},
+        "fieldErrors":{"shape":"FieldErrors"},
+        "createdBy":{"shape":"UpdateAgentOrganizationalProfileResponseCreatedByString"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "lastModifiedBy":{"shape":"UpdateAgentOrganizationalProfileResponseLastModifiedByString"},
+        "lastModifiedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "UpdateAgentOrganizationalProfileResponseBusinessOverviewString":{
+      "type":"string",
+      "max":512,
+      "min":0,
+      "pattern":"(?:(?!\\$\\{[a-zA-Z]+:)[\\P{C}])*",
+      "sensitive":true
+    },
+    "UpdateAgentOrganizationalProfileResponseCreatedByString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "UpdateAgentOrganizationalProfileResponseDescriptionString":{
+      "type":"string",
+      "max":512,
+      "min":0,
+      "pattern":"(?:(?!\\$\\{[a-zA-Z]+:)[\\P{C}])*",
+      "sensitive":true
+    },
+    "UpdateAgentOrganizationalProfileResponseDisplayNameString":{
+      "type":"string",
+      "max":128,
+      "min":3,
+      "pattern":"(?:(?!\\$\\{[a-zA-Z]+:)[\\P{C}])+",
+      "sensitive":true
+    },
+    "UpdateAgentOrganizationalProfileResponseLastModifiedByString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "UpdateAgentOrganizationalProfileResponseNameString":{
+      "type":"string",
+      "max":128,
+      "min":3,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
     "UpdateAgentProfileRequest":{
       "type":"structure",
       "required":["profileArn"],
@@ -7074,7 +8393,6 @@
         "eligibleForScheduledGeneration":{"shape":"Boolean"},
         "eligibleForArchitectureGeneration":{"shape":"Boolean"},
         "fieldErrors":{"shape":"FieldErrors"},
-        "tags":{"shape":"Tags"},
         "createdBy":{"shape":"UpdateAgentProfileResponseCreatedByString"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "lastModifiedBy":{"shape":"UpdateAgentProfileResponseLastModifiedByString"},

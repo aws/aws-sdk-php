@@ -1,3 +1,3 @@
 <?php
 // This file was auto-generated from sdk-root/src/data/iam-toolbox/2018-05-10/examples-1.json
-return [ 'version' => '1.0', 'examples' => [],];
+return [ 'version' => '1.0', 'examples' => [ 'GetRequestAuthorizationPolicy' => [ [ 'input' => [ 'authorizationId' => '1a2b3c4d5e6f7g8h9i0j1k2l3', 'policyUri' => 'arn:aws:iam::aws:policy/AWSDenyAll', ], 'output' => [ 'policyDocument' => [ 'Statement' => [ [ 'Action' => '*', 'Effect' => 'Deny', 'Resource' => '*', 'Sid' => 'DenyAll', ], ], 'Version' => '2012-10-17', ], ], 'id' => 'example-1', 'title' => 'Retrieve the policy for an explicitly denied request', ], ], ],];

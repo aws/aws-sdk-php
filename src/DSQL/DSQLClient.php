@@ -13,6 +13,7 @@ use Aws\AwsClient;
  *     clientToken?: string,
  *     multiRegionProperties?: array{witnessRegion?: string, clusters?: list<string>, ...},
  *     policy?: string,
+ *     metricGroups?: list<array{metricGroup?: 'STATEMENT_STATISTICS', ...}>,
  *     bypassPolicyLockoutSafetyCheck?: bool,
  *     ...,
  * } $args = [])
@@ -24,6 +25,7 @@ use Aws\AwsClient;
  *     clientToken?: string,
  *     multiRegionProperties?: array{witnessRegion?: string, clusters?: list<string>, ...},
  *     policy?: string,
+ *     metricGroups?: list<array{metricGroup?: 'STATEMENT_STATISTICS', ...}>,
  *     bypassPolicyLockoutSafetyCheck?: bool,
  *     ...,
  * } $args = [])
@@ -120,6 +122,7 @@ use Aws\AwsClient;
  *     kmsEncryptionKey?: string,
  *     clientToken?: string,
  *     multiRegionProperties?: array{witnessRegion?: string, clusters?: list<string>, ...},
+ *     metricGroups?: list<array{metricGroup?: 'STATEMENT_STATISTICS', ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateClusterAsync(array $args = [])
@@ -129,6 +132,7 @@ use Aws\AwsClient;
  *     kmsEncryptionKey?: string,
  *     clientToken?: string,
  *     multiRegionProperties?: array{witnessRegion?: string, clusters?: list<string>, ...},
+ *     metricGroups?: list<array{metricGroup?: 'STATEMENT_STATISTICS', ...}>,
  *     ...,
  * } $args = [])
  */

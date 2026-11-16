@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "examples": {
+    "InvokeInferenceRouter": [
+      {
+        "input": {
+          "Body": "{\"instances\": [[1.0, 2.0, 5.0]]}",
+          "ContentType": "application/json",
+          "InferenceRouterName": "my-router",
+          "RoutingTargetName": "my-target"
+        },
+        "output": {
+          "ContentType": "application/json",
+          "RoutingReason": "local-preferred"
+        },
+        "description": "The following example sends a JSON request to the my-target routing target of the my-router inference router. The response shows that a destination in the router's Region served the request.",
+        "id": "example-1",
+        "title": "Invoke an inference router"
+      }
+    ]
+  }
+}

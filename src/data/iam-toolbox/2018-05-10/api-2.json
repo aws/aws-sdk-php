@@ -29,6 +29,23 @@
         {"shape":"InternalServerException"}
       ],
       "readonly":true
+    },
+    "GetRequestAuthorizationPolicy":{
+      "name":"GetRequestAuthorizationPolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/authorization-details/{authorizationId}/policy",
+        "responseCode":200
+      },
+      "input":{"shape":"GetRequestAuthorizationPolicyInput"},
+      "output":{"shape":"GetRequestAuthorizationPolicyOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
     }
   },
   "shapes":{
@@ -63,9 +80,54 @@
       "key":{"shape":"String"},
       "value":{"shape":"Document"}
     },
+    "AuthorizationId":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[0123456789abcdefghijklmnopqrstuvwxyz]+"
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
+    },
+    "Check":{
+      "type":"structure",
+      "required":[
+        "checkType",
+        "evaluatedEffect"
+      ],
+      "members":{
+        "checkType":{"shape":"CheckType"},
+        "evaluatedEffect":{"shape":"CheckEffect"},
+        "targetArn":{"shape":"String"},
+        "relevantPolicyTypes":{"shape":"PolicyTypeList"},
+        "matchedPolicies":{"shape":"MatchedPolicyList"}
+      }
+    },
+    "CheckEffect":{
+      "type":"string",
+      "enum":[
+        "ALLOW",
+        "NO_IMPACT",
+        "IMPLICIT_DENY",
+        "EXPLICIT_DENY"
+      ]
+    },
+    "CheckList":{
+      "type":"list",
+      "member":{"shape":"Check"}
+    },
+    "CheckType":{
+      "type":"string",
+      "enum":[
+        "SERVICE_CONTROL_POLICY",
+        "RESOURCE_CONTROL_POLICY",
+        "VPC_ENDPOINT",
+        "RESOURCE",
+        "PRINCIPAL",
+        "PERMISSIONS_BOUNDARY",
+        "SESSION"
+      ]
     },
     "Document":{
       "type":"structure",
@@ -91,7 +153,13 @@
         "resource":{"shape":"String"},
         "context":{"shape":"AuthorizationContext"},
         "evaluatedEffect":{"shape":"EvaluatedEffect"},
-        "matchedPolicies":{"shape":"MatchedPolicyList"}
+        "matchedPolicies":{
+          "shape":"MatchedPolicyList",
+          "deprecated":true,
+          "deprecatedMessage":"Use checks, which group matched policies by the requirement they apply to.",
+          "deprecatedSince":"2026-11-13"
+        },
+        "checks":{"shape":"CheckList"}
       }
     },
     "Evaluations":{
@@ -103,7 +171,7 @@
       "required":["authorizationId"],
       "members":{
         "authorizationId":{
-          "shape":"GetRequestAuthorizationDetailsInputAuthorizationIdString",
+          "shape":"AuthorizationId",
           "location":"uri",
           "locationName":"authorizationId"
         },
@@ -113,10 +181,6 @@
           "locationName":"nextToken"
         }
       }
-    },
-    "GetRequestAuthorizationDetailsInputAuthorizationIdString":{
-      "type":"string",
-      "pattern":"[0123456789abcdefghijklmnopqrstuvwxyz]+"
     },
     "GetRequestAuthorizationDetailsOutput":{
       "type":"structure",
@@ -130,6 +194,32 @@
         "evaluations":{"shape":"Evaluations"},
         "policies":{"shape":"PolicyInfoList"},
         "nextToken":{"shape":"String"}
+      }
+    },
+    "GetRequestAuthorizationPolicyInput":{
+      "type":"structure",
+      "required":[
+        "authorizationId",
+        "policyUri"
+      ],
+      "members":{
+        "authorizationId":{
+          "shape":"AuthorizationId",
+          "location":"uri",
+          "locationName":"authorizationId"
+        },
+        "policyUri":{
+          "shape":"PolicyUri",
+          "location":"querystring",
+          "locationName":"policyUri"
+        }
+      }
+    },
+    "GetRequestAuthorizationPolicyOutput":{
+      "type":"structure",
+      "required":["policyDocument"],
+      "members":{
+        "policyDocument":{"shape":"Document"}
       }
     },
     "InternalServerException":{
@@ -171,12 +261,18 @@
         "type":{"shape":"PolicyType"},
         "inline":{"shape":"Boolean"},
         "uri":{"shape":"String"},
-        "attachedTo":{"shape":"AttachedToList"}
+        "attachedTo":{"shape":"AttachedToList"},
+        "policySource":{"shape":"PolicySource"}
       }
     },
     "PolicyInfoList":{
       "type":"list",
       "member":{"shape":"PolicyInfo"}
+    },
+    "PolicySource":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
     },
     "PolicyType":{
       "type":"string",
@@ -189,6 +285,15 @@
         "RESOURCE_CONTROL_POLICY",
         "VPC_ENDPOINT_POLICY"
       ]
+    },
+    "PolicyTypeList":{
+      "type":"list",
+      "member":{"shape":"PolicyType"}
+    },
+    "PolicyUri":{
+      "type":"string",
+      "max":2048,
+      "min":1
     },
     "ResourceNotFoundException":{
       "type":"structure",

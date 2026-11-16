@@ -32,6 +32,25 @@
       ],
       "idempotent":true
     },
+    "CreatePerformanceMonitor":{
+      "name":"CreatePerformanceMonitor",
+      "http":{
+        "method":"POST",
+        "requestUri":"/performance-monitors",
+        "responseCode":201
+      },
+      "input":{"shape":"CreatePerformanceMonitorInput"},
+      "output":{"shape":"CreatePerformanceMonitorOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "CreateScope":{
       "name":"CreateScope",
       "http":{
@@ -60,6 +79,25 @@
       },
       "input":{"shape":"DeleteMonitorInput"},
       "output":{"shape":"DeleteMonitorOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeletePerformanceMonitor":{
+      "name":"DeletePerformanceMonitor",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/performance-monitors/{monitorName}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeletePerformanceMonitorInput"},
+      "output":{"shape":"DeletePerformanceMonitorOutput"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
@@ -108,6 +146,42 @@
       ],
       "readonly":true
     },
+    "GetMonitorScopeSuggestions":{
+      "name":"GetMonitorScopeSuggestions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/monitor-scope-suggestions",
+        "responseCode":200
+      },
+      "input":{"shape":"GetMonitorScopeSuggestionsInput"},
+      "output":{"shape":"GetMonitorScopeSuggestionsOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetPerformanceMonitor":{
+      "name":"GetPerformanceMonitor",
+      "http":{
+        "method":"GET",
+        "requestUri":"/performance-monitors/{monitorName}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPerformanceMonitorInput"},
+      "output":{"shape":"GetPerformanceMonitorOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "GetQueryResultsMonitorTopContributors":{
       "name":"GetQueryResultsMonitorTopContributors",
       "http":{
@@ -117,6 +191,25 @@
       },
       "input":{"shape":"GetQueryResultsMonitorTopContributorsInput"},
       "output":{"shape":"GetQueryResultsMonitorTopContributorsOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetQueryResultsPerformanceMonitor":{
+      "name":"GetQueryResultsPerformanceMonitor",
+      "http":{
+        "method":"GET",
+        "requestUri":"/performance-monitors/{monitorName}/queries/{queryId}/results",
+        "responseCode":200
+      },
+      "input":{"shape":"GetQueryResultsPerformanceMonitorInput"},
+      "output":{"shape":"GetQueryResultsPerformanceMonitorOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
@@ -176,6 +269,25 @@
       "output":{"shape":"GetQueryStatusMonitorTopContributorsOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetQueryStatusPerformanceMonitor":{
+      "name":"GetQueryStatusPerformanceMonitor",
+      "http":{
+        "method":"GET",
+        "requestUri":"/performance-monitors/{monitorName}/queries/{queryId}/status",
+        "responseCode":200
+      },
+      "input":{"shape":"GetQueryStatusPerformanceMonitorInput"},
+      "output":{"shape":"GetQueryStatusPerformanceMonitorOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -255,6 +367,23 @@
       ],
       "readonly":true
     },
+    "ListPerformanceMonitors":{
+      "name":"ListPerformanceMonitors",
+      "http":{
+        "method":"GET",
+        "requestUri":"/performance-monitors",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPerformanceMonitorsInput"},
+      "output":{"shape":"ListPerformanceMonitorsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListScopes":{
       "name":"ListScopes",
       "http":{
@@ -309,6 +438,24 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "StartQueryPerformanceMonitor":{
+      "name":"StartQueryPerformanceMonitor",
+      "http":{
+        "method":"POST",
+        "requestUri":"/performance-monitors/{monitorName}/queries",
+        "responseCode":200
+      },
+      "input":{"shape":"StartQueryPerformanceMonitorInput"},
+      "output":{"shape":"StartQueryPerformanceMonitorOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "StartQueryWorkloadInsightsTopContributors":{
       "name":"StartQueryWorkloadInsightsTopContributors",
       "http":{
@@ -356,6 +503,25 @@
       "output":{"shape":"StopQueryMonitorTopContributorsOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "StopQueryPerformanceMonitor":{
+      "name":"StopQueryPerformanceMonitor",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/performance-monitors/{monitorName}/queries/{queryId}",
+        "responseCode":200
+      },
+      "input":{"shape":"StopQueryPerformanceMonitorInput"},
+      "output":{"shape":"StopQueryPerformanceMonitorOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -455,6 +621,26 @@
       ],
       "idempotent":true
     },
+    "UpdatePerformanceMonitor":{
+      "name":"UpdatePerformanceMonitor",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/performance-monitors/{monitorName}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdatePerformanceMonitorInput"},
+      "output":{"shape":"UpdatePerformanceMonitorOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "UpdateScope":{
       "name":"UpdateScope",
       "http":{
@@ -494,6 +680,30 @@
       "min":1,
       "pattern":"[0-9]{12}"
     },
+    "AccountToAdd":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "region",
+        "membership"
+      ],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "region":{"shape":"AwsRegion"},
+        "membership":{"shape":"OrgMembershipStatus"}
+      }
+    },
+    "AccountToAddList":{
+      "type":"list",
+      "member":{"shape":"AccountToAdd"}
+    },
+    "AdditionalFlowInfo":{
+      "type":"structure",
+      "members":{
+        "network":{"shape":"Network"},
+        "clientLocation":{"shape":"ClientLocation"}
+      }
+    },
     "Arn":{
       "type":"string",
       "max":2048,
@@ -502,6 +712,14 @@
     },
     "AvailabilityZone":{"type":"string"},
     "AwsRegion":{"type":"string"},
+    "ClientLocation":{
+      "type":"structure",
+      "members":{
+        "city":{"shape":"String"},
+        "subdivision":{"shape":"String"},
+        "country":{"shape":"String"}
+      }
+    },
     "Component":{"type":"string"},
     "ComponentType":{"type":"string"},
     "ConflictException":{
@@ -561,6 +779,51 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "CreatePerformanceMonitorInput":{
+      "type":"structure",
+      "required":[
+        "monitorName",
+        "targets"
+      ],
+      "members":{
+        "monitorName":{"shape":"ResourceName"},
+        "scopeArn":{"shape":"Arn"},
+        "targets":{"shape":"CreatePerformanceMonitorInputTargetsList"},
+        "clientToken":{
+          "shape":"UuidString",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreatePerformanceMonitorInputTargetsList":{
+      "type":"list",
+      "member":{"shape":"PerformanceMonitorTarget"},
+      "max":100,
+      "min":1
+    },
+    "CreatePerformanceMonitorOutput":{
+      "type":"structure",
+      "required":[
+        "monitorArn",
+        "monitorName",
+        "monitorStatus",
+        "monitorType",
+        "targets",
+        "createdAt",
+        "modifiedAt"
+      ],
+      "members":{
+        "monitorArn":{"shape":"MonitorArn"},
+        "monitorName":{"shape":"ResourceName"},
+        "monitorStatus":{"shape":"MonitorStatus"},
+        "monitorType":{"shape":"PerformanceMonitorType"},
+        "targets":{"shape":"PerformanceMonitorTargets"},
+        "createdAt":{"shape":"Iso8601Timestamp"},
+        "modifiedAt":{"shape":"Iso8601Timestamp"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
     "CreateScopeInput":{
       "type":"structure",
       "required":["targets"],
@@ -576,7 +839,7 @@
     "CreateScopeInputTargetsList":{
       "type":"list",
       "member":{"shape":"TargetResource"},
-      "max":100,
+      "max":1000,
       "min":1
     },
     "CreateScopeOutput":{
@@ -608,6 +871,21 @@
       "type":"structure",
       "members":{}
     },
+    "DeletePerformanceMonitorInput":{
+      "type":"structure",
+      "required":["monitorName"],
+      "members":{
+        "monitorName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"monitorName"
+        }
+      }
+    },
+    "DeletePerformanceMonitorOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteScopeInput":{
       "type":"structure",
       "required":["scopeId"],
@@ -632,12 +910,50 @@
         "UNCLASSIFIED",
         "AMAZON_S3",
         "AMAZON_DYNAMODB",
-        "INTER_REGION"
+        "INTER_REGION",
+        "INTERNET",
+        "AWS_SERVICE",
+        "LOCAL_ZONE",
+        "TRANSIT_GATEWAY"
       ]
     },
     "Double":{
       "type":"double",
       "box":true
+    },
+    "FilterOperator":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "NOT_EQUALS",
+        "IN",
+        "CONTAINS"
+      ]
+    },
+    "FilterParameter":{
+      "type":"structure",
+      "required":[
+        "field",
+        "operator",
+        "values"
+      ],
+      "members":{
+        "field":{"shape":"String"},
+        "operator":{"shape":"FilterOperator"},
+        "values":{"shape":"FilterParameterValuesList"}
+      }
+    },
+    "FilterParameterValuesList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":10,
+      "min":1
+    },
+    "FilterParameters":{
+      "type":"list",
+      "member":{"shape":"FilterParameter"},
+      "max":10,
+      "min":0
     },
     "GetMonitorInput":{
       "type":"structure",
@@ -667,6 +983,73 @@
         "monitorStatus":{"shape":"MonitorStatus"},
         "localResources":{"shape":"MonitorLocalResources"},
         "remoteResources":{"shape":"MonitorRemoteResources"},
+        "createdAt":{"shape":"Iso8601Timestamp"},
+        "modifiedAt":{"shape":"Iso8601Timestamp"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "GetMonitorScopeSuggestionsInput":{
+      "type":"structure",
+      "required":["monitorArn"],
+      "members":{
+        "monitorArn":{
+          "shape":"MonitorArn",
+          "location":"querystring",
+          "locationName":"monitorArn"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetMonitorScopeSuggestionsOutput":{
+      "type":"structure",
+      "required":[
+        "status",
+        "accountsToAdd"
+      ],
+      "members":{
+        "status":{"shape":"ScopeCoverageStatus"},
+        "accountsToAdd":{"shape":"AccountToAddList"},
+        "nextToken":{"shape":"String"},
+        "updatedAt":{"shape":"Iso8601Timestamp"}
+      }
+    },
+    "GetPerformanceMonitorInput":{
+      "type":"structure",
+      "required":["monitorName"],
+      "members":{
+        "monitorName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"monitorName"
+        }
+      }
+    },
+    "GetPerformanceMonitorOutput":{
+      "type":"structure",
+      "required":[
+        "monitorArn",
+        "monitorName",
+        "monitorStatus",
+        "monitorType",
+        "targets",
+        "createdAt",
+        "modifiedAt"
+      ],
+      "members":{
+        "monitorArn":{"shape":"MonitorArn"},
+        "monitorName":{"shape":"ResourceName"},
+        "monitorStatus":{"shape":"MonitorStatus"},
+        "monitorType":{"shape":"PerformanceMonitorType"},
+        "targets":{"shape":"PerformanceMonitorTargets"},
         "createdAt":{"shape":"Iso8601Timestamp"},
         "modifiedAt":{"shape":"Iso8601Timestamp"},
         "tags":{"shape":"TagMap"}
@@ -706,6 +1089,47 @@
       "members":{
         "unit":{"shape":"MetricUnit"},
         "topContributors":{"shape":"MonitorTopContributorsRowList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "GetQueryResultsPerformanceMonitorInput":{
+      "type":"structure",
+      "required":[
+        "monitorName",
+        "queryId"
+      ],
+      "members":{
+        "monitorName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"monitorName"
+        },
+        "queryId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"queryId"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"QueryMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "GetQueryResultsPerformanceMonitorOutput":{
+      "type":"structure",
+      "required":[
+        "fields",
+        "data"
+      ],
+      "members":{
+        "fields":{"shape":"QueryFields"},
+        "data":{"shape":"QueryData"},
         "nextToken":{"shape":"String"}
       }
     },
@@ -806,6 +1230,32 @@
       }
     },
     "GetQueryStatusMonitorTopContributorsOutput":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"QueryStatus"}
+      }
+    },
+    "GetQueryStatusPerformanceMonitorInput":{
+      "type":"structure",
+      "required":[
+        "monitorName",
+        "queryId"
+      ],
+      "members":{
+        "monitorName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"monitorName"
+        },
+        "queryId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"queryId"
+        }
+      }
+    },
+    "GetQueryStatusPerformanceMonitorOutput":{
       "type":"structure",
       "required":["status"],
       "members":{
@@ -957,6 +1407,39 @@
       "required":["monitors"],
       "members":{
         "monitors":{"shape":"MonitorList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListPerformanceMonitorsInput":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "monitorStatus":{
+          "shape":"MonitorStatus",
+          "location":"querystring",
+          "locationName":"monitorStatus"
+        },
+        "monitorType":{
+          "shape":"PerformanceMonitorType",
+          "location":"querystring",
+          "locationName":"monitorType"
+        }
+      }
+    },
+    "ListPerformanceMonitorsOutput":{
+      "type":"structure",
+      "required":["monitors"],
+      "members":{
+        "monitors":{"shape":"PerformanceMonitorSummaryList"},
         "nextToken":{"shape":"String"}
       }
     },
@@ -1161,12 +1644,117 @@
         "localVpcArn":{"shape":"VpcArn"},
         "remoteInstanceArn":{"shape":"InstanceArn"},
         "remoteSubnetArn":{"shape":"SubnetArn"},
-        "remoteVpcArn":{"shape":"VpcArn"}
+        "remoteVpcArn":{"shape":"VpcArn"},
+        "additionalFlowInfo":{"shape":"AdditionalFlowInfo"}
       }
     },
     "MonitorTopContributorsRowList":{
       "type":"list",
       "member":{"shape":"MonitorTopContributorsRow"}
+    },
+    "Network":{
+      "type":"structure",
+      "members":{
+        "asName":{"shape":"String"},
+        "asNumber":{"shape":"Long"}
+      }
+    },
+    "OrgMembershipStatus":{
+      "type":"string",
+      "enum":[
+        "IN_ORG",
+        "NOT_IN_ORG",
+        "UNKNOWN"
+      ]
+    },
+    "PerformanceMonitorQueryType":{
+      "type":"string",
+      "enum":["TOP_PATHS"]
+    },
+    "PerformanceMonitorSummary":{
+      "type":"structure",
+      "required":[
+        "monitorArn",
+        "monitorName",
+        "monitorStatus",
+        "monitorType"
+      ],
+      "members":{
+        "monitorArn":{"shape":"MonitorArn"},
+        "monitorName":{"shape":"ResourceName"},
+        "monitorStatus":{"shape":"MonitorStatus"},
+        "monitorType":{"shape":"PerformanceMonitorType"},
+        "targets":{"shape":"PerformanceMonitorTargets"}
+      }
+    },
+    "PerformanceMonitorSummaryList":{
+      "type":"list",
+      "member":{"shape":"PerformanceMonitorSummary"}
+    },
+    "PerformanceMonitorTarget":{
+      "type":"structure",
+      "required":[
+        "type",
+        "identifier"
+      ],
+      "members":{
+        "type":{"shape":"PerformanceMonitorTargetType"},
+        "identifier":{"shape":"PerformanceMonitorTargetIdentifierString"}
+      }
+    },
+    "PerformanceMonitorTargetIdentifierString":{
+      "type":"string",
+      "max":128,
+      "min":20,
+      "pattern":"arn:.*"
+    },
+    "PerformanceMonitorTargetType":{
+      "type":"string",
+      "enum":["AWS::EC2::VPC"]
+    },
+    "PerformanceMonitorTargets":{
+      "type":"list",
+      "member":{"shape":"PerformanceMonitorTarget"}
+    },
+    "PerformanceMonitorType":{
+      "type":"string",
+      "enum":["VPC"]
+    },
+    "QueryData":{
+      "type":"list",
+      "member":{"shape":"QueryRow"}
+    },
+    "QueryField":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type"
+      ],
+      "members":{
+        "name":{"shape":"String"},
+        "type":{"shape":"String"}
+      }
+    },
+    "QueryFields":{
+      "type":"list",
+      "member":{"shape":"QueryField"}
+    },
+    "QueryLimit":{
+      "type":"integer",
+      "box":true,
+      "max":500,
+      "min":1
+    },
+    "QueryMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":500,
+      "min":1
+    },
+    "QueryRow":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "sparse":true
     },
     "QueryStatus":{
       "type":"string",
@@ -1194,6 +1782,15 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ScopeCoverageStatus":{
+      "type":"string",
+      "enum":[
+        "COMPLETE",
+        "INCOMPLETE",
+        "PENDING",
+        "STALE"
+      ]
     },
     "ScopeId":{"type":"string"},
     "ScopeStatus":{
@@ -1257,6 +1854,34 @@
       }
     },
     "StartQueryMonitorTopContributorsOutput":{
+      "type":"structure",
+      "required":["queryId"],
+      "members":{
+        "queryId":{"shape":"String"}
+      }
+    },
+    "StartQueryPerformanceMonitorInput":{
+      "type":"structure",
+      "required":[
+        "monitorName",
+        "startTime",
+        "endTime",
+        "queryType"
+      ],
+      "members":{
+        "monitorName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"monitorName"
+        },
+        "startTime":{"shape":"SyntheticTimestamp_date_time"},
+        "endTime":{"shape":"SyntheticTimestamp_date_time"},
+        "queryType":{"shape":"PerformanceMonitorQueryType"},
+        "filterParameters":{"shape":"FilterParameters"},
+        "limit":{"shape":"QueryLimit"}
+      }
+    },
+    "StartQueryPerformanceMonitorOutput":{
       "type":"structure",
       "required":["queryId"],
       "members":{
@@ -1340,6 +1965,29 @@
       }
     },
     "StopQueryMonitorTopContributorsOutput":{
+      "type":"structure",
+      "members":{}
+    },
+    "StopQueryPerformanceMonitorInput":{
+      "type":"structure",
+      "required":[
+        "monitorName",
+        "queryId"
+      ],
+      "members":{
+        "monitorName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"monitorName"
+        },
+        "queryId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"queryId"
+        }
+      }
+    },
+    "StopQueryPerformanceMonitorOutput":{
       "type":"structure",
       "members":{}
     },
@@ -1567,6 +2215,57 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "UpdatePerformanceMonitorInput":{
+      "type":"structure",
+      "required":["monitorName"],
+      "members":{
+        "monitorName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"monitorName"
+        },
+        "targetsToAdd":{"shape":"UpdatePerformanceMonitorInputTargetsToAddList"},
+        "targetsToRemove":{"shape":"UpdatePerformanceMonitorInputTargetsToRemoveList"},
+        "clientToken":{
+          "shape":"UuidString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdatePerformanceMonitorInputTargetsToAddList":{
+      "type":"list",
+      "member":{"shape":"PerformanceMonitorTarget"},
+      "max":100,
+      "min":0
+    },
+    "UpdatePerformanceMonitorInputTargetsToRemoveList":{
+      "type":"list",
+      "member":{"shape":"PerformanceMonitorTarget"},
+      "max":100,
+      "min":0
+    },
+    "UpdatePerformanceMonitorOutput":{
+      "type":"structure",
+      "required":[
+        "monitorArn",
+        "monitorName",
+        "monitorStatus",
+        "monitorType",
+        "targets",
+        "createdAt",
+        "modifiedAt"
+      ],
+      "members":{
+        "monitorArn":{"shape":"MonitorArn"},
+        "monitorName":{"shape":"ResourceName"},
+        "monitorStatus":{"shape":"MonitorStatus"},
+        "monitorType":{"shape":"PerformanceMonitorType"},
+        "targets":{"shape":"PerformanceMonitorTargets"},
+        "createdAt":{"shape":"Iso8601Timestamp"},
+        "modifiedAt":{"shape":"Iso8601Timestamp"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
     "UpdateScopeInput":{
       "type":"structure",
       "required":["scopeId"],
@@ -1583,13 +2282,13 @@
     "UpdateScopeInputResourcesToAddList":{
       "type":"list",
       "member":{"shape":"TargetResource"},
-      "max":99,
+      "max":1000,
       "min":1
     },
     "UpdateScopeInputResourcesToDeleteList":{
       "type":"list",
       "member":{"shape":"TargetResource"},
-      "max":99,
+      "max":1000,
       "min":1
     },
     "UpdateScopeOutput":{

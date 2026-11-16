@@ -364,9 +364,23 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listDataCatalogsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listDataCatalogsAsync(array{NextToken?: string, MaxResults?: int, WorkGroup?: string, ...} $args = [])
  * @method \Aws\Result listDatabases(array $args = [])
- * @phpstan-method \Aws\Result listDatabases(array{CatalogName?: string, NextToken?: string, MaxResults?: int, WorkGroup?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result listDatabases(array{
+ *     CatalogName?: string,
+ *     NextToken?: string,
+ *     MaxResults?: int,
+ *     WorkGroup?: string,
+ *     AttributesToGet?: list<'NAME'>,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listDatabasesAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listDatabasesAsync(array{CatalogName?: string, NextToken?: string, MaxResults?: int, WorkGroup?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listDatabasesAsync(array{
+ *     CatalogName?: string,
+ *     NextToken?: string,
+ *     MaxResults?: int,
+ *     WorkGroup?: string,
+ *     AttributesToGet?: list<'NAME'>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listEngineVersions(array $args = [])
  * @phpstan-method \Aws\Result listEngineVersions(array{NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listEngineVersionsAsync(array $args = [])
@@ -435,6 +449,7 @@ use Aws\AwsClient;
  *     NextToken?: string,
  *     MaxResults?: int,
  *     WorkGroup?: string,
+ *     AttributesToGet?: list<'NAME'|'TABLE_TYPE'>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listTableMetadataAsync(array $args = [])
@@ -445,6 +460,7 @@ use Aws\AwsClient;
  *     NextToken?: string,
  *     MaxResults?: int,
  *     WorkGroup?: string,
+ *     AttributesToGet?: list<'NAME'|'TABLE_TYPE'>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])

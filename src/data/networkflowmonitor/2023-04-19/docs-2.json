@@ -3,29 +3,39 @@
   "service": "<p>Network Flow Monitor is a feature of Amazon CloudWatch Network Monitoring that provides visibility into the performance of network flows for your Amazon Web Services workloads, between instances in subnets, as well as to and from Amazon Web Services. Lightweight agents that you install on the instances capture performance metrics for your network flows, such as packet loss and latency, and send them to the Network Flow Monitor backend. Then, you can view and analyze metrics from the top contributors for each metric type, to help troubleshoot issues.</p> <p>In addition, when you create a monitor, Network Flow Monitor provides a network health indicator (NHI) that informs you whether there were Amazon Web Services network issues for one or more of the network flows tracked by a monitor, during a time period that you choose. By using this value, you can independently determine if the Amazon Web Services network is impacting your workload during a specific time frame, to help you focus troubleshooting efforts.</p> <p>To learn more about Network Flow Monitor, see the <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-NetworkFlowMonitor.html\">Network Flow Monitor User Guide</a> in the Amazon CloudWatch User Guide.</p>",
   "operations": {
     "CreateMonitor": "<p>Create a monitor for specific network flows between local and remote resources, so that you can monitor network performance for one or several of your workloads. For each monitor, Network Flow Monitor publishes detailed end-to-end performance metrics and a network health indicator (NHI) that informs you whether there were Amazon Web Services network issues for one or more of the network flows tracked by a monitor, during a time period that you choose. </p>",
+    "CreatePerformanceMonitor": "<p>Create a performance monitor to monitor the traffic of the Amazon Virtual Private Clouds (VPCs) that you specify as targets, to determine whether the Amazon Web Services network is causing issues for your workloads. With a performance monitor, you can identify network degradation across paths between Availability Zones and across Amazon Web Services Regions.</p>",
     "CreateScope": "<p>In Network Flow Monitor, you specify a scope for the service to generate metrics for. By using the scope, Network Flow Monitor can generate a topology of all the resources to measure performance metrics for. When you create a scope, you enable permissions for Network Flow Monitor.</p> <p>A scope is a Region-account pair or multiple Region-account pairs. Network Flow Monitor uses your scope to determine all the resources (the topology) where Network Flow Monitor will gather network flow performance metrics for you. To provide performance metrics, Network Flow Monitor uses the data that is sent by the Network Flow Monitor agents you install on the resources.</p> <p>To define the Region-account pairs for your scope, the Network Flow Monitor API uses the following constucts, which allow for future flexibility in defining scopes:</p> <ul> <li> <p> <i>Targets</i>, which are arrays of targetResources.</p> </li> <li> <p> <i>Target resources</i>, which are Region-targetIdentifier pairs.</p> </li> <li> <p> <i>Target identifiers</i>, made up of a targetID (currently always an account ID) and a targetType (currently always an account). </p> </li> </ul>",
     "DeleteMonitor": "<p>Deletes a monitor in Network Flow Monitor.</p>",
+    "DeletePerformanceMonitor": "<p>Delete a performance monitor. Network Flow Monitor stops tracking network performance for the resources that the monitor included.</p>",
     "DeleteScope": "<p>Deletes a scope that has been defined.</p>",
     "GetMonitor": "<p>Gets information about a monitor in Network Flow Monitor based on a monitor name. The information returned includes the Amazon Resource Name (ARN), create time, modified time, resources included in the monitor, and status information.</p>",
+    "GetMonitorScopeSuggestions": "<p>Returns the accounts that are sending traffic to, or receiving traffic from, resources in a monitor, but that aren't included in the monitoring scope for the monitor. By adding the suggested accounts to your scope, you enable Network Flow Monitor to resolve the network paths for that traffic.</p>",
+    "GetPerformanceMonitor": "<p>Returns information about a performance monitor, including the resources that it monitors, its status, and the tags for the monitor.</p>",
     "GetQueryResultsMonitorTopContributors": "<p>Return the data for a query with the Network Flow Monitor query interface. You specify the query that you want to return results for by providing a query ID and a monitor name. This query returns the top contributors for a specific monitor.</p> <p>Create a query ID for this call by calling the corresponding API call to start the query, <code>StartQueryMonitorTopContributors</code>. Use the scope ID that was returned for your account by <code>CreateScope</code>.</p> <p>Top contributors in Network Flow Monitor are network flows with the highest values for a specific metric type. Top contributors can be across all workload insights, for a given scope, or for a specific monitor. Use the applicable call for the top contributors that you want to be returned.</p>",
+    "GetQueryResultsPerformanceMonitor": "<p>Returns the results of a query for the Network Flow Monitor query interface, for a specified query ID and performance monitor. This call returns the top paths for a performance monitor.</p> <p>Create a query with <a href=\"https://docs.aws.amazon.com/networkflowmonitor/2.0/APIReference/API_StartQueryPerformanceMonitor.html\"> StartQueryPerformanceMonitor</a>, and then use the query ID with this call to return the results.</p>",
     "GetQueryResultsWorkloadInsightsTopContributors": "<p>Return the data for a query with the Network Flow Monitor query interface. You specify the query that you want to return results for by providing a query ID and a monitor name.</p> <p>This query returns the top contributors for a scope for workload insights. Workload insights provide a high level view of network flow performance data collected by agents. To return the data for the top contributors, see <code>GetQueryResultsWorkloadInsightsTopContributorsData</code>.</p> <p>Create a query ID for this call by calling the corresponding API call to start the query, <code>StartQueryWorkloadInsightsTopContributors</code>. Use the scope ID that was returned for your account by <code>CreateScope</code>.</p> <p>Top contributors in Network Flow Monitor are network flows with the highest values for a specific metric type. Top contributors can be across all workload insights, for a given scope, or for a specific monitor. Use the applicable call for the top contributors that you want to be returned.</p>",
     "GetQueryResultsWorkloadInsightsTopContributorsData": "<p>Return the data for a query with the Network Flow Monitor query interface. Specify the query that you want to return results for by providing a query ID and a scope ID.</p> <p>This query returns the data for top contributors for workload insights for a specific scope. Workload insights provide a high level view of network flow performance data collected by agents for a scope. To return just the top contributors, see <code>GetQueryResultsWorkloadInsightsTopContributors</code>.</p> <p>Create a query ID for this call by calling the corresponding API call to start the query, <code>StartQueryWorkloadInsightsTopContributorsData</code>. Use the scope ID that was returned for your account by <code>CreateScope</code>.</p> <p>Top contributors in Network Flow Monitor are network flows with the highest values for a specific metric type. Top contributors can be across all workload insights, for a given scope, or for a specific monitor. Use the applicable call for the top contributors that you want to be returned.</p> <p>The top contributor network flows overall are for a specific metric type, for example, the number of retransmissions.</p>",
     "GetQueryStatusMonitorTopContributors": "<p>Returns the current status of a query for the Network Flow Monitor query interface, for a specified query ID and monitor. This call returns the query status for the top contributors for a monitor.</p> <p>When you create a query, use this call to check the status of the query to make sure that it has has <code>SUCCEEDED</code> before you review the results. Use the same query ID that you used for the corresponding API call to start (create) the query, <code>StartQueryMonitorTopContributors</code>.</p> <p>When you run a query, use this call to check the status of the query to make sure that the query has <code>SUCCEEDED</code> before you review the results.</p>",
+    "GetQueryStatusPerformanceMonitor": "<p>Returns the current status of a query for the Network Flow Monitor query interface, for a specified query ID and performance monitor. This call returns the query status for the top paths for a performance monitor.</p> <p>When you run a query, use this call to check the status of the query to make sure that the query has <code>SUCCEEDED</code> before you review the results. Use the same query ID that you used for the corresponding API call to start (create) the query, <code>StartQueryPerformanceMonitor</code>.</p>",
     "GetQueryStatusWorkloadInsightsTopContributors": "<p>Return the data for a query with the Network Flow Monitor query interface. Specify the query that you want to return results for by providing a query ID and a monitor name. This query returns the top contributors for workload insights.</p> <p>When you start a query, use this call to check the status of the query to make sure that it has has <code>SUCCEEDED</code> before you review the results. Use the same query ID that you used for the corresponding API call to start the query, <code>StartQueryWorkloadInsightsTopContributors</code>.</p> <p>Top contributors in Network Flow Monitor are network flows with the highest values for a specific metric type. Top contributors can be across all workload insights, for a given scope, or for a specific monitor. Use the applicable call for the top contributors that you want to be returned.</p>",
     "GetQueryStatusWorkloadInsightsTopContributorsData": "<p>Returns the current status of a query for the Network Flow Monitor query interface, for a specified query ID and monitor. This call returns the query status for the top contributors data for workload insights.</p> <p>When you start a query, use this call to check the status of the query to make sure that it has has <code>SUCCEEDED</code> before you review the results. Use the same query ID that you used for the corresponding API call to start the query, <code>StartQueryWorkloadInsightsTopContributorsData</code>.</p> <p>Top contributors in Network Flow Monitor are network flows with the highest values for a specific metric type. Top contributors can be across all workload insights, for a given scope, or for a specific monitor. Use the applicable call for the top contributors that you want to be returned.</p> <p>The top contributor network flows overall are for a specific metric type, for example, the number of retransmissions.</p>",
     "GetScope": "<p>Gets information about a scope, including the name, status, tags, and target details. The scope in Network Flow Monitor is an account.</p>",
     "ListMonitors": "<p>List all monitors in an account. Optionally, you can list only monitors that have a specific status, by using the <code>STATUS</code> parameter.</p>",
+    "ListPerformanceMonitors": "<p>Returns a list of the performance monitors in an account. You can optionally return only the monitors that have a specific status or type.</p> <p>Results are paginated. Use the <code>nextToken</code> parameter to return additional results.</p>",
     "ListScopes": "<p>List all the scopes for an account.</p>",
     "ListTagsForResource": "<p>Returns all the tags for a resource.</p>",
     "StartQueryMonitorTopContributors": "<p>Create a query that you can use with the Network Flow Monitor query interface to return the top contributors for a monitor. Specify the monitor that you want to create the query for. </p> <p>The call returns a query ID that you can use with <a href=\"https://docs.aws.amazon.com/networkflowmonitor/2.0/APIReference/API_GetQueryResultsMonitorTopContributors.html\"> GetQueryResultsMonitorTopContributors</a> to run the query and return the top contributors for a specific monitor.</p> <p>Top contributors in Network Flow Monitor are network flows with the highest values for a specific metric type. Top contributors can be across all workload insights, for a given scope, or for a specific monitor. Use the applicable APIs for the top contributors that you want to be returned.</p>",
+    "StartQueryPerformanceMonitor": "<p>Create a query that you can use with the Network Flow Monitor query interface to return the top paths for a performance monitor. Specify the performance monitor that you want to create the query for.</p> <p>The call returns a query ID that you can use with <a href=\"https://docs.aws.amazon.com/networkflowmonitor/2.0/APIReference/API_GetQueryResultsPerformanceMonitor.html\"> GetQueryResultsPerformanceMonitor</a> to return the results of the query.</p> <p>Top paths in Network Flow Monitor are the network paths used by the traffic for the resources that a performance monitor tracks, ranked by impact score and then by traffic volume. Each path includes the traffic and round-trip time for the path, together with a breakdown of the subnet pairs that the path includes.</p>",
     "StartQueryWorkloadInsightsTopContributors": "<p>Create a query with the Network Flow Monitor query interface that you can run to return workload insights top contributors. Specify the scope that you want to create a query for.</p> <p>The call returns a query ID that you can use with <a href=\"https://docs.aws.amazon.com/networkflowmonitor/2.0/APIReference/API_GetQueryResultsWorkloadInsightsTopContributors.html\"> GetQueryResultsWorkloadInsightsTopContributors</a> to run the query and return the top contributors for the workload insights for a scope.</p> <p>Top contributors in Network Flow Monitor are network flows with the highest values for a specific metric type. Top contributors can be across all workload insights, for a given scope, or for a specific monitor. Use the applicable APIs for the top contributors that you want to be returned.</p>",
     "StartQueryWorkloadInsightsTopContributorsData": "<p>Create a query with the Network Flow Monitor query interface that you can run to return data for workload insights top contributors. Specify the scope that you want to create a query for.</p> <p>The call returns a query ID that you can use with <a href=\"https://docs.aws.amazon.com/networkflowmonitor/2.0/APIReference/API_GetQueryResultsWorkloadInsightsTopContributorsData.html\"> GetQueryResultsWorkloadInsightsTopContributorsData</a> to run the query and return the data for the top contributors for the workload insights for a scope.</p> <p>Top contributors in Network Flow Monitor are network flows with the highest values for a specific metric type. Top contributors can be across all workload insights, for a given scope, or for a specific monitor. Use the applicable call for the top contributors that you want to be returned.</p>",
     "StopQueryMonitorTopContributors": "<p>Stop a top contributors query for a monitor. Specify the query that you want to stop by providing a query ID and a monitor name. </p> <p>Top contributors in Network Flow Monitor are network flows with the highest values for a specific metric type. Top contributors can be across all workload insights, for a given scope, or for a specific monitor. Use the applicable call for the top contributors that you want to be returned.</p>",
+    "StopQueryPerformanceMonitor": "<p>Stop a query for the Network Flow Monitor query interface, for a specified query ID and performance monitor. Use the same query ID that you used for the corresponding API call to start the query, <code>StartQueryPerformanceMonitor</code>.</p>",
     "StopQueryWorkloadInsightsTopContributors": "<p>Stop a top contributors query for workload insights. Specify the query that you want to stop by providing a query ID and a scope ID. </p> <p>Top contributors in Network Flow Monitor are network flows with the highest values for a specific metric type. Top contributors can be across all workload insights, for a given scope, or for a specific monitor. Use the applicable call for the top contributors that you want to be returned.</p>",
     "StopQueryWorkloadInsightsTopContributorsData": "<p>Stop a top contributors data query for workload insights. Specify the query that you want to stop by providing a query ID and a scope ID. </p> <p>Top contributors in Network Flow Monitor are network flows with the highest values for a specific metric type. Top contributors can be across all workload insights, for a given scope, or for a specific monitor. Use the applicable call for the top contributors that you want to be returned.</p>",
     "TagResource": "<p>Adds a tag to a resource.</p>",
     "UntagResource": "<p>Removes a tag from a resource.</p>",
     "UpdateMonitor": "<p>Update a monitor to add or remove local or remote resources.</p>",
+    "UpdatePerformanceMonitor": "<p>Update a performance monitor, to add or remove the resources that the monitor tracks network performance for.</p>",
     "UpdateScope": "<p>Update a scope to add or remove resources that you want to be available for Network Flow Monitor to generate metrics for, when you have active agents on those resources sending metrics reports to the Network Flow Monitor backend.</p>"
   },
   "shapes": {
@@ -36,14 +46,34 @@
     "AccountId": {
       "base": null,
       "refs": {
+        "AccountToAdd$accountId": "<p>The ID of the account that you can add to the monitoring scope.</p>",
         "TargetId$accountId": "<p>The identifier for the account for a target.</p>",
         "WorkloadInsightsTopContributorsRow$accountId": "<p>The account ID for a specific row of data.</p>"
+      }
+    },
+    "AccountToAdd": {
+      "base": "<p>An account that you can add to the monitoring scope for a monitor, so that Network Flow Monitor can resolve the network paths for traffic to and from resources in the account.</p>",
+      "refs": {
+        "AccountToAddList$member": null
+      }
+    },
+    "AccountToAddList": {
+      "base": null,
+      "refs": {
+        "GetMonitorScopeSuggestionsOutput$accountsToAdd": "<p>The accounts that you can add to the monitoring scope, so that Network Flow Monitor can resolve the network paths for traffic to and from resources in those accounts.</p>"
+      }
+    },
+    "AdditionalFlowInfo": {
+      "base": "<p>Additional information about a network flow, such as the network that the remote address belongs to and the location of the client.</p>",
+      "refs": {
+        "MonitorTopContributorsRow$additionalFlowInfo": "<p>Additional information about the network flow, such as the network that the remote address belongs to and the location of the client.</p>"
       }
     },
     "Arn": {
       "base": null,
       "refs": {
         "CreateMonitorInput$scopeArn": "<p>The Amazon Resource Name (ARN) of the scope for the monitor.</p>",
+        "CreatePerformanceMonitorInput$scopeArn": "<p>The Amazon Resource Name (ARN) of the scope for the performance monitor.</p>",
         "CreateScopeOutput$scopeArn": "<p>The Amazon Resource Name (ARN) of the scope.</p>",
         "GetScopeOutput$scopeArn": "<p>The Amazon Resource Name (ARN) of the scope.</p>",
         "ListTagsForResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
@@ -65,10 +95,17 @@
     "AwsRegion": {
       "base": null,
       "refs": {
+        "AccountToAdd$region": "<p>The Amazon Web Services Region of the traffic that Network Flow Monitor identified for the account.</p>",
         "MonitorTopContributorsRow$localRegion": "<p>The Amazon Web Services Region for the local resource for a top contributor network flow.</p>",
         "MonitorTopContributorsRow$remoteRegion": "<p>The Amazon Web Services Region for the remote resource for a top contributor network flow.</p>",
         "TargetResource$region": "<p>The Amazon Web Services Region for the scope.</p>",
         "WorkloadInsightsTopContributorsRow$localRegion": "<p>The Amazon Web Services Region where the local resource is located.</p>"
+      }
+    },
+    "ClientLocation": {
+      "base": "<p>The geographic location of the client for a network flow.</p>",
+      "refs": {
+        "AdditionalFlowInfo$clientLocation": "<p>The location of the client for the network flow.</p>"
       }
     },
     "Component": {
@@ -101,6 +138,20 @@
       "base": null,
       "refs": {}
     },
+    "CreatePerformanceMonitorInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePerformanceMonitorInputTargetsList": {
+      "base": null,
+      "refs": {
+        "CreatePerformanceMonitorInput$targets": "<p>The resources to monitor. Each target identifies a resource, currently a VPC, for which you can track network performance. For a VPC, specify the VPC ARN.</p>"
+      }
+    },
+    "CreatePerformanceMonitorOutput": {
+      "base": null,
+      "refs": {}
+    },
     "CreateScopeInput": {
       "base": null,
       "refs": {}
@@ -120,6 +171,14 @@
       "refs": {}
     },
     "DeleteMonitorOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeletePerformanceMonitorInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeletePerformanceMonitorOutput": {
       "base": null,
       "refs": {}
     },
@@ -146,6 +205,30 @@
         "WorkloadInsightsTopContributorsValuesList$member": null
       }
     },
+    "FilterOperator": {
+      "base": null,
+      "refs": {
+        "FilterParameter$operator": "<p>The operator to use to compare the field with the values that you specify. The operator can be one of the following</p> <ul> <li> <p> <code>EQUALS</code>: The field matches a single value.</p> </li> <li> <p> <code>NOT_EQUALS</code>: The field doesn't match a single value.</p> </li> <li> <p> <code>IN</code>: The field matches any one of several values.</p> </li> <li> <p> <code>CONTAINS</code>: The field contains a value.</p> </li> </ul>"
+      }
+    },
+    "FilterParameter": {
+      "base": "<p>A filter for a query, to return a subset of the results.</p>",
+      "refs": {
+        "FilterParameters$member": null
+      }
+    },
+    "FilterParameterValuesList": {
+      "base": null,
+      "refs": {
+        "FilterParameter$values": "<p>The values to compare the field with.</p>"
+      }
+    },
+    "FilterParameters": {
+      "base": null,
+      "refs": {
+        "StartQueryPerformanceMonitorInput$filterParameters": "<p>The filters for the query, to return a subset of the top paths. For a <code>TOP_PATHS</code> query, you can filter on the following fields:</p> <ul> <li> <p> <code>local_az_id</code>: The Availability Zone ID of the local end of a path</p> </li> <li> <p> <code>remote_az_id</code>: The Availability Zone ID of the remote end of a path</p> </li> <li> <p> <code>impact_level</code>: The impact level of a path</p> </li> </ul> <p>When you filter on <code>impact_level</code>, Network Flow Monitor compares the filter with the most severe impact level for the path over the time period of the query, and the traffic and round-trip time that Network Flow Monitor returns for each path still cover the full time period. Paths that have no impact data don't match an <code>impact_level</code> filter, including a <code>NOT_EQUALS</code> filter. Network Flow Monitor doesn't filter the subnet pairs within a path by impact level.</p>"
+      }
+    },
     "GetMonitorInput": {
       "base": null,
       "refs": {}
@@ -154,11 +237,35 @@
       "base": null,
       "refs": {}
     },
+    "GetMonitorScopeSuggestionsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetMonitorScopeSuggestionsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPerformanceMonitorInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPerformanceMonitorOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GetQueryResultsMonitorTopContributorsInput": {
       "base": null,
       "refs": {}
     },
     "GetQueryResultsMonitorTopContributorsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetQueryResultsPerformanceMonitorInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetQueryResultsPerformanceMonitorOutput": {
       "base": null,
       "refs": {}
     },
@@ -183,6 +290,14 @@
       "refs": {}
     },
     "GetQueryStatusMonitorTopContributorsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetQueryStatusPerformanceMonitorInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetQueryStatusPerformanceMonitorOutput": {
       "base": null,
       "refs": {}
     },
@@ -248,10 +363,17 @@
       "refs": {
         "CreateMonitorOutput$createdAt": "<p>The date and time when the monitor was created.</p>",
         "CreateMonitorOutput$modifiedAt": "<p>The last date and time that the monitor was modified.</p>",
+        "CreatePerformanceMonitorOutput$createdAt": "<p>The date and time when the performance monitor was created.</p>",
+        "CreatePerformanceMonitorOutput$modifiedAt": "<p>The date and time when the performance monitor was last modified.</p>",
         "GetMonitorOutput$createdAt": "<p>The date and time when the monitor was created.</p>",
         "GetMonitorOutput$modifiedAt": "<p>The date and time when the monitor was last modified.</p>",
+        "GetMonitorScopeSuggestionsOutput$updatedAt": "<p>The date and time when Network Flow Monitor last determined the coverage of the monitoring scope.</p>",
+        "GetPerformanceMonitorOutput$createdAt": "<p>The date and time when the performance monitor was created.</p>",
+        "GetPerformanceMonitorOutput$modifiedAt": "<p>The date and time when the performance monitor was last modified.</p>",
         "UpdateMonitorOutput$createdAt": "<p>The date and time when the monitor was created.</p>",
-        "UpdateMonitorOutput$modifiedAt": "<p>The last date and time that the monitor was modified.</p>"
+        "UpdateMonitorOutput$modifiedAt": "<p>The last date and time that the monitor was modified.</p>",
+        "UpdatePerformanceMonitorOutput$createdAt": "<p>The date and time when the performance monitor was created.</p>",
+        "UpdatePerformanceMonitorOutput$modifiedAt": "<p>The date and time when the performance monitor was last modified.</p>"
       }
     },
     "KubernetesMetadata": {
@@ -275,6 +397,14 @@
       "base": null,
       "refs": {}
     },
+    "ListPerformanceMonitorsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPerformanceMonitorsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListScopesInput": {
       "base": null,
       "refs": {}
@@ -295,13 +425,16 @@
       "base": null,
       "refs": {
         "MonitorTopContributorsRow$value": "<p>The value of the metric for a top contributor network flow.</p>",
+        "Network$asNumber": "<p>The autonomous system number (ASN) of the autonomous system that the network belongs to.</p>",
         "WorkloadInsightsTopContributorsRow$value": "<p>The value for a metric.</p>"
       }
     },
     "MaxResults": {
       "base": null,
       "refs": {
+        "GetMonitorScopeSuggestionsInput$maxResults": "<p>The number of query results that you want to return with this call.</p>",
         "ListMonitorsInput$maxResults": "<p>The number of query results that you want to return with this call.</p>",
+        "ListPerformanceMonitorsInput$maxResults": "<p>The number of performance monitors that you want to return with this call. If you don't specify a value, the default is 25.</p>",
         "ListScopesInput$maxResults": "<p>The number of query results that you want to return with this call.</p>"
       }
     },
@@ -316,9 +449,14 @@
       "base": null,
       "refs": {
         "CreateMonitorOutput$monitorArn": "<p>The Amazon Resource Name (ARN) of the monitor.</p>",
+        "CreatePerformanceMonitorOutput$monitorArn": "<p>The Amazon Resource Name (ARN) of the performance monitor.</p>",
         "GetMonitorOutput$monitorArn": "<p>The Amazon Resource Name (ARN) of the monitor.</p>",
+        "GetMonitorScopeSuggestionsInput$monitorArn": "<p>The Amazon Resource Name (ARN) of the monitor that you want to return scope suggestions for.</p>",
+        "GetPerformanceMonitorOutput$monitorArn": "<p>The Amazon Resource Name (ARN) of the performance monitor.</p>",
         "MonitorSummary$monitorArn": "<p>The Amazon Resource Name (ARN) of the monitor.</p>",
-        "UpdateMonitorOutput$monitorArn": "<p>The Amazon Resource Name (ARN) of the monitor.</p>"
+        "PerformanceMonitorSummary$monitorArn": "<p>The Amazon Resource Name (ARN) of the performance monitor.</p>",
+        "UpdateMonitorOutput$monitorArn": "<p>The Amazon Resource Name (ARN) of the monitor.</p>",
+        "UpdatePerformanceMonitorOutput$monitorArn": "<p>The Amazon Resource Name (ARN) of the performance monitor.</p>"
       }
     },
     "MonitorList": {
@@ -383,10 +521,15 @@
       "base": null,
       "refs": {
         "CreateMonitorOutput$monitorStatus": "<p>The status of a monitor. The status can be one of the following</p> <ul> <li> <p> <code>PENDING</code>: The monitor is in the process of being created.</p> </li> <li> <p> <code>ACTIVE</code>: The monitor is active.</p> </li> <li> <p> <code>INACTIVE</code>: The monitor is inactive.</p> </li> <li> <p> <code>ERROR</code>: Monitor creation failed due to an error.</p> </li> <li> <p> <code>DELETING</code>: The monitor is in the process of being deleted.</p> </li> </ul>",
+        "CreatePerformanceMonitorOutput$monitorStatus": "<p>The status of a performance monitor. The status can be one of the following</p> <ul> <li> <p> <code>PENDING</code>: The performance monitor is in the process of being created.</p> </li> <li> <p> <code>ACTIVE</code>: The performance monitor is active.</p> </li> <li> <p> <code>INACTIVE</code>: The performance monitor is inactive.</p> </li> <li> <p> <code>ERROR</code>: The performance monitor can't be created or updated.</p> </li> <li> <p> <code>DELETING</code>: The performance monitor is in the process of being deleted.</p> </li> </ul>",
         "GetMonitorOutput$monitorStatus": "<p>The status of a monitor. The status can be one of the following</p> <ul> <li> <p> <code>PENDING</code>: The monitor is in the process of being created.</p> </li> <li> <p> <code>ACTIVE</code>: The monitor is active.</p> </li> <li> <p> <code>INACTIVE</code>: The monitor is inactive.</p> </li> <li> <p> <code>ERROR</code>: Monitor creation failed due to an error.</p> </li> <li> <p> <code>DELETING</code>: The monitor is in the process of being deleted.</p> </li> </ul>",
+        "GetPerformanceMonitorOutput$monitorStatus": "<p>The status of a performance monitor. The status can be one of the following</p> <ul> <li> <p> <code>PENDING</code>: The performance monitor is in the process of being created.</p> </li> <li> <p> <code>ACTIVE</code>: The performance monitor is active.</p> </li> <li> <p> <code>INACTIVE</code>: The performance monitor is inactive.</p> </li> <li> <p> <code>ERROR</code>: The performance monitor can't be created or updated.</p> </li> <li> <p> <code>DELETING</code>: The performance monitor is in the process of being deleted.</p> </li> </ul>",
         "ListMonitorsInput$monitorStatus": "<p>The status of a monitor. The status can be one of the following</p> <ul> <li> <p> <code>PENDING</code>: The monitor is in the process of being created.</p> </li> <li> <p> <code>ACTIVE</code>: The monitor is active.</p> </li> <li> <p> <code>INACTIVE</code>: The monitor is inactive.</p> </li> <li> <p> <code>ERROR</code>: Monitor creation failed due to an error.</p> </li> <li> <p> <code>DELETING</code>: The monitor is in the process of being deleted.</p> </li> </ul>",
+        "ListPerformanceMonitorsInput$monitorStatus": "<p>The status of the performance monitors that you want to return. If you don't specify a status, Network Flow Monitor returns performance monitors with any status.</p>",
         "MonitorSummary$monitorStatus": "<p>The status of a monitor. The status can be one of the following</p> <ul> <li> <p> <code>PENDING</code>: The monitor is in the process of being created.</p> </li> <li> <p> <code>ACTIVE</code>: The monitor is active.</p> </li> <li> <p> <code>INACTIVE</code>: The monitor is inactive.</p> </li> <li> <p> <code>ERROR</code>: Monitor creation failed due to an error.</p> </li> <li> <p> <code>DELETING</code>: The monitor is in the process of being deleted.</p> </li> </ul>",
-        "UpdateMonitorOutput$monitorStatus": "<p>The status of a monitor. The status can be one of the following</p> <ul> <li> <p> <code>PENDING</code>: The monitor is in the process of being created.</p> </li> <li> <p> <code>ACTIVE</code>: The monitor is active.</p> </li> <li> <p> <code>INACTIVE</code>: The monitor is inactive.</p> </li> <li> <p> <code>ERROR</code>: Monitor creation failed due to an error.</p> </li> <li> <p> <code>DELETING</code>: The monitor is in the process of being deleted.</p> </li> </ul>"
+        "PerformanceMonitorSummary$monitorStatus": "<p>The status of a performance monitor. The status can be one of the following</p> <ul> <li> <p> <code>PENDING</code>: The performance monitor is in the process of being created.</p> </li> <li> <p> <code>ACTIVE</code>: The performance monitor is active.</p> </li> <li> <p> <code>INACTIVE</code>: The performance monitor is inactive.</p> </li> <li> <p> <code>ERROR</code>: The performance monitor can't be created or updated.</p> </li> <li> <p> <code>DELETING</code>: The performance monitor is in the process of being deleted.</p> </li> </ul>",
+        "UpdateMonitorOutput$monitorStatus": "<p>The status of a monitor. The status can be one of the following</p> <ul> <li> <p> <code>PENDING</code>: The monitor is in the process of being created.</p> </li> <li> <p> <code>ACTIVE</code>: The monitor is active.</p> </li> <li> <p> <code>INACTIVE</code>: The monitor is inactive.</p> </li> <li> <p> <code>ERROR</code>: Monitor creation failed due to an error.</p> </li> <li> <p> <code>DELETING</code>: The monitor is in the process of being deleted.</p> </li> </ul>",
+        "UpdatePerformanceMonitorOutput$monitorStatus": "<p>The status of a performance monitor. The status can be one of the following</p> <ul> <li> <p> <code>PENDING</code>: The performance monitor is in the process of being created.</p> </li> <li> <p> <code>ACTIVE</code>: The performance monitor is active.</p> </li> <li> <p> <code>INACTIVE</code>: The performance monitor is inactive.</p> </li> <li> <p> <code>ERROR</code>: The performance monitor can't be created or updated.</p> </li> <li> <p> <code>DELETING</code>: The performance monitor is in the process of being deleted.</p> </li> </ul>"
       }
     },
     "MonitorSummary": {
@@ -407,10 +550,117 @@
         "GetQueryResultsMonitorTopContributorsOutput$topContributors": "<p>The top contributor network flows overall for a specific metric type, for example, the number of retransmissions.</p>"
       }
     },
+    "Network": {
+      "base": "<p>The network that an address in a network flow belongs to.</p>",
+      "refs": {
+        "AdditionalFlowInfo$network": "<p>The network that the remote address of the network flow belongs to.</p>"
+      }
+    },
+    "OrgMembershipStatus": {
+      "base": null,
+      "refs": {
+        "AccountToAdd$membership": "<p>Whether the account is a member of the same organization as the account that owns the monitor. The membership status can be one of the following</p> <ul> <li> <p> <code>IN_ORG</code>: The account is a member of the same organization.</p> </li> <li> <p> <code>NOT_IN_ORG</code>: The account isn't a member of the same organization.</p> </li> <li> <p> <code>UNKNOWN</code>: Network Flow Monitor can't determine the organization membership of the account.</p> </li> </ul>"
+      }
+    },
+    "PerformanceMonitorQueryType": {
+      "base": null,
+      "refs": {
+        "StartQueryPerformanceMonitorInput$queryType": "<p>The type of query that you want to create. Specify <code>TOP_PATHS</code> to return the top paths for the performance monitor.</p>"
+      }
+    },
+    "PerformanceMonitorSummary": {
+      "base": "<p>A summary of information about a performance monitor, including the ARN, the name, the status, and the resources that it tracks network performance for.</p>",
+      "refs": {
+        "PerformanceMonitorSummaryList$member": null
+      }
+    },
+    "PerformanceMonitorSummaryList": {
+      "base": null,
+      "refs": {
+        "ListPerformanceMonitorsOutput$monitors": "<p>The performance monitors in the account.</p>"
+      }
+    },
+    "PerformanceMonitorTarget": {
+      "base": "<p>A resource that a performance monitor tracks network performance for.</p>",
+      "refs": {
+        "CreatePerformanceMonitorInputTargetsList$member": null,
+        "PerformanceMonitorTargets$member": null,
+        "UpdatePerformanceMonitorInputTargetsToAddList$member": null,
+        "UpdatePerformanceMonitorInputTargetsToRemoveList$member": null
+      }
+    },
+    "PerformanceMonitorTargetIdentifierString": {
+      "base": null,
+      "refs": {
+        "PerformanceMonitorTarget$identifier": "<p>The Amazon Resource Name (ARN) of the resource that you want Network Flow Monitor to track network performance for.</p>"
+      }
+    },
+    "PerformanceMonitorTargetType": {
+      "base": null,
+      "refs": {
+        "PerformanceMonitorTarget$type": "<p>The type of the resource that you want Network Flow Monitor to track network performance for. Specify <code>AWS::EC2::VPC</code>.</p>"
+      }
+    },
+    "PerformanceMonitorTargets": {
+      "base": null,
+      "refs": {
+        "CreatePerformanceMonitorOutput$targets": "<p>The resources that the performance monitor tracks network performance for.</p>",
+        "GetPerformanceMonitorOutput$targets": "<p>The resources that the performance monitor tracks network performance for.</p>",
+        "PerformanceMonitorSummary$targets": "<p>The resources that the performance monitor tracks network performance for.</p>",
+        "UpdatePerformanceMonitorOutput$targets": "<p>The resources that the performance monitor tracks network performance for.</p>"
+      }
+    },
+    "PerformanceMonitorType": {
+      "base": null,
+      "refs": {
+        "CreatePerformanceMonitorOutput$monitorType": "<p>The type of resource that you monitor determines the type of the performance monitor.</p>",
+        "GetPerformanceMonitorOutput$monitorType": "<p>The type of resource that you monitor determines the type of the performance monitor.</p>",
+        "ListPerformanceMonitorsInput$monitorType": "<p>The type of the performance monitors that you want to return. If you don't specify a type, Network Flow Monitor returns performance monitors of any type.</p>",
+        "PerformanceMonitorSummary$monitorType": "<p>The type of resource that you monitor determines the type of the performance monitor.</p>",
+        "UpdatePerformanceMonitorOutput$monitorType": "<p>The type of resource that you monitor determines the type of the performance monitor.</p>"
+      }
+    },
+    "QueryData": {
+      "base": null,
+      "refs": {
+        "GetQueryResultsPerformanceMonitorOutput$data": "<p>The results of the query. Each row contains the values for the columns that <code>fields</code> describes, in the same order.</p>"
+      }
+    },
+    "QueryField": {
+      "base": "<p>A column that a query returns, with its name and data type.</p>",
+      "refs": {
+        "QueryFields$member": null
+      }
+    },
+    "QueryFields": {
+      "base": "<p>Generic column-based result format. Column names are returned in 'fields', row data in 'data'. This allows different QueryTypes to return different schemas without needing separate API operations.</p>",
+      "refs": {
+        "GetQueryResultsPerformanceMonitorOutput$fields": "<p>The columns that the query returns, in the order that the values for each row appear in <code>data</code>.</p>"
+      }
+    },
+    "QueryLimit": {
+      "base": null,
+      "refs": {
+        "StartQueryPerformanceMonitorInput$limit": "<p>The maximum number of top paths that you want the query to return.</p>"
+      }
+    },
+    "QueryMaxResults": {
+      "base": null,
+      "refs": {
+        "GetQueryResultsPerformanceMonitorInput$maxResults": "<p>The number of query results that you want to return with this call.</p>"
+      }
+    },
+    "QueryRow": {
+      "base": "<p>A single result row: one value per column in 'fields', by position. A cell may be null when no value is available for that column.</p>",
+      "refs": {
+        "QueryData$member": null
+      }
+    },
     "QueryStatus": {
       "base": null,
       "refs": {
         "GetQueryStatusMonitorTopContributorsOutput$status": "<p>When you run a query, use this call to check the status of the query to make sure that the query has <code>SUCCEEDED</code> before you review the results.</p> <ul> <li> <p> <code>QUEUED</code>: The query is scheduled to run.</p> </li> <li> <p> <code>RUNNING</code>: The query is in progress but not complete.</p> </li> <li> <p> <code>SUCCEEDED</code>: The query completed sucessfully.</p> </li> <li> <p> <code>FAILED</code>: The query failed due to an error.</p> </li> <li> <p> <code>CANCELED</code>: The query was canceled.</p> </li> </ul>",
+        "GetQueryStatusPerformanceMonitorOutput$status": "<p>When you run a query, use this call to check the status of the query to make sure that the query has <code>SUCCEEDED</code> before you review the results.</p> <ul> <li> <p> <code>QUEUED</code>: The query is scheduled to run.</p> </li> <li> <p> <code>RUNNING</code>: The query is in progress but not complete.</p> </li> <li> <p> <code>SUCCEEDED</code>: The query completed successfully.</p> </li> <li> <p> <code>FAILED</code>: The query failed due to an error.</p> </li> <li> <p> <code>CANCELED</code>: The query was canceled.</p> </li> </ul>",
         "GetQueryStatusWorkloadInsightsTopContributorsDataOutput$status": "<p>The status of a query for top contributors data.</p> <ul> <li> <p> <code>QUEUED</code>: The query is scheduled to run.</p> </li> <li> <p> <code>RUNNING</code>: The query is in progress but not complete.</p> </li> <li> <p> <code>SUCCEEDED</code>: The query completed sucessfully.</p> </li> <li> <p> <code>FAILED</code>: The query failed due to an error.</p> </li> <li> <p> <code>CANCELED</code>: The query was canceled.</p> </li> </ul>",
         "GetQueryStatusWorkloadInsightsTopContributorsOutput$status": "<p>When you run a query, use this call to check the status of the query to make sure that the query has <code>SUCCEEDED</code> before you review the results.</p> <ul> <li> <p> <code>QUEUED</code>: The query is scheduled to run.</p> </li> <li> <p> <code>RUNNING</code>: The query is in progress but not complete.</p> </li> <li> <p> <code>SUCCEEDED</code>: The query completed sucessfully.</p> </li> <li> <p> <code>FAILED</code>: The query failed due to an error.</p> </li> <li> <p> <code>CANCELED</code>: The query was canceled.</p> </li> </ul>"
       }
@@ -420,21 +670,39 @@
       "refs": {
         "CreateMonitorInput$monitorName": "<p>The name of the monitor. </p>",
         "CreateMonitorOutput$monitorName": "<p>The name of the monitor. </p>",
+        "CreatePerformanceMonitorInput$monitorName": "<p>The name of the performance monitor.</p>",
+        "CreatePerformanceMonitorOutput$monitorName": "<p>The name of the performance monitor.</p>",
         "DeleteMonitorInput$monitorName": "<p>The name of the monitor to delete.</p>",
+        "DeletePerformanceMonitorInput$monitorName": "<p>The name of the performance monitor.</p>",
         "GetMonitorInput$monitorName": "<p>The name of the monitor.</p>",
         "GetMonitorOutput$monitorName": "<p>The name of the monitor.</p>",
+        "GetPerformanceMonitorInput$monitorName": "<p>The name of the performance monitor.</p>",
+        "GetPerformanceMonitorOutput$monitorName": "<p>The name of the performance monitor.</p>",
         "GetQueryResultsMonitorTopContributorsInput$monitorName": "<p>The name of the monitor.</p>",
+        "GetQueryResultsPerformanceMonitorInput$monitorName": "<p>The name of the performance monitor.</p>",
         "GetQueryStatusMonitorTopContributorsInput$monitorName": "<p>The name of the monitor.</p>",
+        "GetQueryStatusPerformanceMonitorInput$monitorName": "<p>The name of the performance monitor.</p>",
         "MonitorSummary$monitorName": "<p>The name of the monitor.</p>",
+        "PerformanceMonitorSummary$monitorName": "<p>The name of the performance monitor.</p>",
         "StartQueryMonitorTopContributorsInput$monitorName": "<p>The name of the monitor.</p>",
+        "StartQueryPerformanceMonitorInput$monitorName": "<p>The name of the performance monitor.</p>",
         "StopQueryMonitorTopContributorsInput$monitorName": "<p>The name of the monitor.</p>",
+        "StopQueryPerformanceMonitorInput$monitorName": "<p>The name of the performance monitor.</p>",
         "UpdateMonitorInput$monitorName": "<p>The name of the monitor.</p>",
-        "UpdateMonitorOutput$monitorName": "<p>The name of the monitor.</p>"
+        "UpdateMonitorOutput$monitorName": "<p>The name of the monitor.</p>",
+        "UpdatePerformanceMonitorInput$monitorName": "<p>The name of the performance monitor.</p>",
+        "UpdatePerformanceMonitorOutput$monitorName": "<p>The name of the performance monitor.</p>"
       }
     },
     "ResourceNotFoundException": {
       "base": "<p>The request specifies a resource that doesn't exist.</p>",
       "refs": {}
+    },
+    "ScopeCoverageStatus": {
+      "base": null,
+      "refs": {
+        "GetMonitorScopeSuggestionsOutput$status": "<p>The coverage status of the monitoring scope for the monitor. The status can be one of the following</p> <ul> <li> <p> <code>COMPLETE</code>: The scope includes every account that sends traffic to, or receives traffic from, resources in the monitor.</p> </li> <li> <p> <code>INCOMPLETE</code>: There are accounts that you can add to the scope.</p> </li> <li> <p> <code>PENDING</code>: Network Flow Monitor is determining the coverage of the scope.</p> </li> <li> <p> <code>STALE</code>: The coverage of the scope was last determined too long ago to be current.</p> </li> </ul>"
+      }
     },
     "ScopeId": {
       "base": null,
@@ -488,6 +756,14 @@
       "base": null,
       "refs": {}
     },
+    "StartQueryPerformanceMonitorInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartQueryPerformanceMonitorOutput": {
+      "base": null,
+      "refs": {}
+    },
     "StartQueryWorkloadInsightsTopContributorsDataInput": {
       "base": null,
       "refs": {}
@@ -512,6 +788,14 @@
       "base": null,
       "refs": {}
     },
+    "StopQueryPerformanceMonitorInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StopQueryPerformanceMonitorOutput": {
+      "base": null,
+      "refs": {}
+    },
     "StopQueryWorkloadInsightsTopContributorsDataInput": {
       "base": null,
       "refs": {}
@@ -532,10 +816,20 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
+        "ClientLocation$city": "<p>The city where the client is located.</p>",
+        "ClientLocation$subdivision": "<p>The subdivision, such as a state or province, where the client is located.</p>",
+        "ClientLocation$country": "<p>The country where the client is located.</p>",
         "ConflictException$message": null,
+        "FilterParameter$field": "<p>The name of the field that you want to filter on. The fields that you can specify depend on the type of query.</p>",
+        "FilterParameterValuesList$member": null,
+        "GetMonitorScopeSuggestionsInput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
+        "GetMonitorScopeSuggestionsOutput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
         "GetQueryResultsMonitorTopContributorsInput$queryId": "<p>The identifier for the query. A query ID is an internally-generated identifier for a specific query returned from an API call to create a query.</p>",
         "GetQueryResultsMonitorTopContributorsInput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
         "GetQueryResultsMonitorTopContributorsOutput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
+        "GetQueryResultsPerformanceMonitorInput$queryId": "<p>The identifier for the query. A query ID is an internally-generated identifier for a specific query returned from an API call to start a query.</p>",
+        "GetQueryResultsPerformanceMonitorInput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
+        "GetQueryResultsPerformanceMonitorOutput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
         "GetQueryResultsWorkloadInsightsTopContributorsDataInput$queryId": "<p>The identifier for the query. A query ID is an internally-generated identifier for a specific query returned from an API call to create a query.</p>",
         "GetQueryResultsWorkloadInsightsTopContributorsDataInput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
         "GetQueryResultsWorkloadInsightsTopContributorsDataOutput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
@@ -543,6 +837,7 @@
         "GetQueryResultsWorkloadInsightsTopContributorsInput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
         "GetQueryResultsWorkloadInsightsTopContributorsOutput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
         "GetQueryStatusMonitorTopContributorsInput$queryId": "<p>The identifier for the query. A query ID is an internally-generated identifier for a specific query returned from an API call to start a query.</p>",
+        "GetQueryStatusPerformanceMonitorInput$queryId": "<p>The identifier for the query. A query ID is an internally-generated identifier for a specific query returned from an API call to start a query.</p>",
         "GetQueryStatusWorkloadInsightsTopContributorsDataInput$queryId": "<p>The identifier for the query. A query ID is an internally-generated identifier for a specific query returned from an API call to start a query.</p>",
         "GetQueryStatusWorkloadInsightsTopContributorsInput$queryId": "<p>The identifier for the query. A query ID is an internally-generated identifier for a specific query returned from an API call to start a query.</p>",
         "InternalServerException$message": null,
@@ -554,6 +849,8 @@
         "KubernetesMetadata$remotePodNamespace": "<p>The namespace of the pod for a remote resource.</p>",
         "ListMonitorsInput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
         "ListMonitorsOutput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
+        "ListPerformanceMonitorsInput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
+        "ListPerformanceMonitorsOutput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
         "ListScopesInput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
         "ListScopesOutput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
         "MonitorLocalResource$identifier": "<p>The identifier of the local resource. The values you can specify are the following:</p> <ul> <li> <p>For a VPC, subnet or EKS cluster, this identifier is the VPC Amazon Resource Name (ARN), subnet ARN or cluster ARN.</p> </li> <li> <p>For an Availability Zone, this identifier is the AZ name, for example, us-west-2b.</p> </li> <li> <p>For a Region, this identifier is the Region name, for example, us-west-2.</p> </li> </ul>",
@@ -562,12 +859,18 @@
         "MonitorTopContributorsRow$snatIp": "<p>The secure network address translation (SNAT) IP address for a top contributor network flow.</p>",
         "MonitorTopContributorsRow$remoteIp": "<p>The IP address of the remote resource for a top contributor network flow.</p>",
         "MonitorTopContributorsRow$dnatIp": "<p>The destination network address translation (DNAT) IP address for a top contributor network flow.</p>",
+        "Network$asName": "<p>The name of the autonomous system that the network belongs to.</p>",
+        "QueryField$name": "<p>The name of the column.</p>",
+        "QueryField$type": "<p>The data type of the values in the column.</p>",
+        "QueryRow$member": null,
         "ResourceNotFoundException$message": null,
         "ServiceQuotaExceededException$message": null,
         "StartQueryMonitorTopContributorsOutput$queryId": "<p>The identifier for the query. A query ID is an internally-generated identifier for a specific query returned from an API call to start a query.</p>",
+        "StartQueryPerformanceMonitorOutput$queryId": "<p>The identifier for the query. A query ID is an internally-generated identifier for a specific query returned from an API call to start a query.</p>",
         "StartQueryWorkloadInsightsTopContributorsDataOutput$queryId": "<p>The identifier for the query. A query ID is an internally-generated identifier for a specific query returned from an API call to start a query.</p>",
         "StartQueryWorkloadInsightsTopContributorsOutput$queryId": "<p>The identifier for the query. A query ID is an internally-generated identifier for a specific query returned from an API call to start a query.</p>",
         "StopQueryMonitorTopContributorsInput$queryId": "<p>The identifier for the query. A query ID is an internally-generated identifier for a specific query returned from an API call to create a query.</p>",
+        "StopQueryPerformanceMonitorInput$queryId": "<p>The identifier for the query. A query ID is an internally-generated identifier for a specific query returned from an API call to start a query.</p>",
         "StopQueryWorkloadInsightsTopContributorsDataInput$queryId": "<p>The identifier for the query. A query ID is an internally-generated identifier for a specific query returned from an API call to create a query.</p>",
         "StopQueryWorkloadInsightsTopContributorsInput$queryId": "<p>The identifier for the query. A query ID is an internally-generated identifier for a specific query returned from an API call to create a query.</p>",
         "ThrottlingException$message": null,
@@ -598,6 +901,8 @@
       "refs": {
         "StartQueryMonitorTopContributorsInput$startTime": "<p>The timestamp that is the date and time that is the beginning of the period that you want to retrieve results for with your query.</p>",
         "StartQueryMonitorTopContributorsInput$endTime": "<p>The timestamp that is the date and time end of the period that you want to retrieve results for with your query.</p>",
+        "StartQueryPerformanceMonitorInput$startTime": "<p>The timestamp that is the date and time that is the beginning of the period that you want to retrieve results for with your query.</p>",
+        "StartQueryPerformanceMonitorInput$endTime": "<p>The timestamp that is the date and time end of the period that you want to retrieve results for with your query.</p>",
         "StartQueryWorkloadInsightsTopContributorsDataInput$startTime": "<p>The timestamp that is the date and time that is the beginning of the period that you want to retrieve results for with your query.</p>",
         "StartQueryWorkloadInsightsTopContributorsDataInput$endTime": "<p>The timestamp that is the date and time end of the period that you want to retrieve results for with your query.</p>",
         "StartQueryWorkloadInsightsTopContributorsInput$startTime": "<p>The timestamp that is the date and time that is the beginning of the period that you want to retrieve results for with your query.</p>",
@@ -623,13 +928,17 @@
       "refs": {
         "CreateMonitorInput$tags": "<p>The tags for a monitor. You can add a maximum of 200 tags.</p>",
         "CreateMonitorOutput$tags": "<p>The tags for a monitor.</p>",
+        "CreatePerformanceMonitorInput$tags": "<p>The tags for a performance monitor. You can add a maximum of 200 tags.</p>",
+        "CreatePerformanceMonitorOutput$tags": "<p>The tags for a performance monitor.</p>",
         "CreateScopeInput$tags": "<p>The tags for a scope. You can add a maximum of 200 tags.</p>",
         "CreateScopeOutput$tags": "<p>The tags for a scope.</p>",
         "GetMonitorOutput$tags": "<p>The tags for a monitor.</p>",
+        "GetPerformanceMonitorOutput$tags": "<p>The tags for a performance monitor.</p>",
         "GetScopeOutput$tags": "<p>The tags for a scope.</p>",
         "ListTagsForResourceOutput$tags": "<p>The tags for a resource.</p>",
         "TagResourceInput$tags": "<p>The tags for a resource.</p>",
         "UpdateMonitorOutput$tags": "<p>The tags for a monitor.</p>",
+        "UpdatePerformanceMonitorOutput$tags": "<p>The tags for a performance monitor.</p>",
         "UpdateScopeOutput$tags": "<p>The tags for a scope.</p>"
       }
     },
@@ -712,6 +1021,26 @@
       "base": null,
       "refs": {}
     },
+    "UpdatePerformanceMonitorInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePerformanceMonitorInputTargetsToAddList": {
+      "base": null,
+      "refs": {
+        "UpdatePerformanceMonitorInput$targetsToAdd": "<p>The resources to add to the performance monitor.</p>"
+      }
+    },
+    "UpdatePerformanceMonitorInputTargetsToRemoveList": {
+      "base": null,
+      "refs": {
+        "UpdatePerformanceMonitorInput$targetsToRemove": "<p>The resources to remove from the performance monitor.</p>"
+      }
+    },
+    "UpdatePerformanceMonitorOutput": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateScopeInput": {
       "base": null,
       "refs": {}
@@ -736,8 +1065,10 @@
       "base": null,
       "refs": {
         "CreateMonitorInput$clientToken": "<p>A unique, case-sensitive string of up to 64 ASCII characters that you specify to make an idempotent API request. Don't reuse the same client token for other API requests.</p>",
+        "CreatePerformanceMonitorInput$clientToken": "<p>A unique, case-sensitive string of up to 64 ASCII characters that you specify to make an idempotent API request. If the token matches a previous request, the service ignores the request without returning an error. Don't reuse the same client token for other API requests.</p>",
         "CreateScopeInput$clientToken": "<p>A unique, case-sensitive string of up to 64 ASCII characters that you specify to make an idempotent API request. Don't reuse the same client token for other API requests.</p>",
-        "UpdateMonitorInput$clientToken": "<p>A unique, case-sensitive string of up to 64 ASCII characters that you specify to make an idempotent API request. Don't reuse the same client token for other API requests.</p>"
+        "UpdateMonitorInput$clientToken": "<p>A unique, case-sensitive string of up to 64 ASCII characters that you specify to make an idempotent API request. Don't reuse the same client token for other API requests.</p>",
+        "UpdatePerformanceMonitorInput$clientToken": "<p>A unique, case-sensitive string of up to 64 ASCII characters that you specify to make an idempotent API request. If the token matches a previous request, the service ignores the request without returning an error. Don't reuse the same client token for other API requests.</p>"
       }
     },
     "ValidationException": {

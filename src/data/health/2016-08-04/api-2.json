@@ -18,6 +18,26 @@
     "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "ConfigureTags":{
+      "name":"ConfigureTags",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ConfigureTagsRequest"},
+      "output":{"shape":"ConfigureTagsResponse"},
+      "idempotent":true
+    },
+    "ConfigureTagsForOrganization":{
+      "name":"ConfigureTagsForOrganization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ConfigureTagsForOrganizationRequest"},
+      "output":{"shape":"ConfigureTagsForOrganizationResponse"},
+      "idempotent":true
+    },
     "DescribeAffectedAccountsForOrganization":{
       "name":"DescribeAffectedAccountsForOrganization",
       "http":{
@@ -182,6 +202,68 @@
       ],
       "idempotent":true
     },
+    "DescribeTagKeys":{
+      "name":"DescribeTagKeys",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "output":{"shape":"DescribeTagKeysResponse"},
+      "idempotent":true
+    },
+    "DescribeTagKeysForOrganization":{
+      "name":"DescribeTagKeysForOrganization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "output":{"shape":"DescribeTagKeysForOrganizationResponse"},
+      "idempotent":true
+    },
+    "DescribeTags":{
+      "name":"DescribeTags",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeTagsRequest"},
+      "output":{"shape":"DescribeTagsResponse"},
+      "errors":[
+        {"shape":"InvalidPaginationToken"}
+      ],
+      "idempotent":true
+    },
+    "DescribeTagsForOrganization":{
+      "name":"DescribeTagsForOrganization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeTagsForOrganizationRequest"},
+      "output":{"shape":"DescribeTagsForOrganizationResponse"},
+      "errors":[
+        {"shape":"InvalidPaginationToken"}
+      ],
+      "idempotent":true
+    },
+    "DescribeTagsOnboardingStatus":{
+      "name":"DescribeTagsOnboardingStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "output":{"shape":"DescribeTagsOnboardingStatusResponse"},
+      "idempotent":true
+    },
+    "DescribeTagsOnboardingStatusForOrganization":{
+      "name":"DescribeTagsOnboardingStatusForOrganization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "output":{"shape":"DescribeTagsOnboardingStatusForOrganizationResponse"},
+      "idempotent":true
+    },
     "DisableHealthServiceAccessForOrganization":{
       "name":"DisableHealthServiceAccessForOrganization",
       "http":{
@@ -191,6 +273,22 @@
       "errors":[
         {"shape":"ConcurrentModificationException"}
       ],
+      "idempotent":true
+    },
+    "DisableTags":{
+      "name":"DisableTags",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "idempotent":true
+    },
+    "DisableTagsForOrganization":{
+      "name":"DisableTagsForOrganization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
       "idempotent":true
     },
     "EnableHealthServiceAccessForOrganization":{
@@ -203,9 +301,32 @@
         {"shape":"ConcurrentModificationException"}
       ],
       "idempotent":true
+    },
+    "EnableTags":{
+      "name":"EnableTags",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "idempotent":true
+    },
+    "EnableTagsForOrganization":{
+      "name":"EnableTagsForOrganization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "idempotent":true
     }
   },
   "shapes":{
+    "AccountEntity":{
+      "type":"structure",
+      "members":{
+        "accountId":{"shape":"accountId"},
+        "accountTags":{"shape":"AccountTagSet"}
+      }
+    },
     "AccountEntityAggregate":{
       "type":"structure",
       "members":{
@@ -218,6 +339,77 @@
       "type":"list",
       "member":{"shape":"AccountEntityAggregate"}
     },
+    "AccountTag":{
+      "type":"structure",
+      "members":{
+        "key":{"shape":"tagKey"},
+        "value":{"shape":"tagValue"},
+        "type":{"shape":"AccountTagType"}
+      }
+    },
+    "AccountTagKey":{
+      "type":"string",
+      "max":127,
+      "min":1,
+      "pattern":"[a-zA-Z0-9 _.:\\/=+\\-@]{1,127}"
+    },
+    "AccountTagList":{
+      "type":"list",
+      "member":{"shape":"AccountTag"}
+    },
+    "AccountTagSet":{
+      "type":"map",
+      "key":{"shape":"AccountTagKey"},
+      "value":{"shape":"AccountTagValue"},
+      "max":10
+    },
+    "AccountTagType":{
+      "type":"string",
+      "enum":["ACCOUNT_RESOURCE_TAG"]
+    },
+    "AccountTagValue":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "pattern":"[a-zA-Z0-9 _.:\\/=+\\-@]{0,255}"
+    },
+    "AffectedAccountEntityList":{
+      "type":"list",
+      "member":{"shape":"AccountEntity"}
+    },
+    "AffectedAccountFilter":{
+      "type":"structure",
+      "members":{
+        "eventArn":{"shape":"eventArn"},
+        "tags":{"shape":"AffectedAccountsForOrganizationTagFilter"}
+      }
+    },
+    "AffectedAccountsForOrganizationTagFilter":{
+      "type":"map",
+      "key":{"shape":"TagFilterKey"},
+      "value":{"shape":"AffectedAccountsForOrganizationTagValueList"},
+      "max":10,
+      "min":0
+    },
+    "AffectedAccountsForOrganizationTagValueList":{
+      "type":"list",
+      "member":{"shape":"TagFilterValue"},
+      "max":50,
+      "min":1
+    },
+    "AffectedEntitiesForOrganizationTagFilter":{
+      "type":"map",
+      "key":{"shape":"TagFilterKey"},
+      "value":{"shape":"AffectedEntitiesForOrganizationTagValueList"},
+      "max":10,
+      "min":0
+    },
+    "AffectedEntitiesForOrganizationTagValueList":{
+      "type":"list",
+      "member":{"shape":"TagFilterValue"},
+      "max":50,
+      "min":1
+    },
     "AffectedEntity":{
       "type":"structure",
       "members":{
@@ -228,16 +420,57 @@
         "awsAccountId":{"shape":"accountId"},
         "lastUpdatedTime":{"shape":"timestamp"},
         "statusCode":{"shape":"entityStatusCode"},
+        "resourceTags":{"shape":"ResourceTagSet"},
+        "accountTags":{"shape":"AccountTagSet"},
         "tags":{"shape":"tagSet"},
         "entityMetadata":{"shape":"entityMetadata"}
       }
     },
+    "Boolean":{"type":"boolean"},
     "ConcurrentModificationException":{
       "type":"structure",
       "members":{
         "message":{"shape":"string"}
       },
       "exception":true
+    },
+    "ConfigureTagsForOrganizationRequest":{
+      "type":"structure",
+      "required":["tagKeys"],
+      "members":{
+        "tagKeys":{"shape":"ConfigureTagsForOrganizationTagKeyList"}
+      }
+    },
+    "ConfigureTagsForOrganizationResponse":{
+      "type":"structure",
+      "members":{
+        "configuredTagKeys":{"shape":"ConfigureTagsForOrganizationTagKeyList"}
+      }
+    },
+    "ConfigureTagsForOrganizationTagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKeyForOrganization"},
+      "max":10,
+      "min":1
+    },
+    "ConfigureTagsRequest":{
+      "type":"structure",
+      "required":["tagKeys"],
+      "members":{
+        "tagKeys":{"shape":"ConfigureTagsResourceTagKeyList"}
+      }
+    },
+    "ConfigureTagsResourceTagKeyList":{
+      "type":"list",
+      "member":{"shape":"ResourceTagKey"},
+      "max":10,
+      "min":1
+    },
+    "ConfigureTagsResponse":{
+      "type":"structure",
+      "members":{
+        "configuredTagKeys":{"shape":"ConfigureTagsResourceTagKeyList"}
+      }
     },
     "DateTimeRange":{
       "type":"structure",
@@ -252,13 +485,15 @@
       "members":{
         "eventArn":{"shape":"eventArn"},
         "nextToken":{"shape":"nextToken"},
-        "maxResults":{"shape":"maxResults"}
+        "maxResults":{"shape":"maxResults"},
+        "filter":{"shape":"AffectedAccountFilter"}
       }
     },
     "DescribeAffectedAccountsForOrganizationResponse":{
       "type":"structure",
       "members":{
         "affectedAccounts":{"shape":"affectedAccountsList"},
+        "affectedAccountEntities":{"shape":"AffectedAccountEntityList"},
         "eventScopeCode":{"shape":"eventScopeCode"},
         "nextToken":{"shape":"nextToken"}
       }
@@ -306,12 +541,26 @@
         "nextToken":{"shape":"nextToken"}
       }
     },
+    "DescribeAffectedEntitiesTagFilter":{
+      "type":"map",
+      "key":{"shape":"TagFilterKey"},
+      "value":{"shape":"DescribeAffectedEntitiesTagValueList"},
+      "max":10,
+      "min":0
+    },
+    "DescribeAffectedEntitiesTagValueList":{
+      "type":"list",
+      "member":{"shape":"TagFilterValue"},
+      "max":50,
+      "min":1
+    },
     "DescribeEntityAggregatesForOrganizationRequest":{
       "type":"structure",
       "required":["eventArns"],
       "members":{
         "eventArns":{"shape":"OrganizationEventArnsList"},
-        "awsAccountIds":{"shape":"OrganizationAccountIdsList"}
+        "awsAccountIds":{"shape":"OrganizationAccountIdsList"},
+        "filter":{"shape":"OrganizationEntityAggregateFilter"}
       }
     },
     "DescribeEntityAggregatesForOrganizationResponse":{
@@ -323,7 +572,8 @@
     "DescribeEntityAggregatesRequest":{
       "type":"structure",
       "members":{
-        "eventArns":{"shape":"EventArnsList"}
+        "eventArns":{"shape":"EventArnsList"},
+        "filter":{"shape":"EntityAggregateFilter"}
       }
     },
     "DescribeEntityAggregatesResponse":{
@@ -331,6 +581,19 @@
       "members":{
         "entityAggregates":{"shape":"EntityAggregateList"}
       }
+    },
+    "DescribeEntityAggregatesTagFilter":{
+      "type":"map",
+      "key":{"shape":"TagFilterKey"},
+      "value":{"shape":"DescribeEntityAggregatesTagValueList"},
+      "max":10,
+      "min":0
+    },
+    "DescribeEntityAggregatesTagValueList":{
+      "type":"list",
+      "member":{"shape":"TagFilterValue"},
+      "max":50,
+      "min":1
     },
     "DescribeEventAggregatesRequest":{
       "type":"structure",
@@ -443,6 +706,19 @@
         "nextToken":{"shape":"nextToken"}
       }
     },
+    "DescribeEventsTagFilter":{
+      "type":"map",
+      "key":{"shape":"TagFilterKey"},
+      "value":{"shape":"DescribeEventsTagValueList"},
+      "max":10,
+      "min":0
+    },
+    "DescribeEventsTagValueList":{
+      "type":"list",
+      "member":{"shape":"TagFilterValue"},
+      "max":50,
+      "min":1
+    },
     "DescribeHealthServiceStatusForOrganizationResponse":{
       "type":"structure",
       "members":{
@@ -464,13 +740,73 @@
         "nextToken":{"shape":"nextToken"}
       }
     },
+    "DescribeTagKeysForOrganizationResponse":{
+      "type":"structure",
+      "members":{
+        "keys":{"shape":"OrganizationTagKeyList"}
+      }
+    },
+    "DescribeTagKeysResponse":{
+      "type":"structure",
+      "members":{
+        "keys":{"shape":"ResourceTagKeyList"}
+      }
+    },
+    "DescribeTagsForOrganizationFilter":{
+      "type":"structure",
+      "members":{
+        "tagTypes":{"shape":"OrganizationTagTypeFilter"}
+      }
+    },
+    "DescribeTagsForOrganizationRequest":{
+      "type":"structure",
+      "members":{
+        "filter":{"shape":"DescribeTagsForOrganizationFilter"},
+        "nextToken":{"shape":"nextToken"},
+        "maxResults":{"shape":"maxResultsLowerRange"}
+      }
+    },
+    "DescribeTagsForOrganizationResponse":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"OrganizationTagList"},
+        "nextToken":{"shape":"nextToken"}
+      }
+    },
+    "DescribeTagsOnboardingStatusForOrganizationResponse":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"TagsOnboardingStatusForOrganization"}
+      }
+    },
+    "DescribeTagsOnboardingStatusResponse":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"TagsOnboardingStatus"}
+      }
+    },
+    "DescribeTagsRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"nextToken"},
+        "maxResults":{"shape":"maxResultsLowerRange"}
+      }
+    },
+    "DescribeTagsResponse":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"AccountTagList"},
+        "nextToken":{"shape":"nextToken"}
+      }
+    },
     "EntityAccountFilter":{
       "type":"structure",
       "required":["eventArn"],
       "members":{
         "eventArn":{"shape":"eventArn"},
         "awsAccountId":{"shape":"accountId"},
-        "statusCodes":{"shape":"entityStatusCodeList"}
+        "statusCodes":{"shape":"entityStatusCodeList"},
+        "tags":{"shape":"AffectedEntitiesForOrganizationTagFilter"}
       }
     },
     "EntityAggregate":{
@@ -479,6 +815,12 @@
         "eventArn":{"shape":"eventArn"},
         "count":{"shape":"count"},
         "statuses":{"shape":"entityStatuses"}
+      }
+    },
+    "EntityAggregateFilter":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"DescribeEntityAggregatesTagFilter"}
       }
     },
     "EntityAggregateList":{
@@ -493,7 +835,7 @@
         "entityArns":{"shape":"entityArnList"},
         "entityValues":{"shape":"entityValueList"},
         "lastUpdatedTimes":{"shape":"dateTimeRangeList"},
-        "tags":{"shape":"tagFilter"},
+        "tags":{"shape":"DescribeAffectedEntitiesTagFilter"},
         "statusCodes":{"shape":"entityStatusCodeList"}
       }
     },
@@ -595,7 +937,7 @@
         "entityArns":{"shape":"entityArnList"},
         "entityValues":{"shape":"entityValueList"},
         "eventTypeCategories":{"shape":"eventTypeCategoryList"},
-        "tags":{"shape":"tagFilter"},
+        "tags":{"shape":"DescribeEventsTagFilter"},
         "eventStatusCodes":{"shape":"eventStatusCodeList"},
         "personas":{"shape":"EventPersonaList"}
       }
@@ -742,6 +1084,25 @@
         "accounts":{"shape":"AccountEntityAggregatesList"}
       }
     },
+    "OrganizationEntityAggregateFilter":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"OrganizationEntityAggregateTagFilter"}
+      }
+    },
+    "OrganizationEntityAggregateTagFilter":{
+      "type":"map",
+      "key":{"shape":"TagFilterKey"},
+      "value":{"shape":"OrganizationEntityAggregateTagValueList"},
+      "max":10,
+      "min":0
+    },
+    "OrganizationEntityAggregateTagValueList":{
+      "type":"list",
+      "member":{"shape":"TagFilterValue"},
+      "max":50,
+      "min":1
+    },
     "OrganizationEntityAggregatesList":{
       "type":"list",
       "member":{"shape":"OrganizationEntityAggregate"}
@@ -814,12 +1175,87 @@
         "entityValues":{"shape":"entityValueList"},
         "eventTypeCategories":{"shape":"eventTypeCategoryList"},
         "eventStatusCodes":{"shape":"eventStatusCodeList"},
-        "personas":{"shape":"EventPersonaList"}
+        "personas":{"shape":"EventPersonaList"},
+        "tags":{"shape":"OrganizationEventTagFilter"}
       }
     },
     "OrganizationEventList":{
       "type":"list",
       "member":{"shape":"OrganizationEvent"}
+    },
+    "OrganizationEventTagFilter":{
+      "type":"map",
+      "key":{"shape":"TagFilterKey"},
+      "value":{"shape":"OrganizationEventTagValueList"},
+      "max":10,
+      "min":0
+    },
+    "OrganizationEventTagValueList":{
+      "type":"list",
+      "member":{"shape":"TagFilterValue"},
+      "max":50,
+      "min":1
+    },
+    "OrganizationTag":{
+      "type":"structure",
+      "members":{
+        "key":{"shape":"tagKey"},
+        "value":{"shape":"tagValue"},
+        "type":{"shape":"OrganizationTagType"}
+      }
+    },
+    "OrganizationTagKey":{
+      "type":"structure",
+      "members":{
+        "key":{"shape":"organizationTagKey"},
+        "enabledForEventBridge":{"shape":"Boolean"},
+        "status":{"shape":"TagKeyStatus"}
+      }
+    },
+    "OrganizationTagKeyList":{
+      "type":"list",
+      "member":{"shape":"OrganizationTagKey"}
+    },
+    "OrganizationTagList":{
+      "type":"list",
+      "member":{"shape":"OrganizationTag"}
+    },
+    "OrganizationTagType":{
+      "type":"string",
+      "enum":[
+        "ORGANIZATION_RESOURCE_TAG",
+        "ORGANIZATION_ACCOUNT_TAG"
+      ]
+    },
+    "OrganizationTagTypeFilter":{
+      "type":"list",
+      "member":{"shape":"OrganizationTagType"},
+      "max":2,
+      "min":1
+    },
+    "ResourceTagKey":{
+      "type":"structure",
+      "members":{
+        "key":{"shape":"resourceTagKey"},
+        "enabledForEventBridge":{"shape":"Boolean"},
+        "status":{"shape":"TagKeyStatus"}
+      }
+    },
+    "ResourceTagKeyList":{
+      "type":"list",
+      "member":{"shape":"ResourceTagKey"}
+    },
+    "ResourceTagSet":{
+      "type":"map",
+      "key":{"shape":"resourceTagKey"},
+      "value":{"shape":"ResourceTagValue"},
+      "max":10
+    },
+    "ResourceTagValue":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "pattern":"[a-zA-Z0-9 _.:\\/=+\\-@]{0,255}"
     },
     "ServiceLifecycle":{
       "type":"structure",
@@ -840,6 +1276,46 @@
     "ServiceLifecycleList":{
       "type":"list",
       "member":{"shape":"ServiceLifecycle"}
+    },
+    "TagFilterKey":{
+      "type":"string",
+      "max":127,
+      "min":1,
+      "pattern":"[a-zA-Z0-9 _.:\\/=+\\-@]{1,127}"
+    },
+    "TagFilterValue":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "pattern":"[a-zA-Z0-9 _.:\\/=+\\-@]{0,255}"
+    },
+    "TagKeyForOrganization":{
+      "type":"structure",
+      "members":{
+        "key":{"shape":"organizationTagKey"},
+        "enabledForEventBridge":{"shape":"Boolean"}
+      }
+    },
+    "TagKeyStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "ACTIVE"
+      ]
+    },
+    "TagsOnboardingStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "TagsOnboardingStatusForOrganization":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "UnsupportedLocale":{
       "type":"structure",
@@ -1047,6 +1523,12 @@
       "min":4,
       "pattern":"[a-zA-Z0-9=/+_.-]{4,10000}"
     },
+    "organizationTagKey":{
+      "type":"string",
+      "max":127,
+      "min":1,
+      "pattern":"[a-zA-Z0-9 _.:/=+\\-@]{1,127}"
+    },
     "region":{
       "type":"string",
       "max":25,
@@ -1058,6 +1540,12 @@
       "member":{"shape":"region"},
       "max":10,
       "min":1
+    },
+    "resourceTagKey":{
+      "type":"string",
+      "max":127,
+      "min":1,
+      "pattern":"[a-zA-Z0-9 _.:\\/=+\\-@]{1,127}"
     },
     "service":{
       "type":"string",
@@ -1072,11 +1560,6 @@
       "min":1
     },
     "string":{"type":"string"},
-    "tagFilter":{
-      "type":"list",
-      "member":{"shape":"tagSet"},
-      "max":50
-    },
     "tagKey":{
       "type":"string",
       "max":127,

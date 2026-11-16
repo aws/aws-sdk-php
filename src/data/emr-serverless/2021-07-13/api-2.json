@@ -754,6 +754,12 @@
       "pattern":".*\\S.*",
       "sensitive":true
     },
+    "FlexExecution":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"Boolean"}
+      }
+    },
     "GetApplicationRequest":{
       "type":"structure",
       "required":["applicationId"],
@@ -1121,7 +1127,8 @@
         "endedAt":{"shape":"Date"},
         "queuedDurationMilliseconds":{"shape":"Long"},
         "imageConfiguration":{"shape":"ImageConfiguration"},
-        "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationMap"}
+        "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationMap"},
+        "flexExecution":{"shape":"FlexExecution"}
       }
     },
     "JobRunAttemptSummary":{
@@ -1154,7 +1161,8 @@
         "stateDetails":{"shape":"String256"},
         "releaseLabel":{"shape":"ReleaseLabel"},
         "type":{"shape":"JobRunType"},
-        "attempt":{"shape":"AttemptNumber"}
+        "attempt":{"shape":"AttemptNumber"},
+        "flexExecution":{"shape":"FlexExecution"}
       }
     },
     "JobRunAttempts":{
@@ -1231,7 +1239,8 @@
         "type":{"shape":"JobRunType"},
         "attempt":{"shape":"AttemptNumber"},
         "attemptCreatedAt":{"shape":"Date"},
-        "attemptUpdatedAt":{"shape":"Date"}
+        "attemptUpdatedAt":{"shape":"Date"},
+        "flexExecution":{"shape":"FlexExecution"}
       }
     },
     "JobRunType":{"type":"string"},
@@ -1836,7 +1845,8 @@
         },
         "name":{"shape":"String256"},
         "mode":{"shape":"JobRunMode"},
-        "retryPolicy":{"shape":"RetryPolicy"}
+        "retryPolicy":{"shape":"RetryPolicy"},
+        "flexExecution":{"shape":"FlexExecution"}
       }
     },
     "StartJobRunResponse":{

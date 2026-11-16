@@ -383,6 +383,18 @@
       "base": null,
       "refs": {}
     },
+    "DeleteReplication": {
+      "base": "<p>The delete replication configuration for a replication rule. When delete replication is enabled, the service replicates image deletions and image tag removals in the source registry to the replication destinations.</p>",
+      "refs": {
+        "ReplicationRule$deleteReplication": "<p>The delete replication settings for the replication rule. When delete replication is enabled, the service replicates image deletions and image tag removals from the source registry to the replication destinations. If you do not specify this parameter, the service does not replicate image deletions or image tag removals for the replication rule.</p>"
+      }
+    },
+    "DeleteReplicationFlag": {
+      "base": null,
+      "refs": {
+        "DeleteReplication$enabled": "<p>Specifies whether delete replication is enabled. If set to <code>true</code>, the service replicates image deletions and image tag removals from the source registry to each replication destination. If set to <code>false</code>, the service does not replicate image deletions or image tag removals.</p>"
+      }
+    },
     "DeleteRepositoryCreationTemplateRequest": {
       "base": null,
       "refs": {}

@@ -607,6 +607,20 @@
         {"shape":"ResourceLimitExceeded"}
       ]
     },
+    "CreateInferenceRouter":{
+      "name":"CreateInferenceRouter",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateInferenceRouterInput"},
+      "output":{"shape":"CreateInferenceRouterOutput"},
+      "errors":[
+        {"shape":"ResourceAlreadyExists"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceLimitExceeded"}
+      ]
+    },
     "CreateJob":{
       "name":"CreateJob",
       "http":{
@@ -1321,6 +1335,18 @@
       },
       "input":{"shape":"DeleteEndpointConfigInput"}
     },
+    "DeleteEndpointPolicy":{
+      "name":"DeleteEndpointPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteEndpointPolicyRequest"},
+      "output":{"shape":"DeleteEndpointPolicyResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
     "DeleteExperiment":{
       "name":"DeleteExperiment",
       "http":{
@@ -1458,6 +1484,19 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFound"}
       ]
+    },
+    "DeleteInferenceRouter":{
+      "name":"DeleteInferenceRouter",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteInferenceRouterInput"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
+      ],
+      "idempotent":true
     },
     "DeleteJob":{
       "name":"DeleteJob",
@@ -2268,6 +2307,19 @@
         {"shape":"ResourceNotFound"}
       ]
     },
+    "DescribeInferenceRouter":{
+      "name":"DescribeInferenceRouter",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeInferenceRouterInput"},
+      "output":{"shape":"DescribeInferenceRouterOutput"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ],
+      "readonly":true
+    },
     "DescribeJob":{
       "name":"DescribeJob",
       "http":{
@@ -2763,6 +2815,18 @@
       },
       "input":{"shape":"GetDeviceFleetReportRequest"},
       "output":{"shape":"GetDeviceFleetReportResponse"}
+    },
+    "GetEndpointPolicy":{
+      "name":"GetEndpointPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetEndpointPolicyRequest"},
+      "output":{"shape":"GetEndpointPolicyResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
     },
     "GetLineageGroupPolicy":{
       "name":"GetLineageGroupPolicy",
@@ -3279,6 +3343,16 @@
       "input":{"shape":"ListInferenceRecommendationsJobsRequest"},
       "output":{"shape":"ListInferenceRecommendationsJobsResponse"}
     },
+    "ListInferenceRouters":{
+      "name":"ListInferenceRouters",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListInferenceRoutersInput"},
+      "output":{"shape":"ListInferenceRoutersOutput"},
+      "readonly":true
+    },
     "ListJobSchemaVersions":{
       "name":"ListJobSchemaVersions",
       "http":{
@@ -3764,6 +3838,18 @@
       },
       "input":{"shape":"ListWorkteamsRequest"},
       "output":{"shape":"ListWorkteamsResponse"}
+    },
+    "PutEndpointPolicy":{
+      "name":"PutEndpointPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutEndpointPolicyRequest"},
+      "output":{"shape":"PutEndpointPolicyResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
     },
     "PutModelPackageGroupPolicy":{
       "name":"PutModelPackageGroupPolicy",
@@ -4516,6 +4602,21 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFound"}
       ]
+    },
+    "UpdateInferenceRouter":{
+      "name":"UpdateInferenceRouter",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateInferenceRouterInput"},
+      "output":{"shape":"UpdateInferenceRouterOutput"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceLimitExceeded"}
+      ],
+      "idempotent":true
     },
     "UpdateMlflowApp":{
       "name":"UpdateMlflowApp",
@@ -10783,7 +10884,8 @@
           "shape":"Boolean",
           "box":true
         },
-        "MetricsConfig":{"shape":"MetricsConfig"}
+        "MetricsConfig":{"shape":"MetricsConfig"},
+        "CrossRegionTrafficConfig":{"shape":"CrossRegionTrafficConfig"}
       }
     },
     "CreateEndpointConfigOutput":{
@@ -11126,6 +11228,29 @@
       "required":["JobArn"],
       "members":{
         "JobArn":{"shape":"RecommendationJobArn"}
+      }
+    },
+    "CreateInferenceRouterInput":{
+      "type":"structure",
+      "required":[
+        "InferenceRouterName",
+        "RoutingTargets"
+      ],
+      "members":{
+        "InferenceRouterName":{"shape":"InferenceRouterName"},
+        "RoutingTargets":{"shape":"RoutingTargetList"},
+        "ClientToken":{
+          "shape":"InferenceRouterClientToken",
+          "idempotencyToken":true
+        },
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateInferenceRouterOutput":{
+      "type":"structure",
+      "required":["InferenceRouterArn"],
+      "members":{
+        "InferenceRouterArn":{"shape":"InferenceRouterArn"}
       }
     },
     "CreateJobRequest":{
@@ -12068,6 +12193,29 @@
         "CrossAccount"
       ]
     },
+    "CrossRegionMaxInvocationsPerSecondPerInstance":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":1
+    },
+    "CrossRegionPercentPerEndpoint":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "CrossRegionTrafficConfig":{
+      "type":"structure",
+      "required":[
+        "MaxInvocationsPerSecondPerInstance",
+        "MaxCrossRegionPercentPerEndpoint"
+      ],
+      "members":{
+        "MaxInvocationsPerSecondPerInstance":{"shape":"CrossRegionMaxInvocationsPerSecondPerInstance"},
+        "MaxCrossRegionPercentPerEndpoint":{"shape":"CrossRegionPercentPerEndpoint"}
+      }
+    },
     "CsvContentType":{
       "type":"string",
       "max":256,
@@ -12717,6 +12865,17 @@
         "EndpointName":{"shape":"EndpointName"}
       }
     },
+    "DeleteEndpointPolicyRequest":{
+      "type":"structure",
+      "required":["EndpointName"],
+      "members":{
+        "EndpointName":{"shape":"EndpointName"}
+      }
+    },
+    "DeleteEndpointPolicyResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteExperimentRequest":{
       "type":"structure",
       "required":["ExperimentName"],
@@ -12844,6 +13003,13 @@
       "required":["InferenceExperimentArn"],
       "members":{
         "InferenceExperimentArn":{"shape":"InferenceExperimentArn"}
+      }
+    },
+    "DeleteInferenceRouterInput":{
+      "type":"structure",
+      "required":["InferenceRouterName"],
+      "members":{
+        "InferenceRouterName":{"shape":"InferenceRouterName"}
       }
     },
     "DeleteJobRequest":{
@@ -14096,7 +14262,8 @@
           "shape":"Boolean",
           "box":true
         },
-        "MetricsConfig":{"shape":"MetricsConfig"}
+        "MetricsConfig":{"shape":"MetricsConfig"},
+        "CrossRegionTrafficConfig":{"shape":"CrossRegionTrafficConfig"}
       }
     },
     "DescribeEndpointInput":{
@@ -14130,7 +14297,8 @@
         "PendingDeploymentSummary":{"shape":"PendingDeploymentSummary"},
         "ExplainerConfig":{"shape":"ExplainerConfig"},
         "ShadowProductionVariants":{"shape":"ProductionVariantSummaryList"},
-        "MetricsConfig":{"shape":"MetricsConfig"}
+        "MetricsConfig":{"shape":"MetricsConfig"},
+        "CrossRegionTrafficConfig":{"shape":"CrossRegionTrafficConfig"}
       }
     },
     "DescribeExperimentRequest":{
@@ -14559,6 +14727,33 @@
         "StoppingConditions":{"shape":"RecommendationJobStoppingConditions"},
         "InferenceRecommendations":{"shape":"InferenceRecommendations"},
         "EndpointPerformances":{"shape":"EndpointPerformances"}
+      }
+    },
+    "DescribeInferenceRouterInput":{
+      "type":"structure",
+      "required":["InferenceRouterName"],
+      "members":{
+        "InferenceRouterName":{"shape":"InferenceRouterName"}
+      }
+    },
+    "DescribeInferenceRouterOutput":{
+      "type":"structure",
+      "required":[
+        "InferenceRouterName",
+        "InferenceRouterArn",
+        "RoutingTargets",
+        "Status",
+        "CreationTime",
+        "LastModifiedTime"
+      ],
+      "members":{
+        "InferenceRouterName":{"shape":"InferenceRouterName"},
+        "InferenceRouterArn":{"shape":"InferenceRouterArn"},
+        "RoutingTargets":{"shape":"RoutingTargetList"},
+        "Status":{"shape":"InferenceRouterStatus"},
+        "StatusReason":{"shape":"InferenceRouterStatusReason"},
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"}
       }
     },
     "DescribeJobRequest":{
@@ -15756,6 +15951,26 @@
       "member":{"shape":"DesiredWeightAndCapacity"},
       "min":1
     },
+    "Destination":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"DestinationResourceArn"},
+        "RoutingStatus":{"shape":"RoutingStatus"}
+      }
+    },
+    "DestinationList":{
+      "type":"list",
+      "member":{"shape":"Destination"},
+      "max":10,
+      "min":1
+    },
+    "DestinationResourceArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[a-z-]*:sagemaker:[a-z0-9-]+:[0-9]{12}:(endpoint|inference-component)/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+    },
     "DestinationS3Uri":{
       "type":"string",
       "max":512,
@@ -16772,6 +16987,12 @@
       "member":{"shape":"EndpointPerformance"},
       "max":1,
       "min":0
+    },
+    "EndpointPolicyDocument":{
+      "type":"string",
+      "max":20480,
+      "min":1,
+      "pattern":".*(?:[ \\r\\n\\t].*)*.*"
     },
     "EndpointSortKey":{
       "type":"string",
@@ -17888,6 +18109,21 @@
         "DeviceStats":{"shape":"DeviceStats"},
         "AgentVersions":{"shape":"AgentVersions"},
         "ModelStats":{"shape":"EdgeModelStats"}
+      }
+    },
+    "GetEndpointPolicyRequest":{
+      "type":"structure",
+      "required":["EndpointName"],
+      "members":{
+        "EndpointName":{"shape":"EndpointName"}
+      }
+    },
+    "GetEndpointPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "EndpointName":{"shape":"EndpointName"},
+        "EndpointArn":{"shape":"EndpointArn"},
+        "ResourcePolicy":{"shape":"EndpointPolicyDocument"}
       }
     },
     "GetLineageGroupPolicyRequest":{
@@ -19692,6 +19928,83 @@
       "type":"list",
       "member":{"shape":"InferenceRecommendationsJob"}
     },
+    "InferenceRouterArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[a-z-]*:sagemaker:[a-z0-9-]+:[0-9]{12}:inference-router/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+    },
+    "InferenceRouterClientToken":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\x21-\\x7E]+"
+    },
+    "InferenceRouterMaxTimeInBacklogSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":21600,
+      "min":60
+    },
+    "InferenceRouterName":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+    },
+    "InferenceRouterRoutingPreference":{
+      "type":"string",
+      "enum":[
+        "LocalRegionFirst",
+        "InstancePoolOrder"
+      ]
+    },
+    "InferenceRouterS3Uri":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"(https|s3)://([^/])/?(.*)"
+    },
+    "InferenceRouterSnsTopicArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[a-z-]*:sns:[a-z0-9-]*:[0-9]{12}:[a-zA-Z0-9_.-]+"
+    },
+    "InferenceRouterStatus":{
+      "type":"string",
+      "enum":[
+        "InService",
+        "Creating",
+        "Updating",
+        "Failed",
+        "Deleting"
+      ]
+    },
+    "InferenceRouterStatusReason":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "InferenceRouterSummary":{
+      "type":"structure",
+      "required":[
+        "InferenceRouterName",
+        "InferenceRouterArn",
+        "CreationTime",
+        "LastModifiedTime"
+      ],
+      "members":{
+        "InferenceRouterName":{"shape":"InferenceRouterName"},
+        "InferenceRouterArn":{"shape":"InferenceRouterArn"},
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"}
+      }
+    },
+    "InferenceRouterSummaryList":{
+      "type":"list",
+      "member":{"shape":"InferenceRouterSummary"}
+    },
     "InferenceSpecification":{
       "type":"structure",
       "required":["Containers"],
@@ -20268,7 +20581,10 @@
       "type":"string",
       "enum":[
         "AgentRFT",
-        "AgentRFTEvaluation"
+        "SyntheticDataGeneration",
+        "DataQualityEvaluation",
+        "AgentRFTEvaluation",
+        "DataTransformation"
       ]
     },
     "JobConfigDocument":{
@@ -20332,7 +20648,15 @@
         "Completed",
         "Restarting",
         "Pending",
+        "Generating",
+        "PartialGeneration",
         "Evaluating",
+        "Validating",
+        "Preparing",
+        "Executing",
+        "Publishing",
+        "Finalizing",
+        "Transforming",
         "Deleting",
         "DeleteFailed"
       ]
@@ -21867,6 +22191,21 @@
         "CreationTime",
         "Status"
       ]
+    },
+    "ListInferenceRoutersInput":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListInferenceRoutersOutput":{
+      "type":"structure",
+      "required":["InferenceRouters"],
+      "members":{
+        "InferenceRouters":{"shape":"InferenceRouterSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
     },
     "ListJobSchemaVersionsRequest":{
       "type":"structure",
@@ -27682,6 +28021,23 @@
         "AmountInUsd":{"shape":"USD"}
       }
     },
+    "PutEndpointPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "EndpointName",
+        "ResourcePolicy"
+      ],
+      "members":{
+        "EndpointName":{"shape":"EndpointName"},
+        "ResourcePolicy":{"shape":"EndpointPolicyDocument"}
+      }
+    },
+    "PutEndpointPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "EndpointArn":{"shape":"EndpointArn"}
+      }
+    },
     "PutModelPackageGroupPolicyInput":{
       "type":"structure",
       "required":[
@@ -28459,6 +28815,13 @@
         "CompletionCriteria":{"shape":"AutoMLJobCompletionCriteria"}
       }
     },
+    "ResourceAlreadyExists":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"FailureReason"}
+      },
+      "exception":true
+    },
     "ResourceArn":{
       "type":"string",
       "max":256,
@@ -28762,13 +29125,81 @@
         "Disabled"
       ]
     },
+    "RoutingStatus":{
+      "type":"string",
+      "enum":[
+        "Routable",
+        "Unroutable",
+        "Unknown"
+      ]
+    },
     "RoutingStrategy":{
       "type":"string",
       "enum":[
         "LEAST_OUTSTANDING_REQUESTS",
         "RANDOM",
-        "PREFIX_AWARE"
+        "PREFIX_AWARE",
+        "KV_AWARE"
       ]
+    },
+    "RoutingTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Destinations"
+      ],
+      "members":{
+        "Name":{"shape":"RoutingTargetName"},
+        "Destinations":{"shape":"DestinationList"},
+        "AsyncInferenceConfig":{"shape":"RoutingTargetAsyncInferenceConfig"},
+        "RoutingPreference":{"shape":"InferenceRouterRoutingPreference"}
+      }
+    },
+    "RoutingTargetAsyncInferenceClientConfig":{
+      "type":"structure",
+      "members":{
+        "MaxTimeInBacklogSeconds":{"shape":"InferenceRouterMaxTimeInBacklogSeconds"}
+      }
+    },
+    "RoutingTargetAsyncInferenceConfig":{
+      "type":"structure",
+      "required":["OutputConfig"],
+      "members":{
+        "OutputConfig":{"shape":"RoutingTargetAsyncInferenceOutputConfig"},
+        "ClientConfig":{"shape":"RoutingTargetAsyncInferenceClientConfig"}
+      }
+    },
+    "RoutingTargetAsyncInferenceNotificationConfig":{
+      "type":"structure",
+      "members":{
+        "SuccessTopic":{"shape":"InferenceRouterSnsTopicArn"},
+        "ErrorTopic":{"shape":"InferenceRouterSnsTopicArn"}
+      }
+    },
+    "RoutingTargetAsyncInferenceOutputConfig":{
+      "type":"structure",
+      "required":[
+        "S3OutputPath",
+        "S3FailurePath"
+      ],
+      "members":{
+        "S3OutputPath":{"shape":"InferenceRouterS3Uri"},
+        "S3FailurePath":{"shape":"InferenceRouterS3Uri"},
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "NotificationConfig":{"shape":"RoutingTargetAsyncInferenceNotificationConfig"}
+      }
+    },
+    "RoutingTargetList":{
+      "type":"list",
+      "member":{"shape":"RoutingTarget"},
+      "max":20,
+      "min":1
+    },
+    "RoutingTargetName":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "RuleConfigurationName":{
       "type":"string",
@@ -33061,6 +33492,24 @@
       "required":["InferenceExperimentArn"],
       "members":{
         "InferenceExperimentArn":{"shape":"InferenceExperimentArn"}
+      }
+    },
+    "UpdateInferenceRouterInput":{
+      "type":"structure",
+      "required":[
+        "InferenceRouterName",
+        "RoutingTargets"
+      ],
+      "members":{
+        "InferenceRouterName":{"shape":"InferenceRouterName"},
+        "RoutingTargets":{"shape":"RoutingTargetList"}
+      }
+    },
+    "UpdateInferenceRouterOutput":{
+      "type":"structure",
+      "required":["InferenceRouterArn"],
+      "members":{
+        "InferenceRouterArn":{"shape":"InferenceRouterArn"}
       }
     },
     "UpdateMlflowAppRequest":{

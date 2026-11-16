@@ -1519,6 +1519,28 @@
         {"shape":"ForbiddenException"}
       ]
     },
+    "GetDerivedToken":{
+      "name":"GetDerivedToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDerivedTokenRequest"},
+      "output":{"shape":"GetDerivedTokenResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"UserNotFoundException"},
+        {"shape":"UnexpectedLambdaException"},
+        {"shape":"UserLambdaValidationException"},
+        {"shape":"InvalidLambdaResponseException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"OperationNotEnabledException"},
+        {"shape":"ForbiddenException"}
+      ]
+    },
     "GetDevice":{
       "name":"GetDevice",
       "http":{
@@ -3702,6 +3724,18 @@
       "type":"list",
       "member":{"shape":"VerifiedAttributeType"}
     },
+    "AudienceListType":{
+      "type":"list",
+      "member":{"shape":"AudienceType"},
+      "max":1,
+      "min":0
+    },
+    "AudienceType":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\x21\\x23-\\x5B\\x5D-\\x7E]+"
+    },
     "AuthEventType":{
       "type":"structure",
       "members":{
@@ -5114,7 +5148,9 @@
         "ALLOW_USER_PASSWORD_AUTH",
         "ALLOW_USER_SRP_AUTH",
         "ALLOW_REFRESH_TOKEN_AUTH",
-        "ALLOW_USER_AUTH"
+        "ALLOW_USER_AUTH",
+        "ALLOW_TOKEN_EXCHANGE_DELEGATION",
+        "ALLOW_TOKEN_EXCHANGE_IMPERSONATION"
       ]
     },
     "FailoverType":{
@@ -5225,6 +5261,50 @@
       "members":{
         "ClientAuthenticationResult":{"shape":"ClientAuthenticationResultType"}
       }
+    },
+    "GetDerivedTokenRequest":{
+      "type":"structure",
+      "required":[
+        "ClientId",
+        "SubjectToken",
+        "SubjectTokenType"
+      ],
+      "members":{
+        "ClientId":{"shape":"ClientIdType"},
+        "ClientSecret":{"shape":"ClientSecretType"},
+        "SubjectToken":{"shape":"GetDerivedTokenTokenModelType"},
+        "SubjectTokenType":{"shape":"TokenTypeIdentifierType"},
+        "SubjectTokenProviderName":{"shape":"ProviderNameType"},
+        "ActorToken":{"shape":"GetDerivedTokenTokenModelType"},
+        "ActorTokenType":{"shape":"TokenTypeIdentifierType"},
+        "ActorTokenProviderName":{"shape":"ProviderNameType"},
+        "Scopes":{"shape":"ScopeListType"},
+        "Audiences":{"shape":"AudienceListType"},
+        "Resources":{"shape":"ResourceListType"},
+        "RequestedTokenType":{"shape":"IssuedTokenTypeIdentifierType"}
+      }
+    },
+    "GetDerivedTokenResponse":{
+      "type":"structure",
+      "required":[
+        "IssuedToken",
+        "IssuedTokenType",
+        "TokenType"
+      ],
+      "members":{
+        "IssuedToken":{"shape":"TokenModelType"},
+        "IssuedTokenType":{"shape":"IssuedTokenTypeIdentifierType"},
+        "TokenType":{"shape":"OAuthTokenTypeType"},
+        "ExpiresIn":{"shape":"IntegerType"},
+        "Scopes":{"shape":"ScopeListType"}
+      }
+    },
+    "GetDerivedTokenTokenModelType":{
+      "type":"string",
+      "max":131072,
+      "min":0,
+      "pattern":"[A-Za-z0-9-_+/=.]+",
+      "sensitive":true
     },
     "GetDeviceRequest":{
       "type":"structure",
@@ -5680,6 +5760,13 @@
         "message":{"shape":"MessageType"}
       },
       "exception":true
+    },
+    "IssuedTokenTypeIdentifierType":{
+      "type":"string",
+      "enum":[
+        "ACCESS_TOKEN",
+        "ID_TOKEN"
+      ]
     },
     "IssuerConfigurationType":{
       "type":"structure",
@@ -6206,6 +6293,13 @@
       "max":3,
       "min":0
     },
+    "OAuthTokenTypeType":{
+      "type":"string",
+      "enum":[
+        "Bearer",
+        "N_A"
+      ]
+    },
     "OperationNotEnabledException":{
       "type":"structure",
       "members":{
@@ -6495,6 +6589,12 @@
       "max":40,
       "min":1,
       "pattern":"^[\\w\\- ]+$"
+    },
+    "ResourceListType":{
+      "type":"list",
+      "member":{"shape":"ResourceServerIdentifierType"},
+      "max":1,
+      "min":0
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -7295,6 +7395,14 @@
       "type":"string",
       "pattern":"[A-Za-z0-9-_=.]+",
       "sensitive":true
+    },
+    "TokenTypeIdentifierType":{
+      "type":"string",
+      "enum":[
+        "ACCESS_TOKEN",
+        "ID_TOKEN",
+        "SAML2"
+      ]
     },
     "TokenValidityUnitsType":{
       "type":"structure",

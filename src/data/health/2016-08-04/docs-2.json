@@ -1,7 +1,9 @@
 {
   "version": "2.0",
-  "service": "<fullname>Health</fullname> <p>The Health API provides access to the Health information that appears in the <a href=\"https://health.aws.amazon.com/health/home\">Health Dashboard</a>. You can use the API operations to get information about events that might affect your Amazon Web Services services and resources.</p> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan from <a href=\"http://aws.amazon.com/premiumsupport/\">Amazon Web Services Support</a> to use the Health API. If you call the Health API from an Amazon Web Services account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, you receive a <code>SubscriptionRequiredException</code> error.</p> <p>For API access, you need an access key ID and a secret access key. Use temporary credentials instead of long-term access keys when possible. Temporary credentials include an access key ID, a secret access key, and a security token that indicates when the credentials expire. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html\">Best practices for managing Amazon Web Services access keys</a> in the <i>Amazon Web Services General Reference</i>.</p> <p>You can use the Health endpoint health.us-east-1.amazonaws.com (HTTPS) to call the Health API operations. Health supports a multi-Region application architecture and has two regional endpoints in an active-passive configuration. You can use the high availability endpoint example to determine which Amazon Web Services Region is active, so that you can get the latest information from the API. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/health-api.html\">Accessing the Health API</a> in the <i>Health User Guide</i>.</p> <p>For authentication of requests, Health uses the <a href=\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version 4 Signing Process</a>.</p> <p>If your Amazon Web Services account is part of Organizations, you can use the Health organizational view feature. This feature provides a centralized view of Health events across all accounts in your organization. You can aggregate Health events in real time to identify accounts in your organization that are affected by an operational event or get notified of security vulnerabilities. Use the organizational view API operations to enable this feature and return event information. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/aggregate-events.html\">Aggregating Health events</a> in the <i>Health User Guide</i>.</p> <note> <p>When you use the Health API operations to return Health events, see the following recommendations:</p> <ul> <li> <p>Use the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_Event.html#AWSHealth-Type-Event-eventScopeCode\">eventScopeCode</a> parameter to specify whether to return Health events that are public or account-specific.</p> </li> <li> <p>Use pagination to view all events from the response. For example, if you call the <code>DescribeEventsForOrganization</code> operation to get all events in your organization, you might receive several page results. Specify the <code>nextToken</code> in the next request to return more results.</p> </li> </ul> </note>",
+  "service": "<fullname>Health</fullname> <p>The Health API provides access to the Health information that appears in the <a href=\"https://health.aws.amazon.com/health/home\">Health Dashboard</a>. You can use the API operations to get information about events that might affect your Amazon Web Services services and resources.</p> <p>You must have an Amazon Web Services Business Support+, Amazon Web Services Enterprise Support, or Amazon Web Services Unified Operations plan from <a href=\"http://aws.amazon.com/premiumsupport/\">Amazon Web Services Support</a> to use the Health API. If you're in an Amazon Web Services Region that doesn't offer one of these Amazon Web Services Support plans, or if you haven't transitioned to one of these plans, you can use the Health API with a Business, Enterprise On-Ramp, or Enterprise Support plan. If you call the Health API from an Amazon Web Services account that isn't enrolled in one of these plans, then you receive a <code>SubscriptionRequiredException</code> error.</p> <p>For API access, you need an access key ID and a secret access key. Use temporary credentials instead of long-term access keys when possible. Temporary credentials include an access key ID, a secret access key, and a security token that indicates when the credentials expire. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html\">Best practices for managing Amazon Web Services access keys</a> in the <i>Amazon Web Services General Reference</i>.</p> <p>You can use the Health endpoint health.us-east-1.amazonaws.com (HTTPS) to call the Health API operations. Health supports a multi-Region application architecture and has two regional endpoints in an active-passive configuration. You can use the high availability endpoint example to determine which Amazon Web Services Region is active, so that you can get the latest information from the API. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/health-api.html\">Accessing the Health API</a> in the <i>Health User Guide</i>.</p> <p>For authentication of requests, Health uses the <a href=\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version 4 Signing Process</a>.</p> <p>If your Amazon Web Services account is part of Organizations, you can use the Health organizational view feature. This feature provides a centralized view of Health events across all accounts in your organization. You can aggregate Health events in real time to identify accounts in your organization that are affected by an operational event or get notified of security vulnerabilities. Use the organizational view API operations to enable this feature and return event information. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/aggregate-events.html\">Aggregating Health events</a> in the <i>Health User Guide</i>.</p> <note> <p>When you use the Health API operations to return Health events, see the following recommendations:</p> <ul> <li> <p>Use the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_Event.html#AWSHealth-Type-Event-eventScopeCode\">eventScopeCode</a> parameter to specify whether to return Health events that are public or account-specific.</p> </li> <li> <p>Use pagination to view all events from the response. For example, if you call the <code>DescribeEventsForOrganization</code> operation to get all events in your organization, you might receive several page results. Specify the <code>nextToken</code> in the next request to return more results.</p> </li> </ul> </note>",
   "operations": {
+    "ConfigureTags": "<p>Configures which resource tag keys are tracked by Health for your account. This operation replaces the existing configuration with the specified tag keys. Only configured tag keys will appear in Health event data.</p>",
+    "ConfigureTagsForOrganization": "<p>Configures which tag keys are tracked by Health for all accounts in your organization. This operation replaces the existing configuration with the specified tag keys. Only configured tag keys will appear in Health event data across the organization.</p>",
     "DescribeAffectedAccountsForOrganization": "<p>Returns a list of accounts in the organization from Organizations that are affected by the provided event. For more information about the different types of Health events, see <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_Event.html\">Event</a>. </p> <p>Before you can call this operation, you must first enable Health to work with Organizations. To do this, call the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_EnableHealthServiceAccessForOrganization.html\">EnableHealthServiceAccessForOrganization</a> operation from your organization's management account.</p> <note> <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the next request to return more results.</p> </note>",
     "DescribeAffectedEntities": "<p>Returns a list of entities that have been affected by the specified events, based on the specified filter criteria. Entities can refer to individual customer resources, groups of customer resources, or any other construct, depending on the Amazon Web Services service. Events that have impact beyond that of the affected entities, or where the extent of impact is unknown, include at least one entity indicating this.</p> <p>At least one event ARN is required.</p> <note> <ul> <li> <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the next request to return more results.</p> </li> <li> <p>This operation supports resource-level permissions. You can use this operation to allow or deny access to specific Health events. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/security_iam_id-based-policy-examples.html#resource-action-based-conditions\">Resource- and action-based conditions</a> in the <i>Health User Guide</i>.</p> </li> </ul> </note>",
     "DescribeAffectedEntitiesForOrganization": "<p>Returns a list of entities that have been affected by one or more events for one or more accounts in your organization in Organizations, based on the filter criteria. Entities can refer to individual customer resources, groups of customer resources, or any other construct, depending on the Amazon Web Services service.</p> <p>At least one event Amazon Resource Name (ARN) and account ID are required.</p> <p>Before you can call this operation, you must first enable Health to work with Organizations. To do this, call the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_EnableHealthServiceAccessForOrganization.html\">EnableHealthServiceAccessForOrganization</a> operation from your organization's management account.</p> <note> <ul> <li> <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the next request to return more results.</p> </li> <li> <p>This operation doesn't support resource-level permissions. You can't use this operation to allow or deny access to specific Health events. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/security_iam_id-based-policy-examples.html#resource-action-based-conditions\">Resource- and action-based conditions</a> in the <i>Health User Guide</i>.</p> </li> </ul> </note>",
@@ -15,10 +17,26 @@
     "DescribeEventsForOrganization": "<p>Returns information about events across your organization in Organizations. You can use the<code>filters</code> parameter to specify the events that you want to return. Events are returned in a summary form and don't include the affected accounts, detailed description, any additional metadata that depends on the event type, or any affected resources. To retrieve that information, use the following operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeAffectedAccountsForOrganization.html\">DescribeAffectedAccountsForOrganization</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeEventDetailsForOrganization.html\">DescribeEventDetailsForOrganization</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeAffectedEntitiesForOrganization.html\">DescribeAffectedEntitiesForOrganization</a> </p> </li> </ul> <p>If you don't specify a <code>filter</code>, the <code>DescribeEventsForOrganizations</code> returns all events across your organization. Results are sorted by <code>lastModifiedTime</code>, starting with the most recent event. </p> <p>For more information about the different types of Health events, see <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_Event.html\">Event</a>.</p> <p>Before you can call this operation, you must first enable Health to work with Organizations. To do this, call the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_EnableHealthServiceAccessForOrganization.html\">EnableHealthServiceAccessForOrganization</a> operation from your organization's management account.</p> <note> <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the next request to return more results.</p> </note>",
     "DescribeHealthServiceStatusForOrganization": "<p>This operation provides status information on enabling or disabling Health to work with your organization. To call this operation, you must use the organization's management account.</p>",
     "DescribeServiceLifecycle": "<p>Returns lifecycle information for Amazon Web Services services, including end-of-life dates, version recommendations, and lifecycle events.</p>",
+    "DescribeTagKeys": "<p>Returns the list of resource tag keys configured for Health event tracking in your account.</p>",
+    "DescribeTagKeysForOrganization": "<p>Returns the list of tag keys configured for Health event tracking across your organization.</p>",
+    "DescribeTags": "<p>Returns the resource tags associated with Health events for your account. Use this operation to retrieve the actual tag key-value pairs attached to affected entities.</p>",
+    "DescribeTagsForOrganization": "<p>Returns the tags associated with Health events across all accounts in your organization.</p>",
+    "DescribeTagsOnboardingStatus": "<p>Returns the current onboarding status of the Health tags feature for your account.</p>",
+    "DescribeTagsOnboardingStatusForOrganization": "<p>Returns the current onboarding status of the Health tags feature for your organization.</p>",
     "DisableHealthServiceAccessForOrganization": "<p>Disables Health from working with Organizations. To call this operation, you must sign in to the organization's management account. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/aggregate-events.html\">Aggregating Health events</a> in the <i>Health User Guide</i>.</p> <p>This operation doesn't remove the service-linked role from the management account in your organization. You must use the IAM console, API, or Command Line Interface (CLI) to remove the service-linked role. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html#delete-service-linked-role\">Deleting a Service-Linked Role</a> in the <i>IAM User Guide</i>.</p> <note> <p>You can also disable the organizational feature by using the Organizations <a href=\"https://docs.aws.amazon.com/organizations/latest/APIReference/API_DisableAWSServiceAccess.html\">DisableAWSServiceAccess</a> API operation. After you call this operation, Health stops aggregating events for all other Amazon Web Services accounts in your organization. If you call the Health API operations for organizational view, Health returns an error. Health continues to aggregate health events for your Amazon Web Services account.</p> </note>",
-    "EnableHealthServiceAccessForOrganization": "<p>Enables Health to work with Organizations. You can use the organizational view feature to aggregate events from all Amazon Web Services accounts in your organization in a centralized location. </p> <p>This operation also creates a service-linked role for the management account in the organization. </p> <note> <p>To call this operation, you must meet the following requirements:</p> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan from <a href=\"http://aws.amazon.com/premiumsupport/\">Amazon Web Services Support</a> to use the Health API. If you call the Health API from an Amazon Web Services account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, you receive a <code>SubscriptionRequiredException</code> error.</p> </li> <li> <p>You must have permission to call this operation from the organization's management account. For example IAM policies, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/security_iam_id-based-policy-examples.html\">Health identity-based policy examples</a>.</p> </li> </ul> </note> <p>If you don't have the required support plan, you can instead use the Health console to enable the organizational view feature. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/aggregate-events.html\">Aggregating Health events</a> in the <i>Health User Guide</i>.</p>"
+    "DisableTags": "<p>Disables the Health tags feature for your account. After disabling, Health events will no longer include resource tag information. Previously configured tag keys are discarded.</p>",
+    "DisableTagsForOrganization": "<p>Disables the Health tags feature for all accounts in your organization.</p>",
+    "EnableHealthServiceAccessForOrganization": "<p>Enables Health to work with Organizations. You can use the organizational view feature to aggregate events from all Amazon Web Services accounts in your organization in a centralized location. </p> <p>This operation also creates a service-linked role for the management account in the organization. </p> <note> <p>To call this operation, you must meet the following requirements:</p> <ul> <li> <p>You must have a Amazon Web Services Business Support+, Amazon Web Services Enterprise Support, or Amazon Web Services Unified Operations plan from <a href=\"http://aws.amazon.com/premiumsupport/\">Amazon Web Services Support</a> to use the Health API. If you call the Health API from an Amazon Web Services account that doesn't have a Amazon Web Services Business Support+, Amazon Web Services Enterprise Support, or Amazon Web Services Unified Operations plan, you receive a <code>SubscriptionRequiredException</code> error.</p> </li> <li> <p>You must have permission to call this operation from the organization's management account. For example IAM policies, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/security_iam_id-based-policy-examples.html\">Health identity-based policy examples</a>.</p> </li> </ul> </note> <p>If you don't have the required support plan, you can instead use the Health console to enable the organizational view feature. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/aggregate-events.html\">Aggregating Health events</a> in the <i>Health User Guide</i>.</p>",
+    "EnableTags": "<p>Enables the Health tags feature for your account. Once enabled, Health events will include resource tag information for affected entities. If the feature is already enabled, this operation has no effect.</p>",
+    "EnableTagsForOrganization": "<p>Enables the Health tags feature for all accounts in your organization. Once enabled, Health events will include resource tag information for affected entities across your organization.</p>"
   },
   "shapes": {
+    "AccountEntity": {
+      "base": "<p>An entity representing an affected account, including its account ID and associated tags.</p>",
+      "refs": {
+        "AffectedAccountEntityList$member": null
+      }
+    },
     "AccountEntityAggregate": {
       "base": "<p>The number of entities in an account that are impacted by a specific event aggregated by the entity status codes.</p>",
       "refs": {
@@ -31,14 +49,125 @@
         "OrganizationEntityAggregate$accounts": "<p>A list of entity aggregates for each of the specified accounts in your organization that are affected by a specific event. If there are no <code>awsAccountIds</code> provided in the request, this field will be empty in the response.</p>"
       }
     },
+    "AccountTag": {
+      "base": "<p>A tag key-value pair associated with a resource in an account.</p>",
+      "refs": {
+        "AccountTagList$member": null
+      }
+    },
+    "AccountTagKey": {
+      "base": null,
+      "refs": {
+        "AccountTagSet$key": null
+      }
+    },
+    "AccountTagList": {
+      "base": null,
+      "refs": {
+        "DescribeTagsResponse$tags": "<p>The list of resource tags associated with Health events.</p>"
+      }
+    },
+    "AccountTagSet": {
+      "base": null,
+      "refs": {
+        "AccountEntity$accountTags": "<p>A map of tag key-value pairs attached to the affected account.</p>",
+        "AffectedEntity$accountTags": "<p>A map of account tag key-value pairs attached to the affected entity.</p>"
+      }
+    },
+    "AccountTagType": {
+      "base": null,
+      "refs": {
+        "AccountTag$type": "<p>The type of tag (resource tag or account tag).</p>"
+      }
+    },
+    "AccountTagValue": {
+      "base": null,
+      "refs": {
+        "AccountTagSet$value": null
+      }
+    },
+    "AffectedAccountEntityList": {
+      "base": null,
+      "refs": {
+        "DescribeAffectedAccountsForOrganizationResponse$affectedAccountEntities": "<p>The list of affected account entities, including account IDs and their associated tags.</p>"
+      }
+    },
+    "AffectedAccountFilter": {
+      "base": "<p>A filter for narrowing down affected accounts in an organization event.</p>",
+      "refs": {
+        "DescribeAffectedAccountsForOrganizationRequest$filter": "<p>Values to narrow the results returned.</p>"
+      }
+    },
+    "AffectedAccountsForOrganizationTagFilter": {
+      "base": null,
+      "refs": {
+        "AffectedAccountFilter$tags": "<p>A map of tag keys to lists of tag values. A tag matches when its key is in the map and its value is one of the values listed for that key. Matching is case sensitive, and the filter matches when at least one key in the map matches.</p> <p>An account is returned when its own tags, or the tags of one of its affected resources, match.</p>"
+      }
+    },
+    "AffectedAccountsForOrganizationTagValueList": {
+      "base": null,
+      "refs": {
+        "AffectedAccountsForOrganizationTagFilter$value": null
+      }
+    },
+    "AffectedEntitiesForOrganizationTagFilter": {
+      "base": null,
+      "refs": {
+        "EntityAccountFilter$tags": "<p>A map of tag keys to lists of tag values. A tag matches when its key is in the map and its value is one of the values listed for that key. Matching is case sensitive, and the filter matches when at least one key in the map matches.</p> <p>An entity is returned when the tags of the resource, or of the account it belongs to, match. When you specify several filters in <code>organizationEntityAccountFilters</code>, the tags must be identical in every filter.</p>"
+      }
+    },
+    "AffectedEntitiesForOrganizationTagValueList": {
+      "base": null,
+      "refs": {
+        "AffectedEntitiesForOrganizationTagFilter$value": null
+      }
+    },
     "AffectedEntity": {
       "base": "<p>Information about an entity that is affected by a Health event.</p>",
       "refs": {
         "EntityList$member": null
       }
     },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "OrganizationTagKey$enabledForEventBridge": "<p>Whether this tag key is enabled for EventBridge notifications.</p>",
+        "ResourceTagKey$enabledForEventBridge": "<p>Whether this tag key is enabled for EventBridge notifications.</p>",
+        "TagKeyForOrganization$enabledForEventBridge": "<p>Whether this tag key is enabled for EventBridge notifications.</p>"
+      }
+    },
     "ConcurrentModificationException": {
       "base": "<p> <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_EnableHealthServiceAccessForOrganization.html\">EnableHealthServiceAccessForOrganization</a> is already in progress. Wait for the action to complete before trying again. To get the current status, use the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeHealthServiceStatusForOrganization.html\">DescribeHealthServiceStatusForOrganization</a> operation.</p>",
+      "refs": {}
+    },
+    "ConfigureTagsForOrganizationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ConfigureTagsForOrganizationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ConfigureTagsForOrganizationTagKeyList": {
+      "base": null,
+      "refs": {
+        "ConfigureTagsForOrganizationRequest$tagKeys": "<p>The list of tag keys to configure for Health event tracking across the organization.</p>",
+        "ConfigureTagsForOrganizationResponse$configuredTagKeys": "<p>The list of tag keys that were successfully configured for the organization.</p>"
+      }
+    },
+    "ConfigureTagsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ConfigureTagsResourceTagKeyList": {
+      "base": null,
+      "refs": {
+        "ConfigureTagsRequest$tagKeys": "<p>The list of resource tag keys to configure for Health event tracking.</p>",
+        "ConfigureTagsResponse$configuredTagKeys": "<p>The list of resource tag keys that were successfully configured.</p>"
+      }
+    },
+    "ConfigureTagsResponse": {
+      "base": null,
       "refs": {}
     },
     "DateTimeRange": {
@@ -80,6 +209,18 @@
       "base": null,
       "refs": {}
     },
+    "DescribeAffectedEntitiesTagFilter": {
+      "base": null,
+      "refs": {
+        "EntityFilter$tags": "<p>A map of resource tag key-value pairs to filter affected entities.</p> <note> <p>Currently, the <code>tags</code> property isn't supported.</p> </note>"
+      }
+    },
+    "DescribeAffectedEntitiesTagValueList": {
+      "base": null,
+      "refs": {
+        "DescribeAffectedEntitiesTagFilter$value": null
+      }
+    },
     "DescribeEntityAggregatesForOrganizationRequest": {
       "base": null,
       "refs": {}
@@ -95,6 +236,18 @@
     "DescribeEntityAggregatesResponse": {
       "base": null,
       "refs": {}
+    },
+    "DescribeEntityAggregatesTagFilter": {
+      "base": null,
+      "refs": {
+        "EntityAggregateFilter$tags": "<p>A map of tag keys to lists of tag values. A tag matches when its key is in the map and its value is one of the values listed for that key. Matching is case sensitive, and the filter matches when at least one key in the map matches.</p> <p>Only entities whose tags match are included in the aggregates.</p>"
+      }
+    },
+    "DescribeEntityAggregatesTagValueList": {
+      "base": null,
+      "refs": {
+        "DescribeEntityAggregatesTagFilter$value": null
+      }
     },
     "DescribeEventAggregatesRequest": {
       "base": null,
@@ -168,6 +321,18 @@
       "base": null,
       "refs": {}
     },
+    "DescribeEventsTagFilter": {
+      "base": null,
+      "refs": {
+        "EventFilter$tags": "<p>A map of resource tag key-value pairs to filter affected entities.</p> <note> <p>Currently, the <code>tags</code> property isn't supported.</p> </note>"
+      }
+    },
+    "DescribeEventsTagValueList": {
+      "base": null,
+      "refs": {
+        "DescribeEventsTagFilter$value": null
+      }
+    },
     "DescribeHealthServiceStatusForOrganizationResponse": {
       "base": null,
       "refs": {}
@@ -177,6 +342,44 @@
       "refs": {}
     },
     "DescribeServiceLifecycleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTagKeysForOrganizationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTagKeysResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTagsForOrganizationFilter": {
+      "base": "<p>A filter for narrowing down the tags returned by DescribeTagsForOrganization.</p>",
+      "refs": {
+        "DescribeTagsForOrganizationRequest$filter": "<p>Values to narrow the results returned.</p>"
+      }
+    },
+    "DescribeTagsForOrganizationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTagsForOrganizationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTagsOnboardingStatusForOrganizationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTagsOnboardingStatusResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTagsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTagsResponse": {
       "base": null,
       "refs": {}
     },
@@ -190,6 +393,12 @@
       "base": "<p>The number of entities that are affected by one or more events. Returned by the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeEntityAggregates.html\">DescribeEntityAggregates</a> operation.</p>",
       "refs": {
         "EntityAggregateList$member": null
+      }
+    },
+    "EntityAggregateFilter": {
+      "base": "<p>A filter for narrowing down the entity aggregates returned by DescribeEntityAggregates.</p>",
+      "refs": {
+        "DescribeEntityAggregatesRequest$filter": "<p>Values to narrow the results returned.</p>"
       }
     },
     "EntityAggregateList": {
@@ -387,7 +596,7 @@
     "LifecycleMaxResults": {
       "base": null,
       "refs": {
-        "DescribeServiceLifecycleRequest$maxResults": "<p>The maximum number of items to return in one batch, between 1 and 20, inclusive.</p>"
+        "DescribeServiceLifecycleRequest$maxResults": "<p>The maximum number of items to return in one batch, between 10 and 100, inclusive.</p>"
       }
     },
     "OrganizationAccountIdsList": {
@@ -412,6 +621,24 @@
       "base": "<p>The aggregate results of entities affected by the specified event in your organization. The results are aggregated by the entity status codes for the specified set of accountsIDs.</p>",
       "refs": {
         "OrganizationEntityAggregatesList$member": null
+      }
+    },
+    "OrganizationEntityAggregateFilter": {
+      "base": "<p>A filter for narrowing down the entity aggregates returned by DescribeEntityAggregatesForOrganization.</p>",
+      "refs": {
+        "DescribeEntityAggregatesForOrganizationRequest$filter": "<p>Values to narrow the results returned.</p>"
+      }
+    },
+    "OrganizationEntityAggregateTagFilter": {
+      "base": null,
+      "refs": {
+        "OrganizationEntityAggregateFilter$tags": "<p>A map of tag keys to lists of tag values. A tag matches when its key is in the map and its value is one of the values listed for that key. Matching is case sensitive, and the filter matches when at least one key in the map matches.</p> <p>Only entities whose tags match are included in the aggregates.</p>"
+      }
+    },
+    "OrganizationEntityAggregateTagValueList": {
+      "base": null,
+      "refs": {
+        "OrganizationEntityAggregateTagFilter$value": null
       }
     },
     "OrganizationEntityAggregatesList": {
@@ -468,6 +695,80 @@
         "DescribeEventsForOrganizationResponse$events": "<p>The events that match the specified filter criteria.</p>"
       }
     },
+    "OrganizationEventTagFilter": {
+      "base": null,
+      "refs": {
+        "OrganizationEventFilter$tags": "<p>A map of tag keys to lists of tag values. A tag matches when its key is in the map and its value is one of the values listed for that key. Matching is case sensitive, and the filter matches when at least one key in the map matches.</p> <p>An event is returned when one of its affected accounts, or one of the entities of those accounts, has tags that match.</p>"
+      }
+    },
+    "OrganizationEventTagValueList": {
+      "base": null,
+      "refs": {
+        "OrganizationEventTagFilter$value": null
+      }
+    },
+    "OrganizationTag": {
+      "base": "<p>A tag key-value pair associated with a resource across an organization.</p>",
+      "refs": {
+        "OrganizationTagList$member": null
+      }
+    },
+    "OrganizationTagKey": {
+      "base": "<p>A tag key configured for Health event tracking across an organization.</p>",
+      "refs": {
+        "OrganizationTagKeyList$member": null
+      }
+    },
+    "OrganizationTagKeyList": {
+      "base": null,
+      "refs": {
+        "DescribeTagKeysForOrganizationResponse$keys": "<p>The list of configured tag keys for the organization and their status.</p>"
+      }
+    },
+    "OrganizationTagList": {
+      "base": null,
+      "refs": {
+        "DescribeTagsForOrganizationResponse$tags": "<p>The list of tags associated with Health events across the organization.</p>"
+      }
+    },
+    "OrganizationTagType": {
+      "base": null,
+      "refs": {
+        "OrganizationTag$type": "<p>The type of organization tag.</p>",
+        "OrganizationTagTypeFilter$member": null
+      }
+    },
+    "OrganizationTagTypeFilter": {
+      "base": null,
+      "refs": {
+        "DescribeTagsForOrganizationFilter$tagTypes": "<p>The types of tags to include in the results.</p>"
+      }
+    },
+    "ResourceTagKey": {
+      "base": "<p>A resource tag key configured for Health event tracking.</p>",
+      "refs": {
+        "ConfigureTagsResourceTagKeyList$member": null,
+        "ResourceTagKeyList$member": null
+      }
+    },
+    "ResourceTagKeyList": {
+      "base": null,
+      "refs": {
+        "DescribeTagKeysResponse$keys": "<p>The list of configured resource tag keys and their status.</p>"
+      }
+    },
+    "ResourceTagSet": {
+      "base": null,
+      "refs": {
+        "AffectedEntity$resourceTags": "<p>A map of resource tag key-value pairs attached to the affected entity.</p>"
+      }
+    },
+    "ResourceTagValue": {
+      "base": null,
+      "refs": {
+        "ResourceTagSet$value": null
+      }
+    },
     "ServiceLifecycle": {
       "base": "<p>Contains lifecycle information for an Amazon Web Services service version, including lifecycle events and version recommendations.</p>",
       "refs": {
@@ -486,6 +787,55 @@
         "DescribeServiceLifecycleResponse$serviceLifecycles": "<p>The list of service lifecycle entries matching the filter criteria.</p>"
       }
     },
+    "TagFilterKey": {
+      "base": null,
+      "refs": {
+        "AffectedAccountsForOrganizationTagFilter$key": null,
+        "AffectedEntitiesForOrganizationTagFilter$key": null,
+        "DescribeAffectedEntitiesTagFilter$key": null,
+        "DescribeEntityAggregatesTagFilter$key": null,
+        "DescribeEventsTagFilter$key": null,
+        "OrganizationEntityAggregateTagFilter$key": null,
+        "OrganizationEventTagFilter$key": null
+      }
+    },
+    "TagFilterValue": {
+      "base": null,
+      "refs": {
+        "AffectedAccountsForOrganizationTagValueList$member": null,
+        "AffectedEntitiesForOrganizationTagValueList$member": null,
+        "DescribeAffectedEntitiesTagValueList$member": null,
+        "DescribeEntityAggregatesTagValueList$member": null,
+        "DescribeEventsTagValueList$member": null,
+        "OrganizationEntityAggregateTagValueList$member": null,
+        "OrganizationEventTagValueList$member": null
+      }
+    },
+    "TagKeyForOrganization": {
+      "base": "<p>A tag key configured for an organization.</p>",
+      "refs": {
+        "ConfigureTagsForOrganizationTagKeyList$member": null
+      }
+    },
+    "TagKeyStatus": {
+      "base": null,
+      "refs": {
+        "OrganizationTagKey$status": "<p>The current status of the tag key configuration.</p>",
+        "ResourceTagKey$status": "<p>The current status of the tag key configuration.</p>"
+      }
+    },
+    "TagsOnboardingStatus": {
+      "base": null,
+      "refs": {
+        "DescribeTagsOnboardingStatusResponse$status": "<p>The current onboarding status of the tags feature for the account.</p>"
+      }
+    },
+    "TagsOnboardingStatusForOrganization": {
+      "base": null,
+      "refs": {
+        "DescribeTagsOnboardingStatusForOrganizationResponse$status": "<p>The current onboarding status of the tags feature for the organization.</p>"
+      }
+    },
     "UnsupportedLocale": {
       "base": "<p>The specified locale is not supported.</p>",
       "refs": {}
@@ -493,6 +843,7 @@
     "accountId": {
       "base": null,
       "refs": {
+        "AccountEntity$accountId": "<p>The 12-digit Amazon Web Services account numbers that contains the affected entities.</p>",
         "AffectedEntity$awsAccountId": "<p>The 12-digit Amazon Web Services account number that contains the affected entity.</p>",
         "EntityAccountFilter$awsAccountId": "<p>The 12-digit Amazon Web Services account numbers that contains the affected entities.</p>",
         "EventAccountFilter$awsAccountId": "<p>The 12-digit Amazon Web Services account numbers that contains the affected entities.</p>",
@@ -641,6 +992,7 @@
       "base": null,
       "refs": {
         "AccountEntityAggregate$accountId": "<p>The 12-digit Amazon Web Services account numbers that contains the affected entities.</p>",
+        "AffectedAccountFilter$eventArn": "<p>The unique identifier for the event. The event ARN has the <code>arn:aws:health:<i>event-region</i>::event/<i>SERVICE</i>/<i>EVENT_TYPE_CODE</i>/<i>EVENT_TYPE_PLUS_ID</i> </code> format.</p> <p>For example, an event ARN might look like the following:</p> <p> <code>arn:aws:health:us-east-1::event/EC2/EC2_INSTANCE_RETIREMENT_SCHEDULED/EC2_INSTANCE_RETIREMENT_SCHEDULED_ABC123-DEF456</code> </p>",
         "AffectedEntity$eventArn": "<p>The unique identifier for the event. The event ARN has the <code>arn:aws:health:<i>event-region</i>::event/<i>SERVICE</i>/<i>EVENT_TYPE_CODE</i>/<i>EVENT_TYPE_PLUS_ID</i> </code> format.</p> <p>For example, an event ARN might look like the following:</p> <p> <code>arn:aws:health:us-east-1::event/EC2/EC2_INSTANCE_RETIREMENT_SCHEDULED/EC2_INSTANCE_RETIREMENT_SCHEDULED_ABC123-DEF456</code> </p>",
         "DescribeAffectedAccountsForOrganizationRequest$eventArn": "<p>The unique identifier for the event. The event ARN has the <code>arn:aws:health:<i>event-region</i>::event/<i>SERVICE</i>/<i>EVENT_TYPE_CODE</i>/<i>EVENT_TYPE_PLUS_ID</i> </code> format.</p> <p>For example, an event ARN might look like the following:</p> <p> <code>arn:aws:health:us-east-1::event/EC2/EC2_INSTANCE_RETIREMENT_SCHEDULED/EC2_INSTANCE_RETIREMENT_SCHEDULED_ABC123-DEF456</code> </p>",
         "EntityAccountFilter$eventArn": "<p>The unique identifier for the event. The event ARN has the <code>arn:aws:health:<i>event-region</i>::event/<i>SERVICE</i>/<i>EVENT_TYPE_CODE</i>/<i>EVENT_TYPE_PLUS_ID</i> </code> format.</p> <p>For example, an event ARN might look like the following:</p> <p> <code>arn:aws:health:us-east-1::event/EC2/EC2_INSTANCE_RETIREMENT_SCHEDULED/EC2_INSTANCE_RETIREMENT_SCHEDULED_ABC123-DEF456</code> </p>",
@@ -772,7 +1124,9 @@
         "DescribeAffectedEntitiesForOrganizationRequest$maxResults": "<p>The maximum number of items to return in one batch, between 1 and 100, inclusive.</p>",
         "DescribeAffectedEntitiesRequest$maxResults": "<p>The maximum number of items to return in one batch, between 1 and 100, inclusive.</p>",
         "DescribeEventsForOrganizationRequest$maxResults": "<p>The maximum number of items to return in one batch, between 1 and 100, inclusive.</p>",
-        "DescribeEventsRequest$maxResults": "<p>The maximum number of items to return in one batch, between 1 and 100, inclusive.</p>"
+        "DescribeEventsRequest$maxResults": "<p>The maximum number of items to return in one batch, between 1 and 100, inclusive.</p>",
+        "DescribeTagsForOrganizationRequest$maxResults": "<p>The maximum number of items to return in one batch, between 10 and 100, inclusive.</p>",
+        "DescribeTagsRequest$maxResults": "<p>The maximum number of items to return in one batch, between 10 and 100, inclusive.</p>"
       }
     },
     "metadataKey": {
@@ -805,7 +1159,18 @@
         "DescribeEventsRequest$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>",
         "DescribeEventsResponse$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>",
         "DescribeServiceLifecycleRequest$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>",
-        "DescribeServiceLifecycleResponse$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>"
+        "DescribeServiceLifecycleResponse$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>",
+        "DescribeTagsForOrganizationRequest$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>",
+        "DescribeTagsForOrganizationResponse$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>",
+        "DescribeTagsRequest$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>",
+        "DescribeTagsResponse$nextToken": "<p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next batch of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value.</p>"
+      }
+    },
+    "organizationTagKey": {
+      "base": null,
+      "refs": {
+        "OrganizationTagKey$key": "<p>The tag key name.</p>",
+        "TagKeyForOrganization$key": "<p>The tag key name.</p>"
       }
     },
     "region": {
@@ -822,6 +1187,13 @@
         "EventFilter$regions": "<p>A list of Amazon Web Services Regions.</p>",
         "LifecycleEvent$regions": "<p>The Amazon Web Services Regions affected by this lifecycle event.</p>",
         "OrganizationEventFilter$regions": "<p>A list of Amazon Web Services Regions.</p>"
+      }
+    },
+    "resourceTagKey": {
+      "base": null,
+      "refs": {
+        "ResourceTagKey$key": "<p>The tag key name.</p>",
+        "ResourceTagSet$key": null
       }
     },
     "service": {
@@ -856,36 +1228,32 @@
         "OrganizationAffectedEntitiesErrorItem$errorName": "<p>The name of the error.</p>",
         "OrganizationAffectedEntitiesErrorItem$errorMessage": "<p>A message that describes the error. Follow the error message and retry your request.</p> <p>For example, the <code>InvalidAccountInputError</code> error message appears if you call the <code>DescribeAffectedEntitiesForOrganization</code> operation and specify the <code>AccountSpecific</code> value for the <code>EventScopeCode</code> parameter, but don't specify an Amazon Web Services account.</p>",
         "OrganizationEventDetailsErrorItem$errorName": "<p>The name of the error.</p>",
-        "OrganizationEventDetailsErrorItem$errorMessage": "<p>A message that describes the error.</p> <p>If you call the <code>DescribeEventDetailsForOrganization</code> operation and receive one of the following errors, follow the recommendations in the message:</p> <ul> <li> <p>We couldn't find a public event that matches your request. To find an event that is account specific, you must enter an Amazon Web Services account ID in the request.</p> </li> <li> <p>We couldn't find an account specific event for the specified Amazon Web Services account. To find an event that is public, you must enter a null value for the Amazon Web Services account ID in the request.</p> </li> <li> <p>Your Amazon Web Services account doesn't include the Amazon Web Services Support plan required to use the Health API. You must have either a Business, Enterprise On-Ramp, or Enterprise Support plan.</p> </li> </ul>",
+        "OrganizationEventDetailsErrorItem$errorMessage": "<p>A message that describes the error.</p> <p>If you call the <code>DescribeEventDetailsForOrganization</code> operation and receive one of the following errors, follow the recommendations in the message:</p> <ul> <li> <p>We couldn't find a public event that matches your request. To find an event that is account specific, you must enter an Amazon Web Services account ID in the request.</p> </li> <li> <p>We couldn't find an account specific event for the specified Amazon Web Services account. To find an event that is public, you must enter a null value for the Amazon Web Services account ID in the request.</p> </li> <li> <p>Your Amazon Web Services account doesn't include the Amazon Web Services Support plan required to use the Health API. You must have either a Amazon Web Services Business Support+, Amazon Web Services Enterprise Support, or Amazon Web Services Unified Operations plan.</p> </li> </ul>",
         "ServiceLifecycle$version": "<p>The version of the service.</p>",
         "ServiceLifecycle$title": "<p>A human-readable title for the lifecycle entry.</p>",
         "ServiceLifecycle$recommendedVersion": "<p>The recommended version to upgrade to.</p>",
         "UnsupportedLocale$message": null
       }
     },
-    "tagFilter": {
-      "base": null,
-      "refs": {
-        "EntityFilter$tags": "<p>A map of entity tags attached to the affected entity.</p> <note> <p>Currently, the <code>tags</code> property isn't supported.</p> </note>",
-        "EventFilter$tags": "<p>A map of entity tags attached to the affected entity.</p> <note> <p>Currently, the <code>tags</code> property isn't supported.</p> </note>"
-      }
-    },
     "tagKey": {
       "base": null,
       "refs": {
+        "AccountTag$key": "<p>The tag key.</p>",
+        "OrganizationTag$key": "<p>The tag key.</p>",
         "tagSet$key": null
       }
     },
     "tagSet": {
       "base": null,
       "refs": {
-        "AffectedEntity$tags": "<p>A map of entity tags attached to the affected entity.</p> <note> <p>Currently, the <code>tags</code> property isn't supported.</p> </note>",
-        "tagFilter$member": null
+        "AffectedEntity$tags": "<p>A map of resource tag key-value pairs attached to the affected entity.</p> <note> <p>Currently, the <code>tags</code> property isn't supported.</p> </note>"
       }
     },
     "tagValue": {
       "base": null,
       "refs": {
+        "AccountTag$value": "<p>The tag value.</p>",
+        "OrganizationTag$value": "<p>The tag value.</p>",
         "tagSet$value": null
       }
     },

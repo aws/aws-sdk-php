@@ -237,7 +237,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result createRuleGroup(array{
  *     RuleGroupName?: string,
  *     RuleGroup?: array{
- *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ...},
+ *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ContextSets?: array<string, array>, ...},
  *         ReferenceSets?: array{IPSetReferences?: array<string, array>, ...},
  *         RulesSource?: array{
  *             RulesString?: string,
@@ -251,13 +251,13 @@ use Aws\AwsClient;
  *     },
  *     FirewallRuleGroup?: array{
  *         RulesSource?: array{RulesString?: string, FirewallRules?: list<array>, RulesSourceList?: array, ...},
- *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ...},
+ *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ContextSets?: array<string, array>, ...},
  *         ReferenceSets?: array{IPSetReferences?: array<string, array>, ...},
  *         ...,
  *     },
  *     IpsRuleGroup?: array{
  *         RulesSource?: array{RulesString?: string, ...},
- *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ...},
+ *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ContextSets?: array<string, array>, ...},
  *         ReferenceSets?: array{IPSetReferences?: array<string, array>, ...},
  *         ...,
  *     },
@@ -277,7 +277,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise createRuleGroupAsync(array{
  *     RuleGroupName?: string,
  *     RuleGroup?: array{
- *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ...},
+ *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ContextSets?: array<string, array>, ...},
  *         ReferenceSets?: array{IPSetReferences?: array<string, array>, ...},
  *         RulesSource?: array{
  *             RulesString?: string,
@@ -291,13 +291,13 @@ use Aws\AwsClient;
  *     },
  *     FirewallRuleGroup?: array{
  *         RulesSource?: array{RulesString?: string, FirewallRules?: list<array>, RulesSourceList?: array, ...},
- *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ...},
+ *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ContextSets?: array<string, array>, ...},
  *         ReferenceSets?: array{IPSetReferences?: array<string, array>, ...},
  *         ...,
  *     },
  *     IpsRuleGroup?: array{
  *         RulesSource?: array{RulesString?: string, ...},
- *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ...},
+ *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ContextSets?: array<string, array>, ...},
  *         ReferenceSets?: array{IPSetReferences?: array<string, array>, ...},
  *         ...,
  *     },
@@ -561,6 +561,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listContainerAssociations(array{MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listContainerAssociationsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listContainerAssociationsAsync(array{MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result listContextStores(array $args = [])
+ * @phpstan-method \Aws\Result listContextStores(array{NextToken?: string, MaxResults?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listContextStoresAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listContextStoresAsync(array{NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \Aws\Result listFirewallPolicies(array $args = [])
  * @phpstan-method \Aws\Result listFirewallPolicies(array{NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listFirewallPoliciesAsync(array $args = [])
@@ -619,6 +623,22 @@ use Aws\AwsClient;
  *     FlowOperationType?: 'FLOW_CAPTURE'|'FLOW_FLUSH',
  *     NextToken?: string,
  *     MaxResults?: int,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listResourcesInContextStore(array $args = [])
+ * @phpstan-method \Aws\Result listResourcesInContextStore(array{
+ *     ContextStoreId?: string,
+ *     Filters?: array{Region?: string, ResourceType?: 'SecurityGroup'|'Subnet'|'TGWAttachment'|'VPC', ...},
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listResourcesInContextStoreAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listResourcesInContextStoreAsync(array{
+ *     ContextStoreId?: string,
+ *     Filters?: array{Region?: string, ResourceType?: 'SecurityGroup'|'Subnet'|'TGWAttachment'|'VPC', ...},
+ *     MaxResults?: int,
+ *     NextToken?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listRuleGroups(array $args = [])
@@ -1005,7 +1025,7 @@ use Aws\AwsClient;
  *     RuleGroupArn?: string,
  *     RuleGroupName?: string,
  *     RuleGroup?: array{
- *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ...},
+ *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ContextSets?: array<string, array>, ...},
  *         ReferenceSets?: array{IPSetReferences?: array<string, array>, ...},
  *         RulesSource?: array{
  *             RulesString?: string,
@@ -1019,13 +1039,13 @@ use Aws\AwsClient;
  *     },
  *     FirewallRuleGroup?: array{
  *         RulesSource?: array{RulesString?: string, FirewallRules?: list<array>, RulesSourceList?: array, ...},
- *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ...},
+ *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ContextSets?: array<string, array>, ...},
  *         ReferenceSets?: array{IPSetReferences?: array<string, array>, ...},
  *         ...,
  *     },
  *     IpsRuleGroup?: array{
  *         RulesSource?: array{RulesString?: string, ...},
- *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ...},
+ *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ContextSets?: array<string, array>, ...},
  *         ReferenceSets?: array{IPSetReferences?: array<string, array>, ...},
  *         ...,
  *     },
@@ -1045,7 +1065,7 @@ use Aws\AwsClient;
  *     RuleGroupArn?: string,
  *     RuleGroupName?: string,
  *     RuleGroup?: array{
- *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ...},
+ *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ContextSets?: array<string, array>, ...},
  *         ReferenceSets?: array{IPSetReferences?: array<string, array>, ...},
  *         RulesSource?: array{
  *             RulesString?: string,
@@ -1059,13 +1079,13 @@ use Aws\AwsClient;
  *     },
  *     FirewallRuleGroup?: array{
  *         RulesSource?: array{RulesString?: string, FirewallRules?: list<array>, RulesSourceList?: array, ...},
- *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ...},
+ *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ContextSets?: array<string, array>, ...},
  *         ReferenceSets?: array{IPSetReferences?: array<string, array>, ...},
  *         ...,
  *     },
  *     IpsRuleGroup?: array{
  *         RulesSource?: array{RulesString?: string, ...},
- *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ...},
+ *         RuleVariables?: array{IPSets?: array<string, array>, PortSets?: array<string, array>, ContextSets?: array<string, array>, ...},
  *         ReferenceSets?: array{IPSetReferences?: array<string, array>, ...},
  *         ...,
  *     },

@@ -2430,7 +2430,8 @@
       "type":"structure",
       "members":{
         "Limit":{"shape":"LimitType"},
-        "Marker":{"shape":"MarkerType"}
+        "Marker":{"shape":"MarkerType"},
+        "ResourceOwners":{"shape":"ResourceOwnersList"}
       }
     },
     "ListKeysResponse":{
@@ -2663,6 +2664,19 @@
         "ReplicaPolicy":{"shape":"PolicyType"},
         "ReplicaTags":{"shape":"TagList"}
       }
+    },
+    "ResourceOwnerType":{
+      "type":"string",
+      "enum":[
+        "SELF",
+        "OTHER_ACCOUNTS_VIA_RAM"
+      ]
+    },
+    "ResourceOwnersList":{
+      "type":"list",
+      "member":{"shape":"ResourceOwnerType"},
+      "max":2,
+      "min":1
     },
     "RetireGrantRequest":{
       "type":"structure",

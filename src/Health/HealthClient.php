@@ -5,10 +5,36 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Health APIs and Notifications** service.
+ * @method \Aws\Result configureTags(array $args = [])
+ * @phpstan-method \Aws\Result configureTags(array{
+ *     tagKeys?: list<array{key?: string, enabledForEventBridge?: bool, status?: 'ACTIVE'|'PENDING', ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise configureTagsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise configureTagsAsync(array{
+ *     tagKeys?: list<array{key?: string, enabledForEventBridge?: bool, status?: 'ACTIVE'|'PENDING', ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result configureTagsForOrganization(array $args = [])
+ * @phpstan-method \Aws\Result configureTagsForOrganization(array{tagKeys?: list<array{key?: string, enabledForEventBridge?: bool, ...}>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise configureTagsForOrganizationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise configureTagsForOrganizationAsync(array{tagKeys?: list<array{key?: string, enabledForEventBridge?: bool, ...}>, ...} $args = [])
  * @method \Aws\Result describeAffectedAccountsForOrganization(array $args = [])
- * @phpstan-method \Aws\Result describeAffectedAccountsForOrganization(array{eventArn?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @phpstan-method \Aws\Result describeAffectedAccountsForOrganization(array{
+ *     eventArn?: string,
+ *     nextToken?: string,
+ *     maxResults?: int,
+ *     filter?: array{eventArn?: string, tags?: array<string, list<string>>, ...},
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise describeAffectedAccountsForOrganizationAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise describeAffectedAccountsForOrganizationAsync(array{eventArn?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeAffectedAccountsForOrganizationAsync(array{
+ *     eventArn?: string,
+ *     nextToken?: string,
+ *     maxResults?: int,
+ *     filter?: array{eventArn?: string, tags?: array<string, list<string>>, ...},
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result describeAffectedEntities(array $args = [])
  * @phpstan-method \Aws\Result describeAffectedEntities(array{
  *     filter?: array{
@@ -16,7 +42,7 @@ use Aws\AwsClient;
  *         entityArns?: list<string>,
  *         entityValues?: list<string>,
  *         lastUpdatedTimes?: list<array>,
- *         tags?: list<array<string, string>>,
+ *         tags?: array<string, list<string>>,
  *         statusCodes?: list<'IMPAIRED'|'PENDING'|'RESOLVED'|'UNIMPAIRED'|'UNKNOWN'>,
  *         ...,
  *     },
@@ -32,7 +58,7 @@ use Aws\AwsClient;
  *         entityArns?: list<string>,
  *         entityValues?: list<string>,
  *         lastUpdatedTimes?: list<array>,
- *         tags?: list<array<string, string>>,
+ *         tags?: array<string, list<string>>,
  *         statusCodes?: list<'IMPAIRED'|'PENDING'|'RESOLVED'|'UNIMPAIRED'|'UNKNOWN'>,
  *         ...,
  *     },
@@ -51,6 +77,7 @@ use Aws\AwsClient;
  *         eventArn?: string,
  *         awsAccountId?: string,
  *         statusCodes?: list<'IMPAIRED'|'PENDING'|'RESOLVED'|'UNIMPAIRED'|'UNKNOWN'>,
+ *         tags?: array<string, list<string>>,
  *         ...,
  *     }>,
  *     ...,
@@ -65,18 +92,29 @@ use Aws\AwsClient;
  *         eventArn?: string,
  *         awsAccountId?: string,
  *         statusCodes?: list<'IMPAIRED'|'PENDING'|'RESOLVED'|'UNIMPAIRED'|'UNKNOWN'>,
+ *         tags?: array<string, list<string>>,
  *         ...,
  *     }>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result describeEntityAggregates(array $args = [])
- * @phpstan-method \Aws\Result describeEntityAggregates(array{eventArns?: list<string>, ...} $args = [])
+ * @phpstan-method \Aws\Result describeEntityAggregates(array{eventArns?: list<string>, filter?: array{tags?: array<string, list<string>>, ...}, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeEntityAggregatesAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise describeEntityAggregatesAsync(array{eventArns?: list<string>, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeEntityAggregatesAsync(array{eventArns?: list<string>, filter?: array{tags?: array<string, list<string>>, ...}, ...} $args = [])
  * @method \Aws\Result describeEntityAggregatesForOrganization(array $args = [])
- * @phpstan-method \Aws\Result describeEntityAggregatesForOrganization(array{eventArns?: list<string>, awsAccountIds?: list<string>, ...} $args = [])
+ * @phpstan-method \Aws\Result describeEntityAggregatesForOrganization(array{
+ *     eventArns?: list<string>,
+ *     awsAccountIds?: list<string>,
+ *     filter?: array{tags?: array<string, list<string>>, ...},
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise describeEntityAggregatesForOrganizationAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise describeEntityAggregatesForOrganizationAsync(array{eventArns?: list<string>, awsAccountIds?: list<string>, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeEntityAggregatesForOrganizationAsync(array{
+ *     eventArns?: list<string>,
+ *     awsAccountIds?: list<string>,
+ *     filter?: array{tags?: array<string, list<string>>, ...},
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result describeEventAggregates(array $args = [])
  * @phpstan-method \Aws\Result describeEventAggregates(array{
  *     filter?: array{
@@ -92,7 +130,7 @@ use Aws\AwsClient;
  *         entityArns?: list<string>,
  *         entityValues?: list<string>,
  *         eventTypeCategories?: list<'accountNotification'|'investigation'|'issue'|'scheduledChange'>,
- *         tags?: list<array<string, string>>,
+ *         tags?: array<string, list<string>>,
  *         eventStatusCodes?: list<'closed'|'open'|'upcoming'>,
  *         personas?: list<'BILLING'|'OPERATIONS'|'SECURITY'>,
  *         ...,
@@ -117,7 +155,7 @@ use Aws\AwsClient;
  *         entityArns?: list<string>,
  *         entityValues?: list<string>,
  *         eventTypeCategories?: list<'accountNotification'|'investigation'|'issue'|'scheduledChange'>,
- *         tags?: list<array<string, string>>,
+ *         tags?: array<string, list<string>>,
  *         eventStatusCodes?: list<'closed'|'open'|'upcoming'>,
  *         personas?: list<'BILLING'|'OPERATIONS'|'SECURITY'>,
  *         ...,
@@ -188,7 +226,7 @@ use Aws\AwsClient;
  *         entityArns?: list<string>,
  *         entityValues?: list<string>,
  *         eventTypeCategories?: list<'accountNotification'|'investigation'|'issue'|'scheduledChange'>,
- *         tags?: list<array<string, string>>,
+ *         tags?: array<string, list<string>>,
  *         eventStatusCodes?: list<'closed'|'open'|'upcoming'>,
  *         personas?: list<'BILLING'|'OPERATIONS'|'SECURITY'>,
  *         ...,
@@ -213,7 +251,7 @@ use Aws\AwsClient;
  *         entityArns?: list<string>,
  *         entityValues?: list<string>,
  *         eventTypeCategories?: list<'accountNotification'|'investigation'|'issue'|'scheduledChange'>,
- *         tags?: list<array<string, string>>,
+ *         tags?: array<string, list<string>>,
  *         eventStatusCodes?: list<'closed'|'open'|'upcoming'>,
  *         personas?: list<'BILLING'|'OPERATIONS'|'SECURITY'>,
  *         ...,
@@ -239,6 +277,7 @@ use Aws\AwsClient;
  *         eventTypeCategories?: list<'accountNotification'|'investigation'|'issue'|'scheduledChange'>,
  *         eventStatusCodes?: list<'closed'|'open'|'upcoming'>,
  *         personas?: list<'BILLING'|'OPERATIONS'|'SECURITY'>,
+ *         tags?: array<string, list<string>>,
  *         ...,
  *     },
  *     nextToken?: string,
@@ -262,6 +301,7 @@ use Aws\AwsClient;
  *         eventTypeCategories?: list<'accountNotification'|'investigation'|'issue'|'scheduledChange'>,
  *         eventStatusCodes?: list<'closed'|'open'|'upcoming'>,
  *         personas?: list<'BILLING'|'OPERATIONS'|'SECURITY'>,
+ *         tags?: array<string, list<string>>,
  *         ...,
  *     },
  *     nextToken?: string,
@@ -277,13 +317,63 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeServiceLifecycle(array{filter?: array{service?: string, ...}, nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeServiceLifecycleAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeServiceLifecycleAsync(array{filter?: array{service?: string, ...}, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \Aws\Result describeTagKeys(array $args = [])
+ * @phpstan-method \Aws\Result describeTagKeys(array{...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeTagKeysAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeTagKeysAsync(array{...} $args = [])
+ * @method \Aws\Result describeTagKeysForOrganization(array $args = [])
+ * @phpstan-method \Aws\Result describeTagKeysForOrganization(array{...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeTagKeysForOrganizationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeTagKeysForOrganizationAsync(array{...} $args = [])
+ * @method \Aws\Result describeTags(array $args = [])
+ * @phpstan-method \Aws\Result describeTags(array{nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeTagsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeTagsAsync(array{nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \Aws\Result describeTagsForOrganization(array $args = [])
+ * @phpstan-method \Aws\Result describeTagsForOrganization(array{
+ *     filter?: array{tagTypes?: list<'ORGANIZATION_ACCOUNT_TAG'|'ORGANIZATION_RESOURCE_TAG'>, ...},
+ *     nextToken?: string,
+ *     maxResults?: int,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeTagsForOrganizationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeTagsForOrganizationAsync(array{
+ *     filter?: array{tagTypes?: list<'ORGANIZATION_ACCOUNT_TAG'|'ORGANIZATION_RESOURCE_TAG'>, ...},
+ *     nextToken?: string,
+ *     maxResults?: int,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result describeTagsOnboardingStatus(array $args = [])
+ * @phpstan-method \Aws\Result describeTagsOnboardingStatus(array{...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeTagsOnboardingStatusAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeTagsOnboardingStatusAsync(array{...} $args = [])
+ * @method \Aws\Result describeTagsOnboardingStatusForOrganization(array $args = [])
+ * @phpstan-method \Aws\Result describeTagsOnboardingStatusForOrganization(array{...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeTagsOnboardingStatusForOrganizationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeTagsOnboardingStatusForOrganizationAsync(array{...} $args = [])
  * @method \Aws\Result disableHealthServiceAccessForOrganization(array $args = [])
  * @phpstan-method \Aws\Result disableHealthServiceAccessForOrganization(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise disableHealthServiceAccessForOrganizationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise disableHealthServiceAccessForOrganizationAsync(array{...} $args = [])
+ * @method \Aws\Result disableTags(array $args = [])
+ * @phpstan-method \Aws\Result disableTags(array{...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise disableTagsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise disableTagsAsync(array{...} $args = [])
+ * @method \Aws\Result disableTagsForOrganization(array $args = [])
+ * @phpstan-method \Aws\Result disableTagsForOrganization(array{...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise disableTagsForOrganizationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise disableTagsForOrganizationAsync(array{...} $args = [])
  * @method \Aws\Result enableHealthServiceAccessForOrganization(array $args = [])
  * @phpstan-method \Aws\Result enableHealthServiceAccessForOrganization(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise enableHealthServiceAccessForOrganizationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise enableHealthServiceAccessForOrganizationAsync(array{...} $args = [])
+ * @method \Aws\Result enableTags(array $args = [])
+ * @phpstan-method \Aws\Result enableTags(array{...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise enableTagsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise enableTagsAsync(array{...} $args = [])
+ * @method \Aws\Result enableTagsForOrganization(array $args = [])
+ * @phpstan-method \Aws\Result enableTagsForOrganization(array{...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise enableTagsForOrganizationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise enableTagsForOrganizationAsync(array{...} $args = [])
  */
 class HealthClient extends AwsClient {}

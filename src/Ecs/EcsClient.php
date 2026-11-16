@@ -347,7 +347,7 @@ use Aws\AwsClient;
  *     },
  *     volumeConfigurations?: list<array{name?: string, managedEBSVolume?: array, ...}>,
  *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, advancedConfiguration?: array, ...}>,
- *     gatewayConnectors?: list<array{portName?: string, healthCheck?: array, filters?: array, ...}>,
+ *     gatewayConnectors?: list<array{portName?: string, healthCheck?: array, filters?: array, deregistrationDelay?: array, ...}>,
  *     monitoring?: array{metricConfigurations?: list<array>, ...},
  *     ...,
  * } $args = [])
@@ -414,7 +414,7 @@ use Aws\AwsClient;
  *     },
  *     volumeConfigurations?: list<array{name?: string, managedEBSVolume?: array, ...}>,
  *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, advancedConfiguration?: array, ...}>,
- *     gatewayConnectors?: list<array{portName?: string, healthCheck?: array, filters?: array, ...}>,
+ *     gatewayConnectors?: list<array{portName?: string, healthCheck?: array, filters?: array, deregistrationDelay?: array, ...}>,
  *     monitoring?: array{metricConfigurations?: list<array>, ...},
  *     ...,
  * } $args = [])
@@ -1807,7 +1807,7 @@ use Aws\AwsClient;
  *     },
  *     volumeConfigurations?: list<array{name?: string, managedEBSVolume?: array, ...}>,
  *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, advancedConfiguration?: array, ...}>,
- *     gatewayConnectors?: list<array{portName?: string, healthCheck?: array, filters?: array, ...}>,
+ *     gatewayConnectors?: list<array{portName?: string, healthCheck?: array, filters?: array, deregistrationDelay?: array, ...}>,
  *     monitoring?: array{metricConfigurations?: list<array>, ...},
  *     ...,
  * } $args = [])
@@ -1870,7 +1870,7 @@ use Aws\AwsClient;
  *     },
  *     volumeConfigurations?: list<array{name?: string, managedEBSVolume?: array, ...}>,
  *     vpcLatticeConfigurations?: list<array{roleArn?: string, targetGroupArn?: string, portName?: string, advancedConfiguration?: array, ...}>,
- *     gatewayConnectors?: list<array{portName?: string, healthCheck?: array, filters?: array, ...}>,
+ *     gatewayConnectors?: list<array{portName?: string, healthCheck?: array, filters?: array, deregistrationDelay?: array, ...}>,
  *     monitoring?: array{metricConfigurations?: list<array>, ...},
  *     ...,
  * } $args = [])

@@ -3,19 +3,26 @@
   "service": "<p>Amazon Connect Health is an AI-powered healthcare service built on Amazon Connect. It provides pre-built agents that automate patient engagement workflows and support clinical documentation at the point of care.</p> <p>You can use the Amazon Connect Health API to programmatically manage domains, configure patient engagement agents, run patient insights jobs, and stream ambient documentation sessions. This API reference describes the available API operations and data types for Amazon Connect Health.</p> <p>We recommend that you use the AWS SDKs to make programmatic API calls to Amazon Connect Health.</p>",
   "operations": {
     "ActivateSubscription": "<p>Activates a Subscription to enable billing for a user.</p>",
+    "CreateDataset": "<p>Creates a Dataset in a Domain and starts building it. A new dataset has the status CREATING. When it's ready to use, its status changes to ACTIVE, or to CREATE_FAILED if it fails to build. To check the status, call GetDataset.</p> <p>This operation is idempotent: if you retry a request with the same clientToken, it returns the dataset that the first request created.</p> <p>For a medical coding dataset, Amazon Connect Health uses the coded examples that are in the s3InputPath when you create the dataset, and writes evaluation scores to the s3OutputPath. Later changes to the s3InputPath don't change the dataset. To use this operation, you must have s3:GetObject and s3:ListBucket permissions for the input location and s3:PutObject permission for the output location, and kms:Decrypt and kms:GenerateDataKey permissions if you encrypt the locations with an AWS KMS key.</p> <p>Datasets are in preview release and are subject to change.</p>",
     "CreateDomain": "<p>Creates a new Domain for managing HealthAgent resources.</p>",
     "CreateSubscription": "<p>Creates a new Subscription within a Domain for billing and user management.</p>",
     "DeactivateSubscription": "<p>Deactivates a Subscription to stop billing for a user.</p>",
+    "DeleteDataset": "<p>Starts deleting a Dataset and the resources that Amazon Connect Health built for it. You can delete a dataset whose status is ACTIVE, CREATE_FAILED, or DELETE_FAILED. The dataset moves to DELETING, and then to DELETED. If the delete fails, the dataset moves to DELETE_FAILED, and you can call DeleteDataset again.</p> <p>Medical coding jobs that already use the dataset finish. Amazon Connect Health rejects new requests that specify the dataset.</p> <p>Datasets are in preview release and are subject to change.</p>",
     "DeleteDomain": "<p>Deletes a Domain and all associated resources.</p>",
+    "GetDataset": "<p>Retrieves information about a Dataset, including its status and, after it is built, its results. A dataset whose status is DELETED returns ResourceNotFoundException.</p> <p>Datasets are in preview release and are subject to change.</p>",
     "GetDomain": "<p>Retrieves information about a Domain.</p>",
+    "GetMedicalCodingJob": "<p>Retrieves information about a medical coding job, including its status and, when it succeeds, the location of its results.</p> <p>Medical coding jobs are in preview release and are subject to change.</p>",
     "GetMedicalScribeListeningSession": "<p>Retrieves details about an existing Medical Scribe listening session</p>",
     "GetPatientInsightsJob": "<p>Get details of a started patient insights job.</p>",
     "GetSubscription": "<p>Retrieves information about a Subscription.</p>",
+    "ListDatasets": "<p>Lists the Datasets in a Domain. You can list only the datasets of one type. The operation doesn't return datasets whose status is DELETED, and the order of the results isn't specified. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>Datasets are in preview release and are subject to change.</p>",
     "ListDomains": "<p>Lists Domains for a given account.</p>",
     "ListSubscriptions": "<p>Lists all Subscriptions within a Domain.</p>",
     "ListTagsForResource": "<p>Lists the tags associated with the specified resource</p>",
+    "StartMedicalCodingJob": "<p>Starts an asynchronous job that generates medical codes (ICD-10 and CPT) for clinical text. Call GetMedicalCodingJob to check the status of the job. When the job succeeds, Amazon Connect Health writes the results to the output Amazon S3 location.</p> <p>To tailor the codes to your organization, specify an ACTIVE medical coding dataset in the Domain. If you don't specify a dataset, the job uses the general medical coding knowledge base.</p> <p>Medical coding jobs are in preview release and are subject to change.</p>",
     "StartMedicalScribeListeningSession": "<p>Starts a new Medical Scribe listening session for real-time audio transcription</p>",
     "StartPatientInsightsJob": "<p>Starts a new patient insights job.</p>",
+    "SubmitFeedback": "<p>Submits feedback on a clinical document or a set of medical codes that Amazon Connect Health generated.</p>",
     "TagResource": "<p>Associates the specified tags with the specified resource</p>",
     "UntagResource": "<p>Removes the specified tags from the specified resource</p>"
   },
@@ -37,7 +44,14 @@
       "refs": {
         "ClinicalNoteGenerationResult$noteResult": "<p>Details about the generated clinical note</p>",
         "ClinicalNoteGenerationResult$transcriptResult": "<p>Details about the generated transcript</p>",
-        "ClinicalNoteGenerationResult$afterVisitSummaryResult": "<p>Details about the generated after visit summary</p>"
+        "ClinicalNoteGenerationResult$afterVisitSummaryResult": "<p>Details about the generated after visit summary</p>",
+        "MedicalCodeGenerationResult$medicalCodesResult": "<p>Details about the generated medical codes. If the status is SKIPPED, medical codes weren't generated, for example because the clinical note wasn't generated or had no content.</p>"
+      }
+    },
+    "ArtifactSourceId": {
+      "base": null,
+      "refs": {
+        "SubmitFeedbackRequest$artifactSourceId": "<p>The identifier of the artifact source. For a clinical document, this is the session ID. For a set of medical codes, this is the medical coding job ID.</p>"
       }
     },
     "AudioChunk": {
@@ -52,6 +66,69 @@
       "refs": {
         "MedicalScribeTranscriptSegment$audioBeginOffset": "<p>The offset from audio start when the audio for this segment begins</p>",
         "MedicalScribeTranscriptSegment$audioEndOffset": "<p>The offset from audio start when the audio for this segment ends</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "MedicalCodeGenerationSettings$enabled": "<p>Specifies whether to generate medical codes for the session. If you set this to true, the service generates medical codes from the clinical note after the session ends, using your permissions for medical coding, the output Amazon S3 location, and the AWS KMS key. You can set this to true only in a Region where medical code generation is available. To provide a medicalCodingContext, you must set this to true.</p>",
+        "MedicalCodesEncounterContext$afterHours": "<p>Specifies whether the encounter took place outside regular business hours.</p>",
+        "MedicalCodingContext$afterHours": "<p>Specifies whether the encounter took place outside regular business hours.</p>",
+        "PeriodontalSite$bleeding": "<p>Specifies whether the site bled during probing.</p>",
+        "PeriodontalSite$suppuration": "<p>Specifies whether suppuration was present at the site.</p>",
+        "PeriodontalTooth$missing": "<p>Specifies whether the tooth is missing.</p>"
+      }
+    },
+    "BoundedSafeString": {
+      "base": "<p>A bounded, safe-character string used for human-readable names and descriptions.</p>",
+      "refs": {
+        "CreateDatasetInput$name": "<p>A name for the dataset.</p>",
+        "DatasetSummary$name": "<p>The name of the dataset.</p>",
+        "DatasetSummary$statusDetails": "<p>Details about the status of the dataset, such as the reason that it failed to build or delete.</p>",
+        "GetDatasetOutput$name": "<p>The name of the dataset.</p>",
+        "GetDatasetOutput$statusDetails": "<p>Details about the status of the dataset, such as the reason that it failed to build or delete.</p>"
+      }
+    },
+    "Checklist": {
+      "base": "<p>Contains the sections of a note template checklist and the discussion status of each section.</p>",
+      "refs": {
+        "ChecklistList$member": null
+      }
+    },
+    "ChecklistId": {
+      "base": null,
+      "refs": {
+        "Checklist$checklistId": "<p>The identifier of the checklist. For a managed note template, this value is the template type, such as <code>HISTORY_AND_PHYSICAL</code>. For a custom note template, this value is <code>CUSTOM_</code> followed by the template base, such as <code>CUSTOM_GIRPP</code>.</p>"
+      }
+    },
+    "ChecklistItem": {
+      "base": "<p>Contains a checklist item and its discussion status.</p>",
+      "refs": {
+        "ChecklistItemList$member": null
+      }
+    },
+    "ChecklistItemKey": {
+      "base": null,
+      "refs": {
+        "ChecklistItem$itemKey": "<p>The key that uniquely identifies the item within the checklist. For a managed note template, this value is a service-defined section key, such as <code>CHIEF_COMPLAINT</code>. For a custom note template, this value is the <code>sectionHeader</code> of the section that you defined.</p>"
+      }
+    },
+    "ChecklistItemList": {
+      "base": null,
+      "refs": {
+        "Checklist$items": "<p>The checklist items in template order. The list contains one item for each checklist section, including sections that have not been discussed.</p>"
+      }
+    },
+    "ChecklistItemStatus": {
+      "base": null,
+      "refs": {
+        "ChecklistItem$status": "<p>The discussion status of the checklist item. The following values are valid:</p> <ul> <li> <p> <code>DISCUSSED</code>: The conversation has covered the item.</p> </li> <li> <p> <code>PARTIALLY_DISCUSSED</code>: The conversation has covered part of the item.</p> </li> <li> <p> <code>NOT_DISCUSSED</code>: The conversation has not covered the item.</p> </li> </ul> <p>The status usually progresses toward <code>DISCUSSED</code>, but it can return to <code>NOT_DISCUSSED</code> if a speaker retracts a statement.</p>"
+      }
+    },
+    "ChecklistList": {
+      "base": null,
+      "refs": {
+        "MedicalScribeChecklistEvent$checklists": "<p>The checklists for the session. The list is empty when no checklist is active.</p>"
       }
     },
     "ClinicalNoteGenerationResult": {
@@ -74,6 +151,20 @@
     },
     "ConflictException": {
       "base": "<p>This error is thrown when a resource update is no longer valid due to assumptions about initial state changing.</p>",
+      "refs": {}
+    },
+    "CreateDatasetInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDatasetInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateDatasetInput$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, the operation returns the dataset that the first request created. If you reuse a clientToken with different parameters, the request fails with ConflictException. Use a new clientToken for a request with different parameters.</p>"
+      }
+    },
+    "CreateDatasetOutput": {
+      "base": null,
       "refs": {}
     },
     "CreateDomainInput": {
@@ -135,11 +226,84 @@
         "NoteTemplateSettingsResponse$customTemplate": "<p/>"
       }
     },
+    "DatasetArn": {
+      "base": null,
+      "refs": {
+        "CreateDatasetOutput$arn": "<p>The Amazon Resource Name (ARN) of the dataset.</p>",
+        "DatasetSummary$arn": "<p>The Amazon Resource Name (ARN) of the dataset.</p>",
+        "DeleteDatasetOutput$arn": "<p>The Amazon Resource Name (ARN) of the dataset.</p>",
+        "GetDatasetOutput$arn": "<p>The Amazon Resource Name (ARN) of the dataset.</p>"
+      }
+    },
+    "DatasetArtifacts": {
+      "base": "<p>The results of building a Dataset, by dataset type.</p>",
+      "refs": {
+        "GetDatasetOutput$artifacts": "<p>The results of building the dataset, such as medical coding evaluation scores. Available after Amazon Connect Health builds the dataset.</p>"
+      }
+    },
+    "DatasetConfig": {
+      "base": "<p>The configuration of a Dataset. Set one member, which determines the dataset type.</p>",
+      "refs": {
+        "CreateDatasetInput$config": "<p>The configuration of the dataset. The member that you set determines the dataset type. You can't change the configuration after you create the dataset.</p>",
+        "GetDatasetOutput$config": "<p>The configuration that you provided when you created the dataset.</p>"
+      }
+    },
+    "DatasetId": {
+      "base": "<p>The identifier of a Dataset. System-generated, unique within a domain. Contains only lowercase letters and digits.</p>",
+      "refs": {
+        "CreateDatasetOutput$datasetId": "<p>The unique identifier of the dataset.</p>",
+        "DatasetSummary$datasetId": "<p>The unique identifier of the dataset.</p>",
+        "DeleteDatasetInput$datasetId": "<p>The unique identifier of the dataset to delete.</p>",
+        "DeleteDatasetOutput$datasetId": "<p>The unique identifier of the dataset.</p>",
+        "GetDatasetInput$datasetId": "<p>The unique identifier of the dataset.</p>",
+        "GetDatasetOutput$datasetId": "<p>The unique identifier of the dataset.</p>",
+        "GetMedicalCodingJobResponse$datasetId": "<p>The unique identifier of the dataset that the job codes against. Not returned if the job uses the general medical coding knowledge base.</p>",
+        "StartMedicalCodingJobRequest$datasetId": "<p>The unique identifier of an ACTIVE medical coding dataset in the Domain to code against. If you don't specify a dataset, the job uses the general medical coding knowledge base.</p>"
+      }
+    },
+    "DatasetStatus": {
+      "base": "<p>Lifecycle status of a Dataset. CREATING -&gt; ACTIVE | CREATE_FAILED; ACTIVE | CREATE_FAILED | DELETE_FAILED -&gt; DELETING -&gt; DELETED | DELETE_FAILED.</p>",
+      "refs": {
+        "CreateDatasetOutput$status": "<p>The status of the dataset. A new dataset has the status CREATING.</p>",
+        "DatasetSummary$status": "<p>The status of the dataset.</p>",
+        "DeleteDatasetOutput$status": "<p>The status of the dataset. After Amazon Connect Health accepts the request, the status is DELETING.</p>",
+        "GetDatasetOutput$status": "<p>The status of the dataset.</p>"
+      }
+    },
+    "DatasetSummary": {
+      "base": "<p>Summary information about a Dataset.</p>",
+      "refs": {
+        "DatasetSummaryList$member": null
+      }
+    },
+    "DatasetSummaryList": {
+      "base": "<p>A page of dataset summaries.</p>",
+      "refs": {
+        "ListDatasetsOutput$items": "<p>A list of dataset summaries.</p>"
+      }
+    },
+    "DatasetType": {
+      "base": "<p>The Amazon Connect Health feature a Dataset is for. Set by the service from the DatasetConfig member supplied at create: medicalCoding -&gt; MEDICAL_CODING.</p>",
+      "refs": {
+        "CreateDatasetOutput$type": "<p>The type of the dataset, determined by the configuration that you provided.</p>",
+        "DatasetSummary$type": "<p>The type of the dataset.</p>",
+        "GetDatasetOutput$type": "<p>The type of the dataset.</p>",
+        "ListDatasetsInput$type": "<p>Returns only datasets of this type.</p>"
+      }
+    },
     "DeactivateSubscriptionInput": {
       "base": null,
       "refs": {}
     },
     "DeactivateSubscriptionOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDatasetInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDatasetOutput": {
       "base": null,
       "refs": {}
     },
@@ -164,23 +328,30 @@
       "base": null,
       "refs": {
         "ActivateSubscriptionInput$domainId": "<p>The unique identifier of the parent Domain.</p>",
+        "CreateDatasetInput$domainId": "<p>The unique identifier of the parent Domain.</p>",
         "CreateDomainOutput$domainId": "<p/>",
         "CreateSubscriptionInput$domainId": "<p>The unique identifier of the parent Domain.</p>",
         "CreateSubscriptionOutput$domainId": "<p/>",
         "DeactivateSubscriptionInput$domainId": "<p>The unique identifier of the parent Domain.</p>",
+        "DeleteDatasetInput$domainId": "<p>The unique identifier of the parent Domain.</p>",
         "DeleteDomainInput$domainId": "<p>The id of the Domain to delete</p>",
         "DeleteDomainOutput$domainId": "<p>The id of the Domain requested for deletion</p>",
         "DomainSummary$domainId": "<p>The unique identifier of the Domain.</p>",
+        "GetDatasetInput$domainId": "<p>The unique identifier of the parent Domain.</p>",
         "GetDomainInput$domainId": "<p>The id of the Domain to get</p>",
         "GetDomainOutput$domainId": "<p/>",
+        "GetMedicalCodingJobRequest$domainId": "<p>The unique identifier of the parent Domain.</p>",
         "GetMedicalScribeListeningSessionInput$domainId": "<p>The Domain identifier</p>",
         "GetPatientInsightsJobRequest$domainId": "<p/>",
         "GetSubscriptionInput$domainId": "<p>The unique identifier of the parent Domain.</p>",
+        "ListDatasetsInput$domainId": "<p>The unique identifier of the parent Domain.</p>",
         "ListSubscriptionsInput$domainId": "<p>The unique identifier of the parent Domain.</p>",
         "MedicalScribeListeningSessionDetails$domainId": "<p>The Domain identifier</p>",
+        "StartMedicalCodingJobRequest$domainId": "<p>The unique identifier of the parent Domain.</p>",
         "StartMedicalScribeListeningSessionInput$domainId": "<p>The Domain identifier</p>",
         "StartMedicalScribeListeningSessionOutput$domainId": "<p>The Domain identifier</p>",
         "StartPatientInsightsJobRequest$domainId": "<p/>",
+        "SubmitFeedbackRequest$domainId": "<p>The unique identifier of the parent Domain.</p>",
         "SubscriptionDescription$domainId": "<p/>"
       }
     },
@@ -221,6 +392,13 @@
         "MedicalScribeConfigurationEvent$encounterContext": "<p>Context information about the clinical encounter</p>"
       }
     },
+    "EncounterType": {
+      "base": null,
+      "refs": {
+        "MedicalCodesEncounterContext$encounterType": "<p>The type of the encounter, either in person or telehealth.</p>",
+        "MedicalCodingContext$encounterType": "<p>The type of the encounter, either in person or telehealth.</p>"
+      }
+    },
     "EncryptionContext": {
       "base": "<p>Encryption context for a Domain.</p>",
       "refs": {
@@ -252,11 +430,39 @@
         "FHIRServer$fhirEndpoint": "<p>FHIR server endpoint URL for accessing patient data.</p>"
       }
     },
+    "FeedbackArtifactType": {
+      "base": null,
+      "refs": {
+        "SubmitFeedbackRequest$artifactType": "<p>The type of artifact that you submit feedback for. The following values are valid:</p> <ul> <li> <p>CLINICAL_DOC is the clinical document generated for an ambient documentation session.</p> </li> <li> <p>MEDICAL_CODES is the set of medical codes generated by a medical coding job.</p> </li> </ul>"
+      }
+    },
+    "FeedbackComments": {
+      "base": null,
+      "refs": {
+        "SubmitFeedbackRequest$comments": "<p>Optional comments about the feedback.</p>"
+      }
+    },
+    "GetDatasetInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDatasetOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GetDomainInput": {
       "base": null,
       "refs": {}
     },
     "GetDomainOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetMedicalCodingJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetMedicalCodingJobResponse": {
       "base": null,
       "refs": {}
     },
@@ -283,6 +489,12 @@
     "GetSubscriptionOutput": {
       "base": null,
       "refs": {}
+    },
+    "IdempotencyToken": {
+      "base": null,
+      "refs": {
+        "SubmitFeedbackRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure that the operation completes no more than one time. If this token matches a previous request, the service ignores the request but does not return an error.</p>"
+      }
     },
     "InputDataConfig": {
       "base": "<p>Configuration details for input patient data</p>",
@@ -326,14 +538,19 @@
     "JobId": {
       "base": null,
       "refs": {
+        "GetMedicalCodingJobRequest$jobId": "<p>The unique identifier of the medical coding job.</p>",
+        "GetMedicalCodingJobResponse$jobId": "<p>The unique identifier of the medical coding job.</p>",
         "GetPatientInsightsJobRequest$jobId": "<p/>",
         "GetPatientInsightsJobResponse$jobId": "<p/>",
+        "MedicalCodeGenerationResult$jobId": "<p>The identifier of the medical coding job that generated the medical codes. To submit feedback on the medical codes, use this value as the artifactSourceId, with the artifactType MEDICAL_CODES, in SubmitFeedback.</p>",
+        "StartMedicalCodingJobResponse$jobId": "<p>The unique identifier of the medical coding job.</p>",
         "StartPatientInsightsJobResponse$jobId": "<p/>"
       }
     },
     "JobStatus": {
       "base": null,
       "refs": {
+        "GetMedicalCodingJobResponse$jobStatus": "<p>The status of the medical coding job.</p>",
         "GetPatientInsightsJobResponse$jobStatus": "<p/>"
       }
     },
@@ -345,6 +562,20 @@
         "EncryptionContext$kmsKeyArn": "<p>The ARN of the KMS key. Only present when encryptionType is CUSTOMER_MANAGED_KEY.</p>",
         "GetDomainOutput$kmsKeyArn": "<p/>"
       }
+    },
+    "ListDatasetsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDatasetsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListDatasetsInput$maxResults": "<p>The maximum number of datasets to return in one page. The default is 100.</p>"
+      }
+    },
+    "ListDatasetsOutput": {
+      "base": null,
+      "refs": {}
     },
     "ListDomainsInput": {
       "base": null,
@@ -382,6 +613,13 @@
       "base": null,
       "refs": {}
     },
+    "Long": {
+      "base": null,
+      "refs": {
+        "MedicalScribeChecklistEvent$snapshotVersion": "<p>The version of this snapshot. Versions increase within a session and can skip values. Keep the snapshot with the highest version and ignore any event whose version is not higher, including after you reconnect to the session. Versions of checklist events and periodontal chart events are independent.</p>",
+        "MedicalScribePeriodontalChartEvent$snapshotVersion": "<p>The version of this snapshot. Versions increase within a session and can skip values. Keep the snapshot with the highest version and ignore any event whose version is not higher, including after you reconnect to the session. Versions of checklist events and periodontal chart events are independent.</p>"
+      }
+    },
     "ManagedNoteTemplate": {
       "base": null,
       "refs": {
@@ -399,6 +637,94 @@
       "base": "<p>Response containing managed template information</p>",
       "refs": {
         "NoteTemplateSettingsResponse$managedTemplate": "<p/>"
+      }
+    },
+    "MedicalCodeGenerationResult": {
+      "base": "<p>Results of medical code generation, including the medical codes and the medical coding job.</p>",
+      "refs": {
+        "MedicalScribePostStreamActionsResult$medicalCodeGenerationResult": "<p>Results of medical code generation. Returned if medical code generation runs for the session. Not returned if you set enabled to false in medicalCodeGenerationSettings.</p>"
+      }
+    },
+    "MedicalCodeGenerationSettings": {
+      "base": "<p>Settings for generating medical codes from the clinical note after the session ends. Medical code generation is in preview release and is subject to change. Medical code generation is available in the US East (N. Virginia) and US West (Oregon) AWS Regions.</p>",
+      "refs": {
+        "MedicalScribePostStreamActionSettings$medicalCodeGenerationSettings": "<p>Settings for medical code generation. Medical code generation is in preview release and is subject to change.</p>"
+      }
+    },
+    "MedicalCodeGenerationSettingsResponse": {
+      "base": "<p>Response containing settings for medical code generation.</p>",
+      "refs": {
+        "MedicalScribePostStreamActionSettingsResponse$medicalCodeGenerationSettings": "<p>Settings for medical code generation. Returned only if you specified medicalCodeGenerationSettings when you started the session.</p>"
+      }
+    },
+    "MedicalCodesEncounterContext": {
+      "base": "<p>Encounter context for a medical coding job. All fields are optional.</p>",
+      "refs": {
+        "GetMedicalCodingJobResponse$encounterContext": "<p>The encounter context that you provided for the job.</p>",
+        "StartMedicalCodingJobRequest$encounterContext": "<p>Encounter context for the job. Providing this information can improve the accuracy of the medical codes.</p>"
+      }
+    },
+    "MedicalCodesEncounterContextEncounterDurationMinutesInteger": {
+      "base": null,
+      "refs": {
+        "MedicalCodesEncounterContext$encounterDurationMinutes": "<p>The duration of the encounter, in minutes, from 1 to 1440.</p>"
+      }
+    },
+    "MedicalCodesEncounterContextEncounterReasonString": {
+      "base": null,
+      "refs": {
+        "MedicalCodesEncounterContext$encounterReason": "<p>The reason for the encounter. The reason can contain letters, numbers, spaces, periods, commas, and hyphens, and can't contain only spaces.</p>"
+      }
+    },
+    "MedicalCodesPatientContext": {
+      "base": "<p>Patient context for a medical coding job. All fields are optional.</p>",
+      "refs": {
+        "GetMedicalCodingJobResponse$patientContext": "<p>The patient context that you provided for the job.</p>",
+        "StartMedicalCodingJobRequest$patientContext": "<p>Patient context for the job. Providing this information can improve the accuracy of the medical codes.</p>"
+      }
+    },
+    "MedicalCodingContext": {
+      "base": "<p>Patient and encounter context for medical code generation. Providing this information can improve the accuracy of the medical codes. To provide it, you must also set enabled to true in medicalCodeGenerationSettings. All fields are optional. The service generates medical codes without any field that you leave out.</p>",
+      "refs": {
+        "EncounterContext$medicalCodingContext": "<p>Structured patient and encounter context for medical code generation.</p>"
+      }
+    },
+    "MedicalCodingContextEncounterReasonString": {
+      "base": null,
+      "refs": {
+        "MedicalCodingContext$encounterReason": "<p>The reason for the encounter. The reason can contain letters, numbers, spaces, periods, commas, and hyphens, and can't contain only spaces.</p>"
+      }
+    },
+    "MedicalCodingDatasetArtifacts": {
+      "base": "<p>The results of building a medical coding dataset.</p>",
+      "refs": {
+        "DatasetArtifacts$medicalCoding": "<p>The results of building a medical coding dataset.</p>"
+      }
+    },
+    "MedicalCodingDatasetConfig": {
+      "base": "<p>The configuration of a medical coding dataset. Amazon Connect Health uses the coded examples that are in the input location when you create the dataset, and writes evaluation scores to the output location, with your permissions. Later changes to the input location don't change the dataset.</p>",
+      "refs": {
+        "DatasetConfig$medicalCoding": "<p>The configuration of a medical coding dataset, which tailors medical coding jobs to your coded examples.</p>"
+      }
+    },
+    "MedicalCodingJobArn": {
+      "base": null,
+      "refs": {
+        "GetMedicalCodingJobResponse$jobArn": "<p>The Amazon Resource Name (ARN) of the medical coding job.</p>",
+        "StartMedicalCodingJobResponse$jobArn": "<p>The Amazon Resource Name (ARN) of the medical coding job.</p>"
+      }
+    },
+    "MedicalCodingOutput": {
+      "base": "<p>The location of the results of a medical coding job.</p>",
+      "refs": {
+        "GetMedicalCodingJobResponse$medicalCodingOutput": "<p>The location of the job results. Returned when the job succeeds.</p>"
+      }
+    },
+    "MedicalCodingOutputDataConfig": {
+      "base": "<p>The output configuration for a medical coding job.</p>",
+      "refs": {
+        "GetMedicalCodingJobResponse$outputDataConfig": "<p>The output configuration that you provided for the job.</p>",
+        "StartMedicalCodingJobRequest$outputDataConfig": "<p>The output configuration for the job.</p>"
       }
     },
     "MedicalScribeAudioEvent": {
@@ -430,6 +756,12 @@
       "base": null,
       "refs": {
         "MedicalScribeChannelDefinition$channelId": "<p>The channel identifier</p>"
+      }
+    },
+    "MedicalScribeChecklistEvent": {
+      "base": "<p>Real-time extraction is in preview release for Amazon Connect Health and is subject to change. To request access to this feature, contact your AWS account team.</p> <p>The session's checklist as of this point in the session. Each event carries every item with its current status, not only the items that changed.</p>",
+      "refs": {
+        "MedicalScribeOutputStream$checklistEvent": "<p>Real-time extraction is in preview release for Amazon Connect Health and is subject to change. To request access to this feature, contact your AWS account team.</p> <p>A snapshot of the session's checklist. Amazon Connect Health sends this event only when real-time extraction is enabled for the account and the session uses a supported note template.</p>"
       }
     },
     "MedicalScribeConfigurationEvent": {
@@ -475,15 +807,21 @@
       }
     },
     "MedicalScribeOutputStream": {
-      "base": "<p>Output stream from Medical Scribe containing transcript events and errors</p>",
+      "base": "<p>The output stream of a listening session. It carries transcript events, periodontal chart events, checklist events, and errors.</p>",
       "refs": {
-        "StartMedicalScribeListeningSessionOutput$responseStream": "<p>The output stream containing transcript events</p>"
+        "StartMedicalScribeListeningSessionOutput$responseStream": "<p>The output stream that contains transcript events, periodontal chart events, checklist events, and errors.</p>"
       }
     },
     "MedicalScribeParticipantRole": {
       "base": null,
       "refs": {
         "MedicalScribeChannelDefinition$participantRole": "<p>The role of the participant on this channel</p>"
+      }
+    },
+    "MedicalScribePeriodontalChartEvent": {
+      "base": "<p>Real-time extraction is in preview release for Amazon Connect Health and is subject to change. To request access to this feature, contact your AWS account team.</p> <p>The periodontal chart as of this point in the session. Each event carries every tooth charted so far, not only the teeth that changed.</p>",
+      "refs": {
+        "MedicalScribeOutputStream$periodontalChartEvent": "<p>Real-time extraction is in preview release for Amazon Connect Health and is subject to change. To request access to this feature, contact your AWS account team.</p> <p>A snapshot of the periodontal chart. Amazon Connect Health sends this event only when real-time extraction is enabled for the account and periodontal charting is dictated during the session.</p>"
       }
     },
     "MedicalScribePostStreamActionSettings": {
@@ -537,14 +875,18 @@
     "NonEmptyString": {
       "base": null,
       "refs": {
+        "GetMedicalCodingJobResponse$statusDetails": "<p>Details about the status of the job, such as the reason that it failed.</p>",
         "GetPatientInsightsJobResponse$statusDetails": "<p>Contains information about the status of a job.</p>",
+        "StartMedicalCodingJobRequest$clientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "StartPatientInsightsJobRequest$clientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
       }
     },
     "NonNullBoolean": {
       "base": null,
       "refs": {
+        "MedicalCodeGenerationSettingsResponse$enabled": "<p>Indicates whether medical code generation was requested for the session.</p>",
         "MedicalScribeListeningSessionDetails$encounterContextProvided": "<p>Indicates whether encounter context was provided</p>",
+        "MedicalScribeListeningSessionDetails$medicalCodingContextProvided": "<p>Indicates whether medical coding context was provided.</p>",
         "MedicalScribeTranscriptSegment$isPartial": "<p>Indicates whether this is a partial or final transcript</p>"
       }
     },
@@ -585,6 +927,94 @@
       "refs": {
         "GetPatientInsightsJobResponse$patientContext": "<p/>",
         "StartPatientInsightsJobRequest$patientContext": "<p/>"
+      }
+    },
+    "PatientStatus": {
+      "base": null,
+      "refs": {
+        "MedicalCodesPatientContext$status": "<p>The status of the patient, either new or established.</p>",
+        "MedicalCodingContext$status": "<p>The status of the patient, either new or established.</p>"
+      }
+    },
+    "PeriodontalGrade": {
+      "base": null,
+      "refs": {
+        "PeriodontalTooth$mobility": "<p>The tooth mobility grade. The value ranges from 0 to 3.</p>",
+        "PeriodontalTooth$furcation": "<p>The furcation involvement class. The value ranges from 0 to 3.</p>"
+      }
+    },
+    "PeriodontalProbingDepthMillimeters": {
+      "base": null,
+      "refs": {
+        "PeriodontalSite$probingDepth": "<p>The probing depth, in millimeters. The value ranges from 0 to 15.</p>"
+      }
+    },
+    "PeriodontalRecessionMillimeters": {
+      "base": null,
+      "refs": {
+        "PeriodontalSite$recession": "<p>The gingival recession, in millimeters. The value ranges from -5 to 15. For example, <code>-1</code> represents \"plus one.\"</p>"
+      }
+    },
+    "PeriodontalReview": {
+      "base": "<p>An item of the periodontal chart that needs the clinician's confirmation.</p>",
+      "refs": {
+        "PeriodontalReviewList$member": null
+      }
+    },
+    "PeriodontalReviewList": {
+      "base": null,
+      "refs": {
+        "MedicalScribePeriodontalChartEvent$reviewItems": "<p>Items that need the clinician's confirmation.</p>"
+      }
+    },
+    "PeriodontalReviewReason": {
+      "base": null,
+      "refs": {
+        "PeriodontalReview$reason": "<p>The reason for review. The following values are valid:</p> <ul> <li> <p> <code>SITE_NOT_CHARTED</code>: One or more sites have no reading.</p> </li> <li> <p> <code>VALUE_NOT_CHARTED</code>: A dictated value or charting instruction was not charted, for example because the value was out of range or not valid at its position.</p> </li> <li> <p> <code>READING_COUNT_MISMATCH</code>: The number of dictated values did not match the number of open sites. The values were charted as dictated.</p> </li> <li> <p> <code>LINE_UNCLEAR</code>: A line of dictation could not be interpreted and was not charted.</p> </li> <li> <p> <code>TOOTH_UNCLEAR</code>: A line of dictation did not identify the tooth and was not charted.</p> </li> <li> <p> <code>MISSING_TOOTH_CONFLICT</code>: The dictation conflicts with a tooth marked as missing.</p> </li> <li> <p> <code>MEASUREMENT_NOT_CHARTED</code>: The dictation included a measurement that the chart does not record, such as plaque, calculus, or the mucogingival junction.</p> </li> <li> <p> <code>SESSION_ISSUE</code>: The exam setup could not be used and all teeth were assumed to be present, or the earlier chart could not be restored and charting restarted.</p> </li> </ul>"
+      }
+    },
+    "PeriodontalSite": {
+      "base": "<p>The measurements at one probing site of a tooth.</p>",
+      "refs": {
+        "PeriodontalSiteList$member": null
+      }
+    },
+    "PeriodontalSiteList": {
+      "base": null,
+      "refs": {
+        "PeriodontalTooth$sites": "<p>The probing sites that have a recorded measurement, in the order <code>MB</code>, <code>B</code>, <code>DB</code>, <code>ML</code>, <code>L</code>, <code>DL</code>.</p>"
+      }
+    },
+    "PeriodontalSiteName": {
+      "base": null,
+      "refs": {
+        "PeriodontalSite$site": "<p>The probing site. The following values are valid:</p> <ul> <li> <p> <code>DB</code>: Distobuccal.</p> </li> <li> <p> <code>B</code>: Buccal.</p> </li> <li> <p> <code>MB</code>: Mesiobuccal.</p> </li> <li> <p> <code>DL</code>: Distolingual.</p> </li> <li> <p> <code>L</code>: Lingual.</p> </li> <li> <p> <code>ML</code>: Mesiolingual.</p> </li> </ul>",
+        "PeriodontalSiteNameList$member": null
+      }
+    },
+    "PeriodontalSiteNameList": {
+      "base": null,
+      "refs": {
+        "PeriodontalReview$sites": "<p>The probing sites of that tooth that the item refers to.</p>"
+      }
+    },
+    "PeriodontalTooth": {
+      "base": "<p>The chart for one tooth.</p>",
+      "refs": {
+        "PeriodontalToothList$member": null
+      }
+    },
+    "PeriodontalToothList": {
+      "base": null,
+      "refs": {
+        "MedicalScribePeriodontalChartEvent$teeth": "<p>The teeth that have a recorded value or are marked missing, in ascending <code>toothNumber</code> order.</p>"
+      }
+    },
+    "PeriodontalToothNumber": {
+      "base": null,
+      "refs": {
+        "PeriodontalReview$toothNumber": "<p>The tooth that the item refers to.</p>",
+        "PeriodontalTooth$toothNumber": "<p>The tooth number in the Universal Numbering System. The value ranges from 1 to 32.</p>"
       }
     },
     "PostStreamArtifactGenerationStatus": {
@@ -628,18 +1058,29 @@
       }
     },
     "S3Uri": {
-      "base": null,
+      "base": "<p>An Amazon S3 location as an s3:// URI, for example s3://amzn-s3-demo-bucket/prefix/.</p>",
       "refs": {
         "InsightsOutput$uri": "<p/>",
+        "MedicalCodingDatasetArtifacts$evaluationS3Uri": "<p>The Amazon S3 location, under the s3OutputPath of the dataset, of the evaluation scores for the dataset.</p>",
+        "MedicalCodingDatasetConfig$s3InputPath": "<p>The Amazon S3 location of your coded examples. You need s3:GetObject and s3:ListBucket permissions for it, and kms:Decrypt if you encrypt it with an AWS KMS key.</p>",
+        "MedicalCodingDatasetConfig$s3OutputPath": "<p>The Amazon S3 location where Amazon Connect Health writes the evaluation scores for the dataset. You need s3:PutObject permission for it, and kms:GenerateDataKey if you encrypt it with an AWS KMS key.</p>",
+        "MedicalCodingOutput$uri": "<p>The Amazon S3 location of the medical codes that the job generated.</p>",
+        "MedicalCodingOutputDataConfig$s3OutputPath": "<p>The Amazon S3 location where Amazon Connect Health writes the results of the job.</p>",
         "MedicalScribePostStreamActionSettings$outputS3Uri": "<p/>",
         "MedicalScribePostStreamActionSettingsResponse$outputS3Uri": "<p/>",
         "OutputDataConfig$s3OutputPath": "<p>S3 URI where the insights output will be stored.</p>",
-        "S3Source$uri": "<p>The S3 URI.</p>"
+        "S3Source$uri": "<p>The S3 URI.</p>",
+        "SubmitFeedbackRequest$signedArtifactS3Uri": "<p>The Amazon Simple Storage Service (Amazon S3) URI of the final artifact that the clinician signed.</p>",
+        "SubmitFeedbackRequest$generatedArtifactS3Uri": "<p>The Amazon S3 URI of the clinical document or set of medical codes that Amazon Connect Health generated.</p>"
       }
     },
     "SensitiveIsoDateString": {
       "base": null,
       "refs": {
+        "MedicalCodesEncounterContext$encounterDate": "<p>The date of the encounter, in YYYY-MM-DD format. The date can't be more than one day after the current date in UTC.</p>",
+        "MedicalCodesPatientContext$dateOfBirth": "<p>The date of birth of the patient, in YYYY-MM-DD format. The date can't be after the current date in UTC.</p>",
+        "MedicalCodingContext$dateOfBirth": "<p>The date of birth of the patient, in YYYY-MM-DD format. The date can't be after the current date in UTC.</p>",
+        "MedicalCodingContext$encounterDate": "<p>The date of the encounter, in YYYY-MM-DD format. The date can't be more than one day after the current date in UTC.</p>",
         "PatientInsightsPatientContext$dateOfBirth": "<p>Date of birth of the patient.</p>"
       }
     },
@@ -654,7 +1095,10 @@
       "base": null,
       "refs": {
         "FHIRServer$oauthToken": "<p>OAuth token for authenticating with the FHIR server.</p>",
+        "GetMedicalCodingJobResponse$text": "<p>The clinical text that the medical coding job codes.</p>",
+        "MedicalCodesPatientContext$insurance": "<p>The insurance of the patient.</p>",
         "PatientInsightsPatientContext$patientId": "<p>Unique identifier of the patient</p>",
+        "StartMedicalCodingJobRequest$text": "<p>The clinical text to generate medical codes for, such as a clinical note.</p>",
         "UserContext$userId": "<p>Unique identifier of the user</p>"
       }
     },
@@ -677,11 +1121,26 @@
         "StartMedicalScribeListeningSessionOutput$sessionId": "<p>The Session identifier</p>"
       }
     },
+    "Sex": {
+      "base": null,
+      "refs": {
+        "MedicalCodesPatientContext$sex": "<p>The sex of the patient.</p>",
+        "MedicalCodingContext$sex": "<p>The sex of the patient.</p>"
+      }
+    },
     "Specialty": {
       "base": null,
       "refs": {
         "UserContext$specialty": "<p/>"
       }
+    },
+    "StartMedicalCodingJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartMedicalCodingJobResponse": {
+      "base": null,
+      "refs": {}
     },
     "StartMedicalScribeListeningSessionInput": {
       "base": null,
@@ -705,6 +1164,8 @@
         "AccessDeniedException$message": null,
         "ConflictException$message": null,
         "InternalServerException$message": null,
+        "ListDatasetsInput$nextToken": "<p>The token for the next page of results, from a previous ListDatasets response. If you don't specify a value, the operation returns the first page of results.</p>",
+        "ListDatasetsOutput$nextToken": "<p>The token for the next page of results. Not returned if there are no more results.</p>",
         "ListDomainsInput$nextToken": "<p>Token for pagination.</p>",
         "ListDomainsOutput$nextToken": "<p>Token for the next page of results.</p>",
         "ListSubscriptionsInput$nextToken": "<p>Token for pagination.</p>",
@@ -720,6 +1181,14 @@
         "UntagResourceInput$resourceArn": "<p>The ARN of the resource to untag</p>",
         "ValidationException$message": null
       }
+    },
+    "SubmitFeedbackRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SubmitFeedbackResponse": {
+      "base": null,
+      "refs": {}
     },
     "SubscriptionArn": {
       "base": null,
@@ -748,6 +1217,7 @@
         "MedicalScribeListeningSessionDetails$subscriptionId": "<p>The Subscription identifier</p>",
         "StartMedicalScribeListeningSessionInput$subscriptionId": "<p>The Subscription identifier</p>",
         "StartMedicalScribeListeningSessionOutput$subscriptionId": "<p>The Subscription identifier</p>",
+        "SubmitFeedbackRequest$subscriptionId": "<p>The unique identifier of the Subscription.</p>",
         "SubscriptionDescription$subscriptionId": "<p/>"
       }
     },
@@ -767,8 +1237,11 @@
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
+        "GetMedicalCodingJobResponse$creationTime": "<p>The date and time that the medical coding job was created.</p>",
+        "GetMedicalCodingJobResponse$updatedTime": "<p>The date and time that the medical coding job was last updated.</p>",
         "GetPatientInsightsJobResponse$creationTime": "<p>Date and time the patient insights job was submitted.</p>",
         "GetPatientInsightsJobResponse$updatedTime": "<p>Date and time the patient insights job was last updated.</p>",
+        "StartMedicalCodingJobResponse$creationTime": "<p>The date and time that the medical coding job was created.</p>",
         "StartPatientInsightsJobResponse$creationTime": "<p>Date and time the patient insights job was submitted.</p>"
       }
     },
@@ -823,12 +1296,17 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "CreateDatasetOutput$createdAt": "<p>The date and time that the dataset was created.</p>",
         "CreateDomainOutput$createdAt": "<p/>",
         "CreateSubscriptionOutput$createdAt": "<p/>",
         "CreateSubscriptionOutput$lastUpdatedAt": "<p/>",
         "CreateSubscriptionOutput$activatedAt": "<p/>",
         "CreateSubscriptionOutput$deactivatedAt": "<p/>",
+        "DatasetSummary$createdAt": "<p>The date and time that the dataset was created.</p>",
+        "DatasetSummary$updatedAt": "<p>The date and time that the dataset was last updated.</p>",
         "DomainSummary$createdAt": "<p>The timestamp when the Domain was created.</p>",
+        "GetDatasetOutput$createdAt": "<p>The date and time that the dataset was created.</p>",
+        "GetDatasetOutput$updatedAt": "<p>The date and time that the dataset was last updated.</p>",
         "GetDomainOutput$createdAt": "<p/>",
         "MedicalScribeListeningSessionDetails$streamCreationTime": "<p>The timestamp when the stream was created</p>",
         "MedicalScribeListeningSessionDetails$streamEndTime": "<p>The timestamp when the stream ended</p>",

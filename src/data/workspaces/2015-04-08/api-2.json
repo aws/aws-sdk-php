@@ -3998,6 +3998,7 @@
         "WorkspaceDirectoryName":{"shape":"WorkspaceDirectoryName"},
         "WorkspaceDirectoryDescription":{"shape":"WorkspaceDirectoryDescription"},
         "UserIdentityType":{"shape":"UserIdentityType"},
+        "WorkspaceOsUserMode":{"shape":"WorkspaceOSUserMode"},
         "IdcInstanceArn":{"shape":"ARN"},
         "MicrosoftEntraConfig":{"shape":"MicrosoftEntraConfig"},
         "WorkspaceType":{"shape":"WorkspaceType"},
@@ -4865,6 +4866,7 @@
         "IDCConfig":{"shape":"IDCConfig"},
         "ActiveDirectoryConfig":{"shape":"ActiveDirectoryConfig"},
         "StreamingProperties":{"shape":"StreamingProperties"},
+        "WorkspaceOsUserMode":{"shape":"WorkspaceOSUserMode"},
         "ErrorMessage":{"shape":"Description"}
       }
     },
@@ -5044,6 +5046,15 @@
     "WorkspaceName":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9_()][a-zA-Z0-9_.()-]{1,63}$"
+    },
+    "WorkspaceOSUserMode":{
+      "type":"string",
+      "enum":[
+        "LOCAL_USER",
+        "DOMAIN_JOIN",
+        "ENTRA_JOIN",
+        "SELF_MANAGED"
+      ]
     },
     "WorkspaceProperties":{
       "type":"structure",

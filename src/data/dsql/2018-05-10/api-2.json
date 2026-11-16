@@ -408,6 +408,7 @@
         },
         "multiRegionProperties":{"shape":"MultiRegionProperties"},
         "policy":{"shape":"PolicyDocument"},
+        "metricGroups":{"shape":"MetricGroupRequestList"},
         "bypassPolicyLockoutSafetyCheck":{"shape":"BypassPolicyLockoutSafetyCheck"}
       }
     },
@@ -428,7 +429,8 @@
         "multiRegionProperties":{"shape":"MultiRegionProperties"},
         "encryptionDetails":{"shape":"EncryptionDetails"},
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
-        "endpoint":{"shape":"Endpoint"}
+        "endpoint":{"shape":"Endpoint"},
+        "metricGroups":{"shape":"MetricGroupResponseList"}
       }
     },
     "CreateStreamInput":{
@@ -644,7 +646,8 @@
         "multiRegionProperties":{"shape":"MultiRegionProperties"},
         "tags":{"shape":"TagMap"},
         "encryptionDetails":{"shape":"EncryptionDetails"},
-        "endpoint":{"shape":"Endpoint"}
+        "endpoint":{"shape":"Endpoint"},
+        "metricGroups":{"shape":"MetricGroupResponseList"}
       }
     },
     "GetClusterPolicyInput":{
@@ -849,6 +852,36 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "MetricGroup":{
+      "type":"string",
+      "enum":["STATEMENT_STATISTICS"]
+    },
+    "MetricGroupRequest":{
+      "type":"structure",
+      "required":["metricGroup"],
+      "members":{
+        "metricGroup":{"shape":"MetricGroup"}
+      }
+    },
+    "MetricGroupRequestList":{
+      "type":"list",
+      "member":{"shape":"MetricGroupRequest"},
+      "max":20,
+      "min":0
+    },
+    "MetricGroupResponse":{
+      "type":"structure",
+      "required":["metricGroup"],
+      "members":{
+        "metricGroup":{"shape":"MetricGroup"}
+      }
+    },
+    "MetricGroupResponseList":{
+      "type":"list",
+      "member":{"shape":"MetricGroupResponse"},
+      "max":20,
+      "min":0
     },
     "MultiRegionProperties":{
       "type":"structure",
@@ -1125,7 +1158,8 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "multiRegionProperties":{"shape":"MultiRegionProperties"}
+        "multiRegionProperties":{"shape":"MultiRegionProperties"},
+        "metricGroups":{"shape":"MetricGroupRequestList"}
       }
     },
     "UpdateClusterOutput":{

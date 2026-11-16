@@ -13,7 +13,7 @@ use Aws\AwsClient;
  *     dataType?: 'float32',
  *     dimension?: int,
  *     distanceMetric?: 'cosine'|'euclidean',
- *     metadataConfiguration?: array{nonFilterableMetadataKeys?: list<string>, ...},
+ *     metadataConfiguration?: array{nonFilterableMetadataKeys?: list<string>, textSearchConfigurations?: list<array>, ...},
  *     encryptionConfiguration?: array{sseType?: 'AES256'|'aws:kms', kmsKeyArn?: string, ...},
  *     tags?: array<string, string>,
  *     ...,
@@ -26,7 +26,7 @@ use Aws\AwsClient;
  *     dataType?: 'float32',
  *     dimension?: int,
  *     distanceMetric?: 'cosine'|'euclidean',
- *     metadataConfiguration?: array{nonFilterableMetadataKeys?: list<string>, ...},
+ *     metadataConfiguration?: array{nonFilterableMetadataKeys?: list<string>, textSearchConfigurations?: list<array>, ...},
  *     encryptionConfiguration?: array{sseType?: 'AES256'|'aws:kms', kmsKeyArn?: string, ...},
  *     tags?: array<string, string>,
  *     ...,
@@ -180,6 +180,8 @@ use Aws\AwsClient;
  *     queryMode?: 'CLASSIC'|'ENHANCED',
  *     returnMetadata?: bool,
  *     returnDistance?: bool,
+ *     queryTexts?: list<array{text?: string, metadataKey?: string, ...}>,
+ *     returnScores?: bool,
  *     nextToken?: string,
  *     ...,
  * } $args = [])
@@ -194,6 +196,8 @@ use Aws\AwsClient;
  *     queryMode?: 'CLASSIC'|'ENHANCED',
  *     returnMetadata?: bool,
  *     returnDistance?: bool,
+ *     queryTexts?: list<array{text?: string, metadataKey?: string, ...}>,
+ *     returnScores?: bool,
  *     nextToken?: string,
  *     ...,
  * } $args = [])
@@ -209,5 +213,23 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateIndexMode(array{vectorBucketName?: string, indexName?: string, indexArn?: string, indexMode?: 'CLASSIC'|'ENHANCED', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateIndexModeAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateIndexModeAsync(array{vectorBucketName?: string, indexName?: string, indexArn?: string, indexMode?: 'CLASSIC'|'ENHANCED', ...} $args = [])
+ * @method \Aws\Result updateMetadataConfiguration(array $args = [])
+ * @phpstan-method \Aws\Result updateMetadataConfiguration(array{
+ *     vectorBucketName?: string,
+ *     indexName?: string,
+ *     indexArn?: string,
+ *     add?: array{textSearchConfigurations?: list<array>, ...},
+ *     delete?: array{textSearchConfigurations?: list<array>, ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateMetadataConfigurationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateMetadataConfigurationAsync(array{
+ *     vectorBucketName?: string,
+ *     indexName?: string,
+ *     indexArn?: string,
+ *     add?: array{textSearchConfigurations?: list<array>, ...},
+ *     delete?: array{textSearchConfigurations?: list<array>, ...},
+ *     ...,
+ * } $args = [])
  */
 class S3VectorsClient extends AwsClient {}

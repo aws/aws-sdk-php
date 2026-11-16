@@ -713,6 +713,20 @@
       "type":"structure",
       "members":{}
     },
+    "ElasticIpConfiguration":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"ElasticIpType"}
+      }
+    },
+    "ElasticIpType":{
+      "type":"string",
+      "enum":[
+        "None",
+        "ServiceManaged"
+      ]
+    },
     "GetNetworkConnectorRequest":{
       "type":"structure",
       "required":["Identifier"],
@@ -1094,6 +1108,7 @@
         "Ec2RequestLimitExceeded",
         "InsufficientRolePermissions",
         "InternalError",
+        "InternetGatewayNotAttached",
         "InvalidSecurityGroup",
         "InvalidSubnet",
         "SecurityGroupsPerInterfaceLimitExceeded",
@@ -1154,6 +1169,7 @@
         "Ec2RequestLimitExceeded",
         "InsufficientRolePermissions",
         "InternalError",
+        "InternetGatewayNotAttached",
         "InvalidSecurityGroup",
         "InvalidSubnet",
         "SecurityGroupsPerInterfaceLimitExceeded",
@@ -1251,7 +1267,8 @@
         "SubnetIds":{"shape":"NetworkConnectorSubnetIds"},
         "SecurityGroupIds":{"shape":"NetworkConnectorSecurityGroupIds"},
         "NetworkProtocol":{"shape":"NetworkProtocol"},
-        "AssociatedComputeResourceTypes":{"shape":"AssociatedComputeResourceTypesList"}
+        "AssociatedComputeResourceTypes":{"shape":"AssociatedComputeResourceTypesList"},
+        "ElasticIpConfiguration":{"shape":"ElasticIpConfiguration"}
       }
     },
     "NetworkConnectorsList":{

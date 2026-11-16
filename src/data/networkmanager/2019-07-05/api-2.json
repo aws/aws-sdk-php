@@ -50,6 +50,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "AssociateContextStore":{
+      "name":"AssociateContextStore",
+      "http":{
+        "method":"POST",
+        "requestUri":"/context-stores/{contextStoreId}/associations"
+      },
+      "input":{"shape":"AssociateContextStoreRequest"},
+      "output":{"shape":"AssociateContextStoreResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "AssociateCustomerGateway":{
       "name":"AssociateCustomerGateway",
       "http":{
@@ -151,6 +168,24 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "CreateContextStore":{
+      "name":"CreateContextStore",
+      "http":{
+        "method":"POST",
+        "requestUri":"/global-networks/{globalNetworkId}/context-stores"
+      },
+      "input":{"shape":"CreateContextStoreRequest"},
+      "output":{"shape":"CreateContextStoreResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
@@ -398,6 +433,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DeleteContextStore":{
+      "name":"DeleteContextStore",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/context-stores/{contextStoreId}"
+      },
+      "input":{"shape":"DeleteContextStoreRequest"},
+      "output":{"shape":"DeleteContextStoreResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DeleteCoreNetwork":{
       "name":"DeleteCoreNetwork",
       "http":{
@@ -601,6 +653,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DisassociateContextStore":{
+      "name":"DisassociateContextStore",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/context-stores/{contextStoreId}/associations/{transitGatewayArn}"
+      },
+      "input":{"shape":"DisassociateContextStoreRequest"},
+      "output":{"shape":"DisassociateContextStoreResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DisassociateCustomerGateway":{
       "name":"DisassociateCustomerGateway",
       "http":{
@@ -726,6 +795,54 @@
       },
       "input":{"shape":"GetConnectionsRequest"},
       "output":{"shape":"GetConnectionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetContextStore":{
+      "name":"GetContextStore",
+      "http":{
+        "method":"GET",
+        "requestUri":"/context-stores/{contextStoreId}"
+      },
+      "input":{"shape":"GetContextStoreRequest"},
+      "output":{"shape":"GetContextStoreResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetContextStoreAssociation":{
+      "name":"GetContextStoreAssociation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/context-stores/{contextStoreId}/associations/{transitGatewayArn}"
+      },
+      "input":{"shape":"GetContextStoreAssociationRequest"},
+      "output":{"shape":"GetContextStoreAssociationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetContextVersion":{
+      "name":"GetContextVersion",
+      "http":{
+        "method":"GET",
+        "requestUri":"/context-stores/{contextStoreId}/context-version"
+      },
+      "input":{"shape":"GetContextVersionRequest"},
+      "output":{"shape":"GetContextVersionResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -1164,6 +1281,70 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListContextChanges":{
+      "name":"ListContextChanges",
+      "http":{
+        "method":"GET",
+        "requestUri":"/context-stores/{contextStoreId}/context-changes"
+      },
+      "input":{"shape":"ListContextChangesRequest"},
+      "output":{"shape":"ListContextChangesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListContextStoreAssociations":{
+      "name":"ListContextStoreAssociations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/context-stores/{contextStoreId}/associations"
+      },
+      "input":{"shape":"ListContextStoreAssociationsRequest"},
+      "output":{"shape":"ListContextStoreAssociationsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListContextStores":{
+      "name":"ListContextStores",
+      "http":{
+        "method":"GET",
+        "requestUri":"/context-stores"
+      },
+      "input":{"shape":"ListContextStoresRequest"},
+      "output":{"shape":"ListContextStoresResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListContexts":{
+      "name":"ListContexts",
+      "http":{
+        "method":"GET",
+        "requestUri":"/context-stores/{contextStoreId}/contexts"
+      },
+      "input":{"shape":"ListContextsRequest"},
+      "output":{"shape":"ListContextsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListCoreNetworkPolicyVersions":{
       "name":"ListCoreNetworkPolicyVersions",
       "http":{
@@ -1493,6 +1674,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "UpdateContextStore":{
+      "name":"UpdateContextStore",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/context-stores/{contextStoreId}"
+      },
+      "input":{"shape":"UpdateContextStoreRequest"},
+      "output":{"shape":"UpdateContextStoreResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "UpdateCoreNetwork":{
       "name":"UpdateCoreNetwork",
       "http":{
@@ -1714,6 +1912,24 @@
       "type":"structure",
       "members":{
         "ConnectPeerAssociation":{"shape":"ConnectPeerAssociation"}
+      }
+    },
+    "AssociateContextStoreRequest":{
+      "type":"structure",
+      "required":["ContextStoreId"],
+      "members":{
+        "ContextStoreId":{
+          "shape":"ContextStoreId",
+          "location":"uri",
+          "locationName":"contextStoreId"
+        },
+        "TransitGatewayArn":{"shape":"TransitGatewayArn"}
+      }
+    },
+    "AssociateContextStoreResponse":{
+      "type":"structure",
+      "members":{
+        "ContextStoreAssociation":{"shape":"ContextStoreAssociation"}
       }
     },
     "AssociateCustomerGatewayRequest":{
@@ -2212,6 +2428,100 @@
       "type":"list",
       "member":{"shape":"ConstrainedString"}
     },
+    "ContextChange":{
+      "type":"structure",
+      "members":{
+        "ChangeType":{"shape":"ContextChangeType"},
+        "Context":{"shape":"ContextEntry"}
+      }
+    },
+    "ContextChangeList":{
+      "type":"list",
+      "member":{"shape":"ContextChange"}
+    },
+    "ContextChangeType":{
+      "type":"string",
+      "enum":[
+        "ADDED",
+        "REMOVED"
+      ]
+    },
+    "ContextEntry":{
+      "type":"structure",
+      "members":{
+        "ContextId":{"shape":"ConstrainedString"},
+        "ContextType":{"shape":"ConstrainedString"},
+        "SegmentType":{"shape":"ConstrainedString"},
+        "PublicId":{"shape":"ConstrainedString"},
+        "Region":{"shape":"ExternalRegionCode"},
+        "AvailabilityZone":{"shape":"ConstrainedString"},
+        "AttachmentType":{"shape":"ConstrainedString"}
+      }
+    },
+    "ContextList":{
+      "type":"list",
+      "member":{"shape":"ContextEntry"}
+    },
+    "ContextStore":{
+      "type":"structure",
+      "members":{
+        "GlobalNetworkId":{"shape":"GlobalNetworkId"},
+        "ContextStoreId":{"shape":"ContextStoreId"},
+        "ContextStoreArn":{"shape":"ContextStoreArn"},
+        "Description":{"shape":"ConstrainedString"},
+        "CreatedAt":{"shape":"DateTime"},
+        "State":{"shape":"ContextStoreState"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "ContextStoreArn":{
+      "type":"string",
+      "max":500,
+      "min":0,
+      "pattern":"[\\s\\S]*"
+    },
+    "ContextStoreAssociation":{
+      "type":"structure",
+      "members":{
+        "ContextStoreId":{"shape":"ContextStoreId"},
+        "TransitGatewayArn":{"shape":"TransitGatewayArn"},
+        "CreatedAt":{"shape":"DateTime"},
+        "State":{"shape":"ContextStoreAssociationState"}
+      }
+    },
+    "ContextStoreAssociationList":{
+      "type":"list",
+      "member":{"shape":"ContextStoreAssociation"}
+    },
+    "ContextStoreAssociationState":{
+      "type":"string",
+      "enum":[
+        "ASSOCIATING",
+        "ASSOCIATED",
+        "DISASSOCIATING",
+        "FAILED"
+      ]
+    },
+    "ContextStoreId":{
+      "type":"string",
+      "max":50,
+      "min":0,
+      "pattern":"^context-store-([0-9a-f]{8,17})$"
+    },
+    "ContextStoreList":{
+      "type":"list",
+      "member":{"shape":"ContextStore"}
+    },
+    "ContextStoreState":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "AVAILABLE",
+        "UPDATING",
+        "DELETING",
+        "DELETED"
+      ]
+    },
     "CoreNetwork":{
       "type":"structure",
       "members":{
@@ -2572,6 +2882,29 @@
         "Connection":{"shape":"Connection"}
       }
     },
+    "CreateContextStoreRequest":{
+      "type":"structure",
+      "required":["GlobalNetworkId"],
+      "members":{
+        "GlobalNetworkId":{
+          "shape":"GlobalNetworkId",
+          "location":"uri",
+          "locationName":"globalNetworkId"
+        },
+        "Description":{"shape":"ConstrainedString"},
+        "Tags":{"shape":"TagList"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateContextStoreResponse":{
+      "type":"structure",
+      "members":{
+        "ContextStore":{"shape":"ContextStore"}
+      }
+    },
     "CreateCoreNetworkPrefixListAssociationRequest":{
       "type":"structure",
       "required":[
@@ -2923,6 +3256,23 @@
         "Connection":{"shape":"Connection"}
       }
     },
+    "DeleteContextStoreRequest":{
+      "type":"structure",
+      "required":["ContextStoreId"],
+      "members":{
+        "ContextStoreId":{
+          "shape":"ContextStoreId",
+          "location":"uri",
+          "locationName":"contextStoreId"
+        }
+      }
+    },
+    "DeleteContextStoreResponse":{
+      "type":"structure",
+      "members":{
+        "ContextStore":{"shape":"ContextStore"}
+      }
+    },
     "DeleteCoreNetworkPolicyVersionRequest":{
       "type":"structure",
       "required":[
@@ -3253,6 +3603,31 @@
         "ConnectPeerAssociation":{"shape":"ConnectPeerAssociation"}
       }
     },
+    "DisassociateContextStoreRequest":{
+      "type":"structure",
+      "required":[
+        "ContextStoreId",
+        "TransitGatewayArn"
+      ],
+      "members":{
+        "ContextStoreId":{
+          "shape":"ContextStoreId",
+          "location":"uri",
+          "locationName":"contextStoreId"
+        },
+        "TransitGatewayArn":{
+          "shape":"TransitGatewayArn",
+          "location":"uri",
+          "locationName":"transitGatewayArn"
+        }
+      }
+    },
+    "DisassociateContextStoreResponse":{
+      "type":"structure",
+      "members":{
+        "ContextStoreAssociation":{"shape":"ContextStoreAssociation"}
+      }
+    },
     "DisassociateCustomerGatewayRequest":{
       "type":"structure",
       "required":[
@@ -3511,6 +3886,65 @@
       "members":{
         "Connections":{"shape":"ConnectionList"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetContextStoreAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "ContextStoreId",
+        "TransitGatewayArn"
+      ],
+      "members":{
+        "ContextStoreId":{
+          "shape":"ContextStoreId",
+          "location":"uri",
+          "locationName":"contextStoreId"
+        },
+        "TransitGatewayArn":{
+          "shape":"TransitGatewayArn",
+          "location":"uri",
+          "locationName":"transitGatewayArn"
+        }
+      }
+    },
+    "GetContextStoreAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "ContextStoreAssociation":{"shape":"ContextStoreAssociation"}
+      }
+    },
+    "GetContextStoreRequest":{
+      "type":"structure",
+      "required":["ContextStoreId"],
+      "members":{
+        "ContextStoreId":{
+          "shape":"ContextStoreId",
+          "location":"uri",
+          "locationName":"contextStoreId"
+        }
+      }
+    },
+    "GetContextStoreResponse":{
+      "type":"structure",
+      "members":{
+        "ContextStore":{"shape":"ContextStore"}
+      }
+    },
+    "GetContextVersionRequest":{
+      "type":"structure",
+      "required":["ContextStoreId"],
+      "members":{
+        "ContextStoreId":{
+          "shape":"ContextStoreId",
+          "location":"uri",
+          "locationName":"contextStoreId"
+        }
+      }
+    },
+    "GetContextVersionResponse":{
+      "type":"structure",
+      "members":{
+        "VersionId":{"shape":"ConstrainedString"}
       }
     },
     "GetCoreNetworkChangeEventsRequest":{
@@ -4511,6 +4945,128 @@
       "members":{
         "ConnectPeers":{"shape":"ConnectPeerSummaryList"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListContextChangesRequest":{
+      "type":"structure",
+      "required":[
+        "ContextStoreId",
+        "FromVersionId"
+      ],
+      "members":{
+        "ContextStoreId":{
+          "shape":"ContextStoreId",
+          "location":"uri",
+          "locationName":"contextStoreId"
+        },
+        "FromVersionId":{
+          "shape":"ConstrainedString",
+          "location":"querystring",
+          "locationName":"fromVersionId"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListContextChangesResponse":{
+      "type":"structure",
+      "members":{
+        "ContextChanges":{"shape":"ContextChangeList"},
+        "FromVersionId":{"shape":"ConstrainedString"},
+        "ToVersionId":{"shape":"ConstrainedString"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListContextStoreAssociationsRequest":{
+      "type":"structure",
+      "required":["ContextStoreId"],
+      "members":{
+        "ContextStoreId":{
+          "shape":"ContextStoreId",
+          "location":"uri",
+          "locationName":"contextStoreId"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListContextStoreAssociationsResponse":{
+      "type":"structure",
+      "members":{
+        "ContextStoreAssociations":{"shape":"ContextStoreAssociationList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListContextStoresRequest":{
+      "type":"structure",
+      "members":{
+        "GlobalNetworkId":{
+          "shape":"GlobalNetworkId",
+          "location":"querystring",
+          "locationName":"globalNetworkId"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListContextStoresResponse":{
+      "type":"structure",
+      "members":{
+        "ContextStores":{"shape":"ContextStoreList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListContextsRequest":{
+      "type":"structure",
+      "required":["ContextStoreId"],
+      "members":{
+        "ContextStoreId":{
+          "shape":"ContextStoreId",
+          "location":"uri",
+          "locationName":"contextStoreId"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListContextsResponse":{
+      "type":"structure",
+      "members":{
+        "Contexts":{"shape":"ContextList"},
+        "NextToken":{"shape":"NextToken"},
+        "VersionId":{"shape":"ConstrainedString"}
       }
     },
     "ListCoreNetworkPolicyVersionsRequest":{
@@ -5847,6 +6403,24 @@
       "type":"structure",
       "members":{
         "Connection":{"shape":"Connection"}
+      }
+    },
+    "UpdateContextStoreRequest":{
+      "type":"structure",
+      "required":["ContextStoreId"],
+      "members":{
+        "ContextStoreId":{
+          "shape":"ContextStoreId",
+          "location":"uri",
+          "locationName":"contextStoreId"
+        },
+        "Description":{"shape":"ConstrainedString"}
+      }
+    },
+    "UpdateContextStoreResponse":{
+      "type":"structure",
+      "members":{
+        "ContextStore":{"shape":"ContextStore"}
       }
     },
     "UpdateCoreNetworkRequest":{

@@ -108,7 +108,10 @@
       "type":"structure",
       "required":["StreamArn"],
       "members":{
-        "StreamArn":{"shape":"StreamArn"},
+        "StreamArn":{
+          "shape":"StreamArn",
+          "contextParam":{"name":"StreamArn"}
+        },
         "Limit":{"shape":"PositiveIntegerObject"},
         "ExclusiveStartShardId":{"shape":"ShardId"},
         "ShardFilter":{"shape":"ShardFilter"}
@@ -132,7 +135,10 @@
       "type":"structure",
       "required":["ShardIterator"],
       "members":{
-        "ShardIterator":{"shape":"ShardIterator"},
+        "ShardIterator":{
+          "shape":"ShardIterator",
+          "contextParam":{"name":"ShardIterator"}
+        },
         "Limit":{"shape":"PositiveIntegerObject"}
       }
     },
@@ -151,7 +157,10 @@
         "ShardIteratorType"
       ],
       "members":{
-        "StreamArn":{"shape":"StreamArn"},
+        "StreamArn":{
+          "shape":"StreamArn",
+          "contextParam":{"name":"StreamArn"}
+        },
         "ShardId":{"shape":"ShardId"},
         "ShardIteratorType":{"shape":"ShardIteratorType"},
         "SequenceNumber":{"shape":"SequenceNumber"},

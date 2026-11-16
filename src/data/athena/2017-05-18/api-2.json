@@ -1657,6 +1657,16 @@
         "Parameters":{"shape":"ParametersMap"}
       }
     },
+    "DatabaseAttributes":{
+      "type":"string",
+      "enum":["NAME"]
+    },
+    "DatabaseAttributesList":{
+      "type":"list",
+      "member":{"shape":"DatabaseAttributes"},
+      "max":1,
+      "min":0
+    },
     "DatabaseList":{
       "type":"list",
       "member":{"shape":"Database"}
@@ -2370,7 +2380,8 @@
         "CatalogName":{"shape":"CatalogNameString"},
         "NextToken":{"shape":"Token"},
         "MaxResults":{"shape":"MaxDatabasesCount"},
-        "WorkGroup":{"shape":"WorkGroupName"}
+        "WorkGroup":{"shape":"WorkGroupName"},
+        "AttributesToGet":{"shape":"DatabaseAttributesList"}
       }
     },
     "ListDatabasesOutput":{
@@ -2537,7 +2548,8 @@
         "Expression":{"shape":"ExpressionString"},
         "NextToken":{"shape":"Token"},
         "MaxResults":{"shape":"MaxTableMetadataCount"},
-        "WorkGroup":{"shape":"WorkGroupName"}
+        "WorkGroup":{"shape":"WorkGroupName"},
+        "AttributesToGet":{"shape":"TableAttributesList"}
       }
     },
     "ListTableMetadataOutput":{
@@ -3386,6 +3398,19 @@
     "SystemTableType":{
       "type":"string",
       "enum":["QUERY_EXECUTIONS"]
+    },
+    "TableAttributes":{
+      "type":"string",
+      "enum":[
+        "NAME",
+        "TABLE_TYPE"
+      ]
+    },
+    "TableAttributesList":{
+      "type":"list",
+      "member":{"shape":"TableAttributes"},
+      "max":2,
+      "min":1
     },
     "TableMetadata":{
       "type":"structure",

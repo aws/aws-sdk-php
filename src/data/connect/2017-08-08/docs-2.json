@@ -77,6 +77,7 @@
     "CreateWorkspace": "<p>Creates a workspace that defines the user experience by mapping views to pages. Workspaces can be assigned to users or routing profiles.</p>",
     "CreateWorkspacePage": "<p>Associates a view with a page in a workspace, defining what users see when they navigate to that page.</p>",
     "DeactivateEvaluationForm": "<p>Deactivates an evaluation form in the specified Connect Customer instance. After a form is deactivated, it is no longer available for users to start new evaluations based on the form. </p>",
+    "DeleteAllEntitySessions": "<p>Deletes all active sessions for the specified entity in the specified Connect Customer instance. The operation supports only the <code>USER</code> entity type, so you can use it to sign out all of a user's active sessions. Use it when you need to end a user's access right away, for example when they leave your organization or you suspect that their credentials are compromised.</p>",
     "DeleteAttachedFile": "<p>Deletes an attached file along with the underlying S3 Object.</p> <important> <p>The attached file is <b>permanently deleted</b> if S3 bucket versioning is not enabled.</p> </important>",
     "DeleteContactData": "<p>Deletes the specified fields containing personally identifiable information (PII) from a contact in the specified Connect Customer instance. We redact PII (such as customer endpoints, additional email recipients, and the email subject) from the contact and its associated contact trace record (CTR). The contact must be in a terminated state.</p> <important> <p> <b>This deletion is permanent and cannot be undone.</b> Performing this operation permanently deletes the specified PII. There is no retention period; you cannot recover the data after deletion. We remove only the fields that Connect Customer identifies and stores as PII. Any PII that you place in fields outside the scope of this operation remains your responsibility to remove.</p> </important>",
     "DeleteContactEvaluation": "<p>Deletes a contact evaluation in the specified Connect Customer instance.</p>",
@@ -4350,6 +4351,14 @@
         "RoutingProfileQueueConfigSummary$Delay": "<p>The delay, in seconds, that a contact should be in the queue before they are routed to an available agent. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/concepts-routing-profiles-priority.html\">Queues: priority and delay</a> in the <i>Connect Customer Administrator Guide</i>.</p>"
       }
     },
+    "DeleteAllEntitySessionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAllEntitySessionsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteAttachedFileRequest": {
       "base": "Request to DeleteAttachedFile API",
       "refs": {}
@@ -5540,7 +5549,8 @@
       "base": null,
       "refs": {
         "AuthScope$EntityId": "<p>The identifier of the entity to scope the session to.</p>",
-        "CreateAuthCodeResponse$EntityId": "<p>The identifier of the entity associated with the authorization code.</p>"
+        "CreateAuthCodeResponse$EntityId": "<p>The identifier of the entity associated with the authorization code.</p>",
+        "DeleteAllEntitySessionsRequest$EntityId": "<p>The identifier of the entity whose sessions you want to delete. For <code>USER</code>, use the user ID or the user ARN.</p>"
       }
     },
     "EntityType": {
@@ -7844,6 +7854,7 @@
         "CreateWorkspaceRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeactivateEvaluationFormRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DefaultVocabulary$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "DeleteAllEntitySessionsRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteAttachedFileRequest$InstanceId": "<p>The unique identifier of the Connect instance.</p>",
         "DeleteContactDataRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteContactEvaluationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -13636,6 +13647,12 @@
       "base": "<p>The reason for the exception.</p>",
       "refs": {
         "ServiceQuotaExceededException$Reason": null
+      }
+    },
+    "SessionEntityType": {
+      "base": "<p>Specifies the type of entity whose sessions you delete when you call <code>DeleteAllEntitySessions</code>. The only valid value is <code>USER</code>, which targets a user in your Connect Customer instance.</p>",
+      "refs": {
+        "DeleteAllEntitySessionsRequest$EntityType": "<p>The type of entity whose sessions you want to delete.</p> <note> <p>The only valid value is <code>USER</code>, which signs out a user in your Connect Customer instance.</p> </note>"
       }
     },
     "SessionId": {

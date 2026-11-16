@@ -346,6 +346,7 @@ use Aws\Middleware;
  *     },
  *     DurableConfig?: array{KMSKeyArn?: string, RetentionPeriodInDays?: int, ExecutionTimeout?: int, ...},
  *     RuntimeConfig?: array{RuntimeArn?: string, RuntimeAlias?: string, ...},
+ *     AcceleratorConfig?: array{AcceleratorMemorySize?: int, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createFunctionAsync(array $args = [])
@@ -402,6 +403,7 @@ use Aws\Middleware;
  *     },
  *     DurableConfig?: array{KMSKeyArn?: string, RetentionPeriodInDays?: int, ExecutionTimeout?: int, ...},
  *     RuntimeConfig?: array{RuntimeArn?: string, RuntimeAlias?: string, ...},
+ *     AcceleratorConfig?: array{AcceleratorMemorySize?: int, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result createFunctionUrlConfig(array $args = [])
@@ -1144,6 +1146,7 @@ use Aws\Middleware;
  *     },
  *     DurableConfig?: array{KMSKeyArn?: string, RetentionPeriodInDays?: int, ExecutionTimeout?: int, ...},
  *     RuntimeConfig?: array{RuntimeArn?: string, RuntimeAlias?: string, ...},
+ *     AcceleratorConfig?: array{AcceleratorMemorySize?: int, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFunctionConfigurationAsync(array $args = [])
@@ -1184,6 +1187,7 @@ use Aws\Middleware;
  *     },
  *     DurableConfig?: array{KMSKeyArn?: string, RetentionPeriodInDays?: int, ExecutionTimeout?: int, ...},
  *     RuntimeConfig?: array{RuntimeArn?: string, RuntimeAlias?: string, ...},
+ *     AcceleratorConfig?: array{AcceleratorMemorySize?: int, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateFunctionEventInvokeConfig(array $args = [])

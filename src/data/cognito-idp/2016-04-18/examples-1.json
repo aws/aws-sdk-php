@@ -793,6 +793,38 @@
         "title": "Example – Get an access token for machine-to-machine authorization"
       }
     ],
+    "GetDerivedToken": [
+      {
+        "input": {
+          "Audiences": [
+            "solar-system-data"
+          ],
+          "ClientId": "1example23456789",
+          "ClientSecret": "13ka4h7u28d9oo44tqpq9djqsfvhvu8rk4d2ighvpu0k8fj1c2r9",
+          "Scopes": [
+            "solar-system-data/asteroids.read"
+          ],
+          "SubjectToken": "eyJra456defEXAMPLE",
+          "SubjectTokenType": "ACCESS_TOKEN"
+        },
+        "output": {
+          "ExpiresIn": 3600,
+          "IssuedToken": "eyJra789ghiEXAMPLE",
+          "IssuedTokenType": "ACCESS_TOKEN",
+          "Scopes": [
+            "solar-system-data/asteroids.read"
+          ],
+          "TokenType": "Bearer"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example exchanges an access token for a new access token that is scoped and audience-bound for the solar-system-data resource server.",
+        "id": "example-exchange-a-subject-token-1786406400000",
+        "title": "Example exchange a subject token for an audience-bound access token"
+      }
+    ],
     "GetProvisionedLimit": [
       {
         "input": {

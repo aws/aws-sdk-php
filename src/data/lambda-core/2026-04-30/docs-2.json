@@ -160,6 +160,18 @@
       "base": null,
       "refs": {}
     },
+    "ElasticIpConfiguration": {
+      "base": "<p>How the connector's network interfaces get an Elastic IP address.</p>",
+      "refs": {
+        "NetworkConnectorVpcEgressConfiguration$ElasticIpConfiguration": "<p>The Elastic IP configuration for the connector's ENIs. Specify <code>ServiceManaged</code> to have Lambda assign a service-managed Elastic IP address to each ENI. The operator role must allow <code>ec2:AllocateAddress</code> and <code>ec2:AssociateAddress</code>.</p>"
+      }
+    },
+    "ElasticIpType": {
+      "base": "<p>The Elastic IP type for a network connector's ENIs.</p>",
+      "refs": {
+        "ElasticIpConfiguration$Type": "<p>The Elastic IP type for the connector's network interfaces.</p>"
+      }
+    },
     "GetNetworkConnectorRequest": {
       "base": null,
       "refs": {}

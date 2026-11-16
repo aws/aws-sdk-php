@@ -41,6 +41,24 @@ use Aws\AwsClient;
  *     tags?: array<string, string>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createPerformanceMonitor(array $args = [])
+ * @phpstan-method \Aws\Result createPerformanceMonitor(array{
+ *     monitorName?: string,
+ *     scopeArn?: string,
+ *     targets?: list<array{type?: 'AWS::EC2::VPC', identifier?: string, ...}>,
+ *     clientToken?: string,
+ *     tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createPerformanceMonitorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createPerformanceMonitorAsync(array{
+ *     monitorName?: string,
+ *     scopeArn?: string,
+ *     targets?: list<array{type?: 'AWS::EC2::VPC', identifier?: string, ...}>,
+ *     clientToken?: string,
+ *     tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createScope(array $args = [])
  * @phpstan-method \Aws\Result createScope(array{
  *     targets?: list<array{targetIdentifier?: array, region?: string, ...}>,
@@ -59,6 +77,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteMonitor(array{monitorName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteMonitorAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteMonitorAsync(array{monitorName?: string, ...} $args = [])
+ * @method \Aws\Result deletePerformanceMonitor(array $args = [])
+ * @phpstan-method \Aws\Result deletePerformanceMonitor(array{monitorName?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deletePerformanceMonitorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deletePerformanceMonitorAsync(array{monitorName?: string, ...} $args = [])
  * @method \Aws\Result deleteScope(array $args = [])
  * @phpstan-method \Aws\Result deleteScope(array{scopeId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteScopeAsync(array $args = [])
@@ -67,10 +89,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getMonitor(array{monitorName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getMonitorAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getMonitorAsync(array{monitorName?: string, ...} $args = [])
+ * @method \Aws\Result getMonitorScopeSuggestions(array $args = [])
+ * @phpstan-method \Aws\Result getMonitorScopeSuggestions(array{monitorArn?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getMonitorScopeSuggestionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getMonitorScopeSuggestionsAsync(array{monitorArn?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result getPerformanceMonitor(array $args = [])
+ * @phpstan-method \Aws\Result getPerformanceMonitor(array{monitorName?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getPerformanceMonitorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getPerformanceMonitorAsync(array{monitorName?: string, ...} $args = [])
  * @method \Aws\Result getQueryResultsMonitorTopContributors(array $args = [])
  * @phpstan-method \Aws\Result getQueryResultsMonitorTopContributors(array{monitorName?: string, queryId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getQueryResultsMonitorTopContributorsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getQueryResultsMonitorTopContributorsAsync(array{monitorName?: string, queryId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \Aws\Result getQueryResultsPerformanceMonitor(array $args = [])
+ * @phpstan-method \Aws\Result getQueryResultsPerformanceMonitor(array{monitorName?: string, queryId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getQueryResultsPerformanceMonitorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getQueryResultsPerformanceMonitorAsync(array{monitorName?: string, queryId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \Aws\Result getQueryResultsWorkloadInsightsTopContributors(array $args = [])
  * @phpstan-method \Aws\Result getQueryResultsWorkloadInsightsTopContributors(array{scopeId?: string, queryId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getQueryResultsWorkloadInsightsTopContributorsAsync(array $args = [])
@@ -83,6 +117,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getQueryStatusMonitorTopContributors(array{monitorName?: string, queryId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getQueryStatusMonitorTopContributorsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getQueryStatusMonitorTopContributorsAsync(array{monitorName?: string, queryId?: string, ...} $args = [])
+ * @method \Aws\Result getQueryStatusPerformanceMonitor(array $args = [])
+ * @phpstan-method \Aws\Result getQueryStatusPerformanceMonitor(array{monitorName?: string, queryId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getQueryStatusPerformanceMonitorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getQueryStatusPerformanceMonitorAsync(array{monitorName?: string, queryId?: string, ...} $args = [])
  * @method \Aws\Result getQueryStatusWorkloadInsightsTopContributors(array $args = [])
  * @phpstan-method \Aws\Result getQueryStatusWorkloadInsightsTopContributors(array{scopeId?: string, queryId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getQueryStatusWorkloadInsightsTopContributorsAsync(array $args = [])
@@ -109,6 +147,22 @@ use Aws\AwsClient;
  *     monitorStatus?: 'ACTIVE'|'DELETING'|'ERROR'|'INACTIVE'|'PENDING',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listPerformanceMonitors(array $args = [])
+ * @phpstan-method \Aws\Result listPerformanceMonitors(array{
+ *     nextToken?: string,
+ *     maxResults?: int,
+ *     monitorStatus?: 'ACTIVE'|'DELETING'|'ERROR'|'INACTIVE'|'PENDING',
+ *     monitorType?: 'VPC',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listPerformanceMonitorsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listPerformanceMonitorsAsync(array{
+ *     nextToken?: string,
+ *     maxResults?: int,
+ *     monitorStatus?: 'ACTIVE'|'DELETING'|'ERROR'|'INACTIVE'|'PENDING',
+ *     monitorType?: 'VPC',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listScopes(array $args = [])
  * @phpstan-method \Aws\Result listScopes(array{nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listScopesAsync(array $args = [])
@@ -123,7 +177,7 @@ use Aws\AwsClient;
  *     startTime?: int|string|\DateTimeInterface,
  *     endTime?: int|string|\DateTimeInterface,
  *     metricName?: 'DATA_TRANSFERRED'|'RETRANSMISSIONS'|'ROUND_TRIP_TIME'|'TIMEOUTS',
- *     destinationCategory?: 'AMAZON_DYNAMODB'|'AMAZON_S3'|'INTER_AZ'|'INTER_REGION'|'INTER_VPC'|'INTRA_AZ'|'UNCLASSIFIED',
+ *     destinationCategory?: 'AMAZON_DYNAMODB'|'AMAZON_S3'|'AWS_SERVICE'|'INTERNET'|'INTER_AZ'|'INTER_REGION'|'INTER_VPC'|'INTRA_AZ'|'LOCAL_ZONE'|'TRANSIT_GATEWAY'|'UNCLASSIFIED',
  *     limit?: int,
  *     ...,
  * } $args = [])
@@ -133,7 +187,27 @@ use Aws\AwsClient;
  *     startTime?: int|string|\DateTimeInterface,
  *     endTime?: int|string|\DateTimeInterface,
  *     metricName?: 'DATA_TRANSFERRED'|'RETRANSMISSIONS'|'ROUND_TRIP_TIME'|'TIMEOUTS',
- *     destinationCategory?: 'AMAZON_DYNAMODB'|'AMAZON_S3'|'INTER_AZ'|'INTER_REGION'|'INTER_VPC'|'INTRA_AZ'|'UNCLASSIFIED',
+ *     destinationCategory?: 'AMAZON_DYNAMODB'|'AMAZON_S3'|'AWS_SERVICE'|'INTERNET'|'INTER_AZ'|'INTER_REGION'|'INTER_VPC'|'INTRA_AZ'|'LOCAL_ZONE'|'TRANSIT_GATEWAY'|'UNCLASSIFIED',
+ *     limit?: int,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result startQueryPerformanceMonitor(array $args = [])
+ * @phpstan-method \Aws\Result startQueryPerformanceMonitor(array{
+ *     monitorName?: string,
+ *     startTime?: int|string|\DateTimeInterface,
+ *     endTime?: int|string|\DateTimeInterface,
+ *     queryType?: 'TOP_PATHS',
+ *     filterParameters?: list<array{field?: string, operator?: 'CONTAINS'|'EQUALS'|'IN'|'NOT_EQUALS', values?: list<string>, ...}>,
+ *     limit?: int,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise startQueryPerformanceMonitorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startQueryPerformanceMonitorAsync(array{
+ *     monitorName?: string,
+ *     startTime?: int|string|\DateTimeInterface,
+ *     endTime?: int|string|\DateTimeInterface,
+ *     queryType?: 'TOP_PATHS',
+ *     filterParameters?: list<array{field?: string, operator?: 'CONTAINS'|'EQUALS'|'IN'|'NOT_EQUALS', values?: list<string>, ...}>,
  *     limit?: int,
  *     ...,
  * } $args = [])
@@ -143,7 +217,7 @@ use Aws\AwsClient;
  *     startTime?: int|string|\DateTimeInterface,
  *     endTime?: int|string|\DateTimeInterface,
  *     metricName?: 'DATA_TRANSFERRED'|'RETRANSMISSIONS'|'TIMEOUTS',
- *     destinationCategory?: 'AMAZON_DYNAMODB'|'AMAZON_S3'|'INTER_AZ'|'INTER_REGION'|'INTER_VPC'|'INTRA_AZ'|'UNCLASSIFIED',
+ *     destinationCategory?: 'AMAZON_DYNAMODB'|'AMAZON_S3'|'AWS_SERVICE'|'INTERNET'|'INTER_AZ'|'INTER_REGION'|'INTER_VPC'|'INTRA_AZ'|'LOCAL_ZONE'|'TRANSIT_GATEWAY'|'UNCLASSIFIED',
  *     limit?: int,
  *     ...,
  * } $args = [])
@@ -153,7 +227,7 @@ use Aws\AwsClient;
  *     startTime?: int|string|\DateTimeInterface,
  *     endTime?: int|string|\DateTimeInterface,
  *     metricName?: 'DATA_TRANSFERRED'|'RETRANSMISSIONS'|'TIMEOUTS',
- *     destinationCategory?: 'AMAZON_DYNAMODB'|'AMAZON_S3'|'INTER_AZ'|'INTER_REGION'|'INTER_VPC'|'INTRA_AZ'|'UNCLASSIFIED',
+ *     destinationCategory?: 'AMAZON_DYNAMODB'|'AMAZON_S3'|'AWS_SERVICE'|'INTERNET'|'INTER_AZ'|'INTER_REGION'|'INTER_VPC'|'INTRA_AZ'|'LOCAL_ZONE'|'TRANSIT_GATEWAY'|'UNCLASSIFIED',
  *     limit?: int,
  *     ...,
  * } $args = [])
@@ -163,7 +237,7 @@ use Aws\AwsClient;
  *     startTime?: int|string|\DateTimeInterface,
  *     endTime?: int|string|\DateTimeInterface,
  *     metricName?: 'DATA_TRANSFERRED'|'RETRANSMISSIONS'|'TIMEOUTS',
- *     destinationCategory?: 'AMAZON_DYNAMODB'|'AMAZON_S3'|'INTER_AZ'|'INTER_REGION'|'INTER_VPC'|'INTRA_AZ'|'UNCLASSIFIED',
+ *     destinationCategory?: 'AMAZON_DYNAMODB'|'AMAZON_S3'|'AWS_SERVICE'|'INTERNET'|'INTER_AZ'|'INTER_REGION'|'INTER_VPC'|'INTRA_AZ'|'LOCAL_ZONE'|'TRANSIT_GATEWAY'|'UNCLASSIFIED',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise startQueryWorkloadInsightsTopContributorsDataAsync(array $args = [])
@@ -172,13 +246,17 @@ use Aws\AwsClient;
  *     startTime?: int|string|\DateTimeInterface,
  *     endTime?: int|string|\DateTimeInterface,
  *     metricName?: 'DATA_TRANSFERRED'|'RETRANSMISSIONS'|'TIMEOUTS',
- *     destinationCategory?: 'AMAZON_DYNAMODB'|'AMAZON_S3'|'INTER_AZ'|'INTER_REGION'|'INTER_VPC'|'INTRA_AZ'|'UNCLASSIFIED',
+ *     destinationCategory?: 'AMAZON_DYNAMODB'|'AMAZON_S3'|'AWS_SERVICE'|'INTERNET'|'INTER_AZ'|'INTER_REGION'|'INTER_VPC'|'INTRA_AZ'|'LOCAL_ZONE'|'TRANSIT_GATEWAY'|'UNCLASSIFIED',
  *     ...,
  * } $args = [])
  * @method \Aws\Result stopQueryMonitorTopContributors(array $args = [])
  * @phpstan-method \Aws\Result stopQueryMonitorTopContributors(array{monitorName?: string, queryId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise stopQueryMonitorTopContributorsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise stopQueryMonitorTopContributorsAsync(array{monitorName?: string, queryId?: string, ...} $args = [])
+ * @method \Aws\Result stopQueryPerformanceMonitor(array $args = [])
+ * @phpstan-method \Aws\Result stopQueryPerformanceMonitor(array{monitorName?: string, queryId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopQueryPerformanceMonitorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise stopQueryPerformanceMonitorAsync(array{monitorName?: string, queryId?: string, ...} $args = [])
  * @method \Aws\Result stopQueryWorkloadInsightsTopContributors(array $args = [])
  * @phpstan-method \Aws\Result stopQueryWorkloadInsightsTopContributors(array{scopeId?: string, queryId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise stopQueryWorkloadInsightsTopContributorsAsync(array $args = [])
@@ -244,6 +322,22 @@ use Aws\AwsClient;
  *         identifier?: string,
  *         ...,
  *     }>,
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updatePerformanceMonitor(array $args = [])
+ * @phpstan-method \Aws\Result updatePerformanceMonitor(array{
+ *     monitorName?: string,
+ *     targetsToAdd?: list<array{type?: 'AWS::EC2::VPC', identifier?: string, ...}>,
+ *     targetsToRemove?: list<array{type?: 'AWS::EC2::VPC', identifier?: string, ...}>,
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updatePerformanceMonitorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updatePerformanceMonitorAsync(array{
+ *     monitorName?: string,
+ *     targetsToAdd?: list<array{type?: 'AWS::EC2::VPC', identifier?: string, ...}>,
+ *     targetsToRemove?: list<array{type?: 'AWS::EC2::VPC', identifier?: string, ...}>,
  *     clientToken?: string,
  *     ...,
  * } $args = [])

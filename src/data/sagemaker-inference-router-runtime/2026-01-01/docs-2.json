@@ -1,0 +1,282 @@
+{
+  "version": "2.0",
+  "service": "<p>Amazon SageMaker Inference Router Runtime is the runtime API for Amazon SageMaker AI inference routers. An inference router sends each request that you make to one of the destinations of a routing target. A destination is a SageMaker AI endpoint or inference component, in your account or in another account, in the router's Amazon Web Services Region or in another Region in the same Amazon Web Services partition. The router chooses a healthy destination with capacity, and prefers destinations in its own Region.</p> <p>Use <code>InvokeInferenceRouter</code> to get an inference in real time. Use <code>InvokeInferenceRouterAsync</code> to submit a request whose input and response are stored in Amazon S3.</p> <p>The inference router runtime endpoint supports HTTP/1.1 only. HTTP/2 isn't supported. If you use the Amazon Web Services SDKs or the Amazon Web Services CLI, you don't need to change anything.</p>",
+  "operations": {
+    "InvokeInferenceRouter": "<p>Sends a real-time inference request to an inference router. In the request, you name the routing target, and the router sends the request to one of the routing target's destinations. The response includes the destination that served the request and the reason that the router chose it.</p> <p>The following limits apply:</p> <ul> <li> <p>The maximum request payload is 6 MB. A request with a larger body fails with HTTP status code 413.</p> </li> <li> <p>Your model has up to 60 seconds for each attempt, the same limit as <code>InvokeEndpoint</code>. If your account has a higher model execution timeout for <code>InvokeEndpoint</code>, it doesn't apply through an inference router. For models that take longer, use <code>InvokeInferenceRouterAsync</code>.</p> </li> </ul> <p>If a destination returns an error that the router can retry, such as a throttling error, before your model produces a response, the router retries the request once on another destination. A request that times out on a destination isn't retried. Because a request can make two attempts, set your client read timeout to at least 170 seconds.</p> <p>The caller needs permission to invoke the inference router and every destination of the routing target. For information about permissions, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/inference-router.html\">Route requests across Regions with inference routers</a>.</p>",
+    "InvokeInferenceRouterAsync": "<p>Submits an asynchronous inference request to an inference router. Before you call this operation, upload the input data to Amazon S3 in the router's Amazon Web Services Region. The router returns as soon as it accepts the request, and sends the request to one of the destinations of the routing target. The destination reads the input from Amazon S3, and the inference response is written to the Amazon S3 output path that the routing target specifies.</p> <p>If a destination doesn't start the request within the routing target's <code>MaxTimeInBacklogSeconds</code>, the router moves the request to another destination. After your model starts processing the request, the request doesn't move. If no destination can take the request before <code>RequestTTLSeconds</code> runs out, or every destination has been tried, the router writes a failure object to the <code>FailureLocation</code> and publishes a notification to the routing target's error topic, if one is configured.</p> <p>For information about the permissions that the caller and each destination need, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/inference-router-async.html\">Send asynchronous requests through an inference router</a>.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You don't have permission to perform this action. Check that the caller is allowed to invoke the inference router and every destination of the routing target.</p>",
+      "refs": {}
+    },
+    "AccessDeniedExceptionMessageString": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$Message": "<p>A message that describes the error.</p>"
+      }
+    },
+    "CustomAttributesHeader": {
+      "base": "<p>Additional information about an inference, passed to or returned by the model container.</p>",
+      "refs": {
+        "InvokeInferenceRouterAsyncInput$CustomAttributes": "<p>Provides additional information about the inference request. The value is an opaque string that the router passes, unchanged, to the model container of the destination that serves the request. The value can contain up to 1,024 visible US-ASCII characters.</p>",
+        "InvokeInferenceRouterInput$CustomAttributes": "<p>Provides additional information about the inference request. The value is an opaque string that the router passes, unchanged, to the model container of the destination that serves the request. The value can contain up to 1,024 visible US-ASCII characters.</p>",
+        "InvokeInferenceRouterOutput$CustomAttributes": "<p>Provides additional information in the response about the inference. This is the value that the model container of the destination returned, unchanged.</p>"
+      }
+    },
+    "InferenceRouterBodyBlob": {
+      "base": "<p>The inference request or response body.</p>",
+      "refs": {
+        "InvokeInferenceRouterInput$Body": "<p>The input data for the inference, in the format that your model expects. The body can't be empty.</p>",
+        "InvokeInferenceRouterOutput$Body": "<p>The inference that the model returned.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "ModelError$OriginalStatusCode": "<p>The HTTP status code that the model container returned.</p>"
+      }
+    },
+    "InternalDependencyException": {
+      "base": "<p>The request failed because of an error in an internal dependency. Retry the request with exponential backoff.</p>",
+      "refs": {}
+    },
+    "InternalDependencyExceptionMessageString": {
+      "base": null,
+      "refs": {
+        "InternalDependencyException$Message": "<p>A message that describes the error.</p>"
+      }
+    },
+    "InternalFailure": {
+      "base": "<p>An internal error occurred. Retry the request with exponential backoff. The Amazon Web Services SDKs and the Amazon Web Services CLI do this by default.</p>",
+      "refs": {}
+    },
+    "InternalFailureMessageString": {
+      "base": null,
+      "refs": {
+        "InternalFailure$Message": "<p>A message that describes the error.</p>"
+      }
+    },
+    "InvokeInferenceRouterAsyncInput": {
+      "base": null,
+      "refs": {}
+    },
+    "InvokeInferenceRouterAsyncInputAcceptString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterAsyncInput$Accept": "<p>The MIME type that you want for the inference response. The router passes it to the destination.</p>"
+      }
+    },
+    "InvokeInferenceRouterAsyncInputContentTypeString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterAsyncInput$ContentType": "<p>The MIME type of the input data in Amazon S3. The router passes it to the destination.</p>"
+      }
+    },
+    "InvokeInferenceRouterAsyncInputFilenameString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterAsyncInput$Filename": "<p>The file name of the inference response stored in Amazon S3. If you don't provide one, SageMaker AI generates one.</p>"
+      }
+    },
+    "InvokeInferenceRouterAsyncInputInferenceIdString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterAsyncInput$InferenceId": "<p>An identifier for the inference request. If you don't provide one, SageMaker AI generates one and returns it in the response.</p>"
+      }
+    },
+    "InvokeInferenceRouterAsyncInputInferenceRouterNameString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterAsyncInput$InferenceRouterName": "<p>The name of the inference router to invoke.</p>"
+      }
+    },
+    "InvokeInferenceRouterAsyncInputInputLocationString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterAsyncInput$InputLocation": "<p>The Amazon S3 URI of the object that contains the input data for the inference. The bucket must be in the inference router's Amazon Web Services Region and owned by the router's account. The destination endpoint's execution role reads the object, and the destination's asynchronous inference limits apply to it.</p>"
+      }
+    },
+    "InvokeInferenceRouterAsyncInputInvocationTimeoutSecondsInteger": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterAsyncInput$InvocationTimeoutSeconds": "<p>The maximum time, in seconds, that a destination can spend processing the request before the request is marked as expired. The default is 900 seconds (15 minutes).</p>"
+      }
+    },
+    "InvokeInferenceRouterAsyncInputRequestTTLSecondsInteger": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterAsyncInput$RequestTTLSeconds": "<p>The time to live of the request, in seconds, measured from when the router accepts it. If no destination starts the request in this time, the request fails. The default is 21,600 seconds (6 hours).</p>"
+      }
+    },
+    "InvokeInferenceRouterAsyncInputRoutingTargetNameString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterAsyncInput$RoutingTargetName": "<p>The name of the routing target in the inference router. The routing target must be configured for asynchronous inference.</p>"
+      }
+    },
+    "InvokeInferenceRouterAsyncInputS3OutputPathExtensionString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterAsyncInput$S3OutputPathExtension": "<p>The path extension that is appended to the routing target's Amazon S3 output path where the inference response is stored.</p>"
+      }
+    },
+    "InvokeInferenceRouterAsyncOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "InvokeInferenceRouterAsyncOutputFailureLocationString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterAsyncOutput$FailureLocation": "<p>The Amazon S3 URI where the failure details are written if the inference fails.</p>"
+      }
+    },
+    "InvokeInferenceRouterAsyncOutputInferenceIdString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterAsyncOutput$InferenceId": "<p>The identifier for the inference request. This is the <code>InferenceId</code> that you provided, or the one that SageMaker AI generated.</p>"
+      }
+    },
+    "InvokeInferenceRouterAsyncOutputOutputLocationString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterAsyncOutput$OutputLocation": "<p>The Amazon S3 URI where the inference response is written. The location doesn't change if the router moves the request to another destination.</p>"
+      }
+    },
+    "InvokeInferenceRouterInput": {
+      "base": null,
+      "refs": {}
+    },
+    "InvokeInferenceRouterInputAcceptString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterInput$Accept": "<p>The MIME type that you want for the inference response. The router passes it to the destination.</p>"
+      }
+    },
+    "InvokeInferenceRouterInputContentTypeString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterInput$ContentType": "<p>The MIME type of the input data in the request body. The router passes it to the destination.</p>"
+      }
+    },
+    "InvokeInferenceRouterInputInferenceIdString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterInput$InferenceId": "<p>An identifier for the inference request. The router passes it to the destination.</p>"
+      }
+    },
+    "InvokeInferenceRouterInputInferenceRouterNameString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterInput$InferenceRouterName": "<p>The name of the inference router to invoke.</p>"
+      }
+    },
+    "InvokeInferenceRouterInputPrefixAwareIdString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterInput$PrefixAwareId": "<p>An optional, stable identifier that serves as a routing hint for prefix-aware routing. The router passes it to the destination that serves the request. Within that destination, requests with the same prefix and the same identifier go to the same instance. If requests from different applications might have the same prompt prefix, set a different identifier for each application to differentiate their routing decisions.</p> <p>Applies only to destination endpoints configured with a <code>RoutingStrategy</code> of <code>PREFIX_AWARE</code>.</p>"
+      }
+    },
+    "InvokeInferenceRouterInputRoutingTargetNameString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterInput$RoutingTargetName": "<p>The name of the routing target in the inference router. The routing target lists the destinations that can serve the request.</p>"
+      }
+    },
+    "InvokeInferenceRouterOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "InvokeInferenceRouterOutputContentTypeString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterOutput$ContentType": "<p>The MIME type of the inference returned in the response body.</p>"
+      }
+    },
+    "InvokeInferenceRouterOutputInvokedProductionVariantString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterOutput$InvokedProductionVariant": "<p>The production variant of the destination endpoint that served the request.</p>"
+      }
+    },
+    "InvokeInferenceRouterOutputInvokedRoutedResourceArnString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterOutput$InvokedRoutedResourceArn": "<p>The Amazon Resource Name (ARN) of the endpoint or inference component that served the request.</p>"
+      }
+    },
+    "InvokeInferenceRouterOutputRoutingReasonString": {
+      "base": null,
+      "refs": {
+        "InvokeInferenceRouterOutput$RoutingReason": "<p>The reason that the router chose the destination that served the request. Possible values:</p> <ul> <li> <p> <code>local-preferred</code> – The destination is a healthy destination in the router's Region.</p> </li> <li> <p> <code>capacity-available</code> – No destination in the router's Region could take the request, and two or more destinations in other Regions could.</p> </li> <li> <p> <code>only-healthy</code> – No destination in the router's Region could take the request, and exactly one destination in another Region could.</p> </li> <li> <p> <code>failover</code> – The router moved the request away from destinations in its Region because they were overloaded or returning errors. You also see this value when the router can't assess destination health, and when no destination is healthy and the router tries one anyway.</p> </li> </ul>"
+      }
+    },
+    "ModelError": {
+      "base": "<p>The model in the destination that served the request returned an error. Check <code>OriginalStatusCode</code>, <code>OriginalMessage</code>, and the destination's logs in Amazon CloudWatch.</p>",
+      "refs": {}
+    },
+    "ModelErrorMessageString": {
+      "base": null,
+      "refs": {
+        "ModelError$Message": "<p>A message that describes the error.</p>"
+      }
+    },
+    "ModelNotReadyException": {
+      "base": "<p>The destination isn't ready to serve the model, for example because an inference component has no copies. Retry the request later.</p>",
+      "refs": {}
+    },
+    "ModelNotReadyExceptionMessageString": {
+      "base": null,
+      "refs": {
+        "ModelNotReadyException$Message": "<p>A message that describes the error.</p>"
+      }
+    },
+    "RequestTimeoutException": {
+      "base": "<p>The inference router didn't receive the complete request within 300 seconds of accepting it, for example because of a very slow upload. Retry the request.</p>",
+      "refs": {}
+    },
+    "RequestTimeoutExceptionMessageString": {
+      "base": null,
+      "refs": {
+        "RequestTimeoutException$Message": "<p>A message that describes the error.</p>"
+      }
+    },
+    "ServiceUnavailableException": {
+      "base": "<p>The service is temporarily unavailable. For example, no destination of the routing target could serve the request, or a destination didn't respond. Retry the request with exponential backoff. The Amazon Web Services SDKs and the Amazon Web Services CLI do this by default.</p>",
+      "refs": {}
+    },
+    "ServiceUnavailableExceptionMessageString": {
+      "base": null,
+      "refs": {
+        "ServiceUnavailableException$Message": "<p>A message that describes the error.</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "ModelError$OriginalMessage": "<p>The error message that the model container returned.</p>",
+        "ModelError$LogStreamArn": "<p>The Amazon Resource Name (ARN) of the Amazon CloudWatch log stream for the destination that served the request.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied because you exceeded the request rate for the inference router, or because a destination throttled the request. Retry the request with exponential backoff.</p>",
+      "refs": {}
+    },
+    "ThrottlingExceptionMessageString": {
+      "base": null,
+      "refs": {
+        "ThrottlingException$Message": "<p>A message that describes the error.</p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The request isn't valid. Check the inference router name, the routing target name, and the request parameters, and then try again.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionMessageString": {
+      "base": null,
+      "refs": {
+        "ValidationException$Message": "<p>A message that describes the error.</p>"
+      }
+    }
+  }
+}

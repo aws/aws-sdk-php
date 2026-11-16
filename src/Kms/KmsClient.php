@@ -493,9 +493,9 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result listKeys(array $args = [])
- * @phpstan-method \Aws\Result listKeys(array{Limit?: int, Marker?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result listKeys(array{Limit?: int, Marker?: string, ResourceOwners?: list<'OTHER_ACCOUNTS_VIA_RAM'|'SELF'>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listKeysAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listKeysAsync(array{Limit?: int, Marker?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listKeysAsync(array{Limit?: int, Marker?: string, ResourceOwners?: list<'OTHER_ACCOUNTS_VIA_RAM'|'SELF'>, ...} $args = [])
  * @method \Aws\Result listResourceTags(array $args = [])
  * @phpstan-method \Aws\Result listResourceTags(array{KeyId?: string, Limit?: int, Marker?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listResourceTagsAsync(array $args = [])

@@ -1645,6 +1645,29 @@
         "description": "The following example retrieves the key policy for the specified KMS key.",
         "id": "to-retrieve-a-key-policy-1479170128325",
         "title": "To retrieve a key policy"
+      },
+      {
+        "input": {
+          "KeyId": "1234abcd-12ab-34cd-56ef-1234567890ab",
+          "PolicyName": "AWS_RAM"
+        },
+        "output": {
+          "Policy": "{\n  \"Version\" : \"2012-10-17\",\n  \"Id\" : \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n  \"Statement\" : [ {\n    \"Sid\" : \"ExampleKmsKeyPermission-external-principals\",\n    \"Effect\" : \"Allow\",\n    \"Principal\" : {\n      \"AWS\" : \"arn:aws:iam::444455556666:root\"\n    },\n    \"Action\" : [ \"kms:DescribeKey\", \"kms:Encrypt\", \"kms:Decrypt\" ],\n    \"Resource\" : \"arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab\"\n  } ]\n}",
+          "PolicyName": "AWS_RAM"
+        },
+        "comments": {
+          "input": {
+            "KeyId": "The identifier of the KMS key whose key policy you want to retrieve. You can use the key ID or the Amazon Resource Name (ARN) of the KMS key.",
+            "PolicyName": "The name of the key policy to retrieve. AWS_RAM gets the key policy that AWS RAM manages for the KMS key."
+          },
+          "output": {
+            "Policy": "The AWS_RAM key policy document. Its statement allows the account that the KMS key is shared with to perform the actions that the AWS RAM permission allows.",
+            "PolicyName": "The name of the key policy."
+          }
+        },
+        "description": "The following example retrieves the AWS_RAM key policy for a KMS key that is shared with account 444455556666 through a resource share that uses a customer managed AWS RAM permission. AWS Resource Access Manager (AWS RAM) creates and manages the AWS_RAM key policy for KMS keys that you share through AWS RAM.",
+        "id": "to-retrieve-the-aws-ram-key-policy-1793236352253",
+        "title": "To retrieve the AWS_RAM key policy"
       }
     ],
     "GetKeyRotationStatus": [
@@ -2081,6 +2104,30 @@
         "description": "The following example lists key policies for the specified KMS key.",
         "id": "to-list-key-policies-for-a-cmk-1481069780998",
         "title": "To list key policies for a KMS key"
+      },
+      {
+        "input": {
+          "KeyId": "1234abcd-12ab-34cd-56ef-1234567890ab"
+        },
+        "output": {
+          "PolicyNames": [
+            "AWS_RAM",
+            "default"
+          ],
+          "Truncated": false
+        },
+        "comments": {
+          "input": {
+            "KeyId": "The identifier of the KMS key whose key policies you want to list. You can use the key ID or the Amazon Resource Name (ARN) of the KMS key."
+          },
+          "output": {
+            "PolicyNames": "A list of key policy names. The list includes AWS_RAM because the KMS key has an AWS_RAM key policy.",
+            "Truncated": "A boolean that indicates whether there are more items in the list. Returns true when there are more items, or false when there are not."
+          }
+        },
+        "description": "The following example lists key policies for a KMS key that has an AWS_RAM key policy. AWS Resource Access Manager (AWS RAM) manages the AWS_RAM key policy for KMS keys that you share through AWS RAM.",
+        "id": "to-list-key-policies-for-a-kms-key-with-an-aws-ram-key-policy-1792784124000",
+        "title": "To list key policies for a KMS key that has an AWS_RAM key policy"
       }
     ],
     "ListKeyRotations": [
@@ -2161,6 +2208,38 @@
         "description": "The following example lists KMS keys.",
         "id": "to-list-cmks-1481071643069",
         "title": "To list KMS keys"
+      },
+      {
+        "input": {
+          "ResourceOwners": [
+            "OTHER_ACCOUNTS_VIA_RAM"
+          ]
+        },
+        "output": {
+          "Keys": [
+            {
+              "KeyArn": "arn:aws:kms:us-east-2:444455556666:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+              "KeyId": "1234abcd-12ab-34cd-56ef-1234567890ab"
+            },
+            {
+              "KeyArn": "arn:aws:kms:us-east-2:444455556666:key/0987dcba-09fe-87dc-65ba-ab0987654321",
+              "KeyId": "0987dcba-09fe-87dc-65ba-ab0987654321"
+            }
+          ],
+          "Truncated": false
+        },
+        "comments": {
+          "input": {
+            "ResourceOwners": "Specifies whose KMS keys to list. OTHER_ACCOUNTS_VIA_RAM lists the KMS keys that other AWS accounts shared with your AWS account through AWS RAM."
+          },
+          "output": {
+            "Keys": "A list of KMS keys, including the key ID and Amazon Resource Name (ARN) of each one. The key ARN contains the account ID of the AWS account that owns the KMS key.",
+            "Truncated": "A boolean that indicates whether there are more items in the list. Returns true when there are more items, or false when there are not."
+          }
+        },
+        "description": "The following example lists the KMS keys in the Region that other AWS accounts shared with your AWS account through AWS Resource Access Manager (AWS RAM).",
+        "id": "to-list-kms-keys-shared-with-you-through-aws-ram-1792784125000",
+        "title": "To list KMS keys that other accounts shared with you through AWS RAM"
       }
     ],
     "ListResourceTags": [

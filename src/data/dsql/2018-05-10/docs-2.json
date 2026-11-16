@@ -307,6 +307,39 @@
         "ListStreamsInput$maxResults": "<p>An optional parameter that specifies the maximum number of results to return. You can use nextToken to display the next page of results. Default: 10.</p>"
       }
     },
+    "MetricGroup": {
+      "base": "<p>The name of an advanced monitoring metric group. Advanced monitoring collects detailed, query-level database metrics to help you analyze and resolve performance issues. You choose which metric groups to collect for each cluster.</p> <p>The following metric groups are available:</p> <dl> <dt>STATEMENT_STATISTICS</dt> <dd> <p>Shows which SQL statements run most often or take the most time. Collects execution count, execution time, and rows for each statement.</p> </dd> </dl>",
+      "refs": {
+        "MetricGroupRequest$metricGroup": "<p>The name of the metric group to enable.</p>",
+        "MetricGroupResponse$metricGroup": "<p>The name of the metric group that you enabled.</p>"
+      }
+    },
+    "MetricGroupRequest": {
+      "base": "<p>A metric group to enable for advanced monitoring.</p>",
+      "refs": {
+        "MetricGroupRequestList$member": null
+      }
+    },
+    "MetricGroupRequestList": {
+      "base": "<p>A list of metric groups to enable for advanced monitoring. Each metric group can appear only once.</p>",
+      "refs": {
+        "CreateClusterInput$metricGroups": "<p>The metric groups to enable for advanced monitoring on the cluster. Advanced monitoring collects detailed, query-level database metrics to help you analyze and resolve performance issues. If you omit this parameter, no metric groups are enabled.</p>",
+        "UpdateClusterInput$metricGroups": "<p>The complete set of metric groups to enable for advanced monitoring on the cluster. This list replaces the current set, so any metric group that you don't include is disabled. To disable all metric groups, specify an empty list (<code>[]</code>). If you omit this parameter, the current setting doesn't change.</p> <p>To view the metric groups enabled on a cluster, use <i>GetCluster</i>.</p>"
+      }
+    },
+    "MetricGroupResponse": {
+      "base": "<p>A metric group that you enabled for advanced monitoring on a cluster.</p>",
+      "refs": {
+        "MetricGroupResponseList$member": null
+      }
+    },
+    "MetricGroupResponseList": {
+      "base": "<p>A list of metric groups that you enabled for advanced monitoring on a cluster.</p>",
+      "refs": {
+        "CreateClusterOutput$metricGroups": "<p>The metric groups that you enabled for advanced monitoring on the created cluster.</p>",
+        "GetClusterOutput$metricGroups": "<p>The metric groups that you enabled for advanced monitoring on the cluster. If you haven't enabled any metric groups, the list is empty.</p>"
+      }
+    },
     "MultiRegionProperties": {
       "base": "<p>Defines the structure for multi-Region cluster configurations, containing the witness region and linked cluster settings.</p>",
       "refs": {

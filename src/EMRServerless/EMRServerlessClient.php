@@ -219,6 +219,7 @@ use Aws\AwsClient;
  *     name?: string,
  *     mode?: 'BATCH'|'STREAMING',
  *     retryPolicy?: array{maxAttempts?: int, maxFailedAttemptsPerHour?: int, ...},
+ *     flexExecution?: array{enabled?: bool, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise startJobRunAsync(array $args = [])
@@ -249,6 +250,7 @@ use Aws\AwsClient;
  *     name?: string,
  *     mode?: 'BATCH'|'STREAMING',
  *     retryPolicy?: array{maxAttempts?: int, maxFailedAttemptsPerHour?: int, ...},
+ *     flexExecution?: array{enabled?: bool, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result startSession(array $args = [])

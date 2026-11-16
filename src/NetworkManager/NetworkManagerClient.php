@@ -13,6 +13,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result associateConnectPeer(array{GlobalNetworkId?: string, ConnectPeerId?: string, DeviceId?: string, LinkId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise associateConnectPeerAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise associateConnectPeerAsync(array{GlobalNetworkId?: string, ConnectPeerId?: string, DeviceId?: string, LinkId?: string, ...} $args = [])
+ * @method \Aws\Result associateContextStore(array $args = [])
+ * @phpstan-method \Aws\Result associateContextStore(array{ContextStoreId?: string, TransitGatewayArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise associateContextStoreAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise associateContextStoreAsync(array{ContextStoreId?: string, TransitGatewayArn?: string, ...} $args = [])
  * @method \Aws\Result associateCustomerGateway(array $args = [])
  * @phpstan-method \Aws\Result associateCustomerGateway(array{CustomerGatewayArn?: string, GlobalNetworkId?: string, DeviceId?: string, LinkId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise associateCustomerGatewayAsync(array $args = [])
@@ -107,6 +111,22 @@ use Aws\AwsClient;
  *     ConnectedLinkId?: string,
  *     Description?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createContextStore(array $args = [])
+ * @phpstan-method \Aws\Result createContextStore(array{
+ *     GlobalNetworkId?: string,
+ *     Description?: string,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ClientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createContextStoreAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createContextStoreAsync(array{
+ *     GlobalNetworkId?: string,
+ *     Description?: string,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ClientToken?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createCoreNetwork(array $args = [])
@@ -335,6 +355,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteConnection(array{GlobalNetworkId?: string, ConnectionId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteConnectionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteConnectionAsync(array{GlobalNetworkId?: string, ConnectionId?: string, ...} $args = [])
+ * @method \Aws\Result deleteContextStore(array $args = [])
+ * @phpstan-method \Aws\Result deleteContextStore(array{ContextStoreId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteContextStoreAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteContextStoreAsync(array{ContextStoreId?: string, ...} $args = [])
  * @method \Aws\Result deleteCoreNetwork(array $args = [])
  * @phpstan-method \Aws\Result deleteCoreNetwork(array{CoreNetworkId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteCoreNetworkAsync(array $args = [])
@@ -383,6 +407,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result disassociateConnectPeer(array{GlobalNetworkId?: string, ConnectPeerId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateConnectPeerAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise disassociateConnectPeerAsync(array{GlobalNetworkId?: string, ConnectPeerId?: string, ...} $args = [])
+ * @method \Aws\Result disassociateContextStore(array $args = [])
+ * @phpstan-method \Aws\Result disassociateContextStore(array{ContextStoreId?: string, TransitGatewayArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateContextStoreAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise disassociateContextStoreAsync(array{ContextStoreId?: string, TransitGatewayArn?: string, ...} $args = [])
  * @method \Aws\Result disassociateCustomerGateway(array $args = [])
  * @phpstan-method \Aws\Result disassociateCustomerGateway(array{GlobalNetworkId?: string, CustomerGatewayArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateCustomerGatewayAsync(array $args = [])
@@ -429,6 +457,18 @@ use Aws\AwsClient;
  *     NextToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result getContextStore(array $args = [])
+ * @phpstan-method \Aws\Result getContextStore(array{ContextStoreId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getContextStoreAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getContextStoreAsync(array{ContextStoreId?: string, ...} $args = [])
+ * @method \Aws\Result getContextStoreAssociation(array $args = [])
+ * @phpstan-method \Aws\Result getContextStoreAssociation(array{ContextStoreId?: string, TransitGatewayArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getContextStoreAssociationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getContextStoreAssociationAsync(array{ContextStoreId?: string, TransitGatewayArn?: string, ...} $args = [])
+ * @method \Aws\Result getContextVersion(array $args = [])
+ * @phpstan-method \Aws\Result getContextVersion(array{ContextStoreId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getContextVersionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getContextVersionAsync(array{ContextStoreId?: string, ...} $args = [])
  * @method \Aws\Result getCoreNetwork(array $args = [])
  * @phpstan-method \Aws\Result getCoreNetwork(array{CoreNetworkId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getCoreNetworkAsync(array $args = [])
@@ -715,6 +755,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listConnectPeers(array{CoreNetworkId?: string, ConnectAttachmentId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listConnectPeersAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listConnectPeersAsync(array{CoreNetworkId?: string, ConnectAttachmentId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result listContextChanges(array $args = [])
+ * @phpstan-method \Aws\Result listContextChanges(array{ContextStoreId?: string, FromVersionId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listContextChangesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listContextChangesAsync(array{ContextStoreId?: string, FromVersionId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result listContextStoreAssociations(array $args = [])
+ * @phpstan-method \Aws\Result listContextStoreAssociations(array{ContextStoreId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listContextStoreAssociationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listContextStoreAssociationsAsync(array{ContextStoreId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result listContextStores(array $args = [])
+ * @phpstan-method \Aws\Result listContextStores(array{GlobalNetworkId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listContextStoresAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listContextStoresAsync(array{GlobalNetworkId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result listContexts(array $args = [])
+ * @phpstan-method \Aws\Result listContexts(array{ContextStoreId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listContextsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listContextsAsync(array{ContextStoreId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \Aws\Result listCoreNetworkPolicyVersions(array $args = [])
  * @phpstan-method \Aws\Result listCoreNetworkPolicyVersions(array{CoreNetworkId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listCoreNetworkPolicyVersionsAsync(array $args = [])
@@ -899,6 +955,10 @@ use Aws\AwsClient;
  *     Description?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result updateContextStore(array $args = [])
+ * @phpstan-method \Aws\Result updateContextStore(array{ContextStoreId?: string, Description?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateContextStoreAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateContextStoreAsync(array{ContextStoreId?: string, Description?: string, ...} $args = [])
  * @method \Aws\Result updateCoreNetwork(array $args = [])
  * @phpstan-method \Aws\Result updateCoreNetwork(array{CoreNetworkId?: string, Description?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateCoreNetworkAsync(array $args = [])

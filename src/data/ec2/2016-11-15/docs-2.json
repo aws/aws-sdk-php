@@ -29,6 +29,7 @@
     "AssociateInstanceEventWindow": "<p>Associates one or more targets with an event window. Only one type of target (instance IDs, Dedicated Host IDs, or tags) can be specified with an event window.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/event-windows.html\">Define event windows for scheduled events</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "AssociateIpamByoasn": "<p>Associates your Autonomous System Number (ASN) with a BYOIP CIDR that you own in the same Amazon Web Services Region. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/tutorials-byoasn.html\">Tutorial: Bring your ASN to IPAM</a> in the <i>Amazon VPC IPAM guide</i>.</p> <p>After the association succeeds, the ASN is eligible for advertisement. You can view the association with <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeByoipCidrs.html\">DescribeByoipCidrs</a>. You can advertise the CIDR with <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AdvertiseByoipCidr.html\">AdvertiseByoipCidr</a>.</p>",
     "AssociateIpamResourceDiscovery": "<p>Associates an IPAM resource discovery with an Amazon VPC IPAM. A resource discovery is an IPAM component that enables IPAM to manage and monitor resources that belong to the owning account.</p>",
+    "AssociateKmsKeyId": "<p>Associates an additional KMS key with an encrypted Amazon EBS snapshot. With the associated key, you have a second, independent way to access the snapshot's data, in addition to the key the snapshot is already encrypted under. Associating a key doesn't re-encrypt the snapshot or grant access to its original key.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/associated-kms-keys.html\">Associated KMS keys</a> in the <i>Amazon EBS User Guide</i>.</p>",
     "AssociateNatGatewayAddress": "<p>Associates Elastic IP addresses (EIPs) and private IPv4 addresses with a public NAT gateway. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html\">Work with NAT gateways</a> in the <i>Amazon VPC User Guide</i>.</p> <p>By default, you can associate up to 2 Elastic IP addresses per public NAT gateway. You can increase the limit by requesting a quota adjustment. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-eips\">Elastic IP address quotas</a> in the <i>Amazon VPC User Guide</i>.</p> <important> <p>When you associate an EIP or secondary EIPs with a public NAT gateway, the network border group of the EIPs must match the network border group of the Availability Zone (AZ) that the public NAT gateway is in. If it's not the same, the EIP will fail to associate. You can see the network border group for the subnet's AZ by viewing the details of the subnet. Similarly, you can view the network border group of an EIP by viewing the details of the EIP address. For more information about network border groups and EIPs, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/WorkWithEIPs.html\">Allocate an Elastic IP address</a> in the <i>Amazon VPC User Guide</i>. </p> </important>",
     "AssociateNetworkingFlexCostAllocationPolicy": "<p>Associates a flex cost allocation policy with one or more network resources. You can associate the policy directly with specific resources by resource ID, or you can associate it with a scope of resources in an account, Amazon VPC, or subnet.</p> <p>The following limits apply:</p> <ul> <li> <p>A request can associate up to 20 resources.</p> </li> <li> <p>A policy can have up to 100 active associations.</p> </li> <li> <p>A network resource can have only one active association, across all policies. If a resource is already associated, the response includes it in the failures with the code <code>ResourceAlreadyAssociated</code>.</p> </li> </ul>",
     "AssociateRouteServer": "<p>Associates a route server with a VPC to enable dynamic route updates.</p> <p>A route server association is the connection established between a route server and a VPC.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/dynamic-routing-route-server.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
@@ -156,6 +157,7 @@
     "CreateTransitGatewayMeteringPolicy": "<p>Creates a metering policy for a transit gateway to track and measure network traffic.</p>",
     "CreateTransitGatewayMeteringPolicyEntry": "<p>Creates an entry in a transit gateway metering policy to define traffic measurement rules.</p>",
     "CreateTransitGatewayMulticastDomain": "<p>Creates a multicast domain using the specified transit gateway.</p> <p>The transit gateway must be in the available state before you create a domain. Use <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeTransitGateways.html\">DescribeTransitGateways</a> to see the state of transit gateway.</p>",
+    "CreateTransitGatewayNetworkFunctionAttachment": "<p>Creates a network function attachment that connects the specified transit gateway to a Gateway Load Balancer endpoint service. Traffic that you route to the attachment is sent to the network function appliances behind the endpoint service. To use this operation, you must be the owner of the transit gateway.</p> <p>You can create one network function attachment for each combination of transit gateway and endpoint service. The attachment remains in the <code>pendingAcceptance</code> state until the endpoint service owner accepts the endpoint connection.</p>",
     "CreateTransitGatewayPeeringAttachment": "<p>Requests a transit gateway peering attachment between the specified transit gateway (requester) and a peer transit gateway (accepter). The peer transit gateway can be in your account or a different Amazon Web Services account.</p> <p>After you create the peering attachment, the owner of the accepter transit gateway must accept the attachment request.</p>",
     "CreateTransitGatewayPolicyTable": "<p>Creates a transit gateway policy table.</p>",
     "CreateTransitGatewayPolicyTableEntry": "<p>Creates an entry in a transit gateway policy table to route matching traffic to a specified route table.</p>",
@@ -256,6 +258,7 @@
     "DeleteTransitGatewayMeteringPolicy": "<p>Deletes a transit gateway metering policy.</p>",
     "DeleteTransitGatewayMeteringPolicyEntry": "<p>Deletes an entry from a transit gateway metering policy.</p>",
     "DeleteTransitGatewayMulticastDomain": "<p>Deletes the specified transit gateway multicast domain.</p>",
+    "DeleteTransitGatewayNetworkFunctionAttachment": "<p>Deletes the specified network function attachment. The attachment must be in the <code>available</code> or <code>pendingAcceptance</code> state.</p>",
     "DeleteTransitGatewayPeeringAttachment": "<p>Deletes a transit gateway peering attachment.</p>",
     "DeleteTransitGatewayPolicyTable": "<p>Deletes the specified transit gateway policy table.</p>",
     "DeleteTransitGatewayPolicyTableEntry": "<p>Deletes the specified transit gateway policy table entry.</p>",
@@ -450,6 +453,7 @@
     "DescribeTransitGatewayConnects": "<p>Describes one or more Connect attachments.</p>",
     "DescribeTransitGatewayMeteringPolicies": "<p>Describes one or more transit gateway metering policies.</p>",
     "DescribeTransitGatewayMulticastDomains": "<p>Describes one or more transit gateway multicast domains.</p>",
+    "DescribeTransitGatewayNetworkFunctionAttachments": "<p>Describes one or more network function attachments. You can describe attachments that you own or that are attached to a transit gateway that you own.</p>",
     "DescribeTransitGatewayPeeringAttachments": "<p>Describes your transit gateway peering attachments.</p>",
     "DescribeTransitGatewayPolicyTables": "<p>Describes one or more transit gateway route policy tables. </p>",
     "DescribeTransitGatewayRouteTableAnnouncements": "<p>Describes one or more transit gateway route table advertisements.</p>",
@@ -522,6 +526,7 @@
     "DisassociateInstanceEventWindow": "<p>Disassociates one or more targets from an event window.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/event-windows.html\">Define event windows for scheduled events</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DisassociateIpamByoasn": "<p>Remove the association between your Autonomous System Number (ASN) and your BYOIP CIDR. You may want to use this action to disassociate an ASN from a CIDR or if you want to swap ASNs. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/tutorials-byoasn.html\">Tutorial: Bring your ASN to IPAM</a> in the <i>Amazon VPC IPAM guide</i>.</p>",
     "DisassociateIpamResourceDiscovery": "<p>Disassociates a resource discovery from an Amazon VPC IPAM. A resource discovery is an IPAM component that enables IPAM to manage and monitor resources that belong to the owning account.</p>",
+    "DisassociateKmsKeyId": "<p>Removes an associated KMS key from an Amazon EBS snapshot. After you disassociate the key, it can no longer be used to access the snapshot's data. The snapshot's original encryption key is unaffected.</p>",
     "DisassociateNatGatewayAddress": "<p>Disassociates secondary Elastic IP addresses (EIPs) from a public NAT gateway. You cannot disassociate your primary EIP. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html#nat-gateway-edit-secondary\">Edit secondary IP address associations</a> in the <i>Amazon VPC User Guide</i>.</p> <p>While disassociating is in progress, you cannot associate/disassociate additional EIPs while the connections are being drained. You are, however, allowed to delete the NAT gateway.</p> <p>An EIP is released only at the end of MaxDrainDurationSeconds. It stays associated and supports the existing connections but does not support any new connections (new connections are distributed across the remaining associated EIPs). As the existing connections drain out, the EIPs (and the corresponding private IP addresses mapped to them) are released.</p>",
     "DisassociateNetworkingFlexCostAllocationPolicy": "<p>Disassociates a flex cost allocation policy from one or more network resources.</p>",
     "DisassociateRouteServer": "<p>Disassociates a route server from a VPC.</p> <p>A route server association is the connection established between a route server and a VPC.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/dynamic-routing-route-server.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
@@ -715,6 +720,7 @@
     "ModifyTransitGateway": "<p>Modifies the specified transit gateway. When you modify a transit gateway, the modified options are applied to new transit gateway attachments only. Your existing transit gateway attachments are not modified.</p>",
     "ModifyTransitGatewayAttachmentNatConfiguration": "<p>Modifies the NAT configuration for the specified transit gateway attachment. Use this operation to do the following:</p> <ul> <li> <p>Enable or disable NAT gateway support for the attachment.</p> </li> <li> <p>Specify whether the transit gateway installs routes for the NAT CIDRs.</p> </li> <li> <p>Replace the NAT gateway rules for the attachment.</p> </li> </ul> <p>Only the owner of the transit gateway can modify the NAT configuration.</p> <p>With NAT gateway support enabled, the transit gateway translates addresses in each rule's <code>MatchSourceCidr</code> range to the corresponding addresses in its <code>NatCidr</code> range.</p> <p>The transit gateway applies changes asynchronously. To check the result, use <code>GetTransitGatewayAttachmentNatConfiguration</code>.</p>",
     "ModifyTransitGatewayMeteringPolicy": "<p>Modifies a transit gateway metering policy.</p>",
+    "ModifyTransitGatewayNetworkFunctionAttachment": "<p>Adds Availability Zones to or removes Availability Zones from the specified network function attachment. The attachment must be in the <code>available</code> state. You must specify at least one Availability Zone to add or remove, and the attachment must keep at least one Availability Zone.</p> <p>Adding an Availability Zone provisions a new Gateway Load Balancer endpoint in that Availability Zone. If the endpoint service doesn't automatically accept connection requests, the endpoint service owner must accept the endpoint connection for each Availability Zone that you add.</p>",
     "ModifyTransitGatewayPolicyTableEntry": "<p>Modifies the specified transit gateway policy table entry.</p>",
     "ModifyTransitGatewayPrefixListReference": "<p>Modifies a reference (route) to a prefix list in a specified transit gateway route table.</p>",
     "ModifyTransitGatewayVpcAttachment": "<p>Modifies the specified VPC attachment.</p>",
@@ -736,7 +742,7 @@
     "ModifyVpcEndpointPayerResponsibility": "<p>Modifies the billing account for VPC endpoint usage/charges.</p>",
     "ModifyVpcEndpointServiceConfiguration": "<p>Modifies the attributes of the specified VPC endpoint service configuration.</p> <p>If you set or modify the private DNS name, you must prove that you own the private DNS domain name.</p>",
     "ModifyVpcEndpointServicePayerResponsibility": "<p>Modifies the payer responsibility for your VPC endpoint service.</p>",
-    "ModifyVpcEndpointServicePermissions": "<p>Modifies the permissions for your VPC endpoint service. You can add or remove permissions for service consumers (Amazon Web Services accounts, users, and IAM roles) to connect to your endpoint service. Principal ARNs with path components aren't supported.</p> <p>If you grant permissions to all principals, the service is public. Any users who know the name of a public service can send a request to attach an endpoint. If the service does not require manual approval, attachments are automatically approved.</p>",
+    "ModifyVpcEndpointServicePermissions": "<p>Modifies the permissions for your VPC endpoint service. You can add or remove permissions for service consumers (Amazon Web Services accounts, users, and IAM roles) to connect to your endpoint service. Principal ARNs with path components aren't supported.</p> <p>If you grant permissions to all principals, the service is public. Any users who know the name of a public service can send a request to attach an endpoint. If the service does not require manual approval, attachments are automatically approved.</p> <p>By default, principals that you grant permissions to can create VPC endpoints that connect to your endpoint service. For Gateway Load Balancer endpoint services, you can instead grant permissions so that principals can create transit gateway attachments that connect to your endpoint service. To do so, specify <code>transit-gateway-attachment</code> for <code>PermissionType</code>. The two permission types are independent. A principal can have either or both.</p>",
     "ModifyVpcPeeringConnectionOptions": "<p>Modifies the VPC peering connection options on one side of a VPC peering connection.</p> <p>If the peered VPCs are in the same Amazon Web Services account, you can enable DNS resolution for queries from the local VPC. This ensures that queries from the local VPC resolve to private IP addresses in the peer VPC. This option is not available if the peered VPCs are in different Amazon Web Services accounts or different Regions. For peered VPCs in different Amazon Web Services accounts, each Amazon Web Services account owner must initiate a separate request to modify the peering connection options. For inter-region peering connections, you must use the Region for the requester VPC to modify the requester VPC peering options and the Region for the accepter VPC to modify the accepter VPC peering options. To verify which VPCs are the accepter and the requester for a VPC peering connection, use the <a>DescribeVpcPeeringConnections</a> command.</p>",
     "ModifyVpcTenancy": "<p>Modifies the instance tenancy attribute of the specified VPC. You can change the instance tenancy attribute of a VPC to <code>default</code> only. You cannot change the instance tenancy attribute to <code>dedicated</code>.</p> <p>After you modify the tenancy of the VPC, any new instances that you launch into the VPC have a tenancy of <code>default</code>, unless you specify otherwise during launch. The tenancy of any existing instances in the VPC is not affected.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html\">Dedicated Instances</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "ModifyVpnConnection": "<p>Modifies the customer gateway or the target gateway of an Amazon Web Services Site-to-Site VPN connection. To modify the target gateway, the following migration options are available:</p> <ul> <li> <p>An existing virtual private gateway to a new virtual private gateway</p> </li> <li> <p>An existing virtual private gateway to a transit gateway</p> </li> <li> <p>An existing transit gateway to a new transit gateway</p> </li> <li> <p>An existing transit gateway to a virtual private gateway</p> </li> </ul> <p>Before you perform the migration to the new gateway, you must configure the new gateway. Use <a>CreateVpnGateway</a> to create a virtual private gateway, or <a>CreateTransitGateway</a> to create a transit gateway.</p> <p>This step is required when you migrate from a virtual private gateway with static routes to a transit gateway. </p> <p>You must delete the static routes before you migrate to the new gateway.</p> <p>Keep a copy of the static route before you delete it. You will need to add back these routes to the transit gateway after the VPN connection migration is complete.</p> <p>After you migrate to the new gateway, you might need to modify your VPC route table. Use <a>CreateRoute</a> and <a>DeleteRoute</a> to make the changes described in <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/modify-vpn-target.html#step-update-routing\">Update VPC route tables</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p> <p>When the new gateway is a transit gateway, modify the transit gateway route table to allow traffic between the VPC and the Amazon Web Services Site-to-Site VPN connection. Use <a>CreateTransitGatewayRoute</a> to add the routes.</p> <p> If you deleted VPN static routes, you must add the static routes to the transit gateway route table.</p> <p>After you perform this operation, the VPN endpoint's IP addresses on the Amazon Web Services side and the tunnel options remain intact. Your Amazon Web Services Site-to-Site VPN connection will be temporarily unavailable for a brief period while we provision the new endpoints.</p>",
@@ -1892,6 +1898,16 @@
       "refs": {
       }
     },
+    "AssociateKmsKeyIdRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssociateKmsKeyIdResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "AssociateNatGatewayAddressRequest": {
       "base": null,
       "refs": {
@@ -2000,6 +2016,18 @@
     "AssociateVpcCidrBlockResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "AssociatedKmsKey": {
+      "base": "<p>Describes an KMS key that is associated with an Amazon EBS snapshot, in addition to the key the snapshot is encrypted under. An associated key provides a second way to access the snapshot's data for cross-account sharing and copying.</p>",
+      "refs": {
+        "AssociatedKmsKeySet$member": null
+      }
+    },
+    "AssociatedKmsKeySet": {
+      "base": null,
+      "refs": {
+        "Snapshot$AssociatedKmsKeys": "<p>The additional KMS keys that are associated with the snapshot.</p>"
       }
     },
     "AssociatedNetworkType": {
@@ -2689,6 +2717,8 @@
         "AssociateInstanceEventWindowRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateIpamByoasnRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateIpamResourceDiscoveryRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "AssociateKmsKeyIdRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "AssociateKmsKeyIdResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "AssociateNatGatewayAddressRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateNetworkingFlexCostAllocationPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateRouteServerRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2869,6 +2899,7 @@
         "CreateTransitGatewayMeteringPolicyEntryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateTransitGatewayMeteringPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateTransitGatewayMulticastDomainRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateTransitGatewayNetworkFunctionAttachmentRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateTransitGatewayPeeringAttachmentRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateTransitGatewayPolicyTableEntryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateTransitGatewayPolicyTableRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2989,6 +3020,7 @@
         "DeleteTransitGatewayMeteringPolicyEntryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteTransitGatewayMeteringPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteTransitGatewayMulticastDomainRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteTransitGatewayNetworkFunctionAttachmentRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteTransitGatewayPeeringAttachmentRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteTransitGatewayPolicyTableEntryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteTransitGatewayPolicyTableRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3194,6 +3226,7 @@
         "DescribeTransitGatewayConnectsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeTransitGatewayMeteringPoliciesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeTransitGatewayMulticastDomainsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeTransitGatewayNetworkFunctionAttachmentsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeTransitGatewayPeeringAttachmentsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeTransitGatewayPolicyTablesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeTransitGatewayRouteTableAnnouncementsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3288,6 +3321,8 @@
         "DisassociateInstanceEventWindowRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateIpamByoasnRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateIpamResourceDiscoveryRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DisassociateKmsKeyIdRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DisassociateKmsKeyIdResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "DisassociateNatGatewayAddressRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateNetworkingFlexCostAllocationPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateRouteServerRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3628,6 +3663,7 @@
         "ModifyTransitGatewayAttachmentNatConfigurationRequest$ResetNatGatewayRules": "<p>Specifies whether to remove all NAT gateway rules from the attachment. If you omit this parameter, the transit gateway doesn't remove any rules. You can't specify this parameter together with <code>NatGatewayRules</code>. Because you can't enable NAT gateway support without rules, also set <code>NatGatewaySupport</code> to <code>disable</code> in the same request if NAT gateway support is currently enabled.</p>",
         "ModifyTransitGatewayAttachmentNatConfigurationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyTransitGatewayMeteringPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "ModifyTransitGatewayNetworkFunctionAttachmentRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyTransitGatewayPolicyTableEntryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyTransitGatewayPrefixListReferenceRequest$Blackhole": "<p>Indicates whether to drop traffic that matches this route.</p>",
         "ModifyTransitGatewayPrefixListReferenceRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -6596,6 +6632,16 @@
       "refs": {
       }
     },
+    "CreateTransitGatewayNetworkFunctionAttachmentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateTransitGatewayNetworkFunctionAttachmentResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateTransitGatewayPeeringAttachmentRequest": {
       "base": null,
       "refs": {
@@ -8095,6 +8141,16 @@
       }
     },
     "DeleteTransitGatewayMulticastDomainResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteTransitGatewayNetworkFunctionAttachmentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteTransitGatewayNetworkFunctionAttachmentResult": {
       "base": null,
       "refs": {
       }
@@ -10539,6 +10595,16 @@
       "refs": {
       }
     },
+    "DescribeTransitGatewayNetworkFunctionAttachmentsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeTransitGatewayNetworkFunctionAttachmentsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeTransitGatewayPeeringAttachmentsRequest": {
       "base": null,
       "refs": {
@@ -11462,6 +11528,16 @@
       }
     },
     "DisassociateIpamResourceDiscoveryResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisassociateKmsKeyIdRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisassociateKmsKeyIdResult": {
       "base": null,
       "refs": {
       }
@@ -12925,6 +13001,7 @@
         "DescribeTransitGatewayConnectsRequest$Filters": "<p>One or more filters. The possible values are:</p> <ul> <li> <p> <code>options.protocol</code> - The tunnel protocol (<code>gre</code>).</p> </li> <li> <p> <code>state</code> - The state of the attachment (<code>initiating</code> | <code>initiatingRequest</code> | <code>pendingAcceptance</code> | <code>rollingBack</code> | <code>pending</code> | <code>available</code> | <code>modifying</code> | <code>deleting</code> | <code>deleted</code> | <code>failed</code> | <code>rejected</code> | <code>rejecting</code> | <code>failing</code>).</p> </li> <li> <p> <code>transit-gateway-attachment-id</code> - The ID of the Connect attachment.</p> </li> <li> <p> <code>transit-gateway-id</code> - The ID of the transit gateway.</p> </li> <li> <p> <code>transport-transit-gateway-attachment-id</code> - The ID of the transit gateway attachment from which the Connect attachment was created.</p> </li> </ul>",
         "DescribeTransitGatewayMeteringPoliciesRequest$Filters": "<p>One or more filters to apply when describing transit gateway metering policies.</p>",
         "DescribeTransitGatewayMulticastDomainsRequest$Filters": "<p>One or more filters. The possible values are:</p> <ul> <li> <p> <code>state</code> - The state of the transit gateway multicast domain. Valid values are <code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>.</p> </li> <li> <p> <code>transit-gateway-id</code> - The ID of the transit gateway.</p> </li> <li> <p> <code>transit-gateway-multicast-domain-id</code> - The ID of the transit gateway multicast domain.</p> </li> </ul>",
+        "DescribeTransitGatewayNetworkFunctionAttachmentsRequest$Filters": "<p>One or more filters. The possible values are:</p> <ul> <li> <p> <code>service-name</code> - The name of the Gateway Load Balancer endpoint service.</p> </li> <li> <p> <code>state</code> - The state of the attachment. Valid values are <code>available</code> | <code>deleted</code> | <code>deleting</code> | <code>failed</code> | <code>failing</code> | <code>modifying</code> | <code>pendingAcceptance</code> | <code>pending</code> | <code>rollingBack</code> | <code>rejected</code> | <code>rejecting</code>.</p> </li> <li> <p> <code>transit-gateway-attachment-id</code> - The ID of the attachment.</p> </li> <li> <p> <code>transit-gateway-id</code> - The ID of the transit gateway.</p> </li> </ul>",
         "DescribeTransitGatewayPeeringAttachmentsRequest$Filters": "<p>One or more filters. The possible values are:</p> <ul> <li> <p> <code>transit-gateway-attachment-id</code> - The ID of the transit gateway attachment.</p> </li> <li> <p> <code>local-owner-id</code> - The ID of your Amazon Web Services account.</p> </li> <li> <p> <code>remote-owner-id</code> - The ID of the Amazon Web Services account in the remote Region that owns the transit gateway.</p> </li> <li> <p> <code>state</code> - The state of the peering attachment. Valid values are <code>available</code> | <code>deleted</code> | <code>deleting</code> | <code>failed</code> | <code>failing</code> | <code>initiatingRequest</code> | <code>modifying</code> | <code>pendingAcceptance</code> | <code>pending</code> | <code>rollingBack</code> | <code>rejected</code> | <code>rejecting</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources that have a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>transit-gateway-id</code> - The ID of the transit gateway.</p> </li> </ul>",
         "DescribeTransitGatewayPolicyTablesRequest$Filters": "<p>The filters associated with the transit gateway policy table.</p>",
         "DescribeTransitGatewayRouteTableAnnouncementsRequest$Filters": "<p>The filters associated with the transit gateway policy table.</p>",
@@ -12945,9 +13022,9 @@
         "DescribeVpcEncryptionControlsRequest$Filters": "<p>The filters to apply to the request.</p>",
         "DescribeVpcEndpointAssociationsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>vpc-endpoint-id</code> - The ID of the VPC endpoint.</p> </li> <li> <p> <code>associated-resource-accessibility</code> - The association state. When the state is <code>accessible</code>, it returns <code>AVAILABLE</code>. When the state is <code>inaccessible</code>, it returns <code>PENDING</code> or <code>FAILED</code>.</p> </li> <li> <p> <code>association-id</code> - The ID of the VPC endpoint association.</p> </li> <li> <p> <code>associated-resource-id</code> - The ID of the associated resource configuration.</p> </li> <li> <p> <code>service-network-arn</code> - The Amazon Resource Name (ARN) of the associated service network. Only VPC endpoints of type service network will be returned.</p> </li> <li> <p> <code>resource-configuration-group-arn</code> - The Amazon Resource Name (ARN) of the resource configuration of type GROUP.</p> </li> </ul>",
         "DescribeVpcEndpointConnectionNotificationsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>connection-notification-arn</code> - The ARN of the SNS topic for the notification.</p> </li> <li> <p> <code>connection-notification-id</code> - The ID of the notification.</p> </li> <li> <p> <code>connection-notification-state</code> - The state of the notification (<code>Enabled</code> | <code>Disabled</code>).</p> </li> <li> <p> <code>connection-notification-type</code> - The type of notification (<code>Topic</code>).</p> </li> <li> <p> <code>service-id</code> - The ID of the endpoint service.</p> </li> <li> <p> <code>vpc-endpoint-id</code> - The ID of the VPC endpoint.</p> </li> </ul>",
-        "DescribeVpcEndpointConnectionsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>ip-address-type</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>service-id</code> - The ID of the service.</p> </li> <li> <p> <code>vpc-endpoint-owner</code> - The ID of the Amazon Web Services account ID that owns the endpoint.</p> </li> <li> <p> <code>vpc-endpoint-region</code> - The Region of the endpoint or <code>cross-region</code> to find endpoints for other Regions.</p> </li> <li> <p> <code>vpc-endpoint-state</code> - The state of the endpoint (<code>pendingAcceptance</code> | <code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code> | <code>rejected</code> | <code>failed</code>).</p> </li> <li> <p> <code>vpc-endpoint-id</code> - The ID of the endpoint.</p> </li> </ul>",
+        "DescribeVpcEndpointConnectionsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>ip-address-type</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>service-id</code> - The ID of the service.</p> </li> <li> <p> <code>transit-gateway-attachment-id</code> - The ID of the transit gateway attachment.</p> </li> <li> <p> <code>vpc-endpoint-owner</code> - The ID of the Amazon Web Services account ID that owns the endpoint.</p> </li> <li> <p> <code>vpc-endpoint-region</code> - The Region of the endpoint or <code>cross-region</code> to find endpoints for other Regions.</p> </li> <li> <p> <code>vpc-endpoint-state</code> - The state of the endpoint (<code>pendingAcceptance</code> | <code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code> | <code>rejected</code> | <code>failed</code>).</p> </li> <li> <p> <code>vpc-endpoint-id</code> - The ID of the endpoint.</p> </li> </ul>",
         "DescribeVpcEndpointServiceConfigurationsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>service-name</code> - The name of the service.</p> </li> <li> <p> <code>service-id</code> - The ID of the service.</p> </li> <li> <p> <code>service-state</code> - The state of the service (<code>Pending</code> | <code>Available</code> | <code>Deleting</code> | <code>Deleted</code> | <code>Failed</code>). </p> </li> <li> <p> <code>supported-ip-address-types</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
-        "DescribeVpcEndpointServicePermissionsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>principal</code> - The ARN of the principal.</p> </li> <li> <p> <code>principal-type</code> - The principal type (<code>All</code> | <code>Service</code> | <code>OrganizationUnit</code> | <code>Account</code> | <code>User</code> | <code>Role</code>).</p> </li> </ul>",
+        "DescribeVpcEndpointServicePermissionsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>permission-type</code> - The permission type (<code>vpc-endpoint</code> | <code>transit-gateway-attachment</code>).</p> </li> <li> <p> <code>principal</code> - The ARN of the principal.</p> </li> <li> <p> <code>principal-type</code> - The principal type (<code>All</code> | <code>Service</code> | <code>OrganizationUnit</code> | <code>Account</code> | <code>User</code> | <code>Role</code>).</p> </li> </ul>",
         "DescribeVpcEndpointServicesRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>owner</code> - The ID or alias of the Amazon Web Services account that owns the service.</p> </li> <li> <p> <code>service-name</code> - The name of the service.</p> </li> <li> <p> <code>service-region</code> - The Region of the service.</p> </li> <li> <p> <code>service-type</code> - The type of service (<code>Interface</code> | <code>Gateway</code> | <code>GatewayLoadBalancer</code>).</p> </li> <li> <p> <code>supported-ip-address-types</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
         "DescribeVpcEndpointsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>ip-address-type</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>service-name</code> - The name of the service.</p> </li> <li> <p> <code>service-region</code> - The Region of the service.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC in which the endpoint resides.</p> </li> <li> <p> <code>vpc-endpoint-id</code> - The ID of the endpoint.</p> </li> <li> <p> <code>vpc-endpoint-state</code> - The state of the endpoint (<code>pendingAcceptance</code> | <code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code> | <code>rejected</code> | <code>failed</code>).</p> </li> <li> <p> <code>vpc-endpoint-type</code> - The type of VPC endpoint (<code>Interface</code> | <code>Gateway</code> | <code>GatewayLoadBalancer</code> | <code>Resource</code> | <code>ServiceNetwork</code> | <code>Tunnel</code>).</p> </li> </ul>",
         "DescribeVpcPeeringConnectionsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>accepter-vpc-info.cidr-block</code> - The IPv4 CIDR block of the accepter VPC.</p> </li> <li> <p> <code>accepter-vpc-info.owner-id</code> - The ID of the Amazon Web Services account that owns the accepter VPC.</p> </li> <li> <p> <code>accepter-vpc-info.vpc-id</code> - The ID of the accepter VPC.</p> </li> <li> <p> <code>expiration-time</code> - The expiration date and time for the VPC peering connection.</p> </li> <li> <p> <code>requester-vpc-info.cidr-block</code> - The IPv4 CIDR block of the requester's VPC.</p> </li> <li> <p> <code>requester-vpc-info.owner-id</code> - The ID of the Amazon Web Services account that owns the requester VPC.</p> </li> <li> <p> <code>requester-vpc-info.vpc-id</code> - The ID of the requester VPC.</p> </li> <li> <p> <code>status-code</code> - The status of the VPC peering connection (<code>pending-acceptance</code> | <code>failed</code> | <code>expired</code> | <code>provisioning</code> | <code>active</code> | <code>deleting</code> | <code>deleted</code> | <code>rejected</code>).</p> </li> <li> <p> <code>status-message</code> - A message that provides more information about the status of the VPC peering connection, if applicable.</p> </li> <li> <p> <code>tag</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-peering-connection-id</code> - The ID of the VPC peering connection.</p> </li> </ul>",
@@ -18937,10 +19014,12 @@
     "KmsKeyId": {
       "base": null,
       "refs": {
+        "AssociateKmsKeyIdRequest$KmsKeyId": "<p>The ID, alias, or ARN of the KMS key to associate with the snapshot. You can specify a key ID, key alias, key ARN, or alias ARN.</p>",
         "CopyImageRequest$KmsKeyId": "<p>The identifier of the symmetric Key Management Service (KMS) KMS key to use when creating encrypted volumes. If this parameter is not specified, your Amazon Web Services managed KMS key for Amazon EBS is used. If you specify a KMS key, you must also set the encrypted state to <code>true</code>.</p> <p>You can specify a KMS key using any of the following:</p> <ul> <li> <p>Key ID. For example, 1234abcd-12ab-34cd-56ef-1234567890ab.</p> </li> <li> <p>Key alias. For example, alias/ExampleAlias.</p> </li> <li> <p>Key ARN. For example, arn:aws:kms:us-east-1:012345678910:key/1234abcd-12ab-34cd-56ef-1234567890ab.</p> </li> <li> <p>Alias ARN. For example, arn:aws:kms:us-east-1:012345678910:alias/ExampleAlias.</p> </li> </ul> <p>Amazon Web Services authenticates the KMS key asynchronously. Therefore, if you specify an identifier that is not valid, the action can appear to complete, but eventually fails.</p> <p>The specified KMS key must exist in the destination Region.</p> <p>Amazon EBS does not support asymmetric KMS keys.</p>",
         "CopySnapshotRequest$KmsKeyId": "<p>The identifier of the KMS key to use for Amazon EBS encryption. If this parameter is not specified, your KMS key for Amazon EBS is used. If <code>KmsKeyId</code> is specified, the encrypted state must be <code>true</code>.</p> <p>You can specify the KMS key using any of the following:</p> <ul> <li> <p>Key ID. For example, 1234abcd-12ab-34cd-56ef-1234567890ab.</p> </li> <li> <p>Key alias. For example, alias/ExampleAlias.</p> </li> <li> <p>Key ARN. For example, arn:aws:kms:us-east-1:012345678910:key/1234abcd-12ab-34cd-56ef-1234567890ab.</p> </li> <li> <p>Alias ARN. For example, arn:aws:kms:us-east-1:012345678910:alias/ExampleAlias.</p> </li> </ul> <p>Amazon Web Services authenticates the KMS key asynchronously. Therefore, if you specify an ID, alias, or ARN that is not valid, the action can appear to complete, but eventually fails.</p>",
         "CopyVolumesRequest$KmsKeyId": "<p>The identifier of the KMS key to use for encryption of the volume copy. Specify a symmetric encryption KMS key. You can specify a KMS key using the key ID, key ARN, alias name, or alias ARN. If you set <code>Encrypted</code> to <code>true</code> but do not specify this parameter, the service uses the default KMS key for EBS encryption in your account. For cross-account volume copies, this must be a KMS key in the calling account.</p>",
         "CreateVolumeRequest$KmsKeyId": "<p>The identifier of the KMS key to use for Amazon EBS encryption. If this parameter is not specified, your KMS key for Amazon EBS is used. If <code>KmsKeyId</code> is specified, the encrypted state must be <code>true</code>.</p> <p>You can specify the KMS key using any of the following:</p> <ul> <li> <p>Key ID. For example, 1234abcd-12ab-34cd-56ef-1234567890ab.</p> </li> <li> <p>Key alias. For example, alias/ExampleAlias.</p> </li> <li> <p>Key ARN. For example, arn:aws:kms:us-east-1:012345678910:key/1234abcd-12ab-34cd-56ef-1234567890ab.</p> </li> <li> <p>Alias ARN. For example, arn:aws:kms:us-east-1:012345678910:alias/ExampleAlias.</p> </li> </ul> <p>Amazon Web Services authenticates the KMS key asynchronously. Therefore, if you specify an ID, alias, or ARN that is not valid, the action can appear to complete, but eventually fails.</p>",
+        "DisassociateKmsKeyIdRequest$KmsKeyId": "<p>The ID, alias, or ARN of the associated KMS key to remove from the snapshot.</p>",
         "EbsBlockDeviceResponse$KmsKeyId": "<p>Identifier (key ID, key alias, key ARN, or alias ARN) of the customer managed KMS key to use for EBS encryption.</p>",
         "FleetEbsBlockDeviceRequest$KmsKeyId": "<p>Identifier (key ID, key alias, key ARN, or alias ARN) of the customer managed KMS key to use for EBS encryption.</p> <p>This parameter is only supported on <code>BlockDeviceMapping</code> objects called by <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFleet.html\">CreateFleet</a>, <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html\">RequestSpotInstances</a>, and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html\">RunInstances</a>.</p>",
         "ImportImageRequest$KmsKeyId": "<p>An identifier for the symmetric KMS key to use when creating the encrypted AMI. This parameter is only required if you want to use a non-default KMS key; if this parameter is not specified, the default KMS key for EBS is used. If a <code>KmsKeyId</code> is specified, the <code>Encrypted</code> flag must also be set. </p> <p>The KMS key identifier may be provided in any of the following formats: </p> <ul> <li> <p>Key ID</p> </li> <li> <p>Key alias</p> </li> <li> <p>ARN using key ID. The ID ARN contains the <code>arn:aws:kms</code> namespace, followed by the Region of the key, the Amazon Web Services account ID of the key owner, the <code>key</code> namespace, and then the key ID. For example, arn:aws:kms:<i>us-east-1</i>:<i>012345678910</i>:key/<i>abcd1234-a123-456a-a12b-a123b4cd56ef</i>.</p> </li> <li> <p>ARN using key alias. The alias ARN contains the <code>arn:aws:kms</code> namespace, followed by the Region of the key, the Amazon Web Services account ID of the key owner, the <code>alias</code> namespace, and then the key alias. For example, arn:aws:kms:<i>us-east-1</i>:<i>012345678910</i>:alias/<i>ExampleAlias</i>. </p> </li> </ul> <p>Amazon Web Services parses <code>KmsKeyId</code> asynchronously, meaning that the action you call may appear to complete even though you provided an invalid identifier. This action will eventually report failure. </p> <p>The specified KMS key must exist in the Region that the AMI is being copied to.</p> <p>Amazon EBS does not support asymmetric KMS keys.</p>",
@@ -20680,6 +20759,7 @@
         "TransitGatewayMeteringPolicy$UpdateEffectiveAt": "<p>The date and time when the metering policy update becomes effective.</p>",
         "TransitGatewayMeteringPolicyEntry$UpdatedAt": "<p>The date and time when the metering policy entry was last updated.</p>",
         "TransitGatewayMeteringPolicyEntry$UpdateEffectiveAt": "<p>The date and time when the metering policy entry update becomes effective.</p>",
+        "TransitGatewayNetworkFunctionAttachment$CreationTime": "<p>The date and time the attachment was created.</p>",
         "UnsuccessfulSuppressionResponseObject$SuppressAt": "<p>The date and time when suppression was attempted.</p>",
         "UnsuccessfulSuppressionResponseObject$ResumeAt": "<p>The date and time when health checks would have resumed.</p>",
         "VolumeRecycleBinInfo$RecycleBinEnterTime": "<p>The date and time when the volume entered the Recycle Bin.</p>",
@@ -21281,6 +21361,16 @@
       }
     },
     "ModifyTransitGatewayMeteringPolicyResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyTransitGatewayNetworkFunctionAttachmentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyTransitGatewayNetworkFunctionAttachmentResult": {
       "base": null,
       "refs": {
       }
@@ -21956,6 +22046,22 @@
       "base": null,
       "refs": {
         "NetworkCardInfo$InterfaceTypes": "<p>The supported interface types for the network card.</p>"
+      }
+    },
+    "NetworkFunctionAttachmentAZIdList": {
+      "base": null,
+      "refs": {
+        "CreateTransitGatewayNetworkFunctionAttachmentRequest$AvailabilityZoneIds": "<p>The IDs of the Availability Zones for the attachment. You must specify at least one Availability Zone, using this parameter, <code>AvailabilityZones</code>, or both. Each Availability Zone must be supported by both the transit gateway and the endpoint service.</p>",
+        "ModifyTransitGatewayNetworkFunctionAttachmentRequest$AddAvailabilityZoneIds": "<p>The IDs of the Availability Zones to add to the attachment. You can't add and remove the same Availability Zone in a single request.</p>",
+        "ModifyTransitGatewayNetworkFunctionAttachmentRequest$RemoveAvailabilityZoneIds": "<p>The IDs of the Availability Zones to remove from the attachment. Each Availability Zone must be currently in the attachment.</p>"
+      }
+    },
+    "NetworkFunctionAttachmentAZNameList": {
+      "base": null,
+      "refs": {
+        "CreateTransitGatewayNetworkFunctionAttachmentRequest$AvailabilityZones": "<p>The names of the Availability Zones for the attachment. You must specify at least one Availability Zone, using this parameter, <code>AvailabilityZoneIds</code>, or both. Each Availability Zone must be supported by both the transit gateway and the endpoint service.</p>",
+        "ModifyTransitGatewayNetworkFunctionAttachmentRequest$AddAvailabilityZones": "<p>The names of the Availability Zones to add to the attachment. You can't add and remove the same Availability Zone in a single request.</p>",
+        "ModifyTransitGatewayNetworkFunctionAttachmentRequest$RemoveAvailabilityZones": "<p>The names of the Availability Zones to remove from the attachment. Each Availability Zone must be currently in the attachment.</p>"
       }
     },
     "NetworkInfo": {
@@ -22960,6 +23066,14 @@
         "LaunchPermission$Group": "<p>The name of the group.</p>",
         "LoadPermission$Group": "<p>The name of the group.</p>",
         "LoadPermissionRequest$Group": "<p>The name of the group.</p>"
+      }
+    },
+    "PermissionType": {
+      "base": null,
+      "refs": {
+        "AddedPrincipal$PermissionType": "<p>The type of permission granted to the principal.</p>",
+        "AllowedPrincipal$PermissionType": "<p>The type of permission granted to the principal.</p>",
+        "ModifyVpcEndpointServicePermissionsRequest$PermissionType": "<p>The type of permission to add or remove. The permission type applies to all principals in <code>AddAllowedPrincipals</code> and <code>RemoveAllowedPrincipals</code>.</p> <ul> <li> <p> <code>vpc-endpoint</code> - Principals can create VPC endpoints that connect to the endpoint service.</p> </li> <li> <p> <code>transit-gateway-attachment</code> - Principals can create transit gateway attachments that connect to the endpoint service. This permission type is supported only for Gateway Load Balancer endpoint services. You can grant it only to Amazon Web Services accounts (<code>arn:aws:iam::account-id:root</code>). You can't grant it to users, IAM roles, organizations, organizational units, or all principals (*).</p> </li> </ul> <p>Default: <code>vpc-endpoint</code> </p>"
       }
     },
     "Phase1DHGroupNumbersList": {
@@ -26413,11 +26527,13 @@
     "SnapshotId": {
       "base": null,
       "refs": {
+        "AssociateKmsKeyIdRequest$SnapshotId": "<p>The ID of the Amazon EBS snapshot.</p>",
         "CreateReplaceRootVolumeTaskRequest$SnapshotId": "<p>The ID of the snapshot from which to restore the replacement root volume. The specified snapshot must be a snapshot that you previously created from the original root volume.</p> <p>If you want to restore the replacement root volume to the initial launch state, if you want to restore the replacement root volume from an AMI, or if you want to replace the root volume with a specified volume, omit this parameter.</p>",
         "CreateVolumeRequest$SnapshotId": "<p>The snapshot from which to create the volume. You must specify either a snapshot ID or a volume size.</p>",
         "DeleteSnapshotRequest$SnapshotId": "<p>The ID of the EBS snapshot.</p>",
         "DeleteSnapshotReturnCode$SnapshotId": "<p>The ID of the snapshot.</p>",
         "DescribeSnapshotAttributeRequest$SnapshotId": "<p>The ID of the EBS snapshot.</p>",
+        "DisassociateKmsKeyIdRequest$SnapshotId": "<p>The ID of the Amazon EBS snapshot.</p>",
         "EbsBlockDevice$SnapshotId": "<p>The ID of the snapshot.</p>",
         "EbsBlockDeviceResponse$SnapshotId": "<p>The ID of the snapshot.</p>",
         "FleetEbsBlockDeviceRequest$SnapshotId": "<p>The ID of the snapshot.</p>",
@@ -27042,6 +27158,7 @@
         "AssociateVpcCidrBlockRequest$Ipv6CidrBlockNetworkBorderGroup": "<p>The name of the location from which we advertise the IPV6 CIDR block. Use this parameter to limit the CIDR block to this location.</p> <p> You must set <code>AmazonProvidedIpv6CidrBlock</code> to <code>true</code> to use this parameter.</p> <p> You can have one IPv6 CIDR block association per network border group.</p>",
         "AssociateVpcCidrBlockRequest$Ipv6CidrBlock": "<p>An IPv6 CIDR block from the IPv6 address pool. You must also specify <code>Ipv6Pool</code> in the request.</p> <p>To let Amazon choose the IPv6 CIDR block for you, omit this parameter.</p>",
         "AssociateVpcCidrBlockResult$VpcId": "<p>The ID of the VPC.</p>",
+        "AssociatedKmsKey$KmsKeyId": "<p>The Amazon Resource Name (ARN) of the associated KMS key.</p>",
         "AssociatedRole$CertificateS3BucketName": "<p>The name of the Amazon S3 bucket in which the Amazon S3 object is stored.</p>",
         "AssociatedRole$CertificateS3ObjectKey": "<p>The key of the Amazon S3 object where the certificate, certificate chain, and encrypted private key bundle are stored. The object key is formatted as follows: <code>role_arn</code>/<code>certificate_arn</code>. </p>",
         "AssociatedRole$EncryptionKmsKeyId": "<p>The ID of the KMS key used to encrypt the private key.</p>",
@@ -27453,6 +27570,7 @@
         "CreateTransitGatewayMeteringPolicyEntryRequest$DestinationCidrBlock": "<p>The destination CIDR block for traffic matching.</p>",
         "CreateTransitGatewayMeteringPolicyEntryRequest$DestinationPortRange": "<p>The destination port range for traffic matching.</p>",
         "CreateTransitGatewayMeteringPolicyEntryRequest$Protocol": "<p>The protocol for traffic matching (1, 6, 17, etc.).</p>",
+        "CreateTransitGatewayNetworkFunctionAttachmentRequest$ServiceName": "<p>The name of the Gateway Load Balancer endpoint service.</p>",
         "CreateTransitGatewayPeeringAttachmentRequest$PeerAccountId": "<p>The ID of the Amazon Web Services account that owns the peer transit gateway.</p>",
         "CreateTransitGatewayPeeringAttachmentRequest$PeerRegion": "<p>The Region where the peer transit gateway is located.</p>",
         "CreateTransitGatewayPolicyTableEntryRequest$PolicyRuleNumber": "<p>The rule number for the policy table entry. Lower rule numbers are evaluated first and take precedence.</p>",
@@ -27800,6 +27918,8 @@
         "DescribeTransitGatewayMeteringPoliciesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeTransitGatewayMulticastDomainsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeTransitGatewayMulticastDomainsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "DescribeTransitGatewayNetworkFunctionAttachmentsRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeTransitGatewayNetworkFunctionAttachmentsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeTransitGatewayPeeringAttachmentsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeTransitGatewayPeeringAttachmentsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeTransitGatewayPolicyTablesRequest$NextToken": "<p>The token for the next page of results.</p>",
@@ -28786,6 +28906,8 @@
         "NetworkAclEntry$CidrBlock": "<p>The IPv4 network range to allow or deny, in CIDR notation.</p>",
         "NetworkAclEntry$Ipv6CidrBlock": "<p>The IPv6 network range to allow or deny, in CIDR notation.</p>",
         "NetworkAclEntry$Protocol": "<p>The protocol number. A value of \"-1\" means all protocols.</p>",
+        "NetworkFunctionAttachmentAZIdList$member": null,
+        "NetworkFunctionAttachmentAZNameList$member": null,
         "NetworkInsightsAccessScopeAnalysis$StatusMessage": "<p>The status message.</p>",
         "NetworkInsightsAccessScopeAnalysis$WarningMessage": "<p>The warning message.</p>",
         "NetworkInsightsAnalysis$StatusMessage": "<p>The status message, if the status is <code>failed</code>.</p>",
@@ -29394,6 +29516,10 @@
         "TransitGatewayNatRule$NatCidr": "<p>The IPv4 CIDR block that the transit gateway translates the source addresses to.</p>",
         "TransitGatewayNatRuleRequest$MatchSourceCidr": "<p>The IPv4 CIDR block of the source addresses to translate. The CIDR block can't overlap the multicast range (<code>224.0.0.0/4</code>) or the link-local range (<code>169.254.0.0/16</code>).</p>",
         "TransitGatewayNatRuleRequest$NatCidr": "<p>The IPv4 CIDR block to translate the source addresses to. The CIDR block must be in a private (RFC 1918) or shared address space (RFC 6598) range, and must have the same prefix length as <code>MatchSourceCidr</code>. The CIDR blocks in the rules for an attachment can't overlap each other.</p>",
+        "TransitGatewayNetworkFunctionAttachment$TransitGatewayId": "<p>The ID of the transit gateway.</p>",
+        "TransitGatewayNetworkFunctionAttachment$TransitGatewayOwnerId": "<p>The ID of the Amazon Web Services account that owns the transit gateway.</p>",
+        "TransitGatewayNetworkFunctionAttachment$ResourceOwnerId": "<p>The ID of the Amazon Web Services account that owns the attachment.</p>",
+        "TransitGatewayNetworkFunctionAttachment$ResourceId": "<p>The name of the Gateway Load Balancer endpoint service.</p>",
         "TransitGatewayOptions$AssociationDefaultRouteTableId": "<p>The ID of the default association route table.</p>",
         "TransitGatewayOptions$PropagationDefaultRouteTableId": "<p>The ID of the default propagation route table.</p>",
         "TransitGatewayPeeringAttachment$TransitGatewayAttachmentId": "<p>The ID of the transit gateway peering attachment.</p>",
@@ -29618,6 +29744,7 @@
         "VpcEndpointConnection$VpcEndpointOwner": "<p>The ID of the Amazon Web Services account that owns the VPC endpoint.</p>",
         "VpcEndpointConnection$VpcEndpointConnectionId": "<p>The ID of the VPC endpoint connection.</p>",
         "VpcEndpointConnection$VpcEndpointRegion": "<p>The Region of the endpoint.</p>",
+        "VpcEndpointConnection$TransitGatewayAttachmentOwner": "<p>The ID of the Amazon Web Services account that owns the transit gateway attachment, if the connection is for a transit gateway attachment.</p>",
         "VpcIpv6CidrBlockAssociation$AssociationId": "<p>The association ID for the IPv6 CIDR block.</p>",
         "VpcIpv6CidrBlockAssociation$Ipv6CidrBlock": "<p>The IPv6 CIDR block.</p>",
         "VpcIpv6CidrBlockAssociation$NetworkBorderGroup": "<p>The name of the unique set of Availability Zones, Local Zones, or Wavelength Zones from which Amazon Web Services advertises IP addresses, for example, <code>us-east-1-wl1-bos-wlz-1</code>.</p>",
@@ -30174,6 +30301,7 @@
         "TransitGatewayConnectPeer$Tags": "<p>The tags for the Connect peer.</p>",
         "TransitGatewayMeteringPolicy$Tags": "<p>The tags assigned to the transit gateway metering policy.</p>",
         "TransitGatewayMulticastDomain$Tags": "<p>The tags for the transit gateway multicast domain.</p>",
+        "TransitGatewayNetworkFunctionAttachment$Tags": "<p>The tags for the attachment.</p>",
         "TransitGatewayPeeringAttachment$Tags": "<p>The tags for the transit gateway peering attachment.</p>",
         "TransitGatewayPolicyTable$Tags": "<p>he key-value pairs associated with the transit gateway policy table.</p>",
         "TransitGatewayRouteTable$Tags": "<p>Any tags assigned to the route table.</p>",
@@ -30289,6 +30417,7 @@
         "CreateTransitGatewayConnectRequest$TagSpecifications": "<p>The tags to apply to the Connect attachment.</p>",
         "CreateTransitGatewayMeteringPolicyRequest$TagSpecifications": "<p>The tags to assign to the metering policy.</p>",
         "CreateTransitGatewayMulticastDomainRequest$TagSpecifications": "<p>The tags for the transit gateway multicast domain.</p>",
+        "CreateTransitGatewayNetworkFunctionAttachmentRequest$TagSpecifications": "<p>The tags to apply to the network function attachment.</p>",
         "CreateTransitGatewayPeeringAttachmentRequest$TagSpecifications": "<p>The tags to apply to the transit gateway peering attachment.</p>",
         "CreateTransitGatewayPolicyTableRequest$TagSpecifications": "<p>The tags specification for the transit gateway policy table created during the request.</p>",
         "CreateTransitGatewayRequest$TagSpecifications": "<p>The tags to apply to the transit gateway.</p>",
@@ -30863,6 +30992,7 @@
         "CreateTransitGatewayRouteTableAnnouncementRequest$PeeringAttachmentId": "<p>The ID of the peering attachment.</p>",
         "DeleteTransitGatewayClientVpnAttachmentRequest$TransitGatewayAttachmentId": "<p>The ID of the Transit Gateway attachment.</p>",
         "DeleteTransitGatewayConnectRequest$TransitGatewayAttachmentId": "<p>The ID of the Connect attachment.</p>",
+        "DeleteTransitGatewayNetworkFunctionAttachmentRequest$TransitGatewayAttachmentId": "<p>The ID of the network function attachment.</p>",
         "DeleteTransitGatewayPeeringAttachmentRequest$TransitGatewayAttachmentId": "<p>The ID of the transit gateway peering attachment.</p>",
         "DeleteTransitGatewayVpcAttachmentRequest$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
         "DisableTransitGatewayRouteTablePropagationRequest$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
@@ -30875,6 +31005,7 @@
         "GetTransitGatewayAttachmentPropagationsRequest$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
         "ModifyTransitGatewayAttachmentNatConfigurationRequest$TransitGatewayAttachmentId": "<p>The ID of the transit gateway attachment.</p>",
         "ModifyTransitGatewayAttachmentNatConfigurationResult$TransitGatewayAttachmentId": "<p>The ID of the transit gateway attachment.</p>",
+        "ModifyTransitGatewayNetworkFunctionAttachmentRequest$TransitGatewayAttachmentId": "<p>The ID of the network function attachment.</p>",
         "ModifyTransitGatewayPrefixListReferenceRequest$TransitGatewayAttachmentId": "<p>The ID of the attachment to which traffic is routed.</p>",
         "ModifyTransitGatewayVpcAttachmentRequest$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
         "RejectTransitGatewayClientVpnAttachmentRequest$TransitGatewayAttachmentId": "<p>The ID of the Transit Gateway attachment.</p>",
@@ -30883,6 +31014,7 @@
         "RejectTransitGatewayVpcAttachmentRequest$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
         "ReplaceTransitGatewayRouteRequest$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
         "TransitGatewayAssociation$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
+        "TransitGatewayAttachmentIdList$member": null,
         "TransitGatewayAttachmentIdStringList$member": null,
         "TransitGatewayClientVpnAttachment$TransitGatewayAttachmentId": "<p>The ID of the Transit Gateway attachment.</p>",
         "TransitGatewayConfigurationDescribeEndpointStructure$TransitGatewayAttachmentId": "<p>The ID of the Transit Gateway attachment.</p>",
@@ -30891,11 +31023,21 @@
         "TransitGatewayConnectPeer$TransitGatewayAttachmentId": "<p>The ID of the Connect attachment.</p>",
         "TransitGatewayMeteringPolicyRule$SourceTransitGatewayAttachmentId": "<p>The ID of the source transit gateway attachment.</p>",
         "TransitGatewayMeteringPolicyRule$DestinationTransitGatewayAttachmentId": "<p>The ID of the destination transit gateway attachment.</p>",
+        "TransitGatewayNetworkFunctionAttachment$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
+        "TransitGatewayNetworkFunctionAttachmentIdList$member": null,
         "TransitGatewayPolicyTableAssociation$TransitGatewayAttachmentId": "<p>The ID of the transit gateway attachment.</p>",
         "TransitGatewayPrefixListAttachment$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
         "TransitGatewayPropagation$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
         "TransitGatewayRouteTableAnnouncement$PeeringAttachmentId": "<p>The ID of the peering attachment.</p>",
+        "VpcEndpointConnection$TransitGatewayAttachmentId": "<p>The ID of the transit gateway attachment, if the connection is for a transit gateway attachment.</p>",
         "VpnConnectionOptionsSpecification$TransportTransitGatewayAttachmentId": "<p>The transit gateway attachment ID to use for the VPN tunnel.</p> <p>Required if <code>OutsideIpAddressType</code> is set to <code>PrivateIpv4</code>.</p>"
+      }
+    },
+    "TransitGatewayAttachmentIdList": {
+      "base": null,
+      "refs": {
+        "AcceptVpcEndpointConnectionsRequest$TransitGatewayAttachmentIds": "<p>The IDs of the transit gateway attachments to accept. This parameter is supported only for Gateway Load Balancer endpoint services.</p> <p>You must specify either <code>VpcEndpointIds</code> or <code>TransitGatewayAttachmentIds</code>, but not both.</p>",
+        "RejectVpcEndpointConnectionsRequest$TransitGatewayAttachmentIds": "<p>The IDs of the transit gateway attachments to reject. This parameter is supported only for Gateway Load Balancer endpoint services.</p> <p>You must specify either <code>VpcEndpointIds</code> or <code>TransitGatewayAttachmentIds</code>, but not both.</p>"
       }
     },
     "TransitGatewayAttachmentIdStringList": {
@@ -30975,6 +31117,7 @@
       "refs": {
         "TransitGatewayAttachment$State": "<p>The attachment state. Note that the <code>initiating</code> state has been deprecated.</p>",
         "TransitGatewayConnect$State": "<p>The state of the attachment.</p>",
+        "TransitGatewayNetworkFunctionAttachment$State": "<p>The state of the attachment.</p>",
         "TransitGatewayPeeringAttachment$State": "<p>The state of the transit gateway peering attachment. Note that the <code>initiating</code> state has been deprecated.</p>",
         "TransitGatewayVpcAttachment$State": "<p>The state of the VPC attachment. Note that the <code>initiating</code> state has been deprecated.</p>"
       }
@@ -31086,6 +31229,7 @@
         "CreateRouteRequest$TransitGatewayId": "<p>The ID of a transit gateway.</p>",
         "CreateTransitGatewayMeteringPolicyRequest$TransitGatewayId": "<p>The ID of the transit gateway for which to create the metering policy.</p>",
         "CreateTransitGatewayMulticastDomainRequest$TransitGatewayId": "<p>The ID of the transit gateway.</p>",
+        "CreateTransitGatewayNetworkFunctionAttachmentRequest$TransitGatewayId": "<p>The ID of the transit gateway. The transit gateway must be in the <code>available</code> state.</p>",
         "CreateTransitGatewayPeeringAttachmentRequest$TransitGatewayId": "<p>The ID of the transit gateway.</p>",
         "CreateTransitGatewayPolicyTableRequest$TransitGatewayId": "<p>The ID of the transit gateway used for the policy table.</p>",
         "CreateTransitGatewayRouteTableRequest$TransitGatewayId": "<p>The ID of the transit gateway.</p>",
@@ -31128,6 +31272,7 @@
         "DescribeTransitGatewayConnectsRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
         "DescribeTransitGatewayMeteringPoliciesRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
         "DescribeTransitGatewayMulticastDomainsRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
+        "DescribeTransitGatewayNetworkFunctionAttachmentsRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
         "DescribeTransitGatewayPeeringAttachmentsRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
         "DescribeTransitGatewayPolicyTablesRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
         "DescribeTransitGatewayRouteTableAnnouncementsRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
@@ -31359,6 +31504,27 @@
       "base": null,
       "refs": {
         "TransitGatewayNatRule$State": "<p>The state of the NAT gateway rule. The possible values are:</p> <ul> <li> <p> <code>pending</code> - The transit gateway is applying a change to the rule.</p> </li> <li> <p> <code>activated</code> - The rule is in effect because NAT gateway support is enabled for the attachment.</p> </li> <li> <p> <code>deactivated</code> - The rule isn't in effect because NAT gateway support is disabled for the attachment.</p> </li> </ul>"
+      }
+    },
+    "TransitGatewayNetworkFunctionAttachment": {
+      "base": "<p>Contains information about a transit gateway network function attachment, including the attachment ID, the transit gateway, the endpoint service, the Availability Zones, and the state of the attachment.</p>",
+      "refs": {
+        "CreateTransitGatewayNetworkFunctionAttachmentResult$TransitGatewayNetworkFunctionAttachment": "<p>Information about the network function attachment.</p>",
+        "DeleteTransitGatewayNetworkFunctionAttachmentResult$TransitGatewayNetworkFunctionAttachment": "<p>Information about the deleted network function attachment.</p>",
+        "ModifyTransitGatewayNetworkFunctionAttachmentResult$TransitGatewayNetworkFunctionAttachment": "<p>Information about the network function attachment.</p>",
+        "TransitGatewayNetworkFunctionAttachmentList$member": null
+      }
+    },
+    "TransitGatewayNetworkFunctionAttachmentIdList": {
+      "base": null,
+      "refs": {
+        "DescribeTransitGatewayNetworkFunctionAttachmentsRequest$TransitGatewayAttachmentIds": "<p>The IDs of the network function attachments.</p>"
+      }
+    },
+    "TransitGatewayNetworkFunctionAttachmentList": {
+      "base": null,
+      "refs": {
+        "DescribeTransitGatewayNetworkFunctionAttachmentsResult$TransitGatewayNetworkFunctionAttachments": "<p>Information about the network function attachments.</p>"
       }
     },
     "TransitGatewayNetworkInterfaceIdList": {
@@ -32238,6 +32404,8 @@
         "TransitGatewayMulticastDeregisteredGroupSources$DeregisteredNetworkInterfaceIds": "<p>The network interface IDs of the non-registered members.</p>",
         "TransitGatewayMulticastRegisteredGroupMembers$RegisteredNetworkInterfaceIds": "<p>The ID of the registered network interfaces.</p>",
         "TransitGatewayMulticastRegisteredGroupSources$RegisteredNetworkInterfaceIds": "<p>The IDs of the network interfaces members registered with the transit gateway multicast group.</p>",
+        "TransitGatewayNetworkFunctionAttachment$AvailabilityZones": "<p>The names of the Availability Zones for the attachment.</p>",
+        "TransitGatewayNetworkFunctionAttachment$AvailabilityZoneIds": "<p>The IDs of the Availability Zones for the attachment.</p>",
         "TransitGatewayOptions$TransitGatewayCidrBlocks": "<p>The transit gateway CIDR blocks.</p>",
         "TransitGatewayVpcAttachment$SubnetIds": "<p>The IDs of the subnets.</p>",
         "UpdateCapacityManagerMonitoredTagKeysRequest$ActivateTagKeys": "<p> The tag keys to activate for monitoring. Once activated, these tag keys will be included as dimensions in capacity metric data. </p>",
@@ -33236,11 +33404,11 @@
     "VpcEndpointIdList": {
       "base": null,
       "refs": {
-        "AcceptVpcEndpointConnectionsRequest$VpcEndpointIds": "<p>The IDs of the interface VPC endpoints.</p>",
+        "AcceptVpcEndpointConnectionsRequest$VpcEndpointIds": "<p>The IDs of the interface VPC endpoints.</p> <p>You must specify either <code>VpcEndpointIds</code> or <code>TransitGatewayAttachmentIds</code>, but not both.</p>",
         "DeleteVpcEndpointsRequest$VpcEndpointIds": "<p>The IDs of the VPC endpoints.</p>",
         "DescribeVpcEndpointAssociationsRequest$VpcEndpointIds": "<p>The IDs of the VPC endpoints.</p>",
         "DescribeVpcEndpointsRequest$VpcEndpointIds": "<p>The IDs of the VPC endpoints.</p>",
-        "RejectVpcEndpointConnectionsRequest$VpcEndpointIds": "<p>The IDs of the VPC endpoints.</p>"
+        "RejectVpcEndpointConnectionsRequest$VpcEndpointIds": "<p>The IDs of the VPC endpoints.</p> <p>You must specify either <code>VpcEndpointIds</code> or <code>TransitGatewayAttachmentIds</code>, but not both.</p>"
       }
     },
     "VpcEndpointRouteTableIdList": {

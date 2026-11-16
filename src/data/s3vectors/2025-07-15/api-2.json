@@ -450,6 +450,26 @@
         {"shape":"NotFoundException"}
       ],
       "idempotent":true
+    },
+    "UpdateMetadataConfiguration":{
+      "name":"UpdateMetadataConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateMetadataConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateMetadataConfigurationInput"},
+      "output":{"shape":"UpdateMetadataConfigurationOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"},
+        {"shape":"ConflictException"},
+        {"shape":"NotFoundException"}
+      ]
     }
   },
   "shapes":{
@@ -464,6 +484,28 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "AnalyzerStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "BUILDING"
+      ]
+    },
+    "Bm25Score":{
+      "type":"structure",
+      "required":[
+        "metadataKey",
+        "score"
+      ],
+      "members":{
+        "metadataKey":{"shape":"MetadataKey"},
+        "score":{"shape":"Float"}
+      }
+    },
+    "Bm25ScoreList":{
+      "type":"list",
+      "member":{"shape":"Bm25Score"}
     },
     "Boolean":{
       "type":"boolean",
@@ -816,6 +858,21 @@
       },
       "exception":true
     },
+    "LanguageCode":{
+      "type":"string",
+      "enum":[
+        "en",
+        "fr",
+        "es",
+        "pt",
+        "it",
+        "de",
+        "nl",
+        "zh",
+        "ja",
+        "ko"
+      ]
+    },
     "ListIndexesInput":{
       "type":"structure",
       "members":{
@@ -968,10 +1025,34 @@
     },
     "MetadataConfiguration":{
       "type":"structure",
-      "required":["nonFilterableMetadataKeys"],
       "members":{
-        "nonFilterableMetadataKeys":{"shape":"NonFilterableMetadataKeys"}
+        "nonFilterableMetadataKeys":{"shape":"NonFilterableMetadataKeys"},
+        "textSearchConfigurations":{"shape":"MetadataConfigurationTextSearchConfigurationsList"}
       }
+    },
+    "MetadataConfigurationAdd":{
+      "type":"structure",
+      "members":{
+        "textSearchConfigurations":{"shape":"MetadataConfigurationAddTextSearchConfigurationsList"}
+      }
+    },
+    "MetadataConfigurationAddTextSearchConfigurationsList":{
+      "type":"list",
+      "member":{"shape":"TextSearchConfiguration"},
+      "max":10,
+      "min":0
+    },
+    "MetadataConfigurationDelete":{
+      "type":"structure",
+      "members":{
+        "textSearchConfigurations":{"shape":"TextSearchConfigurationKeys"}
+      }
+    },
+    "MetadataConfigurationTextSearchConfigurationsList":{
+      "type":"list",
+      "member":{"shape":"TextSearchConfiguration"},
+      "max":10,
+      "min":0
     },
     "MetadataKey":{
       "type":"string",
@@ -982,7 +1063,7 @@
       "type":"list",
       "member":{"shape":"MetadataKey"},
       "max":10,
-      "min":1
+      "min":0
     },
     "NotFoundException":{
       "type":"structure",
@@ -1059,16 +1140,45 @@
       "required":["key"],
       "members":{
         "distance":{"shape":"Float"},
+        "scores":{"shape":"QueryScores"},
         "key":{"shape":"VectorKey"},
         "metadata":{"shape":"VectorMetadata"}
       }
     },
-    "QueryVectorsInput":{
+    "QueryScores":{
+      "type":"structure",
+      "members":{
+        "fused":{"shape":"Float"},
+        "bm25Scores":{"shape":"Bm25ScoreList"},
+        "vectorDistance":{"shape":"Float"}
+      }
+    },
+    "QueryText":{
       "type":"structure",
       "required":[
-        "topK",
-        "queryVector"
+        "text",
+        "metadataKey"
       ],
+      "members":{
+        "text":{"shape":"QueryTextString"},
+        "metadataKey":{"shape":"MetadataKey"}
+      },
+      "sensitive":true
+    },
+    "QueryTextList":{
+      "type":"list",
+      "member":{"shape":"QueryText"},
+      "max":10,
+      "min":1
+    },
+    "QueryTextString":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "QueryVectorsInput":{
+      "type":"structure",
+      "required":["topK"],
       "members":{
         "vectorBucketName":{"shape":"VectorBucketName"},
         "indexName":{"shape":"IndexName"},
@@ -1079,6 +1189,8 @@
         "queryMode":{"shape":"IndexMode"},
         "returnMetadata":{"shape":"Boolean"},
         "returnDistance":{"shape":"Boolean"},
+        "queryTexts":{"shape":"QueryTextList"},
+        "returnScores":{"shape":"Boolean"},
         "nextToken":{"shape":"QueryVectorsNextToken"}
       }
     },
@@ -1192,6 +1304,28 @@
       "key":{"shape":"TagKey"},
       "value":{"shape":"TagValue"}
     },
+    "TextSearchConfiguration":{
+      "type":"structure",
+      "required":["metadataKey"],
+      "members":{
+        "metadataKey":{"shape":"MetadataKey"},
+        "language":{"shape":"LanguageCode"},
+        "status":{"shape":"AnalyzerStatus"}
+      }
+    },
+    "TextSearchConfigurationKey":{
+      "type":"structure",
+      "required":["metadataKey"],
+      "members":{
+        "metadataKey":{"shape":"MetadataKey"}
+      }
+    },
+    "TextSearchConfigurationKeys":{
+      "type":"list",
+      "member":{"shape":"TextSearchConfigurationKey"},
+      "max":10,
+      "min":1
+    },
     "Timestamp":{"type":"timestamp"},
     "TooManyRequestsException":{
       "type":"structure",
@@ -1247,6 +1381,23 @@
     "UpdateIndexModeOutput":{
       "type":"structure",
       "members":{}
+    },
+    "UpdateMetadataConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "vectorBucketName":{"shape":"VectorBucketName"},
+        "indexName":{"shape":"IndexName"},
+        "indexArn":{"shape":"IndexArn"},
+        "add":{"shape":"MetadataConfigurationAdd"},
+        "delete":{"shape":"MetadataConfigurationDelete"}
+      }
+    },
+    "UpdateMetadataConfigurationOutput":{
+      "type":"structure",
+      "required":["indexArn"],
+      "members":{
+        "indexArn":{"shape":"IndexArn"}
+      }
     },
     "ValidationException":{
       "type":"structure",

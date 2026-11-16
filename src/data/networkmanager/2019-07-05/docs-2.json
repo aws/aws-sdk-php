@@ -4,12 +4,14 @@
   "operations": {
     "AcceptAttachment": "<p>Accepts a core network attachment request. </p> <p>Once the attachment request is accepted by a core network owner, the attachment is created and connected to a core network.</p>",
     "AssociateConnectPeer": "<p>Associates a core network Connect peer with a device and optionally, with a link. </p> <p>If you specify a link, it must be associated with the specified device. You can only associate core network Connect peers that have been created on a core network Connect attachment on a core network. </p>",
+    "AssociateContextStore": "<p>Associates a transit gateway with a context store. The transit gateway must be registered with the global network of the context store, and can't be associated with more than one context store. The context store must be in the <code>AVAILABLE</code> state.</p> <p>The association is in the <code>ASSOCIATING</code> state when it's created, and changes to <code>ASSOCIATED</code> when it's complete.</p>",
     "AssociateCustomerGateway": "<p>Associates a customer gateway with a device and optionally, with a link. If you specify a link, it must be associated with the specified device. </p> <p>You can only associate customer gateways that are connected to a VPN attachment on a transit gateway or core network registered in your global network. When you register a transit gateway or core network, customer gateways that are connected to the transit gateway are automatically included in the global network. To list customer gateways that are connected to a transit gateway, use the <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeVpnConnections.html\">DescribeVpnConnections</a> EC2 API and filter by <code>transit-gateway-id</code>.</p> <p>You cannot associate a customer gateway with more than one device and link. </p>",
     "AssociateLink": "<p>Associates a link to a device. A device can be associated to multiple links and a link can be associated to multiple devices. The device and link must be in the same global network and the same site.</p>",
     "AssociateTransitGatewayConnectPeer": "<p>Associates a transit gateway Connect peer with a device, and optionally, with a link. If you specify a link, it must be associated with the specified device. </p> <p>You can only associate transit gateway Connect peers that have been created on a transit gateway that's registered in your global network.</p> <p>You cannot associate a transit gateway Connect peer with more than one device and link. </p>",
     "CreateConnectAttachment": "<p>Creates a core network Connect attachment from a specified core network attachment. </p> <p>A core network Connect attachment is a GRE-based tunnel attachment that you can use to establish a connection between a core network and an appliance. A core network Connect attachment uses an existing VPC attachment as the underlying transport mechanism.</p>",
     "CreateConnectPeer": "<p>Creates a core network Connect peer for a specified core network connect attachment between a core network and an appliance. The peer address and transit gateway address must be the same IP address family (IPv4 or IPv6).</p>",
     "CreateConnection": "<p>Creates a connection between two devices. The devices can be a physical or virtual appliance that connects to a third-party appliance in a VPC, or a physical appliance that connects to another physical appliance in an on-premises network.</p>",
+    "CreateContextStore": "<p>Creates a context store in a global network. A context store maintains context entries, such as security groups, subnets, and attachments, for the resources connected to the transit gateways that you associate with it.</p> <p>The context store is in the <code>PENDING</code> state when it's created, and changes to <code>AVAILABLE</code> when it's ready to use.</p>",
     "CreateCoreNetwork": "<p>Creates a core network as part of your global network, and optionally, with a core network policy.</p>",
     "CreateCoreNetworkPrefixListAssociation": "<p>Creates an association between a core network and a prefix list for routing control.</p>",
     "CreateDevice": "<p>Creates a new device in a global network. If you specify both a site ID and a location, the location of the site is used for visualization in the Network Manager console.</p>",
@@ -24,6 +26,7 @@
     "DeleteAttachment": "<p>Deletes an attachment. Supports all attachment types.</p>",
     "DeleteConnectPeer": "<p>Deletes a Connect peer.</p>",
     "DeleteConnection": "<p>Deletes the specified connection in your global network.</p>",
+    "DeleteContextStore": "<p>Deletes a context store. The context store must be in the <code>AVAILABLE</code> state. You must disassociate all transit gateways from the context store before you can delete it.</p>",
     "DeleteCoreNetwork": "<p>Deletes a core network along with all core network policies. This can only be done if there are no attachments on a core network.</p>",
     "DeleteCoreNetworkPolicyVersion": "<p>Deletes a policy version from a core network. You can't delete the current LIVE policy.</p>",
     "DeleteCoreNetworkPrefixListAssociation": "<p>Deletes an association between a core network and a prefix list.</p>",
@@ -36,6 +39,7 @@
     "DeregisterTransitGateway": "<p>Deregisters a transit gateway from your global network. This action does not delete your transit gateway, or modify any of its attachments. This action removes any customer gateway associations.</p>",
     "DescribeGlobalNetworks": "<p>Describes one or more global networks. By default, all global networks are described. To describe the objects in your global network, you must use the appropriate <code>Get*</code> action. For example, to list the transit gateways in your global network, use <a>GetTransitGatewayRegistrations</a>.</p>",
     "DisassociateConnectPeer": "<p>Disassociates a core network Connect peer from a device and a link. </p>",
+    "DisassociateContextStore": "<p>Disassociates a transit gateway from a context store. The association must be in the <code>ASSOCIATED</code> or <code>FAILED</code> state. The association stays in the <code>DISASSOCIATING</code> state until the disassociation completes.</p>",
     "DisassociateCustomerGateway": "<p>Disassociates a customer gateway from a device and a link.</p>",
     "DisassociateLink": "<p>Disassociates an existing device from a link. You must first disassociate any customer gateways that are associated with the link.</p>",
     "DisassociateTransitGatewayConnectPeer": "<p>Disassociates a transit gateway Connect peer from a device and link.</p>",
@@ -44,6 +48,9 @@
     "GetConnectPeer": "<p>Returns information about a core network Connect peer.</p>",
     "GetConnectPeerAssociations": "<p>Returns information about a core network Connect peer associations.</p>",
     "GetConnections": "<p>Gets information about one or more of your connections in a global network.</p>",
+    "GetContextStore": "<p>Returns information about a context store.</p>",
+    "GetContextStoreAssociation": "<p>Returns information about the association between a context store and a transit gateway.</p>",
+    "GetContextVersion": "<p>Returns the current version of the context entries of a context store. The context store must be in the <code>AVAILABLE</code> state.</p>",
     "GetCoreNetwork": "<p>Returns information about the LIVE policy for a core network.</p>",
     "GetCoreNetworkChangeEvents": "<p>Returns information about a core network change event.</p>",
     "GetCoreNetworkChangeSet": "<p>Returns a change set between the LIVE core network policy and a submitted policy.</p>",
@@ -71,6 +78,10 @@
     "ListAttachmentRoutingPolicyAssociations": "<p>Lists the routing policy associations for attachments in a core network.</p>",
     "ListAttachments": "<p>Returns a list of core network attachments.</p>",
     "ListConnectPeers": "<p>Returns a list of core network Connect peers.</p>",
+    "ListContextChanges": "<p>Returns the context entries that were added to or removed from a context store after the specified version. The context store must be in the <code>AVAILABLE</code> state.</p>",
+    "ListContextStoreAssociations": "<p>Returns the transit gateway associations of a context store.</p>",
+    "ListContextStores": "<p>Returns the context stores in your account. You can optionally return only the context stores in a specific global network.</p>",
+    "ListContexts": "<p>Returns the context entries of a context store, and the version of the context entries. To get the context entries that were added or removed after this version, specify the returned <code>VersionId</code> in a <code>ListContextChanges</code> request. The context store must be in the <code>AVAILABLE</code> state.</p>",
     "ListCoreNetworkPolicyVersions": "<p>Returns a list of core network policy versions.</p>",
     "ListCoreNetworkPrefixListAssociations": "<p>Lists the prefix list associations for a core network.</p>",
     "ListCoreNetworkRoutingInformation": "<p>Lists routing information for a core network, including routes and their attributes.</p>",
@@ -91,6 +102,7 @@
     "UntagResource": "<p>Removes tags from a specified resource.</p>",
     "UpdateAttachmentNatConfiguration": "<p>Updates the NAT configuration of a core network attachment. You can enable or disable NAT gateway support, specify whether the core network installs system routes for the NAT CIDR blocks, and replace the NAT rules of the attachment. Specify at least one of <code>NatGatewaySupport</code>, <code>NatSystemRouteSupport</code>, or <code>NatGatewayRules</code>.</p> <p>Only the core network owner can update the NAT configuration of an attachment. The attachment must be in the <code>AVAILABLE</code>, <code>PENDING_ATTACHMENT_ACCEPTANCE</code>, or <code>PENDING_TAG_ACCEPTANCE</code> state. Changes are applied asynchronously, and the attachment is in the <code>UPDATING</code> state while they are applied. If the attachment is pending acceptance, the NAT configuration is stored and is applied after the attachment is accepted.</p>",
     "UpdateConnection": "<p>Updates the information for an existing connection. To remove information for any of the parameters, specify an empty string.</p>",
+    "UpdateContextStore": "<p>Updates the description of a context store. The context store must be in the <code>AVAILABLE</code> state.</p>",
     "UpdateCoreNetwork": "<p>Updates the description of a core network.</p>",
     "UpdateDevice": "<p>Updates the details for an existing device. To remove information for any of the parameters, specify an empty string.</p>",
     "UpdateDirectConnectGatewayAttachment": "<p>Updates the edge locations associated with an Amazon Web Services Direct Connect gateway attachment. </p>",
@@ -164,6 +176,14 @@
       "refs": {}
     },
     "AssociateConnectPeerResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateContextStoreRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateContextStoreResponse": {
       "base": null,
       "refs": {}
     },
@@ -375,6 +395,7 @@
       "refs": {
         "CreateConnectAttachmentRequest$ClientToken": "<p>The client token associated with the request.</p>",
         "CreateConnectPeerRequest$ClientToken": "<p>The client token associated with the request.</p>",
+        "CreateContextStoreRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "CreateCoreNetworkPrefixListAssociationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "CreateCoreNetworkRequest$ClientToken": "<p>The client token associated with a core network request.</p>",
         "CreateDirectConnectGatewayAttachmentRequest$ClientToken": "<p>client token</p>",
@@ -575,6 +596,13 @@
         "AttachmentRoutingPolicyAssociationSummary$RoutingPolicyLabel": "<p>The routing policy label associated with the attachment.</p>",
         "Connection$Description": "<p>The description of the connection.</p>",
         "ConstrainedStringList$member": null,
+        "ContextEntry$ContextId": "<p>The ID of the context entry.</p>",
+        "ContextEntry$ContextType": "<p>The type of the context entry, for example <code>SegmentId</code>, <code>Subnet</code>, or <code>Attachment</code>.</p>",
+        "ContextEntry$SegmentType": "<p>The type of the segment, for example <code>SecurityGroup</code>. Network Manager returns this value only when the context type is <code>SegmentId</code>.</p>",
+        "ContextEntry$PublicId": "<p>The ID of the resource, for example a security group ID, subnet ID, or transit gateway attachment ID.</p>",
+        "ContextEntry$AvailabilityZone": "<p>The ID of the Availability Zone of the resource, for example <code>use1-az2</code>. Network Manager returns this value only when the context type is <code>Subnet</code>.</p>",
+        "ContextEntry$AttachmentType": "<p>The type of the attachment, for example <code>VPC</code>. Network Manager returns this value only when the context type is <code>Attachment</code>.</p>",
+        "ContextStore$Description": "<p>The description of the context store.</p>",
         "CoreNetwork$Description": "<p>The description of a core network.</p>",
         "CoreNetworkChange$Identifier": "<p>The resource identifier.</p>",
         "CoreNetworkChange$IdentifierPath": "<p>Uniquely identifies the path for a change within the changeset. For example, the <code>IdentifierPath</code> for a core network segment change might be <code>\"CORE_NETWORK_SEGMENT/us-east-1/devsegment\"</code>.</p>",
@@ -599,6 +627,7 @@
         "CoreNetworkSummary$Description": "<p>The description of a core network.</p>",
         "CreateConnectAttachmentRequest$RoutingPolicyLabel": "<p>The routing policy label to apply to the Connect attachment for traffic routing decisions.</p>",
         "CreateConnectionRequest$Description": "<p>A description of the connection.</p> <p>Length Constraints: Maximum length of 256 characters.</p>",
+        "CreateContextStoreRequest$Description": "<p>A description of the context store.</p> <p>Constraints: Maximum length of 256 characters. Only printable ASCII characters are allowed.</p>",
         "CreateCoreNetworkPrefixListAssociationRequest$PrefixListAlias": "<p>An optional alias for the prefix list association.</p>",
         "CreateCoreNetworkPrefixListAssociationResponse$PrefixListAlias": "<p>The alias of the prefix list association, if provided.</p>",
         "CreateCoreNetworkRequest$Description": "<p>The description of a core network.</p>",
@@ -623,6 +652,7 @@
         "Device$SerialNumber": "<p>The device serial number.</p>",
         "EdgeOverride$UseEdge": "<p>The edge that should be used when overriding the current edge order.</p>",
         "EdgeSet$member": null,
+        "GetContextVersionResponse$VersionId": "<p>The current version of the context entries.</p>",
         "GetLinksRequest$Type": "<p>The link type.</p>",
         "GetLinksRequest$Provider": "<p>The link provider.</p>",
         "GetNetworkResourceCountsRequest$ResourceType": "<p>The resource type.</p> <p>The following are the supported resource types for Direct Connect:</p> <ul> <li> <p> <code>dxcon</code> </p> </li> <li> <p> <code>dx-gateway</code> </p> </li> <li> <p> <code>dx-vif</code> </p> </li> </ul> <p>The following are the supported resource types for Network Manager:</p> <ul> <li> <p> <code>attachment</code> </p> </li> <li> <p> <code>connect-peer</code> </p> </li> <li> <p> <code>connection</code> </p> </li> <li> <p> <code>core-network</code> </p> </li> <li> <p> <code>device</code> </p> </li> <li> <p> <code>link</code> </p> </li> <li> <p> <code>peering</code> </p> </li> <li> <p> <code>site</code> </p> </li> </ul> <p>The following are the supported resource types for Amazon VPC:</p> <ul> <li> <p> <code>customer-gateway</code> </p> </li> <li> <p> <code>transit-gateway</code> </p> </li> <li> <p> <code>transit-gateway-attachment</code> </p> </li> <li> <p> <code>transit-gateway-connect-peer</code> </p> </li> <li> <p> <code>transit-gateway-route-table</code> </p> </li> <li> <p> <code>vpn-connection</code> </p> </li> </ul>",
@@ -634,6 +664,10 @@
         "Link$Description": "<p>The description of the link.</p>",
         "Link$Type": "<p>The type of the link.</p>",
         "Link$Provider": "<p>The provider of the link.</p>",
+        "ListContextChangesRequest$FromVersionId": "<p>The version to return changes from. Specify a version returned by <code>ListContexts</code>, <code>GetContextVersion</code>, or the <code>ToVersionId</code> of a previous <code>ListContextChanges</code> request. If the version is no longer available, the request fails, and you must call <code>ListContexts</code> to get the current context entries.</p>",
+        "ListContextChangesResponse$FromVersionId": "<p>The version that the changes start from.</p>",
+        "ListContextChangesResponse$ToVersionId": "<p>The version that the changes bring the context entries up to. To get later changes, specify this value as <code>FromVersionId</code> in your next request. All pages of the same request return the same version.</p>",
+        "ListContextsResponse$VersionId": "<p>The version of the returned context entries. All pages of the same request return the same version.</p>",
         "ListCoreNetworkRoutingInformationRequest$SegmentName": "<p>The name of the segment to filter routing information by.</p>",
         "Location$Address": "<p>The physical address.</p>",
         "Location$Latitude": "<p>The latitude.</p>",
@@ -675,6 +709,7 @@
         "Site$Description": "<p>The description of the site.</p>",
         "TransitGatewayRegistrationStateReason$Message": "<p>The message for the state reason.</p>",
         "UpdateConnectionRequest$Description": "<p>A description of the connection.</p> <p>Length Constraints: Maximum length of 256 characters.</p>",
+        "UpdateContextStoreRequest$Description": "<p>The new description of the context store.</p> <p>Constraints: Maximum length of 256 characters. Only printable ASCII characters are allowed.</p>",
         "UpdateCoreNetworkRequest$Description": "<p>The description of the update.</p>",
         "UpdateDeviceRequest$Description": "<p>A description of the device.</p> <p>Constraints: Maximum length of 256 characters.</p>",
         "UpdateDeviceRequest$Type": "<p>The type of the device.</p>",
@@ -719,6 +754,103 @@
         "RoutingPolicyAssociationDetail$SharedSegments": "<p>The names of the segments that are shared with each other in the association.</p>",
         "ServiceInsertionSegments$SendVia": "<p>The list of segments associated with the <code>send-via</code> action.</p>",
         "ServiceInsertionSegments$SendTo": "<p>The list of segments associated with the <code>send-to</code> action.</p>"
+      }
+    },
+    "ContextChange": {
+      "base": "<p>Describes a context entry that was added to or removed from a context store.</p>",
+      "refs": {
+        "ContextChangeList$member": null
+      }
+    },
+    "ContextChangeList": {
+      "base": null,
+      "refs": {
+        "ListContextChangesResponse$ContextChanges": "<p>The context entries that were added or removed.</p>"
+      }
+    },
+    "ContextChangeType": {
+      "base": null,
+      "refs": {
+        "ContextChange$ChangeType": "<p>The type of change. The possible values are the following:</p> <ul> <li> <p> <code>ADDED</code>: The context entry was added to the context store.</p> </li> <li> <p> <code>REMOVED</code>: The context entry was removed from the context store.</p> </li> </ul>"
+      }
+    },
+    "ContextEntry": {
+      "base": "<p>Describes a context entry in a context store. A context entry describes a resource, such as a security group, subnet, or attachment.</p>",
+      "refs": {
+        "ContextChange$Context": "<p>The context entry that was added or removed.</p>",
+        "ContextList$member": null
+      }
+    },
+    "ContextList": {
+      "base": null,
+      "refs": {
+        "ListContextsResponse$Contexts": "<p>The context entries.</p>"
+      }
+    },
+    "ContextStore": {
+      "base": "<p>Describes a context store.</p>",
+      "refs": {
+        "ContextStoreList$member": null,
+        "CreateContextStoreResponse$ContextStore": "<p>Information about the context store.</p>",
+        "DeleteContextStoreResponse$ContextStore": "<p>Information about the context store.</p>",
+        "GetContextStoreResponse$ContextStore": "<p>Information about the context store.</p>",
+        "UpdateContextStoreResponse$ContextStore": "<p>Information about the context store.</p>"
+      }
+    },
+    "ContextStoreArn": {
+      "base": null,
+      "refs": {
+        "ContextStore$ContextStoreArn": "<p>The Amazon Resource Name (ARN) of the context store.</p>"
+      }
+    },
+    "ContextStoreAssociation": {
+      "base": "<p>Describes the association between a context store and a transit gateway.</p>",
+      "refs": {
+        "AssociateContextStoreResponse$ContextStoreAssociation": "<p>Information about the context store association.</p>",
+        "ContextStoreAssociationList$member": null,
+        "DisassociateContextStoreResponse$ContextStoreAssociation": "<p>Information about the context store association.</p>",
+        "GetContextStoreAssociationResponse$ContextStoreAssociation": "<p>Information about the context store association.</p>"
+      }
+    },
+    "ContextStoreAssociationList": {
+      "base": null,
+      "refs": {
+        "ListContextStoreAssociationsResponse$ContextStoreAssociations": "<p>The context store associations.</p>"
+      }
+    },
+    "ContextStoreAssociationState": {
+      "base": null,
+      "refs": {
+        "ContextStoreAssociation$State": "<p>The state of the association. The possible values are the following:</p> <ul> <li> <p> <code>ASSOCIATING</code>: The transit gateway is being associated with the context store.</p> </li> <li> <p> <code>ASSOCIATED</code>: The transit gateway is associated with the context store.</p> </li> <li> <p> <code>DISASSOCIATING</code>: The transit gateway is being disassociated from the context store.</p> </li> <li> <p> <code>FAILED</code>: The association failed. To remove it, disassociate the transit gateway.</p> </li> </ul>"
+      }
+    },
+    "ContextStoreId": {
+      "base": null,
+      "refs": {
+        "AssociateContextStoreRequest$ContextStoreId": "<p>The ID of the context store.</p>",
+        "ContextStore$ContextStoreId": "<p>The ID of the context store.</p>",
+        "ContextStoreAssociation$ContextStoreId": "<p>The ID of the context store.</p>",
+        "DeleteContextStoreRequest$ContextStoreId": "<p>The ID of the context store to delete.</p>",
+        "DisassociateContextStoreRequest$ContextStoreId": "<p>The ID of the context store.</p>",
+        "GetContextStoreAssociationRequest$ContextStoreId": "<p>The ID of the context store.</p>",
+        "GetContextStoreRequest$ContextStoreId": "<p>The ID of the context store.</p>",
+        "GetContextVersionRequest$ContextStoreId": "<p>The ID of the context store.</p>",
+        "ListContextChangesRequest$ContextStoreId": "<p>The ID of the context store.</p>",
+        "ListContextStoreAssociationsRequest$ContextStoreId": "<p>The ID of the context store.</p>",
+        "ListContextsRequest$ContextStoreId": "<p>The ID of the context store.</p>",
+        "UpdateContextStoreRequest$ContextStoreId": "<p>The ID of the context store.</p>"
+      }
+    },
+    "ContextStoreList": {
+      "base": null,
+      "refs": {
+        "ListContextStoresResponse$ContextStores": "<p>The context stores.</p>"
+      }
+    },
+    "ContextStoreState": {
+      "base": null,
+      "refs": {
+        "ContextStore$State": "<p>The state of the context store. The possible values are the following:</p> <ul> <li> <p> <code>PENDING</code>: The context store is being created.</p> </li> <li> <p> <code>AVAILABLE</code>: The context store is ready to use.</p> </li> <li> <p> <code>UPDATING</code>: The context store is being updated.</p> </li> <li> <p> <code>DELETING</code>: The context store is being deleted.</p> </li> <li> <p> <code>DELETED</code>: The context store is deleted.</p> </li> </ul>"
       }
     },
     "CoreNetwork": {
@@ -988,6 +1120,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateContextStoreRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateContextStoreResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateCoreNetworkPrefixListAssociationRequest": {
       "base": null,
       "refs": {}
@@ -1120,6 +1260,8 @@
         "ConnectPeerSummary$CreatedAt": "<p>The timestamp when a Connect peer was created.</p>",
         "Connection$CreatedAt": "<p>The date and time that the connection was created.</p>",
         "ConnectionHealth$Timestamp": "<p>The time the status was last updated.</p>",
+        "ContextStore$CreatedAt": "<p>The date and time that the context store was created.</p>",
+        "ContextStoreAssociation$CreatedAt": "<p>The date and time that the association was created.</p>",
         "CoreNetwork$CreatedAt": "<p>The timestamp when a core network was created.</p>",
         "CoreNetworkChangeEvent$EventTime": "<p>The timestamp for an event change in status.</p>",
         "CoreNetworkPolicy$CreatedAt": "<p>The timestamp when a core network policy was created.</p>",
@@ -1155,6 +1297,14 @@
       "refs": {}
     },
     "DeleteConnectionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteContextStoreRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteContextStoreResponse": {
       "base": null,
       "refs": {}
     },
@@ -1326,6 +1476,14 @@
       "base": null,
       "refs": {}
     },
+    "DisassociateContextStoreRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateContextStoreResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DisassociateCustomerGatewayRequest": {
       "base": null,
       "refs": {}
@@ -1400,6 +1558,7 @@
         "Attachment$EdgeLocation": "<p>The Region where the edge is located. This is returned for all attachment types except a Direct Connect gateway attachment, which instead returns <code>EdgeLocations</code>.</p>",
         "ConnectPeer$EdgeLocation": "<p>The Connect peer Regions where edges are located.</p>",
         "ConnectPeerSummary$EdgeLocation": "<p>The Region where the edge is located.</p>",
+        "ContextEntry$Region": "<p>The Amazon Web Services Region of the resource.</p>",
         "CoreNetworkChangeEventValues$EdgeLocation": "<p>The edge location for the core network change event.</p>",
         "CoreNetworkChangeEventValues$PeerEdgeLocation": "<p>The edge location of the peer in a core network change event.</p>",
         "CoreNetworkEdge$EdgeLocation": "<p>The Region where a core network edge is located.</p>",
@@ -1487,6 +1646,30 @@
       "refs": {}
     },
     "GetConnectionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetContextStoreAssociationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetContextStoreAssociationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetContextStoreRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetContextStoreResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetContextVersionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetContextVersionResponse": {
       "base": null,
       "refs": {}
     },
@@ -1698,9 +1881,11 @@
         "AssociateTransitGatewayConnectPeerRequest$GlobalNetworkId": "<p>The ID of the global network.</p>",
         "ConnectPeerAssociation$GlobalNetworkId": "<p>The ID of the global network.</p>",
         "Connection$GlobalNetworkId": "<p>The ID of the global network.</p>",
+        "ContextStore$GlobalNetworkId": "<p>The ID of the global network that the context store belongs to.</p>",
         "CoreNetwork$GlobalNetworkId": "<p>The ID of the global network that your core network is a part of. </p>",
         "CoreNetworkSummary$GlobalNetworkId": "<p>The global network ID.</p>",
         "CreateConnectionRequest$GlobalNetworkId": "<p>The ID of the global network.</p>",
+        "CreateContextStoreRequest$GlobalNetworkId": "<p>The ID of the global network to create the context store in.</p>",
         "CreateCoreNetworkRequest$GlobalNetworkId": "<p>The ID of the global network that a core network will be a part of. </p>",
         "CreateDeviceRequest$GlobalNetworkId": "<p>The ID of the global network.</p>",
         "CreateLinkRequest$GlobalNetworkId": "<p>The ID of the global network.</p>",
@@ -1736,6 +1921,7 @@
         "GlobalNetworkIdList$member": null,
         "Link$GlobalNetworkId": "<p>The ID of the global network.</p>",
         "LinkAssociation$GlobalNetworkId": "<p>The ID of the global network.</p>",
+        "ListContextStoresRequest$GlobalNetworkId": "<p>The ID of a global network. If you specify this parameter, only the context stores in the global network are returned.</p>",
         "RegisterTransitGatewayRequest$GlobalNetworkId": "<p>The ID of the global network.</p>",
         "RouteAnalysis$GlobalNetworkId": "<p>The ID of the global network.</p>",
         "Site$GlobalNetworkId": "<p>The ID of the global network.</p>",
@@ -1921,6 +2107,38 @@
       "base": null,
       "refs": {}
     },
+    "ListContextChangesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContextChangesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContextStoreAssociationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContextStoreAssociationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContextStoresRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContextStoresResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContextsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListContextsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListCoreNetworkPolicyVersionsRequest": {
       "base": null,
       "refs": {}
@@ -2022,6 +2240,10 @@
         "ListAttachmentRoutingPolicyAssociationsRequest$MaxResults": "<p>The maximum number of results to return in a single page.</p>",
         "ListAttachmentsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListConnectPeersRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "ListContextChangesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "ListContextStoreAssociationsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "ListContextStoresRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "ListContextsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListCoreNetworkPolicyVersionsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListCoreNetworkPrefixListAssociationsRequest$MaxResults": "<p>The maximum number of results to return in a single page.</p>",
         "ListCoreNetworkRoutingInformationRequest$MaxResults": "<p>The maximum number of routing information entries to return in a single page.</p>",
@@ -2227,6 +2449,14 @@
         "ListAttachmentsResponse$NextToken": "<p>The token for the next page of results.</p>",
         "ListConnectPeersRequest$NextToken": "<p>The token for the next page of results.</p>",
         "ListConnectPeersResponse$NextToken": "<p>The token for the next page of results.</p>",
+        "ListContextChangesRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "ListContextChangesResponse$NextToken": "<p>The token for the next page of results.</p>",
+        "ListContextStoreAssociationsRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "ListContextStoreAssociationsResponse$NextToken": "<p>The token for the next page of results.</p>",
+        "ListContextStoresRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "ListContextStoresResponse$NextToken": "<p>The token for the next page of results.</p>",
+        "ListContextsRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "ListContextsResponse$NextToken": "<p>The token for the next page of results.</p>",
         "ListCoreNetworkPolicyVersionsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "ListCoreNetworkPolicyVersionsResponse$NextToken": "<p>The token for the next page of results.</p>",
         "ListCoreNetworkPrefixListAssociationsRequest$NextToken": "<p>The token for the next page of results.</p>",
@@ -2811,11 +3041,13 @@
         "ConnectPeer$Tags": "<p>The list of key-value tags associated with the Connect peer.</p>",
         "ConnectPeerSummary$Tags": "<p>The list of key-value tags associated with the Connect peer summary.</p>",
         "Connection$Tags": "<p>The tags for the connection.</p>",
+        "ContextStore$Tags": "<p>The tags associated with the context store.</p>",
         "CoreNetwork$Tags": "<p>The list of key-value tags associated with a core network.</p>",
         "CoreNetworkSummary$Tags": "<p>The key-value tags associated with a core network summary.</p>",
         "CreateConnectAttachmentRequest$Tags": "<p>The list of key-value tags associated with the request.</p>",
         "CreateConnectPeerRequest$Tags": "<p>The tags associated with the peer request.</p>",
         "CreateConnectionRequest$Tags": "<p>The tags to apply to the resource during creation.</p>",
+        "CreateContextStoreRequest$Tags": "<p>The tags to apply to the context store during creation.</p>",
         "CreateCoreNetworkRequest$Tags": "<p>Key-value tags associated with a core network request.</p>",
         "CreateDeviceRequest$Tags": "<p>The tags to apply to the resource during creation.</p>",
         "CreateDirectConnectGatewayAttachmentRequest$Tags": "<p>The key value tags to apply to the Direct Connect gateway attachment during creation.</p>",
@@ -2859,8 +3091,12 @@
     "TransitGatewayArn": {
       "base": null,
       "refs": {
+        "AssociateContextStoreRequest$TransitGatewayArn": "<p>The Amazon Resource Name (ARN) of the transit gateway to associate with the context store.</p>",
+        "ContextStoreAssociation$TransitGatewayArn": "<p>The Amazon Resource Name (ARN) of the transit gateway.</p>",
         "CreateTransitGatewayPeeringRequest$TransitGatewayArn": "<p>The ARN of the transit gateway for the peering request.</p>",
         "DeregisterTransitGatewayRequest$TransitGatewayArn": "<p>The Amazon Resource Name (ARN) of the transit gateway.</p>",
+        "DisassociateContextStoreRequest$TransitGatewayArn": "<p>The Amazon Resource Name (ARN) of the transit gateway to disassociate from the context store.</p>",
+        "GetContextStoreAssociationRequest$TransitGatewayArn": "<p>The Amazon Resource Name (ARN) of the transit gateway.</p>",
         "RegisterTransitGatewayRequest$TransitGatewayArn": "<p>The Amazon Resource Name (ARN) of the transit gateway.</p>",
         "RouteAnalysisEndpointOptions$TransitGatewayArn": "<p>The ARN of the transit gateway.</p>",
         "TransitGatewayArnList$member": null,
@@ -3004,6 +3240,14 @@
       "refs": {}
     },
     "UpdateConnectionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateContextStoreRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateContextStoreResponse": {
       "base": null,
       "refs": {}
     },

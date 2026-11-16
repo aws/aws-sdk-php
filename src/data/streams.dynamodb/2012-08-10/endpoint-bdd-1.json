@@ -1,6 +1,12 @@
 {
     "version": "1.1",
     "parameters": {
+        "Region": {
+            "builtIn": "AWS::Region",
+            "required": false,
+            "documentation": "The AWS region used to dispatch the request.",
+            "type": "string"
+        },
         "UseDualStack": {
             "builtIn": "AWS::UseDualStack",
             "required": true,
@@ -21,10 +27,26 @@
             "documentation": "Override the endpoint used to send this request",
             "type": "string"
         },
-        "Region": {
-            "builtIn": "AWS::Region",
+        "AccountId": {
+            "builtIn": "AWS::Auth::AccountId",
             "required": false,
-            "documentation": "The AWS region used to dispatch the request.",
+            "documentation": "The AWS AccountId used for the request.",
+            "type": "string"
+        },
+        "AccountIdEndpointMode": {
+            "builtIn": "AWS::Auth::AccountIdEndpointMode",
+            "required": false,
+            "documentation": "The AccountId Endpoint Mode.",
+            "type": "string"
+        },
+        "StreamArn": {
+            "required": false,
+            "documentation": "The ARN of the stream for the request.",
+            "type": "string"
+        },
+        "ShardIterator": {
+            "required": false,
+            "documentation": "The shard iterator for the GetRecords request.",
             "type": "string"
         }
     },
@@ -58,9 +80,74 @@
             "fn": "booleanEquals",
             "argv": [
                 {
+                    "ref": "UseFIPS"
+                },
+                true
+            ]
+        },
+        {
+            "fn": "booleanEquals",
+            "argv": [
+                {
                     "ref": "UseDualStack"
                 },
                 true
+            ]
+        },
+        {
+            "fn": "booleanEquals",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "PartitionResult"
+                        },
+                        "supportsDualStack"
+                    ]
+                },
+                true
+            ]
+        },
+        {
+            "fn": "booleanEquals",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "PartitionResult"
+                        },
+                        "supportsFIPS"
+                    ]
+                },
+                true
+            ]
+        },
+        {
+            "fn": "isSet",
+            "argv": [
+                {
+                    "ref": "AccountIdEndpointMode"
+                }
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "Region"
+                },
+                "me-south-1"
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "Region"
+                },
+                "me-central-1"
             ]
         },
         {
@@ -109,42 +196,196 @@
             ]
         },
         {
-            "fn": "booleanEquals",
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "AccountIdEndpointMode"
+                },
+                "disabled"
+            ]
+        },
+        {
+            "fn": "isSet",
+            "argv": [
+                {
+                    "ref": "StreamArn"
+                }
+            ]
+        },
+        {
+            "fn": "aws.parseArn",
+            "argv": [
+                {
+                    "ref": "StreamArn"
+                }
+            ],
+            "assign": "ParsedArn_ssa_2"
+        },
+        {
+            "fn": "stringEquals",
             "argv": [
                 {
                     "fn": "getAttr",
                     "argv": [
                         {
-                            "ref": "PartitionResult"
+                            "ref": "ParsedArn_ssa_2"
                         },
-                        "supportsDualStack"
+                        "region"
                     ]
                 },
-                true
-            ]
-        },
-        {
-            "fn": "booleanEquals",
-            "argv": [
                 {
-                    "ref": "UseFIPS"
-                },
-                true
+                    "ref": "Region"
+                }
             ]
         },
         {
-            "fn": "booleanEquals",
+            "fn": "stringEquals",
             "argv": [
                 {
                     "fn": "getAttr",
                     "argv": [
                         {
-                            "ref": "PartitionResult"
+                            "ref": "ParsedArn_ssa_2"
                         },
-                        "supportsFIPS"
+                        "service"
                     ]
                 },
-                true
+                "dynamodb"
+            ]
+        },
+        {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "ParsedArn_ssa_2"
+                        },
+                        "accountId"
+                    ]
+                },
+                false
+            ]
+        },
+        {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "ParsedArn_ssa_2"
+                        },
+                        "region"
+                    ]
+                },
+                false
+            ]
+        },
+        {
+            "fn": "isSet",
+            "argv": [
+                {
+                    "ref": "ShardIterator"
+                }
+            ]
+        },
+        {
+            "fn": "aws.parseArn",
+            "argv": [
+                {
+                    "ref": "ShardIterator"
+                }
+            ],
+            "assign": "ParsedArn_ssa_1"
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "ParsedArn_ssa_1"
+                        },
+                        "region"
+                    ]
+                },
+                {
+                    "ref": "Region"
+                }
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "ParsedArn_ssa_1"
+                        },
+                        "service"
+                    ]
+                },
+                "dynamodb"
+            ]
+        },
+        {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "ParsedArn_ssa_1"
+                        },
+                        "region"
+                    ]
+                },
+                false
+            ]
+        },
+        {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "ParsedArn_ssa_1"
+                        },
+                        "accountId"
+                    ]
+                },
+                false
+            ]
+        },
+        {
+            "fn": "isSet",
+            "argv": [
+                {
+                    "ref": "AccountId"
+                }
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "AccountIdEndpointMode"
+                },
+                "required"
+            ]
+        },
+        {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "ref": "AccountId"
+                },
+                false
             ]
         }
     ],
@@ -162,9 +403,7 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": {
-                    "ref": "Endpoint"
-                },
+                "url": "{Endpoint}",
                 "properties": {},
                 "headers": {}
             },
@@ -172,12 +411,8 @@
         },
         {
             "conditions": [],
-            "endpoint": {
-                "url": "https://streams-dynamodb.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                "properties": {},
-                "headers": {}
-            },
-            "type": "endpoint"
+            "error": "Invalid Configuration: AccountIdEndpointMode is required but account endpoints are not supported in this region",
+            "type": "error"
         },
         {
             "conditions": [],
@@ -191,6 +426,48 @@
         {
             "conditions": [],
             "endpoint": {
+                "url": "https://{ParsedArn_ssa_2#accountId}.streams-ddb-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{ParsedArn_ssa_1#accountId}.streams-ddb-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.streams-ddb-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "error": "Credentials-sourced account ID parameter is invalid",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "error": "AccountIdEndpointMode is required but no AccountID was provided or able to be loaded",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
                 "url": "https://streams.dynamodb.{Region}.{PartitionResult#dnsSuffix}",
                 "properties": {},
                 "headers": {}
@@ -200,7 +477,7 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://streams.dynamodb-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "url": "https://{ParsedArn_ssa_2#accountId}.streams-ddb-fips.{Region}.{PartitionResult#dnsSuffix}",
                 "properties": {},
                 "headers": {}
             },
@@ -208,8 +485,21 @@
         },
         {
             "conditions": [],
-            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
-            "type": "error"
+            "endpoint": {
+                "url": "https://{ParsedArn_ssa_1#accountId}.streams-ddb-fips.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.streams-ddb-fips.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
         },
         {
             "conditions": [],
@@ -228,7 +518,34 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://streams.dynamodb.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "url": "https://streams-dynamodb.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{ParsedArn_ssa_2#accountId}.streams-ddb.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{ParsedArn_ssa_1#accountId}.streams-ddb.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.streams-ddb.{Region}.{PartitionResult#dualStackDnsSuffix}",
                 "properties": {},
                 "headers": {}
             },
@@ -241,11 +558,38 @@
         },
         {
             "conditions": [],
+            "endpoint": {
+                "url": "https://{ParsedArn_ssa_2#accountId}.streams-ddb.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{ParsedArn_ssa_1#accountId}.streams-ddb.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.streams-ddb.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
             "error": "Invalid Configuration: Missing Region",
             "type": "error"
         }
     ],
     "root": 2,
-    "nodeCount": 19,
-    "nodes": "/////wAAAAH/////AAAAAAAAABEAAAADAAAAAQAAAAQF9eENAAAAAgAAAAUF9eENAAAAAwAAAAkAAAAGAAAABAX14QYAAAAHAAAACAAAAAgF9eEGAAAACQX14QkF9eEKAAAABAAAABAAAAAKAAAABQAAABAAAAALAAAABgAAABAAAAAMAAAABwAAAA4AAAANAAAACAX14QgF9eEMAAAACAAAAA8F9eELAAAACQX14QcF9eEIAAAACAX14QUF9eEEAAAAAwAAABMAAAASAAAACAX14QEF9eEDAAAACAX14QEF9eEC"
+    "nodeCount": 121,
+    "nodes": "/////wAAAAH/////AAAAAAAAAHgAAAADAAAAAQAAAAQF9eEaAAAAAgAAAAUF9eEaAAAAAwAAADQAAAAGAAAABAAAABwAAAAHAAAABwAAAAgF9eEMAAAACAAAAF4AAAAJAAAACQAAAF4AAAAKAAAACgAAAA0AAAALAAAACwAAAA0AAAAMAAAADAAAAA0AAABeAAAADQAAAFsAAAAOAAAADgAAAA8AAAAUAAAADwAAABAAAAAUAAAAEAAAABEAAAAUAAAAEQAAABIAAAAUAAAAEgAAABMAAAAUAAAAEwX14RcAAAAUAAAAFAAAABUAAAAaAAAAFQAAABYAAAAaAAAAFgAAABcAAAAaAAAAFwAAABgAAAAaAAAAGAAAABkAAAAaAAAAGQX14RgAAAAaAAAAGgAAABsAAABbAAAAHAX14RkF9eEJAAAABQAAAB0F9eEWAAAABwAAAB4F9eESAAAACAAAADMAAAAfAAAACQAAADMAAAAgAAAACgAAACMAAAAhAAAACwAAACMAAAAiAAAADAAAACMAAAAzAAAADQAAADIAAAAkAAAADgAAACUAAAAqAAAADwAAACYAAAAqAAAAEAAAACcAAAAqAAAAEQAAACgAAAAqAAAAEgAAACkAAAAqAAAAEwX14RMAAAAqAAAAFAAAACsAAAAwAAAAFQAAACwAAAAwAAAAFgAAAC0AAAAwAAAAFwAAAC4AAAAwAAAAGAAAAC8AAAAwAAAAGQX14RQAAAAwAAAAGgAAADEAAAAyAAAAHAX14RUF9eEJAAAAGwX14QoF9eESAAAAGwX14QQF9eESAAAABAAAAF8AAAA1AAAABgAAADYF9eERAAAABwAAADgAAAA3AAAACgX14QwF9eEQAAAACAAAAFwAAAA5AAAACQAAAFwAAAA6AAAACgAAAEwAAAA7AAAACwAAAD0AAAA8AAAADAAAAD0AAABdAAAADQAAAEsAAAA+AAAADgAAAD8AAABEAAAADwAAAEAAAABEAAAAEAAAAEEAAABEAAAAEQAAAEIAAABEAAAAEgAAAEMAAABEAAAAEwX14Q0AAABEAAAAFAAAAEUAAABKAAAAFQAAAEYAAABKAAAAFgAAAEcAAABKAAAAFwAAAEgAAABKAAAAGAAAAEkAAABKAAAAGQX14Q4AAABKAAAAGgAAAFoAAABLAAAAGwX14QoF9eEQAAAADQAAAFsAAABNAAAADgAAAE4AAABTAAAADwAAAE8AAABTAAAAEAAAAFAAAABTAAAAEQAAAFEAAABTAAAAEgAAAFIAAABTAAAAEwX14Q0AAABTAAAAFAAAAFQAAABZAAAAFQAAAFUAAABZAAAAFgAAAFYAAABZAAAAFwAAAFcAAABZAAAAGAAAAFgAAABZAAAAGQX14Q4AAABZAAAAGgAAAFoAAABbAAAAHAX14Q8F9eEJAAAAGwX14QoF9eEMAAAACgAAAF4AAABdAAAAGwX14QQF9eEQAAAAGwX14QQF9eEMAAAABQAAAGAF9eELAAAABgAAAGEF9eELAAAABwAAAGIF9eEFAAAACAAAAHcAAABjAAAACQAAAHcAAABkAAAACgAAAGcAAABlAAAACwAAAGcAAABmAAAADAAAAGcAAAB3AAAADQAAAHYAAABoAAAADgAAAGkAAABuAAAADwAAAGoAAABuAAAAEAAAAGsAAABuAAAAEQAAAGwAAABuAAAAEgAAAG0AAABuAAAAEwX14QYAAABuAAAAFAAAAG8AAAB0AAAAFQAAAHAAAAB0AAAAFgAAAHEAAAB0AAAAFwAAAHIAAAB0AAAAGAAAAHMAAAB0AAAAGQX14QcAAAB0AAAAGgAAAHUAAAB2AAAAHAX14QgF9eEJAAAAGwX14QoF9eEFAAAAGwX14QQF9eEFAAAAAwX14QEAAAB5AAAABAX14QIF9eED"
 }

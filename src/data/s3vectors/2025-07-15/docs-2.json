@@ -19,15 +19,34 @@
     "PutVectorBucketDefaultIndexMode": "<p>Updates the default index mode for a vector bucket. The updated default applies to vector indexes that you create after the request succeeds. The operation doesn't change existing vector indexes. To specify the vector bucket, you must use either the vector bucket name or the vector bucket Amazon Resource Name (ARN).</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3vectors:PutVectorBucketDefaultIndexMode</code> permission to use this operation.</p> </dd> </dl>",
     "PutVectorBucketPolicy": "<p>Creates a bucket policy for a vector bucket. To specify the bucket, you must use either the vector bucket name or the vector bucket Amazon Resource Name (ARN). </p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3vectors:PutVectorBucketPolicy</code> permission to use this operation. </p> </dd> </dl>",
     "PutVectors": "<p>Adds one or more vectors to a vector index. To specify the vector index, you can either use both the vector bucket name and the vector index name, or use the vector index Amazon Resource Name (ARN). </p> <p>For more information about limits, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-vectors-limitations.html\">Limitations and restrictions</a> in the <i>Amazon S3 User Guide</i>.</p> <note> <p>When inserting vector data into your vector index, you must provide the vector data as <code>float32</code> (32-bit floating point) values. If you pass higher-precision values to an Amazon Web Services SDK, S3 Vectors converts the values to 32-bit floating point before storing them, and <code>GetVectors</code>, <code>ListVectors</code>, and <code>QueryVectors</code> operations return the float32 values. Different Amazon Web Services SDKs may have different default numeric types, so ensure your vectors are properly formatted as <code>float32</code> values regardless of which SDK you're using. For example, in Python, use <code>numpy.float32</code> or explicitly cast your values.</p> </note> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3vectors:PutVectors</code> permission to use this operation. </p> </dd> </dl>",
-    "QueryVectors": "<p>Performs an approximate nearest neighbor search query in a vector index using a query vector. By default, it returns the keys of approximate nearest neighbors. You can optionally include the computed distance (between the query vector and each vector in the response) and metadata of each vector in the response.</p> <p>To specify the vector index, you can either use both the vector bucket name and the vector index name, or use the vector index Amazon Resource Name (ARN). </p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3vectors:QueryVectors</code> permission to use this operation. Additional permissions are required based on the request parameters you specify:</p> <ul> <li> <p>With only <code>s3vectors:QueryVectors</code> permission, you can retrieve vector keys of approximate nearest neighbors and computed distances between these vectors. This permission is sufficient only when you don't set any metadata filters and don't request metadata (by keeping the <code>returnMetadata</code> parameter set to <code>false</code> or not specified).</p> </li> <li> <p>If you specify a metadata filter or set <code>returnMetadata</code> to true, you must have both <code>s3vectors:QueryVectors</code> and <code>s3vectors:GetVectors</code> permissions. The request fails with a <code>403 Forbidden error</code> if you request metadata filtering or metadata without the <code>s3vectors:GetVectors</code> permission.</p> </li> </ul> </dd> </dl>",
+    "QueryVectors": "<p>Returns matching vector keys from a vector index ranked by vector similarity, full-text relevance, or both. Specify <code>queryVector</code> to perform a vector search, specify <code>queryTexts</code> to perform a full-text search, or specify both to perform a hybrid search. Full-text search ranks results using BM25. Hybrid search combines the vector and full-text rankings using Reciprocal Rank Fusion (RRF).</p> <p>Amazon S3 Vectors ranks results by distance for a vector-only search, by BM25 score for a full-text-only search, and by RRF score for a hybrid search. You can optionally include computed distances, relevance scores, and vector metadata in the response. Full-text and hybrid searches require a vector index in <code>ENHANCED</code> mode.</p> <p>To specify the vector index, you can either use both the vector bucket name and the vector index name, or use the vector index Amazon Resource Name (ARN). </p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3vectors:QueryVectors</code> permission to use this operation. Additional permissions are required based on the request parameters you specify:</p> <ul> <li> <p>With only <code>s3vectors:QueryVectors</code> permission, you can retrieve vector keys of approximate nearest neighbors and computed distances between these vectors. This permission is sufficient only when you don't set <code>queryTexts</code>, don't set any metadata filters, and don't request metadata (by keeping the <code>returnMetadata</code> parameter set to <code>false</code> or not specified).</p> </li> <li> <p>To use <code>queryTexts</code>, a metadata filter, or <code>returnMetadata</code> set to <code>true</code> with this operation, you must have both the <code>s3vectors:QueryVectors</code> and <code>s3vectors:GetVectors</code> permissions. If you use any of these options without the <code>s3vectors:GetVectors</code> permission, Amazon S3 Vectors returns an <code>AccessDeniedException</code>.</p> </li> </ul> </dd> </dl>",
     "TagResource": "<p>Applies one or more user-defined tags to an Amazon S3 Vectors resource or updates existing tags. Each tag is a label consisting of a key and value pair. Tags can help you organize, track costs for, and control access to your resources. You can add up to 50 tags for each resource.</p> <note> <p>For a list of S3 resources that support tagging, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html#manage-tags\">Managing tags for Amazon S3 resources</a>.</p> </note> <dl> <dt>Permissions</dt> <dd> <p>For vector buckets and vector indexes, you must have the <code>s3vectors:TagResource</code> permission to use this operation.</p> </dd> </dl>",
     "UntagResource": "<p>Removes the specified user-defined tags from an Amazon S3 Vectors resource. You can pass one or more tag keys. </p> <note> <p>For a list of S3 resources that support tagging, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html#manage-tags\">Managing tags for Amazon S3 resources</a>.</p> </note> <dl> <dt>Permissions</dt> <dd> <p>For vector buckets and vector indexes, you must have the <code>s3vectors:UntagResource</code> permission to use this operation.</p> </dd> </dl>",
-    "UpdateIndexMode": "<p>Updates the mode for an existing vector index. You can set the mode to <code>ENHANCED</code> for any vector index. You can set the mode to <code>CLASSIC</code> only for a vector index in a vector bucket created before September 30, 2026. This operation doesn't change the default index mode of the vector bucket or the mode of other vector indexes. Specify the vector index by using its Amazon Resource Name (ARN) or both the vector bucket name and vector index name.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3vectors:UpdateIndexMode</code> permission to use this operation.</p> </dd> </dl>"
+    "UpdateIndexMode": "<p>Updates the mode for an existing vector index. You can set the mode to <code>ENHANCED</code> for any vector index. You can set the mode to <code>CLASSIC</code> only for a vector index in a vector bucket created before September 30, 2026. This operation doesn't change the default index mode of the vector bucket or the mode of other vector indexes. Specify the vector index by using its Amazon Resource Name (ARN) or both the vector bucket name and vector index name.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3vectors:UpdateIndexMode</code> permission to use this operation.</p> </dd> </dl>",
+    "UpdateMetadataConfiguration": "<p>Adds or deletes text search configurations on a vector index. Specify either <code>add</code> or <code>delete</code>, but not both. The vector index must be in <code>ENHANCED</code> mode.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3vectors:UpdateMetadataConfiguration</code> permission to use this operation.</p> </dd> </dl>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>Access denied.</p>",
       "refs": {}
+    },
+    "AnalyzerStatus": {
+      "base": "<p>The backfill status of a text search analyzer.</p>",
+      "refs": {
+        "TextSearchConfiguration$status": "<p>The backfill status of the text search configuration. Valid values are <code>ACTIVE</code>, which indicates that the analyzer is built and serving queries, and <code>BUILDING</code>, which indicates that the analyzer is being backfilled and isn't yet serving queries. This field is returned by <code>GetIndex</code>.</p>"
+      }
+    },
+    "Bm25Score": {
+      "base": "<p>The raw BM25 relevance score for a single searchable metadata key.</p>",
+      "refs": {
+        "Bm25ScoreList$member": null
+      }
+    },
+    "Bm25ScoreList": {
+      "base": "<p>A list of per-metadata-key BM25 relevance scores.</p>",
+      "refs": {
+        "QueryScores$bm25Scores": "<p>The BM25 scores for the searchable metadata keys that the result matched.</p>"
+      }
     },
     "Boolean": {
       "base": null,
@@ -37,7 +56,8 @@
         "ListVectorsInput$returnData": "<p>If true, the vector data of each vector will be included in the response. The default value is <code>false</code>.</p>",
         "ListVectorsInput$returnMetadata": "<p>If true, the metadata associated with each vector will be included in the response. The default value is <code>false</code>.</p>",
         "QueryVectorsInput$returnMetadata": "<p>Indicates whether to include metadata in the response. The default value is <code>false</code>.</p>",
-        "QueryVectorsInput$returnDistance": "<p>Indicates whether to include the computed distance in the response. The default value is <code>false</code>.</p>"
+        "QueryVectorsInput$returnDistance": "<p>Indicates whether to include the computed distance in the response. The default value is <code>false</code>.</p>",
+        "QueryVectorsInput$returnScores": "<p>Indicates whether to include relevance scores in the response. Full-text-only results can include BM25 scores. Hybrid results can also include a Reciprocal Rank Fusion (RRF) score and vector distance. This setting doesn't add scores to vector-only requests. The default value is <code>false</code>.</p>"
       }
     },
     "ConflictException": {
@@ -155,8 +175,11 @@
     "Float": {
       "base": null,
       "refs": {
+        "Bm25Score$score": "<p>The BM25 relevance score.</p>",
         "Float32VectorData$member": null,
-        "QueryOutputVector$distance": "<p>The measure of similarity between the vector in the response and the query vector.</p>"
+        "QueryOutputVector$distance": "<p>The measure of similarity between the vector in the response and the query vector.</p>",
+        "QueryScores$fused": "<p>The Reciprocal Rank Fusion (RRF) score that combines the vector and full-text rankings. This field is returned only for hybrid requests.</p>",
+        "QueryScores$vectorDistance": "<p>The distance from the query vector. This field is returned when a hybrid result matches the vector search.</p>"
       }
     },
     "Float32VectorData": {
@@ -234,7 +257,9 @@
         "ListVectorsInput$indexArn": "<p>The Amazon resource Name (ARN) of the vector index.</p>",
         "PutVectorsInput$indexArn": "<p>The ARN of the vector index where you want to write vectors.</p>",
         "QueryVectorsInput$indexArn": "<p>The ARN of the vector index that you want to query.</p>",
-        "UpdateIndexModeInput$indexArn": "<p>The Amazon Resource Name (ARN) of the vector index to update.</p>"
+        "UpdateIndexModeInput$indexArn": "<p>The Amazon Resource Name (ARN) of the vector index to update.</p>",
+        "UpdateMetadataConfigurationInput$indexArn": "<p>The Amazon Resource Name (ARN) of the vector index to update.</p>",
+        "UpdateMetadataConfigurationOutput$indexArn": "<p>The Amazon Resource Name (ARN) of the updated vector index.</p>"
       }
     },
     "IndexMode": {
@@ -260,7 +285,8 @@
         "ListVectorsInput$indexName": "<p>The name of the vector index.</p>",
         "PutVectorsInput$indexName": "<p>The name of the vector index where you want to write vectors. </p>",
         "QueryVectorsInput$indexName": "<p>The name of the vector index that you want to query. </p>",
-        "UpdateIndexModeInput$indexName": "<p>The name of the vector index to update.</p>"
+        "UpdateIndexModeInput$indexName": "<p>The name of the vector index to update.</p>",
+        "UpdateMetadataConfigurationInput$indexName": "<p>The name of the vector index to update.</p>"
       }
     },
     "IndexSummary": {
@@ -294,6 +320,12 @@
     "KmsNotFoundException": {
       "base": "<p>The KMS key can't be found.</p>",
       "refs": {}
+    },
+    "LanguageCode": {
+      "base": "<p>The analysis language for a text search analyzer. Valid values are <code>en</code> (English), <code>fr</code> (French), <code>es</code> (Spanish), <code>pt</code> (Portuguese), <code>it</code> (Italian), <code>de</code> (German), <code>nl</code> (Dutch), <code>zh</code> (Chinese), <code>ja</code> (Japanese), and <code>ko</code> (Korean).</p>",
+      "refs": {
+        "TextSearchConfiguration$language": "<p>The language that the text search analyzer uses. Valid values are <code>en</code> (English), <code>fr</code> (French), <code>es</code> (Spanish), <code>pt</code> (Portuguese), <code>it</code> (Italian), <code>de</code> (German), <code>nl</code> (Dutch), <code>zh</code> (Chinese), <code>ja</code> (Japanese), and <code>ko</code> (Korean). If you don't specify a language, Amazon S3 Vectors uses the default standard analyzer.</p>"
+      }
     },
     "ListIndexesInput": {
       "base": null,
@@ -421,16 +453,44 @@
         "Index$metadataConfiguration": "<p>The metadata configuration for the vector index. </p>"
       }
     },
+    "MetadataConfigurationAdd": {
+      "base": "<p>Text search configurations to add to a vector index.</p>",
+      "refs": {
+        "UpdateMetadataConfigurationInput$add": "<p>Text search configurations to add to the vector index.</p>"
+      }
+    },
+    "MetadataConfigurationAddTextSearchConfigurationsList": {
+      "base": "<p>A list of per-metadata-key text search configurations. Specify no more than one configuration for each metadata key.</p>",
+      "refs": {
+        "MetadataConfigurationAdd$textSearchConfigurations": "<p>Text search configurations to add. Amazon S3 Vectors begins building the corresponding full-text indexes after the update is accepted.</p>"
+      }
+    },
+    "MetadataConfigurationDelete": {
+      "base": "<p>Text search configurations to delete from a vector index.</p>",
+      "refs": {
+        "UpdateMetadataConfigurationInput$delete": "<p>Text search configurations to delete from the vector index.</p>"
+      }
+    },
+    "MetadataConfigurationTextSearchConfigurationsList": {
+      "base": "<p>A list of per-metadata-key text search configurations. Specify no more than one configuration for each metadata key.</p>",
+      "refs": {
+        "MetadataConfiguration$textSearchConfigurations": "<p>Full-text search configurations for searchable metadata keys.</p>"
+      }
+    },
     "MetadataKey": {
       "base": null,
       "refs": {
-        "NonFilterableMetadataKeys$member": null
+        "Bm25Score$metadataKey": "<p>The searchable metadata key that the score applies to.</p>",
+        "NonFilterableMetadataKeys$member": null,
+        "QueryText$metadataKey": "<p>The searchable metadata key to query.</p>",
+        "TextSearchConfiguration$metadataKey": "<p>The metadata key to make full-text searchable.</p>",
+        "TextSearchConfigurationKey$metadataKey": "<p>The searchable metadata key whose text search configuration to delete.</p>"
       }
     },
     "NonFilterableMetadataKeys": {
       "base": null,
       "refs": {
-        "MetadataConfiguration$nonFilterableMetadataKeys": "<p>Non-filterable metadata keys allow you to enrich vectors with additional context during storage and retrieval. Unlike default metadata keys, these keys can’t be used as query filters. Non-filterable metadata keys can be retrieved but can’t be searched, queried, or filtered. You can access non-filterable metadata keys of your vectors after finding the vectors. For more information about non-filterable metadata keys, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-vectors-vectors.html\">Vectors</a> and <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-vectors-limitations.html\">Limitations and restrictions</a> in the <i>Amazon S3 User Guide</i>. </p>"
+        "MetadataConfiguration$nonFilterableMetadataKeys": "<p>Non-filterable metadata keys allow you to enrich vectors with additional context during storage and retrieval. You can't use these keys in metadata filters. You can still make a non-filterable key full-text searchable by configuring it separately in <code>textSearchConfigurations</code>. You can retrieve non-filterable metadata keys after finding the vectors. For more information about non-filterable metadata keys, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-vectors-vectors.html\">Vectors</a> and <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-vectors-limitations.html\">Limitations and restrictions</a> in the <i>Amazon S3 User Guide</i>. </p>"
       }
     },
     "NotFoundException": {
@@ -474,9 +534,33 @@
       "refs": {}
     },
     "QueryOutputVector": {
-      "base": "<p>The attributes of a vector in the approximate nearest neighbor search.</p>",
+      "base": "<p>Contains the key and optional distance, relevance scores, and metadata for a vector returned by the <code>QueryVectors</code> operation.</p>",
       "refs": {
         "QueryVectorsOutputList$member": null
+      }
+    },
+    "QueryScores": {
+      "base": "<p>Relevance scores for a full-text-only or hybrid search result.</p>",
+      "refs": {
+        "QueryOutputVector$scores": "<p>The relevance scores for a full-text-only or hybrid result, when requested through <code>returnScores</code>.</p>"
+      }
+    },
+    "QueryText": {
+      "base": "<p>A full-text search query for a single metadata key.</p>",
+      "refs": {
+        "QueryTextList$member": null
+      }
+    },
+    "QueryTextList": {
+      "base": "<p>Full-text search queries. Each entry targets a distinct searchable metadata key, which can appear at most once.</p>",
+      "refs": {
+        "QueryVectorsInput$queryTexts": "<p>Full-text queries for searchable metadata keys. Omit <code>queryVector</code> to run a full-text-only search, or provide both fields to run a hybrid search. Each entry must target a distinct searchable metadata key.</p>"
+      }
+    },
+    "QueryTextString": {
+      "base": "<p>A full-text query string containing between 1 and 1,024 characters.</p>",
+      "refs": {
+        "QueryText$text": "<p>The full-text query string.</p>"
       }
     },
     "QueryVectorsInput": {
@@ -497,7 +581,7 @@
     "QueryVectorsOutputList": {
       "base": null,
       "refs": {
-        "QueryVectorsOutput$vectors": "<p>The vectors in the approximate nearest neighbor search.</p>"
+        "QueryVectorsOutput$vectors": "<p>The matching vector results in ranked order. Results are ranked by vector distance for a vector-only search, by BM25 relevance for a full-text-only search, and by RRF score for a hybrid search.</p>"
       }
     },
     "RequestTimeoutException": {
@@ -570,6 +654,25 @@
         "TagResourceInput$tags": "<p>The user-defined tag that you want to add to the specified S3 Vectors resource. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging.html\">Tagging for cost allocation or attribute-based access control (ABAC)</a>.</p>"
       }
     },
+    "TextSearchConfiguration": {
+      "base": "<p>A full-text search configuration for a single metadata key.</p>",
+      "refs": {
+        "MetadataConfigurationAddTextSearchConfigurationsList$member": null,
+        "MetadataConfigurationTextSearchConfigurationsList$member": null
+      }
+    },
+    "TextSearchConfigurationKey": {
+      "base": "<p>A searchable metadata key that identifies a text search configuration.</p>",
+      "refs": {
+        "TextSearchConfigurationKeys$member": null
+      }
+    },
+    "TextSearchConfigurationKeys": {
+      "base": "<p>Searchable metadata keys that identify text search configurations.</p>",
+      "refs": {
+        "MetadataConfigurationDelete$textSearchConfigurations": "<p>Searchable metadata keys whose text search configurations to delete.</p>"
+      }
+    },
     "Timestamp": {
       "base": null,
       "refs": {
@@ -602,6 +705,14 @@
       "refs": {}
     },
     "UpdateIndexModeOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateMetadataConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateMetadataConfigurationOutput": {
       "base": null,
       "refs": {}
     },
@@ -665,6 +776,7 @@
         "PutVectorsInput$vectorBucketName": "<p>The name of the vector bucket that contains the vector index. </p>",
         "QueryVectorsInput$vectorBucketName": "<p>The name of the vector bucket that contains the vector index. </p>",
         "UpdateIndexModeInput$vectorBucketName": "<p>The name of the vector bucket that contains the vector index.</p>",
+        "UpdateMetadataConfigurationInput$vectorBucketName": "<p>The name of the vector bucket that contains the vector index.</p>",
         "VectorBucket$vectorBucketName": "<p>The name of the vector bucket. </p>",
         "VectorBucketSummary$vectorBucketName": "<p>The name of the vector bucket. </p>"
       }
@@ -688,7 +800,7 @@
         "GetOutputVector$data": "<p>The vector data of the vector. </p>",
         "ListOutputVector$data": "<p>The vector data of the vector. </p>",
         "PutInputVector$data": "<p>The vector data of the vector. </p> <p>Vector dimensions must match the dimension count that's configured for the vector index.</p> <ul> <li> <p>For the <code>cosine</code> distance metric, zero vectors (vectors containing all zeros) aren't allowed.</p> </li> <li> <p>For both <code>cosine</code> and <code>euclidean</code> distance metrics, vector data must contain only valid floating-point values. Invalid values such as NaN (Not a Number) or Infinity aren't allowed.</p> </li> </ul>",
-        "QueryVectorsInput$queryVector": "<p>The query vector. Ensure that the query vector has the same dimension as the dimension of the vector index that's being queried. For example, if your vector index contains vectors with 384 dimensions, your query vector must also have 384 dimensions. </p>"
+        "QueryVectorsInput$queryVector": "<p>The query vector for vector similarity search. The query vector must have the same dimension as the vector index. For example, if the vector index has 384 dimensions, the query vector must also have 384 dimensions. You can omit this parameter when you supply <code>queryTexts</code> to perform a full-text-only search. A request must include <code>queryVector</code>, <code>queryTexts</code>, or both.</p>"
       }
     },
     "VectorKey": {
@@ -699,7 +811,7 @@
         "GetVectorsInputList$member": null,
         "ListOutputVector$key": "<p>The name of the vector. </p>",
         "PutInputVector$key": "<p>The name of the vector. The key uniquely identifies the vector in a vector index. </p>",
-        "QueryOutputVector$key": "<p>The key of the vector in the approximate nearest neighbor search.</p>"
+        "QueryOutputVector$key": "<p>The key of the matching vector.</p>"
       }
     },
     "VectorMetadata": {

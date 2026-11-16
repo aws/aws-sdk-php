@@ -4195,8 +4195,21 @@
       "members":{
         "portName":{"shape":"String"},
         "healthCheck":{"shape":"GatewayConnectorHealthCheck"},
-        "filters":{"shape":"GatewayConnectorFilters"}
+        "filters":{"shape":"GatewayConnectorFilters"},
+        "deregistrationDelay":{"shape":"GatewayConnectorDeregistrationDelay"}
       }
+    },
+    "GatewayConnectorDeregistrationDelay":{
+      "type":"structure",
+      "members":{
+        "timeoutSeconds":{"shape":"GatewayConnectorDeregistrationDelayTimeoutSecondsInteger"}
+      }
+    },
+    "GatewayConnectorDeregistrationDelayTimeoutSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":3600,
+      "min":0
     },
     "GatewayConnectorFilters":{
       "type":"structure",

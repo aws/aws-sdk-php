@@ -1361,6 +1361,14 @@
         "policyText":{"shape":"RegistryPolicyText"}
       }
     },
+    "DeleteReplication":{
+      "type":"structure",
+      "required":["enabled"],
+      "members":{
+        "enabled":{"shape":"DeleteReplicationFlag"}
+      }
+    },
+    "DeleteReplicationFlag":{"type":"boolean"},
     "DeleteRepositoryCreationTemplateRequest":{
       "type":"structure",
       "required":["prefix"],
@@ -3011,7 +3019,8 @@
       "required":["destinations"],
       "members":{
         "destinations":{"shape":"ReplicationDestinationList"},
-        "repositoryFilters":{"shape":"RepositoryFilterList"}
+        "repositoryFilters":{"shape":"RepositoryFilterList"},
+        "deleteReplication":{"shape":"DeleteReplication"}
       }
     },
     "ReplicationRuleList":{

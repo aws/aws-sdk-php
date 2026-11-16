@@ -1659,6 +1659,17 @@
     }
   },
   "shapes":{
+    "AcceleratorConfig":{
+      "type":"structure",
+      "required":["AcceleratorMemorySize"],
+      "members":{
+        "AcceleratorMemorySize":{"shape":"AcceleratorMemoryGB"}
+      }
+    },
+    "AcceleratorMemoryGB":{
+      "type":"integer",
+      "box":true
+    },
     "AccountLimit":{
       "type":"structure",
       "members":{
@@ -2045,7 +2056,10 @@
     },
     "CapacityProviderPredefinedMetricType":{
       "type":"string",
-      "enum":["LambdaCapacityProviderAverageCPUUtilization"]
+      "enum":[
+        "LambdaCapacityProviderAverageCPUUtilization",
+        "LambdaCapacityProviderAverageGPUUtilization"
+      ]
     },
     "CapacityProviderScalingConfig":{
       "type":"structure",
@@ -2530,7 +2544,8 @@
         "TenancyConfig":{"shape":"TenancyConfig"},
         "CapacityProviderConfig":{"shape":"CapacityProviderConfig"},
         "DurableConfig":{"shape":"DurableConfig"},
-        "RuntimeConfig":{"shape":"FunctionRuntimeConfig"}
+        "RuntimeConfig":{"shape":"FunctionRuntimeConfig"},
+        "AcceleratorConfig":{"shape":"AcceleratorConfig"}
       }
     },
     "CreateFunctionUrlConfigRequest":{
@@ -3488,7 +3503,8 @@
         "CapacityProviderConfig":{"shape":"CapacityProviderConfig"},
         "ConfigSha256":{"shape":"String"},
         "DurableConfig":{"shape":"DurableConfig"},
-        "RuntimeConfig":{"shape":"FunctionRuntimeConfig"}
+        "RuntimeConfig":{"shape":"FunctionRuntimeConfig"},
+        "AcceleratorConfig":{"shape":"AcceleratorConfig"}
       }
     },
     "FunctionEventInvokeConfig":{
@@ -4713,6 +4729,7 @@
         "FunctionError.TooManyExtensions",
         "FunctionError.InitResourceExhausted",
         "DisallowedByVpcEncryptionControl",
+        "IncompatibleAcceleratorInstanceTypes",
         "DependencyError"
       ]
     },
@@ -6754,6 +6771,7 @@
         "FunctionError.InitResourceExhausted",
         "DisallowedByVpcEncryptionControl",
         "DrainingDurableExecutions",
+        "IncompatibleAcceleratorInstanceTypes",
         "DependencyError"
       ]
     },
@@ -7250,7 +7268,8 @@
         "LoggingConfig":{"shape":"LoggingConfig"},
         "CapacityProviderConfig":{"shape":"CapacityProviderConfig"},
         "DurableConfig":{"shape":"DurableConfig"},
-        "RuntimeConfig":{"shape":"FunctionRuntimeConfig"}
+        "RuntimeConfig":{"shape":"FunctionRuntimeConfig"},
+        "AcceleratorConfig":{"shape":"AcceleratorConfig"}
       }
     },
     "UpdateFunctionEventInvokeConfigRequest":{

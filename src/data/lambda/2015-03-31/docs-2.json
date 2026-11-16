@@ -92,6 +92,20 @@
     "UpdateFunctionUrlConfig": "<p>Updates the configuration for a function URL of a Lambda Event Function.</p>"
   },
   "shapes": {
+    "AcceleratorConfig": {
+      "base": "<p>The accelerator resource settings for a Lambda execution environment, including the amount of accelerator memory to allocate.</p>",
+      "refs": {
+        "CreateFunctionRequest$AcceleratorConfig": "<p>The accelerator resource settings for a Lambda execution environment.</p>",
+        "FunctionConfiguration$AcceleratorConfig": "<p>The accelerator resource settings for a Lambda execution environment.</p>",
+        "UpdateFunctionConfigurationRequest$AcceleratorConfig": "<p>The accelerator resource settings for a Lambda execution environment.</p>"
+      }
+    },
+    "AcceleratorMemoryGB": {
+      "base": null,
+      "refs": {
+        "AcceleratorConfig$AcceleratorMemorySize": "<p>The minimum amount of memory (in GB) of each accelerator device exposed to the execution environment. Lambda might allocate more, depending on the accelerator instance types available.</p>"
+      }
+    },
     "AccountLimit": {
       "base": "<p>Limits that are related to concurrency and storage. All file and storage sizes are in bytes.</p>",
       "refs": {
@@ -1032,11 +1046,11 @@
       }
     },
     "EphemeralStorage": {
-      "base": "<p>The size of the function's <code>/tmp</code> directory in MB. The default value is 512, but can be any whole number between 512 and 10,240 MB. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-ephemeral-storage\">Configuring ephemeral storage (console)</a>.</p>",
+      "base": "<p>The size of the function's <code>/tmp</code> directory in MB. The default value is 512, but can be any whole number between 512 and 10,240 MB. For functions that use <code>AcceleratorConfig</code>, the maximum is 32,768 MB. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-ephemeral-storage\">Configuring ephemeral storage (console)</a>.</p>",
       "refs": {
-        "CreateFunctionRequest$EphemeralStorage": "<p>The size of the function's <code>/tmp</code> directory in MB. The default value is 512, but can be any whole number between 512 and 10,240 MB. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-ephemeral-storage\">Configuring ephemeral storage (console)</a>.</p>",
-        "FunctionConfiguration$EphemeralStorage": "<p>The size of the function's <code>/tmp</code> directory in MB. The default value is 512, but can be any whole number between 512 and 10,240 MB. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-ephemeral-storage\">Configuring ephemeral storage (console)</a>.</p>",
-        "UpdateFunctionConfigurationRequest$EphemeralStorage": "<p>The size of the function's <code>/tmp</code> directory in MB. The default value is 512, but can be any whole number between 512 and 10,240 MB. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-ephemeral-storage\">Configuring ephemeral storage (console)</a>.</p>"
+        "CreateFunctionRequest$EphemeralStorage": "<p>The size of the function's <code>/tmp</code> directory in MB. The default value is 512, but can be any whole number between 512 and 10,240 MB. For functions that use <code>AcceleratorConfig</code>, the maximum is 32,768 MB. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-ephemeral-storage\">Configuring ephemeral storage (console)</a>.</p>",
+        "FunctionConfiguration$EphemeralStorage": "<p>The size of the function's <code>/tmp</code> directory in MB. The default value is 512, but can be any whole number between 512 and 10,240 MB. For functions that use <code>AcceleratorConfig</code>, the maximum is 32,768 MB. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-ephemeral-storage\">Configuring ephemeral storage (console)</a>.</p>",
+        "UpdateFunctionConfigurationRequest$EphemeralStorage": "<p>The size of the function's <code>/tmp</code> directory in MB. The default value is 512, but can be any whole number between 512 and 10,240 MB. For functions that use <code>AcceleratorConfig</code>, the maximum is 32,768 MB. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-ephemeral-storage\">Configuring ephemeral storage (console)</a>.</p>"
       }
     },
     "EphemeralStorageSize": {

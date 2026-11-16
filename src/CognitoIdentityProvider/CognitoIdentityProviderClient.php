@@ -769,7 +769,7 @@ use Aws\AwsClient;
  *     },
  *     ReadAttributes?: list<string>,
  *     WriteAttributes?: list<string>,
- *     ExplicitAuthFlows?: list<'ADMIN_NO_SRP_AUTH'|'ALLOW_ADMIN_USER_PASSWORD_AUTH'|'ALLOW_CUSTOM_AUTH'|'ALLOW_REFRESH_TOKEN_AUTH'|'ALLOW_USER_AUTH'|'ALLOW_USER_PASSWORD_AUTH'|'ALLOW_USER_SRP_AUTH'|'CUSTOM_AUTH_FLOW_ONLY'|'USER_PASSWORD_AUTH'>,
+ *     ExplicitAuthFlows?: list<'ADMIN_NO_SRP_AUTH'|'ALLOW_ADMIN_USER_PASSWORD_AUTH'|'ALLOW_CUSTOM_AUTH'|'ALLOW_REFRESH_TOKEN_AUTH'|'ALLOW_TOKEN_EXCHANGE_DELEGATION'|'ALLOW_TOKEN_EXCHANGE_IMPERSONATION'|'ALLOW_USER_AUTH'|'ALLOW_USER_PASSWORD_AUTH'|'ALLOW_USER_SRP_AUTH'|'CUSTOM_AUTH_FLOW_ONLY'|'USER_PASSWORD_AUTH'>,
  *     SupportedIdentityProviders?: list<string>,
  *     CallbackURLs?: list<string>,
  *     LogoutURLs?: list<string>,
@@ -809,7 +809,7 @@ use Aws\AwsClient;
  *     },
  *     ReadAttributes?: list<string>,
  *     WriteAttributes?: list<string>,
- *     ExplicitAuthFlows?: list<'ADMIN_NO_SRP_AUTH'|'ALLOW_ADMIN_USER_PASSWORD_AUTH'|'ALLOW_CUSTOM_AUTH'|'ALLOW_REFRESH_TOKEN_AUTH'|'ALLOW_USER_AUTH'|'ALLOW_USER_PASSWORD_AUTH'|'ALLOW_USER_SRP_AUTH'|'CUSTOM_AUTH_FLOW_ONLY'|'USER_PASSWORD_AUTH'>,
+ *     ExplicitAuthFlows?: list<'ADMIN_NO_SRP_AUTH'|'ALLOW_ADMIN_USER_PASSWORD_AUTH'|'ALLOW_CUSTOM_AUTH'|'ALLOW_REFRESH_TOKEN_AUTH'|'ALLOW_TOKEN_EXCHANGE_DELEGATION'|'ALLOW_TOKEN_EXCHANGE_IMPERSONATION'|'ALLOW_USER_AUTH'|'ALLOW_USER_PASSWORD_AUTH'|'ALLOW_USER_SRP_AUTH'|'CUSTOM_AUTH_FLOW_ONLY'|'USER_PASSWORD_AUTH'>,
  *     SupportedIdentityProviders?: list<string>,
  *     CallbackURLs?: list<string>,
  *     LogoutURLs?: list<string>,
@@ -982,6 +982,38 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getClientToken(array{ClientId?: string, Secret?: string, Scopes?: list<string>, ClientMetadata?: array<string, string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getClientTokenAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getClientTokenAsync(array{ClientId?: string, Secret?: string, Scopes?: list<string>, ClientMetadata?: array<string, string>, ...} $args = [])
+ * @method \Aws\Result getDerivedToken(array $args = [])
+ * @phpstan-method \Aws\Result getDerivedToken(array{
+ *     ClientId?: string,
+ *     ClientSecret?: string,
+ *     SubjectToken?: string,
+ *     SubjectTokenType?: 'ACCESS_TOKEN'|'ID_TOKEN'|'SAML2',
+ *     SubjectTokenProviderName?: string,
+ *     ActorToken?: string,
+ *     ActorTokenType?: 'ACCESS_TOKEN'|'ID_TOKEN'|'SAML2',
+ *     ActorTokenProviderName?: string,
+ *     Scopes?: list<string>,
+ *     Audiences?: list<string>,
+ *     Resources?: list<string>,
+ *     RequestedTokenType?: 'ACCESS_TOKEN'|'ID_TOKEN',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise getDerivedTokenAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getDerivedTokenAsync(array{
+ *     ClientId?: string,
+ *     ClientSecret?: string,
+ *     SubjectToken?: string,
+ *     SubjectTokenType?: 'ACCESS_TOKEN'|'ID_TOKEN'|'SAML2',
+ *     SubjectTokenProviderName?: string,
+ *     ActorToken?: string,
+ *     ActorTokenType?: 'ACCESS_TOKEN'|'ID_TOKEN'|'SAML2',
+ *     ActorTokenProviderName?: string,
+ *     Scopes?: list<string>,
+ *     Audiences?: list<string>,
+ *     Resources?: list<string>,
+ *     RequestedTokenType?: 'ACCESS_TOKEN'|'ID_TOKEN',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result getDevice(array $args = [])
  * @phpstan-method \Aws\Result getDevice(array{DeviceKey?: string, AccessToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getDeviceAsync(array $args = [])
@@ -1804,7 +1836,7 @@ use Aws\AwsClient;
  *     },
  *     ReadAttributes?: list<string>,
  *     WriteAttributes?: list<string>,
- *     ExplicitAuthFlows?: list<'ADMIN_NO_SRP_AUTH'|'ALLOW_ADMIN_USER_PASSWORD_AUTH'|'ALLOW_CUSTOM_AUTH'|'ALLOW_REFRESH_TOKEN_AUTH'|'ALLOW_USER_AUTH'|'ALLOW_USER_PASSWORD_AUTH'|'ALLOW_USER_SRP_AUTH'|'CUSTOM_AUTH_FLOW_ONLY'|'USER_PASSWORD_AUTH'>,
+ *     ExplicitAuthFlows?: list<'ADMIN_NO_SRP_AUTH'|'ALLOW_ADMIN_USER_PASSWORD_AUTH'|'ALLOW_CUSTOM_AUTH'|'ALLOW_REFRESH_TOKEN_AUTH'|'ALLOW_TOKEN_EXCHANGE_DELEGATION'|'ALLOW_TOKEN_EXCHANGE_IMPERSONATION'|'ALLOW_USER_AUTH'|'ALLOW_USER_PASSWORD_AUTH'|'ALLOW_USER_SRP_AUTH'|'CUSTOM_AUTH_FLOW_ONLY'|'USER_PASSWORD_AUTH'>,
  *     SupportedIdentityProviders?: list<string>,
  *     CallbackURLs?: list<string>,
  *     LogoutURLs?: list<string>,
@@ -1843,7 +1875,7 @@ use Aws\AwsClient;
  *     },
  *     ReadAttributes?: list<string>,
  *     WriteAttributes?: list<string>,
- *     ExplicitAuthFlows?: list<'ADMIN_NO_SRP_AUTH'|'ALLOW_ADMIN_USER_PASSWORD_AUTH'|'ALLOW_CUSTOM_AUTH'|'ALLOW_REFRESH_TOKEN_AUTH'|'ALLOW_USER_AUTH'|'ALLOW_USER_PASSWORD_AUTH'|'ALLOW_USER_SRP_AUTH'|'CUSTOM_AUTH_FLOW_ONLY'|'USER_PASSWORD_AUTH'>,
+ *     ExplicitAuthFlows?: list<'ADMIN_NO_SRP_AUTH'|'ALLOW_ADMIN_USER_PASSWORD_AUTH'|'ALLOW_CUSTOM_AUTH'|'ALLOW_REFRESH_TOKEN_AUTH'|'ALLOW_TOKEN_EXCHANGE_DELEGATION'|'ALLOW_TOKEN_EXCHANGE_IMPERSONATION'|'ALLOW_USER_AUTH'|'ALLOW_USER_PASSWORD_AUTH'|'ALLOW_USER_SRP_AUTH'|'CUSTOM_AUTH_FLOW_ONLY'|'USER_PASSWORD_AUTH'>,
  *     SupportedIdentityProviders?: list<string>,
  *     CallbackURLs?: list<string>,
  *     LogoutURLs?: list<string>,

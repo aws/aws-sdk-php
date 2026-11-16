@@ -1347,6 +1347,23 @@
         {"shape":"ResourceConflictException"}
       ]
     },
+    "DeleteAllEntitySessions":{
+      "name":"DeleteAllEntitySessions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/auth/sessions/delete-all-entity-sessions"
+      },
+      "input":{"shape":"DeleteAllEntitySessionsRequest"},
+      "output":{"shape":"DeleteAllEntitySessionsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "DeleteAttachedFile":{
       "name":"DeleteAttachedFile",
       "http":{
@@ -11847,6 +11864,23 @@
       "type":"integer",
       "max":9999,
       "min":0
+    },
+    "DeleteAllEntitySessionsRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "EntityId",
+        "EntityType"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "EntityId":{"shape":"EntityId"},
+        "EntityType":{"shape":"SessionEntityType"}
+      }
+    },
+    "DeleteAllEntitySessionsResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteAttachedFileRequest":{
       "type":"structure",
@@ -25462,6 +25496,10 @@
         "AttachedFileServiceQuotaExceededExceptionReason":{"shape":"AttachedFileServiceQuotaExceededExceptionReason"}
       },
       "union":true
+    },
+    "SessionEntityType":{
+      "type":"string",
+      "enum":["USER"]
     },
     "SessionId":{
       "type":"string",

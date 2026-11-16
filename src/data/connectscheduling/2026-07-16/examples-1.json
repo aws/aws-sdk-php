@@ -1,0 +1,119 @@
+{
+  "version": "1.0",
+  "examples": {
+    "ApproveTimeOff": [
+      {
+        "input": {
+          "Description": "Approved with coverage from the evening shift",
+          "InstanceId": "12345678-1234-1234-1234-123456789012",
+          "RuleFailureAction": "OVERRIDE",
+          "TimeOffId": "abcdef12-3456-7890-abcd-ef1234567890",
+          "UserId": "87654321-4321-4321-4321-210987654321"
+        },
+        "output": {},
+        "description": "The following example approves a time off request with RuleFailureAction OVERRIDE, so a failed rule is recorded as a WARNING instead of rejecting the request.",
+        "id": "example-1",
+        "title": "To approve a time off request past a failed rule"
+      }
+    ],
+    "CancelTimeOff": [
+      {
+        "input": {
+          "Description": "Plans changed",
+          "InstanceId": "12345678-1234-1234-1234-123456789012",
+          "TimeOffId": "abcdef12-3456-7890-abcd-ef1234567890",
+          "UserId": "87654321-4321-4321-4321-210987654321"
+        },
+        "output": {},
+        "description": "The following example cancels a time off request and records the reason on the cancellation.",
+        "id": "example-1",
+        "title": "To cancel a time off request"
+      }
+    ],
+    "CreateTimeOff": [
+      {
+        "input": {
+          "ApprovalType": "AWAIT_APPROVAL",
+          "Description": "Family event",
+          "EndAt": 1795453200,
+          "InstanceId": "12345678-1234-1234-1234-123456789012",
+          "ShiftActivityId": "11112222-3333-4444-5555-666677778888",
+          "StartAt": 1795424400,
+          "UserId": "87654321-4321-4321-4321-210987654321"
+        },
+        "output": {
+          "TimeOffId": "abcdef12-3456-7890-abcd-ef1234567890"
+        },
+        "description": "The following example creates a time off request for one day. The request is created in AWAITING_APPROVAL until an ApproveTimeOff or RejectTimeOff call decides it.",
+        "id": "example-1",
+        "title": "To create a time off request that waits for approval"
+      }
+    ],
+    "GetTimeOff": [
+      {
+        "input": {
+          "InstanceId": "12345678-1234-1234-1234-123456789012",
+          "TimeOffId": "abcdef12-3456-7890-abcd-ef1234567890",
+          "UserId": "87654321-4321-4321-4321-210987654321"
+        },
+        "output": {
+          "CreatedAt": 1793644200,
+          "CreatedBy": {
+            "ConnectUserArn": "arn:aws:connect:us-west-2:123456789012:instance/12345678-1234-1234-1234-123456789012/agent/87654321-4321-4321-4321-210987654321"
+          },
+          "Description": "Family event",
+          "EndAt": 1795453200,
+          "ShiftActivityId": "11112222-3333-4444-5555-666677778888",
+          "StartAt": 1795424400,
+          "Status": "APPROVED",
+          "TimeOffId": "abcdef12-3456-7890-abcd-ef1234567890",
+          "UpdatedAt": 1793721900,
+          "UpdatedBy": {
+            "ConnectUserArn": "arn:aws:connect:us-west-2:123456789012:instance/12345678-1234-1234-1234-123456789012/agent/99998888-7777-6666-5555-444433332222"
+          },
+          "UserId": "87654321-4321-4321-4321-210987654321",
+          "ValidationResults": [
+            {
+              "Code": "INSUFFICIENT_GROUP_TIME_OFF_ALLOWANCE",
+              "Severity": "WARNING"
+            }
+          ]
+        },
+        "description": "The following example gets a time off request that was approved past a failed group allowance rule, which is reported as a WARNING.",
+        "id": "example-1",
+        "title": "To get a time off request"
+      }
+    ],
+    "PutTimeOffBalance": [
+      {
+        "input": {
+          "Balance": {
+            "Unit": "HOURS",
+            "Value": 80
+          },
+          "InstanceId": "12345678-1234-1234-1234-123456789012",
+          "ShiftActivityId": "11112222-3333-4444-5555-666677778888",
+          "UserId": "87654321-4321-4321-4321-210987654321"
+        },
+        "output": {},
+        "description": "The following example sets a user's balance for one time off activity to 80 hours, replacing any existing balance.",
+        "id": "example-1",
+        "title": "To set a user's time off balance"
+      }
+    ],
+    "RejectTimeOff": [
+      {
+        "input": {
+          "Description": "Not enough coverage for this shift",
+          "InstanceId": "12345678-1234-1234-1234-123456789012",
+          "TimeOffId": "abcdef12-3456-7890-abcd-ef1234567890",
+          "UserId": "87654321-4321-4321-4321-210987654321"
+        },
+        "output": {},
+        "description": "The following example rejects a time off request and records the reason on the rejection.",
+        "id": "example-1",
+        "title": "To reject a time off request"
+      }
+    ]
+  }
+}

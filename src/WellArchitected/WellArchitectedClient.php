@@ -13,6 +13,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result associateProfiles(array{WorkloadId?: string, ProfileArns?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise associateProfilesAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise associateProfilesAsync(array{WorkloadId?: string, ProfileArns?: list<string>, ...} $args = [])
+ * @method \Aws\Result createAgentBasicProfile(array $args = [])
+ * @phpstan-method \Aws\Result createAgentBasicProfile(array{tags?: list<array{key?: string, value?: string, ...}>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise createAgentBasicProfileAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createAgentBasicProfileAsync(array{tags?: list<array{key?: string, value?: string, ...}>, ...} $args = [])
  * @method \Aws\Result createAgentContext(array $args = [])
  * @phpstan-method \Aws\Result createAgentContext(array{
  *     clientToken?: string,
@@ -25,6 +29,7 @@ use Aws\AwsClient;
  *         awsServices?: list<string>,
  *         resourceTypes?: list<string>,
  *         resourceTags?: list<array>,
+ *         organizationalUnitIds?: list<string>,
  *         applicationOverview?: string,
  *         industry?: string,
  *         applicationType?: 'DESKTOP_APPLICATION'|'OTHER'|'SAS',
@@ -47,6 +52,7 @@ use Aws\AwsClient;
  *         awsServices?: list<string>,
  *         resourceTypes?: list<string>,
  *         resourceTags?: list<array>,
+ *         organizationalUnitIds?: list<string>,
  *         applicationOverview?: string,
  *         industry?: string,
  *         applicationType?: 'DESKTOP_APPLICATION'|'OTHER'|'SAS',
@@ -73,6 +79,66 @@ use Aws\AwsClient;
  *     pillars?: list<'COST_OPTIMIZATION'|'OPERATIONAL_EXCELLENCE'|'PERFORMANCE'|'RESILIENCE'|'SECURITY'>,
  *     title?: string,
  *     description?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createAgentOrganizationalProfile(array $args = [])
+ * @phpstan-method \Aws\Result createAgentOrganizationalProfile(array{
+ *     name?: string,
+ *     displayName?: string,
+ *     description?: string,
+ *     businessOverview?: string,
+ *     pillars?: list<'COST_OPTIMIZATION'|'OPERATIONAL_EXCELLENCE'|'PERFORMANCE'|'RESILIENCE'|'SECURITY'>,
+ *     deletionProtection?: bool,
+ *     clientToken?: string,
+ *     organizationalAggregationConfiguration?: array{organizationalUnits?: list<array>, accounts?: list<array>, ...},
+ *     tags?: list<array{key?: string, value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createAgentOrganizationalProfileAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createAgentOrganizationalProfileAsync(array{
+ *     name?: string,
+ *     displayName?: string,
+ *     description?: string,
+ *     businessOverview?: string,
+ *     pillars?: list<'COST_OPTIMIZATION'|'OPERATIONAL_EXCELLENCE'|'PERFORMANCE'|'RESILIENCE'|'SECURITY'>,
+ *     deletionProtection?: bool,
+ *     clientToken?: string,
+ *     organizationalAggregationConfiguration?: array{organizationalUnits?: list<array>, accounts?: list<array>, ...},
+ *     tags?: list<array{key?: string, value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createAgentOrganizationalReport(array $args = [])
+ * @phpstan-method \Aws\Result createAgentOrganizationalReport(array{
+ *     clientToken?: string,
+ *     label?: string,
+ *     filters?: array{
+ *         accountIds?: list<string>,
+ *         organizationalUnitIds?: list<string>,
+ *         pillars?: list<'COST_OPTIMIZATION'|'OPERATIONAL_EXCELLENCE'|'PERFORMANCE'|'RESILIENCE'|'SECURITY'>,
+ *         recommendationTypes?: list<'APPLICATION'|'ARCHITECTURE'|'RESOURCE'>,
+ *         statuses?: list<'ACTIVE'|'COMPLETED'|'SUPPRESSED'>,
+ *         priorities?: list<'HIGH'|'LOW'|'MEDIUM'>,
+ *         createdAtRange?: array{from?: int|string|\DateTimeInterface, to?: int|string|\DateTimeInterface, ...},
+ *         updatedAtRange?: array{from?: int|string|\DateTimeInterface, to?: int|string|\DateTimeInterface, ...},
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createAgentOrganizationalReportAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createAgentOrganizationalReportAsync(array{
+ *     clientToken?: string,
+ *     label?: string,
+ *     filters?: array{
+ *         accountIds?: list<string>,
+ *         organizationalUnitIds?: list<string>,
+ *         pillars?: list<'COST_OPTIMIZATION'|'OPERATIONAL_EXCELLENCE'|'PERFORMANCE'|'RESILIENCE'|'SECURITY'>,
+ *         recommendationTypes?: list<'APPLICATION'|'ARCHITECTURE'|'RESOURCE'>,
+ *         statuses?: list<'ACTIVE'|'COMPLETED'|'SUPPRESSED'>,
+ *         priorities?: list<'HIGH'|'LOW'|'MEDIUM'>,
+ *         createdAtRange?: array{from?: int|string|\DateTimeInterface, to?: int|string|\DateTimeInterface, ...},
+ *         updatedAtRange?: array{from?: int|string|\DateTimeInterface, to?: int|string|\DateTimeInterface, ...},
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result createAgentProfile(array $args = [])
@@ -251,10 +317,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteAgentGoal(array{profileArn?: string, id?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAgentGoalAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteAgentGoalAsync(array{profileArn?: string, id?: string, ...} $args = [])
+ * @method \Aws\Result deleteAgentOrganizationalReport(array $args = [])
+ * @phpstan-method \Aws\Result deleteAgentOrganizationalReport(array{reportId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteAgentOrganizationalReportAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteAgentOrganizationalReportAsync(array{reportId?: string, ...} $args = [])
  * @method \Aws\Result deleteAgentProfile(array $args = [])
  * @phpstan-method \Aws\Result deleteAgentProfile(array{profileArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAgentProfileAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteAgentProfileAsync(array{profileArn?: string, ...} $args = [])
+ * @method \Aws\Result deleteAgentProfilePolicy(array $args = [])
+ * @phpstan-method \Aws\Result deleteAgentProfilePolicy(array{profileArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteAgentProfilePolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteAgentProfilePolicyAsync(array{profileArn?: string, ...} $args = [])
+ * @method \Aws\Result deleteAgentRecommendationPolicy(array $args = [])
+ * @phpstan-method \Aws\Result deleteAgentRecommendationPolicy(array{recommendationArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteAgentRecommendationPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteAgentRecommendationPolicyAsync(array{recommendationArn?: string, ...} $args = [])
  * @method \Aws\Result deleteLens(array $args = [])
  * @phpstan-method \Aws\Result deleteLens(array{LensAlias?: string, ClientRequestToken?: string, LensStatus?: 'ALL'|'DRAFT'|'PUBLISHED', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteLensAsync(array $args = [])
@@ -307,10 +385,26 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getAgentGoal(array{profileArn?: string, id?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getAgentGoalAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getAgentGoalAsync(array{profileArn?: string, id?: string, ...} $args = [])
+ * @method \Aws\Result getAgentOrganizationalReport(array $args = [])
+ * @phpstan-method \Aws\Result getAgentOrganizationalReport(array{reportId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAgentOrganizationalReportAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAgentOrganizationalReportAsync(array{reportId?: string, ...} $args = [])
+ * @method \Aws\Result getAgentOrganizationalReportData(array $args = [])
+ * @phpstan-method \Aws\Result getAgentOrganizationalReportData(array{reportId?: string, format?: 'CSV'|'JSON'|'PARQUET', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAgentOrganizationalReportDataAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAgentOrganizationalReportDataAsync(array{reportId?: string, format?: 'CSV'|'JSON'|'PARQUET', ...} $args = [])
+ * @method \Aws\Result getAgentPreferences(array $args = [])
+ * @phpstan-method \Aws\Result getAgentPreferences(array{...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAgentPreferencesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAgentPreferencesAsync(array{...} $args = [])
  * @method \Aws\Result getAgentProfile(array $args = [])
  * @phpstan-method \Aws\Result getAgentProfile(array{profileArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getAgentProfileAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getAgentProfileAsync(array{profileArn?: string, ...} $args = [])
+ * @method \Aws\Result getAgentProfilePolicy(array $args = [])
+ * @phpstan-method \Aws\Result getAgentProfilePolicy(array{profileArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAgentProfilePolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAgentProfilePolicyAsync(array{profileArn?: string, ...} $args = [])
  * @method \Aws\Result getAgentRecommendation(array $args = [])
  * @phpstan-method \Aws\Result getAgentRecommendation(array{recommendationArn?: string, remediationType?: 'AUTO_REMEDIATION'|'CLI'|'CONSOLE'|'IAC'|'MCP'|'SDK', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getAgentRecommendationAsync(array $args = [])
@@ -319,6 +413,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getAgentRecommendationGeneration(array{profileArn?: string, generationId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getAgentRecommendationGenerationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getAgentRecommendationGenerationAsync(array{profileArn?: string, generationId?: string, ...} $args = [])
+ * @method \Aws\Result getAgentRecommendationPolicy(array $args = [])
+ * @phpstan-method \Aws\Result getAgentRecommendationPolicy(array{recommendationArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAgentRecommendationPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAgentRecommendationPolicyAsync(array{recommendationArn?: string, ...} $args = [])
  * @method \Aws\Result getAnswer(array $args = [])
  * @phpstan-method \Aws\Result getAnswer(array{WorkloadId?: string, LensAlias?: string, QuestionId?: string, MilestoneNumber?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getAnswerAsync(array $args = [])
@@ -387,6 +485,20 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listAgentGoals(array{profileArn?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listAgentGoalsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listAgentGoalsAsync(array{profileArn?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listAgentOrganizationalReports(array $args = [])
+ * @phpstan-method \Aws\Result listAgentOrganizationalReports(array{
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     state?: 'AGGREGATING'|'COMPLETED'|'COMPRESSING'|'DELETING'|'DISCOVERING'|'FAILED'|'SNAPSHOTTING',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAgentOrganizationalReportsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listAgentOrganizationalReportsAsync(array{
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     state?: 'AGGREGATING'|'COMPLETED'|'COMPRESSING'|'DELETING'|'DISCOVERING'|'FAILED'|'SNAPSHOTTING',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listAgentProfiles(array $args = [])
  * @phpstan-method \Aws\Result listAgentProfiles(array{maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listAgentProfilesAsync(array $args = [])
@@ -689,6 +801,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listWorkloads(array{WorkloadNamePrefix?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listWorkloadsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listWorkloadsAsync(array{WorkloadNamePrefix?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
+ * @method \Aws\Result putAgentPreferences(array $args = [])
+ * @phpstan-method \Aws\Result putAgentPreferences(array{preferences?: list<array{key?: 'ORG_INTEGRATION', state?: 'DISABLED'|'ENABLED', ...}>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise putAgentPreferencesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putAgentPreferencesAsync(array{preferences?: list<array{key?: 'ORG_INTEGRATION', state?: 'DISABLED'|'ENABLED', ...}>, ...} $args = [])
+ * @method \Aws\Result putAgentProfilePolicy(array $args = [])
+ * @phpstan-method \Aws\Result putAgentProfilePolicy(array{profileArn?: string, policy?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise putAgentProfilePolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putAgentProfilePolicyAsync(array{profileArn?: string, policy?: string, ...} $args = [])
  * @method \Aws\Result putAgentRecommendationFeedback(array $args = [])
  * @phpstan-method \Aws\Result putAgentRecommendationFeedback(array{
  *     recommendationArn?: string,
@@ -705,6 +825,14 @@ use Aws\AwsClient;
  *     comments?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result putAgentRecommendationPolicy(array $args = [])
+ * @phpstan-method \Aws\Result putAgentRecommendationPolicy(array{recommendationArn?: string, policy?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise putAgentRecommendationPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putAgentRecommendationPolicyAsync(array{recommendationArn?: string, policy?: string, ...} $args = [])
+ * @method \Aws\Result sendAgentOrganizationalReportDataToS3(array $args = [])
+ * @phpstan-method \Aws\Result sendAgentOrganizationalReportDataToS3(array{reportId?: string, format?: 'CSV'|'JSON'|'PARQUET', bucketArn?: string, objectKey?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise sendAgentOrganizationalReportDataToS3Async(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise sendAgentOrganizationalReportDataToS3Async(array{reportId?: string, format?: 'CSV'|'JSON'|'PARQUET', bucketArn?: string, objectKey?: string, ...} $args = [])
  * @method \Aws\Result startAgentRecommendationGeneration(array $args = [])
  * @phpstan-method \Aws\Result startAgentRecommendationGeneration(array{
  *     profileArn?: string,
@@ -753,6 +881,7 @@ use Aws\AwsClient;
  *         awsServices?: list<string>,
  *         resourceTypes?: list<string>,
  *         resourceTags?: list<array>,
+ *         organizationalUnitIds?: list<string>,
  *         applicationOverview?: string,
  *         industry?: string,
  *         applicationType?: 'DESKTOP_APPLICATION'|'OTHER'|'SAS',
@@ -775,6 +904,7 @@ use Aws\AwsClient;
  *         awsServices?: list<string>,
  *         resourceTypes?: list<string>,
  *         resourceTags?: list<array>,
+ *         organizationalUnitIds?: list<string>,
  *         applicationOverview?: string,
  *         industry?: string,
  *         applicationType?: 'DESKTOP_APPLICATION'|'OTHER'|'SAS',
@@ -803,6 +933,30 @@ use Aws\AwsClient;
  *     pillars?: list<'COST_OPTIMIZATION'|'OPERATIONAL_EXCELLENCE'|'PERFORMANCE'|'RESILIENCE'|'SECURITY'>,
  *     title?: string,
  *     description?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateAgentOrganizationalProfile(array $args = [])
+ * @phpstan-method \Aws\Result updateAgentOrganizationalProfile(array{
+ *     clientToken?: string,
+ *     profileArn?: string,
+ *     displayName?: string,
+ *     description?: string,
+ *     businessOverview?: string,
+ *     pillars?: list<'COST_OPTIMIZATION'|'OPERATIONAL_EXCELLENCE'|'PERFORMANCE'|'RESILIENCE'|'SECURITY'>,
+ *     deletionProtection?: bool,
+ *     organizationalAggregationConfiguration?: array{organizationalUnits?: list<array>, accounts?: list<array>, ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateAgentOrganizationalProfileAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateAgentOrganizationalProfileAsync(array{
+ *     clientToken?: string,
+ *     profileArn?: string,
+ *     displayName?: string,
+ *     description?: string,
+ *     businessOverview?: string,
+ *     pillars?: list<'COST_OPTIMIZATION'|'OPERATIONAL_EXCELLENCE'|'PERFORMANCE'|'RESILIENCE'|'SECURITY'>,
+ *     deletionProtection?: bool,
+ *     organizationalAggregationConfiguration?: array{organizationalUnits?: list<array>, accounts?: list<array>, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateAgentProfile(array $args = [])
