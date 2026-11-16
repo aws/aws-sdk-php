@@ -2,6 +2,7 @@
 namespace Aws\CognitoIdentity;
 
 use Aws\Credentials\Credentials;
+use Aws\Credentials\CredentialSources;
 use GuzzleHttp\Promise;
 
 class CognitoIdentityProvider
@@ -47,7 +48,9 @@ class CognitoIdentityProvider
                 $result['Credentials']['AccessKeyId'],
                 $result['Credentials']['SecretKey'],
                 $result['Credentials']['SessionToken'],
-                (int) $result['Credentials']['Expiration']->format('U')
+                (int) $result['Credentials']['Expiration']->format('U'),
+                null,
+                CredentialSources::COGNITO_IDENTITY
             );
         });
     }
