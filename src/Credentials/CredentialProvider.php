@@ -71,6 +71,22 @@ class CredentialProvider
     private const MIN_ERROR_CACHE = 1;
     private const MAX_ERROR_CACHE = 5;
 
+    // Sources that get the refresh lifecycle in memoize(). The SEP excludes
+    // credential_process and customer-provided providers, so credentials from
+    // any other source keep the previous behavior.
+    private const REFRESH_LIFECYCLE_SOURCES = [
+        CredentialSources::STS_ASSUME_ROLE,
+        CredentialSources::STS_WEB_ID_TOKEN,
+        CredentialSources::ENVIRONMENT_STS_WEB_ID_TOKEN,
+        CredentialSources::PROFILE_STS_WEB_ID_TOKEN,
+        CredentialSources::PROFILE_SSO,
+        CredentialSources::PROFILE_SSO_LEGACY,
+        CredentialSources::PROFILE_LOGIN,
+        CredentialSources::ECS,
+        CredentialSources::IMDS,
+        CredentialSources::COGNITO_IDENTITY,
+    ];
+
     /**
      * Create a default credential provider that
      * first checks for environment variables,
@@ -209,6 +225,13 @@ class CredentialProvider
                     $next,
                     $previousCreds
                 ) {
+                    // Providers raise a non-recoverable error only after finding
+                    // their own configuration. Stopping here lets memoize() raise
+                    // it. Falling through would replace it with a later provider's
+                    // error or resolve a different identity.
+                    if ($reason instanceof NonRecoverableCredentialsExceptionInterface) {
+                        return Promise\Create::rejectionFor($reason);
+                    }
                     if ($next instanceof InstanceProfileProvider
                         && $previousCreds instanceof Credentials
                     ) {
@@ -250,12 +273,71 @@ class CredentialProvider
             static $cachedErrorExpiresAt;
             static $fetchPromise;
             static $refreshPromise;
+            // True when the cached credentials come from a source outside
+            // REFRESH_LIFECYCLE_SOURCES.
+            static $isLegacy = false;
 
             $now = time();
 
             // Constant credentials (no expiration) never need refreshing.
             if ($isConstant) {
                 return Promise\Create::promiseFor($cached);
+            }
+
+            // Previous behavior, for sources outside the SEP's scope.
+            // Refreshes within REFRESH_WINDOW of expiry. Concurrent callers
+            // share one refresh. A failed refresh clears the cache and
+            // raises the error.
+            if ($cached !== null && $isLegacy) {
+                if ($cached->getExpiration() - $now > self::REFRESH_WINDOW) {
+                    return Promise\Create::promiseFor($cached);
+                }
+                if ($refreshPromise !== null) {
+                    return $refreshPromise;
+                }
+
+                $refreshPromise = self::callSource($provider, $cached)
+                    ->then(
+                        function ($creds) use (
+                            &$refreshPromise,
+                            &$cached,
+                            &$isLegacy,
+                            &$isConstant,
+                            &$advisoryWindow,
+                            &$nextRefreshAllowedAt,
+                            &$cachedError,
+                            &$cachedErrorExpiresAt
+                        ) {
+                            $refreshPromise = null;
+                            if (!$creds instanceof CredentialsInterface) {
+                                $cached = null;
+                                $isLegacy = false;
+                                return new Promise\RejectedPromise(
+                                    new CredentialsException(
+                                        'The credential source did not return credentials.'
+                                    )
+                                );
+                            }
+                            $cached = $creds;
+                            $isConstant = !$creds->getExpiration();
+                            $isLegacy = !self::usesRefreshLifecycle($creds);
+                            $advisoryWindow = $isConstant || $isLegacy
+                                ? null
+                                : self::advisoryWindow($creds, time());
+                            $nextRefreshAllowedAt = null;
+                            $cachedError = null;
+                            $cachedErrorExpiresAt = null;
+                            return $creds;
+                        },
+                        function ($reason) use (&$refreshPromise, &$cached, &$isLegacy) {
+                            $refreshPromise = null;
+                            $cached = null;
+                            $isLegacy = false;
+                            return new Promise\RejectedPromise($reason);
+                        }
+                    );
+
+                return $refreshPromise;
             }
 
             if ($cached !== null) {
@@ -282,6 +364,7 @@ class CredentialProvider
             ) use (
                 &$cached,
                 &$isConstant,
+                &$isLegacy,
                 &$advisoryWindow,
                 &$nextRefreshAllowedAt,
                 &$cachedError,
@@ -297,6 +380,19 @@ class CredentialProvider
                     $cachedErrorExpiresAt = null;
                     return $creds;
                 }
+
+                // Cached as returned, including expired credentials, to match
+                // the previous behavior for this source.
+                if (!self::usesRefreshLifecycle($creds)) {
+                    $isLegacy = true;
+                    $cached = $creds;
+                    $advisoryWindow = null;
+                    $nextRefreshAllowedAt = null;
+                    $cachedError = null;
+                    $cachedErrorExpiresAt = null;
+                    return $creds;
+                }
+                $isLegacy = false;
 
                 // Response with already-expired credentials.
                 if ($creds->getExpiration() <= $now) {
@@ -456,6 +552,17 @@ class CredentialProvider
     }
 
     /**
+     * Returns true when the credentials' source is in
+     * REFRESH_LIFECYCLE_SOURCES. Other CredentialsInterface implementations
+     * return false.
+     */
+    private static function usesRefreshLifecycle(CredentialsInterface $creds): bool
+    {
+        return $creds instanceof Credentials
+            && in_array($creds->getSource(), self::REFRESH_LIFECYCLE_SOURCES, true);
+    }
+
+    /**
      * Returns the advisory refresh window, sized to the credential lifetime.
      */
     private static function advisoryWindow(CredentialsInterface $creds, int $now): int
@@ -524,7 +631,11 @@ class CredentialProvider
 
             if (!$initialized) {
                 $found = $cache->get($cacheKey);
-                if ($found instanceof CredentialsInterface) {
+                // An expired entry falls through to the source, so memoize()
+                // handles it as a normal initial fetch.
+                if ($found instanceof CredentialsInterface
+                    && !$found->isExpired()
+                ) {
                     $initialized = true;
                     return Promise\Create::promiseFor($found);
                 }
@@ -548,9 +659,14 @@ class CredentialProvider
                         );
                     }
 
-                    // Keep the last successful credentials available after
-                    // their expiration so a later process can recover them.
-                    $cache->set($cacheKey, $creds, 0);
+                    // Same TTL as cache(). A TTL of 0 stores without expiry, so
+                    // expired credentials are returned but not stored.
+                    $expiration = $creds->getExpiration();
+                    if ($expiration === null) {
+                        $cache->set($cacheKey, $creds, 0);
+                    } elseif ($expiration - time() > 0) {
+                        $cache->set($cacheKey, $creds, $expiration - time());
+                    }
 
                     return $creds;
                 });

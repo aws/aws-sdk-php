@@ -17,6 +17,18 @@ class AssumeRoleWithWebIdentityCredentialProvider
     const ERROR_MSG = "Missing required 'AssumeRoleWithWebIdentityCredentialProvider' configuration option: ";
     const ENV_RETRIES = 'AWS_METADATA_SERVICE_NUM_ATTEMPTS';
 
+    /**
+     * STS error codes for an expired web identity token. The provider re-reads
+     * the token file and retries, as the Assume Role with Web Identity SEP
+     * requires. STS returns `ExpiredTokenException`. The SEP names
+     * `ExpiredToken`. `IDPCommunicationError` is left out because the STS
+     * client already retries it with the same token in every retry mode.
+     */
+    private const RETRYABLE_STS_ERROR_CODES = [
+        'ExpiredToken',
+        'ExpiredTokenException',
+    ];
+
     /** @var string */
     private $tokenFile;
 
@@ -95,6 +107,8 @@ class AssumeRoleWithWebIdentityCredentialProvider
         return Promise\Coroutine::of(function () {
             $client = $this->client;
             $result = null;
+            // Counted per call, so each refresh gets its own retries.
+            $stsRetries = 0;
             while ($result == null) {
                 try {
                     $token = @file_get_contents($this->tokenFile);
@@ -135,6 +149,19 @@ class AssumeRoleWithWebIdentityCredentialProvider
                 try {
                     $result = $client->assumeRoleWithWebIdentity($assumeParams);
                 } catch (AwsException $e) {
+                    // The token file may have been rotated since it was read.
+                    if (in_array(
+                            $e->getAwsErrorCode(),
+                            self::RETRYABLE_STS_ERROR_CODES,
+                            true
+                        )
+                        && $stsRetries < $this->retries
+                    ) {
+                        sleep((int) pow(1.2, $stsRetries));
+                        $stsRetries++;
+                        continue;
+                    }
+
                     $isNonRecoverable = in_array(
                         $e->getAwsErrorCode(),
                         NonRecoverableCredentialsException::STS_NON_RECOVERABLE_ERROR_CODES,
