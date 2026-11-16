@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.404.0 - 2026-11-16
 
 * `Aws\` - Fixed asynchronous pagination continuing after a service returns the same forward token that was sent in the request.
 * `Aws\` - Fixes parsing of the `services` section of the shared config file so that settings written without spaces around the equals sign, such as `endpoint_url=http://localhost:4567`, are no longer ignored.
