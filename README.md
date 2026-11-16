@@ -42,6 +42,12 @@ V4 design goals:
 
 See the [design overview](docs/design-overview.md) for more context.
 
+## Preview services
+
+The preview covers exactly five services: S3, STS, Lambda, EC2, and SSO
+and SSO OIDC. All other services are excluded from the preview. See
+[Feature coverage](docs/feature-coverage.md) for details.
+
 ## Illustrative example
 
 Running this illustrative snippet requires the future V4 implementation.
