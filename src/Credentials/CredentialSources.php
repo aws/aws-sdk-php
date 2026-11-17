@@ -20,4 +20,6 @@ final class CredentialSources
     const PROFILE_SSO_LEGACY = 'profile_sso_legacy';
     const PROFILE_PROCESS = 'profile_process';
     const PROFILE_LOGIN = 'profile_login';
+    const CREDENTIAL_DAEMON = 'credential_daemon';
+    const STS_ASSUME_ROLE_CREDENTIAL_DAEMON = 'sts_assume_role_credential_daemon';
 }
