@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.404.1 - 2026-11-17
 
 * `Aws\APIGateway` - API Gateway now adds support for JWT authorizers on REST APIs.
 * `Aws\AppStream` - Adds support for In-Session SmartCard Redirection for Windows Multi-Session fleets
