@@ -99,16 +99,6 @@ class SsoTokenProvider implements RefreshableTokenProviderInterface
             }
 
             $profile = $profiles[$this->profileName];
-            if (array_key_exists('daemon_credential', $profile)
-                && !empty($profile['sso_account_id'])
-                && !empty($profile['sso_role_name'])
-            ) {
-                throw new TokenException(
-                    "Profile `{$this->profileName}` in {$this->configFilePath} gets its SSO session"
-                    . " from a credential daemon, so it has no SSO token for bearer authentication."
-                    . " Services that use bearer tokens need an SSO session stored in files."
-                );
-            }
             if (empty($profile['sso_session'])) {
                 throw new TokenException(
                     "Profile `{$this->profileName}` in {$this->configFilePath} must contain an sso_session."
