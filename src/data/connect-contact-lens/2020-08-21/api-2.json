@@ -204,6 +204,12 @@
       "max":20,
       "min":0
     },
+    "LanguageCode":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":".*\\S.*"
+    },
     "ListRealtimeContactAnalysisSegmentsRequest":{
       "type":"structure",
       "required":[
@@ -414,7 +420,8 @@
         "BeginOffsetMillis":{"shape":"OffsetMillis"},
         "EndOffsetMillis":{"shape":"OffsetMillis"},
         "Sentiment":{"shape":"SentimentValue"},
-        "IssuesDetected":{"shape":"IssuesDetected"}
+        "IssuesDetected":{"shape":"IssuesDetected"},
+        "LanguageCode":{"shape":"LanguageCode"}
       }
     },
     "TranscriptContent":{

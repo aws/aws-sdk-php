@@ -1384,7 +1384,8 @@
         "PRINTING_TO_LOCAL_DEVICE",
         "DOMAIN_PASSWORD_SIGNIN",
         "DOMAIN_SMART_CARD_SIGNIN",
-        "AUTO_TIME_ZONE_REDIRECTION"
+        "AUTO_TIME_ZONE_REDIRECTION",
+        "SMART_CARD_REDIRECTION"
       ]
     },
     "AdminAppLicenseUsageList":{
@@ -1957,7 +1958,7 @@
     "CreateAppBlockBuilderStreamingURLResult":{
       "type":"structure",
       "members":{
-        "StreamingURL":{"shape":"String"},
+        "StreamingURL":{"shape":"StreamingUrl"},
         "Expires":{"shape":"Timestamp"}
       }
     },
@@ -2159,7 +2160,7 @@
     "CreateImageBuilderStreamingURLResult":{
       "type":"structure",
       "members":{
-        "StreamingURL":{"shape":"String"},
+        "StreamingURL":{"shape":"StreamingUrl"},
         "Expires":{"shape":"Timestamp"}
       }
     },
@@ -2232,7 +2233,7 @@
     "CreateStreamingURLResult":{
       "type":"structure",
       "members":{
-        "StreamingURL":{"shape":"String"},
+        "StreamingURL":{"shape":"StreamingUrl"},
         "Expires":{"shape":"Timestamp"}
       }
     },
@@ -4143,6 +4144,10 @@
         "PreferredProtocol":{"shape":"PreferredProtocol"}
       }
     },
+    "StreamingUrl":{
+      "type":"string",
+      "sensitive":true
+    },
     "StreamingUrlUserId":{
       "type":"string",
       "max":32,
@@ -4493,7 +4498,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^(\\*|https?://[^\\s,;]+)$"
+      "pattern":"^((https?|ftp|sftp)://|mailto:)[^\\s,;<>]+$"
     },
     "UrlPatternList":{
       "type":"list",

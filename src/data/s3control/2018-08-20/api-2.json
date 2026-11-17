@@ -1981,7 +1981,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"[a-zA-Z0-9\\-\\_\\.]+"
+      "pattern":"[a-zA-Z0-9\\-\\_]+"
     },
     "ConfirmRemoveSelfBucketAccess":{"type":"boolean"},
     "ConfirmationRequired":{"type":"boolean"},
@@ -3891,6 +3891,12 @@
         "SELF",
         "ALL"
       ]
+    },
+    "IntAccessTiers":{
+      "type":"structure",
+      "members":{
+        "IsEnabled":{"shape":"IsEnabled"}
+      }
     },
     "InternalServiceException":{
       "type":"structure",
@@ -6726,10 +6732,12 @@
         "Exclude":{"shape":"Exclude"},
         "DataExport":{"shape":"StorageLensDataExport"},
         "ExpandedPrefixesDataExport":{"shape":"StorageLensExpandedPrefixesDataExport"},
+        "CostAndUsageReportsPublish":{"shape":"StorageLensCostAndUsageReportsPublish"},
         "IsEnabled":{"shape":"IsEnabled"},
         "AwsOrg":{"shape":"StorageLensAwsOrg"},
         "StorageLensArn":{"shape":"StorageLensArn"},
-        "PrefixDelimiter":{"shape":"StorageLensPrefixLevelDelimiter"}
+        "PrefixDelimiter":{"shape":"StorageLensPrefixLevelDelimiter"},
+        "IntAccessTiers":{"shape":"IntAccessTiers"}
       }
     },
     "StorageLensConfigurationList":{
@@ -6739,6 +6747,39 @@
         "locationName":"StorageLensConfiguration"
       },
       "flattened":true
+    },
+    "StorageLensCostAndUsageReportsMaxDepth":{
+      "type":"integer",
+      "box":true,
+      "max":15,
+      "min":1
+    },
+    "StorageLensCostAndUsageReportsMinDepth":{
+      "type":"integer",
+      "box":true,
+      "max":15,
+      "min":1
+    },
+    "StorageLensCostAndUsageReportsPrefixLevel":{
+      "type":"structure",
+      "required":["IsEnabled"],
+      "members":{
+        "IsEnabled":{"shape":"IsEnabled"},
+        "SelectionCriteria":{"shape":"StorageLensCostAndUsageReportsSelectionCriteria"}
+      }
+    },
+    "StorageLensCostAndUsageReportsPublish":{
+      "type":"structure",
+      "members":{
+        "PrefixLevel":{"shape":"StorageLensCostAndUsageReportsPrefixLevel"}
+      }
+    },
+    "StorageLensCostAndUsageReportsSelectionCriteria":{
+      "type":"structure",
+      "members":{
+        "MinDepth":{"shape":"StorageLensCostAndUsageReportsMinDepth"},
+        "MaxDepth":{"shape":"StorageLensCostAndUsageReportsMaxDepth"}
+      }
     },
     "StorageLensDataExport":{
       "type":"structure",

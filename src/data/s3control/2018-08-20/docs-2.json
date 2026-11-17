@@ -1396,6 +1396,12 @@
         "ListCallerAccessGrantsRequest$InstanceScope": "<p>The scope of S3 Access Grants instances to list grants from.</p> <ul> <li> <p> <code>SELF</code> – Lists grants from the instance of the Amazon Web Services account ID in the request.</p> </li> <li> <p> <code>ALL</code> – Lists grants from the instance of the Amazon Web Services account ID in the request and all instances shared with the caller's account through Amazon Web Services Resource Access Manager (RAM).</p> </li> </ul>"
       }
     },
+    "IntAccessTiers": {
+      "base": "<p>The container for S3 Storage Lens Intelligent-Tiering access tier metrics. When enabled, S3 Storage Lens produces metrics for each individual S3 Intelligent-Tiering access tier instead of reporting a single aggregate value for the INTELLIGENT_TIERING storage class.</p> <p>For more information about S3 Storage Lens, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage_lens.html\">Assessing your storage activity and usage with S3 Storage Lens</a> in the <i>Amazon S3 User Guide</i>. For a complete list of S3 Storage Lens metrics, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage_lens_metrics_glossary.html\">S3 Storage Lens metrics glossary</a> in the <i>Amazon S3 User Guide</i>.</p>",
+      "refs": {
+        "StorageLensConfiguration$IntAccessTiers": "<p>A container element for S3 Storage Lens Intelligent-Tiering access tier metrics.</p>"
+      }
+    },
     "InternalServiceException": {
       "base": "<p/>",
       "refs": {}
@@ -1417,9 +1423,11 @@
         "AdvancedPerformanceMetrics$IsEnabled": "<p>A container that indicates whether S3 Storage Lens advanced performance metrics are enabled.</p>",
         "CloudWatchMetrics$IsEnabled": "<p>A container that indicates whether CloudWatch publishing for S3 Storage Lens metrics is enabled. A value of <code>true</code> indicates that CloudWatch publishing for S3 Storage Lens metrics is enabled.</p>",
         "DetailedStatusCodesMetrics$IsEnabled": "<p>A container that indicates whether detailed status code metrics are enabled.</p>",
+        "IntAccessTiers$IsEnabled": "<p>A container that indicates whether S3 Storage Lens Intelligent-Tiering access tier metrics are enabled.</p>",
         "ListStorageLensConfigurationEntry$IsEnabled": "<p>A container for whether the S3 Storage Lens configuration is enabled. This property is required.</p>",
         "PrefixLevelStorageMetrics$IsEnabled": "<p>A container for whether prefix-level storage metrics are enabled.</p>",
         "StorageLensConfiguration$IsEnabled": "<p>A container for whether the S3 Storage Lens configuration is enabled.</p>",
+        "StorageLensCostAndUsageReportsPrefixLevel$IsEnabled": "<p>Indicates whether prefix-level cost data publishing to Amazon Web Services CUR is enabled.</p>",
         "StorageLensTableDestination$IsEnabled": "<p>A container that indicates whether the export to read-only S3 table buckets is enabled for your S3 Storage Lens configuration. When set to true, Storage Lens reports are automatically exported to tables in addition to other configured destinations.</p>"
       }
     },
@@ -3284,6 +3292,36 @@
       "base": null,
       "refs": {
         "ListStorageLensConfigurationsResult$StorageLensConfigurationList": "<p>A list of S3 Storage Lens configurations.</p>"
+      }
+    },
+    "StorageLensCostAndUsageReportsMaxDepth": {
+      "base": null,
+      "refs": {
+        "StorageLensCostAndUsageReportsSelectionCriteria$MaxDepth": "<p>The maximum prefix depth (inclusive) for which cost data is published to Amazon Web Services CUR. You must provide both <code>MinDepth</code> and <code>MaxDepth</code> together, or neither. If neither is provided, <code>MaxDepth</code> defaults to <code>3</code>.</p>"
+      }
+    },
+    "StorageLensCostAndUsageReportsMinDepth": {
+      "base": null,
+      "refs": {
+        "StorageLensCostAndUsageReportsSelectionCriteria$MinDepth": "<p>The minimum prefix depth (inclusive) for which cost data is published to Amazon Web Services CUR. You must provide both <code>MinDepth</code> and <code>MaxDepth</code> together, or neither. If neither is provided, <code>MinDepth</code> defaults to <code>1</code>.</p>"
+      }
+    },
+    "StorageLensCostAndUsageReportsPrefixLevel": {
+      "base": "<p>A container for the prefix-level configuration that determines the prefixes for which S3 Storage Lens publishes cost data to Amazon Web Services Cost and Usage Reports (Amazon Web Services CUR).</p>",
+      "refs": {
+        "StorageLensCostAndUsageReportsPublish$PrefixLevel": "<p>A container for the prefix-level configuration that determines the prefixes for which S3 Storage Lens publishes cost data to Amazon Web Services CUR.</p>"
+      }
+    },
+    "StorageLensCostAndUsageReportsPublish": {
+      "base": "<p>A container for the configuration used to publish S3 Storage Lens cost data to Amazon Web Services Cost and Usage Reports (Amazon Web Services CUR).</p>",
+      "refs": {
+        "StorageLensConfiguration$CostAndUsageReportsPublish": "<p>A container for the configuration used to publish S3 Storage Lens cost data to Amazon Web Services Cost and Usage Reports (Amazon Web Services CUR).</p>"
+      }
+    },
+    "StorageLensCostAndUsageReportsSelectionCriteria": {
+      "base": "<p>A container for the selection criteria used by the S3 Storage Lens Amazon Web Services Cost and Usage Reports (Amazon Web Services CUR) publish configuration. The selection criteria specifies the minimum and maximum prefix depth (both inclusive) for which cost data is published to Amazon Web Services CUR. You must provide both <code>MinDepth</code> and <code>MaxDepth</code> together, or neither; <code>MinDepth</code> must be less than or equal to <code>MaxDepth</code>, and the difference must not exceed 4. If neither is provided, <code>MinDepth</code> defaults to <code>1</code> and <code>MaxDepth</code> defaults to <code>3</code>.</p>",
+      "refs": {
+        "StorageLensCostAndUsageReportsPrefixLevel$SelectionCriteria": "<p>A container for the selection criteria that determines the prefix depths for which cost data is published to Amazon Web Services CUR.</p>"
       }
     },
     "StorageLensDataExport": {

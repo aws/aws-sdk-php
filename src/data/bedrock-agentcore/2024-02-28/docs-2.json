@@ -13,6 +13,7 @@
     "DeleteABTest": "<p>Deletes an A/B test and its associated gateway rules.</p>",
     "DeleteBatchEvaluation": "<p>Deletes a batch evaluation and its associated results.</p>",
     "DeleteCapacityProviderSession": "<p>Deletes a session associated with a capacity provider in Amazon Bedrock AgentCore and makes the session unavailable for further use. To delete a capacity provider session, specify both the capacity provider identifier and the session ID. After you delete a session, you cannot restart it.</p>",
+    "DeleteDatasetGeneration": "<p>Deletes the record of a dataset generation. The examples the generation added stay in the dataset's draft. To remove them, find them with the <code>generationIds</code> filter of <code>ListDatasetExamples</code>, then call <code>DeleteDatasetExamples</code>.</p>",
     "DeleteEvent": "<p>Deletes an event from an AgentCore Memory resource. When you delete an event, it is permanently removed.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:DeleteEvent</code> permission.</p>",
     "DeleteMemoryRecord": "<p>Deletes a memory record from an AgentCore Memory resource. When you delete a memory record, it is permanently removed.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:DeleteMemoryRecord</code> permission.</p>",
     "DeletePaymentInstrument": "<p>Deletes a payment instrument. This is a soft delete operation that preserves the record for audit and compliance purposes.</p>",
@@ -21,9 +22,11 @@
     "Evaluate": "<p> Performs on-demand evaluation of agent traces using a specified evaluator. This synchronous API accepts traces in OpenTelemetry format and returns immediate scoring results with detailed explanations.</p>",
     "GetABTest": "<p>Retrieves detailed information about an A/B test, including its configuration, status, and statistical results.</p>",
     "GetAgentCard": "<p>Retrieves the A2A agent card associated with an AgentCore Runtime agent.</p>",
+    "GetAgentInsight": "<p>Amazon Bedrock AgentCore Agent Insights identifies patterns detected across your agent sessions. Use Agent Insights to identify recurring issues and prioritize fixes.</p> <p>Retrieves detailed information about an Amazon Bedrock AgentCore Agent Insight, including its archive status, affected sessions, and, when applicable, the batch evaluation that produced it.</p>",
     "GetBatchEvaluation": "<p>Retrieves detailed information about a batch evaluation, including its status, configuration, results, and any error details.</p>",
     "GetBrowserSession": "<p>Retrieves detailed information about a specific browser session in Amazon Bedrock AgentCore. This operation returns the session's configuration, current status, associated streams, and metadata.</p> <p>To get a browser session, you must specify both the browser identifier and the session ID. The response includes information about the session's viewport configuration, timeout settings, and stream endpoints.</p> <p>The following operations are related to <code>GetBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_ListBrowserSessions.html\">ListBrowserSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopBrowserSession.html\">StopBrowserSession</a> </p> </li> </ul>",
     "GetCodeInterpreterSession": "<p>Retrieves detailed information about a specific code interpreter session in Amazon Bedrock AgentCore. This operation returns the session's configuration, current status, and metadata.</p> <p>To get a code interpreter session, you must specify both the code interpreter identifier and the session ID. The response includes information about the session's timeout settings and current status.</p> <p>The following operations are related to <code>GetCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_ListCodeInterpreterSessions.html\">ListCodeInterpreterSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopCodeInterpreterSession.html\">StopCodeInterpreterSession</a> </p> </li> </ul>",
+    "GetDatasetGeneration": "<p>Gets a dataset generation, including its status, the request it was started with, its progress counts, its redaction summary and its errors. Call this operation to track a generation that you started with <code>StartDatasetGeneration</code>.</p>",
     "GetEvent": "<p>Retrieves information about a specific event in an AgentCore Memory resource.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:GetEvent</code> permission.</p>",
     "GetMemoryRecord": "<p>Retrieves a specific memory record from an AgentCore Memory resource.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:GetMemoryRecord</code> permission.</p>",
     "GetPaymentInstrument": "<p>Get a payment instrument by ID.</p>",
@@ -45,9 +48,11 @@
     "InvokeWebSearch": "<p>Searches the web and returns a ranked list of results. Each result includes a text extract from the page.</p> <p>You can filter the results by domain and by publication date.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:InvokeWebSearch</code> permission on the resource <code>arn:${Partition}:bedrock-agentcore:${Region}:aws:tool/web-search.v1</code>.</p>",
     "ListABTests": "<p>Lists all A/B tests in the account.</p>",
     "ListActors": "<p>Lists all actors in an AgentCore Memory resource. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListActors</code> permission.</p>",
+    "ListAgentInsights": "<p>Lists Amazon Bedrock AgentCore Agent Insight summaries in your account and Region. Use this operation to review patterns across sessions before you investigate or archive an insight. The response paginates the results. Use the <code>nextToken</code> parameter to retrieve additional results.</p>",
     "ListBatchEvaluations": "<p>Lists all batch evaluations in the account, providing summary information about each evaluation's status and configuration.</p>",
     "ListBrowserSessions": "<p>Retrieves a list of browser sessions in Amazon Bedrock AgentCore that match the specified criteria. This operation returns summary information about each session, including identifiers, status, and timestamps.</p> <p>You can filter the results by browser identifier and session status. The operation supports pagination to handle large result sets efficiently.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully when retrieving large numbers of sessions.</p> <p>The following operations are related to <code>ListBrowserSessions</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> </ul>",
     "ListCodeInterpreterSessions": "<p>Retrieves a list of code interpreter sessions in Amazon Bedrock AgentCore that match the specified criteria. This operation returns summary information about each session, including identifiers, status, and timestamps.</p> <p>You can filter the results by code interpreter identifier and session status. The operation supports pagination to handle large result sets efficiently.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully when retrieving large numbers of sessions.</p> <p>The following operations are related to <code>ListCodeInterpreterSessions</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
+    "ListDatasetGenerations": "<p>Lists the generations for a dataset. AgentCore keeps a generation until you delete it with <code>DeleteDatasetGeneration</code> or delete the dataset. To get a generation's counts and the request it was started with, call <code>GetDatasetGeneration</code>.</p>",
     "ListEvents": "<p>Lists events in an AgentCore Memory resource based on specified criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListEvents</code> permission.</p>",
     "ListMemoryExtractionJobs": "<p>Lists all long-term memory extraction jobs that are eligible to be started with optional filtering.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListMemoryExtractionJobs</code> permission.</p>",
     "ListMemoryRecords": "<p>Lists memory records in an AgentCore Memory resource based on specified criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListMemoryRecords</code> permission.</p>",
@@ -62,6 +67,7 @@
     "StartBatchEvaluation": "<p>Starts a batch evaluation job that evaluates agent performance across multiple sessions. Batch evaluations pull agent traces from CloudWatch Logs or an existing online evaluation configuration and run specified evaluators and insights against them.</p>",
     "StartBrowserSession": "<p>Creates and initializes a browser session in Amazon Bedrock AgentCore. The session enables agents to navigate and interact with web content, extract information from websites, and perform web-based tasks as part of their response generation.</p> <p>To create a session, you must specify a browser identifier and a name. You can also configure the viewport dimensions to control the visible area of web content. The session remains active until it times out or you explicitly stop it using the <code>StopBrowserSession</code> operation.</p> <p>The following operations are related to <code>StartBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_UpdateBrowserStream.html\">UpdateBrowserStream</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_SaveBrowserSessionProfile.html\">SaveBrowserSessionProfile</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopBrowserSession.html\">StopBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_InvokeBrowser.html\">InvokeBrowser</a> </p> </li> </ul>",
     "StartCodeInterpreterSession": "<p>Creates and initializes a code interpreter session in Amazon Bedrock AgentCore. The session enables agents to execute code as part of their response generation, supporting programming languages such as Python for data analysis, visualization, and computation tasks.</p> <p>To create a session, you must specify a code interpreter identifier and a name. The session remains active until it times out or you explicitly stop it using the <code>StopCodeInterpreterSession</code> operation.</p> <p>The following operations are related to <code>StartCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_InvokeCodeInterpreter.html\">InvokeCodeInterpreter</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopCodeInterpreterSession.html\">StopCodeInterpreterSession</a> </p> </li> </ul>",
+    "StartDatasetGeneration": "<p>Starts a dataset generation, which creates examples for an existing dataset from your agent's traces. The dataset must be <code>ACTIVE</code>. Each generation produces one scenario type, set by <code>scenarioType</code>. When the generation finishes, AgentCore adds the examples to the dataset's draft. Examples that duplicate each other, or that duplicate examples already in the draft, are left out.</p> <p>A dataset can have only one generation in progress at a time. While it runs, requests that change the dataset's draft or publish a version are rejected with a <code>ConflictException</code>.</p> <p>AgentCore reads the traces with your credentials, so you need read access to the trace log groups, and to the dataset's KMS key if the dataset uses a customer managed key. The draft can hold at most 1,000 examples, including the examples this generation can add (<code>maxScenarios</code>).</p> <p>The operation returns immediately. To track progress, call <code>GetDatasetGeneration</code>.</p>",
     "StartMemoryExtractionJob": "<p> Starts a memory extraction job that processes events that failed extraction previously in an AgentCore Memory resource and produces structured memory records. When earlier extraction attempts have left events unprocessed, this job will pick up and extract those as well. </p> <p>To use this operation, you must have the <code>bedrock-agentcore:StartMemoryExtractionJob</code> permission.</p>",
     "StartRecommendation": "<p>Starts a recommendation job that analyzes agent traces and generates optimization suggestions for system prompts or tool descriptions to improve agent performance.</p>",
     "StopBatchEvaluation": "<p>Stops a running batch evaluation. Sessions that have already been evaluated retain their results.</p>",
@@ -69,6 +75,7 @@
     "StopCodeInterpreterSession": "<p>Terminates an active code interpreter session in Amazon Bedrock AgentCore. This operation stops the session, releases associated resources, and makes the session unavailable for further use.</p> <p>To stop a code interpreter session, you must specify both the code interpreter identifier and the session ID. Once stopped, a session cannot be restarted; you must create a new session using <code>StartCodeInterpreterSession</code>.</p> <p>The following operations are related to <code>StopCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
     "StopRuntimeSession": "<p>Stops a session that is running in an running AgentCore Runtime agent.</p>",
     "UpdateABTest": "<p>Updates an A/B test's configuration, including variants, traffic allocation, evaluation settings, or execution status.</p>",
+    "UpdateAgentInsight": "<p>Updates the archive status of an Amazon Bedrock AgentCore Agent Insight.</p>",
     "UpdateBrowserStream": "<p>Updates a browser stream. To use this operation, you must have permissions to perform the bedrock:UpdateBrowserStream action.</p>"
   },
   "shapes": {
@@ -217,6 +224,16 @@
         "RootCauseCluster$affectedSessions": "<p>The list of sessions affected by this root cause.</p>"
       }
     },
+    "AgentApplicationName": {
+      "base": "<p>The default Store includes all applications; this value attributes the Insight to one application and does not configure Store selection.</p>",
+      "refs": {
+        "AgentInsightSummary$applicationName": "<p>The application that the Agent Insight belongs to.</p>",
+        "GetAgentInsightRequest$applicationName": "<p>The application that the Agent Insight belongs to.</p>",
+        "GetAgentInsightResponse$applicationName": "<p>The application that the Agent Insight belongs to.</p>",
+        "ListAgentInsightsRequest$applicationName": "<p>Filters the results to Agent Insights for an application.</p>",
+        "UpdateAgentInsightRequest$applicationName": "<p>The application that the Agent Insight belongs to.</p>"
+      }
+    },
     "AgentCard": {
       "base": null,
       "refs": {
@@ -227,6 +244,88 @@
       "base": "<p> The agent card definition for A2A descriptors, including the schema version and inline content that describes the agent's capabilities.</p>",
       "refs": {
         "A2aDescriptor$agentCard": "<p> The agent card definition that describes the agent's capabilities and interface.</p>"
+      }
+    },
+    "AgentCoreRuntimeInvocation": {
+      "base": "<p>The configuration for invoking an agent hosted on AgentCore Runtime. Each scenario runs in its own runtime session, and the turns of a scenario are sent in order within that session. The batch evaluation uses your credentials to read the agent runtime endpoint and the dataset, invoke the agent runtime, and read the resulting traces. You must have permission for these actions.</p>",
+      "refs": {
+        "AgentInvocationConfig$agentCoreRuntime": "<p>The configuration for invoking an agent hosted on AgentCore Runtime.</p>"
+      }
+    },
+    "AgentCoreRuntimeInvocationDetails": {
+      "base": "<p>The details of the agent hosted on AgentCore Runtime that a batch evaluation invoked.</p>",
+      "refs": {
+        "AgentInvocationDetails$agentCoreRuntime": "<p>The details of the agent hosted on AgentCore Runtime that the batch evaluation invoked.</p>"
+      }
+    },
+    "AgentInsightArchiveStatus": {
+      "base": "<p>Specifies whether an Agent Insight is active or archived. Valid values:</p> <ul> <li> <p> <code>ACTIVE</code> - The insight is currently active.</p> </li> <li> <p> <code>ARCHIVED</code> - The insight has been archived.</p> </li> </ul>",
+      "refs": {
+        "AgentInsightSummary$archiveStatus": "<p>Specifies whether the Agent Insight is active or archived. Valid values:</p> <ul> <li> <p> <code>ACTIVE</code> - The insight is currently active.</p> </li> <li> <p> <code>ARCHIVED</code> - The insight has been archived.</p> </li> </ul>",
+        "GetAgentInsightResponse$archiveStatus": "<p>Specifies whether the Agent Insight is active or archived. Valid values:</p> <ul> <li> <p> <code>ACTIVE</code> - The insight is currently active.</p> </li> <li> <p> <code>ARCHIVED</code> - The insight has been archived.</p> </li> </ul>",
+        "ListAgentInsightsRequest$archiveStatus": "<p>Filters the results by archive status.</p>",
+        "UpdateAgentInsightRequest$archiveStatus": "<p>The archive status to apply to the Agent Insight. Valid values:</p> <ul> <li> <p> <code>ACTIVE</code> - Marks the insight as active.</p> </li> <li> <p> <code>ARCHIVED</code> - Marks the insight as archived.</p> </li> </ul>",
+        "UpdateAgentInsightResponse$archiveStatus": "<p>The archive status of the updated Agent Insight. Valid values:</p> <ul> <li> <p> <code>ACTIVE</code> - The insight is active.</p> </li> <li> <p> <code>ARCHIVED</code> - The insight is archived.</p> </li> </ul>"
+      }
+    },
+    "AgentInsightCustomerMetadataStatus": {
+      "base": "<p>Whether customer-encrypted metadata is available for an Agent Insight.</p>",
+      "refs": {
+        "AgentInsightSummary$customerMetadataStatus": "<p>Specifies whether customer-encrypted metadata is available for the Agent Insight.</p>",
+        "GetAgentInsightResponse$customerMetadataStatus": "<p>Specifies whether customer-encrypted metadata is available for the Agent Insight.</p>"
+      }
+    },
+    "AgentInsightId": {
+      "base": "<p>Application-scoped persisted Insight identifier, distinct from the common-model analysis type identifier.</p>",
+      "refs": {
+        "AgentInsightSummary$agentInsightId": "<p>The unique identifier of the Agent Insight.</p>",
+        "GetAgentInsightRequest$agentInsightId": "<p>The unique identifier of the Agent Insight to retrieve.</p>",
+        "GetAgentInsightResponse$agentInsightId": "<p>The unique identifier of the Agent Insight.</p>",
+        "UpdateAgentInsightRequest$agentInsightId": "<p>The unique identifier of the Agent Insight to update.</p>",
+        "UpdateAgentInsightResponse$agentInsightId": "<p>The unique identifier of the updated Agent Insight.</p>"
+      }
+    },
+    "AgentInsightSummary": {
+      "base": "<p>Contains summary information about an Amazon Bedrock AgentCore Agent Insight, including its label, description, and creation time. This structure is returned by <code>ListAgentInsights</code>; use <code>GetAgentInsight</code> to retrieve the sample sessions and root causes for a specific insight.</p>",
+      "refs": {
+        "AgentInsightSummaryList$member": null
+      }
+    },
+    "AgentInsightSummaryAffectedSessionCountInteger": {
+      "base": null,
+      "refs": {
+        "AgentInsightSummary$affectedSessionCount": "<p>The number of sessions affected by the insight pattern.</p>"
+      }
+    },
+    "AgentInsightSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAgentInsightsResponse$agentInsights": "<p>The Agent Insight summaries.</p>"
+      }
+    },
+    "AgentInvocationConfig": {
+      "base": "<p>The agent that the batch evaluation invokes with each scenario in the dataset.</p>",
+      "refs": {
+        "DatasetExecutionConfig$agentInvocation": "<p>Specifies the agent runtime endpoint and the request template that the batch evaluation uses to invoke the agent for each scenario in the dataset.</p>"
+      }
+    },
+    "AgentInvocationDetails": {
+      "base": "<p>The agent that a batch evaluation invoked with each scenario in the dataset.</p>",
+      "refs": {
+        "DatasetExecutionDetails$agentInvocation": "<p>The agent that the batch evaluation invoked.</p>"
+      }
+    },
+    "AgentRuntimeEndpointArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of an agent runtime endpoint.</p>",
+      "refs": {
+        "AgentCoreRuntimeInvocation$agentRuntimeEndpointArn": "<p>The Amazon Resource Name (ARN) of the agent runtime endpoint to invoke. Specify an endpoint in the same account and Region as the batch evaluation. The service requires the endpoint and its agent runtime version to be ready. The agent runtime must use the HTTP protocol and IAM inbound authorization.</p>",
+        "AgentCoreRuntimeInvocationDetails$agentRuntimeEndpointArn": "<p>The Amazon Resource Name (ARN) of the agent runtime endpoint that the batch evaluation invoked.</p>"
+      }
+    },
+    "AgentRuntimeVersion": {
+      "base": "<p>The version of an agent runtime.</p>",
+      "refs": {
+        "AgentCoreRuntimeInvocationDetails$agentRuntimeVersion": "<p>The version of the agent runtime that the endpoint pointed to when the batch evaluation started. If you update the endpoint after the batch evaluation starts, each later turn uses the version that the endpoint points to when the turn runs.</p>"
       }
     },
     "AgentSkillsDescriptor": {
@@ -332,6 +431,7 @@
     "BatchEvaluationArn": {
       "base": "<p>The Amazon Resource Name (ARN) of a batch evaluation.</p>",
       "refs": {
+        "BatchEvaluationSourceConfig$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the batch evaluation.</p>",
         "BatchEvaluationSummary$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the batch evaluation.</p>",
         "BatchEvaluationTraceConfig$batchEvaluationArn": "<p>The ARN of the completed batch evaluation to use as the trace source.</p>",
         "DeleteBatchEvaluationResponse$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the deleted batch evaluation.</p>",
@@ -353,11 +453,14 @@
     "BatchEvaluationId": {
       "base": "<p>The unique identifier for a batch evaluation.</p>",
       "refs": {
+        "AgentInsightSummary$batchEvaluationId": "<p>The Batch Evaluation that produced this Insight, when applicable.</p>",
         "BatchEvaluationSummary$batchEvaluationId": "<p>The unique identifier of the batch evaluation.</p>",
         "DeleteBatchEvaluationRequest$batchEvaluationId": "<p>The unique identifier of the batch evaluation to delete.</p>",
         "DeleteBatchEvaluationResponse$batchEvaluationId": "<p>The unique identifier of the deleted batch evaluation.</p>",
+        "GetAgentInsightResponse$batchEvaluationId": "<p>The Batch Evaluation that produced this Insight, when applicable.</p>",
         "GetBatchEvaluationRequest$batchEvaluationId": "<p>The unique identifier of the batch evaluation to retrieve.</p>",
         "GetBatchEvaluationResponse$batchEvaluationId": "<p>The unique identifier of the batch evaluation.</p>",
+        "ListAgentInsightsRequest$batchEvaluationId": "<p>Filters the results to Agent Insights produced by a batch evaluation.</p>",
         "StartBatchEvaluationResponse$batchEvaluationId": "<p>The unique identifier of the created batch evaluation.</p>",
         "StopBatchEvaluationRequest$batchEvaluationId": "<p>The unique identifier of the batch evaluation to stop.</p>",
         "StopBatchEvaluationResponse$batchEvaluationId": "<p>The unique identifier of the stopped batch evaluation.</p>"
@@ -370,6 +473,12 @@
         "GetBatchEvaluationResponse$batchEvaluationName": "<p>The name of the batch evaluation.</p>",
         "StartBatchEvaluationRequest$batchEvaluationName": "<p>The name of the batch evaluation. Must be unique within your account.</p>",
         "StartBatchEvaluationResponse$batchEvaluationName": "<p>The name of the batch evaluation.</p>"
+      }
+    },
+    "BatchEvaluationSourceConfig": {
+      "base": "<p>A batch evaluation source for a dataset generation. The generation reads the sessions the batch evaluation evaluated, so there is no time window.</p>",
+      "refs": {
+        "TraceSourceConfig$batchEvaluation": "<p>Reads sessions, with their evaluation results, from a batch evaluation.</p>"
       }
     },
     "BatchEvaluationStatus": {
@@ -440,6 +549,7 @@
         "CoinbaseCdpTokenRequestInput$includeWalletAuthToken": "<p>Set to true for wallet write operations (requires walletSecret configured).</p>",
         "CreateABTestRequest$enableOnCreate": "<p>Whether to enable the A/B test immediately upon creation. If true, traffic splitting begins automatically.</p>",
         "FilterValue$booleanValue": "<p>A boolean value for true/false filtering conditions.</p>",
+        "GenerationFilterValue$booleanValue": "<p>A Boolean value.</p>",
         "GetResourceOauth2TokenRequest$forceAuthentication": "<p>Indicates whether to always initiate a new three-legged OAuth (3LO) flow, regardless of any existing session.</p>",
         "ListEventsInput$includePayloads": "<p>Specifies whether to include event payloads in the response. Set to true to include payloads, or false to exclude them.</p>",
         "MppPaymentInput$buyerPaysGasFees": "<p>Authorizes the service to sign a payment whose blockchain network (gas) fees are charged to your wallet, on top of the payment amount.</p> <p>The challenge indicates who sponsors the network fees. When the challenge does not sponsor them, the service signs the payment only if this field is <code>true</code>. Otherwise it returns a validation error, so you can decide whether to pay the fees or obtain a challenge that sponsors them.</p> <p>Optional. When omitted or <code>false</code>, you decline to pay network fees. This field has no effect on challenges that already sponsor the fees.</p>",
@@ -649,6 +759,7 @@
         "StartBatchEvaluationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error.</p>",
         "StartBrowserSessionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request, but does not return an error. This parameter helps prevent the creation of duplicate sessions if there are temporary network issues.</p>",
         "StartCodeInterpreterSessionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request, but does not return an error. This parameter helps prevent the creation of duplicate sessions if there are temporary network issues.</p>",
+        "StartDatasetGenerationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error.</p>",
         "StartRecommendationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error.</p>",
         "StopBrowserSessionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request, but does not return an error.</p>",
         "StopCodeInterpreterSessionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request, but does not return an error.</p>",
@@ -703,6 +814,24 @@
       "base": "<p>The configuration for reading agent traces from CloudWatch Logs.</p>",
       "refs": {
         "DataSourceConfig$cloudWatchLogs": "<p>Configuration for pulling agent session traces from CloudWatch Logs.</p>"
+      }
+    },
+    "CloudWatchLogsSourceConfig": {
+      "base": "<p>A CloudWatch Logs source for a dataset generation. Specify either <code>logGroupNames</code> or <code>logGroupNamePrefixes</code>.</p>",
+      "refs": {
+        "TraceSourceConfig$cloudWatchLogs": "<p>Reads sessions from CloudWatch Logs log groups.</p>"
+      }
+    },
+    "CloudWatchLogsSourceConfigLogGroupNamePrefixesList": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogsSourceConfig$logGroupNamePrefixes": "<p>Prefixes of the names of the log groups to read, from 1 to 5. You can't specify this together with <code>logGroupNames</code>.</p>"
+      }
+    },
+    "CloudWatchLogsSourceConfigLogGroupNamesList": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogsSourceConfig$logGroupNames": "<p>The names of the log groups to read, from 1 to 5. You can't specify this together with <code>logGroupNamePrefixes</code>.</p>"
       }
     },
     "CloudWatchLogsSourceLogGroupNamePrefixesList": {
@@ -1030,6 +1159,24 @@
         "Amount$currency": "<p>The currency code for the amount.</p>"
       }
     },
+    "CustomDataIdentifier": {
+      "base": "<p>A custom data identifier, defined by a regular expression.</p>",
+      "refs": {
+        "RedactionConfigurationCustomDataIdentifiersList$member": null
+      }
+    },
+    "CustomDataIdentifierNameString": {
+      "base": null,
+      "refs": {
+        "CustomDataIdentifier$name": "<p>The name of the custom data identifier. It can't be the same as the name of a managed data identifier.</p>"
+      }
+    },
+    "CustomDataIdentifierRegexString": {
+      "base": null,
+      "refs": {
+        "CustomDataIdentifier$regex": "<p>The regular expression that matches the data to mask. Lookahead and lookbehind aren't supported.</p>"
+      }
+    },
     "CustomDescriptor": {
       "base": "<p> A custom descriptor configuration for a registry record.</p>",
       "refs": {
@@ -1059,6 +1206,100 @@
       "refs": {
         "GetBatchEvaluationResponse$dataSourceConfig": "<p>The data source configuration specifying where agent traces are pulled from.</p>",
         "StartBatchEvaluationRequest$dataSourceConfig": "<p>The data source configuration that specifies where to pull agent session traces from for evaluation.</p>"
+      }
+    },
+    "DatasetDetails": {
+      "base": "<p>Identifies the dataset and the version of it that a batch evaluation ran.</p>",
+      "refs": {
+        "DatasetExecutionDetails$dataset": "<p>The dataset and the version of it that the batch evaluation ran.</p>"
+      }
+    },
+    "DatasetExecutionConfig": {
+      "base": "<p>The configuration for running the scenarios in a dataset against an agent as part of a batch evaluation.</p>",
+      "refs": {
+        "StartBatchEvaluationRequest$datasetExecutionConfig": "<p>The configuration for running the scenarios in a dataset against an agent before evaluating the resulting sessions. When you specify this field, the batch evaluation runs each scenario in the dataset against the agent. It then evaluates the sessions that the agent produces. You must also specify <code>evaluators</code> and a <code>dataSourceConfig</code> that uses <code>cloudWatchLogs</code>. Configure <code>cloudWatchLogs</code> with the service name and log groups that the agent uses for its traces. You can't specify <code>insights</code> or an <code>onlineEvaluationConfigSource</code> data source with this field.</p>"
+      }
+    },
+    "DatasetExecutionDetails": {
+      "base": "<p>The details of the dataset and agent that a batch evaluation ran.</p>",
+      "refs": {
+        "GetBatchEvaluationResponse$datasetExecutionDetails": "<p>The details of the dataset and agent that the batch evaluation ran, including the dataset version and agent runtime version that the service resolved when the batch evaluation started. This field is present only if the batch evaluation was started with a <code>datasetExecutionConfig</code>.</p>"
+      }
+    },
+    "DatasetGenerationDescription": {
+      "base": null,
+      "refs": {
+        "DatasetGenerationSummary$description": "<p>The description of the dataset generation.</p>",
+        "GetDatasetGenerationResponse$description": "<p>The description of the dataset generation.</p>",
+        "StartDatasetGenerationRequest$description": "<p>A description of the dataset generation.</p>"
+      }
+    },
+    "DatasetGenerationId": {
+      "base": null,
+      "refs": {
+        "DatasetGenerationSummary$generationId": "<p>The unique identifier of the dataset generation.</p>",
+        "DeleteDatasetGenerationRequest$generationId": "<p>The unique identifier of the dataset generation.</p>",
+        "DeleteDatasetGenerationResponse$generationId": "<p>The unique identifier of the dataset generation.</p>",
+        "GetDatasetGenerationRequest$generationId": "<p>The unique identifier of the dataset generation.</p>",
+        "GetDatasetGenerationResponse$generationId": "<p>The unique identifier of the dataset generation.</p>",
+        "StartDatasetGenerationResponse$generationId": "<p>The unique identifier of the dataset generation.</p>"
+      }
+    },
+    "DatasetGenerationName": {
+      "base": null,
+      "refs": {
+        "DatasetGenerationSummary$name": "<p>The name of the dataset generation.</p>",
+        "GetDatasetGenerationResponse$name": "<p>The name of the dataset generation.</p>",
+        "StartDatasetGenerationRequest$name": "<p>The name of the dataset generation. The generation ID starts with this name.</p>",
+        "StartDatasetGenerationResponse$name": "<p>The name of the dataset generation.</p>"
+      }
+    },
+    "DatasetGenerationStatus": {
+      "base": "<p>The status of a dataset generation.</p>",
+      "refs": {
+        "DatasetGenerationSummary$status": "<p>The status of the dataset generation.</p>",
+        "DeleteDatasetGenerationResponse$status": "<p>The status of the dataset generation.</p>",
+        "GetDatasetGenerationResponse$status": "<p>The status of the dataset generation.</p>",
+        "StartDatasetGenerationResponse$status": "<p>The status of the dataset generation.</p>"
+      }
+    },
+    "DatasetGenerationSummary": {
+      "base": "<p>A summary of a dataset generation. To get its counts and the request it was started with, call <code>GetDatasetGeneration</code>.</p>",
+      "refs": {
+        "DatasetGenerationSummaryList$member": null
+      }
+    },
+    "DatasetGenerationSummaryList": {
+      "base": null,
+      "refs": {
+        "ListDatasetGenerationsResponse$datasetGenerations": "<p>The dataset generations.</p>"
+      }
+    },
+    "DatasetId": {
+      "base": "<p>The unique identifier of a dataset.</p>",
+      "refs": {
+        "DatasetDetails$datasetId": "<p>The unique identifier of the dataset.</p>",
+        "DatasetGenerationSummary$datasetId": "<p>The unique identifier of the dataset.</p>",
+        "DatasetSource$datasetId": "<p>The unique identifier of the dataset.</p>",
+        "DeleteDatasetGenerationRequest$datasetId": "<p>The unique identifier of the dataset.</p>",
+        "GetDatasetGenerationRequest$datasetId": "<p>The unique identifier of the dataset.</p>",
+        "GetDatasetGenerationResponse$datasetId": "<p>The unique identifier of the dataset.</p>",
+        "ListDatasetGenerationsRequest$datasetId": "<p>The unique identifier of the dataset.</p>",
+        "StartDatasetGenerationRequest$datasetId": "<p>The unique identifier of the dataset to add the generated examples to. The dataset must be <code>ACTIVE</code>.</p>",
+        "StartDatasetGenerationResponse$datasetId": "<p>The unique identifier of the dataset.</p>"
+      }
+    },
+    "DatasetSource": {
+      "base": "<p>Identifies the dataset and the version of it to run.</p>",
+      "refs": {
+        "DatasetExecutionConfig$dataset": "<p>The dataset whose scenarios are sent to the agent. The dataset must use the predefined evaluation schema, and the version that runs must contain between 1 and 1,000 scenarios.</p>"
+      }
+    },
+    "DatasetVersion": {
+      "base": "<p>The version of a dataset.</p>",
+      "refs": {
+        "DatasetDetails$datasetVersion": "<p>The version of the dataset that the batch evaluation ran. If the request didn't specify a version, this is the latest published version when the batch evaluation started.</p>",
+        "DatasetSource$datasetVersion": "<p>The number of a published version of the dataset. You can't run the <code>DRAFT</code> version. If you don't specify a version, the batch evaluation uses the latest published version.</p>"
       }
     },
     "DateTimestamp": {
@@ -1116,6 +1357,14 @@
       "refs": {}
     },
     "DeleteCapacityProviderSessionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDatasetGenerationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDatasetGenerationResponse": {
       "base": null,
       "refs": {}
     },
@@ -1227,6 +1476,7 @@
         "EvaluationResultContent$value": "<p> The numerical score assigned by the evaluator according to its configured rating scale. For numerical scales, this is a decimal value within the defined range. This field is not allowed for categorical scales. </p>",
         "EvaluatorStatistics$averageScore": "<p>The average score across all evaluated sessions for this evaluator.</p>",
         "FilterValue$doubleValue": "<p>A numeric value for numerical filtering and comparisons.</p>",
+        "GenerationFilterValue$doubleValue": "<p>A numeric value.</p>",
         "InsightsFailureSignal$confidence": "<p>The confidence score of the failure detection.</p>",
         "MemoryRecordMetadataValue$numberValue": "<p>A numeric value.</p>",
         "MemoryRecordSummary$score": "<p>The relevance score of the memory record when returned as part of a search result. Higher values indicate greater relevance to the search query.</p>",
@@ -1324,7 +1574,8 @@
     "EvaluationDimensionName": {
       "base": null,
       "refs": {
-        "EvaluationResultContent$evaluationDimensionName": "<p> The name of the dimension that this result scores. This field is set only on results produced by an evaluator that uses a multi-dimensional rating scale, where each dimension is scored independently. For evaluators with a single rating scale, this field is absent. </p>"
+        "EvaluationResultContent$evaluationDimensionName": "<p> The name of the dimension that this result scores. This field is set only on results produced by an evaluator that uses a multi-dimensional rating scale, where each dimension is scored independently. For evaluators with a single rating scale, this field is absent. </p>",
+        "EvaluatorFilter$evaluationDimensionName": "<p>The dimension of the evaluator's result to compare. Required for an evaluator that scores more than one dimension. Don't specify it for any other evaluator.</p>"
       }
     },
     "EvaluationErrorCode": {
@@ -1427,12 +1678,26 @@
         "RecommendationEvaluatorReference$evaluatorArn": "<p>The Amazon Resource Name (ARN) of the evaluator.</p>"
       }
     },
+    "EvaluatorFilter": {
+      "base": "<p>A condition on a session's evaluation result.</p>",
+      "refs": {
+        "EvaluatorFilterList$member": null
+      }
+    },
+    "EvaluatorFilterList": {
+      "base": null,
+      "refs": {
+        "GenerationFilters$evaluatorFilters": "<p>Conditions on evaluation results, up to 10. A session must meet all of them. You can use these only with an <code>onlineEvaluation</code> or <code>batchEvaluation</code> source. A <code>cloudWatchLogs</code> source has no evaluation results.</p>",
+        "GroundTruthConfig$qualityFilters": "<p>Evaluator conditions that a selected session must also meet to have reference fields copied. If you don't specify these, the generation uses the evaluator filters from <code>selection</code>. If the selection names sessions and traces by ID, every selected session gets reference fields. Specify an empty list to give every selected session reference fields. You can't specify quality filters with a <code>cloudWatchLogs</code> source.</p>"
+      }
+    },
     "EvaluatorId": {
       "base": null,
       "refs": {
         "EvaluateRequest$evaluatorId": "<p> The unique identifier of the evaluator to use for scoring. Can be a built-in evaluator (e.g., <code>Builtin.Helpfulness</code>, <code>Builtin.Correctness</code>) or a custom evaluator Id created through the control plane API. </p>",
         "EvaluationResultContent$evaluatorId": "<p> The unique identifier of the evaluator that produced this result. This matches the <code>evaluatorId</code> provided in the evaluation request and can be used to identify which evaluator generated specific results. </p>",
-        "Evaluator$evaluatorId": "<p>The unique identifier of the evaluator. Can reference built-in evaluators (e.g., <code>Builtin.Helpfulness</code>) or custom evaluators.</p>"
+        "Evaluator$evaluatorId": "<p>The unique identifier of the evaluator. Can reference built-in evaluators (e.g., <code>Builtin.Helpfulness</code>) or custom evaluators.</p>",
+        "EvaluatorFilter$evaluatorId": "<p>The unique identifier of the evaluator whose result to compare.</p>"
       }
     },
     "EvaluatorList": {
@@ -1673,10 +1938,22 @@
         "CloudWatchLogsFilter$value": "<p>The value to compare against using the specified operator.</p>"
       }
     },
+    "FindingCountMap": {
+      "base": null,
+      "refs": {
+        "RedactionSummary$findingCounts": "<p>The number of matches for each data identifier.</p>"
+      }
+    },
     "FindingDescription": {
       "base": null,
       "refs": {
         "SessionFinding$description": "<p>A description of the failure.</p>"
+      }
+    },
+    "FindingIdentifierKey": {
+      "base": null,
+      "refs": {
+        "FindingCountMap$key": null
       }
     },
     "FindingTargetId": {
@@ -1708,6 +1985,154 @@
         "UpdateABTestRequest$gatewayFilter": "<p>The updated gateway filter.</p>"
       }
     },
+    "GenerationAttributeFilter": {
+      "base": "<p>A condition on a session attribute.</p>",
+      "refs": {
+        "GenerationAttributeFilterList$member": null
+      }
+    },
+    "GenerationAttributeFilterKeyString": {
+      "base": null,
+      "refs": {
+        "GenerationAttributeFilter$key": "<p>The attribute key.</p>"
+      }
+    },
+    "GenerationAttributeFilterList": {
+      "base": null,
+      "refs": {
+        "GenerationFilters$attributeFilters": "<p>Attribute conditions, up to 5. A session must meet all of them. An attribute on a span matches when any span in the session meets the condition.</p>"
+      }
+    },
+    "GenerationErrorCode": {
+      "base": null,
+      "refs": {
+        "GenerationErrorDetail$errorCode": "<p>The error code, for example <code>ACCESS_DENIED</code> or <code>EXPIRED_CREDENTIALS</code>. New codes can be added.</p>"
+      }
+    },
+    "GenerationErrorDetail": {
+      "base": "<p>The failures in a dataset generation that share an error code.</p>",
+      "refs": {
+        "GenerationErrorDetailsList$member": null
+      }
+    },
+    "GenerationErrorDetailCountInteger": {
+      "base": null,
+      "refs": {
+        "GenerationErrorDetail$count": "<p>The number of sessions and traces that failed with this error code. Absent for a generation that finished before failures were counted by code. In that case, <code>sessionIds</code> is a sample.</p>"
+      }
+    },
+    "GenerationErrorDetailsList": {
+      "base": null,
+      "refs": {
+        "GetDatasetGenerationResponse$errorDetails": "<p>The errors the generation hit, grouped by error code. The list holds the 10 most frequent error codes, most frequent first.</p>"
+      }
+    },
+    "GenerationErrorMessage": {
+      "base": null,
+      "refs": {
+        "GenerationErrorDetail$errorMessage": "<p>A description of the error.</p>"
+      }
+    },
+    "GenerationErrorSessionIdList": {
+      "base": null,
+      "refs": {
+        "GenerationErrorDetail$sessionIds": "<p>Up to 10 of the sessions that failed with this error code. Each entry is a session ID, or the ID of a trace named in the request.</p>"
+      }
+    },
+    "GenerationFilterOperator": {
+      "base": "<p>How a filter compares a value.</p>",
+      "refs": {
+        "EvaluatorFilter$operator": "<p>How to compare the evaluation result with <code>value</code>.</p>",
+        "GenerationAttributeFilter$operator": "<p>How to compare the attribute with <code>value</code>.</p>"
+      }
+    },
+    "GenerationFilterStringValue": {
+      "base": null,
+      "refs": {
+        "GenerationFilterValue$stringValue": "<p>A string value.</p>"
+      }
+    },
+    "GenerationFilterValue": {
+      "base": "<p>The value a filter compares with. Specify exactly one. Attribute filters support all three types. Evaluator filters support <code>stringValue</code> and <code>doubleValue</code>.</p>",
+      "refs": {
+        "EvaluatorFilter$value": "<p>The value to compare the evaluation result with. Use <code>doubleValue</code> for a score and <code>stringValue</code> for a label. <code>booleanValue</code> isn't supported.</p>",
+        "GenerationAttributeFilter$value": "<p>The value to compare the attribute with.</p>"
+      }
+    },
+    "GenerationFilters": {
+      "base": "<p>Conditions that a session must meet to be selected. A session must meet every condition you specify. Attribute and turn count filters work with any source. Evaluator filters need a source that has evaluation results.</p>",
+      "refs": {
+        "GenerationSelection$filters": "<p>Conditions that a session must meet to be selected.</p>",
+        "GenerationSelectionRecord$filters": "<p>The filters the generation was started with.</p>"
+      }
+    },
+    "GenerationIdentifierCounts": {
+      "base": "<p>The number of session and trace IDs a dataset generation was started with.</p>",
+      "refs": {
+        "GenerationSelectionRecord$identifiers": "<p>The number of session and trace IDs the generation was started with.</p>"
+      }
+    },
+    "GenerationIdentifiers": {
+      "base": "<p>The sessions and traces to generate examples from. Specify at least one session ID or trace ID. A session with more than 100 turns is reported as an error and produces no example.</p>",
+      "refs": {
+        "GenerationSelection$identifiers": "<p>The sessions and traces to use.</p>"
+      }
+    },
+    "GenerationResults": {
+      "base": "<p>Counts of the sessions, scenarios and examples a dataset generation has processed.</p>",
+      "refs": {
+        "GetDatasetGenerationResponse$generationResults": "<p>Counts of the sessions, scenarios and examples the generation has processed.</p>"
+      }
+    },
+    "GenerationSamplingConfig": {
+      "base": "<p>How many scenarios a dataset generation produces.</p>",
+      "refs": {
+        "TraceGenerationRecord$sampling": "<p>How many scenarios the generation produces.</p>",
+        "TraceGenerationSource$sampling": "<p>How many scenarios to generate from the selected sessions.</p>"
+      }
+    },
+    "GenerationSamplingConfigMaxScenariosInteger": {
+      "base": null,
+      "refs": {
+        "GenerationSamplingConfig$maxScenarios": "<p>The maximum number of scenarios to generate, from 1 to 1,000. The default is 100. The generation produces at most one scenario for each selected session. The dataset's draft examples plus this value can't be more than 1,000.</p>"
+      }
+    },
+    "GenerationSelection": {
+      "base": "<p>How a dataset generation chooses sessions. Specify exactly one: filters, to have AgentCore find matching sessions, or identifiers, to name the sessions and traces yourself. Sessions and traces you name aren't filtered further.</p>",
+      "refs": {
+        "TraceGenerationSource$selection": "<p>How to choose sessions from the source. If you don't specify a selection, the generation uses every session in the source and time window that has at most 100 turns.</p>"
+      }
+    },
+    "GenerationSelectionRecord": {
+      "base": "<p>How a dataset generation was asked to choose sessions. Filters are returned as submitted. Session and trace IDs are returned as counts, and the IDs themselves are never returned.</p>",
+      "refs": {
+        "TraceGenerationRecord$selection": "<p>How the generation chooses sessions. Filters are returned as submitted, with the resolved maximum turn count. Session and trace IDs are returned as counts. If this is absent, the request had no selection.</p>"
+      }
+    },
+    "GenerationSessionIdList": {
+      "base": null,
+      "refs": {
+        "GenerationIdentifiers$sessionIds": "<p>The IDs of the sessions to use, up to 25.</p>"
+      }
+    },
+    "GenerationSource": {
+      "base": "<p>The source of a dataset generation.</p>",
+      "refs": {
+        "StartDatasetGenerationRequest$source": "<p>Where the generation reads sessions from, and how it selects, samples, labels and redacts them.</p>"
+      }
+    },
+    "GenerationSourceRecord": {
+      "base": "<p>The source a dataset generation was started with.</p>",
+      "refs": {
+        "GetDatasetGenerationResponse$source": "<p>The source the generation was started with, including the resolved time window. If you selected sessions and traces by ID, the response gives the number of IDs instead of the IDs.</p>"
+      }
+    },
+    "GenerationTraceIdList": {
+      "base": null,
+      "refs": {
+        "GenerationIdentifiers$traceIds": "<p>The IDs of the traces to use, up to 25.</p>"
+      }
+    },
     "GetABTestRequest": {
       "base": null,
       "refs": {}
@@ -1723,6 +2148,20 @@
     "GetAgentCardResponse": {
       "base": null,
       "refs": {}
+    },
+    "GetAgentInsightRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentInsightResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentInsightResponseAffectedSessionCountInteger": {
+      "base": null,
+      "refs": {
+        "GetAgentInsightResponse$affectedSessionCount": "<p>The number of sessions affected by the insight pattern.</p>"
+      }
     },
     "GetBatchEvaluationRequest": {
       "base": null,
@@ -1745,6 +2184,14 @@
       "refs": {}
     },
     "GetCodeInterpreterSessionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDatasetGenerationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDatasetGenerationResponse": {
       "base": null,
       "refs": {}
     },
@@ -1843,6 +2290,25 @@
     "GetWorkloadAccessTokenResponse": {
       "base": null,
       "refs": {}
+    },
+    "GroundTruthConfig": {
+      "base": "<p>Reference fields to copy from the sessions into the generated examples.</p>",
+      "refs": {
+        "TraceGenerationRecord$groundTruth": "<p>The reference fields the generation copies into the examples. If the request didn't specify quality filters, the filters the generation applies are returned here.</p>",
+        "TraceGenerationSource$groundTruth": "<p>Reference fields to copy from the sessions into the examples. If you don't specify this, the examples have no reference fields.</p>"
+      }
+    },
+    "GroundTruthField": {
+      "base": "<p>A reference field in a dataset example.</p>",
+      "refs": {
+        "GroundTruthFieldList$member": null
+      }
+    },
+    "GroundTruthFieldList": {
+      "base": null,
+      "refs": {
+        "GroundTruthConfig$fields": "<p>The reference fields to copy. Values are copied from the session as observed, not generated.</p>"
+      }
     },
     "GroundTruthSource": {
       "base": "<p>Where to pull ground truth from.</p>",
@@ -2521,6 +2987,8 @@
     "InsightDescription": {
       "base": null,
       "refs": {
+        "AgentInsightSummary$description": "<p>A generated description of the Agent Insight that explains the detected pattern and its observed behavior across sessions.</p>",
+        "GetAgentInsightResponse$description": "<p>A generated description of the Agent Insight that explains the detected pattern and its observed behavior across sessions.</p>",
         "InsightResult$description": "<p>A description of the failure pattern that the insight represents.</p>"
       }
     },
@@ -2541,6 +3009,8 @@
     "InsightName": {
       "base": null,
       "refs": {
+        "AgentInsightSummary$name": "<p>A generated display label for the Agent Insight. This is a human-readable summary of the detected pattern, not an identifier.</p>",
+        "GetAgentInsightResponse$name": "<p>A generated display label for the Agent Insight. This is a human-readable summary of the detected pattern, not an identifier.</p>",
         "InsightResult$name": "<p>A generated label for the insight. The name is not an identifier and can differ between batch evaluations.</p>"
       }
     },
@@ -2565,12 +3035,14 @@
     "InsightRootCauseList": {
       "base": null,
       "refs": {
+        "GetAgentInsightResponse$rootCauses": "<p>The root causes identified for the Agent Insight, each with an explanation, an affected session count, an optional suggested fix, and sample sessions that illustrate the root cause.</p>",
         "InsightResult$rootCauses": "<p>The root causes identified for the insight.</p>"
       }
     },
     "InsightSampleSessionList": {
       "base": null,
       "refs": {
+        "GetAgentInsightResponse$sampleSessions": "<p>A list of sample sessions that illustrate the Agent Insight, including per-session findings that point to the relevant spans or traces.</p>",
         "InsightResult$sampleSessions": "<p>A sample of up to 10 sessions affected by the insight. Returned only when the insight has no root causes. Otherwise, sample sessions are returned for each root cause.</p>",
         "InsightRootCause$sampleSessions": "<p>A sample of up to 10 sessions affected by the root cause.</p>"
       }
@@ -2578,6 +3050,8 @@
     "InsightType": {
       "base": "<p>The type of insight.</p>",
       "refs": {
+        "AgentInsightSummary$type": null,
+        "GetAgentInsightResponse$type": null,
         "InsightResult$type": "<p>The type of insight. <code>FAILURE</code> indicates a group of related failures.</p>"
       }
     },
@@ -2624,6 +3098,17 @@
         "FailureCategoryCluster$affectedSessionCount": "<p>The number of sessions affected by this failure category.</p>",
         "FailureSubCategoryCluster$clusterId": "<p>The unique identifier of the failure subcategory cluster.</p>",
         "FailureSubCategoryCluster$affectedSessionCount": "<p>The number of sessions affected by this failure subcategory.</p>",
+        "FindingCountMap$value": null,
+        "GenerationIdentifierCounts$sessionIdCount": "<p>The number of session IDs in the request.</p>",
+        "GenerationIdentifierCounts$traceIdCount": "<p>The number of trace IDs in the request.</p>",
+        "GenerationResults$sessionsMatched": "<p>The number of sessions that matched the filters or were named in the request, before sampling. This includes sessions that later failed.</p>",
+        "GenerationResults$sessionsSelected": "<p>The number of sessions left after sampling.</p>",
+        "GenerationResults$sessionsUnscored": "<p>The number of sessions left out because an evaluator filter had no result to compare, either because the session wasn't evaluated yet or because the evaluation failed.</p>",
+        "GenerationResults$sessionsFailed": "<p>The number of sessions dropped because of an error. See <code>errorDetails</code> for the errors.</p>",
+        "GenerationResults$scenariosGenerated": "<p>The number of scenarios generated.</p>",
+        "GenerationResults$scenariosDeduplicated": "<p>The number of scenarios left out as duplicates, of each other or of examples already in the draft.</p>",
+        "GenerationResults$examplesWritten": "<p>The number of examples added to the dataset's draft.</p>",
+        "GenerationResults$examplesWithGroundTruth": "<p>The number of added examples that have reference fields.</p>",
         "HarnessContentBlockDeltaEvent$contentBlockIndex": "<p>The index of the content block being updated.</p>",
         "HarnessContentBlockStartEvent$contentBlockIndex": "<p>The index of the content block within the message.</p>",
         "HarnessContentBlockStopEvent$contentBlockIndex": "<p>The index of the content block that ended.</p>",
@@ -2649,6 +3134,7 @@
         "MouseScrollArguments$y": "<p>The Y coordinate on screen where the scroll occurs.</p>",
         "PaymentSession$expiryTimeInMinutes": "<p>The session expiry time in minutes.</p>",
         "PaymentSessionSummary$expiryTimeInMinutes": "<p>The session expiry time in minutes.</p>",
+        "RedactionSummary$scenariosScanned": "<p>The number of scenarios scanned for sensitive data.</p>",
         "RootCauseCluster$clusterId": "<p>The unique identifier of the root cause cluster.</p>",
         "RootCauseCluster$affectedSessionCount": "<p>The number of sessions affected by this root cause.</p>",
         "ServiceUnavailableException$retryAfterSeconds": "<p>The number of seconds to wait before you retry the request.</p>",
@@ -3013,6 +3499,20 @@
       "base": null,
       "refs": {}
     },
+    "ListAgentInsightsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentInsightsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAgentInsightsRequest$maxResults": "<p>The maximum number of Agent Insight summaries to return in one response. If you don't specify a value, the operation returns up to 50 summaries.</p>"
+      }
+    },
+    "ListAgentInsightsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListBatchEvaluationsRequest": {
       "base": null,
       "refs": {}
@@ -3040,6 +3540,20 @@
       "refs": {}
     },
     "ListCodeInterpreterSessionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDatasetGenerationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDatasetGenerationsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListDatasetGenerationsRequest$maxResults": "<p>The maximum number of results to return in the response. The default is 20. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
+      }
+    },
+    "ListDatasetGenerationsResponse": {
       "base": null,
       "refs": {}
     },
@@ -3120,12 +3634,14 @@
     "LogGroupName": {
       "base": null,
       "refs": {
+        "CloudWatchLogsSourceConfigLogGroupNamesList$member": null,
         "CloudWatchLogsSourceLogGroupNamesList$member": null
       }
     },
     "LogGroupNamePrefix": {
       "base": "<p>Prefix of a CloudWatch Logs log group name.</p>",
       "refs": {
+        "CloudWatchLogsSourceConfigLogGroupNamePrefixesList$member": null,
         "CloudWatchLogsSourceLogGroupNamePrefixesList$member": null
       }
     },
@@ -3619,6 +4135,8 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "ListAgentInsightsRequest$nextToken": "<p>A token to specify where to start paginating the results. This token is returned in a previous response.</p>",
+        "ListAgentInsightsResponse$nextToken": "<p>A token to use to retrieve the next page of results. This value is present only when additional results are available.</p>",
         "ListBrowserSessionsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results. If not specified, Amazon Bedrock AgentCore returns the first page of results.</p>",
         "ListBrowserSessionsResponse$nextToken": "<p>The token to use in a subsequent <code>ListBrowserSessions</code> request to get the next set of results.</p>",
         "ListCodeInterpreterSessionsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results. If not specified, Amazon Bedrock AgentCore returns the first page of results.</p>",
@@ -3737,6 +4255,7 @@
       "refs": {
         "ABTestEvaluationConfig$onlineEvaluationConfigArn": "<p>The Amazon Resource Name (ARN) of a single online evaluation configuration to use for both variants.</p>",
         "OnlineEvaluationConfigSource$onlineEvaluationConfigArn": "<p>The Amazon Resource Name (ARN) of the online evaluation configuration to use as the session source.</p>",
+        "OnlineEvaluationSourceConfig$onlineEvaluationConfigArn": "<p>The Amazon Resource Name (ARN) of the online evaluation configuration.</p>",
         "OnlineEvaluationTraceConfig$onlineEvaluationConfigArn": "<p>The ARN of the online evaluation configuration to reuse sessions from.</p>",
         "PerVariantOnlineEvaluationConfig$onlineEvaluationConfigArn": "<p>The Amazon Resource Name (ARN) of the online evaluation configuration for this variant.</p>"
       }
@@ -3745,6 +4264,12 @@
       "base": "<p>A reference to an existing online evaluation configuration to use as the data source for batch evaluation.</p>",
       "refs": {
         "DataSourceConfig$onlineEvaluationConfigSource": "<p>Reference an existing OnlineEvaluationConfig as session source</p>"
+      }
+    },
+    "OnlineEvaluationSourceConfig": {
+      "base": "<p>An online evaluation source for a dataset generation.</p>",
+      "refs": {
+        "TraceSourceConfig$onlineEvaluation": "<p>Reads sessions, with their evaluation results, from an online evaluation configuration.</p>"
       }
     },
     "OnlineEvaluationTraceConfig": {
@@ -4243,6 +4768,37 @@
         "BatchUpdateMemoryRecordsInput$recordExpirySpecification": "<p>The record expiry (long-term memory time-to-live) applied to every record updated by this request. Set <code>recordExpiryDurationDays</code> to configure or overwrite the number of days after which the records expire, or set <code>action</code> to <code>REMOVE</code> to clear a previously configured expiry so that the records no longer expire.</p> <p>When you do not provide this value, the service determines each record's expiry from its current state:</p> <ul> <li> <p>If the record already has an expiry configured, the service resets and reapplies the expiry based on the last applied <code>recordExpiryDurationDays</code>.</p> </li> <li> <p>If the record does not have an expiry configured, no expiry is applied and the record remains non-expiring. This is the outcome regardless of whether the record's strategy configures an expiry.</p> </li> </ul> <p>Providing an explicit <code>recordExpiryDurationDays</code> always takes precedence: it overwrites an existing expiry, or sets one on a record that previously had none.</p>"
       }
     },
+    "RedactionConfiguration": {
+      "base": "<p>Sensitive data to mask in generated examples. Nothing is redacted unless you specify at least one identifier. Each character of a match is replaced with <code>*</code>, so a masked value keeps its length. If detection fails, the generation fails and no examples are written.</p>",
+      "refs": {
+        "TraceGenerationRecord$redactionConfiguration": "<p>The sensitive data the generation masks in the examples.</p>",
+        "TraceGenerationSource$redactionConfiguration": "<p>Sensitive data to mask in the examples. If you don't specify this, nothing is redacted.</p>"
+      }
+    },
+    "RedactionConfigurationCustomDataIdentifiersList": {
+      "base": null,
+      "refs": {
+        "RedactionConfiguration$customDataIdentifiers": "<p>Custom data identifiers to apply, up to 10. You can use custom identifiers without any managed identifiers.</p>"
+      }
+    },
+    "RedactionIdentifier": {
+      "base": "<p>A managed data identifier. The values match the CloudWatch Logs managed data identifiers.</p>",
+      "refs": {
+        "RedactionIdentifierList$member": null
+      }
+    },
+    "RedactionIdentifierList": {
+      "base": null,
+      "refs": {
+        "RedactionConfiguration$identifiers": "<p>The managed data identifiers to apply. These match the CloudWatch Logs managed data identifiers.</p>"
+      }
+    },
+    "RedactionSummary": {
+      "base": "<p>A summary of what redaction found in a dataset generation. It contains counts only, never the masked data.</p>",
+      "refs": {
+        "GetDatasetGenerationResponse$redactionSummary": "<p>A summary of what redaction found. Present only when the generation was started with redaction.</p>"
+      }
+    },
     "RegistryArn": {
       "base": null,
       "refs": {
@@ -4302,6 +4858,13 @@
       "refs": {
         "MemoryRecordCreateInput$requestIdentifier": "<p>A client-provided identifier for tracking this specific record creation request.</p>",
         "MemoryRecordOutput$requestIdentifier": "<p>The client-provided identifier that was used to track this record operation.</p>"
+      }
+    },
+    "RequestTemplate": {
+      "base": "<p>A JSON object template for the request payload sent to an agent.</p>",
+      "refs": {
+        "AgentCoreRuntimeInvocation$requestTemplate": "<p>A JSON object template for the request payload sent to the agent for each turn. The template must contain the placeholder <code>{{turn.input}}</code> exactly once, as the complete value of a JSON string and not as a field name. The service replaces the placeholder with the input of the turn. If the input isn't a string, the service inserts it as a JSON value. If you don't specify a template, the service uses <code>{\"prompt\": \"{{turn.input}}\"}</code>.</p>",
+        "AgentCoreRuntimeInvocationDetails$requestTemplate": "<p>The request payload template that the batch evaluation used for each turn. If the request didn't specify a template, this is the default template.</p>"
       }
     },
     "RequestUri": {
@@ -4366,6 +4929,12 @@
       "base": null,
       "refs": {
         "InvokeAgentRuntimeResponse$response": "<p>The response data from the agent runtime. The format of this data depends on the specific agent configuration and the requested accept type. For most agents, this is a JSON object containing the agent's response to the user's request.</p>"
+      }
+    },
+    "ResultAggregation": {
+      "base": "<p>How to combine per-trace or per-span evaluation results into one result for the session.</p>",
+      "refs": {
+        "EvaluatorFilter$aggregation": "<p>How to combine the evaluator's per-trace or per-span results into one result for the session. Required for an evaluator that scores traces or spans. Don't specify it for an evaluator that scores sessions.</p>"
       }
     },
     "ResultDestination": {
@@ -4505,6 +5074,14 @@
       "base": null,
       "refs": {}
     },
+    "ScenarioType": {
+      "base": "<p>The type of scenario a dataset generation produces. Each generation produces one type.</p>",
+      "refs": {
+        "DatasetGenerationSummary$scenarioType": "<p>The type of scenario the generation produces.</p>",
+        "GetDatasetGenerationResponse$scenarioType": "<p>The type of scenario the generation produces. This is the value from the request, or <code>DYNAMIC</code> if the request didn't specify one.</p>",
+        "StartDatasetGenerationRequest$scenarioType": "<p>The type of scenario to generate. If you don't specify a value, the generation produces <code>DYNAMIC</code> scenarios.</p>"
+      }
+    },
     "SchemaVersion": {
       "base": null,
       "refs": {
@@ -4641,6 +5218,7 @@
     "ServiceNameList": {
       "base": null,
       "refs": {
+        "CloudWatchLogsSourceConfig$serviceNames": "<p>The service name of the agent, which matches the <code>service.name</code> resource attribute in its traces. Specify exactly one.</p>",
         "CloudWatchLogsTraceConfig$serviceNames": "<p>The list of service names to filter traces within the specified log groups.</p>"
       }
     },
@@ -4700,6 +5278,8 @@
         "DeleteCapacityProviderSessionResponse$sessionId": "<p>The unique identifier of the deleted capacity provider session.</p>",
         "DeleteEventInput$sessionId": "<p>The identifier of the session containing the event to delete.</p>",
         "Event$sessionId": "<p>The identifier of the session containing the event.</p>",
+        "GenerationErrorSessionIdList$member": null,
+        "GenerationSessionIdList$member": null,
         "GetAgentCardResponse$runtimeSessionId": "<p>The ID of the session associated with the AgentCore Runtime agent.</p>",
         "GetEventInput$sessionId": "<p>The identifier of the session containing the event.</p>",
         "IngestDataInput$sessionId": "<p>The identifier of the session that the content belongs to. If not provided, a session identifier is generated and returned in the response.</p>",
@@ -4874,6 +5454,14 @@
       "base": null,
       "refs": {}
     },
+    "StartDatasetGenerationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartDatasetGenerationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StartMemoryExtractionJobInput": {
       "base": null,
       "refs": {}
@@ -5017,6 +5605,7 @@
         "GetBrowserSessionResponse$sessionReplayArtifact": "<p>The artifact containing the session replay information.</p>",
         "GetCodeInterpreterSessionRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter associated with the session.</p>",
         "GetCodeInterpreterSessionResponse$codeInterpreterIdentifier": "<p>The identifier of the code interpreter.</p>",
+        "GetDatasetGenerationResponse$failureReason": "<p>The reason the dataset generation failed. Present only when the status is <code>FAILED</code>.</p>",
         "HarnessReasoningContentBlockDelta$text": "<p>Reasoning text delta.</p>",
         "HarnessReasoningContentBlockDelta$signature": "<p>Signature for the reasoning content.</p>",
         "HarnessReasoningTextBlock$text": "<p>The reasoning text.</p>",
@@ -5058,6 +5647,8 @@
         "ListBatchEvaluationsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListBrowserSessionsRequest$browserIdentifier": "<p>The unique identifier of the browser to list sessions for. If specified, only sessions for this browser are returned. If not specified, sessions for all browsers are returned.</p>",
         "ListCodeInterpreterSessionsRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter to list sessions for. If specified, only sessions for this code interpreter are returned. If not specified, sessions for all code interpreters are returned.</p>",
+        "ListDatasetGenerationsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
+        "ListDatasetGenerationsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListPaymentInstrumentsResponse$nextToken": "<p>Token for pagination to retrieve the next set of results.</p>",
         "MemoryRecordOutput$errorMessage": "<p>A human-readable error message describing why the memory record operation failed.</p>",
         "MessageMetadata$eventId": "<p>The identifier of the event associated with this message.</p>",
@@ -5232,15 +5823,30 @@
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
+        "AgentInsightSummary$createdAt": "<p>The date and time when the Agent Insight was first created.</p>",
+        "AgentInsightSummary$updatedAt": "<p>The date and time when the Agent Insight was last updated.</p>",
+        "AgentInsightSummary$lastSeenAt": "<p>The most recent date and time when the insight pattern was observed.</p>",
         "BatchEvaluationSummary$createdAt": "<p>The timestamp when the batch evaluation was created.</p>",
         "BatchEvaluationSummary$updatedAt": "<p>The timestamp when the batch evaluation was last updated.</p>",
+        "CloudWatchLogsSourceConfig$startTime": "<p>The start of the time window to read sessions from. The default is 7 days before <code>endTime</code>.</p>",
+        "CloudWatchLogsSourceConfig$endTime": "<p>The end of the time window to read sessions from. The default is the time the generation starts.</p>",
         "CloudWatchLogsTraceConfig$startTime": "<p>The start time of the time range to read traces from.</p>",
         "CloudWatchLogsTraceConfig$endTime": "<p>The end time of the time range to read traces from.</p>",
+        "DatasetGenerationSummary$createdAt": "<p>The time at which the dataset generation started.</p>",
+        "DatasetGenerationSummary$completedAt": "<p>The time at which the dataset generation finished. Present only when the generation has finished.</p>",
+        "GetAgentInsightResponse$createdAt": "<p>The date and time when the Agent Insight was first created.</p>",
+        "GetAgentInsightResponse$updatedAt": "<p>The date and time when the Agent Insight was last updated.</p>",
+        "GetAgentInsightResponse$lastSeenAt": "<p>The most recent date and time when the insight pattern was observed.</p>",
         "GetBatchEvaluationResponse$createdAt": "<p>The timestamp when the batch evaluation was created.</p>",
         "GetBatchEvaluationResponse$updatedAt": "<p>The timestamp when the batch evaluation was last updated.</p>",
+        "GetDatasetGenerationResponse$createdAt": "<p>The time at which the dataset generation started.</p>",
+        "GetDatasetGenerationResponse$updatedAt": "<p>The time at which the dataset generation last changed status.</p>",
+        "GetDatasetGenerationResponse$completedAt": "<p>The time at which the dataset generation finished. Present only when the generation has finished.</p>",
         "GetRecommendationResponse$createdAt": "<p>The timestamp when the recommendation was created.</p>",
         "GetRecommendationResponse$updatedAt": "<p>The timestamp when the recommendation was last updated.</p>",
         "InsightResult$createdAt": "<p>The timestamp when the insight was generated.</p>",
+        "OnlineEvaluationSourceConfig$startTime": "<p>The start of the time window to read sessions from. The default is 7 days before <code>endTime</code>.</p>",
+        "OnlineEvaluationSourceConfig$endTime": "<p>The end of the time window to read sessions from. The default is the time the generation starts.</p>",
         "OnlineEvaluationTraceConfig$startTime": "<p>The start time of the time range. Only sessions evaluated at or after this timestamp are included.</p>",
         "OnlineEvaluationTraceConfig$endTime": "<p>The end time of the time range. Only sessions evaluated before this timestamp are included.</p>",
         "RecommendationSummary$createdAt": "<p>The timestamp when the recommendation was created.</p>",
@@ -5249,8 +5855,10 @@
         "SessionFilterConfig$startTime": "<p>The start time of the time range. Only sessions with activity at or after this timestamp are included.</p>",
         "SessionFilterConfig$endTime": "<p>The end time of the time range. Only sessions with activity before this timestamp are included.</p>",
         "StartBatchEvaluationResponse$createdAt": "<p>The timestamp when the batch evaluation was created.</p>",
+        "StartDatasetGenerationResponse$createdAt": "<p>The time at which the dataset generation started.</p>",
         "StartRecommendationResponse$createdAt": "<p>The timestamp when the recommendation was created.</p>",
-        "StartRecommendationResponse$updatedAt": "<p>The timestamp when the recommendation was last updated.</p>"
+        "StartRecommendationResponse$updatedAt": "<p>The timestamp when the recommendation was last updated.</p>",
+        "UpdateAgentInsightResponse$updatedAt": "<p>The date and time when the Agent Insight was updated.</p>"
       }
     },
     "SystemPromptConfig": {
@@ -5509,9 +6117,22 @@
         "HarnessOpenAiModelConfig$topP": "<p>The topP set when calling the model.</p>"
       }
     },
+    "TraceGenerationRecord": {
+      "base": "<p>The trace source a dataset generation was started with.</p>",
+      "refs": {
+        "GenerationSourceRecord$traceGeneration": "<p>The trace source the generation was started with.</p>"
+      }
+    },
+    "TraceGenerationSource": {
+      "base": "<p>Settings for generating examples from your agent's traces.</p>",
+      "refs": {
+        "GenerationSource$traceGeneration": "<p>Generates examples from your agent's traces.</p>"
+      }
+    },
     "TraceId": {
       "base": null,
       "refs": {
+        "GenerationTraceIdList$member": null,
         "TraceIdList$member": null,
         "TraceIds$member": null
       }
@@ -5526,6 +6147,31 @@
       "base": null,
       "refs": {
         "EvaluationTarget$traceIds": "<p> The list of trace IDs to evaluate, representing complete request-response interactions. Used to evaluate entire conversation turns or specific agent interactions within a session. </p>"
+      }
+    },
+    "TraceSourceConfig": {
+      "base": "<p>Where a dataset generation reads sessions from. Specify exactly one source.</p>",
+      "refs": {
+        "TraceGenerationRecord$sourceConfig": "<p>Where the generation reads sessions from, including the resolved time window.</p>",
+        "TraceGenerationSource$sourceConfig": "<p>Where to read the sessions from.</p>"
+      }
+    },
+    "TurnCountRange": {
+      "base": "<p>A range of turn counts. Each bound is from 1 to 100, and <code>min</code> can't be greater than <code>max</code>.</p>",
+      "refs": {
+        "GenerationFilters$turnCount": "<p>The range of turns a session can have. For example, set <code>max</code> to 1 for single-turn sessions only, or <code>min</code> to 2 for multi-turn sessions only. Sessions with more than 100 turns are never selected.</p>"
+      }
+    },
+    "TurnCountRangeMaxInteger": {
+      "base": null,
+      "refs": {
+        "TurnCountRange$max": "<p>The maximum number of turns. The default is 100.</p>"
+      }
+    },
+    "TurnCountRangeMinInteger": {
+      "base": null,
+      "refs": {
+        "TurnCountRange$min": "<p>The minimum number of turns.</p>"
       }
     },
     "UnauthorizedException": {
@@ -5545,6 +6191,14 @@
       "refs": {}
     },
     "UpdateABTestResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentInsightRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentInsightResponse": {
       "base": null,
       "refs": {}
     },

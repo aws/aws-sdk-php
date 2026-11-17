@@ -871,7 +871,8 @@
     "EnabledBaselineDriftTypes":{
       "type":"structure",
       "members":{
-        "inheritance":{"shape":"EnabledBaselineInheritanceDrift"}
+        "inheritance":{"shape":"EnabledBaselineInheritanceDrift"},
+        "source":{"shape":"EnabledBaselineSourceDrift"}
       }
     },
     "EnabledBaselineEnablementStatuses":{
@@ -887,7 +888,8 @@
         "baselineIdentifiers":{"shape":"EnabledBaselineBaselineIdentifiers"},
         "parentIdentifiers":{"shape":"EnabledBaselineParentIdentifiers"},
         "statuses":{"shape":"EnabledBaselineEnablementStatuses"},
-        "inheritanceDriftStatuses":{"shape":"EnabledBaselineDriftStatuses"}
+        "inheritanceDriftStatuses":{"shape":"EnabledBaselineDriftStatuses"},
+        "sourceDriftStatuses":{"shape":"EnabledBaselineDriftStatuses"}
       }
     },
     "EnabledBaselineInheritanceDrift":{
@@ -936,6 +938,12 @@
       "member":{"shape":"Arn"},
       "max":5,
       "min":1
+    },
+    "EnabledBaselineSourceDrift":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"EnabledBaselineDriftStatus"}
+      }
     },
     "EnabledBaselineSummary":{
       "type":"structure",

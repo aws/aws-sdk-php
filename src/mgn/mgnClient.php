@@ -79,6 +79,7 @@ use Aws\AwsClient;
  *     },
  *     enableMapAutoTagging?: bool,
  *     mapAutoTaggingMpeID?: string,
+ *     mapAutoTaggingKey?: string,
  *     tags?: array<string, string>,
  *     launchDisposition?: 'STARTED'|'STOPPED',
  *     targetInstanceTypeRightSizingMethod?: 'BASIC'|'NONE',
@@ -120,6 +121,7 @@ use Aws\AwsClient;
  *     },
  *     enableMapAutoTagging?: bool,
  *     mapAutoTaggingMpeID?: string,
+ *     mapAutoTaggingKey?: string,
  *     tags?: array<string, string>,
  *     launchDisposition?: 'STARTED'|'STOPPED',
  *     targetInstanceTypeRightSizingMethod?: 'BASIC'|'NONE',
@@ -155,10 +157,11 @@ use Aws\AwsClient;
  *     name?: string,
  *     description?: string,
  *     sourceConfigurations?: list<array{
- *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MIGRATION_PLANNING_ARTIFACTS'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
+ *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'F5_BIGIP'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MIGRATION_PLANNING_ARTIFACTS'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
  *         sourceS3Configuration?: array,
  *         ...,
  *     }>,
+ *     definitionType?: 'MIGRATION'|'NEW_NETWORK',
  *     targetS3Configuration?: array{s3Bucket?: string, s3BucketOwner?: string, ...},
  *     targetNetwork?: array{
  *         topology?: 'HUB_AND_SPOKE'|'ISOLATED_VPC',
@@ -180,10 +183,11 @@ use Aws\AwsClient;
  *     name?: string,
  *     description?: string,
  *     sourceConfigurations?: list<array{
- *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MIGRATION_PLANNING_ARTIFACTS'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
+ *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'F5_BIGIP'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MIGRATION_PLANNING_ARTIFACTS'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
  *         sourceS3Configuration?: array,
  *         ...,
  *     }>,
+ *     definitionType?: 'MIGRATION'|'NEW_NETWORK',
  *     targetS3Configuration?: array{s3Bucket?: string, s3BucketOwner?: string, ...},
  *     targetNetwork?: array{
  *         topology?: 'HUB_AND_SPOKE'|'ISOLATED_VPC',
@@ -197,6 +201,28 @@ use Aws\AwsClient;
  *     cidrMappings?: list<array{originalCidr?: string, updatedCidr?: string, ...}>,
  *     tags?: array<string, string>,
  *     scopeTags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createRemoteSourceAction(array $args = [])
+ * @phpstan-method \Aws\Result createRemoteSourceAction(array{
+ *     name?: string,
+ *     description?: string,
+ *     ssmParameterName?: string,
+ *     timeoutSeconds?: int,
+ *     operatingSystem?: string,
+ *     tags?: array<string, string>,
+ *     accountID?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createRemoteSourceActionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createRemoteSourceActionAsync(array{
+ *     name?: string,
+ *     description?: string,
+ *     ssmParameterName?: string,
+ *     timeoutSeconds?: int,
+ *     operatingSystem?: string,
+ *     tags?: array<string, string>,
+ *     accountID?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createReplicationConfigurationTemplate(array $args = [])
@@ -217,6 +243,7 @@ use Aws\AwsClient;
  *     tags?: array<string, string>,
  *     internetProtocol?: 'IPV4'|'IPV6',
  *     storeSnapshotOnLocalZone?: bool,
+ *     outpostSnapshotLocation?: 'OUTPOST'|'REGION',
  *     storageConfiguration?: array{
  *         storageType?: 'EBS'|'FSX_ONTAP',
  *         fsxOntapConfiguration?: array{storageVirtualMachineId?: string, credentialsSecretArn?: string, ...},
@@ -242,6 +269,7 @@ use Aws\AwsClient;
  *     tags?: array<string, string>,
  *     internetProtocol?: 'IPV4'|'IPV6',
  *     storeSnapshotOnLocalZone?: bool,
+ *     outpostSnapshotLocation?: 'OUTPOST'|'REGION',
  *     storageConfiguration?: array{
  *         storageType?: 'EBS'|'FSX_ONTAP',
  *         fsxOntapConfiguration?: array{storageVirtualMachineId?: string, credentialsSecretArn?: string, ...},
@@ -273,6 +301,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteNetworkMigrationDefinition(array{networkMigrationDefinitionID?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteNetworkMigrationDefinitionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteNetworkMigrationDefinitionAsync(array{networkMigrationDefinitionID?: string, ...} $args = [])
+ * @method \Aws\Result deleteRemoteSourceAction(array $args = [])
+ * @phpstan-method \Aws\Result deleteRemoteSourceAction(array{remoteSourceActionID?: string, accountID?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteRemoteSourceActionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteRemoteSourceActionAsync(array{remoteSourceActionID?: string, accountID?: string, ...} $args = [])
  * @method \Aws\Result deleteReplicationConfigurationTemplate(array $args = [])
  * @phpstan-method \Aws\Result deleteReplicationConfigurationTemplate(array{replicationConfigurationTemplateID?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteReplicationConfigurationTemplateAsync(array $args = [])
@@ -371,6 +403,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getLaunchConfiguration(array{sourceServerID?: string, accountID?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getLaunchConfigurationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getLaunchConfigurationAsync(array{sourceServerID?: string, accountID?: string, ...} $args = [])
+ * @method \Aws\Result getLaunchConfigurationDefaults(array $args = [])
+ * @phpstan-method \Aws\Result getLaunchConfigurationDefaults(array{sourceServerID?: string, accountID?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getLaunchConfigurationDefaultsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getLaunchConfigurationDefaultsAsync(array{sourceServerID?: string, accountID?: string, ...} $args = [])
  * @method \Aws\Result getNetworkMigrationDefinition(array $args = [])
  * @phpstan-method \Aws\Result getNetworkMigrationDefinition(array{networkMigrationDefinitionID?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getNetworkMigrationDefinitionAsync(array $args = [])
@@ -587,6 +623,36 @@ use Aws\AwsClient;
  *     maxResults?: int,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listNetworkMigrationInsights(array $args = [])
+ * @phpstan-method \Aws\Result listNetworkMigrationInsights(array{
+ *     networkMigrationDefinitionID?: string,
+ *     networkMigrationExecutionID?: string,
+ *     producerID?: string,
+ *     segmentID?: string,
+ *     constructID?: string,
+ *     filters?: array{
+ *         insightTypes?: list<'BEHAVIOR_CHANGE'|'CONTEXT'|'ERROR'|'EXCLUDED'|'INFO'|'INTENT_GAP'|'QUESTION'|'WARNING'>,
+ *         ...,
+ *     },
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listNetworkMigrationInsightsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listNetworkMigrationInsightsAsync(array{
+ *     networkMigrationDefinitionID?: string,
+ *     networkMigrationExecutionID?: string,
+ *     producerID?: string,
+ *     segmentID?: string,
+ *     constructID?: string,
+ *     filters?: array{
+ *         insightTypes?: list<'BEHAVIOR_CHANGE'|'CONTEXT'|'ERROR'|'EXCLUDED'|'INFO'|'INTENT_GAP'|'QUESTION'|'WARNING'>,
+ *         ...,
+ *     },
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listNetworkMigrationMapperSegmentConstructs(array $args = [])
  * @phpstan-method \Aws\Result listNetworkMigrationMapperSegmentConstructs(array{
  *     networkMigrationExecutionID?: string,
@@ -595,6 +661,8 @@ use Aws\AwsClient;
  *     filters?: array{constructIDs?: list<string>, constructTypes?: list<string>, ...},
  *     maxResults?: int,
  *     nextToken?: string,
+ *     includeEnrichedProperties?: bool,
+ *     includeConfiguration?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listNetworkMigrationMapperSegmentConstructsAsync(array $args = [])
@@ -605,6 +673,8 @@ use Aws\AwsClient;
  *     filters?: array{constructIDs?: list<string>, constructTypes?: list<string>, ...},
  *     maxResults?: int,
  *     nextToken?: string,
+ *     includeEnrichedProperties?: bool,
+ *     includeConfiguration?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listNetworkMigrationMapperSegments(array $args = [])
@@ -659,6 +729,70 @@ use Aws\AwsClient;
  *     filters?: array{jobIDs?: list<string>, ...},
  *     maxResults?: int,
  *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listRemoteSourceActionInvocationResults(array $args = [])
+ * @phpstan-method \Aws\Result listRemoteSourceActionInvocationResults(array{sourceServerID?: string, maxResults?: int, nextToken?: string, accountID?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRemoteSourceActionInvocationResultsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listRemoteSourceActionInvocationResultsAsync(array{sourceServerID?: string, maxResults?: int, nextToken?: string, accountID?: string, ...} $args = [])
+ * @method \Aws\Result listRemoteSourceActionInvocations(array $args = [])
+ * @phpstan-method \Aws\Result listRemoteSourceActionInvocations(array{
+ *     remoteSourceActionJobID?: string,
+ *     filters?: array{
+ *         sourceServerArns?: list<string>,
+ *         remoteSourceActionArns?: list<string>,
+ *         statuses?: list<'CANCELLED'|'CANCELLING'|'DELAYED'|'FAILED'|'IN_PROGRESS'|'PENDING'|'STALLED'|'SUCCESS'|'TIMED_OUT'>,
+ *         ...,
+ *     },
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     accountID?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRemoteSourceActionInvocationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listRemoteSourceActionInvocationsAsync(array{
+ *     remoteSourceActionJobID?: string,
+ *     filters?: array{
+ *         sourceServerArns?: list<string>,
+ *         remoteSourceActionArns?: list<string>,
+ *         statuses?: list<'CANCELLED'|'CANCELLING'|'DELAYED'|'FAILED'|'IN_PROGRESS'|'PENDING'|'STALLED'|'SUCCESS'|'TIMED_OUT'>,
+ *         ...,
+ *     },
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     accountID?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listRemoteSourceActionJobs(array $args = [])
+ * @phpstan-method \Aws\Result listRemoteSourceActionJobs(array{
+ *     filters?: array{remoteSourceActionJobIDs?: list<string>, ...},
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     accountID?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRemoteSourceActionJobsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listRemoteSourceActionJobsAsync(array{
+ *     filters?: array{remoteSourceActionJobIDs?: list<string>, ...},
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     accountID?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listRemoteSourceActions(array $args = [])
+ * @phpstan-method \Aws\Result listRemoteSourceActions(array{
+ *     filters?: array{remoteSourceActionIDs?: list<string>, ...},
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     accountID?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRemoteSourceActionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listRemoteSourceActionsAsync(array{
+ *     filters?: array{remoteSourceActionIDs?: list<string>, ...},
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     accountID?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listSourceServerActions(array $args = [])
@@ -889,16 +1023,66 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result startNetworkMigrationMappingUpdate(array{
  *     networkMigrationExecutionID?: string,
  *     networkMigrationDefinitionID?: string,
- *     constructs?: list<array{segmentID?: string, constructID?: string, constructType?: string, operation?: array, ...}>,
- *     segments?: list<array{segmentID?: string, targetAccount?: string, scopeTags?: array<string, string>, ...}>,
+ *     constructs?: list<array{
+ *         segmentID?: string,
+ *         segmentLogicalID?: string,
+ *         constructID?: string,
+ *         constructType?: string,
+ *         constructLogicalID?: string,
+ *         operation?: array,
+ *         ...,
+ *     }>,
+ *     segments?: list<array{
+ *         segmentID?: string,
+ *         segmentLogicalID?: string,
+ *         operation?: array,
+ *         targetAccount?: string,
+ *         scopeTags?: array<string, string>,
+ *         ...,
+ *     }>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise startNetworkMigrationMappingUpdateAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise startNetworkMigrationMappingUpdateAsync(array{
  *     networkMigrationExecutionID?: string,
  *     networkMigrationDefinitionID?: string,
- *     constructs?: list<array{segmentID?: string, constructID?: string, constructType?: string, operation?: array, ...}>,
- *     segments?: list<array{segmentID?: string, targetAccount?: string, scopeTags?: array<string, string>, ...}>,
+ *     constructs?: list<array{
+ *         segmentID?: string,
+ *         segmentLogicalID?: string,
+ *         constructID?: string,
+ *         constructType?: string,
+ *         constructLogicalID?: string,
+ *         operation?: array,
+ *         ...,
+ *     }>,
+ *     segments?: list<array{
+ *         segmentID?: string,
+ *         segmentLogicalID?: string,
+ *         operation?: array,
+ *         targetAccount?: string,
+ *         scopeTags?: array<string, string>,
+ *         ...,
+ *     }>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result startRemoteSourceActionJob(array $args = [])
+ * @phpstan-method \Aws\Result startRemoteSourceActionJob(array{
+ *     remoteSourceActionArns?: list<string>,
+ *     connectorArn?: string,
+ *     sourceServerArns?: list<string>,
+ *     clientToken?: string,
+ *     tags?: array<string, string>,
+ *     accountID?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise startRemoteSourceActionJobAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startRemoteSourceActionJobAsync(array{
+ *     remoteSourceActionArns?: list<string>,
+ *     connectorArn?: string,
+ *     sourceServerArns?: list<string>,
+ *     clientToken?: string,
+ *     tags?: array<string, string>,
+ *     accountID?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result startReplication(array $args = [])
@@ -983,6 +1167,7 @@ use Aws\AwsClient;
  *     },
  *     enableMapAutoTagging?: bool,
  *     mapAutoTaggingMpeID?: string,
+ *     mapAutoTaggingKey?: string,
  *     accountID?: string,
  *     ...,
  * } $args = [])
@@ -1006,7 +1191,54 @@ use Aws\AwsClient;
  *     },
  *     enableMapAutoTagging?: bool,
  *     mapAutoTaggingMpeID?: string,
+ *     mapAutoTaggingKey?: string,
  *     accountID?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateLaunchConfigurationDefaults(array $args = [])
+ * @phpstan-method \Aws\Result updateLaunchConfigurationDefaults(array{
+ *     sourceServerID?: string,
+ *     accountID?: string,
+ *     smallVolumeMaxSize?: int,
+ *     smallVolumeConfiguration?: array{
+ *         volumeType?: 'gp2'|'gp3'|'io1'|'io2'|'sc1'|'st1'|'standard',
+ *         iops?: int,
+ *         throughput?: int,
+ *         volumeInitializationRate?: int,
+ *         deleteOnTermination?: 'DISABLED'|'ENABLED',
+ *         ...,
+ *     },
+ *     largeVolumeConfiguration?: array{
+ *         volumeType?: 'gp2'|'gp3'|'io1'|'io2'|'sc1'|'st1'|'standard',
+ *         iops?: int,
+ *         throughput?: int,
+ *         volumeInitializationRate?: int,
+ *         deleteOnTermination?: 'DISABLED'|'ENABLED',
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateLaunchConfigurationDefaultsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateLaunchConfigurationDefaultsAsync(array{
+ *     sourceServerID?: string,
+ *     accountID?: string,
+ *     smallVolumeMaxSize?: int,
+ *     smallVolumeConfiguration?: array{
+ *         volumeType?: 'gp2'|'gp3'|'io1'|'io2'|'sc1'|'st1'|'standard',
+ *         iops?: int,
+ *         throughput?: int,
+ *         volumeInitializationRate?: int,
+ *         deleteOnTermination?: 'DISABLED'|'ENABLED',
+ *         ...,
+ *     },
+ *     largeVolumeConfiguration?: array{
+ *         volumeType?: 'gp2'|'gp3'|'io1'|'io2'|'sc1'|'st1'|'standard',
+ *         iops?: int,
+ *         throughput?: int,
+ *         volumeInitializationRate?: int,
+ *         deleteOnTermination?: 'DISABLED'|'ENABLED',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateLaunchConfigurationTemplate(array $args = [])
@@ -1022,6 +1254,7 @@ use Aws\AwsClient;
  *     },
  *     enableMapAutoTagging?: bool,
  *     mapAutoTaggingMpeID?: string,
+ *     mapAutoTaggingKey?: string,
  *     launchDisposition?: 'STARTED'|'STOPPED',
  *     targetInstanceTypeRightSizingMethod?: 'BASIC'|'NONE',
  *     copyPrivateIp?: bool,
@@ -1063,6 +1296,7 @@ use Aws\AwsClient;
  *     },
  *     enableMapAutoTagging?: bool,
  *     mapAutoTaggingMpeID?: string,
+ *     mapAutoTaggingKey?: string,
  *     launchDisposition?: 'STARTED'|'STOPPED',
  *     targetInstanceTypeRightSizingMethod?: 'BASIC'|'NONE',
  *     copyPrivateIp?: bool,
@@ -1097,7 +1331,7 @@ use Aws\AwsClient;
  *     name?: string,
  *     description?: string,
  *     sourceConfigurations?: list<array{
- *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MIGRATION_PLANNING_ARTIFACTS'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
+ *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'F5_BIGIP'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MIGRATION_PLANNING_ARTIFACTS'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
  *         sourceS3Configuration?: array,
  *         ...,
  *     }>,
@@ -1113,6 +1347,7 @@ use Aws\AwsClient;
  *     vpcProvisioningStrategy?: 'CREATE_NEW'|'USE_EXISTING',
  *     cidrMappings?: list<array{originalCidr?: string, updatedCidr?: string, ...}>,
  *     scopeTags?: array<string, string>,
+ *     definitionType?: 'MIGRATION'|'NEW_NETWORK',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateNetworkMigrationDefinitionAsync(array $args = [])
@@ -1121,7 +1356,7 @@ use Aws\AwsClient;
  *     name?: string,
  *     description?: string,
  *     sourceConfigurations?: list<array{
- *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MIGRATION_PLANNING_ARTIFACTS'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
+ *         sourceEnvironment?: 'AWS_DISCOVERY_COLLECTOR'|'CISCO_ACI'|'F5_BIGIP'|'FORTIGATE_FIREWALL'|'LOGICAL_MODEL'|'MIGRATION_PLANNING_ARTIFACTS'|'MODELIZE_IT'|'NSX'|'PALO_ALTO_FIREWALL'|'VSPHERE',
  *         sourceS3Configuration?: array,
  *         ...,
  *     }>,
@@ -1137,6 +1372,7 @@ use Aws\AwsClient;
  *     vpcProvisioningStrategy?: 'CREATE_NEW'|'USE_EXISTING',
  *     cidrMappings?: list<array{originalCidr?: string, updatedCidr?: string, ...}>,
  *     scopeTags?: array<string, string>,
+ *     definitionType?: 'MIGRATION'|'NEW_NETWORK',
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateNetworkMigrationMapperSegment(array $args = [])
@@ -1153,6 +1389,28 @@ use Aws\AwsClient;
  *     networkMigrationExecutionID?: string,
  *     segmentID?: string,
  *     scopeTags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateRemoteSourceAction(array $args = [])
+ * @phpstan-method \Aws\Result updateRemoteSourceAction(array{
+ *     remoteSourceActionID?: string,
+ *     name?: string,
+ *     description?: string,
+ *     ssmParameterName?: string,
+ *     timeoutSeconds?: int,
+ *     operatingSystem?: string,
+ *     accountID?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateRemoteSourceActionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateRemoteSourceActionAsync(array{
+ *     remoteSourceActionID?: string,
+ *     name?: string,
+ *     description?: string,
+ *     ssmParameterName?: string,
+ *     timeoutSeconds?: int,
+ *     operatingSystem?: string,
+ *     accountID?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateReplicationConfiguration(array $args = [])
@@ -1183,6 +1441,7 @@ use Aws\AwsClient;
  *     accountID?: string,
  *     internetProtocol?: 'IPV4'|'IPV6',
  *     storeSnapshotOnLocalZone?: bool,
+ *     outpostSnapshotLocation?: 'OUTPOST'|'REGION',
  *     storageConfiguration?: array{
  *         storageType?: 'EBS'|'FSX_ONTAP',
  *         fsxOntapConfiguration?: array{storageVirtualMachineId?: string, credentialsSecretArn?: string, ...},
@@ -1218,6 +1477,7 @@ use Aws\AwsClient;
  *     accountID?: string,
  *     internetProtocol?: 'IPV4'|'IPV6',
  *     storeSnapshotOnLocalZone?: bool,
+ *     outpostSnapshotLocation?: 'OUTPOST'|'REGION',
  *     storageConfiguration?: array{
  *         storageType?: 'EBS'|'FSX_ONTAP',
  *         fsxOntapConfiguration?: array{storageVirtualMachineId?: string, credentialsSecretArn?: string, ...},
@@ -1244,6 +1504,7 @@ use Aws\AwsClient;
  *     useFipsEndpoint?: bool,
  *     internetProtocol?: 'IPV4'|'IPV6',
  *     storeSnapshotOnLocalZone?: bool,
+ *     outpostSnapshotLocation?: 'OUTPOST'|'REGION',
  *     storageConfiguration?: array{
  *         storageType?: 'EBS'|'FSX_ONTAP',
  *         fsxOntapConfiguration?: array{storageVirtualMachineId?: string, credentialsSecretArn?: string, ...},
@@ -1270,6 +1531,7 @@ use Aws\AwsClient;
  *     useFipsEndpoint?: bool,
  *     internetProtocol?: 'IPV4'|'IPV6',
  *     storeSnapshotOnLocalZone?: bool,
+ *     outpostSnapshotLocation?: 'OUTPOST'|'REGION',
  *     storageConfiguration?: array{
  *         storageType?: 'EBS'|'FSX_ONTAP',
  *         fsxOntapConfiguration?: array{storageVirtualMachineId?: string, credentialsSecretArn?: string, ...},

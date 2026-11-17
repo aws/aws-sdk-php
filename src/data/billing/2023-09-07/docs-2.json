@@ -10,7 +10,7 @@
     "DeleteBillingView": "<p>Deletes the specified billing view.</p>",
     "DisassociateContract": "<p>Removes the association between a private pricing contract and your Amazon Web Services account. The account must have been associated with the contract previously. This operation is idempotent, so retrying is safe.</p>",
     "DisassociateSourceViews": "<p> Removes the association between one or more source billing views and an existing billing view. This allows modifying the composition of aggregate billing views. </p>",
-    "GetBillingPreferences": "<p>Retrieves billing preferences for the specified feature. Each feature controls a distinct billing capability: which accounts can share Reserved Instances or credits, whether billing alerts are enabled, the historical record of sharing changes, and per-credit options.</p>",
+    "GetBillingPreferences": "<p>Retrieves billing preferences for the specified feature. Each feature controls a distinct billing capability: which accounts can share Reserved Instances or credits, whether billing alerts are enabled, the historical record of sharing changes, per-credit options, and which accounts an individual Reserved Instance or Savings Plan is shared with.</p>",
     "GetBillingView": "<p>Returns the metadata associated to the specified billing view ARN. </p>",
     "GetContractInformation": "<p>Returns information about a specific private pricing contract, including its term (duration), eligible payer accounts, investment accounts, and legal entities. This operation is read-only.</p>",
     "GetCreditAllocationHistory": "<p>Returns the per-billing-month allocation history for credits applied to an Amazon Web Services account's bills. Traverses the consolidated billing family to capture cross-account credit applications. Supports pagination and optional filtering to a single credit.</p>",
@@ -30,9 +30,11 @@
     "ListSourceViewsForBillingView": "<p>Lists the source views (managed Amazon Web Services billing views) associated with the billing view. </p>",
     "ListTagsForResource": "<p>Lists tags associated with the billing view resource. </p>",
     "RedeemCredits": "<p>Redeems an Amazon Web Services promotional credit code on behalf of the calling account. On success, a new credit is added to the account's credit ledger with the amount, validity period, and applicable products defined by the promotion. The credit is then automatically applied to subsequent bills according to the standard credit application order.</p>",
+    "SplitCredit": "<p>Splits the available balance of a credit into 2 to 99 new credits in the same account, and cancels the original credit. The new credits keep the original credit's end date and applicable products.</p> <p>The available balance is the remaining balance minus any amount reserved for a bill that isn't finalized. The portions must add up to exactly the available balance. Each portion must be at least 100.00 in the currency of the credit. For example, if the credit is in USD, each portion must be at least USD $100.00. A reserved amount stays on the original credit and still applies to that bill.</p> <p>A credit and every credit split from it count toward a limit of 100 credits. After a split, you can't split or transfer the original credit. You can split or transfer its new credits, and you can split a credit after you transfer it.</p> <p>You must own the credit or be the payer of the account that owns it. You can't undo a split. This operation is idempotent and supports a dry run.</p>",
     "TagResource": "<p> An API operation for adding one or more tags (key-value pairs) to a resource. </p>",
+    "TransferCredit": "<p>Moves a credit to another account in the same consolidated billing family. The credit keeps its ID, balance, end date, and applicable products. Only the account that owns the credit changes.</p> <p>The transfer removes the credit's sharing settings. The new owner or the payer can set them again. Any amount reserved for a bill that isn't finalized moves with the credit and still applies to that bill.</p> <p>You must be the payer of both accounts. You can't transfer a credit that has ended, has no available balance, or is the original credit of a split. A transfer creates no credit, so it doesn't count toward the split limit, and the payer can transfer the credit back. This operation is idempotent and supports a dry run.</p>",
     "UntagResource": "<p> Removes one or more tags from a resource. Specify only tag keys in your request. Don't specify the value. </p>",
-    "UpdateBillingPreferences": "<p>Updates billing preferences for the specified feature. Each feature targets a distinct billing capability and has its own set of supported keys. The action sets the value for each provided key; keys not present in the request are unchanged.</p> <p>Sharing keys (<code>RI_SHARING</code>, <code>CREDIT_SHARING</code>, <code>CREDIT_LEVEL_SHARING</code>, and sharing keys under <code>CREDIT_PREFERENCE_OPTIONS</code>) may only be set by the management account of a consolidated billing family. The <code>credit/{creditId}/status</code> key may be set by member accounts for credits they own, or by the management account for any credit in the family.</p>",
+    "UpdateBillingPreferences": "<p>Updates billing preferences for the specified feature. Each feature targets a distinct billing capability and has its own set of supported keys. The action sets the value for each provided key; keys not present in the request are unchanged.</p> <p>To set sharing keys (<code>RI_SHARING</code>, <code>CREDIT_SHARING</code>, <code>CREDIT_LEVEL_SHARING</code>, <code>BENEFIT_LEVEL_SHARING</code>, and sharing keys under <code>CREDIT_PREFERENCE_OPTIONS</code>), you must use the management account of a consolidated billing family. To set the <code>credit/{creditId}/status</code> key, you must own the credit or use the management account of its family.</p>",
     "UpdateBillingView": "<p>An API to update the attributes of the billing view. </p>"
   },
   "shapes": {
@@ -68,7 +70,9 @@
         "ListBusinessSupportAccountChargesRequest$accountId": "<p>The linked account ID to filter results to a specific account. If you don't specify a value, the response includes charges for all linked accounts.</p>",
         "ListBusinessSupportSubscriptionHistoryRequest$accountId": "<p>The account ID to filter results to a specific account. If you don't specify a value, the response includes subscription history for all accounts.</p>",
         "ListEnterpriseSupportLinkedAccountChargesRequest$accountId": "<p>The linked account ID to filter results to a specific account. If you don't specify a value, the response includes charges for all linked accounts.</p>",
-        "ShareableAccountIds$member": null
+        "ShareableAccountIds$member": null,
+        "TransferCreditRequest$destinationAccountId": "<p>The Amazon Web Services account ID that becomes the owner of the credit. The account must be in your consolidated billing family and must not be the current owner.</p>",
+        "TransferCreditResponse$destinationAccountId": "<p>The Amazon Web Services account ID that owns the credit after the transfer.</p>"
       }
     },
     "AccountList": {
@@ -233,7 +237,7 @@
       "refs": {
         "BillingPreferenceSummary$feature": "<p>The feature this preference belongs to.</p>",
         "GetBillingPreferencesRequestFeaturesList$member": null,
-        "UpdateBillingPreferencesRequest$feature": "<p>The feature to update. Valid values: <code>BILLING_ALERTS</code>, <code>RI_SHARING</code>, <code>CREDIT_SHARING</code>, <code>CREDIT_LEVEL_SHARING</code>, <code>CREDIT_PREFERENCE_OPTIONS</code>. The history features (<code>RI_SHARING_HISTORY</code> and <code>CREDIT_SHARING_HISTORY</code>) are read-only and cannot be updated.</p>"
+        "UpdateBillingPreferencesRequest$feature": "<p>The feature to update. Valid values: <code>BILLING_ALERTS</code>, <code>RI_SHARING</code>, <code>CREDIT_SHARING</code>, <code>CREDIT_LEVEL_SHARING</code>, <code>CREDIT_PREFERENCE_OPTIONS</code>, <code>BENEFIT_LEVEL_SHARING</code>. The history features (<code>RI_SHARING_HISTORY</code> and <code>CREDIT_SHARING_HISTORY</code>) are read-only and cannot be updated.</p>"
       }
     },
     "BillingFeatureFilter": {
@@ -294,7 +298,7 @@
     "BillingPreferencesPerKey": {
       "base": null,
       "refs": {
-        "UpdateBillingPreferencesRequest$billingPreferencesPerKey": "<p>Key/value pairs to apply. All keys in a single request must be valid for the specified <code>feature</code> and must not be duplicated. For <code>CREDIT_PREFERENCE_OPTIONS</code>, all keys must reference the same <code>creditId</code>.</p>"
+        "UpdateBillingPreferencesRequest$billingPreferencesPerKey": "<p>Key/value pairs to apply. All keys in a single request must be valid for the specified <code>feature</code> and must not be duplicated. For <code>CREDIT_PREFERENCE_OPTIONS</code>, all keys must reference the same <code>creditId</code>.</p> <p>For <code>BENEFIT_LEVEL_SHARING</code>, all keys must reference the same Reserved Instance or Savings Plan. To share it with the accounts in one Cost Category rule, send these three keys with the value <code>ENABLED</code>:</p> <ul> <li> <p> <code>benefit/{ri|sp}/{benefitId}/sharing/costCategoryArn/{costCategoryArn}</code> </p> </li> <li> <p> <code>benefit/{ri|sp}/{benefitId}/sharing/ruleName/{ruleName}</code> </p> </li> <li> <p> <code>benefit/{ri|sp}/{benefitId}/sharing/mode/{prioritized|restricted}</code> </p> </li> </ul> <p>With <code>prioritized</code>, any benefit that the rule's accounts don't use goes to the rest of your consolidated billing family, following your family sharing settings. With <code>restricted</code>, only the owner and the rule's accounts receive it. The Cost Category must belong to your account. To stop sharing, send the same three keys with the value <code>DISABLED</code>.</p> <p>For <code>RI_SHARING</code> and <code>CREDIT_SHARING</code>, you can share benefits by account group. Each rule in a Cost Category is one group. Send exactly one of these group keys with the value <code>ENABLED</code>:</p> <ul> <li> <p> <code>open-sharing</code> - Share across the whole consolidated billing family, with no groups.</p> </li> <li> <p> <code>costcategory-prioritized/{costCategoryArn}</code> - Share within each group first, then with the rest of the family.</p> </li> <li> <p> <code>costcategory-restricted/{costCategoryArn}</code> - An account in a group shares only with accounts in the same group.</p> </li> </ul> <p>For <code>RI_SHARING</code>, the <code>costcategory-</code> keys use a Cost Category that supports the <code>billing:rispgroupsharing</code> resource type. To use a Cost Category that supports the <code>billing:benefitgroupsharing</code> resource type, use the <code>benefitgroup-prioritized/</code> or <code>benefitgroup-restricted/</code> prefix instead. For <code>CREDIT_SHARING</code>, the Cost Category must support the <code>billing:benefitgroupsharing</code> resource type. The Cost Category must belong to your account. <code>GetBillingPreferences</code> returns the group key that is in effect.</p>"
       }
     },
     "BillingViewArn": {
@@ -393,8 +397,8 @@
     "BillingViewSourceViewsList": {
       "base": null,
       "refs": {
-        "AssociateSourceViewsRequest$sourceViews": "<p> A list of ARNs of the source billing views to associate. </p>",
-        "CreateBillingViewRequest$sourceViews": "<p>A list of billing views used as the data source for the custom billing view.</p>",
+        "AssociateSourceViewsRequest$sourceViews": "<p>A list of ARNs of the source billing views to associate. Source views can be of the following types:</p> <ul> <li> <p> <code>PRIMARY</code> - The billing view that contains all cost management data associated with an account.</p> </li> <li> <p> <code>CUSTOM</code> - A billing view that a customer creates from one or more source views.</p> </li> <li> <p> <code>BILLING_GROUP</code> - The billing view for an Billing Conductor billing group.</p> </li> <li> <p> <code>BILLING_TRANSFER</code> - The billing view for the billing data that a bill transfer account is financially responsible for.</p> </li> <li> <p> <code>BILLING_TRANSFER_SHOWBACK</code> - The billing view for billing data configured for showback or chargeback purposes.</p> </li> </ul>",
+        "CreateBillingViewRequest$sourceViews": "<p>A list of billing views used as the data source for the custom billing view. Source views can be of the following types:</p> <ul> <li> <p> <code>PRIMARY</code> - The billing view that contains all cost management data associated with an account.</p> </li> <li> <p> <code>CUSTOM</code> - A billing view that a customer creates from one or more source views.</p> </li> <li> <p> <code>BILLING_GROUP</code> - The billing view for an Billing Conductor billing group.</p> </li> <li> <p> <code>BILLING_TRANSFER</code> - The billing view for the billing data that a bill transfer account is financially responsible for.</p> </li> <li> <p> <code>BILLING_TRANSFER_SHOWBACK</code> - The billing view for billing data configured for showback or chargeback purposes.</p> </li> </ul>",
         "DisassociateSourceViewsRequest$sourceViews": "<p> A list of ARNs of the source billing views to disassociate. </p>",
         "ListSourceViewsForBillingViewResponse$sourceViews": "<p>A list of billing views used as the data source for the custom billing view. </p>"
       }
@@ -420,8 +424,8 @@
     "BillingViewType": {
       "base": null,
       "refs": {
-        "BillingViewElement$billingViewType": "<p>The type of billing group. </p>",
-        "BillingViewListElement$billingViewType": "<p>The type of billing view.</p>",
+        "BillingViewElement$billingViewType": "<p>The type of billing view. The following values are valid:</p> <ul> <li> <p> <code>PRIMARY</code> - The billing view that contains all cost management data associated with an account.</p> </li> <li> <p> <code>CUSTOM</code> - A billing view that a customer creates from one or more source views.</p> </li> <li> <p> <code>BILLING_GROUP</code> - The billing view for an Billing Conductor billing group.</p> </li> <li> <p> <code>BILLING_TRANSFER</code> - The billing view for the billing data that a bill transfer account is financially responsible for.</p> </li> <li> <p> <code>BILLING_TRANSFER_SHOWBACK</code> - The billing view for billing data configured for showback or chargeback purposes.</p> </li> </ul>",
+        "BillingViewListElement$billingViewType": "<p>The type of billing view. The following values are valid:</p> <ul> <li> <p> <code>PRIMARY</code> - The billing view that contains all cost management data associated with an account.</p> </li> <li> <p> <code>CUSTOM</code> - A billing view that a customer creates from one or more source views.</p> </li> <li> <p> <code>BILLING_GROUP</code> - The billing view for an Billing Conductor billing group.</p> </li> <li> <p> <code>BILLING_TRANSFER</code> - The billing view for the billing data that a bill transfer account is financially responsible for.</p> </li> <li> <p> <code>BILLING_TRANSFER_SHOWBACK</code> - The billing view for billing data configured for showback or chargeback purposes.</p> </li> </ul>",
         "BillingViewTypeList$member": null
       }
     },
@@ -459,7 +463,11 @@
         "InvestmentAttestation$isCancellable": "<p>Indicates whether the attestation can be canceled with <code>CancelContractualInvestmentAttestation</code>.</p>",
         "ListBusinessSupportAccountChargesResponse$isEstimated": "<p>Specifies whether the Support charge amount is estimated. When false, the charge amount is finalized.</p>",
         "PricingPlan$discountAppliesToMinimumCharge": "<p>Whether the discount applies to the minimum Support charge.</p>",
-        "PricingPlanTier$incremental": "<p>Whether the tier charges are calculated incrementally.</p>"
+        "PricingPlanTier$incremental": "<p>Whether the tier charges are calculated incrementally.</p>",
+        "SplitCreditRequest$dryRun": "<p>Specifies whether to validate the request and return the result without changing any credit.</p>",
+        "SplitCreditResponse$dryRun": "<p>Specifies whether the request was a dry run. If <code>true</code>, the operation didn't change any credit.</p>",
+        "TransferCreditRequest$dryRun": "<p>Specifies whether to validate the request and return the result without changing the credit.</p>",
+        "TransferCreditResponse$dryRun": "<p>Specifies whether the request was a dry run. If <code>true</code>, the operation didn't change the credit.</p>"
       }
     },
     "BusinessSupportAccountCharge": {
@@ -550,10 +558,24 @@
         "GetEnterpriseSupportContractDetailsResponse$chargedPayerAccountIds": "<p>The list of payer accounts and their charge allocation percentages.</p>"
       }
     },
+    "ChildCredit": {
+      "base": "<p>A new credit that a split created.</p>",
+      "refs": {
+        "ChildCredits$member": null
+      }
+    },
+    "ChildCredits": {
+      "base": "<p>The new credits that a split created, or would create in a dry run.</p>",
+      "refs": {
+        "SplitCreditResponse$childCredits": "<p>The new credits, in the order of the requested portions.</p>"
+      }
+    },
     "ClientToken": {
       "base": null,
       "refs": {
-        "CreateBillingViewRequest$clientToken": "<p>A unique, case-sensitive identifier you specify to ensure idempotency of the request. Idempotency ensures that an API request completes no more than one time. If the original request completes successfully, any subsequent retries complete successfully without performing any further actions with an idempotent request. </p>"
+        "CreateBillingViewRequest$clientToken": "<p>A unique, case-sensitive identifier you specify to ensure idempotency of the request. Idempotency ensures that an API request completes no more than one time. If the original request completes successfully, any subsequent retries complete successfully without performing any further actions with an idempotent request. </p>",
+        "SplitCreditRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure that the operation completes no more than one time. If you retry a successful request with the same client token and parameters, the retry completes without performing any further actions. If you reuse a client token with different parameters, the request fails with a <code>ValidationException</code>.</p>",
+        "TransferCreditRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure that the operation completes no more than one time. If you retry a successful request with the same client token and parameters, the retry completes without performing any further actions. If you reuse a client token with different parameters, the request fails with a <code>ValidationException</code>.</p>"
       }
     },
     "ConflictException": {
@@ -670,8 +692,14 @@
     "CreditId": {
       "base": null,
       "refs": {
+        "ChildCredit$creditId": "<p>The ID of the new credit. A dry run omits this field.</p>",
         "CreditAllocationHistoryEntry$creditId": "<p>The identifier of the credit that was applied.</p>",
-        "CreditData$creditId": "<p>The unique identifier for the credit.</p>"
+        "CreditData$creditId": "<p>The unique identifier for the credit.</p>",
+        "SplitCreditRequest$creditId": "<p>The ID of the credit to split.</p>",
+        "SplitCreditResponse$parentCreditId": "<p>The ID of the credit that was split.</p>",
+        "TransferCreditRequest$creditId": "<p>The ID of the credit to transfer.</p>",
+        "TransferCreditResponse$sourceCreditId": "<p>The ID of the transferred credit. The credit keeps this ID.</p>",
+        "TransferCreditResponse$newCreditId": "<p>Always the same as <code>sourceCreditId</code>, because a transfer moves the credit and creates no new one. A dry run omits this field.</p>"
       }
     },
     "CreditSharingType": {
@@ -696,6 +724,14 @@
       "base": null,
       "refs": {
         "Amount$currencyCode": "<p>The ISO 4217 currency code for the amount (for example, <code>USD</code>).</p>"
+      }
+    },
+    "DecimalAmountString": {
+      "base": "<p>The amount, as a decimal string with at most six decimal places, for example <code>2400.000000</code>. The amount is always in the currency of the credit, so unlike <code>Amount</code> it carries no currency code. A decimal string, not a floating-point number, lets portions add up exactly to a balance.</p>",
+      "refs": {
+        "ChildCredit$amount": "<p>The amount of the new credit.</p>",
+        "SplitPortion$amount": "<p>The amount of the new credit, in the currency of the credit that you split. The amount must be at least 100.00 in that currency. For example, if the credit is in USD, the amount must be at least USD $100.00.</p>",
+        "TransferCreditResponse$amount": "<p>The available balance of the credit, which is its remaining balance minus any amount reserved for a bill that isn't finalized.</p>"
       }
     },
     "DeleteBillingViewRequest": {
@@ -790,13 +826,13 @@
     "GetBillingPreferencesRequestFeaturesList": {
       "base": null,
       "refs": {
-        "GetBillingPreferencesRequest$features": "<p>The feature to retrieve. Specify exactly one value. Valid values: <code>BILLING_ALERTS</code>, <code>RI_SHARING</code>, <code>RI_SHARING_HISTORY</code>, <code>CREDIT_SHARING</code>, <code>CREDIT_SHARING_HISTORY</code>, <code>CREDIT_LEVEL_SHARING</code>, <code>CREDIT_PREFERENCE_OPTIONS</code>.</p>"
+        "GetBillingPreferencesRequest$features": "<p>The feature to retrieve. Specify exactly one value. Valid values: <code>BILLING_ALERTS</code>, <code>RI_SHARING</code>, <code>RI_SHARING_HISTORY</code>, <code>CREDIT_SHARING</code>, <code>CREDIT_SHARING_HISTORY</code>, <code>CREDIT_LEVEL_SHARING</code>, <code>CREDIT_PREFERENCE_OPTIONS</code>, <code>BENEFIT_LEVEL_SHARING</code>.</p>"
       }
     },
     "GetBillingPreferencesRequestFiltersList": {
       "base": null,
       "refs": {
-        "GetBillingPreferencesRequest$filters": "<p>Filters to narrow results. Specify exactly one filter when supplied. The supported filter name is <code>PREFERENCE_KEY</code>, which accepts 1 to 10 values to match preference keys.</p>"
+        "GetBillingPreferencesRequest$filters": "<p>Filters to narrow results. Specify exactly one filter when supplied. The supported filter name is <code>PREFERENCE_KEY</code>, which accepts 1 to 10 values to match preference keys.</p> <p>For <code>BENEFIT_LEVEL_SHARING</code>, this filter is required. Specify exactly one value that identifies the Reserved Instance (RI) or Savings Plan (SP), in the form <code>benefit/{ri|sp}/{benefitId}</code>.</p>"
       }
     },
     "GetBillingPreferencesRequestMaxResultsInteger": {
@@ -1469,6 +1505,32 @@
         "CreditData$shareableAccounts": "<p>The Amazon Web Services account IDs entitled to apply this credit.</p>"
       }
     },
+    "SplitCreditRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SplitCreditResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "SplitPortion": {
+      "base": "<p>One new credit to create from a split.</p>",
+      "refs": {
+        "SplitPortions$member": null
+      }
+    },
+    "SplitPortionDescriptionString": {
+      "base": null,
+      "refs": {
+        "SplitPortion$description": "<p>The description of the new credit. If you omit it, the new credit gets the original credit's description followed by its position in the request, for example <code>MAP credit - 1/3</code>. If you split that credit again, the name extends, for example <code>MAP credit - 1/3 - 2/2</code>. A generated name is at most 93 characters. If it would be longer, the name keeps only the beginning of the original description.</p>"
+      }
+    },
+    "SplitPortions": {
+      "base": "<p>The portions of a split. Their amounts must add up to exactly the available balance of the credit. The limit of 100 credits includes the credit that you split, so a credit with no earlier splits can take at most 99 portions. The new credits follow the order of this list.</p>",
+      "refs": {
+        "SplitCreditRequest$portions": "<p>The new credits to create, one for each portion, in the order listed.</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
@@ -1607,8 +1669,8 @@
         "CreditData$exhaustDate": "<p>The date the credit balance reached zero, as Unix epoch seconds.</p>",
         "EnterpriseSupportTimePeriod$beginDate": "<p>The begin date of the time period.</p>",
         "EnterpriseSupportTimePeriod$endDate": "<p>The end date of the time period.</p>",
-        "GetCreditAllocationHistoryRequest$startDate": "<p>Inclusive start date as Unix epoch seconds. Must be on or before <code>endDate</code>. The range from <code>startDate</code> to <code>endDate</code> cannot exceed 24 billing months.</p>",
-        "GetCreditAllocationHistoryRequest$endDate": "<p>Inclusive end date as Unix epoch seconds.</p>",
+        "GetCreditAllocationHistoryRequest$startDate": "<p>The inclusive start date of the range, in Unix epoch seconds. This value must be earlier than <code>endDate</code>. You get credit allocations for bills whose billing period starts on or after <code>startDate</code> and before <code>endDate</code>. If <code>startDate</code> is in the middle of a billing period, that period isn't included. The range can't exceed 24 calendar months.</p>",
+        "GetCreditAllocationHistoryRequest$endDate": "<p>The exclusive end date of the range, in Unix epoch seconds. To get one billing month, set <code>startDate</code> to the first day of that month. Then set <code>endDate</code> to the first day of the next month. Use 00:00 UTC for both.</p>",
         "GetCreditsRequest$startDate": "<p>The start date for the credit period as Unix epoch seconds. Must be a past date that is not more than one year before the current date.</p>",
         "GetCreditsRequest$endDate": "<p>The end date for the credit period as Unix epoch seconds. Must not be a future date and must be on or after <code>startDate</code>. Defaults to the current date when omitted.</p>",
         "GetEnterpriseSupportChargeSummaryResponse$billingPeriodStartDate": "<p>The start date of the billing period.</p>",
@@ -1631,6 +1693,14 @@
         "TimeRange$endDateInclusive": "<p> The inclusive end date of the time range. </p>",
         "UpdateBillingViewResponse$updatedAt": "<p> The time when the billing view was last updated. </p>"
       }
+    },
+    "TransferCreditRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TransferCreditResponse": {
+      "base": null,
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,

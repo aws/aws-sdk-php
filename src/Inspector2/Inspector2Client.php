@@ -133,13 +133,20 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result createConnector(array{
  *     clientToken?: string,
  *     name?: string,
- *     provider?: 'AZURE',
+ *     provider?: 'AZURE'|'GCP',
  *     description?: string,
  *     providerDetail?: array{
  *         azure?: array{
  *             awsConfigConnectorArn?: string,
  *             scopeConfiguration?: array,
  *             azureRegions?: list<string>,
+ *             autoInstallVMScanner?: bool,
+ *             ...,
+ *         },
+ *         gcp?: array{
+ *             awsConfigConnectorArn?: string,
+ *             scopeConfiguration?: array,
+ *             gcpRegions?: list<string>,
  *             autoInstallVMScanner?: bool,
  *             ...,
  *         },
@@ -152,13 +159,20 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise createConnectorAsync(array{
  *     clientToken?: string,
  *     name?: string,
- *     provider?: 'AZURE',
+ *     provider?: 'AZURE'|'GCP',
  *     description?: string,
  *     providerDetail?: array{
  *         azure?: array{
  *             awsConfigConnectorArn?: string,
  *             scopeConfiguration?: array,
  *             azureRegions?: list<string>,
+ *             autoInstallVMScanner?: bool,
+ *             ...,
+ *         },
+ *         gcp?: array{
+ *             awsConfigConnectorArn?: string,
+ *             scopeConfiguration?: array,
+ *             gcpRegions?: list<string>,
  *             autoInstallVMScanner?: bool,
  *             ...,
  *         },
@@ -676,13 +690,13 @@ use Aws\AwsClient;
  * @method \Aws\Result getEncryptionKey(array $args = [])
  * @phpstan-method \Aws\Result getEncryptionKey(array{
  *     scanType?: 'CODE'|'NETWORK'|'PACKAGE',
- *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites'|'artifactregistry.googleapis.com/DockerImage'|'cloudfunctions.googleapis.com/Function'|'compute.googleapis.com/Instance',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise getEncryptionKeyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getEncryptionKeyAsync(array{
  *     scanType?: 'CODE'|'NETWORK'|'PACKAGE',
- *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites'|'artifactregistry.googleapis.com/DockerImage'|'cloudfunctions.googleapis.com/Function'|'compute.googleapis.com/Instance',
  *     ...,
  * } $args = [])
  * @method \Aws\Result getFindingsReportStatus(array $args = [])
@@ -1084,7 +1098,7 @@ use Aws\AwsClient;
  *     aggregationRequest?: array{
  *         accountAggregation?: array{
  *             findingType?: 'CODE_VULNERABILITY'|'NETWORK_REACHABILITY'|'PACKAGE_VULNERABILITY',
- *             resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *             resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites'|'artifactregistry.googleapis.com/DockerImage'|'cloudfunctions.googleapis.com/Function'|'compute.googleapis.com/Instance',
  *             sortOrder?: 'ASC'|'DESC',
  *             sortBy?: 'ALL'|'CRITICAL'|'HIGH',
  *             ...,
@@ -1119,7 +1133,7 @@ use Aws\AwsClient;
  *         },
  *         findingTypeAggregation?: array{
  *             findingType?: 'CODE_VULNERABILITY'|'NETWORK_REACHABILITY'|'PACKAGE_VULNERABILITY',
- *             resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *             resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites'|'artifactregistry.googleapis.com/DockerImage'|'cloudfunctions.googleapis.com/Function'|'compute.googleapis.com/Instance',
  *             sortOrder?: 'ASC'|'DESC',
  *             sortBy?: 'ALL'|'CRITICAL'|'HIGH',
  *             ...,
@@ -1147,7 +1161,7 @@ use Aws\AwsClient;
  *         titleAggregation?: array{
  *             titles?: list<array>,
  *             vulnerabilityIds?: list<array>,
- *             resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *             resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites'|'artifactregistry.googleapis.com/DockerImage'|'cloudfunctions.googleapis.com/Function'|'compute.googleapis.com/Instance',
  *             findingType?: 'CODE_VULNERABILITY'|'NETWORK_REACHABILITY'|'PACKAGE_VULNERABILITY',
  *             sortOrder?: 'ASC'|'DESC',
  *             sortBy?: 'ALL'|'CRITICAL'|'HIGH',
@@ -1237,7 +1251,7 @@ use Aws\AwsClient;
  *     aggregationRequest?: array{
  *         accountAggregation?: array{
  *             findingType?: 'CODE_VULNERABILITY'|'NETWORK_REACHABILITY'|'PACKAGE_VULNERABILITY',
- *             resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *             resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites'|'artifactregistry.googleapis.com/DockerImage'|'cloudfunctions.googleapis.com/Function'|'compute.googleapis.com/Instance',
  *             sortOrder?: 'ASC'|'DESC',
  *             sortBy?: 'ALL'|'CRITICAL'|'HIGH',
  *             ...,
@@ -1272,7 +1286,7 @@ use Aws\AwsClient;
  *         },
  *         findingTypeAggregation?: array{
  *             findingType?: 'CODE_VULNERABILITY'|'NETWORK_REACHABILITY'|'PACKAGE_VULNERABILITY',
- *             resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *             resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites'|'artifactregistry.googleapis.com/DockerImage'|'cloudfunctions.googleapis.com/Function'|'compute.googleapis.com/Instance',
  *             sortOrder?: 'ASC'|'DESC',
  *             sortBy?: 'ALL'|'CRITICAL'|'HIGH',
  *             ...,
@@ -1300,7 +1314,7 @@ use Aws\AwsClient;
  *         titleAggregation?: array{
  *             titles?: list<array>,
  *             vulnerabilityIds?: list<array>,
- *             resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *             resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites'|'artifactregistry.googleapis.com/DockerImage'|'cloudfunctions.googleapis.com/Function'|'compute.googleapis.com/Instance',
  *             findingType?: 'CODE_VULNERABILITY'|'NETWORK_REACHABILITY'|'PACKAGE_VULNERABILITY',
  *             sortOrder?: 'ASC'|'DESC',
  *             sortBy?: 'ALL'|'CRITICAL'|'HIGH',
@@ -1566,13 +1580,13 @@ use Aws\AwsClient;
  * @method \Aws\Result resetEncryptionKey(array $args = [])
  * @phpstan-method \Aws\Result resetEncryptionKey(array{
  *     scanType?: 'CODE'|'NETWORK'|'PACKAGE',
- *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites'|'artifactregistry.googleapis.com/DockerImage'|'cloudfunctions.googleapis.com/Function'|'compute.googleapis.com/Instance',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise resetEncryptionKeyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise resetEncryptionKeyAsync(array{
  *     scanType?: 'CODE'|'NETWORK'|'PACKAGE',
- *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites'|'artifactregistry.googleapis.com/DockerImage'|'cloudfunctions.googleapis.com/Function'|'compute.googleapis.com/Instance',
  *     ...,
  * } $args = [])
  * @method \Aws\Result searchVulnerabilities(array $args = [])
@@ -1815,6 +1829,7 @@ use Aws\AwsClient;
  *     description?: string,
  *     providerDetail?: array{
  *         azure?: array{azureRegions?: list<string>, scopeConfiguration?: array, autoInstallVMScanner?: bool, ...},
+ *         gcp?: array{gcpRegions?: list<string>, scopeConfiguration?: array, autoInstallVMScanner?: bool, ...},
  *         ...,
  *     },
  *     ...,
@@ -1825,6 +1840,7 @@ use Aws\AwsClient;
  *     description?: string,
  *     providerDetail?: array{
  *         azure?: array{azureRegions?: list<string>, scopeConfiguration?: array, autoInstallVMScanner?: bool, ...},
+ *         gcp?: array{gcpRegions?: list<string>, scopeConfiguration?: array, autoInstallVMScanner?: bool, ...},
  *         ...,
  *     },
  *     ...,
@@ -1863,14 +1879,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateEncryptionKey(array{
  *     kmsKeyId?: string,
  *     scanType?: 'CODE'|'NETWORK'|'PACKAGE',
- *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites'|'artifactregistry.googleapis.com/DockerImage'|'cloudfunctions.googleapis.com/Function'|'compute.googleapis.com/Instance',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateEncryptionKeyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateEncryptionKeyAsync(array{
  *     kmsKeyId?: string,
  *     scanType?: 'CODE'|'NETWORK'|'PACKAGE',
- *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites',
+ *     resourceType?: 'AWS_EC2_INSTANCE'|'AWS_ECR_CONTAINER_IMAGE'|'AWS_ECR_REPOSITORY'|'AWS_LAMBDA_FUNCTION'|'CODE_REPOSITORY'|'MACHINE_IMAGE'|'Microsoft.Compute/virtualMachines'|'Microsoft.ContainerRegistry/registry/containerImage'|'Microsoft.Web/sites'|'artifactregistry.googleapis.com/DockerImage'|'cloudfunctions.googleapis.com/Function'|'compute.googleapis.com/Instance',
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateFilter(array $args = [])

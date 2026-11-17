@@ -27,6 +27,7 @@
     "GetAssetFile": "<p>Gets a file from an asset</p>",
     "GetAssociation": "<p>Retrieves given associations configured for a specific AgentSpace.</p>",
     "GetBacklogTask": "<p>Gets a backlog task for the specified agent space and task id</p>",
+    "GetChat": "<p>Retrieves the details of a chat execution, including its execution ID, summary, timestamps, and archive status.</p>",
     "GetOperatorApp": "<p>Get the full auth configuration of operator including any enabled auth flow</p>",
     "GetRecommendation": "<p>Retrieves a specific recommendation by its ID</p>",
     "GetService": "<p>Retrieves given service by it's unique identifier</p>",
@@ -59,6 +60,7 @@
     "UpdateAssetFile": "<p>Updates a file in an asset</p>",
     "UpdateAssociation": "<p>Partially updates the configuration of an existing service association for an AgentSpace. Present fields are fully replaced; absent fields are left unchanged. Returns 200 OK on success.</p>",
     "UpdateBacklogTask": "<p>Update an existing backlog task.</p>",
+    "UpdateChat": "<p>Updates a chat execution. You can use this operation to change the chat execution's summary or to archive or unarchive it.</p><p>Archiving a chat execution hides it from the default chat list. Unarchiving a chat execution restores it to the default chat list.</p>",
     "UpdateGoal": "<p>Update an existing goal</p>",
     "UpdateOperatorAppIdpConfig": "<p>Update the external Identity Provider configuration for the Operator App</p>",
     "UpdatePrivateConnectionCertificate": "<p>Updates the certificate associated with a Private Connection.</p>",
@@ -145,6 +147,7 @@
         "GetAssetFileRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
         "GetAssetRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
         "GetBacklogTaskRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the task</p>",
+        "GetChatRequest$agentSpaceId": "<p>The unique identifier of the agent space that contains the chat execution.</p>",
         "GetRecommendationRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the recommendation</p>",
         "GetTriggerRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the Trigger</p>",
         "ListAssetFilesRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
@@ -162,6 +165,7 @@
         "UpdateAssetFileRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
         "UpdateAssetRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
         "UpdateBacklogTaskRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the task</p>",
+        "UpdateChatRequest$agentSpaceId": "<p>The unique identifier of the agent space that contains the chat execution to update.</p>",
         "UpdateGoalRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the goal</p>",
         "UpdateRecommendationRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the recommendation</p>",
         "UpdateTriggerRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the Trigger</p>"
@@ -549,6 +553,16 @@
         "UpdatePrivateConnectionCertificateInput$certificate": "<p>The new certificate for the Private Connection.</p>"
       }
     },
+    "ChatArchiveStatus": {
+      "base": null,
+      "refs": {
+        "ChatExecution$archiveStatus": "<p>Indicates whether the chat execution is archived or active.</p>",
+        "GetChatResponse$archiveStatus": "<p>Indicates whether the chat execution is archived or active.</p>",
+        "ListChatsRequest$archiveStatus": "<p>The archive status to filter by. Use this parameter to list only archived chat executions or only active ones.</p>",
+        "UpdateChatRequest$archiveStatus": "<p>The archive status to set for the chat execution. Use this parameter to archive the chat execution, hiding it from the default chat list, or to unarchive it, restoring it to the default chat list.</p>",
+        "UpdateChatResponse$archiveStatus": "<p>The archive status of the chat execution after the update.</p>"
+      }
+    },
     "ChatExecution": {
       "base": "<p>A single chat execution summary</p>",
       "refs": {
@@ -591,6 +605,12 @@
     "ConflictException": {
       "base": "<p>The request conflicts with the current state of the resource.</p>",
       "refs": {}
+    },
+    "ConflictExceptionReason": {
+      "base": null,
+      "refs": {
+        "ConflictException$reason": "<p>A machine-readable reason code that explains why the request conflicted with the current state of the resource. For example, <code>CHAT_ARCHIVED</code> indicates that the request acted on a chat that is archived. This field is absent when no specific reason applies.</p>"
+      }
     },
     "ContentSizeExceededException": {
       "base": "<p>This exception is thrown when the content size exceeds the allowed limit.</p>",
@@ -1065,6 +1085,14 @@
     },
     "GetBacklogTaskResponse": {
       "base": "<p>Response structure containing the requested backlog task</p>",
+      "refs": {}
+    },
+    "GetChatRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetChatResponse": {
+      "base": null,
       "refs": {}
     },
     "GetOperatorAppInput": {
@@ -2676,6 +2704,8 @@
         "GetAssetFileRequest$assetId": "<p>The unique identifier of the asset containing the file</p>",
         "GetAssetRequest$assetId": "<p>The unique identifier of the asset to retrieve</p>",
         "GetBacklogTaskRequest$taskId": "<p>The unique identifier of the task to retrieve</p>",
+        "GetChatRequest$executionId": "<p>The unique identifier of the chat execution to retrieve.</p>",
+        "GetChatResponse$executionId": "<p>The unique identifier of the chat execution.</p>",
         "GetRecommendationRequest$recommendationId": "<p>The unique identifier for the recommendation to retrieve</p>",
         "GetTriggerRequest$triggerId": "<p>The unique identifier of the Trigger to retrieve</p>",
         "ListAssetFilesRequest$assetId": "<p>The unique identifier of the asset whose files to list</p>",
@@ -2694,6 +2724,8 @@
         "UpdateAssetFileRequest$assetId": "<p>The unique identifier of the asset containing the file</p>",
         "UpdateAssetRequest$assetId": "<p>The unique identifier of the asset to update</p>",
         "UpdateBacklogTaskRequest$taskId": "<p>The unique identifier of the task to update</p>",
+        "UpdateChatRequest$executionId": "<p>The unique identifier of the chat execution to update.</p>",
+        "UpdateChatResponse$executionId": "<p>The unique identifier of the updated chat execution.</p>",
         "UpdateRecommendationRequest$recommendationId": "<p>The unique identifier for the recommendation to update</p>",
         "UpdateTriggerRequest$triggerId": "<p>The unique identifier of the Trigger to update</p>"
       }
@@ -3054,6 +3086,7 @@
         "Execution$uid": "<p>The unique identifier for the user session associated with this execution</p>",
         "GenericWebhook$webhookUrl": "<p>The webhook URL endpoint</p>",
         "GenericWebhook$webhookId": "<p>The unique webhook identifier</p>",
+        "GetChatResponse$summary": "<p>The summary of the chat execution.</p>",
         "GitHubConfiguration$repoName": "<p>Associated Github repo name</p>",
         "GitHubConfiguration$repoId": "<p>Associated Github repo ID</p>",
         "GitHubConfiguration$owner": "<p>The GitHub repository owner name.</p>",
@@ -3159,6 +3192,7 @@
         "Task$primaryTaskId": "<p>The task ID of the primary investigation this task is linked to</p>",
         "Task$statusReason": "<p>Explanation for why the task status was changed (e.g., linked reason)</p>",
         "ThrottlingException$message": "<p>Detailed error message describing the throttling condition.</p>",
+        "UpdateChatResponse$summary": "<p>The summary of the chat execution after the update.</p>",
         "UpdateGoalRequest$goalId": "<p>The unique identifier of the goal to update</p>",
         "UpdateRecommendationRequest$additionalContext": "<p>Additional context for recommendation</p>",
         "UserMessageBlock$text": "<p>Text content from the user.</p>",
@@ -3343,12 +3377,15 @@
         "ChatExecution$createdAt": "<p>Timestamp when the chat was created</p>",
         "ChatExecution$updatedAt": "<p>Timestamp when the chat was last updated</p>",
         "CreateChatResponse$createdAt": "<p>Timestamp when the chat was created</p>",
+        "GetChatResponse$createdAt": "<p>The date and time at which the chat execution was created.</p>",
+        "GetChatResponse$updatedAt": "<p>The date and time at which the chat execution was last updated.</p>",
         "ListAssetsRequest$updatedAfter": "<p>Filter results to only assets updated after this timestamp</p>",
         "ListAssetsRequest$updatedBefore": "<p>Filter results to only assets updated before this timestamp</p>",
         "ListPendingMessagesResponse$createdAt": "<p>Timestamp when the pending messages were created.</p>",
         "Trigger$createdAt": "<p>Timestamp when this Trigger was created</p>",
         "Trigger$updatedAt": "<p>Timestamp when this Trigger was last updated</p>",
-        "UpdateApprovalActionResponse$expiresAt": "<p>Absolute timestamp at which the approval expires. Set when status is APPROVED (computed as the submission time plus ttlSeconds); absent when status is REJECTED.</p>"
+        "UpdateApprovalActionResponse$expiresAt": "<p>Absolute timestamp at which the approval expires. Set when status is APPROVED (computed as the submission time plus ttlSeconds); absent when status is REJECTED.</p>",
+        "UpdateChatResponse$updatedAt": "<p>The date and time at which the chat execution was last updated.</p>"
       }
     },
     "ToolClassification": {
@@ -3534,6 +3571,26 @@
     },
     "UpdateBacklogTaskResponse": {
       "base": "<p>Response structure containing the updated task</p>",
+      "refs": {}
+    },
+    "UpdateChatRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateChatRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "UpdateChatRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error.</p>"
+      }
+    },
+    "UpdateChatRequestSummaryString": {
+      "base": null,
+      "refs": {
+        "UpdateChatRequest$summary": "<p>The new summary to set for the chat execution.</p>"
+      }
+    },
+    "UpdateChatResponse": {
+      "base": null,
       "refs": {}
     },
     "UpdateGoalRequest": {

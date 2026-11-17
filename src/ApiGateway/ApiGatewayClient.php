@@ -36,7 +36,7 @@ use Psr\Http\Message\RequestInterface;
  * @phpstan-method \Aws\Result createAuthorizer(array{
  *     restApiId?: string,
  *     name?: string,
- *     type?: 'COGNITO_USER_POOLS'|'REQUEST'|'TOKEN',
+ *     type?: 'COGNITO_USER_POOLS'|'JWT'|'REQUEST'|'TOKEN',
  *     providerARNs?: list<string>,
  *     authType?: string,
  *     authorizerUri?: string,
@@ -44,13 +44,14 @@ use Psr\Http\Message\RequestInterface;
  *     identitySource?: string,
  *     identityValidationExpression?: string,
  *     authorizerResultTtlInSeconds?: int,
+ *     jwtConfiguration?: array{issuers?: list<array>, defaultAlgorithms?: list<'ES256'|'ES384'|'ES512'|'RS256'|'RS384'|'RS512'>, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createAuthorizerAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createAuthorizerAsync(array{
  *     restApiId?: string,
  *     name?: string,
- *     type?: 'COGNITO_USER_POOLS'|'REQUEST'|'TOKEN',
+ *     type?: 'COGNITO_USER_POOLS'|'JWT'|'REQUEST'|'TOKEN',
  *     providerARNs?: list<string>,
  *     authType?: string,
  *     authorizerUri?: string,
@@ -58,6 +59,7 @@ use Psr\Http\Message\RequestInterface;
  *     identitySource?: string,
  *     identityValidationExpression?: string,
  *     authorizerResultTtlInSeconds?: int,
+ *     jwtConfiguration?: array{issuers?: list<array>, defaultAlgorithms?: list<'ES256'|'ES384'|'ES512'|'RS256'|'RS384'|'RS512'>, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result createBasePathMapping(array $args = [])

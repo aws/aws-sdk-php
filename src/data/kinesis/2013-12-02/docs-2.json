@@ -1,50 +1,62 @@
 {
   "version": "2.0",
-  "service": "<fullname>Amazon Kinesis Data Streams Service API Reference</fullname> <p>Amazon Kinesis Data Streams is a managed service that scales elastically for real-time processing of streaming big data.</p>",
+  "service": "<fullname>Amazon Kinesis Data Streams Service API Reference</fullname> <p>Amazon Kinesis Data Streams is a serverless data streaming service that ingests data once and fans it out to multiple consumer applications for real-time processing.</p>",
   "operations": {
+    "AcknowledgeDeadLetterQueueRecords": "<p>Acknowledges up to 10 dead-letter records in the specified queue, so the queue doesn't return them again. The result for each entry is reported individually in the response.</p> <p>Acknowledging a record does not affect the record in the data stream. That record remains available to stream consumers and to other queues on the same stream for the rest of its retention period.</p> <p>Because the request can result in a combination of successful and unsuccessful entries, check the <code>Failed</code> list even when the call returns an HTTP status code of <code>200</code>.</p>",
+    "AcknowledgeQueueRecords": "<p>Acknowledges up to 10 records from the specified queue. After a record is acknowledged, the queue does not deliver it again. The result for each entry is reported individually in the response.</p> <p>Acknowledging a record does not affect the record in the data stream. That record remains available to stream consumers and to other queues on the same stream for the rest of its retention period.</p> <p>Because the request can result in a combination of successful and unsuccessful entries, check the <code>Failed</code> list even when the call returns an HTTP status code of <code>200</code>.</p> <p>On rare occasions, you can receive a record again after you acknowledge it. Design your queue consumer to be idempotent, so that processing the same record more than once is safe.</p>",
     "AddTagsToStream": "<p>Adds or updates tags for the specified Kinesis data stream. You can assign up to 50 tags to a data stream.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>If tags have already been assigned to the stream, <code>AddTagsToStream</code> overwrites any existing tags that correspond to the specified tag keys.</p> <p> <a>AddTagsToStream</a> has a limit of five transactions per second per account.</p>",
     "CreateChannel": "<p>Creates a channel that delivers records from a Kinesis data stream to a destination. A channel reads records from the specified stream and writes them to streaming tables on Apache Iceberg (Amazon S3 Tables) or to a general purpose Amazon S3 bucket.</p> <p>You must specify either <code>S3DestinationConfiguration</code> or <code>S3TablesDestinationConfiguration</code>, but not both.</p> <p>To use this operation, you must have permission to pass the specified service execution IAM role to Amazon Kinesis Data Streams (the <code>iam:PassRole</code> permission on that role).</p> <p>Creating a channel is an asynchronous operation. Upon receiving the request, Amazon Kinesis Data Streams returns immediately with the channel in the <code>CREATING</code> state. After provisioning is complete, Amazon Kinesis Data Streams sets the state to <code>ACTIVE</code>. You can use <a>DescribeChannel</a> to check the current state.</p> <p>This operation is only supported for data streams with the on-demand capacity mode.</p> <p>This operation has a call limit of 5 transactions per second (TPS) for each Amazon Web Services account. Exceeding 5 TPS results in a <code>LimitExceededException</code>.</p>",
+    "CreateQueue": "<p>Creates a queue on the specified data stream. A queue delivers records from the stream to a queue consumer, tracks the delivery state of each record, and redelivers any record that is not acknowledged before its visibility timeout expires.</p> <p>A queue does not extend how long the stream keeps a record. When a record reaches the end of the data stream's retention period, the queue stops delivering it.</p> <p>Your queue consumer calls <a>ReceiveQueueRecords</a> to receive up to 10 records at a time. After it processes records, it calls <a>AcknowledgeQueueRecords</a> so the queue does not deliver them again.</p> <p>Queues are supported only on data streams in on-demand capacity mode.</p> <p>Creating a queue does not change how producers write to the stream, and it does not change how existing stream consumers read from it. A queue counts as a registered consumer on the stream and shares the stream's registered consumer limit with enhanced fan-out consumers: 20 on On-demand Standard and 50 on On-demand Advantage.</p> <p>Use <code>StartingPosition</code> to set the position in the stream where delivery begins. The default is <code>LATEST</code>.</p> <p> <code>CreateQueue</code> is an asynchronous operation. Upon receiving a <code>CreateQueue</code> request, Amazon Kinesis Data Streams immediately returns a queue description with a <code>QueueStatus</code> of <code>CREATING</code>. After the queue is created, Kinesis Data Streams sets the <code>QueueStatus</code> to <code>ACTIVE</code>. You can begin receiving records after the queue is <code>ACTIVE</code>. Use <a>DescribeQueue</a> to check the status of the queue.</p> <p>Each queue has built-in dead-letter handling. When a record has been received <code>MaxReceiveCount</code> times without being acknowledged, it becomes a dead-letter record, and <a>ReceiveQueueRecords</a> no longer returns it. You work with dead-letter records through a separate set of operations that use the same queue ARN: <a>ReceiveDeadLetterQueueRecords</a>, <a>AcknowledgeDeadLetterQueueRecords</a>, <a>UpdateDeadLetterQueueRecordsVisibility</a>, and <a>RestoreDeadLetterQueueRecords</a>.</p> <p>Dead-letter handling is enabled by default, with a <code>MaxReceiveCount</code> of 6. To use a different value, or to turn dead-letter handling off, specify <code>DeadLetterConfiguration</code> in <code>QueueAttributes</code>.</p>",
     "CreateStream": "<p>Creates a Kinesis data stream. A stream captures and transports data records that are continuously emitted from different data sources or <i>producers</i>. Scale-out within a stream is explicitly supported by means of shards, which are uniquely identified groups of data records in a stream.</p> <p>You can create your data stream using either on-demand or provisioned capacity mode. Data streams with an on-demand mode require no capacity planning and automatically scale to handle gigabytes of write and read throughput per minute. With the on-demand mode, Kinesis Data Streams automatically manages the shards in order to provide the necessary throughput.</p> <p>If you'd still like to proactively scale your on-demand data stream’s capacity, you can unlock the warm throughput feature for on-demand data streams by enabling <code>MinimumThroughputBillingCommitment</code> for your account. Once your account has <code>MinimumThroughputBillingCommitment</code> enabled, you can specify the warm throughput in MiB per second that your stream can support in writes.</p> <p>For the data streams with a provisioned mode, you must specify the number of shards for the data stream. Each shard can support reads up to five transactions per second, up to a maximum data read total of 2 MiB per second. Each shard can support writes up to 1,000 records per second, up to a maximum data write total of 1 MiB per second. If the amount of data input increases or decreases, you can add or remove shards.</p> <p>The stream name identifies the stream. The name is scoped to the Amazon Web Services account used by the application. It is also scoped by Amazon Web Services Region. That is, two streams in two different accounts can have the same name, and two streams in the same account, but in two different Regions, can have the same name.</p> <p> <code>CreateStream</code> is an asynchronous operation. Upon receiving a <code>CreateStream</code> request, Kinesis Data Streams immediately returns and sets the stream status to <code>CREATING</code>. After the stream is created, Kinesis Data Streams sets the stream status to <code>ACTIVE</code>. You should perform read and write operations only on an <code>ACTIVE</code> stream. </p> <p>You receive a <code>LimitExceededException</code> when making a <code>CreateStream</code> request when you try to do one of the following:</p> <ul> <li> <p>Have more than five streams in the <code>CREATING</code> state at any point in time.</p> </li> <li> <p>Create more shards than are authorized for your account.</p> </li> </ul> <p>For the default shard or on-demand throughput limits for an Amazon Web Services account, see <a href=\"https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html\">Amazon Kinesis Data Streams Limits</a> in the <i>Amazon Kinesis Data Streams Developer Guide</i>. To increase this limit, <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html\">contact Amazon Web Services Support</a>.</p> <p>You can use <a>DescribeStreamSummary</a> to check the stream status, which is returned in <code>StreamStatus</code>.</p> <p> <a>CreateStream</a> has a limit of five transactions per second per account.</p> <p>You can add tags to the stream when making a <code>CreateStream</code> request by setting the <code>Tags</code> parameter. If you pass the <code>Tags</code> parameter, in addition to having the <code>kinesis:CreateStream</code> permission, you must also have the <code>kinesis:AddTagsToStream</code> permission for the stream that will be created. The <code>kinesis:TagResource</code> permission won’t work to tag streams on creation. Tags will take effect from the <code>CREATING</code> status of the stream, but you can't make any updates to the tags until the stream is in <code>ACTIVE</code> state.</p>",
     "DecreaseStreamRetentionPeriod": "<p>Decreases the Kinesis data stream's retention period, which is the length of time data records are accessible after they are added to the stream. The minimum value of a stream's retention period is 24 hours.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>This operation may result in lost data. For example, if the stream's retention period is 48 hours and is decreased to 24 hours, any data already in the stream that is older than 24 hours is inaccessible.</p>",
     "DeleteChannel": "<p>Deletes the specified channel. Deleting a channel stops delivery from the source stream to the destination. Data already delivered to the destination is not deleted.</p> <p>A stream cannot be deleted while it has active channels. Use <a>ListChannels</a> with a stream filter to find the channels attached to a stream before deleting it.</p> <p>This operation has a call limit of 5 transactions per second (TPS) for each Amazon Web Services account. Exceeding 5 TPS results in a <code>LimitExceededException</code>.</p>",
-    "DeleteResourcePolicy": "<p>Delete a policy for the specified data stream or consumer. Request patterns can be one of the following:</p> <ul> <li> <p>Data stream pattern: <code>arn:aws.*:kinesis:.*:\\d{12}:.*stream/\\S+</code> </p> </li> <li> <p>Consumer pattern: <code>^(arn):aws.*:kinesis:.*:\\d{12}:.*stream\\/[a-zA-Z0-9_.-]+\\/consumer\\/[a-zA-Z0-9_.-]+:[0-9]+</code> </p> </li> </ul>",
-    "DeleteStream": "<p>Deletes a Kinesis data stream and all its shards and data. You must shut down any applications that are operating on the stream before you delete the stream. If an application attempts to operate on a deleted stream, it receives the exception <code>ResourceNotFoundException</code>.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>If the stream is in the <code>ACTIVE</code> state, you can delete it. After a <code>DeleteStream</code> request, the specified stream is in the <code>DELETING</code> state until Kinesis Data Streams completes the deletion.</p> <p> <b>Note:</b> Kinesis Data Streams might continue to accept data read and write operations, such as <a>PutRecord</a>, <a>PutRecords</a>, and <a>GetRecords</a>, on a stream in the <code>DELETING</code> state until the stream deletion is complete.</p> <p>When you delete a stream, any shards in that stream are also deleted, and any tags are dissociated from the stream.</p> <p>You can use the <a>DescribeStreamSummary</a> operation to check the state of the stream, which is returned in <code>StreamStatus</code>.</p> <p> <a>DeleteStream</a> has a limit of five transactions per second per account.</p>",
+    "DeleteQueue": "<p>Deletes the specified queue. Records that are in flight when you delete the queue are not delivered again, and receipt handles issued by the queue stop being valid.</p> <p>Deleting a queue does not delete the data stream the queue was created on, and does not delete any records in that stream. Those records remain available to stream consumers and to other queues on the same stream for the rest of their retention period.</p> <p> <code>DeleteQueue</code> is an asynchronous operation. Upon receiving a <code>DeleteQueue</code> request, Amazon Kinesis Data Streams sets the <code>QueueStatus</code> to <code>DELETING</code>. The queue is deleted when the operation completes. A queue in the <code>DELETING</code> state does not deliver records.</p> <p>You must delete every queue on a data stream before you can delete the stream, or switch it from on-demand to provisioned capacity mode.</p>",
+    "DeleteResourcePolicy": "<p>Delete a policy for the specified data stream, consumer, or queue. Request patterns can be one of the following:</p> <ul> <li> <p>Data stream pattern: <code>arn:aws.*:kinesis:.*:\\d{12}:.*stream/\\S+</code> </p> </li> <li> <p>Consumer pattern: <code>^(arn):aws.*:kinesis:.*:\\d{12}:.*stream\\/[a-zA-Z0-9_.-]+\\/consumer\\/[a-zA-Z0-9_.-]+:[0-9]+</code> </p> </li> <li> <p>Queue pattern: <code>arn:aws.*:kinesis:.*:\\d{12}:queue/\\S+</code> </p> </li> </ul>",
+    "DeleteStream": "<p>Deletes a Kinesis data stream and all its shards and data. You must shut down any applications that are operating on the stream before you delete the stream. If an application attempts to operate on a deleted stream, it receives the exception <code>ResourceNotFoundException</code>.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>If the stream is in the <code>ACTIVE</code> state, you can delete it. After a <code>DeleteStream</code> request, the specified stream is in the <code>DELETING</code> state until Kinesis Data Streams completes the deletion.</p> <p> <b>Note:</b> Kinesis Data Streams might continue to accept data read and write operations, such as <a>PutRecord</a>, <a>PutRecords</a>, and <a>GetRecords</a>, on a stream in the <code>DELETING</code> state until the stream deletion is complete.</p> <p>When you delete a stream, any shards in that stream are also deleted, and any tags are dissociated from the stream.</p> <p>Before you can delete a data stream that has queues, you must delete every queue on the stream with <a>DeleteQueue</a>.</p> <p>You can use the <a>DescribeStreamSummary</a> operation to check the state of the stream, which is returned in <code>StreamStatus</code>.</p> <p> <a>DeleteStream</a> has a limit of five transactions per second per account.</p>",
     "DeregisterStreamConsumer": "<p>To deregister a consumer, provide its ARN. Alternatively, you can provide the ARN of the data stream and the name you gave the consumer when you registered it. You may also provide all three parameters, as long as they don't conflict with each other. If you don't know the name or ARN of the consumer that you want to deregister, you can use the <a>ListStreamConsumers</a> operation to get a list of the descriptions of all the consumers that are currently registered with a given data stream. The description of a consumer contains its name and ARN.</p> <p>This operation has a limit of five transactions per second per stream.</p>",
     "DescribeAccountSettings": "<p>Describes the account-level settings for Amazon Kinesis Data Streams. This operation returns information about the minimum throughput billing commitments and other account-level configurations.</p> <p>This API has a call limit of 5 transactions per second (TPS) for each Amazon Web Services account. TPS over 5 will initiate the <code>LimitExceededException</code>.</p>",
     "DescribeChannel": "<p>Describes the specified channel, including its configuration and current status.</p> <p>Use this operation to verify that a channel reached the <code>ACTIVE</code> state after creation, or to diagnose a channel in the <code>FAILED</code> state by reading the <code>ChannelStatusReason</code>.</p> <p>This operation has a call limit of 5 transactions per second (TPS) for each Amazon Web Services account. Exceeding 5 TPS results in a <code>LimitExceededException</code>.</p>",
     "DescribeLimits": "<p>Describes the shard limits and usage for the account.</p> <p>If you update your account limits, the old limits might be returned for a few minutes.</p> <p>This operation has a limit of one transaction per second per account.</p>",
+    "DescribeQueue": "<p>Returns a description of the specified queue, including its status, the data stream it delivers records from, and its configuration attributes.</p>",
     "DescribeStream": "<p>Describes the specified Kinesis data stream.</p> <note> <p>This API has been revised. It's highly recommended that you use the <a>DescribeStreamSummary</a> API to get a summarized description of the specified Kinesis data stream and the <a>ListShards</a> API to list the shards in a specified data stream and obtain information about each shard. </p> </note> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>The information returned includes the stream name, Amazon Resource Name (ARN), creation time, enhanced metric configuration, and shard map. The shard map is an array of shard objects. For each shard object, there is the hash key and sequence number ranges that the shard spans, and the IDs of any earlier shards that played in a role in creating the shard. Every record ingested in the stream is identified by a sequence number, which is assigned when the record is put into the stream.</p> <p>You can limit the number of shards returned by each call. For more information, see <a href=\"https://docs.aws.amazon.com/kinesis/latest/dev/kinesis-using-sdk-java-retrieve-shards.html\">Retrieving Shards from a Stream</a> in the <i>Amazon Kinesis Data Streams Developer Guide</i>.</p> <p>There are no guarantees about the chronological order shards returned. To process shards in chronological order, use the ID of the parent shard to track the lineage to the oldest shard.</p> <p>This operation has a limit of 10 transactions per second per account.</p>",
     "DescribeStreamConsumer": "<p>To get the description of a registered consumer, provide the ARN of the consumer. Alternatively, you can provide the ARN of the data stream and the name you gave the consumer when you registered it. You may also provide all three parameters, as long as they don't conflict with each other. If you don't know the name or ARN of the consumer that you want to describe, you can use the <a>ListStreamConsumers</a> operation to get a list of the descriptions of all the consumers that are currently registered with a given data stream.</p> <p>This operation has a limit of 20 transactions per second per stream.</p> <note> <p>When making a cross-account call with <code>DescribeStreamConsumer</code>, make sure to provide the ARN of the consumer. </p> </note>",
     "DescribeStreamSummary": "<p>Provides a summarized description of the specified Kinesis data stream without the shard list.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>The information returned includes the stream name, Amazon Resource Name (ARN), status, record retention period, approximate creation time, monitoring, encryption details, and open shard count. </p> <p> <a>DescribeStreamSummary</a> has a limit of 20 transactions per second per account.</p>",
     "DisableEnhancedMonitoring": "<p>Disables enhanced monitoring.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note>",
     "EnableEnhancedMonitoring": "<p>Enables enhanced Kinesis data stream monitoring for shard-level metrics.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note>",
     "GetRecords": "<p>Gets data records from a Kinesis data stream's shard.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>Specify a shard iterator using the <code>ShardIterator</code> parameter. The shard iterator specifies the position in the shard from which you want to start reading data records sequentially. If there are no records available in the portion of the shard that the iterator points to, <a>GetRecords</a> returns an empty list. It might take multiple calls to get to a portion of the shard that contains records.</p> <p>You can scale by provisioning multiple shards per stream while considering service limits (for more information, see <a href=\"https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html\">Amazon Kinesis Data Streams Limits</a> in the <i>Amazon Kinesis Data Streams Developer Guide</i>). Your application should have one thread per shard, each reading continuously from its stream. To read from a stream continually, call <a>GetRecords</a> in a loop. Use <a>GetShardIterator</a> to get the shard iterator to specify in the first <a>GetRecords</a> call. <a>GetRecords</a> returns a new shard iterator in <code>NextShardIterator</code>. Specify the shard iterator returned in <code>NextShardIterator</code> in subsequent calls to <a>GetRecords</a>. If the shard has been closed, the shard iterator can't return more data and <a>GetRecords</a> returns <code>null</code> in <code>NextShardIterator</code>. You can terminate the loop when the shard is closed, or when the shard iterator reaches the record with the sequence number or other attribute that marks it as the last record to process.</p> <p>Each data record can be up to 1 MiB in size by default. Amazon Kinesis Data Streams supports large records up to 10 MiB in size, but the average throughput for your stream cannot exceed 1 MiB per second. For more information about how large records are handled, see <a href=\"https://docs.aws.amazon.com/streams/latest/dev/large-records.html\">Large records</a>. Each shard can read up to 2 MiB per second. You can ensure that your calls don't exceed the maximum supported size or throughput by using the <code>Limit</code> parameter to specify the maximum number of records that <a>GetRecords</a> can return. Consider your average record size when determining this limit. The maximum number of records that can be returned per call is 10,000.</p> <p>The size of the data returned by <a>GetRecords</a> varies depending on the utilization of the shard. It is recommended that consumer applications retrieve records via the <code>GetRecords</code> command using the 5 TPS limit to remain caught up. Retrieving records less frequently can lead to consumer applications falling behind. The maximum size of data that <a>GetRecords</a> can return is 10 MiB. If a call returns this amount of data, subsequent calls made within the next 5 seconds throw <code>ProvisionedThroughputExceededException</code>. If there is insufficient provisioned throughput on the stream, subsequent calls made within the next 1 second throw <code>ProvisionedThroughputExceededException</code>. <a>GetRecords</a> doesn't return any data when it throws an exception. For this reason, we recommend that you wait 1 second between calls to <a>GetRecords</a>. However, it's possible that the application will get exceptions for longer than 1 second.</p> <p>To detect whether the application is falling behind in processing, you can use the <code>MillisBehindLatest</code> response attribute. You can also monitor the stream using CloudWatch metrics and other mechanisms (see <a href=\"https://docs.aws.amazon.com/kinesis/latest/dev/monitoring.html\">Monitoring</a> in the <i>Amazon Kinesis Data Streams Developer Guide</i>).</p> <p>Each Amazon Kinesis record includes a value, <code>ApproximateArrivalTimestamp</code>, that is set when a stream successfully receives and stores a record. This is commonly referred to as a server-side time stamp, whereas a client-side time stamp is set when a data producer creates or sends the record to a stream (a data producer is any data source putting data records into a stream, for example with <a>PutRecords</a>). The time stamp has millisecond precision. There are no guarantees about the time stamp accuracy, or that the time stamp is always increasing. For example, records in a shard or across a stream might have time stamps that are out of order.</p> <p>This operation has a limit of five transactions per second per shard.</p>",
-    "GetResourcePolicy": "<p>Returns a policy attached to the specified data stream or consumer. Request patterns can be one of the following:</p> <ul> <li> <p>Data stream pattern: <code>arn:aws.*:kinesis:.*:\\d{12}:.*stream/\\S+</code> </p> </li> <li> <p> Consumer pattern: <code>^(arn):aws.*:kinesis:.*:\\d{12}:.*stream\\/[a-zA-Z0-9_.-]+\\/consumer\\/[a-zA-Z0-9_.-]+:[0-9]+</code> </p> </li> </ul>",
+    "GetResourcePolicy": "<p>Returns a policy attached to the specified data stream, consumer, or queue. Request patterns can be one of the following:</p> <ul> <li> <p>Data stream pattern: <code>arn:aws.*:kinesis:.*:\\d{12}:.*stream/\\S+</code> </p> </li> <li> <p> Consumer pattern: <code>^(arn):aws.*:kinesis:.*:\\d{12}:.*stream\\/[a-zA-Z0-9_.-]+\\/consumer\\/[a-zA-Z0-9_.-]+:[0-9]+</code> </p> </li> <li> <p>Queue pattern: <code>arn:aws.*:kinesis:.*:\\d{12}:queue/\\S+</code> </p> </li> </ul>",
     "GetShardIterator": "<p>Gets an Amazon Kinesis shard iterator. A shard iterator expires 5 minutes after it is returned to the requester.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>A shard iterator specifies the shard position from which to start reading data records sequentially. The position is specified using the sequence number of a data record in a shard. A sequence number is the identifier associated with every record ingested in the stream, and is assigned when a record is put into the stream. Each stream has one or more shards.</p> <p>You must specify the shard iterator type. For example, you can set the <code>ShardIteratorType</code> parameter to read exactly from the position denoted by a specific sequence number by using the <code>AT_SEQUENCE_NUMBER</code> shard iterator type. Alternatively, the parameter can read right after the sequence number by using the <code>AFTER_SEQUENCE_NUMBER</code> shard iterator type, using sequence numbers returned by earlier calls to <a>PutRecord</a>, <a>PutRecords</a>, <a>GetRecords</a>, or <a>DescribeStream</a>. In the request, you can specify the shard iterator type <code>AT_TIMESTAMP</code> to read records from an arbitrary point in time, <code>TRIM_HORIZON</code> to cause <code>ShardIterator</code> to point to the last untrimmed record in the shard in the system (the oldest data record in the shard), or <code>LATEST</code> so that you always read the most recent data in the shard. </p> <p>When you read repeatedly from a stream, use a <a>GetShardIterator</a> request to get the first shard iterator for use in your first <a>GetRecords</a> request and for subsequent reads use the shard iterator returned by the <a>GetRecords</a> request in <code>NextShardIterator</code>. A new shard iterator is returned by every <a>GetRecords</a> request in <code>NextShardIterator</code>, which you use in the <code>ShardIterator</code> parameter of the next <a>GetRecords</a> request. </p> <p>If a <a>GetShardIterator</a> request is made too often, you receive a <code>ProvisionedThroughputExceededException</code>. For more information about throughput limits, see <a>GetRecords</a>, and <a href=\"https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html\">Streams Limits</a> in the <i>Amazon Kinesis Data Streams Developer Guide</i>.</p> <p>If the shard is closed, <a>GetShardIterator</a> returns a valid iterator for the last sequence number of the shard. A shard can be closed as a result of using <a>SplitShard</a> or <a>MergeShards</a>.</p> <p> <a>GetShardIterator</a> has a limit of five transactions per second per account per open shard.</p>",
     "IncreaseStreamRetentionPeriod": "<p>Increases the Kinesis data stream's retention period, which is the length of time data records are accessible after they are added to the stream. The maximum value of a stream's retention period is 8760 hours (365 days).</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>If you choose a longer stream retention period, this operation increases the time period during which records that have not yet expired are accessible. However, it does not make previous, expired data (older than the stream's previous retention period) accessible after the operation has been called. For example, if a stream's retention period is set to 24 hours and is increased to 168 hours, any data that is older than 24 hours remains inaccessible to consumer applications.</p>",
     "ListChannels": "<p>Lists the channels in your account. You can filter the results by source stream. The results are paginated. Use the <code>NextToken</code> value returned in the response to retrieve additional results.</p> <p>Use this operation to find channels before deleting a stream, or to audit the channels configured in an Amazon Web Services Region.</p> <p>This operation has a call limit of 5 transactions per second (TPS) for each Amazon Web Services account. Exceeding 5 TPS results in a <code>LimitExceededException</code>.</p>",
+    "ListQueues": "<p>Returns a summary of each queue in the Amazon Web Services account and Region used by the request. Use <code>StreamFilter</code> to list only the queues on a particular data stream.</p> <p>If the response contains a <code>NextToken</code>, more queues are available. Call <code>ListQueues</code> again with that value to retrieve the next page.</p>",
     "ListShards": "<p>Lists the shards in a stream and provides information about each shard. This operation has a limit of 1000 transactions per second per data stream.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>This action does not list expired shards. For information about expired shards, see <a href=\"https://docs.aws.amazon.com/streams/latest/dev/kinesis-using-sdk-java-after-resharding.html#kinesis-using-sdk-java-resharding-data-routing\">Data Routing, Data Persistence, and Shard State after a Reshard</a>. </p> <important> <p>This API is a new operation that is used by the Amazon Kinesis Client Library (KCL). If you have a fine-grained IAM policy that only allows specific operations, you must update your policy to allow calls to this API. For more information, see <a href=\"https://docs.aws.amazon.com/streams/latest/dev/controlling-access.html\">Controlling Access to Amazon Kinesis Data Streams Resources Using IAM</a>.</p> </important>",
     "ListStreamConsumers": "<p>Lists the consumers registered to receive data from a stream using enhanced fan-out, and provides information about each consumer.</p> <p>This operation has a limit of 5 transactions per second per stream.</p>",
     "ListStreams": "<p>Lists your Kinesis data streams.</p> <p>The number of streams may be too large to return from a single call to <code>ListStreams</code>. You can limit the number of returned streams using the <code>Limit</code> parameter. If you do not specify a value for the <code>Limit</code> parameter, Kinesis Data Streams uses the default limit, which is currently 100.</p> <p>You can detect if there are more streams available to list by using the <code>HasMoreStreams</code> flag from the returned output. If there are more streams available, you can request more streams by using the name of the last stream returned by the <code>ListStreams</code> request in the <code>ExclusiveStartStreamName</code> parameter in a subsequent request to <code>ListStreams</code>. The group of stream names returned by the subsequent request is then added to the list. You can continue this process until all the stream names have been collected in the list. </p> <p> <a>ListStreams</a> has a limit of five transactions per second per account.</p>",
-    "ListTagsForResource": "<p>List all tags added to the specified Kinesis resource. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources.</p> <p>For more information about tagging Kinesis resources, see <a href=\"https://docs.aws.amazon.com/streams/latest/dev/tagging.html\">Tag your Amazon Kinesis Data Streams resources</a>.</p>",
+    "ListTagsForResource": "<p>List all tags added to the specified Kinesis resource. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources.</p> <p>The Kinesis resource can be a data stream, a queue, or an enhanced fan-out consumer.</p> <p>For more information about tagging Kinesis resources, see <a href=\"https://docs.aws.amazon.com/streams/latest/dev/tagging.html\">Tag your Amazon Kinesis Data Streams resources</a>.</p>",
     "ListTagsForStream": "<p>Lists the tags for the specified Kinesis data stream. This operation has a limit of five transactions per second per account.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note>",
     "MergeShards": "<p>Merges two adjacent shards in a Kinesis data stream and combines them into a single shard to reduce the stream's capacity to ingest and transport data. This API is only supported for the data streams with the provisioned capacity mode. Two shards are considered adjacent if the union of the hash key ranges for the two shards form a contiguous set with no gaps. For example, if you have two shards, one with a hash key range of 276...381 and the other with a hash key range of 382...454, then you could merge these two shards into a single shard that would have a hash key range of 276...454. After the merge, the single child shard receives data for all hash key values covered by the two parent shards.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p> <code>MergeShards</code> is called when there is a need to reduce the overall capacity of a stream because of excess capacity that is not being used. You must specify the shard to be merged and the adjacent shard for a stream. For more information about merging shards, see <a href=\"https://docs.aws.amazon.com/kinesis/latest/dev/kinesis-using-sdk-java-resharding-merge.html\">Merge Two Shards</a> in the <i>Amazon Kinesis Data Streams Developer Guide</i>.</p> <p>If the stream is in the <code>ACTIVE</code> state, you can call <code>MergeShards</code>. If a stream is in the <code>CREATING</code>, <code>UPDATING</code>, or <code>DELETING</code> state, <code>MergeShards</code> returns a <code>ResourceInUseException</code>. If the specified stream does not exist, <code>MergeShards</code> returns a <code>ResourceNotFoundException</code>. </p> <p>You can use <a>DescribeStreamSummary</a> to check the state of the stream, which is returned in <code>StreamStatus</code>.</p> <p> <code>MergeShards</code> is an asynchronous operation. Upon receiving a <code>MergeShards</code> request, Amazon Kinesis Data Streams immediately returns a response and sets the <code>StreamStatus</code> to <code>UPDATING</code>. After the operation is completed, Kinesis Data Streams sets the <code>StreamStatus</code> to <code>ACTIVE</code>. Read and write operations continue to work while the stream is in the <code>UPDATING</code> state. </p> <p>You use <a>DescribeStreamSummary</a> and the <a>ListShards</a> APIs to determine the shard IDs that are specified in the <code>MergeShards</code> request. </p> <p>If you try to operate on too many streams in parallel using <a>CreateStream</a>, <a>DeleteStream</a>, <code>MergeShards</code>, or <a>SplitShard</a>, you receive a <code>LimitExceededException</code>. </p> <p> <code>MergeShards</code> has a limit of five transactions per second per account.</p>",
     "PutRecord": "<p>Writes a single data record into an Amazon Kinesis data stream. Call <code>PutRecord</code> to send data into the stream for real-time ingestion and subsequent processing, one record at a time. Each shard can support writes up to 1,000 records per second, up to a maximum data write total of 10 MiB per second.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>You must specify the name of the stream that captures, stores, and transports the data; a partition key; and the data blob itself.</p> <p>The data blob can be any type of data; for example, a segment from a log file, geographic/location data, website clickstream data, and so on.</p> <p>The partition key is used by Kinesis Data Streams to distribute data across shards. Kinesis Data Streams segregates the data records that belong to a stream into multiple shards, using the partition key associated with each data record to determine the shard to which a given data record belongs.</p> <p>Partition keys are Unicode strings, with a maximum length limit of 256 characters for each key. An MD5 hash function is used to map partition keys to 128-bit integer values and to map associated data records to shards using the hash key ranges of the shards. You can override hashing the partition key to determine the shard by explicitly specifying a hash value using the <code>ExplicitHashKey</code> parameter. For more information, see <a href=\"https://docs.aws.amazon.com/kinesis/latest/dev/developing-producers-with-sdk.html#kinesis-using-sdk-java-add-data-to-stream\">Adding Data to a Stream</a> in the <i>Amazon Kinesis Data Streams Developer Guide</i>.</p> <p> <code>PutRecord</code> returns the shard ID of where the data record was placed and the sequence number that was assigned to the data record.</p> <p>Sequence numbers increase over time and are specific to a shard within a stream, not across all shards within a stream. To guarantee strictly increasing ordering, write serially to a shard and use the <code>SequenceNumberForOrdering</code> parameter. For more information, see <a href=\"https://docs.aws.amazon.com/kinesis/latest/dev/developing-producers-with-sdk.html#kinesis-using-sdk-java-add-data-to-stream\">Adding Data to a Stream</a> in the <i>Amazon Kinesis Data Streams Developer Guide</i>.</p> <important> <p>After you write a record to a stream, you cannot modify that record or its order within the stream.</p> </important> <p>If a <code>PutRecord</code> request cannot be processed because of insufficient provisioned throughput on the shard involved in the request, <code>PutRecord</code> throws <code>ProvisionedThroughputExceededException</code>. </p> <p>By default, data records are accessible for 24 hours from the time that they are added to a stream. You can use <a>IncreaseStreamRetentionPeriod</a> or <a>DecreaseStreamRetentionPeriod</a> to modify this retention period.</p>",
     "PutRecords": "<p>Writes multiple data records into a Kinesis data stream in a single call (also referred to as a <code>PutRecords</code> request). Use this operation to send data into the stream for data ingestion and processing. </p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>Each <code>PutRecords</code> request can support up to 500 records. Each record in the request can be as large as 10 MiB, up to a limit of 10 MiB for the entire request, including partition keys. Each shard can support writes up to 1,000 records per second, up to a maximum data write total of 1 MB per second.</p> <p>You must specify the name of the stream that captures, stores, and transports the data; and an array of request <code>Records</code>, with each record in the array requiring a partition key and data blob. The record size limit applies to the total size of the partition key and data blob.</p> <p>The data blob can be any type of data; for example, a segment from a log file, geographic/location data, website clickstream data, and so on.</p> <p>The partition key is used by Kinesis Data Streams as input to a hash function that maps the partition key and associated data to a specific shard. An MD5 hash function is used to map partition keys to 128-bit integer values and to map associated data records to shards. As a result of this hashing mechanism, all data records with the same partition key map to the same shard within the stream. For more information, see <a href=\"https://docs.aws.amazon.com/kinesis/latest/dev/developing-producers-with-sdk.html#kinesis-using-sdk-java-add-data-to-stream\">Adding Data to a Stream</a> in the <i>Amazon Kinesis Data Streams Developer Guide</i>.</p> <p>Each record in the <code>Records</code> array may include an optional parameter, <code>ExplicitHashKey</code>, which overrides the partition key to shard mapping. This parameter allows a data producer to determine explicitly the shard where the record is stored. For more information, see <a href=\"https://docs.aws.amazon.com/kinesis/latest/dev/developing-producers-with-sdk.html#kinesis-using-sdk-java-putrecords\">Adding Multiple Records with PutRecords</a> in the <i>Amazon Kinesis Data Streams Developer Guide</i>.</p> <p>The <code>PutRecords</code> response includes an array of response <code>Records</code>. Each record in the response array directly correlates with a record in the request array using natural ordering, from the top to the bottom of the request and response. The response <code>Records</code> array always includes the same number of records as the request array.</p> <p>The response <code>Records</code> array includes both successfully and unsuccessfully processed records. Kinesis Data Streams attempts to process all records in each <code>PutRecords</code> request. A single record failure does not stop the processing of subsequent records. As a result, PutRecords doesn't guarantee the ordering of records. If you need to read records in the same order they are written to the stream, use <a>PutRecord</a> instead of <code>PutRecords</code>, and write to the same shard.</p> <p>A successfully processed record includes <code>ShardId</code> and <code>SequenceNumber</code> values. The <code>ShardId</code> parameter identifies the shard in the stream where the record is stored. The <code>SequenceNumber</code> parameter is an identifier assigned to the put record, unique to all records in the stream.</p> <p>An unsuccessfully processed record includes <code>ErrorCode</code> and <code>ErrorMessage</code> values. <code>ErrorCode</code> reflects the type of error and can be one of the following values: <code>ProvisionedThroughputExceededException</code> or <code>InternalFailure</code>. <code>ErrorMessage</code> provides more detailed information about the <code>ProvisionedThroughputExceededException</code> exception including the account ID, stream name, and shard ID of the record that was throttled. For more information about partially successful responses, see <a href=\"https://docs.aws.amazon.com/kinesis/latest/dev/kinesis-using-sdk-java-add-data-to-stream.html#kinesis-using-sdk-java-putrecords\">Adding Multiple Records with PutRecords</a> in the <i>Amazon Kinesis Data Streams Developer Guide</i>.</p> <important> <p>After you write a record to a stream, you cannot modify that record or its order within the stream.</p> </important> <p>By default, data records are accessible for 24 hours from the time that they are added to a stream. You can use <a>IncreaseStreamRetentionPeriod</a> or <a>DecreaseStreamRetentionPeriod</a> to modify this retention period.</p>",
-    "PutResourcePolicy": "<p>Attaches a resource-based policy to a data stream or registered consumer. If you are using an identity other than the root user of the Amazon Web Services account that owns the resource, the calling identity must have the <code>PutResourcePolicy</code> permissions on the specified Kinesis Data Streams resource and belong to the owner's account in order to use this operation. If you don't have <code>PutResourcePolicy</code> permissions, Amazon Kinesis Data Streams returns a <code>403 Access Denied error</code>. If you receive a <code>ResourceNotFoundException</code>, check to see if you passed a valid stream or consumer resource. </p> <p> Request patterns can be one of the following:</p> <ul> <li> <p>Data stream pattern: <code>arn:aws.*:kinesis:.*:\\d{12}:.*stream/\\S+</code> </p> </li> <li> <p>Consumer pattern: <code>^(arn):aws.*:kinesis:.*:\\d{12}:.*stream\\/[a-zA-Z0-9_.-]+\\/consumer\\/[a-zA-Z0-9_.-]+:[0-9]+</code> </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/streams/latest/dev/controlling-access.html\">Controlling Access to Amazon Kinesis Data Streams Resources Using IAM</a>.</p>",
-    "RegisterStreamConsumer": "<p>Registers a consumer with a Kinesis data stream. When you use this operation, the consumer you register can then call <a>SubscribeToShard</a> to receive data from the stream using enhanced fan-out, at a rate of up to 2 MiB per second for every shard you subscribe to. This rate is unaffected by the total number of consumers that read from the same stream.</p> <p>You can add tags to the registered consumer when making a <code>RegisterStreamConsumer</code> request by setting the <code>Tags</code> parameter. If you pass the <code>Tags</code> parameter, in addition to having the <code>kinesis:RegisterStreamConsumer</code> permission, you must also have the <code>kinesis:TagResource</code> permission for the consumer that will be registered. Tags will take effect from the <code>CREATING</code> status of the consumer.</p> <p>With On-demand Advantage streams, you can register up to 50 consumers per stream to use Enhanced Fan-out. With On-demand Standard and Provisioned streams, you can register up to 20 consumers per stream to use Enhanced Fan-out. A given consumer can only be registered with one stream at a time.</p> <p>For an example of how to use this operation, see <a href=\"https://docs.aws.amazon.com/streams/latest/dev/building-enhanced-consumers-api.html\">Enhanced Fan-Out Using the Kinesis Data Streams API</a>.</p> <p>The use of this operation has a limit of five transactions per second per account. Also, only 5 consumers can be created simultaneously. In other words, you cannot have more than 5 consumers in a <code>CREATING</code> status at the same time. Registering a 6th consumer while there are 5 in a <code>CREATING</code> status results in a <code>LimitExceededException</code>.</p>",
+    "PutResourcePolicy": "<p>Attaches a resource-based policy to a data stream, a queue, or an enhanced fan-out consumer. If you are using an identity other than the root user of the Amazon Web Services account that owns the resource, the calling identity must have the <code>PutResourcePolicy</code> permissions on the specified Kinesis Data Streams resource and belong to the owner's account in order to use this operation. If you don't have <code>PutResourcePolicy</code> permissions, Amazon Kinesis Data Streams returns a <code>403 Access Denied error</code>. If you receive a <code>ResourceNotFoundException</code>, check to see if you passed a valid stream or consumer resource. </p> <p> Request patterns can be one of the following:</p> <ul> <li> <p>Data stream pattern: <code>arn:aws.*:kinesis:.*:\\d{12}:.*stream/\\S+</code> </p> </li> <li> <p>Consumer pattern: <code>^(arn):aws.*:kinesis:.*:\\d{12}:.*stream\\/[a-zA-Z0-9_.-]+\\/consumer\\/[a-zA-Z0-9_.-]+:[0-9]+</code> </p> </li> <li> <p>Queue pattern: <code>arn:aws.*:kinesis:.*:\\d{12}:queue/\\S+</code> </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/streams/latest/dev/controlling-access.html\">Controlling Access to Amazon Kinesis Data Streams Resources Using IAM</a>.</p>",
+    "ReceiveDeadLetterQueueRecords": "<p>Receives up to 10 dead-letter records from the specified queue. Each queue has built-in dead-letter handling: when a record has been received <code>MaxReceiveCount</code> times without being acknowledged, it becomes a dead-letter record, which usually means your queue consumer could not process it. The dead-letter record stays in the same queue, and <a>ReceiveQueueRecords</a> no longer returns it.</p> <p>Dead-letter records carry the same data and partition key as when they were first delivered, and are returned with a receipt handle. Use the receipt handle to acknowledge the record with <a>AcknowledgeDeadLetterQueueRecords</a>, which discards it, to change its visibility with <a>UpdateDeadLetterQueueRecordsVisibility</a>, or to restore it with <a>RestoreDeadLetterQueueRecords</a>, which returns it to the normal receive path so that <a>ReceiveQueueRecords</a> can return it again.</p> <p>Use this operation to inspect the records your queue consumer could not process, so you can correct the cause and then either acknowledge or restore them.</p> <p>A queue delivers dead-letter records while it is in the <code>ACTIVE</code> state.</p>",
+    "ReceiveQueueRecords": "<p>Receives up to 10 records from the specified queue. Each record is returned with a receipt handle, which is the identifier you use to acknowledge the record or change its visibility.</p> <p>A record returned by <code>ReceiveQueueRecords</code> becomes in flight: it is not visible to any consumer instance for the duration of its visibility timeout, so subsequent receive requests do not return it while your queue consumer processes it. Acknowledge the record with <a>AcknowledgeQueueRecords</a> when you finish processing it. A record that is not acknowledged before its visibility timeout expires becomes visible in the queue again and can be received by any consumer instance.</p> <p>Use <code>WaitTimeSeconds</code> to control how long the call waits for a record to become visible before returning. If a record becomes visible sooner, the call returns sooner. If the wait time expires and no records are visible, the call returns an empty list of records.</p> <p>Records are not necessarily received in the order they were written to the data stream.</p> <p>A queue delivers records while it is in the <code>ACTIVE</code> state.</p> <p>On rare occasions, a queue can deliver a record more than once. Design your queue consumer to be idempotent, so that processing the same record more than once is safe.</p>",
+    "RegisterStreamConsumer": "<p>Registers a consumer with a Kinesis data stream. When you use this operation, the consumer you register can then call <a>SubscribeToShard</a> to receive data from the stream using enhanced fan-out, at a rate of up to 2 MiB per second for every shard you subscribe to. This rate is unaffected by the total number of consumers that read from the same stream.</p> <p>You can add tags to the registered consumer when making a <code>RegisterStreamConsumer</code> request by setting the <code>Tags</code> parameter. If you pass the <code>Tags</code> parameter, in addition to having the <code>kinesis:RegisterStreamConsumer</code> permission, you must also have the <code>kinesis:TagResource</code> permission for the consumer that will be registered. Tags will take effect from the <code>CREATING</code> status of the consumer.</p> <p>With On-demand Advantage streams, you can register up to 50 consumers per stream to use enhanced fan-out. With On-demand Standard and Provisioned streams, you can register up to 20 consumers per stream to use enhanced fan-out. Queues share this limit with enhanced fan-out consumers: both count as registered consumers on the stream. A given consumer can only be registered with one stream at a time.</p> <p>For an example of how to use this operation, see <a href=\"https://docs.aws.amazon.com/streams/latest/dev/building-enhanced-consumers-api.html\">Develop enhanced fan-out consumers with the Amazon Web Services SDK for Java</a>.</p> <p>The use of this operation has a limit of five transactions per second per account. Also, only 5 consumers can be created simultaneously. In other words, you cannot have more than 5 consumers in a <code>CREATING</code> status at the same time. Registering a 6th consumer while there are 5 in a <code>CREATING</code> status results in a <code>LimitExceededException</code>.</p>",
     "RemoveTagsFromStream": "<p>Removes tags from the specified Kinesis data stream. Removed tags are deleted and cannot be recovered after this operation successfully completes.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>If you specify a tag that does not exist, it is ignored.</p> <p> <a>RemoveTagsFromStream</a> has a limit of five transactions per second per account.</p>",
+    "RestoreDeadLetterQueueRecords": "<p>Restores up to 10 dead-letter records in the specified queue. Restoring a record clears its dead-letter state and resets its receive count, so <a>ReceiveQueueRecords</a> can return it again, up to <code>MaxReceiveCount</code> times before it becomes a dead-letter record again. The result for each entry is reported individually in the response.</p> <p>Restore records after you have corrected the condition that prevented your queue consumer from processing them.</p> <p>Because the request can result in a combination of successful and unsuccessful entries, check the <code>Failed</code> list even when the call returns an HTTP status code of <code>200</code>.</p>",
     "SplitShard": "<p>Splits a shard into two new shards in the Kinesis data stream, to increase the stream's capacity to ingest and transport data. <code>SplitShard</code> is called when there is a need to increase the overall capacity of a stream because of an expected increase in the volume of data records being ingested. This API is only supported for the data streams with the provisioned capacity mode.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>You can also use <code>SplitShard</code> when a shard appears to be approaching its maximum utilization; for example, the producers sending data into the specific shard are suddenly sending more than previously anticipated. You can also call <code>SplitShard</code> to increase stream capacity, so that more Kinesis Data Streams applications can simultaneously read data from the stream for real-time processing. </p> <p>You must specify the shard to be split and the new hash key, which is the position in the shard where the shard gets split in two. In many cases, the new hash key might be the average of the beginning and ending hash key, but it can be any hash key value in the range being mapped into the shard. For more information, see <a href=\"https://docs.aws.amazon.com/kinesis/latest/dev/kinesis-using-sdk-java-resharding-split.html\">Split a Shard</a> in the <i>Amazon Kinesis Data Streams Developer Guide</i>.</p> <p>You can use <a>DescribeStreamSummary</a> and the <a>ListShards</a> APIs to determine the shard ID and hash key values for the <code>ShardToSplit</code> and <code>NewStartingHashKey</code> parameters that are specified in the <code>SplitShard</code> request.</p> <p> <code>SplitShard</code> is an asynchronous operation. Upon receiving a <code>SplitShard</code> request, Kinesis Data Streams immediately returns a response and sets the stream status to <code>UPDATING</code>. After the operation is completed, Kinesis Data Streams sets the stream status to <code>ACTIVE</code>. Read and write operations continue to work while the stream is in the <code>UPDATING</code> state. </p> <p>You can use <a>DescribeStreamSummary</a> to check the status of the stream, which is returned in <code>StreamStatus</code>. If the stream is in the <code>ACTIVE</code> state, you can call <code>SplitShard</code>. </p> <p>If the specified stream does not exist, <a>DescribeStreamSummary</a> returns a <code>ResourceNotFoundException</code>. If you try to create more shards than are authorized for your account, you receive a <code>LimitExceededException</code>. </p> <p>For the default shard limit for an Amazon Web Services account, see <a href=\"https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html\">Kinesis Data Streams Limits</a> in the <i>Amazon Kinesis Data Streams Developer Guide</i>. To increase this limit, <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html\">contact Amazon Web Services Support</a>.</p> <p>If you try to operate on too many streams simultaneously using <a>CreateStream</a>, <a>DeleteStream</a>, <a>MergeShards</a>, and/or <a>SplitShard</a>, you receive a <code>LimitExceededException</code>. </p> <p> <code>SplitShard</code> has a limit of five transactions per second per account.</p>",
     "StartStreamEncryption": "<p>Enables or updates server-side encryption using an Amazon Web Services KMS key for a specified stream. </p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>Starting encryption is an asynchronous operation. Upon receiving the request, Kinesis Data Streams returns immediately and sets the status of the stream to <code>UPDATING</code>. After the update is complete, Kinesis Data Streams sets the status of the stream back to <code>ACTIVE</code>. Updating or applying encryption normally takes a few seconds to complete, but it can take minutes. You can continue to read and write data to your stream while its status is <code>UPDATING</code>. Once the status of the stream is <code>ACTIVE</code>, encryption begins for records written to the stream. </p> <p>API Limits: You can successfully apply a new Amazon Web Services KMS key for server-side encryption 25 times in a rolling 24-hour period.</p> <p>Note: It can take up to 5 seconds after the stream is in an <code>ACTIVE</code> status before all records written to the stream are encrypted. After you enable encryption, you can verify that encryption is applied by inspecting the API response from <code>PutRecord</code> or <code>PutRecords</code>.</p>",
     "StopStreamEncryption": "<p>Disables server-side encryption for a specified stream. </p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>Stopping encryption is an asynchronous operation. Upon receiving the request, Kinesis Data Streams returns immediately and sets the status of the stream to <code>UPDATING</code>. After the update is complete, Kinesis Data Streams sets the status of the stream back to <code>ACTIVE</code>. Stopping encryption normally takes a few seconds to complete, but it can take minutes. You can continue to read and write data to your stream while its status is <code>UPDATING</code>. Once the status of the stream is <code>ACTIVE</code>, records written to the stream are no longer encrypted by Kinesis Data Streams. </p> <p>API Limits: You can successfully disable server-side encryption 25 times in a rolling 24-hour period. </p> <p>Note: It can take up to 5 seconds after the stream is in an <code>ACTIVE</code> status before all records written to the stream are no longer subject to encryption. After you disabled encryption, you can verify that encryption is not applied by inspecting the API response from <code>PutRecord</code> or <code>PutRecords</code>.</p>",
-    "SubscribeToShard": "<p>This operation establishes an HTTP/2 connection between the consumer you specify in the <code>ConsumerARN</code> parameter and the shard you specify in the <code>ShardId</code> parameter. After the connection is successfully established, Kinesis Data Streams pushes records from the shard to the consumer over this connection. Before you call this operation, call <a>RegisterStreamConsumer</a> to register the consumer with Kinesis Data Streams.</p> <p>When the <code>SubscribeToShard</code> call succeeds, your consumer starts receiving events of type <a>SubscribeToShardEvent</a> over the HTTP/2 connection for up to 5 minutes, after which time you need to call <code>SubscribeToShard</code> again to renew the subscription if you want to continue to receive records.</p> <p>You can make one call to <code>SubscribeToShard</code> per second per registered consumer per shard. For example, if you have a 4000 shard stream and two registered stream consumers, you can make one <code>SubscribeToShard</code> request per second for each combination of shard and registered consumer, allowing you to subscribe both consumers to all 4000 shards in one second. </p> <p>If you call <code>SubscribeToShard</code> again with the same <code>ConsumerARN</code> and <code>ShardId</code> within 5 seconds of a successful call, you'll get a <code>ResourceInUseException</code>. If you call <code>SubscribeToShard</code> 5 seconds or more after a successful call, the second call takes over the subscription and the previous connection expires or fails with a <code>ResourceInUseException</code>.</p> <p>For an example of how to use this operation, see <a href=\"https://docs.aws.amazon.com/streams/latest/dev/building-enhanced-consumers-api.html\">Enhanced Fan-Out Using the Kinesis Data Streams API</a>.</p>",
-    "TagResource": "<p>Adds or updates tags for the specified Kinesis resource. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources. You can assign up to 50 tags to a Kinesis resource.</p>",
-    "UntagResource": "<p>Removes tags from the specified Kinesis resource. Removed tags are deleted and can't be recovered after this operation completes successfully.</p>",
+    "SubscribeToShard": "<p>This operation establishes an HTTP/2 connection between the consumer you specify in the <code>ConsumerARN</code> parameter and the shard you specify in the <code>ShardId</code> parameter. After the connection is successfully established, Kinesis Data Streams pushes records from the shard to the consumer over this connection. Before you call this operation, call <a>RegisterStreamConsumer</a> to register the consumer with Kinesis Data Streams.</p> <p>When the <code>SubscribeToShard</code> call succeeds, your consumer starts receiving events of type <a>SubscribeToShardEvent</a> over the HTTP/2 connection for up to 5 minutes, after which time you need to call <code>SubscribeToShard</code> again to renew the subscription if you want to continue to receive records.</p> <p>You can make one call to <code>SubscribeToShard</code> per second per registered consumer per shard. For example, if you have a 4000 shard stream and two registered stream consumers, you can make one <code>SubscribeToShard</code> request per second for each combination of shard and registered consumer, allowing you to subscribe both consumers to all 4000 shards in one second. </p> <p>If you call <code>SubscribeToShard</code> again with the same <code>ConsumerARN</code> and <code>ShardId</code> within 5 seconds of a successful call, you'll get a <code>ResourceInUseException</code>. If you call <code>SubscribeToShard</code> 5 seconds or more after a successful call, the second call takes over the subscription and the previous connection expires or fails with a <code>ResourceInUseException</code>.</p> <p>For an example of how to use this operation, see <a href=\"https://docs.aws.amazon.com/streams/latest/dev/building-enhanced-consumers-api.html\">Develop enhanced fan-out consumers with the Amazon Web Services SDK for Java</a>.</p>",
+    "TagResource": "<p>Adds or updates tags for the specified Kinesis resource. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources. You can assign up to 50 tags to a Kinesis resource.</p> <p>The Kinesis resource can be a data stream, a queue, or an enhanced fan-out consumer.</p>",
+    "UntagResource": "<p>Removes tags from the specified Kinesis resource. Removed tags are deleted and can't be recovered after this operation completes successfully.</p> <p>The Kinesis resource can be a data stream, a queue, or an enhanced fan-out consumer.</p>",
     "UpdateAccountSettings": "<p>Updates the account-level settings for Amazon Kinesis Data Streams.</p> <p>Updating account settings is a synchronous operation. Upon receiving the request, Kinesis Data Streams will return immediately with your account’s updated settings.</p> <p> <b>API limits</b> </p> <ul> <li> <p>Certain account configurations have minimum commitment windows. Attempting to update your settings prior to the end of the minimum commitment window might have certain restrictions.</p> </li> <li> <p>This API has a call limit of 5 transactions per second (TPS) for each Amazon Web Services account. TPS over 5 will initiate the <code>LimitExceededException</code>.</p> </li> </ul>",
     "UpdateChannel": "<p>Updates the data freshness interval or the Amazon CloudWatch Logs configuration of an existing channel. You cannot change the destination, source stream, record format, schema, encryption configuration, or service execution role of an existing channel. To change any other setting, delete the channel and create a new one.</p> <p>Updating a channel is an asynchronous operation. Upon receiving the request, Amazon Kinesis Data Streams sets the channel to the <code>UPDATING</code> state and returns immediately. After the change is applied, Amazon Kinesis Data Streams sets the channel back to the <code>ACTIVE</code> state.</p> <p>This operation has a call limit of 5 transactions per second (TPS) for each Amazon Web Services account. Exceeding 5 TPS results in a <code>LimitExceededException</code>.</p>",
+    "UpdateDeadLetterQueueRecordsVisibility": "<p>Changes the visibility timeout of up to 10 dead-letter records that you have received from the specified queue but not yet acknowledged. The result for each entry is reported individually in the response.</p> <p>Because the request can result in a combination of successful and unsuccessful entries, check the <code>Failed</code> list even when the call returns an HTTP status code of <code>200</code>.</p>",
     "UpdateMaxRecordSize": "<p>This allows you to update the <code>MaxRecordSize</code> of a single record that you can write to, and read from a stream. You can ingest and digest single records up to 10240 KiB.</p>",
+    "UpdateQueue": "<p>Updates the configuration attributes of the specified queue. You can change the queue's visibility timeout, its dead-letter handling configuration, or both.</p> <p>A new visibility timeout applies to records received after the update completes. Records that are already in flight keep the visibility timeout they were received with. To change the visibility timeout of a record that is already in flight, use <a>UpdateQueueRecordsVisibility</a>.</p> <p> <code>UpdateQueue</code> is an asynchronous operation. Upon receiving an <code>UpdateQueue</code> request, Amazon Kinesis Data Streams sets the <code>QueueStatus</code> to <code>UPDATING</code>, and sets it back to <code>ACTIVE</code> when the update is complete. You can continue to receive and acknowledge records while the queue is <code>UPDATING</code>.</p> <p>You can't change the data stream or the starting position of a queue after you create it. To read from a different stream or position, create a new queue.</p>",
+    "UpdateQueueRecordsVisibility": "<p>Changes the visibility timeout of up to 10 records that you have received from the specified queue but not yet acknowledged. The result for each entry is reported individually in the response.</p> <p>Extend the visibility timeout of a record when your queue consumer needs more time to finish processing it, so the record does not become visible and get redelivered while it is still being processed. Set the visibility timeout to <code>0</code> to make a record visible in the queue immediately, so that it can be received again without waiting for its current timeout to expire.</p> <p>Because the request can result in a combination of successful and unsuccessful entries, check the <code>Failed</code> list even when the call returns an HTTP status code of <code>200</code>.</p>",
     "UpdateShardCount": "<p>Updates the shard count of the specified stream to the specified number of shards. This API is only supported for the data streams with the provisioned capacity mode.</p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>Updating the shard count is an asynchronous operation. Upon receiving the request, Kinesis Data Streams returns immediately and sets the status of the stream to <code>UPDATING</code>. After the update is complete, Kinesis Data Streams sets the status of the stream back to <code>ACTIVE</code>. Depending on the size of the stream, the scaling action could take a few minutes to complete. You can continue to read and write data to your stream while its status is <code>UPDATING</code>.</p> <p>To update the shard count, Kinesis Data Streams performs splits or merges on individual shards. This can cause short-lived shards to be created, in addition to the final shards. These short-lived shards count towards your total shard limit for your account in the Region.</p> <p>When using this operation, we recommend that you specify a target shard count that is a multiple of 25% (25%, 50%, 75%, 100%). You can specify any target value within your shard limit. However, if you specify a target that isn't a multiple of 25%, the scaling action might take longer to complete. </p> <p>This operation has the following default limits. By default, you cannot do the following:</p> <ul> <li> <p>Scale more than ten times per rolling 24-hour period per stream</p> </li> <li> <p>Scale up to more than double your current shard count for a stream</p> </li> <li> <p>Scale down below half your current shard count for a stream</p> </li> <li> <p>Scale up to more than 10000 shards in a stream</p> </li> <li> <p>Scale a stream with more than 10000 shards down unless the result is less than 10000 shards</p> </li> <li> <p>Scale up to more than the shard limit for your account</p> </li> <li> <p>Make over 10 TPS. TPS over 10 will trigger the LimitExceededException</p> </li> </ul> <p>For the default limits for an Amazon Web Services account, see <a href=\"https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html\">Streams Limits</a> in the <i>Amazon Kinesis Data Streams Developer Guide</i>. To request an increase in the call rate limit, the shard limit for this API, or your overall shard limit, use the <a href=\"https://console.aws.amazon.com/support/v1#/case/create?issueType=service-limit-increase&amp;limitType=service-code-kinesis\">limits form</a>.</p>",
-    "UpdateStreamMode": "<p> Updates the capacity mode of the data stream. Currently, in Kinesis Data Streams, you can choose between an <b>on-demand</b> capacity mode and a <b>provisioned</b> capacity mode for your data stream. </p> <p>If you'd still like to proactively scale your on-demand data stream’s capacity, you can unlock the warm throughput feature for on-demand data streams by enabling <code>MinimumThroughputBillingCommitment</code> for your account. Once your account has <code>MinimumThroughputBillingCommitment</code> enabled, you can specify the warm throughput in MiB per second that your stream can support in writes.</p>",
+    "UpdateStreamMode": "<p> Updates the capacity mode of the data stream. Currently, in Kinesis Data Streams, you can choose between an <b>on-demand</b> capacity mode and a <b>provisioned</b> capacity mode for your data stream. </p> <p>If you'd still like to proactively scale your on-demand data stream’s capacity, you can unlock the warm throughput feature for on-demand data streams by enabling <code>MinimumThroughputBillingCommitment</code> for your account. Once your account has <code>MinimumThroughputBillingCommitment</code> enabled, you can specify the warm throughput in MiB per second that your stream can support in writes.</p> <p>You can't switch a data stream from on-demand to provisioned capacity mode while the stream has one or more queues. Delete the queues with <a>DeleteQueue</a> before you change the capacity mode.</p>",
     "UpdateStreamRecordDistributionStrategy": "<p>Updates the record distribution strategy for the specified Amazon Kinesis Data Streams on-demand data stream. The record distribution strategy determines how Amazon Kinesis Data Streams distributes records across the shards in a stream.</p> <note> <p>You must specify the stream using the <code>StreamARN</code> parameter.</p> </note> <p>The record distribution strategy is a stream-level setting. You can switch between the following strategies at any time, and the change takes effect immediately without downtime, data loss, or disruption to producer or consumer applications:</p> <ul> <li> <p> <code>AUTO</code> – Amazon Kinesis Data Streams distributes records evenly across shards using service-managed algorithms, and ignores any partition key and <code>ExplicitHashKey</code> that a producer provides. Use this strategy for stateless workloads that do not require partition-key ordering.</p> </li> <li> <p> <code>USER_PARTITION_KEY</code> – Producers must provide a partition key, and Amazon Kinesis Data Streams uses the partition key to determine shard placement. Records that share a partition key are sent to the same shard. This is the default strategy.</p> </li> </ul> <p>This operation is only supported for data streams that use the on-demand capacity mode. Provisioned capacity mode streams do not support the record distribution strategy setting. Attempting to set <code>AUTO</code> on a provisioned stream results in an <code>InvalidArgumentException</code>.</p> <p>New records that arrive after the change are distributed according to the new strategy. Records already in the stream keep their original shard assignments and are not redistributed.</p>",
     "UpdateStreamWarmThroughput": "<p>Updates the warm throughput configuration for the specified Amazon Kinesis Data Streams on-demand data stream. Updates the warm throughput configuration for the specified on-demand data stream. Use this operation to scale your stream to a specified throughput level before anticipated traffic spikes, or to release excess capacity after traffic has decreased. </p> <note> <p>When invoking this API, you must use either the <code>StreamARN</code> or the <code>StreamName</code> parameter, or both. It is recommended that you use the <code>StreamARN</code> input parameter when you invoke this API.</p> </note> <p>Updating the warm throughput is an asynchronous operation. Upon receiving the request, Kinesis Data Streams returns immediately and sets the status of the stream to <code>UPDATING</code>. After the update is complete, Kinesis Data Streams sets the status of the stream back to <code>ACTIVE</code>. Depending on the size of the stream, the scaling action could take a few minutes to complete. You can continue to read and write data to your stream while its status is <code>UPDATING</code>.</p> <p>This operation is only supported for data streams with the on-demand capacity mode in accounts that have <code>MinimumThroughputBillingCommitment</code> enabled. Provisioned capacity mode streams do not support warm throughput configuration.</p> <p>To release excess capacity, call the API again and set the warm throughput to the same or a lower value.</p> <p>This operation has the following default limits. By default, you cannot do the following:</p> <ul> <li> <p>Scale to more than 10 GiBps for an on-demand stream.</p> </li> <li> <p>This API has a call limit of 5 transactions per second (TPS) for each Amazon Web Services account. TPS over 5 will initiate the <code>LimitExceededException</code>.</p> </li> </ul> <p>For the default limits for an Amazon Web Services account, see <a href=\"https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html\">Streams Limits</a> in the <i>Amazon Kinesis Data Streams Developer Guide</i>. To request an increase in the call rate limit, the shard limit for this API, or your overall shard limit, use the <a href=\"https://console.aws.amazon.com/support/v1#/case/create?issueType=service-limit-increase&amp;limitType=service-code-kinesis\">limits form</a>.</p>"
   },
@@ -53,16 +65,110 @@
       "base": "<p>Specifies that you do not have the permissions required to perform this operation.</p>",
       "refs": {}
     },
+    "AcknowledgeDeadLetterQueueRecordsErrorEntry": {
+      "base": "<p>A dead-letter record that was not acknowledged, and why.</p>",
+      "refs": {
+        "AcknowledgeDeadLetterQueueRecordsErrorEntryList$member": null
+      }
+    },
+    "AcknowledgeDeadLetterQueueRecordsErrorEntryList": {
+      "base": null,
+      "refs": {
+        "AcknowledgeDeadLetterQueueRecordsOutput$Failed": "<p>The records that were not acknowledged, each with the reason the entry failed.</p>"
+      }
+    },
+    "AcknowledgeDeadLetterQueueRecordsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "AcknowledgeDeadLetterQueueRecordsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "AcknowledgeDeadLetterQueueRecordsRequestEntry": {
+      "base": "<p>A dead-letter record to acknowledge, identified by its receipt handle.</p>",
+      "refs": {
+        "AcknowledgeDeadLetterQueueRecordsRequestEntryList$member": null
+      }
+    },
+    "AcknowledgeDeadLetterQueueRecordsRequestEntryList": {
+      "base": null,
+      "refs": {
+        "AcknowledgeDeadLetterQueueRecordsInput$Entries": "<p>The dead-letter records to acknowledge, identified by their receipt handles.</p>"
+      }
+    },
+    "AcknowledgeDeadLetterQueueRecordsResultEntry": {
+      "base": "<p>A dead-letter record that was acknowledged.</p>",
+      "refs": {
+        "AcknowledgeDeadLetterQueueRecordsResultEntryList$member": null
+      }
+    },
+    "AcknowledgeDeadLetterQueueRecordsResultEntryList": {
+      "base": null,
+      "refs": {
+        "AcknowledgeDeadLetterQueueRecordsOutput$Successful": "<p>The records that were acknowledged.</p>"
+      }
+    },
+    "AcknowledgeQueueRecordsErrorEntry": {
+      "base": "<p>A record that was not acknowledged, and why.</p>",
+      "refs": {
+        "AcknowledgeQueueRecordsErrorEntryList$member": null
+      }
+    },
+    "AcknowledgeQueueRecordsErrorEntryList": {
+      "base": null,
+      "refs": {
+        "AcknowledgeQueueRecordsOutput$Failed": "<p>The records that were not acknowledged, each with the reason the entry failed.</p>"
+      }
+    },
+    "AcknowledgeQueueRecordsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "AcknowledgeQueueRecordsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "AcknowledgeQueueRecordsRequestEntry": {
+      "base": "<p>A record to acknowledge, identified by its receipt handle.</p>",
+      "refs": {
+        "AcknowledgeQueueRecordsRequestEntryList$member": null
+      }
+    },
+    "AcknowledgeQueueRecordsRequestEntryList": {
+      "base": null,
+      "refs": {
+        "AcknowledgeQueueRecordsInput$Entries": "<p>The records to acknowledge, identified by their receipt handles.</p>"
+      }
+    },
+    "AcknowledgeQueueRecordsResultEntry": {
+      "base": "<p>A record that was acknowledged.</p>",
+      "refs": {
+        "AcknowledgeQueueRecordsResultEntryList$member": null
+      }
+    },
+    "AcknowledgeQueueRecordsResultEntryList": {
+      "base": null,
+      "refs": {
+        "AcknowledgeQueueRecordsOutput$Successful": "<p>The records that were acknowledged.</p>"
+      }
+    },
     "AddTagsToStreamInput": {
       "base": "<p>Represents the input for <code>AddTagsToStream</code>.</p>",
       "refs": {}
+    },
+    "ApproximateArrivalTimestamp": {
+      "base": null,
+      "refs": {
+        "QueueRecord$ApproximateArrivalTimestamp": "<p>The approximate time the record arrived in the data stream. The difference between this value and the current time is how long the record took to reach your queue consumer.</p>"
+      }
     },
     "BooleanObject": {
       "base": null,
       "refs": {
         "CloudWatchLogs$Enabled": "<p>Specifies whether logging to Amazon CloudWatch Logs is enabled.</p>",
         "CloudWatchLogsUpdateInput$Enabled": "<p>Specifies whether logging to Amazon CloudWatch Logs is enabled.</p>",
-        "DeleteStreamInput$EnforceConsumerDeletion": "<p>If this parameter is unset (<code>null</code>) or if you set it to <code>false</code>, and the stream has registered consumers, the call to <code>DeleteStream</code> fails with a <code>ResourceInUseException</code>. </p>",
+        "DeleteStreamInput$EnforceConsumerDeletion": "<p>If this parameter is unset (<code>null</code>) or if you set it to <code>false</code>, and the stream has registered enhanced fan-out consumers, the call to <code>DeleteStream</code> fails with a <code>ResourceInUseException</code>.</p> <p>If you set it to <code>true</code>, <code>DeleteStream</code> deletes the stream and every consumer registered with it.</p> <p>This parameter does not apply to queues. A stream that has queues cannot be deleted until every queue on it is deleted with <a>DeleteQueue</a>, whatever this parameter is set to.</p>",
         "GetRecordsInput$DryRun": "<p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter.</p>",
         "GetShardIteratorInput$DryRun": "<p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter.</p>",
         "ListStreamsOutput$HasMoreStreams": "<p>If set to <code>true</code>, there are more streams available to list.</p>",
@@ -274,7 +380,7 @@
     "ConsumerCountObject": {
       "base": null,
       "refs": {
-        "StreamDescriptionSummary$ConsumerCount": "<p>The number of enhanced fan-out consumers registered with the stream.</p>"
+        "StreamDescriptionSummary$ConsumerCount": "<p>The number of enhanced fan-out consumers registered with the stream. Queues are not included in this count, even though they share the stream's registered consumer limit with enhanced fan-out consumers. <code>QueueCount</code> reports the number of queues.</p>"
       }
     },
     "ConsumerDescription": {
@@ -314,6 +420,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateQueueInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateQueueOutput": {
+      "base": null,
+      "refs": {}
+    },
     "CreateStreamInput": {
       "base": "<p>Represents the input for <code>CreateStream</code>.</p>",
       "refs": {}
@@ -323,6 +437,7 @@
       "refs": {
         "PutRecordInput$Data": "<p>The data blob to put into the record, which is base64-encoded when the blob is serialized. When the data blob (the payload before base64-encoding) is added to the partition key size, the total size must not exceed the maximum record size (10 MiB).</p>",
         "PutRecordsRequestEntry$Data": "<p>The data blob to put into the record, which is base64-encoded when the blob is serialized. When the data blob (the payload before base64-encoding) is added to the partition key size, the total size must not exceed the maximum record size (10 MiB).</p>",
+        "QueueRecord$Data": "<p>The data blob of the record. Amazon Kinesis Data Streams does not inspect, interpret, or change the data.</p>",
         "Record$Data": "<p>The data blob. The data in the blob is both opaque and immutable to Kinesis Data Streams, which does not inspect, interpret, or change the data in the blob in any way. When the data blob (the payload before base64-encoding) is added to the partition key size, the total size must not exceed the maximum record size (10 MiB).</p>"
       }
     },
@@ -335,6 +450,12 @@
         "S3TablesDestinationConfiguration$DataFreshnessInSeconds": "<p>The maximum age, in seconds, of undelivered data before the channel delivers it to the destination. The default value is 300 seconds.</p>",
         "S3TablesDestinationDescription$DataFreshnessInSeconds": "<p>The maximum age, in seconds, of undelivered data.</p>",
         "S3TablesDestinationUpdateInput$DataFreshnessInSeconds": "<p>The maximum age, in seconds, of undelivered data before the channel delivers it to the destination.</p>"
+      }
+    },
+    "DeadLetterConfiguration": {
+      "base": "<p>The dead-letter handling configuration for a queue. Each queue has built-in dead-letter handling. When a record has been received <code>MaxReceiveCount</code> times without being acknowledged, it becomes a dead-letter record, and <a>ReceiveQueueRecords</a> no longer returns it. The dead-letter record stays in the same queue, and you work with it through <a>ReceiveDeadLetterQueueRecords</a>, <a>AcknowledgeDeadLetterQueueRecords</a>, <a>UpdateDeadLetterQueueRecordsVisibility</a>, and <a>RestoreDeadLetterQueueRecords</a>, which use the same queue ARN.</p> <p>Dead-letter handling is enabled by default, with a <code>MaxReceiveCount</code> of 6. To use a different value, or to turn dead-letter handling off, specify this configuration in <code>QueueAttributes</code>.</p>",
+      "refs": {
+        "QueueAttributes$DeadLetterConfiguration": "<p>The dead-letter handling configuration for the queue. If you omit this attribute, dead-letter handling is enabled with a <code>MaxReceiveCount</code> of 6. If you specify it with a <code>TargetType</code> of <code>BUILT_IN</code>, you must also specify <code>MaxReceiveCount</code>.</p>"
       }
     },
     "DeadLetterQueueS3Configuration": {
@@ -351,6 +472,10 @@
       "refs": {}
     },
     "DeleteChannelInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteQueueInput": {
       "base": null,
       "refs": {}
     },
@@ -387,6 +512,14 @@
       "refs": {}
     },
     "DescribeLimitsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeQueueInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeQueueOutput": {
       "base": null,
       "refs": {}
     },
@@ -464,13 +597,20 @@
     "ErrorCode": {
       "base": null,
       "refs": {
-        "PutRecordsResultEntry$ErrorCode": "<p>The error code for an individual record result. <code>ErrorCodes</code> can be either <code>ProvisionedThroughputExceededException</code> or <code>InternalFailure</code>.</p>"
+        "AcknowledgeDeadLetterQueueRecordsErrorEntry$ErrorCode": "<p>A code identifying the type of failure. One of <code>ResourceNotFoundException</code>, <code>InvalidArgumentException</code>, <code>ThrottlingException</code>, or <code>InternalFailureException</code>.</p>",
+        "AcknowledgeQueueRecordsErrorEntry$ErrorCode": "<p>A code identifying the type of failure. One of <code>ResourceNotFoundException</code>, <code>InvalidArgumentException</code>, <code>ThrottlingException</code>, or <code>InternalFailureException</code>.</p>",
+        "PutRecordsResultEntry$ErrorCode": "<p>The error code for an individual record result. <code>ErrorCodes</code> can be either <code>ProvisionedThroughputExceededException</code> or <code>InternalFailure</code>.</p>",
+        "RestoreDeadLetterQueueRecordsErrorEntry$ErrorCode": "<p>A code identifying the type of failure. One of <code>ResourceNotFoundException</code>, <code>InvalidArgumentException</code>, <code>ThrottlingException</code>, or <code>InternalFailureException</code>.</p>",
+        "UpdateDeadLetterQueueRecordsVisibilityErrorEntry$ErrorCode": "<p>A code identifying the type of failure. One of <code>ResourceNotFoundException</code>, <code>InvalidArgumentException</code>, <code>ThrottlingException</code>, or <code>InternalFailureException</code>.</p>",
+        "UpdateQueueRecordsVisibilityErrorEntry$ErrorCode": "<p>A code identifying the type of failure. One of <code>ResourceNotFoundException</code>, <code>InvalidArgumentException</code>, <code>ThrottlingException</code>, or <code>InternalFailureException</code>.</p>"
       }
     },
     "ErrorMessage": {
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
+        "AcknowledgeDeadLetterQueueRecordsErrorEntry$ErrorMessage": "<p>A description of the cause of the failure.</p>",
+        "AcknowledgeQueueRecordsErrorEntry$ErrorMessage": "<p>A description of the cause of the failure.</p>",
         "DryRunOperationException$message": null,
         "ExpiredIteratorException$message": "<p>A message that provides information about the error.</p>",
         "ExpiredNextTokenException$message": null,
@@ -487,6 +627,10 @@
         "PutRecordsResultEntry$ErrorMessage": "<p>The error message for an individual record result. An <code>ErrorCode</code> value of <code>ProvisionedThroughputExceededException</code> has an error message that includes the account ID, stream name, and shard ID. An <code>ErrorCode</code> value of <code>InternalFailure</code> has the error message <code>\"Internal Service Failure\"</code>.</p>",
         "ResourceInUseException$message": "<p>A message that provides information about the error.</p>",
         "ResourceNotFoundException$message": "<p>A message that provides information about the error.</p>",
+        "RestoreDeadLetterQueueRecordsErrorEntry$ErrorMessage": "<p>A description of the cause of the failure.</p>",
+        "ThrottlingException$message": "<p>A message that provides information about the error.</p>",
+        "UpdateDeadLetterQueueRecordsVisibilityErrorEntry$ErrorMessage": "<p>A description of the cause of the failure.</p>",
+        "UpdateQueueRecordsVisibilityErrorEntry$ErrorMessage": "<p>A description of the cause of the failure.</p>",
         "ValidationException$message": null
       }
     },
@@ -504,6 +648,12 @@
     "ExpiredNextTokenException": {
       "base": "<p>The pagination token passed to the operation is expired.</p>",
       "refs": {}
+    },
+    "FirstReceiveTimestamp": {
+      "base": null,
+      "refs": {
+        "QueueRecord$FirstReceiveTimestamp": "<p>The approximate time the record was first received from the queue.</p>"
+      }
     },
     "GSRSchemaARN": {
       "base": null,
@@ -579,7 +729,7 @@
       }
     },
     "KMSDisabledException": {
-      "base": "<p>The request was rejected because the specified customer master key (CMK) isn't enabled.</p>",
+      "base": "<p>The request was rejected because the specified KMS key isn't enabled.</p>",
       "refs": {
         "SubscribeToShardEventStream$KMSDisabledException": null
       }
@@ -633,6 +783,20 @@
       }
     },
     "ListChannelsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListQueuesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListQueuesInputLimit": {
+      "base": null,
+      "refs": {
+        "ListQueuesInput$MaxResults": "<p>The maximum number of queue summaries to return in one response. The response might contain fewer summaries than this value, and might contain a <code>NextToken</code> even when it contains fewer.</p>"
+      }
+    },
+    "ListQueuesOutput": {
       "base": null,
       "refs": {}
     },
@@ -699,6 +863,12 @@
     "ListTagsForStreamOutput": {
       "base": "<p>Represents the output for <code>ListTagsForStream</code>.</p>",
       "refs": {}
+    },
+    "MaxReceiveCount": {
+      "base": null,
+      "refs": {
+        "DeadLetterConfiguration$MaxReceiveCount": "<p>The number of times a record can be received without being acknowledged before it becomes a dead-letter record. Required when <code>TargetType</code> is <code>BUILT_IN</code>. A queue that you create without <code>DeadLetterConfiguration</code> gets a <code>MaxReceiveCount</code> of 6.</p>"
+      }
     },
     "MaxRecordSizeInKiB": {
       "base": null,
@@ -775,6 +945,8 @@
       "refs": {
         "ListChannelsInput$NextToken": "<p>The pagination token returned by a previous call. Specify this token to retrieve the next page of results.</p>",
         "ListChannelsOutput$NextToken": "<p>The pagination token to use in a subsequent call to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "ListQueuesInput$NextToken": "<p>The <code>NextToken</code> returned by a previous <code>ListQueues</code> request. Use it to retrieve the next page of queue summaries.</p>",
+        "ListQueuesOutput$NextToken": "<p>The token to pass to the next <code>ListQueues</code> request to retrieve the next page of queue summaries. This member is absent when no more queues are available.</p>",
         "ListShardsInput$NextToken": "<p>When the number of shards in the data stream is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of shards in the data stream, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListShards</code> to list the next set of shards.</p> <p>Don't specify <code>StreamName</code> or <code>StreamCreationTimestamp</code> if you specify <code>NextToken</code> because the latter unambiguously identifies the stream.</p> <p>You can optionally specify a value for the <code>MaxResults</code> parameter when you specify <code>NextToken</code>. If you specify a <code>MaxResults</code> value that is less than the number of shards that the operation returns if you don't specify <code>MaxResults</code>, the response will contain a new <code>NextToken</code> value. You can use the new <code>NextToken</code> value in a subsequent call to the <code>ListShards</code> operation.</p> <important> <p>Tokens expire after 300 seconds. When you obtain a value for <code>NextToken</code> in the response to a call to <code>ListShards</code>, you have 300 seconds to use that value. If you specify an expired token in a call to <code>ListShards</code>, you get <code>ExpiredNextTokenException</code>.</p> </important>",
         "ListShardsOutput$NextToken": "<p>When the number of shards in the data stream is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of shards in the data stream, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListShards</code> to list the next set of shards. For more information about the use of this pagination token when calling the <code>ListShards</code> operation, see <a>ListShardsInput$NextToken</a>.</p> <important> <p>Tokens expire after 300 seconds. When you obtain a value for <code>NextToken</code> in the response to a call to <code>ListShards</code>, you have 300 seconds to use that value. If you specify an expired token in a call to <code>ListShards</code>, you get <code>ExpiredNextTokenException</code>.</p> </important>",
         "ListStreamConsumersInput$NextToken": "<p>When the number of consumers that are registered with the data stream is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of consumers that are registered with the data stream, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListStreamConsumers</code> to list the next set of registered consumers.</p> <p>Don't specify <code>StreamName</code> or <code>StreamCreationTimestamp</code> if you specify <code>NextToken</code> because the latter unambiguously identifies the stream.</p> <p>You can optionally specify a value for the <code>MaxResults</code> parameter when you specify <code>NextToken</code>. If you specify a <code>MaxResults</code> value that is less than the number of consumers that the operation returns if you don't specify <code>MaxResults</code>, the response will contain a new <code>NextToken</code> value. You can use the new <code>NextToken</code> value in a subsequent call to the <code>ListStreamConsumers</code> operation to list the next set of consumers.</p> <important> <p>Tokens expire after 300 seconds. When you obtain a value for <code>NextToken</code> in the response to a call to <code>ListStreamConsumers</code>, you have 300 seconds to use that value. If you specify an expired token in a call to <code>ListStreamConsumers</code>, you get <code>ExpiredNextTokenException</code>.</p> </important>",
@@ -812,6 +984,7 @@
       "refs": {
         "PutRecordInput$PartitionKey": "<p>Determines which shard in the stream the data record is assigned to. Partition keys are Unicode strings with a maximum length limit of 256 characters for each key. Amazon Kinesis Data Streams uses the partition key as input to a hash function that maps the partition key and associated data to a specific shard. Specifically, an MD5 hash function is used to map partition keys to 128-bit integer values and to map associated data records to shards. As a result of this hashing mechanism, all data records with the same partition key map to the same shard within the stream.</p> <p>If the stream uses the <code>USER_PARTITION_KEY</code> record distribution strategy (the default), a partition key is required. If the stream uses the <code>AUTO</code> record distribution strategy, the partition key is optional and any value you provide is ignored, along with any <code>ExplicitHashKey</code> you provide. In that case, Amazon Kinesis Data Streams distributes the record across shards using service-managed algorithms. For more information, see <code>UpdateStreamRecordDistributionStrategy</code>.</p>",
         "PutRecordsRequestEntry$PartitionKey": "<p>Determines which shard in the stream the data record is assigned to. Partition keys are Unicode strings with a maximum length limit of 256 characters for each key. Amazon Kinesis Data Streams uses the partition key as input to a hash function that maps the partition key and associated data to a specific shard. Specifically, an MD5 hash function is used to map partition keys to 128-bit integer values and to map associated data records to shards. As a result of this hashing mechanism, all data records with the same partition key map to the same shard within the stream.</p> <p>If the stream uses the <code>USER_PARTITION_KEY</code> record distribution strategy (the default), a partition key is required for each record. If the stream uses the <code>AUTO</code> record distribution strategy, the partition key is optional and any value you provide is ignored, along with any <code>ExplicitHashKey</code> you provide. In that case, Amazon Kinesis Data Streams distributes records across shards using service-managed algorithms. For more information, see <code>UpdateStreamRecordDistributionStrategy</code>.</p>",
+        "QueueRecord$PartitionKey": "<p>The partition key the record was written to the data stream with.</p>",
         "Record$PartitionKey": "<p>Identifies which shard in the stream the data record is assigned to.</p> <p>For a stream that uses the <code>AUTO</code> record distribution strategy, this value is not returned if the producer did not provide a partition key when writing the record. If the producer provided a partition key, the original value is returned even though it was not used to determine shard placement.</p>"
       }
     },
@@ -898,6 +1071,191 @@
       "base": null,
       "refs": {}
     },
+    "QueueARN": {
+      "base": null,
+      "refs": {
+        "AcknowledgeDeadLetterQueueRecordsInput$QueueARN": "<p>The ARN of the queue whose dead-letter records are acknowledged.</p>",
+        "AcknowledgeQueueRecordsInput$QueueARN": "<p>The ARN of the queue the records were received from.</p>",
+        "DeleteQueueInput$QueueARN": "<p>The ARN of the queue to delete.</p>",
+        "DescribeQueueInput$QueueARN": "<p>The ARN of the queue to describe.</p>",
+        "QueueDescription$QueueARN": "<p>The ARN of the queue. The resource identifier in the ARN is generated when the queue is created and is not derived from <code>QueueName</code>. Use the returned <code>QueueARN</code> to identify the queue in subsequent requests.</p>",
+        "QueueSummary$QueueARN": "<p>The ARN of the queue.</p>",
+        "ReceiveDeadLetterQueueRecordsInput$QueueARN": "<p>The ARN of the queue whose dead-letter records are received.</p>",
+        "ReceiveQueueRecordsInput$QueueARN": "<p>The ARN of the queue to receive records from.</p>",
+        "RestoreDeadLetterQueueRecordsInput$QueueARN": "<p>The ARN of the queue whose dead-letter records are restored.</p>",
+        "UpdateDeadLetterQueueRecordsVisibilityInput$QueueARN": "<p>The ARN of the queue whose dead-letter records are updated.</p>",
+        "UpdateQueueInput$QueueARN": "<p>The ARN of the queue to update.</p>",
+        "UpdateQueueRecordsVisibilityInput$QueueARN": "<p>The ARN of the queue the records were received from.</p>"
+      }
+    },
+    "QueueAttributes": {
+      "base": "<p>The configuration attributes for a queue.</p>",
+      "refs": {
+        "CreateQueueInput$QueueAttributes": "<p>The configuration attributes for the queue, including its visibility timeout and its dead-letter handling configuration.</p>",
+        "QueueDescription$QueueAttributes": "<p>The configuration attributes of the queue.</p>",
+        "UpdateQueueInput$QueueAttributes": "<p>The configuration attributes to apply to the queue. Attributes you do not specify are left unchanged.</p>"
+      }
+    },
+    "QueueCountObject": {
+      "base": null,
+      "refs": {
+        "StreamDescriptionSummary$QueueCount": "<p>The number of queues created on the data stream.</p>"
+      }
+    },
+    "QueueDescription": {
+      "base": "<p>A description of a queue. Returned by <a>CreateQueue</a>, <a>UpdateQueue</a>, and <a>DescribeQueue</a>.</p>",
+      "refs": {
+        "CreateQueueOutput$QueueDescription": "<p>A description of the queue that was created.</p>",
+        "DescribeQueueOutput$QueueDescription": "<p>A description of the queue.</p>",
+        "UpdateQueueOutput$QueueDescription": "<p>A description of the queue, including the updated attributes.</p>"
+      }
+    },
+    "QueueName": {
+      "base": null,
+      "refs": {
+        "CreateQueueInput$QueueName": "<p>A name for the queue. The name is scoped to the Amazon Web Services account and Region used by the request, so two queues in different accounts, or in the same account and different Regions, can have the same name.</p>",
+        "QueueDescription$QueueName": "<p>The name of the queue.</p>",
+        "QueueSummary$QueueName": "<p>The name of the queue.</p>"
+      }
+    },
+    "QueueRecord": {
+      "base": "<p>A data stream record, as delivered through a queue.</p>",
+      "refs": {
+        "QueueRecordList$member": null
+      }
+    },
+    "QueueRecordList": {
+      "base": null,
+      "refs": {
+        "ReceiveDeadLetterQueueRecordsOutput$QueueRecords": "<p>The dead-letter records received from the queue. This list is empty when no dead-letter records are visible.</p>",
+        "ReceiveQueueRecordsOutput$QueueRecords": "<p>The records received from the queue. This list is empty when no records are visible.</p>"
+      }
+    },
+    "QueueStartingPosition": {
+      "base": "<p>The position in a data stream from which a queue begins delivering records.</p>",
+      "refs": {
+        "QueueStreamConfiguration$StartingPosition": "<p>The position in the stream from which the queue begins delivering records. The default is <code>LATEST</code>.</p>"
+      }
+    },
+    "QueueStartingPositionType": {
+      "base": null,
+      "refs": {
+        "QueueStartingPosition$Type": "<p>You can set the starting position to one of the following values:</p> <p> <code>LATEST</code>: Delivers records that arrive after you create the queue. This is the default.</p> <p> <code>TRIM_HORIZON</code>: Start delivering at the last untrimmed record in the stream, which is the oldest record the stream still retains.</p> <p> <code>AT_TIMESTAMP</code>: Delivers records that arrive at or after a time stamp that you provide.</p>"
+      }
+    },
+    "QueueStatus": {
+      "base": null,
+      "refs": {
+        "QueueDescription$QueueStatus": "<p>The current status of the queue.</p>",
+        "QueueSummary$QueueStatus": "<p>The current status of the queue.</p>"
+      }
+    },
+    "QueueStreamConfiguration": {
+      "base": "<p>The data stream a queue delivers records from, and the position in that stream where delivery begins.</p>",
+      "refs": {
+        "QueueStreamConfigurationList$member": null
+      }
+    },
+    "QueueStreamConfigurationList": {
+      "base": null,
+      "refs": {
+        "CreateQueueInput$StreamConfigurationList": "<p>The data stream the queue delivers records from, and the position in that stream where delivery begins. The list must contain exactly one entry, because a queue delivers records from a single data stream.</p>",
+        "QueueDescription$StreamConfigurationList": "<p>The data stream the queue delivers records from, and the position in that stream where delivery begins. The list contains exactly one entry, because a queue delivers records from a single data stream.</p>"
+      }
+    },
+    "QueueStreamFilter": {
+      "base": "<p>Filters the queues returned by <a>ListQueues</a> to those created on a particular data stream.</p>",
+      "refs": {
+        "QueueStreamFilterList$member": null
+      }
+    },
+    "QueueStreamFilterList": {
+      "base": null,
+      "refs": {
+        "ListQueuesInput$StreamFilter": "<p>Lists only the queues created on the specified data stream.</p>"
+      }
+    },
+    "QueueStreamIdentifier": {
+      "base": "<p>Identifies a data stream associated with a queue.</p>",
+      "refs": {
+        "QueueStreamIdentifierList$member": null
+      }
+    },
+    "QueueStreamIdentifierList": {
+      "base": null,
+      "refs": {
+        "QueueSummary$Streams": "<p>The data stream the queue delivers records from.</p>"
+      }
+    },
+    "QueueSummary": {
+      "base": "<p>A summary of a queue. Returned by <a>ListQueues</a>. To retrieve a queue's configuration attributes, use <a>DescribeQueue</a>.</p>",
+      "refs": {
+        "QueueSummaryList$member": null
+      }
+    },
+    "QueueSummaryList": {
+      "base": null,
+      "refs": {
+        "ListQueuesOutput$QueueSummaries": "<p>A summary of each queue that matched the request.</p>"
+      }
+    },
+    "ReceiptHandle": {
+      "base": null,
+      "refs": {
+        "AcknowledgeDeadLetterQueueRecordsErrorEntry$ReceiptHandle": "<p>The receipt handle of the record that was not acknowledged.</p>",
+        "AcknowledgeDeadLetterQueueRecordsRequestEntry$ReceiptHandle": "<p>The receipt handle of the record to acknowledge, as returned by <a>ReceiveDeadLetterQueueRecords</a>.</p>",
+        "AcknowledgeDeadLetterQueueRecordsResultEntry$ReceiptHandle": "<p>The receipt handle of the record that was acknowledged.</p>",
+        "AcknowledgeQueueRecordsErrorEntry$ReceiptHandle": "<p>The receipt handle of the record that was not acknowledged.</p>",
+        "AcknowledgeQueueRecordsRequestEntry$ReceiptHandle": "<p>The receipt handle of the record to acknowledge, as returned by <a>ReceiveQueueRecords</a>.</p>",
+        "AcknowledgeQueueRecordsResultEntry$ReceiptHandle": "<p>The receipt handle of the record that was acknowledged.</p>",
+        "QueueRecord$ReceiptHandle": "<p>The identifier you use to acknowledge this record, change its visibility, or restore it after it becomes a dead-letter record. A new receipt handle is issued each time the record is received.</p>",
+        "RestoreDeadLetterQueueRecordsErrorEntry$ReceiptHandle": "<p>The receipt handle of the record that was not restored.</p>",
+        "RestoreDeadLetterQueueRecordsRequestEntry$ReceiptHandle": "<p>The receipt handle of the record to restore, as returned by <a>ReceiveDeadLetterQueueRecords</a>.</p>",
+        "RestoreDeadLetterQueueRecordsResultEntry$ReceiptHandle": "<p>The receipt handle of the record that was restored.</p>",
+        "UpdateDeadLetterQueueRecordsVisibilityErrorEntry$ReceiptHandle": "<p>The receipt handle of the record whose visibility timeout was not changed.</p>",
+        "UpdateDeadLetterQueueRecordsVisibilityRequestEntry$ReceiptHandle": "<p>The receipt handle of the record, as returned by <a>ReceiveDeadLetterQueueRecords</a>.</p>",
+        "UpdateDeadLetterQueueRecordsVisibilityResultEntry$ReceiptHandle": "<p>The receipt handle of the record whose visibility timeout was changed.</p>",
+        "UpdateQueueRecordsVisibilityErrorEntry$ReceiptHandle": "<p>The receipt handle of the record whose visibility timeout was not changed.</p>",
+        "UpdateQueueRecordsVisibilityRequestEntry$ReceiptHandle": "<p>The receipt handle of the record, as returned by <a>ReceiveQueueRecords</a>.</p>",
+        "UpdateQueueRecordsVisibilityResultEntry$ReceiptHandle": "<p>The receipt handle of the record whose visibility timeout was changed.</p>"
+      }
+    },
+    "ReceiveCount": {
+      "base": null,
+      "refs": {
+        "QueueRecord$ReceiveCount": "<p>The number of times this record has been received without being acknowledged.</p>"
+      }
+    },
+    "ReceiveDeadLetterQueueRecordsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ReceiveDeadLetterQueueRecordsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ReceiveQueueRecordsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ReceiveQueueRecordsInputLimit": {
+      "base": null,
+      "refs": {
+        "ReceiveDeadLetterQueueRecordsInput$Limit": "<p>The maximum number of records to return. The queue never returns more dead-letter records than this value, and might return fewer. The default is 10.</p>",
+        "ReceiveQueueRecordsInput$Limit": "<p>The maximum number of records to return. The queue never returns more records than this value, and might return fewer. The default is 10.</p>"
+      }
+    },
+    "ReceiveQueueRecordsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ReceiveQueueRecordsWaitTimeSeconds": {
+      "base": null,
+      "refs": {
+        "ReceiveDeadLetterQueueRecordsInput$WaitTimeSeconds": "<p>The duration, in seconds, that the call waits for a record to become visible before returning. The default is 9.</p>",
+        "ReceiveQueueRecordsInput$WaitTimeSeconds": "<p>The duration, in seconds, that the call waits for a record to become visible before returning. The default is 9.</p>"
+      }
+    },
     "Record": {
       "base": "<p>The unit of data of the Kinesis data stream, which is composed of a sequence number, a partition key, and a data blob.</p>",
       "refs": {
@@ -925,6 +1283,12 @@
         "RecordConfiguration$RecordFormatType": "<p>The format of records on the source stream. Valid values:</p> <ul> <li> <p> <code>GSR_JSON</code> - Supported only for streaming table (Amazon S3 Tables) destinations.</p> </li> <li> <p> <code>JSON</code> - Supported for both general purpose Amazon S3 and streaming table destinations.</p> </li> <li> <p> <code>STRING</code> - Supported only for general purpose Amazon S3 destinations.</p> </li> <li> <p> <code>BYTE_ARRAY</code> - Supported only for general purpose Amazon S3 destinations.</p> </li> </ul>"
       }
     },
+    "RecordId": {
+      "base": null,
+      "refs": {
+        "QueueRecord$RecordId": "<p>The unique identifier of the record. This value stays the same across every delivery of the record, and it is the same in every queue on the stream that delivers the record. To identify a single delivery, use <code>ReceiptHandle</code> instead.</p>"
+      }
+    },
     "RecordList": {
       "base": null,
       "refs": {
@@ -947,10 +1311,10 @@
     "ResourceARN": {
       "base": null,
       "refs": {
-        "DeleteResourcePolicyInput$ResourceARN": "<p>The Amazon Resource Name (ARN) of the data stream or consumer.</p>",
-        "GetResourcePolicyInput$ResourceARN": "<p>The Amazon Resource Name (ARN) of the data stream or consumer.</p>",
+        "DeleteResourcePolicyInput$ResourceARN": "<p>The Amazon Resource Name (ARN) of a data stream, a queue, or an enhanced fan-out consumer.</p>",
+        "GetResourcePolicyInput$ResourceARN": "<p>The Amazon Resource Name (ARN) of a data stream, a queue, or an enhanced fan-out consumer.</p>",
         "ListTagsForResourceInput$ResourceARN": "<p>The Amazon Resource Name (ARN) of the Kinesis resource for which to list tags.</p>",
-        "PutResourcePolicyInput$ResourceARN": "<p>The Amazon Resource Name (ARN) of the data stream or consumer.</p>",
+        "PutResourcePolicyInput$ResourceARN": "<p>The Amazon Resource Name (ARN) of a data stream, a queue, or an enhanced fan-out consumer.</p>",
         "TagResourceInput$ResourceARN": "<p>The Amazon Resource Name (ARN) of the Kinesis resource to which to add tags.</p>",
         "UntagResourceInput$ResourceARN": "<p>The Amazon Resource Name (ARN) of the Kinesis resource from which to remove tags.</p>"
       }
@@ -965,6 +1329,50 @@
       "base": "<p>The requested resource could not be found. The stream might not be specified correctly.</p>",
       "refs": {
         "SubscribeToShardEventStream$ResourceNotFoundException": null
+      }
+    },
+    "RestoreDeadLetterQueueRecordsErrorEntry": {
+      "base": "<p>A dead-letter record that was not restored, and why.</p>",
+      "refs": {
+        "RestoreDeadLetterQueueRecordsErrorEntryList$member": null
+      }
+    },
+    "RestoreDeadLetterQueueRecordsErrorEntryList": {
+      "base": null,
+      "refs": {
+        "RestoreDeadLetterQueueRecordsOutput$Failed": "<p>The records that were not restored, each with the reason the entry failed.</p>"
+      }
+    },
+    "RestoreDeadLetterQueueRecordsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "RestoreDeadLetterQueueRecordsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "RestoreDeadLetterQueueRecordsRequestEntry": {
+      "base": "<p>A dead-letter record to restore, identified by its receipt handle.</p>",
+      "refs": {
+        "RestoreDeadLetterQueueRecordsRequestEntryList$member": null
+      }
+    },
+    "RestoreDeadLetterQueueRecordsRequestEntryList": {
+      "base": null,
+      "refs": {
+        "RestoreDeadLetterQueueRecordsInput$Entries": "<p>The dead-letter records to restore, identified by their receipt handles.</p>"
+      }
+    },
+    "RestoreDeadLetterQueueRecordsResultEntry": {
+      "base": "<p>A dead-letter record that was restored.</p>",
+      "refs": {
+        "RestoreDeadLetterQueueRecordsResultEntryList$member": null
+      }
+    },
+    "RestoreDeadLetterQueueRecordsResultEntryList": {
+      "base": null,
+      "refs": {
+        "RestoreDeadLetterQueueRecordsOutput$Successful": "<p>The records that were restored.</p>"
       }
     },
     "RetentionPeriodHours": {
@@ -1225,6 +1633,9 @@
         "MergeShardsInput$StreamARN": "<p>The ARN of the stream.</p>",
         "PutRecordInput$StreamARN": "<p>The ARN of the stream.</p>",
         "PutRecordsInput$StreamARN": "<p>The ARN of the stream.</p>",
+        "QueueStreamConfiguration$StreamARN": "<p>The ARN of the data stream.</p>",
+        "QueueStreamFilter$StreamARN": "<p>The ARN of the data stream to filter on.</p>",
+        "QueueStreamIdentifier$StreamARN": "<p>The ARN of the data stream.</p>",
         "RegisterStreamConsumerInput$StreamARN": "<p>The ARN of the Kinesis data stream that you want to register the consumer with. For more info, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-kinesis-streams\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p>",
         "RemoveTagsFromStreamInput$StreamARN": "<p>The ARN of the stream.</p>",
         "SplitShardInput$StreamARN": "<p>The ARN of the stream.</p>",
@@ -1319,7 +1730,7 @@
       "refs": {
         "CreateStreamInput$StreamModeDetails": "<p> Indicates the capacity mode of the data stream. Currently, in Kinesis Data Streams, you can choose between an <b>on-demand</b> capacity mode and a <b>provisioned</b> capacity mode for your data streams.</p>",
         "StreamDescription$StreamModeDetails": "<p> Specifies the capacity mode to which you want to set your data stream. Currently, in Kinesis Data Streams, you can choose between an <b>on-demand</b> capacity mode and a <b>provisioned</b> capacity mode for your data streams. </p>",
-        "StreamDescriptionSummary$StreamModeDetails": "<p> Specifies the capacity mode to which you want to set your data stream. Currently, in Kinesis Data Streams, you can choose between an <b>on-demand</b> ycapacity mode and a <b>provisioned</b> capacity mode for your data streams. </p>",
+        "StreamDescriptionSummary$StreamModeDetails": "<p> Specifies the capacity mode to which you want to set your data stream. Currently, in Kinesis Data Streams, you can choose between an <b>on-demand</b> capacity mode and a <b>provisioned</b> capacity mode for your data streams. </p>",
         "StreamSummary$StreamModeDetails": null,
         "UpdateStreamModeInput$StreamModeDetails": "<p> Specifies the capacity mode to which you want to set your data stream. Currently, in Kinesis Data Streams, you can choose between an <b>on-demand</b> capacity mode and a <b>provisioned</b> capacity mode for your data streams. </p>"
       }
@@ -1387,7 +1798,7 @@
     "SubscribeToShardEvent": {
       "base": "<p>After you call <a>SubscribeToShard</a>, Kinesis Data Streams sends events of this type over an HTTP/2 connection to your consumer.</p>",
       "refs": {
-        "SubscribeToShardEventStream$SubscribeToShardEvent": "<p>After you call <a>SubscribeToShard</a>, Kinesis Data Streams sends events of this type to your consumer. For an example of how to handle these events, see <a href=\"/streams/latest/dev/building-enhanced-consumers-api.html\">Enhanced Fan-Out Using the Kinesis Data Streams API</a>.</p>"
+        "SubscribeToShardEventStream$SubscribeToShardEvent": "<p>After you call <a>SubscribeToShard</a>, Kinesis Data Streams sends events of this type to your consumer. For an example of how to handle these events, see <a href=\"/streams/latest/dev/building-enhanced-consumers-api.html\">Develop enhanced fan-out consumers with the Amazon Web Services SDK for Java</a>.</p>"
       }
     },
     "SubscribeToShardEventStream": {
@@ -1444,6 +1855,7 @@
       "refs": {
         "AddTagsToStreamInput$Tags": "<p>A set of up to 50 key-value pairs to use to create the tags. A tag consists of a required key and an optional value. You can add up to 50 tags per resource.</p>",
         "CreateChannelInput$Tags": "<p>A set of key-value pairs to assign to the channel. A tag consists of a required key and an optional value.</p>",
+        "CreateQueueInput$Tags": "<p>A set of up to 50 key-value pairs to apply to the queue. You can also add, change, and remove tags after the queue is created with <a>TagResource</a> and <a>UntagResource</a>.</p>",
         "CreateStreamInput$Tags": "<p>A set of up to 50 key-value pairs to use to create the tags. A tag consists of a required key and an optional value.</p>",
         "RegisterStreamConsumerInput$Tags": "<p>A set of up to 50 key-value pairs. A tag consists of a required key and an optional value.</p>",
         "TagResourceInput$Tags": "<p>An array of tags to be added to the Kinesis resource. A tag consists of a required key and an optional value. You can add up to 50 tags per resource.</p> <p>Tags may only contain Unicode letters, digits, white space, or these symbols: _ . : / = + - @.</p>"
@@ -1460,6 +1872,16 @@
         "TagMap$value": null
       }
     },
+    "TargetType": {
+      "base": null,
+      "refs": {
+        "DeadLetterConfiguration$TargetType": "<p>Whether dead-letter handling is enabled for the queue. <code>BUILT_IN</code> enables it: when a record has been received <code>MaxReceiveCount</code> times without being acknowledged, it becomes a dead-letter record and <a>ReceiveQueueRecords</a> no longer returns it. <code>NONE</code> disables it, and an unacknowledged record continues to be redelivered until it is acknowledged or its retention period ends.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied because the request rate is too high. Reduce the frequency of your requests, and retry them with exponential backoff.</p>",
+      "refs": {}
+    },
     "Timestamp": {
       "base": null,
       "refs": {
@@ -1475,6 +1897,11 @@
         "MinimumThroughputBillingCommitmentOutput$StartedAt": "<p>The timestamp when the commitment was started.</p>",
         "MinimumThroughputBillingCommitmentOutput$EndedAt": "<p>The timestamp when the commitment was ended.</p>",
         "MinimumThroughputBillingCommitmentOutput$EarliestAllowedEndAt": "<p>The earliest timestamp when the commitment can be ended.</p>",
+        "QueueDescription$QueueCreationTimestamp": "<p>The time the queue was created.</p>",
+        "QueueStartingPosition$Timestamp": "<p>The approximate time from which the queue begins delivering records. Records that arrive at approximately this time or later are delivered.</p> <p>In a request, specify this value only when <code>Type</code> is <code>AT_TIMESTAMP</code>. It is required in that case, and specifying it for any other type returns a <code>ValidationException</code>.</p> <p>In a response, this value is approximate and reflects the queue's effective starting position. While the queue is <code>CREATING</code>, the response echoes what you configured: for <code>AT_TIMESTAMP</code>, the timestamp you provided, and for <code>TRIM_HORIZON</code> and <code>LATEST</code>, this member is absent because the effective position is not yet determined. Once the queue is <code>ACTIVE</code>, the response always includes this member. For <code>AT_TIMESTAMP</code>, it is the timestamp you provided or the earliest time the stream can be read from, whichever is later.</p>",
+        "QueueStreamFilter$StreamCreationTimestamp": "<p>The time the data stream was created. Specify this value to distinguish between a deleted stream and a stream that was recreated with the same name.</p>",
+        "QueueStreamIdentifier$StreamCreationTimestamp": "<p>The time the data stream was created.</p>",
+        "QueueSummary$QueueCreationTimestamp": "<p>The time the queue was created.</p>",
         "Record$ApproximateArrivalTimestamp": "<p>The approximate time that the record was inserted into the stream.</p>",
         "ShardFilter$Timestamp": "<p>The timestamps specified in the <code>ShardFilter</code> parameter. A timestamp is a Unix epoch date with precision in milliseconds. For example, 2016-04-04T19:58:46.480-00:00 or 1459799926.480. This property can only be used if <code>FROM_TIMESTAMP</code> or <code>AT_TIMESTAMP</code> shard types are specified.</p>",
         "StartingPosition$Timestamp": "<p>The time stamp of the data record from which to start reading. To specify a time stamp, set <code>StartingPosition</code> to <code>Type AT_TIMESTAMP</code>. A time stamp is the Unix epoch date with precision in milliseconds. For example, <code>2016-04-04T19:58:46.480-00:00</code> or <code>1459799926.480</code>. If a record with this exact time stamp does not exist, records will be streamed from the next (later) record. If the time stamp is older than the current trim horizon, records will be streamed from the oldest untrimmed data record (<code>TRIM_HORIZON</code>).</p>",
@@ -1504,9 +1931,105 @@
       "base": null,
       "refs": {}
     },
+    "UpdateDeadLetterQueueRecordsVisibilityErrorEntry": {
+      "base": "<p>A dead-letter record whose visibility timeout was not changed, and why.</p>",
+      "refs": {
+        "UpdateDeadLetterQueueRecordsVisibilityErrorEntryList$member": null
+      }
+    },
+    "UpdateDeadLetterQueueRecordsVisibilityErrorEntryList": {
+      "base": null,
+      "refs": {
+        "UpdateDeadLetterQueueRecordsVisibilityOutput$Failed": "<p>The records whose visibility timeout was not changed, each with the reason the entry failed.</p>"
+      }
+    },
+    "UpdateDeadLetterQueueRecordsVisibilityInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDeadLetterQueueRecordsVisibilityOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDeadLetterQueueRecordsVisibilityRequestEntry": {
+      "base": "<p>A dead-letter record whose visibility timeout is changed, and the new visibility timeout.</p>",
+      "refs": {
+        "UpdateDeadLetterQueueRecordsVisibilityRequestEntryList$member": null
+      }
+    },
+    "UpdateDeadLetterQueueRecordsVisibilityRequestEntryList": {
+      "base": null,
+      "refs": {
+        "UpdateDeadLetterQueueRecordsVisibilityInput$Entries": "<p>The dead-letter records whose visibility timeout is changed, identified by their receipt handles, and the new visibility timeout for each.</p>"
+      }
+    },
+    "UpdateDeadLetterQueueRecordsVisibilityResultEntry": {
+      "base": "<p>A dead-letter record whose visibility timeout was changed.</p>",
+      "refs": {
+        "UpdateDeadLetterQueueRecordsVisibilityResultEntryList$member": null
+      }
+    },
+    "UpdateDeadLetterQueueRecordsVisibilityResultEntryList": {
+      "base": null,
+      "refs": {
+        "UpdateDeadLetterQueueRecordsVisibilityOutput$Successful": "<p>The records whose visibility timeout was changed.</p>"
+      }
+    },
     "UpdateMaxRecordSizeInput": {
       "base": null,
       "refs": {}
+    },
+    "UpdateQueueInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateQueueOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateQueueRecordsVisibilityErrorEntry": {
+      "base": "<p>A record whose visibility timeout was not changed, and why.</p>",
+      "refs": {
+        "UpdateQueueRecordsVisibilityErrorEntryList$member": null
+      }
+    },
+    "UpdateQueueRecordsVisibilityErrorEntryList": {
+      "base": null,
+      "refs": {
+        "UpdateQueueRecordsVisibilityOutput$Failed": "<p>The records whose visibility timeout was not changed, each with the reason the entry failed.</p>"
+      }
+    },
+    "UpdateQueueRecordsVisibilityInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateQueueRecordsVisibilityOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateQueueRecordsVisibilityRequestEntry": {
+      "base": "<p>A record whose visibility timeout is changed, and the new visibility timeout.</p>",
+      "refs": {
+        "UpdateQueueRecordsVisibilityRequestEntryList$member": null
+      }
+    },
+    "UpdateQueueRecordsVisibilityRequestEntryList": {
+      "base": null,
+      "refs": {
+        "UpdateQueueRecordsVisibilityInput$Entries": "<p>The records whose visibility timeout is changed, identified by their receipt handles, and the new visibility timeout for each.</p>"
+      }
+    },
+    "UpdateQueueRecordsVisibilityResultEntry": {
+      "base": "<p>A record whose visibility timeout was changed.</p>",
+      "refs": {
+        "UpdateQueueRecordsVisibilityResultEntryList$member": null
+      }
+    },
+    "UpdateQueueRecordsVisibilityResultEntryList": {
+      "base": null,
+      "refs": {
+        "UpdateQueueRecordsVisibilityOutput$Successful": "<p>The records whose visibility timeout was changed.</p>"
+      }
     },
     "UpdateShardCountInput": {
       "base": null,
@@ -1533,8 +2056,18 @@
       "refs": {}
     },
     "ValidationException": {
-      "base": "<p>Specifies that you tried to invoke this API for a data stream with the on-demand capacity mode. This API is only supported for data streams with the provisioned capacity mode. </p>",
+      "base": "<p>The request failed validation. For example, a parameter value is not valid, a combination of parameters is not supported, or the operation is not supported for the stream's capacity mode. The error message describes the specific reason.</p>",
       "refs": {}
+    },
+    "VisibilityTimeoutSeconds": {
+      "base": null,
+      "refs": {
+        "QueueAttributes$VisibilityTimeoutSeconds": "<p>The duration, in seconds, that a record is in flight and not visible to any consumer instance after it is received. A record that is not acknowledged before this duration elapses becomes visible in the queue again and can be received by any consumer instance. If you omit this attribute when you create a queue, the queue uses 30 seconds.</p>",
+        "ReceiveDeadLetterQueueRecordsInput$VisibilityTimeoutSeconds": "<p>The duration, in seconds, that the records returned by this request are in flight and not visible to any consumer instance. If you do not specify this value, the queue's visibility timeout is used.</p>",
+        "ReceiveQueueRecordsInput$VisibilityTimeoutSeconds": "<p>The duration, in seconds, that the records returned by this request are in flight and not visible to any consumer instance. If you do not specify this value, the queue's visibility timeout is used.</p>",
+        "UpdateDeadLetterQueueRecordsVisibilityRequestEntry$VisibilityTimeoutSeconds": "<p>The new duration, in seconds, that the record is in flight and not visible to any consumer instance, measured from when this request is processed. Specify <code>0</code> to make the record visible immediately.</p>",
+        "UpdateQueueRecordsVisibilityRequestEntry$VisibilityTimeoutSeconds": "<p>The new duration, in seconds, that the record is in flight and not visible to any consumer instance, measured from when this request is processed. Specify <code>0</code> to make the record visible in the queue immediately.</p>"
+      }
     },
     "WarmThroughputObject": {
       "base": "<p>Represents the warm throughput configuration on the stream. This is only present for On-Demand Kinesis Data Streams in accounts that have <code>MinimumThroughputBillingCommitment</code> enabled.</p>",

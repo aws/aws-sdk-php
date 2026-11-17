@@ -14,6 +14,7 @@ use Aws\AwsClient;
  *             Scope?: string,
  *             SourceLogsConfiguration?: array,
  *             SourceMetricsConfiguration?: array,
+ *             SourceProfilesConfiguration?: array,
  *             SourceContextGraphConfiguration?: array,
  *             ...,
  *         },
@@ -22,6 +23,7 @@ use Aws\AwsClient;
  *             Account?: string,
  *             DestinationLogsConfiguration?: array,
  *             DestinationMetricsConfiguration?: array,
+ *             DestinationProfilesConfiguration?: array,
  *             ...,
  *         },
  *         ...,
@@ -38,6 +40,7 @@ use Aws\AwsClient;
  *             Scope?: string,
  *             SourceLogsConfiguration?: array,
  *             SourceMetricsConfiguration?: array,
+ *             SourceProfilesConfiguration?: array,
  *             SourceContextGraphConfiguration?: array,
  *             ...,
  *         },
@@ -46,11 +49,30 @@ use Aws\AwsClient;
  *             Account?: string,
  *             DestinationLogsConfiguration?: array,
  *             DestinationMetricsConfiguration?: array,
+ *             DestinationProfilesConfiguration?: array,
  *             ...,
  *         },
  *         ...,
  *     },
  *     Tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createConnector(array $args = [])
+ * @phpstan-method \Aws\Result createConnector(array{
+ *     ConnectorConfiguration?: array{Azure?: array{TenantIdentifier?: string, ClientIdentifier?: string, ...}, ...},
+ *     RoleArn?: string,
+ *     Name?: string,
+ *     Tags?: array<string, string>,
+ *     ClientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createConnectorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createConnectorAsync(array{
+ *     ConnectorConfiguration?: array{Azure?: array{TenantIdentifier?: string, ClientIdentifier?: string, ...}, ...},
+ *     RoleArn?: string,
+ *     Name?: string,
+ *     Tags?: array<string, string>,
+ *     ClientToken?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createDatasetIntegration(array $args = [])
@@ -199,6 +221,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteCentralizationRuleForOrganization(array{RuleIdentifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteCentralizationRuleForOrganizationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteCentralizationRuleForOrganizationAsync(array{RuleIdentifier?: string, ...} $args = [])
+ * @method \Aws\Result deleteConnector(array $args = [])
+ * @phpstan-method \Aws\Result deleteConnector(array{ConnectorIdentifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteConnectorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteConnectorAsync(array{ConnectorIdentifier?: string, ...} $args = [])
  * @method \Aws\Result deleteDatasetIntegration(array $args = [])
  * @phpstan-method \Aws\Result deleteDatasetIntegration(array{Arn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteDatasetIntegrationAsync(array $args = [])
@@ -223,6 +249,18 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getCentralizationRuleForOrganization(array{RuleIdentifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getCentralizationRuleForOrganizationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getCentralizationRuleForOrganizationAsync(array{RuleIdentifier?: string, ...} $args = [])
+ * @method \Aws\Result getConnector(array $args = [])
+ * @phpstan-method \Aws\Result getConnector(array{ConnectorIdentifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getConnectorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getConnectorAsync(array{ConnectorIdentifier?: string, ...} $args = [])
+ * @method \Aws\Result getConnectorTelemetryManifest(array $args = [])
+ * @phpstan-method \Aws\Result getConnectorTelemetryManifest(array{ConnectorIdentifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getConnectorTelemetryManifestAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getConnectorTelemetryManifestAsync(array{ConnectorIdentifier?: string, ...} $args = [])
+ * @method \Aws\Result getConnectorTelemetrySetup(array $args = [])
+ * @phpstan-method \Aws\Result getConnectorTelemetrySetup(array{ConnectorIdentifier?: string, Format?: 'BICEP', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getConnectorTelemetrySetupAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getConnectorTelemetrySetupAsync(array{ConnectorIdentifier?: string, Format?: 'BICEP', ...} $args = [])
  * @method \Aws\Result getDatasetIntegration(array $args = [])
  * @phpstan-method \Aws\Result getDatasetIntegration(array{Arn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getDatasetIntegrationAsync(array $args = [])
@@ -255,10 +293,18 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getTelemetryRuleForOrganization(array{RuleIdentifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getTelemetryRuleForOrganizationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getTelemetryRuleForOrganizationAsync(array{RuleIdentifier?: string, ...} $args = [])
+ * @method \Aws\Result getThirdPartyTelemetryEnrichment(array $args = [])
+ * @phpstan-method \Aws\Result getThirdPartyTelemetryEnrichment(array{TelemetryEnrichmentIdentifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getThirdPartyTelemetryEnrichmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getThirdPartyTelemetryEnrichmentAsync(array{TelemetryEnrichmentIdentifier?: string, ...} $args = [])
  * @method \Aws\Result listCentralizationRulesForOrganization(array $args = [])
  * @phpstan-method \Aws\Result listCentralizationRulesForOrganization(array{RuleNamePrefix?: string, AllRegions?: bool, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listCentralizationRulesForOrganizationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listCentralizationRulesForOrganizationAsync(array{RuleNamePrefix?: string, AllRegions?: bool, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result listConnectors(array $args = [])
+ * @phpstan-method \Aws\Result listConnectors(array{MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listConnectorsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listConnectorsAsync(array{MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \Aws\Result listDatasetIntegrations(array $args = [])
  * @phpstan-method \Aws\Result listDatasetIntegrations(array{MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listDatasetIntegrationsAsync(array $args = [])
@@ -305,6 +351,44 @@ use Aws\AwsClient;
  *     NextToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listResourcesByConnector(array $args = [])
+ * @phpstan-method \Aws\Result listResourcesByConnector(array{
+ *     ConnectorIdentifier?: string,
+ *     Selector?: array{
+ *         Azure?: array{
+ *             ManagementGroups?: array,
+ *             Subscriptions?: array,
+ *             ResourceTypes?: array,
+ *             Regions?: array,
+ *             ResourceIds?: array,
+ *             EventHubs?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listResourcesByConnectorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listResourcesByConnectorAsync(array{
+ *     ConnectorIdentifier?: string,
+ *     Selector?: array{
+ *         Azure?: array{
+ *             ManagementGroups?: array,
+ *             Subscriptions?: array,
+ *             ResourceTypes?: array,
+ *             Regions?: array,
+ *             ResourceIds?: array,
+ *             EventHubs?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listS3TableIntegrations(array $args = [])
  * @phpstan-method \Aws\Result listS3TableIntegrations(array{MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listS3TableIntegrationsAsync(array $args = [])
@@ -339,6 +423,38 @@ use Aws\AwsClient;
  *     NextToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listThirdPartyTelemetryEnrichments(array $args = [])
+ * @phpstan-method \Aws\Result listThirdPartyTelemetryEnrichments(array{
+ *     Status?: 'Impaired'|'Initializing'|'Running'|'Stopped',
+ *     TelemetrySource?: 'Azure',
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listThirdPartyTelemetryEnrichmentsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listThirdPartyTelemetryEnrichmentsAsync(array{
+ *     Status?: 'Impaired'|'Initializing'|'Running'|'Stopped',
+ *     TelemetrySource?: 'Azure',
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result putConnectorTelemetryManifest(array $args = [])
+ * @phpstan-method \Aws\Result putConnectorTelemetryManifest(array{
+ *     ConnectorIdentifier?: string,
+ *     Manifest?: array{Source?: array{Azure?: list<array>, ...}, Infrastructure?: array{Azure?: array, ...}, ...},
+ *     ExpectedVersion?: int,
+ *     ClientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise putConnectorTelemetryManifestAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putConnectorTelemetryManifestAsync(array{
+ *     ConnectorIdentifier?: string,
+ *     Manifest?: array{Source?: array{Azure?: list<array>, ...}, Infrastructure?: array{Azure?: array, ...}, ...},
+ *     ExpectedVersion?: int,
+ *     ClientToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result startTelemetryEnrichment(array $args = [])
  * @phpstan-method \Aws\Result startTelemetryEnrichment(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise startTelemetryEnrichmentAsync(array $args = [])
@@ -351,6 +467,24 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result startTelemetryEvaluationForOrganization(array{Regions?: list<string>, AllRegions?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise startTelemetryEvaluationForOrganizationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise startTelemetryEvaluationForOrganizationAsync(array{Regions?: list<string>, AllRegions?: bool, ...} $args = [])
+ * @method \Aws\Result startTelemetryPipelineRefresh(array $args = [])
+ * @phpstan-method \Aws\Result startTelemetryPipelineRefresh(array{PipelineIdentifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise startTelemetryPipelineRefreshAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startTelemetryPipelineRefreshAsync(array{PipelineIdentifier?: string, ...} $args = [])
+ * @method \Aws\Result startThirdPartyTelemetryEnrichment(array $args = [])
+ * @phpstan-method \Aws\Result startThirdPartyTelemetryEnrichment(array{
+ *     Name?: string,
+ *     TelemetrySourceConfiguration?: array{Azure?: array{AwsConfigConnectorArn?: string, ...}, ...},
+ *     Tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise startThirdPartyTelemetryEnrichmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startThirdPartyTelemetryEnrichmentAsync(array{
+ *     Name?: string,
+ *     TelemetrySourceConfiguration?: array{Azure?: array{AwsConfigConnectorArn?: string, ...}, ...},
+ *     Tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result stopTelemetryEnrichment(array $args = [])
  * @phpstan-method \Aws\Result stopTelemetryEnrichment(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise stopTelemetryEnrichmentAsync(array $args = [])
@@ -363,6 +497,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result stopTelemetryEvaluationForOrganization(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise stopTelemetryEvaluationForOrganizationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise stopTelemetryEvaluationForOrganizationAsync(array{...} $args = [])
+ * @method \Aws\Result stopThirdPartyTelemetryEnrichment(array $args = [])
+ * @phpstan-method \Aws\Result stopThirdPartyTelemetryEnrichment(array{TelemetryEnrichmentIdentifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopThirdPartyTelemetryEnrichmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise stopThirdPartyTelemetryEnrichmentAsync(array{TelemetryEnrichmentIdentifier?: string, ...} $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @phpstan-method \Aws\Result tagResource(array{ResourceARN?: string, Tags?: array<string, string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
@@ -394,6 +532,7 @@ use Aws\AwsClient;
  *             Scope?: string,
  *             SourceLogsConfiguration?: array,
  *             SourceMetricsConfiguration?: array,
+ *             SourceProfilesConfiguration?: array,
  *             SourceContextGraphConfiguration?: array,
  *             ...,
  *         },
@@ -402,6 +541,7 @@ use Aws\AwsClient;
  *             Account?: string,
  *             DestinationLogsConfiguration?: array,
  *             DestinationMetricsConfiguration?: array,
+ *             DestinationProfilesConfiguration?: array,
  *             ...,
  *         },
  *         ...,
@@ -417,6 +557,7 @@ use Aws\AwsClient;
  *             Scope?: string,
  *             SourceLogsConfiguration?: array,
  *             SourceMetricsConfiguration?: array,
+ *             SourceProfilesConfiguration?: array,
  *             SourceContextGraphConfiguration?: array,
  *             ...,
  *         },
@@ -425,6 +566,7 @@ use Aws\AwsClient;
  *             Account?: string,
  *             DestinationLogsConfiguration?: array,
  *             DestinationMetricsConfiguration?: array,
+ *             DestinationProfilesConfiguration?: array,
  *             ...,
  *         },
  *         ...,

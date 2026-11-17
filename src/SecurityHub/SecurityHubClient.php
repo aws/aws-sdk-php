@@ -471,6 +471,7 @@ use Aws\AwsClient;
  *     Description?: string,
  *     Provider?: array{
  *         Azure?: array{AWSConfigConnectorArn?: string, ScopeConfiguration?: array, AzureRegions?: list<string>, ...},
+ *         GCP?: array{AWSConfigConnectorArn?: string, ScopeConfiguration?: array, GCPRegions?: list<string>, ...},
  *         ...,
  *     },
  *     Tags?: array<string, string>,
@@ -483,6 +484,7 @@ use Aws\AwsClient;
  *     Description?: string,
  *     Provider?: array{
  *         Azure?: array{AWSConfigConnectorArn?: string, ScopeConfiguration?: array, AzureRegions?: list<string>, ...},
+ *         GCP?: array{AWSConfigConnectorArn?: string, ScopeConfiguration?: array, GCPRegions?: list<string>, ...},
  *         ...,
  *     },
  *     Tags?: array<string, string>,
@@ -497,6 +499,7 @@ use Aws\AwsClient;
  *         JiraCloud?: array{ProjectKey?: string, ...},
  *         ServiceNow?: array{InstanceName?: string, SecretArn?: string, ...},
  *         Azure?: array{AWSConfigConnectorArn?: string, ScopeConfiguration?: array, AzureRegions?: list<string>, ...},
+ *         GCP?: array{AWSConfigConnectorArn?: string, ScopeConfiguration?: array, GCPRegions?: list<string>, ...},
  *         ...,
  *     },
  *     KmsKeyArn?: string,
@@ -512,6 +515,7 @@ use Aws\AwsClient;
  *         JiraCloud?: array{ProjectKey?: string, ...},
  *         ServiceNow?: array{InstanceName?: string, SecretArn?: string, ...},
  *         Azure?: array{AWSConfigConnectorArn?: string, ScopeConfiguration?: array, AzureRegions?: list<string>, ...},
+ *         GCP?: array{AWSConfigConnectorArn?: string, ScopeConfiguration?: array, GCPRegions?: list<string>, ...},
  *         ...,
  *     },
  *     KmsKeyArn?: string,
@@ -832,9 +836,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeSecurityHubV2Async(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeSecurityHubV2Async(array{...} $args = [])
  * @method \Aws\Result describeStandards(array $args = [])
- * @phpstan-method \Aws\Result describeStandards(array{NextToken?: string, MaxResults?: int, Providers?: list<'AWS'|'Azure'>, ...} $args = [])
+ * @phpstan-method \Aws\Result describeStandards(array{NextToken?: string, MaxResults?: int, Providers?: list<'AWS'|'Azure'|'GCP'>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeStandardsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise describeStandardsAsync(array{NextToken?: string, MaxResults?: int, Providers?: list<'AWS'|'Azure'>, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeStandardsAsync(array{NextToken?: string, MaxResults?: int, Providers?: list<'AWS'|'Azure'|'GCP'>, ...} $args = [])
  * @method \Aws\Result describeStandardsControls(array $args = [])
  * @phpstan-method \Aws\Result describeStandardsControls(array{StandardsSubscriptionArn?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeStandardsControlsAsync(array $args = [])
@@ -938,7 +942,7 @@ use Aws\AwsClient;
  *     StandardsSubscriptionArns?: list<string>,
  *     NextToken?: string,
  *     MaxResults?: int,
- *     Providers?: list<'AWS'|'Azure'>,
+ *     Providers?: list<'AWS'|'Azure'|'GCP'>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise getEnabledStandardsAsync(array $args = [])
@@ -946,7 +950,7 @@ use Aws\AwsClient;
  *     StandardsSubscriptionArns?: list<string>,
  *     NextToken?: string,
  *     MaxResults?: int,
- *     Providers?: list<'AWS'|'Azure'>,
+ *     Providers?: list<'AWS'|'Azure'|'GCP'>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result getExportJobV2(array $args = [])
@@ -1493,7 +1497,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listConnectors(array{
  *     NextToken?: string,
  *     MaxResults?: int,
- *     ProviderName?: 'AZURE',
+ *     ProviderName?: 'AZURE'|'GCP',
  *     ConnectorStatus?: 'CONNECTED'|'DEGRADED'|'FAILED_TO_CONNECT'|'UNKNOWN',
  *     EnablementStatus?: 'ENABLED'|'PENDING_DELETION'|'PENDING_ENABLEMENT'|'PENDING_UPDATE',
  *     ...,
@@ -1502,7 +1506,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise listConnectorsAsync(array{
  *     NextToken?: string,
  *     MaxResults?: int,
- *     ProviderName?: 'AZURE',
+ *     ProviderName?: 'AZURE'|'GCP',
  *     ConnectorStatus?: 'CONNECTED'|'DEGRADED'|'FAILED_TO_CONNECT'|'UNKNOWN',
  *     EnablementStatus?: 'ENABLED'|'PENDING_DELETION'|'PENDING_ENABLEMENT'|'PENDING_UPDATE',
  *     ...,
@@ -1511,7 +1515,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listConnectorsV2(array{
  *     NextToken?: string,
  *     MaxResults?: int,
- *     ProviderName?: 'AZURE'|'JIRA_CLOUD'|'SERVICENOW',
+ *     ProviderName?: 'AZURE'|'GCP'|'JIRA_CLOUD'|'SERVICENOW',
  *     ConnectorStatus?: 'CONNECTED'|'DEGRADED'|'FAILED_TO_CONNECT'|'PENDING_AUTHORIZATION'|'PENDING_CONFIGURATION'|'UNKNOWN',
  *     EnablementStatus?: 'ENABLED'|'FAILED_TO_DELETE'|'FAILED_TO_ENABLE'|'FAILED_TO_UPDATE'|'PENDING_DELETION'|'PENDING_ENABLEMENT'|'PENDING_UPDATE',
  *     ...,
@@ -1520,7 +1524,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise listConnectorsV2Async(array{
  *     NextToken?: string,
  *     MaxResults?: int,
- *     ProviderName?: 'AZURE'|'JIRA_CLOUD'|'SERVICENOW',
+ *     ProviderName?: 'AZURE'|'GCP'|'JIRA_CLOUD'|'SERVICENOW',
  *     ConnectorStatus?: 'CONNECTED'|'DEGRADED'|'FAILED_TO_CONNECT'|'PENDING_AUTHORIZATION'|'PENDING_CONFIGURATION'|'UNKNOWN',
  *     EnablementStatus?: 'ENABLED'|'FAILED_TO_DELETE'|'FAILED_TO_ENABLE'|'FAILED_TO_UPDATE'|'PENDING_DELETION'|'PENDING_ENABLEMENT'|'PENDING_UPDATE',
  *     ...,
@@ -1582,9 +1586,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listOrganizationAdminAccountsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listOrganizationAdminAccountsAsync(array{MaxResults?: int, NextToken?: string, Feature?: 'SecurityHub'|'SecurityHubV2', ...} $args = [])
  * @method \Aws\Result listSecurityControlDefinitions(array $args = [])
- * @phpstan-method \Aws\Result listSecurityControlDefinitions(array{StandardsArn?: string, NextToken?: string, MaxResults?: int, Providers?: list<'AWS'|'Azure'>, ...} $args = [])
+ * @phpstan-method \Aws\Result listSecurityControlDefinitions(array{StandardsArn?: string, NextToken?: string, MaxResults?: int, Providers?: list<'AWS'|'Azure'|'GCP'>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listSecurityControlDefinitionsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listSecurityControlDefinitionsAsync(array{StandardsArn?: string, NextToken?: string, MaxResults?: int, Providers?: list<'AWS'|'Azure'>, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listSecurityControlDefinitionsAsync(array{StandardsArn?: string, NextToken?: string, MaxResults?: int, Providers?: list<'AWS'|'Azure'|'GCP'>, ...} $args = [])
  * @method \Aws\Result listStandardsControlAssociations(array $args = [])
  * @phpstan-method \Aws\Result listStandardsControlAssociations(array{SecurityControlId?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listStandardsControlAssociationsAsync(array $args = [])
@@ -1751,14 +1755,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateConnector(array{
  *     ConnectorId?: string,
  *     Description?: string,
- *     Provider?: array{Azure?: array{ScopeConfiguration?: array, AzureRegions?: list<string>, ...}, ...},
+ *     Provider?: array{
+ *         Azure?: array{ScopeConfiguration?: array, AzureRegions?: list<string>, ...},
+ *         GCP?: array{ScopeConfiguration?: array, GCPRegions?: list<string>, ...},
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateConnectorAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateConnectorAsync(array{
  *     ConnectorId?: string,
  *     Description?: string,
- *     Provider?: array{Azure?: array{ScopeConfiguration?: array, AzureRegions?: list<string>, ...}, ...},
+ *     Provider?: array{
+ *         Azure?: array{ScopeConfiguration?: array, AzureRegions?: list<string>, ...},
+ *         GCP?: array{ScopeConfiguration?: array, GCPRegions?: list<string>, ...},
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateConnectorV2(array $args = [])
@@ -1769,6 +1781,7 @@ use Aws\AwsClient;
  *         JiraCloud?: array{ProjectKey?: string, ...},
  *         ServiceNow?: array{SecretArn?: string, ...},
  *         Azure?: array{ScopeConfiguration?: array, AzureRegions?: list<string>, ...},
+ *         GCP?: array{ScopeConfiguration?: array, GCPRegions?: list<string>, ...},
  *         ...,
  *     },
  *     ...,
@@ -1781,6 +1794,7 @@ use Aws\AwsClient;
  *         JiraCloud?: array{ProjectKey?: string, ...},
  *         ServiceNow?: array{SecretArn?: string, ...},
  *         Azure?: array{ScopeConfiguration?: array, AzureRegions?: list<string>, ...},
+ *         GCP?: array{ScopeConfiguration?: array, GCPRegions?: list<string>, ...},
  *         ...,
  *     },
  *     ...,

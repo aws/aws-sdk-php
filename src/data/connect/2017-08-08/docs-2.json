@@ -5711,6 +5711,18 @@
         "EvaluationSummary$ContactParticipant": "<p>Information about a contact participant in the evaluation.</p>"
       }
     },
+    "EvaluationEnablementStatus": {
+      "base": null,
+      "refs": {
+        "EvaluationEnablementStatusMap$value": null
+      }
+    },
+    "EvaluationEnablementStatusMap": {
+      "base": null,
+      "refs": {
+        "Evaluation$ItemEnablementStatus": "<p>A map of item (section or question) identifiers to their enablement status, computed by the service from each item's conditional enablement configuration. Disabled items are excluded from scoring. Valid values: <code>ENABLED</code> | <code>DISABLED</code>.</p>"
+      }
+    },
     "EvaluationForm": {
       "base": "<p>Information about the evaluation form.</p>",
       "refs": {
@@ -5752,6 +5764,12 @@
         "ListEvaluationFormAIVersionsResponse$AIVersionSummaries": "<p>The list of AI version summaries.</p>"
       }
     },
+    "EvaluationFormAiMetricsField": {
+      "base": null,
+      "refs": {
+        "EvaluationFormItemEnablementSource$AiMetricsField": "<p>The AI metrics field to use as the source. Use when <code>Type</code> is <code>AI_METRICS</code>.</p>"
+      }
+    },
     "EvaluationFormAutoEvaluationConfiguration": {
       "base": "<p>The automatic evaluation configuration of an evaluation form.</p>",
       "refs": {
@@ -5759,6 +5777,18 @@
         "EvaluationForm$AutoEvaluationConfiguration": "<p>The automatic evaluation configuration of an evaluation form.</p>",
         "EvaluationFormContent$AutoEvaluationConfiguration": "<p>The configuration of the automated evaluation.</p>",
         "UpdateEvaluationFormRequest$AutoEvaluationConfiguration": "<p>Whether automated evaluations are enabled.</p>"
+      }
+    },
+    "EvaluationFormContactAttributeKey": {
+      "base": null,
+      "refs": {
+        "EvaluationFormItemEnablementSource$ContactAttributeKey": "<p>The key of the contact attribute to use as the source. Use when <code>Type</code> is <code>CONTACT</code>.</p>"
+      }
+    },
+    "EvaluationFormContactField": {
+      "base": null,
+      "refs": {
+        "EvaluationFormItemEnablementSource$ContactField": "<p>The contact field to use as the source, such as <code>CHANNEL</code>, <code>QUEUE_ARN</code>, <code>OVERALL_CUSTOMER_SENTIMENT_SCORE</code>, or <code>RECORDING_MEDIA_STREAM_TYPES</code>. Use when <code>Type</code> is <code>CONTACT</code>.</p>"
       }
     },
     "EvaluationFormContent": {
@@ -5777,6 +5807,30 @@
         "UpdateEvaluationFormRequest$Description": "<p>The description of the evaluation form.</p>"
       }
     },
+    "EvaluationFormEnablementBooleanValue": {
+      "base": null,
+      "refs": {
+        "EvaluationFormItemEnablementSourceValue$BooleanValue": "<p>A Boolean value to compare against the source. Use when <code>Type</code> is <code>BOOLEAN_VALUE</code>.</p>"
+      }
+    },
+    "EvaluationFormEnablementNumericValue": {
+      "base": null,
+      "refs": {
+        "EvaluationFormItemEnablementSourceValue$NumericValue": "<p>A numeric value to compare against the source. Use when <code>Type</code> is <code>NUMERIC_VALUE</code>.</p>"
+      }
+    },
+    "EvaluationFormEnablementStringValue": {
+      "base": null,
+      "refs": {
+        "EvaluationFormItemEnablementSourceValue$StringValue": "<p>A string value to compare against the source. Use when <code>Type</code> is <code>STRING_VALUE</code>.</p>"
+      }
+    },
+    "EvaluationFormEvaluationMetadataField": {
+      "base": null,
+      "refs": {
+        "EvaluationFormItemEnablementSource$EvaluationMetadataField": "<p>The evaluation metadata field to use as the source. Use when <code>Type</code> is <code>EVALUATION_METADATA</code>.</p>"
+      }
+    },
     "EvaluationFormId": {
       "base": null,
       "refs": {
@@ -5792,15 +5846,16 @@
     "EvaluationFormItemEnablementAction": {
       "base": null,
       "refs": {
-        "EvaluationFormItemEnablementConfiguration$Action": "<p>An enablement action that if condition is satisfied. </p>",
-        "EvaluationFormItemEnablementConfiguration$DefaultAction": "<p>An enablement action that if condition is not satisfied. </p>"
+        "EvaluationFormItemEnablementConfiguration$Action": "<p>The enablement action to apply if the condition is satisfied.</p>",
+        "EvaluationFormItemEnablementConfiguration$DefaultAction": "<p>The enablement action to apply if the condition is not satisfied. This action is also applied when the condition depends on an external source that is still pending or could not be resolved.</p>"
       }
     },
     "EvaluationFormItemEnablementCondition": {
       "base": "<p>A condition for item enablement.</p>",
       "refs": {
         "EvaluationFormItemEnablementConditionOperand$Condition": "<p>A condition for item enablement.</p>",
-        "EvaluationFormItemEnablementConfiguration$Condition": "<p>A condition for item enablement configuration.</p>"
+        "EvaluationFormItemEnablementConfiguration$Condition": "<p>A condition for item enablement configuration.</p>",
+        "SingleSelectQuestionAutomationRule$Condition": "<p>The condition that must be satisfied for the answer option to be selected. The condition uses the same sources, comparators, and operators as item enablement conditions.</p>"
       }
     },
     "EvaluationFormItemEnablementConditionOperand": {
@@ -5818,7 +5873,8 @@
     "EvaluationFormItemEnablementConfiguration": {
       "base": "<p>An item enablement configuration.</p>",
       "refs": {
-        "EvaluationFormQuestion$Enablement": "<p>A question conditional enablement.</p>"
+        "EvaluationFormQuestion$Enablement": "<p>A question conditional enablement.</p>",
+        "EvaluationFormSection$Enablement": "<p>The conditional enablement configuration of the section. Sections use the same enablement model as questions.</p>"
       }
     },
     "EvaluationFormItemEnablementExpression": {
@@ -5830,25 +5886,27 @@
     "EvaluationFormItemEnablementOperator": {
       "base": null,
       "refs": {
-        "EvaluationFormItemEnablementCondition$Operator": "<p>The operator to be used to be applied to operands if more than one provided. </p>"
+        "EvaluationFormItemEnablementCondition$Operator": "<p>The operator to apply to the operands when more than one operand is provided.</p>"
       }
     },
     "EvaluationFormItemEnablementSource": {
       "base": "<p>An enablement expression source item.</p>",
       "refs": {
-        "EvaluationFormItemEnablementExpression$Source": "<p>A source item of enablement expression.</p>"
+        "EvaluationFormItemEnablementExpression$Source": "<p>A source item of enablement expression.</p>",
+        "EvaluationResolvedSource$Source": "<p>The external source, such as contact data, evaluation metadata, form metadata, or AI metrics.</p>"
       }
     },
     "EvaluationFormItemEnablementSourceType": {
       "base": null,
       "refs": {
-        "EvaluationFormItemEnablementSource$Type": "<p>A type of source item. </p>"
+        "EvaluationFormItemEnablementSource$Type": "<p>A type of source item. Valid values:</p> <ul> <li> <p> <code>QUESTION_REF_ID</code> - The answer to another question in the evaluation form.</p> </li> <li> <p> <code>CONTACT</code> - Data from the evaluated contact.</p> </li> <li> <p> <code>EVALUATION_METADATA</code> - Metadata of the evaluation, such as the evaluation type.</p> </li> <li> <p> <code>AI_METRICS</code> - Metrics about AI agents, AI sessions, and AI tools on the contact.</p> </li> </ul>"
       }
     },
     "EvaluationFormItemEnablementSourceValue": {
-      "base": "<p>An enablement expression source value.</p>",
+      "base": "<p>An enablement expression source value. Provide only the value member that matches the specified <code>Type</code>.</p>",
       "refs": {
-        "EvaluationFormItemEnablementSourceValueList$member": null
+        "EvaluationFormItemEnablementSourceValueList$member": null,
+        "EvaluationResolvedSourceValueList$member": null
       }
     },
     "EvaluationFormItemEnablementSourceValueList": {
@@ -5860,13 +5918,13 @@
     "EvaluationFormItemEnablementSourceValueType": {
       "base": null,
       "refs": {
-        "EvaluationFormItemEnablementSourceValue$Type": "<p>A type of source item value. </p>"
+        "EvaluationFormItemEnablementSourceValue$Type": "<p>A type of source item value. Valid values: <code>OPTION_REF_ID</code> | <code>STRING_VALUE</code> | <code>NUMERIC_VALUE</code> | <code>BOOLEAN_VALUE</code> | <code>DATETIME_VALUE</code>.</p>"
       }
     },
     "EvaluationFormItemSourceValuesComparator": {
       "base": null,
       "refs": {
-        "EvaluationFormItemEnablementExpression$Comparator": "<p>A comparator to be used against list of values. </p>"
+        "EvaluationFormItemEnablementExpression$Comparator": "<p>A comparator to be used against a list of values. <code>IN</code>, <code>NOT_IN</code>, <code>ALL_IN</code>, and <code>EXACT</code> compare sets of values. <code>GREATER_THAN</code>, <code>LESS_THAN</code>, <code>GREATER_THAN_OR_EQUAL_TO</code>, and <code>LESS_THAN_OR_EQUAL_TO</code> compare a single numeric or date and time value. <code>EQUAL_TO</code> and <code>NOT_EQUAL_TO</code> compare a single value.</p>"
       }
     },
     "EvaluationFormItemWeight": {
@@ -6009,7 +6067,7 @@
     "EvaluationFormQuestionAutomationAnswerSource": {
       "base": "<p>A question automation answer.</p>",
       "refs": {
-        "EvaluationFormMultiSelectQuestionAutomation$AnswerSource": null,
+        "EvaluationFormMultiSelectQuestionAutomation$AnswerSource": "<p>Automation answer source.</p>",
         "EvaluationFormNumericQuestionAutomation$AnswerSource": "<p>A source of automation answer for numeric question.</p>",
         "EvaluationFormSingleSelectQuestionAutomation$AnswerSource": "<p>Automation answer source.</p>",
         "EvaluationFormTextQuestionAutomation$AnswerSource": "<p>Automation answer source.</p>"
@@ -6018,7 +6076,7 @@
     "EvaluationFormQuestionAutomationAnswerSourceType": {
       "base": null,
       "refs": {
-        "EvaluationFormQuestionAutomationAnswerSource$SourceType": "<p>The automation answer source type.</p>"
+        "EvaluationFormQuestionAutomationAnswerSource$SourceType": "<p>The automation answer source type. Valid values:</p> <ul> <li> <p> <code>CONTACT_LENS_DATA</code> - The answer is based on Contact Lens data, such as rule categories and metrics.</p> </li> <li> <p> <code>GEN_AI</code> - The answer is generated by generative AI.</p> </li> <li> <p> <code>CONDITION</code> - The answer is determined by evaluating the conditions defined in the automation rules of the question.</p> </li> </ul>"
       }
     },
     "EvaluationFormQuestionInstructions": {
@@ -6129,6 +6187,12 @@
       "base": null,
       "refs": {
         "EvaluationFormSection$Title": "<p>The title of the section.</p>"
+      }
+    },
+    "EvaluationFormSegmentAttributeKey": {
+      "base": null,
+      "refs": {
+        "EvaluationFormItemEnablementSource$SegmentAttributeKey": "<p>The key of the contact segment attribute to use as the source. Use when <code>Type</code> is <code>CONTACT</code>.</p>"
       }
     },
     "EvaluationFormSingleSelectQuestionAutomation": {
@@ -6331,6 +6395,13 @@
         "ContactEvaluations$key": null
       }
     },
+    "EvaluationItemResolutionStatus": {
+      "base": null,
+      "refs": {
+        "Evaluation$SourceResolutionStatus": "<p>The aggregate status of resolving the external source data (such as Contact Lens analysis and AI metrics) that is used by conditional enablement in the evaluation. Source data is resolved asynchronously after the evaluation is started. While a source is pending or after it fails to resolve, conditions that depend on it evaluate to the item's <code>DefaultAction</code>. Valid values:</p> <ul> <li> <p> <code>PENDING</code> - One or more sources have not been resolved yet. Call <code>DescribeContactEvaluation</code> again to get updated <code>ItemEnablementStatus</code> values.</p> </li> <li> <p> <code>RESOLVED</code> - All sources have been resolved.</p> </li> <li> <p> <code>FAILED</code> - One or more sources could not be resolved. Dependent conditions use the item's <code>DefaultAction</code>.</p> </li> </ul>",
+        "EvaluationResolvedSource$Status": "<p>The status of resolving the source. Valid values:</p> <ul> <li> <p> <code>PENDING</code> - The source has not been resolved yet.</p> </li> <li> <p> <code>RESOLVED</code> - The source has been resolved.</p> </li> <li> <p> <code>FAILED</code> - The source could not be resolved.</p> </li> </ul>"
+      }
+    },
     "EvaluationMetadata": {
       "base": "<p>Metadata information about a contact evaluation.</p>",
       "refs": {
@@ -6366,13 +6437,31 @@
     "EvaluationQuestionAnswerAnalysisType": {
       "base": null,
       "refs": {
-        "EvaluationSuggestedAnswer$AnalysisType": "<p>Type of analysis used to provide suggested answer.</p>"
+        "EvaluationSuggestedAnswer$AnalysisType": "<p>Type of analysis used to provide suggested answer. Valid values: <code>CONTACT_LENS_DATA</code> | <code>GEN_AI</code> | <code>CONDITION</code>.</p>"
       }
     },
     "EvaluationQuestionInputDetails": {
       "base": "<p>Details of the input data used for automated question processing.</p>",
       "refs": {
         "EvaluationSuggestedAnswer$Input": "<p>Details about the input used to question automation.</p>"
+      }
+    },
+    "EvaluationResolvedSource": {
+      "base": "<p>The resolved value of an external source that is used by the conditions in an evaluation form.</p>",
+      "refs": {
+        "EvaluationResolvedSourceList$member": null
+      }
+    },
+    "EvaluationResolvedSourceList": {
+      "base": null,
+      "refs": {
+        "Evaluation$SourceValues": "<p>The resolved values of the external sources (such as contact data, evaluation metadata, form metadata, and AI metrics) that are used by the conditions in the evaluation form. You can use these values to evaluate the conditions against the current answers without calling <code>DescribeContactEvaluation</code> again.</p>"
+      }
+    },
+    "EvaluationResolvedSourceValueList": {
+      "base": null,
+      "refs": {
+        "EvaluationResolvedSource$Values": "<p>The resolved values of the source. Present when <code>Status</code> is <code>RESOLVED</code>. Contains one value for a single-valued source, any number of values for a multi-valued source, and no values when the source is not present on the contact.</p>"
       }
     },
     "EvaluationReviewConfiguration": {
@@ -10261,7 +10350,7 @@
       }
     },
     "NumericQuestionPropertyValueAutomation": {
-      "base": "<p>Information about the property value used in automation of a numeric questions. Label values are associated with minimum and maximum values for the numeric question.</p> <ul> <li> <p>Sentiment scores have a minimum value of -5 and maximum value of 5.</p> </li> <li> <p> Duration labels, such as <code>NON_TALK_TIME</code>, <code>CONTACT_DURATION</code>, <code>AGENT_INTERACTION_DURATION</code>, <code>CUSTOMER_HOLD_TIME</code> have a minimum value of 0 and maximum value of 63072000.</p> </li> <li> <p>Percentages have a minimum value of 0 and maximum value of 100. </p> </li> <li> <p> <code>NUMBER_OF_INTERRUPTIONS</code> has a minimum value of 0 and maximum value of 1000.</p> </li> </ul>",
+      "base": "<p>Information about the property value used in automation of a numeric question. Label values are associated with minimum and maximum values for the numeric question.</p> <ul> <li> <p>Sentiment scores have a minimum value of -5 and maximum value of 5.</p> </li> <li> <p> Duration labels, such as <code>NON_TALK_TIME</code>, <code>CONTACT_DURATION</code>, <code>AGENT_INTERACTION_DURATION</code>, <code>CUSTOMER_HOLD_TIME</code> have a minimum value of 0 and maximum value of 63072000.</p> </li> <li> <p>Percentages have a minimum value of 0 and maximum value of 100. </p> </li> <li> <p> <code>NUMBER_OF_INTERRUPTIONS</code> has a minimum value of 0 and maximum value of 1000.</p> </li> </ul>",
       "refs": {
         "EvaluationFormNumericQuestionAutomation$PropertyValue": "<p>The property value of the automation.</p>"
       }
@@ -12107,8 +12196,9 @@
       "base": null,
       "refs": {
         "AutomaticFailConfiguration$TargetSection": "<p>The referenceId of the target section for auto failure.</p>",
-        "EvaluationFormItemEnablementSource$RefId": "<p>A referenceId of the source item.</p>",
-        "EvaluationFormItemEnablementSourceValue$RefId": "<p>A referenceId of the source value.</p>",
+        "EvaluationEnablementStatusMap$key": null,
+        "EvaluationFormItemEnablementSource$RefId": "<p>A referenceId of the source item. Use when <code>Type</code> is <code>QUESTION_REF_ID</code>.</p>",
+        "EvaluationFormItemEnablementSourceValue$RefId": "<p>A referenceId of the source value. Use when <code>Type</code> is <code>OPTION_REF_ID</code>.</p>",
         "EvaluationFormMultiSelectQuestionOption$RefId": "<p>Reference identifier for this option.</p>",
         "EvaluationFormQuestion$RefId": "<p>The identifier of the question. An identifier must be unique within the evaluation form.</p>",
         "EvaluationFormSection$RefId": "<p>The identifier of the section. An identifier must be unique within the evaluation form.</p>",
@@ -12116,6 +12206,7 @@
         "EvaluationFormSingleSelectQuestionOption$RefId": "<p>The identifier of the answer option. An identifier must be unique within the question.</p>",
         "EvaluationFormValidationFindingItem$RefId": "<p>The identifier of the evaluation form item (question or section) affected by the finding.</p>",
         "ReferenceIdList$member": null,
+        "SingleSelectQuestionAutomationRule$OptionRefId": "<p>The identifier of the answer option to select when the condition is satisfied.</p>",
         "SingleSelectQuestionRuleCategoryAutomation$OptionRefId": "<p>The identifier of the answer option.</p>"
       }
     },
@@ -13693,6 +13784,12 @@
         "TaskTemplateField$SingleSelectOptions": "<p>A list of options for a single select field.</p>"
       }
     },
+    "SingleSelectQuestionAutomationRule": {
+      "base": "<p>Information about a condition-based automation rule for a single select question. When the condition is satisfied, the specified answer option is selected.</p>",
+      "refs": {
+        "EvaluationFormSingleSelectQuestionAutomationOption$AutomationRule": "<p>The automation option based on a condition for the single select question. Use with the <code>CONDITION</code> answer source type.</p>"
+      }
+    },
     "SingleSelectQuestionRuleCategoryAutomation": {
       "base": "<p>Information about the automation option based on a rule category for a single select question.</p>",
       "refs": {
@@ -14954,6 +15051,7 @@
         "EvaluationForm$LastValidationTime": "<p>The timestamp when the most recent validation was started for this evaluation form.</p>",
         "EvaluationFormAIVersionLifecycle$StartOfLifeTime": "<p>The timestamp for when this AI version became available.</p>",
         "EvaluationFormAIVersionLifecycle$EndOfLifeTime": "<p>The timestamp when this AI version reaches or reached end of life.</p>",
+        "EvaluationFormItemEnablementSourceValue$DateTimeValue": "<p>A date and time value to compare against the source. Use when <code>Type</code> is <code>DATETIME_VALUE</code>.</p>",
         "EvaluationFormSearchSummary$CreatedTime": "<p>When the evaluation form was created.</p>",
         "EvaluationFormSearchSummary$LastModifiedTime": "<p>When the evaluation form was last changed.</p>",
         "EvaluationFormSearchSummary$LastActivatedTime": "<p>When the evaluation format was last activated.</p>",

@@ -95,8 +95,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result createAccessSource(array{
  *     cidr?: string,
  *     clientToken?: string,
- *     ipAddressType?: 'IPV4'|'IPV6',
+ *     ipAddressType?: 'IPV4'|'IPV6'|'NONE',
  *     name?: string,
+ *     coreNetworkEndpointId?: string,
+ *     segment?: string,
  *     dnsViewId?: string,
  *     protocol?: 'DO53'|'DOH'|'DOT',
  *     tags?: array<string, string>,
@@ -106,8 +108,10 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise createAccessSourceAsync(array{
  *     cidr?: string,
  *     clientToken?: string,
- *     ipAddressType?: 'IPV4'|'IPV6',
+ *     ipAddressType?: 'IPV4'|'IPV6'|'NONE',
  *     name?: string,
+ *     coreNetworkEndpointId?: string,
+ *     segment?: string,
  *     dnsViewId?: string,
  *     protocol?: 'DO53'|'DOH'|'DOT',
  *     tags?: array<string, string>,
@@ -127,6 +131,40 @@ use Aws\AwsClient;
  *     clientToken?: string,
  *     dnsViewId?: string,
  *     expiresAt?: int|string|\DateTimeInterface,
+ *     name?: string,
+ *     tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createCoreNetworkEndpoint(array $args = [])
+ * @phpstan-method \Aws\Result createCoreNetworkEndpoint(array{
+ *     clientToken?: string,
+ *     coreNetworkArn?: string,
+ *     globalResolverId?: string,
+ *     ipAddresses?: list<array{
+ *         ipv4Address?: string,
+ *         ipv6Address?: string,
+ *         dnsLabel?: string,
+ *         regionScope?: 'ALL'|'REGIONAL',
+ *         regions?: list<string>,
+ *         ...,
+ *     }>,
+ *     name?: string,
+ *     tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createCoreNetworkEndpointAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createCoreNetworkEndpointAsync(array{
+ *     clientToken?: string,
+ *     coreNetworkArn?: string,
+ *     globalResolverId?: string,
+ *     ipAddresses?: list<array{
+ *         ipv4Address?: string,
+ *         ipv6Address?: string,
+ *         dnsLabel?: string,
+ *         regionScope?: 'ALL'|'REGIONAL',
+ *         regions?: list<string>,
+ *         ...,
+ *     }>,
  *     name?: string,
  *     tags?: array<string, string>,
  *     ...,
@@ -214,6 +252,7 @@ use Aws\AwsClient;
  *     clientToken?: string,
  *     description?: string,
  *     ipAddressType?: 'DUAL_STACK'|'IPV4',
+ *     publicIpStatus?: 'DISABLED_RELEASED'|'DISABLED_RESERVED'|'ENABLED_RESERVED',
  *     name?: string,
  *     observabilityRegion?: string,
  *     regions?: list<string>,
@@ -225,6 +264,7 @@ use Aws\AwsClient;
  *     clientToken?: string,
  *     description?: string,
  *     ipAddressType?: 'DUAL_STACK'|'IPV4',
+ *     publicIpStatus?: 'DISABLED_RELEASED'|'DISABLED_RESERVED'|'ENABLED_RESERVED',
  *     name?: string,
  *     observabilityRegion?: string,
  *     regions?: list<string>,
@@ -239,6 +279,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteAccessToken(array{accessTokenId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAccessTokenAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteAccessTokenAsync(array{accessTokenId?: string, ...} $args = [])
+ * @method \Aws\Result deleteCoreNetworkEndpoint(array $args = [])
+ * @phpstan-method \Aws\Result deleteCoreNetworkEndpoint(array{coreNetworkEndpointId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteCoreNetworkEndpointAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteCoreNetworkEndpointAsync(array{coreNetworkEndpointId?: string, ...} $args = [])
  * @method \Aws\Result deleteDNSView(array $args = [])
  * @phpstan-method \Aws\Result deleteDNSView(array{dnsViewId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteDNSViewAsync(array $args = [])
@@ -275,6 +319,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getAccessToken(array{accessTokenId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getAccessTokenAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getAccessTokenAsync(array{accessTokenId?: string, ...} $args = [])
+ * @method \Aws\Result getCoreNetworkEndpoint(array $args = [])
+ * @phpstan-method \Aws\Result getCoreNetworkEndpoint(array{coreNetworkEndpointId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getCoreNetworkEndpointAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getCoreNetworkEndpointAsync(array{coreNetworkEndpointId?: string, ...} $args = [])
  * @method \Aws\Result getDNSView(array $args = [])
  * @phpstan-method \Aws\Result getDNSView(array{dnsViewId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getDNSViewAsync(array $args = [])
@@ -311,6 +359,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listAccessTokens(array{maxResults?: int, nextToken?: string, dnsViewId?: string, filters?: array<string, list<string>>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listAccessTokensAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listAccessTokensAsync(array{maxResults?: int, nextToken?: string, dnsViewId?: string, filters?: array<string, list<string>>, ...} $args = [])
+ * @method \Aws\Result listCoreNetworkEndpoints(array $args = [])
+ * @phpstan-method \Aws\Result listCoreNetworkEndpoints(array{maxResults?: int, nextToken?: string, filters?: array<string, list<string>>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listCoreNetworkEndpointsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listCoreNetworkEndpointsAsync(array{maxResults?: int, nextToken?: string, filters?: array<string, list<string>>, ...} $args = [])
  * @method \Aws\Result listDNSViews(array $args = [])
  * @phpstan-method \Aws\Result listDNSViews(array{maxResults?: int, nextToken?: string, globalResolverId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listDNSViewsAsync(array $args = [])
@@ -359,7 +411,8 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateAccessSource(array{
  *     accessSourceId?: string,
  *     cidr?: string,
- *     ipAddressType?: 'IPV4'|'IPV6',
+ *     dnsViewId?: string,
+ *     ipAddressType?: 'IPV4'|'IPV6'|'NONE',
  *     name?: string,
  *     protocol?: 'DO53'|'DOH'|'DOT',
  *     ...,
@@ -368,7 +421,8 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise updateAccessSourceAsync(array{
  *     accessSourceId?: string,
  *     cidr?: string,
- *     ipAddressType?: 'IPV4'|'IPV6',
+ *     dnsViewId?: string,
+ *     ipAddressType?: 'IPV4'|'IPV6'|'NONE',
  *     name?: string,
  *     protocol?: 'DO53'|'DOH'|'DOT',
  *     ...,
@@ -377,6 +431,36 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateAccessToken(array{accessTokenId?: string, name?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAccessTokenAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateAccessTokenAsync(array{accessTokenId?: string, name?: string, ...} $args = [])
+ * @method \Aws\Result updateCoreNetworkEndpoint(array $args = [])
+ * @phpstan-method \Aws\Result updateCoreNetworkEndpoint(array{
+ *     coreNetworkEndpointId?: string,
+ *     name?: string,
+ *     updateIpAddresses?: list<array{
+ *         operation?: 'ADD'|'REMOVE'|'UPDATE',
+ *         ipv4Address?: string,
+ *         ipv6Address?: string,
+ *         dnsLabel?: string,
+ *         regionScope?: 'ALL'|'REGIONAL',
+ *         regions?: list<string>,
+ *         ...,
+ *     }>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateCoreNetworkEndpointAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateCoreNetworkEndpointAsync(array{
+ *     coreNetworkEndpointId?: string,
+ *     name?: string,
+ *     updateIpAddresses?: list<array{
+ *         operation?: 'ADD'|'REMOVE'|'UPDATE',
+ *         ipv4Address?: string,
+ *         ipv6Address?: string,
+ *         dnsLabel?: string,
+ *         regionScope?: 'ALL'|'REGIONAL',
+ *         regions?: list<string>,
+ *         ...,
+ *     }>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateDNSView(array $args = [])
  * @phpstan-method \Aws\Result updateDNSView(array{
  *     dnsViewId?: string,
@@ -440,6 +524,7 @@ use Aws\AwsClient;
  *     observabilityRegion?: string,
  *     description?: string,
  *     ipAddressType?: 'DUAL_STACK'|'IPV4',
+ *     publicIpStatus?: 'DISABLED_RELEASED'|'DISABLED_RESERVED'|'ENABLED_RESERVED',
  *     regions?: list<string>,
  *     ...,
  * } $args = [])
@@ -450,6 +535,7 @@ use Aws\AwsClient;
  *     observabilityRegion?: string,
  *     description?: string,
  *     ipAddressType?: 'DUAL_STACK'|'IPV4',
+ *     publicIpStatus?: 'DISABLED_RELEASED'|'DISABLED_RESERVED'|'ENABLED_RESERVED',
  *     regions?: list<string>,
  *     ...,
  * } $args = [])

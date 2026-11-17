@@ -14778,7 +14778,10 @@
         "CreatedTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
         "EvaluationType":{"shape":"EvaluationType"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "ItemEnablementStatus":{"shape":"EvaluationEnablementStatusMap"},
+        "SourceResolutionStatus":{"shape":"EvaluationItemResolutionStatus"},
+        "SourceValues":{"shape":"EvaluationResolvedSourceList"}
       }
     },
     "EvaluationAcknowledgement":{
@@ -14883,6 +14886,19 @@
         "ContactParticipantId":{"shape":"ResourceId"}
       }
     },
+    "EvaluationEnablementStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "EvaluationEnablementStatusMap":{
+      "type":"map",
+      "key":{"shape":"ReferenceId"},
+      "value":{"shape":"EvaluationEnablementStatus"},
+      "max":100
+    },
     "EvaluationForm":{
       "type":"structure",
       "required":[
@@ -14963,12 +14979,58 @@
       "type":"list",
       "member":{"shape":"EvaluationFormAIVersionSummary"}
     },
+    "EvaluationFormAiMetricsField":{
+      "type":"string",
+      "enum":[
+        "AI_SESSION_IS_HANDED_OFF",
+        "AI_SESSION_SELF_SERVICE_DURATION",
+        "AI_SESSION_GOAL_SUCCESS_RATE",
+        "AI_SESSION_COMPLETENESS_SCORE",
+        "AI_SESSION_FAITHFULNESS_SCORE",
+        "AI_AGENT_MAX_PROMPT_LATENCY",
+        "AI_TOOL_MAX_LATENCY",
+        "AI_TOOL_SELECTION_ACCURACY",
+        "AI_TOOL_PARAMETER_ACCURACY",
+        "AI_TOOL_UTILIZATION_ACCURACY"
+      ]
+    },
     "EvaluationFormAutoEvaluationConfiguration":{
       "type":"structure",
       "required":["Enabled"],
       "members":{
         "Enabled":{"shape":"Boolean"}
       }
+    },
+    "EvaluationFormContactAttributeKey":{
+      "type":"string",
+      "max":32767,
+      "min":1
+    },
+    "EvaluationFormContactField":{
+      "type":"string",
+      "enum":[
+        "CATEGORIES",
+        "AGENT_ARN",
+        "QUEUE_ARN",
+        "ROUTING_PROFILE_ARN",
+        "CHANNEL",
+        "INITIATION_METHOD",
+        "IS_QUEUED",
+        "OVERALL_CUSTOMER_SENTIMENT_SCORE",
+        "OVERALL_AGENT_SENTIMENT_SCORE",
+        "CUSTOMER_SENTIMENT_SCORE_WITHOUT_AGENT",
+        "CUSTOMER_SENTIMENT_SCORE_WITH_AGENT",
+        "NON_TALK_TIME",
+        "NON_TALK_TIME_PERCENTAGE",
+        "NUMBER_OF_INTERRUPTIONS",
+        "CONTACT_DURATION",
+        "AGENT_INTERACTION_DURATION",
+        "CUSTOMER_HOLD_TIME",
+        "LONGEST_HOLD_DURATION",
+        "NUMBER_OF_HOLDS",
+        "AGENT_INTERACTION_AND_HOLD_DURATION",
+        "RECORDING_MEDIA_STREAM_TYPES"
+      ]
     },
     "EvaluationFormContent":{
       "type":"structure",
@@ -14995,6 +15057,17 @@
       }
     },
     "EvaluationFormDescription":{"type":"string"},
+    "EvaluationFormEnablementBooleanValue":{"type":"boolean"},
+    "EvaluationFormEnablementNumericValue":{"type":"double"},
+    "EvaluationFormEnablementStringValue":{
+      "type":"string",
+      "max":512,
+      "min":0
+    },
+    "EvaluationFormEvaluationMetadataField":{
+      "type":"string",
+      "enum":["EVALUATION_TYPE"]
+    },
     "EvaluationFormId":{
       "type":"string",
       "max":256,
@@ -15072,19 +15145,40 @@
       "required":["Type"],
       "members":{
         "Type":{"shape":"EvaluationFormItemEnablementSourceType"},
-        "RefId":{"shape":"ReferenceId"}
+        "RefId":{"shape":"ReferenceId"},
+        "ContactField":{"shape":"EvaluationFormContactField"},
+        "ContactAttributeKey":{"shape":"EvaluationFormContactAttributeKey"},
+        "SegmentAttributeKey":{"shape":"EvaluationFormSegmentAttributeKey"},
+        "EvaluationMetadataField":{"shape":"EvaluationFormEvaluationMetadataField"},
+        "AiMetricsField":{"shape":"EvaluationFormAiMetricsField"}
       }
     },
     "EvaluationFormItemEnablementSourceType":{
       "type":"string",
-      "enum":["QUESTION_REF_ID"]
+      "enum":[
+        "QUESTION_REF_ID",
+        "CONTACT",
+        "EVALUATION_METADATA",
+        "FORM_METADATA",
+        "AI_METRICS"
+      ]
     },
     "EvaluationFormItemEnablementSourceValue":{
       "type":"structure",
       "required":["Type"],
       "members":{
         "Type":{"shape":"EvaluationFormItemEnablementSourceValueType"},
-        "RefId":{"shape":"ReferenceId"}
+        "RefId":{"shape":"ReferenceId"},
+        "StringValue":{"shape":"EvaluationFormEnablementStringValue"},
+        "NumericValue":{
+          "shape":"EvaluationFormEnablementNumericValue",
+          "box":true
+        },
+        "BooleanValue":{
+          "shape":"EvaluationFormEnablementBooleanValue",
+          "box":true
+        },
+        "DateTimeValue":{"shape":"Timestamp"}
       }
     },
     "EvaluationFormItemEnablementSourceValueList":{
@@ -15093,7 +15187,13 @@
     },
     "EvaluationFormItemEnablementSourceValueType":{
       "type":"string",
-      "enum":["OPTION_REF_ID"]
+      "enum":[
+        "OPTION_REF_ID",
+        "STRING_VALUE",
+        "NUMERIC_VALUE",
+        "BOOLEAN_VALUE",
+        "DATETIME_VALUE"
+      ]
     },
     "EvaluationFormItemSourceValuesComparator":{
       "type":"string",
@@ -15101,7 +15201,13 @@
         "IN",
         "NOT_IN",
         "ALL_IN",
-        "EXACT"
+        "EXACT",
+        "GREATER_THAN",
+        "LESS_THAN",
+        "GREATER_THAN_OR_EQUAL_TO",
+        "LESS_THAN_OR_EQUAL_TO",
+        "EQUAL_TO",
+        "NOT_EQUAL_TO"
       ]
     },
     "EvaluationFormItemWeight":{"type":"double"},
@@ -15378,7 +15484,8 @@
       "type":"string",
       "enum":[
         "CONTACT_LENS_DATA",
-        "GEN_AI"
+        "GEN_AI",
+        "CONDITION"
       ]
     },
     "EvaluationFormQuestionInstructions":{"type":"string"},
@@ -15530,10 +15637,16 @@
         "Items":{"shape":"EvaluationFormItemsList"},
         "Weight":{"shape":"EvaluationFormItemWeight"},
         "IsExcludedFromScoring":{"shape":"Boolean"},
-        "ScoreThresholds":{"shape":"EvaluationFormScoreThresholdList"}
+        "ScoreThresholds":{"shape":"EvaluationFormScoreThresholdList"},
+        "Enablement":{"shape":"EvaluationFormItemEnablementConfiguration"}
       }
     },
     "EvaluationFormSectionTitle":{"type":"string"},
+    "EvaluationFormSegmentAttributeKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "EvaluationFormSingleSelectQuestionAutomation":{
       "type":"structure",
       "members":{
@@ -15545,7 +15658,8 @@
     "EvaluationFormSingleSelectQuestionAutomationOption":{
       "type":"structure",
       "members":{
-        "RuleCategory":{"shape":"SingleSelectQuestionRuleCategoryAutomation"}
+        "RuleCategory":{"shape":"SingleSelectQuestionRuleCategoryAutomation"},
+        "AutomationRule":{"shape":"SingleSelectQuestionAutomationRule"}
       },
       "union":true
     },
@@ -15737,6 +15851,14 @@
       }
     },
     "EvaluationId":{"type":"string"},
+    "EvaluationItemResolutionStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "RESOLVED",
+        "FAILED"
+      ]
+    },
     "EvaluationMetadata":{
       "type":"structure",
       "required":[
@@ -15785,7 +15907,8 @@
       "type":"string",
       "enum":[
         "CONTACT_LENS_DATA",
-        "GEN_AI"
+        "GEN_AI",
+        "CONDITION"
       ]
     },
     "EvaluationQuestionInputDetails":{
@@ -15793,6 +15916,28 @@
       "members":{
         "TranscriptType":{"shape":"EvaluationTranscriptType"}
       }
+    },
+    "EvaluationResolvedSource":{
+      "type":"structure",
+      "required":[
+        "Source",
+        "Status"
+      ],
+      "members":{
+        "Source":{"shape":"EvaluationFormItemEnablementSource"},
+        "Status":{"shape":"EvaluationItemResolutionStatus"},
+        "Values":{"shape":"EvaluationResolvedSourceValueList"}
+      }
+    },
+    "EvaluationResolvedSourceList":{
+      "type":"list",
+      "member":{"shape":"EvaluationResolvedSource"},
+      "max":100
+    },
+    "EvaluationResolvedSourceValueList":{
+      "type":"list",
+      "member":{"shape":"EvaluationFormItemEnablementSourceValue"},
+      "max":100
     },
     "EvaluationReviewConfiguration":{
       "type":"structure",
@@ -21439,7 +21584,16 @@
         "CUSTOMER_HOLD_TIME",
         "LONGEST_HOLD_DURATION",
         "NUMBER_OF_HOLDS",
-        "AGENT_INTERACTION_AND_HOLD_DURATION"
+        "AGENT_INTERACTION_AND_HOLD_DURATION",
+        "AI_SESSION_SELF_SERVICE_DURATION",
+        "AI_SESSION_GOAL_SUCCESS_RATE",
+        "AI_SESSION_COMPLETENESS_SCORE",
+        "AI_SESSION_FAITHFULNESS_SCORE",
+        "AI_AGENT_MAX_PROMPT_LATENCY",
+        "AI_TOOL_MAX_LATENCY",
+        "AI_TOOL_SELECTION_ACCURACY",
+        "AI_TOOL_PARAMETER_ACCURACY",
+        "AI_TOOL_UTILIZATION_ACCURACY"
       ]
     },
     "NumericQuestionPropertyValueAutomation":{
@@ -25535,6 +25689,17 @@
     "SingleSelectOptions":{
       "type":"list",
       "member":{"shape":"TaskTemplateSingleSelectOption"}
+    },
+    "SingleSelectQuestionAutomationRule":{
+      "type":"structure",
+      "required":[
+        "Condition",
+        "OptionRefId"
+      ],
+      "members":{
+        "Condition":{"shape":"EvaluationFormItemEnablementCondition"},
+        "OptionRefId":{"shape":"ReferenceId"}
+      }
     },
     "SingleSelectQuestionRuleCategoryAutomation":{
       "type":"structure",

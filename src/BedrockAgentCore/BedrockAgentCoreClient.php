@@ -205,6 +205,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteCapacityProviderSession(array{capacityProviderId?: string, sessionId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteCapacityProviderSessionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteCapacityProviderSessionAsync(array{capacityProviderId?: string, sessionId?: string, ...} $args = [])
+ * @method \Aws\Result deleteDatasetGeneration(array $args = [])
+ * @phpstan-method \Aws\Result deleteDatasetGeneration(array{datasetId?: string, generationId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteDatasetGenerationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteDatasetGenerationAsync(array{datasetId?: string, generationId?: string, ...} $args = [])
  * @method \Aws\Result deleteEvent(array $args = [])
  * @phpstan-method \Aws\Result deleteEvent(array{memoryId?: string, sessionId?: string, eventId?: string, actorId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteEventAsync(array $args = [])
@@ -261,6 +265,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getAgentCard(array{runtimeSessionId?: string, agentRuntimeArn?: string, qualifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getAgentCardAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getAgentCardAsync(array{runtimeSessionId?: string, agentRuntimeArn?: string, qualifier?: string, ...} $args = [])
+ * @method \Aws\Result getAgentInsight(array $args = [])
+ * @phpstan-method \Aws\Result getAgentInsight(array{applicationName?: string, agentInsightId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAgentInsightAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAgentInsightAsync(array{applicationName?: string, agentInsightId?: string, ...} $args = [])
  * @method \Aws\Result getBatchEvaluation(array $args = [])
  * @phpstan-method \Aws\Result getBatchEvaluation(array{batchEvaluationId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getBatchEvaluationAsync(array $args = [])
@@ -273,6 +281,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getCodeInterpreterSession(array{codeInterpreterIdentifier?: string, sessionId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getCodeInterpreterSessionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getCodeInterpreterSessionAsync(array{codeInterpreterIdentifier?: string, sessionId?: string, ...} $args = [])
+ * @method \Aws\Result getDatasetGeneration(array $args = [])
+ * @phpstan-method \Aws\Result getDatasetGeneration(array{datasetId?: string, generationId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getDatasetGenerationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getDatasetGenerationAsync(array{datasetId?: string, generationId?: string, ...} $args = [])
  * @method \Aws\Result getEvent(array $args = [])
  * @phpstan-method \Aws\Result getEvent(array{memoryId?: string, sessionId?: string, actorId?: string, eventId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getEventAsync(array $args = [])
@@ -765,6 +777,24 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listActors(array{memoryId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listActorsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listActorsAsync(array{memoryId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listAgentInsights(array $args = [])
+ * @phpstan-method \Aws\Result listAgentInsights(array{
+ *     applicationName?: string,
+ *     batchEvaluationId?: string,
+ *     archiveStatus?: 'ACTIVE'|'ARCHIVED',
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAgentInsightsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listAgentInsightsAsync(array{
+ *     applicationName?: string,
+ *     batchEvaluationId?: string,
+ *     archiveStatus?: 'ACTIVE'|'ARCHIVED',
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listBatchEvaluations(array $args = [])
  * @phpstan-method \Aws\Result listBatchEvaluations(array{maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listBatchEvaluationsAsync(array $args = [])
@@ -789,6 +819,10 @@ use Aws\AwsClient;
  *     status?: 'READY'|'TERMINATED',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listDatasetGenerations(array $args = [])
+ * @phpstan-method \Aws\Result listDatasetGenerations(array{datasetId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listDatasetGenerationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listDatasetGenerationsAsync(array{datasetId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result listEvents(array $args = [])
  * @phpstan-method \Aws\Result listEvents(array{
  *     memoryId?: string,
@@ -1036,6 +1070,11 @@ use Aws\AwsClient;
  *         },
  *         ...,
  *     },
+ *     datasetExecutionConfig?: array{
+ *         dataset?: array{datasetId?: string, datasetVersion?: string, ...},
+ *         agentInvocation?: array{agentCoreRuntime?: array, ...},
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise startBatchEvaluationAsync(array $args = [])
@@ -1067,6 +1106,11 @@ use Aws\AwsClient;
  *             resultDestination?: 'DEDICATED_LOG_GROUP'|'SOURCE_LOG_GROUP',
  *             ...,
  *         },
+ *         ...,
+ *     },
+ *     datasetExecutionConfig?: array{
+ *         dataset?: array{datasetId?: string, datasetVersion?: string, ...},
+ *         agentInvocation?: array{agentCoreRuntime?: array, ...},
  *         ...,
  *     },
  *     ...,
@@ -1126,6 +1170,46 @@ use Aws\AwsClient;
  *     sessionTimeoutSeconds?: int,
  *     certificates?: list<array{location?: array, ...}>,
  *     filesystemConfigurations?: list<array{s3FilesConfiguration?: array, efsConfiguration?: array, ...}>,
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result startDatasetGeneration(array $args = [])
+ * @phpstan-method \Aws\Result startDatasetGeneration(array{
+ *     datasetId?: string,
+ *     name?: string,
+ *     description?: string,
+ *     scenarioType?: 'DYNAMIC'|'FIXED',
+ *     source?: array{
+ *         traceGeneration?: array{
+ *             sourceConfig?: array,
+ *             selection?: array,
+ *             sampling?: array,
+ *             groundTruth?: array,
+ *             redactionConfiguration?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise startDatasetGenerationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startDatasetGenerationAsync(array{
+ *     datasetId?: string,
+ *     name?: string,
+ *     description?: string,
+ *     scenarioType?: 'DYNAMIC'|'FIXED',
+ *     source?: array{
+ *         traceGeneration?: array{
+ *             sourceConfig?: array,
+ *             selection?: array,
+ *             sampling?: array,
+ *             groundTruth?: array,
+ *             redactionConfiguration?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
  *     clientToken?: string,
  *     ...,
  * } $args = [])
@@ -1233,6 +1317,10 @@ use Aws\AwsClient;
  *     executionStatus?: 'NOT_STARTED'|'PAUSED'|'RUNNING'|'STOPPED',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result updateAgentInsight(array $args = [])
+ * @phpstan-method \Aws\Result updateAgentInsight(array{applicationName?: string, agentInsightId?: string, archiveStatus?: 'ACTIVE'|'ARCHIVED', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateAgentInsightAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateAgentInsightAsync(array{applicationName?: string, agentInsightId?: string, archiveStatus?: 'ACTIVE'|'ARCHIVED', ...} $args = [])
  * @method \Aws\Result updateBrowserStream(array $args = [])
  * @phpstan-method \Aws\Result updateBrowserStream(array{
  *     browserIdentifier?: string,

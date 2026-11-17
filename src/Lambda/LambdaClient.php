@@ -452,6 +452,10 @@ use Aws\Middleware;
  * @phpstan-method \Aws\Result deleteCodeSigningConfig(array{CodeSigningConfigArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteCodeSigningConfigAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteCodeSigningConfigAsync(array{CodeSigningConfigArn?: string, ...} $args = [])
+ * @method \Aws\Result deleteDurableExecution(array $args = [])
+ * @phpstan-method \Aws\Result deleteDurableExecution(array{DurableExecutionArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteDurableExecutionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteDurableExecutionAsync(array{DurableExecutionArn?: string, ...} $args = [])
  * @method \Aws\Result deleteEventSourceMapping(array $args = [])
  * @phpstan-method \Aws\Result deleteEventSourceMapping(array{UUID?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteEventSourceMappingAsync(array $args = [])
@@ -661,7 +665,7 @@ use Aws\Middleware;
  *     FunctionName?: string,
  *     Qualifier?: string,
  *     DurableExecutionName?: string,
- *     Statuses?: list<'FAILED'|'RUNNING'|'STOPPED'|'SUCCEEDED'|'TIMED_OUT'>,
+ *     Statuses?: list<'DELETING'|'FAILED'|'PAUSED'|'PAUSING'|'RUNNING'|'STOPPED'|'SUCCEEDED'|'TIMED_OUT'>,
  *     StartedAfter?: int|string|\DateTimeInterface,
  *     StartedBefore?: int|string|\DateTimeInterface,
  *     ReverseOrder?: bool,
@@ -674,7 +678,7 @@ use Aws\Middleware;
  *     FunctionName?: string,
  *     Qualifier?: string,
  *     DurableExecutionName?: string,
- *     Statuses?: list<'FAILED'|'RUNNING'|'STOPPED'|'SUCCEEDED'|'TIMED_OUT'>,
+ *     Statuses?: list<'DELETING'|'FAILED'|'PAUSED'|'PAUSING'|'RUNNING'|'STOPPED'|'SUCCEEDED'|'TIMED_OUT'>,
  *     StartedAfter?: int|string|\DateTimeInterface,
  *     StartedBefore?: int|string|\DateTimeInterface,
  *     ReverseOrder?: bool,
@@ -752,6 +756,10 @@ use Aws\Middleware;
  * @phpstan-method \Aws\Result listVersionsByFunction(array{FunctionName?: string, Marker?: string, MaxItems?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listVersionsByFunctionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listVersionsByFunctionAsync(array{FunctionName?: string, Marker?: string, MaxItems?: int, ...} $args = [])
+ * @method \Aws\Result pauseDurableExecution(array $args = [])
+ * @phpstan-method \Aws\Result pauseDurableExecution(array{DurableExecutionArn?: string, ClientToken?: string, Reason?: string, ExecutionTimeoutPaused?: bool, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise pauseDurableExecutionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise pauseDurableExecutionAsync(array{DurableExecutionArn?: string, ClientToken?: string, Reason?: string, ExecutionTimeoutPaused?: bool, ...} $args = [])
  * @method \Aws\Result publishLayerVersion(array $args = [])
  * @phpstan-method \Aws\Result publishLayerVersion(array{
  *     LayerName?: string,
@@ -880,6 +888,10 @@ use Aws\Middleware;
  * @phpstan-method \Aws\Result removePermission(array{FunctionName?: string, StatementId?: string, Qualifier?: string, RevisionId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise removePermissionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise removePermissionAsync(array{FunctionName?: string, StatementId?: string, Qualifier?: string, RevisionId?: string, ...} $args = [])
+ * @method \Aws\Result resumeDurableExecution(array $args = [])
+ * @phpstan-method \Aws\Result resumeDurableExecution(array{DurableExecutionArn?: string, ClientToken?: string, Reason?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise resumeDurableExecutionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise resumeDurableExecutionAsync(array{DurableExecutionArn?: string, ClientToken?: string, Reason?: string, ...} $args = [])
  * @method \Aws\Result sendDurableExecutionCallbackFailure(array $args = [])
  * @phpstan-method \Aws\Result sendDurableExecutionCallbackFailure(array{
  *     CallbackId?: string,

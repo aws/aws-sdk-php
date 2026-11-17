@@ -5360,13 +5360,13 @@
       }
     },
     "CspmProviderConfiguration": {
-      "base": "<p>The cloud provider configuration for creating a connector. This is a union type that currently supports Azure.</p>",
+      "base": "<p>The cloud provider configuration for creating a connector. This is a union type that currently supports Azure and GCP.</p>",
       "refs": {
         "CreateConnectorRequest$Provider": "<p>The configuration for the cloud provider to connect to. Currently supports Azure.</p>"
       }
     },
     "CspmProviderDetail": {
-      "base": "<p>The detailed cloud provider configuration for a connector. This is a union type that currently supports Azure.</p>",
+      "base": "<p>The detailed cloud provider configuration for a connector. This is a union type that currently supports Azure and GCP.</p>",
       "refs": {
         "CspmProviderSummary$ProviderConfiguration": "<p>The provider configuration details.</p>",
         "GetConnectorResponse$ProviderDetail": "<p>The cloud provider configuration details for the connector.</p>"
@@ -5379,7 +5379,7 @@
       }
     },
     "CspmProviderUpdateConfiguration": {
-      "base": "<p>The cloud provider configuration for updating a connector. This is a union type that currently supports Azure.</p>",
+      "base": "<p>The cloud provider configuration for updating a connector. This is a union type that currently supports Azure and GCP.</p>",
       "refs": {
         "UpdateConnectorRequest$Provider": "<p>The updated cloud provider configuration for the connector.</p>"
       }
@@ -6234,6 +6234,55 @@
       "base": null,
       "refs": {
         "FreeTrialStatus$FeatureType": "<p>The feature that the free trial period applies to. Valid values:</p> <ul> <li> <p> <code>SECURITY_HUB_V2</code> specifies Security Hub.</p> </li> <li> <p> <code>SECURITY_HUB_V2_MULTI_CLOUD_AZURE</code> specifies Security Hub coverage for Microsoft Azure resources.</p> </li> </ul>"
+      }
+    },
+    "GcpDetail": {
+      "base": "<p>The detailed GCP configuration for a connector.</p>",
+      "refs": {
+        "CspmProviderDetail$GCP": "<p>The GCP provider detail.</p>",
+        "ProviderDetail$GCP": "<p>Details about a Google Cloud Platform (GCP) CSPM integration.</p>"
+      }
+    },
+    "GcpProviderConfiguration": {
+      "base": "<p>The configuration for connecting to a GCP environment.</p>",
+      "refs": {
+        "CspmProviderConfiguration$GCP": "<p>The GCP provider configuration.</p>",
+        "ProviderConfiguration$GCP": "<p>The configuration settings required to establish a CSPM integration with Google Cloud Platform (GCP).</p>"
+      }
+    },
+    "GcpRegionList": {
+      "base": "<p>A list of GCP regions.</p>",
+      "refs": {
+        "GcpDetail$GCPRegions": "<p>The list of GCP regions being monitored.</p>",
+        "GcpProviderConfiguration$GCPRegions": "<p>The list of GCP regions to monitor.</p>",
+        "GcpUpdateConfiguration$GCPRegions": "<p>The updated list of GCP regions to monitor.</p>"
+      }
+    },
+    "GcpResourceDetails": {
+      "base": "<p>Details about a GCP resource that is related to a finding. This field is a JSON object that contains provider-specific resource details.</p>",
+      "refs": {
+        "ResourceDetails$GcpResource": "<p>Details about a GCP resource that is related to a finding.</p>"
+      }
+    },
+    "GcpScopeConfiguration": {
+      "base": "<p>The scope configuration for a GCP connector, defining the organization or project scope.</p>",
+      "refs": {
+        "GcpDetail$ScopeConfiguration": "<p>The scope configuration that defines which GCP resources are monitored.</p>",
+        "GcpProviderConfiguration$ScopeConfiguration": "<p>The scope configuration that defines which GCP resources are monitored.</p>",
+        "GcpUpdateConfiguration$ScopeConfiguration": "<p>The updated scope configuration.</p>"
+      }
+    },
+    "GcpScopeType": {
+      "base": "<p>The type of scope for a GCP connector. Valid values are <code>ORGANIZATION</code> (monitor all projects in the organization) and <code>PROJECT</code> (monitor specific projects).</p>",
+      "refs": {
+        "GcpScopeConfiguration$ScopeType": "<p>The type of scope. Valid values are <code>ORGANIZATION</code> and <code>PROJECT</code>.</p>"
+      }
+    },
+    "GcpUpdateConfiguration": {
+      "base": "<p>The configuration for updating a GCP connector's scope and regions.</p>",
+      "refs": {
+        "CspmProviderUpdateConfiguration$GCP": "<p>The GCP update configuration.</p>",
+        "ProviderUpdateConfiguration$GCP": "<p>The parameters required to update the configuration for a Google Cloud Platform (GCP) CSPM integration.</p>"
       }
     },
     "GenerateRecommendedPolicyV2Request": {
@@ -9038,6 +9087,9 @@
         "FirewallPolicyStatefulRuleGroupReferencesDetails$ResourceArn": "<p>The ARN of the stateful rule group.</p>",
         "FirewallPolicyStatelessCustomActionsDetails$ActionName": "<p>The name of the custom action.</p>",
         "FirewallPolicyStatelessRuleGroupReferencesDetails$ResourceArn": "<p>The ARN of the stateless rule group.</p>",
+        "GcpDetail$AWSConfigConnectorArn": "<p>The ARN of the multi-cloud configuration connector used to establish the connection to GCP.</p>",
+        "GcpProviderConfiguration$AWSConfigConnectorArn": "<p>The ARN of the multi-cloud configuration connector used to establish the connection to GCP.</p>",
+        "GcpRegionList$member": "<p>A GCP region.</p>",
         "GenerateRecommendedPolicyV2Request$MetadataUid": "<p>The unique identifier (ID) of Security Hub OCSF findings found under the <code>metadata.uid</code> field of the finding.</p>",
         "GeneratorDetails$Name": "<p> The name of the detector used to identify the code vulnerability. </p>",
         "GeneratorDetails$Description": "<p> The description of the detector used to identify the code vulnerability. </p>",
@@ -10866,7 +10918,8 @@
     "ScopeValueList": {
       "base": null,
       "refs": {
-        "AzureScopeConfiguration$ScopeValues": "<p>The list of scope values, such as subscription IDs, when the scope type is <code>subscription</code>.</p>"
+        "AzureScopeConfiguration$ScopeValues": "<p>The list of scope values, such as subscription IDs, when the scope type is <code>subscription</code>.</p>",
+        "GcpScopeConfiguration$ScopeValues": "<p>The list of scope values. Use an organization ID when the scope type is <code>ORGANIZATION</code>, or project IDs when the scope type is <code>PROJECT</code>.</p>"
       }
     },
     "SecurityControl": {
@@ -10933,15 +10986,15 @@
     "SecurityControlsProvider": {
       "base": null,
       "refs": {
-        "SecurityControl$Provider": "<p>The cloud provider whose resources the security control evaluates. For example, <code>AWS</code> or <code>Azure</code>.</p>",
-        "SecurityControlDefinition$Provider": "<p>The cloud provider whose resources the security control evaluates. For example, <code>AWS</code> or <code>Azure</code>.</p>",
+        "SecurityControl$Provider": "<p>The cloud provider whose resources the security control evaluates. For example, <code>AWS</code>, <code>Azure</code>, or <code>GCP</code>.</p>",
+        "SecurityControlDefinition$Provider": "<p>The cloud provider whose resources the security control evaluates. For example, <code>AWS</code>, <code>Azure</code>, or <code>GCP</code>.</p>",
         "SecurityControlsProviders$member": null
       }
     },
     "SecurityControlsProviders": {
       "base": null,
       "refs": {
-        "ListSecurityControlDefinitionsRequest$Providers": "<p>A list of cloud providers to filter the security control definitions by. For example, specify <code>Azure</code> to return only controls that evaluate Azure resources.</p>"
+        "ListSecurityControlDefinitionsRequest$Providers": "<p>A list of cloud providers to filter the security control definitions by. For example, specify <code>Azure</code> to return only controls that evaluate Azure resources, or <code>GCP</code> to return only controls that evaluate GCP resources.</p>"
       }
     },
     "SecurityGroups": {
@@ -11300,16 +11353,16 @@
     "StandardsProvider": {
       "base": null,
       "refs": {
-        "Standard$Provider": "<p>The cloud provider whose resources the standard evaluates. For example, <code>AWS</code> or <code>Azure</code>.</p>",
+        "Standard$Provider": "<p>The cloud provider whose resources the standard evaluates. For example, <code>AWS</code>, <code>Azure</code>, or <code>GCP</code>.</p>",
         "StandardsProviders$member": null,
-        "StandardsSubscription$Provider": "<p>The cloud provider whose resources the standard evaluates. For example, <code>AWS</code> or <code>Azure</code>.</p>"
+        "StandardsSubscription$Provider": "<p>The cloud provider whose resources the standard evaluates. For example, <code>AWS</code>, <code>Azure</code>, or <code>GCP</code>.</p>"
       }
     },
     "StandardsProviders": {
       "base": null,
       "refs": {
-        "DescribeStandardsRequest$Providers": "<p>A list of cloud providers to filter the standards by. For example, specify <code>Azure</code> to return only standards that evaluate Azure resources.</p>",
-        "GetEnabledStandardsRequest$Providers": "<p>A list of cloud providers to filter the enabled standards by. For example, specify <code>Azure</code> to return only enabled standards that evaluate Azure resources.</p>"
+        "DescribeStandardsRequest$Providers": "<p>A list of cloud providers to filter the standards by. For example, specify <code>Azure</code> to return only standards that evaluate Azure resources, or <code>GCP</code> to return only standards that evaluate GCP resources.</p>",
+        "GetEnabledStandardsRequest$Providers": "<p>A list of cloud providers to filter the enabled standards by. For example, specify <code>Azure</code> to return only enabled standards that evaluate Azure resources, or <code>GCP</code> to return only enabled standards that evaluate GCP resources.</p>"
       }
     },
     "StandardsStatus": {

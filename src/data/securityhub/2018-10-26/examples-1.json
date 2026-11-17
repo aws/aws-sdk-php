@@ -1143,6 +1143,17 @@
                 "Company": "AWS",
                 "Product": "Security Hub"
               }
+            },
+            {
+              "Description": "The Center for Internet Security (CIS) Google Cloud Platform Foundation Benchmark v4.0.0 is a set of security configuration best practices for Google Cloud Platform. This Security Hub standard automatically checks your compliance readiness against a subset of CIS requirements.",
+              "EnabledByDefault": false,
+              "Name": "CIS Google Cloud Platform Foundation Benchmark v4.0.0",
+              "Provider": "GCP",
+              "StandardsArn": "arn:aws:securityhub:us-west-1::standards/cis-gcp-foundation-benchmark/v/4.0.0",
+              "StandardsManagedBy": {
+                "Company": "AWS",
+                "Product": "Security Hub"
+              }
             }
           ]
         },
@@ -1182,6 +1193,35 @@
         "description": "The following example returns a list of available security standards from a specified provider.",
         "id": "to-get-available-azure-standards-1719014400000",
         "title": "To get available Azure security standards"
+      },
+      {
+        "input": {
+          "Providers": [
+            "GCP"
+          ]
+        },
+        "output": {
+          "Standards": [
+            {
+              "Description": "The Center for Internet Security (CIS) Google Cloud Platform Foundation Benchmark v4.0.0 is a set of security configuration best practices for Google Cloud Platform. This Security Hub standard automatically checks your compliance readiness against a subset of CIS requirements.",
+              "EnabledByDefault": false,
+              "Name": "CIS Google Cloud Platform Foundation Benchmark v4.0.0",
+              "Provider": "GCP",
+              "StandardsArn": "arn:aws:securityhub:us-west-1::standards/cis-gcp-foundation-benchmark/v/4.0.0",
+              "StandardsManagedBy": {
+                "Company": "AWS",
+                "Product": "Security Hub"
+              }
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example returns a list of available security standards from a specified provider.",
+        "id": "to-get-available-gcp-standards-1719014400000",
+        "title": "To get available GCP security standards"
       }
     ],
     "DescribeStandardsControls": [
@@ -2310,10 +2350,20 @@
               "CustomizableProperties": [],
               "Description": "This control checks whether Azure Container Apps have managed identity enabled. The control fails if the Container App has a system-assigned or user-assigned managed identity enabled.",
               "Provider": "Azure",
-              "RemediationUrl": "https://docs.aws.amazon.com/console/securityhub/Azure.App.1/remediation",
+              "RemediationUrl": "https://learn.microsoft.com/en-us/azure/container-apps/managed-identity",
               "SecurityControlId": "Azure.App.1",
               "SeverityRating": "MEDIUM",
               "Title": "Azure Container Apps with managed identity enabled should follow least privilege"
+            },
+            {
+              "CurrentRegionAvailability": "AVAILABLE",
+              "CustomizableProperties": [],
+              "Description": "This control checks whether any GCP API keys exist. The control fails if an API key exists.",
+              "Provider": "GCP",
+              "RemediationUrl": "https://cloud.google.com/sdk/gcloud/reference/services/api-keys/delete",
+              "SecurityControlId": "GCP.ApiKeys.1",
+              "SeverityRating": "MEDIUM",
+              "Title": "GCP API keys should not exist"
             }
           ]
         },
@@ -2340,7 +2390,7 @@
               "CustomizableProperties": [],
               "Description": "This control checks whether Azure Container Apps have managed identity enabled. The control fails if the Container App has a system-assigned or user-assigned managed identity enabled.",
               "Provider": "Azure",
-              "RemediationUrl": "https://docs.aws.amazon.com/console/securityhub/Azure.App.1/remediation",
+              "RemediationUrl": "https://learn.microsoft.com/en-us/azure/container-apps/managed-identity",
               "SecurityControlId": "Azure.App.1",
               "SeverityRating": "MEDIUM",
               "Title": "Azure Container Apps with managed identity enabled should follow least privilege"
@@ -2350,7 +2400,7 @@
               "CustomizableProperties": [],
               "Description": "This control checks whether an Azure Container App passes Azure SDK credentials as plain-text container environment variables. The control fails if any container (including initContainers) defines AZURE_CLIENT_SECRET, AZURE_CLIENT_CERTIFICATE_PASSWORD, or AZURE_PASSWORD as a plain-text environment variable instead of referencing a secret via secretRef.",
               "Provider": "Azure",
-              "RemediationUrl": "https://docs.aws.amazon.com/console/securityhub/Azure.App.2/remediation",
+              "RemediationUrl": "https://learn.microsoft.com/en-us/azure/container-apps/manage-secrets",
               "SecurityControlId": "Azure.App.2",
               "SeverityRating": "CRITICAL",
               "Title": "Azure Container Apps should not pass Azure SDK credentials as environment variables"
@@ -2360,7 +2410,7 @@
               "CustomizableProperties": [],
               "Description": "This control checks whether Azure Container Apps have external ingress configured. The control fails if the Container App ingress is set to accept traffic from anywhere (external).",
               "Provider": "Azure",
-              "RemediationUrl": "https://docs.aws.amazon.com/console/securityhub/Azure.App.3/remediation",
+              "RemediationUrl": "https://learn.microsoft.com/en-us/azure/container-apps/ingress-how-to",
               "SecurityControlId": "Azure.App.3",
               "SeverityRating": "HIGH",
               "Title": "Azure Container Apps should not have external ingress enabled"
@@ -2374,6 +2424,56 @@
         "description": "The following example lists security control definitions for a specified provider.",
         "id": "to-list-azure-security-control-definitions-1719014400000",
         "title": "To list Azure security control definitions"
+      },
+      {
+        "input": {
+          "MaxResults": 3,
+          "Providers": [
+            "GCP"
+          ]
+        },
+        "output": {
+          "NextToken": "U2FsdGVkX1...",
+          "SecurityControlDefinitions": [
+            {
+              "CurrentRegionAvailability": "AVAILABLE",
+              "CustomizableProperties": [],
+              "Description": "This control checks whether any GCP API keys exist. The control fails if an API key exists.",
+              "Provider": "GCP",
+              "RemediationUrl": "https://cloud.google.com/sdk/gcloud/reference/services/api-keys/delete",
+              "SecurityControlId": "GCP.ApiKeys.1",
+              "SeverityRating": "MEDIUM",
+              "Title": "GCP API keys should not exist"
+            },
+            {
+              "CurrentRegionAvailability": "AVAILABLE",
+              "CustomizableProperties": [],
+              "Description": "This control checks whether a GCP API key restricts which hosts or apps may use it. The control fails if the key has no HTTP referrer, IP address, Android app, or iOS app restriction, or if any allowed HTTP referrer or IP address is effectively open. A referrer is effectively open when its host is * or a wildcard over a top-level domain, such as https://* or *.com. An IP address is effectively open when it allows any host, such as 0.0.0.0, 0.0.0.0/0, ::, or ::/0. A single open entry fails the key even when specific entries are also listed, because the key accepts a request that matches any entry.",
+              "Provider": "GCP",
+              "RemediationUrl": "https://cloud.google.com/docs/authentication/api-keys#adding-application-restrictions",
+              "SecurityControlId": "GCP.ApiKeys.2",
+              "SeverityRating": "MEDIUM",
+              "Title": "GCP API keys should be restricted to specified hosts and apps"
+            },
+            {
+              "CurrentRegionAvailability": "AVAILABLE",
+              "CustomizableProperties": [],
+              "Description": "This control checks whether a GCP API key is restricted to only the specific APIs an application needs. The control fails if the key declares no restrictions.apiTargets entries, or if any entry targets the broad cloudapis.googleapis.com service, which allows the key to call every enabled service.",
+              "Provider": "GCP",
+              "RemediationUrl": "https://cloud.google.com/docs/authentication/api-keys#adding-api-restrictions",
+              "SecurityControlId": "GCP.ApiKeys.3",
+              "SeverityRating": "HIGH",
+              "Title": "GCP API keys should be restricted to only the APIs an application needs"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example lists security control definitions for a specified provider.",
+        "id": "to-list-gcp-security-control-definitions-1719014400000",
+        "title": "To list GCP security control definitions"
       }
     ],
     "ListStandardsControlAssociations": [

@@ -2233,7 +2233,10 @@
         "ConformancePackInputParameters":{"shape":"ConformancePackInputParameters"},
         "LastUpdateRequestedTime":{"shape":"Date"},
         "CreatedBy":{"shape":"StringWithCharLimit256"},
-        "TemplateSSMDocumentDetails":{"shape":"TemplateSSMDocumentDetails"}
+        "TemplateSSMDocumentDetails":{"shape":"TemplateSSMDocumentDetails"},
+        "Type":{"shape":"ConformancePackType"},
+        "Source":{"shape":"ConformancePackSource"},
+        "Scope":{"shape":"ConformancePackScope"}
       }
     },
     "ConformancePackDetailList":{
@@ -2286,7 +2289,7 @@
     "ConformancePackInputParameters":{
       "type":"list",
       "member":{"shape":"ConformancePackInputParameter"},
-      "max":60,
+      "max":330,
       "min":0
     },
     "ConformancePackName":{
@@ -2333,12 +2336,35 @@
       "max":100,
       "min":0
     },
+    "ConformancePackScope":{
+      "type":"structure",
+      "required":["TagKey"],
+      "members":{
+        "TagKey":{"shape":"TagKey"},
+        "TagValue":{"shape":"TagValue"}
+      }
+    },
+    "ConformancePackSource":{
+      "type":"structure",
+      "required":["SourceIdentifier"],
+      "members":{
+        "SourceIdentifier":{"shape":"ConformancePackSourceIdentifier"}
+      }
+    },
+    "ConformancePackSourceIdentifier":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "ConformancePackState":{
       "type":"string",
       "enum":[
         "CREATE_IN_PROGRESS",
         "CREATE_COMPLETE",
         "CREATE_FAILED",
+        "UPDATE_IN_PROGRESS",
+        "UPDATE_COMPLETE",
+        "UPDATE_FAILED",
         "DELETE_IN_PROGRESS",
         "DELETE_FAILED"
       ]
@@ -2350,7 +2376,6 @@
         "ConformancePackId",
         "ConformancePackArn",
         "ConformancePackState",
-        "StackArn",
         "LastUpdateRequestedTime"
       ],
       "members":{
@@ -2361,7 +2386,8 @@
         "StackArn":{"shape":"StackArn"},
         "ConformancePackStatusReason":{"shape":"ConformancePackStatusReason"},
         "LastUpdateRequestedTime":{"shape":"Date"},
-        "LastUpdateCompletedTime":{"shape":"Date"}
+        "LastUpdateCompletedTime":{"shape":"Date"},
+        "Type":{"shape":"ConformancePackType"}
       }
     },
     "ConformancePackStatusDetailsList":{
@@ -2379,6 +2405,19 @@
       "type":"structure",
       "members":{},
       "exception":true
+    },
+    "ConformancePackType":{
+      "type":"string",
+      "enum":[
+        "CUSTOM",
+        "MANAGED"
+      ]
+    },
+    "ConformancePackTypeList":{
+      "type":"list",
+      "member":{"shape":"ConformancePackType"},
+      "max":2,
+      "min":1
     },
     "Connector":{
       "type":"structure",
@@ -2914,6 +2953,7 @@
       "type":"structure",
       "members":{
         "ConformancePackNames":{"shape":"ConformancePackNamesList"},
+        "Filters":{"shape":"DescribeConformancePacksFilters"},
         "Limit":{"shape":"PageSizeLimit"},
         "NextToken":{"shape":"NextToken"}
       }
@@ -2925,10 +2965,17 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "DescribeConformancePacksFilters":{
+      "type":"structure",
+      "members":{
+        "Types":{"shape":"ConformancePackTypeList"}
+      }
+    },
     "DescribeConformancePacksRequest":{
       "type":"structure",
       "members":{
         "ConformancePackNames":{"shape":"ConformancePackNamesList"},
+        "Filters":{"shape":"DescribeConformancePacksFilters"},
         "Limit":{"shape":"PageSizeLimit"},
         "NextToken":{"shape":"NextToken"}
       }
@@ -4569,7 +4616,9 @@
         "DeliveryS3KeyPrefix":{"shape":"DeliveryS3KeyPrefix"},
         "ConformancePackInputParameters":{"shape":"ConformancePackInputParameters"},
         "TemplateSSMDocumentDetails":{"shape":"TemplateSSMDocumentDetails"},
-        "Tags":{"shape":"TagsList"}
+        "Tags":{"shape":"TagsList"},
+        "Source":{"shape":"ConformancePackSource"},
+        "Scope":{"shape":"ConformancePackScope"}
       }
     },
     "PutConformancePackResponse":{

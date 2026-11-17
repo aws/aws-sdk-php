@@ -31,6 +31,24 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "CreateConnector":{
+      "name":"CreateConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateConnector",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateConnectorInput"},
+      "output":{"shape":"CreateConnectorOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
     "CreateDatasetIntegration":{
       "name":"CreateDatasetIntegration",
       "http":{
@@ -136,6 +154,24 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "DeleteConnector":{
+      "name":"DeleteConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteConnector",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteConnectorInput"},
+      "output":{"shape":"DeleteConnectorOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidStateException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "DeleteDatasetIntegration":{
       "name":"DeleteDatasetIntegration",
       "http":{
@@ -230,6 +266,60 @@
       },
       "input":{"shape":"GetCentralizationRuleForOrganizationInput"},
       "output":{"shape":"GetCentralizationRuleForOrganizationOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
+    },
+    "GetConnector":{
+      "name":"GetConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetConnector",
+        "responseCode":200
+      },
+      "input":{"shape":"GetConnectorInput"},
+      "output":{"shape":"GetConnectorOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
+    },
+    "GetConnectorTelemetryManifest":{
+      "name":"GetConnectorTelemetryManifest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetConnectorTelemetryManifest",
+        "responseCode":200
+      },
+      "input":{"shape":"GetConnectorTelemetryManifestInput"},
+      "output":{"shape":"GetConnectorTelemetryManifestOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
+    },
+    "GetConnectorTelemetrySetup":{
+      "name":"GetConnectorTelemetrySetup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetConnectorTelemetrySetup",
+        "responseCode":200
+      },
+      "input":{"shape":"GetConnectorTelemetrySetupInput"},
+      "output":{"shape":"GetConnectorTelemetrySetupOutput"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
@@ -376,6 +466,24 @@
       ],
       "readonly":true
     },
+    "GetThirdPartyTelemetryEnrichment":{
+      "name":"GetThirdPartyTelemetryEnrichment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetThirdPartyTelemetryEnrichment",
+        "responseCode":200
+      },
+      "input":{"shape":"GetThirdPartyTelemetryEnrichmentInput"},
+      "output":{"shape":"GetThirdPartyTelemetryEnrichmentOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
+    },
     "ListCentralizationRulesForOrganization":{
       "name":"ListCentralizationRulesForOrganization",
       "http":{
@@ -385,6 +493,23 @@
       },
       "input":{"shape":"ListCentralizationRulesForOrganizationInput"},
       "output":{"shape":"ListCentralizationRulesForOrganizationOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
+    },
+    "ListConnectors":{
+      "name":"ListConnectors",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListConnectors",
+        "responseCode":200
+      },
+      "input":{"shape":"ListConnectorsInput"},
+      "output":{"shape":"ListConnectorsOutput"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
@@ -437,6 +562,24 @@
       "input":{"shape":"ListResourceTelemetryForOrganizationInput"},
       "output":{"shape":"ListResourceTelemetryForOrganizationOutput"},
       "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
+    },
+    "ListResourcesByConnector":{
+      "name":"ListResourcesByConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListResourcesByConnector",
+        "responseCode":200
+      },
+      "input":{"shape":"ListResourcesByConnectorInput"},
+      "output":{"shape":"ListResourcesByConnectorOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -530,6 +673,41 @@
       ],
       "readonly":true
     },
+    "ListThirdPartyTelemetryEnrichments":{
+      "name":"ListThirdPartyTelemetryEnrichments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListThirdPartyTelemetryEnrichments",
+        "responseCode":200
+      },
+      "input":{"shape":"ListThirdPartyTelemetryEnrichmentsInput"},
+      "output":{"shape":"ListThirdPartyTelemetryEnrichmentsOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
+    },
+    "PutConnectorTelemetryManifest":{
+      "name":"PutConnectorTelemetryManifest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/PutConnectorTelemetryManifest",
+        "responseCode":200
+      },
+      "input":{"shape":"PutConnectorTelemetryManifestInput"},
+      "output":{"shape":"PutConnectorTelemetryManifestOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
     "StartTelemetryEnrichment":{
       "name":"StartTelemetryEnrichment",
       "http":{
@@ -575,6 +753,42 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "StartTelemetryPipelineRefresh":{
+      "name":"StartTelemetryPipelineRefresh",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StartTelemetryPipelineRefresh",
+        "responseCode":200
+      },
+      "input":{"shape":"StartTelemetryPipelineRefreshInput"},
+      "output":{"shape":"StartTelemetryPipelineRefreshOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "StartThirdPartyTelemetryEnrichment":{
+      "name":"StartThirdPartyTelemetryEnrichment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StartThirdPartyTelemetryEnrichment",
+        "responseCode":202
+      },
+      "input":{"shape":"StartThirdPartyTelemetryEnrichmentInput"},
+      "output":{"shape":"StartThirdPartyTelemetryEnrichmentOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
     "StopTelemetryEnrichment":{
       "name":"StopTelemetryEnrichment",
       "http":{
@@ -612,6 +826,24 @@
         "responseCode":200
       },
       "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "StopThirdPartyTelemetryEnrichment":{
+      "name":"StopThirdPartyTelemetryEnrichment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StopThirdPartyTelemetryEnrichment",
+        "responseCode":202
+      },
+      "input":{"shape":"StopThirdPartyTelemetryEnrichmentInput"},
+      "output":{"shape":"StopThirdPartyTelemetryEnrichmentOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -849,11 +1081,450 @@
       "type":"boolean",
       "box":true
     },
+    "AllSubscriptions":{
+      "type":"structure",
+      "members":{}
+    },
+    "AwsConfigConnectorArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-[a-z]+)*:config:[a-z0-9\\-]+:[0-9]{12}:connector/[^\\r\\n]+"
+    },
     "AwsResourceExplorerManagedViewArn":{
       "type":"string",
       "max":2048,
       "min":20,
       "pattern":"arn:aws([a-z0-9\\-]+)?:resource-explorer-2:([a-z0-9\\-]+)?:([0-9]{12})?:managed-view/(.+)"
+    },
+    "AzureAwsManagedFlowLogs":{
+      "type":"structure",
+      "required":["RetentionDays"],
+      "members":{
+        "RetentionDays":{"shape":"AzureFlowLogRetentionDays"}
+      }
+    },
+    "AzureClientIdentifier":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+    },
+    "AzureConnectorConfiguration":{
+      "type":"structure",
+      "required":[
+        "TenantIdentifier",
+        "ClientIdentifier"
+      ],
+      "members":{
+        "TenantIdentifier":{"shape":"AzureTenantIdentifier"},
+        "ClientIdentifier":{"shape":"AzureClientIdentifier"}
+      }
+    },
+    "AzureConnectorQuery":{
+      "type":"structure",
+      "members":{
+        "ManagementGroups":{"shape":"AzureManagementGroupsQuery"},
+        "Subscriptions":{"shape":"AzureSubscriptionsQuery"},
+        "ResourceTypes":{"shape":"AzureResourceTypesQuery"},
+        "Regions":{"shape":"AzureRegionsQuery"},
+        "ResourceIds":{"shape":"AzureResourceIdsQuery"},
+        "EventHubs":{"shape":"AzureEventHubsQuery"}
+      },
+      "union":true
+    },
+    "AzureConnectorQueryResults":{
+      "type":"structure",
+      "members":{
+        "ManagementGroups":{"shape":"AzureManagementGroupSummaries"},
+        "Subscriptions":{"shape":"AzureSubscriptionSummaries"},
+        "ResourceTypes":{"shape":"AzureResourceTypeList"},
+        "Regions":{"shape":"AzureRegionList"},
+        "ResourceIds":{"shape":"AzureResourceIdentifierSummaries"},
+        "EventHubs":{"shape":"AzureEventHubSummaries"}
+      },
+      "union":true
+    },
+    "AzureCustomerManagedFlowLogs":{
+      "type":"structure",
+      "required":["StorageAccounts"],
+      "members":{
+        "StorageAccounts":{"shape":"AzureCustomerManagedFlowLogsStorageAccountsList"}
+      }
+    },
+    "AzureCustomerManagedFlowLogsStorageAccountsList":{
+      "type":"list",
+      "member":{"shape":"AzureFlowLogStorageAccountScope"},
+      "max":100,
+      "min":1
+    },
+    "AzureEventHubConfiguration":{
+      "type":"structure",
+      "required":[
+        "Tier",
+        "PartitionCount"
+      ],
+      "members":{
+        "Tier":{"shape":"AzureEventHubTier"},
+        "PartitionCount":{"shape":"AzureEventHubPartitionCount"}
+      }
+    },
+    "AzureEventHubNamespaceName":{
+      "type":"string",
+      "max":50,
+      "min":6,
+      "pattern":"[A-Za-z][A-Za-z0-9-]{4,48}[A-Za-z0-9]"
+    },
+    "AzureEventHubPartitionCount":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "AzureEventHubSummaries":{
+      "type":"list",
+      "member":{"shape":"AzureEventHubSummary"}
+    },
+    "AzureEventHubSummary":{
+      "type":"structure",
+      "required":[
+        "ResourceId",
+        "EventHubName",
+        "NamespaceName",
+        "FullyQualifiedNamespace"
+      ],
+      "members":{
+        "ResourceId":{"shape":"AzureResourceId"},
+        "EventHubName":{"shape":"String"},
+        "NamespaceName":{"shape":"AzureEventHubNamespaceName"},
+        "FullyQualifiedNamespace":{"shape":"String"},
+        "Region":{"shape":"AzureRegion"},
+        "SubscriptionId":{"shape":"AzureSubscriptionId"}
+      }
+    },
+    "AzureEventHubTier":{
+      "type":"string",
+      "enum":[
+        "Standard",
+        "Premium"
+      ]
+    },
+    "AzureEventHubsQuery":{
+      "type":"structure",
+      "members":{
+        "Scope":{"shape":"AzureQueryScope"},
+        "NamespaceName":{"shape":"AzureEventHubNamespaceName"},
+        "Region":{"shape":"AzureRegion"}
+      }
+    },
+    "AzureFlowLogRetentionDays":{
+      "type":"integer",
+      "box":true,
+      "max":365,
+      "min":1
+    },
+    "AzureFlowLogStorageAccountScope":{
+      "type":"structure",
+      "required":[
+        "Region",
+        "StorageAccountIds"
+      ],
+      "members":{
+        "Region":{"shape":"AzureRegion"},
+        "StorageAccountIds":{"shape":"AzureFlowLogStorageAccountScopeStorageAccountIdsList"}
+      }
+    },
+    "AzureFlowLogStorageAccountScopeStorageAccountIdsList":{
+      "type":"list",
+      "member":{"shape":"AzureStorageAccountId"},
+      "max":100,
+      "min":1
+    },
+    "AzureFlowLogsInfrastructure":{
+      "type":"structure",
+      "members":{
+        "CustomerManaged":{"shape":"AzureCustomerManagedFlowLogs"},
+        "AwsManaged":{"shape":"AzureAwsManagedFlowLogs"}
+      },
+      "union":true
+    },
+    "AzureInfrastructure":{
+      "type":"structure",
+      "members":{
+        "SubscriptionId":{"shape":"AzureSubscriptionId"},
+        "EventHubs":{"shape":"AzureInfrastructureEventHubsList"},
+        "FlowLogs":{"shape":"AzureFlowLogsInfrastructure"}
+      }
+    },
+    "AzureInfrastructureEventHubsList":{
+      "type":"list",
+      "member":{"shape":"AzureEventHubConfiguration"},
+      "max":1,
+      "min":1
+    },
+    "AzureManagementGroupId":{
+      "type":"string",
+      "max":90,
+      "min":1,
+      "pattern":"[-\\w._()]+"
+    },
+    "AzureManagementGroupSummaries":{
+      "type":"list",
+      "member":{"shape":"AzureManagementGroupSummary"}
+    },
+    "AzureManagementGroupSummary":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{"shape":"AzureManagementGroupId"},
+        "Name":{"shape":"String"},
+        "DisplayName":{"shape":"String"}
+      }
+    },
+    "AzureManagementGroupsQuery":{
+      "type":"structure",
+      "members":{
+        "ParentManagementGroupId":{"shape":"AzureManagementGroupId"}
+      }
+    },
+    "AzureQueryScope":{
+      "type":"structure",
+      "members":{
+        "ManagementGroupId":{"shape":"AzureManagementGroupId"},
+        "SubscriptionIds":{"shape":"AzureQueryScopeSubscriptionIdsList"}
+      }
+    },
+    "AzureQueryScopeSubscriptionIdsList":{
+      "type":"list",
+      "member":{"shape":"AzureSubscriptionId"},
+      "max":1000,
+      "min":1
+    },
+    "AzureRegion":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-z0-9]+"
+    },
+    "AzureRegionList":{
+      "type":"list",
+      "member":{"shape":"AzureRegion"}
+    },
+    "AzureRegionsQuery":{
+      "type":"structure",
+      "members":{
+        "Scope":{"shape":"AzureQueryScope"}
+      }
+    },
+    "AzureResourceId":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "AzureResourceIdScope":{
+      "type":"structure",
+      "required":[
+        "Region",
+        "ResourceIds"
+      ],
+      "members":{
+        "Region":{"shape":"AzureRegion"},
+        "ResourceIds":{"shape":"AzureResourceIdScopeResourceIdsList"}
+      }
+    },
+    "AzureResourceIdScopeResourceIdsList":{
+      "type":"list",
+      "member":{"shape":"ManifestAzureResourceId"},
+      "max":1000,
+      "min":1
+    },
+    "AzureResourceIdentifierSummaries":{
+      "type":"list",
+      "member":{"shape":"AzureResourceIdentifierSummary"}
+    },
+    "AzureResourceIdentifierSummary":{
+      "type":"structure",
+      "required":["ResourceId"],
+      "members":{
+        "ResourceId":{"shape":"AzureResourceId"},
+        "ResourceType":{"shape":"AzureResourceType"},
+        "Region":{"shape":"AzureRegion"},
+        "SubscriptionId":{"shape":"AzureSubscriptionId"},
+        "Tags":{"shape":"AzureResourceTags"}
+      }
+    },
+    "AzureResourceIdsQuery":{
+      "type":"structure",
+      "members":{
+        "Scope":{"shape":"AzureQueryScope"},
+        "ResourceType":{"shape":"AzureResourceType"},
+        "Region":{"shape":"AzureRegion"},
+        "TagFilters":{"shape":"AzureResourceIdsQueryTagFiltersList"}
+      }
+    },
+    "AzureResourceIdsQueryTagFiltersList":{
+      "type":"list",
+      "member":{"shape":"TagFilter"},
+      "max":50,
+      "min":1
+    },
+    "AzureResourceTagKey":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "AzureResourceTagValue":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
+    "AzureResourceTags":{
+      "type":"map",
+      "key":{"shape":"AzureResourceTagKey"},
+      "value":{"shape":"AzureResourceTagValue"},
+      "max":50,
+      "min":0
+    },
+    "AzureResourceType":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[A-Za-z0-9]+\\.[A-Za-z0-9]+/[A-Za-z0-9/]+"
+    },
+    "AzureResourceTypeList":{
+      "type":"list",
+      "member":{"shape":"AzureResourceType"}
+    },
+    "AzureResourceTypesQuery":{
+      "type":"structure",
+      "members":{
+        "Scope":{"shape":"AzureQueryScope"}
+      }
+    },
+    "AzureScope":{
+      "type":"structure",
+      "members":{
+        "Subscriptions":{"shape":"AzureSubscriptionScope"},
+        "Regions":{"shape":"AzureScopeRegionsList"},
+        "ResourceTypes":{"shape":"AzureScopeResourceTypesList"},
+        "TagFilters":{"shape":"AzureScopeTagFiltersList"},
+        "Resources":{"shape":"AzureScopeResourcesList"}
+      }
+    },
+    "AzureScopeItem":{
+      "type":"structure",
+      "required":[
+        "TelemetryTypes",
+        "Scope"
+      ],
+      "members":{
+        "TelemetryTypes":{"shape":"AzureScopeItemTelemetryTypesList"},
+        "Scope":{"shape":"AzureScope"}
+      }
+    },
+    "AzureScopeItemTelemetryTypesList":{
+      "type":"list",
+      "member":{"shape":"AzureTelemetryType"},
+      "max":3,
+      "min":1
+    },
+    "AzureScopeRegionsList":{
+      "type":"list",
+      "member":{"shape":"AzureRegion"},
+      "max":100,
+      "min":1
+    },
+    "AzureScopeResourceTypesList":{
+      "type":"list",
+      "member":{"shape":"AzureResourceType"},
+      "max":100,
+      "min":1
+    },
+    "AzureScopeResourcesList":{
+      "type":"list",
+      "member":{"shape":"AzureResourceIdScope"},
+      "max":100,
+      "min":1
+    },
+    "AzureScopeTagFiltersList":{
+      "type":"list",
+      "member":{"shape":"TagFilter"},
+      "max":50,
+      "min":1
+    },
+    "AzureStorageAccountId":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"/[sS][uU][bB][sS][cC][rR][iI][pP][tT][iI][oO][nN][sS]/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/[rR][eE][sS][oO][uU][rR][cC][eE][gG][rR][oO][uU][pP][sS]/[^/${}'\"`\\\\<>%&?#\\s\\u0000-\\u001F\\u007F]+/[pP][rR][oO][vV][iI][dD][eE][rR][sS]/[mM][iI][cC][rR][oO][sS][oO][fF][tT]\\.[sS][tT][oO][rR][aA][gG][eE]/[sS][tT][oO][rR][aA][gG][eE][aA][cC][cC][oO][uU][nN][tT][sS]/[a-z0-9]{3,24}"
+    },
+    "AzureSubscriptionId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+    },
+    "AzureSubscriptionScope":{
+      "type":"structure",
+      "members":{
+        "All":{"shape":"AllSubscriptions"},
+        "Ids":{"shape":"AzureSubscriptionScopeIdsList"}
+      },
+      "union":true
+    },
+    "AzureSubscriptionScopeIdsList":{
+      "type":"list",
+      "member":{"shape":"AzureSubscriptionId"},
+      "max":1000,
+      "min":1
+    },
+    "AzureSubscriptionSummaries":{
+      "type":"list",
+      "member":{"shape":"AzureSubscriptionSummary"}
+    },
+    "AzureSubscriptionSummary":{
+      "type":"structure",
+      "required":["SubscriptionId"],
+      "members":{
+        "SubscriptionId":{"shape":"AzureSubscriptionId"},
+        "DisplayName":{"shape":"String"},
+        "State":{"shape":"String"},
+        "ManagementGroupId":{"shape":"AzureManagementGroupId"}
+      }
+    },
+    "AzureSubscriptionsQuery":{
+      "type":"structure",
+      "members":{
+        "ManagementGroupId":{"shape":"AzureManagementGroupId"}
+      }
+    },
+    "AzureTelemetrySourceConfigurationInput":{
+      "type":"structure",
+      "required":["AwsConfigConnectorArn"],
+      "members":{
+        "AwsConfigConnectorArn":{"shape":"AwsConfigConnectorArn"}
+      }
+    },
+    "AzureTelemetrySourceConfigurationOutput":{
+      "type":"structure",
+      "members":{
+        "AwsConfigConnectorArn":{"shape":"AwsConfigConnectorArn"},
+        "ServiceLinkedRecorderArn":{"shape":"ServiceLinkedRecorderArn"}
+      }
+    },
+    "AzureTelemetryType":{
+      "type":"string",
+      "enum":[
+        "ResourceLogs",
+        "Metrics",
+        "FlowLogs"
+      ]
+    },
+    "AzureTenantIdentifier":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
     },
     "Boolean":{
       "type":"boolean",
@@ -885,7 +1556,8 @@
         "Region":{"shape":"Region"},
         "Account":{"shape":"AccountIdentifier"},
         "DestinationLogsConfiguration":{"shape":"DestinationLogsConfiguration"},
-        "DestinationMetricsConfiguration":{"shape":"DestinationMetricsConfiguration"}
+        "DestinationMetricsConfiguration":{"shape":"DestinationMetricsConfiguration"},
+        "DestinationProfilesConfiguration":{"shape":"DestinationProfilesConfiguration"}
       }
     },
     "CentralizationRuleSource":{
@@ -896,6 +1568,7 @@
         "Scope":{"shape":"SourceFilterString"},
         "SourceLogsConfiguration":{"shape":"SourceLogsConfiguration"},
         "SourceMetricsConfiguration":{"shape":"SourceMetricsConfiguration"},
+        "SourceProfilesConfiguration":{"shape":"SourceProfilesConfiguration"},
         "SourceContextGraphConfiguration":{"shape":"SourceContextGraphConfiguration"}
       }
     },
@@ -920,6 +1593,13 @@
         "DestinationAccountId":{"shape":"String"},
         "DestinationRegion":{"shape":"Region"}
       }
+    },
+    "ClientToken":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[!-~]+",
+      "sensitive":true
     },
     "CloudtrailParameters":{
       "type":"structure",
@@ -963,6 +1643,84 @@
       },
       "exception":true
     },
+    "Connector":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Provider",
+        "ConnectorConfiguration",
+        "RoleArn"
+      ],
+      "members":{
+        "Arn":{"shape":"ResourceArn"},
+        "Provider":{"shape":"ConnectorProvider"},
+        "ConnectorConfiguration":{"shape":"ConnectorConfiguration"},
+        "RoleArn":{"shape":"RoleArn"},
+        "Name":{"shape":"ConnectorName"},
+        "CreatedTimeStamp":{"shape":"Long"}
+      }
+    },
+    "ConnectorConfiguration":{
+      "type":"structure",
+      "members":{
+        "Azure":{"shape":"AzureConnectorConfiguration"}
+      },
+      "union":true
+    },
+    "ConnectorIdentifier":{
+      "type":"string",
+      "max":1011,
+      "min":1,
+      "pattern":"([a-z0-9]+|arn:aws[a-z0-9\\-]*:observabilityadmin:[a-z0-9-]+:[0-9]{12}:connector/(azure/)?[a-z0-9]+)"
+    },
+    "ConnectorName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z][a-zA-Z0-9\\-_.]*"
+    },
+    "ConnectorNextToken":{
+      "type":"string",
+      "max":8192,
+      "min":1,
+      "pattern":"[A-Za-z0-9+/=_-]+",
+      "sensitive":true
+    },
+    "ConnectorProvider":{
+      "type":"string",
+      "enum":["AZURE"]
+    },
+    "ConnectorQuery":{
+      "type":"structure",
+      "members":{
+        "Azure":{"shape":"AzureConnectorQuery"}
+      },
+      "union":true
+    },
+    "ConnectorQueryResults":{
+      "type":"structure",
+      "members":{
+        "Azure":{"shape":"AzureConnectorQueryResults"}
+      },
+      "union":true
+    },
+    "ConnectorSummaries":{
+      "type":"list",
+      "member":{"shape":"ConnectorSummary"}
+    },
+    "ConnectorSummary":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Provider"
+      ],
+      "members":{
+        "Arn":{"shape":"ResourceArn"},
+        "Provider":{"shape":"ConnectorProvider"},
+        "Name":{"shape":"ConnectorName"},
+        "CreatedTimeStamp":{"shape":"Long"}
+      }
+    },
     "ContextGraphStatus":{
       "type":"string",
       "enum":[
@@ -987,6 +1745,28 @@
       "type":"structure",
       "members":{
         "RuleArn":{"shape":"ResourceArn"}
+      }
+    },
+    "CreateConnectorInput":{
+      "type":"structure",
+      "required":[
+        "ConnectorConfiguration",
+        "RoleArn",
+        "Name"
+      ],
+      "members":{
+        "ConnectorConfiguration":{"shape":"ConnectorConfiguration"},
+        "RoleArn":{"shape":"RoleArn"},
+        "Name":{"shape":"ConnectorName"},
+        "Tags":{"shape":"TagMapInput"},
+        "ClientToken":{"shape":"ClientToken"}
+      }
+    },
+    "CreateConnectorOutput":{
+      "type":"structure",
+      "required":["Connector"],
+      "members":{
+        "Connector":{"shape":"Connector"}
       }
     },
     "CreateDatasetIntegrationInput":{
@@ -1121,6 +1901,17 @@
         "RuleIdentifier":{"shape":"RuleIdentifier"}
       }
     },
+    "DeleteConnectorInput":{
+      "type":"structure",
+      "required":["ConnectorIdentifier"],
+      "members":{
+        "ConnectorIdentifier":{"shape":"ConnectorIdentifier"}
+      }
+    },
+    "DeleteConnectorOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteDatasetIntegrationInput":{
       "type":"structure",
       "required":["Arn"],
@@ -1178,6 +1969,12 @@
       "type":"structure",
       "members":{
         "BackupConfiguration":{"shape":"MetricsBackupConfiguration"}
+      }
+    },
+    "DestinationProfilesConfiguration":{
+      "type":"structure",
+      "members":{
+        "BackupConfiguration":{"shape":"ProfilesBackupConfiguration"}
       }
     },
     "DestinationType":{
@@ -1297,6 +2094,61 @@
         "CentralizationRule":{"shape":"CentralizationRule"}
       }
     },
+    "GetConnectorInput":{
+      "type":"structure",
+      "required":["ConnectorIdentifier"],
+      "members":{
+        "ConnectorIdentifier":{"shape":"ConnectorIdentifier"}
+      }
+    },
+    "GetConnectorOutput":{
+      "type":"structure",
+      "required":["Connector"],
+      "members":{
+        "Connector":{"shape":"Connector"}
+      }
+    },
+    "GetConnectorTelemetryManifestInput":{
+      "type":"structure",
+      "required":["ConnectorIdentifier"],
+      "members":{
+        "ConnectorIdentifier":{"shape":"ConnectorIdentifier"}
+      }
+    },
+    "GetConnectorTelemetryManifestOutput":{
+      "type":"structure",
+      "required":[
+        "Manifest",
+        "Version"
+      ],
+      "members":{
+        "Manifest":{"shape":"TelemetryManifest"},
+        "Version":{"shape":"Long"},
+        "LastUpdateTimeStamp":{"shape":"Long"}
+      }
+    },
+    "GetConnectorTelemetrySetupInput":{
+      "type":"structure",
+      "required":["ConnectorIdentifier"],
+      "members":{
+        "ConnectorIdentifier":{"shape":"ConnectorIdentifier"},
+        "Format":{"shape":"SetupFormat"}
+      }
+    },
+    "GetConnectorTelemetrySetupOutput":{
+      "type":"structure",
+      "required":[
+        "Artifacts",
+        "Format"
+      ],
+      "members":{
+        "Artifacts":{"shape":"SetupArtifactList"},
+        "RequiredPermissionsToApply":{"shape":"PermissionList"},
+        "Format":{"shape":"SetupFormat"},
+        "Provider":{"shape":"ConnectorProvider"},
+        "ManifestVersion":{"shape":"Long"}
+      }
+    },
     "GetDatasetIntegrationInput":{
       "type":"structure",
       "required":["Arn"],
@@ -1409,6 +2261,29 @@
         "RegionStatuses":{"shape":"RegionStatuses"}
       }
     },
+    "GetThirdPartyTelemetryEnrichmentInput":{
+      "type":"structure",
+      "required":["TelemetryEnrichmentIdentifier"],
+      "members":{
+        "TelemetryEnrichmentIdentifier":{"shape":"ThirdPartyTelemetryEnrichmentIdentifier"}
+      }
+    },
+    "GetThirdPartyTelemetryEnrichmentOutput":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Status",
+        "TelemetrySourceConfiguration"
+      ],
+      "members":{
+        "Arn":{"shape":"ThirdPartyTelemetryEnrichmentArn"},
+        "Name":{"shape":"ThirdPartyTelemetryEnrichmentName"},
+        "Status":{"shape":"ThirdPartyTelemetryEnrichmentStatus"},
+        "StatusReason":{"shape":"StatusReason"},
+        "TelemetrySourceConfiguration":{"shape":"TelemetrySourceConfigurationOutput"},
+        "Tags":{"shape":"TagMapOutput"}
+      }
+    },
     "IamRoleArn":{
       "type":"string",
       "max":2048,
@@ -1516,6 +2391,27 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListConnectorsInput":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListConnectorsMaxResults"},
+        "NextToken":{"shape":"ConnectorNextToken"}
+      }
+    },
+    "ListConnectorsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListConnectorsOutput":{
+      "type":"structure",
+      "required":["ConnectorSummaries"],
+      "members":{
+        "ConnectorSummaries":{"shape":"ConnectorSummaries"},
+        "NextToken":{"shape":"ConnectorNextToken"}
+      }
+    },
     "ListDatasetIntegrationsInput":{
       "type":"structure",
       "members":{
@@ -1584,6 +2480,33 @@
       "members":{
         "TelemetryConfigurations":{"shape":"TelemetryConfigurations"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListResourcesByConnectorInput":{
+      "type":"structure",
+      "required":[
+        "ConnectorIdentifier",
+        "Selector"
+      ],
+      "members":{
+        "ConnectorIdentifier":{"shape":"ConnectorIdentifier"},
+        "Selector":{"shape":"ConnectorQuery"},
+        "MaxResults":{"shape":"ListResourcesByConnectorMaxResults"},
+        "NextToken":{"shape":"ConnectorNextToken"}
+      }
+    },
+    "ListResourcesByConnectorMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListResourcesByConnectorOutput":{
+      "type":"structure",
+      "required":["Results"],
+      "members":{
+        "Results":{"shape":"ConnectorQueryResults"},
+        "NextToken":{"shape":"ConnectorNextToken"}
       }
     },
     "ListS3TableIntegrationsInput":{
@@ -1684,6 +2607,28 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListThirdPartyTelemetryEnrichmentsInput":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"ThirdPartyTelemetryEnrichmentStatus"},
+        "TelemetrySource":{"shape":"ThirdPartyTelemetrySource"},
+        "MaxResults":{"shape":"ListThirdPartyTelemetryEnrichmentsMaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListThirdPartyTelemetryEnrichmentsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListThirdPartyTelemetryEnrichmentsOutput":{
+      "type":"structure",
+      "members":{
+        "TelemetryEnrichments":{"shape":"ThirdPartyTelemetryEnrichmentSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "LogDeliveryParameters":{
       "type":"structure",
       "members":{
@@ -1755,6 +2700,12 @@
       "type":"long",
       "box":true
     },
+    "ManifestAzureResourceId":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"/[sS][uU][bB][sS][cC][rR][iI][pP][tT][iI][oO][nN][sS]/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(/[rR][eE][sS][oO][uU][rR][cC][eE][gG][rR][oO][uU][pP][sS]/[^/${}'\"`\\\\<>%&?#\\s\\u0000-\\u001F\\u007F]+)?/[pP][rR][oO][vV][iI][dD][eE][rR][sS]/[A-Za-z0-9.]+/[^/${}'\"`\\\\<>%&?#\\s\\u0000-\\u001F\\u007F]+(/[^/${}'\"`\\\\<>%&?#\\s\\u0000-\\u001F\\u007F]+)*"
+    },
     "MetricsBackupConfiguration":{
       "type":"structure",
       "required":["Region"],
@@ -1799,6 +2750,17 @@
         "json"
       ]
     },
+    "Permission":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "PermissionList":{
+      "type":"list",
+      "member":{"shape":"Permission"},
+      "max":50,
+      "min":0
+    },
     "PipelineOutput":{
       "type":"structure",
       "members":{
@@ -1819,6 +2781,38 @@
     "Processors":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "ProfilesBackupConfiguration":{
+      "type":"structure",
+      "required":["Region"],
+      "members":{
+        "Region":{"shape":"Region"}
+      }
+    },
+    "ProfilesFilterString":{
+      "type":"string",
+      "max":2000,
+      "min":1
+    },
+    "PutConnectorTelemetryManifestInput":{
+      "type":"structure",
+      "required":[
+        "ConnectorIdentifier",
+        "Manifest"
+      ],
+      "members":{
+        "ConnectorIdentifier":{"shape":"ConnectorIdentifier"},
+        "Manifest":{"shape":"TelemetryManifest"},
+        "ExpectedVersion":{"shape":"Long"},
+        "ClientToken":{"shape":"ClientToken"}
+      }
+    },
+    "PutConnectorTelemetryManifestOutput":{
+      "type":"structure",
+      "required":["Version"],
+      "members":{
+        "Version":{"shape":"Long"}
+      }
     },
     "Record":{
       "type":"structure",
@@ -1931,6 +2925,12 @@
       "max":3653,
       "min":1
     },
+    "RoleArn":{
+      "type":"string",
+      "max":1011,
+      "min":20,
+      "pattern":"arn:aws([a-z0-9\\-]+)?:([a-zA-Z0-9\\-]+):([a-z0-9\\-]+)?:([0-9]{12})?:(.+)"
+    },
     "RuleHealth":{
       "type":"string",
       "enum":[
@@ -1957,6 +2957,12 @@
         "AES256"
       ]
     },
+    "ServiceLinkedRecorderArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-[a-z]+)*:config:[a-z0-9\\-]+:[0-9]{12}:configuration-recorder/[^\\r\\n]+"
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
@@ -1976,6 +2982,45 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "SetupArtifact":{
+      "type":"structure",
+      "required":[
+        "FileName",
+        "Content",
+        "Format"
+      ],
+      "members":{
+        "FileName":{"shape":"SetupArtifactFileName"},
+        "Content":{"shape":"SetupArtifactContent"},
+        "Format":{"shape":"SetupFormat"},
+        "ContentType":{"shape":"SetupArtifactContentType"}
+      }
+    },
+    "SetupArtifactContent":{
+      "type":"string",
+      "max":262144,
+      "min":0
+    },
+    "SetupArtifactContentType":{
+      "type":"string",
+      "max":127,
+      "min":1
+    },
+    "SetupArtifactFileName":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "SetupArtifactList":{
+      "type":"list",
+      "member":{"shape":"SetupArtifact"},
+      "max":50,
+      "min":0
+    },
+    "SetupFormat":{
+      "type":"string",
+      "enum":["BICEP"]
     },
     "SignalType":{
       "type":"string",
@@ -2029,6 +3074,29 @@
         "MetricsSelectionCriteria":{"shape":"MetricsFilterString"}
       }
     },
+    "SourceProfilesConfiguration":{
+      "type":"structure",
+      "members":{
+        "ProfilesSelectionCriteria":{"shape":"ProfilesFilterString"}
+      }
+    },
+    "SourceProgress":{
+      "type":"structure",
+      "members":{
+        "Active":{"shape":"SourceProgressActiveInteger"},
+        "Total":{"shape":"SourceProgressTotalInteger"}
+      }
+    },
+    "SourceProgressActiveInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "SourceProgressTotalInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
     "Sources":{
       "type":"list",
       "member":{"shape":"Source"}
@@ -2054,6 +3122,46 @@
         "AllRegions":{"shape":"AllRegions"}
       }
     },
+    "StartTelemetryPipelineRefreshInput":{
+      "type":"structure",
+      "required":["PipelineIdentifier"],
+      "members":{
+        "PipelineIdentifier":{"shape":"TelemetryPipelineIdentifier"}
+      }
+    },
+    "StartTelemetryPipelineRefreshOutput":{
+      "type":"structure",
+      "members":{}
+    },
+    "StartThirdPartyTelemetryEnrichmentInput":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "TelemetrySourceConfiguration"
+      ],
+      "members":{
+        "Name":{"shape":"ThirdPartyTelemetryEnrichmentName"},
+        "TelemetrySourceConfiguration":{"shape":"TelemetrySourceConfigurationInput"},
+        "Tags":{"shape":"TagMapInput"}
+      }
+    },
+    "StartThirdPartyTelemetryEnrichmentOutput":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Name",
+        "Status",
+        "TelemetrySourceConfiguration"
+      ],
+      "members":{
+        "Arn":{"shape":"ThirdPartyTelemetryEnrichmentArn"},
+        "Name":{"shape":"ThirdPartyTelemetryEnrichmentName"},
+        "Status":{"shape":"ThirdPartyTelemetryEnrichmentStatus"},
+        "StatusReason":{"shape":"StatusReason"},
+        "TelemetrySourceConfiguration":{"shape":"TelemetrySourceConfigurationOutput"},
+        "Tags":{"shape":"TagMapOutput"}
+      }
+    },
     "Status":{
       "type":"string",
       "enum":[
@@ -2066,10 +3174,32 @@
         "STOPPED"
       ]
     },
+    "StatusReason":{"type":"string"},
     "StopTelemetryEnrichmentOutput":{
       "type":"structure",
       "members":{
         "Status":{"shape":"TelemetryEnrichmentStatus"}
+      }
+    },
+    "StopThirdPartyTelemetryEnrichmentInput":{
+      "type":"structure",
+      "required":["TelemetryEnrichmentIdentifier"],
+      "members":{
+        "TelemetryEnrichmentIdentifier":{"shape":"ThirdPartyTelemetryEnrichmentIdentifier"}
+      }
+    },
+    "StopThirdPartyTelemetryEnrichmentOutput":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "TelemetrySource",
+        "Status"
+      ],
+      "members":{
+        "Name":{"shape":"ThirdPartyTelemetryEnrichmentName"},
+        "TelemetrySource":{"shape":"ThirdPartyTelemetrySource"},
+        "Status":{"shape":"ThirdPartyTelemetryEnrichmentStatus"},
+        "StatusReason":{"shape":"StatusReason"}
       }
     },
     "String":{"type":"string"},
@@ -2084,6 +3214,35 @@
         "ADD_ONLY",
         "UPDATE_SYNC"
       ]
+    },
+    "TagFilter":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Values"
+      ],
+      "members":{
+        "Key":{"shape":"TagFilterKey"},
+        "Values":{"shape":"TagFilterValuesList"}
+      }
+    },
+    "TagFilterKey":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[^<>%&\\\\?/${}'\"`\\u0000-\\u001F\\u007F]+"
+    },
+    "TagFilterValue":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[^${}'\"`\\\\<>\\u0000-\\u001F\\u007F]*"
+    },
+    "TagFilterValuesList":{
+      "type":"list",
+      "member":{"shape":"TagFilterValue"},
+      "max":50,
+      "min":1
     },
     "TagKey":{
       "type":"string",
@@ -2192,6 +3351,34 @@
         "Impaired"
       ]
     },
+    "TelemetryManifest":{
+      "type":"structure",
+      "required":["Source"],
+      "members":{
+        "Source":{"shape":"TelemetryManifestSource"},
+        "Infrastructure":{"shape":"TelemetryManifestInfrastructure"}
+      }
+    },
+    "TelemetryManifestInfrastructure":{
+      "type":"structure",
+      "members":{
+        "Azure":{"shape":"AzureInfrastructure"}
+      },
+      "union":true
+    },
+    "TelemetryManifestSource":{
+      "type":"structure",
+      "members":{
+        "Azure":{"shape":"TelemetryManifestSourceAzureList"}
+      },
+      "union":true
+    },
+    "TelemetryManifestSourceAzureList":{
+      "type":"list",
+      "member":{"shape":"AzureScopeItem"},
+      "max":100,
+      "min":0
+    },
     "TelemetryPipeline":{
       "type":"structure",
       "members":{
@@ -2202,7 +3389,10 @@
         "Configuration":{"shape":"TelemetryPipelineConfiguration"},
         "Status":{"shape":"TelemetryPipelineStatus"},
         "StatusReason":{"shape":"TelemetryPipelineStatusReason"},
-        "Tags":{"shape":"TagMapOutput"}
+        "Tags":{"shape":"TagMapOutput"},
+        "LastRefreshTimeStamp":{"shape":"Long"},
+        "SourceProgress":{"shape":"SourceProgress"},
+        "ConfigurationSummary":{"shape":"ConfigurationSummary"}
       }
     },
     "TelemetryPipelineConfiguration":{
@@ -2292,6 +3482,20 @@
         "TelemetrySourceTypes":{"shape":"TelemetrySourceTypes"}
       }
     },
+    "TelemetrySourceConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "Azure":{"shape":"AzureTelemetrySourceConfigurationInput"}
+      },
+      "union":true
+    },
+    "TelemetrySourceConfigurationOutput":{
+      "type":"structure",
+      "members":{
+        "Azure":{"shape":"AzureTelemetrySourceConfigurationOutput"}
+      },
+      "union":true
+    },
     "TelemetrySourceType":{
       "type":"string",
       "enum":[
@@ -2342,6 +3546,50 @@
       "members":{
         "Results":{"shape":"PipelineOutputs"}
       }
+    },
+    "ThirdPartyTelemetryEnrichmentArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-[a-z]+)*:observabilityadmin:[a-z0-9\\-]+:[0-9]{12}:telemetry-enrichments/[a-z][a-z0-9]{9,63}"
+    },
+    "ThirdPartyTelemetryEnrichmentIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ThirdPartyTelemetryEnrichmentName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z][a-zA-Z0-9\\-]*"
+    },
+    "ThirdPartyTelemetryEnrichmentStatus":{
+      "type":"string",
+      "enum":[
+        "Initializing",
+        "Running",
+        "Stopped",
+        "Impaired"
+      ]
+    },
+    "ThirdPartyTelemetryEnrichmentSummaries":{
+      "type":"list",
+      "member":{"shape":"ThirdPartyTelemetryEnrichmentSummary"},
+      "max":100,
+      "min":0
+    },
+    "ThirdPartyTelemetryEnrichmentSummary":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"ThirdPartyTelemetryEnrichmentName"},
+        "TelemetrySource":{"shape":"ThirdPartyTelemetrySource"},
+        "Status":{"shape":"ThirdPartyTelemetryEnrichmentStatus"}
+      }
+    },
+    "ThirdPartyTelemetrySource":{
+      "type":"string",
+      "enum":["Azure"]
     },
     "Timestamp":{"type":"timestamp"},
     "TooManyRequestsException":{

@@ -1195,6 +1195,24 @@
       ],
       "idempotent":true
     },
+    "GetAgentInsightStore":{
+      "name":"GetAgentInsightStore",
+      "http":{
+        "method":"GET",
+        "requestUri":"/agent-insight-stores/{agentInsightStoreId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAgentInsightStoreRequest"},
+      "output":{"shape":"GetAgentInsightStoreResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "GetAgentRuntime":{
       "name":"GetAgentRuntime",
       "http":{
@@ -1836,6 +1854,23 @@
       ],
       "readonly":true
     },
+    "ListAgentInsightStores":{
+      "name":"ListAgentInsightStores",
+      "http":{
+        "method":"POST",
+        "requestUri":"/agent-insight-stores",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAgentInsightStoresRequest"},
+      "output":{"shape":"ListAgentInsightStoresResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListAgentRuntimeEndpoints":{
       "name":"ListAgentRuntimeEndpoints",
       "http":{
@@ -2048,8 +2083,8 @@
     "ListDatasetExamples":{
       "name":"ListDatasetExamples",
       "http":{
-        "method":"GET",
-        "requestUri":"/datasets/{datasetId}/examples",
+        "method":"POST",
+        "requestUri":"/datasets/{datasetId}/examples/list",
         "responseCode":200
       },
       "input":{"shape":"ListDatasetExamplesRequest"},
@@ -2067,8 +2102,8 @@
     "ListDatasetVersions":{
       "name":"ListDatasetVersions",
       "http":{
-        "method":"GET",
-        "requestUri":"/datasets/{datasetId}/versions",
+        "method":"POST",
+        "requestUri":"/datasets/{datasetId}/versions/list",
         "responseCode":200
       },
       "input":{"shape":"ListDatasetVersionsRequest"},
@@ -2085,8 +2120,8 @@
     "ListDatasets":{
       "name":"ListDatasets",
       "http":{
-        "method":"GET",
-        "requestUri":"/datasets",
+        "method":"POST",
+        "requestUri":"/datasets/list",
         "responseCode":200
       },
       "input":{"shape":"ListDatasetsRequest"},
@@ -2709,6 +2744,26 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateAgentInsightStore":{
+      "name":"UpdateAgentInsightStore",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/agent-insight-stores/{agentInsightStoreId}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateAgentInsightStoreRequest"},
+      "output":{"shape":"UpdateAgentInsightStoreResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -3369,6 +3424,78 @@
       "type":"string",
       "max":256,
       "min":1
+    },
+    "AgentInsightStoreArn":{
+      "type":"string",
+      "pattern":"arn:aws(-[a-z]+)*:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:agent-insight-store\\/[a-z0-9-]{1,64}"
+    },
+    "AgentInsightStoreEnablementStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "AgentInsightStoreEncryptionConfiguration":{
+      "type":"structure",
+      "required":["mode"],
+      "members":{
+        "mode":{"shape":"AgentInsightStoreEncryptionMode"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
+    "AgentInsightStoreEncryptionMode":{
+      "type":"string",
+      "enum":[
+        "AWS_OWNED_KMS_KEY",
+        "CUSTOMER_MANAGED_KMS"
+      ]
+    },
+    "AgentInsightStoreFailureReason":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "sensitive":true
+    },
+    "AgentInsightStoreId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-z0-9-]+"
+    },
+    "AgentInsightStoreStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "UPDATING",
+        "INACTIVE",
+        "ERROR"
+      ]
+    },
+    "AgentInsightStoreSummary":{
+      "type":"structure",
+      "required":[
+        "agentInsightStoreArn",
+        "agentInsightStoreId",
+        "status",
+        "enablementStatus",
+        "encryptionConfiguration",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "agentInsightStoreArn":{"shape":"AgentInsightStoreArn"},
+        "agentInsightStoreId":{"shape":"AgentInsightStoreId"},
+        "status":{"shape":"AgentInsightStoreStatus"},
+        "enablementStatus":{"shape":"AgentInsightStoreEnablementStatus"},
+        "encryptionConfiguration":{"shape":"AgentInsightStoreEncryptionConfiguration"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "AgentInsightStoreSummaryList":{
+      "type":"list",
+      "member":{"shape":"AgentInsightStoreSummary"}
     },
     "AgentManagedRuntimeType":{
       "type":"string",
@@ -5183,11 +5310,7 @@
     },
     "CreateDatasetRequest":{
       "type":"structure",
-      "required":[
-        "datasetName",
-        "source",
-        "schemaType"
-      ],
+      "required":["datasetName"],
       "members":{
         "clientToken":{
           "shape":"ClientToken",
@@ -6268,6 +6391,10 @@
       "type":"list",
       "member":{"shape":"SensitiveJson"}
     },
+    "DatasetGenerationId":{
+      "type":"string",
+      "pattern":"[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+    },
     "DatasetId":{
       "type":"string",
       "pattern":"[a-zA-Z0-9_-]{1,110}"
@@ -6303,7 +6430,6 @@
         "datasetId",
         "datasetName",
         "status",
-        "schemaType",
         "exampleCount",
         "createdAt",
         "updatedAt"
@@ -6317,6 +6443,7 @@
         "draftStatus":{"shape":"DraftStatus"},
         "schemaType":{"shape":"DatasetSchemaType"},
         "exampleCount":{"shape":"Long"},
+        "exampleCountByField":{"shape":"ExampleCountByField"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"}
       }
@@ -6339,6 +6466,7 @@
       "members":{
         "datasetVersion":{"shape":"DatasetVersion"},
         "exampleCount":{"shape":"Long"},
+        "exampleCountByField":{"shape":"ExampleCountByField"},
         "createdAt":{"shape":"Timestamp"}
       }
     },
@@ -7802,6 +7930,69 @@
         "CustomDerived"
       ]
     },
+    "ExampleCountByField":{
+      "type":"structure",
+      "required":[
+        "turns",
+        "input",
+        "actorProfile"
+      ],
+      "members":{
+        "turns":{"shape":"Long"},
+        "input":{"shape":"Long"},
+        "actorProfile":{"shape":"Long"}
+      }
+    },
+    "ExampleCountByFieldCondition":{
+      "type":"structure",
+      "members":{
+        "anyOf":{"shape":"ExampleFieldList"},
+        "min":{"shape":"ExampleCountByFieldConditionMinLong"},
+        "max":{"shape":"ExampleCountByFieldConditionMaxLong"}
+      }
+    },
+    "ExampleCountByFieldConditionList":{
+      "type":"list",
+      "member":{"shape":"ExampleCountByFieldCondition"},
+      "max":3,
+      "min":1
+    },
+    "ExampleCountByFieldConditionMaxLong":{
+      "type":"long",
+      "box":true,
+      "min":0
+    },
+    "ExampleCountByFieldConditionMinLong":{
+      "type":"long",
+      "box":true,
+      "min":0
+    },
+    "ExampleField":{
+      "type":"string",
+      "enum":[
+        "TURNS",
+        "INPUT",
+        "ACTOR_PROFILE"
+      ]
+    },
+    "ExampleFieldCondition":{
+      "type":"structure",
+      "members":{
+        "anyOf":{"shape":"ExampleFieldList"}
+      }
+    },
+    "ExampleFieldConditionList":{
+      "type":"list",
+      "member":{"shape":"ExampleFieldCondition"},
+      "max":3,
+      "min":1
+    },
+    "ExampleFieldList":{
+      "type":"list",
+      "member":{"shape":"ExampleField"},
+      "max":3,
+      "min":1
+    },
     "ExampleId":{
       "type":"string",
       "max":256,
@@ -8313,6 +8504,39 @@
       "max":1024,
       "min":1
     },
+    "GetAgentInsightStoreRequest":{
+      "type":"structure",
+      "required":["agentInsightStoreId"],
+      "members":{
+        "agentInsightStoreId":{
+          "shape":"AgentInsightStoreId",
+          "location":"uri",
+          "locationName":"agentInsightStoreId"
+        }
+      }
+    },
+    "GetAgentInsightStoreResponse":{
+      "type":"structure",
+      "required":[
+        "agentInsightStoreArn",
+        "agentInsightStoreId",
+        "status",
+        "enablementStatus",
+        "encryptionConfiguration",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "agentInsightStoreArn":{"shape":"AgentInsightStoreArn"},
+        "agentInsightStoreId":{"shape":"AgentInsightStoreId"},
+        "status":{"shape":"AgentInsightStoreStatus"},
+        "enablementStatus":{"shape":"AgentInsightStoreEnablementStatus"},
+        "encryptionConfiguration":{"shape":"AgentInsightStoreEncryptionConfiguration"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "failureReason":{"shape":"AgentInsightStoreFailureReason"}
+      }
+    },
     "GetAgentRuntimeEndpointRequest":{
       "type":"structure",
       "required":[
@@ -8730,7 +8954,6 @@
         "datasetVersion",
         "datasetName",
         "status",
-        "schemaType",
         "exampleCount",
         "createdAt",
         "updatedAt"
@@ -8747,6 +8970,7 @@
         "schemaType":{"shape":"DatasetSchemaType"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
         "exampleCount":{"shape":"Long"},
+        "exampleCountByField":{"shape":"ExampleCountByField"},
         "downloadUrl":{"shape":"DownloadUrl"},
         "downloadUrlExpiresAt":{"shape":"Timestamp"},
         "createdAt":{"shape":"Timestamp"},
@@ -11084,6 +11308,40 @@
         "clientId":{"shape":"ClientIdType"}
       }
     },
+    "ListAgentInsightStoresRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"ListAgentInsightStoresRequestNextTokenString",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListAgentInsightStoresRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListAgentInsightStoresRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListAgentInsightStoresRequestNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
+    "ListAgentInsightStoresResponse":{
+      "type":"structure",
+      "required":["agentInsightStores"],
+      "members":{
+        "agentInsightStores":{"shape":"AgentInsightStoreSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListAgentRuntimeEndpointsRequest":{
       "type":"structure",
       "required":["agentRuntimeId"],
@@ -11398,6 +11656,19 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListDatasetExamplesFilter":{
+      "type":"structure",
+      "members":{
+        "generationIds":{"shape":"ListDatasetExamplesFilterGenerationIdsList"},
+        "exampleFields":{"shape":"ExampleFieldConditionList"}
+      }
+    },
+    "ListDatasetExamplesFilterGenerationIdsList":{
+      "type":"list",
+      "member":{"shape":"DatasetGenerationId"},
+      "max":1,
+      "min":1
+    },
     "ListDatasetExamplesRequest":{
       "type":"structure",
       "required":["datasetId"],
@@ -11407,21 +11678,10 @@
           "location":"uri",
           "locationName":"datasetId"
         },
-        "datasetVersion":{
-          "shape":"DatasetVersion",
-          "location":"querystring",
-          "locationName":"datasetVersion"
-        },
-        "maxResults":{
-          "shape":"ListDatasetExamplesRequestMaxResultsInteger",
-          "location":"querystring",
-          "locationName":"maxResults"
-        },
-        "nextToken":{
-          "shape":"ListDatasetExamplesRequestNextTokenString",
-          "location":"querystring",
-          "locationName":"nextToken"
-        }
+        "datasetVersion":{"shape":"DatasetVersion"},
+        "filter":{"shape":"ListDatasetExamplesFilter"},
+        "maxResults":{"shape":"ListDatasetExamplesRequestMaxResultsInteger"},
+        "nextToken":{"shape":"ListDatasetExamplesRequestNextTokenString"}
       }
     },
     "ListDatasetExamplesRequestMaxResultsInteger":{
@@ -11451,6 +11711,12 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListDatasetVersionsFilter":{
+      "type":"structure",
+      "members":{
+        "exampleCountByField":{"shape":"ExampleCountByFieldConditionList"}
+      }
+    },
     "ListDatasetVersionsRequest":{
       "type":"structure",
       "required":["datasetId"],
@@ -11460,16 +11726,9 @@
           "location":"uri",
           "locationName":"datasetId"
         },
-        "nextToken":{
-          "shape":"String",
-          "location":"querystring",
-          "locationName":"nextToken"
-        },
-        "maxResults":{
-          "shape":"ListDatasetVersionsRequestMaxResultsInteger",
-          "location":"querystring",
-          "locationName":"maxResults"
-        }
+        "filter":{"shape":"ListDatasetVersionsFilter"},
+        "nextToken":{"shape":"ListDatasetVersionsRequestNextTokenString"},
+        "maxResults":{"shape":"ListDatasetVersionsRequestMaxResultsInteger"}
       }
     },
     "ListDatasetVersionsRequestMaxResultsInteger":{
@@ -11477,6 +11736,11 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "ListDatasetVersionsRequestNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":0
     },
     "ListDatasetVersionsResponse":{
       "type":"structure",
@@ -11486,19 +11750,18 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListDatasetsFilter":{
+      "type":"structure",
+      "members":{
+        "exampleCountByField":{"shape":"ExampleCountByFieldConditionList"}
+      }
+    },
     "ListDatasetsRequest":{
       "type":"structure",
       "members":{
-        "nextToken":{
-          "shape":"ListDatasetsRequestNextTokenString",
-          "location":"querystring",
-          "locationName":"nextToken"
-        },
-        "maxResults":{
-          "shape":"ListDatasetsRequestMaxResultsInteger",
-          "location":"querystring",
-          "locationName":"maxResults"
-        }
+        "filter":{"shape":"ListDatasetsFilter"},
+        "nextToken":{"shape":"ListDatasetsRequestNextTokenString"},
+        "maxResults":{"shape":"ListDatasetsRequestMaxResultsInteger"}
       }
     },
     "ListDatasetsRequestMaxResultsInteger":{
@@ -15909,6 +16172,41 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{}
+    },
+    "UpdateAgentInsightStoreRequest":{
+      "type":"structure",
+      "required":["agentInsightStoreId"],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "agentInsightStoreId":{
+          "shape":"AgentInsightStoreId",
+          "location":"uri",
+          "locationName":"agentInsightStoreId"
+        },
+        "enablementStatus":{"shape":"AgentInsightStoreEnablementStatus"},
+        "encryptionConfiguration":{"shape":"AgentInsightStoreEncryptionConfiguration"}
+      }
+    },
+    "UpdateAgentInsightStoreResponse":{
+      "type":"structure",
+      "required":[
+        "agentInsightStoreArn",
+        "agentInsightStoreId",
+        "status",
+        "enablementStatus",
+        "updatedAt"
+      ],
+      "members":{
+        "agentInsightStoreArn":{"shape":"AgentInsightStoreArn"},
+        "agentInsightStoreId":{"shape":"AgentInsightStoreId"},
+        "status":{"shape":"AgentInsightStoreStatus"},
+        "enablementStatus":{"shape":"AgentInsightStoreEnablementStatus"},
+        "updatedAt":{"shape":"Timestamp"},
+        "failureReason":{"shape":"AgentInsightStoreFailureReason"}
+      }
     },
     "UpdateAgentRuntimeEndpointRequest":{
       "type":"structure",

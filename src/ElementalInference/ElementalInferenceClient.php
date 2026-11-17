@@ -53,6 +53,50 @@ use Aws\AwsClient;
  *     tags?: array<string, string>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createFunction(array $args = [])
+ * @phpstan-method \Aws\Result createFunction(array{
+ *     name?: string,
+ *     target?: array{bedrock?: array{api?: 'INVOKE_MODEL', model?: string, ...}, passthrough?: array, ...},
+ *     requestExpression?: string,
+ *     responseExpression?: string,
+ *     description?: string,
+ *     eventBridgeDelivery?: 'DISABLED'|'ENABLED',
+ *     tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createFunctionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createFunctionAsync(array{
+ *     name?: string,
+ *     target?: array{bedrock?: array{api?: 'INVOKE_MODEL', model?: string, ...}, passthrough?: array, ...},
+ *     requestExpression?: string,
+ *     responseExpression?: string,
+ *     description?: string,
+ *     eventBridgeDelivery?: 'DISABLED'|'ENABLED',
+ *     tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createQuestionSet(array $args = [])
+ * @phpstan-method \Aws\Result createQuestionSet(array{
+ *     yesNo?: list<array{name?: string, question?: string, ...}>,
+ *     yesNoPerOption?: list<array{name?: string, question?: string, options?: list<array>, ...}>,
+ *     chooseOne?: list<array{name?: string, question?: string, options?: list<array>, ...}>,
+ *     name?: string,
+ *     tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createQuestionSetAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createQuestionSetAsync(array{
+ *     yesNo?: list<array{name?: string, question?: string, ...}>,
+ *     yesNoPerOption?: list<array{name?: string, question?: string, options?: list<array>, ...}>,
+ *     chooseOne?: list<array{name?: string, question?: string, options?: list<array>, ...}>,
+ *     name?: string,
+ *     tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createQuestionSetVersion(array $args = [])
+ * @phpstan-method \Aws\Result createQuestionSetVersion(array{id?: string, sha256?: string, description?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise createQuestionSetVersionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createQuestionSetVersionAsync(array{id?: string, sha256?: string, description?: string, ...} $args = [])
  * @method \Aws\Result createScheduleAction(array $args = [])
  * @phpstan-method \Aws\Result createScheduleAction(array{
  *     id?: string,
@@ -91,6 +135,18 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteFeedPolicy(array{id?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteFeedPolicyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteFeedPolicyAsync(array{id?: string, ...} $args = [])
+ * @method \Aws\Result deleteFunction(array $args = [])
+ * @phpstan-method \Aws\Result deleteFunction(array{id?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteFunctionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteFunctionAsync(array{id?: string, ...} $args = [])
+ * @method \Aws\Result deleteQuestionSet(array $args = [])
+ * @phpstan-method \Aws\Result deleteQuestionSet(array{id?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteQuestionSetAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteQuestionSetAsync(array{id?: string, ...} $args = [])
+ * @method \Aws\Result deleteQuestionSetVersion(array $args = [])
+ * @phpstan-method \Aws\Result deleteQuestionSetVersion(array{id?: string, questionSetVersion?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteQuestionSetVersionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteQuestionSetVersionAsync(array{id?: string, questionSetVersion?: string, ...} $args = [])
  * @method \Aws\Result deleteScheduleAction(array $args = [])
  * @phpstan-method \Aws\Result deleteScheduleAction(array{id?: string, actionName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteScheduleActionAsync(array $args = [])
@@ -119,6 +175,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getFixture(array{fixtureId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getFixtureAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getFixtureAsync(array{fixtureId?: string, ...} $args = [])
+ * @method \Aws\Result getFunction(array $args = [])
+ * @phpstan-method \Aws\Result getFunction(array{id?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getFunctionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getFunctionAsync(array{id?: string, ...} $args = [])
+ * @method \Aws\Result getQuestionSet(array $args = [])
+ * @phpstan-method \Aws\Result getQuestionSet(array{id?: string, questionSetVersion?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getQuestionSetAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getQuestionSetAsync(array{id?: string, questionSetVersion?: string, ...} $args = [])
  * @method \Aws\Result listDictionaries(array $args = [])
  * @phpstan-method \Aws\Result listDictionaries(array{maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listDictionariesAsync(array $args = [])
@@ -127,6 +191,18 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listFeeds(array{maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listFeedsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listFeedsAsync(array{maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listFunctions(array $args = [])
+ * @phpstan-method \Aws\Result listFunctions(array{maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listFunctionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listFunctionsAsync(array{maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listQuestionSetVersions(array $args = [])
+ * @phpstan-method \Aws\Result listQuestionSetVersions(array{id?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listQuestionSetVersionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listQuestionSetVersionsAsync(array{id?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listQuestionSets(array $args = [])
+ * @phpstan-method \Aws\Result listQuestionSets(array{maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listQuestionSetsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listQuestionSetsAsync(array{maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result listScheduleActions(array $args = [])
  * @phpstan-method \Aws\Result listScheduleActions(array{id?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listScheduleActionsAsync(array $args = [])
@@ -199,6 +275,46 @@ use Aws\AwsClient;
  *         fromAssociation?: bool,
  *         ...,
  *     }>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateFunction(array $args = [])
+ * @phpstan-method \Aws\Result updateFunction(array{
+ *     id?: string,
+ *     name?: string,
+ *     target?: array{bedrock?: array{api?: 'INVOKE_MODEL', model?: string, ...}, passthrough?: array, ...},
+ *     requestExpression?: string,
+ *     responseExpression?: string,
+ *     description?: string,
+ *     eventBridgeDelivery?: 'DISABLED'|'ENABLED',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateFunctionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateFunctionAsync(array{
+ *     id?: string,
+ *     name?: string,
+ *     target?: array{bedrock?: array{api?: 'INVOKE_MODEL', model?: string, ...}, passthrough?: array, ...},
+ *     requestExpression?: string,
+ *     responseExpression?: string,
+ *     description?: string,
+ *     eventBridgeDelivery?: 'DISABLED'|'ENABLED',
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateQuestionSet(array $args = [])
+ * @phpstan-method \Aws\Result updateQuestionSet(array{
+ *     id?: string,
+ *     yesNo?: list<array{name?: string, question?: string, ...}>,
+ *     yesNoPerOption?: list<array{name?: string, question?: string, options?: list<array>, ...}>,
+ *     chooseOne?: list<array{name?: string, question?: string, options?: list<array>, ...}>,
+ *     name?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateQuestionSetAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateQuestionSetAsync(array{
+ *     id?: string,
+ *     yesNo?: list<array{name?: string, question?: string, ...}>,
+ *     yesNoPerOption?: list<array{name?: string, question?: string, options?: list<array>, ...}>,
+ *     chooseOne?: list<array{name?: string, question?: string, options?: list<array>, ...}>,
+ *     name?: string,
  *     ...,
  * } $args = [])
  */

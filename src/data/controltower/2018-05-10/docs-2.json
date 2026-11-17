@@ -292,7 +292,8 @@
       "base": null,
       "refs": {
         "EnabledBaselineDriftStatuses$member": null,
-        "EnabledBaselineInheritanceDrift$status": "<p>The inheritance drift status for enabled baselines.</p>"
+        "EnabledBaselineInheritanceDrift$status": "<p>The inheritance drift status for enabled baselines.</p>",
+        "EnabledBaselineSourceDrift$status": "<p>The source drift status for the enabled baseline.</p>"
       }
     },
     "EnabledBaselineDriftStatusSummary": {
@@ -305,7 +306,8 @@
     "EnabledBaselineDriftStatuses": {
       "base": null,
       "refs": {
-        "EnabledBaselineFilter$inheritanceDriftStatuses": "<p>A list of <code>EnabledBaselineDriftStatus</code> items for enabled baselines.</p>"
+        "EnabledBaselineFilter$inheritanceDriftStatuses": "<p>A list of <code>EnabledBaselineDriftStatus</code> items for enabled baselines.</p>",
+        "EnabledBaselineFilter$sourceDriftStatuses": "<p>A list of <code>EnabledBaselineDriftStatus</code> items for enabled baselines.</p>"
       }
     },
     "EnabledBaselineDriftTypes": {
@@ -368,6 +370,12 @@
       "base": null,
       "refs": {
         "EnabledBaselineFilter$parentIdentifiers": "<p>An optional filter that sets up a list of <code>parentIdentifiers</code> to filter the results of the <code>ListEnabledBaseline</code> output.</p>"
+      }
+    },
+    "EnabledBaselineSourceDrift": {
+      "base": "<p>The source drift summary for the enabled baseline. Source drift occurs when an enabled baseline no longer matches the landing zone's configuration.</p>",
+      "refs": {
+        "EnabledBaselineDriftTypes$source": "<p>Source drift occurs when an enabled baseline no longer matches the landing zone's configuration.</p>"
       }
     },
     "EnabledBaselineSummary": {

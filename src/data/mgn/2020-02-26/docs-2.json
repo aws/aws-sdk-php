@@ -11,6 +11,7 @@
     "CreateConnector": "<p>Create Connector.</p>",
     "CreateLaunchConfigurationTemplate": "<p>Creates a new Launch Configuration Template.</p>",
     "CreateNetworkMigrationDefinition": "<p>Creates a new network migration definition that specifies the source and target network configuration for a migration.</p>",
+    "CreateRemoteSourceAction": "<p>Creates a source action, which references a script in AWS Systems Manager Parameter Store that Application Migration Service runs on source environment.</p>",
     "CreateReplicationConfigurationTemplate": "<p>Creates a new ReplicationConfigurationTemplate.</p>",
     "CreateWave": "<p>Create wave.</p>",
     "DeleteApplication": "<p>Delete application.</p>",
@@ -18,6 +19,7 @@
     "DeleteJob": "<p>Deletes a single Job by ID.</p>",
     "DeleteLaunchConfigurationTemplate": "<p>Deletes a single Launch Configuration Template by ID.</p>",
     "DeleteNetworkMigrationDefinition": "<p>Deletes a network migration definition. This operation removes the migration definition and all associated metadata.</p>",
+    "DeleteRemoteSourceAction": "<p>Deletes a source action. This operation also deletes the invocation results of the source action.</p>",
     "DeleteReplicationConfigurationTemplate": "<p>Deletes a single Replication Configuration Template by ID</p>",
     "DeleteSourceServer": "<p>Deletes a single source server by ID.</p>",
     "DeleteVcenterClient": "<p>Deletes a given vCenter client by ID.</p>",
@@ -33,6 +35,7 @@
     "DisconnectFromService": "<p>Disconnects specific Source Servers from Application Migration Service. Data replication is stopped immediately. All AWS resources created by Application Migration Service for enabling the replication of these source servers will be terminated / deleted within 90 minutes. Launched Test or Cutover instances will NOT be terminated. If the agent on the source server has not been prevented from communicating with Application Migration Service, then it will receive a command to uninstall itself (within approximately 10 minutes). The following properties of the SourceServer will be changed immediately: dataReplicationInfo.dataReplicationState will be set to DISCONNECTED; The totalStorageBytes property for each of dataReplicationInfo.replicatedDisks will be set to zero; dataReplicationInfo.lagDuration and dataReplicationInfo.etaDateTime will be nullified.</p>",
     "FinalizeCutover": "<p>Finalizes the cutover immediately for specific Source Servers. All AWS resources created by Application Migration Service for enabling the replication of these source servers will be terminated / deleted within 90 minutes. Launched Test or Cutover instances will NOT be terminated. The AWS Replication Agent will receive a command to uninstall itself (within 10 minutes). The following properties of the SourceServer will be changed immediately: dataReplicationInfo.dataReplicationState will be changed to DISCONNECTED; The SourceServer.lifeCycle.state will be changed to CUTOVER; The totalStorageBytes property for each of dataReplicationInfo.replicatedDisks will be set to zero; dataReplicationInfo.lagDuration and dataReplicationInfo.etaDateTime will be nullified.</p>",
     "GetLaunchConfiguration": "<p>Lists all LaunchConfigurations available, filtered by Source Server IDs.</p>",
+    "GetLaunchConfigurationDefaults": "<p>Gets the launch configuration defaults of a source server: the Amazon Elastic Block Store (Amazon EBS) volume configuration used for the disk mappings created later in the source server's Amazon Elastic Compute Cloud (Amazon EC2) launch template.</p>",
     "GetNetworkMigrationDefinition": "<p>Retrieves the details of a network migration definition including source and target configurations.</p>",
     "GetNetworkMigrationMapperSegmentConstruct": "<p>Retrieves detailed information about a specific construct within a mapper segment, including its properties and configuration data.</p>",
     "GetReplicationConfiguration": "<p>Lists all ReplicationConfigurations, filtered by Source Server ID.</p>",
@@ -53,10 +56,15 @@
     "ListNetworkMigrationDeployedStacks": "<p>Lists CloudFormation stacks that have been deployed as part of the network migration.</p>",
     "ListNetworkMigrationDeployments": "<p>Lists network migration deployment jobs and their current status.</p>",
     "ListNetworkMigrationExecutions": "<p>Lists network migration execution instances for a given definition, showing the status and progress of each execution.</p>",
+    "ListNetworkMigrationInsights": "<p>Lists network migration insights for a network migration definition.</p>",
     "ListNetworkMigrationMapperSegmentConstructs": "<p>Lists constructs within a mapper segment, representing individual infrastructure components like VPCs, subnets, or security groups.</p>",
     "ListNetworkMigrationMapperSegments": "<p>Lists mapper segments, which represent logical groupings of network resources to be migrated together.</p>",
     "ListNetworkMigrationMappingUpdates": "<p>Lists mapping update jobs, which apply customer modifications to the generated network mappings.</p>",
     "ListNetworkMigrationMappings": "<p>Lists network migration mapping jobs, which analyze and create relationships between source and target network resources.</p>",
+    "ListRemoteSourceActionInvocationResults": "<p>Lists the latest invocation result of each source action that ran on a source server.</p>",
+    "ListRemoteSourceActionInvocations": "<p>Lists the invocations of a source action job, one for each source server and source action, with optional filtering.</p>",
+    "ListRemoteSourceActionJobs": "<p>Lists the source action jobs in the account, with optional filtering.</p>",
+    "ListRemoteSourceActions": "<p>Lists the source actions in the account, with optional filtering.</p>",
     "ListSourceServerActions": "<p>List source server post migration custom actions.</p>",
     "ListTagsForResource": "<p>List all tags for your Application Migration Service resources.</p>",
     "ListTemplateActions": "<p>List template post migration custom actions.</p>",
@@ -78,6 +86,7 @@
     "StartNetworkMigrationDeployment": "<p>Starts a deployment job to create the target network infrastructure based on the generated code templates.</p>",
     "StartNetworkMigrationMapping": "<p>Starts the network migration mapping process for a given network migration execution.</p>",
     "StartNetworkMigrationMappingUpdate": "<p>Starts a job to apply customer modifications to network migration mappings, such as changing properties.</p>",
+    "StartRemoteSourceActionJob": "<p>Starts a job that runs a source action on source servers through a connector.</p>",
     "StartReplication": "<p>Start replication for source server irrespective of its replication type.</p>",
     "StartTest": "<p>Launches a Test Instance for specific Source Servers. This command starts a LAUNCH job whose initiatedBy property is StartTest and changes the SourceServer.lifeCycle.state property to TESTING.</p>",
     "StopReplication": "<p>Stop Replication.</p>",
@@ -89,9 +98,11 @@
     "UpdateApplication": "<p>Update application.</p>",
     "UpdateConnector": "<p>Update Connector.</p>",
     "UpdateLaunchConfiguration": "<p>Updates multiple LaunchConfigurations by Source Server ID.</p> <note> <p>bootMode valid values are <code>LEGACY_BIOS | UEFI | USE_SOURCE</code> </p> </note>",
+    "UpdateLaunchConfigurationDefaults": "<p>Updates the launch configuration defaults of a source server. They apply only to disk mappings created later in the source server's Amazon Elastic Compute Cloud (Amazon EC2) launch template, and members you omit keep their current values.</p>",
     "UpdateLaunchConfigurationTemplate": "<p>Updates an existing Launch Configuration Template by ID.</p>",
     "UpdateNetworkMigrationDefinition": "<p>Updates an existing network migration definition with new source or target configurations.</p>",
     "UpdateNetworkMigrationMapperSegment": "<p>Updates a mapper segment's configuration, such as changing its scope tags.</p>",
+    "UpdateRemoteSourceAction": "<p>Updates a source action.</p>",
     "UpdateReplicationConfiguration": "<p>Allows you to update multiple ReplicationConfigurations by Source Server ID.</p>",
     "UpdateReplicationConfigurationTemplate": "<p>Updates a ReplicationConfigurationTemplate by ID.</p>",
     "UpdateSourceServer": "<p>Update Source Server.</p>",
@@ -104,6 +115,7 @@
       "refs": {
         "Application$arn": "<p>Application ARN.</p>",
         "Connector$arn": "<p>Connector arn.</p>",
+        "CreateRemoteSourceActionResponse$arn": "<p>The Amazon Resource Name (ARN) of the source action.</p>",
         "CreateReplicationConfigurationTemplateRequest$ebsEncryptionKeyArn": "<p>Request to configure an EBS encryption key during Replication Settings template creation.</p>",
         "ExportTask$arn": "<p>ExportTask arn.</p>",
         "ImportTask$arn": "<p>ImportTask arn.</p>",
@@ -113,6 +125,8 @@
         "ListTagsForResourceRequest$resourceArn": "<p>List tags for resource request by ARN.</p>",
         "NetworkMigrationDefinition$arn": "<p>The Amazon Resource Name (ARN) of the network migration definition.</p>",
         "NetworkMigrationDefinitionSummary$arn": "<p>The Amazon Resource Name (ARN) of the network migration definition.</p>",
+        "RemoteSourceAction$arn": "<p>The Amazon Resource Name (ARN) of the source action.</p>",
+        "RemoteSourceActionJob$arn": "<p>The Amazon Resource Name (ARN) of the job.</p>",
         "ReplicationConfiguration$ebsEncryptionKeyArn": "<p>Replication Configuration EBS encryption key ARN.</p>",
         "ReplicationConfigurationTemplate$arn": "<p>Replication Configuration template ARN.</p>",
         "ReplicationConfigurationTemplate$ebsEncryptionKeyArn": "<p>Replication Configuration template EBS encryption key ARN.</p>",
@@ -120,6 +134,7 @@
         "TagResourceRequest$resourceArn": "<p>Tag resource by ARN.</p>",
         "UntagResourceRequest$resourceArn": "<p>Untag resource by ARN.</p>",
         "UpdateLaunchConfigurationTemplateRequest$parametersEncryptionKey": "<p>Parameters encryption key.</p>",
+        "UpdateRemoteSourceActionResponse$arn": "<p>The Amazon Resource Name (ARN) of the source action.</p>",
         "UpdateReplicationConfigurationRequest$ebsEncryptionKeyArn": "<p>Update replication configuration EBS encryption key ARN request.</p>",
         "UpdateReplicationConfigurationTemplateRequest$arn": "<p>Update replication configuration template ARN request.</p>",
         "UpdateReplicationConfigurationTemplateRequest$ebsEncryptionKeyArn": "<p>Update replication configuration template EBS encryption key ARN request.</p>",
@@ -140,9 +155,11 @@
         "AssociateSourceServersRequest$accountID": "<p>Account ID.</p>",
         "ChangeServerLifeCycleStateRequest$accountID": "<p>The request to change the source server migration account ID.</p>",
         "CreateApplicationRequest$accountID": "<p>Account ID.</p>",
+        "CreateRemoteSourceActionRequest$accountID": "<p>Account ID.</p>",
         "CreateWaveRequest$accountID": "<p>Account ID.</p>",
         "DeleteApplicationRequest$accountID": "<p>Account ID.</p>",
         "DeleteJobRequest$accountID": "<p>Request to delete Job from service by Account ID.</p>",
+        "DeleteRemoteSourceActionRequest$accountID": "<p>Account ID.</p>",
         "DeleteSourceServerRequest$accountID": "<p>Request to delete Source Server from service by Account ID.</p>",
         "DeleteWaveRequest$accountID": "<p>Account ID.</p>",
         "DescribeJobLogItemsRequest$accountID": "<p>Request to describe Job log Account ID.</p>",
@@ -155,10 +172,15 @@
         "EnrichmentTargetS3Configuration$s3BucketOwner": "<p>The AWS account ID of the target S3 bucket owner.</p>",
         "ExportTask$s3BucketOwner": "<p>Export task s3 bucket owner.</p>",
         "FinalizeCutoverRequest$accountID": "<p>Request to finalize Cutover by Source Account ID.</p>",
+        "GetLaunchConfigurationDefaultsRequest$accountID": "<p>Request to get the launch configuration defaults by Account ID.</p>",
         "GetLaunchConfigurationRequest$accountID": "<p>Request to get Launch Configuration information by Account ID.</p>",
         "GetReplicationConfigurationRequest$accountID": "<p>Request to get Replication Configuration by Account ID.</p>",
         "ImportErrorData$accountID": "<p>Import error data source account ID.</p>",
         "ListApplicationsRequest$accountID": "<p>Applications list Account ID.</p>",
+        "ListRemoteSourceActionInvocationResultsRequest$accountID": "<p>Account ID.</p>",
+        "ListRemoteSourceActionInvocationsRequest$accountID": "<p>Account ID.</p>",
+        "ListRemoteSourceActionJobsRequest$accountID": "<p>Account ID.</p>",
+        "ListRemoteSourceActionsRequest$accountID": "<p>Account ID.</p>",
         "ListSourceServerActionsRequest$accountID": "<p>Account ID to return when listing source server post migration custom actions.</p>",
         "ListWavesRequest$accountID": "<p>Request account ID.</p>",
         "ManagedAccount$accountId": "<p>Managed account, account ID.</p>",
@@ -167,15 +189,19 @@
         "NetworkMigrationMapperSegment$targetAccount": "<p>The target AWS account where this segment will be deployed.</p>",
         "PauseReplicationRequest$accountID": "<p>Pause Replication Request account ID.</p>",
         "PutSourceServerActionRequest$accountID": "<p>Source server post migration custom account ID.</p>",
+        "RemoteSourceActionInvocationResult$connectorOwnerAccountID": "<p>The ID of the account that owns the connector that ran the source action.</p>",
         "RemoveSourceServerActionRequest$accountID": "<p>Source server post migration account ID.</p>",
         "ResumeReplicationRequest$accountID": "<p>Resume Replication Request account ID.</p>",
         "RetryDataReplicationRequest$accountID": "<p>Retry data replication for Account ID.</p>",
         "S3BucketSource$s3BucketOwner": "<p>S3 bucket source s3 bucket owner.</p>",
         "S3Configuration$s3BucketOwner": "<p>The AWS account ID of the S3 bucket owner.</p>",
+        "SegmentCreateOperation$targetAccount": "<p>The target AWS account for the new segment.</p>",
+        "SegmentUpdateOperation$targetAccount": "<p>The updated target AWS account for the segment.</p>",
         "SourceS3Configuration$s3BucketOwner": "<p>The AWS account ID of the S3 bucket owner.</p>",
         "StartCutoverRequest$accountID": "<p>Start Cutover by Account IDs</p>",
         "StartExportRequest$s3BucketOwner": "<p>Start export request s3 bucket owner.</p>",
         "StartNetworkMigrationMappingUpdateSegment$targetAccount": "<p>The updated target AWS account for the segment.</p>",
+        "StartRemoteSourceActionJobRequest$accountID": "<p>Account ID.</p>",
         "StartReplicationRequest$accountID": "<p>Account ID on which to start replication.</p>",
         "StartTestRequest$accountID": "<p>Start Test for Account ID.</p>",
         "StopReplicationRequest$accountID": "<p>Stop Replication Request account ID.</p>",
@@ -185,7 +211,9 @@
         "UnarchiveApplicationRequest$accountID": "<p>Account ID.</p>",
         "UnarchiveWaveRequest$accountID": "<p>Account ID.</p>",
         "UpdateApplicationRequest$accountID": "<p>Account ID.</p>",
+        "UpdateLaunchConfigurationDefaultsRequest$accountID": "<p>Request to update the launch configuration defaults by Account ID.</p>",
         "UpdateLaunchConfigurationRequest$accountID": "<p>Update Launch configuration Account ID.</p>",
+        "UpdateRemoteSourceActionRequest$accountID": "<p>Account ID.</p>",
         "UpdateReplicationConfigurationRequest$accountID": "<p>Update replication configuration Account ID request.</p>",
         "UpdateSourceServerReplicationTypeRequest$accountID": "<p>Account ID on which to update replication type.</p>",
         "UpdateSourceServerRequest$accountID": "<p>Update Source Server request account ID.</p>",
@@ -348,6 +376,30 @@
       "base": null,
       "refs": {}
     },
+    "AssociationCidrList": {
+      "base": null,
+      "refs": {
+        "SecurityGroupAssociations$cidrs": "<p>The CIDR ranges associated with the security group. A provided list replaces the stored list; an empty list clears it, and omitting the field leaves it unchanged.</p>"
+      }
+    },
+    "AssociationUserProvidedID": {
+      "base": null,
+      "refs": {
+        "AssociationUserProvidedIDList$member": null
+      }
+    },
+    "AssociationUserProvidedIDList": {
+      "base": null,
+      "refs": {
+        "SecurityGroupAssociations$userProvidedIDs": "<p>The user-provided identifiers of the source machines associated with the security group.</p>"
+      }
+    },
+    "AssociationVmUUIDList": {
+      "base": null,
+      "refs": {
+        "SecurityGroupAssociations$vmUUIDs": "<p>The UUIDs of the source machines associated with the security group.</p>"
+      }
+    },
     "BandwidthThrottling": {
       "base": null,
       "refs": {
@@ -369,6 +421,7 @@
         "CreateLaunchConfigurationTemplateRequest$associatePublicIpAddress": "<p>Associate public Ip address.</p>",
         "CreateLaunchConfigurationTemplateRequest$copyTags": "<p>Copy tags.</p>",
         "CreateLaunchConfigurationTemplateRequest$enableParametersEncryption": "<p>Enable parameters encryption.</p>",
+        "CreateOperation$excluded": "<p>Whether the new construct is excluded from the migration.</p>",
         "CreateReplicationConfigurationTemplateRequest$associateDefaultSecurityGroup": "<p>Request to associate the default Application Migration Service Security group with the Replication Settings template.</p>",
         "CreateReplicationConfigurationTemplateRequest$useDedicatedReplicationServer": "<p>Request to use Dedicated Replication Servers during Replication Settings template creation.</p>",
         "CreateReplicationConfigurationTemplateRequest$createPublicIP": "<p>Request to create Public IP during Replication Settings template creation.</p>",
@@ -386,6 +439,8 @@
         "LaunchTemplateDiskConf$deleteOnTermination": "<p>Launch template disk delete on termination configuration.</p>",
         "Licensing$osByol": "<p>Configure BYOL OS licensing.</p>",
         "ListApplicationsRequestFilters$isArchived": "<p>Filter applications list by archival status.</p>",
+        "ListNetworkMigrationMapperSegmentConstructsRequest$includeEnrichedProperties": "<p>Whether to return construct properties using their native value types.</p>",
+        "ListNetworkMigrationMapperSegmentConstructsRequest$includeConfiguration": "<p>Whether to return construct-type-specific behavioral configuration.</p>",
         "ListWavesRequestFilters$isArchived": "<p>Filter waves list by archival status.</p>",
         "NetworkInterface$isPrimary": "<p>Network interface primary IP.</p>",
         "NetworkMigrationMapperSegmentConstruct$excluded": "<p>Whether this construct is excluded from the migration.</p>",
@@ -404,6 +459,7 @@
         "ReplicationConfigurationTemplate$createPublicIP": "<p>Replication Configuration template create Public IP.</p>",
         "ReplicationConfigurationTemplate$useFipsEndpoint": "<p>Replication Configuration template use Fips Endpoint.</p>",
         "ReplicationConfigurationTemplate$storeSnapshotOnLocalZone": "<p>Replication Configuration template store snapshot on local zone.</p>",
+        "SecurityGroupRuleConfiguration$enableReferencing": "<p>Whether automatic conversion of CIDR-based sources and destinations to security group references applies to this rule.</p>",
         "SourceServer$isArchived": "<p>Source server archived status.</p>",
         "SourceServerActionDocument$active": "<p>Source server post migration custom action active status.</p>",
         "SourceServerActionDocument$mustSucceedForCutover": "<p>Source server post migration custom action must succeed for cutover.</p>",
@@ -419,6 +475,7 @@
         "UpdateLaunchConfigurationTemplateRequest$copyTags": "<p>Copy tags.</p>",
         "UpdateLaunchConfigurationTemplateRequest$enableParametersEncryption": "<p>Enable parameters encryption.</p>",
         "UpdateOperation$excluded": "<p>Whether to exclude this construct from the migration.</p>",
+        "UpdateOperationV2$excluded": "<p>Whether to exclude this construct from the migration.</p>",
         "UpdateReplicationConfigurationRequest$associateDefaultSecurityGroup": "<p>Update replication configuration associate default Application Migration Service Security group request.</p>",
         "UpdateReplicationConfigurationRequest$useDedicatedReplicationServer": "<p>Update replication configuration use dedicated Replication Server request.</p>",
         "UpdateReplicationConfigurationRequest$createPublicIP": "<p>Update replication configuration create Public IP request.</p>",
@@ -455,6 +512,8 @@
         "IdentificationHints$vmWareUuid": "<p>vmWare UUID identification hint.</p>",
         "IdentificationHints$vmPath": "<p>vCenter VM path identification hint.</p>",
         "ImportErrorData$ec2LaunchTemplateID": "<p>Import error data ec2 LaunchTemplate ID.</p>",
+        "InsightMessage$code": "<p>A stable identifier for the kind of insight.</p>",
+        "InsightMessage$topic": "<p>The topic that the insight relates to.</p>",
         "JobPostLaunchActionsLaunchStatus$executionID": "<p>AWS Systems Manager Document's execution ID of the Job Post Launch Actions.</p>",
         "JobPostLaunchActionsLaunchStatus$failureReason": "<p>AWS Systems Manager Document's failure reason.</p>",
         "LastKnownCheck$name": "<p>Last known check name.</p>",
@@ -523,6 +582,7 @@
     "CidrBlock": {
       "base": null,
       "refs": {
+        "AssociationCidrList$member": null,
         "SplitConstruct$cidrBlock": "<p>The CIDR block for the split construct.</p>"
       }
     },
@@ -545,7 +605,8 @@
       "refs": {
         "CreateNetworkMigrationDefinitionRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "StartImportFileEnrichmentRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
-        "StartImportRequest$clientToken": "<p>Start import request client token.</p>"
+        "StartImportRequest$clientToken": "<p>Start import request client token.</p>",
+        "StartRemoteSourceActionJobRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
       }
     },
     "CloudWatchLogGroupName": {
@@ -605,7 +666,9 @@
     "ConnectorArn": {
       "base": null,
       "refs": {
-        "SourceServerConnectorAction$connectorArn": "<p>Source Server connector action connector arn.</p>"
+        "RemoteSourceActionJob$connectorArn": "<p>The ARN of the connector that runs the job.</p>",
+        "SourceServerConnectorAction$connectorArn": "<p>Source Server connector action connector arn.</p>",
+        "StartRemoteSourceActionJobRequest$connectorArn": "<p>The ARN of the connector that runs the source actions.</p>"
       }
     },
     "ConnectorID": {
@@ -649,10 +712,18 @@
       "base": null,
       "refs": {
         "GetNetworkMigrationMapperSegmentConstructRequest$constructID": "<p>The unique identifier of the construct within the segment.</p>",
+        "ListNetworkMigrationInsightsRequest$constructID": "<p>The unique identifier of the construct to narrow the results to.</p>",
         "ListNetworkMigrationMapperSegmentConstructsIDsFilter$member": null,
         "MergeConstruct$constructID": "<p>The construct ID to merge.</p>",
+        "NetworkMigrationInsight$constructID": "<p>The unique identifier of the construct the insight relates to; absent for run-level and segment-level insights.</p>",
         "NetworkMigrationMapperSegmentConstruct$constructID": "<p>The unique identifier of the construct.</p>",
         "StartNetworkMigrationMappingUpdateConstruct$constructID": "<p>The ID of the construct to update.</p>"
+      }
+    },
+    "ConstructLogicalID": {
+      "base": null,
+      "refs": {
+        "StartNetworkMigrationMappingUpdateConstruct$constructLogicalID": "<p>The logical identifier for a construct created by a create operation; other operations identify the construct by constructID. Other entries in the same request can reference the new construct as {\"Ref\": \"&lt;constructLogicalID&gt;\"}.</p>"
       }
     },
     "ConstructProperties": {
@@ -687,6 +758,20 @@
       "refs": {}
     },
     "CreateNetworkMigrationDefinitionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateOperation": {
+      "base": "<p>An operation that creates a new construct in the segment.</p>",
+      "refs": {
+        "OperationUnion$create": "<p>A create operation that adds a new construct to the segment, identified by the constructLogicalID on the parent construct entry.</p>"
+      }
+    },
+    "CreateRemoteSourceActionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRemoteSourceActionResponse": {
       "base": null,
       "refs": {}
     },
@@ -764,6 +849,15 @@
         "DataReplicationInfo$dataReplicationState": "<p>Request to query the data replication state.</p>"
       }
     },
+    "DefinitionType": {
+      "base": null,
+      "refs": {
+        "CreateNetworkMigrationDefinitionRequest$definitionType": "<p>Specifies the type of the definition. <code>MIGRATION</code> migrates an existing network. <code>NEW_NETWORK</code> designs a new network. If you omit this value, the definition type is <code>MIGRATION</code>.</p>",
+        "NetworkMigrationDefinition$definitionType": "<p>Specifies the type of the definition. <code>MIGRATION</code> migrates an existing network. <code>NEW_NETWORK</code> designs a new network.</p>",
+        "NetworkMigrationDefinitionSummary$definitionType": "<p>The type of the network migration definition.</p>",
+        "UpdateNetworkMigrationDefinitionRequest$definitionType": "<p>The updated type of the network migration definition.</p>"
+      }
+    },
     "DeleteApplicationRequest": {
       "base": null,
       "refs": {}
@@ -800,11 +894,25 @@
       "base": null,
       "refs": {}
     },
+    "DeleteOnTermination": {
+      "base": null,
+      "refs": {
+        "SourceServerVolumeConfiguration$deleteOnTermination": "<p>Specifies whether the volume is deleted when the launched instance terminates.</p>"
+      }
+    },
     "DeleteOperation": {
       "base": "<p>An operation that deletes a construct from the mapping.</p>",
       "refs": {
         "OperationUnion$delete": "<p>A delete operation to remove a construct from the mapping.</p>"
       }
+    },
+    "DeleteRemoteSourceActionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRemoteSourceActionResponse": {
+      "base": null,
+      "refs": {}
     },
     "DeleteReplicationConfigurationTemplateRequest": {
       "base": null,
@@ -950,6 +1058,12 @@
         "SourceProperties$disks": "<p>Source Server disks.</p>"
       }
     },
+    "Document": {
+      "base": null,
+      "refs": {
+        "EnrichedProperties$value": null
+      }
+    },
     "DocumentVersion": {
       "base": null,
       "refs": {
@@ -990,6 +1104,21 @@
       "base": null,
       "refs": {
         "Checksum$encryptionAlgorithm": "<p>The encryption algorithm used to generate the checksum.</p>"
+      }
+    },
+    "EnrichedProperties": {
+      "base": "<p>A map of construct property keys to values, using native types such as strings, numbers, references, and lists.</p>",
+      "refs": {
+        "CreateOperation$properties": "<p>The properties of the new construct, using their native value types.</p>",
+        "NetworkMigrationMapperSegmentConstruct$enrichedProperties": "<p>The construct properties using their native value types. Returned by Get, and by List when includeEnrichedProperties is true.</p>",
+        "UpdateOperationV2$properties": "<p>The properties to set or overwrite on the construct, using their native value types; omitted keys are unchanged.</p>"
+      }
+    },
+    "EnrichedPropertyKey": {
+      "base": null,
+      "refs": {
+        "EnrichedProperties$key": null,
+        "PropertiesToDelete$member": null
       }
     },
     "EnrichmentSourceS3Configuration": {
@@ -1109,6 +1238,14 @@
       "refs": {
         "StorageConfiguration$fsxOntapConfiguration": "<p>Storage configuration FSx ONTAP configuration.</p>"
       }
+    },
+    "GetLaunchConfigurationDefaultsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetLaunchConfigurationDefaultsResponse": {
+      "base": null,
+      "refs": {}
     },
     "GetLaunchConfigurationRequest": {
       "base": null,
@@ -1321,6 +1458,56 @@
         "Job$initiatedBy": "<p>Job initiated by field.</p>"
       }
     },
+    "InsightID": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationInsight$insightID": "<p>The unique identifier of the insight.</p>"
+      }
+    },
+    "InsightLevel": {
+      "base": "<p>The level that a network migration insight applies to: the run, a segment, or a construct.</p>",
+      "refs": {
+        "NetworkMigrationInsight$insightLevel": "<p>The level that the insight applies to: the run, a segment, or a construct.</p>"
+      }
+    },
+    "InsightMessage": {
+      "base": "<p>The content of a network migration insight.</p>",
+      "refs": {
+        "NetworkMigrationInsight$insightMessage": "<p>The content of the insight.</p>"
+      }
+    },
+    "InsightMessageText": {
+      "base": null,
+      "refs": {
+        "InsightMessage$message": "<p>The human-readable insight message.</p>"
+      }
+    },
+    "InsightProducerID": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationInsightsRequest$producerID": "<p>The identifier of the job or API request to narrow the results to.</p>",
+        "NetworkMigrationInsight$producerID": "<p>The identifier of the job or API request that produced the insight.</p>"
+      }
+    },
+    "InsightProducerName": {
+      "base": "<p>The job type or API name that produced a network migration insight.</p>",
+      "refs": {
+        "NetworkMigrationInsight$producerName": "<p>The job type or API name that produced the insight.</p>"
+      }
+    },
+    "InsightProducerType": {
+      "base": "<p>Whether a network migration insight was produced by a job or by an API request.</p>",
+      "refs": {
+        "NetworkMigrationInsight$producerType": "<p>Whether the insight was produced by a job or by an API request.</p>"
+      }
+    },
+    "InsightType": {
+      "base": "<p>The type of a network migration insight.</p>",
+      "refs": {
+        "ListNetworkMigrationInsightsTypesFilter$member": null,
+        "NetworkMigrationInsight$insightType": "<p>The type of the insight.</p>"
+      }
+    },
     "InternalServerException": {
       "base": "<p>The server encountered an unexpected condition that prevented it from fulfilling the request.</p>",
       "refs": {}
@@ -1338,7 +1525,8 @@
     "Iops": {
       "base": null,
       "refs": {
-        "LaunchTemplateDiskConf$iops": "<p>Launch template disk iops configuration.</p>"
+        "LaunchTemplateDiskConf$iops": "<p>Launch template disk iops configuration.</p>",
+        "SourceServerVolumeConfiguration$iops": "<p>Provisioned IOPS, for io1, io2 and gp3 volumes.</p>"
       }
     },
     "IpAssignmentStrategy": {
@@ -1453,6 +1641,7 @@
         "NetworkMigrationFailedResourceDetails$statusReason": "<p>The reason why the resource failed.</p>",
         "NetworkMigrationMappingJobDetails$statusDetails": "<p>Detailed status information about the job.</p>",
         "NetworkMigrationMappingUpdateJobDetails$statusDetails": "<p>Detailed status information about the job.</p>",
+        "RemoteSourceActionJob$statusReason": "<p>The reason the job failed.</p>",
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$code": null,
         "ResourceNotFoundException$resourceId": "<p>Resource ID not found error.</p>",
@@ -1874,6 +2063,26 @@
       "base": null,
       "refs": {}
     },
+    "ListNetworkMigrationInsightsFilters": {
+      "base": "<p>Filters for listing network migration insights.</p>",
+      "refs": {
+        "ListNetworkMigrationInsightsRequest$filters": "<p>Filters to apply when listing insights.</p>"
+      }
+    },
+    "ListNetworkMigrationInsightsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationInsightsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationInsightsTypesFilter": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationInsightsFilters$insightTypes": "<p>The insight types to include in the results.</p>"
+      }
+    },
     "ListNetworkMigrationMapperSegmentConstructTypesFilter": {
       "base": null,
       "refs": {
@@ -1960,6 +2169,56 @@
       "base": null,
       "refs": {}
     },
+    "ListRemoteSourceActionInvocationResultsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRemoteSourceActionInvocationResultsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRemoteSourceActionInvocationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRemoteSourceActionInvocationsRequestFilters": {
+      "base": "<p>Filters for listing source action invocations.</p>",
+      "refs": {
+        "ListRemoteSourceActionInvocationsRequest$filters": "<p>Filters to apply when listing invocations, such as source server or status.</p>"
+      }
+    },
+    "ListRemoteSourceActionInvocationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRemoteSourceActionJobsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRemoteSourceActionJobsRequestFilters": {
+      "base": "<p>Filters for listing source action jobs.</p>",
+      "refs": {
+        "ListRemoteSourceActionJobsRequest$filters": "<p>Filters to apply when listing source action jobs.</p>"
+      }
+    },
+    "ListRemoteSourceActionJobsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRemoteSourceActionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRemoteSourceActionsRequestFilters": {
+      "base": "<p>Filters for listing source actions.</p>",
+      "refs": {
+        "ListRemoteSourceActionsRequest$filters": "<p>Filters to apply when listing source actions.</p>"
+      }
+    },
+    "ListRemoteSourceActionsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListSourceServerActionsRequest": {
       "base": null,
       "refs": {}
@@ -2006,7 +2265,8 @@
         "NetworkMigrationDeployedStackDetails$stackLogicalID": "<p>The logical ID of the stack.</p>",
         "NetworkMigrationFailedResourceDetails$logicalID": "<p>The logical ID of the failed resource.</p>",
         "NetworkMigrationMapperSegment$logicalID": "<p>The logical identifier for the segment in the infrastructure code.</p>",
-        "NetworkMigrationMapperSegmentConstruct$logicalID": "<p>The logical identifier for the construct in the infrastructure code.</p>"
+        "NetworkMigrationMapperSegmentConstruct$logicalID": "<p>The logical identifier for the construct in the infrastructure code.</p>",
+        "StartNetworkMigrationMappingUpdateConstruct$segmentLogicalID": "<p>The identifier of a segment created in the same request that this construct belongs to. Use it instead of <code>segmentID</code> for a new segment.</p>"
       }
     },
     "ManagedAccount": {
@@ -2056,10 +2316,15 @@
         "ListNetworkMigrationDeployedStacksRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListNetworkMigrationDeploymentsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListNetworkMigrationExecutionsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListNetworkMigrationInsightsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListNetworkMigrationMapperSegmentConstructsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListNetworkMigrationMapperSegmentsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListNetworkMigrationMappingUpdatesRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListNetworkMigrationMappingsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListRemoteSourceActionInvocationResultsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListRemoteSourceActionInvocationsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListRemoteSourceActionJobsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListRemoteSourceActionsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListSourceServerActionsRequest$maxResults": "<p>Maximum amount of items to return when listing source server post migration custom actions.</p>",
         "ListTemplateActionsRequest$maxResults": "<p>Maximum amount of items to return when listing template post migration custom actions.</p>",
         "ListWavesRequest$maxResults": "<p>Maximum results to return when listing waves.</p>"
@@ -2222,6 +2487,7 @@
         "ListNetworkMigrationDeployedStacksRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
         "ListNetworkMigrationDeploymentsRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
         "ListNetworkMigrationExecutionsRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition to list executions for.</p>",
+        "ListNetworkMigrationInsightsRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
         "ListNetworkMigrationMapperSegmentConstructsRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
         "ListNetworkMigrationMapperSegmentsRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
         "ListNetworkMigrationMappingUpdatesRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
@@ -2235,6 +2501,7 @@
         "NetworkMigrationDefintionsIDsFilter$member": null,
         "NetworkMigrationDeployerJobDetails$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
         "NetworkMigrationExecution$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition used by this execution.</p>",
+        "NetworkMigrationInsight$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition the insight belongs to.</p>",
         "NetworkMigrationMapperSegment$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
         "NetworkMigrationMappingJobDetails$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
         "NetworkMigrationMappingUpdateJobDetails$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
@@ -2320,6 +2587,7 @@
         "ListNetworkMigrationCodeGenerationsRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
         "ListNetworkMigrationDeployedStacksRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
         "ListNetworkMigrationDeploymentsRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "ListNetworkMigrationInsightsRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution to narrow the results to.</p>",
         "ListNetworkMigrationMapperSegmentConstructsRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
         "ListNetworkMigrationMapperSegmentsRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
         "ListNetworkMigrationMappingUpdatesRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
@@ -2331,6 +2599,7 @@
         "NetworkMigrationDeployerJobDetails$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
         "NetworkMigrationExecution$networkMigrationExecutionID": "<p>The unique identifier of the execution.</p>",
         "NetworkMigrationExecutionIDsFilter$member": null,
+        "NetworkMigrationInsight$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution the insight belongs to.</p>",
         "NetworkMigrationMapperSegment$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
         "NetworkMigrationMappingJobDetails$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
         "NetworkMigrationMappingUpdateJobDetails$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
@@ -2376,6 +2645,18 @@
       "base": null,
       "refs": {
         "NetworkMigrationDeployedStackDetails$failedResources": "<p>A list of resources that failed to deploy.</p>"
+      }
+    },
+    "NetworkMigrationInsight": {
+      "base": "<p>An insight produced during a network migration, such as a warning, decision, question, or other context beyond the migrated output.</p>",
+      "refs": {
+        "NetworkMigrationInsightsList$member": null
+      }
+    },
+    "NetworkMigrationInsightsList": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationInsightsResponse$items": "<p>A list of network migration insights.</p>"
       }
     },
     "NetworkMigrationJobID": {
@@ -2483,9 +2764,20 @@
     "OperatingSystemString": {
       "base": null,
       "refs": {
+        "CreateRemoteSourceActionResponse$operatingSystem": "<p>The operating system of the source servers that the script runs on. Absent when the script runs on both Linux and Windows.</p>",
         "PutTemplateActionRequest$operatingSystem": "<p>Operating system eligible for this template post migration custom action.</p>",
+        "RemoteSourceAction$operatingSystem": "<p>The operating system of the source servers that the script runs on. Absent when the script runs on both Linux and Windows.</p>",
         "TemplateActionDocument$operatingSystem": "<p>Operating system eligible for this template post migration custom action.</p>",
+        "UpdateRemoteSourceActionResponse$operatingSystem": "<p>The operating system of the source servers that the script runs on. Absent when the script runs on both Linux and Windows.</p>",
         "UpdateSourceServerRequest$platform": "<p>Update Source Server request platform operating system.</p>"
+      }
+    },
+    "OperationConfigurationUnion": {
+      "base": "<p>Construct-type-specific behavioral configuration. The variant provided must match the construct type.</p>",
+      "refs": {
+        "CreateOperation$configuration": "<p>The initial construct-type-specific behavioral configuration for the new construct.</p>",
+        "NetworkMigrationMapperSegmentConstruct$configuration": "<p>The construct-type-specific behavioral configuration. Returned by Get, and by List when includeConfiguration is true.</p>",
+        "UpdateOperationV2$configuration": "<p>Construct-type-specific behavioral configuration to apply, such as security group associations or security group rule referencing.</p>"
       }
     },
     "OperationUnion": {
@@ -2501,6 +2793,22 @@
         "PutTemplateActionRequest$order": "<p>Template post migration custom action order.</p>",
         "SourceServerActionDocument$order": "<p>Source server post migration custom action order.</p>",
         "TemplateActionDocument$order": "<p>Template post migration custom action order.</p>"
+      }
+    },
+    "OutpostARN": {
+      "base": null,
+      "refs": {
+        "DataReplicationInfo$stagingOutpostArn": "<p>The ARN of the AWS Outpost that hosts the staging area, when the staging area subnet is on an Outpost.</p>"
+      }
+    },
+    "OutpostSnapshotLocation": {
+      "base": null,
+      "refs": {
+        "CreateReplicationConfigurationTemplateRequest$outpostSnapshotLocation": "<p>Request to set the location of replication snapshots when the staging area subnet is on an AWS Outpost during Replication Settings template creation. Set to <code>OUTPOST</code> to keep replication snapshots on the Outpost, or <code>REGION</code> to store them in the AWS Region. Required when the staging area subnet is on an Outpost, and not allowed otherwise.</p>",
+        "ReplicationConfiguration$outpostSnapshotLocation": "<p>Indicates the location of replication snapshots when the staging area subnet is on an AWS Outpost. <code>OUTPOST</code> keeps replication snapshots on the Outpost, and <code>REGION</code> stores them in the AWS Region.</p>",
+        "ReplicationConfigurationTemplate$outpostSnapshotLocation": "<p>Indicates the location of replication snapshots in the Replication Configuration template when the staging area subnet is on an AWS Outpost. <code>OUTPOST</code> keeps replication snapshots on the Outpost, and <code>REGION</code> stores them in the AWS Region.</p>",
+        "UpdateReplicationConfigurationRequest$outpostSnapshotLocation": "<p>Updates the location of replication snapshots when the staging area subnet is on an AWS Outpost. Set to <code>OUTPOST</code> to keep replication snapshots on the Outpost, or <code>REGION</code> to store them in the AWS Region. Required when the staging area subnet is on an Outpost, and not allowed otherwise.</p>",
+        "UpdateReplicationConfigurationTemplateRequest$outpostSnapshotLocation": "<p>Updates the location of replication snapshots in the Replication Configuration template when the staging area subnet is on an AWS Outpost. Set to <code>OUTPOST</code> to keep replication snapshots on the Outpost, or <code>REGION</code> to store them in the AWS Region. Required when the staging area subnet is on an Outpost, and not allowed otherwise.</p>"
       }
     },
     "PaginationToken": {
@@ -2550,6 +2858,8 @@
         "ListNetworkMigrationDeploymentsRequest$nextToken": "<p>The token for the next page of results.</p>",
         "ListNetworkMigrationExecutionsRequest$nextToken": "<p>The token for the next page of results.</p>",
         "ListNetworkMigrationExecutionsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListNetworkMigrationInsightsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListNetworkMigrationInsightsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
         "ListNetworkMigrationMapperSegmentConstructsRequest$nextToken": "<p>The token for the next page of results.</p>",
         "ListNetworkMigrationMapperSegmentConstructsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
         "ListNetworkMigrationMapperSegmentsRequest$nextToken": "<p>The token for the next page of results.</p>",
@@ -2558,6 +2868,14 @@
         "ListNetworkMigrationMappingUpdatesResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
         "ListNetworkMigrationMappingsRequest$nextToken": "<p>The token for the next page of results.</p>",
         "ListNetworkMigrationMappingsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListRemoteSourceActionInvocationResultsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListRemoteSourceActionInvocationResultsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListRemoteSourceActionInvocationsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListRemoteSourceActionInvocationsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListRemoteSourceActionJobsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListRemoteSourceActionJobsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListRemoteSourceActionsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListRemoteSourceActionsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
         "ListSourceServerActionsRequest$nextToken": "<p>Next token to use when listing source server post migration custom actions.</p>",
         "ListSourceServerActionsResponse$nextToken": "<p>Next token returned when listing source server post migration custom actions.</p>",
         "ListTemplateActionsRequest$nextToken": "<p>Next token to use when listing template post migration custom actions.</p>",
@@ -2602,6 +2920,7 @@
         "ExportTaskSummary$serversCount": "<p>Export task summary servers count.</p>",
         "ExportTaskSummary$applicationsCount": "<p>Export task summary applications count.</p>",
         "ExportTaskSummary$wavesCount": "<p>Export task summary waves count.</p>",
+        "GetLaunchConfigurationDefaultsResponse$smallVolumeMaxSize": "<p>Disks up to this size, in GiB, use the small volume configuration, and larger disks use the large one. <code>0</code> means every disk uses the large one.</p>",
         "ImportErrorData$rowNumber": "<p>Import error data row number.</p>",
         "ImportTaskSummaryApplications$createdCount": "<p>Import task summary applications created count.</p>",
         "ImportTaskSummaryApplications$modifiedCount": "<p>Import task summary applications modified count.</p>",
@@ -2614,6 +2933,8 @@
         "ReplicationConfigurationReplicatedDisk$iops": "<p>Replication Configuration replicated disk IOPs.</p>",
         "ReplicationConfigurationReplicatedDisk$throughput": "<p>Replication Configuration replicated disk throughput.</p>",
         "SourceProperties$ramBytes": "<p>Source server RAM in bytes.</p>",
+        "UpdateLaunchConfigurationDefaultsRequest$smallVolumeMaxSize": "<p>Disks up to this size, in GiB, use the small volume configuration, and larger disks use the large one. <code>0</code> means every disk uses the large one. If you omit it, the current value is kept.</p>",
+        "UpdateLaunchConfigurationDefaultsResponse$smallVolumeMaxSize": "<p>Disks up to this size, in GiB, use the small volume configuration, and larger disks use the large one. <code>0</code> means every disk uses the large one.</p>",
         "UpdateLaunchConfigurationTemplateRequest$smallVolumeMaxSize": "<p>Small volume maximum size.</p>",
         "WaveAggregatedStatus$totalApplications": "<p>Wave aggregated status total applications amount.</p>"
       }
@@ -2652,6 +2973,12 @@
         "ParticipatingServer$postLaunchActionsStatus": "<p>Participating server's Post Launch Actions Status.</p>"
       }
     },
+    "PropertiesToDelete": {
+      "base": "<p>A list of construct property keys to remove.</p>",
+      "refs": {
+        "UpdateOperationV2$propertiesToDelete": "<p>The property keys to remove from the construct.</p>"
+      }
+    },
     "PutSourceServerActionRequest": {
       "base": null,
       "refs": {}
@@ -2659,6 +2986,165 @@
     "PutTemplateActionRequest": {
       "base": null,
       "refs": {}
+    },
+    "RemoteSourceAction": {
+      "base": "<p>A source action, which references a script in AWS Systems Manager Parameter Store that Application Migration Service runs on source servers through a connector.</p>",
+      "refs": {
+        "RemoteSourceActionsList$member": null
+      }
+    },
+    "RemoteSourceActionArn": {
+      "base": null,
+      "refs": {
+        "RemoteSourceActionArns$member": null,
+        "RemoteSourceActionArnsFilter$member": null,
+        "RemoteSourceActionInvocation$remoteSourceActionArn": "<p>The ARN of the source action.</p>"
+      }
+    },
+    "RemoteSourceActionArns": {
+      "base": null,
+      "refs": {
+        "RemoteSourceActionJob$remoteSourceActionArns": "<p>The ARNs of the source actions that the job runs.</p>",
+        "StartRemoteSourceActionJobRequest$remoteSourceActionArns": "<p>The ARNs of the source actions to run.</p>"
+      }
+    },
+    "RemoteSourceActionArnsFilter": {
+      "base": null,
+      "refs": {
+        "ListRemoteSourceActionInvocationsRequestFilters$remoteSourceActionArns": "<p>A list of source action ARNs to filter by.</p>"
+      }
+    },
+    "RemoteSourceActionDescription": {
+      "base": null,
+      "refs": {
+        "CreateRemoteSourceActionRequest$description": "<p>A description of the source action.</p>",
+        "CreateRemoteSourceActionResponse$description": "<p>A description of the source action.</p>",
+        "RemoteSourceAction$description": "<p>A description of the source action.</p>",
+        "UpdateRemoteSourceActionRequest$description": "<p>The updated description of the source action.</p>",
+        "UpdateRemoteSourceActionResponse$description": "<p>A description of the source action.</p>"
+      }
+    },
+    "RemoteSourceActionID": {
+      "base": null,
+      "refs": {
+        "CreateRemoteSourceActionResponse$remoteSourceActionID": "<p>The unique identifier of the source action.</p>",
+        "DeleteRemoteSourceActionRequest$remoteSourceActionID": "<p>The unique identifier of the source action to delete.</p>",
+        "RemoteSourceAction$remoteSourceActionID": "<p>The unique identifier of the source action.</p>",
+        "RemoteSourceActionIDsFilter$member": null,
+        "RemoteSourceActionInvocationResult$remoteSourceActionID": "<p>The unique identifier of the source action.</p>",
+        "UpdateRemoteSourceActionRequest$remoteSourceActionID": "<p>The unique identifier of the source action to update.</p>",
+        "UpdateRemoteSourceActionResponse$remoteSourceActionID": "<p>The unique identifier of the source action.</p>"
+      }
+    },
+    "RemoteSourceActionIDsFilter": {
+      "base": null,
+      "refs": {
+        "ListRemoteSourceActionsRequestFilters$remoteSourceActionIDs": "<p>A list of source action IDs to filter by.</p>"
+      }
+    },
+    "RemoteSourceActionInvocation": {
+      "base": "<p>The run of a source action on one source server as part of a job.</p>",
+      "refs": {
+        "RemoteSourceActionInvocationsList$member": null
+      }
+    },
+    "RemoteSourceActionInvocationResult": {
+      "base": "<p>The latest invocation result of a source action on a source server.</p>",
+      "refs": {
+        "RemoteSourceActionInvocationResultsList$member": null
+      }
+    },
+    "RemoteSourceActionInvocationResultsList": {
+      "base": null,
+      "refs": {
+        "ListRemoteSourceActionInvocationResultsResponse$items": "<p>A list of source action invocation results.</p>"
+      }
+    },
+    "RemoteSourceActionInvocationStatus": {
+      "base": "<p>The status of a source action invocation. Can be PENDING, IN_PROGRESS, DELAYED, SUCCESS, CANCELLED, TIMED_OUT, FAILED, CANCELLING, or STALLED.</p>",
+      "refs": {
+        "RemoteSourceActionInvocation$status": "<p>The current status of the invocation.</p>",
+        "RemoteSourceActionInvocationResult$status": "<p>The status of the latest invocation.</p>",
+        "RemoteSourceActionInvocationStatusesFilter$member": null
+      }
+    },
+    "RemoteSourceActionInvocationStatusesFilter": {
+      "base": null,
+      "refs": {
+        "ListRemoteSourceActionInvocationsRequestFilters$statuses": "<p>A list of invocation statuses to filter by.</p>"
+      }
+    },
+    "RemoteSourceActionInvocationsList": {
+      "base": null,
+      "refs": {
+        "ListRemoteSourceActionInvocationsResponse$items": "<p>A list of source action invocations.</p>"
+      }
+    },
+    "RemoteSourceActionJob": {
+      "base": "<p>A job that runs a source action on source servers through a connector.</p>",
+      "refs": {
+        "RemoteSourceActionJobsList$member": null,
+        "StartRemoteSourceActionJobResponse$remoteSourceActionJob": "<p>The job that was started.</p>"
+      }
+    },
+    "RemoteSourceActionJobID": {
+      "base": null,
+      "refs": {
+        "ListRemoteSourceActionInvocationsRequest$remoteSourceActionJobID": "<p>The unique identifier of the job to list invocations for.</p>",
+        "RemoteSourceActionJob$remoteSourceActionJobID": "<p>The unique identifier of the job.</p>",
+        "RemoteSourceActionJobIDsFilter$member": null
+      }
+    },
+    "RemoteSourceActionJobIDsFilter": {
+      "base": null,
+      "refs": {
+        "ListRemoteSourceActionJobsRequestFilters$remoteSourceActionJobIDs": "<p>A list of job IDs to filter by.</p>"
+      }
+    },
+    "RemoteSourceActionJobStatus": {
+      "base": "<p>The status of a source action job. Can be PENDING, RUNNING, COMPLETED, FAILED, or STALLED.</p>",
+      "refs": {
+        "RemoteSourceActionJob$status": "<p>The current status of the job.</p>"
+      }
+    },
+    "RemoteSourceActionJobsList": {
+      "base": null,
+      "refs": {
+        "ListRemoteSourceActionJobsResponse$items": "<p>A list of source action jobs.</p>"
+      }
+    },
+    "RemoteSourceActionName": {
+      "base": null,
+      "refs": {
+        "CreateRemoteSourceActionRequest$name": "<p>The name of the source action.</p>",
+        "CreateRemoteSourceActionResponse$name": "<p>The name of the source action.</p>",
+        "RemoteSourceAction$name": "<p>The name of the source action.</p>",
+        "UpdateRemoteSourceActionRequest$name": "<p>The updated name of the source action.</p>",
+        "UpdateRemoteSourceActionResponse$name": "<p>The name of the source action.</p>"
+      }
+    },
+    "RemoteSourceActionOperatingSystem": {
+      "base": null,
+      "refs": {
+        "CreateRemoteSourceActionRequest$operatingSystem": "<p>The operating system of the source servers that the script runs on. Set to <code>linux</code> or <code>windows</code> to run the script only on source servers with that operating system, or <code>all</code> to run it on both.</p>",
+        "UpdateRemoteSourceActionRequest$operatingSystem": "<p>The updated operating system of the source servers that the script runs on. Set to <code>linux</code> or <code>windows</code> to run the script only on source servers with that operating system, or <code>all</code> to run it on both.</p>"
+      }
+    },
+    "RemoteSourceActionTimeoutSeconds": {
+      "base": null,
+      "refs": {
+        "CreateRemoteSourceActionRequest$timeoutSeconds": "<p>The maximum time, in seconds, that the script can run on each source server.</p>",
+        "CreateRemoteSourceActionResponse$timeoutSeconds": "<p>The maximum time, in seconds, that the script can run on each source server.</p>",
+        "RemoteSourceAction$timeoutSeconds": "<p>The maximum time, in seconds, that the script can run on each source server.</p>",
+        "UpdateRemoteSourceActionRequest$timeoutSeconds": "<p>The updated maximum time, in seconds, that the script can run on each source server.</p>",
+        "UpdateRemoteSourceActionResponse$timeoutSeconds": "<p>The maximum time, in seconds, that the script can run on each source server.</p>"
+      }
+    },
+    "RemoteSourceActionsList": {
+      "base": null,
+      "refs": {
+        "ListRemoteSourceActionsResponse$items": "<p>A list of source actions.</p>"
+      }
     },
     "RemoveSourceServerActionRequest": {
       "base": null,
@@ -2869,6 +3355,8 @@
         "NetworkMigrationDefinition$scopeTags": "<p>Scope tags for the network migration definition.</p>",
         "NetworkMigrationDefinitionSummary$scopeTags": "<p>Scope tags for the network migration definition.</p>",
         "NetworkMigrationMapperSegment$scopeTags": "<p>Scope tags for the segment.</p>",
+        "SegmentCreateOperation$scopeTags": "<p>Scope tags for the new segment.</p>",
+        "SegmentUpdateOperation$scopeTags": "<p>The updated scope tags for the segment.</p>",
         "StartNetworkMigrationMappingUpdateSegment$scopeTags": "<p>The updated scope tags for the segment.</p>",
         "UpdateNetworkMigrationDefinitionRequest$scopeTags": "<p>The updated scope tags for the network migration definition.</p>",
         "UpdateNetworkMigrationMapperSegmentRequest$scopeTags": "<p>The updated scope tags for the segment.</p>"
@@ -2879,6 +3367,18 @@
       "refs": {
         "FsxOntapConfiguration$credentialsSecretArn": "<p>FSx ONTAP configuration credentials secret ARN.</p>",
         "SourceServerConnectorAction$credentialsSecretArn": "<p>Source Server connector action credentials secret arn.</p>"
+      }
+    },
+    "SecurityGroupAssociations": {
+      "base": "<p>The associations that bind a security group to source machines before they are provisioned.</p>",
+      "refs": {
+        "SecurityGroupConfiguration$associations": "<p>The CIDR ranges and machine identifiers that associate source machines with the security group. Each list provided replaces the stored list rather than merging into it.</p>"
+      }
+    },
+    "SecurityGroupConfiguration": {
+      "base": "<p>Behavioral configuration for a security group construct.</p>",
+      "refs": {
+        "OperationConfigurationUnion$securityGroup": "<p>Behavioral configuration for a security group construct.</p>"
       }
     },
     "SecurityGroupID": {
@@ -2893,6 +3393,12 @@
         "StartNetworkMigrationMappingRequest$securityGroupMappingStrategy": "<p>The security group mapping strategy to use.</p>"
       }
     },
+    "SecurityGroupRuleConfiguration": {
+      "base": "<p>Behavioral configuration for a security group rule construct.</p>",
+      "refs": {
+        "OperationConfigurationUnion$securityGroupRule": "<p>Behavioral configuration for a security group rule construct.</p>"
+      }
+    },
     "SegmentConstructDescription": {
       "base": null,
       "refs": {
@@ -2902,14 +3408,30 @@
     "SegmentConstructName": {
       "base": null,
       "refs": {
+        "CreateOperation$name": "<p>The name for the new construct.</p>",
         "NetworkMigrationMapperSegmentConstruct$name": "<p>The name of the construct.</p>",
-        "UpdateOperation$name": "<p>The updated name for the construct.</p>"
+        "UpdateOperation$name": "<p>The updated name for the construct.</p>",
+        "UpdateOperationV2$name": "<p>The updated name for the construct.</p>"
+      }
+    },
+    "SegmentCreateOperation": {
+      "base": "<p>An operation that creates a segment.</p>",
+      "refs": {
+        "SegmentOperation$create": "<p>A create operation to add a new segment.</p>"
+      }
+    },
+    "SegmentDeleteOperation": {
+      "base": "<p>An operation that deletes a segment from the mapping.</p>",
+      "refs": {
+        "SegmentOperation$delete": "<p>A delete operation to remove a segment from the mapping.</p>"
       }
     },
     "SegmentDescription": {
       "base": null,
       "refs": {
-        "NetworkMigrationMapperSegment$description": "<p>A description of the segment.</p>"
+        "NetworkMigrationMapperSegment$description": "<p>A description of the segment.</p>",
+        "SegmentCreateOperation$description": "<p>A description of the new segment.</p>",
+        "SegmentUpdateOperation$description": "<p>The updated description for the segment.</p>"
       }
     },
     "SegmentID": {
@@ -2917,12 +3439,14 @@
       "refs": {
         "GetNetworkMigrationMapperSegmentConstructRequest$segmentID": "<p>The unique identifier of the mapper segment.</p>",
         "ListNetworkMigrationCodeGenerationSegmentsIDsFilter$member": null,
+        "ListNetworkMigrationInsightsRequest$segmentID": "<p>The unique identifier of the segment to narrow the results to.</p>",
         "ListNetworkMigrationMapperSegmentConstructsRequest$segmentID": "<p>The unique identifier of the segment to list constructs for.</p>",
         "ListNetworkMigrationMapperSegmentsIDsFilter$member": null,
         "MergeConstruct$segmentID": "<p>The segment ID of the construct to merge.</p>",
         "NetworkMigrationCodeGenerationSegment$segmentID": "<p>The unique identifier of the segment.</p>",
         "NetworkMigrationCodeGenerationSegment$mapperSegmentID": "<p>The ID of the mapper segment that this code generation segment was created from.</p>",
         "NetworkMigrationDeployedStackDetails$segmentID": "<p>The ID of the segment that this stack was deployed for.</p>",
+        "NetworkMigrationInsight$segmentID": "<p>The unique identifier of the segment the insight relates to; absent for run-level insights.</p>",
         "NetworkMigrationMapperSegment$segmentID": "<p>The unique identifier of the segment.</p>",
         "StartNetworkMigrationMappingUpdateConstruct$segmentID": "<p>The ID of the segment containing the construct.</p>",
         "StartNetworkMigrationMappingUpdateSegment$segmentID": "<p>The ID of the segment to update.</p>",
@@ -2930,10 +3454,30 @@
         "referencedSegmentsList$member": null
       }
     },
+    "SegmentLogicalID": {
+      "base": null,
+      "refs": {
+        "StartNetworkMigrationMappingUpdateSegment$segmentLogicalID": "<p>An identifier that you choose for a segment created by this request. You can use it in other constructs in the same request to refer to the new segment.</p>"
+      }
+    },
     "SegmentName": {
       "base": null,
       "refs": {
-        "NetworkMigrationMapperSegment$name": "<p>The name of the segment.</p>"
+        "NetworkMigrationMapperSegment$name": "<p>The name of the segment.</p>",
+        "SegmentCreateOperation$name": "<p>The name of the new segment.</p>",
+        "SegmentUpdateOperation$name": "<p>The updated name for the segment.</p>"
+      }
+    },
+    "SegmentOperation": {
+      "base": "<p>Specifies the operation to perform on a segment during a mapping update. Specify one of a create, update, or delete operation.</p>",
+      "refs": {
+        "StartNetworkMigrationMappingUpdateSegment$operation": "<p>The operation to perform on the segment.</p>"
+      }
+    },
+    "SegmentUpdateOperation": {
+      "base": "<p>An operation that updates the properties of a segment.</p>",
+      "refs": {
+        "SegmentOperation$update": "<p>An update operation to modify segment properties.</p>"
       }
     },
     "ServiceQuotaExceededException": {
@@ -3006,6 +3550,27 @@
         "ListSourceServerActionsRequest$filters": "<p>Filters to apply when listing source server post migration custom actions.</p>"
       }
     },
+    "SourceServerArn": {
+      "base": null,
+      "refs": {
+        "RemoteSourceActionInvocation$sourceServerArn": "<p>The ARN of the source server.</p>",
+        "SourceServerArns$member": null,
+        "SourceServerArnsFilter$member": null
+      }
+    },
+    "SourceServerArns": {
+      "base": null,
+      "refs": {
+        "RemoteSourceActionJob$sourceServerArns": "<p>The ARNs of the source servers that the job runs on.</p>",
+        "StartRemoteSourceActionJobRequest$sourceServerArns": "<p>The ARNs of the source servers to run the source actions on.</p>"
+      }
+    },
+    "SourceServerArnsFilter": {
+      "base": null,
+      "refs": {
+        "ListRemoteSourceActionInvocationsRequestFilters$sourceServerArns": "<p>A list of source server ARNs to filter by.</p>"
+      }
+    },
     "SourceServerConnectorAction": {
       "base": "<p>Source Server connector action.</p>",
       "refs": {
@@ -3023,11 +3588,14 @@
         "DisassociateSourceServersRequestSourceServerIDs$member": null,
         "DisconnectFromServiceRequest$sourceServerID": "<p>Request to disconnect Source Server from service by Server ID.</p>",
         "FinalizeCutoverRequest$sourceServerID": "<p>Request to finalize Cutover by Source Server ID.</p>",
+        "GetLaunchConfigurationDefaultsRequest$sourceServerID": "<p>Request to get the launch configuration defaults by Source Server ID.</p>",
+        "GetLaunchConfigurationDefaultsResponse$sourceServerID": "<p>Source Server ID of the launch configuration defaults.</p>",
         "GetLaunchConfigurationRequest$sourceServerID": "<p>Request to get Launch Configuration information by Source Server ID.</p>",
         "GetReplicationConfigurationRequest$sourceServerID": "<p>Request to get Replication Configuration by Source Server ID.</p>",
         "ImportErrorData$sourceServerID": "<p>Import error data source server ID.</p>",
         "JobLogEventData$sourceServerID": "<p>Job Event Source Server ID.</p>",
         "LaunchConfiguration$sourceServerID": "<p>Launch configuration Source Server ID.</p>",
+        "ListRemoteSourceActionInvocationResultsRequest$sourceServerID": "<p>The unique identifier of the source server to list invocation results for.</p>",
         "ListSourceServerActionsRequest$sourceServerID": "<p>Source server ID.</p>",
         "MarkAsArchivedRequest$sourceServerID": "<p>Mark as archived by Source Server ID.</p>",
         "ParticipatingServer$sourceServerID": "<p>Participating server Source Server ID.</p>",
@@ -3043,10 +3611,23 @@
         "StartTestRequestSourceServerIDs$member": null,
         "StopReplicationRequest$sourceServerID": "<p>Stop Replication Request source server ID.</p>",
         "TerminateTargetInstancesRequestSourceServerIDs$member": null,
+        "UpdateLaunchConfigurationDefaultsRequest$sourceServerID": "<p>Request to update the launch configuration defaults by Source Server ID.</p>",
+        "UpdateLaunchConfigurationDefaultsResponse$sourceServerID": "<p>Source Server ID of the launch configuration defaults.</p>",
         "UpdateLaunchConfigurationRequest$sourceServerID": "<p>Update Launch configuration by Source Server ID request.</p>",
         "UpdateReplicationConfigurationRequest$sourceServerID": "<p>Update replication configuration Source Server ID request.</p>",
         "UpdateSourceServerReplicationTypeRequest$sourceServerID": "<p>ID of source server on which to update replication type.</p>",
         "UpdateSourceServerRequest$sourceServerID": "<p>Update Source Server request source server ID.</p>"
+      }
+    },
+    "SourceServerVolumeConfiguration": {
+      "base": "<p>Contains the Amazon Elastic Block Store (Amazon EBS) volume configuration for the disk mappings created later in the source server's Amazon Elastic Compute Cloud (Amazon EC2) launch template. Fields that aren't set get the service's default values.</p>",
+      "refs": {
+        "GetLaunchConfigurationDefaultsResponse$smallVolumeConfiguration": "<p>Volume configuration for disks up to <code>smallVolumeMaxSize</code>. Omitted when none of its fields is set.</p>",
+        "GetLaunchConfigurationDefaultsResponse$largeVolumeConfiguration": "<p>Volume configuration for disks larger than <code>smallVolumeMaxSize</code>. Omitted when none of its fields is set.</p>",
+        "UpdateLaunchConfigurationDefaultsRequest$smallVolumeConfiguration": "<p>Volume configuration for disks up to <code>smallVolumeMaxSize</code>. If you omit it, the current one is kept. If you send it, it replaces the current one: fields you omit are cleared, and an empty configuration, <code>{}</code>, clears all of them.</p>",
+        "UpdateLaunchConfigurationDefaultsRequest$largeVolumeConfiguration": "<p>Volume configuration for disks larger than <code>smallVolumeMaxSize</code>. If you omit it, the current one is kept. If you send it, it replaces the current one: fields you omit are cleared, and an empty configuration, <code>{}</code>, clears all of them.</p>",
+        "UpdateLaunchConfigurationDefaultsResponse$smallVolumeConfiguration": "<p>Volume configuration for disks up to <code>smallVolumeMaxSize</code>. Omitted when none of its fields is set.</p>",
+        "UpdateLaunchConfigurationDefaultsResponse$largeVolumeConfiguration": "<p>Volume configuration for disks larger than <code>smallVolumeMaxSize</code>. Omitted when none of its fields is set.</p>"
       }
     },
     "SourceServersList": {
@@ -3071,6 +3652,12 @@
       "base": "<p>An operation that splits a construct into multiple constructs with different CIDR blocks.</p>",
       "refs": {
         "OperationUnion$split": "<p>A split operation to divide a construct into multiple constructs with specified CIDR blocks.</p>"
+      }
+    },
+    "SsmCommandInvocationID": {
+      "base": null,
+      "refs": {
+        "RemoteSourceActionInvocation$ssmCommandInvocationID": "<p>The ID of the AWS Systems Manager command that runs the source action on the connector.</p>"
       }
     },
     "SsmDocument": {
@@ -3147,7 +3734,12 @@
     "SsmParameterStoreParameterName": {
       "base": null,
       "refs": {
-        "SsmParameterStoreParameter$parameterName": "<p>AWS Systems Manager Parameter Store parameter name.</p>"
+        "CreateRemoteSourceActionRequest$ssmParameterName": "<p>AWS Systems Manager Parameter Store parameter name.</p>",
+        "CreateRemoteSourceActionResponse$ssmParameterName": "<p>AWS Systems Manager Parameter Store parameter name.</p>",
+        "RemoteSourceAction$ssmParameterName": "<p>AWS Systems Manager Parameter Store parameter name.</p>",
+        "SsmParameterStoreParameter$parameterName": "<p>AWS Systems Manager Parameter Store parameter name.</p>",
+        "UpdateRemoteSourceActionRequest$ssmParameterName": "<p>AWS Systems Manager Parameter Store parameter name.</p>",
+        "UpdateRemoteSourceActionResponse$ssmParameterName": "<p>AWS Systems Manager Parameter Store parameter name.</p>"
       }
     },
     "SsmParameterStoreParameterType": {
@@ -3264,6 +3856,14 @@
         "StartNetworkMigrationMappingUpdateRequest$segments": "<p>A list of segment updates to apply.</p>"
       }
     },
+    "StartRemoteSourceActionJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartRemoteSourceActionJobResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StartReplicationRequest": {
       "base": null,
       "refs": {}
@@ -3342,8 +3942,13 @@
     "TagKey": {
       "base": null,
       "refs": {
+        "CreateLaunchConfigurationTemplateRequest$mapAutoTaggingKey": "<p>Launch configuration template map auto tagging key.</p>",
+        "LaunchConfiguration$mapAutoTaggingKey": "<p>Map auto tagging key.</p>",
+        "LaunchConfigurationTemplate$mapAutoTaggingKey": "<p>Launch configuration template map auto tagging key.</p>",
         "TagKeys$member": null,
-        "TagsMap$key": null
+        "TagsMap$key": null,
+        "UpdateLaunchConfigurationRequest$mapAutoTaggingKey": "<p>Launch configuration map auto tagging key.</p>",
+        "UpdateLaunchConfigurationTemplateRequest$mapAutoTaggingKey": "<p>Launch configuration template map auto tagging key.</p>"
       }
     },
     "TagKeys": {
@@ -3376,6 +3981,8 @@
         "CreateConnectorRequest$tags": "<p>Create Connector request tags.</p>",
         "CreateLaunchConfigurationTemplateRequest$tags": "<p>Request to associate tags during creation of a Launch Configuration Template.</p>",
         "CreateNetworkMigrationDefinitionRequest$tags": "<p>Tags to assign to the network migration definition.</p>",
+        "CreateRemoteSourceActionRequest$tags": "<p>Tags to assign to the source action.</p>",
+        "CreateRemoteSourceActionResponse$tags": "<p>Tags assigned to the source action.</p>",
         "CreateReplicationConfigurationTemplateRequest$stagingAreaTags": "<p>Request to configure Staging Area tags during Replication Settings template creation.</p>",
         "CreateReplicationConfigurationTemplateRequest$tags": "<p>Request to configure tags during Replication Settings template creation.</p>",
         "CreateWaveRequest$tags": "<p>Wave tags.</p>",
@@ -3387,6 +3994,8 @@
         "NetworkMigrationDefinition$tags": "<p>Tags assigned to the network migration definition.</p>",
         "NetworkMigrationDefinitionSummary$tags": "<p>Tags assigned to the network migration definition.</p>",
         "NetworkMigrationExecution$tags": "<p>Tags assigned to the execution.</p>",
+        "RemoteSourceAction$tags": "<p>Tags assigned to the source action.</p>",
+        "RemoteSourceActionJob$tags": "<p>Tags assigned to the job.</p>",
         "ReplicationConfiguration$stagingAreaTags": "<p>Replication Configuration Staging Area tags.</p>",
         "ReplicationConfigurationTemplate$stagingAreaTags": "<p>Replication Configuration template Staging Area Tags.</p>",
         "ReplicationConfigurationTemplate$tags": "<p>Replication Configuration template Tags.</p>",
@@ -3394,9 +4003,11 @@
         "StartCutoverRequest$tags": "<p>Start Cutover by Tags.</p>",
         "StartExportRequest$tags": "<p>Start export request tags.</p>",
         "StartImportRequest$tags": "<p>Start import request tags.</p>",
+        "StartRemoteSourceActionJobRequest$tags": "<p>Tags to assign to the job.</p>",
         "StartTestRequest$tags": "<p>Start Test by Tags.</p>",
         "TagResourceRequest$tags": "<p>Tag resource by Tags.</p>",
         "TerminateTargetInstancesRequest$tags": "<p>Terminate Target instance by Tags.</p>",
+        "UpdateRemoteSourceActionResponse$tags": "<p>Tags assigned to the source action.</p>",
         "UpdateReplicationConfigurationRequest$stagingAreaTags": "<p>Update replication configuration Staging Area Tags request.</p>",
         "UpdateReplicationConfigurationTemplateRequest$stagingAreaTags": "<p>Update replication configuration template Staging Area Tags request.</p>",
         "VcenterClient$sourceServerTags": "<p>Tags for Source Server of vCenter client.</p>",
@@ -3494,7 +4105,8 @@
     "Throughput": {
       "base": null,
       "refs": {
-        "LaunchTemplateDiskConf$throughput": "<p>Launch template disk throughput configuration.</p>"
+        "LaunchTemplateDiskConf$throughput": "<p>Launch template disk throughput configuration.</p>",
+        "SourceServerVolumeConfiguration$throughput": "<p>Throughput in MiB/s, for gp3 volumes only.</p>"
       }
     },
     "Timestamp": {
@@ -3515,6 +4127,7 @@
         "NetworkMigrationDeployerJobDetails$endedAt": "<p>The timestamp when the job completed or failed.</p>",
         "NetworkMigrationExecution$createdAt": "<p>The timestamp when the execution was created.</p>",
         "NetworkMigrationExecution$updatedAt": "<p>The timestamp when the execution was last updated.</p>",
+        "NetworkMigrationInsight$createdAt": "<p>The timestamp when the insight was created.</p>",
         "NetworkMigrationMapperSegment$createdAt": "<p>The timestamp when the segment was created.</p>",
         "NetworkMigrationMapperSegment$updatedAt": "<p>The timestamp when the segment was last updated.</p>",
         "NetworkMigrationMapperSegmentConstruct$createdAt": "<p>The timestamp when the construct was created.</p>",
@@ -3522,7 +4135,13 @@
         "NetworkMigrationMappingJobDetails$createdAt": "<p>The timestamp when the job was created.</p>",
         "NetworkMigrationMappingJobDetails$endedAt": "<p>The timestamp when the job completed or failed.</p>",
         "NetworkMigrationMappingUpdateJobDetails$createdAt": "<p>The timestamp when the job was created.</p>",
-        "NetworkMigrationMappingUpdateJobDetails$endedAt": "<p>The timestamp when the job completed or failed.</p>"
+        "NetworkMigrationMappingUpdateJobDetails$endedAt": "<p>The timestamp when the job completed or failed.</p>",
+        "RemoteSourceActionInvocation$startedAt": "<p>The timestamp when the command started running.</p>",
+        "RemoteSourceActionInvocation$endedAt": "<p>The timestamp when the command finished.</p>",
+        "RemoteSourceActionInvocationResult$startedAt": "<p>The timestamp when the command started running.</p>",
+        "RemoteSourceActionInvocationResult$endedAt": "<p>The timestamp when the command finished.</p>",
+        "RemoteSourceActionJob$startedAt": "<p>The timestamp when the job started running.</p>",
+        "RemoteSourceActionJob$endedAt": "<p>The timestamp when the job completed or failed.</p>"
       }
     },
     "UnarchiveApplicationRequest": {
@@ -3549,6 +4168,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateLaunchConfigurationDefaultsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLaunchConfigurationDefaultsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateLaunchConfigurationRequest": {
       "base": null,
       "refs": {}
@@ -3570,6 +4197,20 @@
       "refs": {
         "OperationUnion$update": "<p>An update operation to modify construct properties.</p>"
       }
+    },
+    "UpdateOperationV2": {
+      "base": "<p>An operation that updates a construct using native property value types and construct-type-specific behavioral configuration.</p>",
+      "refs": {
+        "OperationUnion$updateV2": "<p>An update operation that modifies a construct using native property value types and behavioral configuration, with partial updates and property removal.</p>"
+      }
+    },
+    "UpdateRemoteSourceActionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRemoteSourceActionResponse": {
+      "base": null,
+      "refs": {}
     },
     "UpdateReplicationConfigurationRequest": {
       "base": null,
@@ -3640,16 +4281,24 @@
         "DescribeVcenterClientsResponse$items": "<p>List of items returned by DescribeVcenterClients.</p>"
       }
     },
+    "VmUUID": {
+      "base": null,
+      "refs": {
+        "AssociationVmUUIDList$member": null
+      }
+    },
     "VolumeInitializationRate": {
       "base": null,
       "refs": {
-        "LaunchTemplateDiskConf$volumeInitializationRate": "<p>Launch template disk volume initialization rate configuration.</p>"
+        "LaunchTemplateDiskConf$volumeInitializationRate": "<p>Launch template disk volume initialization rate configuration.</p>",
+        "SourceServerVolumeConfiguration$volumeInitializationRate": "<p>Provisioned rate for volume initialization, in MiB/s.</p>"
       }
     },
     "VolumeType": {
       "base": null,
       "refs": {
-        "LaunchTemplateDiskConf$volumeType": "<p>Launch template disk volume type configuration.</p>"
+        "LaunchTemplateDiskConf$volumeType": "<p>Launch template disk volume type configuration.</p>",
+        "SourceServerVolumeConfiguration$volumeType": "<p>EBS volume type.</p>"
       }
     },
     "VpcID": {

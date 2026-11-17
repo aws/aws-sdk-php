@@ -220,9 +220,9 @@
     "AggregationResourceType": {
       "base": null,
       "refs": {
-        "AccountAggregation$resourceType": "<p>The type of resource.</p>",
-        "FindingTypeAggregation$resourceType": "<p>The resource type to aggregate.</p>",
-        "TitleAggregation$resourceType": "<p>The resource type to aggregate on.</p>"
+        "AccountAggregation$resourceType": "<p>The type of resource. For Google Cloud Platform (GCP) resources, the resource type is <code>compute.googleapis.com/Instance</code>, <code>cloudfunctions.googleapis.com/Function</code>, or <code>artifactregistry.googleapis.com/DockerImage</code>.</p>",
+        "FindingTypeAggregation$resourceType": "<p>The resource type to aggregate. For Google Cloud Platform (GCP) resources, the resource type is <code>compute.googleapis.com/Instance</code>, <code>cloudfunctions.googleapis.com/Function</code>, or <code>artifactregistry.googleapis.com/DockerImage</code>.</p>",
+        "TitleAggregation$resourceType": "<p>The resource type to aggregate on. For Google Cloud Platform (GCP) resources, the resource type is <code>compute.googleapis.com/Instance</code>, <code>cloudfunctions.googleapis.com/Function</code>, or <code>artifactregistry.googleapis.com/DockerImage</code>.</p>"
       }
     },
     "AggregationResponse": {
@@ -417,6 +417,7 @@
         "AzureProviderDetailCreate$awsConfigConnectorArn": "<p>The ARN of the Amazon Web Services Config connector to associate with this connector.</p>",
         "Connector$awsConfigConnectorArn": "<p>The ARN of the Amazon Web Services Config connector associated with this connector.</p>",
         "ConnectorScanConfigurationItem$awsConfigConnectorArn": "<p>The ARN of the Amazon Web Services Config connector.</p>",
+        "GcpProviderDetailCreate$awsConfigConnectorArn": "<p>The ARN of the Amazon Web Services Config connector to associate with this connector.</p>",
         "UpdateConnectorScanConfigurationRequest$awsConfigConnectorArn": "<p>The ARN of the Amazon Web Services Config connector.</p>"
       }
     },
@@ -681,6 +682,8 @@
         "Connector$autoInstallVMScanner": "<p>Specifies whether the VM scanner is automatically installed on connected resources.</p>",
         "DescribeOrganizationConfigurationResponse$maxAccountLimitReached": "<p>Represents whether your organization has reached the maximum Amazon Web Services account limit for Amazon Inspector.</p>",
         "Ec2Configuration$activateVMScanner": "<p>Whether to activate Amazon Inspector VM scanner for Amazon EC2 scanning.</p>",
+        "GcpProviderDetailCreate$autoInstallVMScanner": "<p>Specifies whether to automatically install the VM scanner on connected GCP resources. Defaults to <code>true</code>.</p>",
+        "GcpProviderDetailUpdate$autoInstallVMScanner": "<p>Specifies whether to automatically install the VM scanner on connected GCP resources.</p>",
         "ListMembersRequest$onlyAssociated": "<p>Specifies whether to list only currently associated members if <code>True</code> or to list all members within the organization if <code>False</code>.</p>",
         "MachineImageDetails$isPublic": "<p>Whether the image is publicly shared</p>",
         "MemberAccountEc2DeepInspectionStatus$activateDeepInspection": "<p>Whether Amazon Inspector deep inspection is active in the account. If <code>TRUE</code> Amazon Inspector deep inspection is active, if <code>FALSE</code> it is not active.</p>",
@@ -1199,8 +1202,8 @@
     "CloudProvider": {
       "base": null,
       "refs": {
-        "FreeTrialInfo$cloudProvider": "<p>The cloud provider associated with the free trial information.</p>",
-        "Usage$cloudProvider": "<p>The cloud provider associated with the usage information.</p>"
+        "FreeTrialInfo$cloudProvider": "<p>The cloud provider associated with the free trial information. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Google Cloud Platform (GCP) resources.</p> </li> </ul>",
+        "Usage$cloudProvider": "<p>The cloud provider associated with the usage information. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Google Cloud Platform (GCP) resources.</p> </li> </ul>"
       }
     },
     "CloudSecurityGroupIdList": {
@@ -1829,7 +1832,7 @@
     "CoverageResourceType": {
       "base": null,
       "refs": {
-        "CoveredResource$resourceType": "<p>The type of the covered resource.</p>"
+        "CoveredResource$resourceType": "<p>The type of the covered resource. Valid values:</p> <ul> <li> <p>Amazon Web Services – <code>AWS_EC2_INSTANCE</code>, <code>AWS_LAMBDA_FUNCTION</code>, <code>AWS_ECR_CONTAINER_IMAGE</code>, <code>AWS_ECR_REPOSITORY</code>, <code>MACHINE_IMAGE</code>, <code>CODE_REPOSITORY</code>, or <code>AWS_ACCOUNT</code>.</p> </li> <li> <p>Microsoft Azure – <code>Microsoft.Compute/virtualMachines</code>, <code>Microsoft.ContainerRegistry/registries</code>, <code>Microsoft.ContainerRegistry/registry/containerRepository</code>, <code>Microsoft.ContainerRegistry/registry/containerImage</code>, or <code>Microsoft.Web/sites</code>.</p> </li> <li> <p>Google Cloud Platform (GCP) – <code>compute.googleapis.com/Instance</code>, <code>cloudfunctions.googleapis.com/Function</code>, <code>artifactregistry.googleapis.com/Repository</code>, or <code>artifactregistry.googleapis.com/DockerImage</code>.</p> </li> </ul>"
       }
     },
     "CoverageStringComparison": {
@@ -1851,7 +1854,7 @@
         "CoverageFilterCriteria$scanStatusReason": "<p>The scan status reason to filter on.</p>",
         "CoverageFilterCriteria$accountId": "<p>An array of Amazon Web Services account IDs to return coverage statistics for.</p>",
         "CoverageFilterCriteria$resourceId": "<p>An array of Amazon Web Services resource IDs to return coverage statistics for.</p>",
-        "CoverageFilterCriteria$resourceType": "<p>An array of Amazon Web Services resource types to return coverage statistics for. The values can be <code>AWS_EC2_INSTANCE</code>, <code>AWS_LAMBDA_FUNCTION</code>, <code>AWS_ECR_CONTAINER_IMAGE</code>, <code>AWS_ECR_REPOSITORY</code> or <code>AWS_ACCOUNT</code>.</p>",
+        "CoverageFilterCriteria$resourceType": "<p>An array of resource types to return coverage statistics for. Valid values:</p> <ul> <li> <p>Amazon Web Services – <code>AWS_EC2_INSTANCE</code>, <code>AWS_LAMBDA_FUNCTION</code>, <code>AWS_ECR_CONTAINER_IMAGE</code>, <code>AWS_ECR_REPOSITORY</code>, <code>MACHINE_IMAGE</code>, <code>CODE_REPOSITORY</code>, or <code>AWS_ACCOUNT</code>.</p> </li> <li> <p>Microsoft Azure – <code>Microsoft.Compute/virtualMachines</code>, <code>Microsoft.ContainerRegistry/registries</code>, <code>Microsoft.ContainerRegistry/registry/containerRepository</code>, <code>Microsoft.ContainerRegistry/registry/containerImage</code>, or <code>Microsoft.Web/sites</code>.</p> </li> <li> <p>Google Cloud Platform (GCP) – <code>compute.googleapis.com/Instance</code>, <code>cloudfunctions.googleapis.com/Function</code>, <code>artifactregistry.googleapis.com/Repository</code>, or <code>artifactregistry.googleapis.com/DockerImage</code>.</p> </li> </ul>",
         "CoverageFilterCriteria$scanType": "<p>An array of Amazon Inspector scan types to return coverage statistics for.</p>",
         "CoverageFilterCriteria$ecrRepositoryName": "<p>The Amazon ECR repository name to filter on.</p>",
         "CoverageFilterCriteria$ecrImageTags": "<p>The Amazon ECR image tags to filter on.</p>",
@@ -1862,15 +1865,15 @@
         "CoverageFilterCriteria$codeRepositoryProviderType": "<p>Filter criteria for code repositories based on provider type (such as GitHub, GitLab, etc.).</p>",
         "CoverageFilterCriteria$codeRepositoryProviderTypeVisibility": "<p>Filter criteria for code repositories based on visibility setting (public or private).</p>",
         "CoverageFilterCriteria$lastScannedCommitId": "<p>Filter criteria for code repositories based on the ID of the last scanned commit.</p>",
-        "CoverageFilterCriteria$cloudProvider": "<p>The cloud provider to filter coverage results by.</p>",
-        "CoverageFilterCriteria$cloudProviderAccountId": "<p>The cloud provider account ID to filter coverage results by.</p>",
-        "CoverageFilterCriteria$cloudProviderRegion": "<p>The cloud provider region to filter coverage results by.</p>",
+        "CoverageFilterCriteria$cloudProvider": "<p>The cloud provider to filter coverage results by. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Google Cloud Platform (GCP) resources.</p> </li> </ul>",
+        "CoverageFilterCriteria$cloudProviderAccountId": "<p>The cloud provider account ID to filter coverage results by. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services account ID.</p> </li> <li> <p>An Azure subscription ID.</p> </li> <li> <p>A Google Cloud Platform (GCP) project ID, such as <code>my-project</code>.</p> </li> </ul>",
+        "CoverageFilterCriteria$cloudProviderRegion": "<p>The cloud provider region to filter coverage results by. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>",
         "CoverageFilterCriteria$cloudContainerImageTags": "<p>The cloud container image tags to filter coverage results by.</p>",
         "CoverageFilterCriteria$cloudContainerRepositoryName": "<p>The cloud container repository name to filter coverage results by.</p>",
         "CoverageFilterCriteria$cloudContainerRegistryName": "<p>The cloud container registry name to filter coverage results by.</p>",
         "CoverageFilterCriteria$cloudServerlessFunctionName": "<p>The cloud serverless function name to filter coverage results by.</p>",
         "CoverageFilterCriteria$cloudServerlessFunctionRuntime": "<p>The cloud serverless function runtime to filter coverage results by.</p>",
-        "CoverageFilterCriteria$cloudProviderOrgId": "<p>The cloud provider organization ID to filter coverage results by.</p>"
+        "CoverageFilterCriteria$cloudProviderOrgId": "<p>The cloud provider organization ID to filter coverage results by. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Organizations organization ID.</p> </li> <li> <p>An Azure tenant ID.</p> </li> <li> <p>A numeric Google Cloud Platform (GCP) organization ID.</p> </li> </ul>"
       }
     },
     "CoverageStringInput": {
@@ -2840,6 +2843,74 @@
         "AwsLambdaFunctionDetails$functionName": "<p>The name of the Amazon Web Services Lambda function.</p>"
       }
     },
+    "GcpCapabilityScope": {
+      "base": "<p>The scope of Google Cloud Platform (GCP) resources that Amazon Inspector scans for a single scanning type, including the scope level, the targeted resources, and the current state.</p>",
+      "refs": {
+        "GcpScopeConfiguration$vmScanning": "<p>The scope configuration for VM scanning.</p>",
+        "GcpScopeConfiguration$containerImageScanning": "<p>The scope configuration for container image scanning.</p>",
+        "GcpScopeConfiguration$serverlessScanning": "<p>The scope configuration for serverless scanning.</p>"
+      }
+    },
+    "GcpCapabilityScopeInput": {
+      "base": "<p>The scope of Google Cloud Platform (GCP) resources to scan for a single scanning type. Provide this as part of a <code>GcpScopeConfigurationInput</code> when you create or update a connector.</p>",
+      "refs": {
+        "GcpScopeConfigurationInput$vmScanning": "<p>The scope configuration input for VM scanning.</p>",
+        "GcpScopeConfigurationInput$containerImageScanning": "<p>The scope configuration input for container image scanning.</p>",
+        "GcpScopeConfigurationInput$serverlessScanning": "<p>The scope configuration input for serverless scanning.</p>"
+      }
+    },
+    "GcpProviderDetailCreate": {
+      "base": "<p>The configuration details specific to Google Cloud Platform (GCP) for creating a connector, including the Amazon Web Services Config connector association, scan scope, and locations to scan.</p>",
+      "refs": {
+        "ProviderDetailCreate$gcp": "<p>The details specific to Google Cloud Platform (GCP) for creating a connector.</p>"
+      }
+    },
+    "GcpProviderDetailUpdate": {
+      "base": "<p>The configuration details specific to Google Cloud Platform (GCP) for updating a connector, including the scan scope and locations to scan.</p>",
+      "refs": {
+        "ProviderDetailUpdate$gcp": "<p>The details specific to Google Cloud Platform (GCP) for updating a connector.</p>"
+      }
+    },
+    "GcpRegion": {
+      "base": null,
+      "refs": {
+        "GcpRegionList$member": null
+      }
+    },
+    "GcpRegionList": {
+      "base": null,
+      "refs": {
+        "Connector$gcpRegions": "<p>The Google Cloud Platform (GCP) locations configured for the connector.</p>",
+        "GcpProviderDetailCreate$gcpRegions": "<p>The GCP locations to scan, such as regions, zones, multi-regions, or dual-regions. Specify <code>ALL</code> to scan all locations.</p>",
+        "GcpProviderDetailUpdate$gcpRegions": "<p>The updated GCP locations to scan, such as regions, zones, multi-regions, or dual-regions. Specify <code>ALL</code> to scan all locations.</p>"
+      }
+    },
+    "GcpScopeConfiguration": {
+      "base": "<p>The scope of Google Cloud Platform (GCP) resources that Amazon Inspector scans, defined separately for VM, container image, and serverless scanning. Returned as part of a connector's configuration.</p>",
+      "refs": {
+        "Connector$gcpScopeConfiguration": "<p>The Google Cloud Platform (GCP) scope configuration for the connector.</p>"
+      }
+    },
+    "GcpScopeConfigurationInput": {
+      "base": "<p>The scope of Google Cloud Platform (GCP) resources to scan, defined separately for VM, container image, and serverless scanning. Provide this when you create or update a GCP connector.</p>",
+      "refs": {
+        "GcpProviderDetailCreate$scopeConfiguration": "<p>The scope configuration that defines which GCP resources to scan.</p>",
+        "GcpProviderDetailUpdate$scopeConfiguration": "<p>The updated scope configuration that defines which GCP resources to scan.</p>"
+      }
+    },
+    "GcpScopeValue": {
+      "base": null,
+      "refs": {
+        "GcpScopeValueList$member": null
+      }
+    },
+    "GcpScopeValueList": {
+      "base": null,
+      "refs": {
+        "GcpCapabilityScope$scopeValues": "<p>The GCP project IDs to scan when <code>scopeType</code> is <code>PROJECT</code>. Not used when <code>scopeType</code> is <code>ORGANIZATION</code>. Amazon Inspector scans the organization of the Amazon Web Services Config connector.</p>",
+        "GcpCapabilityScopeInput$scopeValues": "<p>The GCP project IDs to scan. Required when <code>scopeType</code> is <code>PROJECT</code>. Don't specify scope values when <code>scopeType</code> is <code>ORGANIZATION</code>. Amazon Inspector scans the organization of the Amazon Web Services Config connector.</p>"
+      }
+    },
     "GetCisScanReportRequest": {
       "base": null,
       "refs": {}
@@ -2999,7 +3070,7 @@
       "base": null,
       "refs": {
         "Counts$groupKey": "<p>The key associated with this group</p>",
-        "ListCoverageStatisticsRequest$groupBy": "<p>The value to group the results by.</p>"
+        "ListCoverageStatisticsRequest$groupBy": "<p>The value to group the results by. For multi-cloud resources, use <code>PROVIDER</code>, <code>PROVIDER_ACCOUNT_ID</code> (Azure subscription ID or Google Cloud Platform (GCP) project ID), <code>PROVIDER_ORG_ID</code> (Azure tenant ID or Google Cloud Platform (GCP) organization ID), or <code>PROVIDER_REGION</code>.</p>"
       }
     },
     "Image": {
@@ -4141,13 +4212,13 @@
     "Provider": {
       "base": null,
       "refs": {
-        "AmiAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this Amazon Machine Image (AMI) aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
-        "ContainerImageAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this container image aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
-        "CoveredResource$provider": "<p>The cloud provider of the covered resource.</p>",
-        "RepositoryAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this repository aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
-        "Resource$provider": "<p>The cloud provider of the resource.</p>",
-        "ServerlessFunctionAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this serverless function aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
-        "VmInstanceAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this VM instance aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>"
+        "AmiAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this Amazon Machine Image (AMI) aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Findings from Google Cloud Platform (GCP) resources.</p> </li> </ul>",
+        "ContainerImageAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this container image aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Findings from Google Cloud Platform (GCP) resources.</p> </li> </ul>",
+        "CoveredResource$provider": "<p>The cloud provider of the covered resource. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Google Cloud Platform (GCP) resources.</p> </li> </ul>",
+        "RepositoryAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this repository aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Findings from Google Cloud Platform (GCP) resources.</p> </li> </ul>",
+        "Resource$provider": "<p>The cloud provider of the resource. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Google Cloud Platform (GCP) resources.</p> </li> </ul>",
+        "ServerlessFunctionAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this serverless function aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Findings from Google Cloud Platform (GCP) resources.</p> </li> </ul>",
+        "VmInstanceAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this VM instance aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Findings from Google Cloud Platform (GCP) resources.</p> </li> </ul>"
       }
     },
     "ProviderAccountId": {
@@ -4155,10 +4226,10 @@
       "refs": {
         "AmiAggregationResponse$cloudAccountId": "<p>The cloud account ID for the AMI aggregation.</p>",
         "ContainerImageAggregationResponse$cloudAccountId": "<p>The cloud account ID for the container image aggregation.</p>",
-        "CoveredResource$providerAccountId": "<p>The cloud provider account ID of the covered resource.</p>",
+        "CoveredResource$providerAccountId": "<p>The cloud provider account ID of the covered resource. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services account ID.</p> </li> <li> <p>An Azure subscription ID.</p> </li> <li> <p>A Google Cloud Platform (GCP) project ID, such as <code>my-project</code>.</p> </li> </ul>",
         "MachineImageDetails$ownerAccountId": "<p>Account ID that owns the image</p>",
         "RepositoryAggregationResponse$cloudAccountId": "<p>The cloud account ID for the repository aggregation.</p>",
-        "Resource$providerAccountId": "<p>The cloud provider account ID of the resource.</p>",
+        "Resource$providerAccountId": "<p>The cloud provider account ID of the resource. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services account ID.</p> </li> <li> <p>An Azure subscription ID.</p> </li> <li> <p>A Google Cloud Platform (GCP) project ID, such as <code>my-project</code>.</p> </li> </ul>",
         "ServerlessFunctionAggregationResponse$cloudAccountId": "<p>The cloud account ID for the serverless function aggregation.</p>",
         "VmInstanceAggregationResponse$cloudAccountId": "<p>The cloud account ID for the VM instance aggregation.</p>"
       }
@@ -4198,9 +4269,9 @@
       "refs": {
         "AmiAggregationResponse$cloudOrgId": "<p>The cloud organization ID for the AMI aggregation.</p>",
         "ContainerImageAggregationResponse$cloudOrgId": "<p>The cloud organization ID for the container image aggregation.</p>",
-        "CoveredResource$providerOrgId": "<p>The cloud provider organization ID of the covered resource.</p>",
+        "CoveredResource$providerOrgId": "<p>The cloud provider organization ID of the covered resource. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Organizations organization ID.</p> </li> <li> <p>An Azure tenant ID.</p> </li> <li> <p>A numeric Google Cloud Platform (GCP) organization ID.</p> </li> </ul>",
         "RepositoryAggregationResponse$cloudOrgId": "<p>The cloud organization ID for the repository aggregation.</p>",
-        "Resource$providerOrgId": "<p>The cloud provider organization ID of the resource.</p>",
+        "Resource$providerOrgId": "<p>The cloud provider organization ID of the resource. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Organizations organization ID.</p> </li> <li> <p>An Azure tenant ID.</p> </li> <li> <p>A numeric Google Cloud Platform (GCP) organization ID.</p> </li> </ul>",
         "ServerlessFunctionAggregationResponse$cloudOrgId": "<p>The cloud organization ID for the serverless function aggregation.</p>",
         "VmInstanceAggregationResponse$cloudOrgId": "<p>The cloud organization ID for the VM instance aggregation.</p>"
       }
@@ -4219,12 +4290,12 @@
     "ProviderRegion": {
       "base": null,
       "refs": {
-        "AmiAggregationResponse$cloudRegion": "<p>The cloud Region associated with this AMI aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
-        "ContainerImageAggregationResponse$cloudRegion": "<p>The cloud Region associated with this container image aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
-        "CoveredResource$providerRegion": "<p>The cloud provider region of the covered resource.</p>",
-        "RepositoryAggregationResponse$cloudRegion": "<p>The cloud Region associated with this repository aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
-        "ServerlessFunctionAggregationResponse$cloudRegion": "<p>The cloud Region associated with this serverless function aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
-        "VmInstanceAggregationResponse$cloudRegion": "<p>The cloud Region associated with this VM instance aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>"
+        "AmiAggregationResponse$cloudRegion": "<p>The cloud Region associated with this AMI aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>",
+        "ContainerImageAggregationResponse$cloudRegion": "<p>The cloud Region associated with this container image aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>",
+        "CoveredResource$providerRegion": "<p>The cloud provider region of the covered resource. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>",
+        "RepositoryAggregationResponse$cloudRegion": "<p>The cloud Region associated with this repository aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>",
+        "ServerlessFunctionAggregationResponse$cloudRegion": "<p>The cloud Region associated with this serverless function aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>",
+        "VmInstanceAggregationResponse$cloudRegion": "<p>The cloud Region associated with this VM instance aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>"
       }
     },
     "Reason": {
@@ -4444,14 +4515,14 @@
       "refs": {
         "ResourceFilterCriteria$accountId": "<p>The account IDs used as resource filter criteria.</p>",
         "ResourceFilterCriteria$resourceId": "<p>The resource IDs used as resource filter criteria.</p>",
-        "ResourceFilterCriteria$resourceType": "<p>The resource types used as resource filter criteria.</p>",
+        "ResourceFilterCriteria$resourceType": "<p>The resource types used as resource filter criteria. Valid values:</p> <ul> <li> <p>Amazon Web Services – <code>AWS_EC2_INSTANCE</code>, <code>AWS_ECR_CONTAINER_IMAGE</code>, <code>AWS_LAMBDA_FUNCTION</code>, or <code>MACHINE_IMAGE</code>.</p> </li> <li> <p>Microsoft Azure – <code>Microsoft.Compute/virtualMachines</code>, <code>Microsoft.ContainerRegistry/registry/containerImage</code>, or <code>Microsoft.Web/sites</code>.</p> </li> <li> <p>Google Cloud Platform (GCP) – <code>compute.googleapis.com/Instance</code>, <code>cloudfunctions.googleapis.com/Function</code>, or <code>artifactregistry.googleapis.com/DockerImage</code>.</p> </li> </ul>",
         "ResourceFilterCriteria$ecrRepositoryName": "<p>The ECR repository names used as resource filter criteria.</p>",
         "ResourceFilterCriteria$lambdaFunctionName": "<p>The Amazon Web Services Lambda function name used as resource filter criteria.</p>",
         "ResourceFilterCriteria$ecrImageTags": "<p>The ECR image tags used as resource filter criteria.</p>",
-        "ResourceFilterCriteria$cloudProvider": "<p>The cloud providers used as resource filter criteria.</p>",
-        "ResourceFilterCriteria$cloudProviderAccountId": "<p>The cloud provider account IDs used as resource filter criteria.</p>",
-        "ResourceFilterCriteria$cloudProviderOrgId": "<p>The cloud provider organization IDs used as resource filter criteria.</p>",
-        "ResourceFilterCriteria$cloudProviderRegion": "<p>The cloud provider regions used as resource filter criteria.</p>",
+        "ResourceFilterCriteria$cloudProvider": "<p>The cloud providers used as resource filter criteria. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Google Cloud Platform (GCP) resources.</p> </li> </ul>",
+        "ResourceFilterCriteria$cloudProviderAccountId": "<p>The cloud provider account IDs used as resource filter criteria. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services account ID.</p> </li> <li> <p>An Azure subscription ID.</p> </li> <li> <p>A Google Cloud Platform (GCP) project ID.</p> </li> </ul>",
+        "ResourceFilterCriteria$cloudProviderOrgId": "<p>The cloud provider organization IDs used as resource filter criteria. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Organizations organization ID.</p> </li> <li> <p>An Azure tenant ID.</p> </li> <li> <p>A Google Cloud Platform (GCP) organization ID.</p> </li> </ul>",
+        "ResourceFilterCriteria$cloudProviderRegion": "<p>The cloud provider regions used as resource filter criteria. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>",
         "ResourceFilterCriteria$cloudContainerImageTags": "<p>The cloud container image tags used as resource filter criteria.</p>",
         "ResourceFilterCriteria$cloudContainerRepositoryName": "<p>The cloud container repository names used as resource filter criteria.</p>",
         "ResourceFilterCriteria$cloudContainerRegistryName": "<p>The cloud container registry names used as resource filter criteria.</p>",
@@ -4640,14 +4711,17 @@
     "ScopeState": {
       "base": null,
       "refs": {
+        "GcpCapabilityScope$state": "<p>The current state of the scope configuration.</p>",
         "ScopeConfiguration$state": "<p>The current state of the scope configuration.</p>"
       }
     },
     "ScopeType": {
       "base": null,
       "refs": {
+        "GcpCapabilityScope$scopeType": "<p>The type of scope: <code>ORGANIZATION</code>, which scans all projects in the GCP organization, or <code>PROJECT</code>, which scans only the specified GCP projects.</p>",
+        "GcpCapabilityScopeInput$scopeType": "<p>The type of scope: <code>ORGANIZATION</code>, which scans all projects in the GCP organization, or <code>PROJECT</code>, which scans only the specified GCP projects.</p>",
         "ScopeConfiguration$scopeType": "<p>The type of scope. Valid values are <code>TENANT</code>, which scans all resources in the Azure tenant, and <code>SUBSCRIPTION</code>, which scans only the resources in the specified Azure subscriptions.</p>",
-        "ScopeConfigurationInput$scopeType": "<p>The type of scope. Valid values are <code>TENANT</code>, which scans all resources in the Azure tenant, and <code>SUBSCRIPTION</code>, which scans only the resources in the specified Azure subscriptions.</p>"
+        "ScopeConfigurationInput$scopeType": "<p>The type of scope: <code>TENANT</code>, which scans all resources in the Azure tenant, or <code>SUBSCRIPTION</code>, which scans only the resources in the specified Azure subscriptions.</p>"
       }
     },
     "ScopeValue": {
@@ -4972,22 +5046,23 @@
         "Ec2InstanceAggregationResponse$operatingSystem": "<p>The operating system of the Amazon EC2 instance.</p>",
         "Ec2InstanceAggregationResponse$accountId": "<p>The Amazon Web Services account for the Amazon EC2 instance.</p>",
         "EcrRepositoryMetadata$name": "<p>The name of the Amazon ECR repository.</p>",
-        "FindingTypeAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this finding type aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "FindingTypeAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this finding type aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Findings from Google Cloud Platform (GCP) resources.</p> </li> </ul>",
         "FindingTypeAggregationResponse$cloudAccountId": "<p>The cloud account ID for the finding type aggregation.</p>",
         "FindingTypeAggregationResponse$cloudOrgId": "<p>The cloud organization ID for the finding type aggregation.</p>",
-        "FindingTypeAggregationResponse$cloudRegion": "<p>The cloud Region associated with this finding type aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "FindingTypeAggregationResponse$cloudRegion": "<p>The cloud Region associated with this finding type aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>",
         "FindingTypeAggregationResponse$cloudPartition": "<p>The cloud infrastructure partition associated with this finding type aggregation. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
         "FreeTrialInfoError$message": "<p>The error message returned.</p>",
+        "GcpCapabilityScope$stateReason": "<p>The reason for the current state of the scope configuration.</p>",
         "GetCisScanReportResponse$url": "<p> The URL where a PDF or CSV of the CIS scan report can be downloaded. </p>",
         "GetCodeSecurityIntegrationResponse$statusReason": "<p>The reason for the current status of the code security integration.</p>",
         "GetCodeSecurityScanResponse$accountId": "<p>The Amazon Web Services account ID associated with the scan.</p>",
         "GetCodeSecurityScanResponse$statusReason": "<p>The reason for the current status of the scan.</p>",
         "GetCodeSecurityScanResponse$lastCommitId": "<p>The identifier of the last commit that was scanned. This is only returned if the scan was successful or skipped.</p>",
         "Image$author": "<p>The author of the container image.</p>",
-        "ImageLayerAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this image layer aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "ImageLayerAggregationResponse$cloudProvider": "<p>The cloud service provider associated with this image layer aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Findings from Google Cloud Platform (GCP) resources.</p> </li> </ul>",
         "ImageLayerAggregationResponse$cloudAccountId": "<p>The cloud account ID for the image layer aggregation.</p>",
         "ImageLayerAggregationResponse$cloudOrgId": "<p>The cloud organization ID for the image layer aggregation.</p>",
-        "ImageLayerAggregationResponse$cloudRegion": "<p>The cloud Region associated with this image layer aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "ImageLayerAggregationResponse$cloudRegion": "<p>The cloud Region associated with this image layer aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>",
         "ImageLayerAggregationResponse$cloudPartition": "<p>The cloud infrastructure partition associated with this image layer aggregation. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
         "InternalServerException$message": null,
         "LambdaFunctionAggregationResponse$functionName": "<p>The Amazon Web Services Lambda function names included in the aggregation results.</p>",
@@ -5055,9 +5130,9 @@
         "ContainerImageAggregation$registries": "<p>The image registries to aggregate findings for.</p>",
         "ContainerImageAggregation$architectures": "<p>The image architectures to aggregate findings for.</p>",
         "ContainerImageAggregation$imageTags": "<p>The image tags to aggregate findings for.</p>",
-        "ContainerImageAggregation$cloudProviders": "<p>The cloud providers to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "ContainerImageAggregation$cloudProviders": "<p>The cloud providers to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Findings from Google Cloud Platform (GCP) resources.</p> </li> </ul>",
         "ContainerImageAggregation$cloudPartitions": "<p>The cloud partitions to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
-        "ContainerImageAggregation$cloudRegions": "<p>The cloud regions to aggregate findings for. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "ContainerImageAggregation$cloudRegions": "<p>The cloud regions to aggregate findings for. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>",
         "ContainerImageAggregation$cloudOrgIds": "<p>The cloud organization IDs to aggregate findings for.</p>",
         "ContainerImageAggregation$cloudAccountIds": "<p>The cloud account IDs to aggregate findings for.</p>",
         "Ec2InstanceAggregation$amis": "<p>The AMI IDs associated with the Amazon EC2 instances to aggregate findings for.</p>",
@@ -5069,7 +5144,7 @@
         "FilterCriteria$severity": "<p>Details on the severity used to filter findings.</p>",
         "FilterCriteria$findingStatus": "<p>Details on the finding status types used to filter findings.</p>",
         "FilterCriteria$title": "<p>Details on the finding title used to filter findings.</p>",
-        "FilterCriteria$resourceType": "<p>Details on the resource types used to filter findings.</p>",
+        "FilterCriteria$resourceType": "<p>Details on the resource types used to filter findings. For Google Cloud Platform (GCP) resources, the resource type is <code>compute.googleapis.com/Instance</code>, <code>cloudfunctions.googleapis.com/Function</code>, or <code>artifactregistry.googleapis.com/DockerImage</code>.</p>",
         "FilterCriteria$resourceId": "<p>Details on the resource IDs used to filter findings.</p>",
         "FilterCriteria$ec2InstanceImageId": "<p>Details of the Amazon EC2 instance image IDs used to filter findings.</p>",
         "FilterCriteria$ec2InstanceVpcId": "<p>Details of the Amazon EC2 instance VPC IDs used to filter findings.</p>",
@@ -5119,10 +5194,10 @@
         "ImageLayerAggregation$repositories": "<p>The repository associated with the container image hosting the layers.</p>",
         "ImageLayerAggregation$resourceIds": "<p>The ID of the container image layer.</p>",
         "ImageLayerAggregation$layerHashes": "<p>The hashes associated with the layers.</p>",
-        "ImageLayerAggregation$cloudProviders": "<p>The cloud providers to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "ImageLayerAggregation$cloudProviders": "<p>The cloud providers to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Findings from Google Cloud Platform (GCP) resources.</p> </li> </ul>",
         "ImageLayerAggregation$cloudAccountIds": "<p>The cloud account IDs to aggregate findings for.</p>",
         "ImageLayerAggregation$cloudOrgIds": "<p>The cloud organization IDs to aggregate findings for.</p>",
-        "ImageLayerAggregation$cloudRegions": "<p>The cloud regions to aggregate findings for. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "ImageLayerAggregation$cloudRegions": "<p>The cloud regions to aggregate findings for. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>",
         "ImageLayerAggregation$cloudPartitions": "<p>The cloud partitions to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
         "LambdaFunctionAggregation$resourceIds": "<p>The resource IDs to include in the aggregation results.</p>",
         "LambdaFunctionAggregation$functionNames": "<p>The Amazon Web Services Lambda function names to include in the aggregation results.</p>",
@@ -5136,9 +5211,9 @@
         "ServerlessFunctionAggregation$resourceIds": "<p>The resource IDs to aggregate findings for.</p>",
         "ServerlessFunctionAggregation$functionNames": "<p>The function names to aggregate findings for.</p>",
         "ServerlessFunctionAggregation$runtimes": "<p>The runtimes to aggregate findings for.</p>",
-        "ServerlessFunctionAggregation$cloudProviders": "<p>The cloud providers to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "ServerlessFunctionAggregation$cloudProviders": "<p>The cloud providers to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Findings from Google Cloud Platform (GCP) resources.</p> </li> </ul>",
         "ServerlessFunctionAggregation$cloudPartitions": "<p>The cloud partitions to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
-        "ServerlessFunctionAggregation$cloudRegions": "<p>The cloud regions to aggregate findings for. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "ServerlessFunctionAggregation$cloudRegions": "<p>The cloud regions to aggregate findings for. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>",
         "ServerlessFunctionAggregation$cloudOrgIds": "<p>The cloud organization IDs to aggregate findings for.</p>",
         "ServerlessFunctionAggregation$cloudAccountIds": "<p>The cloud account IDs to aggregate findings for.</p>",
         "TitleAggregation$titles": "<p>The finding titles to aggregate on.</p>",
@@ -5146,9 +5221,9 @@
         "VmInstanceAggregation$resourceIds": "<p>The resource IDs to aggregate findings for.</p>",
         "VmInstanceAggregation$operatingSystems": "<p>The operating systems to aggregate findings for.</p>",
         "VmInstanceAggregation$vmImageReferences": "<p>The VM image references to aggregate findings for.</p>",
-        "VmInstanceAggregation$cloudProviders": "<p>The cloud providers to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> </ul>",
+        "VmInstanceAggregation$cloudProviders": "<p>The cloud providers to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings from Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Findings from Google Cloud Platform (GCP) resources.</p> </li> </ul>",
         "VmInstanceAggregation$cloudPartitions": "<p>The cloud partitions to aggregate findings for. Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure commercial Regions.</p> </li> </ul>",
-        "VmInstanceAggregation$cloudRegions": "<p>The cloud regions to aggregate findings for. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> </ul>",
+        "VmInstanceAggregation$cloudRegions": "<p>The cloud regions to aggregate findings for. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>",
         "VmInstanceAggregation$cloudOrgIds": "<p>The cloud organization IDs to aggregate findings for.</p>",
         "VmInstanceAggregation$cloudAccountIds": "<p>The cloud account IDs to aggregate findings for.</p>"
       }
@@ -5628,7 +5703,7 @@
     "UsageType": {
       "base": null,
       "refs": {
-        "Usage$type": "<p>The type scan.</p>"
+        "Usage$type": "<p>The type of scan. Valid values:</p> <ul> <li> <p>Amazon Web Services – <code>EC2_INSTANCE_HOURS</code>, <code>EC2_AGENTLESS_INSTANCE_HOURS</code>, <code>EC2_AMI_HOURS</code>, <code>EC2_AMI_ONE_SHOT_SCAN</code>, <code>ECR_INITIAL_SCAN</code>, <code>ECR_RESCAN</code>, <code>LAMBDA_FUNCTION_HOURS</code>, <code>LAMBDA_FUNCTION_CODE_HOURS</code>, <code>CODE_REPOSITORY_SAST</code>, <code>CODE_REPOSITORY_IAC</code>, or <code>CODE_REPOSITORY_SCA</code>.</p> </li> <li> <p>Microsoft Azure – <code>AZURE_VM_AGENT_BASED_INSTANCE_HOURS</code>, <code>AZURE_CONTAINER_IMAGE_INITIAL_SCAN</code>, <code>AZURE_CONTAINER_IMAGE_RESCAN</code>, or <code>AZURE_SERVERLESS_FUNCTION_HOURS</code>.</p> </li> <li> <p>Google Cloud Platform (GCP) – <code>GCP_VM_AGENT_BASED_INSTANCE_HOURS</code>, <code>GCP_CONTAINER_IMAGE_INITIAL_SCAN</code>, <code>GCP_CONTAINER_IMAGE_RESCAN</code>, or <code>GCP_CLOUD_RUN_HOURS</code> (Cloud Run functions).</p> </li> </ul>"
       }
     },
     "UsageValue": {

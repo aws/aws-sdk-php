@@ -3,18 +3,23 @@
   "service": "<p> You can use Amazon CloudWatch Observability Admin to discover and understand the state of telemetry configuration in CloudWatch for your Amazon Web Services Organization or account. This simplifies the process of auditing your telemetry collection configurations across multiple resource types within your Amazon Web Services Organization or account. By providing a consolidated view, it allows you to easily review and manage telemetry settings, helping you ensure proper monitoring and data collection across your Amazon Web Services environment. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/telemetry-config-cloudwatch.html\">Auditing CloudWatch telemetry conﬁgurations</a> in the CloudWatch User Guide.</p> <p>For information on the permissions you need to use this API, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/auth-and-access-control-cw.html\">Identity and access management for Amazon CloudWatch</a> in the CloudWatch User Guide.</p>",
   "operations": {
     "CreateCentralizationRuleForOrganization": "<p>Creates a centralization rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
+    "CreateConnector": "<p>Creates a connector to a third-party cloud provider. With a connector, you can discover resources in the provider and collect their telemetry. Currently, Microsoft Azure is the only supported provider.</p>",
     "CreateDatasetIntegration": "<p>Creates a dataset integration for the caller's account in the current region and returns its ARN.</p> <p>To use this operation, you must have permission to access the dataset integration resources through the IAM role specified in the <code>RoleArn</code> parameter.</p> <p>If a dataset integration already exists for the account, this operation fails with a <code>ConflictException</code>.</p>",
     "CreateS3TableIntegration": "<p>Creates an integration between CloudWatch and S3 Tables for analytics. This integration enables querying CloudWatch telemetry data using analytics engines like Amazon Athena, Amazon Redshift, and Apache Spark.</p>",
     "CreateTelemetryPipeline": "<p>Creates a telemetry pipeline for processing and transforming telemetry data. The pipeline defines how data flows from sources through processors to destinations, enabling data transformation and delivering capabilities. </p>",
     "CreateTelemetryRule": "<p> Creates a telemetry rule that defines how telemetry should be configured for Amazon Web Services resources in your account. The rule specifies which resources should have telemetry enabled and how that telemetry data should be collected based on resource type, telemetry type, and selection criteria. </p>",
     "CreateTelemetryRuleForOrganization": "<p> Creates a telemetry rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
     "DeleteCentralizationRuleForOrganization": "<p>Deletes an organization-wide centralization rule. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
+    "DeleteConnector": "<p>Deletes a connector and its telemetry manifest.</p>",
     "DeleteDatasetIntegration": "<p>Deletes a dataset integration for the caller's account in the current region. This operation is idempotent; if you submit the same delete more than once, each call succeeds.</p>",
     "DeleteS3TableIntegration": "<p>Deletes an S3 Table integration and its associated data. This operation removes the connection between CloudWatch Observability Admin and S3 Tables.</p>",
     "DeleteTelemetryPipeline": "<p>Deletes a telemetry pipeline and its associated resources. This operation stops data processing and removes the pipeline configuration.</p>",
     "DeleteTelemetryRule": "<p> Deletes a telemetry rule from your account. Any telemetry configurations previously created by the rule will remain but no new resources will be configured by this rule. </p>",
     "DeleteTelemetryRuleForOrganization": "<p> Deletes an organization-wide telemetry rule. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
     "GetCentralizationRuleForOrganization": "<p>Retrieves the details of a specific organization centralization rule. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
+    "GetConnector": "<p>Retrieves the details of a connector.</p>",
+    "GetConnectorTelemetryManifest": "<p>Retrieves the telemetry manifest of a connector and its current version. If the connector has no telemetry manifest, this operation returns a <code>ResourceNotFoundException</code>.</p>",
+    "GetConnectorTelemetrySetup": "<p>Generates the artifacts that you use to create the infrastructure in your cloud provider that delivers the telemetry declared in the connector's telemetry manifest. This operation doesn't change any resources in your cloud provider or in Amazon Web Services.</p>",
     "GetDatasetIntegration": "<p>Returns the dataset integration for the caller's account in the current region.</p>",
     "GetS3TableIntegration": "<p>Retrieves information about a specific S3 Table integration, including its configuration, status, and metadata.</p>",
     "GetTelemetryEnrichmentStatus": "<p> Returns the current status of the resource tags for telemetry feature, which enhances telemetry data with additional resource metadata from Resource Explorer. </p>",
@@ -23,24 +28,32 @@
     "GetTelemetryPipeline": "<p>Retrieves information about a specific telemetry pipeline, including its configuration, status, and metadata.</p>",
     "GetTelemetryRule": "<p> Retrieves the details of a specific telemetry rule in your account. </p>",
     "GetTelemetryRuleForOrganization": "<p> Retrieves the details of a specific organization telemetry rule. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
+    "GetThirdPartyTelemetryEnrichment": "<p>Returns the details of a third-party telemetry enrichment, including its status and source configuration.</p>",
     "ListCentralizationRulesForOrganization": "<p>Lists all centralization rules in your organization. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
+    "ListConnectors": "<p>Lists the connectors in the account and Region. This operation returns results in pages. To get the next page, pass the returned <code>NextToken</code> in the next call. We recommend that you use pagination to ensure that the operation returns quickly and successfully.</p>",
     "ListDatasetIntegrations": "<p>Returns the dataset integrations in your account.</p>",
     "ListResourceTelemetry": "<p> Returns a list of telemetry configurations for Amazon Web Services resources supported by telemetry config. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/telemetry-config-cloudwatch.html\">Auditing CloudWatch telemetry configurations</a>. </p>",
     "ListResourceTelemetryForOrganization": "<p> Returns a list of telemetry configurations for Amazon Web Services resources supported by telemetry config in the organization. </p>",
+    "ListResourcesByConnector": "<p>Lists resources in your cloud provider that the connector can access, such as management groups, subscriptions, resource types, Regions, resources, and Event Hubs. Use the results to build a telemetry manifest. This operation returns results in pages. To get the next page, pass the returned <code>NextToken</code> in the next call. We recommend that you use pagination to ensure that the operation returns quickly and successfully.</p>",
     "ListS3TableIntegrations": "<p>Lists all S3 Table integrations in your account. We recommend using pagination to ensure that the operation returns quickly and successfully.</p>",
-    "ListTagsForResource": "<p> Lists all tags attached to the specified resource. Supports telemetry rule resources and telemetry pipeline resources. </p>",
+    "ListTagsForResource": "<p> Lists all tags attached to the specified resource. Supports telemetry rule resources, telemetry pipeline resources, and third-party telemetry enrichment resources. </p>",
     "ListTelemetryPipelines": "<p>Returns a list of telemetry pipelines in your account. Returns up to 100 results. If more than 100 telemetry pipelines exist, include the <code>NextToken</code> value from the response to retrieve the next set of results.</p>",
     "ListTelemetryRules": "<p> Lists all telemetry rules in your account. You can filter the results by specifying a rule name prefix. </p>",
     "ListTelemetryRulesForOrganization": "<p> Lists all telemetry rules in your organization. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
+    "ListThirdPartyTelemetryEnrichments": "<p>Returns a summary of each third-party telemetry enrichment in your account and Region. To get the full configuration of an enrichment, use <code>GetThirdPartyTelemetryEnrichment</code>. The results are paginated. To get the next page of results, use <code>NextToken</code>.</p>",
+    "PutConnectorTelemetryManifest": "<p>Creates or replaces the telemetry manifest of a connector. The telemetry manifest declares which resources in your cloud provider to collect telemetry from and which telemetry types to collect. To avoid overwriting changes made by another caller, specify <code>ExpectedVersion</code>.</p>",
     "StartTelemetryEnrichment": "<p> Enables the resource tags for telemetry feature for your account, which enhances telemetry data with additional resource metadata from Resource Explorer to provide richer context for monitoring and observability. </p>",
     "StartTelemetryEvaluation": "<p> This action begins onboarding the caller Amazon Web Services account to the telemetry config feature. </p>",
     "StartTelemetryEvaluationForOrganization": "<p> This actions begins onboarding the organization and all member accounts to the telemetry config feature. </p>",
+    "StartTelemetryPipelineRefresh": "<p>Starts a refresh of an external-cloud telemetry pipeline. The refresh re-reads the connector's telemetry manifest and re-discovers the sources in scope.</p> <p>The pipeline must be in the <code>ACTIVE</code> or <code>UPDATE_FAILED</code> state, with no refresh already running. You can use <code>GetTelemetryPipeline</code> to track the refresh.</p>",
+    "StartThirdPartyTelemetryEnrichment": "<p>Starts a third-party telemetry enrichment. An enrichment adds resource metadata, such as tags, from a third-party telemetry source to the telemetry that CloudWatch receives from the resources of that source.</p> <p>You specify an Amazon Web Services Config connector for your third-party environment, such as a Microsoft Azure tenant. You can use each connector for only one enrichment.</p> <p>To use this operation, you must have the <code>config:PutThirdPartyServiceLinkedConfigurationRecorder</code> permission. If the Amazon Web Services Config service-linked role does not exist in your account, you must also have the <code>iam:CreateServiceLinkedRole</code> permission.</p>",
     "StopTelemetryEnrichment": "<p> Disables the resource tags for telemetry feature for your account, stopping the enhancement of telemetry data with additional resource metadata. </p>",
     "StopTelemetryEvaluation": "<p> This action begins offboarding the caller Amazon Web Services account from the telemetry config feature. </p>",
     "StopTelemetryEvaluationForOrganization": "<p> This action offboards the Organization of the caller Amazon Web Services account from the telemetry config feature. </p>",
-    "TagResource": "<p> Adds or updates tags for a resource. Supports telemetry rule resources and telemetry pipeline resources. </p>",
+    "StopThirdPartyTelemetryEnrichment": "<p>Stops a third-party telemetry enrichment. CloudWatch stops adding resource metadata from the third-party telemetry source to your telemetry.</p> <p>To use this operation, you must have the <code>config:DeleteServiceLinkedConfigurationRecorder</code> permission.</p>",
+    "TagResource": "<p> Adds or updates tags for a resource. Supports telemetry rule resources, telemetry pipeline resources, and third-party telemetry enrichment resources. </p>",
     "TestTelemetryPipeline": "<p>Tests a pipeline configuration with sample records to validate data processing before deployment. This operation helps ensure your pipeline configuration works as expected. </p>",
-    "UntagResource": "<p> Removes tags from a resource. Supports telemetry rule resources and telemetry pipeline resources. </p>",
+    "UntagResource": "<p> Removes tags from a resource. Supports telemetry rule resources, telemetry pipeline resources, and third-party telemetry enrichment resources. </p>",
     "UpdateCentralizationRuleForOrganization": "<p>Updates an existing centralization rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
     "UpdateDatasetIntegration": "<p>Updates a dataset integration for the caller's account in the current region. This operation is idempotent; if you submit the same update more than once, each call succeeds.</p>",
     "UpdateTelemetryPipeline": "<p>Updates the configuration of an existing telemetry pipeline.</p> <note> <p>The following attributes cannot be updated after pipeline creation:</p> <ul> <li> <p> <b>Pipeline name</b> - The pipeline name is immutable</p> </li> <li> <p> <b>Pipeline ARN</b> - The ARN is automatically generated and cannot be changed</p> </li> <li> <p> <b>Source type</b> - Once a pipeline is created with a specific source type (such as S3, CloudWatch Logs, GitHub, or third-party sources), it cannot be changed to a different source type</p> </li> </ul> <p>Processors can be added, removed, or modified. However, some processors are not supported for third-party pipelines and cannot be added through updates.</p> </note> <p> <b>Source-Specific Update Rules</b> </p> <dl> <dt>CloudWatch Logs Sources (Vended and Custom)</dt> <dd> <p> <b>Updatable:</b> <code>sts_role_arn</code> </p> <p> <b>Fixed:</b> <code>data_source_name</code>, <code>data_source_type</code>, sink (must remain <code>@original</code>)</p> </dd> <dt>S3 Sources (Crowdstrike, Zscaler, SentinelOne, Custom)</dt> <dd> <p> <b>Updatable:</b> All SQS configuration parameters, <code>sts_role_arn</code>, codec settings, compression type, bucket ownership settings, sink log group</p> <p> <b>Fixed:</b> <code>notification_type</code>, <code>aws.region</code> </p> </dd> <dt>GitHub Audit Logs</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>scope</code> (can switch between ORGANIZATION/ENTERPRISE), <code>organization</code> or <code>enterprise</code> name, <code>range</code>, authentication credentials (PAT or GitHub App)</p> </dd> <dt>Microsoft Sources (Entra ID, Office365, Windows)</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>tenant_id</code>, <code>workspace_id</code> (Windows only), OAuth2 credentials (<code>client_id</code>, <code>client_secret</code>)</p> </dd> <dt>Okta Sources (SSO, Auth0)</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>domain</code>, <code>range</code>, OAuth2 credentials (<code>client_id</code>, <code>client_secret</code>)</p> </dd> <dt>Palo Alto Networks</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>hostname</code>, basic authentication credentials (<code>username</code>, <code>password</code>)</p> </dd> <dt>ServiceNow CMDB</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>instance_url</code>, <code>range</code>, OAuth2 credentials (<code>client_id</code>, <code>client_secret</code>)</p> </dd> <dt>Wiz CNAPP</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>region</code>, <code>range</code>, OAuth2 credentials (<code>client_id</code>, <code>client_secret</code>)</p> </dd> </dl>",
@@ -106,11 +119,408 @@
         "TelemetryRule$AllRegions": "<p> If set to <code>true</code>, the telemetry rule is replicated to all Amazon Web Services Regions where Amazon CloudWatch Observability Admin is available in the current partition. When new regions become available, the rule automatically replicates to them. Mutually exclusive with <code>Regions</code>. </p>"
       }
     },
+    "AllSubscriptions": {
+      "base": "<p>Selects every Azure subscription that Azure role-based access control (Azure RBAC) allows the connector to read. Subscriptions that the connector can read later are included automatically.</p>",
+      "refs": {
+        "AzureSubscriptionScope$All": "<p>All subscriptions that Azure role-based access control (Azure RBAC) allows the connector to read. Subscriptions that the connector can read later are included automatically.</p>"
+      }
+    },
+    "AwsConfigConnectorArn": {
+      "base": null,
+      "refs": {
+        "AzureTelemetrySourceConfigurationInput$AwsConfigConnectorArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Config connector for the Microsoft Azure tenant to collect resource metadata from.</p>",
+        "AzureTelemetrySourceConfigurationOutput$AwsConfigConnectorArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Config connector that the enrichment uses.</p>"
+      }
+    },
     "AwsResourceExplorerManagedViewArn": {
       "base": null,
       "refs": {
         "GetTelemetryEnrichmentStatusOutput$AwsResourceExplorerManagedViewArn": "<p> The Amazon Resource Name (ARN) of the Resource Explorer managed view used for resource tags for telemetry, if the feature is enabled. </p>",
         "StartTelemetryEnrichmentOutput$AwsResourceExplorerManagedViewArn": "<p> The Amazon Resource Name (ARN) of the Resource Explorer managed view created for resource tags for telemetry. </p>"
+      }
+    },
+    "AzureAwsManagedFlowLogs": {
+      "base": "<p>Configuration for Flow Log Storage Accounts that the setup creates, one in each Region that ingests Flow Logs.</p>",
+      "refs": {
+        "AzureFlowLogsInfrastructure$AwsManaged": "<p>Create one Storage Account in each Azure Region that ingests Flow Logs, in the subscription specified by <code>SubscriptionId</code>.</p>"
+      }
+    },
+    "AzureClientIdentifier": {
+      "base": null,
+      "refs": {
+        "AzureConnectorConfiguration$ClientIdentifier": "<p>The application (client) ID of the Azure app registration. The app registration must have a federated identity credential that trusts the Amazon Web Services OpenID Connect (OIDC) issuer for your account.</p>"
+      }
+    },
+    "AzureConnectorConfiguration": {
+      "base": "<p>The configuration of a connector to Microsoft Azure.</p>",
+      "refs": {
+        "ConnectorConfiguration$Azure": "<p>The configuration of a connector to Microsoft Azure.</p>"
+      }
+    },
+    "AzureConnectorQuery": {
+      "base": "<p>The type of Azure resource to list. Specify one type.</p>",
+      "refs": {
+        "ConnectorQuery$Azure": "<p>The type of Azure resource to list.</p>"
+      }
+    },
+    "AzureConnectorQueryResults": {
+      "base": "<p>The results of an Azure discovery query. The populated member matches the member of the query.</p>",
+      "refs": {
+        "ConnectorQueryResults$Azure": "<p>The results of an Azure discovery query.</p>"
+      }
+    },
+    "AzureCustomerManagedFlowLogs": {
+      "base": "<p>Configuration for existing Azure Storage Accounts that already receive your Flow Logs.</p>",
+      "refs": {
+        "AzureFlowLogsInfrastructure$CustomerManaged": "<p>Use your existing Storage Accounts that already store Flow Logs.</p>"
+      }
+    },
+    "AzureCustomerManagedFlowLogsStorageAccountsList": {
+      "base": null,
+      "refs": {
+        "AzureCustomerManagedFlowLogs$StorageAccounts": "<p>The Storage Accounts that store your Flow Logs, listed by Azure Region. Each Region can appear only once, and each Storage Account can appear only once across all Regions.</p>"
+      }
+    },
+    "AzureEventHubConfiguration": {
+      "base": "<p>Configuration of the Azure Event Hubs that the setup creates to deliver resource logs.</p>",
+      "refs": {
+        "AzureInfrastructureEventHubsList$member": null
+      }
+    },
+    "AzureEventHubNamespaceName": {
+      "base": null,
+      "refs": {
+        "AzureEventHubSummary$NamespaceName": "<p>The name of the Event Hubs namespace that contains the Event Hub.</p>",
+        "AzureEventHubsQuery$NamespaceName": "<p>Limits the results to Event Hubs in this namespace.</p>"
+      }
+    },
+    "AzureEventHubPartitionCount": {
+      "base": null,
+      "refs": {
+        "AzureEventHubConfiguration$PartitionCount": "<p>The number of partitions in each Event Hub. The Standard tier allows 1–32 partitions and the Premium tier allows 1–100. On the Standard tier, you can't change this value after the setup creates the Event Hub.</p>"
+      }
+    },
+    "AzureEventHubSummaries": {
+      "base": null,
+      "refs": {
+        "AzureConnectorQueryResults$EventHubs": "<p>The Azure Event Hubs.</p>"
+      }
+    },
+    "AzureEventHubSummary": {
+      "base": "<p>Information about an Azure Event Hub.</p>",
+      "refs": {
+        "AzureEventHubSummaries$member": null
+      }
+    },
+    "AzureEventHubTier": {
+      "base": null,
+      "refs": {
+        "AzureEventHubConfiguration$Tier": "<p>The Event Hubs namespace tier.</p>"
+      }
+    },
+    "AzureEventHubsQuery": {
+      "base": "<p>A query that lists Azure Event Hubs.</p>",
+      "refs": {
+        "AzureConnectorQuery$EventHubs": "<p>Lists Azure Event Hubs.</p>"
+      }
+    },
+    "AzureFlowLogRetentionDays": {
+      "base": null,
+      "refs": {
+        "AzureAwsManagedFlowLogs$RetentionDays": "<p>The number of days that the created Storage Accounts keep Flow Logs.</p>"
+      }
+    },
+    "AzureFlowLogStorageAccountScope": {
+      "base": "<p>The Azure Storage Accounts in one Azure Region that store Flow Logs.</p>",
+      "refs": {
+        "AzureCustomerManagedFlowLogsStorageAccountsList$member": null
+      }
+    },
+    "AzureFlowLogStorageAccountScopeStorageAccountIdsList": {
+      "base": null,
+      "refs": {
+        "AzureFlowLogStorageAccountScope$StorageAccountIds": "<p>The Azure Resource Manager IDs of the Storage Accounts.</p>"
+      }
+    },
+    "AzureFlowLogsInfrastructure": {
+      "base": "<p>The location of your Flow Logs: your existing Storage Accounts, or Storage Accounts that the setup creates. Specify one.</p>",
+      "refs": {
+        "AzureInfrastructure$FlowLogs": "<p>The location of your Flow Logs. You must specify this value if an <code>AzureScopeItem</code> collects <code>FlowLogs</code>, and you can specify it only in that case.</p>"
+      }
+    },
+    "AzureInfrastructure": {
+      "base": "<p>The choices for the Azure infrastructure that the setup creates.</p>",
+      "refs": {
+        "TelemetryManifestInfrastructure$Azure": "<p>The choices for the Azure infrastructure that the setup creates.</p>"
+      }
+    },
+    "AzureInfrastructureEventHubsList": {
+      "base": null,
+      "refs": {
+        "AzureInfrastructure$EventHubs": "<p>The Event Hubs configuration. Specify exactly one entry, which applies to the Event Hubs in every Azure Region. This value applies only if an <code>AzureScopeItem</code> collects <code>ResourceLogs</code>. If you omit it, the setup uses default settings.</p>"
+      }
+    },
+    "AzureManagementGroupId": {
+      "base": null,
+      "refs": {
+        "AzureManagementGroupSummary$Id": "<p>The ID of the management group.</p>",
+        "AzureManagementGroupsQuery$ParentManagementGroupId": "<p>Lists the management groups under this management group. If you omit this value, the query starts at the tenant root group.</p>",
+        "AzureQueryScope$ManagementGroupId": "<p>Limits the query to resources under this management group.</p>",
+        "AzureSubscriptionSummary$ManagementGroupId": "<p>The ID of the management group that contains the subscription.</p>",
+        "AzureSubscriptionsQuery$ManagementGroupId": "<p>Limits the results to subscriptions under this management group.</p>"
+      }
+    },
+    "AzureManagementGroupSummaries": {
+      "base": null,
+      "refs": {
+        "AzureConnectorQueryResults$ManagementGroups": "<p>The Azure management groups.</p>"
+      }
+    },
+    "AzureManagementGroupSummary": {
+      "base": "<p>Information about an Azure management group.</p>",
+      "refs": {
+        "AzureManagementGroupSummaries$member": null
+      }
+    },
+    "AzureManagementGroupsQuery": {
+      "base": "<p>A query that lists Azure management groups.</p>",
+      "refs": {
+        "AzureConnectorQuery$ManagementGroups": "<p>Lists Azure management groups.</p>"
+      }
+    },
+    "AzureQueryScope": {
+      "base": "<p>Limits a query to a management group or to specific subscriptions.</p>",
+      "refs": {
+        "AzureEventHubsQuery$Scope": "<p>Limits the query to a management group or to specific subscriptions.</p>",
+        "AzureRegionsQuery$Scope": "<p>Limits the query to a management group or to specific subscriptions.</p>",
+        "AzureResourceIdsQuery$Scope": "<p>Limits the query to a management group or to specific subscriptions.</p>",
+        "AzureResourceTypesQuery$Scope": "<p>Limits the query to a management group or to specific subscriptions.</p>"
+      }
+    },
+    "AzureQueryScopeSubscriptionIdsList": {
+      "base": null,
+      "refs": {
+        "AzureQueryScope$SubscriptionIds": "<p>Limits the query to these subscriptions. You can specify 1–1000 subscriptions.</p>"
+      }
+    },
+    "AzureRegion": {
+      "base": null,
+      "refs": {
+        "AzureEventHubSummary$Region": "<p>The Azure Region of the Event Hub, for example <code>eastus</code>.</p>",
+        "AzureEventHubsQuery$Region": "<p>Limits the results to one Azure Region, for example <code>eastus</code>.</p>",
+        "AzureFlowLogStorageAccountScope$Region": "<p>The Azure Region of the Storage Accounts, for example <code>eastus</code>.</p>",
+        "AzureRegionList$member": null,
+        "AzureResourceIdScope$Region": "<p>The Azure Region of the resources, for example <code>eastus</code>. Required because an Azure resource ID doesn't include the Region.</p>",
+        "AzureResourceIdentifierSummary$Region": "<p>The Azure Region of the resource, for example <code>eastus</code>.</p>",
+        "AzureResourceIdsQuery$Region": "<p>Limits the results to one Azure Region, for example <code>eastus</code>.</p>",
+        "AzureScopeRegionsList$member": null
+      }
+    },
+    "AzureRegionList": {
+      "base": null,
+      "refs": {
+        "AzureConnectorQueryResults$Regions": "<p>The Azure Regions.</p>"
+      }
+    },
+    "AzureRegionsQuery": {
+      "base": "<p>A query that lists the Azure Regions that have resources in scope.</p>",
+      "refs": {
+        "AzureConnectorQuery$Regions": "<p>Lists the Azure Regions that have resources in scope.</p>"
+      }
+    },
+    "AzureResourceId": {
+      "base": null,
+      "refs": {
+        "AzureEventHubSummary$ResourceId": "<p>The Azure Resource Manager ID of the Event Hub.</p>",
+        "AzureResourceIdentifierSummary$ResourceId": "<p>The Azure Resource Manager ID of the resource.</p>"
+      }
+    },
+    "AzureResourceIdScope": {
+      "base": "<p>Azure resources in one Azure Region.</p>",
+      "refs": {
+        "AzureScopeResourcesList$member": null
+      }
+    },
+    "AzureResourceIdScopeResourceIdsList": {
+      "base": null,
+      "refs": {
+        "AzureResourceIdScope$ResourceIds": "<p>The Azure Resource Manager IDs of the resources.</p>"
+      }
+    },
+    "AzureResourceIdentifierSummaries": {
+      "base": null,
+      "refs": {
+        "AzureConnectorQueryResults$ResourceIds": "<p>The Azure resources.</p>"
+      }
+    },
+    "AzureResourceIdentifierSummary": {
+      "base": "<p>Information about an Azure resource.</p>",
+      "refs": {
+        "AzureResourceIdentifierSummaries$member": null
+      }
+    },
+    "AzureResourceIdsQuery": {
+      "base": "<p>A query that lists Azure resources.</p>",
+      "refs": {
+        "AzureConnectorQuery$ResourceIds": "<p>Lists Azure resources.</p>"
+      }
+    },
+    "AzureResourceIdsQueryTagFiltersList": {
+      "base": null,
+      "refs": {
+        "AzureResourceIdsQuery$TagFilters": "<p>Limits the results to resources that have these tags. A resource must match the filters for all tag keys, and any of the values for each key. The service matches tag keys and values case-insensitively, as Azure does.</p>"
+      }
+    },
+    "AzureResourceTagKey": {
+      "base": null,
+      "refs": {
+        "AzureResourceTags$key": null
+      }
+    },
+    "AzureResourceTagValue": {
+      "base": null,
+      "refs": {
+        "AzureResourceTags$value": null
+      }
+    },
+    "AzureResourceTags": {
+      "base": null,
+      "refs": {
+        "AzureResourceIdentifierSummary$Tags": "<p>The tags on the resource. Absent if the resource has no tags.</p>"
+      }
+    },
+    "AzureResourceType": {
+      "base": null,
+      "refs": {
+        "AzureResourceIdentifierSummary$ResourceType": "<p>The Azure resource type, for example <code>Microsoft.Compute/virtualMachines</code>.</p>",
+        "AzureResourceIdsQuery$ResourceType": "<p>Limits the results to one Azure resource type, for example <code>Microsoft.Compute/virtualMachines</code>.</p>",
+        "AzureResourceTypeList$member": null,
+        "AzureScopeResourceTypesList$member": null
+      }
+    },
+    "AzureResourceTypeList": {
+      "base": null,
+      "refs": {
+        "AzureConnectorQueryResults$ResourceTypes": "<p>The Azure resource types.</p>"
+      }
+    },
+    "AzureResourceTypesQuery": {
+      "base": "<p>A query that lists the Azure resource types that have resources in scope.</p>",
+      "refs": {
+        "AzureConnectorQuery$ResourceTypes": "<p>Lists the Azure resource types that have resources in scope.</p>"
+      }
+    },
+    "AzureScope": {
+      "base": "<p>The Azure resources to collect telemetry from. These are the resources found by <code>Subscriptions</code>, <code>Regions</code>, and <code>ResourceTypes</code>, optionally narrowed by <code>TagFilters</code>, plus any resources listed in <code>Resources</code>. You can specify:</p> <ul> <li> <p> <code>Subscriptions</code>, <code>Regions</code>, and <code>ResourceTypes</code> together</p> </li> <li> <p> <code>Resources</code> </p> </li> <li> <p>Both</p> </li> </ul>",
+      "refs": {
+        "AzureScopeItem$Scope": "<p>The Azure resources to collect telemetry from.</p>"
+      }
+    },
+    "AzureScopeItem": {
+      "base": "<p>The telemetry types to collect from a set of Azure resources.</p>",
+      "refs": {
+        "TelemetryManifestSourceAzureList$member": null
+      }
+    },
+    "AzureScopeItemTelemetryTypesList": {
+      "base": null,
+      "refs": {
+        "AzureScopeItem$TelemetryTypes": "<p>The telemetry types to collect.</p>"
+      }
+    },
+    "AzureScopeRegionsList": {
+      "base": null,
+      "refs": {
+        "AzureScope$Regions": "<p>The Azure Regions to find resources in. Required when you use <code>Subscriptions</code> and <code>ResourceTypes</code>.</p>"
+      }
+    },
+    "AzureScopeResourceTypesList": {
+      "base": null,
+      "refs": {
+        "AzureScope$ResourceTypes": "<p>The Azure resource types to find. Required when you use <code>Subscriptions</code> and <code>Regions</code>.</p>"
+      }
+    },
+    "AzureScopeResourcesList": {
+      "base": null,
+      "refs": {
+        "AzureScope$Resources": "<p>Specific Azure resources, listed by Azure Region.</p>"
+      }
+    },
+    "AzureScopeTagFiltersList": {
+      "base": null,
+      "refs": {
+        "AzureScope$TagFilters": "<p>Limits the resources found by <code>Subscriptions</code>, <code>Regions</code>, and <code>ResourceTypes</code> to those that have these tags. You can specify up to 50 filters.</p>"
+      }
+    },
+    "AzureStorageAccountId": {
+      "base": null,
+      "refs": {
+        "AzureFlowLogStorageAccountScopeStorageAccountIdsList$member": null
+      }
+    },
+    "AzureSubscriptionId": {
+      "base": null,
+      "refs": {
+        "AzureEventHubSummary$SubscriptionId": "<p>The Azure subscription that contains the Event Hub.</p>",
+        "AzureInfrastructure$SubscriptionId": "<p>The Azure subscription in which the setup creates the Event Hubs namespaces and, for <code>AwsManaged</code> Flow Logs, the Storage Accounts. You must specify this value if an <code>AzureScopeItem</code> collects <code>ResourceLogs</code>, or if you specify <code>EventHubs</code> or <code>AwsManaged</code> Flow Logs.</p>",
+        "AzureQueryScopeSubscriptionIdsList$member": null,
+        "AzureResourceIdentifierSummary$SubscriptionId": "<p>The Azure subscription that contains the resource.</p>",
+        "AzureSubscriptionScopeIdsList$member": null,
+        "AzureSubscriptionSummary$SubscriptionId": "<p>The ID of the subscription.</p>"
+      }
+    },
+    "AzureSubscriptionScope": {
+      "base": "<p>The subscriptions to find resources in: all subscriptions that the connector can read, or a list of subscriptions. Specify one.</p>",
+      "refs": {
+        "AzureScope$Subscriptions": "<p>The subscriptions to find resources in: all subscriptions that the connector can read, or a list of subscriptions. Required when you use <code>Regions</code> and <code>ResourceTypes</code>.</p>"
+      }
+    },
+    "AzureSubscriptionScopeIdsList": {
+      "base": null,
+      "refs": {
+        "AzureSubscriptionScope$Ids": "<p>A list of 1–1000 subscription IDs.</p>"
+      }
+    },
+    "AzureSubscriptionSummaries": {
+      "base": null,
+      "refs": {
+        "AzureConnectorQueryResults$Subscriptions": "<p>The Azure subscriptions.</p>"
+      }
+    },
+    "AzureSubscriptionSummary": {
+      "base": "<p>Information about an Azure subscription.</p>",
+      "refs": {
+        "AzureSubscriptionSummaries$member": null
+      }
+    },
+    "AzureSubscriptionsQuery": {
+      "base": "<p>A query that lists Azure subscriptions.</p>",
+      "refs": {
+        "AzureConnectorQuery$Subscriptions": "<p>Lists Azure subscriptions.</p>"
+      }
+    },
+    "AzureTelemetrySourceConfigurationInput": {
+      "base": "<p>The Microsoft Azure source configuration for a third-party telemetry enrichment.</p>",
+      "refs": {
+        "TelemetrySourceConfigurationInput$Azure": "<p>The configuration for a Microsoft Azure source.</p>"
+      }
+    },
+    "AzureTelemetrySourceConfigurationOutput": {
+      "base": "<p>The Microsoft Azure source configuration of a third-party telemetry enrichment.</p>",
+      "refs": {
+        "TelemetrySourceConfigurationOutput$Azure": "<p>The configuration of the Microsoft Azure source.</p>"
+      }
+    },
+    "AzureTelemetryType": {
+      "base": null,
+      "refs": {
+        "AzureScopeItemTelemetryTypesList$member": null
+      }
+    },
+    "AzureTenantIdentifier": {
+      "base": null,
+      "refs": {
+        "AzureConnectorConfiguration$TenantIdentifier": "<p>The ID of the Microsoft Entra ID tenant.</p>"
       }
     },
     "Boolean": {
@@ -159,6 +569,13 @@
         "CentralizationRuleSummaries$member": null
       }
     },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "CreateConnectorInput$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the operation completes no more than one time. If you use an Amazon Web Services SDK, the SDK generates this value and reuses it on retries. If this token matches a previous request with the same parameters, the service returns the connector from the first request without an error. If you use the same token with different parameters, including different tags, the service returns a <code>ValidationException</code>. This operation is idempotent when you use the same token and parameters.</p>",
+        "PutConnectorTelemetryManifestInput$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the operation completes no more than one time. If you use an Amazon Web Services SDK, the SDK generates this value and reuses it on retries. If this token matches a previous request with the same telemetry manifest, the service returns the stored version without an error. If you use the same token with a different telemetry manifest, the service returns a <code>ValidationException</code>. This operation is idempotent when you use the same token and parameters.</p>"
+      }
+    },
     "CloudtrailParameters": {
       "base": "<p> Parameters specific to Amazon Web Services CloudTrail telemetry configuration. </p>",
       "refs": {
@@ -180,12 +597,87 @@
     "ConfigurationSummary": {
       "base": "<p>Provides a summary of pipeline configuration components including sources, processors, and destinations.</p>",
       "refs": {
+        "TelemetryPipeline$ConfigurationSummary": "<p>A summary of the pipeline configuration components.</p>",
         "TelemetryPipelineSummary$ConfigurationSummary": "<p>A summary of the pipeline configuration components.</p>"
       }
     },
     "ConflictException": {
       "base": "<p> The requested operation conflicts with the current state of the specified resource or with another request. </p>",
       "refs": {}
+    },
+    "Connector": {
+      "base": "<p>A connector to a third-party cloud provider.</p>",
+      "refs": {
+        "CreateConnectorOutput$Connector": "<p>The connector that this request created.</p>",
+        "GetConnectorOutput$Connector": "<p>The connector.</p>"
+      }
+    },
+    "ConnectorConfiguration": {
+      "base": "<p>The configuration for connecting to a third-party cloud provider. Specify one provider.</p>",
+      "refs": {
+        "Connector$ConnectorConfiguration": "<p>The configuration for connecting to the third-party cloud provider.</p>",
+        "CreateConnectorInput$ConnectorConfiguration": "<p>The configuration for connecting to the third-party cloud provider.</p>"
+      }
+    },
+    "ConnectorIdentifier": {
+      "base": null,
+      "refs": {
+        "DeleteConnectorInput$ConnectorIdentifier": "<p>The connector to delete. Specify one of the following:</p> <ul> <li> <p>The Amazon Resource Name (ARN) of the connector</p> </li> <li> <p>The ID of the connector</p> </li> </ul>",
+        "GetConnectorInput$ConnectorIdentifier": "<p>The connector. Specify one of the following:</p> <ul> <li> <p>The Amazon Resource Name (ARN) of the connector</p> </li> <li> <p>The ID of the connector</p> </li> </ul>",
+        "GetConnectorTelemetryManifestInput$ConnectorIdentifier": "<p>The connector. Specify one of the following:</p> <ul> <li> <p>The Amazon Resource Name (ARN) of the connector</p> </li> <li> <p>The ID of the connector</p> </li> </ul>",
+        "GetConnectorTelemetrySetupInput$ConnectorIdentifier": "<p>The connector whose telemetry manifest you want to generate the setup from. Specify one of the following:</p> <ul> <li> <p>The Amazon Resource Name (ARN) of the connector</p> </li> <li> <p>The ID of the connector</p> </li> </ul>",
+        "ListResourcesByConnectorInput$ConnectorIdentifier": "<p>The connector to use for the query. Specify one of the following:</p> <ul> <li> <p>The Amazon Resource Name (ARN) of the connector</p> </li> <li> <p>The ID of the connector</p> </li> </ul>",
+        "PutConnectorTelemetryManifestInput$ConnectorIdentifier": "<p>The connector. Specify one of the following:</p> <ul> <li> <p>The Amazon Resource Name (ARN) of the connector</p> </li> <li> <p>The ID of the connector</p> </li> </ul>"
+      }
+    },
+    "ConnectorName": {
+      "base": null,
+      "refs": {
+        "Connector$Name": "<p>The name of the connector.</p>",
+        "ConnectorSummary$Name": "<p>The name of the connector.</p>",
+        "CreateConnectorInput$Name": "<p>The name of the connector. The name must be unique in the account and Region (case-sensitive). If another connector already uses the name, the request fails with a <code>ConflictException</code>.</p> <p>The name can contain letters, digits, hyphens (-), underscores (_) and periods (.), and must start with a letter.</p>"
+      }
+    },
+    "ConnectorNextToken": {
+      "base": null,
+      "refs": {
+        "ListConnectorsInput$NextToken": "<p>The token for the next page of results, returned by a previous call.</p>",
+        "ListConnectorsOutput$NextToken": "<p>The token to use in the next call to get the next page of results. Absent when there are no more results.</p>",
+        "ListResourcesByConnectorInput$NextToken": "<p>The token for the next page of results, returned by a previous call.</p>",
+        "ListResourcesByConnectorOutput$NextToken": "<p>The token to use in the next call to get the next page of results. Absent when there are no more results.</p>"
+      }
+    },
+    "ConnectorProvider": {
+      "base": null,
+      "refs": {
+        "Connector$Provider": "<p>The cloud provider that the connector connects to.</p>",
+        "ConnectorSummary$Provider": "<p>The cloud provider that the connector connects to.</p>",
+        "GetConnectorTelemetrySetupOutput$Provider": "<p>The cloud provider that the setup artifacts are for.</p>"
+      }
+    },
+    "ConnectorQuery": {
+      "base": "<p>What to list in a cloud provider. Specify one provider.</p>",
+      "refs": {
+        "ListResourcesByConnectorInput$Selector": "<p>What to list: one cloud provider, and one type of resource in that provider.</p>"
+      }
+    },
+    "ConnectorQueryResults": {
+      "base": "<p>The results of a query. The populated member matches the member of the query.</p>",
+      "refs": {
+        "ListResourcesByConnectorOutput$Results": "<p>The results, in the same shape as the <code>Selector</code> that you specified.</p>"
+      }
+    },
+    "ConnectorSummaries": {
+      "base": null,
+      "refs": {
+        "ListConnectorsOutput$ConnectorSummaries": "<p>The connectors in the account and Region.</p>"
+      }
+    },
+    "ConnectorSummary": {
+      "base": "<p>Summary information about a connector.</p>",
+      "refs": {
+        "ConnectorSummaries$member": null
+      }
     },
     "ContextGraphStatus": {
       "base": "<p>The status of context graph centralization for a centralization rule. This status is independent of the overall <code>RuleHealth</code> for log delivery. Returns <code>Provisioning</code> while the context graph is being set up, <code>Healthy</code> once it is active, or <code>Unhealthy</code> if provisioning failed.</p>",
@@ -199,6 +691,14 @@
       "refs": {}
     },
     "CreateCentralizationRuleForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateConnectorInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateConnectorOutput": {
       "base": null,
       "refs": {}
     },
@@ -276,6 +776,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteConnectorInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteConnectorOutput": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteDatasetIntegrationInput": {
       "base": null,
       "refs": {}
@@ -316,6 +824,12 @@
       "base": "<p>Configuration for centralization destination metrics, including backup settings.</p>",
       "refs": {
         "CentralizationRuleDestination$DestinationMetricsConfiguration": "<p>Metric specific configuration for centralization destination metrics.</p>"
+      }
+    },
+    "DestinationProfilesConfiguration": {
+      "base": "<p>Configuration for centralization destination profiles, including backup settings.</p>",
+      "refs": {
+        "CentralizationRuleDestination$DestinationProfilesConfiguration": "<p>Profile-specific configuration for centralization destination profiles.</p>"
       }
     },
     "DestinationType": {
@@ -419,6 +933,30 @@
       "base": null,
       "refs": {}
     },
+    "GetConnectorInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConnectorOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConnectorTelemetryManifestInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConnectorTelemetryManifestOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConnectorTelemetrySetupInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConnectorTelemetrySetupOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GetDatasetIntegrationInput": {
       "base": null,
       "refs": {}
@@ -468,6 +1006,14 @@
       "refs": {}
     },
     "GetTelemetryRuleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetThirdPartyTelemetryEnrichmentInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetThirdPartyTelemetryEnrichmentOutput": {
       "base": null,
       "refs": {}
     },
@@ -557,6 +1103,20 @@
       "base": null,
       "refs": {}
     },
+    "ListConnectorsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConnectorsMaxResults": {
+      "base": null,
+      "refs": {
+        "ListConnectorsInput$MaxResults": "<p>The maximum number of connectors to return in one call. The default is 100.</p>"
+      }
+    },
+    "ListConnectorsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListDatasetIntegrationsInput": {
       "base": null,
       "refs": {}
@@ -596,6 +1156,20 @@
       }
     },
     "ListResourceTelemetryOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListResourcesByConnectorInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListResourcesByConnectorMaxResults": {
+      "base": null,
+      "refs": {
+        "ListResourcesByConnectorInput$MaxResults": "<p>The maximum number of results to return in one call. For an <code>EventHubs</code> query, a page can contain more results than this value.</p>"
+      }
+    },
+    "ListResourcesByConnectorOutput": {
       "base": null,
       "refs": {}
     },
@@ -663,6 +1237,20 @@
       "base": null,
       "refs": {}
     },
+    "ListThirdPartyTelemetryEnrichmentsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListThirdPartyTelemetryEnrichmentsMaxResults": {
+      "base": null,
+      "refs": {
+        "ListThirdPartyTelemetryEnrichmentsInput$MaxResults": "<p>The maximum number of results to return in a single call. If you omit this parameter, the operation returns up to 100 results.</p>"
+      }
+    },
+    "ListThirdPartyTelemetryEnrichmentsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "LogDeliveryParameters": {
       "base": "<p>The configuration parameters for log delivery, including <code>logType</code> settings. Applies to resource types that support configurable log delivery, such as Amazon Bedrock Knowledge Bases, Amazon Bedrock AgentCore payment managers, and Elastic Load Balancing Application Load Balancers.</p>",
       "refs": {
@@ -722,20 +1310,34 @@
       "refs": {
         "CentralizationRuleSummary$CreatedTimeStamp": "<p>The timestamp when the organization centralization rule was created.</p>",
         "CentralizationRuleSummary$LastUpdateTimeStamp": "<p>The timestamp when the organization centralization rule was last updated.</p>",
+        "Connector$CreatedTimeStamp": "<p>The time when the connector was created, in milliseconds since the Unix epoch.</p>",
+        "ConnectorSummary$CreatedTimeStamp": "<p>The time when the connector was created, in milliseconds since the Unix epoch.</p>",
         "GetCentralizationRuleForOrganizationOutput$CreatedTimeStamp": "<p>The timestamp when the organization centralization rule was created.</p>",
         "GetCentralizationRuleForOrganizationOutput$LastUpdateTimeStamp": "<p>The timestamp when the organization centralization rule was last updated.</p>",
+        "GetConnectorTelemetryManifestOutput$Version": "<p>The current version of the telemetry manifest. Pass this value as <code>ExpectedVersion</code> when you next call <code>PutConnectorTelemetryManifest</code>.</p>",
+        "GetConnectorTelemetryManifestOutput$LastUpdateTimeStamp": "<p>The time when the telemetry manifest was last updated, in milliseconds since the Unix epoch.</p>",
+        "GetConnectorTelemetrySetupOutput$ManifestVersion": "<p>The version of the telemetry manifest that the service generated the setup artifacts from.</p>",
         "GetS3TableIntegrationOutput$CreatedTimeStamp": "<p>The timestamp when the S3 Table integration was created.</p>",
         "GetTelemetryRuleForOrganizationOutput$CreatedTimeStamp": "<p> The timestamp when the organization telemetry rule was created. </p>",
         "GetTelemetryRuleForOrganizationOutput$LastUpdateTimeStamp": "<p> The timestamp when the organization telemetry rule was last updated. </p>",
         "GetTelemetryRuleOutput$CreatedTimeStamp": "<p> The timestamp when the telemetry rule was created. </p>",
         "GetTelemetryRuleOutput$LastUpdateTimeStamp": "<p> The timestamp when the telemetry rule was last updated. </p>",
+        "PutConnectorTelemetryManifestInput$ExpectedVersion": "<p>The version of the telemetry manifest that you expect to replace, as returned by <code>GetConnectorTelemetryManifest</code>. Omit this value when you create the first telemetry manifest. If the value doesn't match the current version, the request fails with a <code>ConflictException</code>.</p>",
+        "PutConnectorTelemetryManifestOutput$Version": "<p>The version of the telemetry manifest after this update.</p>",
         "TelemetryConfiguration$LastUpdateTimeStamp": "<p> The timestamp of the last change to the telemetry configuration for the resource. For example, <code>1728679196318</code>. </p>",
         "TelemetryPipeline$CreatedTimeStamp": "<p>The timestamp when the telemetry pipeline was created.</p>",
         "TelemetryPipeline$LastUpdateTimeStamp": "<p>The timestamp when the telemetry pipeline was last updated.</p>",
+        "TelemetryPipeline$LastRefreshTimeStamp": "<p>The timestamp when the most recent refresh of the telemetry pipeline started. This field is only present for external-cloud pipelines that you have refreshed.</p>",
         "TelemetryPipelineSummary$CreatedTimeStamp": "<p>The timestamp when the telemetry pipeline was created.</p>",
         "TelemetryPipelineSummary$LastUpdateTimeStamp": "<p>The timestamp when the telemetry pipeline was last updated.</p>",
         "TelemetryRuleSummary$CreatedTimeStamp": "<p> The timestamp when the telemetry rule was created. </p>",
         "TelemetryRuleSummary$LastUpdateTimeStamp": "<p> The timestamp when the telemetry rule was last modified. </p>"
+      }
+    },
+    "ManifestAzureResourceId": {
+      "base": null,
+      "refs": {
+        "AzureResourceIdScopeResourceIdsList$member": null
       }
     },
     "MetricsBackupConfiguration": {
@@ -780,7 +1382,9 @@
         "ListTelemetryRulesForOrganizationInput$NextToken": "<p> The token for the next set of results. A previous call generates this token. </p>",
         "ListTelemetryRulesForOrganizationOutput$NextToken": "<p> A token to resume pagination of results. </p>",
         "ListTelemetryRulesInput$NextToken": "<p> The token for the next set of results. A previous call generates this token. </p>",
-        "ListTelemetryRulesOutput$NextToken": "<p> A token to resume pagination of results. </p>"
+        "ListTelemetryRulesOutput$NextToken": "<p> A token to resume pagination of results. </p>",
+        "ListThirdPartyTelemetryEnrichmentsInput$NextToken": "<p>The token for the next set of results. A previous call generates this token. If you omit this parameter, the operation returns the first page of results.</p>",
+        "ListThirdPartyTelemetryEnrichmentsOutput$NextToken": "<p>A token to resume pagination of results.</p>"
       }
     },
     "OrganizationUnitIdentifier": {
@@ -799,6 +1403,18 @@
       "base": "<p> Enumeration of supported output formats for ELB access logs: PLAIN for space-delimited format, JSON for structured JSON format. </p>",
       "refs": {
         "ELBLoadBalancerLoggingParameters$OutputFormat": "<p> The format for ELB access log entries (plain text or JSON format). </p>"
+      }
+    },
+    "Permission": {
+      "base": null,
+      "refs": {
+        "PermissionList$member": null
+      }
+    },
+    "PermissionList": {
+      "base": null,
+      "refs": {
+        "GetConnectorTelemetrySetupOutput$RequiredPermissionsToApply": "<p>The permissions or roles in your cloud provider that you need to apply the artifacts, for example Azure Contributor and User Access Administrator.</p>"
       }
     },
     "PipelineOutput": {
@@ -824,6 +1440,26 @@
       "refs": {
         "ConfigurationSummary$Processors": "<p>The list of processors configured in the pipeline for data transformation.</p>"
       }
+    },
+    "ProfilesBackupConfiguration": {
+      "base": "<p>Configuration for backing up centralized profiles data to a secondary Region.</p>",
+      "refs": {
+        "DestinationProfilesConfiguration$BackupConfiguration": "<p>Configuration that defines the backup Region for the profiles backup destination.</p>"
+      }
+    },
+    "ProfilesFilterString": {
+      "base": null,
+      "refs": {
+        "SourceProfilesConfiguration$ProfilesSelectionCriteria": "<p>The filter expression that selects which source profiles to centralize.</p>"
+      }
+    },
+    "PutConnectorTelemetryManifestInput": {
+      "base": null,
+      "refs": {}
+    },
+    "PutConnectorTelemetryManifestOutput": {
+      "base": null,
+      "refs": {}
     },
     "Record": {
       "base": "<p>Represents a test record structure used for pipeline testing operations to validate data processing.</p>",
@@ -863,6 +1499,7 @@
         "GetTelemetryRuleOutput$HomeRegion": "<p> The Amazon Web Services Region where the telemetry rule was originally created. For replicated rules in spoke regions, this indicates the region that manages the rule. For rules created without multi-region scope, this field is not present. </p>",
         "LogsBackupConfiguration$Region": "<p>Logs specific backup destination region within the primary destination account to which log data should be centralized.</p>",
         "MetricsBackupConfiguration$Region": "<p>Metrics specific backup destination region within the primary destination account to which metrics data should be centralized.</p>",
+        "ProfilesBackupConfiguration$Region": "<p>The backup Region for profiles, within the primary destination account, to which the service centralizes profiles data.</p>",
         "RegionStatus$Region": "<p> The Amazon Web Services Region code (for example, <code>eu-west-1</code> or <code>us-west-2</code>) that this status applies to. </p>",
         "Regions$member": null
       }
@@ -895,6 +1532,8 @@
       "base": null,
       "refs": {
         "CentralizationRuleSummary$RuleArn": "<p>The Amazon Resource Name (ARN) of the organization centralization rule.</p>",
+        "Connector$Arn": "<p>The Amazon Resource Name (ARN) of the connector.</p>",
+        "ConnectorSummary$Arn": "<p>The Amazon Resource Name (ARN) of the connector.</p>",
         "CreateCentralizationRuleForOrganizationOutput$RuleArn": "<p>The Amazon Resource Name (ARN) of the created organization centralization rule.</p>",
         "CreateDatasetIntegrationInput$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that grants Amazon CloudWatch permission to access the resources needed for the dataset integration.</p>",
         "CreateDatasetIntegrationOutput$Arn": "<p>The Amazon Resource Name (ARN) of the created dataset integration.</p>",
@@ -977,6 +1616,13 @@
         "TelemetryDestinationConfiguration$RetentionInDays": "<p> The number of days to retain the telemetry data in the destination. </p>"
       }
     },
+    "RoleArn": {
+      "base": null,
+      "refs": {
+        "Connector$RoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) role that CloudWatch assumes to obtain credentials for the third-party cloud provider.</p>",
+        "CreateConnectorInput$RoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) role that CloudWatch assumes to get credentials for the third-party cloud provider. The role must trust the Amazon CloudWatch Observability Admin service principal, <code>observabilityadmin.amazonaws.com</code>. The role must also allow <code>sts:GetWebIdentityToken</code> for the provider's token exchange audience.</p>"
+      }
+    },
     "RuleHealth": {
       "base": null,
       "refs": {
@@ -1017,9 +1663,53 @@
         "Encryption$SseAlgorithm": "<p>The server-side encryption algorithm used for encrypting data in the S3 Table integration.</p>"
       }
     },
+    "ServiceLinkedRecorderArn": {
+      "base": null,
+      "refs": {
+        "AzureTelemetrySourceConfigurationOutput$ServiceLinkedRecorderArn": "<p>The Amazon Resource Name (ARN) of the service-linked configuration recorder that CloudWatch created in your account for the enrichment.</p>"
+      }
+    },
     "ServiceQuotaExceededException": {
       "base": "<p> The requested operation would exceed the allowed quota for the specified resource type. </p>",
       "refs": {}
+    },
+    "SetupArtifact": {
+      "base": "<p>A setup artifact, which is one file in the requested format.</p>",
+      "refs": {
+        "SetupArtifactList$member": null
+      }
+    },
+    "SetupArtifactContent": {
+      "base": null,
+      "refs": {
+        "SetupArtifact$Content": "<p>The content of the artifact.</p>"
+      }
+    },
+    "SetupArtifactContentType": {
+      "base": null,
+      "refs": {
+        "SetupArtifact$ContentType": "<p>The content type of the artifact, for example <code>text/plain</code>.</p>"
+      }
+    },
+    "SetupArtifactFileName": {
+      "base": null,
+      "refs": {
+        "SetupArtifact$FileName": "<p>The suggested file name, for example <code>main.bicep</code>.</p>"
+      }
+    },
+    "SetupArtifactList": {
+      "base": null,
+      "refs": {
+        "GetConnectorTelemetrySetupOutput$Artifacts": "<p>The setup artifacts to apply in your cloud provider.</p>"
+      }
+    },
+    "SetupFormat": {
+      "base": null,
+      "refs": {
+        "GetConnectorTelemetrySetupInput$Format": "<p>The format of the setup artifacts. If you omit this value, the service uses the default format for the connector's provider (<code>BICEP</code> for an Azure connector). If the provider doesn't support the format, the service returns a <code>ValidationException</code>.</p>",
+        "GetConnectorTelemetrySetupOutput$Format": "<p>The format of the setup artifacts.</p>",
+        "SetupArtifact$Format": "<p>The format of the artifact.</p>"
+      }
     },
     "SignalType": {
       "base": null,
@@ -1075,6 +1765,30 @@
         "CentralizationRuleSource$SourceMetricsConfiguration": "<p>Metric specific configuration for centralization source metrics.</p>"
       }
     },
+    "SourceProfilesConfiguration": {
+      "base": "<p>Configuration for selecting source profiles for centralization.</p>",
+      "refs": {
+        "CentralizationRuleSource$SourceProfilesConfiguration": "<p>Profile-specific configuration for centralization source profiles.</p>"
+      }
+    },
+    "SourceProgress": {
+      "base": "<p>A summary of source activation for an external-cloud telemetry pipeline, with the number of active sources and the total number of discovered sources.</p>",
+      "refs": {
+        "TelemetryPipeline$SourceProgress": "<p>The progress of source activation for the telemetry pipeline. This field is only present for external-cloud pipelines.</p>"
+      }
+    },
+    "SourceProgressActiveInteger": {
+      "base": null,
+      "refs": {
+        "SourceProgress$Active": "<p>The number of discovered sources that are active and sending telemetry to the pipeline.</p>"
+      }
+    },
+    "SourceProgressTotalInteger": {
+      "base": null,
+      "refs": {
+        "SourceProgress$Total": "<p>The total number of sources discovered for the pipeline.</p>"
+      }
+    },
     "Sources": {
       "base": null,
       "refs": {
@@ -1093,6 +1807,22 @@
       "base": null,
       "refs": {}
     },
+    "StartTelemetryPipelineRefreshInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartTelemetryPipelineRefreshOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartThirdPartyTelemetryEnrichmentInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartThirdPartyTelemetryEnrichmentOutput": {
+      "base": null,
+      "refs": {}
+    },
     "Status": {
       "base": null,
       "refs": {
@@ -1100,7 +1830,23 @@
         "GetTelemetryEvaluationStatusOutput$Status": "<p> The onboarding status of the telemetry config feature. </p>"
       }
     },
+    "StatusReason": {
+      "base": null,
+      "refs": {
+        "GetThirdPartyTelemetryEnrichmentOutput$StatusReason": "<p>The reason for the current status. This field is present when the status is <code>Impaired</code>.</p>",
+        "StartThirdPartyTelemetryEnrichmentOutput$StatusReason": "<p>The reason for the current status. This field is present when the status is <code>Impaired</code>.</p>",
+        "StopThirdPartyTelemetryEnrichmentOutput$StatusReason": "<p>The reason for the current status. This field is present when the status is <code>Impaired</code>.</p>"
+      }
+    },
     "StopTelemetryEnrichmentOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "StopThirdPartyTelemetryEnrichmentInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StopThirdPartyTelemetryEnrichmentOutput": {
       "base": null,
       "refs": {}
     },
@@ -1111,6 +1857,12 @@
         "AccessDeniedException$amznErrorType": "<p> The name of the exception. </p>",
         "AdvancedEventSelector$Name": "<p>An optional, descriptive name for an advanced event selector, such as \"Log data events for only two S3 buckets\".</p>",
         "AdvancedFieldSelector$Field": "<p> The name of the field to use for selection. </p>",
+        "AzureEventHubSummary$EventHubName": "<p>The name of the Event Hub.</p>",
+        "AzureEventHubSummary$FullyQualifiedNamespace": "<p>The fully qualified host name of the Event Hubs namespace, for example <code>&lt;namespace&gt;.servicebus.windows.net</code>. The suffix differs in sovereign clouds.</p>",
+        "AzureManagementGroupSummary$Name": "<p>The name of the management group.</p>",
+        "AzureManagementGroupSummary$DisplayName": "<p>The display name of the management group.</p>",
+        "AzureSubscriptionSummary$DisplayName": "<p>The display name of the subscription.</p>",
+        "AzureSubscriptionSummary$State": "<p>The state of the subscription in Azure, for example <code>Enabled</code>.</p>",
         "CentralizationRuleSummary$CreatorAccountId": "<p>The Amazon Web Services Account that created the organization centralization rule.</p>",
         "CentralizationRuleSummary$DestinationAccountId": "<p>The primary destination account of the organization centralization rule.</p>",
         "ConflictException$Message": null,
@@ -1178,6 +1930,31 @@
         "TagPropagationConfiguration$TagConflictResolutionStrategy": "<p>The strategy for resolving conflicts when a tag key exists on both the source and destination log groups. If not specified, defaults to <code>UPDATE_SYNC</code>.</p> <ul> <li> <p> <code>ADD_ONLY</code> – Only adds new tags from the source without modifying existing destination tags.</p> </li> <li> <p> <code>UPDATE_SYNC</code> – Adds new tags and updates existing tags from the source. Does not remove destination tags that are absent from the source.</p> </li> <li> <p> <code>IN_SYNC</code> – Keeps destination tags fully synchronized with source tags, including removing destination tags that do not exist on the source.</p> </li> </ul>"
       }
     },
+    "TagFilter": {
+      "base": "<p>A tag filter. A resource matches only if it has the tag. Filters for different tag keys must all match; for one tag key, any of the values can match.</p>",
+      "refs": {
+        "AzureResourceIdsQueryTagFiltersList$member": null,
+        "AzureScopeTagFiltersList$member": null
+      }
+    },
+    "TagFilterKey": {
+      "base": null,
+      "refs": {
+        "TagFilter$Key": "<p>The tag key. Up to 512 characters. The characters &lt; &gt; % &amp; \\ ? / $ { } ' \" ` and control characters aren't allowed.</p>"
+      }
+    },
+    "TagFilterValue": {
+      "base": null,
+      "refs": {
+        "TagFilterValuesList$member": null
+      }
+    },
+    "TagFilterValuesList": {
+      "base": null,
+      "refs": {
+        "TagFilter$Values": "<p>The tag values to match. A resource matches if it has any of these values for the tag key.</p>"
+      }
+    },
     "TagKey": {
       "base": null,
       "refs": {
@@ -1195,6 +1972,7 @@
       "base": null,
       "refs": {
         "CreateCentralizationRuleForOrganizationInput$Tags": "<p>The key-value pairs to associate with the organization telemetry rule resource for categorization and management purposes.</p>",
+        "CreateConnectorInput$Tags": "<p>The tags that you want to apply to the connector.</p>",
         "CreateDatasetIntegrationInput$Tags": "<p>The key-value pairs to associate with the dataset integration resource for categorization and management purposes.</p>",
         "CreateS3TableIntegrationInput$Tags": "<p>The key-value pairs to associate with the S3 Table integration resource for categorization and management purposes.</p>",
         "CreateTelemetryPipelineInput$Tags": "<p>The key-value pairs to associate with the telemetry pipeline resource for categorization and management purposes.</p>",
@@ -1202,13 +1980,16 @@
         "CreateTelemetryRuleInput$Tags": "<p> The key-value pairs to associate with the telemetry rule resource for categorization and management purposes. </p>",
         "ListResourceTelemetryForOrganizationInput$ResourceTags": "<p> A key-value pair to filter resources in the organization based on tags associated with the resource. Fore more information about tags, see <a href=\"https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/what-are-tags.html\">What are tags?</a> </p>",
         "ListResourceTelemetryInput$ResourceTags": "<p> A key-value pair to filter resources based on tags associated with the resource. For more information about tags, see <a href=\"https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/what-are-tags.html\">What are tags?</a> </p>",
+        "StartThirdPartyTelemetryEnrichmentInput$Tags": "<p>The tags to associate with the enrichment resource.</p>",
         "TagResourceInput$Tags": "<p> The key-value pairs to add or update for the telemetry rule resource. </p>"
       }
     },
     "TagMapOutput": {
       "base": null,
       "refs": {
+        "GetThirdPartyTelemetryEnrichmentOutput$Tags": "<p>The tags associated with the enrichment.</p>",
         "ListTagsForResourceOutput$Tags": "<p> The list of tags associated with the telemetry rule resource. </p>",
+        "StartThirdPartyTelemetryEnrichmentOutput$Tags": "<p>The tags associated with the enrichment.</p>",
         "TelemetryConfiguration$ResourceTags": "<p> Tags associated with the resource, for example <code>{ Name: \"ExampleInstance\", Environment: \"Development\" }</code>. </p>",
         "TelemetryPipeline$Tags": "<p>The key-value pairs associated with the telemetry pipeline resource.</p>",
         "TelemetryPipelineSummary$Tags": "<p>The key-value pairs associated with the telemetry pipeline resource.</p>"
@@ -1255,7 +2036,7 @@
       "refs": {
         "ListResourceTelemetryForOrganizationInput$TelemetryConfigurationState": "<p> A key-value pair to filter resources in the organization based on the telemetry type and the state of the telemetry configuration. The key is the telemetry type and the value is the state. </p>",
         "ListResourceTelemetryInput$TelemetryConfigurationState": "<p> A key-value pair to filter resources based on the telemetry type and the state of the telemetry configuration. The key is the telemetry type and the value is the state. </p>",
-        "TelemetryConfiguration$TelemetryConfigurationState": "<p> The configuration state for the resource, for example <code>{ Logs: NotApplicable; Metrics: Enabled; Traces: NotApplicable; }</code>. </p>"
+        "TelemetryConfiguration$TelemetryConfigurationState": "<p> The configuration state for the resource, for example <code>{ Logs: NotApplicable; Metrics: Enabled; Traces: NotApplicable; Insights: NotApplicable; }</code>. </p>"
       }
     },
     "TelemetryConfigurations": {
@@ -1277,6 +2058,31 @@
         "GetTelemetryEnrichmentStatusOutput$Status": "<p> The current status of the resource tags for telemetry feature (<code>Running</code>, <code>Stopped</code>, or <code>Impaired</code>). </p>",
         "StartTelemetryEnrichmentOutput$Status": "<p> The status of the resource tags for telemetry feature after the start operation (<code>Running</code>, <code>Stopped</code>, or <code>Impaired</code>). </p>",
         "StopTelemetryEnrichmentOutput$Status": "<p> The status of the resource tags for telemetry feature after the stop operation (<code>Running</code>, <code>Stopped</code>, or <code>Impaired</code>). </p>"
+      }
+    },
+    "TelemetryManifest": {
+      "base": "<p>Declares which resources in a cloud provider to collect telemetry from and which telemetry types to collect.</p>",
+      "refs": {
+        "GetConnectorTelemetryManifestOutput$Manifest": "<p>The telemetry manifest.</p>",
+        "PutConnectorTelemetryManifestInput$Manifest": "<p>The telemetry manifest.</p>"
+      }
+    },
+    "TelemetryManifestInfrastructure": {
+      "base": "<p>The choices for the infrastructure that the setup creates. Specify one provider, which must match the provider in <code>Source</code>.</p>",
+      "refs": {
+        "TelemetryManifest$Infrastructure": "<p>The choices for the infrastructure that the setup creates in your cloud provider, such as the subscription that contains the Event Hubs and their size. If you omit this value, the setup uses default settings. If an <code>AzureScopeItem</code> collects <code>ResourceLogs</code>, you must specify at least the Azure <code>SubscriptionId</code>.</p>"
+      }
+    },
+    "TelemetryManifestSource": {
+      "base": "<p>The resources to collect telemetry from, for one cloud provider. Specify one provider.</p>",
+      "refs": {
+        "TelemetryManifest$Source": "<p>The resources to collect telemetry from and the telemetry types to collect.</p>"
+      }
+    },
+    "TelemetryManifestSourceAzureList": {
+      "base": null,
+      "refs": {
+        "TelemetryManifestSource$Azure": "<p>The Azure scope items. Each <code>AzureScopeItem</code> specifies a set of Azure resources and the telemetry types to collect from them. You can specify up to 100 scope items.</p>"
       }
     },
     "TelemetryPipeline": {
@@ -1306,6 +2112,7 @@
       "refs": {
         "DeleteTelemetryPipelineInput$PipelineIdentifier": "<p>The ARN of the telemetry pipeline to delete.</p>",
         "GetTelemetryPipelineInput$PipelineIdentifier": "<p>The identifier (name or ARN) of the telemetry pipeline to retrieve.</p>",
+        "StartTelemetryPipelineRefreshInput$PipelineIdentifier": "<p>The Amazon Resource Name (ARN) of the telemetry pipeline to refresh.</p>",
         "UpdateTelemetryPipelineInput$PipelineIdentifier": "<p>The ARN of the telemetry pipeline to update.</p>"
       }
     },
@@ -1366,6 +2173,19 @@
         "TelemetryRuleSummaries$member": null
       }
     },
+    "TelemetrySourceConfigurationInput": {
+      "base": "<p>The configuration of the third-party telemetry source that a new enrichment collects resource metadata from. Specify exactly one member.</p>",
+      "refs": {
+        "StartThirdPartyTelemetryEnrichmentInput$TelemetrySourceConfiguration": "<p>The third-party telemetry source to collect resource metadata from. Specify exactly one telemetry source.</p>"
+      }
+    },
+    "TelemetrySourceConfigurationOutput": {
+      "base": "<p>The third-party source configuration of an enrichment.</p>",
+      "refs": {
+        "GetThirdPartyTelemetryEnrichmentOutput$TelemetrySourceConfiguration": "<p>The source configuration of the enrichment.</p>",
+        "StartThirdPartyTelemetryEnrichmentOutput$TelemetrySourceConfiguration": "<p>The source configuration of the enrichment.</p>"
+      }
+    },
     "TelemetrySourceType": {
       "base": "<p> Specifies the type of telemetry source for a resource, such as EKS cluster logs. </p>",
       "refs": {
@@ -1390,8 +2210,8 @@
       "base": null,
       "refs": {
         "TelemetryConfigurationState$key": null,
-        "TelemetryRule$TelemetryType": "<p> The type of telemetry to collect (Logs, Metrics, or Traces). </p>",
-        "TelemetryRuleSummary$TelemetryType": "<p> The type of telemetry (Logs, Metrics, or Traces) the rule configures. </p>"
+        "TelemetryRule$TelemetryType": "<p> The type of telemetry to collect (Logs, Metrics, Traces, or Insights). </p>",
+        "TelemetryRuleSummary$TelemetryType": "<p> The type of telemetry (Logs, Metrics, Traces, or Insights) the rule configures. </p>"
       }
     },
     "TestTelemetryPipelineInput": {
@@ -1401,6 +2221,60 @@
     "TestTelemetryPipelineOutput": {
       "base": null,
       "refs": {}
+    },
+    "ThirdPartyTelemetryEnrichmentArn": {
+      "base": null,
+      "refs": {
+        "GetThirdPartyTelemetryEnrichmentOutput$Arn": "<p>The Amazon Resource Name (ARN) of the enrichment.</p>",
+        "StartThirdPartyTelemetryEnrichmentOutput$Arn": "<p>The Amazon Resource Name (ARN) of the enrichment.</p>"
+      }
+    },
+    "ThirdPartyTelemetryEnrichmentIdentifier": {
+      "base": null,
+      "refs": {
+        "GetThirdPartyTelemetryEnrichmentInput$TelemetryEnrichmentIdentifier": "<p>The identifier of the enrichment to return. You can specify one of the following:</p> <ul> <li> <p>The name of the enrichment.</p> </li> <li> <p>The Amazon Resource Name (ARN) of the enrichment.</p> </li> </ul>",
+        "StopThirdPartyTelemetryEnrichmentInput$TelemetryEnrichmentIdentifier": "<p>The identifier of the enrichment to stop. You can specify one of the following:</p> <ul> <li> <p>The name of the enrichment.</p> </li> <li> <p>The Amazon Resource Name (ARN) of the enrichment.</p> </li> </ul>"
+      }
+    },
+    "ThirdPartyTelemetryEnrichmentName": {
+      "base": null,
+      "refs": {
+        "GetThirdPartyTelemetryEnrichmentOutput$Name": "<p>The name of the enrichment.</p>",
+        "StartThirdPartyTelemetryEnrichmentInput$Name": "<p>A name for the enrichment. The name must be unique in your account and Region. You can use the name instead of the ARN to identify the enrichment in other operations.</p>",
+        "StartThirdPartyTelemetryEnrichmentOutput$Name": "<p>The name of the enrichment.</p>",
+        "StopThirdPartyTelemetryEnrichmentOutput$Name": "<p>The name of the enrichment.</p>",
+        "ThirdPartyTelemetryEnrichmentSummary$Name": "<p>The name of the enrichment.</p>"
+      }
+    },
+    "ThirdPartyTelemetryEnrichmentStatus": {
+      "base": "<p>The status of a third-party telemetry enrichment.</p>",
+      "refs": {
+        "GetThirdPartyTelemetryEnrichmentOutput$Status": "<p>The current status of the enrichment. Valid values:</p> <ul> <li> <p> <code>Initializing</code> - CloudWatch is setting up the enrichment. Some telemetry can be enriched before setup completes.</p> </li> <li> <p> <code>Running</code> - The enrichment is active.</p> </li> <li> <p> <code>Stopped</code> - The enrichment is stopped.</p> </li> <li> <p> <code>Impaired</code> - The enrichment has a problem. <code>StatusReason</code> describes the problem.</p> </li> </ul>",
+        "ListThirdPartyTelemetryEnrichmentsInput$Status": "<p>Returns only the enrichments that have this status. Valid values:</p> <ul> <li> <p> <code>Initializing</code> - CloudWatch is setting up the enrichment. Some telemetry can be enriched before setup completes.</p> </li> <li> <p> <code>Running</code> - The enrichment is active.</p> </li> <li> <p> <code>Stopped</code> - The enrichment is stopped.</p> </li> <li> <p> <code>Impaired</code> - The enrichment has a problem. <code>StatusReason</code> describes the problem.</p> </li> </ul>",
+        "StartThirdPartyTelemetryEnrichmentOutput$Status": "<p>The status of the enrichment after the start operation. Valid values:</p> <ul> <li> <p> <code>Initializing</code> - CloudWatch is setting up the enrichment. Some telemetry can be enriched before setup completes.</p> </li> <li> <p> <code>Running</code> - The enrichment is active.</p> </li> <li> <p> <code>Stopped</code> - The enrichment is stopped.</p> </li> <li> <p> <code>Impaired</code> - The enrichment has a problem. <code>StatusReason</code> describes the problem.</p> </li> </ul>",
+        "StopThirdPartyTelemetryEnrichmentOutput$Status": "<p>The status of the enrichment after the stop operation. Valid values:</p> <ul> <li> <p> <code>Initializing</code> - CloudWatch is setting up the enrichment. Some telemetry can be enriched before setup completes.</p> </li> <li> <p> <code>Running</code> - The enrichment is active.</p> </li> <li> <p> <code>Stopped</code> - The enrichment is stopped.</p> </li> <li> <p> <code>Impaired</code> - The enrichment has a problem. <code>StatusReason</code> describes the problem.</p> </li> </ul>",
+        "ThirdPartyTelemetryEnrichmentSummary$Status": "<p>The current status of the enrichment. Valid values:</p> <ul> <li> <p> <code>Initializing</code> - CloudWatch is setting up the enrichment. Some telemetry can be enriched before setup completes.</p> </li> <li> <p> <code>Running</code> - The enrichment is active.</p> </li> <li> <p> <code>Stopped</code> - The enrichment is stopped.</p> </li> <li> <p> <code>Impaired</code> - The enrichment has a problem. <code>StatusReason</code> describes the problem.</p> </li> </ul>"
+      }
+    },
+    "ThirdPartyTelemetryEnrichmentSummaries": {
+      "base": null,
+      "refs": {
+        "ListThirdPartyTelemetryEnrichmentsOutput$TelemetryEnrichments": "<p>The enrichments in your account and Region.</p>"
+      }
+    },
+    "ThirdPartyTelemetryEnrichmentSummary": {
+      "base": "<p>Summary information about a third-party telemetry enrichment, as returned by <code>ListThirdPartyTelemetryEnrichments</code>.</p>",
+      "refs": {
+        "ThirdPartyTelemetryEnrichmentSummaries$member": null
+      }
+    },
+    "ThirdPartyTelemetrySource": {
+      "base": "<p>A third-party telemetry source that can provide resource metadata.</p>",
+      "refs": {
+        "ListThirdPartyTelemetryEnrichmentsInput$TelemetrySource": "<p>Returns only the enrichments for this third-party telemetry source.</p>",
+        "StopThirdPartyTelemetryEnrichmentOutput$TelemetrySource": "<p>The third-party telemetry source of the enrichment.</p>",
+        "ThirdPartyTelemetryEnrichmentSummary$TelemetrySource": "<p>The third-party telemetry source of the enrichment.</p>"
+      }
     },
     "Timestamp": {
       "base": null,

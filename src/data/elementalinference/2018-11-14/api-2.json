@@ -71,6 +71,64 @@
       ],
       "idempotent":true
     },
+    "CreateFunction":{
+      "name":"CreateFunction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/function",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateFunctionRequest"},
+      "output":{"shape":"CreateFunctionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
+    "CreateQuestionSet":{
+      "name":"CreateQuestionSet",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/question-set",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateQuestionSetRequest"},
+      "output":{"shape":"CreateQuestionSetResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
+    "CreateQuestionSetVersion":{
+      "name":"CreateQuestionSetVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/question-set/{id}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateQuestionSetVersionRequest"},
+      "output":{"shape":"CreateQuestionSetVersionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
     "CreateScheduleAction":{
       "name":"CreateScheduleAction",
       "http":{
@@ -143,6 +201,63 @@
         {"shape":"InternalServerErrorException"},
         {"shape":"AccessDeniedException"},
         {"shape":"TooManyRequestException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteFunction":{
+      "name":"DeleteFunction",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/function/{id}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteFunctionRequest"},
+      "output":{"shape":"DeleteFunctionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteQuestionSet":{
+      "name":"DeleteQuestionSet",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/question-set/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteQuestionSetRequest"},
+      "output":{"shape":"DeleteQuestionSetResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteQuestionSetVersion":{
+      "name":"DeleteQuestionSetVersion",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/question-set/{id}/versions/{questionSetVersion}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteQuestionSetVersionRequest"},
+      "output":{"shape":"DeleteQuestionSetVersionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -275,6 +390,42 @@
       ],
       "readonly":true
     },
+    "GetFunction":{
+      "name":"GetFunction",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/function/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetFunctionRequest"},
+      "output":{"shape":"GetFunctionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"}
+      ],
+      "readonly":true
+    },
+    "GetQuestionSet":{
+      "name":"GetQuestionSet",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/question-set/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetQuestionSetRequest"},
+      "output":{"shape":"GetQuestionSetResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"}
+      ],
+      "readonly":true
+    },
     "ListDictionaries":{
       "name":"ListDictionaries",
       "http":{
@@ -304,6 +455,58 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"}
+      ],
+      "readonly":true
+    },
+    "ListFunctions":{
+      "name":"ListFunctions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/functions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListFunctionsRequest"},
+      "output":{"shape":"ListFunctionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"}
+      ],
+      "readonly":true
+    },
+    "ListQuestionSetVersions":{
+      "name":"ListQuestionSetVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/question-set/{id}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListQuestionSetVersionsRequest"},
+      "output":{"shape":"ListQuestionSetVersionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"}
+      ],
+      "readonly":true
+    },
+    "ListQuestionSets":{
+      "name":"ListQuestionSets",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/question-sets",
+        "responseCode":200
+      },
+      "input":{"shape":"ListQuestionSetsRequest"},
+      "output":{"shape":"ListQuestionSetsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
         {"shape":"InternalServerErrorException"},
         {"shape":"AccessDeniedException"},
         {"shape":"TooManyRequestException"}
@@ -457,6 +660,44 @@
         {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
+    },
+    "UpdateFunction":{
+      "name":"UpdateFunction",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/v1/function/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateFunctionRequest"},
+      "output":{"shape":"UpdateFunctionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateQuestionSet":{
+      "name":"UpdateQuestionSet",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/v1/question-set/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateQuestionSetRequest"},
+      "output":{"shape":"UpdateQuestionSetResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
     }
   },
   "shapes":{
@@ -521,15 +762,72 @@
       "min":1,
       "pattern":"[\\w \\-\\.',@:;/]*"
     },
+    "BedrockApi":{
+      "type":"string",
+      "enum":["INVOKE_MODEL"]
+    },
+    "BedrockFunctionTarget":{
+      "type":"structure",
+      "required":[
+        "api",
+        "model"
+      ],
+      "members":{
+        "api":{"shape":"BedrockApi"},
+        "model":{"shape":"BedrockFunctionTargetModelString"}
+      }
+    },
+    "BedrockFunctionTargetModelString":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"([a-z0-9-]{1,63}[.][a-z0-9-.:]{1,76}|arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:(custom-model|provisioned-model)/.+)"
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
+    },
+    "ChooseOneOptionList":{
+      "type":"list",
+      "member":{"shape":"QuestionOption"},
+      "max":26,
+      "min":2
+    },
+    "ChooseOneQuestion":{
+      "type":"structure",
+      "required":[
+        "name",
+        "question",
+        "options"
+      ],
+      "members":{
+        "name":{"shape":"QuestionName"},
+        "question":{"shape":"QuestionText"},
+        "options":{"shape":"ChooseOneOptionList"}
+      }
+    },
+    "ChooseOneQuestionList":{
+      "type":"list",
+      "member":{"shape":"ChooseOneQuestion"},
+      "max":10,
+      "min":0
+    },
+    "ClipTrigger":{
+      "type":"structure",
+      "members":{}
     },
     "ClippingConfig":{
       "type":"structure",
       "members":{
         "callbackMetadata":{"shape":"ResourceDescription"},
         "dataSourceConfiguration":{"shape":"DataSourceConfiguration"}
+      }
+    },
+    "ClippingSettings":{
+      "type":"structure",
+      "required":["outputName"],
+      "members":{
+        "outputName":{"shape":"ResourceName"}
       }
     },
     "Competitor":{
@@ -558,11 +856,34 @@
       "exception":true,
       "retryable":{"throttling":false}
     },
+    "ContextType":{
+      "type":"string",
+      "enum":[
+        "FRAMES",
+        "SUBTITLES",
+        "CONTEXTUAL_METADATA",
+        "CLIP_METADATA"
+      ]
+    },
+    "ContextTypeList":{
+      "type":"list",
+      "member":{"shape":"ContextType"},
+      "max":10,
+      "min":0
+    },
     "ContextualMetadataConfig":{
       "type":"structure",
       "members":{
         "summaryGeneration":{"shape":"SummaryGenerationMode"},
-        "extendedAnalysis":{"shape":"ExtendedAnalysisMode"}
+        "extendedAnalysis":{"shape":"ExtendedAnalysisMode"},
+        "customQuestions":{"shape":"CustomQuestionsConfig"}
+      }
+    },
+    "ContextualMetadataSettings":{
+      "type":"structure",
+      "required":["outputName"],
+      "members":{
+        "outputName":{"shape":"ResourceName"}
       }
     },
     "CreateDictionaryRequest":{
@@ -632,6 +953,60 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "CreateFunctionRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "target",
+        "requestExpression"
+      ],
+      "members":{
+        "name":{"shape":"ResourceName"},
+        "target":{"shape":"FunctionTarget"},
+        "requestExpression":{"shape":"CreateFunctionRequestRequestExpressionString"},
+        "responseExpression":{"shape":"JsonataExpression"},
+        "description":{"shape":"FunctionDescription"},
+        "eventBridgeDelivery":{"shape":"EventBridgeDeliveryMode"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateFunctionRequestRequestExpressionString":{
+      "type":"string",
+      "max":5120,
+      "min":1,
+      "sensitive":true
+    },
+    "CreateFunctionResponse":{
+      "type":"structure",
+      "required":[
+        "name",
+        "target",
+        "requestExpression",
+        "arn",
+        "id",
+        "status"
+      ],
+      "members":{
+        "name":{"shape":"ResourceName"},
+        "target":{"shape":"FunctionTarget"},
+        "requestExpression":{"shape":"CreateFunctionResponseRequestExpressionString"},
+        "responseExpression":{"shape":"JsonataExpression"},
+        "description":{"shape":"FunctionDescription"},
+        "eventBridgeDelivery":{"shape":"EventBridgeDeliveryMode"},
+        "arn":{"shape":"FunctionArn"},
+        "id":{"shape":"FunctionId"},
+        "status":{"shape":"FunctionStatus"},
+        "references":{"shape":"FeedReferences"},
+        "contextTypes":{"shape":"ContextTypeList"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateFunctionResponseRequestExpressionString":{
+      "type":"string",
+      "max":5120,
+      "min":1,
+      "sensitive":true
+    },
     "CreateOutput":{
       "type":"structure",
       "required":[
@@ -649,6 +1024,78 @@
     "CreateOutputList":{
       "type":"list",
       "member":{"shape":"CreateOutput"}
+    },
+    "CreateQuestionSetRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "yesNo":{"shape":"YesNoQuestionList"},
+        "yesNoPerOption":{"shape":"YesNoPerOptionQuestionList"},
+        "chooseOne":{"shape":"ChooseOneQuestionList"},
+        "name":{"shape":"ResourceName"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateQuestionSetResponse":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "id",
+        "name",
+        "version",
+        "sha256"
+      ],
+      "members":{
+        "yesNo":{"shape":"YesNoQuestionList"},
+        "yesNoPerOption":{"shape":"YesNoPerOptionQuestionList"},
+        "chooseOne":{"shape":"ChooseOneQuestionList"},
+        "arn":{"shape":"QuestionSetArn"},
+        "id":{"shape":"QuestionSetId"},
+        "name":{"shape":"ResourceName"},
+        "version":{"shape":"QuestionSetVersion"},
+        "description":{"shape":"QuestionSetVersionDescription"},
+        "latestVersion":{"shape":"QuestionSetVersion"},
+        "sha256":{"shape":"QuestionSetSha256"},
+        "references":{"shape":"FeedReferences"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateQuestionSetVersionRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"QuestionSetId",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "sha256":{"shape":"QuestionSetSha256"},
+        "description":{"shape":"QuestionSetVersionDescription"}
+      }
+    },
+    "CreateQuestionSetVersionResponse":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "id",
+        "name",
+        "version",
+        "sha256"
+      ],
+      "members":{
+        "yesNo":{"shape":"YesNoQuestionList"},
+        "yesNoPerOption":{"shape":"YesNoPerOptionQuestionList"},
+        "chooseOne":{"shape":"ChooseOneQuestionList"},
+        "arn":{"shape":"QuestionSetArn"},
+        "id":{"shape":"QuestionSetId"},
+        "name":{"shape":"ResourceName"},
+        "version":{"shape":"QuestionSetVersion"},
+        "description":{"shape":"QuestionSetVersionDescription"},
+        "latestVersion":{"shape":"QuestionSetVersion"},
+        "sha256":{"shape":"QuestionSetSha256"},
+        "references":{"shape":"FeedReferences"},
+        "tags":{"shape":"TagMap"}
+      }
     },
     "CreateScheduleActionRequest":{
       "type":"structure",
@@ -689,6 +1136,13 @@
       "type":"structure",
       "members":{
         "templateGroups":{"shape":"TemplateGroupList"}
+      }
+    },
+    "CustomQuestionsConfig":{
+      "type":"structure",
+      "members":{
+        "shot":{"shape":"QuestionSetReference"},
+        "scene":{"shape":"QuestionSetReference"}
       }
     },
     "DataSourceConfiguration":{
@@ -763,6 +1217,75 @@
         "id":{"shape":"FeedId"},
         "status":{"shape":"FeedStatus"}
       }
+    },
+    "DeleteFunctionRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"FunctionId",
+          "location":"uri",
+          "locationName":"id"
+        }
+      }
+    },
+    "DeleteFunctionResponse":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "id",
+        "status"
+      ],
+      "members":{
+        "arn":{"shape":"FunctionArn"},
+        "id":{"shape":"FunctionId"},
+        "status":{"shape":"FunctionStatus"}
+      }
+    },
+    "DeleteQuestionSetRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"QuestionSetId",
+          "location":"uri",
+          "locationName":"id"
+        }
+      }
+    },
+    "DeleteQuestionSetResponse":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "id"
+      ],
+      "members":{
+        "arn":{"shape":"QuestionSetArn"},
+        "id":{"shape":"QuestionSetId"}
+      }
+    },
+    "DeleteQuestionSetVersionRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "questionSetVersion"
+      ],
+      "members":{
+        "id":{
+          "shape":"QuestionSetId",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "questionSetVersion":{
+          "shape":"PublishedQuestionSetVersion",
+          "location":"uri",
+          "locationName":"questionSetVersion"
+        }
+      }
+    },
+    "DeleteQuestionSetVersionResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteScheduleActionRequest":{
       "type":"structure",
@@ -874,6 +1397,13 @@
         "id":{"shape":"FeedId"}
       }
     },
+    "EventBridgeDeliveryMode":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "ExportDictionaryEntriesRequest":{
       "type":"structure",
       "required":["id"],
@@ -961,6 +1491,19 @@
       "max":10,
       "min":0
     },
+    "FixedIntervalTrigger":{
+      "type":"structure",
+      "required":["intervalSeconds"],
+      "members":{
+        "intervalSeconds":{"shape":"FixedIntervalTriggerIntervalSecondsInteger"}
+      }
+    },
+    "FixedIntervalTriggerIntervalSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":60,
+      "min":1
+    },
     "FixedModeScheduleActionStartSettings":{
       "type":"structure",
       "required":["scheduledAt"],
@@ -997,6 +1540,126 @@
     "FixtureSummaryList":{
       "type":"list",
       "member":{"shape":"FixtureSummary"}
+    },
+    "FrameSamplingMode":{
+      "type":"string",
+      "enum":[
+        "FIRST",
+        "UNIFORM",
+        "LAST"
+      ]
+    },
+    "FrameSamplingStrategy":{
+      "type":"structure",
+      "required":["mode"],
+      "members":{
+        "mode":{"shape":"FrameSamplingMode"},
+        "count":{"shape":"FrameSamplingStrategyCountInteger"}
+      }
+    },
+    "FrameSamplingStrategyCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":64,
+      "min":1
+    },
+    "FrameSettings":{
+      "type":"structure",
+      "required":["frameSampling"],
+      "members":{
+        "frameSampling":{"shape":"FrameSamplingStrategy"},
+        "frameSize":{"shape":"FrameSize"}
+      }
+    },
+    "FrameSize":{
+      "type":"structure",
+      "required":[
+        "widthPixels",
+        "heightPixels"
+      ],
+      "members":{
+        "widthPixels":{"shape":"FrameSizeWidthPixelsInteger"},
+        "heightPixels":{"shape":"FrameSizeHeightPixelsInteger"}
+      }
+    },
+    "FrameSizeHeightPixelsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":720,
+      "min":1
+    },
+    "FrameSizeWidthPixelsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1280,
+      "min":1
+    },
+    "FunctionArn":{"type":"string"},
+    "FunctionConfig":{
+      "type":"structure",
+      "required":[
+        "functionArn",
+        "trigger"
+      ],
+      "members":{
+        "functionArn":{"shape":"FunctionArn"},
+        "trigger":{"shape":"Trigger"},
+        "frameSettings":{"shape":"FrameSettings"},
+        "subtitlingSettings":{"shape":"SubtitlingSettings"},
+        "contextualMetadataSettings":{"shape":"ContextualMetadataSettings"},
+        "clippingSettings":{"shape":"ClippingSettings"}
+      }
+    },
+    "FunctionDescription":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"[\\w \\-\\.',@:;]*",
+      "sensitive":true
+    },
+    "FunctionId":{
+      "type":"string",
+      "pattern":"[a-z0-9]{19}"
+    },
+    "FunctionStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "AVAILABLE",
+        "REFERENCED",
+        "DELETING",
+        "DELETED"
+      ]
+    },
+    "FunctionSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "id",
+        "name",
+        "status"
+      ],
+      "members":{
+        "arn":{"shape":"FunctionArn"},
+        "id":{"shape":"FunctionId"},
+        "name":{"shape":"ResourceName"},
+        "description":{"shape":"FunctionDescription"},
+        "status":{"shape":"FunctionStatus"},
+        "target":{"shape":"FunctionTarget"},
+        "contextTypes":{"shape":"ContextTypeList"}
+      }
+    },
+    "FunctionSummaryList":{
+      "type":"list",
+      "member":{"shape":"FunctionSummary"}
+    },
+    "FunctionTarget":{
+      "type":"structure",
+      "members":{
+        "bedrock":{"shape":"BedrockFunctionTarget"},
+        "passthrough":{"shape":"PassthroughFunctionTarget"}
+      },
+      "union":true
     },
     "GatewayTimedOutException":{
       "type":"structure",
@@ -1118,6 +1781,48 @@
         "competitors":{"shape":"CompetitorList"}
       }
     },
+    "GetFunctionRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"FunctionId",
+          "location":"uri",
+          "locationName":"id"
+        }
+      }
+    },
+    "GetFunctionResponse":{
+      "type":"structure",
+      "required":[
+        "name",
+        "target",
+        "requestExpression",
+        "arn",
+        "id",
+        "status"
+      ],
+      "members":{
+        "name":{"shape":"ResourceName"},
+        "target":{"shape":"FunctionTarget"},
+        "requestExpression":{"shape":"GetFunctionResponseRequestExpressionString"},
+        "responseExpression":{"shape":"JsonataExpression"},
+        "description":{"shape":"FunctionDescription"},
+        "eventBridgeDelivery":{"shape":"EventBridgeDeliveryMode"},
+        "arn":{"shape":"FunctionArn"},
+        "id":{"shape":"FunctionId"},
+        "status":{"shape":"FunctionStatus"},
+        "references":{"shape":"FeedReferences"},
+        "contextTypes":{"shape":"ContextTypeList"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "GetFunctionResponseRequestExpressionString":{
+      "type":"string",
+      "max":5120,
+      "min":1,
+      "sensitive":true
+    },
     "GetOutput":{
       "type":"structure",
       "required":[
@@ -1136,6 +1841,46 @@
     "GetOutputList":{
       "type":"list",
       "member":{"shape":"GetOutput"}
+    },
+    "GetQuestionSetRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"QuestionSetId",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "questionSetVersion":{
+          "shape":"QuestionSetVersion",
+          "location":"querystring",
+          "locationName":"questionSetVersion"
+        }
+      }
+    },
+    "GetQuestionSetResponse":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "id",
+        "name",
+        "version",
+        "sha256"
+      ],
+      "members":{
+        "yesNo":{"shape":"YesNoQuestionList"},
+        "yesNoPerOption":{"shape":"YesNoPerOptionQuestionList"},
+        "chooseOne":{"shape":"ChooseOneQuestionList"},
+        "arn":{"shape":"QuestionSetArn"},
+        "id":{"shape":"QuestionSetId"},
+        "name":{"shape":"ResourceName"},
+        "version":{"shape":"QuestionSetVersion"},
+        "description":{"shape":"QuestionSetVersionDescription"},
+        "latestVersion":{"shape":"QuestionSetVersion"},
+        "sha256":{"shape":"QuestionSetSha256"},
+        "references":{"shape":"FeedReferences"},
+        "tags":{"shape":"TagMap"}
+      }
     },
     "IamRoleArn":{
       "type":"string",
@@ -1157,6 +1902,12 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "JsonataExpression":{
+      "type":"string",
+      "max":5120,
+      "min":0,
+      "sensitive":true
     },
     "ListDictionariesRequest":{
       "type":"structure",
@@ -1216,6 +1967,99 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListFunctionsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"ListFunctionsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListFunctionsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListFunctionsResponse":{
+      "type":"structure",
+      "required":["functions"],
+      "members":{
+        "functions":{"shape":"FunctionSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListQuestionSetVersionsRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"QuestionSetId",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "maxResults":{
+          "shape":"ListQuestionSetVersionsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListQuestionSetVersionsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListQuestionSetVersionsResponse":{
+      "type":"structure",
+      "required":["versions"],
+      "members":{
+        "versions":{"shape":"QuestionSetVersionSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListQuestionSetsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"ListQuestionSetsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListQuestionSetsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListQuestionSetsResponse":{
+      "type":"structure",
+      "required":["questionSets"],
+      "members":{
+        "questionSets":{"shape":"QuestionSetSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListScheduleActionsRequest":{
       "type":"structure",
       "required":["id"],
@@ -1268,13 +2112,24 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "OptionName":{
+      "type":"string",
+      "pattern":"[A-Za-z_][A-Za-z0-9_]{0,63}"
+    },
+    "OptionText":{
+      "type":"string",
+      "max":16,
+      "min":1,
+      "pattern":"[\\p{L}\\p{M}\\p{N} .,?!'\"’“”()\\-:;/&%]*"
+    },
     "OutputConfig":{
       "type":"structure",
       "members":{
         "cropping":{"shape":"CroppingConfig"},
         "clipping":{"shape":"ClippingConfig"},
         "subtitling":{"shape":"SubtitlingConfig"},
-        "contextualMetadata":{"shape":"ContextualMetadataConfig"}
+        "contextualMetadata":{"shape":"ContextualMetadataConfig"},
+        "function":{"shape":"FunctionConfig"}
       },
       "union":true
     },
@@ -1284,6 +2139,10 @@
         "ENABLED",
         "DISABLED"
       ]
+    },
+    "PassthroughFunctionTarget":{
+      "type":"structure",
+      "members":{}
     },
     "PolicyDocument":{
       "type":"string",
@@ -1297,6 +2156,12 @@
         "CENSOR",
         "DROP"
       ]
+    },
+    "PublishedQuestionSetVersion":{
+      "type":"string",
+      "max":10,
+      "min":1,
+      "pattern":"[1-9][0-9]*"
     },
     "PutFeedPolicyRequest":{
       "type":"structure",
@@ -1317,6 +2182,95 @@
       "type":"structure",
       "members":{}
     },
+    "QuestionName":{
+      "type":"string",
+      "pattern":"[A-Za-z_][A-Za-z0-9_]{0,63}"
+    },
+    "QuestionOption":{
+      "type":"structure",
+      "required":[
+        "name",
+        "text"
+      ],
+      "members":{
+        "name":{"shape":"OptionName"},
+        "text":{"shape":"OptionText"}
+      }
+    },
+    "QuestionSetArn":{"type":"string"},
+    "QuestionSetId":{
+      "type":"string",
+      "pattern":"[a-z0-9]{19}"
+    },
+    "QuestionSetReference":{
+      "type":"structure",
+      "required":[
+        "questionSetId",
+        "version"
+      ],
+      "members":{
+        "questionSetId":{"shape":"QuestionSetId"},
+        "version":{"shape":"QuestionSetVersion"}
+      }
+    },
+    "QuestionSetSha256":{
+      "type":"string",
+      "pattern":"[a-f0-9]{64}"
+    },
+    "QuestionSetSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "id",
+        "name"
+      ],
+      "members":{
+        "arn":{"shape":"QuestionSetArn"},
+        "id":{"shape":"QuestionSetId"},
+        "name":{"shape":"ResourceName"},
+        "latestVersion":{"shape":"QuestionSetVersion"}
+      }
+    },
+    "QuestionSetSummaryList":{
+      "type":"list",
+      "member":{"shape":"QuestionSetSummary"}
+    },
+    "QuestionSetVersion":{
+      "type":"string",
+      "max":10,
+      "min":1,
+      "pattern":"(DRAFT|[1-9][0-9]*)"
+    },
+    "QuestionSetVersionDescription":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\w \\-\\.',@:;]*"
+    },
+    "QuestionSetVersionSummary":{
+      "type":"structure",
+      "required":[
+        "version",
+        "sha256",
+        "lastModifiedAt"
+      ],
+      "members":{
+        "version":{"shape":"QuestionSetVersion"},
+        "description":{"shape":"QuestionSetVersionDescription"},
+        "sha256":{"shape":"QuestionSetSha256"},
+        "lastModifiedAt":{"shape":"Timestamp"}
+      }
+    },
+    "QuestionSetVersionSummaryList":{
+      "type":"list",
+      "member":{"shape":"QuestionSetVersionSummary"}
+    },
+    "QuestionText":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\p{L}\\p{M}\\p{N} .,?!'\"’“”()\\-:;/&%]*"
+    },
     "RemoveClippingDataSourceConfiguration":{
       "type":"structure",
       "required":["outputName"],
@@ -1326,7 +2280,7 @@
     },
     "ResourceArn":{
       "type":"string",
-      "pattern":"arn:aws[a-z\\-]*:elemental-inference[a-z\\-]*:[a-z0-9\\-]+:[0-9]{12}:[a-z]+/[a-zA-Z0-9]{1,19}"
+      "pattern":"arn:aws[a-z\\-]*:elemental-inference[a-z\\-]*:[a-z0-9\\-]+:[0-9]{12}:[a-z\\-]+/[a-zA-Z0-9]{1,19}"
     },
     "ResourceDescription":{
       "type":"string",
@@ -1355,6 +2309,10 @@
       "max":255,
       "min":10,
       "pattern":"s3://[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]/.+"
+    },
+    "SceneTrigger":{
+      "type":"structure",
+      "members":{}
     },
     "ScheduleAction":{
       "type":"structure",
@@ -1495,6 +2453,10 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
+    "ShotTrigger":{
+      "type":"structure",
+      "members":{}
+    },
     "String":{"type":"string"},
     "StringList":{
       "type":"list",
@@ -1508,6 +2470,13 @@
         "aspectRatio":{"shape":"AspectRatio"},
         "dictionary":{"shape":"DictionaryId"},
         "profanityFilter":{"shape":"ProfanityFilterMode"}
+      }
+    },
+    "SubtitlingSettings":{
+      "type":"structure",
+      "required":["outputName"],
+      "members":{
+        "outputName":{"shape":"ResourceName"}
       }
     },
     "SummaryGenerationMode":{
@@ -1605,6 +2574,16 @@
         "spa",
         "por"
       ]
+    },
+    "Trigger":{
+      "type":"structure",
+      "members":{
+        "fixedInterval":{"shape":"FixedIntervalTrigger"},
+        "perShot":{"shape":"ShotTrigger"},
+        "perScene":{"shape":"SceneTrigger"},
+        "perClip":{"shape":"ClipTrigger"}
+      },
+      "union":true
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -1709,6 +2688,60 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "UpdateFunctionRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"FunctionId",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "name":{"shape":"ResourceName"},
+        "target":{"shape":"FunctionTarget"},
+        "requestExpression":{"shape":"UpdateFunctionRequestRequestExpressionString"},
+        "responseExpression":{"shape":"JsonataExpression"},
+        "description":{"shape":"FunctionDescription"},
+        "eventBridgeDelivery":{"shape":"EventBridgeDeliveryMode"}
+      }
+    },
+    "UpdateFunctionRequestRequestExpressionString":{
+      "type":"string",
+      "max":5120,
+      "min":1,
+      "sensitive":true
+    },
+    "UpdateFunctionResponse":{
+      "type":"structure",
+      "required":[
+        "name",
+        "target",
+        "requestExpression",
+        "arn",
+        "id",
+        "status"
+      ],
+      "members":{
+        "name":{"shape":"ResourceName"},
+        "target":{"shape":"FunctionTarget"},
+        "requestExpression":{"shape":"UpdateFunctionResponseRequestExpressionString"},
+        "responseExpression":{"shape":"JsonataExpression"},
+        "description":{"shape":"FunctionDescription"},
+        "eventBridgeDelivery":{"shape":"EventBridgeDeliveryMode"},
+        "arn":{"shape":"FunctionArn"},
+        "id":{"shape":"FunctionId"},
+        "status":{"shape":"FunctionStatus"},
+        "references":{"shape":"FeedReferences"},
+        "contextTypes":{"shape":"ContextTypeList"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "UpdateFunctionResponseRequestExpressionString":{
+      "type":"string",
+      "max":5120,
+      "min":1,
+      "sensitive":true
+    },
     "UpdateOutput":{
       "type":"structure",
       "required":[
@@ -1739,6 +2772,45 @@
         "status":{"shape":"OutputStatus"}
       }
     },
+    "UpdateQuestionSetRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"QuestionSetId",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "yesNo":{"shape":"YesNoQuestionList"},
+        "yesNoPerOption":{"shape":"YesNoPerOptionQuestionList"},
+        "chooseOne":{"shape":"ChooseOneQuestionList"},
+        "name":{"shape":"ResourceName"}
+      }
+    },
+    "UpdateQuestionSetResponse":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "id",
+        "name",
+        "version",
+        "sha256"
+      ],
+      "members":{
+        "yesNo":{"shape":"YesNoQuestionList"},
+        "yesNoPerOption":{"shape":"YesNoPerOptionQuestionList"},
+        "chooseOne":{"shape":"ChooseOneQuestionList"},
+        "arn":{"shape":"QuestionSetArn"},
+        "id":{"shape":"QuestionSetId"},
+        "name":{"shape":"ResourceName"},
+        "version":{"shape":"QuestionSetVersion"},
+        "description":{"shape":"QuestionSetVersionDescription"},
+        "latestVersion":{"shape":"QuestionSetVersion"},
+        "sha256":{"shape":"QuestionSetSha256"},
+        "references":{"shape":"FeedReferences"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
     "ValidationException":{
       "type":"structure",
       "required":["message"],
@@ -1750,6 +2822,48 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "YesNoPerOptionOptionList":{
+      "type":"list",
+      "member":{"shape":"QuestionOption"},
+      "max":50,
+      "min":1
+    },
+    "YesNoPerOptionQuestion":{
+      "type":"structure",
+      "required":[
+        "name",
+        "question",
+        "options"
+      ],
+      "members":{
+        "name":{"shape":"QuestionName"},
+        "question":{"shape":"QuestionText"},
+        "options":{"shape":"YesNoPerOptionOptionList"}
+      }
+    },
+    "YesNoPerOptionQuestionList":{
+      "type":"list",
+      "member":{"shape":"YesNoPerOptionQuestion"},
+      "max":10,
+      "min":0
+    },
+    "YesNoQuestion":{
+      "type":"structure",
+      "required":[
+        "name",
+        "question"
+      ],
+      "members":{
+        "name":{"shape":"QuestionName"},
+        "question":{"shape":"QuestionText"}
+      }
+    },
+    "YesNoQuestionList":{
+      "type":"list",
+      "member":{"shape":"YesNoQuestion"},
+      "max":50,
+      "min":0
     }
   }
 }

@@ -57,6 +57,17 @@
             "documentation": "The ARN of the Kinesis data channel",
             "type": "string"
         },
+        "QueueARN": {
+            "required": false,
+            "documentation": "The ARN of the Kinesis queue",
+            "type": "string"
+        },
+        "ResourceType": {
+            "required": true,
+            "default": "",
+            "documentation": "The type of Kinesis resource targeted by the operation (e.g., queue). Used for endpoint routing.",
+            "type": "string"
+        },
         "AccountId": {
             "builtIn": "AWS::Auth::AccountId",
             "required": false,
@@ -221,6 +232,14 @@
             ]
         },
         {
+            "fn": "isSet",
+            "argv": [
+                {
+                    "ref": "ResourceARN"
+                }
+            ]
+        },
+        {
             "fn": "aws.parseArn",
             "argv": [
                 {
@@ -230,74 +249,23 @@
             "assign": "arn_ssa_2"
         },
         {
-            "fn": "substring",
+            "fn": "aws.parseArn",
             "argv": [
                 {
-                    "ref": "Endpoint"
-                },
-                15,
-                20,
-                false
+                    "ref": "ResourceARN"
+                }
             ],
-            "assign": "HttpsCustomEndpointSuffixValue"
+            "assign": "arn_ssa_4"
         },
         {
-            "fn": "stringEquals",
+            "fn": "getAttr",
             "argv": [
                 {
-                    "fn": "coalesce",
-                    "argv": [
-                        {
-                            "fn": "substring",
-                            "argv": [
-                                {
-                                    "ref": "Endpoint"
-                                },
-                                15,
-                                16,
-                                false
-                            ]
-                        },
-                        ""
-                    ]
+                    "ref": "arn_ssa_4"
                 },
-                "-"
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "coalesce",
-                    "argv": [
-                        {
-                            "fn": "substring",
-                            "argv": [
-                                {
-                                    "ref": "Endpoint"
-                                },
-                                20,
-                                21,
-                                false
-                            ]
-                        },
-                        ""
-                    ]
-                },
-                "."
-            ]
-        },
-        {
-            "fn": "substring",
-            "argv": [
-                {
-                    "ref": "Endpoint"
-                },
-                7,
-                12,
-                false
+                "resourceId[0]"
             ],
-            "assign": "PlainCustomEndpointSuffixValue"
+            "assign": "isoArnType"
         },
         {
             "fn": "isValidHostLabel",
@@ -364,13 +332,188 @@
             ]
         },
         {
+            "fn": "substring",
+            "argv": [
+                {
+                    "ref": "Endpoint"
+                },
+                15,
+                20,
+                false
+            ],
+            "assign": "HttpsCustomEndpointSuffixValue"
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "coalesce",
+                    "argv": [
+                        {
+                            "fn": "substring",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                },
+                                20,
+                                21,
+                                false
+                            ]
+                        },
+                        ""
+                    ]
+                },
+                "."
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "coalesce",
+                    "argv": [
+                        {
+                            "fn": "substring",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                },
+                                15,
+                                16,
+                                false
+                            ]
+                        },
+                        ""
+                    ]
+                },
+                "-"
+            ]
+        },
+        {
+            "fn": "substring",
+            "argv": [
+                {
+                    "ref": "Endpoint"
+                },
+                7,
+                12,
+                false
+            ],
+            "assign": "PlainCustomEndpointSuffixValue"
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "arnType_ssa_2"
+                },
+                "stream"
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "PartitionResult"
+                        },
+                        "name"
+                    ]
+                },
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "arn_ssa_2"
+                        },
+                        "partition"
+                    ]
+                }
+            ]
+        },
+        {
             "fn": "aws.parseArn",
             "argv": [
                 {
                     "ref": "StreamARN"
                 }
             ],
-            "assign": "arn_ssa_4"
+            "assign": "arn_ssa_5"
+        },
+        {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "arn_ssa_5"
+                        },
+                        "accountId"
+                    ]
+                },
+                false
+            ]
+        },
+        {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "arn_ssa_5"
+                        },
+                        "region"
+                    ]
+                },
+                false
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "arn_ssa_5"
+                        },
+                        "service"
+                    ]
+                },
+                "kinesis"
+            ]
+        },
+        {
+            "fn": "getAttr",
+            "argv": [
+                {
+                    "ref": "arn_ssa_5"
+                },
+                "resourceId[0]"
+            ],
+            "assign": "arnType_ssa_1"
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "arnType_ssa_1"
+                },
+                ""
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "isoArnType"
+                },
+                "queue"
+            ]
         },
         {
             "fn": "isValidHostLabel",
@@ -391,7 +534,7 @@
             "fn": "stringEquals",
             "argv": [
                 {
-                    "ref": "arnType_ssa_2"
+                    "ref": "arnType_ssa_1"
                 },
                 "stream"
             ]
@@ -427,7 +570,7 @@
                     "fn": "getAttr",
                     "argv": [
                         {
-                            "ref": "arn_ssa_2"
+                            "ref": "arn_ssa_5"
                         },
                         "partition"
                     ]
@@ -457,22 +600,64 @@
                 },
                 "resourceId[0]"
             ],
-            "assign": "arnType_ssa_1"
+            "assign": "arnType_ssa_3"
         },
         {
             "fn": "stringEquals",
             "argv": [
                 {
-                    "ref": "arnType_ssa_1"
+                    "ref": "arnType_ssa_3"
                 },
                 ""
             ]
         },
         {
-            "fn": "isSet",
+            "fn": "stringEquals",
             "argv": [
                 {
-                    "ref": "ResourceARN"
+                    "ref": "arnType_ssa_3"
+                },
+                "stream"
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "arnType_ssa_3"
+                },
+                "channel"
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "arnType_ssa_3"
+                },
+                "queue"
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "PartitionResult"
+                        },
+                        "name"
+                    ]
+                },
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "arn_ssa_4"
+                        },
+                        "partition"
+                    ]
                 }
             ]
         },
@@ -485,18 +670,20 @@
             ]
         },
         {
-            "fn": "isSet",
+            "fn": "getAttr",
             "argv": [
                 {
-                    "ref": "AccountIdEndpointMode"
-                }
-            ]
+                    "ref": "arn_ssa_4"
+                },
+                "resourceId[1]"
+            ],
+            "assign": "resourceId_ssa_1"
         },
         {
             "fn": "isSet",
             "argv": [
                 {
-                    "ref": "AccountId"
+                    "ref": "QueueARN"
                 }
             ]
         },
@@ -510,21 +697,11 @@
             "assign": "arn_ssa_1"
         },
         {
-            "fn": "stringEquals",
+            "fn": "isSet",
             "argv": [
                 {
                     "ref": "AccountIdEndpointMode"
-                },
-                "disabled"
-            ]
-        },
-        {
-            "fn": "isValidHostLabel",
-            "argv": [
-                {
-                    "ref": "AccountId"
-                },
-                false
+                }
             ]
         },
         {
@@ -553,6 +730,41 @@
                         },
                         "region"
                     ]
+                },
+                false
+            ]
+        },
+        {
+            "fn": "isSet",
+            "argv": [
+                {
+                    "ref": "AccountId"
+                }
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "AccountIdEndpointMode"
+                },
+                "disabled"
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "ref": "AccountIdEndpointMode"
+                },
+                "required"
+            ]
+        },
+        {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "ref": "AccountId"
                 },
                 false
             ]
@@ -595,39 +807,16 @@
             "fn": "stringEquals",
             "argv": [
                 {
-                    "ref": "arnType_ssa_4"
+                    "ref": "ResourceType"
                 },
-                "channel"
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "PartitionResult"
-                        },
-                        "name"
-                    ]
-                },
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "arn_ssa_1"
-                        },
-                        "partition"
-                    ]
-                }
+                "queue"
             ]
         },
         {
             "fn": "aws.parseArn",
             "argv": [
                 {
-                    "ref": "ResourceARN"
+                    "ref": "QueueARN"
                 }
             ],
             "assign": "arn_ssa_3"
@@ -685,13 +874,13 @@
                 },
                 "resourceId[0]"
             ],
-            "assign": "arnType_ssa_3"
+            "assign": "arnType_ssa_5"
         },
         {
             "fn": "stringEquals",
             "argv": [
                 {
-                    "ref": "arnType_ssa_3"
+                    "ref": "arnType_ssa_5"
                 },
                 ""
             ]
@@ -700,18 +889,9 @@
             "fn": "stringEquals",
             "argv": [
                 {
-                    "ref": "arnType_ssa_3"
+                    "ref": "arnType_ssa_5"
                 },
-                "stream"
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "ref": "arnType_ssa_3"
-                },
-                "channel"
+                "queue"
             ]
         },
         {
@@ -738,12 +918,21 @@
             ]
         },
         {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "ref": "resourceId_ssa_1"
+                },
+                false
+            ]
+        },
+        {
             "fn": "stringEquals",
             "argv": [
                 {
-                    "ref": "arnType_ssa_1"
+                    "ref": "arnType_ssa_4"
                 },
-                "stream"
+                "channel"
             ]
         },
         {
@@ -762,20 +951,11 @@
                     "fn": "getAttr",
                     "argv": [
                         {
-                            "ref": "arn_ssa_4"
+                            "ref": "arn_ssa_1"
                         },
                         "partition"
                     ]
                 }
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "ref": "AccountIdEndpointMode"
-                },
-                "required"
             ]
         },
         {
@@ -790,30 +970,30 @@
             "fn": "getAttr",
             "argv": [
                 {
-                    "ref": "arn_ssa_3"
-                },
-                "resourceId[1]"
-            ],
-            "assign": "resourceId_ssa_1"
-        },
-        {
-            "fn": "isValidHostLabel",
-            "argv": [
-                {
-                    "ref": "resourceId_ssa_1"
-                },
-                false
-            ]
-        },
-        {
-            "fn": "getAttr",
-            "argv": [
-                {
                     "ref": "arn_ssa_1"
                 },
                 "resourceId[1]"
             ],
             "assign": "resourceId_ssa_2"
+        },
+        {
+            "fn": "getAttr",
+            "argv": [
+                {
+                    "ref": "arn_ssa_3"
+                },
+                "resourceId[1]"
+            ],
+            "assign": "resourceId_ssa_3"
+        },
+        {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "ref": "resourceId_ssa_3"
+                },
+                false
+            ]
         },
         {
             "fn": "isValidHostLabel",
@@ -825,35 +1005,31 @@
             ]
         },
         {
-            "fn": "stringEquals",
+            "fn": "getAttr",
             "argv": [
                 {
-                    "ref": "OperationType"
+                    "ref": "arn_ssa_4"
                 },
-                "data"
+                "resourceId[1]"
+            ],
+            "assign": "isoResourceId"
+        },
+        {
+            "fn": "isValidHostLabel",
+            "argv": [
+                {
+                    "ref": "isoResourceId"
+                },
+                false
             ]
         },
         {
             "fn": "stringEquals",
             "argv": [
                 {
-                    "fn": "coalesce",
-                    "argv": [
-                        {
-                            "fn": "substring",
-                            "argv": [
-                                {
-                                    "ref": "Endpoint"
-                                },
-                                7,
-                                8,
-                                false
-                            ]
-                        },
-                        ""
-                    ]
+                    "ref": "OperationType"
                 },
-                "-"
+                "data"
             ]
         },
         {
@@ -940,6 +1116,29 @@
                     ]
                 },
                 "."
+            ]
+        },
+        {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "coalesce",
+                    "argv": [
+                        {
+                            "fn": "substring",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                },
+                                7,
+                                8,
+                                false
+                            ]
+                        },
+                        ""
+                    ]
+                },
+                "-"
             ]
         }
     ],
@@ -1080,7 +1279,7 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://{arn_ssa_4#accountId}.{OperationType}-kinesis-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "url": "https://{arn_ssa_5#accountId}.{OperationType}-kinesis-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
                 "properties": {},
                 "headers": {}
             },
@@ -1089,7 +1288,7 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://{arn_ssa_4#accountId}.{OperationType}-kinesis-fips.{Region}.{PartitionResult#dnsSuffix}",
+                "url": "https://{arn_ssa_5#accountId}.{OperationType}-kinesis-fips.{Region}.{PartitionResult#dnsSuffix}",
                 "properties": {},
                 "headers": {}
             },
@@ -1098,7 +1297,7 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://{arn_ssa_4#accountId}.{OperationType}-kinesis.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "url": "https://{arn_ssa_5#accountId}.{OperationType}-kinesis.{Region}.{PartitionResult#dualStackDnsSuffix}",
                 "properties": {},
                 "headers": {}
             },
@@ -1107,7 +1306,7 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://{arn_ssa_4#accountId}.{OperationType}-kinesis.{Region}.{PartitionResult#dnsSuffix}",
+                "url": "https://{arn_ssa_5#accountId}.{OperationType}-kinesis.{Region}.{PartitionResult#dnsSuffix}",
                 "properties": {},
                 "headers": {}
             },
@@ -1115,7 +1314,7 @@
         },
         {
             "conditions": [],
-            "error": "Partition: {arn_ssa_4#partition} from ARN doesn't match with partition name: {PartitionResult#name}.",
+            "error": "Partition: {arn_ssa_5#partition} from ARN doesn't match with partition name: {PartitionResult#name}.",
             "type": "error"
         },
         {
@@ -1130,7 +1329,7 @@
         },
         {
             "conditions": [],
-            "error": "Invalid ARN: The ARN was not for the Kinesis service, found: {arn_ssa_4#service}.",
+            "error": "Invalid ARN: The ARN was not for the Kinesis service, found: {arn_ssa_5#service}.",
             "type": "error"
         },
         {
@@ -1201,13 +1400,13 @@
         },
         {
             "conditions": [],
-            "error": "Invalid ARN: Unsupported resource type `{arnType_ssa_3}`. Expected: stream or channel",
+            "error": "Invalid ARN: Unsupported resource type `{arnType_ssa_3}`. Expected: stream, channel, or queue.",
             "type": "error"
         },
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://{arn_ssa_3#accountId}.{OperationType}-kinesis-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "url": "https://{arn_ssa_4#accountId}.{OperationType}-kinesis-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
                 "properties": {},
                 "headers": {}
             },
@@ -1216,7 +1415,7 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://{arn_ssa_3#accountId}.{OperationType}-kinesis-fips.{Region}.{PartitionResult#dnsSuffix}",
+                "url": "https://{arn_ssa_4#accountId}.{OperationType}-kinesis-fips.{Region}.{PartitionResult#dnsSuffix}",
                 "properties": {},
                 "headers": {}
             },
@@ -1225,7 +1424,7 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://{arn_ssa_3#accountId}.{OperationType}-kinesis.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "url": "https://{arn_ssa_4#accountId}.{OperationType}-kinesis.{Region}.{PartitionResult#dualStackDnsSuffix}",
                 "properties": {},
                 "headers": {}
             },
@@ -1234,7 +1433,7 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://{arn_ssa_3#accountId}.{OperationType}-kinesis.{Region}.{PartitionResult#dnsSuffix}",
+                "url": "https://{arn_ssa_4#accountId}.{OperationType}-kinesis.{Region}.{PartitionResult#dnsSuffix}",
                 "properties": {},
                 "headers": {}
             },
@@ -1288,13 +1487,95 @@
         },
         {
             "conditions": [],
-            "error": "Partition: {arn_ssa_3#partition} from ARN doesn't match with partition name: {PartitionResult#name}.",
+            "endpoint": {
+                "url": "https://{resourceId_ssa_1}.{OperationType}-kinesis-queues-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{resourceId_ssa_1}.{OperationType}-kinesis-queues-fips.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{resourceId_ssa_1}.{OperationType}-kinesis-queues.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{resourceId_ssa_1}.{OperationType}-kinesis-queues.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "error": "Invalid ARN: Invalid queue id.",
             "type": "error"
         },
         {
             "conditions": [],
-            "error": "Invalid ARN: The ARN was not for the Kinesis service, found: {arn_ssa_3#service}.",
+            "error": "Invalid ARN: Missing queue id.",
             "type": "error"
+        },
+        {
+            "conditions": [],
+            "error": "Partition: {arn_ssa_4#partition} from ARN doesn't match with partition name: {PartitionResult#name}.",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "error": "Invalid ARN: The ARN was not for the Kinesis service, found: {arn_ssa_4#service}.",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://kinesis-queues-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://kinesis-queues-fips.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://kinesis-queues.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://kinesis-queues.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
         },
         {
             "conditions": [],
@@ -1351,6 +1632,114 @@
             "conditions": [],
             "error": "Invalid ARN: The ARN was not for the Kinesis service, found: {arn_ssa_1#service}.",
             "type": "error"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{resourceId_ssa_3}.{OperationType}-kinesis-queues-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{resourceId_ssa_3}.{OperationType}-kinesis-queues-fips.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{resourceId_ssa_3}.{OperationType}-kinesis-queues.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{resourceId_ssa_3}.{OperationType}-kinesis-queues.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {},
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "error": "Partition: {arn_ssa_3#partition} from ARN doesn't match with partition name: {PartitionResult#name}.",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "error": "Invalid ARN: QueueARN only supports `queue` ARN types, found: `{arnType_ssa_5}`.",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "error": "Invalid ARN: The ARN was not for the Kinesis service, found: {arn_ssa_3#service}.",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "error": "Invalid Configuration: ResourceType must be \"queue\" when QueueARN is set.",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.{OperationType}-kinesis-queues-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.{OperationType}-kinesis-queues-fips.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.{OperationType}-kinesis-queues.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{AccountId}.{OperationType}-kinesis-queues.{Region}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "metricValues": [
+                        "O"
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
         },
         {
             "conditions": [],
@@ -1497,6 +1886,6 @@
         }
     ],
     "root": 2,
-    "nodeCount": 155,
-    "nodes": "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"
+    "nodeCount": 237,
+    "nodes": "/////wAAAAH/////AAAAAAAAAAMAAAAEAAAAAQAAAAcAAAAEAAAACQAAAOwAAAAFAAAALwAAAAYF9eFfAAAAOwX14V8F9eFKAAAAAgAAAMEAAAAIAAAAAwAAAMEAAAAJAAAABAAAAAoAAAAOAAAABQAAAAsAAAAOAAAABgAAAAwAAAAOAAAABwAAAA0AAAAOAAAACAAAAJwAAAAOAAAACQAAAOwAAAAPAAAACgAAAIwAAAAQAAAACwAAAHwAAAARAAAADAAAAFAAAAASAAAALQAAAD0AAAATAAAALwAAACoAAAAUAAAAMQAAABUAAADJAAAANAAAABYAAAApAAAANQAAACkAAAAXAAAANwAAABgF9eFTAAAAOwAAACEAAAAZAAAARwAAABoF9eERAAAATwAAAB0AAAAbAAAAUAAAABwF9eFSAAAAUgX14VEF9eEHAAAAUAAAAB8AAAAeAAAAUQX14VAF9eEFAAAAUQAAACAF9eEDAAAAUgX14U8F9eECAAAARwAAACIF9eERAAAATwAAACUAAAAjAAAAUAAAACQF9eFOAAAAUgX14U0F9eEHAAAAUAAAACcAAAAmAAAAUQX14UwF9eEFAAAAUQAAACgF9eEDAAAAUgX14UsF9eECAAAANgX14VQAAADJAAAAOwAAACsF9eFKAAAAPAAAACwF9eEcAAAAPQAAAC0F9eEbAAAAPgAAAC4F9eEaAAAAPwAAAC8F9eFJAAAAQAAAADAF9eEYAAAAQQX14RgAAAAxAAAAQgAAADIF9eFIAAAAQwAAADMF9eFHAAAARwAAADQF9eERAAAASQAAADUF9eE0AAAASgAAADYF9eEzAAAATwAAADkAAAA3AAAAUAAAADgF9eFGAAAAUgX14UUF9eEHAAAAUAAAADsAAAA6AAAAUQX14UQF9eEFAAAAUQAAADwF9eEDAAAAUgX14UMF9eECAAAAMAAAAD4F9eEcAAAAMgAAAD8F9eEbAAAAMwAAAEAF9eEaAAAAOAAAAEEF9eFCAAAAOQAAAEIF9eEYAAAAOgX14RgAAABDAAAARQAAAEQF9eFBAAAARgAAAEUF9eFAAAAARwAAAEYF9eERAAAASAAAAEcF9eEuAAAASwAAAEgF9eEtAAAATgX14T8AAABJAAAATwAAAEwAAABKAAAAUAAAAEsF9eE+AAAAUgX14T0F9eEHAAAAUAAAAE4AAABNAAAAUQX14TwF9eEFAAAAUQAAAE8F9eEDAAAAUgX14TsF9eECAAAADgAAAFEF9eEcAAAAIgAAAFIF9eEbAAAAJAAAAFMF9eEaAAAAJgAAAFQF9eE2AAAAJwAAAFUF9eEYAAAAKAX14RgAAABWAAAAKQAAAHMAAABXAAAAKgAAAGYAAABYAAAAKwAAAFkF9eEkAAAALAAAAFoF9eE1AAAALgAAAFwAAABbAAAARwX14TQF9eERAAAARAAAAF4AAABdAAAARwX14TMF9eERAAAARwAAAF8F9eERAAAATwAAAGIAAABgAAAAUAAAAGEF9eEyAAAAUgX14TEF9eEHAAAAUAAAAGQAAABjAAAAUQX14TAF9eEFAAAAUQAAAGUF9eEDAAAAUgX14S8F9eECAAAALAAAAGcF9eE1AAAALgAAAGkAAABoAAAARwX14S4F9eERAAAARAAAAGsAAABqAAAARwX14S0F9eERAAAARwAAAGwF9eERAAAATwAAAG8AAABtAAAAUAAAAG4F9eEsAAAAUgX14SsF9eEHAAAAUAAAAHEAAABwAAAAUQX14SoF9eEFAAAAUQAAAHIF9eEDAAAAUgX14SkF9eECAAAALAAAAHQF9eE1AAAARwAAAHUF9eERAAAATwAAAHgAAAB2AAAAUAAAAHcF9eEoAAAAUgX14ScF9eEHAAAAUAAAAHoAAAB5AAAAUQX14SYF9eEFAAAAUQAAAHsF9eEDAAAAUgX14SUF9eECAAAADQAAAH0F9eEcAAAAEAAAAH4F9eEbAAAAEQAAAH8F9eEaAAAAEgAAAIAF9eEjAAAAEwAAAIEF9eEYAAAAFAX14RgAAACCAAAAGQAAAIMF9eEiAAAAGgAAAIQF9eEhAAAARwAAAIUF9eERAAAATwAAAIgAAACGAAAAUAAAAIcF9eEgAAAAUgX14R8F9eEHAAAAUAAAAIoAAACJAAAAUQX14R4F9eEFAAAAUQAAAIsF9eEDAAAAUgX14R0F9eECAAAAGwAAAI0F9eEcAAAAHAAAAI4F9eEbAAAAHQAAAI8F9eEaAAAAHgAAAJAF9eEZAAAAHwAAAJEF9eEYAAAAIAX14RgAAACSAAAAIwAAAJMF9eEXAAAAJQAAAJQF9eEWAAAARwAAAJUF9eERAAAATwAAAJgAAACWAAAAUAAAAJcF9eEVAAAAUgX14RQF9eEHAAAAUAAAAJoAAACZAAAAUQX14RMF9eEFAAAAUQAAAJsF9eEDAAAAUgX14RIF9eECAAAACQAAAJ0AAAChAAAAFQAAAJ4AAACgAAAAFgAAAJ8AAACgAAAAFwAAALkAAACgAAAAGAAAAKkAAAChAAAARwAAAKIF9eERAAAATwAAAKUAAACjAAAAUAAAAKQF9eEQAAAAUgX14Q8F9eEHAAAAUAAAAKcAAACmAAAAUQX14Q4F9eEFAAAAUQAAAKgF9eEDAAAAUgX14Q0F9eECAAAARwAAAKoF9eERAAAATwAAALEAAACrAAAAUAAAAK4AAACsAAAAVAAAAK0F9eEQAAAAVQX14QwF9eEQAAAAUgAAAK8F9eEHAAAAVAAAALAF9eEPAAAAVQX14QsF9eEPAAAAUAAAALUAAACyAAAAUQAAALMF9eEFAAAAVAAAALQF9eEOAAAAVQX14QoF9eEOAAAAUQAAALYF9eEDAAAAUgAAALcF9eECAAAAVAAAALgF9eENAAAAVQX14QkF9eENAAAARwAAALoF9eERAAAATwAAAL0AAAC7AAAAUAAAALwF9eEIAAAAUgX14QYF9eEHAAAAUAAAAL8AAAC+AAAAUQX14QQF9eEFAAAAUQAAAMAF9eEDAAAAUgX14QEF9eECAAAACQAAAOwAAADCAAAADAAAAMMAAADGAAAADgAAAMQAAADGAAAADwAAAMUAAADGAAAAIQAAAN4AAADGAAAALwAAANIAAADHAAAAMQAAAMgAAADJAAAANgX14VUAAADJAAAAOwAAAOUAAADKAAAATwAAAM0AAADLAAAAUAAAAMwF9eFeAAAAUgX14V0F9eEHAAAAUAAAANAAAADOAAAAUQAAAM8F9eEFAAAAUwX14VsF9eFcAAAAUQAAANEF9eFaAAAAUgX14VkF9eFaAAAAOwAAANMF9eFKAAAAPAAAANQF9eEcAAAAPQAAANUF9eEbAAAAPgAAANYF9eEaAAAAPwAAANcF9eFJAAAAQAAAANgF9eEYAAAAQQX14RgAAADZAAAAQgAAANoF9eFIAAAAQwAAANsF9eFHAAAARwAAANwF9eERAAAASQAAAN0F9eE0AAAASgAAAOUF9eEzAAAAIgAAAN8F9eEbAAAAJAAAAOAF9eEaAAAAJgAAAOEF9eE2AAAALAAAAOIF9eE1AAAARwAAAOMF9eERAAAATAAAAOQF9eE0AAAATQAAAOUF9eEzAAAATwAAAOgAAADmAAAAUAAAAOcF9eE6AAAAUgX14TkF9eEHAAAAUAAAAOoAAADpAAAAUQX14TgF9eEFAAAAUQAAAOsF9eEDAAAAUgX14TcF9eECAAAATwX14VYAAADtAAAAUAX14VcF9eFY"
 }

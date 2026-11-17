@@ -1518,6 +1518,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise modifyTransitGatewayMeteringPolicyAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyTransitGatewayNetworkFunctionAttachment(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyTransitGatewayNetworkFunctionAttachmentAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result modifyTransitGatewayPeeringAttachment(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise modifyTransitGatewayPeeringAttachmentAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyTransitGatewayPolicyTableEntry(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyTransitGatewayPolicyTableEntryAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyTransitGatewayPrefixListReference(array $args = []) (supported in versions 2016-11-15)

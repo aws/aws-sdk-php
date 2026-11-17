@@ -188,6 +188,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     Alias?: string,
+ *     SessionMetadata?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise putRumEventsAsync(array $args = [])
@@ -205,6 +206,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     Alias?: string,
+ *     SessionMetadata?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result putRumMetricsDestination(array $args = [])

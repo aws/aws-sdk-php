@@ -345,6 +345,7 @@ use Aws\AwsClient;
  *     DailySnapshotTime?: string,
  *     NetworkType?: 'dual_stack'|'ipv4'|'ipv6',
  *     ConnectionType?: 'public'|'vpc',
+ *     Integrations?: list<array{IntegrationType?: 'dynamodb', ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createServerlessCacheAsync(array $args = [])
@@ -368,6 +369,7 @@ use Aws\AwsClient;
  *     DailySnapshotTime?: string,
  *     NetworkType?: 'dual_stack'|'ipv4'|'ipv6',
  *     ConnectionType?: 'public'|'vpc',
+ *     Integrations?: list<array{IntegrationType?: 'dynamodb', ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createServerlessCacheSnapshot(array $args = [])

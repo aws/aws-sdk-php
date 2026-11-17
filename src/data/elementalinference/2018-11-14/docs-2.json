@@ -5,10 +5,16 @@
     "AssociateFeed": "<p>Associates a resource with the feed. The resource provides the input that Elemental Inference needs in order to perform an Elemental Inference feature, such as cropping video. You always provide the resource by associating it with a feed. You can associate only one resource with each feed. With an association, a specific source media is claiming ownership of the feed. </p> <p>AssociateFeed is a PATCH operation, which means that you can include only parameters that you want to change. Parameters that you don't include will not be affected by the operation. </p> <p>Specifically:</p> <ul> <li> <p>You can add more outputs to the existing outputs. New outputs will be appended.</p> </li> <li> <p>You can't modify an existing output (for example to change its name). Instead, use UpdateFeed. </p> </li> <li> <p>You can't delete an existing output. Instead, use UpdateFeed.</p> </li> </ul> <p>Also note that you can't change the feed name with AssociateFeed. Instead, use UpdateFeed. </p>",
     "CreateDictionary": "<p>Creates a custom dictionary for improving transcription accuracy. A dictionary contains custom words and phrases that the ASR engine might not recognize, such as brand names, technical terms, or proper nouns. You can reference a dictionary when configuring a smart subtitles output. </p>",
     "CreateFeed": "<p>Creates a feed. The feed is the target for the live media stream that is being sent by the calling application. An example of a calling application is AWS Elemental MediaLive. </p> <p>The key contents of the feed is an array of outputs. Each output represents an Elemental Inference feature. After you create the feed, you must associate a resource with the feed. At that point, you will have a useable feed: resource - feed - output or outputs. </p>",
+    "CreateFunction": "<p>Creates a function. A function analyzes a feed by building a request from the feed's media and metadata, optionally sending that request to an Amazon Bedrock model in your account, and publishing the result to the feed's metadata timeline. </p> <p>A function runs only after you attach it to a feed as a function output. For more information, see <a href=\"https://docs.aws.amazon.com/elemental-inference/latest/userguide/functions.html\">Using functions</a> in the <i>AWS Elemental Inference User Guide</i>. </p>",
+    "CreateQuestionSet": "<p>Creates a question set. Use a question set to get answers about content that's specific to your business, in addition to the built-in contextual metadata classifications. A question set contains your own questions. You ask Elemental Inference these questions about each shot or scene of the media in a contextual metadata output, and Elemental Inference answers each question with scores. To use a question set, reference it in the customQuestions property of the contextual metadata configuration of a feed output. </p> <p>CreateQuestionSet creates the question set with a DRAFT version that contains the questions in the request. To change DRAFT, use UpdateQuestionSet. To publish DRAFT as a numbered version, use CreateQuestionSetVersion. You can't change a published version. </p> <p>A question set can contain the following types of questions. You must specify at least one question. </p> <ul> <li> <p>yesNo – Elemental Inference answers yes or no.</p> </li> <li> <p>yesNoPerOption – Elemental Inference answers yes or no for each option.</p> </li> <li> <p>chooseOne – Elemental Inference chooses one of the options.</p> </li> </ul> <p>A version can contain up to 100 scored items, where each yesNo question, each option of a yesNoPerOption question, and each chooseOne question counts as one item. The name of each question must be unique across all three types. </p>",
+    "CreateQuestionSetVersion": "<p>Publishes the DRAFT version of the specified question set as a new version. The new version has the same name and questions as DRAFT, and you can't change it. DRAFT doesn't change, so you can continue to update it. </p> <p>Version numbers start at 1, and each new version has the next number. Elemental Inference never reuses a version number, even after you delete that version. </p> <p>If DRAFT hasn't changed since the latest published version, Elemental Inference doesn't create a version. Instead, it returns the latest version. A change to the name of the question set counts as a change to DRAFT. </p> <p>A question set can have a limited number of versions. If the question set already has the maximum number of versions, Elemental Inference returns ServiceQuotaExceededException. To free space for a new version, delete a version that you no longer need, or create a new question set. </p>",
     "CreateScheduleAction": "<p>Creates a schedule action on a feed. A schedule action applies configuration changes to the feed at a time that you specify, in the same way as an UpdateFeed request. </p> <p>Elemental Inference validates the targets of the action when you create it.</p>",
     "DeleteDictionary": "<p>Deletes the specified dictionary. You cannot delete a dictionary that is referenced by a feed. You must first remove the dictionary reference from the feed's subtitling configuration. </p>",
     "DeleteFeed": "<p>Deletes the specified feed. You can delete the feed at any time. Elemental Inference doesn't block you from deleting a feed when the calling application is calling PutMedia or GetMetadata on that feed, although both these calls will start to fail. For more information about managing inactive feeds, see the Elemental Inference User Guide. </p>",
     "DeleteFeedPolicy": "<p>Deletes the resource-based policy attached to the specified feed. After you delete the policy, the operation revokes the cross-account access that the policy granted. </p>",
+    "DeleteFunction": "<p>Deletes a function. If any feed still references the function, the operation returns a ConflictException. A disabled function output still references the function. Use GetFunction to find those feeds, then remove the function output from each one with UpdateFeed, or delete the feed, before retrying. </p> <p>Deleting a function doesn't delete the metadata that it has already produced.</p>",
+    "DeleteQuestionSet": "<p>Deletes the specified question set, including its DRAFT version and all its published versions. You can't delete a question set while any feed references any of its versions, including an archived feed. You must first remove the question set from the customQuestions configuration of each feed output that references it, or delete those feeds. </p>",
+    "DeleteQuestionSetVersion": "<p>Deletes a published version of the specified question set. You can't delete a version while a feed references it, including an archived feed. You can't restore a deleted version, and Elemental Inference doesn't reuse its number. </p> <p>You can't delete the DRAFT version on its own. To delete DRAFT, delete the question set by using DeleteQuestionSet. </p> <p>Deleting a version doesn't change the latestVersion of the question set, even if you delete the highest version. </p>",
     "DeleteScheduleAction": "<p>Deletes a schedule action from a feed. A deleted action never runs.</p> <p>You can delete only an action whose status is PENDING. Deleting an action doesn't reverse changes that the action already made to the feed. When you delete or archive a feed, Elemental Inference deletes all the schedule actions on that feed. </p>",
     "DisassociateFeed": "<p>Releases the resource (the source media) that is associated with this feed. The outputs in the feed become DISABLED. </p>",
     "ExportDictionaryEntries": "<p>Exports the entries from the specified dictionary.</p>",
@@ -16,8 +22,13 @@
     "GetFeed": "<p>Retrieves information about the specified feed.</p>",
     "GetFeedPolicy": "<p>Retrieves the resource-based policy attached to the specified feed.</p>",
     "GetFixture": "<p>Retrieves information about the specified fixture (a sports event, such as a specific basketball game). You obtain a fixtureId from SearchFixtures, or from the clipping output of a feed. </p>",
+    "GetFunction": "<p>Retrieves the details of a function, including its expressions, the media context that Elemental Inference derived from the request expression, and the feeds that currently reference it. </p>",
+    "GetQuestionSet": "<p>Retrieves information about the specified question set at one version. By default, GetQuestionSet returns the DRAFT version. To retrieve a published version, specify questionSetVersion. </p>",
     "ListDictionaries": "<p>Lists the dictionaries in your account.</p>",
     "ListFeeds": "<p>Displays a list of feeds that belong to this AWS account.</p>",
+    "ListFunctions": "<p>Lists the functions in this account, in this Region. Each entry is a summary. To get the expressions of a function, use GetFunction. </p>",
+    "ListQuestionSetVersions": "<p>Lists the versions of the specified question set. The list starts with the DRAFT version, followed by the published versions from the highest version number to the lowest. The list doesn't include deleted versions. </p> <p>The response doesn't include the questions in each version. To retrieve them, use GetQuestionSet and specify questionSetVersion. </p>",
+    "ListQuestionSets": "<p>Lists the question sets in your account. The response doesn't include the questions in each question set. To retrieve them, use GetQuestionSet. </p>",
     "ListScheduleActions": "<p>Displays a list of the schedule actions on a feed, including the status of each action and, for a failed action, information about why it failed. </p> <p>Elemental Inference keeps an action whose status is COMPLETED or FAILED for about 48 hours after its scheduled time, and then deletes it automatically. </p>",
     "ListTagsForResource": "<p>List all tags that are on an Elemental Inference resource in the current region.</p>",
     "PutFeedPolicy": "<p>Attaches or replaces a resource-based policy on the specified feed. A resource-based policy grants cross-account access to the feed. </p>",
@@ -25,7 +36,9 @@
     "TagResource": "<p>Associates the specified tags to the resource identified by the specified resourceArn in the current region. If existing tags on a resource are not specified in the request parameters, they are not changed. When a resource is deleted, the tags associated with that resource are also deleted. </p>",
     "UntagResource": "<p>Deletes specified tags from the specified resource in the current region.</p>",
     "UpdateDictionary": "<p>Updates the specified dictionary.</p>",
-    "UpdateFeed": "<p>Updates the name and/or outputs in a feed. </p> <p>UpdateFeed is a PUT operation, which means that the payload that you specify completely overwrites the existing payload. </p> <p>This means that if you want to touch the array of outputs, you must pass in the full new list. So you must omit outputs you want to delete, and include outputs you want to add or modify. </p> <p>If you want to patch the array of outputs to make selective additions, use AssociateFeed. </p>"
+    "UpdateFeed": "<p>Updates the name and/or outputs in a feed. </p> <p>UpdateFeed is a PUT operation, which means that the payload that you specify completely overwrites the existing payload. </p> <p>This means that if you want to touch the array of outputs, you must pass in the full new list. So you must omit outputs you want to delete, and include outputs you want to add or modify. </p> <p>If you want to patch the array of outputs to make selective additions, use AssociateFeed. </p>",
+    "UpdateFunction": "<p>Updates a function. Include only the parameters that you want to change; parameters that you don't include aren't affected. Elemental Inference validates the updated expressions in the same way as CreateFunction. </p> <p>While a feed references the function, you can change only its expressions and its description, and you can set eventBridgeDelivery to DISABLED but not to ENABLED. The request expression must keep referencing the same media context, as reported in contextTypes. Changing an expression changes the behavior of every feed that references the function. </p>",
+    "UpdateQuestionSet": "<p>Updates the DRAFT version of the specified question set. UpdateQuestionSet doesn't create a version and doesn't change published versions. To publish the updated DRAFT as a new version, use CreateQuestionSetVersion. </p> <p>UpdateQuestionSet replaces questions one type at a time. For each of yesNo, yesNoPerOption, and chooseOne: if you omit the array, DRAFT keeps its questions of that type. If you include the array, it replaces all the questions of that type in DRAFT. If you include an empty array, DRAFT no longer has questions of that type. The updated DRAFT must follow the same rules as in CreateQuestionSet, and Elemental Inference applies those rules to the questions that DRAFT keeps as well as to the questions in the request. </p> <p>Feeds that reference the DRAFT version use the updated questions. To make sure that the questions for a feed don't change, reference a published version instead. </p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -54,6 +67,24 @@
         "FeedAssociation$associatedResourceName": "<p>The name of the associated resource.</p>"
       }
     },
+    "BedrockApi": {
+      "base": null,
+      "refs": {
+        "BedrockFunctionTarget$api": "<p>The Amazon Bedrock API to call. The only valid value is INVOKE_MODEL.</p>"
+      }
+    },
+    "BedrockFunctionTarget": {
+      "base": "<p>An Amazon Bedrock model to invoke. Elemental Inference invokes the model in your account by assuming the feed's access role, so a feed that runs this function must specify an accessRoleArn. The invocation is subject to your Amazon Bedrock quotas and appears on your bill. </p>",
+      "refs": {
+        "FunctionTarget$bedrock": "<p>Send the request to an Amazon Bedrock model.</p>"
+      }
+    },
+    "BedrockFunctionTargetModelString": {
+      "base": null,
+      "refs": {
+        "BedrockFunctionTarget$model": "<p>The model to invoke. Specify one of the following:</p> <ul> <li> <p>A model ID.</p> </li> <li> <p>An inference profile ID.</p> </li> <li> <p>The ARN of a custom model.</p> </li> <li> <p>The ARN of a provisioned model.</p> </li> </ul> <p>Elemental Inference invokes the model in the Region of the feed. To use a model in other Regions, specify a cross-Region inference profile ID. A custom or provisioned model must be in the Region of the feed. </p> <p>The request expression must produce a request body that this model accepts, and the model must accept the kind of media that the request expression references. For example, a text-only model can't accept a request that references media.frames. </p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
@@ -64,10 +95,45 @@
         "UpdateOutput$fromAssociation": "<p>Elemental Inference originally sets this parameter to True if this output was created by AssociateFeed or to False if this output was created by CreateFeed or UpdateFeed. </p> <p>You must not change this value. Therefore, use GetFeed to determine the current value. Then in the UpdateFeed request, if the current value is True, include this parameter with a value of True. If it's False, omit the parameter. </p>"
       }
     },
+    "ChooseOneOptionList": {
+      "base": "<p>An array of the options of a chooseOne question.</p>",
+      "refs": {
+        "ChooseOneQuestion$options": "<p>The options that Elemental Inference chooses from. You can specify from 2 to 26 options. The question counts as one item toward the limit of 100 scored items in a version, regardless of how many options it has. </p>"
+      }
+    },
+    "ChooseOneQuestion": {
+      "base": "<p>A question that you ask Elemental Inference, which answers by choosing one of its options. You specify it in the chooseOne array of a question set. </p>",
+      "refs": {
+        "ChooseOneQuestionList$member": null
+      }
+    },
+    "ChooseOneQuestionList": {
+      "base": "<p>An array of ChooseOneQuestion objects.</p>",
+      "refs": {
+        "CreateQuestionSetRequest$chooseOne": "<p>An array of questions that Elemental Inference answers by choosing one of their options. You can specify up to 10 chooseOne questions. An empty array is the same as omitting this property. </p>",
+        "CreateQuestionSetResponse$chooseOne": "<p>The chooseOne questions that you specified in the request, in the order that you specified them. Elemental Inference doesn't return this property if the request didn't include any chooseOne questions. </p>",
+        "CreateQuestionSetVersionResponse$chooseOne": "<p>The chooseOne questions in this version. Elemental Inference doesn't return this property if the version has no chooseOne questions. </p>",
+        "GetQuestionSetResponse$chooseOne": "<p>The chooseOne questions in this version. Elemental Inference doesn't return this property if the version has no chooseOne questions. </p>",
+        "UpdateQuestionSetRequest$chooseOne": "<p>An array of questions that Elemental Inference answers by choosing one of their options, to replace all the chooseOne questions in DRAFT. You can specify up to 10 chooseOne questions. If not specified, the chooseOne questions are not changed. To remove all the chooseOne questions, specify an empty array. </p>",
+        "UpdateQuestionSetResponse$chooseOne": "<p>The chooseOne questions in this version. Elemental Inference doesn't return this property if the version has no chooseOne questions. </p>"
+      }
+    },
+    "ClipTrigger": {
+      "base": "<p>The perClip trigger, which runs the function each time an event clipping output reports events. Events that the output reports together share one run, and media.clip.events contains all of them. To choose this trigger, set perClip to an empty object. </p> <p>Specify clippingSettings to name the event clipping output that reports the events. You can't use this trigger with a function that references media.transcript or media.contextual. </p>",
+      "refs": {
+        "Trigger$perClip": "<p>Run the function once for each clip that an event clipping output detects. Requires clippingSettings. Can't be used with a function that references media.transcript or media.contextual. </p>"
+      }
+    },
     "ClippingConfig": {
       "base": "<p>A type of OutputConfig, used when the output in a feed is for the clip feature.</p>",
       "refs": {
         "OutputConfig$clipping": "<p>The output config type that applies to the clipping feature.</p>"
+      }
+    },
+    "ClippingSettings": {
+      "base": "<p>The event clipping output on this feed that provides events for a perClip trigger and media.clip for a function. Specify this structure for a perClip trigger, and for a function that references media.clip on a fixedInterval trigger. </p> <p>If the function output is ENABLED, the output that you name must also be ENABLED.</p>",
+      "refs": {
+        "FunctionConfig$clippingSettings": "<p>The event clipping output on this feed to read clips from. Required for a perClip trigger, and for a function that references media.clip. </p>"
       }
     },
     "Competitor": {
@@ -87,10 +153,31 @@
       "base": "<p>The request could not be completed due to a conflict.</p>",
       "refs": {}
     },
+    "ContextType": {
+      "base": "<p>One kind of media context that a function reads. Elemental Inference derives this value from the media paths that the request expression references: </p> <ul> <li> <p>FRAMES – Derived from media.frames.</p> </li> <li> <p>SUBTITLES – Derived from media.transcript.</p> </li> <li> <p>CONTEXTUAL_METADATA – Derived from media.contextual.</p> </li> <li> <p>CLIP_METADATA – Derived from media.clip.</p> </li> </ul> <p>A request expression can reference at most one of SUBTITLES, CONTEXTUAL_METADATA, and CLIP_METADATA, in addition to FRAMES. </p>",
+      "refs": {
+        "ContextTypeList$member": null
+      }
+    },
+    "ContextTypeList": {
+      "base": null,
+      "refs": {
+        "CreateFunctionResponse$contextTypes": "<p>The kinds of media context that this function uses. Elemental Inference derives this field from the media paths that the request expression references; you can't set it. An empty list means that the expression references no media, so Elemental Inference supplies none at run time. </p>",
+        "FunctionSummary$contextTypes": "<p>The kinds of media context that this function uses. Elemental Inference derives this field from the media paths that the request expression references; you can't set it. An empty list means that the expression references no media, so Elemental Inference supplies none at run time. </p>",
+        "GetFunctionResponse$contextTypes": "<p>The kinds of media context that this function uses. Elemental Inference derives this field from the media paths that the request expression references; you can't set it. An empty list means that the expression references no media, so Elemental Inference supplies none at run time. </p>",
+        "UpdateFunctionResponse$contextTypes": "<p>The kinds of media context that this function uses. Elemental Inference derives this field from the media paths that the request expression references; you can't set it. An empty list means that the expression references no media, so Elemental Inference supplies none at run time. </p>"
+      }
+    },
     "ContextualMetadataConfig": {
       "base": "<p>The output configuration settings for the contextual metadata feature. Use this structure when the feed output generates metadata that describes the media content. </p>",
       "refs": {
         "OutputConfig$contextualMetadata": "<p>The output config type that applies to the contextual metadata feature.</p>"
+      }
+    },
+    "ContextualMetadataSettings": {
+      "base": "<p>The contextual metadata output on this feed that provides scenes for a perScene trigger and media.contextual for a function. Specify this structure for a perScene trigger, and for a function that references media.contextual on a perShot trigger. </p> <p>If the function output is ENABLED, the output that you name must also be ENABLED.</p>",
+      "refs": {
+        "FunctionConfig$contextualMetadataSettings": "<p>The contextual metadata output on this feed to read scenes and classifications from. Required for a perScene trigger, and for a function that references media.contextual on a perShot trigger. </p>"
       }
     },
     "CreateDictionaryRequest": {
@@ -109,6 +196,26 @@
       "base": null,
       "refs": {}
     },
+    "CreateFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateFunctionRequestRequestExpressionString": {
+      "base": null,
+      "refs": {
+        "CreateFunctionRequest$requestExpression": "<p>The JSONata expression that builds the request. Elemental Inference evaluates it against the media object of the feed, which holds the media and metadata that the function asked for. Maximum length: 5,120 characters. </p> <p>When you save the function, Elemental Inference evaluates the expression against sample media and rejects it if the evaluation fails. For a Bedrock target, the result must be a JSON object; Elemental Inference doesn't check that the object is a valid request body for the model. The expression can reference at most one of media.transcript, media.contextual, and media.clip. For a passthrough target, it can't reference media.frames. </p>"
+      }
+    },
+    "CreateFunctionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateFunctionResponseRequestExpressionString": {
+      "base": null,
+      "refs": {
+        "CreateFunctionResponse$requestExpression": "<p>The JSONata expression that builds the request. Elemental Inference evaluates it against the media object of the feed, which holds the media and metadata that the function asked for. </p>"
+      }
+    },
     "CreateOutput": {
       "base": "<p>Contains configuration information about one output in a feed. It is used in the AssociateFeed and the CreateFeed actions. </p>",
       "refs": {
@@ -122,6 +229,22 @@
         "CreateFeedRequest$outputs": "<p>An array of outputs for this feed. Each output represents a specific Elemental Inference feature. For example, there is one output type for the smart crop feature. You must specify at least one output, but you can later add outputs using AssociateFeed, or add, modify, and delete outputs using UpdateFeed. </p>"
       }
     },
+    "CreateQuestionSetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateQuestionSetResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateQuestionSetVersionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateQuestionSetVersionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateScheduleActionRequest": {
       "base": null,
       "refs": {}
@@ -134,6 +257,12 @@
       "base": "<p>A type of OutputConfig, used when the output in a feed is for the crop feature.</p>",
       "refs": {
         "OutputConfig$cropping": "<p>The output config type that applies to the cropping feature.</p>"
+      }
+    },
+    "CustomQuestionsConfig": {
+      "base": "<p>The question sets that you ask Elemental Inference about the media in a contextual metadata output. You must specify at least one of shot or scene. They can reference the same version of the same question set. </p>",
+      "refs": {
+        "ContextualMetadataConfig$customQuestions": "<p>The question sets that you ask Elemental Inference about each shot, each scene, or both, in this output. </p> <p>If you specify customQuestions, you must also set extendedAnalysis to DISABLED. If you omit extendedAnalysis, it defaults to ENABLED, and the request fails. </p> <p>While a feed references a version of a question set, you can't delete that version or the question set. </p>"
       }
     },
     "DataSourceConfiguration": {
@@ -166,6 +295,30 @@
       "refs": {}
     },
     "DeleteFeedResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteFunctionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteQuestionSetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteQuestionSetResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteQuestionSetVersionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteQuestionSetVersionResponse": {
       "base": null,
       "refs": {}
     },
@@ -251,6 +404,16 @@
       "base": null,
       "refs": {}
     },
+    "EventBridgeDeliveryMode": {
+      "base": "<p>Whether Elemental Inference sends a function's marked results to Amazon EventBridge.</p> <ul> <li> <p>ENABLED – Elemental Inference sends each result that is a JSON object with a top-level <code>eventBridge</code> field set to <code>true</code> as an event. </p> </li> <li> <p>DISABLED – Elemental Inference doesn't send events.</p> </li> </ul>",
+      "refs": {
+        "CreateFunctionRequest$eventBridgeDelivery": "<p>Specifies whether Elemental Inference also sends this function's results to Amazon EventBridge. Elemental Inference sends a result only when the result is a JSON object with a top-level <code>eventBridge</code> field set to <code>true</code>. It sends the result, unchanged, as a Function Metadata Generated event to the default event bus in your account, after the result is available from GetMetadata. If the result is larger than 64 KB, the event has <code>resultOmitted</code> set to <code>true</code> in place of the result. </p> <p>Valid values:</p> <ul> <li> <p>ENABLED – Elemental Inference sends each marked result as an event.</p> </li> <li> <p>DISABLED (default) – Elemental Inference doesn't send events.</p> </li> </ul> <p>For a Bedrock target, ENABLED requires a response expression, because the model response itself never has a top-level <code>eventBridge</code> field. A feed output that runs a function with ENABLED can't use a fixedInterval trigger shorter than 4 seconds. </p>",
+        "CreateFunctionResponse$eventBridgeDelivery": "<p>Indicates whether Elemental Inference also sends this function's results to Amazon EventBridge. With ENABLED, each result that is a JSON object with a top-level <code>eventBridge</code> field set to <code>true</code> is also sent as a Function Metadata Generated event to the default event bus in your account. </p>",
+        "GetFunctionResponse$eventBridgeDelivery": "<p>Indicates whether Elemental Inference also sends this function's results to Amazon EventBridge. With ENABLED, each result that is a JSON object with a top-level <code>eventBridge</code> field set to <code>true</code> is also sent as a Function Metadata Generated event to the default event bus in your account. </p>",
+        "UpdateFunctionRequest$eventBridgeDelivery": "<p>Specifies whether Elemental Inference also sends this function's marked results to Amazon EventBridge, as described for CreateFunction. If you omit this parameter, the current value is kept. While a feed references the function, you can change this value to DISABLED, but not to ENABLED. </p>",
+        "UpdateFunctionResponse$eventBridgeDelivery": "<p>Indicates whether Elemental Inference also sends this function's results to Amazon EventBridge. With ENABLED, each result that is a JSON object with a top-level <code>eventBridge</code> field set to <code>true</code> is also sent as a Function Metadata Generated event to the default event bus in your account. </p>"
+      }
+    },
     "ExportDictionaryEntriesRequest": {
       "base": null,
       "refs": {}
@@ -262,7 +425,7 @@
     "ExtendedAnalysisMode": {
       "base": null,
       "refs": {
-        "ContextualMetadataConfig$extendedAnalysis": "<p>Specifies whether Elemental Inference generates extended analysis of the media content for this output. Extended analysis identifies the people, environments, brands, and on-screen text in the media content. This setting is independent of <code>summaryGeneration</code>. </p> <p>Valid values:</p> <ul> <li> <p>ENABLED (default) – Elemental Inference populates the people, environments, brands, and on-screen text fields. </p> </li> <li> <p>DISABLED – Elemental Inference doesn't populate the people, environments, brands, and on-screen text fields. </p> </li> </ul>"
+        "ContextualMetadataConfig$extendedAnalysis": "<p>Specifies whether Elemental Inference generates extended analysis of the media content for this output. Extended analysis identifies the people, environments, brands, and on-screen text in the media content. This setting is independent of <code>summaryGeneration</code>. </p> <p>Valid values:</p> <ul> <li> <p>ENABLED (default) – Elemental Inference populates the people, environments, brands, and on-screen text fields. </p> </li> <li> <p>DISABLED – Elemental Inference doesn't populate the people, environments, brands, and on-screen text fields. </p> </li> </ul> <p>If you specify <code>customQuestions</code>, you must set this property to DISABLED. </p>"
       }
     },
     "FeedArn": {
@@ -314,8 +477,15 @@
       "base": null,
       "refs": {
         "CreateDictionaryResponse$references": "<p>A list of feed IDs that reference this dictionary.</p>",
+        "CreateFunctionResponse$references": "<p>The IDs of the feeds that have a function output, enabled or disabled, that references this function. While this list isn't empty, the function can't be deleted, and its name and target can't be changed. </p>",
+        "CreateQuestionSetResponse$references": "<p>A list of feed IDs that reference this version of the question set. For a new question set, the list is empty. </p>",
+        "CreateQuestionSetVersionResponse$references": "<p>A list of feed IDs that reference this version of the question set. For a new version, the list is empty. </p>",
         "GetDictionaryResponse$references": "<p>A list of feed IDs that reference this dictionary.</p>",
-        "UpdateDictionaryResponse$references": "<p>A list of feed IDs that reference this dictionary.</p>"
+        "GetFunctionResponse$references": "<p>The IDs of the feeds that have a function output, enabled or disabled, that references this function. While this list isn't empty, the function can't be deleted, and its name and target can't be changed. </p>",
+        "GetQuestionSetResponse$references": "<p>A list of feed IDs that reference this version of the question set. The list doesn't include feeds that reference other versions. </p>",
+        "UpdateDictionaryResponse$references": "<p>A list of feed IDs that reference this dictionary.</p>",
+        "UpdateFunctionResponse$references": "<p>The IDs of the feeds that have a function output, enabled or disabled, that references this function. While this list isn't empty, the function can't be deleted, and its name and target can't be changed. </p>",
+        "UpdateQuestionSetResponse$references": "<p>A list of feed IDs that reference the DRAFT version of the question set.</p>"
       }
     },
     "FeedStatus": {
@@ -358,6 +528,18 @@
         "SearchFilter$values": "<p>An array of values to match in the dimension that you specified in name. You can specify up to 10 values. A fixture appears in the results if it matches at least one of these values. </p>"
       }
     },
+    "FixedIntervalTrigger": {
+      "base": "<p>The settings of the fixedInterval trigger, which runs the function once for every intervalSeconds of content. A function that references media.transcript must use this trigger. You can't use this trigger with a function that references media.contextual. </p> <p>If the function references media.transcript, specify subtitlingSettings. If the function references media.clip, specify clippingSettings. Each run then receives the events that the event clipping output reported during the interval, in media.clip.events. </p>",
+      "refs": {
+        "Trigger$fixedInterval": "<p>Run the function at a fixed interval of content. This is the only trigger for a function that references media.transcript. Can't be used with a function that references media.contextual. </p>"
+      }
+    },
+    "FixedIntervalTriggerIntervalSecondsInteger": {
+      "base": null,
+      "refs": {
+        "FixedIntervalTrigger$intervalSeconds": "<p>The amount of content, in seconds, between runs of the function. Valid range: 1 to 60. For a function with eventBridgeDelivery set to ENABLED, the minimum is 4. </p>"
+      }
+    },
     "FixedModeScheduleActionStartSettings": {
       "base": "<p>Sets the time at which a schedule action runs once. This is a type of ScheduleActionStartConfiguration. </p>",
       "refs": {
@@ -390,6 +572,122 @@
       "base": null,
       "refs": {
         "SearchFixturesResponse$fixtures": "<p>An array of FixtureSummary objects, one for each fixture that matches the search. The array is empty if no fixtures match. </p>"
+      }
+    },
+    "FrameSamplingMode": {
+      "base": null,
+      "refs": {
+        "FrameSamplingStrategy$mode": "<p>Which frames of the window to send: FIRST (the first frames), UNIFORM (frames spread evenly across the window), or LAST (the last frames). </p>"
+      }
+    },
+    "FrameSamplingStrategy": {
+      "base": "<p>Specifies how Elemental Inference chooses frames from the media of each run, and how many frames it chooses. The media of a run is the interval, shot, scene, or clips that the run covers. </p>",
+      "refs": {
+        "FrameSettings$frameSampling": "<p>The method for choosing which frames to send.</p>"
+      }
+    },
+    "FrameSamplingStrategyCountInteger": {
+      "base": null,
+      "refs": {
+        "FrameSamplingStrategy$count": "<p>The number of frames to send on each run. Valid range: 1 to 64. The default is 1. Each frame adds to the size of the model request and to what the model charges for it. </p>"
+      }
+    },
+    "FrameSettings": {
+      "base": "<p>The frames that a function receives in media.frames on each run: which frames, how many, and at what size. Elemental Inference applies these settings only to a function that references media.frames. </p> <p>When you add or change the function output, Elemental Inference estimates the size of the frames and rejects settings whose frames won't fit in one model request. To send more frames in each request, specify a smaller frameSize. </p>",
+      "refs": {
+        "FunctionConfig$frameSettings": "<p>The frames to send on each run: how many, which ones, and at what size. Applies to a function that references media.frames. If you omit this structure, Elemental Inference sends the first frame of the window, at its source size. </p>"
+      }
+    },
+    "FrameSize": {
+      "base": "<p>The dimensions, in pixels, of each frame that a function sends. Elemental Inference resizes each frame to exactly this width and height. </p>",
+      "refs": {
+        "FrameSettings$frameSize": "<p>The size to resize each frame to. If you omit this structure, frames keep their source size. Smaller frames reduce the size of the model request. </p>"
+      }
+    },
+    "FrameSizeHeightPixelsInteger": {
+      "base": null,
+      "refs": {
+        "FrameSize$heightPixels": "<p>The height of each frame, in pixels. Valid range: 1 to 720.</p>"
+      }
+    },
+    "FrameSizeWidthPixelsInteger": {
+      "base": null,
+      "refs": {
+        "FrameSize$widthPixels": "<p>The width of each frame, in pixels. Valid range: 1 to 1280.</p>"
+      }
+    },
+    "FunctionArn": {
+      "base": null,
+      "refs": {
+        "CreateFunctionResponse$arn": "<p>The ARN of the function.</p>",
+        "DeleteFunctionResponse$arn": "<p>The ARN of the function.</p>",
+        "FunctionConfig$functionArn": "<p>The ARN of the function to run. The function must exist in the same account and the same Region as the feed. </p>",
+        "FunctionSummary$arn": "<p>The ARN of the function.</p>",
+        "GetFunctionResponse$arn": "<p>The ARN of the function.</p>",
+        "UpdateFunctionResponse$arn": "<p>The ARN of the function.</p>"
+      }
+    },
+    "FunctionConfig": {
+      "base": "<p>The output configuration settings for a function. Use this structure to run a function on this feed. The name of the output is the name that you pass to GetMetadata to read the results. </p> <p>Include the settings that the function's media context and trigger require. Elemental Inference ignores settings that neither uses. It also rejects settings whose frames are estimated to exceed the size of a single model request. </p> <p>A feed that has an enabled function output must also have an enabled cropping, clipping, subtitling, or contextual metadata output. A feed that runs a function with a Bedrock target must specify an accessRoleArn. </p>",
+      "refs": {
+        "OutputConfig$function": "<p>The output config type that applies to a function.</p>"
+      }
+    },
+    "FunctionDescription": {
+      "base": null,
+      "refs": {
+        "CreateFunctionRequest$description": "<p>The description of the function. Maximum length: 1,024 characters.</p>",
+        "CreateFunctionResponse$description": "<p>The description of the function.</p>",
+        "FunctionSummary$description": "<p>The description of the function.</p>",
+        "GetFunctionResponse$description": "<p>The description of the function.</p>",
+        "UpdateFunctionRequest$description": "<p>A new description for the function.</p>",
+        "UpdateFunctionResponse$description": "<p>The description of the function.</p>"
+      }
+    },
+    "FunctionId": {
+      "base": null,
+      "refs": {
+        "CreateFunctionResponse$id": "<p>The ID of the function.</p>",
+        "DeleteFunctionRequest$id": "<p>The ID of the function.</p>",
+        "DeleteFunctionResponse$id": "<p>The ID of the function.</p>",
+        "FunctionSummary$id": "<p>The ID of the function.</p>",
+        "GetFunctionRequest$id": "<p>The ID of the function.</p>",
+        "GetFunctionResponse$id": "<p>The ID of the function.</p>",
+        "UpdateFunctionRequest$id": "<p>The ID of the function.</p>",
+        "UpdateFunctionResponse$id": "<p>The ID of the function.</p>"
+      }
+    },
+    "FunctionStatus": {
+      "base": "<p>The status of a function.</p> <ul> <li> <p>CREATING – CreateFunction returns this status. The function is ready to use as soon as the request succeeds. </p> </li> <li> <p>AVAILABLE – No feed references the function. Every property can be changed, and the function can be deleted. </p> </li> <li> <p>REFERENCED – At least one feed references the function, so the function can't be deleted. Only the expressions and the description can be changed, and eventBridgeDelivery can be set to DISABLED but not to ENABLED. The request expression must keep referencing the same media context. </p> </li> <li> <p>DELETING – DeleteFunction returns this status. The function is removed as soon as the request succeeds. </p> </li> <li> <p>DELETED – Not currently returned.</p> </li> </ul>",
+      "refs": {
+        "CreateFunctionResponse$status": "<p>The status of the function. A successful request returns CREATING. The function is ready to use as soon as the request succeeds. </p>",
+        "DeleteFunctionResponse$status": "<p>The status of the function. A successful request returns DELETING. Elemental Inference removes the function before it returns the response. </p>",
+        "FunctionSummary$status": "<p>The status of the function.</p>",
+        "GetFunctionResponse$status": "<p>The status of the function.</p>",
+        "UpdateFunctionResponse$status": "<p>The status of the function.</p>"
+      }
+    },
+    "FunctionSummary": {
+      "base": "<p>Contains identifying and configuration details for a function, including its name, target, status, and derived media context.</p>",
+      "refs": {
+        "FunctionSummaryList$member": null
+      }
+    },
+    "FunctionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListFunctionsResponse$functions": "<p>An array of function summaries.</p>"
+      }
+    },
+    "FunctionTarget": {
+      "base": "<p>The destination for the request that a function builds. Specify exactly one member.</p>",
+      "refs": {
+        "CreateFunctionRequest$target": "<p>The destination for the request that the function builds.</p>",
+        "CreateFunctionResponse$target": "<p>The destination for the request that the function builds.</p>",
+        "FunctionSummary$target": "<p>The destination for the request that the function builds.</p>",
+        "GetFunctionResponse$target": "<p>The destination for the request that the function builds.</p>",
+        "UpdateFunctionRequest$target": "<p>A new target for the function. You can't change the target while the function is referenced by a feed. </p>",
+        "UpdateFunctionResponse$target": "<p>The destination for the request that the function builds.</p>"
       }
     },
     "GatewayTimedOutException": {
@@ -428,6 +726,20 @@
       "base": null,
       "refs": {}
     },
+    "GetFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetFunctionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetFunctionResponseRequestExpressionString": {
+      "base": null,
+      "refs": {
+        "GetFunctionResponse$requestExpression": "<p>The JSONata expression that builds the request. Elemental Inference evaluates it against the media object of the feed, which holds the media and metadata that the function asked for. </p>"
+      }
+    },
     "GetOutput": {
       "base": "<p>Contains configuration information about one output in a feed. It is used in the GetFeed response. </p>",
       "refs": {
@@ -441,6 +753,14 @@
         "GetFeedResponse$outputs": "<p>An array of the outputs in the feed.</p>",
         "UpdateFeedResponse$outputs": "<p>The array of outputs in the feed. You might have left this array unchanged, or you might have changed it. </p>"
       }
+    },
+    "GetQuestionSetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetQuestionSetResponse": {
+      "base": null,
+      "refs": {}
     },
     "IamRoleArn": {
       "base": null,
@@ -462,6 +782,16 @@
     "InternalServerErrorException": {
       "base": "<p>An internal server error occurred. This is a temporary condition and the request can be retried. If the problem persists, contact AWS Support. </p>",
       "refs": {}
+    },
+    "JsonataExpression": {
+      "base": null,
+      "refs": {
+        "CreateFunctionRequest$responseExpression": "<p>The JSONata expression that selects what to store. Elemental Inference evaluates it against the result as its root: the model response for a Bedrock target, or the output of the request expression for a passthrough target. If a function has no response expression, Elemental Inference stores the entire result. Maximum length: 5,120 characters. </p> <p>When you save the function, Elemental Inference checks that the expression is valid JSONata. For a passthrough target, it also evaluates the request and response expressions together against sample media, and rejects them if they produce no value. </p>",
+        "CreateFunctionResponse$responseExpression": "<p>The JSONata expression that selects what to store. Elemental Inference evaluates it against the result as its root: the model response for a Bedrock target, or the output of the request expression for a passthrough target. If a function has no response expression, Elemental Inference stores the entire result. </p>",
+        "GetFunctionResponse$responseExpression": "<p>The JSONata expression that selects what to store. Elemental Inference evaluates it against the result as its root: the model response for a Bedrock target, or the output of the request expression for a passthrough target. If a function has no response expression, Elemental Inference stores the entire result. </p>",
+        "UpdateFunctionRequest$responseExpression": "<p>A new response expression for the function. To remove the response expression, specify an empty string. A function with a Bedrock target and eventBridgeDelivery set to ENABLED must keep a response expression. </p>",
+        "UpdateFunctionResponse$responseExpression": "<p>The JSONata expression that selects what to store. Elemental Inference evaluates it against the result as its root: the model response for a Bedrock target, or the output of the request expression for a passthrough target. If a function has no response expression, Elemental Inference stores the entire result. </p>"
+      }
     },
     "ListDictionariesRequest": {
       "base": null,
@@ -491,6 +821,48 @@
       "base": null,
       "refs": {}
     },
+    "ListFunctionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFunctionsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListFunctionsRequest$maxResults": "<p>The maximum number of functions to return in one response. Valid range: 1 to 100. The default is 100. </p>"
+      }
+    },
+    "ListFunctionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListQuestionSetVersionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListQuestionSetVersionsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListQuestionSetVersionsRequest$maxResults": "<p>The maximum number of results to return per API request. Valid range: 1 to 100.</p>"
+      }
+    },
+    "ListQuestionSetVersionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListQuestionSetsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListQuestionSetsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListQuestionSetsRequest$maxResults": "<p>The maximum number of results to return per API request. Valid range: 1 to 100.</p>"
+      }
+    },
+    "ListQuestionSetsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListScheduleActionsRequest": {
       "base": null,
       "refs": {}
@@ -513,6 +885,18 @@
       "base": null,
       "refs": {}
     },
+    "OptionName": {
+      "base": "<p>The name of an option. The name can be up to 64 characters. It must start with a letter or an underscore, and can contain only the letters A-Z and a-z, the digits 0-9, and underscores. </p>",
+      "refs": {
+        "QuestionOption$name": "<p>A name for the option. The name must be unique among the options of the question. The name can be up to 64 characters. It must start with a letter or an underscore, and can contain only the letters A-Z and a-z, the digits 0-9, and underscores. </p>"
+      }
+    },
+    "OptionText": {
+      "base": "<p>The text of an option. The text can be up to 16 bytes, encoded in UTF-8.</p>",
+      "refs": {
+        "QuestionOption$text": "<p>The text of the option. The text must be unique among the options of the question, ignoring case. The text can be up to 16 bytes, encoded in UTF-8. It can contain the same characters as the text of a question. </p>"
+      }
+    },
     "OutputConfig": {
       "base": "<p>Contains one typed output. It is used in the CreateOutput, GetOutput, and Update Output structures.</p>",
       "refs": {
@@ -530,6 +914,12 @@
         "UpdateOutputStatus$status": "<p>Specifies whether the output is enabled or disabled after the action runs.</p>"
       }
     },
+    "PassthroughFunctionTarget": {
+      "base": "<p>A target that invokes nothing. Elemental Inference evaluates your request expression, then evaluates your response expression against that result. If the function has no response expression, Elemental Inference stores the result of the request expression. </p> <p>A passthrough function can't reference media.frames. It also needs no access role on the feed. </p>",
+      "refs": {
+        "FunctionTarget$passthrough": "<p>Send the request nowhere. Use this target to reshape the metadata that Elemental Inference already produces, with no model invocation and no model charges. </p>"
+      }
+    },
     "PolicyDocument": {
       "base": null,
       "refs": {
@@ -543,6 +933,12 @@
         "SubtitlingConfig$profanityFilter": "<p>Controls how profanity is handled in the generated subtitles. Valid values: DISABLED (no filtering, default), CENSOR (replace profanity with asterisks), DROP (remove profanity from the transcript). </p>"
       }
     },
+    "PublishedQuestionSetVersion": {
+      "base": "<p>The number of a published version of a question set.</p>",
+      "refs": {
+        "DeleteQuestionSetVersionRequest$questionSetVersion": "<p>The number of the published version to delete. You can't specify DRAFT.</p>"
+      }
+    },
     "PutFeedPolicyRequest": {
       "base": null,
       "refs": {}
@@ -550,6 +946,128 @@
     "PutFeedPolicyResponse": {
       "base": null,
       "refs": {}
+    },
+    "QuestionName": {
+      "base": "<p>The name of a question. The name can be up to 64 characters. It must start with a letter or an underscore, and can contain only the letters A-Z and a-z, the digits 0-9, and underscores. </p>",
+      "refs": {
+        "ChooseOneQuestion$name": "<p>A name for the question. The name must be unique among all the questions in the version, across all question types. The name can be up to 64 characters. It must start with a letter or an underscore, and can contain only the letters A-Z and a-z, the digits 0-9, and underscores. </p>",
+        "YesNoPerOptionQuestion$name": "<p>A name for the question. The name must be unique among all the questions in the version, across all question types. The name can be up to 64 characters. It must start with a letter or an underscore, and can contain only the letters A-Z and a-z, the digits 0-9, and underscores. </p>",
+        "YesNoQuestion$name": "<p>A name for the question. The name must be unique among all the questions in the version, across all question types. The name can be up to 64 characters. It must start with a letter or an underscore, and can contain only the letters A-Z and a-z, the digits 0-9, and underscores. </p>"
+      }
+    },
+    "QuestionOption": {
+      "base": "<p>An option in a yesNoPerOption question or a chooseOne question.</p>",
+      "refs": {
+        "ChooseOneOptionList$member": null,
+        "YesNoPerOptionOptionList$member": null
+      }
+    },
+    "QuestionSetArn": {
+      "base": "<p>The ARN of a question set.</p>",
+      "refs": {
+        "CreateQuestionSetResponse$arn": "<p>The ARN of the question set.</p>",
+        "CreateQuestionSetVersionResponse$arn": "<p>The ARN of the question set.</p>",
+        "DeleteQuestionSetResponse$arn": "<p>The ARN of the deleted question set.</p>",
+        "GetQuestionSetResponse$arn": "<p>The ARN of the question set.</p>",
+        "QuestionSetSummary$arn": "<p>The ARN of the question set.</p>",
+        "UpdateQuestionSetResponse$arn": "<p>The ARN of the question set.</p>"
+      }
+    },
+    "QuestionSetId": {
+      "base": "<p>The ID of a question set.</p>",
+      "refs": {
+        "CreateQuestionSetResponse$id": "<p>A unique ID that Elemental Inference assigns to the question set.</p>",
+        "CreateQuestionSetVersionRequest$id": "<p>The ID of the question set whose DRAFT version you want to publish.</p>",
+        "CreateQuestionSetVersionResponse$id": "<p>The ID of the question set.</p>",
+        "DeleteQuestionSetRequest$id": "<p>The ID of the question set to delete.</p>",
+        "DeleteQuestionSetResponse$id": "<p>The ID of the deleted question set.</p>",
+        "DeleteQuestionSetVersionRequest$id": "<p>The ID of the question set that contains the version.</p>",
+        "GetQuestionSetRequest$id": "<p>The ID of the question set to retrieve.</p>",
+        "GetQuestionSetResponse$id": "<p>The ID of the question set.</p>",
+        "ListQuestionSetVersionsRequest$id": "<p>The ID of the question set whose versions you want to list.</p>",
+        "QuestionSetReference$questionSetId": "<p>The ID of the question set. The question set must be in your account.</p>",
+        "QuestionSetSummary$id": "<p>The ID of the question set.</p>",
+        "UpdateQuestionSetRequest$id": "<p>The ID of the question set to update.</p>",
+        "UpdateQuestionSetResponse$id": "<p>The ID of the question set.</p>"
+      }
+    },
+    "QuestionSetReference": {
+      "base": "<p>Identifies one version of a question set. You specify it in CustomQuestionsConfig.</p>",
+      "refs": {
+        "CustomQuestionsConfig$shot": "<p>The version of a question set to ask Elemental Inference about each shot.</p>",
+        "CustomQuestionsConfig$scene": "<p>The version of a question set to ask Elemental Inference about each scene.</p>"
+      }
+    },
+    "QuestionSetSha256": {
+      "base": "<p>The SHA-256 hash of a version of a question set, as 64 lowercase hexadecimal characters. </p>",
+      "refs": {
+        "CreateQuestionSetResponse$sha256": "<p>The SHA-256 hash of the DRAFT version, as 64 lowercase hexadecimal characters. The hash covers the name of the question set and its questions. You can specify this value in a CreateQuestionSetVersion request, so that Elemental Inference publishes DRAFT only if it hasn't changed. </p>",
+        "CreateQuestionSetVersionRequest$sha256": "<p>The SHA-256 hash of the DRAFT version that you want to publish, as returned by GetQuestionSet or UpdateQuestionSet. If you specify this value, Elemental Inference publishes DRAFT only if its current hash matches. If it doesn't match, because DRAFT changed after you retrieved it, the request fails with ConflictException. </p> <p>If you don't specify this value, Elemental Inference publishes DRAFT as it is when it receives the request. </p>",
+        "CreateQuestionSetVersionResponse$sha256": "<p>The SHA-256 hash of the version, as 64 lowercase hexadecimal characters. It's the same as the hash of the DRAFT version that Elemental Inference published. </p>",
+        "GetQuestionSetResponse$sha256": "<p>The SHA-256 hash of this version, as 64 lowercase hexadecimal characters. The hash covers the name of the question set and its questions at this version. For DRAFT, you can specify this value in a CreateQuestionSetVersion request, so that Elemental Inference publishes DRAFT only if it hasn't changed. </p>",
+        "QuestionSetVersionSummary$sha256": "<p>The SHA-256 hash of this version, as 64 lowercase hexadecimal characters. The hash covers the name of the question set and its questions at this version. </p>",
+        "UpdateQuestionSetResponse$sha256": "<p>The SHA-256 hash of the DRAFT version after the update, as 64 lowercase hexadecimal characters. The hash covers the name of the question set and its questions, so it changes when you rename the question set. You can specify this value in a CreateQuestionSetVersion request, so that Elemental Inference publishes DRAFT only if it hasn't changed since this update. </p>"
+      }
+    },
+    "QuestionSetSummary": {
+      "base": "<p>Contains summary information about a question set. Used in the ListQuestionSets response. </p>",
+      "refs": {
+        "QuestionSetSummaryList$member": null
+      }
+    },
+    "QuestionSetSummaryList": {
+      "base": "<p>An array of QuestionSetSummary objects.</p>",
+      "refs": {
+        "ListQuestionSetsResponse$questionSets": "<p>A list of QuestionSetSummary objects.</p>"
+      }
+    },
+    "QuestionSetVersion": {
+      "base": "<p>A version of a question set: DRAFT or the number of a published version.</p>",
+      "refs": {
+        "CreateQuestionSetResponse$version": "<p>The version that this response describes. For CreateQuestionSet, the version is always DRAFT. </p>",
+        "CreateQuestionSetResponse$latestVersion": "<p>The number of the highest version that you have published for this question set. Elemental Inference doesn't return this property for CreateQuestionSet, because a new question set has no published versions. </p>",
+        "CreateQuestionSetVersionResponse$version": "<p>The number of the version that Elemental Inference published. If DRAFT hadn't changed since the latest version, this is the number of that existing version. </p>",
+        "CreateQuestionSetVersionResponse$latestVersion": "<p>The number of the highest version that you have published for this question set. It's the same as version. </p>",
+        "GetQuestionSetRequest$questionSetVersion": "<p>The version of the question set to retrieve: DRAFT or the number of a published version. If you don't specify a version, Elemental Inference returns DRAFT. </p>",
+        "GetQuestionSetResponse$version": "<p>The version that this response describes: DRAFT or the number of a published version. </p>",
+        "GetQuestionSetResponse$latestVersion": "<p>The number of the highest version that you have published for this question set, even if you have since deleted that version. Elemental Inference doesn't return this property if you haven't published a version. </p>",
+        "QuestionSetReference$version": "<p>The version of the question set: DRAFT or the number of a published version. The version must exist. </p> <p>If you specify DRAFT, the output uses the current DRAFT questions and picks up changes that you make later by using UpdateQuestionSet. To keep the questions for the output fixed, specify a published version. </p>",
+        "QuestionSetSummary$latestVersion": "<p>The number of the highest version that you have published for this question set, even if you have since deleted that version. Elemental Inference doesn't return this property if you haven't published a version. </p>",
+        "QuestionSetVersionSummary$version": "<p>The version: DRAFT or the number of a published version.</p>",
+        "UpdateQuestionSetResponse$version": "<p>The version that this response describes. For UpdateQuestionSet, the version is always DRAFT. </p>",
+        "UpdateQuestionSetResponse$latestVersion": "<p>The number of the highest version that you have published for this question set, even if you have since deleted that version. Elemental Inference doesn't return this property if you haven't published a version. </p>"
+      }
+    },
+    "QuestionSetVersionDescription": {
+      "base": "<p>A description of a published version of a question set.</p>",
+      "refs": {
+        "CreateQuestionSetResponse$description": "<p>The description of the version. Elemental Inference doesn't return this property for CreateQuestionSet, because the DRAFT version has no description. </p>",
+        "CreateQuestionSetVersionRequest$description": "<p>A description of the new version. You can't change the description after Elemental Inference publishes the version. If DRAFT hasn't changed since the latest version, Elemental Inference ignores this value and returns the latest version with its existing description. </p> <p>The description can be up to 256 characters. It can contain the letters A-Z and a-z, the digits 0-9, underscores, spaces, and the following characters: <code>- . ' , @ : ;</code>. </p>",
+        "CreateQuestionSetVersionResponse$description": "<p>The description of the version. For a new version, this is the description that you specified in the request. If DRAFT hadn't changed since the latest version, this is the description of that existing version. Elemental Inference doesn't return this property if the version has no description. </p>",
+        "GetQuestionSetResponse$description": "<p>The description that you specified when you published this version. Elemental Inference doesn't return this property for DRAFT, or for a version that you published without a description. </p>",
+        "QuestionSetVersionSummary$description": "<p>The description that you specified when you published this version. Elemental Inference doesn't return this property for DRAFT, or for a version that you published without a description. </p>",
+        "UpdateQuestionSetResponse$description": "<p>The description of the version. Elemental Inference doesn't return this property for UpdateQuestionSet, because the DRAFT version has no description. </p>"
+      }
+    },
+    "QuestionSetVersionSummary": {
+      "base": "<p>Contains summary information about one version of a question set. Used in the ListQuestionSetVersions response. </p>",
+      "refs": {
+        "QuestionSetVersionSummaryList$member": null
+      }
+    },
+    "QuestionSetVersionSummaryList": {
+      "base": "<p>An array of QuestionSetVersionSummary objects.</p>",
+      "refs": {
+        "ListQuestionSetVersionsResponse$versions": "<p>A list of QuestionSetVersionSummary objects.</p>"
+      }
+    },
+    "QuestionText": {
+      "base": "<p>The text of a question. The text can be up to 256 bytes, encoded in UTF-8.</p>",
+      "refs": {
+        "ChooseOneQuestion$question": "<p>The text of the question. The text can be up to 256 bytes, encoded in UTF-8. It can contain letters in any language, combining marks, digits, spaces, and the following characters: <code>. , ? ! ' \" ( ) - : ; / &amp; %</code>, plus the curly apostrophe and quotation marks (U+2019, U+201C, and U+201D). </p>",
+        "YesNoPerOptionQuestion$question": "<p>The text of the question. The text can be up to 256 bytes, encoded in UTF-8. It can contain letters in any language, combining marks, digits, spaces, and the following characters: <code>. , ? ! ' \" ( ) - : ; / &amp; %</code>, plus the curly apostrophe and quotation marks (U+2019, U+201C, and U+201D). </p>",
+        "YesNoQuestion$question": "<p>The text of the question. The text can be up to 256 bytes, encoded in UTF-8. It can contain letters in any language, combining marks, digits, spaces, and the following characters: <code>. , ? ! ' \" ( ) - : ; / &amp; %</code>, plus the curly apostrophe and quotation marks (U+2019, U+201C, and U+201D). </p>"
+      }
     },
     "RemoveClippingDataSourceConfiguration": {
       "base": "<p>Removes the game from an event clipping output at the action's scheduled time. This is a type of ScheduleActionOperation, and the output must be an event clipping output. </p>",
@@ -577,30 +1095,46 @@
     "ResourceName": {
       "base": null,
       "refs": {
+        "ClippingSettings$outputName": "<p>The name of an ENABLED event clipping output on this feed.</p>",
+        "ContextualMetadataSettings$outputName": "<p>The name of an ENABLED contextual metadata output on this feed.</p>",
         "CreateDictionaryRequest$name": "<p>A user-friendly name for this dictionary.</p>",
         "CreateDictionaryResponse$name": "<p>The name that you specified in the request.</p>",
         "CreateFeedRequest$name": "<p>A user-friendly name for this feed.</p>",
         "CreateFeedResponse$name": "<p>The name that you specified in the request.</p>",
+        "CreateFunctionRequest$name": "<p>A name for this function.</p>",
+        "CreateFunctionResponse$name": "<p>The name of the function.</p>",
         "CreateOutput$name": "<p>A name for the output.</p>",
+        "CreateQuestionSetRequest$name": "<p>A user-friendly name for this question set.</p>",
+        "CreateQuestionSetResponse$name": "<p>The name that you specified in the request.</p>",
+        "CreateQuestionSetVersionResponse$name": "<p>The name of the question set at this version.</p>",
         "CreateScheduleActionRequest$actionName": "<p>A name for the schedule action. The name must be unique within the feed. You can reuse the name of an action that you deleted. </p>",
         "CreateScheduleActionResponse$actionName": "<p>The name that you specified.</p>",
         "DeleteScheduleActionRequest$actionName": "<p>The name of the schedule action that you want to delete.</p>",
         "DeleteScheduleActionResponse$actionName": "<p>The name of the schedule action that Elemental Inference deleted.</p>",
         "DictionarySummary$name": "<p>The name of the dictionary.</p>",
         "FeedSummary$name": "<p>The name of the feed</p>",
+        "FunctionSummary$name": "<p>The name of the function.</p>",
         "GetDictionaryResponse$name": "<p>The name of the dictionary.</p>",
         "GetFeedResponse$name": "<p>The name of the feed.</p>",
+        "GetFunctionResponse$name": "<p>The name of the function.</p>",
         "GetOutput$name": "<p>The name of the output.</p>",
+        "GetQuestionSetResponse$name": "<p>The name of the question set at this version. For a published version, this is the name that the question set had when the version was published. </p>",
+        "QuestionSetSummary$name": "<p>The name of the question set.</p>",
         "RemoveClippingDataSourceConfiguration$outputName": "<p>The name of the output that you want to remove the game from.</p>",
         "ScheduleAction$actionName": "<p>The name of the schedule action. The name is unique within the feed.</p>",
+        "SubtitlingSettings$outputName": "<p>The name of an ENABLED smart subtitles output on this feed.</p>",
         "TemplateGroup$name": "<p>A name for the template group.</p>",
         "UpdateClippingDataSourceConfiguration$outputName": "<p>The name of the output that you want to attach the game to.</p>",
         "UpdateDictionaryRequest$name": "<p>A new name for the dictionary. If not specified, the name is not changed.</p>",
         "UpdateDictionaryResponse$name": "<p>The updated or original name of the dictionary.</p>",
         "UpdateFeedRequest$name": "<p>Required. You can specify the existing name (to leave it unchanged) or a new name. </p>",
         "UpdateFeedResponse$name": "<p>The updated or original name of the feed.</p>",
+        "UpdateFunctionRequest$name": "<p>A new name for the function. You can't change the name while the function is referenced by a feed. </p>",
+        "UpdateFunctionResponse$name": "<p>The name of the function.</p>",
         "UpdateOutput$name": "<p>The name of the output.</p>",
-        "UpdateOutputStatus$outputName": "<p>The name of the output that you want to enable or disable. The output must exist in the feed when you create the action. </p>"
+        "UpdateOutputStatus$outputName": "<p>The name of the output that you want to enable or disable. The output must exist in the feed when you create the action. </p>",
+        "UpdateQuestionSetRequest$name": "<p>A new name for the question set. If not specified, the name is not changed.</p>",
+        "UpdateQuestionSetResponse$name": "<p>The updated or original name of the question set.</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -611,6 +1145,12 @@
       "base": null,
       "refs": {
         "TemplateUriList$member": null
+      }
+    },
+    "SceneTrigger": {
+      "base": "<p>The perScene trigger, which runs the function once for each scene that a contextual metadata output reports. The function runs after the scene ends, with the media of that scene. To choose this trigger, set perScene to an empty object. </p> <p>Specify contextualMetadataSettings to name the contextual metadata output that reports the scenes. You can't use this trigger with a function that references media.transcript or media.clip. </p>",
+      "refs": {
+        "Trigger$perScene": "<p>Run the function once for each scene boundary that a contextual metadata output reports. Requires contextualMetadataSettings. Can't be used with a function that references media.transcript or media.clip. </p>"
       }
     },
     "ScheduleAction": {
@@ -701,6 +1241,12 @@
       "base": "<p>The service is temporarily unable to handle the request. Retry the request. If the problem persists, contact AWS Support. </p>",
       "refs": {}
     },
+    "ShotTrigger": {
+      "base": "<p>The perShot trigger, which runs the function once for each shot that Elemental Inference detects in the video. The function runs after the shot ends, with the media of that shot. To choose this trigger, set perShot to an empty object. The feed must have a video input. </p> <p>You can't use this trigger with a function that references media.transcript or media.clip. If the function references media.contextual, specify contextualMetadataSettings. </p>",
+      "refs": {
+        "Trigger$perShot": "<p>Run the function once for each shot that Elemental Inference detects. Can't be used with a function that references media.transcript or media.clip. </p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
@@ -719,6 +1265,12 @@
         "ListDictionariesResponse$nextToken": "<p>The token to use to retrieve the next batch of results.</p>",
         "ListFeedsRequest$nextToken": "<p>The token that identifies the batch of results that you want to see.</p> <p>For example, you submit a ListFeeds request with MaxResults set at 5. The service returns the first batch of results (up to 5) and a NextToken value. To see the next batch of results, you can submit the ListFeeds request a second time and specify the NextToken value. </p>",
         "ListFeedsResponse$nextToken": "<p>The token that identifies the batch of results that you want to see. For example, you submit a list request with MaxResults set at 5. The service returns the first batch of results (up to 5) and a NextToken value. To see the next batch of results, you can submit the list request a second time and specify the NextToken value. </p>",
+        "ListFunctionsRequest$nextToken": "<p>The token that identifies the page of results to return. Use the nextToken value from a previous response. </p>",
+        "ListFunctionsResponse$nextToken": "<p>The token to use in a subsequent request to get the next page of results. This field is absent when there are no more results. </p>",
+        "ListQuestionSetVersionsRequest$nextToken": "<p>The token that identifies the next batch of results to return.</p>",
+        "ListQuestionSetVersionsResponse$nextToken": "<p>The token to use to retrieve the next batch of results.</p>",
+        "ListQuestionSetsRequest$nextToken": "<p>The token that identifies the next batch of results to return.</p>",
+        "ListQuestionSetsResponse$nextToken": "<p>The token to use to retrieve the next batch of results.</p>",
         "ListScheduleActionsRequest$nextToken": "<p>The token that identifies the batch of results that you want to see. To see the next batch, submit the request a second time and specify the NextToken value that Elemental Inference returned. </p>",
         "ListScheduleActionsResponse$nextToken": "<p>The token that identifies the next batch of results. Elemental Inference returns it only when more results are available. </p>",
         "ResourceNotFoundException$message": null,
@@ -744,6 +1296,12 @@
       "base": "<p>A type of OutputConfig, used when the output in a feed is for the smart subtitling feature. Smart subtitling uses automatic speech recognition (ASR) to generate live TTML subtitles from the audio in your source media. </p>",
       "refs": {
         "OutputConfig$subtitling": "<p>The output config type that applies to the smart subtitling feature.</p>"
+      }
+    },
+    "SubtitlingSettings": {
+      "base": "<p>The smart subtitles output on this feed that a function reads media.transcript from. Specify this structure for a function that references media.transcript. That function must use a fixedInterval trigger. </p> <p>If the function output is ENABLED, the output that you name must also be ENABLED.</p>",
+      "refs": {
+        "FunctionConfig$subtitlingSettings": "<p>The smart subtitles output on this feed to read the transcript from. Required for a function that references media.transcript. </p>"
       }
     },
     "SummaryGenerationMode": {
@@ -779,12 +1337,21 @@
         "CreateDictionaryResponse$tags": "<p>Any tags that you included when you created the dictionary.</p>",
         "CreateFeedRequest$tags": "<p>Optional tags. You can also add tags later, using TagResource.</p>",
         "CreateFeedResponse$tags": "<p>Any tags that you included when you created the feed.</p>",
+        "CreateFunctionRequest$tags": "<p>The tags to associate with this function.</p>",
+        "CreateFunctionResponse$tags": "<p>The tags associated with the function.</p>",
+        "CreateQuestionSetRequest$tags": "<p>Optional tags to associate with the question set. You can also add tags later, using TagResource. </p>",
+        "CreateQuestionSetResponse$tags": "<p>Any tags that you included when you created the question set.</p>",
+        "CreateQuestionSetVersionResponse$tags": "<p>Any tags associated with the question set.</p>",
         "GetDictionaryResponse$tags": "<p>The tags associated with the dictionary.</p>",
         "GetFeedResponse$tags": "<p>A list of the tags, if any, for the feed.</p>",
+        "GetFunctionResponse$tags": "<p>The tags associated with the function.</p>",
+        "GetQuestionSetResponse$tags": "<p>The tags associated with the question set.</p>",
         "ListTagsForResourceResponse$tags": "<p>A list of the tags that belong to this resource.</p>",
         "TagResourceRequest$tags": "<p>A list of tags to add to the resource.</p>",
         "UpdateDictionaryResponse$tags": "<p>Any tags associated with the dictionary.</p>",
-        "UpdateFeedResponse$tags": "<p>The tags associated with the feed.</p>"
+        "UpdateFeedResponse$tags": "<p>The tags associated with the feed.</p>",
+        "UpdateFunctionResponse$tags": "<p>The tags associated with the function.</p>",
+        "UpdateQuestionSetResponse$tags": "<p>Any tags associated with the question set.</p>"
       }
     },
     "TagResourceRequest": {
@@ -818,7 +1385,8 @@
     "Timestamp": {
       "base": null,
       "refs": {
-        "FixedModeScheduleActionStartSettings$scheduledAt": "<p>The UTC time at which the action runs. Specify the time in whole seconds. For the range of times that you can specify, see the AWS Elemental Inference User Guide. </p> <p>This time is approximate. The change can take a few minutes to take effect on the media that the feed is processing. </p>"
+        "FixedModeScheduleActionStartSettings$scheduledAt": "<p>The UTC time at which the action runs. Specify the time in whole seconds. For the range of times that you can specify, see the AWS Elemental Inference User Guide. </p> <p>This time is approximate. The change can take a few minutes to take effect on the media that the feed is processing. </p>",
+        "QuestionSetVersionSummary$lastModifiedAt": "<p>For DRAFT, the time when you created the question set or last updated DRAFT. For a published version, the time when you published it. </p>"
       }
     },
     "TooManyRequestException": {
@@ -829,6 +1397,12 @@
       "base": null,
       "refs": {
         "SubtitlingConfig$language": "<p>The language of the audio in the source media. Elemental Inference uses this setting to optimize transcription accuracy. Specify the language using an ISO 639-2/T three-letter code, optionally with a region subtag. Supported values: eng, eng-au, eng-gb, eng-us, fra, ita, deu, spa, por. </p>"
+      }
+    },
+    "Trigger": {
+      "base": "<p>Determines when a function runs. Specify exactly one member.</p>",
+      "refs": {
+        "FunctionConfig$trigger": "<p>Determines when the function runs.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -857,6 +1431,26 @@
       "base": null,
       "refs": {}
     },
+    "UpdateFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateFunctionRequestRequestExpressionString": {
+      "base": null,
+      "refs": {
+        "UpdateFunctionRequest$requestExpression": "<p>A new request expression for the function. Elemental Inference derives contextTypes again from the new expression. While a feed references the function, the new expression must reference the same media context as the current one. </p>"
+      }
+    },
+    "UpdateFunctionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateFunctionResponseRequestExpressionString": {
+      "base": null,
+      "refs": {
+        "UpdateFunctionResponse$requestExpression": "<p>The JSONata expression that builds the request. Elemental Inference evaluates it against the media object of the feed, which holds the media and metadata that the function asked for. </p>"
+      }
+    },
     "UpdateOutput": {
       "base": "<p>Contains configuration information about one output in a feed. It is used in the UpdateFeed action. </p>",
       "refs": {
@@ -875,9 +1469,57 @@
         "ScheduleActionOperation$updateOutputStatus": "<p>The operation type that enables or disables an output.</p>"
       }
     },
+    "UpdateQuestionSetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateQuestionSetResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by the service. Check the error message for details about which parameter or field is invalid and correct the request before retrying. </p>",
       "refs": {}
+    },
+    "YesNoPerOptionOptionList": {
+      "base": "<p>An array of the options of a yesNoPerOption question.</p>",
+      "refs": {
+        "YesNoPerOptionQuestion$options": "<p>The options that you ask the question about. You can specify from 1 to 50 options. Each option counts as one item toward the limit of 100 scored items in a version. </p>"
+      }
+    },
+    "YesNoPerOptionQuestion": {
+      "base": "<p>A question that you ask Elemental Inference separately about each of its options. Elemental Inference answers yes or no for each option. Word the question so that it fits any of the options. For example, ask Is this overlay visible? with one option for each overlay. You specify it in the yesNoPerOption array of a question set. </p>",
+      "refs": {
+        "YesNoPerOptionQuestionList$member": null
+      }
+    },
+    "YesNoPerOptionQuestionList": {
+      "base": "<p>An array of YesNoPerOptionQuestion objects.</p>",
+      "refs": {
+        "CreateQuestionSetRequest$yesNoPerOption": "<p>An array of questions that you ask about each of their options. Elemental Inference answers yes or no for each option. You can specify up to 10 yesNoPerOption questions. An empty array is the same as omitting this property. </p>",
+        "CreateQuestionSetResponse$yesNoPerOption": "<p>The yesNoPerOption questions that you specified in the request, in the order that you specified them. Elemental Inference doesn't return this property if the request didn't include any yesNoPerOption questions. </p>",
+        "CreateQuestionSetVersionResponse$yesNoPerOption": "<p>The yesNoPerOption questions in this version. Elemental Inference doesn't return this property if the version has no yesNoPerOption questions. </p>",
+        "GetQuestionSetResponse$yesNoPerOption": "<p>The yesNoPerOption questions in this version. Elemental Inference doesn't return this property if the version has no yesNoPerOption questions. </p>",
+        "UpdateQuestionSetRequest$yesNoPerOption": "<p>An array of questions that you ask about each of their options, to replace all the yesNoPerOption questions in DRAFT. You can specify up to 10 yesNoPerOption questions. If not specified, the yesNoPerOption questions are not changed. To remove all the yesNoPerOption questions, specify an empty array. </p>",
+        "UpdateQuestionSetResponse$yesNoPerOption": "<p>The yesNoPerOption questions in this version. Elemental Inference doesn't return this property if the version has no yesNoPerOption questions. </p>"
+      }
+    },
+    "YesNoQuestion": {
+      "base": "<p>A question that you ask Elemental Inference, which answers with yes or no. You specify it in the yesNo array of a question set. </p>",
+      "refs": {
+        "YesNoQuestionList$member": null
+      }
+    },
+    "YesNoQuestionList": {
+      "base": "<p>An array of YesNoQuestion objects.</p>",
+      "refs": {
+        "CreateQuestionSetRequest$yesNo": "<p>An array of questions that Elemental Inference answers with yes or no. You can specify up to 50 yesNo questions. An empty array is the same as omitting this property. </p>",
+        "CreateQuestionSetResponse$yesNo": "<p>The yesNo questions that you specified in the request, in the order that you specified them. Elemental Inference doesn't return this property if the request didn't include any yesNo questions. </p>",
+        "CreateQuestionSetVersionResponse$yesNo": "<p>The yesNo questions in this version. Elemental Inference doesn't return this property if the version has no yesNo questions. </p>",
+        "GetQuestionSetResponse$yesNo": "<p>The yesNo questions in this version. Elemental Inference doesn't return this property if the version has no yesNo questions. </p>",
+        "UpdateQuestionSetRequest$yesNo": "<p>An array of questions that Elemental Inference answers with yes or no, to replace all the yesNo questions in DRAFT. You can specify up to 50 yesNo questions. If not specified, the yesNo questions are not changed. To remove all the yesNo questions, specify an empty array. </p>",
+        "UpdateQuestionSetResponse$yesNo": "<p>The yesNo questions in this version. Elemental Inference doesn't return this property if the version has no yesNo questions. </p>"
+      }
     }
   }
 }

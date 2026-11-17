@@ -1572,7 +1572,10 @@
         "CODE_REPOSITORY",
         "Microsoft.Compute/virtualMachines",
         "Microsoft.ContainerRegistry/registry/containerImage",
-        "Microsoft.Web/sites"
+        "Microsoft.Web/sites",
+        "cloudfunctions.googleapis.com/Function",
+        "compute.googleapis.com/Instance",
+        "artifactregistry.googleapis.com/DockerImage"
       ]
     },
     "AggregationResponse":{
@@ -2795,6 +2798,7 @@
       "enum":[
         "AWS",
         "AZURE",
+        "GCP",
         "NOT_APPLICABLE"
       ]
     },
@@ -3216,7 +3220,9 @@
         "awsConfigConnectorArn":{"shape":"AwsConfigConnectorArn"},
         "scopeConfiguration":{"shape":"AzureScopeConfiguration"},
         "tags":{"shape":"ConnectorTagMap"},
-        "autoInstallVMScanner":{"shape":"Boolean"}
+        "autoInstallVMScanner":{"shape":"Boolean"},
+        "gcpRegions":{"shape":"GcpRegionList"},
+        "gcpScopeConfiguration":{"shape":"GcpScopeConfiguration"}
       }
     },
     "ConnectorArn":{
@@ -3252,7 +3258,10 @@
     },
     "ConnectorCloudProvider":{
       "type":"string",
-      "enum":["AZURE"]
+      "enum":[
+        "AZURE",
+        "GCP"
+      ]
     },
     "ConnectorContainerImageScanConfiguration":{
       "type":"structure",
@@ -3615,7 +3624,11 @@
         "Microsoft.ContainerRegistry/registry/containerRepository",
         "Microsoft.Web/sites",
         "Microsoft.ContainerRegistry/registries",
-        "MACHINE_IMAGE"
+        "MACHINE_IMAGE",
+        "cloudfunctions.googleapis.com/Function",
+        "compute.googleapis.com/Instance",
+        "artifactregistry.googleapis.com/Repository",
+        "artifactregistry.googleapis.com/DockerImage"
       ]
     },
     "CoverageStringComparison":{
@@ -4973,6 +4986,86 @@
     "FunctionName":{
       "type":"string",
       "pattern":"[a-zA-Z0-9-_\\.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
+    },
+    "GcpCapabilityScope":{
+      "type":"structure",
+      "required":["scopeType"],
+      "members":{
+        "scopeType":{"shape":"ScopeType"},
+        "scopeValues":{"shape":"GcpScopeValueList"},
+        "state":{"shape":"ScopeState"},
+        "stateReason":{"shape":"String"}
+      }
+    },
+    "GcpCapabilityScopeInput":{
+      "type":"structure",
+      "required":["scopeType"],
+      "members":{
+        "scopeType":{"shape":"ScopeType"},
+        "scopeValues":{"shape":"GcpScopeValueList"}
+      }
+    },
+    "GcpProviderDetailCreate":{
+      "type":"structure",
+      "required":[
+        "awsConfigConnectorArn",
+        "scopeConfiguration",
+        "gcpRegions"
+      ],
+      "members":{
+        "awsConfigConnectorArn":{"shape":"AwsConfigConnectorArn"},
+        "scopeConfiguration":{"shape":"GcpScopeConfigurationInput"},
+        "gcpRegions":{"shape":"GcpRegionList"},
+        "autoInstallVMScanner":{"shape":"Boolean"}
+      }
+    },
+    "GcpProviderDetailUpdate":{
+      "type":"structure",
+      "members":{
+        "gcpRegions":{"shape":"GcpRegionList"},
+        "scopeConfiguration":{"shape":"GcpScopeConfigurationInput"},
+        "autoInstallVMScanner":{"shape":"Boolean"}
+      }
+    },
+    "GcpRegion":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"(ALL|[a-z][a-z0-9-]*)"
+    },
+    "GcpRegionList":{
+      "type":"list",
+      "member":{"shape":"GcpRegion"},
+      "max":256,
+      "min":1
+    },
+    "GcpScopeConfiguration":{
+      "type":"structure",
+      "members":{
+        "vmScanning":{"shape":"GcpCapabilityScope"},
+        "containerImageScanning":{"shape":"GcpCapabilityScope"},
+        "serverlessScanning":{"shape":"GcpCapabilityScope"}
+      }
+    },
+    "GcpScopeConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "vmScanning":{"shape":"GcpCapabilityScopeInput"},
+        "containerImageScanning":{"shape":"GcpCapabilityScopeInput"},
+        "serverlessScanning":{"shape":"GcpCapabilityScopeInput"}
+      }
+    },
+    "GcpScopeValue":{
+      "type":"string",
+      "max":30,
+      "min":6,
+      "pattern":"([a-z][a-z0-9-]{4,28}[a-z0-9]|[0-9]{6,30})"
+    },
+    "GcpScopeValueList":{
+      "type":"list",
+      "member":{"shape":"GcpScopeValue"},
+      "max":100,
+      "min":0
     },
     "GetCisScanReportRequest":{
       "type":"structure",
@@ -6575,14 +6668,15 @@
       "type":"string",
       "enum":[
         "AWS",
-        "AZURE"
+        "AZURE",
+        "GCP"
       ]
     },
     "ProviderAccountId":{
       "type":"string",
       "max":36,
-      "min":12,
-      "pattern":"(\\d{12}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"
+      "min":6,
+      "pattern":"(\\d{12}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[a-z][a-z0-9-]{4,28}[a-z0-9])"
     },
     "ProviderComparison":{
       "type":"string",
@@ -6591,14 +6685,16 @@
     "ProviderDetailCreate":{
       "type":"structure",
       "members":{
-        "azure":{"shape":"AzureProviderDetailCreate"}
+        "azure":{"shape":"AzureProviderDetailCreate"},
+        "gcp":{"shape":"GcpProviderDetailCreate"}
       },
       "union":true
     },
     "ProviderDetailUpdate":{
       "type":"structure",
       "members":{
-        "azure":{"shape":"AzureProviderDetailUpdate"}
+        "azure":{"shape":"AzureProviderDetailUpdate"},
+        "gcp":{"shape":"GcpProviderDetailUpdate"}
       },
       "union":true
     },
@@ -6622,8 +6718,8 @@
     "ProviderOrgId":{
       "type":"string",
       "max":36,
-      "min":12,
-      "pattern":"(o-[a-z0-9]{10,32}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"
+      "min":6,
+      "pattern":"(o-[a-z0-9]{10,32}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9]{6,30})"
     },
     "ProviderPartition":{
       "type":"string",
@@ -6635,7 +6731,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"([a-z]{2}(-[a-z]+)+-\\d+|[a-z][a-z0-9]+)"
+      "pattern":"([a-z]{2}(-[a-z]+)+-\\d+|[a-z][a-z0-9]+|[a-z]+-[a-z]+[0-9]+(-[a-z])?)"
     },
     "Reason":{
       "type":"string",
@@ -6972,7 +7068,10 @@
         "Microsoft.Compute/virtualMachines",
         "Microsoft.ContainerRegistry/registry/containerImage",
         "Microsoft.Web/sites",
-        "MACHINE_IMAGE"
+        "MACHINE_IMAGE",
+        "cloudfunctions.googleapis.com/Function",
+        "compute.googleapis.com/Instance",
+        "artifactregistry.googleapis.com/DockerImage"
       ]
     },
     "RiskScore":{
@@ -7197,7 +7296,9 @@
       "type":"string",
       "enum":[
         "TENANT",
-        "SUBSCRIPTION"
+        "SUBSCRIPTION",
+        "ORGANIZATION",
+        "PROJECT"
       ]
     },
     "ScopeValue":{
@@ -8198,7 +8299,12 @@
         "AZURE_CONTAINER_IMAGE_RESCAN",
         "AZURE_VM_AGENT_BASED_INSTANCE_HOURS",
         "AZURE_SERVERLESS_FUNCTION_HOURS",
-        "EC2_AMI_HOURS"
+        "EC2_AMI_HOURS",
+        "EC2_AMI_ONE_SHOT_SCAN",
+        "GCP_VM_AGENT_BASED_INSTANCE_HOURS",
+        "GCP_CLOUD_RUN_HOURS",
+        "GCP_CONTAINER_IMAGE_INITIAL_SCAN",
+        "GCP_CONTAINER_IMAGE_RESCAN"
       ]
     },
     "UsageValue":{

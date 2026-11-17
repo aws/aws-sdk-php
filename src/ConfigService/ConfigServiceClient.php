@@ -297,13 +297,37 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result describeConformancePackStatus(array $args = [])
- * @phpstan-method \Aws\Result describeConformancePackStatus(array{ConformancePackNames?: list<string>, Limit?: int, NextToken?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result describeConformancePackStatus(array{
+ *     ConformancePackNames?: list<string>,
+ *     Filters?: array{Types?: list<'CUSTOM'|'MANAGED'>, ...},
+ *     Limit?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise describeConformancePackStatusAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise describeConformancePackStatusAsync(array{ConformancePackNames?: list<string>, Limit?: int, NextToken?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeConformancePackStatusAsync(array{
+ *     ConformancePackNames?: list<string>,
+ *     Filters?: array{Types?: list<'CUSTOM'|'MANAGED'>, ...},
+ *     Limit?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result describeConformancePacks(array $args = [])
- * @phpstan-method \Aws\Result describeConformancePacks(array{ConformancePackNames?: list<string>, Limit?: int, NextToken?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result describeConformancePacks(array{
+ *     ConformancePackNames?: list<string>,
+ *     Filters?: array{Types?: list<'CUSTOM'|'MANAGED'>, ...},
+ *     Limit?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise describeConformancePacksAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise describeConformancePacksAsync(array{ConformancePackNames?: list<string>, Limit?: int, NextToken?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeConformancePacksAsync(array{
+ *     ConformancePackNames?: list<string>,
+ *     Filters?: array{Types?: list<'CUSTOM'|'MANAGED'>, ...},
+ *     Limit?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result describeDeliveryChannelStatus(array $args = [])
  * @phpstan-method \Aws\Result describeDeliveryChannelStatus(array{DeliveryChannelNames?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeDeliveryChannelStatusAsync(array $args = [])
@@ -952,6 +976,8 @@ use Aws\AwsClient;
  *     ConformancePackInputParameters?: list<array{ParameterName?: string, ParameterValue?: string, ...}>,
  *     TemplateSSMDocumentDetails?: array{DocumentName?: string, DocumentVersion?: string, ...},
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     Source?: array{SourceIdentifier?: string, ...},
+ *     Scope?: array{TagKey?: string, TagValue?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise putConformancePackAsync(array $args = [])
@@ -964,6 +990,8 @@ use Aws\AwsClient;
  *     ConformancePackInputParameters?: list<array{ParameterName?: string, ParameterValue?: string, ...}>,
  *     TemplateSSMDocumentDetails?: array{DocumentName?: string, DocumentVersion?: string, ...},
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     Source?: array{SourceIdentifier?: string, ...},
+ *     Scope?: array{TagKey?: string, TagValue?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result putConnector(array $args = [])

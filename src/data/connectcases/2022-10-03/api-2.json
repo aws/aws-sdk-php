@@ -1014,6 +1014,14 @@
       "max":500,
       "min":1
     },
+    "AutoIncludeFields":{
+      "type":"string",
+      "enum":[
+        "All",
+        "System",
+        "Custom"
+      ]
+    },
     "BasicLayout":{
       "type":"structure",
       "members":{
@@ -1356,7 +1364,8 @@
       "type":"structure",
       "required":["fields"],
       "members":{
-        "fields":{"shape":"CaseEventIncludedDataFieldsList"}
+        "fields":{"shape":"CaseEventIncludedDataFieldsList"},
+        "autoIncludeFields":{"shape":"AutoIncludeFields"}
       }
     },
     "CaseEventIncludedDataFieldsList":{

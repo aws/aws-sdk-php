@@ -232,6 +232,24 @@
       ],
       "idempotent":true
     },
+    "DeleteDurableExecution":{
+      "name":"DeleteDurableExecution",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2025-12-01/durable-executions/{DurableExecutionArn}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteDurableExecutionRequest"},
+      "output":{"shape":"DeleteDurableExecutionResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "DeleteEventSourceMapping":{
       "name":"DeleteEventSourceMapping",
       "http":{
@@ -1188,6 +1206,28 @@
       ],
       "readonly":true
     },
+    "PauseDurableExecution":{
+      "name":"PauseDurableExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2025-12-01/durable-executions/{DurableExecutionArn}/pause",
+        "responseCode":202
+      },
+      "input":{"shape":"PauseDurableExecutionRequest"},
+      "output":{"shape":"PauseDurableExecutionResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"KMSNotFoundException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"KMSAccessDeniedException"},
+        {"shape":"KMSDisabledException"}
+      ],
+      "idempotent":true
+    },
     "PublishLayerVersion":{
       "name":"PublishLayerVersion",
       "http":{
@@ -1400,6 +1440,28 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"PreconditionFailedException"}
       ]
+    },
+    "ResumeDurableExecution":{
+      "name":"ResumeDurableExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2025-12-01/durable-executions/{DurableExecutionArn}/resume",
+        "responseCode":202
+      },
+      "input":{"shape":"ResumeDurableExecutionRequest"},
+      "output":{"shape":"ResumeDurableExecutionResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"KMSNotFoundException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"KMSAccessDeniedException"},
+        {"shape":"KMSDisabledException"}
+      ],
+      "idempotent":true
     },
     "SendDurableExecutionCallbackFailure":{
       "name":"SendDurableExecutionCallbackFailure",
@@ -2652,6 +2714,24 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteDurableExecutionRequest":{
+      "type":"structure",
+      "required":["DurableExecutionArn"],
+      "members":{
+        "DurableExecutionArn":{
+          "shape":"DurableExecutionArn",
+          "location":"uri",
+          "locationName":"DurableExecutionArn"
+        }
+      }
+    },
+    "DeleteDurableExecutionResponse":{
+      "type":"structure",
+      "required":["DeletionRequestTimestamp"],
+      "members":{
+        "DeletionRequestTimestamp":{"shape":"ExecutionTimestamp"}
+      }
+    },
     "DeleteEventSourceMappingRequest":{
       "type":"structure",
       "required":["UUID"],
@@ -3099,7 +3179,9 @@
         "CallbackSucceededDetails":{"shape":"CallbackSucceededDetails"},
         "CallbackFailedDetails":{"shape":"CallbackFailedDetails"},
         "CallbackTimedOutDetails":{"shape":"CallbackTimedOutDetails"},
-        "InvocationCompletedDetails":{"shape":"InvocationCompletedDetails"}
+        "InvocationCompletedDetails":{"shape":"InvocationCompletedDetails"},
+        "ExecutionPausedDetails":{"shape":"ExecutionPausedDetails"},
+        "ExecutionResumedDetails":{"shape":"ExecutionResumedDetails"}
       }
     },
     "EventError":{
@@ -3121,10 +3203,24 @@
         "Truncated":{"shape":"Truncated"}
       }
     },
+    "EventPauseReason":{
+      "type":"structure",
+      "members":{
+        "Payload":{"shape":"PauseReason"},
+        "Truncated":{"shape":"Truncated"}
+      }
+    },
     "EventResult":{
       "type":"structure",
       "members":{
         "Payload":{"shape":"OperationPayload"},
+        "Truncated":{"shape":"Truncated"}
+      }
+    },
+    "EventResumeReason":{
+      "type":"structure",
+      "members":{
+        "Payload":{"shape":"ResumeReason"},
         "Truncated":{"shape":"Truncated"}
       }
     },
@@ -3250,7 +3346,9 @@
         "CallbackSucceeded",
         "CallbackFailed",
         "CallbackTimedOut",
-        "InvocationCompleted"
+        "InvocationCompleted",
+        "ExecutionPaused",
+        "ExecutionResumed"
       ]
     },
     "Events":{
@@ -3299,6 +3397,26 @@
         "Error":{"shape":"EventError"}
       }
     },
+    "ExecutionPausedDetails":{
+      "type":"structure",
+      "required":[
+        "PauseRequestTimestamp",
+        "ExecutionTimeoutPaused"
+      ],
+      "members":{
+        "PauseRequestTimestamp":{"shape":"ExecutionTimestamp"},
+        "Reason":{"shape":"EventPauseReason"},
+        "ExecutionTimeoutPaused":{"shape":"ExecutionTimeoutPaused"}
+      }
+    },
+    "ExecutionResumedDetails":{
+      "type":"structure",
+      "required":["ResumeRequestTimestamp"],
+      "members":{
+        "ResumeRequestTimestamp":{"shape":"ExecutionTimestamp"},
+        "Reason":{"shape":"EventResumeReason"}
+      }
+    },
     "ExecutionStartedDetails":{
       "type":"structure",
       "required":[
@@ -3317,7 +3435,10 @@
         "SUCCEEDED",
         "FAILED",
         "TIMED_OUT",
-        "STOPPED"
+        "STOPPED",
+        "DELETING",
+        "PAUSING",
+        "PAUSED"
       ]
     },
     "ExecutionStatusList":{
@@ -3351,6 +3472,10 @@
       "box":true,
       "max":31622400,
       "min":1
+    },
+    "ExecutionTimeoutPaused":{
+      "type":"boolean",
+      "box":true
     },
     "ExecutionTimestamp":{"type":"timestamp"},
     "FileSystemArn":{
@@ -3803,7 +3928,9 @@
         "Version":{"shape":"VersionWithLatestPublished"},
         "TraceHeader":{"shape":"TraceHeader"},
         "ExecutionDataIncluded":{"shape":"ExecutionDataIncluded"},
-        "DurableConfig":{"shape":"DurableConfig"}
+        "DurableConfig":{"shape":"DurableConfig"},
+        "PauseDetails":{"shape":"PauseDetails"},
+        "ExpectedExecutionTimeoutTimestamp":{"shape":"ExecutionTimestamp"}
       }
     },
     "GetDurableExecutionStateRequest":{
@@ -5678,6 +5805,45 @@
       "min":0,
       "pattern":"[\\s\\S]*"
     },
+    "PauseDetails":{
+      "type":"structure",
+      "required":[
+        "PauseRequestTimestamp",
+        "ExecutionTimeoutPaused"
+      ],
+      "members":{
+        "PauseRequestTimestamp":{"shape":"ExecutionTimestamp"},
+        "Reason":{"shape":"PauseReason"},
+        "ExecutionTimeoutPaused":{"shape":"ExecutionTimeoutPaused"}
+      }
+    },
+    "PauseDurableExecutionRequest":{
+      "type":"structure",
+      "required":["DurableExecutionArn"],
+      "members":{
+        "DurableExecutionArn":{
+          "shape":"DurableExecutionArn",
+          "location":"uri",
+          "locationName":"DurableExecutionArn"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "Reason":{"shape":"PauseReason"},
+        "ExecutionTimeoutPaused":{"shape":"ExecutionTimeoutPaused"}
+      }
+    },
+    "PauseDurableExecutionResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "PauseReason":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "sensitive":true
+    },
     "PerExecutionEnvironmentMaxConcurrency":{
       "type":"integer",
       "box":true,
@@ -6252,6 +6418,32 @@
         "RequestResponse",
         "DryRun"
       ]
+    },
+    "ResumeDurableExecutionRequest":{
+      "type":"structure",
+      "required":["DurableExecutionArn"],
+      "members":{
+        "DurableExecutionArn":{
+          "shape":"DurableExecutionArn",
+          "location":"uri",
+          "locationName":"DurableExecutionArn"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "Reason":{"shape":"ResumeReason"}
+      }
+    },
+    "ResumeDurableExecutionResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "ResumeReason":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "sensitive":true
     },
     "RetentionPeriodInDays":{
       "type":"integer",

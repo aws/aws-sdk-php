@@ -5,6 +5,28 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Marketplace Agreement Service** service.
+ * @method \Aws\Result acceptAgreementApproval(array $args = [])
+ * @phpstan-method \Aws\Result acceptAgreementApproval(array{
+ *     buyerAgreementApprovalApproverInput?: array{
+ *         agreementApprovalId?: string,
+ *         purchaseOrders?: list<array>,
+ *         note?: string,
+ *         approverOutcomeIdToOverride?: string,
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise acceptAgreementApprovalAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise acceptAgreementApprovalAsync(array{
+ *     buyerAgreementApprovalApproverInput?: array{
+ *         agreementApprovalId?: string,
+ *         purchaseOrders?: list<array>,
+ *         note?: string,
+ *         approverOutcomeIdToOverride?: string,
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result acceptAgreementCancellationRequest(array $args = [])
  * @phpstan-method \Aws\Result acceptAgreementCancellationRequest(array{agreementId?: string, agreementCancellationRequestId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise acceptAgreementCancellationRequestAsync(array $args = [])
@@ -65,6 +87,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result cancelAgreementPaymentRequest(array{paymentRequestId?: string, agreementId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelAgreementPaymentRequestAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise cancelAgreementPaymentRequestAsync(array{paymentRequestId?: string, agreementId?: string, ...} $args = [])
+ * @method \Aws\Result cancelAgreementRequest(array $args = [])
+ * @phpstan-method \Aws\Result cancelAgreementRequest(array{agreementRequestId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelAgreementRequestAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise cancelAgreementRequestAsync(array{agreementRequestId?: string, ...} $args = [])
  * @method \Aws\Result createAgreementRequest(array $args = [])
  * @phpstan-method \Aws\Result createAgreementRequest(array{
  *     clientToken?: string,
@@ -73,6 +99,14 @@ use Aws\AwsClient;
  *     sourceAgreementIdentifier?: string,
  *     agreementProposalIdentifier?: string,
  *     taxConfiguration?: array{taxEstimation?: 'DISABLED'|'ENABLED', ...},
+ *     acceptorContact?: array{
+ *         firstName?: string,
+ *         lastName?: string,
+ *         emailAddress?: string,
+ *         companyName?: string,
+ *         countryCode?: string,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createAgreementRequestAsync(array $args = [])
@@ -83,16 +117,32 @@ use Aws\AwsClient;
  *     sourceAgreementIdentifier?: string,
  *     agreementProposalIdentifier?: string,
  *     taxConfiguration?: array{taxEstimation?: 'DISABLED'|'ENABLED', ...},
+ *     acceptorContact?: array{
+ *         firstName?: string,
+ *         lastName?: string,
+ *         emailAddress?: string,
+ *         companyName?: string,
+ *         countryCode?: string,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result describeAgreement(array $args = [])
  * @phpstan-method \Aws\Result describeAgreement(array{agreementId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeAgreementAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeAgreementAsync(array{agreementId?: string, ...} $args = [])
+ * @method \Aws\Result getAgreementApproval(array $args = [])
+ * @phpstan-method \Aws\Result getAgreementApproval(array{agreementApprovalId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAgreementApprovalAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAgreementApprovalAsync(array{agreementApprovalId?: string, ...} $args = [])
  * @method \Aws\Result getAgreementCancellationRequest(array $args = [])
  * @phpstan-method \Aws\Result getAgreementCancellationRequest(array{agreementCancellationRequestId?: string, agreementId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getAgreementCancellationRequestAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getAgreementCancellationRequestAsync(array{agreementCancellationRequestId?: string, agreementId?: string, ...} $args = [])
+ * @method \Aws\Result getAgreementContacts(array $args = [])
+ * @phpstan-method \Aws\Result getAgreementContacts(array{agreementId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAgreementContactsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAgreementContactsAsync(array{agreementId?: string, ...} $args = [])
  * @method \Aws\Result getAgreementEntitlements(array $args = [])
  * @phpstan-method \Aws\Result getAgreementEntitlements(array{agreementId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getAgreementEntitlementsAsync(array $args = [])
@@ -101,6 +151,18 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getAgreementPaymentRequest(array{paymentRequestId?: string, agreementId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getAgreementPaymentRequestAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getAgreementPaymentRequestAsync(array{paymentRequestId?: string, agreementId?: string, ...} $args = [])
+ * @method \Aws\Result getAgreementRequest(array $args = [])
+ * @phpstan-method \Aws\Result getAgreementRequest(array{agreementRequestId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAgreementRequestAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAgreementRequestAsync(array{agreementRequestId?: string, ...} $args = [])
+ * @method \Aws\Result getAgreementRequestApprovalPlans(array $args = [])
+ * @phpstan-method \Aws\Result getAgreementRequestApprovalPlans(array{agreementRequestId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAgreementRequestApprovalPlansAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAgreementRequestApprovalPlansAsync(array{agreementRequestId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result getAgreementRequestTerms(array $args = [])
+ * @phpstan-method \Aws\Result getAgreementRequestTerms(array{agreementRequestId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAgreementRequestTermsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAgreementRequestTermsAsync(array{agreementRequestId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result getAgreementTerms(array $args = [])
  * @phpstan-method \Aws\Result getAgreementTerms(array{agreementId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getAgreementTermsAsync(array $args = [])
@@ -109,6 +171,28 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getBillingAdjustmentRequest(array{agreementId?: string, billingAdjustmentRequestId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getBillingAdjustmentRequestAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getBillingAdjustmentRequestAsync(array{agreementId?: string, billingAdjustmentRequestId?: string, ...} $args = [])
+ * @method \Aws\Result listAgreementApprovals(array $args = [])
+ * @phpstan-method \Aws\Result listAgreementApprovals(array{
+ *     catalog?: string,
+ *     partyType?: 'AWS_ORGANIZATION_ADMIN'|'REQUESTER',
+ *     agreementRequestId?: string,
+ *     approvalType?: 'BUYER_AGREEMENT_APPROVAL',
+ *     status?: 'APPROVED'|'CANCELLED'|'EXPIRED'|'PENDING_APPROVAL'|'REJECTED',
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAgreementApprovalsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listAgreementApprovalsAsync(array{
+ *     catalog?: string,
+ *     partyType?: 'AWS_ORGANIZATION_ADMIN'|'REQUESTER',
+ *     agreementRequestId?: string,
+ *     approvalType?: 'BUYER_AGREEMENT_APPROVAL',
+ *     status?: 'APPROVED'|'CANCELLED'|'EXPIRED'|'PENDING_APPROVAL'|'REJECTED',
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listAgreementCancellationRequests(array $args = [])
  * @phpstan-method \Aws\Result listAgreementCancellationRequests(array{
  *     partyType?: string,
@@ -197,6 +281,24 @@ use Aws\AwsClient;
  *     nextToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listAgreementRequests(array $args = [])
+ * @phpstan-method \Aws\Result listAgreementRequests(array{
+ *     catalog?: string,
+ *     status?: 'ACCEPTED'|'APPROVED'|'CANCELLED'|'DRAFT'|'PENDING_APPROVAL'|'REJECTED',
+ *     resourceId?: string,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAgreementRequestsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listAgreementRequestsAsync(array{
+ *     catalog?: string,
+ *     status?: 'ACCEPTED'|'APPROVED'|'CANCELLED'|'DRAFT'|'PENDING_APPROVAL'|'REJECTED',
+ *     resourceId?: string,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listBillingAdjustmentRequests(array $args = [])
  * @phpstan-method \Aws\Result listBillingAdjustmentRequests(array{
  *     agreementId?: string,
@@ -219,6 +321,16 @@ use Aws\AwsClient;
  *     catalog?: string,
  *     agreementType?: string,
  *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result rejectAgreementApproval(array $args = [])
+ * @phpstan-method \Aws\Result rejectAgreementApproval(array{
+ *     buyerAgreementApprovalRejectionInput?: array{agreementApprovalId?: string, note?: string, approverOutcomeIdToOverride?: string, ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise rejectAgreementApprovalAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise rejectAgreementApprovalAsync(array{
+ *     buyerAgreementApprovalRejectionInput?: array{agreementApprovalId?: string, note?: string, approverOutcomeIdToOverride?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result rejectAgreementCancellationRequest(array $args = [])
@@ -281,6 +393,20 @@ use Aws\AwsClient;
  *     name?: string,
  *     chargeAmount?: string,
  *     description?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result startAgreementApprovals(array $args = [])
+ * @phpstan-method \Aws\Result startAgreementApprovals(array{
+ *     agreementRequestId?: string,
+ *     planInputs?: list<array{buyerAgreementApprovalPlanInput?: array, ...}>,
+ *     purchaseOrders?: list<array{chargeId?: string, purchaseOrderReference?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise startAgreementApprovalsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startAgreementApprovalsAsync(array{
+ *     agreementRequestId?: string,
+ *     planInputs?: list<array{buyerAgreementApprovalPlanInput?: array, ...}>,
+ *     purchaseOrders?: list<array{chargeId?: string, purchaseOrderReference?: string, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updatePurchaseOrders(array $args = [])

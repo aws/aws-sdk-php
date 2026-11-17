@@ -107,7 +107,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getBillingPreferences(array{
  *     nextToken?: string,
  *     maxResults?: int,
- *     features?: list<'BILLING_ALERTS'|'CREDIT_LEVEL_SHARING'|'CREDIT_PREFERENCE_OPTIONS'|'CREDIT_SHARING'|'CREDIT_SHARING_HISTORY'|'RI_SHARING'|'RI_SHARING_HISTORY'>,
+ *     features?: list<'BENEFIT_LEVEL_SHARING'|'BILLING_ALERTS'|'CREDIT_LEVEL_SHARING'|'CREDIT_PREFERENCE_OPTIONS'|'CREDIT_SHARING'|'CREDIT_SHARING_HISTORY'|'RI_SHARING'|'RI_SHARING_HISTORY'>,
  *     filters?: list<array{name?: 'PREFERENCE_KEY', value?: list<string>, ...}>,
  *     ...,
  * } $args = [])
@@ -115,7 +115,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise getBillingPreferencesAsync(array{
  *     nextToken?: string,
  *     maxResults?: int,
- *     features?: list<'BILLING_ALERTS'|'CREDIT_LEVEL_SHARING'|'CREDIT_PREFERENCE_OPTIONS'|'CREDIT_SHARING'|'CREDIT_SHARING_HISTORY'|'RI_SHARING'|'RI_SHARING_HISTORY'>,
+ *     features?: list<'BENEFIT_LEVEL_SHARING'|'BILLING_ALERTS'|'CREDIT_LEVEL_SHARING'|'CREDIT_PREFERENCE_OPTIONS'|'CREDIT_SHARING'|'CREDIT_SHARING_HISTORY'|'RI_SHARING'|'RI_SHARING_HISTORY'>,
  *     filters?: list<array{name?: 'PREFERENCE_KEY', value?: list<string>, ...}>,
  *     ...,
  * } $args = [])
@@ -287,23 +287,43 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result redeemCredits(array{promoCode?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise redeemCreditsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise redeemCreditsAsync(array{promoCode?: string, ...} $args = [])
+ * @method \Aws\Result splitCredit(array $args = [])
+ * @phpstan-method \Aws\Result splitCredit(array{
+ *     creditId?: string,
+ *     portions?: list<array{amount?: string, description?: string, ...}>,
+ *     clientToken?: string,
+ *     dryRun?: bool,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise splitCreditAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise splitCreditAsync(array{
+ *     creditId?: string,
+ *     portions?: list<array{amount?: string, description?: string, ...}>,
+ *     clientToken?: string,
+ *     dryRun?: bool,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @phpstan-method \Aws\Result tagResource(array{resourceArn?: string, resourceTags?: list<array{key?: string, value?: string, ...}>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise tagResourceAsync(array{resourceArn?: string, resourceTags?: list<array{key?: string, value?: string, ...}>, ...} $args = [])
+ * @method \Aws\Result transferCredit(array $args = [])
+ * @phpstan-method \Aws\Result transferCredit(array{creditId?: string, destinationAccountId?: string, clientToken?: string, dryRun?: bool, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise transferCreditAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise transferCreditAsync(array{creditId?: string, destinationAccountId?: string, clientToken?: string, dryRun?: bool, ...} $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @phpstan-method \Aws\Result untagResource(array{resourceArn?: string, resourceTagKeys?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise untagResourceAsync(array{resourceArn?: string, resourceTagKeys?: list<string>, ...} $args = [])
  * @method \Aws\Result updateBillingPreferences(array $args = [])
  * @phpstan-method \Aws\Result updateBillingPreferences(array{
- *     feature?: 'BILLING_ALERTS'|'CREDIT_LEVEL_SHARING'|'CREDIT_PREFERENCE_OPTIONS'|'CREDIT_SHARING'|'CREDIT_SHARING_HISTORY'|'RI_SHARING'|'RI_SHARING_HISTORY',
+ *     feature?: 'BENEFIT_LEVEL_SHARING'|'BILLING_ALERTS'|'CREDIT_LEVEL_SHARING'|'CREDIT_PREFERENCE_OPTIONS'|'CREDIT_SHARING'|'CREDIT_SHARING_HISTORY'|'RI_SHARING'|'RI_SHARING_HISTORY',
  *     billingPreferencesPerKey?: list<array{key?: string, value?: 'DISABLED'|'ENABLED', ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateBillingPreferencesAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateBillingPreferencesAsync(array{
- *     feature?: 'BILLING_ALERTS'|'CREDIT_LEVEL_SHARING'|'CREDIT_PREFERENCE_OPTIONS'|'CREDIT_SHARING'|'CREDIT_SHARING_HISTORY'|'RI_SHARING'|'RI_SHARING_HISTORY',
+ *     feature?: 'BENEFIT_LEVEL_SHARING'|'BILLING_ALERTS'|'CREDIT_LEVEL_SHARING'|'CREDIT_PREFERENCE_OPTIONS'|'CREDIT_SHARING'|'CREDIT_SHARING_HISTORY'|'RI_SHARING'|'RI_SHARING_HISTORY',
  *     billingPreferencesPerKey?: list<array{key?: string, value?: 'DISABLED'|'ENABLED', ...}>,
  *     ...,
  * } $args = [])

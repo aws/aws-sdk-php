@@ -8568,7 +8568,8 @@
       "type":"string",
       "enum":[
         "Azure",
-        "AWS"
+        "AWS",
+        "GCP"
       ]
     },
     "CloudWatchLogsLogGroupArnConfigDetails":{
@@ -8729,7 +8730,8 @@
       "enum":[
         "JIRA_CLOUD",
         "SERVICENOW",
-        "AZURE"
+        "AZURE",
+        "GCP"
       ]
     },
     "ConnectorStatus":{
@@ -9080,14 +9082,16 @@
     "CriticalitySourceList":{
       "type":"list",
       "member":{"shape":"CriticalitySource"},
-      "max":3
+      "max":5
     },
     "CriticalitySourceType":{
       "type":"string",
       "enum":[
         "AutomationRule",
         "ResourceName",
-        "TagInference"
+        "TagInference",
+        "CloudWatchTelemetryInference",
+        "InstalledSoftwareAndPackageInference"
       ]
     },
     "CrossAccountMaxResults":{
@@ -9097,7 +9101,10 @@
     },
     "CspmConnectorProviderName":{
       "type":"string",
-      "enum":["AZURE"]
+      "enum":[
+        "AZURE",
+        "GCP"
+      ]
     },
     "CspmConnectorStatus":{
       "type":"string",
@@ -9150,14 +9157,16 @@
     "CspmProviderConfiguration":{
       "type":"structure",
       "members":{
-        "Azure":{"shape":"AzureProviderConfiguration"}
+        "Azure":{"shape":"AzureProviderConfiguration"},
+        "GCP":{"shape":"GcpProviderConfiguration"}
       },
       "union":true
     },
     "CspmProviderDetail":{
       "type":"structure",
       "members":{
-        "Azure":{"shape":"AzureDetail"}
+        "Azure":{"shape":"AzureDetail"},
+        "GCP":{"shape":"GcpDetail"}
       },
       "union":true
     },
@@ -9172,7 +9181,8 @@
     "CspmProviderUpdateConfiguration":{
       "type":"structure",
       "members":{
-        "Azure":{"shape":"AzureUpdateConfiguration"}
+        "Azure":{"shape":"AzureUpdateConfiguration"},
+        "GCP":{"shape":"GcpUpdateConfiguration"}
       },
       "union":true
     },
@@ -10345,6 +10355,69 @@
         "SECURITY_HUB_V2",
         "SECURITY_HUB_V2_MULTI_CLOUD_AZURE"
       ]
+    },
+    "GcpDetail":{
+      "type":"structure",
+      "required":[
+        "AWSConfigConnectorArn",
+        "ScopeConfiguration",
+        "GCPRegions"
+      ],
+      "members":{
+        "AWSConfigConnectorArn":{"shape":"NonEmptyString"},
+        "ScopeConfiguration":{"shape":"GcpScopeConfiguration"},
+        "GCPRegions":{"shape":"GcpRegionList"}
+      }
+    },
+    "GcpProviderConfiguration":{
+      "type":"structure",
+      "required":[
+        "AWSConfigConnectorArn",
+        "ScopeConfiguration",
+        "GCPRegions"
+      ],
+      "members":{
+        "AWSConfigConnectorArn":{"shape":"NonEmptyString"},
+        "ScopeConfiguration":{"shape":"GcpScopeConfiguration"},
+        "GCPRegions":{"shape":"GcpRegionList"}
+      }
+    },
+    "GcpRegionList":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"},
+      "max":256,
+      "min":1
+    },
+    "GcpResourceDetails":{
+      "type":"structure",
+      "members":{},
+      "document":true
+    },
+    "GcpScopeConfiguration":{
+      "type":"structure",
+      "required":["ScopeType"],
+      "members":{
+        "ScopeType":{"shape":"GcpScopeType"},
+        "ScopeValues":{"shape":"ScopeValueList"}
+      }
+    },
+    "GcpScopeType":{
+      "type":"string",
+      "enum":[
+        "PROJECT",
+        "ORGANIZATION"
+      ]
+    },
+    "GcpUpdateConfiguration":{
+      "type":"structure",
+      "required":[
+        "ScopeConfiguration",
+        "GCPRegions"
+      ],
+      "members":{
+        "ScopeConfiguration":{"shape":"GcpScopeConfiguration"},
+        "GCPRegions":{"shape":"GcpRegionList"}
+      }
     },
     "GenerateRecommendedPolicyV2Request":{
       "type":"structure",
@@ -12591,7 +12664,8 @@
       "members":{
         "JiraCloud":{"shape":"JiraCloudProviderConfiguration"},
         "ServiceNow":{"shape":"ServiceNowProviderConfiguration"},
-        "Azure":{"shape":"AzureProviderConfiguration"}
+        "Azure":{"shape":"AzureProviderConfiguration"},
+        "GCP":{"shape":"GcpProviderConfiguration"}
       },
       "union":true
     },
@@ -12600,7 +12674,8 @@
       "members":{
         "JiraCloud":{"shape":"JiraCloudDetail"},
         "ServiceNow":{"shape":"ServiceNowDetail"},
-        "Azure":{"shape":"AzureDetail"}
+        "Azure":{"shape":"AzureDetail"},
+        "GCP":{"shape":"GcpDetail"}
       },
       "union":true
     },
@@ -12617,7 +12692,8 @@
       "members":{
         "JiraCloud":{"shape":"JiraCloudUpdateConfiguration"},
         "ServiceNow":{"shape":"ServiceNowUpdateConfiguration"},
-        "Azure":{"shape":"AzureUpdateConfiguration"}
+        "Azure":{"shape":"AzureUpdateConfiguration"},
+        "GCP":{"shape":"GcpUpdateConfiguration"}
       },
       "union":true
     },
@@ -13200,7 +13276,8 @@
         "AwsS3AccessPoint":{"shape":"AwsS3AccessPointDetails"},
         "AwsEc2ClientVpnEndpoint":{"shape":"AwsEc2ClientVpnEndpointDetails"},
         "CodeRepository":{"shape":"CodeRepositoryDetails"},
-        "AzureResource":{"shape":"AzureResourceDetails"}
+        "AzureResource":{"shape":"AzureResourceDetails"},
+        "GcpResource":{"shape":"GcpResourceDetails"}
       }
     },
     "ResourceFindingsSummary":{
@@ -13956,7 +14033,8 @@
       "type":"string",
       "enum":[
         "AWS",
-        "Azure"
+        "Azure",
+        "GCP"
       ]
     },
     "SecurityControlsProviders":{
@@ -14445,7 +14523,8 @@
       "type":"string",
       "enum":[
         "AWS",
-        "Azure"
+        "Azure",
+        "GCP"
       ]
     },
     "StandardsProviders":{

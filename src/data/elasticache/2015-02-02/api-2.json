@@ -2432,7 +2432,8 @@
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
         "DailySnapshotTime":{"shape":"String"},
         "NetworkType":{"shape":"NetworkType"},
-        "ConnectionType":{"shape":"ConnectionType"}
+        "ConnectionType":{"shape":"ConnectionType"},
+        "Integrations":{"shape":"IntegrationRequestList"}
       }
     },
     "CreateServerlessCacheResponse":{
@@ -3302,6 +3303,47 @@
     },
     "Integer":{"type":"integer"},
     "IntegerOptional":{"type":"integer"},
+    "Integration":{
+      "type":"structure",
+      "members":{
+        "IntegrationType":{"shape":"IntegrationType"},
+        "Status":{"shape":"IntegrationStatus"}
+      }
+    },
+    "IntegrationList":{
+      "type":"list",
+      "member":{
+        "shape":"Integration",
+        "locationName":"Integration"
+      }
+    },
+    "IntegrationRequest":{
+      "type":"structure",
+      "members":{
+        "IntegrationType":{"shape":"IntegrationType"}
+      }
+    },
+    "IntegrationRequestList":{
+      "type":"list",
+      "member":{
+        "shape":"IntegrationRequest",
+        "locationName":"IntegrationRequest"
+      }
+    },
+    "IntegrationStatus":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled",
+        "enabling",
+        "disabling",
+        "failed"
+      ]
+    },
+    "IntegrationType":{
+      "type":"string",
+      "enum":["dynamodb"]
+    },
     "InvalidARNFault":{
       "type":"structure",
       "members":{},
@@ -4574,7 +4616,8 @@
         "DailySnapshotTime":{"shape":"String"},
         "NetworkType":{"shape":"NetworkType"},
         "ConnectionType":{"shape":"ConnectionType"},
-        "Migration":{"shape":"MigrationSummary"}
+        "Migration":{"shape":"MigrationSummary"},
+        "Integrations":{"shape":"IntegrationList"}
       }
     },
     "ServerlessCacheAlreadyExistsFault":{

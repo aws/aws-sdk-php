@@ -10,7 +10,7 @@
     "AcceptTransitGatewayPeeringAttachment": "<p>Accepts a transit gateway peering attachment request. The peering attachment must be in the <code>pendingAcceptance</code> state.</p>",
     "AcceptTransitGatewayVpcAttachment": "<p>Accepts a request to attach a VPC to a transit gateway.</p> <p>The VPC attachment must be in the <code>pendingAcceptance</code> state. Use <a>DescribeTransitGatewayVpcAttachments</a> to view your pending VPC attachment requests. Use <a>RejectTransitGatewayVpcAttachment</a> to reject a VPC attachment request.</p>",
     "AcceptVpcEndpointConnections": "<p>Accepts connection requests to your VPC endpoint service.</p>",
-    "AcceptVpcPeeringConnection": "<p>Accept a VPC peering connection request. To accept a request, the VPC peering connection must be in the <code>pending-acceptance</code> state, and you must be the owner of the peer VPC. Use <a>DescribeVpcPeeringConnections</a> to view your outstanding VPC peering connection requests.</p> <p>For an inter-Region VPC peering connection request, you must accept the VPC peering connection in the Region of the accepter VPC.</p>",
+    "AcceptVpcPeeringConnection": "<p>Accept a VPC peering connection request. To accept a request, the VPC peering connection must be in the <code>pending-acceptance</code> state, and you must be the owner of the peer VPC. Use <a>DescribeVpcPeeringConnections</a> to view your outstanding VPC peering connection requests.</p> <p>For an inter-Region VPC peering connection request, you must accept the VPC peering connection in the Region of the accepter VPC.</p> <p>If the requester allows multipath resilience, accepting the request also allows multipath resilience for the accepter VPC, and the <code>multipathResilienceStatus</code> of the VPC peering connection becomes <code>enabled</code>. Additional charges apply. For more information, see <a href=\"http://aws.amazon.com/vpc/pricing/\">Amazon VPC pricing</a>. To stop allowing multipath resilience for the accepter VPC, use <a>ModifyVpcPeeringConnectionOptions</a> and set <code>AllowMultipathResilience</code> to <code>false</code>.</p>",
     "AdvertiseByoipCidr": "<p>Advertises an IPv4 or IPv6 address range that is provisioned for use with your Amazon Web Services resources through bring your own IP addresses (BYOIP).</p> <p>You can perform this operation at most once every 10 seconds, even if you specify different address ranges each time.</p> <p>We recommend that you stop advertising the BYOIP CIDR from other locations when you advertise it from Amazon Web Services. To minimize down time, you can configure your Amazon Web Services resources to use an address from a BYOIP CIDR before it is advertised, and then simultaneously stop advertising it from the current location and start advertising it through Amazon Web Services.</p> <p>It can take a few minutes before traffic to the specified addresses starts routing to Amazon Web Services because of BGP propagation delays.</p>",
     "AllocateAddress": "<p>Allocates an Elastic IP address to your Amazon Web Services account. After you allocate the Elastic IP address you can associate it with an instance or network interface. After you release an Elastic IP address, it is released to the IP address pool and can be allocated to a different Amazon Web Services account.</p> <p>You can allocate an Elastic IP address from one of the following address pools:</p> <ul> <li> <p>Amazon's pool of IPv4 addresses</p> </li> <li> <p>Public IPv4 address range that you own and bring to your Amazon Web Services account using <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html\">Bring Your Own IP Addresses (BYOIP)</a> </p> </li> <li> <p>An IPv4 IPAM pool with an Amazon-provided or BYOIP public IPv4 address range</p> </li> <li> <p>IPv4 addresses from your on-premises network made available for use with an Outpost using a <a href=\"https://docs.aws.amazon.com/outposts/latest/userguide/routing.html#ip-addressing\">customer-owned IP address pool</a> (CoIP pool)</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html\">Elastic IP Addresses</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>If you release an Elastic IP address, you might be able to recover it. You cannot recover an Elastic IP address that you released after it is allocated to another Amazon Web Services account. To attempt to recover an Elastic IP address that you released, specify it in this operation.</p> <p>You can allocate a carrier IP address which is a public IP address from a telecommunication carrier, to a network interface which resides in a subnet in a Wavelength Zone (for example an EC2 instance).</p>",
     "AllocateHosts": "<p>Allocates a Dedicated Host to your account. At a minimum, specify the supported instance type or instance family, the Availability Zone in which to allocate the host, and the number of hosts to allocate.</p>",
@@ -177,7 +177,7 @@
     "CreateVpcEndpoint": "<p>Creates a VPC endpoint. A VPC endpoint provides a private connection between the specified VPC and the specified endpoint service. You can use an endpoint service provided by Amazon Web Services, an Amazon Web Services Marketplace Partner, or another Amazon Web Services account. For more information, see the <a href=\"https://docs.aws.amazon.com/vpc/latest/privatelink/\">Amazon Web Services PrivateLink User Guide</a>.</p>",
     "CreateVpcEndpointConnectionNotification": "<p>Creates a connection notification for a specified VPC endpoint or VPC endpoint service. A connection notification notifies you of specific endpoint events. You must create an SNS topic to receive notifications. For more information, see <a href=\"https://docs.aws.amazon.com/sns/latest/dg/CreateTopic.html\">Creating an Amazon SNS topic</a> in the <i>Amazon SNS Developer Guide</i>.</p> <p>You can create a connection notification for interface endpoints only.</p>",
     "CreateVpcEndpointServiceConfiguration": "<p>Creates a VPC endpoint service to which service consumers (Amazon Web Services accounts, users, and IAM roles) can connect.</p> <p>Before you create an endpoint service, you must create one of the following for your service:</p> <ul> <li> <p>A <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/network/\">Network Load Balancer</a>. Service consumers connect to your service using an interface endpoint.</p> </li> <li> <p>A <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/\">Gateway Load Balancer</a>. Service consumers connect to your service using a Gateway Load Balancer endpoint.</p> </li> </ul> <p>If you set the private DNS name, you must prove that you own the private DNS domain name.</p> <p>For more information, see the <a href=\"https://docs.aws.amazon.com/vpc/latest/privatelink/\">Amazon Web Services PrivateLink Guide</a>.</p>",
-    "CreateVpcPeeringConnection": "<p>Requests a VPC peering connection between two VPCs: a requester VPC that you own and an accepter VPC with which to create the connection. The accepter VPC can belong to another Amazon Web Services account and can be in a different Region to the requester VPC. The requester VPC and accepter VPC cannot have overlapping CIDR blocks.</p> <note> <p>Limitations and rules apply to a VPC peering connection. For more information, see the <a href=\"https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-basics.html#vpc-peering-limitations\">VPC peering limitations</a> in the <i>VPC Peering Guide</i>.</p> </note> <p>The owner of the accepter VPC must accept the peering request to activate the peering connection. The VPC peering connection request expires after 7 days, after which it cannot be accepted or rejected.</p> <p>If you create a VPC peering connection request between VPCs with overlapping CIDR blocks, the VPC peering connection has a status of <code>failed</code>.</p>",
+    "CreateVpcPeeringConnection": "<p>Requests a VPC peering connection between two VPCs: a requester VPC that you own and an accepter VPC with which to create the connection. The accepter VPC can belong to another Amazon Web Services account and can be in a different Region to the requester VPC. The requester VPC and accepter VPC cannot have overlapping CIDR blocks.</p> <note> <p>Limitations and rules apply to a VPC peering connection. For more information, see the <a href=\"https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-basics.html#vpc-peering-limitations\">VPC peering limitations</a> in the <i>VPC Peering Guide</i>.</p> </note> <p>The owner of the accepter VPC must accept the peering request to activate the peering connection. The VPC peering connection request expires after 7 days, after which it cannot be accepted or rejected.</p> <p>Multipath resilience replicates the traffic of an inter-Region VPC peering connection across multiple network paths.</p> <p>If you create a VPC peering connection request between VPCs with overlapping CIDR blocks, the VPC peering connection has a status of <code>failed</code>.</p>",
     "CreateVpnConcentrator": "<p>Creates a VPN concentrator that aggregates multiple VPN connections to a transit gateway.</p>",
     "CreateVpnConnection": "<p>Creates a VPN connection between an existing virtual private gateway or transit gateway and a customer gateway. The supported connection type is <code>ipsec.1</code>.</p> <p>The response includes information that you need to give to your network administrator to configure your customer gateway.</p> <important> <p>We strongly recommend that you use HTTPS when calling this operation because the response contains sensitive cryptographic information for configuring your customer gateway device.</p> </important> <p>If you decide to shut down your VPN connection for any reason and later create a new VPN connection, you must reconfigure your customer gateway with the new information returned from this call.</p> <p>This is an idempotent operation. If you perform the operation more than once, Amazon EC2 doesn't return an error.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html\">Amazon Web Services Site-to-Site VPN</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p>",
     "CreateVpnConnectionRoute": "<p>Creates a static route associated with a VPN connection between an existing virtual private gateway and a VPN customer gateway. The static route allows traffic to be routed from the virtual private gateway to the VPN customer gateway.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html\">Amazon Web Services Site-to-Site VPN</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p>",
@@ -721,6 +721,7 @@
     "ModifyTransitGatewayAttachmentNatConfiguration": "<p>Modifies the NAT configuration for the specified transit gateway attachment. Use this operation to do the following:</p> <ul> <li> <p>Enable or disable NAT gateway support for the attachment.</p> </li> <li> <p>Specify whether the transit gateway installs routes for the NAT CIDRs.</p> </li> <li> <p>Replace the NAT gateway rules for the attachment.</p> </li> </ul> <p>Only the owner of the transit gateway can modify the NAT configuration.</p> <p>With NAT gateway support enabled, the transit gateway translates addresses in each rule's <code>MatchSourceCidr</code> range to the corresponding addresses in its <code>NatCidr</code> range.</p> <p>The transit gateway applies changes asynchronously. To check the result, use <code>GetTransitGatewayAttachmentNatConfiguration</code>.</p>",
     "ModifyTransitGatewayMeteringPolicy": "<p>Modifies a transit gateway metering policy.</p>",
     "ModifyTransitGatewayNetworkFunctionAttachment": "<p>Adds Availability Zones to or removes Availability Zones from the specified network function attachment. The attachment must be in the <code>available</code> state. You must specify at least one Availability Zone to add or remove, and the attachment must keep at least one Availability Zone.</p> <p>Adding an Availability Zone provisions a new Gateway Load Balancer endpoint in that Availability Zone. If the endpoint service doesn't automatically accept connection requests, the endpoint service owner must accept the endpoint connection for each Availability Zone that you add.</p>",
+    "ModifyTransitGatewayPeeringAttachment": "<p>Modifies the options for a transit gateway peering attachment. The peering attachment must be in the <code>available</code> state.</p> <p>You can allow multipath resilience for your side of an inter-Region transit gateway peering attachment between supported Regions. Multipath resilience isn't supported for transit gateway peering attachments in the same Region. It takes effect only when both the requester and the accepter allow it. To modify the requester side, send the request in the Region of the requester transit gateway. To modify the accepter side, send the request in the Region of the accepter transit gateway. To check whether multipath resilience is in effect, use <a>DescribeTransitGatewayPeeringAttachments</a> and check <code>multipathResilienceStatus</code>.</p>",
     "ModifyTransitGatewayPolicyTableEntry": "<p>Modifies the specified transit gateway policy table entry.</p>",
     "ModifyTransitGatewayPrefixListReference": "<p>Modifies a reference (route) to a prefix list in a specified transit gateway route table.</p>",
     "ModifyTransitGatewayVpcAttachment": "<p>Modifies the specified VPC attachment.</p>",
@@ -743,7 +744,7 @@
     "ModifyVpcEndpointServiceConfiguration": "<p>Modifies the attributes of the specified VPC endpoint service configuration.</p> <p>If you set or modify the private DNS name, you must prove that you own the private DNS domain name.</p>",
     "ModifyVpcEndpointServicePayerResponsibility": "<p>Modifies the payer responsibility for your VPC endpoint service.</p>",
     "ModifyVpcEndpointServicePermissions": "<p>Modifies the permissions for your VPC endpoint service. You can add or remove permissions for service consumers (Amazon Web Services accounts, users, and IAM roles) to connect to your endpoint service. Principal ARNs with path components aren't supported.</p> <p>If you grant permissions to all principals, the service is public. Any users who know the name of a public service can send a request to attach an endpoint. If the service does not require manual approval, attachments are automatically approved.</p> <p>By default, principals that you grant permissions to can create VPC endpoints that connect to your endpoint service. For Gateway Load Balancer endpoint services, you can instead grant permissions so that principals can create transit gateway attachments that connect to your endpoint service. To do so, specify <code>transit-gateway-attachment</code> for <code>PermissionType</code>. The two permission types are independent. A principal can have either or both.</p>",
-    "ModifyVpcPeeringConnectionOptions": "<p>Modifies the VPC peering connection options on one side of a VPC peering connection.</p> <p>If the peered VPCs are in the same Amazon Web Services account, you can enable DNS resolution for queries from the local VPC. This ensures that queries from the local VPC resolve to private IP addresses in the peer VPC. This option is not available if the peered VPCs are in different Amazon Web Services accounts or different Regions. For peered VPCs in different Amazon Web Services accounts, each Amazon Web Services account owner must initiate a separate request to modify the peering connection options. For inter-region peering connections, you must use the Region for the requester VPC to modify the requester VPC peering options and the Region for the accepter VPC to modify the accepter VPC peering options. To verify which VPCs are the accepter and the requester for a VPC peering connection, use the <a>DescribeVpcPeeringConnections</a> command.</p>",
+    "ModifyVpcPeeringConnectionOptions": "<p>Modifies the VPC peering connection options on one side of a VPC peering connection.</p> <p>If the peered VPCs are in the same Amazon Web Services account, you can enable DNS resolution for queries from the local VPC. This ensures that queries from the local VPC resolve to private IP addresses in the peer VPC. This option is not available if the peered VPCs are in different Amazon Web Services accounts or different Regions. For peered VPCs in different Amazon Web Services accounts, each Amazon Web Services account owner must initiate a separate request to modify the peering connection options. For inter-region peering connections, you must use the Region for the requester VPC to modify the requester VPC peering options and the Region for the accepter VPC to modify the accepter VPC peering options. To verify which VPCs are the accepter and the requester for a VPC peering connection, use the <a>DescribeVpcPeeringConnections</a> command.</p> <p>Multipath resilience replicates the traffic of an inter-Region VPC peering connection across multiple network paths. You can allow multipath resilience for your side of the connection if both of its Regions are supported. It takes effect only when both the requester and the accepter allow it. Additional charges apply when multipath resilience is in effect. For more information, see <a href=\"http://aws.amazon.com/vpc/pricing/\">Amazon VPC pricing</a>. To check whether multipath resilience is in effect, use <a>DescribeVpcPeeringConnections</a> and check <code>multipathResilienceStatus</code>.</p>",
     "ModifyVpcTenancy": "<p>Modifies the instance tenancy attribute of the specified VPC. You can change the instance tenancy attribute of a VPC to <code>default</code> only. You cannot change the instance tenancy attribute to <code>dedicated</code>.</p> <p>After you modify the tenancy of the VPC, any new instances that you launch into the VPC have a tenancy of <code>default</code>, unless you specify otherwise during launch. The tenancy of any existing instances in the VPC is not affected.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html\">Dedicated Instances</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "ModifyVpnConnection": "<p>Modifies the customer gateway or the target gateway of an Amazon Web Services Site-to-Site VPN connection. To modify the target gateway, the following migration options are available:</p> <ul> <li> <p>An existing virtual private gateway to a new virtual private gateway</p> </li> <li> <p>An existing virtual private gateway to a transit gateway</p> </li> <li> <p>An existing transit gateway to a new transit gateway</p> </li> <li> <p>An existing transit gateway to a virtual private gateway</p> </li> </ul> <p>Before you perform the migration to the new gateway, you must configure the new gateway. Use <a>CreateVpnGateway</a> to create a virtual private gateway, or <a>CreateTransitGateway</a> to create a transit gateway.</p> <p>This step is required when you migrate from a virtual private gateway with static routes to a transit gateway. </p> <p>You must delete the static routes before you migrate to the new gateway.</p> <p>Keep a copy of the static route before you delete it. You will need to add back these routes to the transit gateway after the VPN connection migration is complete.</p> <p>After you migrate to the new gateway, you might need to modify your VPC route table. Use <a>CreateRoute</a> and <a>DeleteRoute</a> to make the changes described in <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/modify-vpn-target.html#step-update-routing\">Update VPC route tables</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p> <p>When the new gateway is a transit gateway, modify the transit gateway route table to allow traffic between the VPC and the Amazon Web Services Site-to-Site VPN connection. Use <a>CreateTransitGatewayRoute</a> to add the routes.</p> <p> If you deleted VPN static routes, you must add the static routes to the transit gateway route table.</p> <p>After you perform this operation, the VPN endpoint's IP addresses on the Amazon Web Services side and the tunnel options remain intact. Your Amazon Web Services Site-to-Site VPN connection will be temporarily unavailable for a brief period while we provision the new endpoints.</p>",
     "ModifyVpnConnectionOptions": "<p>Modifies the connection options for your Site-to-Site VPN connection.</p> <p>When you modify the VPN connection options, the VPN endpoint IP addresses on the Amazon Web Services side do not change, and the tunnel options do not change. Your VPN connection will be temporarily unavailable for a brief period while the VPN connection is updated.</p>",
@@ -1095,6 +1096,13 @@
         "AccountVpcEncryptionControl$State": "<p>The current state of the account-level VPC Encryption Control configuration.</p>"
       }
     },
+    "ActiveAdditionalKeyExchangesList": {
+      "base": null,
+      "refs": {
+        "ActiveVpnTunnelStatus$Phase1AdditionalKeyExchanges": "<p>The additional key exchanges negotiated in Phase 1 IKE negotiations.</p>",
+        "ActiveVpnTunnelStatus$Phase2AdditionalKeyExchanges": "<p>The additional key exchanges negotiated in Phase 2 IKE negotiations.</p>"
+      }
+    },
     "ActiveInstance": {
       "base": "<p>Describes a running instance in a Spot Fleet.</p>",
       "refs": {
@@ -1106,6 +1114,12 @@
       "refs": {
         "DescribeFleetInstancesResult$ActiveInstances": "<p>The running instances. This list is refreshed periodically and might be out of date.</p>",
         "DescribeSpotFleetInstancesResponse$ActiveInstances": "<p>The running instances. This list is refreshed periodically and might be out of date.</p>"
+      }
+    },
+    "ActiveVpnTunnelAdditionalKeyExchange": {
+      "base": "<p>Describes an additional key exchange round negotiated for an active VPN tunnel.</p>",
+      "refs": {
+        "ActiveAdditionalKeyExchangesList$member": null
       }
     },
     "ActiveVpnTunnelStatus": {
@@ -1188,6 +1202,59 @@
       "base": null,
       "refs": {
         "NetworkCardInfo$AdditionalFlexibleNetworkInterfaces": "<p>The number of additional network interfaces that can be attached to an instance when using flexible Elastic Network Adapter (ENA) queues. This number is in addition to the base number specified by <code>maximumNetworkInterfaces</code>.</p>"
+      }
+    },
+    "AdditionalKeyExchangeMethodsList": {
+      "base": null,
+      "refs": {
+        "VpnAdditionalKeyExchange$KeyExchangeMethods": "<p>The key exchange method numbers permitted for this round.</p>"
+      }
+    },
+    "AdditionalKeyExchangeMethodsListValue": {
+      "base": "<p>The key exchange method number that is permitted for an additional key exchange round.</p>",
+      "refs": {
+        "AdditionalKeyExchangeMethodsList$member": null
+      }
+    },
+    "AdditionalKeyExchangeMethodsRequestList": {
+      "base": null,
+      "refs": {
+        "VpnAdditionalKeyExchangeRequest$KeyExchangeMethods": "<p>The key exchange method numbers that are permitted for this round. The method numbers are the IANA IKEv2 key exchange method transform IDs.</p> <p>A <code>required</code> round must specify at least one method. An <code>optional</code> round can omit this parameter or specify an empty list. If omitted or empty for an optional round, the round is disabled.</p> <p>IKEv2 requires that the initial Diffie-Hellman exchange and each required round use a different key exchange method. The permitted methods must allow a distinct method to be selected for each of them.</p> <p>Valid values: <code>2</code> | <code>5</code> | <code>14</code> | <code>15</code> | <code>16</code> | <code>17</code> | <code>18</code> | <code>19</code> | <code>20</code> | <code>21</code> | <code>22</code> | <code>23</code> | <code>24</code> | <code>35</code> | <code>36</code> | <code>37</code> </p>"
+      }
+    },
+    "AdditionalKeyExchangeMethodsRequestListValue": {
+      "base": "<p>Specifies a key exchange method number that is permitted for an additional key exchange round.</p>",
+      "refs": {
+        "AdditionalKeyExchangeMethodsRequestList$member": null
+      }
+    },
+    "AdditionalKeyExchangeRequirement": {
+      "base": null,
+      "refs": {
+        "VpnAdditionalKeyExchange$Requirement": "<p>Indicates whether this round is mandatory.</p>",
+        "VpnAdditionalKeyExchangeRequest$Requirement": "<p>Indicates whether this round is mandatory. If <code>required</code>, the tunnel isn't established unless the customer gateway device negotiates this round. If <code>optional</code>, the round is negotiated only if the customer gateway device supports it.</p> <p>Valid values: <code>required</code> | <code>optional</code> </p> <p>Default: <code>required</code> </p>"
+      }
+    },
+    "AdditionalKeyExchangeRound": {
+      "base": null,
+      "refs": {
+        "VpnAdditionalKeyExchangeRequest$AdditionalKeyExchangeRound": "<p>The additional key exchange round number.</p> <p>Valid range: Minimum value of 1. Maximum value of 7.</p>"
+      }
+    },
+    "AdditionalKeyExchangesList": {
+      "base": null,
+      "refs": {
+        "TunnelOption$Phase1AdditionalKeyExchanges": "<p>The permitted additional key exchange rounds for the VPN tunnel for phase 1 IKE negotiations.</p>",
+        "TunnelOption$Phase2AdditionalKeyExchanges": "<p>The permitted additional key exchange rounds for the VPN tunnel for phase 2 IKE negotiations.</p>"
+      }
+    },
+    "AdditionalKeyExchangesRequestSpecification": {
+      "base": null,
+      "refs": {
+        "ModifyVpnTunnelOptionsSpecification$Phase1AdditionalKeyExchanges": "<p>One or more additional key exchange rounds that are permitted for the VPN tunnel for phase 1 IKE negotiations. Additional key exchanges occur after the initial Diffie-Hellman exchange. Each round must have a unique round number.</p> <p>Additional key exchanges are supported only with IKEv2. You can't specify a <code>required</code> round if <code>IKEVersions</code> contains only <code>ikev1</code>.</p>",
+        "ModifyVpnTunnelOptionsSpecification$Phase2AdditionalKeyExchanges": "<p>One or more additional key exchange rounds that are permitted for the VPN tunnel for phase 2 IKE negotiations. Additional key exchanges occur after the initial Diffie-Hellman exchange. Each round must have a unique round number.</p> <p>Additional key exchanges are supported only with IKEv2. You can't specify a <code>required</code> round if <code>IKEVersions</code> contains only <code>ikev1</code>.</p>",
+        "VpnTunnelOptionsSpecification$Phase1AdditionalKeyExchanges": "<p>One or more additional key exchange rounds that are permitted for the VPN tunnel for phase 1 IKE negotiations. Additional key exchanges occur after the initial Diffie-Hellman exchange. Each round must have a unique round number.</p> <p>Additional key exchanges are supported only with IKEv2. You can't specify a <code>required</code> round if <code>IKEVersions</code> contains only <code>ikev1</code>.</p>",
+        "VpnTunnelOptionsSpecification$Phase2AdditionalKeyExchanges": "<p>One or more additional key exchange rounds that are permitted for the VPN tunnel for phase 2 IKE negotiations. Additional key exchanges occur after the initial Diffie-Hellman exchange. Each round must have a unique round number.</p> <p>Additional key exchanges are supported only with IKEv2. You can't specify a <code>required</code> round if <code>IKEVersions</code> contains only <code>ikev1</code>.</p>"
       }
     },
     "Address": {
@@ -2867,6 +2934,7 @@
         "CreateNetworkInterfaceRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateNetworkingFlexCostAllocationPolicyRequest$ShowBackEnabled": "<p>Specifies whether showback reporting is enabled for the policy.</p> <p>Default: <code>true</code> </p>",
         "CreateNetworkingFlexCostAllocationPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreatePeeringConnectionOptionsRequest$AllowMultipathResilience": "<p>Specifies whether you allow multipath resilience for the requester VPC. Multipath resilience is supported only for inter-Region VPC peering connections between supported Regions. It takes effect only when both the requester and the accepter allow it. Accepting the VPC peering connection request also allows multipath resilience for the accepter VPC. If you don't specify this parameter, the default is <code>false</code>.</p>",
         "CreatePlacementGroupRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreatePublicIpv4PoolRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateReplaceRootVolumeTaskRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2901,6 +2969,7 @@
         "CreateTransitGatewayMulticastDomainRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateTransitGatewayNetworkFunctionAttachmentRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateTransitGatewayPeeringAttachmentRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateTransitGatewayPeeringAttachmentRequestOptions$AllowMultipathResilience": "<p>Specifies whether you allow multipath resilience for the requester side of the transit gateway peering attachment. Multipath resilience is supported only for inter-Region transit gateway peering attachments between supported Regions. It takes effect only when both the requester and the accepter allow it. If you don't specify this parameter, the default is <code>false</code>.</p>",
         "CreateTransitGatewayPolicyTableEntryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateTransitGatewayPolicyTableRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateTransitGatewayPrefixListReferenceRequest$Blackhole": "<p>Indicates whether to drop traffic that matches this route.</p>",
@@ -3664,6 +3733,8 @@
         "ModifyTransitGatewayAttachmentNatConfigurationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyTransitGatewayMeteringPolicyRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyTransitGatewayNetworkFunctionAttachmentRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "ModifyTransitGatewayPeeringAttachmentRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "ModifyTransitGatewayPeeringAttachmentRequestOptions$AllowMultipathResilience": "<p>Specifies whether you allow multipath resilience for your side of the transit gateway peering attachment. Multipath resilience is supported only for inter-Region transit gateway peering attachments between supported Regions. It takes effect only when both the requester and the accepter allow it. If you don't specify this parameter, the current setting doesn't change.</p>",
         "ModifyTransitGatewayPolicyTableEntryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyTransitGatewayPrefixListReferenceRequest$Blackhole": "<p>Indicates whether to drop traffic that matches this route.</p>",
         "ModifyTransitGatewayPrefixListReferenceRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3736,9 +3807,11 @@
         "PeeringConnectionOptions$AllowDnsResolutionFromRemoteVpc": "<p>If true, the public DNS hostnames of instances in the specified VPC resolve to private IP addresses when queried from instances in the peer VPC.</p>",
         "PeeringConnectionOptions$AllowEgressFromLocalClassicLinkToRemoteVpc": "<p>Deprecated.</p>",
         "PeeringConnectionOptions$AllowEgressFromLocalVpcToRemoteClassicLink": "<p>Deprecated.</p>",
+        "PeeringConnectionOptions$AllowMultipathResilience": "<p>Indicates whether this side of the VPC peering connection allows multipath resilience.</p>",
         "PeeringConnectionOptionsRequest$AllowDnsResolutionFromRemoteVpc": "<p>If true, enables a local VPC to resolve public DNS hostnames to private IP addresses when queried from instances in the peer VPC.</p>",
         "PeeringConnectionOptionsRequest$AllowEgressFromLocalClassicLinkToRemoteVpc": "<p>Deprecated.</p>",
         "PeeringConnectionOptionsRequest$AllowEgressFromLocalVpcToRemoteClassicLink": "<p>Deprecated.</p>",
+        "PeeringConnectionOptionsRequest$AllowMultipathResilience": "<p>Specifies whether you allow multipath resilience for this side of the VPC peering connection. Multipath resilience is supported only for inter-Region VPC peering connections between supported Regions. It takes effect only when both the requester and the accepter allow it. If you don't specify this parameter, the current setting doesn't change.</p>",
         "PriceSchedule$Active": "<p>The current price schedule, as determined by the term remaining for the Reserved Instance in the listing.</p> <p>A specific price schedule is always in effect, but only one price schedule can be active at any time. Take, for example, a Reserved Instance listing that has five months remaining in its term. When you specify price schedules for five months and two months, this means that schedule 1, covering the first three months of the remaining term, will be active during months 5, 4, and 3. Then schedule 2, covering the last two months of the term, will be active for months 2 and 1.</p>",
         "PrivateDnsNameOptionsOnLaunch$EnableResourceNameDnsARecord": "<p>Indicates whether to respond to DNS queries for instance hostnames with DNS A records.</p>",
         "PrivateDnsNameOptionsOnLaunch$EnableResourceNameDnsAAAARecord": "<p>Indicates whether to respond to DNS queries for instance hostname with DNS AAAA records.</p>",
@@ -3895,6 +3968,8 @@
         "TerminateInstancesRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "TransitGatewayMulticastGroup$GroupMember": "<p>Indicates that the resource is a transit gateway multicast group member.</p>",
         "TransitGatewayMulticastGroup$GroupSource": "<p>Indicates that the resource is a transit gateway multicast group member.</p>",
+        "TransitGatewayPeeringAttachmentOptions$RequesterAllowMultipathResilience": "<p>Indicates whether the requester allows multipath resilience for the transit gateway peering attachment.</p>",
+        "TransitGatewayPeeringAttachmentOptions$AccepterAllowMultipathResilience": "<p>Indicates whether the accepter allows multipath resilience for the transit gateway peering attachment.</p>",
         "TransitGatewayPrefixListReference$Blackhole": "<p>Indicates whether traffic that matches this route is dropped.</p>",
         "TransitGatewayRouteTable$DefaultAssociationRouteTable": "<p>Indicates whether this is the default association route table for the transit gateway.</p>",
         "TransitGatewayRouteTable$DefaultPropagationRouteTable": "<p>Indicates whether this is the default propagation route table for the transit gateway.</p>",
@@ -3938,6 +4013,7 @@
         "VpcPeeringConnectionOptionsDescription$AllowDnsResolutionFromRemoteVpc": "<p>Indicates whether a local VPC can resolve public DNS hostnames to private IP addresses when queried from instances in a peer VPC.</p>",
         "VpcPeeringConnectionOptionsDescription$AllowEgressFromLocalClassicLinkToRemoteVpc": "<p>Deprecated.</p>",
         "VpcPeeringConnectionOptionsDescription$AllowEgressFromLocalVpcToRemoteClassicLink": "<p>Deprecated.</p>",
+        "VpcPeeringConnectionOptionsDescription$AllowMultipathResilience": "<p>Indicates whether this side of the VPC peering connection allows multipath resilience.</p>",
         "VpnConnectionOptions$EnableAcceleration": "<p>Indicates whether acceleration is enabled for the VPN connection.</p>",
         "VpnConnectionOptions$StaticRoutesOnly": "<p>Indicates whether the VPN connection uses static routes only. Static routes must be used for devices that don't support BGP.</p>",
         "VpnConnectionOptionsSpecification$EnableAcceleration": "<p>Indicate whether to enable acceleration for the VPN connection.</p> <p>Default: <code>false</code> </p>",
@@ -4403,6 +4479,18 @@
         "DescribeCapacityBlocksRequest$CapacityBlockIds": "<p>The IDs of the Capacity Blocks.</p>"
       }
     },
+    "CapacityBlockInstanceTypePreference": {
+      "base": "<p>Instance type preference for a Capacity Block search. Specifies one or more instance types to evaluate when searching for available Capacity Blocks.</p>",
+      "refs": {
+        "CapacityBlockInstanceTypePreferenceSet$member": null
+      }
+    },
+    "CapacityBlockInstanceTypePreferenceSet": {
+      "base": null,
+      "refs": {
+        "DescribeCapacityBlockOfferingsRequest$InstanceTypePreferences": "<p>List of instance type preferences for the Capacity Block offering search. Accepts one or more instance type names. Either this or the legacy <code>InstanceType</code> parameter is required.</p>"
+      }
+    },
     "CapacityBlockInterconnectStatus": {
       "base": null,
       "refs": {
@@ -4413,6 +4501,18 @@
       "base": "<p>The recommended Capacity Block that fits your search requirements.</p>",
       "refs": {
         "CapacityBlockOfferingSet$member": null
+      }
+    },
+    "CapacityBlockOfferingSegment": {
+      "base": "<p>Describes an individual segment within a Capacity Block offering. Each segment represents a distinct block of capacity with its own Availability Zone, instance type, duration, pricing, and schedule.</p>",
+      "refs": {
+        "CapacityBlockOfferingSegmentSet$member": null
+      }
+    },
+    "CapacityBlockOfferingSegmentSet": {
+      "base": null,
+      "refs": {
+        "CapacityBlockOffering$CapacityBlockOfferingSegments": "<p>The individual segments that compose the Capacity Block offering. Each segment describes a distinct block of capacity with its own Availability Zone, instance type, schedule, and pricing.</p>"
       }
     },
     "CapacityBlockOfferingSet": {
@@ -4845,7 +4945,8 @@
     "CapacityReservationSet": {
       "base": null,
       "refs": {
-        "DescribeCapacityReservationsResult$CapacityReservations": "<p>Information about the Capacity Reservations.</p>"
+        "DescribeCapacityReservationsResult$CapacityReservations": "<p>Information about the Capacity Reservations.</p>",
+        "PurchaseCapacityBlockResult$CapacityReservations": "<p>The Capacity Reservations created as a result of the Capacity Block purchase. When a Capacity Block offering contains multiple segments, a separate Capacity Reservation is created for each segment.</p>"
       }
     },
     "CapacityReservationSpecification": {
@@ -6338,6 +6439,12 @@
     "CreateNetworkingFlexCostAllocationPolicyResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "CreatePeeringConnectionOptionsRequest": {
+      "base": "<p>The VPC peering connection options to apply to the requester VPC when you create a VPC peering connection.</p>",
+      "refs": {
+        "CreateVpcPeeringConnectionRequest$RequesterPeeringConnectionOptions": "<p>The VPC peering connection options to apply to the requester VPC.</p>"
       }
     },
     "CreatePlacementGroupRequest": {
@@ -16898,8 +17005,12 @@
         "AcceleratorTotalMemoryMiB$Max": "<p>The maximum amount of accelerator memory, in MiB. If this parameter is not specified, there is no maximum limit.</p>",
         "AcceleratorTotalMemoryMiBRequest$Min": "<p>The minimum amount of accelerator memory, in MiB. To specify no minimum limit, omit this parameter.</p>",
         "AcceleratorTotalMemoryMiBRequest$Max": "<p>The maximum amount of accelerator memory, in MiB. To specify no maximum limit, omit this parameter.</p>",
+        "ActiveVpnTunnelAdditionalKeyExchange$AdditionalKeyExchangeRound": "<p>The additional key exchange round number.</p>",
+        "ActiveVpnTunnelAdditionalKeyExchange$KeyExchangeMethod": "<p>The key exchange method number negotiated for this round.</p>",
         "ActiveVpnTunnelStatus$Phase1DHGroup": "<p>The Diffie-Hellman group number being used in Phase 1 IKE negotiations.</p>",
         "ActiveVpnTunnelStatus$Phase2DHGroup": "<p>The Diffie-Hellman group number being used in Phase 2 IKE negotiations.</p>",
+        "AdditionalKeyExchangeMethodsListValue$Value": "<p>The key exchange method number.</p>",
+        "AdditionalKeyExchangeMethodsRequestListValue$Value": "<p>The key exchange method number.</p>",
         "AllocateHostsRequest$Quantity": "<p>The number of Dedicated Hosts to allocate to your account with these parameters. If you are allocating the Dedicated Hosts on an Outpost, and you specify <b>AssetIds</b>, you can omit this parameter. In this case, Amazon EC2 allocates a Dedicated Host on each specified hardware asset. If you specify both <b>AssetIds</b> and <b>Quantity</b>, then the value that you specify for <b>Quantity</b> must be equal to the number of asset IDs specified.</p>",
         "AllocateIpamPoolCidrRequest$NetmaskLength": "<p>The netmask length of the CIDR you would like to allocate from the IPAM pool. Note the following:</p> <ul> <li> <p>If there is no DefaultNetmaskLength allocation rule set on the pool, you must specify either the NetmaskLength or the CIDR.</p> </li> <li> <p>If the DefaultNetmaskLength allocation rule is set on the pool, you can specify either the NetmaskLength or the CIDR and the DefaultNetmaskLength allocation rule will be ignored.</p> </li> </ul> <p>Possible netmask lengths for IPv4 addresses are 0 - 32. Possible netmask lengths for IPv6 addresses are 0 - 128.</p>",
         "AnalysisAclRule$RuleNumber": "<p>The rule number.</p>",
@@ -16940,6 +17051,9 @@
         "CapacityBlockOffering$InstanceCount": "<p>The number of instances in the Capacity Block offering.</p>",
         "CapacityBlockOffering$CapacityBlockDurationHours": "<p>The number of hours (in addition to <code>capacityBlockDurationMinutes</code>) for the duration of the Capacity Block reservation. For example, if a Capacity Block starts at <b>04:55</b> and ends at <b>11:30</b>, the hours field would be <b>6</b>.</p>",
         "CapacityBlockOffering$CapacityBlockDurationMinutes": "<p>The number of minutes (in addition to <code>capacityBlockDurationHours</code>) for the duration of the Capacity Block reservation. For example, if a Capacity Block starts at <b>08:55</b> and ends at <b>11:30</b>, the minutes field would be <b>35</b>.</p>",
+        "CapacityBlockOfferingSegment$InstanceCount": "<p>The number of instances in the Capacity Block offering segment.</p>",
+        "CapacityBlockOfferingSegment$CapacityBlockDurationHours": "<p>The number of hours for the duration of the Capacity Block offering segment.</p>",
+        "CapacityBlockOfferingSegment$CapacityBlockDurationMinutes": "<p>The number of minutes for the duration of the Capacity Block offering segment.</p>",
         "CapacityBlockStatus$TotalCapacity": "<p>The combined amount of <code>Available</code> and <code>Unavailable</code> capacity in the Capacity Block.</p>",
         "CapacityBlockStatus$TotalAvailableCapacity": "<p>The remaining capacity. Indicates the number of resources that can be launched into the Capacity Block.</p>",
         "CapacityBlockStatus$TotalUnavailableCapacity": "<p>The unavailable capacity. Indicates the instance capacity that is unavailable for use due to a system status check failure.</p>",
@@ -17363,6 +17477,7 @@
         "VolumeRecycleBinInfo$Size": "<p>The size of the volume, in GiB.</p>",
         "VolumeRecycleBinInfo$Iops": "<p>The number of I/O operations per second (IOPS) for the volume.</p>",
         "VolumeRecycleBinInfo$Throughput": "<p>The throughput that the volume supports, in MiB/s.</p>",
+        "VpnAdditionalKeyExchange$AdditionalKeyExchangeRound": "<p>The additional key exchange round number.</p>",
         "VpnTunnelOptionsSpecification$Phase1LifetimeSeconds": "<p>The lifetime for phase 1 of the IKE negotiation, in seconds.</p> <p>Constraints: A value between 900 and 28,800.</p> <p>Default: <code>28800</code> </p>",
         "VpnTunnelOptionsSpecification$Phase2LifetimeSeconds": "<p>The lifetime for phase 2 of the IKE negotiation, in seconds.</p> <p>Constraints: A value between 900 and 3,600. The value must be less than the value for <code>Phase1LifetimeSeconds</code>.</p> <p>Default: <code>3600</code> </p>",
         "VpnTunnelOptionsSpecification$RekeyMarginTimeSeconds": "<p>The margin time, in seconds, before the phase 2 lifetime expires, during which the Amazon Web Services side of the VPN connection performs an IKE rekey. The exact time of the rekey is randomly selected based on the value for <code>RekeyFuzzPercentage</code>.</p> <p>Constraints: A value between 60 and half of <code>Phase2LifetimeSeconds</code>.</p> <p>Default: <code>270</code> </p>",
@@ -20605,6 +20720,8 @@
         "CapacityBlockExtensionOffering$CapacityBlockExtensionEndDate": "<p>The date and time at which the Capacity Block extension expires. When a Capacity Block expires, the reserved capacity is released and you can no longer launch instances into it. The Capacity Block's state changes to <code>expired</code> when it reaches its end date</p>",
         "CapacityBlockOffering$StartDate": "<p>The start date of the Capacity Block offering.</p>",
         "CapacityBlockOffering$EndDate": "<p>The end date of the Capacity Block offering.</p>",
+        "CapacityBlockOfferingSegment$StartDate": "<p>The start date of the Capacity Block offering segment.</p>",
+        "CapacityBlockOfferingSegment$EndDate": "<p>The end date of the Capacity Block offering segment.</p>",
         "CapacityManagerDataExportResponse$CreateTime": "<p> The timestamp when the data export configuration was created. </p>",
         "CapacityManagerDataExportResponse$LatestDeliveryTime": "<p> The timestamp when the most recent export was delivered to S3. </p>",
         "CapacityManagerDimension$ReservationCreateTimestamp": "<p> The timestamp when the capacity reservation was originally created, in milliseconds since epoch. This differs from the start timestamp as reservations can be created before they become active. </p>",
@@ -21381,6 +21498,22 @@
         "ModifyTransitGatewayRequest$Options": "<p>The options to modify.</p>"
       }
     },
+    "ModifyTransitGatewayPeeringAttachmentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyTransitGatewayPeeringAttachmentRequestOptions": {
+      "base": "<p>Contains the options to modify for a transit gateway peering attachment, including multipath resilience settings.</p>",
+      "refs": {
+        "ModifyTransitGatewayPeeringAttachmentRequest$Options": "<p>The options to modify for the transit gateway peering attachment.</p>"
+      }
+    },
+    "ModifyTransitGatewayPeeringAttachmentResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ModifyTransitGatewayPolicyTableEntryRequest": {
       "base": null,
       "refs": {
@@ -21812,6 +21945,21 @@
       "refs": {
         "TransitGatewayOptions$MulticastSupport": "<p>Indicates whether multicast is enabled on the transit gateway</p>",
         "TransitGatewayRequestOptions$MulticastSupport": "<p>Indicates whether multicast is enabled on the transit gateway</p>"
+      }
+    },
+    "MultipathResilienceMode": {
+      "base": null,
+      "refs": {
+        "CreatePeeringConnectionOptionsRequest$MultipathResilienceMode": "<p>The multipath resilience mode. You can specify this parameter only if <code>AllowMultipathResilience</code> is <code>true</code>.</p> <p>The following value is valid:</p> <ul> <li> <p> <code>always-on</code> – Replicates traffic across multiple network paths while multipath resilience is in effect.</p> </li> </ul> <p>If <code>AllowMultipathResilience</code> is <code>true</code> and you don't specify a mode, the default is <code>always-on</code>.</p>",
+        "PeeringConnectionOptions$MultipathResilienceMode": "<p>The multipath resilience mode for this side of the VPC peering connection. This value is present only when this side allows multipath resilience.</p>",
+        "PeeringConnectionOptionsRequest$MultipathResilienceMode": "<p>The multipath resilience mode. You can specify this parameter only if <code>AllowMultipathResilience</code> is <code>true</code>.</p> <p>The following value is valid:</p> <ul> <li> <p> <code>always-on</code> – Replicates traffic across multiple network paths while multipath resilience is in effect.</p> </li> </ul> <p>If <code>AllowMultipathResilience</code> is <code>true</code> and you don't specify a mode, the default is <code>always-on</code>.</p>",
+        "VpcPeeringConnectionOptionsDescription$MultipathResilienceMode": "<p>The multipath resilience mode for this side of the VPC peering connection. This value is present only when this side allows multipath resilience.</p>"
+      }
+    },
+    "MultipathResilienceStatus": {
+      "base": null,
+      "refs": {
+        "VpcPeeringConnection$MultipathResilienceStatus": "<p>The multipath resilience status of the VPC peering connection. The possible values are:</p> <ul> <li> <p> <code>enabled</code> – Both the requester and the accepter allow multipath resilience.</p> </li> <li> <p> <code>pending</code> – Either the requester or the accepter allows multipath resilience, but not both.</p> </li> <li> <p> <code>disabled</code> – Neither the requester nor the accepter allows multipath resilience.</p> </li> </ul>"
       }
     },
     "NatFlexCostAllocationPolicyDocument": {
@@ -23091,8 +23239,8 @@
     "Phase1DHGroupNumbersRequestList": {
       "base": null,
       "refs": {
-        "ModifyVpnTunnelOptionsSpecification$Phase1DHGroupNumbers": "<p>One or more Diffie-Hellman group numbers that are permitted for the VPN tunnel for phase 1 IKE negotiations.</p> <p>Valid values: <code>2</code> | <code>14</code> | <code>15</code> | <code>16</code> | <code>17</code> | <code>18</code> | <code>19</code> | <code>20</code> | <code>21</code> | <code>22</code> | <code>23</code> | <code>24</code> </p>",
-        "VpnTunnelOptionsSpecification$Phase1DHGroupNumbers": "<p>One or more Diffie-Hellman group numbers that are permitted for the VPN tunnel for phase 1 IKE negotiations.</p> <p>Valid values: <code>2</code> | <code>14</code> | <code>15</code> | <code>16</code> | <code>17</code> | <code>18</code> | <code>19</code> | <code>20</code> | <code>21</code> | <code>22</code> | <code>23</code> | <code>24</code> </p>"
+        "ModifyVpnTunnelOptionsSpecification$Phase1DHGroupNumbers": "<p>One or more Diffie-Hellman group numbers that are permitted for the VPN tunnel for phase 1 IKE negotiations.</p> <p>Valid values: <code>2</code> | <code>14</code> | <code>15</code> | <code>16</code> | <code>17</code> | <code>18</code> | <code>19</code> | <code>20</code> | <code>21</code> | <code>22</code> | <code>23</code> | <code>24</code> | <code>35</code> </p>",
+        "VpnTunnelOptionsSpecification$Phase1DHGroupNumbers": "<p>One or more Diffie-Hellman group numbers that are permitted for the VPN tunnel for phase 1 IKE negotiations.</p> <p>Valid values: <code>2</code> | <code>14</code> | <code>15</code> | <code>16</code> | <code>17</code> | <code>18</code> | <code>19</code> | <code>20</code> | <code>21</code> | <code>22</code> | <code>23</code> | <code>24</code> | <code>35</code> </p>"
       }
     },
     "Phase1DHGroupNumbersRequestListValue": {
@@ -23166,8 +23314,8 @@
     "Phase2DHGroupNumbersRequestList": {
       "base": null,
       "refs": {
-        "ModifyVpnTunnelOptionsSpecification$Phase2DHGroupNumbers": "<p>One or more Diffie-Hellman group numbers that are permitted for the VPN tunnel for phase 2 IKE negotiations.</p> <p>Valid values: <code>2</code> | <code>5</code> | <code>14</code> | <code>15</code> | <code>16</code> | <code>17</code> | <code>18</code> | <code>19</code> | <code>20</code> | <code>21</code> | <code>22</code> | <code>23</code> | <code>24</code> </p>",
-        "VpnTunnelOptionsSpecification$Phase2DHGroupNumbers": "<p>One or more Diffie-Hellman group numbers that are permitted for the VPN tunnel for phase 2 IKE negotiations.</p> <p>Valid values: <code>2</code> | <code>5</code> | <code>14</code> | <code>15</code> | <code>16</code> | <code>17</code> | <code>18</code> | <code>19</code> | <code>20</code> | <code>21</code> | <code>22</code> | <code>23</code> | <code>24</code> </p>"
+        "ModifyVpnTunnelOptionsSpecification$Phase2DHGroupNumbers": "<p>One or more Diffie-Hellman group numbers that are permitted for the VPN tunnel for phase 2 IKE negotiations.</p> <p>Valid values: <code>2</code> | <code>5</code> | <code>14</code> | <code>15</code> | <code>16</code> | <code>17</code> | <code>18</code> | <code>19</code> | <code>20</code> | <code>21</code> | <code>22</code> | <code>23</code> | <code>24</code> | <code>35</code> | <code>36</code> | <code>37</code> </p>",
+        "VpnTunnelOptionsSpecification$Phase2DHGroupNumbers": "<p>One or more Diffie-Hellman group numbers that are permitted for the VPN tunnel for phase 2 IKE negotiations.</p> <p>Valid values: <code>2</code> | <code>5</code> | <code>14</code> | <code>15</code> | <code>16</code> | <code>17</code> | <code>18</code> | <code>19</code> | <code>20</code> | <code>21</code> | <code>22</code> | <code>23</code> | <code>24</code> | <code>35</code> | <code>36</code> | <code>37</code> </p>"
       }
     },
     "Phase2DHGroupNumbersRequestListValue": {
@@ -27248,12 +27396,19 @@
         "CapacityBlockExtensionOffering$UpfrontFee": "<p>The total price of the Capacity Block extension offering, to be paid up front.</p>",
         "CapacityBlockExtensionOffering$CurrencyCode": "<p>The currency of the payment for the Capacity Block extension offering.</p>",
         "CapacityBlockExtensionOffering$ZoneType": "<p>The type of zone where the Capacity Block extension offering is available.</p>",
+        "CapacityBlockInstanceTypePreference$InstanceType": "<p>The instance type to consider in the Capacity Block search.</p>",
         "CapacityBlockOffering$InstanceType": "<p>The instance type of the Capacity Block offering.</p>",
         "CapacityBlockOffering$AvailabilityZone": "<p>The Availability Zone of the Capacity Block offering.</p>",
         "CapacityBlockOffering$UpfrontFee": "<p>The total price to be paid up front.</p>",
         "CapacityBlockOffering$CurrencyCode": "<p>The currency of the payment for the Capacity Block.</p>",
         "CapacityBlockOffering$UltraserverType": "<p>The EC2 UltraServer type of the Capacity Block offering.</p>",
         "CapacityBlockOffering$ZoneType": "<p>The type of zone where the Capacity Block offering is available.</p>",
+        "CapacityBlockOfferingSegment$InstanceType": "<p>The instance type of the Capacity Block offering segment.</p>",
+        "CapacityBlockOfferingSegment$AvailabilityZone": "<p>The Availability Zone of the Capacity Block offering segment.</p>",
+        "CapacityBlockOfferingSegment$AvailabilityZoneId": "<p>The ID of the Availability Zone for the Capacity Block offering segment.</p>",
+        "CapacityBlockOfferingSegment$UpfrontFee": "<p>The total price to be paid up front for the Capacity Block offering segment.</p>",
+        "CapacityBlockOfferingSegment$CurrencyCode": "<p>The currency of the payment for the Capacity Block offering segment.</p>",
+        "CapacityBlockOfferingSegment$ZoneType": "<p>The type of zone where the Capacity Block offering segment is available.</p>",
         "CapacityManagerDataExportResponse$S3BucketName": "<p> The name of the S3 bucket where export files are delivered. </p>",
         "CapacityManagerDataExportResponse$S3BucketPrefix": "<p> The S3 key prefix used for organizing export files within the bucket. </p>",
         "CapacityManagerDataExportResponse$LatestDeliveryStatusMessage": "<p> A message describing the status of the most recent export delivery, including any error details if the delivery failed. </p>",
@@ -31006,6 +31161,7 @@
         "ModifyTransitGatewayAttachmentNatConfigurationRequest$TransitGatewayAttachmentId": "<p>The ID of the transit gateway attachment.</p>",
         "ModifyTransitGatewayAttachmentNatConfigurationResult$TransitGatewayAttachmentId": "<p>The ID of the transit gateway attachment.</p>",
         "ModifyTransitGatewayNetworkFunctionAttachmentRequest$TransitGatewayAttachmentId": "<p>The ID of the network function attachment.</p>",
+        "ModifyTransitGatewayPeeringAttachmentRequest$TransitGatewayAttachmentId": "<p>The ID of the transit gateway peering attachment.</p>",
         "ModifyTransitGatewayPrefixListReferenceRequest$TransitGatewayAttachmentId": "<p>The ID of the attachment to which traffic is routed.</p>",
         "ModifyTransitGatewayVpcAttachmentRequest$TransitGatewayAttachmentId": "<p>The ID of the attachment.</p>",
         "RejectTransitGatewayClientVpnAttachmentRequest$TransitGatewayAttachmentId": "<p>The ID of the Transit Gateway attachment.</p>",
@@ -31548,6 +31704,7 @@
         "AcceptTransitGatewayPeeringAttachmentResult$TransitGatewayPeeringAttachment": "<p>The transit gateway peering attachment.</p>",
         "CreateTransitGatewayPeeringAttachmentResult$TransitGatewayPeeringAttachment": "<p>The transit gateway peering attachment.</p>",
         "DeleteTransitGatewayPeeringAttachmentResult$TransitGatewayPeeringAttachment": "<p>The transit gateway peering attachment.</p>",
+        "ModifyTransitGatewayPeeringAttachmentResult$TransitGatewayPeeringAttachment": "<p>Information about the transit gateway peering attachment.</p>",
         "RejectTransitGatewayPeeringAttachmentResult$TransitGatewayPeeringAttachment": "<p>The transit gateway peering attachment.</p>",
         "TransitGatewayPeeringAttachmentList$member": null
       }
@@ -31556,6 +31713,21 @@
       "base": null,
       "refs": {
         "DescribeTransitGatewayPeeringAttachmentsResult$TransitGatewayPeeringAttachments": "<p>The transit gateway peering attachments.</p>"
+      }
+    },
+    "TransitGatewayPeeringAttachmentMultipathResilienceMode": {
+      "base": null,
+      "refs": {
+        "CreateTransitGatewayPeeringAttachmentRequestOptions$MultipathResilienceMode": "<p>The multipath resilience mode. You can specify this parameter only if <code>AllowMultipathResilience</code> is <code>true</code>.</p> <p>The following value is valid:</p> <ul> <li> <p> <code>always-on</code> – Replicates traffic across multiple network paths while multipath resilience is in effect.</p> </li> </ul> <p>If <code>AllowMultipathResilience</code> is <code>true</code> and you don't specify a mode, the default is <code>always-on</code>.</p>",
+        "ModifyTransitGatewayPeeringAttachmentRequestOptions$MultipathResilienceMode": "<p>The multipath resilience mode. You can specify this parameter only if <code>AllowMultipathResilience</code> is <code>true</code>.</p> <p>The following value is valid:</p> <ul> <li> <p> <code>always-on</code> – Replicates traffic across multiple network paths while multipath resilience is in effect.</p> </li> </ul> <p>If <code>AllowMultipathResilience</code> is <code>true</code> and you don't specify a mode, the default is <code>always-on</code>.</p>",
+        "TransitGatewayPeeringAttachmentOptions$RequesterMultipathResilienceMode": "<p>The multipath resilience mode for the requester. This value is present only when the requester allows multipath resilience.</p>",
+        "TransitGatewayPeeringAttachmentOptions$AccepterMultipathResilienceMode": "<p>The multipath resilience mode for the accepter. This value is present only when the accepter allows multipath resilience.</p>"
+      }
+    },
+    "TransitGatewayPeeringAttachmentMultipathResilienceStatus": {
+      "base": null,
+      "refs": {
+        "TransitGatewayPeeringAttachmentOptions$MultipathResilienceStatus": "<p>The multipath resilience status of the transit gateway peering attachment. The possible values are:</p> <ul> <li> <p> <code>enabled</code> – Both the requester and the accepter allow multipath resilience.</p> </li> <li> <p> <code>pending</code> – Either the requester or the accepter allows multipath resilience, but not both.</p> </li> <li> <p> <code>disabled</code> – Neither the requester nor the accepter allows multipath resilience.</p> </li> </ul>"
       }
     },
     "TransitGatewayPeeringAttachmentOptions": {
@@ -33249,7 +33421,7 @@
         "VpcEncryptionControlExclusions$Lambda": "<p>The exclusion configuration for Lambda function traffic.</p>",
         "VpcEncryptionControlExclusions$VpcLattice": "<p>The exclusion configuration for VPC Lattice traffic.</p>",
         "VpcEncryptionControlExclusions$ElasticFileSystem": "<p>The exclusion configuration for Elastic File System traffic.</p>",
-        "VpcEncryptionControlExclusions$GlobalAccelerator": "<p>The exclusion configuration for AWS Global Accelerator traffic.</p>",
+        "VpcEncryptionControlExclusions$GlobalAccelerator": "<p>The exclusion configuration for Amazon Web Services Global Accelerator traffic.</p>",
         "VpcEncryptionControlExclusions$ApiGatewayV2": "<p>The exclusion configuration for Amazon API Gateway V2 traffic.</p>"
       }
     },
@@ -33264,7 +33436,7 @@
         "AccountVpcEncryptionControlExclusions$Lambda": "<p>The exclusion configuration for Lambda service.</p>",
         "AccountVpcEncryptionControlExclusions$VpcLattice": "<p>The exclusion configuration for VPC Lattice service.</p>",
         "AccountVpcEncryptionControlExclusions$ElasticFileSystem": "<p>The exclusion configuration for Elastic File System service.</p>",
-        "AccountVpcEncryptionControlExclusions$GlobalAccelerator": "<p>The exclusion configuration for AWS Global Accelerator.</p>",
+        "AccountVpcEncryptionControlExclusions$GlobalAccelerator": "<p>The exclusion configuration for Amazon Web Services Global Accelerator.</p>",
         "AccountVpcEncryptionControlExclusions$ApiGatewayV2": "<p>The exclusion configuration for Amazon API Gateway V2.</p>",
         "VpcEncryptionControlExclusion$State": "<p>The current state of the exclusion configuration.</p>"
       }
@@ -33280,7 +33452,7 @@
         "ModifyAccountVpcEncryptionControlRequest$Lambda": "<p>Specifies whether to exclude Lambda service from account-level encryption enforcement.</p>",
         "ModifyAccountVpcEncryptionControlRequest$VpcLattice": "<p>Specifies whether to exclude VPC Lattice service from account-level encryption enforcement.</p>",
         "ModifyAccountVpcEncryptionControlRequest$ElasticFileSystem": "<p>Specifies whether to exclude Elastic File System service from account-level encryption enforcement.</p>",
-        "ModifyAccountVpcEncryptionControlRequest$GlobalAccelerator": "<p>Specifies whether to exclude AWS Global Accelerator from account-level encryption enforcement.</p>",
+        "ModifyAccountVpcEncryptionControlRequest$GlobalAccelerator": "<p>Specifies whether to exclude Amazon Web Services Global Accelerator from account-level encryption enforcement.</p>",
         "ModifyAccountVpcEncryptionControlRequest$ApiGatewayV2": "<p>Specifies whether to exclude Amazon API Gateway V2 from account-level encryption enforcement.</p>",
         "ModifyVpcEncryptionControlRequest$InternetGatewayExclusion": "<p>Specifies whether to exclude internet gateway traffic from encryption enforcement.</p>",
         "ModifyVpcEncryptionControlRequest$EgressOnlyInternetGatewayExclusion": "<p>Specifies whether to exclude egress-only internet gateway traffic from encryption enforcement.</p>",
@@ -33290,7 +33462,7 @@
         "ModifyVpcEncryptionControlRequest$LambdaExclusion": "<p>Specifies whether to exclude Lambda function traffic from encryption enforcement.</p>",
         "ModifyVpcEncryptionControlRequest$VpcLatticeExclusion": "<p>Specifies whether to exclude VPC Lattice traffic from encryption enforcement.</p>",
         "ModifyVpcEncryptionControlRequest$ElasticFileSystemExclusion": "<p>Specifies whether to exclude Elastic File System traffic from encryption enforcement.</p>",
-        "ModifyVpcEncryptionControlRequest$GlobalAcceleratorExclusion": "<p>Specifies whether to exclude AWS Global Accelerator traffic from encryption enforcement.</p>",
+        "ModifyVpcEncryptionControlRequest$GlobalAcceleratorExclusion": "<p>Specifies whether to exclude Amazon Web Services Global Accelerator traffic from encryption enforcement.</p>",
         "ModifyVpcEncryptionControlRequest$ApiGatewayV2Exclusion": "<p>Specifies whether to exclude Amazon API Gateway V2 traffic from encryption enforcement.</p>",
         "VpcEncryptionControlConfiguration$InternetGatewayExclusion": "<p>Specifies whether to exclude internet gateway traffic from encryption enforcement.</p>",
         "VpcEncryptionControlConfiguration$EgressOnlyInternetGatewayExclusion": "<p>Specifies whether to exclude egress-only internet gateway traffic from encryption enforcement.</p>",
@@ -33300,7 +33472,7 @@
         "VpcEncryptionControlConfiguration$LambdaExclusion": "<p>Specifies whether to exclude Lambda function traffic from encryption enforcement.</p>",
         "VpcEncryptionControlConfiguration$VpcLatticeExclusion": "<p>Specifies whether to exclude VPC Lattice traffic from encryption enforcement.</p>",
         "VpcEncryptionControlConfiguration$ElasticFileSystemExclusion": "<p>Specifies whether to exclude Elastic File System traffic from encryption enforcement.</p>",
-        "VpcEncryptionControlConfiguration$GlobalAcceleratorExclusion": "<p>Specifies whether to exclude AWS Global Accelerator traffic from encryption enforcement.</p>",
+        "VpcEncryptionControlConfiguration$GlobalAcceleratorExclusion": "<p>Specifies whether to exclude Amazon Web Services Global Accelerator traffic from encryption enforcement.</p>",
         "VpcEncryptionControlConfiguration$ApiGatewayV2Exclusion": "<p>Specifies whether to exclude Amazon API Gateway V2 traffic from encryption enforcement.</p>"
       }
     },
@@ -33629,6 +33801,18 @@
       "base": null,
       "refs": {
         "ModifyVpcTenancyRequest$InstanceTenancy": "<p>The instance tenancy attribute for the VPC. </p>"
+      }
+    },
+    "VpnAdditionalKeyExchange": {
+      "base": "<p>Describes an additional key exchange round that is permitted for the VPN tunnel.</p>",
+      "refs": {
+        "AdditionalKeyExchangesList$member": null
+      }
+    },
+    "VpnAdditionalKeyExchangeRequest": {
+      "base": "<p>Specifies an additional key exchange round for the VPN tunnel, as defined in RFC 9370.</p>",
+      "refs": {
+        "AdditionalKeyExchangesRequestSpecification$member": null
       }
     },
     "VpnConcentrator": {

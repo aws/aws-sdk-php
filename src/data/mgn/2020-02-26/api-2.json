@@ -157,6 +157,22 @@
       ],
       "idempotent":true
     },
+    "CreateRemoteSourceAction":{
+      "name":"CreateRemoteSourceAction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateRemoteSourceAction",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateRemoteSourceActionRequest"},
+      "output":{"shape":"CreateRemoteSourceActionResponse"},
+      "errors":[
+        {"shape":"UninitializedAccountException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "CreateReplicationConfigurationTemplate":{
       "name":"CreateReplicationConfigurationTemplate",
       "http":{
@@ -263,6 +279,23 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteRemoteSourceAction":{
+      "name":"DeleteRemoteSourceAction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteRemoteSourceAction",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteRemoteSourceActionRequest"},
+      "output":{"shape":"DeleteRemoteSourceActionResponse"},
+      "errors":[
+        {"shape":"UninitializedAccountException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
         {"shape":"ConflictException"}
       ],
       "idempotent":true
@@ -498,6 +531,22 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "GetLaunchConfigurationDefaults":{
+      "name":"GetLaunchConfigurationDefaults",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetLaunchConfigurationDefaults",
+        "responseCode":200
+      },
+      "input":{"shape":"GetLaunchConfigurationDefaultsRequest"},
+      "output":{"shape":"GetLaunchConfigurationDefaultsResponse"},
+      "errors":[
+        {"shape":"UninitializedAccountException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
       ],
       "readonly":true
     },
@@ -809,6 +858,23 @@
       ],
       "readonly":true
     },
+    "ListNetworkMigrationInsights":{
+      "name":"ListNetworkMigrationInsights",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/ListNetworkMigrationInsights",
+        "responseCode":200
+      },
+      "input":{"shape":"ListNetworkMigrationInsightsRequest"},
+      "output":{"shape":"ListNetworkMigrationInsightsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
     "ListNetworkMigrationMapperSegmentConstructs":{
       "name":"ListNetworkMigrationMapperSegmentConstructs",
       "http":{
@@ -873,6 +939,68 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListRemoteSourceActionInvocationResults":{
+      "name":"ListRemoteSourceActionInvocationResults",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListRemoteSourceActionInvocationResults",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRemoteSourceActionInvocationResultsRequest"},
+      "output":{"shape":"ListRemoteSourceActionInvocationResultsResponse"},
+      "errors":[
+        {"shape":"UninitializedAccountException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListRemoteSourceActionInvocations":{
+      "name":"ListRemoteSourceActionInvocations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListRemoteSourceActionInvocations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRemoteSourceActionInvocationsRequest"},
+      "output":{"shape":"ListRemoteSourceActionInvocationsResponse"},
+      "errors":[
+        {"shape":"UninitializedAccountException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListRemoteSourceActionJobs":{
+      "name":"ListRemoteSourceActionJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListRemoteSourceActionJobs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRemoteSourceActionJobsRequest"},
+      "output":{"shape":"ListRemoteSourceActionJobsResponse"},
+      "errors":[
+        {"shape":"UninitializedAccountException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListRemoteSourceActions":{
+      "name":"ListRemoteSourceActions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListRemoteSourceActions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRemoteSourceActionsRequest"},
+      "output":{"shape":"ListRemoteSourceActionsResponse"},
+      "errors":[
+        {"shape":"UninitializedAccountException"},
         {"shape":"ValidationException"}
       ],
       "readonly":true
@@ -1225,6 +1353,23 @@
       ],
       "idempotent":true
     },
+    "StartRemoteSourceActionJob":{
+      "name":"StartRemoteSourceActionJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StartRemoteSourceActionJob",
+        "responseCode":202
+      },
+      "input":{"shape":"StartRemoteSourceActionJobRequest"},
+      "output":{"shape":"StartRemoteSourceActionJobResponse"},
+      "errors":[
+        {"shape":"UninitializedAccountException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "StartReplication":{
       "name":"StartReplication",
       "http":{
@@ -1402,6 +1547,22 @@
       ],
       "idempotent":true
     },
+    "UpdateLaunchConfigurationDefaults":{
+      "name":"UpdateLaunchConfigurationDefaults",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateLaunchConfigurationDefaults",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateLaunchConfigurationDefaultsRequest"},
+      "output":{"shape":"UpdateLaunchConfigurationDefaultsResponse"},
+      "errors":[
+        {"shape":"UninitializedAccountException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "UpdateLaunchConfigurationTemplate":{
       "name":"UpdateLaunchConfigurationTemplate",
       "http":{
@@ -1447,6 +1608,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateRemoteSourceAction":{
+      "name":"UpdateRemoteSourceAction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateRemoteSourceAction",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateRemoteSourceActionRequest"},
+      "output":{"shape":"UpdateRemoteSourceActionResponse"},
+      "errors":[
+        {"shape":"UninitializedAccountException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -1729,6 +1907,30 @@
       "type":"structure",
       "members":{}
     },
+    "AssociationCidrList":{
+      "type":"list",
+      "member":{"shape":"CidrBlock"},
+      "max":10,
+      "min":0
+    },
+    "AssociationUserProvidedID":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^\\s\\x00]( *[^\\s\\x00])*"
+    },
+    "AssociationUserProvidedIDList":{
+      "type":"list",
+      "member":{"shape":"AssociationUserProvidedID"},
+      "max":100,
+      "min":0
+    },
+    "AssociationVmUUIDList":{
+      "type":"list",
+      "member":{"shape":"VmUUID"},
+      "max":100,
+      "min":0
+    },
     "BandwidthThrottling":{
       "type":"long",
       "max":10000,
@@ -1943,6 +2145,12 @@
       "min":36,
       "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     },
+    "ConstructLogicalID":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[a-zA-Z][a-zA-Z0-9]*"
+    },
     "ConstructProperties":{
       "type":"map",
       "key":{"shape":"ConstructPropertyKey"},
@@ -1952,7 +2160,7 @@
     },
     "ConstructPropertyKey":{
       "type":"string",
-      "max":24,
+      "max":128,
       "min":0
     },
     "Cpus":{
@@ -1990,6 +2198,7 @@
         "postLaunchActions":{"shape":"PostLaunchActions"},
         "enableMapAutoTagging":{"shape":"Boolean"},
         "mapAutoTaggingMpeID":{"shape":"TagValue"},
+        "mapAutoTaggingKey":{"shape":"TagKey"},
         "tags":{"shape":"TagsMap"},
         "launchDisposition":{"shape":"LaunchDisposition"},
         "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"},
@@ -2020,6 +2229,7 @@
         "name":{"shape":"NetworkMigrationDefinitionName"},
         "description":{"shape":"NetworkMigrationDefinitionDescription"},
         "sourceConfigurations":{"shape":"SourceConfigurationList"},
+        "definitionType":{"shape":"DefinitionType"},
         "targetS3Configuration":{"shape":"TargetS3Configuration"},
         "targetNetwork":{"shape":"TargetNetwork"},
         "targetDeployment":{"shape":"TargetDeployment"},
@@ -2027,6 +2237,44 @@
         "cidrMappings":{"shape":"CidrMappingsList"},
         "tags":{"shape":"TagsMap"},
         "scopeTags":{"shape":"ScopeTagsMap"}
+      }
+    },
+    "CreateOperation":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"SegmentConstructName"},
+        "excluded":{"shape":"Boolean"},
+        "properties":{"shape":"EnrichedProperties"},
+        "configuration":{"shape":"OperationConfigurationUnion"}
+      }
+    },
+    "CreateRemoteSourceActionRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "ssmParameterName"
+      ],
+      "members":{
+        "name":{"shape":"RemoteSourceActionName"},
+        "description":{"shape":"RemoteSourceActionDescription"},
+        "ssmParameterName":{"shape":"SsmParameterStoreParameterName"},
+        "timeoutSeconds":{"shape":"RemoteSourceActionTimeoutSeconds"},
+        "operatingSystem":{"shape":"RemoteSourceActionOperatingSystem"},
+        "tags":{"shape":"TagsMap"},
+        "accountID":{"shape":"AccountID"}
+      }
+    },
+    "CreateRemoteSourceActionResponse":{
+      "type":"structure",
+      "members":{
+        "remoteSourceActionID":{"shape":"RemoteSourceActionID"},
+        "arn":{"shape":"ARN"},
+        "name":{"shape":"RemoteSourceActionName"},
+        "description":{"shape":"RemoteSourceActionDescription"},
+        "ssmParameterName":{"shape":"SsmParameterStoreParameterName"},
+        "timeoutSeconds":{"shape":"RemoteSourceActionTimeoutSeconds"},
+        "operatingSystem":{"shape":"OperatingSystemString"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreateReplicationConfigurationTemplateRequest":{
@@ -2061,6 +2309,7 @@
         "tags":{"shape":"TagsMap"},
         "internetProtocol":{"shape":"InternetProtocol"},
         "storeSnapshotOnLocalZone":{"shape":"Boolean"},
+        "outpostSnapshotLocation":{"shape":"OutpostSnapshotLocation"},
         "storageConfiguration":{"shape":"StorageConfiguration"}
       }
     },
@@ -2114,7 +2363,8 @@
         "dataReplicationInitiation":{"shape":"DataReplicationInitiation"},
         "dataReplicationError":{"shape":"DataReplicationError"},
         "lastSnapshotDateTime":{"shape":"ISO8601DatetimeString"},
-        "replicatorId":{"shape":"ReplicatorID"}
+        "replicatorId":{"shape":"ReplicatorID"},
+        "stagingOutpostArn":{"shape":"OutpostARN"}
       }
     },
     "DataReplicationInfoReplicatedDisk":{
@@ -2196,6 +2446,13 @@
         "SHIPPING_SNAPSHOT"
       ]
     },
+    "DefinitionType":{
+      "type":"string",
+      "enum":[
+        "MIGRATION",
+        "NEW_NETWORK"
+      ]
+    },
     "DeleteApplicationRequest":{
       "type":"structure",
       "required":["applicationID"],
@@ -2249,7 +2506,26 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteOnTermination":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "DeleteOperation":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteRemoteSourceActionRequest":{
+      "type":"structure",
+      "required":["remoteSourceActionID"],
+      "members":{
+        "remoteSourceActionID":{"shape":"RemoteSourceActionID"},
+        "accountID":{"shape":"AccountID"}
+      }
+    },
+    "DeleteRemoteSourceActionResponse":{
       "type":"structure",
       "members":{}
     },
@@ -2491,6 +2767,11 @@
       "max":1000,
       "min":0
     },
+    "Document":{
+      "type":"structure",
+      "members":{},
+      "document":true
+    },
     "DocumentVersion":{
       "type":"string",
       "pattern":"(\\$DEFAULT|\\$LATEST|[0-9]+)"
@@ -2515,6 +2796,19 @@
     "EncryptionAlgorithm":{
       "type":"string",
       "enum":["SHA256"]
+    },
+    "EnrichedProperties":{
+      "type":"map",
+      "key":{"shape":"EnrichedPropertyKey"},
+      "value":{"shape":"Document"},
+      "max":20,
+      "min":1
+    },
+    "EnrichedPropertyKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[A-Za-z][A-Za-z0-9]*"
     },
     "EnrichmentSourceS3Configuration":{
       "type":"structure",
@@ -2677,6 +2971,23 @@
       "members":{
         "storageVirtualMachineId":{"shape":"StorageVirtualMachineId"},
         "credentialsSecretArn":{"shape":"SecretArn"}
+      }
+    },
+    "GetLaunchConfigurationDefaultsRequest":{
+      "type":"structure",
+      "required":["sourceServerID"],
+      "members":{
+        "sourceServerID":{"shape":"SourceServerID"},
+        "accountID":{"shape":"AccountID"}
+      }
+    },
+    "GetLaunchConfigurationDefaultsResponse":{
+      "type":"structure",
+      "members":{
+        "sourceServerID":{"shape":"SourceServerID"},
+        "smallVolumeMaxSize":{"shape":"PositiveInteger"},
+        "smallVolumeConfiguration":{"shape":"SourceServerVolumeConfiguration"},
+        "largeVolumeConfiguration":{"shape":"SourceServerVolumeConfiguration"}
       }
     },
     "GetLaunchConfigurationRequest":{
@@ -2908,6 +3219,70 @@
         "TERMINATE"
       ]
     },
+    "InsightID":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "InsightLevel":{
+      "type":"string",
+      "enum":[
+        "RUN",
+        "SEGMENT",
+        "CONSTRUCT"
+      ]
+    },
+    "InsightMessage":{
+      "type":"structure",
+      "members":{
+        "code":{"shape":"BoundedString"},
+        "message":{"shape":"InsightMessageText"},
+        "topic":{"shape":"BoundedString"}
+      }
+    },
+    "InsightMessageText":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
+    "InsightProducerID":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[0-9a-zA-Z-]+"
+    },
+    "InsightProducerName":{
+      "type":"string",
+      "enum":[
+        "MAPPING",
+        "MAPPING_UPDATE",
+        "CODE_GENERATION",
+        "DEPLOY",
+        "DEPLOYED_STACKS_DELETION",
+        "ANALYZE"
+      ]
+    },
+    "InsightProducerType":{
+      "type":"string",
+      "enum":[
+        "JOB",
+        "API"
+      ]
+    },
+    "InsightType":{
+      "type":"string",
+      "enum":[
+        "INTENT_GAP",
+        "WARNING",
+        "QUESTION",
+        "INFO",
+        "ERROR",
+        "CONTEXT",
+        "EXCLUDED",
+        "BEHAVIOR_CHANGE"
+      ]
+    },
     "InternalServerException":{
       "type":"structure",
       "required":["message"],
@@ -2933,7 +3308,7 @@
     "Iops":{
       "type":"long",
       "box":true,
-      "max":64000,
+      "max":80000,
       "min":100
     },
     "IpAssignmentStrategy":{
@@ -3099,7 +3474,8 @@
         "bootMode":{"shape":"BootMode"},
         "postLaunchActions":{"shape":"PostLaunchActions"},
         "enableMapAutoTagging":{"shape":"Boolean"},
-        "mapAutoTaggingMpeID":{"shape":"TagValue"}
+        "mapAutoTaggingMpeID":{"shape":"TagValue"},
+        "mapAutoTaggingKey":{"shape":"TagKey"}
       }
     },
     "LaunchConfigurationTemplate":{
@@ -3111,6 +3487,7 @@
         "postLaunchActions":{"shape":"PostLaunchActions"},
         "enableMapAutoTagging":{"shape":"Boolean"},
         "mapAutoTaggingMpeID":{"shape":"TagValue"},
+        "mapAutoTaggingKey":{"shape":"TagKey"},
         "tags":{"shape":"TagsMap"},
         "ec2LaunchTemplateID":{"shape":"EC2LaunchConfigurationTemplateID"},
         "launchDisposition":{"shape":"LaunchDisposition"},
@@ -3660,6 +4037,39 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListNetworkMigrationInsightsFilters":{
+      "type":"structure",
+      "members":{
+        "insightTypes":{"shape":"ListNetworkMigrationInsightsTypesFilter"}
+      }
+    },
+    "ListNetworkMigrationInsightsRequest":{
+      "type":"structure",
+      "required":["networkMigrationDefinitionID"],
+      "members":{
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "producerID":{"shape":"InsightProducerID"},
+        "segmentID":{"shape":"SegmentID"},
+        "constructID":{"shape":"ConstructID"},
+        "filters":{"shape":"ListNetworkMigrationInsightsFilters"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationInsightsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"NetworkMigrationInsightsList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationInsightsTypesFilter":{
+      "type":"list",
+      "member":{"shape":"InsightType"},
+      "max":10,
+      "min":0
+    },
     "ListNetworkMigrationMapperSegmentConstructTypesFilter":{
       "type":"list",
       "member":{"shape":"NetworkMigrationMapperSegmentConstructType"},
@@ -3692,7 +4102,9 @@
         "segmentID":{"shape":"SegmentID"},
         "filters":{"shape":"ListNetworkMigrationMapperSegmentConstructsFilters"},
         "maxResults":{"shape":"MaxResultsType"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "includeEnrichedProperties":{"shape":"Boolean"},
+        "includeConfiguration":{"shape":"Boolean"}
       }
     },
     "ListNetworkMigrationMapperSegmentConstructsResponse":{
@@ -3798,6 +4210,93 @@
       "type":"structure",
       "members":{
         "items":{"shape":"NetworkMigrationMappingsList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListRemoteSourceActionInvocationResultsRequest":{
+      "type":"structure",
+      "required":["sourceServerID"],
+      "members":{
+        "sourceServerID":{"shape":"SourceServerID"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"},
+        "accountID":{"shape":"AccountID"}
+      }
+    },
+    "ListRemoteSourceActionInvocationResultsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"RemoteSourceActionInvocationResultsList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListRemoteSourceActionInvocationsRequest":{
+      "type":"structure",
+      "required":["remoteSourceActionJobID"],
+      "members":{
+        "remoteSourceActionJobID":{"shape":"RemoteSourceActionJobID"},
+        "filters":{"shape":"ListRemoteSourceActionInvocationsRequestFilters"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"},
+        "accountID":{"shape":"AccountID"}
+      }
+    },
+    "ListRemoteSourceActionInvocationsRequestFilters":{
+      "type":"structure",
+      "members":{
+        "sourceServerArns":{"shape":"SourceServerArnsFilter"},
+        "remoteSourceActionArns":{"shape":"RemoteSourceActionArnsFilter"},
+        "statuses":{"shape":"RemoteSourceActionInvocationStatusesFilter"}
+      }
+    },
+    "ListRemoteSourceActionInvocationsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"RemoteSourceActionInvocationsList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListRemoteSourceActionJobsRequest":{
+      "type":"structure",
+      "members":{
+        "filters":{"shape":"ListRemoteSourceActionJobsRequestFilters"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"},
+        "accountID":{"shape":"AccountID"}
+      }
+    },
+    "ListRemoteSourceActionJobsRequestFilters":{
+      "type":"structure",
+      "members":{
+        "remoteSourceActionJobIDs":{"shape":"RemoteSourceActionJobIDsFilter"}
+      }
+    },
+    "ListRemoteSourceActionJobsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"RemoteSourceActionJobsList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListRemoteSourceActionsRequest":{
+      "type":"structure",
+      "members":{
+        "filters":{"shape":"ListRemoteSourceActionsRequestFilters"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"},
+        "accountID":{"shape":"AccountID"}
+      }
+    },
+    "ListRemoteSourceActionsRequestFilters":{
+      "type":"structure",
+      "members":{
+        "remoteSourceActionIDs":{"shape":"RemoteSourceActionIDsFilter"}
+      }
+    },
+    "ListRemoteSourceActionsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"RemoteSourceActionsList"},
         "nextToken":{"shape":"PaginationToken"}
       }
     },
@@ -4102,6 +4601,7 @@
         "name":{"shape":"NetworkMigrationDefinitionName"},
         "description":{"shape":"NetworkMigrationDefinitionDescription"},
         "sourceConfigurations":{"shape":"SourceConfigurationList"},
+        "definitionType":{"shape":"DefinitionType"},
         "targetS3Configuration":{"shape":"TargetS3Configuration"},
         "targetNetwork":{"shape":"TargetNetwork"},
         "targetDeployment":{"shape":"TargetDeployment"},
@@ -4143,7 +4643,8 @@
         "sourceEnvironment":{"shape":"SourceEnvironment"},
         "arn":{"shape":"ARN"},
         "tags":{"shape":"TagsMap"},
-        "scopeTags":{"shape":"ScopeTagsMap"}
+        "scopeTags":{"shape":"ScopeTagsMap"},
+        "definitionType":{"shape":"DefinitionType"}
       }
     },
     "NetworkMigrationDefintionsIDsFilter":{
@@ -4254,6 +4755,29 @@
       "max":5,
       "min":0
     },
+    "NetworkMigrationInsight":{
+      "type":"structure",
+      "members":{
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "producerID":{"shape":"InsightProducerID"},
+        "producerType":{"shape":"InsightProducerType"},
+        "producerName":{"shape":"InsightProducerName"},
+        "segmentID":{"shape":"SegmentID"},
+        "constructID":{"shape":"ConstructID"},
+        "insightID":{"shape":"InsightID"},
+        "insightLevel":{"shape":"InsightLevel"},
+        "insightType":{"shape":"InsightType"},
+        "insightMessage":{"shape":"InsightMessage"},
+        "createdAt":{"shape":"Timestamp"}
+      }
+    },
+    "NetworkMigrationInsightsList":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationInsight"},
+      "max":100,
+      "min":0
+    },
     "NetworkMigrationJobID":{
       "type":"string",
       "max":36,
@@ -4300,14 +4824,16 @@
         "excluded":{"shape":"Boolean"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
-        "properties":{"shape":"ConstructProperties"}
+        "properties":{"shape":"ConstructProperties"},
+        "enrichedProperties":{"shape":"EnrichedProperties"},
+        "configuration":{"shape":"OperationConfigurationUnion"}
       }
     },
     "NetworkMigrationMapperSegmentConstructType":{
       "type":"string",
-      "max":24,
+      "max":64,
       "min":0,
-      "pattern":"AWS::([A-Z\\d]){2,10}::[a-zA-Z\\d]{2,30}"
+      "pattern":"AWS::([A-Z\\d]){2,10}::[a-zA-Z\\d]{2,47}"
     },
     "NetworkMigrationMapperSegmentConstructs":{
       "type":"list",
@@ -4374,13 +4900,23 @@
       "type":"string",
       "pattern":"(linux|windows)"
     },
+    "OperationConfigurationUnion":{
+      "type":"structure",
+      "members":{
+        "securityGroup":{"shape":"SecurityGroupConfiguration"},
+        "securityGroupRule":{"shape":"SecurityGroupRuleConfiguration"}
+      },
+      "union":true
+    },
     "OperationUnion":{
       "type":"structure",
       "members":{
         "merge":{"shape":"MergeOperation"},
         "split":{"shape":"SplitOperation"},
         "delete":{"shape":"DeleteOperation"},
-        "update":{"shape":"UpdateOperation"}
+        "update":{"shape":"UpdateOperation"},
+        "updateV2":{"shape":"UpdateOperationV2"},
+        "create":{"shape":"CreateOperation"}
       },
       "union":true
     },
@@ -4389,6 +4925,19 @@
       "box":true,
       "max":10000,
       "min":1001
+    },
+    "OutpostARN":{
+      "type":"string",
+      "max":255,
+      "min":20,
+      "pattern":"arn:aws([a-z-]+)?:outposts:[a-z\\d-]+:\\d{12}:outpost/op-[a-f0-9]{17}"
+    },
+    "OutpostSnapshotLocation":{
+      "type":"string",
+      "enum":[
+        "OUTPOST",
+        "REGION"
+      ]
     },
     "PaginationToken":{
       "type":"string",
@@ -4464,6 +5013,12 @@
         "postLaunchActionsLaunchStatusList":{"shape":"PostLaunchActionsLaunchStatusList"}
       }
     },
+    "PropertiesToDelete":{
+      "type":"list",
+      "member":{"shape":"EnrichedPropertyKey"},
+      "max":20,
+      "min":1
+    },
     "PutSourceServerActionRequest":{
       "type":"structure",
       "required":[
@@ -4515,6 +5070,165 @@
         "description":{"shape":"ActionDescription"},
         "category":{"shape":"ActionCategory"}
       }
+    },
+    "RemoteSourceAction":{
+      "type":"structure",
+      "members":{
+        "remoteSourceActionID":{"shape":"RemoteSourceActionID"},
+        "arn":{"shape":"ARN"},
+        "name":{"shape":"RemoteSourceActionName"},
+        "description":{"shape":"RemoteSourceActionDescription"},
+        "ssmParameterName":{"shape":"SsmParameterStoreParameterName"},
+        "timeoutSeconds":{"shape":"RemoteSourceActionTimeoutSeconds"},
+        "operatingSystem":{"shape":"OperatingSystemString"},
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "RemoteSourceActionArn":{
+      "type":"string",
+      "max":100,
+      "min":20,
+      "pattern":"arn:[\\w-]+:mgn:([a-z]{2}-(gov-)?[a-z]+-\\d{1})?:(\\d{12})?:remote-source-action\\/(rsa-[0-9a-zA-Z]{17})"
+    },
+    "RemoteSourceActionArns":{
+      "type":"list",
+      "member":{"shape":"RemoteSourceActionArn"},
+      "max":1,
+      "min":1
+    },
+    "RemoteSourceActionArnsFilter":{
+      "type":"list",
+      "member":{"shape":"RemoteSourceActionArn"},
+      "max":1,
+      "min":0
+    },
+    "RemoteSourceActionDescription":{
+      "type":"string",
+      "max":600,
+      "min":0,
+      "pattern":"[^\\x00]*"
+    },
+    "RemoteSourceActionID":{
+      "type":"string",
+      "max":21,
+      "min":21,
+      "pattern":"rsa-[0-9a-zA-Z]{17}"
+    },
+    "RemoteSourceActionIDsFilter":{
+      "type":"list",
+      "member":{"shape":"RemoteSourceActionID"},
+      "max":200,
+      "min":0
+    },
+    "RemoteSourceActionInvocation":{
+      "type":"structure",
+      "members":{
+        "sourceServerArn":{"shape":"SourceServerArn"},
+        "remoteSourceActionArn":{"shape":"RemoteSourceActionArn"},
+        "ssmCommandInvocationID":{"shape":"SsmCommandInvocationID"},
+        "status":{"shape":"RemoteSourceActionInvocationStatus"},
+        "startedAt":{"shape":"Timestamp"},
+        "endedAt":{"shape":"Timestamp"}
+      }
+    },
+    "RemoteSourceActionInvocationResult":{
+      "type":"structure",
+      "members":{
+        "remoteSourceActionID":{"shape":"RemoteSourceActionID"},
+        "connectorOwnerAccountID":{"shape":"AccountID"},
+        "status":{"shape":"RemoteSourceActionInvocationStatus"},
+        "startedAt":{"shape":"Timestamp"},
+        "endedAt":{"shape":"Timestamp"}
+      }
+    },
+    "RemoteSourceActionInvocationResultsList":{
+      "type":"list",
+      "member":{"shape":"RemoteSourceActionInvocationResult"}
+    },
+    "RemoteSourceActionInvocationStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "IN_PROGRESS",
+        "DELAYED",
+        "SUCCESS",
+        "CANCELLED",
+        "TIMED_OUT",
+        "FAILED",
+        "CANCELLING",
+        "STALLED"
+      ]
+    },
+    "RemoteSourceActionInvocationStatusesFilter":{
+      "type":"list",
+      "member":{"shape":"RemoteSourceActionInvocationStatus"},
+      "max":10,
+      "min":0
+    },
+    "RemoteSourceActionInvocationsList":{
+      "type":"list",
+      "member":{"shape":"RemoteSourceActionInvocation"}
+    },
+    "RemoteSourceActionJob":{
+      "type":"structure",
+      "members":{
+        "remoteSourceActionJobID":{"shape":"RemoteSourceActionJobID"},
+        "arn":{"shape":"ARN"},
+        "status":{"shape":"RemoteSourceActionJobStatus"},
+        "sourceServerArns":{"shape":"SourceServerArns"},
+        "remoteSourceActionArns":{"shape":"RemoteSourceActionArns"},
+        "connectorArn":{"shape":"ConnectorArn"},
+        "startedAt":{"shape":"Timestamp"},
+        "endedAt":{"shape":"Timestamp"},
+        "statusReason":{"shape":"LargeBoundedString"},
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "RemoteSourceActionJobID":{
+      "type":"string",
+      "max":24,
+      "min":24,
+      "pattern":"rsajob-[0-9a-zA-Z]{17}"
+    },
+    "RemoteSourceActionJobIDsFilter":{
+      "type":"list",
+      "member":{"shape":"RemoteSourceActionJobID"},
+      "max":200,
+      "min":0
+    },
+    "RemoteSourceActionJobStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "RUNNING",
+        "COMPLETED",
+        "FAILED",
+        "STALLED"
+      ]
+    },
+    "RemoteSourceActionJobsList":{
+      "type":"list",
+      "member":{"shape":"RemoteSourceActionJob"}
+    },
+    "RemoteSourceActionName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^\\s\\x00]( *[^\\s\\x00])*"
+    },
+    "RemoteSourceActionOperatingSystem":{
+      "type":"string",
+      "pattern":"(linux|windows|all)"
+    },
+    "RemoteSourceActionTimeoutSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":5400,
+      "min":60
+    },
+    "RemoteSourceActionsList":{
+      "type":"list",
+      "member":{"shape":"RemoteSourceAction"}
     },
     "RemoveSourceServerActionRequest":{
       "type":"structure",
@@ -4568,6 +5282,7 @@
         "useFipsEndpoint":{"shape":"Boolean"},
         "internetProtocol":{"shape":"InternetProtocol"},
         "storeSnapshotOnLocalZone":{"shape":"Boolean"},
+        "outpostSnapshotLocation":{"shape":"OutpostSnapshotLocation"},
         "storageConfiguration":{"shape":"StorageConfiguration"}
       }
     },
@@ -4645,6 +5360,7 @@
         "tags":{"shape":"TagsMap"},
         "internetProtocol":{"shape":"InternetProtocol"},
         "storeSnapshotOnLocalZone":{"shape":"Boolean"},
+        "outpostSnapshotLocation":{"shape":"OutpostSnapshotLocation"},
         "storageConfiguration":{"shape":"StorageConfiguration"}
       }
     },
@@ -4782,6 +5498,20 @@
       "min":20,
       "pattern":"arn:[\\w-]+:secretsmanager:([a-z]{2}-(gov-)?[a-z]+-\\d{1})?:(\\d{12})?:secret:(.+)"
     },
+    "SecurityGroupAssociations":{
+      "type":"structure",
+      "members":{
+        "cidrs":{"shape":"AssociationCidrList"},
+        "vmUUIDs":{"shape":"AssociationVmUUIDList"},
+        "userProvidedIDs":{"shape":"AssociationUserProvidedIDList"}
+      }
+    },
+    "SecurityGroupConfiguration":{
+      "type":"structure",
+      "members":{
+        "associations":{"shape":"SecurityGroupAssociations"}
+      }
+    },
     "SecurityGroupID":{
       "type":"string",
       "max":255,
@@ -4796,6 +5526,12 @@
         "MAP_DHCP"
       ]
     },
+    "SecurityGroupRuleConfiguration":{
+      "type":"structure",
+      "members":{
+        "enableReferencing":{"shape":"Boolean"}
+      }
+    },
     "SegmentConstructDescription":{
       "type":"string",
       "max":600,
@@ -4807,6 +5543,20 @@
       "max":256,
       "min":1,
       "pattern":"[^\\s\\x00]( *[^\\s\\x00])*"
+    },
+    "SegmentCreateOperation":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"SegmentName"},
+        "description":{"shape":"SegmentDescription"},
+        "targetAccount":{"shape":"AccountID"},
+        "scopeTags":{"shape":"ScopeTagsMap"}
+      }
+    },
+    "SegmentDeleteOperation":{
+      "type":"structure",
+      "members":{}
     },
     "SegmentDescription":{
       "type":"string",
@@ -4820,11 +5570,35 @@
       "min":36,
       "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     },
+    "SegmentLogicalID":{
+      "type":"string",
+      "max":64,
+      "min":0,
+      "pattern":"nmd[a-zA-Z0-9]+"
+    },
     "SegmentName":{
       "type":"string",
       "max":256,
       "min":1,
       "pattern":"[^\\s\\x00]( *[^\\s\\x00])*"
+    },
+    "SegmentOperation":{
+      "type":"structure",
+      "members":{
+        "create":{"shape":"SegmentCreateOperation"},
+        "update":{"shape":"SegmentUpdateOperation"},
+        "delete":{"shape":"SegmentDeleteOperation"}
+      },
+      "union":true
+    },
+    "SegmentUpdateOperation":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"SegmentName"},
+        "description":{"shape":"SegmentDescription"},
+        "targetAccount":{"shape":"AccountID"},
+        "scopeTags":{"shape":"ScopeTagsMap"}
+      }
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -4862,7 +5636,7 @@
     "SourceConfigurationList":{
       "type":"list",
       "member":{"shape":"SourceConfiguration"},
-      "max":2,
+      "max":3,
       "min":0
     },
     "SourceEnvironment":{
@@ -4876,7 +5650,8 @@
         "LOGICAL_MODEL",
         "MODELIZE_IT",
         "AWS_DISCOVERY_COLLECTOR",
-        "MIGRATION_PLANNING_ARTIFACTS"
+        "MIGRATION_PLANNING_ARTIFACTS",
+        "F5_BIGIP"
       ]
     },
     "SourceProperties":{
@@ -4953,6 +5728,24 @@
         "actionIDs":{"shape":"ActionIDs"}
       }
     },
+    "SourceServerArn":{
+      "type":"string",
+      "max":100,
+      "min":20,
+      "pattern":"arn:[\\w-]+:mgn:([a-z]{2}-(gov-)?[a-z]+-\\d{1})?:(\\d{12})?:source-server\\/(s-[0-9a-zA-Z]{17})"
+    },
+    "SourceServerArns":{
+      "type":"list",
+      "member":{"shape":"SourceServerArn"},
+      "max":100,
+      "min":1
+    },
+    "SourceServerArnsFilter":{
+      "type":"list",
+      "member":{"shape":"SourceServerArn"},
+      "max":200,
+      "min":0
+    },
     "SourceServerConnectorAction":{
       "type":"structure",
       "members":{
@@ -4965,6 +5758,16 @@
       "max":19,
       "min":19,
       "pattern":"s-[0-9a-zA-Z]{17}"
+    },
+    "SourceServerVolumeConfiguration":{
+      "type":"structure",
+      "members":{
+        "volumeType":{"shape":"VolumeType"},
+        "iops":{"shape":"Iops"},
+        "throughput":{"shape":"Throughput"},
+        "volumeInitializationRate":{"shape":"VolumeInitializationRate"},
+        "deleteOnTermination":{"shape":"DeleteOnTermination"}
+      }
     },
     "SourceServersList":{
       "type":"list",
@@ -4987,6 +5790,12 @@
       "members":{
         "splitConstructs":{"shape":"SplitConstructs"}
       }
+    },
+    "SsmCommandInvocationID":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}"
     },
     "SsmDocument":{
       "type":"structure",
@@ -5237,15 +6046,13 @@
     },
     "StartNetworkMigrationMappingUpdateConstruct":{
       "type":"structure",
-      "required":[
-        "segmentID",
-        "constructID",
-        "constructType"
-      ],
+      "required":["constructType"],
       "members":{
         "segmentID":{"shape":"SegmentID"},
+        "segmentLogicalID":{"shape":"LogicalID"},
         "constructID":{"shape":"ConstructID"},
         "constructType":{"shape":"NetworkMigrationMapperSegmentConstructType"},
+        "constructLogicalID":{"shape":"ConstructLogicalID"},
         "operation":{"shape":"OperationUnion"}
       }
     },
@@ -5276,9 +6083,10 @@
     },
     "StartNetworkMigrationMappingUpdateSegment":{
       "type":"structure",
-      "required":["segmentID"],
       "members":{
         "segmentID":{"shape":"SegmentID"},
+        "segmentLogicalID":{"shape":"SegmentLogicalID"},
+        "operation":{"shape":"SegmentOperation"},
         "targetAccount":{"shape":"AccountID"},
         "scopeTags":{"shape":"ScopeTagsMap"}
       }
@@ -5288,6 +6096,31 @@
       "member":{"shape":"StartNetworkMigrationMappingUpdateSegment"},
       "max":100,
       "min":0
+    },
+    "StartRemoteSourceActionJobRequest":{
+      "type":"structure",
+      "required":[
+        "remoteSourceActionArns",
+        "connectorArn",
+        "sourceServerArns"
+      ],
+      "members":{
+        "remoteSourceActionArns":{"shape":"RemoteSourceActionArns"},
+        "connectorArn":{"shape":"ConnectorArn"},
+        "sourceServerArns":{"shape":"SourceServerArns"},
+        "clientToken":{
+          "shape":"ClientIdempotencyToken",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"TagsMap"},
+        "accountID":{"shape":"AccountID"}
+      }
+    },
+    "StartRemoteSourceActionJobResponse":{
+      "type":"structure",
+      "members":{
+        "remoteSourceActionJob":{"shape":"RemoteSourceActionJob"}
+      }
     },
     "StartReplicationRequest":{
       "type":"structure",
@@ -5598,6 +6431,26 @@
         "ssmCommandConfig":{"shape":"ConnectorSsmCommandConfig"}
       }
     },
+    "UpdateLaunchConfigurationDefaultsRequest":{
+      "type":"structure",
+      "required":["sourceServerID"],
+      "members":{
+        "sourceServerID":{"shape":"SourceServerID"},
+        "accountID":{"shape":"AccountID"},
+        "smallVolumeMaxSize":{"shape":"PositiveInteger"},
+        "smallVolumeConfiguration":{"shape":"SourceServerVolumeConfiguration"},
+        "largeVolumeConfiguration":{"shape":"SourceServerVolumeConfiguration"}
+      }
+    },
+    "UpdateLaunchConfigurationDefaultsResponse":{
+      "type":"structure",
+      "members":{
+        "sourceServerID":{"shape":"SourceServerID"},
+        "smallVolumeMaxSize":{"shape":"PositiveInteger"},
+        "smallVolumeConfiguration":{"shape":"SourceServerVolumeConfiguration"},
+        "largeVolumeConfiguration":{"shape":"SourceServerVolumeConfiguration"}
+      }
+    },
     "UpdateLaunchConfigurationRequest":{
       "type":"structure",
       "required":["sourceServerID"],
@@ -5613,6 +6466,7 @@
         "postLaunchActions":{"shape":"PostLaunchActions"},
         "enableMapAutoTagging":{"shape":"Boolean"},
         "mapAutoTaggingMpeID":{"shape":"TagValue"},
+        "mapAutoTaggingKey":{"shape":"TagKey"},
         "accountID":{"shape":"AccountID"}
       }
     },
@@ -5624,6 +6478,7 @@
         "postLaunchActions":{"shape":"PostLaunchActions"},
         "enableMapAutoTagging":{"shape":"Boolean"},
         "mapAutoTaggingMpeID":{"shape":"TagValue"},
+        "mapAutoTaggingKey":{"shape":"TagKey"},
         "launchDisposition":{"shape":"LaunchDisposition"},
         "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"},
         "copyPrivateIp":{"shape":"Boolean"},
@@ -5651,7 +6506,8 @@
         "targetDeployment":{"shape":"TargetDeployment"},
         "vpcProvisioningStrategy":{"shape":"VpcProvisioningStrategy"},
         "cidrMappings":{"shape":"CidrMappingsList"},
-        "scopeTags":{"shape":"ScopeTagsMap"}
+        "scopeTags":{"shape":"ScopeTagsMap"},
+        "definitionType":{"shape":"DefinitionType"}
       }
     },
     "UpdateNetworkMigrationMapperSegmentRequest":{
@@ -5674,6 +6530,42 @@
         "name":{"shape":"SegmentConstructName"},
         "excluded":{"shape":"Boolean"},
         "properties":{"shape":"ConstructProperties"}
+      }
+    },
+    "UpdateOperationV2":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"SegmentConstructName"},
+        "excluded":{"shape":"Boolean"},
+        "properties":{"shape":"EnrichedProperties"},
+        "propertiesToDelete":{"shape":"PropertiesToDelete"},
+        "configuration":{"shape":"OperationConfigurationUnion"}
+      }
+    },
+    "UpdateRemoteSourceActionRequest":{
+      "type":"structure",
+      "required":["remoteSourceActionID"],
+      "members":{
+        "remoteSourceActionID":{"shape":"RemoteSourceActionID"},
+        "name":{"shape":"RemoteSourceActionName"},
+        "description":{"shape":"RemoteSourceActionDescription"},
+        "ssmParameterName":{"shape":"SsmParameterStoreParameterName"},
+        "timeoutSeconds":{"shape":"RemoteSourceActionTimeoutSeconds"},
+        "operatingSystem":{"shape":"RemoteSourceActionOperatingSystem"},
+        "accountID":{"shape":"AccountID"}
+      }
+    },
+    "UpdateRemoteSourceActionResponse":{
+      "type":"structure",
+      "members":{
+        "remoteSourceActionID":{"shape":"RemoteSourceActionID"},
+        "arn":{"shape":"ARN"},
+        "name":{"shape":"RemoteSourceActionName"},
+        "description":{"shape":"RemoteSourceActionDescription"},
+        "ssmParameterName":{"shape":"SsmParameterStoreParameterName"},
+        "timeoutSeconds":{"shape":"RemoteSourceActionTimeoutSeconds"},
+        "operatingSystem":{"shape":"OperatingSystemString"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "UpdateReplicationConfigurationRequest":{
@@ -5699,6 +6591,7 @@
         "accountID":{"shape":"AccountID"},
         "internetProtocol":{"shape":"InternetProtocol"},
         "storeSnapshotOnLocalZone":{"shape":"Boolean"},
+        "outpostSnapshotLocation":{"shape":"OutpostSnapshotLocation"},
         "storageConfiguration":{"shape":"StorageConfiguration"}
       }
     },
@@ -5723,6 +6616,7 @@
         "useFipsEndpoint":{"shape":"Boolean"},
         "internetProtocol":{"shape":"InternetProtocol"},
         "storeSnapshotOnLocalZone":{"shape":"Boolean"},
+        "outpostSnapshotLocation":{"shape":"OutpostSnapshotLocation"},
         "storageConfiguration":{"shape":"StorageConfiguration"}
       }
     },
@@ -5822,6 +6716,12 @@
     "VcenterClientList":{
       "type":"list",
       "member":{"shape":"VcenterClient"}
+    },
+    "VmUUID":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-]+"
     },
     "VolumeInitializationRate":{
       "type":"long",

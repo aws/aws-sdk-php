@@ -376,6 +376,45 @@
         "title": "Sample ListNetworkMigrationExecutions call"
       }
     ],
+    "ListNetworkMigrationInsights": [
+      {
+        "input": {
+          "filters": {
+            "insightTypes": [
+              "WARNING"
+            ]
+          },
+          "networkMigrationDefinitionID": "nmd-54cf850b22f7cf65e",
+          "networkMigrationExecutionID": "b1235ba8-398e-4ef0-b803-78c8c85b5021",
+          "producerID": "f7aa9266-b070-421b-a630-e503783b7f12"
+        },
+        "output": {
+          "items": [
+            {
+              "constructID": "533af212-2d0b-4a98-a89c-c01cd2070b5b",
+              "createdAt": 1793621845,
+              "insightID": "0bf04d20-205b-58f6-ac5d-9419e1decf8b",
+              "insightLevel": "CONSTRUCT",
+              "insightMessage": {
+                "code": "mapper.load_balancers.alb_address_conflict_risk",
+                "message": "AWS picks this application load balancer's addresses in its subnets when NM deploys it, before the servers launch, and adds more as it scales. Its subnets hold 2 addresses of servers or network load balancers: a server that keeps its address fails to launch, and a network load balancer fails to deploy, if this load balancer took it first. In each zone the load balancer uses the subnet with the most addresses free.",
+                "topic": "load_balancers.placement"
+              },
+              "insightType": "WARNING",
+              "networkMigrationDefinitionID": "nmd-54cf850b22f7cf65e",
+              "networkMigrationExecutionID": "b1235ba8-398e-4ef0-b803-78c8c85b5021",
+              "producerID": "f7aa9266-b070-421b-a630-e503783b7f12",
+              "producerName": "MAPPING",
+              "producerType": "JOB",
+              "segmentID": "47088070-f6d7-4724-846e-bce3ee48a2d0"
+            }
+          ],
+          "nextToken": "NextTokenId"
+        },
+        "id": "example-1",
+        "title": "List the WARNING insights a mapping job recorded for one construct"
+      }
+    ],
     "ListNetworkMigrationMapperSegmentConstructs": [
       {
         "input": {

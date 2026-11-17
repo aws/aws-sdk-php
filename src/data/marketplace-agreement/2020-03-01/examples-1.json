@@ -1,6 +1,25 @@
 {
   "version": "1.0",
   "examples": {
+    "AcceptAgreementApproval": [
+      {
+        "input": {
+          "buyerAgreementApprovalApproverInput": {
+            "agreementApprovalId": "apr-EXAMPLE9s0t1u2v3w4x",
+            "note": "Approved. Budget confirmed for this fiscal year.",
+            "purchaseOrders": [
+              {
+                "chargeId": "ch-EXAMPLE4b4296145c3EXAMPLE56",
+                "purchaseOrderReference": "PO-123"
+              }
+            ]
+          }
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Approve an agreement approval"
+      }
+    ],
     "BatchCreateBillingAdjustmentRequest": [
       {
         "input": {
@@ -50,6 +69,83 @@
         "title": "Cancel a cancellation request"
       }
     ],
+    "CancelAgreementRequest": [
+      {
+        "input": {
+          "agreementRequestId": "ar-EXAMPLE4a539b123d4EXAMPLE78"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Cancel an agreement request"
+      }
+    ],
+    "GetAgreementApproval": [
+      {
+        "input": {
+          "agreementApprovalId": "apr-EXAMPLE9s0t1u2v3w4x"
+        },
+        "output": {
+          "buyerAgreementApproval": {
+            "name": "Example Analytics Platform sold by Example Corp",
+            "agreementApprovalId": "apr-EXAMPLE9s0t1u2v3w4x",
+            "agreementRequestId": "ar-EXAMPLE4a539b123d4EXAMPLE78",
+            "approvalNeededBy": 1739527800,
+            "approvalType": "BUYER_AGREEMENT_APPROVAL",
+            "createdAt": 1736935800,
+            "expiresAt": 1739527800,
+            "levels": [
+              {
+                "name": "Budget owner review",
+                "groups": [
+                  {
+                    "approvalCriteria": {
+                      "requiredApprovalCount": 1
+                    },
+                    "approvers": [
+                      {
+                        "awsOrganizationApproverOutcome": {
+                          "approverOutcomeId": "aprout-EXAMPLE1e2f3g4h5i6j",
+                          "status": "PENDING_APPROVAL",
+                          "updatedAt": 1737022200
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "planInput": {
+              "planReference": "aplan-EXAMPLE7g8h9i0j1k2l",
+              "requesterNote": "Annual subscription for the data platform team."
+            },
+            "proposalSummary": {
+              "offerId": "ABCDEFGHIJKLMNOP123",
+              "resources": [
+                {
+                  "name": "Example Analytics Platform",
+                  "type": "SaaSProduct",
+                  "deployedOnAws": "DEPLOYED",
+                  "id": "0EXAMPLE-8ce8-4814-bcf1-636EXAMPLEb5"
+                }
+              ],
+              "visibilityScope": "PRIVATE"
+            },
+            "proposer": {
+              "accountId": "444455556666",
+              "legalName": "Example Corp"
+            },
+            "requester": {
+              "accountId": "123456789010"
+            },
+            "startedAt": 1736935800,
+            "status": "PENDING_APPROVAL",
+            "updatedAt": 1737022200
+          }
+        },
+        "id": "example-1",
+        "title": "Get an agreement approval"
+      }
+    ],
     "GetAgreementCancellationRequest": [
       {
         "input": {
@@ -68,6 +164,195 @@
         },
         "id": "example-1",
         "title": "Get a cancellation request"
+      }
+    ],
+    "GetAgreementContacts": [
+      {
+        "input": {
+          "agreementId": "agmt-xxxxxxx"
+        },
+        "output": {
+          "acceptorContact": {
+            "companyName": "Example Corp",
+            "countryCode": "US",
+            "emailAddress": "xxx@example.com",
+            "firstName": "xx",
+            "lastName": "xx"
+          }
+        },
+        "id": "example-1",
+        "title": "Get the contacts captured on an agreement"
+      }
+    ],
+    "GetAgreementRequest": [
+      {
+        "input": {
+          "agreementRequestId": "ar-EXAMPLE4a539b123d4EXAMPLE78"
+        },
+        "output": {
+          "agreementRequestId": "ar-EXAMPLE4a539b123d4EXAMPLE78",
+          "agreementType": "PurchaseAgreement",
+          "approvalRequirement": "REQUIRED",
+          "chargeSummary": {
+            "currencyCode": "USD",
+            "expectedCharges": [
+              {
+                "amount": "100",
+                "id": "ch-EXAMPLE4b4296145c3EXAMPLE56",
+                "purchaseOrderReference": "PO-123",
+                "timing": "ON_ACCEPTANCE"
+              }
+            ],
+            "itemizedCharges": [
+              {
+                "chargeReference": "ch-EXAMPLE4b4296145c3EXAMPLE56",
+                "dimensionKey": "AdminUsers",
+                "incrementalChargeAmount": "50",
+                "newQuantity": 5,
+                "oldQuantity": 0
+              },
+              {
+                "chargeReference": "ch-EXAMPLE4b4296145c3EXAMPLE56",
+                "dimensionKey": "ReadOnlyUsers",
+                "incrementalChargeAmount": "50",
+                "newQuantity": 10,
+                "oldQuantity": 0
+              }
+            ],
+            "newAgreementValue": "100"
+          },
+          "createdAt": 1736935800,
+          "intent": "NEW",
+          "proposalSummary": {
+            "offerId": "ABCDEFGHIJKLMNOP123",
+            "resources": [
+              {
+                "type": "SaaSProduct",
+                "id": "0EXAMPLE-8ce8-4814-bcf1-636EXAMPLEb5"
+              }
+            ]
+          },
+          "proposer": {
+            "accountId": "444455556666"
+          },
+          "status": "PENDING_APPROVAL"
+        },
+        "id": "example-1",
+        "title": "Get an agreement request"
+      }
+    ],
+    "GetAgreementRequestApprovalPlans": [
+      {
+        "input": {
+          "agreementRequestId": "ar-EXAMPLE4a539b123d4EXAMPLE78"
+        },
+        "output": {
+          "items": [
+            {
+              "buyerAgreementApprovalPlan": {
+                "name": "Software purchases over 10000 USD",
+                "levels": [
+                  {
+                    "name": "Budget owner review",
+                    "groups": [
+                      {
+                        "approvalCriteria": {
+                          "requiredApprovalCount": 1
+                        },
+                        "approvers": [
+                          {
+                            "awsOrganizationAdminApprover": {
+                              "organizationId": "o-exampleab12"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "planReference": "aplan-EXAMPLE7g8h9i0j1k2l"
+              }
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Get the approval plans of an agreement request"
+      }
+    ],
+    "GetAgreementRequestTerms": [
+      {
+        "input": {
+          "agreementRequestId": "ar-EXAMPLE4a539b123d4EXAMPLE78"
+        },
+        "output": {
+          "terms": [
+            {
+              "legalTerm": {
+                "type": "LegalTerm",
+                "documents": [
+                  {
+                    "type": "CustomEula",
+                    "url": "URL"
+                  }
+                ],
+                "id": "term-EXAMPLE3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f"
+              }
+            },
+            {
+              "configurableUpfrontPricingTerm": {
+                "type": "ConfigurableUpfrontPricingTerm",
+                "configuration": {
+                  "dimensions": [
+                    {
+                      "dimensionKey": "AdminUsers",
+                      "dimensionValue": 5
+                    },
+                    {
+                      "dimensionKey": "ReadOnlyUsers",
+                      "dimensionValue": 10
+                    }
+                  ],
+                  "selectorValue": "P12M"
+                },
+                "currencyCode": "USD",
+                "id": "term-EXAMPLE1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d",
+                "rateCards": [
+                  {
+                    "constraints": {
+                      "multipleDimensionSelection": "Allowed",
+                      "quantityConfiguration": "Allowed"
+                    },
+                    "rateCard": [
+                      {
+                        "dimensionKey": "AdminUsers",
+                        "price": "10"
+                      },
+                      {
+                        "dimensionKey": "ReadOnlyUsers",
+                        "price": "5"
+                      }
+                    ],
+                    "selector": {
+                      "type": "Duration",
+                      "value": "P12M"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "renewalTerm": {
+                "type": "RenewalTerm",
+                "configuration": {
+                  "enableAutoRenew": false
+                },
+                "id": "term-EXAMPLE2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e"
+              }
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Get the terms of an agreement request"
       }
     ],
     "GetBillingAdjustmentRequest": [
@@ -90,6 +375,33 @@
         },
         "id": "example-1",
         "title": "Get a billing adjustment request"
+      }
+    ],
+    "ListAgreementApprovals": [
+      {
+        "input": {
+          "maxResults": 10,
+          "partyType": "REQUESTER",
+          "status": "PENDING_APPROVAL"
+        },
+        "output": {
+          "items": [
+            {
+              "name": "Example Analytics Platform sold by Example Corp",
+              "agreementApprovalId": "apr-EXAMPLE9s0t1u2v3w4x",
+              "agreementRequestId": "ar-EXAMPLE4a539b123d4EXAMPLE78",
+              "approvalNeededBy": 1739527800,
+              "approvalType": "BUYER_AGREEMENT_APPROVAL",
+              "createdAt": 1736935800,
+              "expiresAt": 1739527800,
+              "startedAt": 1736935800,
+              "status": "PENDING_APPROVAL",
+              "updatedAt": 1737022200
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List agreement approvals"
       }
     ],
     "ListAgreementCancellationRequests": [
@@ -148,6 +460,34 @@
         "title": "List agreement invoice line items"
       }
     ],
+    "ListAgreementRequests": [
+      {
+        "input": {
+          "maxResults": 10,
+          "status": "PENDING_APPROVAL"
+        },
+        "output": {
+          "items": [
+            {
+              "agreementRequestId": "ar-EXAMPLE4a539b123d4EXAMPLE78",
+              "agreementType": "PurchaseAgreement",
+              "proposalSummary": {
+                "offerId": "ABCDEFGHIJKLMNOP123",
+                "resources": [
+                  {
+                    "type": "SaaSProduct",
+                    "id": "0EXAMPLE-8ce8-4814-bcf1-636EXAMPLEb5"
+                  }
+                ]
+              },
+              "status": "PENDING_APPROVAL"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List agreement requests"
+      }
+    ],
     "ListBillingAdjustmentRequests": [
       {
         "input": {
@@ -173,6 +513,19 @@
         "title": "List billing adjustment requests"
       }
     ],
+    "RejectAgreementApproval": [
+      {
+        "input": {
+          "buyerAgreementApprovalRejectionInput": {
+            "agreementApprovalId": "apr-EXAMPLE9s0t1u2v3w4x",
+            "note": "Rejected. This purchase isn't in the approved budget."
+          }
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Reject an agreement approval"
+      }
+    ],
     "SendAgreementCancellationRequest": [
       {
         "input": {
@@ -192,6 +545,45 @@
         },
         "id": "example-1",
         "title": "Send a cancellation request"
+      }
+    ],
+    "StartAgreementApprovals": [
+      {
+        "input": {
+          "agreementRequestId": "ar-EXAMPLE4a539b123d4EXAMPLE78",
+          "planInputs": [
+            {
+              "buyerAgreementApprovalPlanInput": {
+                "planReference": "aplan-EXAMPLE7g8h9i0j1k2l",
+                "requesterNote": "Annual subscription for the data platform team."
+              }
+            }
+          ],
+          "purchaseOrders": [
+            {
+              "chargeId": "ch-EXAMPLE4b4296145c3EXAMPLE56",
+              "purchaseOrderReference": "PO-123"
+            }
+          ]
+        },
+        "output": {
+          "approvalSummaries": [
+            {
+              "name": "Example Analytics Platform sold by Example Corp",
+              "agreementApprovalId": "apr-EXAMPLE9s0t1u2v3w4x",
+              "agreementRequestId": "ar-EXAMPLE4a539b123d4EXAMPLE78",
+              "approvalNeededBy": 1739527800,
+              "approvalType": "BUYER_AGREEMENT_APPROVAL",
+              "createdAt": 1736935800,
+              "expiresAt": 1739527800,
+              "startedAt": 1736935800,
+              "status": "PENDING_APPROVAL",
+              "updatedAt": 1736935800
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Start agreement approvals"
       }
     ]
   }

@@ -1547,6 +1547,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteWorkloadIdentity(array{name?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteWorkloadIdentityAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteWorkloadIdentityAsync(array{name?: string, ...} $args = [])
+ * @method \Aws\Result getAgentInsightStore(array $args = [])
+ * @phpstan-method \Aws\Result getAgentInsightStore(array{agentInsightStoreId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAgentInsightStoreAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAgentInsightStoreAsync(array{agentInsightStoreId?: string, ...} $args = [])
  * @method \Aws\Result getAgentRuntime(array $args = [])
  * @phpstan-method \Aws\Result getAgentRuntime(array{agentRuntimeId?: string, agentRuntimeVersion?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getAgentRuntimeAsync(array $args = [])
@@ -1687,6 +1691,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getWorkloadIdentity(array{name?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getWorkloadIdentityAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getWorkloadIdentityAsync(array{name?: string, ...} $args = [])
+ * @method \Aws\Result listAgentInsightStores(array $args = [])
+ * @phpstan-method \Aws\Result listAgentInsightStores(array{nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAgentInsightStoresAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listAgentInsightStoresAsync(array{nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \Aws\Result listAgentRuntimeEndpoints(array $args = [])
  * @phpstan-method \Aws\Result listAgentRuntimeEndpoints(array{agentRuntimeId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listAgentRuntimeEndpointsAsync(array $args = [])
@@ -1748,17 +1756,43 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listConsentPortalsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listConsentPortalsAsync(array{maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result listDatasetExamples(array $args = [])
- * @phpstan-method \Aws\Result listDatasetExamples(array{datasetId?: string, datasetVersion?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result listDatasetExamples(array{
+ *     datasetId?: string,
+ *     datasetVersion?: string,
+ *     filter?: array{generationIds?: list<string>, exampleFields?: list<array>, ...},
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listDatasetExamplesAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listDatasetExamplesAsync(array{datasetId?: string, datasetVersion?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listDatasetExamplesAsync(array{
+ *     datasetId?: string,
+ *     datasetVersion?: string,
+ *     filter?: array{generationIds?: list<string>, exampleFields?: list<array>, ...},
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listDatasetVersions(array $args = [])
- * @phpstan-method \Aws\Result listDatasetVersions(array{datasetId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @phpstan-method \Aws\Result listDatasetVersions(array{
+ *     datasetId?: string,
+ *     filter?: array{exampleCountByField?: list<array>, ...},
+ *     nextToken?: string,
+ *     maxResults?: int,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listDatasetVersionsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listDatasetVersionsAsync(array{datasetId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listDatasetVersionsAsync(array{
+ *     datasetId?: string,
+ *     filter?: array{exampleCountByField?: list<array>, ...},
+ *     nextToken?: string,
+ *     maxResults?: int,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listDatasets(array $args = [])
- * @phpstan-method \Aws\Result listDatasets(array{nextToken?: string, maxResults?: int, ...} $args = [])
+ * @phpstan-method \Aws\Result listDatasets(array{filter?: array{exampleCountByField?: list<array>, ...}, nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listDatasetsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listDatasetsAsync(array{nextToken?: string, maxResults?: int, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listDatasetsAsync(array{filter?: array{exampleCountByField?: list<array>, ...}, nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \Aws\Result listEvaluators(array $args = [])
  * @phpstan-method \Aws\Result listEvaluators(array{nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listEvaluatorsAsync(array $args = [])
@@ -1957,6 +1991,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result untagResource(array{resourceArn?: string, tagKeys?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise untagResourceAsync(array{resourceArn?: string, tagKeys?: list<string>, ...} $args = [])
+ * @method \Aws\Result updateAgentInsightStore(array $args = [])
+ * @phpstan-method \Aws\Result updateAgentInsightStore(array{
+ *     clientToken?: string,
+ *     agentInsightStoreId?: string,
+ *     enablementStatus?: 'DISABLED'|'ENABLED',
+ *     encryptionConfiguration?: array{mode?: 'AWS_OWNED_KMS_KEY'|'CUSTOMER_MANAGED_KMS', kmsKeyArn?: string, ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateAgentInsightStoreAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateAgentInsightStoreAsync(array{
+ *     clientToken?: string,
+ *     agentInsightStoreId?: string,
+ *     enablementStatus?: 'DISABLED'|'ENABLED',
+ *     encryptionConfiguration?: array{mode?: 'AWS_OWNED_KMS_KEY'|'CUSTOMER_MANAGED_KMS', kmsKeyArn?: string, ...},
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateAgentRuntime(array $args = [])
  * @phpstan-method \Aws\Result updateAgentRuntime(array{
  *     agentRuntimeId?: string,

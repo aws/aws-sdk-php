@@ -124,6 +124,26 @@
       ],
       "idempotent":true
     },
+    "CreateCoreNetworkEndpoint":{
+      "name":"CreateCoreNetworkEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/core-network-endpoints",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateCoreNetworkEndpointInput"},
+      "output":{"shape":"CreateCoreNetworkEndpointOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "CreateDNSView":{
       "name":"CreateDNSView",
       "http":{
@@ -231,6 +251,25 @@
       },
       "input":{"shape":"DeleteAccessTokenInput"},
       "output":{"shape":"DeleteAccessTokenOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteCoreNetworkEndpoint":{
+      "name":"DeleteCoreNetworkEndpoint",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/core-network-endpoints/{coreNetworkEndpointId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteCoreNetworkEndpointInput"},
+      "output":{"shape":"DeleteCoreNetworkEndpointOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -412,6 +451,24 @@
       ],
       "readonly":true
     },
+    "GetCoreNetworkEndpoint":{
+      "name":"GetCoreNetworkEndpoint",
+      "http":{
+        "method":"GET",
+        "requestUri":"/core-network-endpoints/{coreNetworkEndpointId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetCoreNetworkEndpointInput"},
+      "output":{"shape":"GetCoreNetworkEndpointOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "GetDNSView":{
       "name":"GetDNSView",
       "http":{
@@ -574,6 +631,23 @@
       ],
       "readonly":true
     },
+    "ListCoreNetworkEndpoints":{
+      "name":"ListCoreNetworkEndpoints",
+      "http":{
+        "method":"GET",
+        "requestUri":"/core-network-endpoints",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCoreNetworkEndpointsInput"},
+      "output":{"shape":"ListCoreNetworkEndpointsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
+    },
     "ListDNSViews":{
       "name":"ListDNSViews",
       "http":{
@@ -725,7 +799,10 @@
       "input":{"shape":"ListTagsForResourceRequest"},
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "TagResource":{
@@ -738,9 +815,12 @@
       "input":{"shape":"TagResourceRequest"},
       "output":{"shape":"TagResourceResponse"},
       "errors":[
+        {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UntagResource":{
@@ -753,8 +833,11 @@
       "input":{"shape":"UntagResourceRequest"},
       "output":{"shape":"UntagResourceResponse"},
       "errors":[
+        {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdateAccessSource":{
@@ -786,6 +869,26 @@
       },
       "input":{"shape":"UpdateAccessTokenInput"},
       "output":{"shape":"UpdateAccessTokenOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateCoreNetworkEndpoint":{
+      "name":"UpdateCoreNetworkEndpoint",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/core-network-endpoints/{coreNetworkEndpointId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateCoreNetworkEndpointInput"},
+      "output":{"shape":"UpdateCoreNetworkEndpointOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -918,10 +1021,8 @@
       "type":"structure",
       "required":[
         "arn",
-        "cidr",
         "createdAt",
         "id",
-        "ipAddressType",
         "dnsViewId",
         "protocol",
         "status",
@@ -930,12 +1031,14 @@
       "members":{
         "arn":{"shape":"ResourceArn"},
         "cidr":{"shape":"Cidr"},
+        "coreNetworkEndpointId":{"shape":"ResourceId"},
         "createdAt":{"shape":"ISO8601TimeString"},
         "id":{"shape":"ResourceId"},
         "ipAddressType":{"shape":"IpAddressType"},
         "name":{"shape":"ResourceNameShort"},
         "dnsViewId":{"shape":"ResourceId"},
         "protocol":{"shape":"DnsProtocol"},
+        "segment":{"shape":"SegmentName"},
         "status":{"shape":"CRResourceStatus"},
         "updatedAt":{"shape":"ISO8601TimeString"}
       }
@@ -1269,7 +1372,7 @@
     "Cidr":{
       "type":"string",
       "max":43,
-      "min":1
+      "min":0
     },
     "ClientToken":{
       "type":"string",
@@ -1301,10 +1404,76 @@
       },
       "exception":true
     },
+    "CoreNetworkEndpointDnsIpInputItem":{
+      "type":"structure",
+      "required":[
+        "dnsLabel",
+        "regionScope"
+      ],
+      "members":{
+        "ipv4Address":{"shape":"IPv4Address"},
+        "ipv6Address":{"shape":"IPv6Address"},
+        "dnsLabel":{"shape":"DnsLabel"},
+        "regionScope":{"shape":"RegionScopeType"},
+        "regions":{"shape":"Regions"}
+      }
+    },
+    "CoreNetworkEndpointDnsIpInputItems":{
+      "type":"list",
+      "member":{"shape":"CoreNetworkEndpointDnsIpInputItem"}
+    },
+    "CoreNetworkEndpointDnsIpItem":{
+      "type":"structure",
+      "required":[
+        "dnsLabel",
+        "regionScope"
+      ],
+      "members":{
+        "ipv4Address":{"shape":"IPv4Address"},
+        "ipv6Address":{"shape":"IPv6Address"},
+        "dnsLabel":{"shape":"DnsLabel"},
+        "dnsName":{"shape":"DnsName"},
+        "regionScope":{"shape":"RegionScopeType"},
+        "regions":{"shape":"Regions"}
+      }
+    },
+    "CoreNetworkEndpointDnsIpItems":{
+      "type":"list",
+      "member":{"shape":"CoreNetworkEndpointDnsIpItem"}
+    },
+    "CoreNetworkEndpoints":{
+      "type":"list",
+      "member":{"shape":"CoreNetworkEndpointsItem"}
+    },
+    "CoreNetworkEndpointsItem":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "availableRegions",
+        "coreNetworkArn",
+        "createdAt",
+        "globalResolverId",
+        "id",
+        "ipAddresses",
+        "status",
+        "updatedAt"
+      ],
+      "members":{
+        "arn":{"shape":"ResourceArn"},
+        "availableRegions":{"shape":"Regions"},
+        "coreNetworkArn":{"shape":"ResourceArn"},
+        "createdAt":{"shape":"ISO8601TimeString"},
+        "globalResolverId":{"shape":"ResourceId"},
+        "id":{"shape":"ResourceId"},
+        "ipAddresses":{"shape":"CoreNetworkEndpointDnsIpItems"},
+        "name":{"shape":"ResourceName"},
+        "status":{"shape":"CRResourceStatus"},
+        "updatedAt":{"shape":"ISO8601TimeString"}
+      }
+    },
     "CreateAccessSourceInput":{
       "type":"structure",
       "required":[
-        "cidr",
         "dnsViewId",
         "protocol"
       ],
@@ -1316,6 +1485,8 @@
         },
         "ipAddressType":{"shape":"IpAddressType"},
         "name":{"shape":"ResourceNameShort"},
+        "coreNetworkEndpointId":{"shape":"ResourceId"},
+        "segment":{"shape":"SegmentName"},
         "dnsViewId":{"shape":"ResourceId"},
         "protocol":{"shape":"DnsProtocol"},
         "tags":{"shape":"Tags"}
@@ -1325,10 +1496,8 @@
       "type":"structure",
       "required":[
         "arn",
-        "cidr",
         "createdAt",
         "id",
-        "ipAddressType",
         "dnsViewId",
         "protocol",
         "status",
@@ -1340,6 +1509,8 @@
         "createdAt":{"shape":"ISO8601TimeString"},
         "id":{"shape":"ResourceId"},
         "ipAddressType":{"shape":"IpAddressType"},
+        "coreNetworkEndpointId":{"shape":"ResourceId"},
+        "segment":{"shape":"SegmentName"},
         "name":{"shape":"ResourceNameShort"},
         "dnsViewId":{"shape":"ResourceId"},
         "protocol":{"shape":"DnsProtocol"},
@@ -1386,6 +1557,51 @@
         "name":{"shape":"ResourceNameShort"},
         "status":{"shape":"TokenStatus"},
         "value":{"shape":"AccessTokenValue"}
+      }
+    },
+    "CreateCoreNetworkEndpointInput":{
+      "type":"structure",
+      "required":[
+        "coreNetworkArn",
+        "globalResolverId",
+        "ipAddresses"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "coreNetworkArn":{"shape":"ResourceArn"},
+        "globalResolverId":{"shape":"ResourceId"},
+        "ipAddresses":{"shape":"CoreNetworkEndpointDnsIpInputItems"},
+        "name":{"shape":"ResourceName"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "CreateCoreNetworkEndpointOutput":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "availableRegions",
+        "coreNetworkArn",
+        "createdAt",
+        "globalResolverId",
+        "id",
+        "ipAddresses",
+        "status",
+        "updatedAt"
+      ],
+      "members":{
+        "arn":{"shape":"ResourceArn"},
+        "availableRegions":{"shape":"Regions"},
+        "coreNetworkArn":{"shape":"ResourceArn"},
+        "createdAt":{"shape":"ISO8601TimeString"},
+        "globalResolverId":{"shape":"ResourceId"},
+        "id":{"shape":"ResourceId"},
+        "ipAddresses":{"shape":"CoreNetworkEndpointDnsIpItems"},
+        "name":{"shape":"ResourceName"},
+        "status":{"shape":"CRResourceStatus"},
+        "updatedAt":{"shape":"ISO8601TimeString"}
       }
     },
     "CreateDNSViewInput":{
@@ -1558,6 +1774,7 @@
         },
         "description":{"shape":"ResourceDescription"},
         "ipAddressType":{"shape":"GlobalResolverIpAddressType"},
+        "publicIpStatus":{"shape":"PublicIpStatus"},
         "name":{"shape":"ResourceName"},
         "observabilityRegion":{"shape":"Region"},
         "regions":{"shape":"Regions"},
@@ -1586,6 +1803,7 @@
         "description":{"shape":"ResourceDescription"},
         "dnsName":{"shape":"Sni"},
         "ipAddressType":{"shape":"GlobalResolverIpAddressType"},
+        "publicIpStatus":{"shape":"PublicIpStatus"},
         "ipv4Addresses":{"shape":"IPv4Addresses"},
         "ipv6Addresses":{"shape":"IPv6Addresses"},
         "name":{"shape":"ResourceName"},
@@ -1644,10 +1862,8 @@
       "type":"structure",
       "required":[
         "arn",
-        "cidr",
         "createdAt",
         "id",
-        "ipAddressType",
         "dnsViewId",
         "protocol",
         "status",
@@ -1656,12 +1872,14 @@
       "members":{
         "arn":{"shape":"ResourceArn"},
         "cidr":{"shape":"Cidr"},
+        "coreNetworkEndpointId":{"shape":"ResourceId"},
         "createdAt":{"shape":"ISO8601TimeString"},
         "id":{"shape":"ResourceId"},
         "ipAddressType":{"shape":"IpAddressType"},
         "name":{"shape":"ResourceNameShort"},
         "dnsViewId":{"shape":"ResourceId"},
         "protocol":{"shape":"DnsProtocol"},
+        "segment":{"shape":"SegmentName"},
         "status":{"shape":"CRResourceStatus"},
         "updatedAt":{"shape":"ISO8601TimeString"}
       }
@@ -1688,6 +1906,43 @@
         "id":{"shape":"ResourceId"},
         "status":{"shape":"TokenStatus"},
         "deletedAt":{"shape":"ISO8601TimeString"}
+      }
+    },
+    "DeleteCoreNetworkEndpointInput":{
+      "type":"structure",
+      "required":["coreNetworkEndpointId"],
+      "members":{
+        "coreNetworkEndpointId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"coreNetworkEndpointId"
+        }
+      }
+    },
+    "DeleteCoreNetworkEndpointOutput":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "availableRegions",
+        "coreNetworkArn",
+        "createdAt",
+        "globalResolverId",
+        "id",
+        "ipAddresses",
+        "status",
+        "updatedAt"
+      ],
+      "members":{
+        "arn":{"shape":"ResourceArn"},
+        "availableRegions":{"shape":"Regions"},
+        "coreNetworkArn":{"shape":"ResourceArn"},
+        "createdAt":{"shape":"ISO8601TimeString"},
+        "globalResolverId":{"shape":"ResourceId"},
+        "id":{"shape":"ResourceId"},
+        "ipAddresses":{"shape":"CoreNetworkEndpointDnsIpItems"},
+        "name":{"shape":"ResourceName"},
+        "status":{"shape":"CRResourceStatus"},
+        "updatedAt":{"shape":"ISO8601TimeString"}
       }
     },
     "DeleteDNSViewInput":{
@@ -1931,6 +2186,16 @@
         "DICTIONARY_DGA"
       ]
     },
+    "DnsLabel":{
+      "type":"string",
+      "max":32,
+      "min":1
+    },
+    "DnsName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "DnsProtocol":{
       "type":"string",
       "enum":[
@@ -2119,10 +2384,8 @@
       "type":"structure",
       "required":[
         "arn",
-        "cidr",
         "createdAt",
         "id",
-        "ipAddressType",
         "dnsViewId",
         "protocol",
         "status",
@@ -2131,12 +2394,14 @@
       "members":{
         "arn":{"shape":"ResourceArn"},
         "cidr":{"shape":"Cidr"},
+        "coreNetworkEndpointId":{"shape":"ResourceId"},
         "createdAt":{"shape":"ISO8601TimeString"},
         "id":{"shape":"ResourceId"},
         "ipAddressType":{"shape":"IpAddressType"},
         "name":{"shape":"ResourceNameShort"},
         "dnsViewId":{"shape":"ResourceId"},
         "protocol":{"shape":"DnsProtocol"},
+        "segment":{"shape":"SegmentName"},
         "status":{"shape":"CRResourceStatus"},
         "updatedAt":{"shape":"ISO8601TimeString"}
       }
@@ -2177,6 +2442,43 @@
         "status":{"shape":"TokenStatus"},
         "updatedAt":{"shape":"ISO8601TimeString"},
         "value":{"shape":"AccessTokenValue"}
+      }
+    },
+    "GetCoreNetworkEndpointInput":{
+      "type":"structure",
+      "required":["coreNetworkEndpointId"],
+      "members":{
+        "coreNetworkEndpointId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"coreNetworkEndpointId"
+        }
+      }
+    },
+    "GetCoreNetworkEndpointOutput":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "availableRegions",
+        "coreNetworkArn",
+        "createdAt",
+        "globalResolverId",
+        "id",
+        "ipAddresses",
+        "status",
+        "updatedAt"
+      ],
+      "members":{
+        "arn":{"shape":"ResourceArn"},
+        "availableRegions":{"shape":"Regions"},
+        "coreNetworkArn":{"shape":"ResourceArn"},
+        "createdAt":{"shape":"ISO8601TimeString"},
+        "globalResolverId":{"shape":"ResourceId"},
+        "id":{"shape":"ResourceId"},
+        "ipAddresses":{"shape":"CoreNetworkEndpointDnsIpItems"},
+        "name":{"shape":"ResourceName"},
+        "status":{"shape":"CRResourceStatus"},
+        "updatedAt":{"shape":"ISO8601TimeString"}
       }
     },
     "GetDNSViewInput":{
@@ -2338,7 +2640,8 @@
         "status":{"shape":"CRResourceStatus"},
         "ipv4Addresses":{"shape":"IPv4Addresses"},
         "ipv6Addresses":{"shape":"IPv6Addresses"},
-        "ipAddressType":{"shape":"GlobalResolverIpAddressType"}
+        "ipAddressType":{"shape":"GlobalResolverIpAddressType"},
+        "publicIpStatus":{"shape":"PublicIpStatus"}
       }
     },
     "GetHostedZoneAssociationInput":{
@@ -2439,7 +2742,8 @@
         "status":{"shape":"CRResourceStatus"},
         "ipv4Addresses":{"shape":"IPv4Addresses"},
         "ipv6Addresses":{"shape":"IPv6Addresses"},
-        "ipAddressType":{"shape":"GlobalResolverIpAddressType"}
+        "ipAddressType":{"shape":"GlobalResolverIpAddressType"},
+        "publicIpStatus":{"shape":"PublicIpStatus"}
       }
     },
     "HostedZoneAssociationStatus":{
@@ -2565,7 +2869,8 @@
       "type":"string",
       "enum":[
         "IPV4",
-        "IPV6"
+        "IPV6",
+        "NONE"
       ]
     },
     "ListAccessSourcesInput":{
@@ -2625,6 +2930,33 @@
       "members":{
         "nextToken":{"shape":"String"},
         "accessTokens":{"shape":"AccessTokens"}
+      }
+    },
+    "ListCoreNetworkEndpointsInput":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"Integer",
+          "location":"querystring",
+          "locationName":"max_results"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next_token"
+        },
+        "filters":{
+          "shape":"Filters",
+          "location":"querystring"
+        }
+      }
+    },
+    "ListCoreNetworkEndpointsOutput":{
+      "type":"structure",
+      "required":["coreNetworkEndpoints"],
+      "members":{
+        "nextToken":{"shape":"String"},
+        "coreNetworkEndpoints":{"shape":"CoreNetworkEndpoints"}
       }
     },
     "ListDNSViewsInput":{
@@ -2892,10 +3224,25 @@
         "DELETING"
       ]
     },
+    "PublicIpStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED_RESERVED",
+        "DISABLED_RESERVED",
+        "DISABLED_RELEASED"
+      ]
+    },
     "Region":{
       "type":"string",
       "max":32,
       "min":0
+    },
+    "RegionScopeType":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "REGIONAL"
+      ]
     },
     "Regions":{
       "type":"list",
@@ -2946,6 +3293,11 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "SegmentName":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -3103,6 +3455,7 @@
           "locationName":"accessSourceId"
         },
         "cidr":{"shape":"Cidr"},
+        "dnsViewId":{"shape":"ResourceId"},
         "ipAddressType":{"shape":"IpAddressType"},
         "name":{"shape":"ResourceNameShort"},
         "protocol":{"shape":"DnsProtocol"}
@@ -3112,10 +3465,8 @@
       "type":"structure",
       "required":[
         "arn",
-        "cidr",
         "createdAt",
         "id",
-        "ipAddressType",
         "dnsViewId",
         "protocol",
         "status",
@@ -3124,12 +3475,14 @@
       "members":{
         "arn":{"shape":"ResourceArn"},
         "cidr":{"shape":"Cidr"},
+        "coreNetworkEndpointId":{"shape":"ResourceId"},
         "createdAt":{"shape":"ISO8601TimeString"},
         "id":{"shape":"ResourceId"},
         "ipAddressType":{"shape":"IpAddressType"},
         "name":{"shape":"ResourceNameShort"},
         "dnsViewId":{"shape":"ResourceId"},
         "protocol":{"shape":"DnsProtocol"},
+        "segment":{"shape":"SegmentName"},
         "status":{"shape":"CRResourceStatus"},
         "updatedAt":{"shape":"ISO8601TimeString"}
       }
@@ -3158,6 +3511,45 @@
       "members":{
         "id":{"shape":"ResourceId"},
         "name":{"shape":"ResourceNameShort"}
+      }
+    },
+    "UpdateCoreNetworkEndpointInput":{
+      "type":"structure",
+      "required":["coreNetworkEndpointId"],
+      "members":{
+        "coreNetworkEndpointId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"coreNetworkEndpointId"
+        },
+        "name":{"shape":"ResourceName"},
+        "updateIpAddresses":{"shape":"UpdateIpAddressList"}
+      }
+    },
+    "UpdateCoreNetworkEndpointOutput":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "availableRegions",
+        "coreNetworkArn",
+        "createdAt",
+        "globalResolverId",
+        "id",
+        "ipAddresses",
+        "status",
+        "updatedAt"
+      ],
+      "members":{
+        "arn":{"shape":"ResourceArn"},
+        "availableRegions":{"shape":"Regions"},
+        "coreNetworkArn":{"shape":"ResourceArn"},
+        "createdAt":{"shape":"ISO8601TimeString"},
+        "globalResolverId":{"shape":"ResourceId"},
+        "id":{"shape":"ResourceId"},
+        "ipAddresses":{"shape":"CoreNetworkEndpointDnsIpItems"},
+        "name":{"shape":"ResourceName"},
+        "status":{"shape":"CRResourceStatus"},
+        "updatedAt":{"shape":"ISO8601TimeString"}
       }
     },
     "UpdateDNSViewInput":{
@@ -3308,6 +3700,7 @@
         "observabilityRegion":{"shape":"Region"},
         "description":{"shape":"ResourceDescription"},
         "ipAddressType":{"shape":"GlobalResolverIpAddressType"},
+        "publicIpStatus":{"shape":"PublicIpStatus"},
         "regions":{"shape":"Regions"}
       }
     },
@@ -3339,7 +3732,8 @@
         "status":{"shape":"CRResourceStatus"},
         "ipv4Addresses":{"shape":"IPv4Addresses"},
         "ipv6Addresses":{"shape":"IPv6Addresses"},
-        "ipAddressType":{"shape":"GlobalResolverIpAddressType"}
+        "ipAddressType":{"shape":"GlobalResolverIpAddressType"},
+        "publicIpStatus":{"shape":"PublicIpStatus"}
       }
     },
     "UpdateHostedZoneAssociationInput":{
@@ -3376,6 +3770,30 @@
         "updatedAt":{"shape":"ISO8601TimeString"},
         "status":{"shape":"HostedZoneAssociationStatus"}
       }
+    },
+    "UpdateIpAddressEntry":{
+      "type":"structure",
+      "required":["operation"],
+      "members":{
+        "operation":{"shape":"UpdateIpAddressOperation"},
+        "ipv4Address":{"shape":"IPv4Address"},
+        "ipv6Address":{"shape":"IPv6Address"},
+        "dnsLabel":{"shape":"DnsLabel"},
+        "regionScope":{"shape":"RegionScopeType"},
+        "regions":{"shape":"Regions"}
+      }
+    },
+    "UpdateIpAddressList":{
+      "type":"list",
+      "member":{"shape":"UpdateIpAddressEntry"}
+    },
+    "UpdateIpAddressOperation":{
+      "type":"string",
+      "enum":[
+        "ADD",
+        "REMOVE",
+        "UPDATE"
+      ]
     },
     "ValidationException":{
       "type":"structure",

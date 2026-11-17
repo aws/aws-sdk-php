@@ -2629,6 +2629,10 @@
         "RoutingPolicyAssociationDetails":{
           "shape":"RoutingPolicyAssociationDetailsList",
           "box":true
+        },
+        "MultipathResilience":{
+          "shape":"MultipathResilienceChangeValues",
+          "box":true
         }
       }
     },
@@ -5290,6 +5294,23 @@
       "type":"integer",
       "max":500,
       "min":1
+    },
+    "MultipathResilienceChangeValues":{
+      "type":"structure",
+      "members":{
+        "Mode":{"shape":"MultipathResilienceMode"},
+        "EdgeSets":{
+          "shape":"EdgeSetList",
+          "box":true
+        }
+      }
+    },
+    "MultipathResilienceMode":{
+      "type":"string",
+      "enum":[
+        "best-effort",
+        "disabled"
+      ]
     },
     "NatGatewaySupportState":{
       "type":"string",

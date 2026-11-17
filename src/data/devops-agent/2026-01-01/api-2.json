@@ -582,6 +582,29 @@
       "endpoint":{"hostPrefix":"dp."},
       "readonly":true
     },
+    "GetChat":{
+      "name":"GetChat",
+      "http":{
+        "method":"GET",
+        "requestUri":"/agents/agent-space/{agentSpaceId}/chat/get/{executionId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetChatRequest"},
+      "output":{"shape":"GetChatResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ContentSizeExceededException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"}
+      ],
+      "endpoint":{"hostPrefix":"dp."},
+      "readonly":true
+    },
     "GetOperatorApp":{
       "name":"GetOperatorApp",
       "http":{
@@ -1303,6 +1326,29 @@
       ],
       "endpoint":{"hostPrefix":"dp."}
     },
+    "UpdateChat":{
+      "name":"UpdateChat",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/agents/agent-space/{agentSpaceId}/chat/{executionId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateChatRequest"},
+      "output":{"shape":"UpdateChatResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ContentSizeExceededException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"}
+      ],
+      "endpoint":{"hostPrefix":"dp."},
+      "idempotent":true
+    },
     "UpdateGoal":{
       "name":"UpdateGoal",
       "http":{
@@ -1932,13 +1978,22 @@
       "type":"string",
       "enum":[
         "RELEASE_READINESS_REVIEW",
-        "RELEASE_READINESS_REVIEW_AUTOMATED_TESTING"
+        "RELEASE_READINESS_REVIEW_AUTOMATED_TESTING",
+        "CODE_CHANGE_RISK_ANALYSIS",
+        "CODE_CHANGE_RISK_ANALYSIS_AUTOMATED_TESTING"
       ]
     },
     "CertificateString":{
       "type":"string",
       "max":32768,
       "min":1
+    },
+    "ChatArchiveStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "ARCHIVED"
+      ]
     },
     "ChatExecution":{
       "type":"structure",
@@ -1950,7 +2005,8 @@
         "executionId":{"shape":"ResourceId"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
-        "summary":{"shape":"String"}
+        "summary":{"shape":"String"},
+        "archiveStatus":{"shape":"ChatArchiveStatus"}
       }
     },
     "ChatExecutionId":{
@@ -1981,13 +2037,18 @@
       "type":"structure",
       "required":["message"],
       "members":{
-        "message":{"shape":"String"}
+        "message":{"shape":"String"},
+        "reason":{"shape":"ConflictExceptionReason"}
       },
       "error":{
         "httpStatusCode":409,
         "senderFault":true
       },
       "exception":true
+    },
+    "ConflictExceptionReason":{
+      "type":"string",
+      "enum":["CHAT_ARCHIVED"]
     },
     "ContentSizeExceededException":{
       "type":"structure",
@@ -2937,6 +2998,41 @@
         "task":{"shape":"Task"}
       }
     },
+    "GetChatRequest":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "executionId"
+      ],
+      "members":{
+        "agentSpaceId":{
+          "shape":"AgentSpaceIdentifier",
+          "location":"uri",
+          "locationName":"agentSpaceId"
+        },
+        "executionId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"executionId"
+        }
+      }
+    },
+    "GetChatResponse":{
+      "type":"structure",
+      "required":[
+        "executionId",
+        "createdAt",
+        "updatedAt",
+        "archiveStatus"
+      ],
+      "members":{
+        "executionId":{"shape":"ResourceId"},
+        "summary":{"shape":"String"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "archiveStatus":{"shape":"ChatArchiveStatus"}
+      }
+    },
     "GetOperatorAppInput":{
       "type":"structure",
       "required":["agentSpaceId"],
@@ -3674,6 +3770,11 @@
           "shape":"String",
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "archiveStatus":{
+          "shape":"ChatArchiveStatus",
+          "location":"querystring",
+          "locationName":"archiveStatus"
         }
       }
     },
@@ -5951,7 +6052,8 @@
         "INVESTIGATION",
         "EVALUATION",
         "RELEASE_READINESS_REVIEW",
-        "RELEASE_TESTING"
+        "RELEASE_TESTING",
+        "CODE_CHANGE_RISK_ANALYSIS"
       ]
     },
     "ThrottlingException":{
@@ -6329,6 +6431,56 @@
       "required":["task"],
       "members":{
         "task":{"shape":"Task"}
+      }
+    },
+    "UpdateChatRequest":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "executionId"
+      ],
+      "members":{
+        "agentSpaceId":{
+          "shape":"AgentSpaceIdentifier",
+          "location":"uri",
+          "locationName":"agentSpaceId"
+        },
+        "executionId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"executionId"
+        },
+        "summary":{"shape":"UpdateChatRequestSummaryString"},
+        "archiveStatus":{"shape":"ChatArchiveStatus"},
+        "clientToken":{
+          "shape":"UpdateChatRequestClientTokenString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateChatRequestClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\x21-\\x7E]+"
+    },
+    "UpdateChatRequestSummaryString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "UpdateChatResponse":{
+      "type":"structure",
+      "required":[
+        "executionId",
+        "updatedAt",
+        "archiveStatus"
+      ],
+      "members":{
+        "executionId":{"shape":"ResourceId"},
+        "summary":{"shape":"String"},
+        "updatedAt":{"shape":"Timestamp"},
+        "archiveStatus":{"shape":"ChatArchiveStatus"}
       }
     },
     "UpdateGoalRequest":{

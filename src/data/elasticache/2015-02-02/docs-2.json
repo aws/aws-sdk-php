@@ -1234,6 +1234,43 @@
         "Snapshot$NumNodeGroups": "<p>The number of node groups (shards) in this snapshot. When restoring from a snapshot, the number of node groups (shards) in the snapshot and in the restored replication group must be the same.</p>"
       }
     },
+    "Integration": {
+      "base": "<p>An integration configured on the serverless cache, and its current status. ElastiCache supports DynamoDB integration.</p>",
+      "refs": {
+        "IntegrationList$member": null
+      }
+    },
+    "IntegrationList": {
+      "base": null,
+      "refs": {
+        "ServerlessCache$Integrations": "<p>Configured integrations and their status.</p>"
+      }
+    },
+    "IntegrationRequest": {
+      "base": "<p>Specifies an integration to enable on the serverless cache when you create it.</p>",
+      "refs": {
+        "IntegrationRequestList$member": null
+      }
+    },
+    "IntegrationRequestList": {
+      "base": null,
+      "refs": {
+        "CreateServerlessCacheRequest$Integrations": "<p>Which serverless cache integrations to enable. Valid values are:</p> <ul> <li> <p> <code>dynamodb</code> – DynamoDB integration.</p> </li> </ul> <p>DynamoDB integration requires the Valkey engine with a major engine version of 9 or above. If not specified, no integrations are enabled.</p>"
+      }
+    },
+    "IntegrationStatus": {
+      "base": null,
+      "refs": {
+        "Integration$Status": "<p>The current status of the integration. Valid values are:</p> <ul> <li> <p> <code>enabled</code> – The integration is enabled.</p> </li> <li> <p> <code>disabled</code> – The integration is disabled.</p> </li> </ul>"
+      }
+    },
+    "IntegrationType": {
+      "base": null,
+      "refs": {
+        "Integration$IntegrationType": "<p>The integration type. ElastiCache supports <code>dynamodb</code>.</p>",
+        "IntegrationRequest$IntegrationType": "<p>The integration type to enable. Must be <code>dynamodb</code>.</p>"
+      }
+    },
     "InvalidARNFault": {
       "base": "<p>The requested Amazon Resource Name (ARN) does not refer to an existing resource.</p>",
       "refs": {}
@@ -2556,7 +2593,7 @@
         "RevokeCacheSecurityGroupIngressMessage$CacheSecurityGroupName": "<p>The name of the cache security group to revoke ingress from.</p>",
         "RevokeCacheSecurityGroupIngressMessage$EC2SecurityGroupName": "<p>The name of the Amazon EC2 security group to revoke access from.</p>",
         "RevokeCacheSecurityGroupIngressMessage$EC2SecurityGroupOwnerId": "<p>The Amazon account number of the Amazon EC2 security group owner. Note that this is not the same thing as an Amazon access key ID - you must provide a valid Amazon account number for this parameter.</p>",
-        "SecretManagerAuthConfig$SecretArn": "<p>The ARN of the secret in AWS Secrets Manager that contains the credentials for authenticating with the source.</p>",
+        "SecretManagerAuthConfig$SecretArn": "<p>The ARN of the secret in Secrets Manager that contains the credentials for authenticating with the source.</p>",
         "SecurityGroupIdsList$member": null,
         "SecurityGroupMembership$SecurityGroupId": "<p>The identifier of the cache security group.</p>",
         "SecurityGroupMembership$Status": "<p>The status of the cache security group membership. The status changes whenever a cache security group is modified, or when the cache security groups assigned to a cluster are modified.</p>",

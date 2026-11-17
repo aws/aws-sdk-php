@@ -1543,6 +1543,11 @@
           "shape":"RequestCharged",
           "location":"header",
           "locationName":"x-amz-request-charged"
+        },
+        "VersionId":{
+          "shape":"ObjectVersionId",
+          "location":"header",
+          "locationName":"x-amz-version-id"
         }
       }
     },
@@ -2945,6 +2950,11 @@
           "shape":"ChecksumType",
           "location":"header",
           "locationName":"x-amz-checksum-type"
+        },
+        "VersionId":{
+          "shape":"ObjectVersionId",
+          "location":"header",
+          "locationName":"x-amz-version-id"
         }
       }
     },
@@ -7153,7 +7163,12 @@
           "locationName":"x-amz-request-charged"
         },
         "ChecksumAlgorithm":{"shape":"ChecksumAlgorithm"},
-        "ChecksumType":{"shape":"ChecksumType"}
+        "ChecksumType":{"shape":"ChecksumType"},
+        "VersionId":{
+          "shape":"ObjectVersionId",
+          "location":"header",
+          "locationName":"x-amz-version-id"
+        }
       }
     },
     "ListPartsRequest":{
@@ -7419,7 +7434,8 @@
         "Owner":{"shape":"Owner"},
         "Initiator":{"shape":"Initiator"},
         "ChecksumAlgorithm":{"shape":"ChecksumAlgorithm"},
-        "ChecksumType":{"shape":"ChecksumType"}
+        "ChecksumType":{"shape":"ChecksumType"},
+        "VersionId":{"shape":"ObjectVersionId"}
       }
     },
     "MultipartUploadId":{"type":"string"},
@@ -10901,6 +10917,11 @@
           "shape":"RequestCharged",
           "location":"header",
           "locationName":"x-amz-request-charged"
+        },
+        "VersionId":{
+          "shape":"ObjectVersionId",
+          "location":"header",
+          "locationName":"x-amz-version-id"
         }
       },
       "payload":"CopyPartResult"
@@ -11100,6 +11121,11 @@
           "shape":"RequestCharged",
           "location":"header",
           "locationName":"x-amz-request-charged"
+        },
+        "VersionId":{
+          "shape":"ObjectVersionId",
+          "location":"header",
+          "locationName":"x-amz-version-id"
         }
       }
     },

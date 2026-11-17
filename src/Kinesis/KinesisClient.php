@@ -6,6 +6,14 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with the **Amazon Kinesis** service.
  *
+ * @method \Aws\Result acknowledgeDeadLetterQueueRecords(array $args = [])
+ * @phpstan-method \Aws\Result acknowledgeDeadLetterQueueRecords(array{QueueARN?: string, Entries?: list<array{ReceiptHandle?: string, ...}>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise acknowledgeDeadLetterQueueRecordsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise acknowledgeDeadLetterQueueRecordsAsync(array{QueueARN?: string, Entries?: list<array{ReceiptHandle?: string, ...}>, ...} $args = [])
+ * @method \Aws\Result acknowledgeQueueRecords(array $args = [])
+ * @phpstan-method \Aws\Result acknowledgeQueueRecords(array{QueueARN?: string, Entries?: list<array{ReceiptHandle?: string, ...}>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise acknowledgeQueueRecordsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise acknowledgeQueueRecordsAsync(array{QueueARN?: string, Entries?: list<array{ReceiptHandle?: string, ...}>, ...} $args = [])
  * @method \Aws\Result addTagsToStream(array $args = [])
  * @phpstan-method \Aws\Result addTagsToStream(array{StreamName?: string, Tags?: array<string, string>, StreamARN?: string, StreamId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise addTagsToStreamAsync(array $args = [])
@@ -68,6 +76,30 @@ use Aws\AwsClient;
  *     LoggingConfiguration?: array{CloudWatchLogs?: array{Enabled?: bool, LogGroupName?: string, LogStreamName?: string, ...}, ...},
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createQueue(array $args = [])
+ * @phpstan-method \Aws\Result createQueue(array{
+ *     QueueName?: string,
+ *     StreamConfigurationList?: list<array{StreamARN?: string, StartingPosition?: array, ...}>,
+ *     QueueAttributes?: array{
+ *         VisibilityTimeoutSeconds?: int,
+ *         DeadLetterConfiguration?: array{TargetType?: 'BUILT_IN'|'NONE', MaxReceiveCount?: int, ...},
+ *         ...,
+ *     },
+ *     Tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createQueueAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createQueueAsync(array{
+ *     QueueName?: string,
+ *     StreamConfigurationList?: list<array{StreamARN?: string, StartingPosition?: array, ...}>,
+ *     QueueAttributes?: array{
+ *         VisibilityTimeoutSeconds?: int,
+ *         DeadLetterConfiguration?: array{TargetType?: 'BUILT_IN'|'NONE', MaxReceiveCount?: int, ...},
+ *         ...,
+ *     },
+ *     Tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createStream(array $args = [])
  * @phpstan-method \Aws\Result createStream(array{
  *     StreamName?: string,
@@ -98,6 +130,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteChannel(array{ChannelARN?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteChannelAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteChannelAsync(array{ChannelARN?: string, ...} $args = [])
+ * @method \Aws\Result deleteQueue(array $args = [])
+ * @phpstan-method \Aws\Result deleteQueue(array{QueueARN?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteQueueAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteQueueAsync(array{QueueARN?: string, ...} $args = [])
  * @method \Aws\Result deleteResourcePolicy(array $args = [])
  * @phpstan-method \Aws\Result deleteResourcePolicy(array{ResourceARN?: string, StreamId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteResourcePolicyAsync(array $args = [])
@@ -122,6 +158,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeLimits(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeLimitsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeLimitsAsync(array{...} $args = [])
+ * @method \Aws\Result describeQueue(array $args = [])
+ * @phpstan-method \Aws\Result describeQueue(array{QueueARN?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeQueueAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeQueueAsync(array{QueueARN?: string, ...} $args = [])
  * @method \Aws\Result describeStream(array $args = [])
  * @phpstan-method \Aws\Result describeStream(array{
  *     StreamName?: string,
@@ -228,6 +268,20 @@ use Aws\AwsClient;
  *     StreamFilter?: list<array{StreamARN?: string, StreamCreationTimestamp?: int|string|\DateTimeInterface, ...}>,
  *     MaxResults?: int,
  *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listQueues(array $args = [])
+ * @phpstan-method \Aws\Result listQueues(array{
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     StreamFilter?: list<array{StreamARN?: string, StreamCreationTimestamp?: int|string|\DateTimeInterface, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listQueuesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listQueuesAsync(array{
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     StreamFilter?: list<array{StreamARN?: string, StreamCreationTimestamp?: int|string|\DateTimeInterface, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listShards(array $args = [])
@@ -382,6 +436,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result putResourcePolicy(array{ResourceARN?: string, StreamId?: string, Policy?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise putResourcePolicyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise putResourcePolicyAsync(array{ResourceARN?: string, StreamId?: string, Policy?: string, ...} $args = [])
+ * @method \Aws\Result receiveDeadLetterQueueRecords(array $args = [])
+ * @phpstan-method \Aws\Result receiveDeadLetterQueueRecords(array{QueueARN?: string, Limit?: int, WaitTimeSeconds?: int, VisibilityTimeoutSeconds?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise receiveDeadLetterQueueRecordsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise receiveDeadLetterQueueRecordsAsync(array{QueueARN?: string, Limit?: int, WaitTimeSeconds?: int, VisibilityTimeoutSeconds?: int, ...} $args = [])
+ * @method \Aws\Result receiveQueueRecords(array $args = [])
+ * @phpstan-method \Aws\Result receiveQueueRecords(array{QueueARN?: string, Limit?: int, WaitTimeSeconds?: int, VisibilityTimeoutSeconds?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise receiveQueueRecordsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise receiveQueueRecordsAsync(array{QueueARN?: string, Limit?: int, WaitTimeSeconds?: int, VisibilityTimeoutSeconds?: int, ...} $args = [])
  * @method \Aws\Result registerStreamConsumer(array $args = [])
  * @phpstan-method \Aws\Result registerStreamConsumer(array{StreamARN?: string, ConsumerName?: string, StreamId?: string, Tags?: array<string, string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise registerStreamConsumerAsync(array $args = [])
@@ -390,6 +452,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result removeTagsFromStream(array{StreamName?: string, TagKeys?: list<string>, StreamARN?: string, StreamId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise removeTagsFromStreamAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise removeTagsFromStreamAsync(array{StreamName?: string, TagKeys?: list<string>, StreamARN?: string, StreamId?: string, ...} $args = [])
+ * @method \Aws\Result restoreDeadLetterQueueRecords(array $args = [])
+ * @phpstan-method \Aws\Result restoreDeadLetterQueueRecords(array{QueueARN?: string, Entries?: list<array{ReceiptHandle?: string, ...}>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise restoreDeadLetterQueueRecordsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise restoreDeadLetterQueueRecordsAsync(array{QueueARN?: string, Entries?: list<array{ReceiptHandle?: string, ...}>, ...} $args = [])
  * @method \Aws\Result splitShard(array $args = [])
  * @phpstan-method \Aws\Result splitShard(array{
  *     StreamName?: string,
@@ -472,10 +538,54 @@ use Aws\AwsClient;
  *     LoggingConfiguration?: array{CloudWatchLogs?: array{Enabled?: bool, LogGroupName?: string, LogStreamName?: string, ...}, ...},
  *     ...,
  * } $args = [])
+ * @method \Aws\Result updateDeadLetterQueueRecordsVisibility(array $args = [])
+ * @phpstan-method \Aws\Result updateDeadLetterQueueRecordsVisibility(array{
+ *     QueueARN?: string,
+ *     Entries?: list<array{ReceiptHandle?: string, VisibilityTimeoutSeconds?: int, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateDeadLetterQueueRecordsVisibilityAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateDeadLetterQueueRecordsVisibilityAsync(array{
+ *     QueueARN?: string,
+ *     Entries?: list<array{ReceiptHandle?: string, VisibilityTimeoutSeconds?: int, ...}>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateMaxRecordSize(array $args = [])
  * @phpstan-method \Aws\Result updateMaxRecordSize(array{StreamARN?: string, StreamId?: string, MaxRecordSizeInKiB?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateMaxRecordSizeAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateMaxRecordSizeAsync(array{StreamARN?: string, StreamId?: string, MaxRecordSizeInKiB?: int, ...} $args = [])
+ * @method \Aws\Result updateQueue(array $args = [])
+ * @phpstan-method \Aws\Result updateQueue(array{
+ *     QueueARN?: string,
+ *     QueueAttributes?: array{
+ *         VisibilityTimeoutSeconds?: int,
+ *         DeadLetterConfiguration?: array{TargetType?: 'BUILT_IN'|'NONE', MaxReceiveCount?: int, ...},
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateQueueAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateQueueAsync(array{
+ *     QueueARN?: string,
+ *     QueueAttributes?: array{
+ *         VisibilityTimeoutSeconds?: int,
+ *         DeadLetterConfiguration?: array{TargetType?: 'BUILT_IN'|'NONE', MaxReceiveCount?: int, ...},
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateQueueRecordsVisibility(array $args = [])
+ * @phpstan-method \Aws\Result updateQueueRecordsVisibility(array{
+ *     QueueARN?: string,
+ *     Entries?: list<array{ReceiptHandle?: string, VisibilityTimeoutSeconds?: int, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateQueueRecordsVisibilityAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateQueueRecordsVisibilityAsync(array{
+ *     QueueARN?: string,
+ *     Entries?: list<array{ReceiptHandle?: string, VisibilityTimeoutSeconds?: int, ...}>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateShardCount(array $args = [])
  * @phpstan-method \Aws\Result updateShardCount(array{
  *     StreamName?: string,

@@ -2124,7 +2124,8 @@
         "authorizerCredentials":{"shape":"String"},
         "identitySource":{"shape":"String"},
         "identityValidationExpression":{"shape":"String"},
-        "authorizerResultTtlInSeconds":{"shape":"NullableInteger"}
+        "authorizerResultTtlInSeconds":{"shape":"NullableInteger"},
+        "jwtConfiguration":{"shape":"JwtConfiguration"}
       }
     },
     "AuthorizerType":{
@@ -2132,7 +2133,8 @@
       "enum":[
         "TOKEN",
         "REQUEST",
-        "COGNITO_USER_POOLS"
+        "COGNITO_USER_POOLS",
+        "JWT"
       ]
     },
     "Authorizers":{
@@ -2282,7 +2284,8 @@
         "authorizerCredentials":{"shape":"String"},
         "identitySource":{"shape":"String"},
         "identityValidationExpression":{"shape":"String"},
-        "authorizerResultTtlInSeconds":{"shape":"NullableInteger"}
+        "authorizerResultTtlInSeconds":{"shape":"NullableInteger"},
+        "jwtConfiguration":{"shape":"JwtConfigurationInput"}
       }
     },
     "CreateBasePathMappingRequest":{
@@ -4347,6 +4350,73 @@
         "dualstack"
       ]
     },
+    "JwtAdditionalClaim":{
+      "type":"structure",
+      "required":[
+        "claimName",
+        "format"
+      ],
+      "members":{
+        "claimName":{"shape":"String"},
+        "format":{"shape":"JwtClaimFormat"},
+        "required":{"shape":"Boolean"},
+        "expectedValues":{"shape":"ListOfString"}
+      }
+    },
+    "JwtClaimFormat":{
+      "type":"string",
+      "enum":["SINGLE_STRING"]
+    },
+    "JwtConfiguration":{
+      "type":"structure",
+      "members":{
+        "issuers":{"shape":"ListOfJwtIssuer"},
+        "defaultAlgorithms":{"shape":"ListOfJwtSigningAlgorithm"}
+      }
+    },
+    "JwtConfigurationInput":{
+      "type":"structure",
+      "required":[
+        "issuers",
+        "defaultAlgorithms"
+      ],
+      "members":{
+        "issuers":{"shape":"ListOfJwtIssuerInput"},
+        "defaultAlgorithms":{"shape":"ListOfJwtSigningAlgorithm"}
+      }
+    },
+    "JwtIssuer":{
+      "type":"structure",
+      "members":{
+        "issuer":{"shape":"String"},
+        "audiences":{"shape":"ListOfString"},
+        "additionalClaims":{"shape":"ListOfJwtAdditionalClaim"},
+        "jwksUri":{"shape":"String"}
+      }
+    },
+    "JwtIssuerInput":{
+      "type":"structure",
+      "required":[
+        "issuer",
+        "audiences"
+      ],
+      "members":{
+        "issuer":{"shape":"String"},
+        "audiences":{"shape":"ListOfString"},
+        "additionalClaims":{"shape":"ListOfJwtAdditionalClaim"}
+      }
+    },
+    "JwtSigningAlgorithm":{
+      "type":"string",
+      "enum":[
+        "RS256",
+        "RS384",
+        "RS512",
+        "ES256",
+        "ES384",
+        "ES512"
+      ]
+    },
     "LimitExceededException":{
       "type":"structure",
       "members":{
@@ -4411,6 +4481,22 @@
     "ListOfGatewayResponse":{
       "type":"list",
       "member":{"shape":"GatewayResponse"}
+    },
+    "ListOfJwtAdditionalClaim":{
+      "type":"list",
+      "member":{"shape":"JwtAdditionalClaim"}
+    },
+    "ListOfJwtIssuer":{
+      "type":"list",
+      "member":{"shape":"JwtIssuer"}
+    },
+    "ListOfJwtIssuerInput":{
+      "type":"list",
+      "member":{"shape":"JwtIssuerInput"}
+    },
+    "ListOfJwtSigningAlgorithm":{
+      "type":"list",
+      "member":{"shape":"JwtSigningAlgorithm"}
     },
     "ListOfLong":{
       "type":"list",

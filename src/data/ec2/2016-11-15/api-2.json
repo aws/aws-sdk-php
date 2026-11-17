@@ -6445,6 +6445,15 @@
       "input":{"shape":"ModifyTransitGatewayNetworkFunctionAttachmentRequest"},
       "output":{"shape":"ModifyTransitGatewayNetworkFunctionAttachmentResult"}
     },
+    "ModifyTransitGatewayPeeringAttachment":{
+      "name":"ModifyTransitGatewayPeeringAttachment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyTransitGatewayPeeringAttachmentRequest"},
+      "output":{"shape":"ModifyTransitGatewayPeeringAttachmentResult"}
+    },
     "ModifyTransitGatewayPolicyTableEntry":{
       "name":"ModifyTransitGatewayPolicyTableEntry",
       "http":{
@@ -7924,6 +7933,13 @@
         "transitions-failed"
       ]
     },
+    "ActiveAdditionalKeyExchangesList":{
+      "type":"list",
+      "member":{
+        "shape":"ActiveVpnTunnelAdditionalKeyExchange",
+        "locationName":"item"
+      }
+    },
     "ActiveInstance":{
       "type":"structure",
       "members":{
@@ -7950,6 +7966,19 @@
       "member":{
         "shape":"ActiveInstance",
         "locationName":"item"
+      }
+    },
+    "ActiveVpnTunnelAdditionalKeyExchange":{
+      "type":"structure",
+      "members":{
+        "AdditionalKeyExchangeRound":{
+          "shape":"Integer",
+          "locationName":"additionalKeyExchangeRound"
+        },
+        "KeyExchangeMethod":{
+          "shape":"Integer",
+          "locationName":"keyExchangeMethod"
+        }
       }
     },
     "ActiveVpnTunnelStatus":{
@@ -7990,6 +8019,14 @@
         "ProvisioningStatusReason":{
           "shape":"String",
           "locationName":"provisioningStatusReason"
+        },
+        "Phase1AdditionalKeyExchanges":{
+          "shape":"ActiveAdditionalKeyExchangesList",
+          "locationName":"phase1AdditionalKeyExchangeSet"
+        },
+        "Phase2AdditionalKeyExchanges":{
+          "shape":"ActiveAdditionalKeyExchangesList",
+          "locationName":"phase2AdditionalKeyExchangeSet"
         }
       }
     },
@@ -8117,6 +8154,61 @@
       }
     },
     "AdditionalFlexibleNetworkInterfaces":{"type":"integer"},
+    "AdditionalKeyExchangeMethodsList":{
+      "type":"list",
+      "member":{
+        "shape":"AdditionalKeyExchangeMethodsListValue",
+        "locationName":"item"
+      }
+    },
+    "AdditionalKeyExchangeMethodsListValue":{
+      "type":"structure",
+      "members":{
+        "Value":{
+          "shape":"Integer",
+          "locationName":"value"
+        }
+      }
+    },
+    "AdditionalKeyExchangeMethodsRequestList":{
+      "type":"list",
+      "member":{
+        "shape":"AdditionalKeyExchangeMethodsRequestListValue",
+        "locationName":"item"
+      }
+    },
+    "AdditionalKeyExchangeMethodsRequestListValue":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"Integer"}
+      }
+    },
+    "AdditionalKeyExchangeRequirement":{
+      "type":"string",
+      "enum":[
+        "required",
+        "optional"
+      ]
+    },
+    "AdditionalKeyExchangeRound":{
+      "type":"integer",
+      "max":7,
+      "min":1
+    },
+    "AdditionalKeyExchangesList":{
+      "type":"list",
+      "member":{
+        "shape":"VpnAdditionalKeyExchange",
+        "locationName":"item"
+      }
+    },
+    "AdditionalKeyExchangesRequestSpecification":{
+      "type":"list",
+      "member":{
+        "shape":"VpnAdditionalKeyExchangeRequest",
+        "locationName":"item"
+      }
+    },
     "Address":{
       "type":"structure",
       "members":{
@@ -11825,6 +11917,21 @@
         "locationName":"item"
       }
     },
+    "CapacityBlockInstanceTypePreference":{
+      "type":"structure",
+      "members":{
+        "InstanceType":{"shape":"String"}
+      }
+    },
+    "CapacityBlockInstanceTypePreferenceSet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityBlockInstanceTypePreference",
+        "locationName":"item"
+      },
+      "max":10,
+      "min":0
+    },
     "CapacityBlockInterconnectStatus":{
       "type":"string",
       "enum":[
@@ -11891,8 +11998,70 @@
         "ZoneType":{
           "shape":"String",
           "locationName":"zoneType"
+        },
+        "CapacityBlockOfferingSegments":{
+          "shape":"CapacityBlockOfferingSegmentSet",
+          "locationName":"capacityBlockOfferingSegmentSet"
         }
       }
+    },
+    "CapacityBlockOfferingSegment":{
+      "type":"structure",
+      "members":{
+        "InstanceType":{
+          "shape":"String",
+          "locationName":"instanceType"
+        },
+        "AvailabilityZone":{
+          "shape":"String",
+          "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
+        "InstanceCount":{
+          "shape":"Integer",
+          "locationName":"instanceCount"
+        },
+        "StartDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"startDate"
+        },
+        "EndDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"endDate"
+        },
+        "CapacityBlockDurationHours":{
+          "shape":"Integer",
+          "locationName":"capacityBlockDurationHours"
+        },
+        "CapacityBlockDurationMinutes":{
+          "shape":"Integer",
+          "locationName":"capacityBlockDurationMinutes"
+        },
+        "UpfrontFee":{
+          "shape":"String",
+          "locationName":"upfrontFee"
+        },
+        "CurrencyCode":{
+          "shape":"String",
+          "locationName":"currencyCode"
+        },
+        "ZoneType":{
+          "shape":"String",
+          "locationName":"zoneType"
+        }
+      }
+    },
+    "CapacityBlockOfferingSegmentSet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityBlockOfferingSegment",
+        "locationName":"item"
+      },
+      "max":10,
+      "min":0
     },
     "CapacityBlockOfferingSet":{
       "type":"list",
@@ -16423,6 +16592,13 @@
         }
       }
     },
+    "CreatePeeringConnectionOptionsRequest":{
+      "type":"structure",
+      "members":{
+        "AllowMultipathResilience":{"shape":"Boolean"},
+        "MultipathResilienceMode":{"shape":"MultipathResilienceMode"}
+      }
+    },
     "CreatePlacementGroupRequest":{
       "type":"structure",
       "members":{
@@ -17383,7 +17559,9 @@
     "CreateTransitGatewayPeeringAttachmentRequestOptions":{
       "type":"structure",
       "members":{
-        "DynamicRouting":{"shape":"DynamicRoutingValue"}
+        "DynamicRouting":{"shape":"DynamicRoutingValue"},
+        "AllowMultipathResilience":{"shape":"Boolean"},
+        "MultipathResilienceMode":{"shape":"TransitGatewayPeeringAttachmentMultipathResilienceMode"}
       }
     },
     "CreateTransitGatewayPeeringAttachmentResult":{
@@ -18061,6 +18239,7 @@
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
         },
+        "RequesterPeeringConnectionOptions":{"shape":"CreatePeeringConnectionOptionsRequest"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -21143,7 +21322,11 @@
         "MaxResults":{"shape":"DescribeCapacityBlockOfferingsMaxResults"},
         "UltraserverType":{"shape":"String"},
         "UltraserverCount":{"shape":"Integer"},
-        "AllAvailabilityZones":{"shape":"Boolean"}
+        "AllAvailabilityZones":{"shape":"Boolean"},
+        "InstanceTypePreferences":{
+          "shape":"CapacityBlockInstanceTypePreferenceSet",
+          "locationName":"InstanceTypePreference"
+        }
       }
     },
     "DescribeCapacityBlockOfferingsResult":{
@@ -47579,6 +47762,31 @@
         "EncryptionSupport":{"shape":"EncryptionSupportOptionValue"}
       }
     },
+    "ModifyTransitGatewayPeeringAttachmentRequest":{
+      "type":"structure",
+      "required":["TransitGatewayAttachmentId"],
+      "members":{
+        "TransitGatewayAttachmentId":{"shape":"TransitGatewayAttachmentId"},
+        "Options":{"shape":"ModifyTransitGatewayPeeringAttachmentRequestOptions"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "ModifyTransitGatewayPeeringAttachmentRequestOptions":{
+      "type":"structure",
+      "members":{
+        "AllowMultipathResilience":{"shape":"Boolean"},
+        "MultipathResilienceMode":{"shape":"TransitGatewayPeeringAttachmentMultipathResilienceMode"}
+      }
+    },
+    "ModifyTransitGatewayPeeringAttachmentResult":{
+      "type":"structure",
+      "members":{
+        "TransitGatewayPeeringAttachment":{
+          "shape":"TransitGatewayPeeringAttachment",
+          "locationName":"transitGatewayPeeringAttachment"
+        }
+      }
+    },
     "ModifyTransitGatewayPolicyTableEntryRequest":{
       "type":"structure",
       "required":[
@@ -48441,7 +48649,15 @@
         },
         "StartupAction":{"shape":"String"},
         "LogOptions":{"shape":"VpnTunnelLogOptionsSpecification"},
-        "EnableTunnelLifecycleControl":{"shape":"Boolean"}
+        "EnableTunnelLifecycleControl":{"shape":"Boolean"},
+        "Phase1AdditionalKeyExchanges":{
+          "shape":"AdditionalKeyExchangesRequestSpecification",
+          "locationName":"Phase1AdditionalKeyExchange"
+        },
+        "Phase2AdditionalKeyExchanges":{
+          "shape":"AdditionalKeyExchangesRequestSpecification",
+          "locationName":"Phase2AdditionalKeyExchange"
+        }
       },
       "sensitive":true
     },
@@ -48611,6 +48827,18 @@
       "enum":[
         "enable",
         "disable"
+      ]
+    },
+    "MultipathResilienceMode":{
+      "type":"string",
+      "enum":["always-on"]
+    },
+    "MultipathResilienceStatus":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "enabled",
+        "disabled"
       ]
     },
     "NatFlexCostAllocationPolicyDocument":{
@@ -50607,6 +50835,14 @@
         "AllowEgressFromLocalVpcToRemoteClassicLink":{
           "shape":"Boolean",
           "locationName":"allowEgressFromLocalVpcToRemoteClassicLink"
+        },
+        "AllowMultipathResilience":{
+          "shape":"Boolean",
+          "locationName":"allowMultipathResilience"
+        },
+        "MultipathResilienceMode":{
+          "shape":"MultipathResilienceMode",
+          "locationName":"multipathResilienceMode"
         }
       }
     },
@@ -50615,7 +50851,9 @@
       "members":{
         "AllowDnsResolutionFromRemoteVpc":{"shape":"Boolean"},
         "AllowEgressFromLocalClassicLinkToRemoteVpc":{"shape":"Boolean"},
-        "AllowEgressFromLocalVpcToRemoteClassicLink":{"shape":"Boolean"}
+        "AllowEgressFromLocalVpcToRemoteClassicLink":{"shape":"Boolean"},
+        "AllowMultipathResilience":{"shape":"Boolean"},
+        "MultipathResilienceMode":{"shape":"MultipathResilienceMode"}
       }
     },
     "PeeringTgwInfo":{
@@ -51920,6 +52158,10 @@
         "CapacityBlocks":{
           "shape":"CapacityBlockSet",
           "locationName":"capacityBlockSet"
+        },
+        "CapacityReservations":{
+          "shape":"CapacityReservationSet",
+          "locationName":"capacityReservationSet"
         }
       }
     },
@@ -61222,12 +61464,44 @@
         "locationName":"item"
       }
     },
+    "TransitGatewayPeeringAttachmentMultipathResilienceMode":{
+      "type":"string",
+      "enum":["always-on"]
+    },
+    "TransitGatewayPeeringAttachmentMultipathResilienceStatus":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "enabled",
+        "disabled"
+      ]
+    },
     "TransitGatewayPeeringAttachmentOptions":{
       "type":"structure",
       "members":{
         "DynamicRouting":{
           "shape":"DynamicRoutingValue",
           "locationName":"dynamicRouting"
+        },
+        "RequesterAllowMultipathResilience":{
+          "shape":"Boolean",
+          "locationName":"requesterAllowMultipathResilience"
+        },
+        "RequesterMultipathResilienceMode":{
+          "shape":"TransitGatewayPeeringAttachmentMultipathResilienceMode",
+          "locationName":"requesterMultipathResilienceMode"
+        },
+        "AccepterAllowMultipathResilience":{
+          "shape":"Boolean",
+          "locationName":"accepterAllowMultipathResilience"
+        },
+        "AccepterMultipathResilienceMode":{
+          "shape":"TransitGatewayPeeringAttachmentMultipathResilienceMode",
+          "locationName":"accepterMultipathResilienceMode"
+        },
+        "MultipathResilienceStatus":{
+          "shape":"TransitGatewayPeeringAttachmentMultipathResilienceStatus",
+          "locationName":"multipathResilienceStatus"
         }
       }
     },
@@ -62072,6 +62346,14 @@
         "EnableTunnelLifecycleControl":{
           "shape":"Boolean",
           "locationName":"enableTunnelLifecycleControl"
+        },
+        "Phase1AdditionalKeyExchanges":{
+          "shape":"AdditionalKeyExchangesList",
+          "locationName":"phase1AdditionalKeyExchangeSet"
+        },
+        "Phase2AdditionalKeyExchanges":{
+          "shape":"AdditionalKeyExchangesList",
+          "locationName":"phase2AdditionalKeyExchangeSet"
         }
       }
     },
@@ -65003,6 +65285,10 @@
         "VpcPeeringConnectionId":{
           "shape":"String",
           "locationName":"vpcPeeringConnectionId"
+        },
+        "MultipathResilienceStatus":{
+          "shape":"MultipathResilienceStatus",
+          "locationName":"multipathResilienceStatus"
         }
       }
     },
@@ -65036,6 +65322,14 @@
         "AllowEgressFromLocalVpcToRemoteClassicLink":{
           "shape":"Boolean",
           "locationName":"allowEgressFromLocalVpcToRemoteClassicLink"
+        },
+        "AllowMultipathResilience":{
+          "shape":"Boolean",
+          "locationName":"allowMultipathResilience"
+        },
+        "MultipathResilienceMode":{
+          "shape":"MultipathResilienceMode",
+          "locationName":"multipathResilienceMode"
         }
       }
     },
@@ -65110,6 +65404,35 @@
     "VpcTenancy":{
       "type":"string",
       "enum":["default"]
+    },
+    "VpnAdditionalKeyExchange":{
+      "type":"structure",
+      "members":{
+        "AdditionalKeyExchangeRound":{
+          "shape":"Integer",
+          "locationName":"additionalKeyExchangeRound"
+        },
+        "KeyExchangeMethods":{
+          "shape":"AdditionalKeyExchangeMethodsList",
+          "locationName":"keyExchangeMethodSet"
+        },
+        "Requirement":{
+          "shape":"AdditionalKeyExchangeRequirement",
+          "locationName":"requirement"
+        }
+      }
+    },
+    "VpnAdditionalKeyExchangeRequest":{
+      "type":"structure",
+      "required":["AdditionalKeyExchangeRound"],
+      "members":{
+        "AdditionalKeyExchangeRound":{"shape":"AdditionalKeyExchangeRound"},
+        "KeyExchangeMethods":{
+          "shape":"AdditionalKeyExchangeMethodsRequestList",
+          "locationName":"KeyExchangeMethod"
+        },
+        "Requirement":{"shape":"AdditionalKeyExchangeRequirement"}
+      }
     },
     "VpnConcentrator":{
       "type":"structure",
@@ -65509,7 +65832,15 @@
         },
         "StartupAction":{"shape":"String"},
         "LogOptions":{"shape":"VpnTunnelLogOptionsSpecification"},
-        "EnableTunnelLifecycleControl":{"shape":"Boolean"}
+        "EnableTunnelLifecycleControl":{"shape":"Boolean"},
+        "Phase1AdditionalKeyExchanges":{
+          "shape":"AdditionalKeyExchangesRequestSpecification",
+          "locationName":"Phase1AdditionalKeyExchange"
+        },
+        "Phase2AdditionalKeyExchanges":{
+          "shape":"AdditionalKeyExchangesRequestSpecification",
+          "locationName":"Phase2AdditionalKeyExchange"
+        }
       }
     },
     "VpnTunnelOptionsSpecificationsList":{

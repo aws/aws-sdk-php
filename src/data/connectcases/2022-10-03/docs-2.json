@@ -144,6 +144,12 @@
         "AuditMergeMetadata$mergeEventId": "<p>The unique identifier of the merge. All audit events produced by the same merge, on both cases, have the same value. Use it to group the changes that a merge made.</p>"
       }
     },
+    "AutoIncludeFields": {
+      "base": null,
+      "refs": {
+        "CaseEventIncludedData$autoIncludeFields": "<p>Automatically include a category of fields in case event data, combined as a union with any fields specified in <code>fields</code>. Valid values are <code>All</code> (include all fields on the case), <code>System</code> (include all system fields), and <code>Custom</code> (include all custom fields). When this attribute is set, new fields added to the domain are picked up automatically without another call to PutCaseEventConfiguration. For the full behavior matrix and IAM requirements, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/case-event-streams.html\">Case event streams in Connect Customer Cases</a> in the <i>Connect Customer Administrator Guide</i>.</p>"
+      }
+    },
     "BasicLayout": {
       "base": "<p>Content specific to <code>BasicLayout</code> type. It configures fields in the top panel and More Info tab of agent application. </p>",
       "refs": {
@@ -375,7 +381,7 @@
       }
     },
     "CaseEventIncludedData": {
-      "base": "<p>Details of what case data is published through the case event stream.</p>",
+      "base": "<p>Details of what case data is published through the case event stream. Use <code>fields</code> to include a specific list of fields, and use <code>autoIncludeFields</code> to automatically include a category of fields. When both are set, the effective field set is the union of the two.</p>",
       "refs": {
         "EventIncludedData$caseData": "<p>Details of what case data is published through the case event stream.</p>"
       }
@@ -383,7 +389,7 @@
     "CaseEventIncludedDataFieldsList": {
       "base": null,
       "refs": {
-        "CaseEventIncludedData$fields": "<p>List of field identifiers.</p>"
+        "CaseEventIncludedData$fields": "<p>List of field identifiers to include in case event data.</p>"
       }
     },
     "CaseFilter": {

@@ -492,6 +492,25 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "SplitCredit":{
+      "name":"SplitCredit",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SplitCreditRequest"},
+      "output":{"shape":"SplitCreditResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -507,6 +526,25 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "TransferCredit":{
+      "name":"TransferCredit",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TransferCreditRequest"},
+      "output":{"shape":"TransferCreditResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
     },
     "UntagResource":{
       "name":"UntagResource",
@@ -766,7 +804,8 @@
         "CREDIT_SHARING_HISTORY",
         "CREDIT_LEVEL_SHARING",
         "BILLING_ALERTS",
-        "CREDIT_PREFERENCE_OPTIONS"
+        "CREDIT_PREFERENCE_OPTIONS",
+        "BENEFIT_LEVEL_SHARING"
       ]
     },
     "BillingFeatureFilter":{
@@ -1142,6 +1181,20 @@
       "max":1000,
       "min":0
     },
+    "ChildCredit":{
+      "type":"structure",
+      "required":["amount"],
+      "members":{
+        "creditId":{"shape":"CreditId"},
+        "amount":{"shape":"DecimalAmountString"}
+      }
+    },
+    "ChildCredits":{
+      "type":"list",
+      "member":{"shape":"ChildCredit"},
+      "max":99,
+      "min":2
+    },
     "ClientToken":{
       "type":"string",
       "pattern":"[a-zA-Z0-9-]+"
@@ -1393,6 +1446,12 @@
     "CurrencyCode":{
       "type":"string",
       "pattern":"[A-Z]{3}"
+    },
+    "DecimalAmountString":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"[0-9]{1,25}(\\.[0-9]{1,6})?"
     },
     "DeleteBillingViewRequest":{
       "type":"structure",
@@ -2232,7 +2291,7 @@
       "type":"string",
       "max":2148,
       "min":1,
-      "pattern":"[a-zA-Z0-9-\\/\\*: ]+"
+      "pattern":"[-a-zA-Z0-9_\\/\\*: ]+"
     },
     "PreferenceValue":{
       "type":"string",
@@ -2483,6 +2542,55 @@
       "type":"list",
       "member":{"shape":"AccountId"}
     },
+    "SplitCreditRequest":{
+      "type":"structure",
+      "required":[
+        "creditId",
+        "portions"
+      ],
+      "members":{
+        "creditId":{"shape":"CreditId"},
+        "portions":{"shape":"SplitPortions"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "dryRun":{"shape":"Boolean"}
+      }
+    },
+    "SplitCreditResponse":{
+      "type":"structure",
+      "required":[
+        "parentCreditId",
+        "childCredits",
+        "dryRun"
+      ],
+      "members":{
+        "parentCreditId":{"shape":"CreditId"},
+        "childCredits":{"shape":"ChildCredits"},
+        "dryRun":{"shape":"Boolean"}
+      }
+    },
+    "SplitPortion":{
+      "type":"structure",
+      "required":["amount"],
+      "members":{
+        "amount":{"shape":"DecimalAmountString"},
+        "description":{"shape":"SplitPortionDescriptionString"}
+      }
+    },
+    "SplitPortionDescriptionString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[\\x21-\\x7E\\xA1-\\xFF][\\x20-\\x7E\\xA1-\\xFF]*"
+    },
+    "SplitPortions":{
+      "type":"list",
+      "member":{"shape":"SplitPortion"},
+      "max":99,
+      "min":2
+    },
     "String":{"type":"string"},
     "StringSearch":{
       "type":"structure",
@@ -2555,6 +2663,38 @@
       }
     },
     "Timestamp":{"type":"timestamp"},
+    "TransferCreditRequest":{
+      "type":"structure",
+      "required":[
+        "creditId",
+        "destinationAccountId"
+      ],
+      "members":{
+        "creditId":{"shape":"CreditId"},
+        "destinationAccountId":{"shape":"AccountId"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "dryRun":{"shape":"Boolean"}
+      }
+    },
+    "TransferCreditResponse":{
+      "type":"structure",
+      "required":[
+        "sourceCreditId",
+        "destinationAccountId",
+        "amount",
+        "dryRun"
+      ],
+      "members":{
+        "sourceCreditId":{"shape":"CreditId"},
+        "newCreditId":{"shape":"CreditId"},
+        "destinationAccountId":{"shape":"AccountId"},
+        "amount":{"shape":"DecimalAmountString"},
+        "dryRun":{"shape":"Boolean"}
+      }
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
