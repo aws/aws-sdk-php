@@ -29,7 +29,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 class CredentialDaemonProvider
 {
     const ENV_SOCKET = 'AWS_CREDENTIAL_DAEMON_SOCKET';
-    const DOC_LINK = '<CREDENTIAL_DAEMON_DOC>';
+    const DOC_LINK = 'https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-credential-daemon.html';
     const DEFAULT_CONNECT_TIMEOUT = 1.0;
     const DEFAULT_TIMEOUT = 5.0;
 
@@ -290,9 +290,6 @@ class CredentialDaemonProvider
         );
     }
 
-    /**
-     * @throws CredentialDaemonException
-     */
     /**
      * Checks the settings of a daemon profile and returns its credential
      * name.
