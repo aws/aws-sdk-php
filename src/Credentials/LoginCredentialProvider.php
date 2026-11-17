@@ -588,7 +588,8 @@ final class LoginCredentialProvider
         return new SigninClient([
             self::KEY_CLIENT_REGION => $region,
             self::KEY_CLIENT_SIGNATURE_VERSION => self::CLIENT_SIGNATURE_DPOP,
-            self::KEY_CLIENT_CREDENTIALS => false
+            self::KEY_CLIENT_CREDENTIALS => false,
+            'http' => CredentialsUtils::withSourceClientTimeouts(),
         ]);
     }
 

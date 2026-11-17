@@ -217,13 +217,16 @@ class CredentialProvider
         }
 
         return function ($previousCreds = null) use ($links) {
+            // First error from a provider that reached its credential source.
+            $sourceError = null;
             /** @var callable $parent */
             $parent = array_shift($links);
             $promise = $parent();
             while ($next = array_shift($links)) {
                 $promise = $promise->otherwise(function ($reason) use (
                     $next,
-                    $previousCreds
+                    $previousCreds,
+                    &$sourceError
                 ) {
                     // Providers raise a non-recoverable error only after finding
                     // their own configuration. Stopping here lets memoize() raise
@@ -231,6 +234,9 @@ class CredentialProvider
                     // error or resolve a different identity.
                     if ($reason instanceof NonRecoverableCredentialsExceptionInterface) {
                         return Promise\Create::rejectionFor($reason);
+                    }
+                    if ($sourceError === null && self::reachedCredentialSource($reason)) {
+                        $sourceError = $reason;
                     }
                     if ($next instanceof InstanceProfileProvider
                         && $previousCreds instanceof Credentials
@@ -240,8 +246,32 @@ class CredentialProvider
                     return $next($reason);
                 });
             }
-            return $promise;
+
+            // When every provider fails, report the configured provider's
+            // source failure (for example an STS timeout) rather than the last
+            // provider's error, which is usually "not configured".
+            return $promise->otherwise(function ($reason) use (&$sourceError) {
+                if ($reason instanceof NonRecoverableCredentialsExceptionInterface) {
+                    return Promise\Create::rejectionFor($reason);
+                }
+                return Promise\Create::rejectionFor($sourceError ?? $reason);
+            });
         };
+    }
+
+    /**
+     * Returns true when a provider's rejection came from a call to its
+     * credential source (an AwsException in the chain), as opposed to the
+     * provider not being configured.
+     */
+    private static function reachedCredentialSource($reason): bool
+    {
+        for ($e = $reason; $e instanceof \Throwable; $e = $e->getPrevious()) {
+            if ($e instanceof AwsException) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -1479,7 +1509,8 @@ class CredentialProvider
             $ssoOidcClient = new Aws\SSOOIDC\SSOOIDCClient([
                 'region' => $ssoSession['sso_region'],
                 'version' => '2019-06-10',
-                'credentials' => false
+                'credentials' => false,
+                'http' => CredentialsUtils::withSourceClientTimeouts(),
             ]);
         } else {
             $ssoOidcClient = $config['ssoClient'];
@@ -1599,7 +1630,8 @@ class CredentialProvider
             $ssoClient = new Aws\SSO\SSOClient([
                 'region' => $clientRegion,
                 'version' => '2019-06-10',
-                'credentials' => false
+                'credentials' => false,
+                'http' => CredentialsUtils::withSourceClientTimeouts(),
             ]);
         } else {
             $ssoClient = $config['ssoClient'];
@@ -1655,7 +1687,8 @@ class CredentialProvider
 
         return new StsClient([
             'credentials' => $credentials,
-            'region' => $region
+            'region' => $region,
+            'http' => CredentialsUtils::withSourceClientTimeouts(),
         ]);
     }
 }

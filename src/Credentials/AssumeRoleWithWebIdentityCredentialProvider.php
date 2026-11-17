@@ -150,13 +150,12 @@ class AssumeRoleWithWebIdentityCredentialProvider
                     $result = $client->assumeRoleWithWebIdentity($assumeParams);
                 } catch (AwsException $e) {
                     // The token file may have been rotated since it was read.
-                    if (in_array(
-                            $e->getAwsErrorCode(),
-                            self::RETRYABLE_STS_ERROR_CODES,
-                            true
-                        )
-                        && $stsRetries < $this->retries
-                    ) {
+                    $isRetryable = in_array(
+                        $e->getAwsErrorCode(),
+                        self::RETRYABLE_STS_ERROR_CODES,
+                        true
+                    );
+                    if ($isRetryable && $stsRetries < $this->retries) {
                         sleep((int) pow(1.2, $stsRetries));
                         $stsRetries++;
                         continue;
@@ -221,7 +220,8 @@ class AssumeRoleWithWebIdentityCredentialProvider
 
         return new StsClient([
             'credentials' => false,
-            'region' => $region
+            'region' => $region,
+            'http' => CredentialsUtils::withSourceClientTimeouts(),
         ]);
     }
 }
