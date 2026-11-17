@@ -3321,6 +3321,87 @@ EOT;
         $this->assertSame(0, $nextCalls);
     }
 
+    public function testChainReportsSourceErrorWhenEveryProviderFails(): void
+    {
+        $sourceError = new CredentialsException(
+            'Error in retrieving assume role credentials.',
+            0,
+            new StsException('timed out', new Command('AssumeRole'), ['code' => 'RequestTimeout'])
+        );
+        $chain = CredentialProvider::chain(
+            static function () {
+                return Create::rejectionFor(new CredentialsException('not configured'));
+            },
+            static function () use ($sourceError) {
+                return Create::rejectionFor($sourceError);
+            },
+            static function () {
+                return Create::rejectionFor(new CredentialsException('EC2 metadata service access disabled'));
+            }
+        );
+
+        try {
+            $chain()->wait();
+            $this->fail('Expected the chain to fail.');
+        } catch (CredentialsException $e) {
+            $this->assertSame($sourceError, $e);
+        }
+    }
+
+    public function testChainReportsLastErrorWhenNoSourceWasReached(): void
+    {
+        $last = new CredentialsException('EC2 metadata service access disabled');
+        $chain = CredentialProvider::chain(
+            static function () {
+                return Create::rejectionFor(new CredentialsException('not configured'));
+            },
+            static function () use ($last) {
+                return Create::rejectionFor($last);
+            }
+        );
+
+        try {
+            $chain()->wait();
+            $this->fail('Expected the chain to fail.');
+        } catch (CredentialsException $e) {
+            $this->assertSame($last, $e);
+        }
+    }
+
+    public function testDefaultProviderReportsRoleProfileSourceError(): void
+    {
+        $this->createDefaultRoleProfile();
+        putenv('AWS_EC2_METADATA_DISABLED=true');
+        $sts = new StsClient([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => false,
+            'retries' => 0,
+            'handler' => static function () {
+                return Create::rejectionFor(new StsException(
+                    'service unavailable',
+                    new Command('AssumeRole'),
+                    ['code' => 'ServiceUnavailable']
+                ));
+            },
+        ]);
+
+        try {
+            $provider = CredentialProvider::defaultProvider(['stsClient' => $sts]);
+            try {
+                $provider()->wait();
+                $this->fail('Expected NoCredentialsException.');
+            } catch (NoCredentialsException $e) {
+                // The STS failure is reported, not the instance profile
+                // provider's "access disabled" error from the end of the chain.
+                $this->assertInstanceOf(StsException::class, $e->getPrevious());
+                $this->assertStringContainsString('service unavailable', $e->getMessage());
+            }
+        } finally {
+            putenv('AWS_EC2_METADATA_DISABLED');
+        }
+    }
+
     public function testDefaultProviderRaisesNonRecoverableRoleProfileError(): void
     {
         $this->createDefaultRoleProfile();

@@ -3,6 +3,7 @@ namespace Aws\CognitoIdentity;
 
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialSources;
+use Aws\Credentials\CredentialsUtils;
 use GuzzleHttp\Promise;
 
 class CognitoIdentityProvider
@@ -25,6 +26,10 @@ class CognitoIdentityProvider
         $this->identityPoolId = $poolId;
         $this->logins = $logins;
         $this->accountId = $accountId;
+        // Timeouts the caller set in $clientOptions['http'] are kept.
+        $clientOptions['http'] = CredentialsUtils::withSourceClientTimeouts(
+            $clientOptions['http'] ?? []
+        );
         $this->client = new CognitoIdentityClient($clientOptions + [
             'credentials' => false,
         ]);

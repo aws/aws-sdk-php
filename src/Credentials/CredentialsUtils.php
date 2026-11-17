@@ -4,6 +4,29 @@ namespace Aws\Credentials;
 
 final class CredentialsUtils
 {
+    // Request timeout, in seconds, for the service clients that credential
+    // providers create (STS, SSO, SSO OIDC, Sign-In, Cognito). Guzzle sets
+    // none by default, and a refresh runs in the calling process, so a source
+    // that connects but never answers would block it indefinitely. The
+    // timeout covers the whole request, connecting included. Matches the
+    // Java v2 SDK's default read timeout.
+    private const SOURCE_CLIENT_TIMEOUT = 30;
+
+    /**
+     * Returns client `http` options with the credential-source request
+     * timeout added. Values already set in $http are kept.
+     *
+     * @internal
+     *
+     * @param array $http Existing `http` client options.
+     *
+     * @return array
+     */
+    public static function withSourceClientTimeouts(array $http = []): array
+    {
+        return $http + ['timeout' => self::SOURCE_CLIENT_TIMEOUT];
+    }
+
     /**
      * Determines whether a given host
      * is a loopback address.
