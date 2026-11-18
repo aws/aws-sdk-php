@@ -57,6 +57,7 @@ final class MetricsBuilder
     const S3_TRANSFER_UPLOAD_DIRECTORY = "9";
     const S3_TRANSFER_DOWNLOAD_DIRECTORY = "+";
     const CREDENTIALS_PROFILE_LOGIN = "AC";
+    const CREDENTIALS_COGNITO = "8";
 
     /** @var int */
     private static $MAX_METRICS_SIZE = 1024; // 1KB or 1024 B
@@ -254,7 +255,9 @@ final class MetricsBuilder
             CredentialSources::PROFILE_SSO_LEGACY =>
                 self::CREDENTIALS_PROFILE_SSO_LEGACY,
             CredentialSources::PROFILE_LOGIN =>
-                self::CREDENTIALS_PROFILE_LOGIN
+                self::CREDENTIALS_PROFILE_LOGIN,
+            CredentialSources::COGNITO_IDENTITY =>
+                self::CREDENTIALS_COGNITO
         ];
         if (isset($credentialsMetricMapping[$source])) {
             $this->append($credentialsMetricMapping[$source]);
