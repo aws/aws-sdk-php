@@ -1,14 +1,16 @@
 <?php
 namespace Aws;
 
+use Aws\Api\ListShape;
+use Aws\Api\MapShape;
 use Aws\Api\Service;
+use Aws\Api\Shape;
+use Aws\Api\StructureShape;
 use Aws\Exception\AwsException;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use RecursiveArrayIterator;
-use RecursiveIteratorIterator;
 
 /**
  * Traces state changes between middlewares.
@@ -20,6 +22,8 @@ class TraceMiddleware
     private $config;
     /** @var Service */
     private $service;
+    /** @var array Memoized "operation:direction" => has sensitive data */
+    private $sensitiveOps = [];
 
     private static $authHeaders = [
         'X-Amz-Security-Token' => '[TOKEN]',
@@ -91,7 +95,10 @@ class TraceMiddleware
                 $this->stepInput([
                     'step'    => $step,
                     'name'    => $name,
-                    'request' => $this->requestArray($request),
+                    'request' => $this->requestArray(
+                        $request,
+                        $command->getName()
+                    ),
                     'command' => $this->commandArray($command)
                 ]);
 
@@ -101,7 +108,13 @@ class TraceMiddleware
                         $this->stepOutput($start, [
                             'step'   => $step,
                             'name'   => $name,
-                            'result' => $this->resultArray($value),
+                            'result' => $this->resultArray(
+                                $value,
+                                $this->operationShape(
+                                    $command->getName(),
+                                    'output'
+                                )
+                            ),
                             'error'  => null
                         ]);
                         return $value;
@@ -159,11 +172,14 @@ class TraceMiddleware
         return [
             'instance' => spl_object_hash($cmd),
             'name'     => $cmd->getName(),
-            'params'   => $this->getRedactedArray($cmd)
+            'params'   => $this->redactValue(
+                $cmd->toArray(),
+                $this->operationShape($cmd->getName(), 'input')
+            )
         ];
     }
 
-    private function requestArray($request = null)
+    private function requestArray($request = null, ?string $opName = null)
     {
         return !$request instanceof RequestInterface
             ? []
@@ -171,7 +187,11 @@ class TraceMiddleware
                 'instance' => spl_object_hash($request),
                 'method'   => $request->getMethod(),
                 'headers'  => $this->redactHeaders($request->getHeaders()),
-                'body'     => $this->streamStr($request->getBody()),
+                'body'     => $this->bodyStr(
+                    $request->getBody(),
+                    $opName,
+                    'input'
+                ),
                 'scheme'   => $request->getUri()->getScheme(),
                 'port'     => $request->getUri()->getPort(),
                 'path'     => $request->getUri()->getPath(),
@@ -179,22 +199,28 @@ class TraceMiddleware
         ]);
     }
 
-    private function responseArray(?ResponseInterface $response = null)
-    {
+    private function responseArray(
+        ?ResponseInterface $response = null,
+        ?string $opName = null
+    ) {
         return !$response ? [] : [
             'instance'   => spl_object_hash($response),
             'statusCode' => $response->getStatusCode(),
             'headers'    => $this->redactHeaders($response->getHeaders()),
-            'body'       => $this->streamStr($response->getBody())
+            'body'       => $this->bodyStr(
+                $response->getBody(),
+                $opName,
+                'output'
+            )
         ];
     }
 
-    private function resultArray($value)
+    private function resultArray($value, ?Shape $shape = null)
     {
         return $value instanceof ResultInterface
             ? [
                 'instance' => spl_object_hash($value),
-                'data'     => $value->toArray()
+                'data'     => $this->redactValue($value->toArray(), $shape)
             ] : $value;
     }
 
@@ -214,14 +240,18 @@ class TraceMiddleware
         ];
 
         if ($e instanceof AwsException) {
+            $opName = $e->getCommand()?->getName();
             $result += [
                 'type'       => $e->getAwsErrorType(),
                 'code'       => $e->getAwsErrorCode(),
                 'requestId'  => $e->getAwsRequestId(),
                 'statusCode' => $e->getStatusCode(),
-                'result'     => $this->resultArray($e->getResult()),
-                'request'    => $this->requestArray($e->getRequest()),
-                'response'   => $this->responseArray($e->getResponse()),
+                'result'     => $this->resultArray(
+                    $e->getResult(),
+                    $e->getAwsErrorShape()
+                ),
+                'request'    => $this->requestArray($e->getRequest(), $opName),
+                'response'   => $this->responseArray($e->getResponse(), $opName),
             ];
         }
 
@@ -286,7 +316,7 @@ class TraceMiddleware
 
     private function flushHttpDebug(CommandInterface $command, $deferClose = false)
     {
-        if ($res = $command['@http']['debug']) {
+        if ($res = $command['@http']['debug'] ?? null) {
             if (is_resource($res)) {
                 rewind($res);
                 $this->write(stream_get_contents($res));
@@ -325,39 +355,172 @@ class TraceMiddleware
         return $headers;
     }
 
+    private function bodyStr(
+        StreamInterface $body,
+        ?string $opName,
+        string $direction
+    ) {
+        if ($this->operationHasSensitive($opName, $direction)) {
+            $size = $body->getSize();
+            return '[REDACTED body, size=' . ($size ?? 'unknown') . ']';
+        }
+
+        return $this->streamStr($body);
+    }
+
     /**
-     * @param CommandInterface $cmd
-     * @return array
+     * Returns the input or output shape of a modeled operation, or null when
+     * there is no service or the command is not one of its operations.
      */
-    private function getRedactedArray(CommandInterface $cmd)
+    private function operationShape(?string $name, string $direction): ?Shape
     {
-        if (!isset($this->service["shapes"])) {
-            return $cmd->toArray();
+        if (!$this->service
+            || $name === null
+            || !$this->service->hasOperation($name)
+        ) {
+            return null;
         }
-        $shapes = $this->service["shapes"];
-        $cmdArray = $cmd->toArray();
-        $iterator = new RecursiveIteratorIterator(
-            new RecursiveArrayIterator($cmdArray),
-            RecursiveIteratorIterator::SELF_FIRST
-        );
-        foreach ($iterator as $parameter => $value) {
-           if (isset($shapes[$parameter]['sensitive']) &&
-               $shapes[$parameter]['sensitive'] === true
-           ) {
-               $redactedValue = is_string($value) ? "[{$parameter}]" : ["[{$parameter}]"];
-               $currentDepth = $iterator->getDepth();
-               for ($subDepth = $currentDepth; $subDepth >= 0; $subDepth--) {
-                   $subIterator = $iterator->getSubIterator($subDepth);
-                   $subIterator->offsetSet(
-                       $subIterator->key(),
-                       ($subDepth === $currentDepth
-                           ? $redactedValue
-                           : $iterator->getSubIterator(($subDepth+1))->getArrayCopy()
-                       )
-                   );
-               }
-           }
+
+        $operation = $this->service->getOperation($name);
+
+        return $direction === 'input'
+            ? $operation->getInput()
+            : $operation->getOutput();
+    }
+
+    /**
+     * Returns a copy of $value with every value whose modeled shape is
+     * sensitive replaced by a placeholder. Keys the model does not define
+     * are left unchanged.
+     */
+    private function redactValue(mixed $value, ?Shape $shape): mixed
+    {
+        if ($shape === null) {
+            return $value;
         }
-        return $iterator->getArrayCopy();
+
+        if ($this->isSensitive($shape)) {
+            return $this->placeholder($shape);
+        }
+
+        if (!is_array($value)) {
+            return $value;
+        }
+
+        if ($shape instanceof StructureShape) {
+            if (!empty($shape['document'])) {
+                return $value;
+            }
+            foreach ($value as $k => $v) {
+                if ($shape->hasMember($k)) {
+                    $value[$k] = $this->redactValue($v, $shape->getMember($k));
+                }
+            }
+            return $value;
+        }
+
+        if ($shape instanceof ListShape) {
+            $member = $shape->getMember();
+            foreach ($value as $k => $v) {
+                $value[$k] = $this->redactValue($v, $member);
+            }
+            return $value;
+        }
+
+        if ($shape instanceof MapShape) {
+            $keyShape = $shape->getKey();
+            $valueShape = $shape->getValue();
+            $redactKeys = $this->isSensitive($keyShape);
+            $result = [];
+            $i = 0;
+            foreach ($value as $k => $v) {
+                $i++;
+                $key = $redactKeys
+                    ? $this->placeholder($keyShape) . '#' . $i
+                    : $k;
+                $result[$key] = $this->redactValue($v, $valueShape);
+            }
+            return $result;
+        }
+
+        return $value;
+    }
+
+    private function isSensitive(Shape $shape): bool
+    {
+        if (!empty($shape['sensitive'])) {
+            return true;
+        }
+
+        // Guard against a member ref that overrides a sensitive target.
+        $name = $shape['name'];
+        if ($name !== null && $this->service) {
+            $definition = $this->service->getShapeMap()[$name];
+            return !empty($definition['sensitive']);
+        }
+
+        return false;
+    }
+
+    private function placeholder(Shape $shape): string
+    {
+        $name = $shape['name'];
+
+        return $name !== null ? "[{$name}]" : '[REDACTED]';
+    }
+
+    /**
+     * Whether any shape reachable from the operation's input or output shape
+     * is sensitive. Memoized per operation and direction.
+     */
+    private function operationHasSensitive(
+        ?string $opName,
+        string $direction
+    ): bool
+    {
+        $key = $opName . ':' . $direction;
+        if (!isset($this->sensitiveOps[$key])) {
+            $shape = $this->operationShape($opName, $direction);
+            $seen = [];
+            $this->sensitiveOps[$key] = $shape !== null
+                && $this->shapeHasSensitive($shape, $seen);
+        }
+
+        return $this->sensitiveOps[$key];
+    }
+
+    private function shapeHasSensitive(Shape $shape, array &$seen): bool
+    {
+        if ($this->isSensitive($shape)) {
+            return true;
+        }
+
+        $name = $shape['name'];
+        if ($name !== null) {
+            if (isset($seen[$name])) {
+                return false;
+            }
+            $seen[$name] = true;
+        }
+
+        if ($shape instanceof StructureShape) {
+            // Shapes with no members (e.g., no modeled output) have nothing
+            // to walk.
+            if (!empty($shape['document']) || empty($shape['members'])) {
+                return false;
+            }
+            foreach ($shape->getMembers() as $member) {
+                if ($this->shapeHasSensitive($member, $seen)) {
+                    return true;
+                }
+            }
+        } elseif ($shape instanceof ListShape) {
+            return $this->shapeHasSensitive($shape->getMember(), $seen);
+        } elseif ($shape instanceof MapShape) {
+            return $this->shapeHasSensitive($shape->getKey(), $seen)
+                || $this->shapeHasSensitive($shape->getValue(), $seen);
+        }
+
+        return false;
     }
 }
