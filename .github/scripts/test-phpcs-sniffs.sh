@@ -75,6 +75,17 @@ test_sniff \
     "TypedBraceOwnLine" \
     "an invalid multi-line function declaration brace"
 
+test_sniff \
+    ".github/phpcs/tests/fixtures/class-body-same-line-invalid.php" \
+    ".github/phpcs/tests/fixtures/class-body-same-line-valid.php" \
+    "AwsSdk.Classes.ClassDeclaration.OpenBraceNewLine" \
+    "a class body opened on the declaration line"
+
+"$PHPCS_BIN" \
+    --standard=phpcs.xml.dist \
+    --no-colors \
+    ".github/phpcs/tests/fixtures/empty-class-body.php"
+
 comment_fixture=".github/phpcs/tests/fixtures/multiline-function-comment.php"
 actual_comment_fixture="$temporary_directory/$(basename "$comment_fixture")"
 cp "$comment_fixture" "$actual_comment_fixture"
@@ -112,5 +123,7 @@ php -l "$actual_comment_fixture" >/dev/null
 "$PHPCS_BIN" \
     --standard=phpcs.xml.dist \
     --no-colors \
+    ".github/phpcs/AwsSdk/Sniffs/Classes/ClassDeclarationSniff.php" \
     ".github/phpcs/AwsSdk/Sniffs/ControlStructures/FirstConditionSameLineSniff.php" \
-    ".github/phpcs/AwsSdk/Sniffs/Functions/MultiLineFunctionDeclarationBraceSniff.php"
+    ".github/phpcs/AwsSdk/Sniffs/Functions/MultiLineFunctionDeclarationBraceSniff.php" \
+    ".github/phpcs/AwsSdk/Sniffs/WhiteSpace/ScopeClosingBraceSniff.php"

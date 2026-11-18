@@ -13,22 +13,25 @@
     <rule ref="PSR12">
         <exclude name="PSR12.ControlStructures.ControlStructureSpacing.FirstExpressionLine"/>
         <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.NewlineBeforeOpenBrace"/>
+        <!-- Replaced by AwsSdk sniffs that also allow an empty `{}` body. -->
+        <exclude name="PSR2.Classes.ClassDeclaration"/>
+        <exclude name="Squiz.WhiteSpace.ScopeClosingBrace"/>
     </rule>
 
+    <rule ref="./.github/phpcs/AwsSdk/Sniffs/Classes/ClassDeclarationSniff.php"/>
     <rule ref="./.github/phpcs/AwsSdk/Sniffs/ControlStructures/FirstConditionSameLineSniff.php"/>
     <rule ref="./.github/phpcs/AwsSdk/Sniffs/Functions/MultiLineFunctionDeclarationBraceSniff.php"/>
+    <rule ref="./.github/phpcs/AwsSdk/Sniffs/WhiteSpace/ScopeClosingBraceSniff.php"/>
 
     <rule ref="PSR12.Files.FileHeader.SpacingAfterBlock">
         <exclude-pattern>*/src/*</exclude-pattern>
     </rule>
 
-    <rule ref="PSR2.Classes.ClassDeclaration.OpenBraceNewLine">
+    <rule ref="AwsSdk.Classes.ClassDeclaration.OpenBraceNewLine">
         <exclude-pattern>*/src/*/*Client.php</exclude-pattern>
-        <exclude-pattern>*/src/*/Exception/*Exception.php</exclude-pattern>
     </rule>
 
-    <rule ref="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore">
+    <rule ref="AwsSdk.WhiteSpace.ScopeClosingBrace.ContentBefore">
         <exclude-pattern>*/src/*/*Client.php</exclude-pattern>
-        <exclude-pattern>*/src/*/Exception/*Exception.php</exclude-pattern>
     </rule>
 </ruleset>
