@@ -61,7 +61,7 @@ class CredentialsUtilsTest extends TestCase
     public function testSourceClientTimeoutsAreAdded(): void
     {
         $this->assertSame(
-            ['timeout' => 30],
+            ['connect_timeout' => 2, 'timeout' => 30],
             CredentialsUtils::withSourceClientTimeouts()
         );
     }
@@ -69,7 +69,7 @@ class CredentialsUtilsTest extends TestCase
     public function testSourceClientTimeoutsKeepCallerValues(): void
     {
         $this->assertSame(
-            ['timeout' => 5, 'verify' => false],
+            ['timeout' => 5, 'verify' => false, 'connect_timeout' => 2],
             CredentialsUtils::withSourceClientTimeouts(['timeout' => 5, 'verify' => false])
         );
     }
@@ -102,8 +102,8 @@ class CredentialsUtilsTest extends TestCase
     {
         $client = $build();
         $http = $this->captureHttpOptions($client, $operation);
+        $this->assertSame(2, $http['connect_timeout']);
         $this->assertSame(30, $http['timeout']);
-        $this->assertArrayNotHasKey('connect_timeout', $http);
     }
 
     public function testCognitoProviderAddsTimeoutsAndKeepsCallerValues(): void
@@ -117,6 +117,7 @@ class CredentialsUtilsTest extends TestCase
         $provider = new CognitoIdentityProvider('poolId', ['region' => 'us-west-2', 'handler' => $handler]);
         $client = (new \ReflectionProperty($provider, 'client'))->getValue($provider);
         $client->getId(['IdentityPoolId' => 'poolId']);
+        $this->assertSame(2, $captured[0]['connect_timeout']);
         $this->assertSame(30, $captured[0]['timeout']);
 
         $provider = new CognitoIdentityProvider('poolId', [
@@ -125,6 +126,7 @@ class CredentialsUtilsTest extends TestCase
         $client = (new \ReflectionProperty($provider, 'client'))->getValue($provider);
         $client->getId(['IdentityPoolId' => 'poolId']);
         $this->assertSame(7, $captured[1]['timeout']);
+        $this->assertSame(2, $captured[1]['connect_timeout']);
     }
 
     /**
