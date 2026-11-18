@@ -1128,6 +1128,19 @@
         {"shape":"BadRequestException"}
       ]
     },
+    "PutAccountDeliveryAttributes":{
+      "name":"PutAccountDeliveryAttributes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/account/delivery"
+      },
+      "input":{"shape":"PutAccountDeliveryAttributesRequest"},
+      "output":{"shape":"PutAccountDeliveryAttributesResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
     "PutAccountDetails":{
       "name":"PutAccountDetails",
       "http":{
@@ -1692,6 +1705,13 @@
         "AdditionalContactEmailAddresses":{"shape":"AdditionalContactEmailAddresses"},
         "ReviewDetails":{"shape":"ReviewDetails"}
       }
+    },
+    "AccountSharedPoolDeliveryMode":{
+      "type":"string",
+      "enum":[
+        "GLOBAL",
+        "REGIONAL"
+      ]
     },
     "AccountSuspendedException":{
       "type":"structure",
@@ -2720,6 +2740,12 @@
       ]
     },
     "DeliverabilityTestSubject":{"type":"string"},
+    "DeliveryAttributes":{
+      "type":"structure",
+      "members":{
+        "SharedPoolDeliveryMode":{"shape":"AccountSharedPoolDeliveryMode"}
+      }
+    },
     "DeliveryEventType":{
       "type":"string",
       "enum":[
@@ -2736,7 +2762,8 @@
       "members":{
         "TlsPolicy":{"shape":"TlsPolicy"},
         "SendingPoolName":{"shape":"PoolName"},
-        "MaxDeliverySeconds":{"shape":"MaxDeliverySeconds"}
+        "MaxDeliverySeconds":{"shape":"MaxDeliverySeconds"},
+        "SharedPoolDeliveryMode":{"shape":"SharedPoolDeliveryMode"}
       }
     },
     "Description":{"type":"string"},
@@ -3204,7 +3231,8 @@
         "SuppressionAttributes":{"shape":"SuppressionAttributes"},
         "Details":{"shape":"AccountDetails"},
         "VdmAttributes":{"shape":"VdmAttributes"},
-        "PricingAttributes":{"shape":"PricingAttributes"}
+        "PricingAttributes":{"shape":"PricingAttributes"},
+        "DeliveryAttributes":{"shape":"DeliveryAttributes"}
       }
     },
     "GetBlacklistReportsRequest":{
@@ -4804,6 +4832,17 @@
       "type":"structure",
       "members":{}
     },
+    "PutAccountDeliveryAttributesRequest":{
+      "type":"structure",
+      "required":["SharedPoolDeliveryMode"],
+      "members":{
+        "SharedPoolDeliveryMode":{"shape":"AccountSharedPoolDeliveryMode"}
+      }
+    },
+    "PutAccountDeliveryAttributesResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "PutAccountDetailsRequest":{
       "type":"structure",
       "required":[
@@ -4893,7 +4932,8 @@
         },
         "TlsPolicy":{"shape":"TlsPolicy"},
         "SendingPoolName":{"shape":"SendingPoolName"},
-        "MaxDeliverySeconds":{"shape":"MaxDeliverySeconds"}
+        "MaxDeliverySeconds":{"shape":"MaxDeliverySeconds"},
+        "SharedPoolDeliveryMode":{"shape":"SharedPoolDeliveryMode"}
       }
     },
     "PutConfigurationSetDeliveryOptionsResponse":{
@@ -5499,6 +5539,14 @@
     },
     "SentLast24Hours":{"type":"double"},
     "SerialNumber":{"type":"long"},
+    "SharedPoolDeliveryMode":{
+      "type":"string",
+      "enum":[
+        "GLOBAL",
+        "REGIONAL",
+        "ACCOUNT"
+      ]
+    },
     "SignatureFormat":{
       "type":"string",
       "enum":["DETACHED"]

@@ -43,7 +43,13 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result createConfigurationSet(array{
  *     ConfigurationSetName?: string,
  *     TrackingOptions?: array{CustomRedirectDomain?: string, HttpsPolicy?: 'OPTIONAL'|'REQUIRE'|'REQUIRE_OPEN_ONLY', ...},
- *     DeliveryOptions?: array{TlsPolicy?: 'OPTIONAL'|'REQUIRE', SendingPoolName?: string, MaxDeliverySeconds?: int, ...},
+ *     DeliveryOptions?: array{
+ *         TlsPolicy?: 'OPTIONAL'|'REQUIRE',
+ *         SendingPoolName?: string,
+ *         MaxDeliverySeconds?: int,
+ *         SharedPoolDeliveryMode?: 'ACCOUNT'|'GLOBAL'|'REGIONAL',
+ *         ...,
+ *     },
  *     ReputationOptions?: array{ReputationMetricsEnabled?: bool, LastFreshStart?: int|string|\DateTimeInterface, ...},
  *     SendingOptions?: array{SendingEnabled?: bool, ...},
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
@@ -66,7 +72,13 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise createConfigurationSetAsync(array{
  *     ConfigurationSetName?: string,
  *     TrackingOptions?: array{CustomRedirectDomain?: string, HttpsPolicy?: 'OPTIONAL'|'REQUIRE'|'REQUIRE_OPEN_ONLY', ...},
- *     DeliveryOptions?: array{TlsPolicy?: 'OPTIONAL'|'REQUIRE', SendingPoolName?: string, MaxDeliverySeconds?: int, ...},
+ *     DeliveryOptions?: array{
+ *         TlsPolicy?: 'OPTIONAL'|'REQUIRE',
+ *         SendingPoolName?: string,
+ *         MaxDeliverySeconds?: int,
+ *         SharedPoolDeliveryMode?: 'ACCOUNT'|'GLOBAL'|'REGIONAL',
+ *         ...,
+ *     },
  *     ReputationOptions?: array{ReputationMetricsEnabled?: bool, LastFreshStart?: int|string|\DateTimeInterface, ...},
  *     SendingOptions?: array{SendingEnabled?: bool, ...},
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
@@ -699,6 +711,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result putAccountDedicatedIpWarmupAttributes(array{AutoWarmupEnabled?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise putAccountDedicatedIpWarmupAttributesAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise putAccountDedicatedIpWarmupAttributesAsync(array{AutoWarmupEnabled?: bool, ...} $args = [])
+ * @method \Aws\Result putAccountDeliveryAttributes(array $args = [])
+ * @phpstan-method \Aws\Result putAccountDeliveryAttributes(array{SharedPoolDeliveryMode?: 'GLOBAL'|'REGIONAL', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise putAccountDeliveryAttributesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putAccountDeliveryAttributesAsync(array{SharedPoolDeliveryMode?: 'GLOBAL'|'REGIONAL', ...} $args = [])
  * @method \Aws\Result putAccountDetails(array $args = [])
  * @phpstan-method \Aws\Result putAccountDetails(array{
  *     MailType?: 'MARKETING'|'TRANSACTIONAL',
@@ -775,6 +791,7 @@ use Aws\AwsClient;
  *     TlsPolicy?: 'OPTIONAL'|'REQUIRE',
  *     SendingPoolName?: string,
  *     MaxDeliverySeconds?: int,
+ *     SharedPoolDeliveryMode?: 'ACCOUNT'|'GLOBAL'|'REGIONAL',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise putConfigurationSetDeliveryOptionsAsync(array $args = [])
@@ -783,6 +800,7 @@ use Aws\AwsClient;
  *     TlsPolicy?: 'OPTIONAL'|'REQUIRE',
  *     SendingPoolName?: string,
  *     MaxDeliverySeconds?: int,
+ *     SharedPoolDeliveryMode?: 'ACCOUNT'|'GLOBAL'|'REGIONAL',
  *     ...,
  * } $args = [])
  * @method \Aws\Result putConfigurationSetReputationOptions(array $args = [])

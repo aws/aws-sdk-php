@@ -492,6 +492,7 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ],
       "readonly":true
@@ -950,6 +951,7 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ],
       "readonly":true
@@ -1520,9 +1522,9 @@
     },
     "ClientToken":{
       "type":"string",
-      "max":63,
+      "max":64,
       "min":1,
-      "pattern":"[A-Za-z0-9_.-]{0,63}"
+      "pattern":"[A-Za-z0-9_.-]{1,64}"
     },
     "CloudWatchAlarmArn":{
       "type":"string",
@@ -3689,13 +3691,25 @@
     },
     "ListTestTemplatesRequest":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
     },
     "ListTestTemplatesResponse":{
       "type":"structure",
       "required":["testTemplates"],
       "members":{
-        "testTemplates":{"shape":"TestTemplateSummaryList"}
+        "testTemplates":{"shape":"TestTemplateSummaryList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListTestsRequest":{
@@ -5252,6 +5266,7 @@
         "testTemplateArn":{"shape":"ServiceOwnedArn"},
         "reportConfiguration":{"shape":"TestRunReportConfiguration"},
         "policy":{"shape":"TestRunPolicySnapshot"},
+        "effectivePolicyValues":{"shape":"TestRunEffectivePolicyValues"},
         "reportOutput":{"shape":"ReportGenerationResult"},
         "regionSwitchPlanArn":{"shape":"Arn"},
         "regionSwitchExecutionId":{"shape":"RegionSwitchExecutionId"},
@@ -5312,6 +5327,19 @@
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "TestRunEffectivePolicyValues":{
+      "type":"structure",
+      "members":{
+        "availabilitySlo":{"shape":"SloSource"},
+        "multiAzRto":{"shape":"TargetSource"},
+        "multiAzRpo":{"shape":"TargetSource"},
+        "multiAzDrApproach":{"shape":"DisasterRecoverySource"},
+        "multiRegionRto":{"shape":"TargetSource"},
+        "multiRegionRpo":{"shape":"TargetSource"},
+        "multiRegionDrApproach":{"shape":"DisasterRecoverySource"},
+        "dataRecoveryTimeBetweenBackups":{"shape":"TargetSource"}
+      }
     },
     "TestRunEvent":{
       "type":"structure",

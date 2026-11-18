@@ -1,12 +1,6 @@
 {
     "version": "1.1",
     "parameters": {
-        "Region": {
-            "builtIn": "AWS::Region",
-            "required": false,
-            "documentation": "The AWS region used to dispatch the request.",
-            "type": "string"
-        },
         "UseDualStack": {
             "builtIn": "AWS::UseDualStack",
             "required": true,
@@ -25,6 +19,12 @@
             "builtIn": "SDK::Endpoint",
             "required": false,
             "documentation": "Override the endpoint used to send this request",
+            "type": "string"
+        },
+        "Region": {
+            "builtIn": "AWS::Region",
+            "required": false,
+            "documentation": "The AWS region used to dispatch the request.",
             "type": "string"
         }
     },
@@ -64,15 +64,6 @@
             ]
         },
         {
-            "fn": "booleanEquals",
-            "argv": [
-                {
-                    "ref": "UseDualStack"
-                },
-                true
-            ]
-        },
-        {
             "fn": "stringEquals",
             "argv": [
                 {
@@ -84,7 +75,16 @@
                         "name"
                     ]
                 },
-                "aws"
+                "aws-cn"
+            ]
+        },
+        {
+            "fn": "booleanEquals",
+            "argv": [
+                {
+                    "ref": "UseDualStack"
+                },
+                true
             ]
         },
         {
@@ -103,36 +103,6 @@
             ]
         },
         {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "PartitionResult"
-                        },
-                        "name"
-                    ]
-                },
-                "aws-cn"
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "PartitionResult"
-                        },
-                        "name"
-                    ]
-                },
-                "aws-us-gov"
-            ]
-        },
-        {
             "fn": "booleanEquals",
             "argv": [
                 {
@@ -145,36 +115,6 @@
                     ]
                 },
                 true
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "PartitionResult"
-                        },
-                        "name"
-                    ]
-                },
-                "aws-iso"
-            ]
-        },
-        {
-            "fn": "stringEquals",
-            "argv": [
-                {
-                    "fn": "getAttr",
-                    "argv": [
-                        {
-                            "ref": "PartitionResult"
-                        },
-                        "name"
-                    ]
-                },
-                "aws-iso-b"
             ]
         }
     ],
@@ -203,29 +143,11 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://support.us-east-1.amazonaws.com",
-                "properties": {
-                    "authSchemes": [
-                        {
-                            "name": "sigv4",
-                            "signingName": "support",
-                            "signingRegion": "us-east-1"
-                        }
-                    ]
-                },
-                "headers": {}
-            },
-            "type": "endpoint"
-        },
-        {
-            "conditions": [],
-            "endpoint": {
                 "url": "https://support.cn-north-1.amazonaws.com.cn",
                 "properties": {
                     "authSchemes": [
                         {
                             "name": "sigv4",
-                            "signingName": "support",
                             "signingRegion": "cn-north-1"
                         }
                     ]
@@ -237,13 +159,12 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://support.us-gov-west-1.amazonaws.com",
+                "url": "https://support-fips.cn-north-1.amazonaws.com.cn",
                 "properties": {
                     "authSchemes": [
                         {
                             "name": "sigv4",
-                            "signingName": "support",
-                            "signingRegion": "us-gov-west-1"
+                            "signingRegion": "cn-north-1"
                         }
                     ]
                 },
@@ -254,13 +175,12 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://support.us-iso-east-1.c2s.ic.gov",
+                "url": "https://support.cn-north-1.api.amazonwebservices.com.cn",
                 "properties": {
                     "authSchemes": [
                         {
                             "name": "sigv4",
-                            "signingName": "support",
-                            "signingRegion": "us-iso-east-1"
+                            "signingRegion": "cn-north-1"
                         }
                     ]
                 },
@@ -271,13 +191,12 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://support.us-isob-east-1.sc2s.sgov.gov",
+                "url": "https://support-fips.cn-north-1.api.amazonwebservices.com.cn",
                 "properties": {
                     "authSchemes": [
                         {
                             "name": "sigv4",
-                            "signingName": "support",
-                            "signingRegion": "us-isob-east-1"
+                            "signingRegion": "cn-north-1"
                         }
                     ]
                 },
@@ -288,8 +207,15 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://support-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                "properties": {},
+                "url": "https://support-fips.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4",
+                            "signingRegion": "{PartitionResult#implicitGlobalRegion}"
+                        }
+                    ]
+                },
                 "headers": {}
             },
             "type": "endpoint"
@@ -302,8 +228,15 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://support-fips.{Region}.{PartitionResult#dnsSuffix}",
-                "properties": {},
+                "url": "https://support-fips.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4",
+                            "signingRegion": "{PartitionResult#implicitGlobalRegion}"
+                        }
+                    ]
+                },
                 "headers": {}
             },
             "type": "endpoint"
@@ -316,8 +249,15 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://support.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                "properties": {},
+                "url": "https://support.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dualStackDnsSuffix}",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4",
+                            "signingRegion": "{PartitionResult#implicitGlobalRegion}"
+                        }
+                    ]
+                },
                 "headers": {}
             },
             "type": "endpoint"
@@ -330,8 +270,15 @@
         {
             "conditions": [],
             "endpoint": {
-                "url": "https://support.{Region}.{PartitionResult#dnsSuffix}",
-                "properties": {},
+                "url": "https://support.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dnsSuffix}",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4",
+                            "signingRegion": "{PartitionResult#implicitGlobalRegion}"
+                        }
+                    ]
+                },
                 "headers": {}
             },
             "type": "endpoint"
@@ -343,6 +290,6 @@
         }
     ],
     "root": 2,
-    "nodeCount": 19,
-    "nodes": "/////wAAAAH/////AAAAAAAAABIAAAADAAAAAQAAAAQF9eEQAAAAAgAAAAUF9eEQAAAAAwAAAA0AAAAGAAAABAAAAAwAAAAHAAAABQX14QQAAAAIAAAABwX14QUAAAAJAAAACAX14QYAAAAKAAAACgX14QcAAAALAAAACwX14QgF9eEPAAAABgX14Q0F9eEOAAAABAAAABAAAAAOAAAACAX14QYAAAAPAAAACQX14QsF9eEMAAAABgAAABEF9eEKAAAACQX14QkF9eEKAAAAAwX14QEAAAATAAAABAX14QIF9eED"
+    "nodeCount": 17,
+    "nodes": "/////wAAAAH/////AAAAAAAAABAAAAADAAAAAQAAAAQF9eEPAAAAAgAAAAUF9eEPAAAAAwAAAAoAAAAGAAAABAAAAAkAAAAHAAAABQAAAAgF9eEOAAAABgX14QwF9eENAAAABQX14QYF9eEEAAAABAAAAA8AAAALAAAABQAAAA0AAAAMAAAABwX14QoF9eELAAAABgAAAA4F9eEJAAAABwX14QgF9eEJAAAABQX14QcF9eEFAAAAAwX14QEAAAARAAAABQX14QIF9eED"
 }

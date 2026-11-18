@@ -4143,7 +4143,8 @@
       "type":"structure",
       "required":["capacityProviderArn"],
       "members":{
-        "capacityProviderArn":{"shape":"CapacityProviderArn"}
+        "capacityProviderArn":{"shape":"CapacityProviderArn"},
+        "operatingSystemConfiguration":{"shape":"OperatingSystemConfiguration"}
       }
     },
     "CapacityProviderId":{
@@ -8103,7 +8104,8 @@
         "sessionStorage":{"shape":"SessionStorageConfiguration"},
         "s3FilesAccessPoint":{"shape":"S3FilesAccessPointConfiguration"},
         "efsAccessPoint":{"shape":"EfsAccessPointConfiguration"},
-        "capacityProviderVolume":{"shape":"CapacityProviderVolumeConfiguration"}
+        "capacityProviderVolume":{"shape":"CapacityProviderVolumeConfiguration"},
+        "s3BucketMount":{"shape":"S3BucketMountConfiguration"}
       },
       "union":true
     },
@@ -11308,6 +11310,12 @@
         "clientId":{"shape":"ClientIdType"}
       }
     },
+    "LinuxOperatingSystemConfiguration":{
+      "type":"structure",
+      "members":{
+        "privilegeMode":{"shape":"PrivilegeMode"}
+      }
+    },
     "ListAgentInsightStoresRequest":{
       "type":"structure",
       "members":{
@@ -13479,6 +13487,13 @@
         "LINUX_ARM64"
       ]
     },
+    "OperatingSystemConfiguration":{
+      "type":"structure",
+      "members":{
+        "linux":{"shape":"LinuxOperatingSystemConfiguration"}
+      },
+      "union":true
+    },
     "OptionalLogGroupName":{
       "type":"string",
       "pattern":"$|^[.\\-_/#A-Za-z0-9]+"
@@ -14135,6 +14150,13 @@
       },
       "union":true
     },
+    "PrivilegeMode":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "PRIVILEGED"
+      ]
+    },
     "Prompt":{
       "type":"string",
       "max":30000,
@@ -14771,6 +14793,41 @@
         "qualifier":{"shape":"RuntimeQualifier"},
         "schema":{"shape":"HttpApiSchemaConfiguration"}
       }
+    },
+    "S3BucketMountConfiguration":{
+      "type":"structure",
+      "required":[
+        "bucket",
+        "mountPath"
+      ],
+      "members":{
+        "bucket":{"shape":"S3BucketMountConfigurationBucketString"},
+        "mountPath":{"shape":"MountPath"},
+        "prefix":{"shape":"S3BucketMountConfigurationPrefixString"},
+        "s3BucketOwner":{"shape":"S3BucketMountConfigurationS3BucketOwnerString"},
+        "s3BucketRegion":{"shape":"S3BucketMountConfigurationS3BucketRegionString"}
+      }
+    },
+    "S3BucketMountConfigurationBucketString":{
+      "type":"string",
+      "max":63,
+      "min":3
+    },
+    "S3BucketMountConfigurationPrefixString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[a-zA-Z0-9{][a-zA-Z0-9!_.*'()/{}-]*"
+    },
+    "S3BucketMountConfigurationS3BucketOwnerString":{
+      "type":"string",
+      "pattern":"[0-9]{12}"
+    },
+    "S3BucketMountConfigurationS3BucketRegionString":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"([a-z]+-){2,3}\\d+"
     },
     "S3BucketUri":{
       "type":"string",

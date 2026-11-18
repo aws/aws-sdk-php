@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "examples": {
+    "CreateAbuseReport": [
+      {
+        "input": {
+          "report": {
+            "xarf": {}
+          }
+        },
+        "output": {
+          "correlationId": "my-tracking-id-123",
+          "reportId": "rpt5a8b3c2d1e4f6g7h8i9j0"
+        },
+        "id": "example-1",
+        "title": "Submit an abuse report in X-ARF format"
+      }
+    ],
+    "GetAbuseReportStatus": [
+      {
+        "input": {
+          "reportId": "rpt5a8b3c2d1e4f6g7h8i9j0"
+        },
+        "output": {
+          "description": "Report has been successfully submitted to Trust & Safety",
+          "reportId": "rpt5a8b3c2d1e4f6g7h8i9j0",
+          "status": "PROCESSING",
+          "submittedAt": "2024-01-01T00:00:00Z"
+        },
+        "id": "example-1",
+        "title": "Get the status of a submitted report"
+      }
+    ],
+    "ListAbuseReportStatuses": [
+      {
+        "input": {},
+        "output": {
+          "reports": [
+            {
+              "description": "Submitted",
+              "reportId": "rpt5a8b3c2d1e4f6g7h8i9j0",
+              "status": "PROCESSING"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List abuse report statuses"
+      }
+    ]
+  }
+}

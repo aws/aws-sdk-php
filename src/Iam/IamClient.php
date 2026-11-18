@@ -99,9 +99,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createInstanceProfileAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createInstanceProfileAsync(array{InstanceProfileName?: string, Path?: string, Tags?: list<array{Key?: string, Value?: string, ...}>, ...} $args = [])
  * @method \Aws\Result createLoginProfile(array $args = [])
- * @phpstan-method \Aws\Result createLoginProfile(array{UserName?: string, Password?: string, PasswordResetRequired?: bool, ...} $args = [])
+ * @phpstan-method \Aws\Result createLoginProfile(array{UserName?: string, Password?: string, PasswordResetRequired?: bool, MaxSigninSessionDuration?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise createLoginProfileAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise createLoginProfileAsync(array{UserName?: string, Password?: string, PasswordResetRequired?: bool, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createLoginProfileAsync(array{UserName?: string, Password?: string, PasswordResetRequired?: bool, MaxSigninSessionDuration?: int, ...} $args = [])
  * @method \Aws\Result createOpenIDConnectProvider(array $args = [])
  * @phpstan-method \Aws\Result createOpenIDConnectProvider(array{
  *     Url?: string,
@@ -147,6 +147,7 @@ use Aws\AwsClient;
  *     AssumeRolePolicyDocument?: string,
  *     Description?: string,
  *     MaxSessionDuration?: int,
+ *     MaxSigninSessionDuration?: int,
  *     PermissionsBoundary?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
@@ -158,6 +159,7 @@ use Aws\AwsClient;
  *     AssumeRolePolicyDocument?: string,
  *     Description?: string,
  *     MaxSessionDuration?: int,
+ *     MaxSigninSessionDuration?: int,
  *     PermissionsBoundary?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
@@ -975,17 +977,45 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateGroupAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateGroupAsync(array{GroupName?: string, NewPath?: string, NewGroupName?: string, ...} $args = [])
  * @method \Aws\Result updateLoginProfile(array $args = [])
- * @phpstan-method \Aws\Result updateLoginProfile(array{UserName?: string, Password?: string, PasswordResetRequired?: bool, ...} $args = [])
+ * @phpstan-method \Aws\Result updateLoginProfile(array{
+ *     UserName?: string,
+ *     Password?: string,
+ *     PasswordResetRequired?: bool,
+ *     MaxSigninSessionDuration?: int,
+ *     ResetMaxSigninSessionDuration?: bool,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLoginProfileAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise updateLoginProfileAsync(array{UserName?: string, Password?: string, PasswordResetRequired?: bool, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateLoginProfileAsync(array{
+ *     UserName?: string,
+ *     Password?: string,
+ *     PasswordResetRequired?: bool,
+ *     MaxSigninSessionDuration?: int,
+ *     ResetMaxSigninSessionDuration?: bool,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateOpenIDConnectProviderThumbprint(array $args = [])
  * @phpstan-method \Aws\Result updateOpenIDConnectProviderThumbprint(array{OpenIDConnectProviderArn?: string, ThumbprintList?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateOpenIDConnectProviderThumbprintAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateOpenIDConnectProviderThumbprintAsync(array{OpenIDConnectProviderArn?: string, ThumbprintList?: list<string>, ...} $args = [])
  * @method \Aws\Result updateRole(array $args = [])
- * @phpstan-method \Aws\Result updateRole(array{RoleName?: string, Description?: string, MaxSessionDuration?: int, ...} $args = [])
+ * @phpstan-method \Aws\Result updateRole(array{
+ *     RoleName?: string,
+ *     Description?: string,
+ *     MaxSessionDuration?: int,
+ *     MaxSigninSessionDuration?: int,
+ *     ResetMaxSigninSessionDuration?: bool,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRoleAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise updateRoleAsync(array{RoleName?: string, Description?: string, MaxSessionDuration?: int, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateRoleAsync(array{
+ *     RoleName?: string,
+ *     Description?: string,
+ *     MaxSessionDuration?: int,
+ *     MaxSigninSessionDuration?: int,
+ *     ResetMaxSigninSessionDuration?: bool,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateRoleDescription(array $args = [])
  * @phpstan-method \Aws\Result updateRoleDescription(array{RoleName?: string, Description?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRoleDescriptionAsync(array $args = [])

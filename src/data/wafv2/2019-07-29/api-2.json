@@ -1101,6 +1101,20 @@
         "CustomRequestHandling":{"shape":"CustomRequestHandling"}
       }
     },
+    "AnalyticsConfig":{
+      "type":"structure",
+      "required":["Mode"],
+      "members":{
+        "Mode":{"shape":"AnalyticsMode"}
+      }
+    },
+    "AnalyticsMode":{
+      "type":"string",
+      "enum":[
+        "CROSS_REGION",
+        "DISABLED"
+      ]
+    },
     "AndStatement":{
       "type":"structure",
       "required":["Statements"],
@@ -1843,7 +1857,8 @@
         "AssociationConfig":{"shape":"AssociationConfig"},
         "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"},
         "ApplicationConfig":{"shape":"ApplicationConfig"},
-        "MonetizationConfig":{"shape":"MonetizationConfig"}
+        "MonetizationConfig":{"shape":"MonetizationConfig"},
+        "AnalyticsConfig":{"shape":"AnalyticsConfig"}
       }
     },
     "CreateWebACLResponse":{
@@ -5110,7 +5125,8 @@
         "AssociationConfig":{"shape":"AssociationConfig"},
         "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"},
         "ApplicationConfig":{"shape":"ApplicationConfig"},
-        "MonetizationConfig":{"shape":"MonetizationConfig"}
+        "MonetizationConfig":{"shape":"MonetizationConfig"},
+        "AnalyticsConfig":{"shape":"AnalyticsConfig"}
       }
     },
     "UpdateWebACLResponse":{
@@ -5371,7 +5387,8 @@
         "RetrofittedByFirewallManager":{"shape":"Boolean"},
         "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"},
         "ApplicationConfig":{"shape":"ApplicationConfig"},
-        "MonetizationConfig":{"shape":"MonetizationConfig"}
+        "MonetizationConfig":{"shape":"MonetizationConfig"},
+        "AnalyticsConfig":{"shape":"AnalyticsConfig"}
       }
     },
     "WebACLSummaries":{

@@ -656,6 +656,7 @@
         "CollaborationAnalysisTemplate$arn": "<p>The Amazon Resource Name (ARN) of the analysis template.</p>",
         "CollaborationAnalysisTemplateSummary$arn": "<p>The Amazon Resource Name (ARN) of the analysis template.</p>",
         "GetCollaborationAnalysisTemplateInput$analysisTemplateArn": "<p>The Amazon Resource Name (ARN) associated with the analysis template within a collaboration.</p>",
+        "PopulationAnalysisJobParameters$analysisTemplateArn": "<p>Specifies the ARN of the PySpark analysis template that populates the intermediate table. Provide this ARN in <code>jobParameters</code> when you populate the intermediate table with results from a PySpark job.</p>",
         "PopulationAnalysisSqlParameters$analysisTemplateArn": "<p>The Amazon Resource Name (ARN) of the analysis template to use for populating the intermediate table.</p>",
         "ProtectedJobParameters$analysisTemplateArn": "<p> The ARN of the analysis template.</p>",
         "ProtectedQuerySQLParameters$analysisTemplateArn": "<p>The Amazon Resource Name (ARN) associated with the analysis template within a collaboration.</p>"
@@ -2844,6 +2845,8 @@
     "IntermediateTableOutputConfiguration": {
       "base": "<p>Contains the output configuration of an intermediate table when a protected query populates it.</p>",
       "refs": {
+        "ProtectedJobOutputConfigurationOutput$intermediateTable": "<p>Specifies the intermediate table that the protected job populated, identified by its ID, Amazon Resource Name (ARN), and name. This field is present when the protected job was triggered by a <code>PopulateIntermediateTable</code> operation.</p>",
+        "ProtectedJobSummary$intermediateTableConfiguration": "<p>The intermediate table that the protected job populated. This field is present when the protected job was triggered by a <code>PopulateIntermediateTable</code> operation.</p>",
         "ProtectedQueryOutputConfiguration$intermediateTable": "<p>The intermediate table output configuration, present when the protected query was triggered by a populate operation.</p>",
         "ProtectedQuerySummary$intermediateTableConfiguration": "<p>The intermediate table configuration, present when the protected query was triggered by a populate operation.</p>"
       }
@@ -3673,6 +3676,12 @@
         "IntermediateTable$populationAnalysisConfiguration": "<p>The analysis configuration that defines the query used to populate the intermediate table.</p>"
       }
     },
+    "PopulationAnalysisJobParameters": {
+      "base": "<p>Contains the PySpark job parameters used to populate an intermediate table, including the ARN of the analysis template that defines the job. Use these parameters instead of SQL parameters when the analysis you use to populate the intermediate table is a PySpark analysis template.</p>",
+      "refs": {
+        "PopulationAnalysisConfiguration$jobParameters": "<p>Specifies the PySpark job parameters for the population analysis. Use <code>jobParameters</code> instead of <code>sqlParameters</code> when you populate the intermediate table with results from a PySpark job.</p>"
+      }
+    },
     "PopulationAnalysisSqlParameters": {
       "base": "<p>Contains the SQL parameters used to populate an intermediate table.</p>",
       "refs": {
@@ -3829,6 +3838,7 @@
     "ProtectedJobComputeConfiguration": {
       "base": "<p>The configuration of the compute resources for a PySpark job.</p>",
       "refs": {
+        "IntermediateTableComputeConfiguration$jobComputeConfiguration": "<p>Specifies the compute configuration for the PySpark job that populates the intermediate table.</p>",
         "ProtectedJob$computeConfiguration": "<p>The compute configuration for the protected job.</p>",
         "StartProtectedJobInput$computeConfiguration": "<p>The compute configuration for the protected job.</p>"
       }

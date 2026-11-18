@@ -1,4 +1,168 @@
 {
   "version": "1.0",
-  "examples": {}
+  "examples": {
+    "BatchRevokeSessions": [
+      {
+        "input": {
+          "reason": "Signed out of a lost device",
+          "sessionArns": [
+            "arn:aws:signin:us-east-1:123456789012:session/3b0a6152-ba23-447d-83cf-b3b3cc7b95f7"
+          ]
+        },
+        "output": {
+          "errors": [],
+          "revokedSessions": [
+            {
+              "sessionArn": "arn:aws:signin:us-east-1:123456789012:session/3b0a6152-ba23-447d-83cf-b3b3cc7b95f7"
+            }
+          ]
+        },
+        "description": "Revokes a session owned by the caller and records the reason.",
+        "id": "example-1",
+        "title": "Revoke one of your own sessions"
+      },
+      {
+        "input": {
+          "principalArn": "arn:aws:iam::123456789012:*",
+          "reason": "Revoked by account administrator",
+          "sessionArns": [
+            "arn:aws:signin:us-east-1:123456789012:session/5dbdd43b-4135-4c59-ad06-5ddbcc2c1d77"
+          ]
+        },
+        "output": {
+          "errors": [],
+          "revokedSessions": [
+            {
+              "sessionArn": "arn:aws:signin:us-east-1:123456789012:session/5dbdd43b-4135-4c59-ad06-5ddbcc2c1d77"
+            }
+          ]
+        },
+        "description": "Uses the account wildcard principal ARN to revoke another IAM identity's session.",
+        "id": "example-2",
+        "title": "Revoke another identity's session as an account administrator"
+      },
+      {
+        "input": {
+          "sessionArns": [
+            "arn:aws:signin:us-east-1:123456789012:session/ac148df8-7f37-48eb-b0cf-8987fc4a55a4",
+            "arn:aws:signin:us-east-1:123456789012:session/36b6ae9d-4fa9-40d9-8eff-eeeb4d15f79d"
+          ]
+        },
+        "output": {
+          "errors": [
+            {
+              "code": "ResourceNotFoundException",
+              "message": "No session found for the given sessionArn",
+              "sessionArn": "arn:aws:signin:us-east-1:123456789012:session/36b6ae9d-4fa9-40d9-8eff-eeeb4d15f79d"
+            }
+          ],
+          "revokedSessions": [
+            {
+              "sessionArn": "arn:aws:signin:us-east-1:123456789012:session/ac148df8-7f37-48eb-b0cf-8987fc4a55a4"
+            }
+          ]
+        },
+        "description": "Revokes the caller's session and reports a session that was not found in the errors list.",
+        "id": "example-3",
+        "title": "Revoke a batch of sessions with a partial failure"
+      }
+    ],
+    "GetSession": [
+      {
+        "input": {
+          "sessionArn": "arn:aws:signin:us-east-1:123456789012:session/3b0a6152-ba23-447d-83cf-b3b3cc7b95f7"
+        },
+        "output": {
+          "clientId": "arn:aws:signin:::devtools/same-device",
+          "clientType": "CLI",
+          "expiresAt": 1794431207,
+          "issuedAt": 1793825807,
+          "issuedInRegion": "us-east-1",
+          "principalArn": "arn:aws:iam::123456789012:role/Developer",
+          "role": "arn:aws:iam::123456789012:role/Developer",
+          "sessionArn": "arn:aws:signin:us-east-1:123456789012:session/3b0a6152-ba23-447d-83cf-b3b3cc7b95f7",
+          "status": "ACTIVE"
+        },
+        "description": "Returns a session owned by the caller when principalArn is omitted.",
+        "id": "example-1",
+        "title": "Get one of your own sessions"
+      },
+      {
+        "input": {
+          "principalArn": "arn:aws:iam::123456789012:*",
+          "sessionArn": "arn:aws:signin:us-east-1:123456789012:session/5dbdd43b-4135-4c59-ad06-5ddbcc2c1d77"
+        },
+        "output": {
+          "clientId": "arn:aws:signin:::devtools/same-device",
+          "clientType": "CLI",
+          "expiresAt": 1794431214,
+          "issuedAt": 1793826107,
+          "issuedInRegion": "us-east-1",
+          "principalArn": "arn:aws:iam::123456789012:role/ReadOnly",
+          "role": "arn:aws:iam::123456789012:role/ReadOnly",
+          "sessionArn": "arn:aws:signin:us-east-1:123456789012:session/5dbdd43b-4135-4c59-ad06-5ddbcc2c1d77",
+          "status": "ACTIVE"
+        },
+        "description": "Uses the account wildcard principal ARN to get a session owned by another IAM identity.",
+        "id": "example-2",
+        "title": "Get another identity's session as an account administrator"
+      }
+    ],
+    "ListSessions": [
+      {
+        "input": {},
+        "output": {
+          "items": [
+            {
+              "clientId": "arn:aws:signin:::devtools/same-device",
+              "clientType": "CLI",
+              "expiresAt": 1794431207,
+              "issuedAt": 1793825807,
+              "principalArn": "arn:aws:iam::123456789012:role/Developer",
+              "role": "arn:aws:iam::123456789012:role/Developer",
+              "sessionArn": "arn:aws:signin:us-east-1:123456789012:session/3b0a6152-ba23-447d-83cf-b3b3cc7b95f7",
+              "status": "ACTIVE"
+            },
+            {
+              "clientId": "arn:aws:signin:::devtools/same-device",
+              "clientType": "CLI",
+              "expiresAt": 1794431212,
+              "issuedAt": 1793824607,
+              "principalArn": "arn:aws:iam::123456789012:role/Developer",
+              "role": "arn:aws:iam::123456789012:role/Developer",
+              "sessionArn": "arn:aws:signin:us-east-1:123456789012:session/4c63f231-2128-42cf-aa83-83589f9a0df2",
+              "status": "ACTIVE"
+            }
+          ]
+        },
+        "description": "Lists the caller's sessions when principalArn is omitted.",
+        "id": "example-1",
+        "title": "List your own sessions"
+      },
+      {
+        "input": {
+          "maxResults": 1,
+          "status": "ACTIVE"
+        },
+        "output": {
+          "items": [
+            {
+              "clientId": "arn:aws:signin:::devtools/same-device",
+              "clientType": "CLI",
+              "expiresAt": 1794431207,
+              "issuedAt": 1793825807,
+              "principalArn": "arn:aws:iam::123456789012:role/Developer",
+              "role": "arn:aws:iam::123456789012:role/Developer",
+              "sessionArn": "arn:aws:signin:us-east-1:123456789012:session/3b0a6152-ba23-447d-83cf-b3b3cc7b95f7",
+              "status": "ACTIVE"
+            }
+          ],
+          "nextToken": "AAMA-EXAMPLE-NEXT-TOKEN"
+        },
+        "description": "Returns one active session and a token to request the next page.",
+        "id": "example-2",
+        "title": "List active sessions one page at a time"
+      }
+    ]
+  }
 }

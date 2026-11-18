@@ -177,6 +177,7 @@ use Aws\AwsClient;
  *         CurrencyMode?: 'REAL'|'TEST',
  *         ...,
  *     },
+ *     AnalyticsConfig?: array{Mode?: 'CROSS_REGION'|'DISABLED', ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createWebACLAsync(array $args = [])
@@ -213,6 +214,7 @@ use Aws\AwsClient;
  *         CurrencyMode?: 'REAL'|'TEST',
  *         ...,
  *     },
+ *     AnalyticsConfig?: array{Mode?: 'CROSS_REGION'|'DISABLED', ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result deleteAPIKey(array $args = [])
@@ -780,6 +782,7 @@ use Aws\AwsClient;
  *         CurrencyMode?: 'REAL'|'TEST',
  *         ...,
  *     },
+ *     AnalyticsConfig?: array{Mode?: 'CROSS_REGION'|'DISABLED', ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWebACLAsync(array $args = [])
@@ -817,6 +820,7 @@ use Aws\AwsClient;
  *         CurrencyMode?: 'REAL'|'TEST',
  *         ...,
  *     },
+ *     AnalyticsConfig?: array{Mode?: 'CROSS_REGION'|'DISABLED', ...},
  *     ...,
  * } $args = [])
  */

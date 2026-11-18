@@ -881,6 +881,44 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listThreats(array{threatJobId?: string, agentSpaceId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listThreatsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listThreatsAsync(array{threatJobId?: string, agentSpaceId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
+ * @method \Aws\Result resumePentestJob(array $args = [])
+ * @phpstan-method \Aws\Result resumePentestJob(array{
+ *     agentSpaceId?: string,
+ *     pentestJobId?: string,
+ *     actors?: list<array{
+ *         identifier?: string,
+ *         uris?: list<string>,
+ *         authentication?: array,
+ *         description?: string,
+ *         enableEmailMfa?: bool,
+ *         mfaForwardingAddress?: string,
+ *         ...,
+ *     }>,
+ *     networkTrafficConfig?: array{rules?: list<array>, customHeaders?: list<array>, ...},
+ *     vpcConfig?: array{vpcArn?: string, securityGroupArns?: list<string>, subnetArns?: list<string>, ...},
+ *     maxTaskHours?: float,
+ *     copyConfigFromPentest?: bool,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise resumePentestJobAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise resumePentestJobAsync(array{
+ *     agentSpaceId?: string,
+ *     pentestJobId?: string,
+ *     actors?: list<array{
+ *         identifier?: string,
+ *         uris?: list<string>,
+ *         authentication?: array,
+ *         description?: string,
+ *         enableEmailMfa?: bool,
+ *         mfaForwardingAddress?: string,
+ *         ...,
+ *     }>,
+ *     networkTrafficConfig?: array{rules?: list<array>, customHeaders?: list<array>, ...},
+ *     vpcConfig?: array{vpcArn?: string, securityGroupArns?: list<string>, subnetArns?: list<string>, ...},
+ *     maxTaskHours?: float,
+ *     copyConfigFromPentest?: bool,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result startCodeRemediation(array $args = [])
  * @phpstan-method \Aws\Result startCodeRemediation(array{agentSpaceId?: string, pentestJobId?: string, codeReviewJobId?: string, findingIds?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise startCodeRemediationAsync(array $args = [])
@@ -930,9 +968,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise stopCodeReviewJobAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise stopCodeReviewJobAsync(array{agentSpaceId?: string, codeReviewJobId?: string, ...} $args = [])
  * @method \Aws\Result stopPentestJob(array $args = [])
- * @phpstan-method \Aws\Result stopPentestJob(array{agentSpaceId?: string, pentestJobId?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result stopPentestJob(array{agentSpaceId?: string, pentestJobId?: string, pause?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise stopPentestJobAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise stopPentestJobAsync(array{agentSpaceId?: string, pentestJobId?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise stopPentestJobAsync(array{agentSpaceId?: string, pentestJobId?: string, pause?: bool, ...} $args = [])
  * @method \Aws\Result stopThreatModelJob(array $args = [])
  * @phpstan-method \Aws\Result stopThreatModelJob(array{agentSpaceId?: string, threatModelJobId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise stopThreatModelJobAsync(array $args = [])

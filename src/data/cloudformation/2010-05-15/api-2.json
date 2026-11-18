@@ -1609,6 +1609,10 @@
         "ClientRequestToken":{"shape":"ClientRequestToken"}
       }
     },
+    "CancelledStackInstancesCount":{
+      "type":"integer",
+      "min":0
+    },
     "Capabilities":{
       "type":"list",
       "member":{"shape":"Capability"}
@@ -1789,6 +1793,14 @@
       "type":"string",
       "max":128,
       "min":1
+    },
+    "CompletedAccountsCount":{
+      "type":"integer",
+      "min":0
+    },
+    "CompletedStackInstancesCount":{
+      "type":"integer",
+      "min":0
     },
     "ConcurrencyMode":{
       "type":"string",
@@ -2736,6 +2748,10 @@
     "Exports":{
       "type":"list",
       "member":{"shape":"Export"}
+    },
+    "FailedAccountsCount":{
+      "type":"integer",
+      "min":0
     },
     "FailedEventsFilter":{"type":"boolean"},
     "FailedStackInstancesCount":{
@@ -3874,6 +3890,14 @@
       "type":"list",
       "member":{"shape":"Parameter"}
     },
+    "PendingAccountsCount":{
+      "type":"integer",
+      "min":0
+    },
+    "PendingStackInstancesCount":{
+      "type":"integer",
+      "min":0
+    },
     "PercentageCompleted":{"type":"double"},
     "PermissionModels":{
       "type":"string",
@@ -4028,6 +4052,41 @@
     "RegionList":{
       "type":"list",
       "member":{"shape":"Region"}
+    },
+    "RegionalStackInstancesDeployment":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"StageStatus"},
+        "SucceededStackInstancesCount":{"shape":"SucceededStackInstancesCount"},
+        "FailedStackInstancesCount":{"shape":"StackInstancesDeploymentFailedStackInstancesCount"},
+        "CompletedStackInstancesCount":{"shape":"CompletedStackInstancesCount"},
+        "PendingStackInstancesCount":{"shape":"PendingStackInstancesCount"},
+        "CancelledStackInstancesCount":{"shape":"CancelledStackInstancesCount"},
+        "SkippedStackInstancesCount":{"shape":"SkippedStackInstancesCount"},
+        "TotalStackInstancesCount":{"shape":"RegionalTotalStackInstancesCount"},
+        "PercentageCompleted":{"shape":"StagePercentageCompleted"}
+      }
+    },
+    "RegionalStages":{
+      "type":"structure",
+      "members":{
+        "RegionalStackInstancesDeployment":{"shape":"RegionalStackInstancesDeployment"}
+      }
+    },
+    "RegionalStatusDetail":{
+      "type":"structure",
+      "members":{
+        "Stages":{"shape":"RegionalStages"}
+      }
+    },
+    "RegionalStatusDetails":{
+      "type":"map",
+      "key":{"shape":"Region"},
+      "value":{"shape":"RegionalStatusDetail"}
+    },
+    "RegionalTotalStackInstancesCount":{
+      "type":"integer",
+      "min":0
     },
     "RegisterPublisherInput":{
       "type":"structure",
@@ -4511,6 +4570,17 @@
       "min":1,
       "pattern":"arn:.+:iam::[0-9]{12}:role/.+"
     },
+    "RoleProvisioning":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"StageStatus"},
+        "SucceededAccountsCount":{"shape":"SucceededAccountsCount"},
+        "FailedAccountsCount":{"shape":"FailedAccountsCount"},
+        "CompletedAccountsCount":{"shape":"CompletedAccountsCount"},
+        "PendingAccountsCount":{"shape":"PendingAccountsCount"},
+        "PercentageCompleted":{"shape":"StagePercentageCompleted"}
+      }
+    },
     "RollbackConfiguration":{
       "type":"structure",
       "members":{
@@ -4677,6 +4747,10 @@
         "UniqueId":{"shape":"ResourceSignalUniqueId"},
         "Status":{"shape":"ResourceSignalStatus"}
       }
+    },
+    "SkippedStackInstancesCount":{
+      "type":"integer",
+      "min":0
     },
     "Stack":{
       "type":"structure",
@@ -4939,6 +5013,23 @@
         "LastDriftCheckTimestamp":{"shape":"Timestamp"},
         "LastOperationId":{"shape":"ClientRequestToken"}
       }
+    },
+    "StackInstancesDeployment":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"StageStatus"},
+        "SucceededStackInstancesCount":{"shape":"SucceededStackInstancesCount"},
+        "FailedStackInstancesCount":{"shape":"StackInstancesDeploymentFailedStackInstancesCount"},
+        "CompletedStackInstancesCount":{"shape":"CompletedStackInstancesCount"},
+        "PendingStackInstancesCount":{"shape":"PendingStackInstancesCount"},
+        "CancelledStackInstancesCount":{"shape":"CancelledStackInstancesCount"},
+        "SkippedStackInstancesCount":{"shape":"SkippedStackInstancesCount"},
+        "PercentageCompleted":{"shape":"StagePercentageCompleted"}
+      }
+    },
+    "StackInstancesDeploymentFailedStackInstancesCount":{
+      "type":"integer",
+      "min":0
     },
     "StackName":{"type":"string"},
     "StackNameOrId":{
@@ -5326,7 +5417,8 @@
         "DeploymentTargets":{"shape":"DeploymentTargets"},
         "StackSetDriftDetectionDetails":{"shape":"StackSetDriftDetectionDetails"},
         "StatusReason":{"shape":"StackSetOperationStatusReason"},
-        "StatusDetails":{"shape":"StackSetOperationStatusDetails"}
+        "StatusDetails":{"shape":"StackSetOperationStatusDetails"},
+        "RegionalStatusDetails":{"shape":"RegionalStatusDetails"}
       }
     },
     "StackSetOperationAction":{
@@ -5389,6 +5481,9 @@
     "StackSetOperationStatusDetails":{
       "type":"structure",
       "members":{
+        "Stages":{"shape":"Stages"},
+        "TotalAccountsCount":{"shape":"TotalAccountsCount"},
+        "TotalStackInstancesCount":{"shape":"StackSetOperationTotalStackInstancesCount"},
         "FailedStackInstancesCount":{"shape":"FailedStackInstancesCount"}
       }
     },
@@ -5409,6 +5504,10 @@
         "StatusDetails":{"shape":"StackSetOperationStatusDetails"},
         "OperationPreferences":{"shape":"StackSetOperationPreferences"}
       }
+    },
+    "StackSetOperationTotalStackInstancesCount":{
+      "type":"integer",
+      "min":0
     },
     "StackSetStatus":{
       "type":"string",
@@ -5502,6 +5601,30 @@
       "type":"list",
       "member":{"shape":"TemplateStage"}
     },
+    "StagePercentageCompleted":{
+      "type":"double",
+      "max":100,
+      "min":0
+    },
+    "StageStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "NOT_APPLICABLE",
+        "NOT_STARTED",
+        "IN_PROGRESS",
+        "SUCCEEDED",
+        "PARTIAL_SUCCESS",
+        "FAILED"
+      ]
+    },
+    "Stages":{
+      "type":"structure",
+      "members":{
+        "RoleProvisioning":{"shape":"RoleProvisioning"},
+        "StackInstancesDeployment":{"shape":"StackInstancesDeployment"}
+      }
+    },
     "StaleRequestException":{
       "type":"structure",
       "members":{},
@@ -5544,6 +5667,14 @@
     "StopStackSetOperationOutput":{
       "type":"structure",
       "members":{}
+    },
+    "SucceededAccountsCount":{
+      "type":"integer",
+      "min":0
+    },
+    "SucceededStackInstancesCount":{
+      "type":"integer",
+      "min":0
     },
     "SupportedMajorVersion":{
       "type":"integer",
@@ -5703,6 +5834,10 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "TotalAccountsCount":{
+      "type":"integer",
+      "min":0
     },
     "TotalStackInstancesCount":{
       "type":"integer",

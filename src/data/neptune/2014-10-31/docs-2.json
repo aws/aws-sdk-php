@@ -11,7 +11,7 @@
     "CopyDBParameterGroup": "<p>Copies the specified DB parameter group.</p>",
     "CreateDBCluster": "<p>Creates a new Amazon Neptune DB cluster.</p> <p>You can use the <code>ReplicationSourceIdentifier</code> parameter to create the DB cluster as a Read Replica of another DB cluster or Amazon Neptune DB instance.</p> <p>Note that when you create a new cluster using <code>CreateDBCluster</code> directly, deletion protection is disabled by default (when you create a new production cluster in the console, deletion protection is enabled by default). You can only delete a DB cluster if its <code>DeletionProtection</code> field is set to <code>false</code>.</p>",
     "CreateDBClusterEndpoint": "<p>Creates a new custom endpoint and associates it with an Amazon Neptune DB cluster.</p>",
-    "CreateDBClusterParameterGroup": "<p>Creates a new DB cluster parameter group.</p> <p>Parameters in a DB cluster parameter group apply to all of the instances in a DB cluster.</p> <p> A DB cluster parameter group is initially created with the default parameters for the database engine used by instances in the DB cluster. To provide custom values for any of the parameters, you must modify the group after creating it using <a>ModifyDBClusterParameterGroup</a>. Once you've created a DB cluster parameter group, you need to associate it with your DB cluster using <a>ModifyDBCluster</a>. When you associate a new DB cluster parameter group with a running DB cluster, you need to reboot the DB instances in the DB cluster without failover for the new DB cluster parameter group and associated settings to take effect.</p> <important> <p>After you create a DB cluster parameter group, you should wait at least 5 minutes before creating your first DB cluster that uses that DB cluster parameter group as the default parameter group. This allows Amazon Neptune to fully complete the create action before the DB cluster parameter group is used as the default for a new DB cluster. This is especially important for parameters that are critical when creating the default database for a DB cluster, such as the character set for the default database defined by the <code>character_set_database</code> parameter. You can use the <i>Parameter Groups</i> option of the <a href=\"https://console.aws.amazon.com/rds/\">Amazon Neptune console</a> or the <a>DescribeDBClusterParameters</a> command to verify that your DB cluster parameter group has been created or modified.</p> </important>",
+    "CreateDBClusterParameterGroup": "<p>Creates a new DB cluster parameter group.</p> <p>Parameters in a DB cluster parameter group apply to all of the instances in a DB cluster.</p> <p> A DB cluster parameter group is initially created with the default parameters for the database engine used by instances in the DB cluster. To provide custom values for any of the parameters, you must modify the group after creating it using <a>ModifyDBClusterParameterGroup</a>. Once you've created a DB cluster parameter group, you need to associate it with your DB cluster using <a>ModifyDBCluster</a>. When you associate a new DB cluster parameter group with a running DB cluster, you need to reboot the DB instances in the DB cluster without failover for the new DB cluster parameter group and associated settings to take effect.</p>",
     "CreateDBClusterSnapshot": "<p>Creates a snapshot of a DB cluster.</p>",
     "CreateDBInstance": "<p>Creates a new DB instance.</p>",
     "CreateDBParameterGroup": "<p>Creates a new DB parameter group.</p> <p>A DB parameter group is initially created with the default parameters for the database engine used by the DB instance. To provide custom values for any of the parameters, you must modify the group after creating it using <i>ModifyDBParameterGroup</i>. Once you've created a DB parameter group, you need to associate it with your DB instance using <i>ModifyDBInstance</i>. When you associate a new DB parameter group with a running DB instance, you need to reboot the DB instance without failover for the new DB parameter group and associated settings to take effect.</p> <important> <p>After you create a DB parameter group, you should wait at least 5 minutes before creating your first DB instance that uses that DB parameter group as the default parameter group. This allows Amazon Neptune to fully complete the create action before the parameter group is used as the default for a new DB instance. This is especially important for parameters that are critical when creating the default database for a DB instance, such as the character set for the default database defined by the <code>character_set_database</code> parameter. You can use the <i>Parameter Groups</i> option of the Amazon Neptune console or the <i>DescribeDBParameters</i> command to verify that your DB parameter group has been created or modified.</p> </important>",
@@ -46,6 +46,7 @@
     "DescribeGlobalClusters": "<p>Returns information about Neptune global database clusters. This API supports pagination.</p>",
     "DescribeOrderableDBInstanceOptions": "<p>Returns a list of orderable DB instance options for the specified engine.</p>",
     "DescribePendingMaintenanceActions": "<p>Returns a list of resources (for example, DB instances) that have at least one pending maintenance action.</p>",
+    "DescribeServerlessV2PlatformVersions": "<p>Describes the properties of specific platform versions for Neptune Serverless.</p>",
     "DescribeValidDBInstanceModifications": "<p>You can call <a>DescribeValidDBInstanceModifications</a> to learn what modifications you can make to your DB instance. You can use this information when you call <a>ModifyDBInstance</a>.</p>",
     "FailoverDBCluster": "<p>Forces a failover for a DB cluster.</p> <p>A failover for a DB cluster promotes one of the Read Replicas (read-only instances) in the DB cluster to be the primary instance (the cluster writer).</p> <p>Amazon Neptune will automatically fail over to a Read Replica, if one exists, when the primary instance fails. You can force a failover when you want to simulate a failure of a primary instance for testing. Because each instance in a DB cluster has its own endpoint address, you will need to clean up and re-establish any existing connections that use those endpoint addresses when the failover is complete.</p>",
     "FailoverGlobalCluster": "<p>Initiates the failover process for a Neptune global database.</p> <p>A failover for a Neptune global database promotes one of secondary read-only DB clusters to be the primary DB cluster and demotes the primary DB cluster to being a secondary (read-only) DB cluster. In other words, the role of the current primary DB cluster and the selected target secondary DB cluster are switched. The selected secondary DB cluster assumes full read/write capabilities for the Neptune global database.</p> <note> <p>This action applies <b>only</b> to Neptune global databases. This action is only intended for use on healthy Neptune global databases with healthy Neptune DB clusters and no region-wide outages, to test disaster recovery scenarios or to reconfigure the global database topology.</p> </note>",
@@ -182,6 +183,7 @@
         "ResetDBClusterParameterGroupMessage$ResetAllParameters": "<p>A value that is set to <code>true</code> to reset all parameters in the DB cluster parameter group to their default values, and <code>false</code> otherwise. You can't use this parameter if there is a list of parameter names specified for the <code>Parameters</code> parameter.</p>",
         "ResetDBParameterGroupMessage$ResetAllParameters": "<p>Specifies whether (<code>true</code>) or not (<code>false</code>) to reset all parameters in the DB parameter group to default values.</p> <p>Default: <code>true</code> </p>",
         "RestoreDBClusterToPointInTimeMessage$UseLatestRestorableTime": "<p>A value that is set to <code>true</code> to restore the DB cluster to the latest restorable backup time, and <code>false</code> otherwise.</p> <p>Default: <code>false</code> </p> <p>Constraints: Cannot be specified if <code>RestoreToTime</code> parameter is provided.</p>",
+        "ServerlessV2PlatformVersionInfo$IsDefault": "<p>Indicates whether this platform version is the default version for the engine. The default platform version is the version used for new DB clusters.</p>",
         "UpgradeTarget$AutoUpgrade": "<p>A value that indicates whether the target version is applied to any source DB instances that have AutoMinorVersionUpgrade set to true.</p>",
         "UpgradeTarget$IsMajorVersionUpgrade": "<p>A value that indicates whether a database engine is upgraded to a major version.</p>"
       }
@@ -214,6 +216,8 @@
         "DescribeDBEngineVersionsMessage$ListSupportedCharacterSets": "<p>If this parameter is specified and the requested engine supports the <code>CharacterSetName</code> parameter for <code>CreateDBInstance</code>, the response includes a list of supported character sets for each engine version.</p>",
         "DescribeDBEngineVersionsMessage$ListSupportedTimezones": "<p>If this parameter is specified and the requested engine supports the <code>TimeZone</code> parameter for <code>CreateDBInstance</code>, the response includes a list of supported time zones for each engine version.</p>",
         "DescribeOrderableDBInstanceOptionsMessage$Vpc": "<p>The VPC filter value. Specify this parameter to show only the available VPC or non-VPC offerings.</p>",
+        "DescribeServerlessV2PlatformVersionsMessage$DefaultOnly": "<p>Specifies whether to return only the default platform versions for each engine. The default platform version is the version used for new DB clusters.</p>",
+        "DescribeServerlessV2PlatformVersionsMessage$IncludeAll": "<p>Specifies whether to also include platform versions which are no longer in use.</p>",
         "FailoverGlobalClusterMessage$AllowDataLoss": "<p>Specifies whether to allow data loss for this global database cluster operation. Allowing data loss triggers a global failover operation.</p> <p>If you don't specify <code>AllowDataLoss</code>, the global database cluster operation defaults to a switchover.</p> <p>Constraints: Can't be specified together with the <code>Switchover</code> parameter.</p>",
         "FailoverGlobalClusterMessage$Switchover": "<p>Specifies whether to switch over this global database cluster.</p> <p>Constraints: Can't be specified together with the <code>AllowDataLoss</code> parameter.</p>",
         "GlobalCluster$StorageEncrypted": "<p>The storage encryption setting for the global database.</p>",
@@ -878,6 +882,10 @@
       "base": null,
       "refs": {}
     },
+    "DescribeServerlessV2PlatformVersionsMessage": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeValidDBInstanceModificationsMessage": {
       "base": null,
       "refs": {}
@@ -914,6 +922,8 @@
       "refs": {
         "OrderableDBInstanceOption$MinIopsPerGib": "<p>Minimum provisioned IOPS per GiB for a DB instance.</p>",
         "OrderableDBInstanceOption$MaxIopsPerGib": "<p>Maximum provisioned IOPS per GiB for a DB instance.</p>",
+        "ServerlessV2FeaturesSupport$MinCapacity": "<p>Specifies the lower Neptune capacity unit (NCU) limit that a serverless platform version supports.</p>",
+        "ServerlessV2FeaturesSupport$MaxCapacity": "<p>Specifies the upper Neptune capacity unit (NCU) limit that a serverless platform version supports.</p>",
         "ServerlessV2ScalingConfiguration$MinCapacity": "<p>The minimum number of Neptune capacity units (NCUs) for a DB instance in a Neptune Serverless cluster. You can specify NCU values in half-step increments, such as 8, 8.5, 9, and so on.</p>",
         "ServerlessV2ScalingConfiguration$MaxCapacity": "<p>The maximum number of Neptune capacity units (NCUs) for a DB instance in a Neptune Serverless cluster. You can specify NCU values in half-step increments, such as 40, 40.5, 41, and so on.</p>",
         "ServerlessV2ScalingConfigurationInfo$MinCapacity": "<p>The minimum number of Neptune capacity units (NCUs) for a DB instance in a Neptune Serverless cluster. You can specify NCU values in half-step increments, such as 8, 8.5, 9, and so on.</p>",
@@ -1067,6 +1077,7 @@
         "DescribeEventsMessage$Filters": "<p>This parameter is not currently supported.</p>",
         "DescribeOrderableDBInstanceOptionsMessage$Filters": "<p>This parameter is not currently supported.</p>",
         "DescribePendingMaintenanceActionsMessage$Filters": "<p>A filter that specifies one or more resources to return pending maintenance actions for.</p> <p>Supported filters:</p> <ul> <li> <p> <code>db-cluster-id</code> - Accepts DB cluster identifiers and DB cluster Amazon Resource Names (ARNs). The results list will only include pending maintenance actions for the DB clusters identified by these ARNs.</p> </li> <li> <p> <code>db-instance-id</code> - Accepts DB instance identifiers and DB instance ARNs. The results list will only include pending maintenance actions for the DB instances identified by these ARNs.</p> </li> </ul>",
+        "DescribeServerlessV2PlatformVersionsMessage$Filters": "<p>This parameter isn't currently supported.</p>",
         "ListTagsForResourceMessage$Filters": "<p>This parameter is not currently supported.</p>"
       }
     },
@@ -1207,6 +1218,7 @@
         "DescribeGlobalClustersMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination marker token is included in the response that you can use to retrieve the remaining results.</p> <p>Default: <code>100</code> </p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribeOrderableDBInstanceOptionsMessage$MaxRecords": "<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribePendingMaintenanceActionsMessage$MaxRecords": "<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
+        "DescribeServerlessV2PlatformVersionsMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more than the <code>MaxRecords</code> value is available, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p> <p>Default: 20</p> <p>Constraints: Minimum 1, maximum 200.</p>",
         "ModifyDBClusterMessage$BackupRetentionPeriod": "<p>The number of days for which automated backups are retained. You must specify a minimum value of 1.</p> <p>Default: 1</p> <p>Constraints:</p> <ul> <li> <p>Must be a value from 1 to 35</p> </li> </ul>",
         "ModifyDBClusterMessage$Port": "<p>The port number on which the DB cluster accepts connections.</p> <p>Constraints: Value must be <code>1150-65535</code> </p> <p>Default: The same port as the original DB cluster.</p>",
         "ModifyDBInstanceMessage$AllocatedStorage": "<p>Not supported by Neptune.</p>",
@@ -1602,6 +1614,28 @@
         "ModifyDBInstanceMessage$TdeCredentialPassword": "<p>The password for the given ARN from the key store in order to access the device.</p>"
       }
     },
+    "ServerlessV2FeaturesSupport": {
+      "base": "<p>Specifies any Neptune Serverless properties or limits that differ between serverless platform versions.</p>",
+      "refs": {
+        "ServerlessV2PlatformVersionInfo$ServerlessV2FeaturesSupport": "<p>Specifies any Neptune Serverless properties or limits that differ between serverless platform versions. You can retrieve the platform version of an existing DB cluster and check whether that version supports certain serverless features before you attempt to use those features.</p>"
+      }
+    },
+    "ServerlessV2PlatformVersionInfo": {
+      "base": "<p>This data type is used as a response element in the <code>DescribeServerlessV2PlatformVersions</code> action. It describes the properties of a specific Neptune Serverless platform version.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/neptune-serverless-using.html\">Using Amazon Neptune Serverless</a> in the <i>Amazon Neptune User Guide</i>.</p>",
+      "refs": {
+        "ServerlessV2PlatformVersionList$member": null
+      }
+    },
+    "ServerlessV2PlatformVersionList": {
+      "base": null,
+      "refs": {
+        "ServerlessV2PlatformVersionsMessage$ServerlessV2PlatformVersions": "<p>A list of <a>ServerlessV2PlatformVersionInfo</a> elements.</p>"
+      }
+    },
+    "ServerlessV2PlatformVersionsMessage": {
+      "base": "<p>Contains the result of a successful invocation of the <code>DescribeServerlessV2PlatformVersions</code> action.</p>",
+      "refs": {}
+    },
     "ServerlessV2ScalingConfiguration": {
       "base": "<p>Contains the scaling configuration of a Neptune Serverless DB cluster.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/neptune-serverless-using.html\">Using Amazon Neptune Serverless</a> in the <i>Amazon Neptune User Guide</i>.</p>",
       "refs": {
@@ -1787,6 +1821,7 @@
         "DBCluster$DbClusterResourceId": "<p>The Amazon Region-unique, immutable identifier for the DB cluster. This identifier is found in Amazon CloudTrail log entries whenever the Amazon KMS key for the DB cluster is accessed.</p>",
         "DBCluster$DBClusterArn": "<p>The Amazon Resource Name (ARN) for the DB cluster.</p>",
         "DBCluster$CloneGroupId": "<p>Identifies the clone group to which the DB cluster is associated.</p>",
+        "DBCluster$ServerlessV2PlatformVersion": "<p>The serverless platform version used by the Neptune Serverless DB cluster.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/neptune-serverless-using.html\">Using Amazon Neptune Serverless</a> in the <i>Amazon Neptune User Guide</i>.</p>",
         "DBCluster$StorageType": "<p>The storage type used by the DB cluster.</p> <p>Valid Values:</p> <ul> <li> <p> <b> <code>standard</code> </b>   –   ( <i>the default</i> ) Provides cost-effective database storage for applications with moderate to small I/O usage.</p> </li> <li> <p> <b> <code>iopt1</code> </b>   –   Enables <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/storage-types.html#provisioned-iops-storage\">I/O-Optimized storage</a> that's designed to meet the needs of I/O-intensive graph workloads that require predictable pricing with low I/O latency and consistent I/O throughput.</p> <p>Neptune I/O-Optimized storage is only available starting with engine release 1.3.0.0.</p> </li> </ul>",
         "DBCluster$NetworkType": "<p>The network type of the DB cluster.</p> <p>Valid Values:</p> <ul> <li> <p> <b> <code>IPV4</code> </b>   –   The DB cluster uses only IPv4 addresses for communication.</p> </li> <li> <p> <b> <code>DUAL</code> </b>   –   The DB cluster uses both IPv4 and IPv6 addresses for communication.</p> </li> </ul>",
         "DBClusterEndpoint$DBClusterEndpointIdentifier": "<p>The identifier associated with the endpoint. This parameter is stored as a lowercase string.</p>",
@@ -1946,6 +1981,9 @@
         "DescribeOrderableDBInstanceOptionsMessage$Marker": "<p> An optional pagination token provided by a previous DescribeOrderableDBInstanceOptions request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code> .</p>",
         "DescribePendingMaintenanceActionsMessage$ResourceIdentifier": "<p>The ARN of a resource to return pending maintenance actions for.</p>",
         "DescribePendingMaintenanceActionsMessage$Marker": "<p> An optional pagination token provided by a previous <code>DescribePendingMaintenanceActions</code> request. If this parameter is specified, the response includes only records beyond the marker, up to a number of records specified by <code>MaxRecords</code>.</p>",
+        "DescribeServerlessV2PlatformVersionsMessage$ServerlessV2PlatformVersion": "<p>A specific platform version to return details for.</p> <p>Example: <code>3</code> </p>",
+        "DescribeServerlessV2PlatformVersionsMessage$Engine": "<p>The database engine to return platform version details for.</p>",
+        "DescribeServerlessV2PlatformVersionsMessage$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
         "DescribeValidDBInstanceModificationsMessage$DBInstanceIdentifier": "<p>The customer identifier or the ARN of your DB instance.</p>",
         "DomainMembership$Domain": "<p>The identifier of the Active Directory Domain.</p>",
         "DomainMembership$Status": "<p>The status of the DB instance's Active Directory Domain membership, such as joined, pending-join, failed etc).</p>",
@@ -2100,6 +2138,11 @@
         "RestoreDBClusterToPointInTimeMessage$DBClusterParameterGroupName": "<p>The name of the DB cluster parameter group to associate with the new DB cluster.</p> <p>Constraints:</p> <ul> <li> <p>If supplied, must match the name of an existing DBClusterParameterGroup.</p> </li> </ul>",
         "RestoreDBClusterToPointInTimeMessage$StorageType": "<p>Specifies the storage type to be associated with the DB cluster.</p> <p>Valid values: <code>standard</code>, <code>iopt1</code> </p> <p>Default: <code>standard</code> </p>",
         "RestoreDBClusterToPointInTimeMessage$NetworkType": "<p>The network type of the DB cluster.</p> <p>Valid Values:</p> <ul> <li> <p> <b> <code>IPV4</code> </b>   –   ( <i>the default</i> ) The DB cluster uses only IPv4 addresses for communication.</p> </li> <li> <p> <b> <code>DUAL</code> </b>   –   The DB cluster uses both IPv4 and IPv6 addresses for communication. The DB subnet group associated with the cluster must support IPv6.</p> </li> </ul>",
+        "ServerlessV2PlatformVersionInfo$ServerlessV2PlatformVersion": "<p>The version number of the serverless platform.</p>",
+        "ServerlessV2PlatformVersionInfo$ServerlessV2PlatformVersionDescription": "<p>The description of the serverless platform.</p>",
+        "ServerlessV2PlatformVersionInfo$Engine": "<p>The name of the database engine.</p>",
+        "ServerlessV2PlatformVersionInfo$Status": "<p>The status of the serverless platform version. Valid statuses are the following:</p> <ul> <li> <p> <code>enabled</code> - The platform version is in use.</p> </li> <li> <p> <code>disabled</code> - The platform version is not in use.</p> </li> </ul>",
+        "ServerlessV2PlatformVersionsMessage$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
         "SourceIdsList$member": null,
         "StartDBClusterMessage$DBClusterIdentifier": "<p>The DB cluster identifier of the Neptune DB cluster to be started. This parameter is stored as a lowercase string.</p>",
         "StopDBClusterMessage$DBClusterIdentifier": "<p>The DB cluster identifier of the Neptune DB cluster to be stopped. This parameter is stored as a lowercase string.</p>",

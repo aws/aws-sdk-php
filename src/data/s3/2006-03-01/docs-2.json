@@ -1620,7 +1620,7 @@
       }
     },
     "DeleteMarkerReplication": {
-      "base": "<p>Specifies whether Amazon S3 replicates delete markers. If you specify a <code>Filter</code> in your replication configuration, you must also include a <code>DeleteMarkerReplication</code> element. If your <code>Filter</code> includes a <code>Tag</code> element, the <code>DeleteMarkerReplication</code> <code>Status</code> must be set to Disabled, because Amazon S3 does not support replicating delete markers for tag-based rules. For an example configuration, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/replication-add-config.html#replication-config-min-rule-config\">Basic Rule Configuration</a>. </p> <p>For more information about delete marker replication, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/delete-marker-replication.html\">Basic Rule Configuration</a>. </p> <note> <p>If you are using an earlier version of the replication configuration, Amazon S3 handles replication of delete markers differently. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/replication-add-config.html#replication-backward-compat-considerations\">Backward Compatibility</a>.</p> </note>",
+      "base": "<p>Specifies whether Amazon S3 replicates delete markers. If you specify a <code>Filter</code> in your replication configuration, you must also include a <code>DeleteMarkerReplication</code> element. If your <code>Filter</code> includes a <code>Tag</code> element, including within a <code>Not</code> or <code>Or</code> element, the <code>DeleteMarkerReplication</code> <code>Status</code> must be set to Disabled, because Amazon S3 does not support replicating delete markers for tag-based rules. For an example configuration, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/replication-add-config.html#replication-config-min-rule-config\">Basic Rule Configuration</a>. </p> <p>For more information about delete marker replication, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/delete-marker-replication.html\">Basic Rule Configuration</a>. </p> <note> <p>If you are using an earlier version of the replication configuration, Amazon S3 handles replication of delete markers differently. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/replication-add-config.html#replication-backward-compat-considerations\">Backward Compatibility</a>.</p> </note>",
       "refs": {
         "ReplicationRule$DeleteMarkerReplication": null
       }
@@ -3934,9 +3934,11 @@
         "ListObjectsV2Request$Prefix": "<p>Limits the response to keys that begin with the specified prefix.</p> <note> <p> <b>Directory buckets</b> - For directory buckets, only prefixes that end in a delimiter (<code>/</code>) are supported.</p> </note>",
         "MetricsAndOperator$Prefix": "<p>The prefix used when evaluating an AND predicate.</p>",
         "MetricsFilter$Prefix": "<p>The prefix used when evaluating a metrics filter.</p>",
+        "ReplicationPrefixList$member": null,
         "ReplicationRule$Prefix": "<p>An object key name prefix that identifies the object or objects to which the rule applies. The maximum prefix length is 1,024 characters. To include all objects in a bucket, specify an empty string. </p> <important> <p>Replacement must be made for object keys containing special characters (such as carriage returns) when using XML requests. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html#object-key-xml-related-constraints\"> XML related object key constraints</a>.</p> </important>",
         "ReplicationRuleAndOperator$Prefix": "<p>An object key name prefix that identifies the subset of objects to which the rule applies.</p>",
         "ReplicationRuleFilter$Prefix": "<p>An object key name prefix that identifies the subset of objects to which the rule applies.</p> <important> <p>Replacement must be made for object keys containing special characters (such as carriage returns) when using XML requests. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html#object-key-xml-related-constraints\"> XML related object key constraints</a>.</p> </important>",
+        "ReplicationRuleNotOperator$Prefix": "<p>An object key name prefix that identifies objects to exclude from the replication rule.</p>",
         "Rule$Prefix": "<p>Object key prefix that identifies one or more objects to which this rule applies.</p> <important> <p>Replacement must be made for object keys containing special characters (such as carriage returns) when using XML requests. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html#object-key-xml-related-constraints\"> XML related object key constraints</a>.</p> </important>"
       }
     },
@@ -4300,6 +4302,12 @@
         "PutBucketReplicationRequest$ReplicationConfiguration": null
       }
     },
+    "ReplicationPrefixList": {
+      "base": null,
+      "refs": {
+        "ReplicationRuleOrOperator$Prefixes": "<p>An array of object key name prefixes.</p>"
+      }
+    },
     "ReplicationRule": {
       "base": "<p>Specifies which Amazon S3 objects to replicate and where to store the replicas.</p>",
       "refs": {
@@ -4313,9 +4321,22 @@
       }
     },
     "ReplicationRuleFilter": {
-      "base": "<p>A filter that identifies the subset of objects to which the replication rule applies. A <code>Filter</code> must specify exactly one <code>Prefix</code>, <code>Tag</code>, or an <code>And</code> child element.</p>",
+      "base": "<p>A filter that identifies the subset of objects to which the replication rule applies. A <code>Filter</code> must specify exactly one <code>Prefix</code>, <code>Tag</code>, <code>And</code>, or <code>Not</code> child element.</p>",
       "refs": {
         "ReplicationRule$Filter": null
+      }
+    },
+    "ReplicationRuleNotOperator": {
+      "base": "<p>A container for specifying a filter that excludes matching objects from the replication rule. Specify exactly one <code>Prefix</code>, <code>Tag</code>, or <code>Or</code> child element.</p>",
+      "refs": {
+        "ReplicationRuleAndOperator$Not": "<p>A container for specifying filters that exclude matching objects from the replication rule.</p>",
+        "ReplicationRuleFilter$Not": "<p>A container for specifying filters that exclude matching objects from the replication rule.</p>"
+      }
+    },
+    "ReplicationRuleOrOperator": {
+      "base": "<p>A container for specifying one or more prefix or tag filters.</p>",
+      "refs": {
+        "ReplicationRuleNotOperator$Or": "<p>A container for specifying prefixes and tags. An object is excluded from the replication rule if it matches any of the specified filters.</p>"
       }
     },
     "ReplicationRuleStatus": {
@@ -5001,6 +5022,7 @@
         "LifecycleRuleFilter$Tag": "<p>This tag must exist in the object's tag set in order for the rule to apply.</p> <note> <p>This parameter applies to general purpose buckets only. It is not supported for directory bucket lifecycle configurations.</p> </note>",
         "MetricsFilter$Tag": "<p>The tag used when evaluating a metrics filter.</p> <note> <p> <code>Tag</code> filters are not supported for directory buckets.</p> </note>",
         "ReplicationRuleFilter$Tag": "<p>A container for specifying a tag key and value. </p> <p>The rule applies only to objects that have the tag in their tag set.</p>",
+        "ReplicationRuleNotOperator$Tag": "<p>A tag key and value that identify objects to exclude from the replication rule.</p>",
         "TagSet$member": null
       }
     },
@@ -5023,6 +5045,7 @@
         "LifecycleRuleAndOperator$Tags": "<p>All of these tags must exist in the object's tag set in order for the rule to apply.</p>",
         "MetricsAndOperator$Tags": "<p>The list of tags used when evaluating an AND predicate.</p> <note> <p> <code>Tag</code> filters are not supported for directory buckets.</p> </note>",
         "ReplicationRuleAndOperator$Tags": "<p>An array of tags containing key and value pairs.</p>",
+        "ReplicationRuleOrOperator$Tags": "<p>An array of tags containing key and value pairs.</p>",
         "Tagging$TagSet": "<p>A collection for a set of tags</p>"
       }
     },
@@ -5230,6 +5253,18 @@
     "UploadPartRequest": {
       "base": null,
       "refs": {}
+    },
+    "UseSourceMultiRegionKey": {
+      "base": "<p>A container for configuring the use of the related multi-Region KMS key in the destination Amazon Web Services Region for replication.</p>",
+      "refs": {
+        "EncryptionConfiguration$UseSourceMultiRegionKey": "<p>Specifies whether Amazon S3 uses the related multi-Region KMS key in the destination Amazon Web Services Region to encrypt the replica.</p>"
+      }
+    },
+    "UseSourceMultiRegionKeyStatus": {
+      "base": null,
+      "refs": {
+        "UseSourceMultiRegionKey$Status": "<p>Specifies whether Amazon S3 uses the related multi-Region KMS key in the destination Amazon Web Services Region to encrypt the replica.</p>"
+      }
     },
     "UserMetadata": {
       "base": null,

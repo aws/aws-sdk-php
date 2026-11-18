@@ -674,6 +674,25 @@
       "authtype":"none",
       "auth":["smithy.api#noAuth"]
     },
+    "CancelPointInTimeRecovery":{
+      "name":"CancelPointInTimeRecovery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CancelPointInTimeRecoveryRequest"},
+      "output":{"shape":"CancelPointInTimeRecoveryResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"FeatureUnavailableInTierException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"OperationNotEnabledException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
     "ChangePassword":{
       "name":"ChangePassword",
       "http":{
@@ -1295,6 +1314,24 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "DescribePointInTimeRecovery":{
+      "name":"DescribePointInTimeRecovery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribePointInTimeRecoveryRequest"},
+      "output":{"shape":"DescribePointInTimeRecoveryResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"FeatureUnavailableInTierException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"OperationNotEnabledException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
     "DescribeResourceServer":{
       "name":"DescribeResourceServer",
       "http":{
@@ -1870,6 +1907,26 @@
       "authtype":"none",
       "auth":["smithy.api#noAuth"]
     },
+    "InitiatePointInTimeRecovery":{
+      "name":"InitiatePointInTimeRecovery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"InitiatePointInTimeRecoveryRequest"},
+      "output":{"shape":"InitiatePointInTimeRecoveryResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"FeatureUnavailableInTierException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"OperationNotEnabledException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
     "ListDevices":{
       "name":"ListDevices",
       "http":{
@@ -1924,6 +1981,24 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"NotAuthorizedException"},
         {"shape":"TooManyRequestsException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
+    "ListPointInTimeRecoveries":{
+      "name":"ListPointInTimeRecoveries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListPointInTimeRecoveriesRequest"},
+      "output":{"shape":"ListPointInTimeRecoveriesResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"FeatureUnavailableInTierException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"OperationNotEnabledException"},
         {"shape":"InternalErrorException"}
       ]
     },
@@ -2435,6 +2510,25 @@
       ],
       "authtype":"none",
       "auth":["smithy.api#noAuth"]
+    },
+    "StartPointInTimeRecovery":{
+      "name":"StartPointInTimeRecovery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartPointInTimeRecoveryRequest"},
+      "output":{"shape":"StartPointInTimeRecoveryResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"FeatureUnavailableInTierException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"OperationNotEnabledException"},
+        {"shape":"InternalErrorException"}
+      ]
     },
     "StartUserImportJob":{
       "name":"StartUserImportJob",
@@ -3820,6 +3914,23 @@
       "max":100,
       "min":0
     },
+    "CancelPointInTimeRecoveryRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "RestoreId"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "RestoreId":{"shape":"RestoreIdType"}
+      }
+    },
+    "CancelPointInTimeRecoveryResponse":{
+      "type":"structure",
+      "members":{
+        "Restoration":{"shape":"RestorationType"}
+      }
+    },
     "ChallengeName":{
       "type":"string",
       "enum":[
@@ -4697,6 +4808,23 @@
       "type":"structure",
       "members":{
         "ManagedLoginBranding":{"shape":"ManagedLoginBrandingType"}
+      }
+    },
+    "DescribePointInTimeRecoveryRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "RestoreId"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "RestoreId":{"shape":"RestoreIdType"}
+      }
+    },
+    "DescribePointInTimeRecoveryResponse":{
+      "type":"structure",
+      "members":{
+        "Restoration":{"shape":"RestorationType"}
       }
     },
     "DescribeResourceServerRequest":{
@@ -5686,6 +5814,23 @@
         "AvailableChallenges":{"shape":"AvailableChallengeListType"}
       }
     },
+    "InitiatePointInTimeRecoveryRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "RestoreTimestamp"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "RestoreTimestamp":{"shape":"DateType"}
+      }
+    },
+    "InitiatePointInTimeRecoveryResponse":{
+      "type":"structure",
+      "members":{
+        "Restoration":{"shape":"RestorationType"}
+      }
+    },
     "IntegerType":{"type":"integer"},
     "InternalErrorException":{
       "type":"structure",
@@ -5912,6 +6057,22 @@
     "ListOfStringTypes":{
       "type":"list",
       "member":{"shape":"StringType"}
+    },
+    "ListPointInTimeRecoveriesRequest":{
+      "type":"structure",
+      "required":["UserPoolId"],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "NextToken":{"shape":"PaginationKeyType"},
+        "MaxResults":{"shape":"PoolQueryLimitType"}
+      }
+    },
+    "ListPointInTimeRecoveriesResponse":{
+      "type":"structure",
+      "members":{
+        "Restorations":{"shape":"RestorationListType"},
+        "NextToken":{"shape":"PaginationKeyType"}
+      }
     },
     "ListProvidersLimitType":{
       "type":"integer",
@@ -6686,6 +6847,61 @@
         "AvailableChallenges":{"shape":"AvailableChallengeListType"}
       }
     },
+    "RestorationDescriptionType":{
+      "type":"structure",
+      "members":{
+        "RestoreId":{"shape":"RestoreIdType"},
+        "RestoreStatus":{"shape":"RestoreStatusType"},
+        "RestoreTimestamp":{"shape":"DateType"}
+      }
+    },
+    "RestorationListType":{
+      "type":"list",
+      "member":{"shape":"RestorationDescriptionType"}
+    },
+    "RestorationType":{
+      "type":"structure",
+      "members":{
+        "RestoreId":{"shape":"RestoreIdType"},
+        "RestoreStatus":{"shape":"RestoreStatusType"},
+        "RestoreTimestamp":{"shape":"DateType"},
+        "TriggerTimestamp":{"shape":"DateType"},
+        "RestorePreview":{"shape":"RestorePreviewListType"}
+      }
+    },
+    "RestoreIdType":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"^[0-9a-f]{8}\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\b[0-9a-f]{12}$"
+    },
+    "RestorePreviewListType":{
+      "type":"list",
+      "member":{"shape":"RestorePreviewType"}
+    },
+    "RestorePreviewType":{
+      "type":"structure",
+      "members":{
+        "Entity":{"shape":"StringType"},
+        "CreateCount":{"shape":"LongType"},
+        "UpdateCount":{"shape":"LongType"},
+        "DeleteCount":{"shape":"LongType"}
+      }
+    },
+    "RestoreStatusType":{
+      "type":"string",
+      "enum":[
+        "PREVIEW_GENERATING",
+        "PREVIEW_GENERATED",
+        "PREVIEW_CANCELLED",
+        "PREVIEW_GENERATION_FAILED",
+        "PREVIEW_EXPIRED",
+        "RESTORING",
+        "RESTORE_COMPLETED",
+        "TEMPORARY_INTERNAL_ERROR_SEE_SUPPORT_CASE",
+        "AWS_ABORTED"
+      ]
+    },
     "RetryGracePeriodSecondsType":{
       "type":"integer",
       "max":60,
@@ -7198,6 +7414,23 @@
       "members":{
         "Enabled":{"shape":"BooleanType"},
         "PreferredMfa":{"shape":"BooleanType"}
+      }
+    },
+    "StartPointInTimeRecoveryRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "RestoreId"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "RestoreId":{"shape":"RestoreIdType"}
+      }
+    },
+    "StartPointInTimeRecoveryResponse":{
+      "type":"structure",
+      "members":{
+        "Restoration":{"shape":"RestorationType"}
       }
     },
     "StartUserImportJobRequest":{

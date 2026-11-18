@@ -354,7 +354,11 @@ use Aws\AwsClient;
  *     membershipIdentifier?: string,
  *     name?: string,
  *     description?: string,
- *     populationAnalysisConfiguration?: array{sqlParameters?: array{queryString?: string, analysisTemplateArn?: string, ...}, ...},
+ *     populationAnalysisConfiguration?: array{
+ *         sqlParameters?: array{queryString?: string, analysisTemplateArn?: string, ...},
+ *         jobParameters?: array{analysisTemplateArn?: string, ...},
+ *         ...,
+ *     },
  *     kmsKeyArn?: string,
  *     retentionInDays?: int,
  *     tags?: array<string, string>,
@@ -365,7 +369,11 @@ use Aws\AwsClient;
  *     membershipIdentifier?: string,
  *     name?: string,
  *     description?: string,
- *     populationAnalysisConfiguration?: array{sqlParameters?: array{queryString?: string, analysisTemplateArn?: string, ...}, ...},
+ *     populationAnalysisConfiguration?: array{
+ *         sqlParameters?: array{queryString?: string, analysisTemplateArn?: string, ...},
+ *         jobParameters?: array{analysisTemplateArn?: string, ...},
+ *         ...,
+ *     },
  *     kmsKeyArn?: string,
  *     retentionInDays?: int,
  *     tags?: array<string, string>,
@@ -848,6 +856,7 @@ use Aws\AwsClient;
  *     parameters?: array<string, string>,
  *     computeConfiguration?: array{
  *         queryComputeConfiguration?: array{type?: 'CR.1X'|'CR.4X'|'CR.8X', number?: int, properties?: array, ...},
+ *         jobComputeConfiguration?: array{worker?: array, ...},
  *         ...,
  *     },
  *     analysisPayerAccountId?: string,
@@ -860,6 +869,7 @@ use Aws\AwsClient;
  *     parameters?: array<string, string>,
  *     computeConfiguration?: array{
  *         queryComputeConfiguration?: array{type?: 'CR.1X'|'CR.4X'|'CR.8X', number?: int, properties?: array, ...},
+ *         jobComputeConfiguration?: array{worker?: array, ...},
  *         ...,
  *     },
  *     analysisPayerAccountId?: string,

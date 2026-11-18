@@ -6188,7 +6188,8 @@
     "IntermediateTableComputeConfiguration":{
       "type":"structure",
       "members":{
-        "queryComputeConfiguration":{"shape":"WorkerComputeConfiguration"}
+        "queryComputeConfiguration":{"shape":"WorkerComputeConfiguration"},
+        "jobComputeConfiguration":{"shape":"ProtectedJobComputeConfiguration"}
       },
       "union":true
     },
@@ -7601,7 +7602,10 @@
     },
     "PopulateIntermediateTableAnalysisType":{
       "type":"string",
-      "enum":["QUERY"]
+      "enum":[
+        "QUERY",
+        "JOB"
+      ]
     },
     "PopulateIntermediateTableInput":{
       "type":"structure",
@@ -7641,9 +7645,17 @@
     "PopulationAnalysisConfiguration":{
       "type":"structure",
       "members":{
-        "sqlParameters":{"shape":"PopulationAnalysisSqlParameters"}
+        "sqlParameters":{"shape":"PopulationAnalysisSqlParameters"},
+        "jobParameters":{"shape":"PopulationAnalysisJobParameters"}
       },
       "union":true
+    },
+    "PopulationAnalysisJobParameters":{
+      "type":"structure",
+      "required":["analysisTemplateArn"],
+      "members":{
+        "analysisTemplateArn":{"shape":"AnalysisTemplateArn"}
+      }
     },
     "PopulationAnalysisSqlParameters":{
       "type":"structure",
@@ -7946,7 +7958,8 @@
       "type":"structure",
       "members":{
         "s3":{"shape":"ProtectedJobS3OutputConfigurationOutput"},
-        "member":{"shape":"ProtectedJobMemberOutputConfigurationOutput"}
+        "member":{"shape":"ProtectedJobMemberOutputConfigurationOutput"},
+        "intermediateTable":{"shape":"IntermediateTableOutputConfiguration"}
       },
       "union":true
     },
@@ -8073,7 +8086,8 @@
         "createTime":{"shape":"Timestamp"},
         "status":{"shape":"ProtectedJobStatus"},
         "receiverConfigurations":{"shape":"ProtectedJobReceiverConfigurations"},
-        "jobComputePayerAccountId":{"shape":"AccountId"}
+        "jobComputePayerAccountId":{"shape":"AccountId"},
+        "intermediateTableConfiguration":{"shape":"IntermediateTableOutputConfiguration"}
       }
     },
     "ProtectedJobSummaryList":{

@@ -5722,6 +5722,12 @@
         "Oauth2ProviderConfigOutput$linkedinOauth2ProviderConfig": "<p>The configuration details for the LinkedIn OAuth2 provider.</p>"
       }
     },
+    "LinuxOperatingSystemConfiguration": {
+      "base": "<p>Contains the operating system configuration of agents that run on Linux instances, such as the privilege mode.</p>",
+      "refs": {
+        "OperatingSystemConfiguration$linux": "<p>The operating system configuration of agents that run on Linux instances.</p>"
+      }
+    },
     "ListAgentInsightStoresRequest": {
       "base": null,
       "refs": {}
@@ -6721,6 +6727,7 @@
         "CapacityProviderVolumeConfiguration$mountPath": "<p>The mount path for the capacity provider volume inside the AgentCore Runtime. The path must be under <code>/mnt</code> with exactly one subdirectory level (for example, <code>/mnt/data</code>).</p>",
         "EfsAccessPointConfiguration$mountPath": "<p>The mount path for the EFS access point inside the AgentCore Runtime. The path must be under <code>/mnt</code> with exactly one subdirectory level (for example, <code>/mnt/data</code>).</p>",
         "EfsConfiguration$mountPath": "<p>The absolute path within the session at which the access point is mounted, for example <code>/mnt/efs</code>. Each mount path must be unique across all file system configurations in the session.</p>",
+        "S3BucketMountConfiguration$mountPath": "<p>The mount path for the S3 bucket inside the AgentCore Runtime. The path must be under <code>/mnt</code> with exactly one subdirectory level (for example, <code>/mnt/data</code>).</p>",
         "S3FilesAccessPointConfiguration$mountPath": "<p>The mount path for the S3 Files access point inside the AgentCore Runtime. The path must be under <code>/mnt</code> with exactly one subdirectory level (for example, <code>/mnt/data</code>).</p>",
         "S3FilesConfiguration$mountPath": "<p>The absolute path within the session at which the access point is mounted, for example <code>/mnt/s3data</code>. Each mount path must be unique across all file system configurations in the session.</p>",
         "SessionStorageConfiguration$mountPath": "<p>The mount path for the session storage filesystem inside the AgentCore Runtime. The path must be under <code>/mnt</code> with exactly one subdirectory level (for example, <code>/mnt/data</code>).</p>"
@@ -7171,6 +7178,12 @@
       "base": "<p>The operating system and CPU architecture for capacity provider instances.</p>",
       "refs": {
         "LaunchParameters$operatingSystem": "<p>The operating system and CPU architecture for the instances.</p>"
+      }
+    },
+    "OperatingSystemConfiguration": {
+      "base": "<p>Contains the operating system configuration of the agents that AgentCore Runtime runs on a capacity provider. Specify the member for the operating system of the capacity provider.</p>",
+      "refs": {
+        "CapacityProviderConfiguration$operatingSystemConfiguration": "<p>The operating system configuration of the agents that Amazon Bedrock AgentCore Runtime runs on the capacity provider.</p>"
       }
     },
     "OptionalLogGroupName": {
@@ -7778,6 +7791,12 @@
       "base": "<p>Contains the private key source configuration for a JWT client assertion.</p>",
       "refs": {
         "PrivateKeyJwtConfig$privateKeySource": "<p>The private key source for the JWT client assertion.</p>"
+      }
+    },
+    "PrivilegeMode": {
+      "base": "<p>The privilege mode of the agents, either <code>STANDARD</code> (the default) or <code>PRIVILEGED</code>.</p>",
+      "refs": {
+        "LinuxOperatingSystemConfiguration$privilegeMode": "<p>The privilege mode of the agents. If you omit this field, the agents run in <code>STANDARD</code> privilege mode. The following values are possible:</p> <ul> <li> <p> <code>STANDARD</code> – The agent runs without elevated privileges. This is the default.</p> </li> <li> <p> <code>PRIVILEGED</code> – The agent runs with elevated privileges on its instance. Use this mode for agents that build container images, run containers, or install system packages. A session that runs a <code>PRIVILEGED</code> agent runs only that agent.</p> </li> </ul>"
       }
     },
     "Prompt": {
@@ -8449,6 +8468,36 @@
       "base": "<p>Configuration for an AgentCore Runtime target. Specifies the agent runtime to route requests to via HTTP.</p>",
       "refs": {
         "HttpTargetConfiguration$agentcoreRuntime": "<p>The AgentCore Runtime target configuration for HTTP-based communication with an agent runtime.</p>"
+      }
+    },
+    "S3BucketMountConfiguration": {
+      "base": "<p>Mounts an Amazon S3 bucket in the AgentCore Runtime with Mountpoint for Amazon S3. Files under the mount path map to objects in the bucket.</p>",
+      "refs": {
+        "FilesystemConfiguration$s3BucketMount": "<p>Mounts an Amazon S3 bucket as a file system in the AgentCore Runtime.</p>"
+      }
+    },
+    "S3BucketMountConfigurationBucketString": {
+      "base": null,
+      "refs": {
+        "S3BucketMountConfiguration$bucket": "<p>The name of the S3 bucket to mount. You can specify a general purpose bucket or a directory bucket.</p>"
+      }
+    },
+    "S3BucketMountConfigurationPrefixString": {
+      "base": null,
+      "refs": {
+        "S3BucketMountConfiguration$prefix": "<p>The key prefix to mount. Only objects under this prefix are visible at the mount path. To give each session its own prefix, include <code>{runtimeSessionId}</code> (for example, <code>data/{runtimeSessionId}/</code>). If you omit the prefix, the whole bucket is mounted.</p>"
+      }
+    },
+    "S3BucketMountConfigurationS3BucketOwnerString": {
+      "base": null,
+      "refs": {
+        "S3BucketMountConfiguration$s3BucketOwner": "<p>The AWS account ID that must own the bucket. If you omit it, the bucket must be owned by the account that owns the AgentCore Runtime.</p>"
+      }
+    },
+    "S3BucketMountConfigurationS3BucketRegionString": {
+      "base": null,
+      "refs": {
+        "S3BucketMountConfiguration$s3BucketRegion": "<p>The AWS Region of the S3 bucket. If you omit it, the bucket must be in the same Region as the AgentCore Runtime.</p>"
       }
     },
     "S3BucketUri": {

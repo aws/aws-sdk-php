@@ -6,15 +6,9 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with the **AWS Health APIs and Notifications** service.
  * @method \Aws\Result configureTags(array $args = [])
- * @phpstan-method \Aws\Result configureTags(array{
- *     tagKeys?: list<array{key?: string, enabledForEventBridge?: bool, status?: 'ACTIVE'|'PENDING', ...}>,
- *     ...,
- * } $args = [])
+ * @phpstan-method \Aws\Result configureTags(array{tagKeys?: list<array{key?: string, enabledForEventBridge?: bool, ...}>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise configureTagsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise configureTagsAsync(array{
- *     tagKeys?: list<array{key?: string, enabledForEventBridge?: bool, status?: 'ACTIVE'|'PENDING', ...}>,
- *     ...,
- * } $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise configureTagsAsync(array{tagKeys?: list<array{key?: string, enabledForEventBridge?: bool, ...}>, ...} $args = [])
  * @method \Aws\Result configureTagsForOrganization(array $args = [])
  * @phpstan-method \Aws\Result configureTagsForOrganization(array{tagKeys?: list<array{key?: string, enabledForEventBridge?: bool, ...}>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise configureTagsForOrganizationAsync(array $args = [])

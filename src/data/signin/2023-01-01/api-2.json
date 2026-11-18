@@ -13,6 +13,27 @@
     "uid":"signin-2023-01-01"
   },
   "operations":{
+    "BatchRevokeSessions":{
+      "name":"BatchRevokeSessions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/batch-revoke-sessions",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchRevokeSessionsInput"},
+      "output":{"shape":"BatchRevokeSessionsOutput"},
+      "errors":[
+        {"shape":"TooManyRequestsError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true,
+      "staticContextParams":{
+        "IsControlPlane":{"value":true}
+      }
+    },
     "CreateBearerToken":{
       "name":"CreateBearerToken",
       "http":{
@@ -177,6 +198,27 @@
         "IsControlPlane":{"value":true}
       }
     },
+    "GetSession":{
+      "name":"GetSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/get-session",
+        "responseCode":200
+      },
+      "input":{"shape":"GetSessionInput"},
+      "output":{"shape":"GetSessionOutput"},
+      "errors":[
+        {"shape":"TooManyRequestsError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "IsControlPlane":{"value":true}
+      }
+    },
     "IntrospectOAuth2TokenWithIAM":{
       "name":"IntrospectOAuth2TokenWithIAM",
       "http":{
@@ -209,6 +251,26 @@
       "errors":[
         {"shape":"TooManyRequestsError"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true,
+      "staticContextParams":{
+        "IsControlPlane":{"value":true}
+      }
+    },
+    "ListSessions":{
+      "name":"ListSessions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-sessions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSessionsInput"},
+      "output":{"shape":"ListSessionsOutput"},
+      "errors":[
+        {"shape":"TooManyRequestsError"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
@@ -325,10 +387,53 @@
       "min":12,
       "pattern":"[0-9]{12}"
     },
+    "Assertion":{
+      "type":"string",
+      "max":20000,
+      "min":4,
+      "sensitive":true
+    },
     "AuthorizationCode":{
       "type":"string",
       "max":512,
       "min":1
+    },
+    "BatchRevokeSessionError":{
+      "type":"structure",
+      "required":[
+        "sessionArn",
+        "code",
+        "message"
+      ],
+      "members":{
+        "sessionArn":{"shape":"SessionArn"},
+        "code":{"shape":"String"},
+        "message":{"shape":"String"}
+      }
+    },
+    "BatchRevokeSessionErrorList":{
+      "type":"list",
+      "member":{"shape":"BatchRevokeSessionError"}
+    },
+    "BatchRevokeSessionsInput":{
+      "type":"structure",
+      "required":["sessionArns"],
+      "members":{
+        "principalArn":{"shape":"PrincipalArnFilter"},
+        "sessionArns":{"shape":"SessionArnList"},
+        "reason":{"shape":"RevocationReason"}
+      }
+    },
+    "BatchRevokeSessionsOutput":{
+      "type":"structure",
+      "required":[
+        "revokedSessions",
+        "errors"
+      ],
+      "members":{
+        "revokedSessions":{"shape":"RevokedSessionList"},
+        "errors":{"shape":"BatchRevokeSessionErrorList"}
+      }
     },
     "BearerTokenExpiresIn":{
       "type":"integer",
@@ -356,6 +461,13 @@
       "max":64,
       "min":1,
       "pattern":"[!-~]+"
+    },
+    "ClientType":{
+      "type":"string",
+      "enum":[
+        "CLI",
+        "MCP"
+      ]
     },
     "CodeVerifier":{
       "type":"string",
@@ -569,6 +681,11 @@
           "shape":"SubjectTokenType",
           "locationName":"subject_token_type"
         },
+        "assertion":{"shape":"Assertion"},
+        "clientId":{
+          "shape":"JwtBearerClientId",
+          "locationName":"client_id"
+        },
         "resource":{"shape":"Resource"},
         "scope":{"shape":"Scope"}
       }
@@ -596,7 +713,9 @@
         "expiresIn":{
           "shape":"TokenExpiresIn",
           "locationName":"expires_in"
-        }
+        },
+        "resource":{"shape":"Resource"},
+        "scope":{"shape":"Scope"}
       }
     },
     "DeleteConsoleAuthorizationConfigurationInput":{
@@ -637,7 +756,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:aws:((iam::[0-9]{12}:role/[a-zA-Z0-9_+=,.@-]{1,64})|(iam::[0-9]{12}:user/[a-zA-Z0-9_+=,.@-]{1,64})|(sts::[0-9]{12}:federated-user/[a-zA-Z0-9_+=,.@-]{2,193})|(iam::[0-9]{12}:root))"
+      "pattern":"arn:aws(-[a-z]+)*:((iam::[0-9]{12}:role/[a-zA-Z0-9_+=,.@-]{1,64})|(iam::[0-9]{12}:user/[a-zA-Z0-9_+=,.@-]{1,64})|(sts::[0-9]{12}:federated-user/[a-zA-Z0-9_+=,.@-]{2,193})|(iam::[0-9]{12}:root))"
     },
     "ExpiresIn":{
       "type":"integer",
@@ -673,6 +792,38 @@
       "required":["signinResourceBasedPolicy"],
       "members":{
         "signinResourceBasedPolicy":{"shape":"SigninResourceBasedPolicy"}
+      }
+    },
+    "GetSessionInput":{
+      "type":"structure",
+      "required":["sessionArn"],
+      "members":{
+        "sessionArn":{"shape":"SessionArn"},
+        "principalArn":{"shape":"PrincipalArnFilter"}
+      }
+    },
+    "GetSessionOutput":{
+      "type":"structure",
+      "required":[
+        "sessionArn",
+        "principalArn",
+        "issuedAt",
+        "expiresAt"
+      ],
+      "members":{
+        "sessionArn":{"shape":"SessionArn"},
+        "principalArn":{"shape":"PrincipalArn"},
+        "role":{"shape":"PrincipalArn"},
+        "status":{"shape":"SessionStatus"},
+        "clientId":{"shape":"String"},
+        "clientType":{"shape":"ClientType"},
+        "resource":{"shape":"String"},
+        "issuedAt":{"shape":"Long"},
+        "expiresAt":{"shape":"Long"},
+        "lastUsedAt":{"shape":"Long"},
+        "issuedInRegion":{"shape":"String"},
+        "originSessionArn":{"shape":"SessionArn"},
+        "userAgent":{"shape":"String"}
       }
     },
     "GrantType":{
@@ -777,7 +928,7 @@
     },
     "IntrospectionToken":{
       "type":"string",
-      "max":4096,
+      "max":12288,
       "min":1,
       "pattern":"ASO[AR][A-Za-z0-9+/=_\\-]+",
       "sensitive":true
@@ -818,6 +969,11 @@
       "type":"string",
       "pattern":"urn:ietf:params:oauth:token-type:access_token"
     },
+    "JwtBearerClientId":{
+      "type":"string",
+      "max":212,
+      "min":1
+    },
     "ListResourcePermissionStatementsInput":{
       "type":"structure",
       "members":{
@@ -830,6 +986,26 @@
       "required":["permissionStatements"],
       "members":{
         "permissionStatements":{"shape":"PermissionStatementSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListSessionsInput":{
+      "type":"structure",
+      "members":{
+        "principalArn":{"shape":"PrincipalArnFilter"},
+        "maxResults":{"shape":"SessionsMaxResults"},
+        "nextToken":{"shape":"NextToken"},
+        "status":{"shape":"SessionStatus"},
+        "clientId":{"shape":"String"},
+        "issuedAfter":{"shape":"Long"},
+        "issuedBefore":{"shape":"Long"}
+      }
+    },
+    "ListSessionsOutput":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"SessionSummaryList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -860,6 +1036,7 @@
         "invalid_grant",
         "invalid_scope",
         "invalid_target",
+        "invalid_client",
         "rate_exceeded",
         "service_unavailable"
       ]
@@ -920,6 +1097,18 @@
       "key":{"shape":"String"},
       "value":{"shape":"String"}
     },
+    "PrincipalArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws:((iam::[0-9]{12}:role/[a-zA-Z0-9_+=,.@-]{1,64})|(iam::[0-9]{12}:user/[a-zA-Z0-9_+=,.@-]{1,64})|(sts::[0-9]{12}:federated-user/[a-zA-Z0-9_+=,.@-]{2,193})|(iam::[0-9]{12}:root))"
+    },
+    "PrincipalArnFilter":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws:((iam::[0-9]{12}:role/[a-zA-Z0-9_+=,.@-]{1,64})|(iam::[0-9]{12}:user/[a-zA-Z0-9_+=,.@-]{1,64})|(sts::[0-9]{12}:federated-user/[a-zA-Z0-9_+=,.@-]{2,193})|(iam::[0-9]{12}:root)|(iam::[0-9]{12}:[*]))"
+    },
     "PutConsoleAuthorizationConfigurationInput":{
       "type":"structure",
       "members":{
@@ -969,7 +1158,7 @@
     },
     "RefreshToken":{
       "type":"string",
-      "max":2048,
+      "max":12288,
       "min":1,
       "sensitive":true
     },
@@ -998,9 +1187,14 @@
       },
       "exception":true
     },
+    "RevocationReason":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "RevocationToken":{
       "type":"string",
-      "max":4096,
+      "max":12288,
       "min":1,
       "pattern":"ASOR[A-Za-z0-9+/=_\\-]+",
       "sensitive":true
@@ -1018,6 +1212,17 @@
     "RevokeOAuth2TokenWithIAMResponse":{
       "type":"structure",
       "members":{}
+    },
+    "RevokedSession":{
+      "type":"structure",
+      "required":["sessionArn"],
+      "members":{
+        "sessionArn":{"shape":"SessionArn"}
+      }
+    },
+    "RevokedSessionList":{
+      "type":"list",
+      "member":{"shape":"RevokedSession"}
     },
     "Scope":{
       "type":"string",
@@ -1054,6 +1259,54 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "Session":{
+      "type":"structure",
+      "required":[
+        "sessionArn",
+        "principalArn",
+        "issuedAt",
+        "expiresAt"
+      ],
+      "members":{
+        "sessionArn":{"shape":"SessionArn"},
+        "principalArn":{"shape":"PrincipalArn"},
+        "role":{"shape":"PrincipalArn"},
+        "status":{"shape":"SessionStatus"},
+        "issuedAt":{"shape":"Long"},
+        "expiresAt":{"shape":"Long"},
+        "clientId":{"shape":"String"},
+        "clientType":{"shape":"ClientType"},
+        "resource":{"shape":"String"}
+      }
+    },
+    "SessionArn":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "SessionArnList":{
+      "type":"list",
+      "member":{"shape":"SessionArn"},
+      "max":5,
+      "min":1
+    },
+    "SessionStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "REVOKED"
+      ]
+    },
+    "SessionSummaryList":{
+      "type":"list",
+      "member":{"shape":"Session"}
+    },
+    "SessionsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
     },
     "SigninResourceBasedPolicy":{
       "type":"structure",
@@ -1105,7 +1358,7 @@
     },
     "TokenExchangeGrantType":{
       "type":"string",
-      "pattern":"urn:ietf:params:oauth:grant-type:token-exchange"
+      "pattern":"urn:ietf:params:oauth:grant-type:(token-exchange|jwt-bearer)"
     },
     "TokenExpiresIn":{
       "type":"integer",

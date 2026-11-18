@@ -71,7 +71,7 @@
       "base": null,
       "refs": {
         "AccountEntity$accountTags": "<p>A map of tag key-value pairs attached to the affected account.</p>",
-        "AffectedEntity$accountTags": "<p>A map of account tag key-value pairs attached to the affected entity.</p>"
+        "AffectedEntity$accountTags": "<p>A map of account tag key-value pairs for the account that owns the affected entity. This field is returned only by DescribeAffectedEntitiesForOrganization and is not populated by DescribeAffectedEntities.</p>"
       }
     },
     "AccountTagType": {
@@ -131,6 +131,7 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "ConfigureTagsTagKey$enabledForEventBridge": "<p>Whether this tag key is enabled for EventBridge notifications.</p>",
         "OrganizationTagKey$enabledForEventBridge": "<p>Whether this tag key is enabled for EventBridge notifications.</p>",
         "ResourceTagKey$enabledForEventBridge": "<p>Whether this tag key is enabled for EventBridge notifications.</p>",
         "TagKeyForOrganization$enabledForEventBridge": "<p>Whether this tag key is enabled for EventBridge notifications.</p>"
@@ -148,27 +149,43 @@
       "base": null,
       "refs": {}
     },
+    "ConfigureTagsForOrganizationResponseTagKeyList": {
+      "base": null,
+      "refs": {
+        "ConfigureTagsForOrganizationResponse$configuredTagKeys": "<p>The list of tag keys that were successfully configured for the organization, with the current status of each tag key.</p>"
+      }
+    },
     "ConfigureTagsForOrganizationTagKeyList": {
       "base": null,
       "refs": {
-        "ConfigureTagsForOrganizationRequest$tagKeys": "<p>The list of tag keys to configure for Health event tracking across the organization.</p>",
-        "ConfigureTagsForOrganizationResponse$configuredTagKeys": "<p>The list of tag keys that were successfully configured for the organization.</p>"
+        "ConfigureTagsForOrganizationRequest$tagKeys": "<p>The list of tag keys to configure for Health event tracking across the organization.</p>"
       }
     },
     "ConfigureTagsRequest": {
       "base": null,
       "refs": {}
     },
+    "ConfigureTagsRequestTagKeyList": {
+      "base": null,
+      "refs": {
+        "ConfigureTagsRequest$tagKeys": "<p>The list of resource tag keys to configure for Health event tracking.</p>"
+      }
+    },
     "ConfigureTagsResourceTagKeyList": {
       "base": null,
       "refs": {
-        "ConfigureTagsRequest$tagKeys": "<p>The list of resource tag keys to configure for Health event tracking.</p>",
         "ConfigureTagsResponse$configuredTagKeys": "<p>The list of resource tag keys that were successfully configured.</p>"
       }
     },
     "ConfigureTagsResponse": {
       "base": null,
       "refs": {}
+    },
+    "ConfigureTagsTagKey": {
+      "base": "<p>A resource tag key to configure for Health event tracking.</p>",
+      "refs": {
+        "ConfigureTagsRequestTagKeyList$member": null
+      }
     },
     "DateTimeRange": {
       "base": "<p>A range of dates and times that is used by the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_EventFilter.html\">EventFilter</a> and <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_EntityFilter.html\">EntityFilter</a> objects. If <code>from</code> is set and <code>to</code> is set: match items where the timestamp (<code>startTime</code>, <code>endTime</code>, or <code>lastUpdatedTime</code>) is between <code>from</code> and <code>to</code> inclusive. If <code>from</code> is set and <code>to</code> is not set: match items where the timestamp value is equal to or after <code>from</code>. If <code>from</code> is not set and <code>to</code> is set: match items where the timestamp value is equal to or before <code>to</code>.</p>",
@@ -212,7 +229,7 @@
     "DescribeAffectedEntitiesTagFilter": {
       "base": null,
       "refs": {
-        "EntityFilter$tags": "<p>A map of resource tag key-value pairs to filter affected entities.</p> <note> <p>Currently, the <code>tags</code> property isn't supported.</p> </note>"
+        "EntityFilter$tags": "<p>A map of tag keys to lists of tag values. A tag matches when its key is in the map and its value is one of the values listed for that key. The filter matches when at least one key in the map matches.</p>"
       }
     },
     "DescribeAffectedEntitiesTagValueList": {
@@ -324,7 +341,7 @@
     "DescribeEventsTagFilter": {
       "base": null,
       "refs": {
-        "EventFilter$tags": "<p>A map of resource tag key-value pairs to filter affected entities.</p> <note> <p>Currently, the <code>tags</code> property isn't supported.</p> </note>"
+        "EventFilter$tags": "<p>A map of tag keys to lists of tag values. A tag matches when its key is in the map and its value is one of the values listed for that key. The filter matches when at least one key in the map matches.</p>"
       }
     },
     "DescribeEventsTagValueList": {
@@ -716,6 +733,7 @@
     "OrganizationTagKey": {
       "base": "<p>A tag key configured for Health event tracking across an organization.</p>",
       "refs": {
+        "ConfigureTagsForOrganizationResponseTagKeyList$member": null,
         "OrganizationTagKeyList$member": null
       }
     },
@@ -1192,6 +1210,7 @@
     "resourceTagKey": {
       "base": null,
       "refs": {
+        "ConfigureTagsTagKey$key": "<p>The tag key name.</p>",
         "ResourceTagKey$key": "<p>The tag key name.</p>",
         "ResourceTagSet$key": null
       }
@@ -1239,22 +1258,14 @@
       "base": null,
       "refs": {
         "AccountTag$key": "<p>The tag key.</p>",
-        "OrganizationTag$key": "<p>The tag key.</p>",
-        "tagSet$key": null
-      }
-    },
-    "tagSet": {
-      "base": null,
-      "refs": {
-        "AffectedEntity$tags": "<p>A map of resource tag key-value pairs attached to the affected entity.</p> <note> <p>Currently, the <code>tags</code> property isn't supported.</p> </note>"
+        "OrganizationTag$key": "<p>The tag key.</p>"
       }
     },
     "tagValue": {
       "base": null,
       "refs": {
         "AccountTag$value": "<p>The tag value.</p>",
-        "OrganizationTag$value": "<p>The tag value.</p>",
-        "tagSet$value": null
+        "OrganizationTag$value": "<p>The tag value.</p>"
       }
     },
     "timestamp": {

@@ -3888,7 +3888,8 @@
     "EncryptionConfiguration":{
       "type":"structure",
       "members":{
-        "ReplicaKmsKeyID":{"shape":"ReplicaKmsKeyID"}
+        "ReplicaKmsKeyID":{"shape":"ReplicaKmsKeyID"},
+        "UseSourceMultiRegionKey":{"shape":"UseSourceMultiRegionKey"}
       }
     },
     "EncryptionType":{
@@ -9897,6 +9898,13 @@
         }
       }
     },
+    "ReplicationPrefixList":{
+      "type":"list",
+      "member":{
+        "shape":"Prefix",
+        "locationName":"Prefix"
+      }
+    },
     "ReplicationRule":{
       "type":"structure",
       "required":[
@@ -9926,7 +9934,8 @@
           "shape":"TagSet",
           "flattened":true,
           "locationName":"Tag"
-        }
+        },
+        "Not":{"shape":"ReplicationRuleNotOperator"}
       }
     },
     "ReplicationRuleFilter":{
@@ -9934,7 +9943,31 @@
       "members":{
         "Prefix":{"shape":"Prefix"},
         "Tag":{"shape":"Tag"},
-        "And":{"shape":"ReplicationRuleAndOperator"}
+        "And":{"shape":"ReplicationRuleAndOperator"},
+        "Not":{"shape":"ReplicationRuleNotOperator"}
+      }
+    },
+    "ReplicationRuleNotOperator":{
+      "type":"structure",
+      "members":{
+        "Prefix":{"shape":"Prefix"},
+        "Tag":{"shape":"Tag"},
+        "Or":{"shape":"ReplicationRuleOrOperator"}
+      }
+    },
+    "ReplicationRuleOrOperator":{
+      "type":"structure",
+      "members":{
+        "Prefixes":{
+          "shape":"ReplicationPrefixList",
+          "flattened":true,
+          "locationName":"Prefix"
+        },
+        "Tags":{
+          "shape":"TagSet",
+          "flattened":true,
+          "locationName":"Tag"
+        }
       }
     },
     "ReplicationRuleStatus":{
@@ -11256,6 +11289,20 @@
         }
       },
       "payload":"Body"
+    },
+    "UseSourceMultiRegionKey":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Status":{"shape":"UseSourceMultiRegionKeyStatus"}
+      }
+    },
+    "UseSourceMultiRegionKeyStatus":{
+      "type":"string",
+      "enum":[
+        "Enabled",
+        "Disabled"
+      ]
     },
     "UserMetadata":{
       "type":"list",

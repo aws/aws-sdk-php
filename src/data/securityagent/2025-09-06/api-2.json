@@ -983,6 +983,16 @@
       "output":{"shape":"ListThreatsOutput"},
       "readonly":true
     },
+    "ResumePentestJob":{
+      "name":"ResumePentestJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ResumePentestJob",
+        "responseCode":200
+      },
+      "input":{"shape":"ResumePentestJobInput"},
+      "output":{"shape":"ResumePentestJobOutput"}
+    },
     "StartCodeRemediation":{
       "name":"StartCodeRemediation",
       "http":{
@@ -3181,7 +3191,8 @@
       "enum":[
         "CLIENT_ERROR",
         "INTERNAL_ERROR",
-        "STOPPED_BY_USER"
+        "STOPPED_BY_USER",
+        "PAUSED_BY_USER"
       ]
     },
     "ErrorInformation":{
@@ -3800,6 +3811,8 @@
         "IN_PROGRESS",
         "STOPPING",
         "STOPPED",
+        "PAUSING",
+        "PAUSED",
         "FAILED",
         "COMPLETED"
       ]
@@ -4466,6 +4479,7 @@
         "scopeChanges":{"shape":"ScopeChangeList"},
         "cicdConfiguration":{"shape":"CiCdConfiguration"},
         "testScope":{"shape":"TestScope"},
+        "version":{"shape":"String"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -4492,7 +4506,8 @@
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
         "jobType":{"shape":"JobType"},
-        "reportUrl":{"shape":"String"}
+        "reportUrl":{"shape":"String"},
+        "version":{"shape":"String"}
       }
     },
     "PentestJobSummaryList":{
@@ -4701,6 +4716,30 @@
         "DOCUMENT",
         "PROJECT"
       ]
+    },
+    "ResumePentestJobInput":{
+      "type":"structure",
+      "members":{
+        "agentSpaceId":{"shape":"String"},
+        "pentestJobId":{"shape":"String"},
+        "actors":{"shape":"ActorList"},
+        "networkTrafficConfig":{"shape":"NetworkTrafficConfig"},
+        "vpcConfig":{"shape":"VpcConfig"},
+        "maxTaskHours":{"shape":"Double"},
+        "copyConfigFromPentest":{"shape":"Boolean"}
+      }
+    },
+    "ResumePentestJobOutput":{
+      "type":"structure",
+      "members":{
+        "title":{"shape":"String"},
+        "status":{"shape":"JobStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "pentestId":{"shape":"String"},
+        "pentestJobId":{"shape":"String"},
+        "version":{"shape":"String"}
+      }
     },
     "RiskLevel":{
       "type":"string",
@@ -5146,7 +5185,8 @@
       ],
       "members":{
         "agentSpaceId":{"shape":"String"},
-        "pentestJobId":{"shape":"String"}
+        "pentestJobId":{"shape":"String"},
+        "pause":{"shape":"Boolean"}
       }
     },
     "StopPentestJobOutput":{

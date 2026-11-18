@@ -708,6 +708,28 @@ use Aws\PresignUrlMiddleware;
  *     MaxRecords?: int,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result describeServerlessV2PlatformVersions(array $args = [])
+ * @phpstan-method \Aws\Result describeServerlessV2PlatformVersions(array{
+ *     ServerlessV2PlatformVersion?: string,
+ *     Engine?: string,
+ *     Filters?: list<array{Name?: string, Values?: list<string>, ...}>,
+ *     DefaultOnly?: bool,
+ *     IncludeAll?: bool,
+ *     MaxRecords?: int,
+ *     Marker?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeServerlessV2PlatformVersionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeServerlessV2PlatformVersionsAsync(array{
+ *     ServerlessV2PlatformVersion?: string,
+ *     Engine?: string,
+ *     Filters?: list<array{Name?: string, Values?: list<string>, ...}>,
+ *     DefaultOnly?: bool,
+ *     IncludeAll?: bool,
+ *     MaxRecords?: int,
+ *     Marker?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result describeValidDBInstanceModifications(array $args = [])
  * @phpstan-method \Aws\Result describeValidDBInstanceModifications(array{DBInstanceIdentifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeValidDBInstanceModificationsAsync(array $args = [])

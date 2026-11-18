@@ -2609,6 +2609,7 @@
         {"shape":"NoSuchEntityException"},
         {"shape":"PasswordPolicyViolationException"},
         {"shape":"LimitExceededException"},
+        {"shape":"InvalidInputException"},
         {"shape":"ServiceFailureException"}
       ]
     },
@@ -2640,6 +2641,7 @@
       "errors":[
         {"shape":"UnmodifiableEntityException"},
         {"shape":"NoSuchEntityException"},
+        {"shape":"InvalidInputException"},
         {"shape":"ServiceFailureException"}
       ]
     },
@@ -3193,7 +3195,8 @@
       "members":{
         "UserName":{"shape":"userNameType"},
         "Password":{"shape":"passwordType"},
-        "PasswordResetRequired":{"shape":"booleanType"}
+        "PasswordResetRequired":{"shape":"booleanType"},
+        "MaxSigninSessionDuration":{"shape":"maxSigninSessionDurationType"}
       }
     },
     "CreateLoginProfileResponse":{
@@ -3270,6 +3273,7 @@
         "AssumeRolePolicyDocument":{"shape":"policyDocumentType"},
         "Description":{"shape":"roleDescriptionType"},
         "MaxSessionDuration":{"shape":"roleMaxSessionDurationType"},
+        "MaxSigninSessionDuration":{"shape":"maxSigninSessionDurationType"},
         "PermissionsBoundary":{"shape":"arnType"},
         "Tags":{"shape":"tagListType"}
       }
@@ -5251,7 +5255,8 @@
       "members":{
         "UserName":{"shape":"userNameType"},
         "CreateDate":{"shape":"dateType"},
-        "PasswordResetRequired":{"shape":"booleanType"}
+        "PasswordResetRequired":{"shape":"booleanType"},
+        "MaxSigninSessionDuration":{"shape":"maxSigninSessionDurationType"}
       }
     },
     "MFADevice":{
@@ -5861,6 +5866,7 @@
         "AssumeRolePolicyDocument":{"shape":"policyDocumentType"},
         "Description":{"shape":"roleDescriptionType"},
         "MaxSessionDuration":{"shape":"roleMaxSessionDurationType"},
+        "MaxSigninSessionDuration":{"shape":"maxSigninSessionDurationType"},
         "PermissionsBoundary":{"shape":"AttachedPermissionsBoundary"},
         "Tags":{"shape":"tagListType"},
         "RoleLastUsed":{"shape":"RoleLastUsed"},
@@ -6560,7 +6566,9 @@
       "members":{
         "UserName":{"shape":"userNameType"},
         "Password":{"shape":"passwordType"},
-        "PasswordResetRequired":{"shape":"booleanObjectType"}
+        "PasswordResetRequired":{"shape":"booleanObjectType"},
+        "MaxSigninSessionDuration":{"shape":"maxSigninSessionDurationType"},
+        "ResetMaxSigninSessionDuration":{"shape":"booleanObjectType"}
       }
     },
     "UpdateOpenIDConnectProviderThumbprintRequest":{
@@ -6597,7 +6605,9 @@
       "members":{
         "RoleName":{"shape":"roleNameType"},
         "Description":{"shape":"roleDescriptionType"},
-        "MaxSessionDuration":{"shape":"roleMaxSessionDurationType"}
+        "MaxSessionDuration":{"shape":"roleMaxSessionDurationType"},
+        "MaxSigninSessionDuration":{"shape":"maxSigninSessionDurationType"},
+        "ResetMaxSigninSessionDuration":{"shape":"booleanObjectType"}
       }
     },
     "UpdateRoleResponse":{
@@ -7072,6 +7082,11 @@
       "box":true,
       "max":1095,
       "min":1
+    },
+    "maxSigninSessionDurationType":{
+      "type":"integer",
+      "max":7776000,
+      "min":3600
     },
     "mfaDeviceListType":{
       "type":"list",

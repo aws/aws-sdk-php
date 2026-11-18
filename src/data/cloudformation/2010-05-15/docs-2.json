@@ -6,7 +6,7 @@
     "ActivateType": "<p>Activates a public third-party extension, such as a resource or module, to make it available for use in stack templates in your current account and Region. It can also create CloudFormation Hooks, which allow you to evaluate resource configurations before CloudFormation provisions them. Hooks integrate with both CloudFormation and Cloud Control API operations.</p> <p>After you activate an extension, you can use <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_SetTypeConfiguration.html\">SetTypeConfiguration</a> to set specific properties for the extension.</p> <p>To see which extensions have been activated, use <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListTypes.html\">ListTypes</a>. To see configuration details for an extension, use <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_DescribeType.html\">DescribeType</a>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry-public-activate-extension.html\">Activate a third-party public extension in your account</a> in the <i>CloudFormation User Guide</i>. For information about creating Hooks, see the <a href=\"https://docs.aws.amazon.com/cloudformation-cli/latest/hooks-userguide/what-is-cloudformation-hooks.html\">CloudFormation Hooks User Guide</a>.</p>",
     "BatchDescribeTypeConfigurations": "<p>Returns configuration data for the specified CloudFormation extensions, from the CloudFormation registry in your current account and Region.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry-set-configuration.html\">Edit configuration data for extensions in your account</a> in the <i>CloudFormation User Guide</i>.</p>",
     "CancelUpdateStack": "<p>Cancels an update on the specified stack. If the call completes successfully, the stack rolls back the update and reverts to the previous stack configuration.</p> <note> <p>You can cancel only stacks that are in the <code>UPDATE_IN_PROGRESS</code> state.</p> </note>",
-    "ContinueUpdateRollback": "<p>Continues rolling back a stack from <code>UPDATE_ROLLBACK_FAILED</code> to <code>UPDATE_ROLLBACK_COMPLETE</code> state. Depending on the cause of the failure, you can manually fix the error and continue the rollback. By continuing the rollback, you can return your stack to a working state (the <code>UPDATE_ROLLBACK_COMPLETE</code> state) and then try to update the stack again.</p> <p>A stack enters the <code>UPDATE_ROLLBACK_FAILED</code> state when CloudFormation can't roll back all changes after a failed stack update. For example, this might occur when a stack attempts to roll back to an old database that was deleted outside of CloudFormation. Because CloudFormation doesn't know the instance was deleted, it assumes the instance still exists and attempts to roll back to it, causing the update rollback to fail.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-continueupdaterollback.html\">Continue rolling back an update</a> in the <i>CloudFormation User Guide</i>. For information for troubleshooting a failed update rollback, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html#troubleshooting-errors-update-rollback-failed\">Update rollback failed</a>.</p> <p> <code>ForceRollback</code> and <code>ResourcesToSkip</code> are mutually exclusive. For details, see <a>ContinueUpdateRollbackInput$ForceRollback</a>.</p>",
+    "ContinueUpdateRollback": "<p>Continues rolling back a stack from <code>UPDATE_ROLLBACK_FAILED</code> to <code>UPDATE_ROLLBACK_COMPLETE</code> state. Depending on the cause of the failure, you can manually fix the error and continue the rollback. By continuing the rollback, you can return your stack to a working state (the <code>UPDATE_ROLLBACK_COMPLETE</code> state) and then try to update the stack again.</p> <p>A stack enters the <code>UPDATE_ROLLBACK_FAILED</code> state when CloudFormation can't roll back all changes after a failed stack update. For example, this might occur when a stack attempts to roll back to an old database that was deleted outside of CloudFormation. Because CloudFormation doesn't know the instance was deleted, it assumes the instance still exists and attempts to roll back to it, causing the update rollback to fail.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-continueupdaterollback.html\">Continue rolling back an update</a> in the <i>CloudFormation User Guide</i>. For information for troubleshooting a failed update rollback, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html#troubleshooting-errors-update-rollback-failed\">Update rollback failed</a>.</p> <p> <code>ForceRollback</code> and <code>ResourcesToSkip</code> are mutually exclusive. For details, see the <code>ForceRollback</code> parameter.</p>",
     "CreateChangeSet": "<p>Creates a list of changes that will be applied to a stack so that you can review the changes before executing them. You can create a change set for a stack that doesn't exist or an existing stack. If you create a change set for a stack that doesn't exist, the change set shows all of the resources that CloudFormation will create. If you create a change set for an existing stack, CloudFormation compares the stack's information with the information that you submit in the change set and lists the differences. Use change sets to understand which resources CloudFormation will create or change, and how it will change resources in an existing stack, before you create or update a stack.</p> <p>To create a change set for a stack that doesn't exist, for the <code>ChangeSetType</code> parameter, specify <code>CREATE</code>. To create a change set for an existing stack, specify <code>UPDATE</code> for the <code>ChangeSetType</code> parameter. To create a change set for an import operation, specify <code>IMPORT</code> for the <code>ChangeSetType</code> parameter. After the <code>CreateChangeSet</code> call successfully completes, CloudFormation starts creating the change set. To check the status of the change set or to review it, use the <a>DescribeChangeSet</a> action.</p> <p>When you are satisfied with the changes the change set will make, execute the change set by using the <a>ExecuteChangeSet</a> action. CloudFormation doesn't make changes until you execute the change set.</p> <p>To create a change set for the entire stack hierarchy, set <code>IncludeNestedStacks</code> to <code>True</code>.</p>",
     "CreateGeneratedTemplate": "<p>Creates a template from existing resources that are not already managed with CloudFormation. You can check the status of the template generation using the <code>DescribeGeneratedTemplate</code> API action.</p>",
     "CreateStack": "<p>Creates a stack as specified in the template. After the call completes successfully, the stack creation starts. You can check the status of the stack through the <a>DescribeStacks</a> operation.</p> <p>For more information about creating a stack and monitoring stack progress, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html\">Managing Amazon Web Services resources as a single unit with CloudFormation stacks</a> in the <i>CloudFormation User Guide</i>.</p>",
@@ -37,7 +37,7 @@
     "DescribeStackResourceDrifts": "<p>Returns drift information for the resources that have been checked for drift in the specified stack. This includes actual and expected configuration values for resources where CloudFormation detects configuration drift.</p> <p>For a given stack, there will be one <code>StackResourceDrift</code> for each stack resource that has been checked for drift. Resources that haven't yet been checked for drift aren't included. Resources that don't currently support drift detection aren't checked, and so not included. For a list of resources that support drift detection, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-supported-resources.html\">Resource type support for imports and drift detection</a>.</p> <p>Use <a>DetectStackResourceDrift</a> to detect drift on individual resources, or <a>DetectStackDrift</a> to detect drift on all supported resources for a given stack.</p>",
     "DescribeStackResources": "<p>Returns Amazon Web Services resource descriptions for running and deleted stacks. If <code>StackName</code> is specified, all the associated resources that are part of the stack are returned. If <code>PhysicalResourceId</code> is specified, the associated resources of the stack that the resource belongs to are returned.</p> <note> <p>Only the first 100 resources will be returned. If your stack has more resources than this, you should use <code>ListStackResources</code> instead.</p> </note> <p>For deleted stacks, <code>DescribeStackResources</code> returns resource information for up to 90 days after the stack has been deleted.</p> <p>You must specify either <code>StackName</code> or <code>PhysicalResourceId</code>, but not both. In addition, you can specify <code>LogicalResourceId</code> to filter the returned result. For more information about resources, the <code>LogicalResourceId</code> and <code>PhysicalResourceId</code>, see the <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/\">CloudFormation User Guide</a>.</p> <note> <p>A <code>ValidationError</code> is returned if you specify both <code>StackName</code> and <code>PhysicalResourceId</code> in the same request.</p> </note>",
     "DescribeStackSet": "<p>Returns the description of the specified StackSet.</p> <note> <p>This API provides <i>strongly consistent</i> reads meaning it will always return the most up-to-date data.</p> </note>",
-    "DescribeStackSetOperation": "<p>Returns the description of the specified StackSet operation.</p> <note> <p>This API provides <i>strongly consistent</i> reads meaning it will always return the most up-to-date data.</p> </note>",
+    "DescribeStackSetOperation": "<p>Returns the description of the specified StackSet operation.</p> <p>Reports role provisioning and stack instances deployment progress in <code>StatusDetails.Stages</code>. A breakdown for each Amazon Web Services Region is available in <code>RegionalStatusDetails</code>.</p> <note> <p>This API provides <i>strongly consistent</i> reads meaning it will always return the most up-to-date data.</p> </note>",
     "DescribeStacks": "<p>Returns the description for the specified stack; if no stack name was specified, then it returns the description for all the stacks created. For more information about a stack's event history, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stack-resource-configuration-complete.html\">Understand CloudFormation stack creation events</a> in the <i>CloudFormation User Guide</i>.</p> <note> <p>If the stack doesn't exist, a <code>ValidationError</code> is returned.</p> </note>",
     "DescribeType": "<p>Returns detailed information about an extension from the CloudFormation registry in your current account and Region.</p> <p>If you specify a <code>VersionId</code>, <code>DescribeType</code> returns information about that specific extension version. Otherwise, it returns information about the default extension version.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry-set-configuration.html\">Edit configuration data for extensions in your account</a> in the <i>CloudFormation User Guide</i>.</p>",
     "DescribeTypeRegistration": "<p>Returns information about an extension's registration, including its current status and type and version identifiers.</p> <p>When you initiate a registration request using <a>RegisterType</a>, you can then use <a>DescribeTypeRegistration</a> to monitor the progress of that registration request.</p> <p>Once the registration request has completed, use <a>DescribeType</a> to return detailed information about an extension.</p>",
@@ -68,7 +68,7 @@
     "ListStackResources": "<p>Returns descriptions of all resources of the specified stack.</p> <p>For deleted stacks, ListStackResources returns resource information for up to 90 days after the stack has been deleted.</p>",
     "ListStackSetAutoDeploymentTargets": "<p>Returns summary information about deployment targets for a StackSet.</p>",
     "ListStackSetOperationResults": "<p>Returns summary information about the results of a StackSet operation.</p> <note> <p>This API provides <i>eventually consistent</i> reads meaning it may take some time but will eventually return the most up-to-date data.</p> </note>",
-    "ListStackSetOperations": "<p>Returns summary information about operations performed on a StackSet.</p> <note> <p>This API provides <i>eventually consistent</i> reads meaning it may take some time but will eventually return the most up-to-date data.</p> </note>",
+    "ListStackSetOperations": "<p>Returns summary information about operations performed on a StackSet.</p> <p>Reports role provisioning and stack instances deployment progress in <code>StatusDetails.Stages</code>. The breakdown for each Amazon Web Services Region is available only from <a>DescribeStackSetOperation</a>.</p> <note> <p>This API provides <i>eventually consistent</i> reads meaning it may take some time but will eventually return the most up-to-date data.</p> </note>",
     "ListStackSets": "<p>Returns summary information about StackSets that are associated with the user.</p> <note> <p>This API provides <i>strongly consistent</i> reads meaning it will always return the most up-to-date data.</p> </note> <ul> <li> <p>[Self-managed permissions] If you set the <code>CallAs</code> parameter to <code>SELF</code> while signed in to your Amazon Web Services account, <code>ListStackSets</code> returns all self-managed StackSets in your Amazon Web Services account.</p> </li> <li> <p>[Service-managed permissions] If you set the <code>CallAs</code> parameter to <code>SELF</code> while signed in to the organization's management account, <code>ListStackSets</code> returns all StackSets in the management account.</p> </li> <li> <p>[Service-managed permissions] If you set the <code>CallAs</code> parameter to <code>DELEGATED_ADMIN</code> while signed in to your member account, <code>ListStackSets</code> returns all StackSets with service-managed permissions in the management account.</p> </li> </ul>",
     "ListStacks": "<p>Returns the summary information for stacks whose status matches the specified <code>StackStatusFilter</code>. Summary information for stacks that have been deleted is kept for 90 days after the stack is deleted. If no <code>StackStatusFilter</code> is specified, summary information for all stacks is returned (including existing stacks and stacks that have been deleted).</p>",
     "ListTypeRegistrations": "<p>Returns a list of registration tokens for the specified extension(s).</p>",
@@ -384,6 +384,13 @@
       "base": "<p>The input for the <a>CancelUpdateStack</a> action.</p>",
       "refs": {}
     },
+    "CancelledStackInstancesCount": {
+      "base": null,
+      "refs": {
+        "RegionalStackInstancesDeployment$CancelledStackInstancesCount": "<p>The number of stack instances in this Region that were canceled because the operation exceeded its failure tolerance or was stopped.</p>",
+        "StackInstancesDeployment$CancelledStackInstancesCount": "<p>The number of stack instances that were canceled because the operation exceeded its failure tolerance or was stopped.</p>"
+      }
+    },
     "Capabilities": {
       "base": null,
       "refs": {
@@ -598,6 +605,19 @@
       "refs": {
         "CreateChangeSetInput$ClientToken": "<p>A unique identifier for this <code>CreateChangeSet</code> request. Specify this token if you plan to retry requests so that CloudFormation knows that you're not attempting to create another change set with the same name. You might retry <code>CreateChangeSet</code> requests to ensure that CloudFormation successfully received them.</p>",
         "RecordHandlerProgressInput$BearerToken": "<p>Reserved for use by the <a href=\"https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/what-is-cloudformation-cli.html\">CloudFormation CLI</a>.</p>"
+      }
+    },
+    "CompletedAccountsCount": {
+      "base": null,
+      "refs": {
+        "RoleProvisioning$CompletedAccountsCount": "<p>The number of accounts that have finished role provisioning, including both succeeded and failed accounts.</p>"
+      }
+    },
+    "CompletedStackInstancesCount": {
+      "base": null,
+      "refs": {
+        "RegionalStackInstancesDeployment$CompletedStackInstancesCount": "<p>The number of stack instances in this Region that have reached a final state. This count includes stack instances that succeeded, failed, were skipped, or were canceled.</p>",
+        "StackInstancesDeployment$CompletedStackInstancesCount": "<p>The number of stack instances that have reached a final state. This count includes stack instances that succeeded, failed, were skipped, or were canceled.</p>"
       }
     },
     "ConcurrencyMode": {
@@ -1187,6 +1207,12 @@
       "base": null,
       "refs": {
         "ListExportsOutput$Exports": "<p>The output for the <a>ListExports</a> action.</p>"
+      }
+    },
+    "FailedAccountsCount": {
+      "base": null,
+      "refs": {
+        "RoleProvisioning$FailedAccountsCount": "<p>The number of accounts for which role provisioning failed.</p>"
       }
     },
     "FailedEventsFilter": {
@@ -2248,6 +2274,19 @@
         "UpdateStackSetInput$Parameters": "<p>A list of input parameters for the StackSet template.</p>"
       }
     },
+    "PendingAccountsCount": {
+      "base": null,
+      "refs": {
+        "RoleProvisioning$PendingAccountsCount": "<p>The number of accounts that are still awaiting role provisioning.</p>"
+      }
+    },
+    "PendingStackInstancesCount": {
+      "base": null,
+      "refs": {
+        "RegionalStackInstancesDeployment$PendingStackInstancesCount": "<p>The number of stack instances in this Region that have not reached a final state. This is the total number of stack instances in this Region minus the completed count.</p>",
+        "StackInstancesDeployment$PendingStackInstancesCount": "<p>The number of stack instances that have not reached a final state. This is the total number of stack instances minus the completed count.</p>"
+      }
+    },
     "PercentageCompleted": {
       "base": null,
       "refs": {
@@ -2449,6 +2488,7 @@
         "ListStackInstanceResourceDriftsInput$StackInstanceRegion": "<p>The name of the Region where you want to list resource drifts.</p>",
         "ListStackInstancesInput$StackInstanceRegion": "<p>The name of the Region where you want to list stack instances.</p>",
         "RegionList$member": null,
+        "RegionalStatusDetails$key": null,
         "StackInstance$Region": "<p>The name of the Amazon Web Services Region that the stack instance is associated with.</p>",
         "StackInstanceSummary$Region": "<p>The name of the Amazon Web Services Region that the stack instance is associated with.</p>",
         "StackSetOperationResultSummary$Region": "<p>The name of the Amazon Web Services Region for this operation result.</p>"
@@ -2470,6 +2510,36 @@
         "StackSetOperationPreferences$RegionOrder": "<p>The order of the Regions where you want to perform the stack operation.</p>",
         "UpdateStackInstancesInput$Regions": "<p>The names of one or more Amazon Web Services Regions in which you want to update parameter values for stack instances. The overridden parameter values will be applied to all stack instances in the specified accounts and Amazon Web Services Regions.</p>",
         "UpdateStackSetInput$Regions": "<p>The Amazon Web Services Regions in which to update associated stack instances. If you specify Regions, you must also specify accounts in which to update StackSet instances.</p> <p>To update <i>all</i> the stack instances associated with this StackSet, do not specify the <code>Accounts</code> or <code>Regions</code> properties.</p> <p>If the StackSet update includes changes to the template (that is, if the <code>TemplateBody</code> or <code>TemplateURL</code> properties are specified), or the <code>Parameters</code> property, CloudFormation marks all stack instances with a status of <code>OUTDATED</code> prior to updating the stack instances in the specified accounts and Regions. If the StackSet update does not include changes to the template or parameters, CloudFormation updates the stack instances in the specified accounts and Regions, while leaving all other stack instances with their existing stack instance status.</p>"
+      }
+    },
+    "RegionalStackInstancesDeployment": {
+      "base": "<p>Provides visibility into the stack instances deployment stage for a single Region, including per-stack-instance progress counts and a completion percentage for that Region.</p>",
+      "refs": {
+        "RegionalStages$RegionalStackInstancesDeployment": "<p>The progress detail for the stack instances deployment stage in this Region.</p>"
+      }
+    },
+    "RegionalStages": {
+      "base": "<p>Contains the progress information for the individual stages of a StackSet operation in a single Region. Currently reports the stack instances deployment stage for the Region.</p>",
+      "refs": {
+        "RegionalStatusDetail$Stages": "<p>The progress information for the individual stages of the operation in this Region.</p>"
+      }
+    },
+    "RegionalStatusDetail": {
+      "base": "<p>Contains the progress detail for a single Region of a StackSet operation. This information is returned only by <a>DescribeStackSetOperation</a>.</p>",
+      "refs": {
+        "RegionalStatusDetails$value": null
+      }
+    },
+    "RegionalStatusDetails": {
+      "base": null,
+      "refs": {
+        "StackSetOperation$RegionalStatusDetails": "<p>The progress detail for each Region of the operation, keyed by Region. Each entry reports the stack instances deployment progress for that Region. This field is returned only by <a>DescribeStackSetOperation</a>. It is not included in the <a>ListStackSetOperations</a> summary.</p>"
+      }
+    },
+    "RegionalTotalStackInstancesCount": {
+      "base": null,
+      "refs": {
+        "RegionalStackInstancesDeployment$TotalStackInstancesCount": "<p>The total number of stack instances targeted by this operation in this Region.</p>"
       }
     },
     "RegisterPublisherInput": {
@@ -3004,6 +3074,12 @@
         "RegisterTypeInput$ExecutionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role for CloudFormation to assume when invoking the extension.</p> <p>For CloudFormation to assume the specified execution role, the role must contain a trust relationship with the CloudFormation service principal (<code>resources.cloudformation.amazonaws.com</code>). For more information about adding trust relationships, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/roles-managingrole-editing-console.html#roles-managingrole_edit-trust-policy\">Modifying a role trust policy</a> in the <i>Identity and Access Management User Guide</i>.</p> <p>If your extension calls Amazon Web Services APIs in any of its handlers, you must create an <i> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html\">IAM execution role</a> </i> that includes the necessary permissions to call those Amazon Web Services APIs, and provision that execution role in your account. When CloudFormation needs to invoke the resource type handler, CloudFormation assumes this execution role to create a temporary session token, which it then passes to the resource type handler, thereby supplying your resource type with the appropriate credentials.</p>"
       }
     },
+    "RoleProvisioning": {
+      "base": "<p>Provides visibility into the role provisioning stage of a StackSet operation, including per-account progress counts and a completion percentage. For operations that do not provision IAM roles in target accounts, the <code>Status</code> is <code>NOT_APPLICABLE</code> and the progress counts are omitted.</p>",
+      "refs": {
+        "Stages$RoleProvisioning": "<p>The progress detail for the role provisioning stage. For operations that do not provision roles, this stage is present with a <code>Status</code> of <code>NOT_APPLICABLE</code>.</p>"
+      }
+    },
     "RollbackConfiguration": {
       "base": "<p>Structure that contains the rollback triggers for CloudFormation to monitor during stack creation and updating operations, and for the specified monitoring period afterwards.</p> <p>Rollback triggers enable you to have CloudFormation monitor the state of your application during stack creation and updating, and to roll back that operation if the application breaches the threshold of any of the alarms you've specified. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-rollback-triggers.html\">Roll back your CloudFormation stack on alarm breach with rollback triggers</a>.</p>",
       "refs": {
@@ -3124,6 +3200,13 @@
     "SignalResourceInput": {
       "base": "<p>The input for the <a>SignalResource</a> action.</p>",
       "refs": {}
+    },
+    "SkippedStackInstancesCount": {
+      "base": null,
+      "refs": {
+        "RegionalStackInstancesDeployment$SkippedStackInstancesCount": "<p>The number of stack instances in this Region that were skipped because role provisioning failed for their target account.</p>",
+        "StackInstancesDeployment$SkippedStackInstancesCount": "<p>The number of stack instances that were skipped because role provisioning failed for their target account.</p>"
+      }
     },
     "Stack": {
       "base": "<p>The <code>Stack</code> data type.</p>",
@@ -3326,6 +3409,19 @@
       "base": "<p>The structure that contains summary information about a stack instance.</p>",
       "refs": {
         "StackInstanceSummaries$member": null
+      }
+    },
+    "StackInstancesDeployment": {
+      "base": "<p>Provides visibility into the stack instances deployment stage of a StackSet operation, including per-stack-instance progress counts and a completion percentage. For service-managed operations that provision roles, this stage begins after role provisioning finishes.</p>",
+      "refs": {
+        "Stages$StackInstancesDeployment": "<p>The progress detail for the stack instances deployment stage. This stage reports the deployment of stack instances to the target accounts and Amazon Web Services Regions, after any role provisioning has finished.</p>"
+      }
+    },
+    "StackInstancesDeploymentFailedStackInstancesCount": {
+      "base": null,
+      "refs": {
+        "RegionalStackInstancesDeployment$FailedStackInstancesCount": "<p>The number of stack instances that failed to deploy in this Region.</p>",
+        "StackInstancesDeployment$FailedStackInstancesCount": "<p>The number of stack instances that failed to deploy.</p>"
       }
     },
     "StackName": {
@@ -3770,6 +3866,12 @@
         "StackSetOperationSummaries$member": null
       }
     },
+    "StackSetOperationTotalStackInstancesCount": {
+      "base": null,
+      "refs": {
+        "StackSetOperationStatusDetails$TotalStackInstancesCount": "<p>The total number of stack instances targeted by this StackSet operation. CloudFormation populates this value after it resolves the target stack instances. Until then, this field is not present.</p>"
+      }
+    },
     "StackSetStatus": {
       "base": null,
       "refs": {
@@ -3835,6 +3937,28 @@
         "GetTemplateOutput$StagesAvailable": "<p>The stage of the template that you can retrieve. For stacks, the <code>Original</code> and <code>Processed</code> templates are always available. For change sets, the <code>Original</code> template is always available. After CloudFormation finishes creating the change set, the <code>Processed</code> template becomes available.</p>"
       }
     },
+    "StagePercentageCompleted": {
+      "base": null,
+      "refs": {
+        "RegionalStackInstancesDeployment$PercentageCompleted": "<p>The percentage of stack instances in this Region that have reached a final state.</p>",
+        "RoleProvisioning$PercentageCompleted": "<p>The percentage of accounts that have completed role provisioning.</p>",
+        "StackInstancesDeployment$PercentageCompleted": "<p>The percentage of stack instances that have reached a final state.</p>"
+      }
+    },
+    "StageStatus": {
+      "base": null,
+      "refs": {
+        "RegionalStackInstancesDeployment$Status": "<p>The status of the stack instances deployment stage can be one of the following values:</p> <ul> <li> <p> <code>NOT_APPLICABLE</code>: The operation does not deploy stack instances, such as a drift detection operation.</p> </li> <li> <p> <code>NOT_STARTED</code>: Stack instances deployment has not started. The operation is still provisioning roles, has not begun, or failed before this stage was reached.</p> </li> <li> <p> <code>IN_PROGRESS</code>: At least one stack instance has started deploying.</p> </li> <li> <p> <code>SUCCEEDED</code>: Deployment finished and succeeded for all stack instances that were not skipped.</p> </li> <li> <p> <code>PARTIAL_SUCCESS</code>: Deployment finished with a mix of succeeded, failed, and canceled stack instances.</p> </li> <li> <p> <code>FAILED</code>: Deployment finished and every stack instance that was not skipped failed or was canceled.</p> </li> </ul>",
+        "RoleProvisioning$Status": "<p>The status of the role provisioning stage can be one of the following values:</p> <ul> <li> <p> <code>NOT_APPLICABLE</code>: The operation does not provision roles. This includes self-managed operations and service-managed operations whose configuration does not require role provisioning.</p> </li> <li> <p> <code>NOT_STARTED</code>: Role provisioning has not started. The operation has not begun resolving target accounts, or it failed or stopped before the total number of target accounts was resolved.</p> </li> <li> <p> <code>IN_PROGRESS</code>: Role provisioning is actively processing target accounts.</p> </li> <li> <p> <code>SUCCEEDED</code>: Role provisioning finished and succeeded for all target accounts.</p> </li> <li> <p> <code>PARTIAL_SUCCESS</code>: Role provisioning finished, but succeeded for only a subset of target accounts; one or more accounts failed.</p> </li> <li> <p> <code>FAILED</code>: Role provisioning finished and failed for all target accounts.</p> </li> </ul>",
+        "StackInstancesDeployment$Status": "<p>The status of the stack instances deployment stage can be one of the following values:</p> <ul> <li> <p> <code>NOT_APPLICABLE</code>: The operation does not deploy stack instances, such as a drift detection operation.</p> </li> <li> <p> <code>NOT_STARTED</code>: Stack instances deployment has not started. The operation is still provisioning roles, has not begun, or failed before this stage was reached.</p> </li> <li> <p> <code>IN_PROGRESS</code>: At least one stack instance has started deploying.</p> </li> <li> <p> <code>SUCCEEDED</code>: Deployment finished and succeeded for all stack instances that were not skipped.</p> </li> <li> <p> <code>PARTIAL_SUCCESS</code>: Deployment finished with a mix of succeeded, failed, and canceled stack instances.</p> </li> <li> <p> <code>FAILED</code>: Deployment finished and every stack instance that was not skipped failed or was canceled.</p> </li> </ul>"
+      }
+    },
+    "Stages": {
+      "base": "<p>Contains detailed progress information for the individual stages of a StackSet operation: the role provisioning stage and the stack instances deployment stage.</p>",
+      "refs": {
+        "StackSetOperationStatusDetails$Stages": "<p>The detailed progress information for the individual stages of the StackSet operation: the role provisioning stage and the stack instances deployment stage.</p>"
+      }
+    },
     "StaleRequestException": {
       "base": "<p>Another operation has been performed on this StackSet since the specified operation was performed.</p>",
       "refs": {}
@@ -3860,6 +3984,19 @@
     "StopStackSetOperationOutput": {
       "base": null,
       "refs": {}
+    },
+    "SucceededAccountsCount": {
+      "base": null,
+      "refs": {
+        "RoleProvisioning$SucceededAccountsCount": "<p>The number of accounts for which role provisioning succeeded.</p>"
+      }
+    },
+    "SucceededStackInstancesCount": {
+      "base": null,
+      "refs": {
+        "RegionalStackInstancesDeployment$SucceededStackInstancesCount": "<p>The number of stack instances that deployed successfully in this Region.</p>",
+        "StackInstancesDeployment$SucceededStackInstancesCount": "<p>The number of stack instances that deployed successfully.</p>"
+      }
     },
     "SupportedMajorVersion": {
       "base": null,
@@ -4083,6 +4220,12 @@
     "TokenAlreadyExistsException": {
       "base": "<p>A client request token already exists.</p>",
       "refs": {}
+    },
+    "TotalAccountsCount": {
+      "base": null,
+      "refs": {
+        "StackSetOperationStatusDetails$TotalAccountsCount": "<p>The total number of accounts targeted by this StackSet operation. Self-managed operations and service-managed operations that do not provision roles also report this value when it is known. CloudFormation populates this value after it resolves the target accounts. Until then, this field is not present.</p>"
+      }
     },
     "TotalStackInstancesCount": {
       "base": null,

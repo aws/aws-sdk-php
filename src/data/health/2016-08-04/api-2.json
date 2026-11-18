@@ -422,7 +422,6 @@
         "statusCode":{"shape":"entityStatusCode"},
         "resourceTags":{"shape":"ResourceTagSet"},
         "accountTags":{"shape":"AccountTagSet"},
-        "tags":{"shape":"tagSet"},
         "entityMetadata":{"shape":"entityMetadata"}
       }
     },
@@ -444,8 +443,14 @@
     "ConfigureTagsForOrganizationResponse":{
       "type":"structure",
       "members":{
-        "configuredTagKeys":{"shape":"ConfigureTagsForOrganizationTagKeyList"}
+        "configuredTagKeys":{"shape":"ConfigureTagsForOrganizationResponseTagKeyList"}
       }
+    },
+    "ConfigureTagsForOrganizationResponseTagKeyList":{
+      "type":"list",
+      "member":{"shape":"OrganizationTagKey"},
+      "max":10,
+      "min":1
     },
     "ConfigureTagsForOrganizationTagKeyList":{
       "type":"list",
@@ -457,8 +462,14 @@
       "type":"structure",
       "required":["tagKeys"],
       "members":{
-        "tagKeys":{"shape":"ConfigureTagsResourceTagKeyList"}
+        "tagKeys":{"shape":"ConfigureTagsRequestTagKeyList"}
       }
+    },
+    "ConfigureTagsRequestTagKeyList":{
+      "type":"list",
+      "member":{"shape":"ConfigureTagsTagKey"},
+      "max":10,
+      "min":1
     },
     "ConfigureTagsResourceTagKeyList":{
       "type":"list",
@@ -470,6 +481,14 @@
       "type":"structure",
       "members":{
         "configuredTagKeys":{"shape":"ConfigureTagsResourceTagKeyList"}
+      }
+    },
+    "ConfigureTagsTagKey":{
+      "type":"structure",
+      "required":["key"],
+      "members":{
+        "key":{"shape":"resourceTagKey"},
+        "enabledForEventBridge":{"shape":"Boolean"}
       }
     },
     "DateTimeRange":{
@@ -1291,6 +1310,7 @@
     },
     "TagKeyForOrganization":{
       "type":"structure",
+      "required":["key"],
       "members":{
         "key":{"shape":"organizationTagKey"},
         "enabledForEventBridge":{"shape":"Boolean"}
@@ -1564,12 +1584,6 @@
       "type":"string",
       "max":127,
       "pattern":".{0,127}"
-    },
-    "tagSet":{
-      "type":"map",
-      "key":{"shape":"tagKey"},
-      "value":{"shape":"tagValue"},
-      "max":50
     },
     "tagValue":{
       "type":"string",

@@ -2,6 +2,7 @@
   "version": "2.0",
   "service": "<p>AWS Sign-In manages authentication for AWS services. It implements OAuth 2.0, providing secure token exchange and refresh capabilities.</p>",
   "operations": {
+    "BatchRevokeSessions": "<p>Revokes up to five sign-in sessions. A revoked session can no longer be refreshed. Revoking a session that is already revoked succeeds. Each session must belong to the identity specified by principalArn, or to the caller if principalArn is omitted. Failures for individual sessions are returned in the errors list and do not fail the whole request.</p>",
     "CreateBearerToken": "<p>Creates a bearer token that represents your IAM credentials and can be used to access a supported AWS service. By default, the token is valid for 12 hours.</p>",
     "CreateOAuth2Token": "<p>Exchanges an authorization code or refresh token for an OAuth 2.0 access token and refresh token.</p>",
     "CreateOAuth2TokenWithIAM": "<p>Exchanges client credentials for an OAuth 2.0 access token scoped to a resource, which you can use to access AWS services from applications.</p>",
@@ -10,8 +11,10 @@
     "DeleteResourcePermissionStatement": "<p>Remove a permission statement from the account's SignIn resource-based policy</p>",
     "GetConsoleAuthorizationConfiguration": "<p>Get console authorization configuration with automatic scope detection</p>",
     "GetResourcePolicy": "<p>Retrieve the account's consolidated SignIn resource-based policy</p>",
+    "GetSession": "<p>Returns the details of a single sign-in session. The session must belong to the identity specified by principalArn, or to the caller if principalArn is omitted. A session that belongs to a different identity or account is reported as not found.</p>",
     "IntrospectOAuth2TokenWithIAM": "<p>Inspects the metadata and active state of an OAuth 2.0 access token or refresh token.</p> <p>Implements RFC 7662 OAuth 2.0 Token Introspection over a SigV4-authenticated endpoint. Returns the claims associated with a token issued by AWS Sign-In.</p>",
     "ListResourcePermissionStatements": "<p>Retrieve all permission statements in the account's SignIn resource-based policy</p>",
+    "ListSessions": "<p>Lists sign-in sessions for an IAM identity in your account. If you omit principalArn, the operation lists the caller's own sessions. Specify a user or role ARN to list that identity's sessions, or specify arn:aws:iam::{account-id}:* to list all sessions in the account. Filters are combined with a logical AND.</p>",
     "PutConsoleAuthorizationConfiguration": "<p>Enable console authorization configuration with automatic scope detection</p>",
     "PutResourcePermissionStatement": "<p>Create a permission statement in the account's SignIn resource-based policy</p>",
     "RevokeOAuth2TokenWithIAM": "<p>Revokes an OAuth 2.0 refresh token and its associated token chain.</p>"
@@ -33,11 +36,37 @@
         "IntrospectOAuth2TokenWithIAMResponse$accountId": "<p>12-digit AWS account ID of the token's subject principal.</p>"
       }
     },
+    "Assertion": {
+      "base": null,
+      "refs": {
+        "CreateOAuth2TokenWithTokenExchangeRequest$assertion": "<p>The JWT authorization grant, as defined in RFC 7523. Required when &quot;grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&quot;.</p>"
+      }
+    },
     "AuthorizationCode": {
       "base": "<p>Authorization code received from AWS Sign-In. Used only in the authorization code redemption flow.</p>",
       "refs": {
         "CreateOAuth2TokenRequestBody$code": "<p>The authorization code received from the &quot;/v1/authorize&quot; endpoint. Required when &quot;grant_type=authorization_code&quot;.</p>"
       }
+    },
+    "BatchRevokeSessionError": {
+      "base": "<p>A session that could not be revoked</p>",
+      "refs": {
+        "BatchRevokeSessionErrorList$member": null
+      }
+    },
+    "BatchRevokeSessionErrorList": {
+      "base": null,
+      "refs": {
+        "BatchRevokeSessionsOutput$errors": "<p>Sessions that could not be revoked</p>"
+      }
+    },
+    "BatchRevokeSessionsInput": {
+      "base": "<p>Input for BatchRevokeSessions operation</p>",
+      "refs": {}
+    },
+    "BatchRevokeSessionsOutput": {
+      "base": "<p>Output for BatchRevokeSessions operation</p>",
+      "refs": {}
     },
     "BearerTokenExpiresIn": {
       "base": "<p>Token lifetime in seconds.</p>",
@@ -80,6 +109,13 @@
       "refs": {
         "DeleteResourcePermissionStatementInput$clientToken": "<p>Idempotency token for the request</p>",
         "PutResourcePermissionStatementInput$clientToken": "<p>Idempotency token for the request</p>"
+      }
+    },
+    "ClientType": {
+      "base": "<p>Type of OAuth client that created a session</p>",
+      "refs": {
+        "GetSessionOutput$clientType": "<p>The type of OAuth client that created the session</p>",
+        "Session$clientType": "<p>The type of OAuth client that created the session</p>"
       }
     },
     "CodeVerifier": {
@@ -164,7 +200,7 @@
       "refs": {}
     },
     "CreateOAuth2TokenWithTokenExchangeResponse": {
-      "base": "<p>Output structure for CreateOAuth2TokenWithTokenExchange operation.</p> <p>Contains the access token, issued token type, token type, and expiration as defined in RFC 6749 §5.1 and RFC 8693 §2.2.1.</p>",
+      "base": "<p>Output structure for CreateOAuth2TokenWithTokenExchange operation.</p> <p>Contains the access token, token type, and expiration as defined in RFC 6749 §5.1, plus fields specific to the grant type.</p>",
       "refs": {}
     },
     "DeleteConsoleAuthorizationConfigurationInput": {
@@ -209,6 +245,14 @@
     },
     "GetResourcePolicyOutput": {
       "base": "<p>Output for GetResourcePolicy operation</p>",
+      "refs": {}
+    },
+    "GetSessionInput": {
+      "base": "<p>Input for GetSession operation</p>",
+      "refs": {}
+    },
+    "GetSessionOutput": {
+      "base": "<p>Output for GetSession operation</p>",
       "refs": {}
     },
     "GrantType": {
@@ -258,7 +302,13 @@
     "IssuedOAuthAccessTokenType": {
       "base": null,
       "refs": {
-        "CreateOAuth2TokenWithTokenExchangeResponse$issuedTokenType": "<p>The token type of the issued token. Always &quot;urn:ietf:params:oauth:token-type:access_token&quot; as defined in RFC 8693 §2.2.1.</p>"
+        "CreateOAuth2TokenWithTokenExchangeResponse$issuedTokenType": "<p>The token type of the issued token. Returned when &quot;grant_type=urn:ietf:params:oauth:grant-type:token-exchange&quot;. Value is &quot;urn:ietf:params:oauth:token-type:access_token&quot; as defined in RFC 8693 §2.2.1.</p>"
+      }
+    },
+    "JwtBearerClientId": {
+      "base": null,
+      "refs": {
+        "CreateOAuth2TokenWithTokenExchangeRequest$clientId": "<p>The OAuth 2.0 client identifier. If provided with &quot;grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&quot;, must match the assertion's &quot;client_id&quot; claim.</p>"
       }
     },
     "ListResourcePermissionStatementsInput": {
@@ -269,19 +319,36 @@
       "base": "<p>Output for ListResourcePermissionStatements operation</p>",
       "refs": {}
     },
+    "ListSessionsInput": {
+      "base": "<p>Input for ListSessions operation</p>",
+      "refs": {}
+    },
+    "ListSessionsOutput": {
+      "base": "<p>Output for ListSessions operation</p>",
+      "refs": {}
+    },
     "Long": {
       "base": null,
       "refs": {
+        "GetSessionOutput$issuedAt": "<p>The time the session was created, in Unix epoch seconds</p>",
+        "GetSessionOutput$expiresAt": "<p>The time the session expires, in Unix epoch seconds</p>",
+        "GetSessionOutput$lastUsedAt": "<p>The time the session was last refreshed, in Unix epoch seconds</p>",
         "IntrospectOAuth2TokenWithIAMResponse$exp": "<p>Token expiration time as a NumericDate (Unix epoch seconds).</p>",
         "IntrospectOAuth2TokenWithIAMResponse$iat": "<p>Token issuance time as a NumericDate (Unix epoch seconds).</p>",
-        "IntrospectOAuth2TokenWithIAMResponse$nbf": "<p>Token &quot;not before&quot; time as a NumericDate (Unix epoch seconds).</p>"
+        "IntrospectOAuth2TokenWithIAMResponse$nbf": "<p>Token &quot;not before&quot; time as a NumericDate (Unix epoch seconds).</p>",
+        "ListSessionsInput$issuedAfter": "<p>Returns only sessions created at or after this time, in Unix epoch seconds</p>",
+        "ListSessionsInput$issuedBefore": "<p>Returns only sessions created before this time, in Unix epoch seconds</p>",
+        "Session$issuedAt": "<p>The time the session was created, in Unix epoch seconds</p>",
+        "Session$expiresAt": "<p>The time the session expires, in Unix epoch seconds</p>"
       }
     },
     "NextToken": {
       "base": "<p>Pagination token</p>",
       "refs": {
         "ListResourcePermissionStatementsInput$nextToken": "<p>Token for pagination</p>",
-        "ListResourcePermissionStatementsOutput$nextToken": "<p>Token for next page of results</p>"
+        "ListResourcePermissionStatementsOutput$nextToken": "<p>Token for next page of results</p>",
+        "ListSessionsInput$nextToken": "<p>Token for pagination</p>",
+        "ListSessionsOutput$nextToken": "<p>Token for next page of results</p>"
       }
     },
     "OAuth2ErrorCode": {
@@ -303,8 +370,8 @@
       "base": "<p>OAuth 2.0 access token containing principal identity and resource scope.</p>",
       "refs": {
         "CreateBearerTokenResponse$accessToken": "<p>The bearer token. Present it to the AWS service named in the request.</p>",
-        "CreateOAuth2TokenWithIAMResponse$accessToken": "<p>Access token containing principal identity, resource scope, and session metadata.</p>",
-        "CreateOAuth2TokenWithTokenExchangeResponse$accessToken": "<p>Access token containing principal identity, resource scope, and session metadata.</p>"
+        "CreateOAuth2TokenWithIAMResponse$accessToken": "<p>The access token containing principal identity, resource scope, and session metadata.</p>",
+        "CreateOAuth2TokenWithTokenExchangeResponse$accessToken": "<p>The access token containing principal identity, resource scope, and session metadata.</p>"
       }
     },
     "PermissionStatementSummaries": {
@@ -341,6 +408,23 @@
       "base": "<p>IAM principal identifier</p>",
       "refs": {
         "PolicyStatement$principal": "<p>Principal the statement applies to</p>"
+      }
+    },
+    "PrincipalArn": {
+      "base": "<p>IAM identity that owns a session</p>",
+      "refs": {
+        "GetSessionOutput$principalArn": "<p>The IAM identity that owns the session</p>",
+        "GetSessionOutput$role": "<p>The IAM role for the session, when the owner is a role</p>",
+        "Session$principalArn": "<p>The IAM identity that owns the session</p>",
+        "Session$role": "<p>The IAM role for the session, when the owner is a role</p>"
+      }
+    },
+    "PrincipalArnFilter": {
+      "base": "<p>IAM identity ARN, or arn:aws:iam::{account-id}:* for all identities in the account</p>",
+      "refs": {
+        "BatchRevokeSessionsInput$principalArn": "<p>The identity that owns the sessions. Omit to use the caller. Specify arn:aws:iam::{account-id}:* to revoke any session in the account.</p>",
+        "GetSessionInput$principalArn": "<p>The identity that owns the session. Omit to use the caller. Specify arn:aws:iam::{account-id}:* to retrieve any session in the account.</p>",
+        "ListSessionsInput$principalArn": "<p>The identity whose sessions to list. Omit to list the caller's own sessions. Specify arn:aws:iam::{account-id}:* to list all sessions in the account.</p>"
       }
     },
     "PutConsoleAuthorizationConfigurationInput": {
@@ -383,13 +467,20 @@
       "refs": {
         "CreateBearerTokenRequest$resource": "<p>The AWS service the bearer token is for. Example: &quot;ecr.amazonaws.com&quot;.</p>",
         "CreateOAuth2TokenWithIAMRequest$resource": "<p>The OAuth resource for which the access token is requested. Example: &quot;aws-mcp.amazonaws.com&quot;.</p>",
-        "CreateOAuth2TokenWithTokenExchangeRequest$resource": "<p>The OAuth resource for which the access token is requested. Required when &quot;grant_type=urn:ietf:params:oauth:grant-type:token-exchange&quot;. Example: &quot;glue.amazonaws.com&quot;.</p>",
+        "CreateOAuth2TokenWithTokenExchangeRequest$resource": "<p>The OAuth resource for which the access token is requested:</p> <ul> <li>&quot;grant_type=urn:ietf:params:oauth:grant-type:token-exchange&quot;: Required. Must be a service principal. Example: &quot;glue.amazonaws.com&quot;.</li> <li>&quot;grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&quot;: Required when the assertion has no &quot;resource&quot; claim, otherwise must match it. Must be a URI. Example: &quot;https://aws-mcp.us-east-1.api.aws/mcp&quot;.</li> </ul>",
+        "CreateOAuth2TokenWithTokenExchangeResponse$resource": "<p>The resource the access token is scoped to. Returned when &quot;grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&quot;.</p>",
         "IntrospectOAuth2TokenWithIAMResponse$resource": "<p>The OAuth resource the token is scoped to. Only present for refresh token introspection.</p>"
       }
     },
     "ResourceNotFoundException": {
       "base": "<p>Error thrown when requested resource is not found</p> <p>HTTP Status Code: 404 Not Found</p> <p>Used when the specified resource does not exist</p>",
       "refs": {}
+    },
+    "RevocationReason": {
+      "base": "<p>Reason for revoking a session</p>",
+      "refs": {
+        "BatchRevokeSessionsInput$reason": "<p>The reason for revoking the sessions</p>"
+      }
     },
     "RevocationToken": {
       "base": "<p>Refresh token string submitted for revocation.</p>",
@@ -405,10 +496,23 @@
       "base": "<p>Output structure for RevokeOAuth2TokenWithIAM operation</p> <p>RFC 7009 §2.2 revocation response. The endpoint returns 200 OK with an empty body on success; there are no response fields.</p>",
       "refs": {}
     },
+    "RevokedSession": {
+      "base": "<p>A session that was revoked</p>",
+      "refs": {
+        "RevokedSessionList$member": null
+      }
+    },
+    "RevokedSessionList": {
+      "base": null,
+      "refs": {
+        "BatchRevokeSessionsOutput$revokedSessions": "<p>Sessions that were revoked</p>"
+      }
+    },
     "Scope": {
       "base": null,
       "refs": {
-        "CreateOAuth2TokenWithTokenExchangeRequest$scope": "<p>IAM managed policy Amazon Resource Names (ARNs) to apply as session policies that further scope down the permissions of the issued access token, provided as a space-delimited list. Example: &quot;arn:aws:iam::444455556666:policy/MyPolicy&quot;.</p>"
+        "CreateOAuth2TokenWithTokenExchangeRequest$scope": "<p>The IAM managed policy Amazon Resource Names (ARNs) to apply as session policies that further scope down the permissions of the issued access token, provided as a space-delimited list. Example: &quot;arn:aws:iam::444455556666:policy/MyPolicy&quot;.</p> <p>If provided with &quot;grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&quot;, must match the assertion's &quot;scope&quot; claim.</p>",
+        "CreateOAuth2TokenWithTokenExchangeResponse$scope": "<p>The IAM managed policy ARNs applied as session policies, as a space-delimited list. Returned when &quot;grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&quot; and the assertion has a scope.</p>"
       }
     },
     "ServiceQuotaExceededException": {
@@ -418,6 +522,50 @@
     "ServiceUnavailableException": {
       "base": "<p>The request failed because a dependency is temporarily unavailable. You can retry the request.</p>",
       "refs": {}
+    },
+    "Session": {
+      "base": "<p>Summary of a sign-in session</p>",
+      "refs": {
+        "SessionSummaryList$member": null
+      }
+    },
+    "SessionArn": {
+      "base": "<p>Sign-in session ARN</p>",
+      "refs": {
+        "BatchRevokeSessionError$sessionArn": "<p>The session ARN</p>",
+        "GetSessionInput$sessionArn": "<p>The ARN of the session to retrieve</p>",
+        "GetSessionOutput$sessionArn": "<p>The session ARN</p>",
+        "GetSessionOutput$originSessionArn": "<p>The ARN of the session this session originated from</p>",
+        "RevokedSession$sessionArn": "<p>The revoked session ARN</p>",
+        "Session$sessionArn": "<p>The session ARN</p>",
+        "SessionArnList$member": null
+      }
+    },
+    "SessionArnList": {
+      "base": null,
+      "refs": {
+        "BatchRevokeSessionsInput$sessionArns": "<p>The ARNs of the sessions to revoke</p>"
+      }
+    },
+    "SessionStatus": {
+      "base": "<p>Status of a sign-in session</p>",
+      "refs": {
+        "GetSessionOutput$status": "<p>The session status</p>",
+        "ListSessionsInput$status": "<p>Returns only sessions with this status</p>",
+        "Session$status": "<p>The session status</p>"
+      }
+    },
+    "SessionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListSessionsOutput$items": "<p>List of session summaries</p>"
+      }
+    },
+    "SessionsMaxResults": {
+      "base": "<p>Maximum number of sessions to return</p>",
+      "refs": {
+        "ListSessionsInput$maxResults": "<p>Maximum number of results to return</p>"
+      }
     },
     "SigninResourceBasedPolicy": {
       "base": "<p>SignIn resource-based policy document</p>",
@@ -459,11 +607,17 @@
         "AccessToken$accessKeyId": "<p>The AWS access key ID for the temporary credentials.</p>",
         "AccessToken$secretAccessKey": "<p>The AWS secret access key used to sign requests.</p>",
         "AccessToken$sessionToken": "<p>The session token that validates the temporary security credentials.</p>",
+        "BatchRevokeSessionError$code": "<p>The error code</p>",
+        "BatchRevokeSessionError$message": "<p>The error message</p>",
         "Condition$key": null,
         "ConditionValues$member": null,
         "ConflictException$message": "<p>Detailed message explaining the conflict Provides specific information about what caused the conflict</p>",
         "DeleteConsoleAuthorizationConfigurationOutput$scope": "<p>Authorization scope</p>",
         "GetConsoleAuthorizationConfigurationOutput$scope": "<p>Authorization scope</p>",
+        "GetSessionOutput$clientId": "<p>The OAuth client that created the session</p>",
+        "GetSessionOutput$resource": "<p>The resource that the session's tokens are bound to</p>",
+        "GetSessionOutput$issuedInRegion": "<p>The AWS Region where the session was created</p>",
+        "GetSessionOutput$userAgent": "<p>The user agent captured when the session was created or last refreshed</p>",
         "InternalServerException$message": "<p>The server error detail.</p>",
         "IntrospectOAuth2TokenWithIAMResponse$clientId": "<p>Client identifier for the OAuth 2.0 client that requested the token.</p>",
         "IntrospectOAuth2TokenWithIAMResponse$userId": "<p>User identifier matching the &quot;UserId&quot; field from &quot;sts:GetCallerIdentity&quot; for the token's subject principal.</p>",
@@ -474,6 +628,7 @@
         "IntrospectOAuth2TokenWithIAMResponse$signinSession": "<p>AWS Sign-In session ARN bound to the token, of the form arn:aws:signin:{region}:{account}:session/{uuid}.</p>",
         "InvalidGrantException$message": null,
         "InvalidScopeException$message": null,
+        "ListSessionsInput$clientId": "<p>Returns only sessions created by this OAuth client</p>",
         "PolicyActions$member": null,
         "PolicyStatement$effect": "<p>Effect of the policy statement (Allow/Deny)</p>",
         "PolicyStatement$resource": "<p>Resource the statement applies to</p>",
@@ -483,6 +638,8 @@
         "ResourceNotFoundException$message": "<p>Detailed message explaining which resource was not found Provides specific information about the missing resource</p>",
         "ServiceQuotaExceededException$message": "<p>Detailed message explaining which quota was exceeded Provides specific information about the limit and current usage</p>",
         "ServiceUnavailableException$message": null,
+        "Session$clientId": "<p>The OAuth client that created the session</p>",
+        "Session$resource": "<p>The resource that the session's tokens are bound to</p>",
         "SigninResourceBasedPolicy$version": "<p>Policy version</p>",
         "TooManyRequestsError$message": "<p>Details about the rate limit.</p>",
         "ValidationException$message": "<p>The validation constraint that failed.</p>"
@@ -520,14 +677,14 @@
     "TokenExchangeGrantType": {
       "base": null,
       "refs": {
-        "CreateOAuth2TokenWithTokenExchangeRequest$grantType": "<p>The OAuth 2.0 grant type. Currently only supports &quot;urn:ietf:params:oauth:grant-type:token-exchange&quot;.</p>"
+        "CreateOAuth2TokenWithTokenExchangeRequest$grantType": "<p>The OAuth 2.0 grant type. Currently supports &quot;urn:ietf:params:oauth:grant-type:token-exchange&quot; and &quot;urn:ietf:params:oauth:grant-type:jwt-bearer&quot;.</p>"
       }
     },
     "TokenExpiresIn": {
       "base": "<p>Token lifetime in seconds. The lesser of session validity and 3600 (1 hour).</p>",
       "refs": {
-        "CreateOAuth2TokenWithIAMResponse$expiresIn": "<p>Token lifetime in seconds. Value is the minimum of the caller's session validity and 1 hour (3600 seconds).</p>",
-        "CreateOAuth2TokenWithTokenExchangeResponse$expiresIn": "<p>Token lifetime in seconds. Value is the minimum of the subject token's validity and 1 hour (3600 seconds).</p>"
+        "CreateOAuth2TokenWithIAMResponse$expiresIn": "<p>The token lifetime in seconds. Value is the minimum of the caller's session validity and 1 hour (3600 seconds).</p>",
+        "CreateOAuth2TokenWithTokenExchangeResponse$expiresIn": "<p>The token lifetime in seconds. Value is the minimum of the provided token's validity and 1 hour (3600 seconds).</p>"
       }
     },
     "TokenType": {

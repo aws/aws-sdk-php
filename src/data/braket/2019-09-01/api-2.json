@@ -674,7 +674,29 @@
       "enum":[
         "ONLINE",
         "OFFLINE",
-        "RETIRED"
+        "RETIRED",
+        "PAUSED"
+      ]
+    },
+    "DeviceStatusReason":{
+      "type":"structure",
+      "required":[
+        "reason",
+        "updatedAt"
+      ],
+      "members":{
+        "reason":{"shape":"DeviceStatusReasonCode"},
+        "startedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "estimatedEndAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "DeviceStatusReasonCode":{
+      "type":"string",
+      "enum":[
+        "OUTSIDE_AVAILABILITY_WINDOW",
+        "MAINTENANCE",
+        "RESERVATION"
       ]
     },
     "DeviceSummary":{
@@ -746,6 +768,7 @@
         "providerName":{"shape":"String"},
         "deviceType":{"shape":"DeviceType"},
         "deviceStatus":{"shape":"DeviceStatus"},
+        "deviceStatusReason":{"shape":"DeviceStatusReason"},
         "deviceCapabilities":{
           "shape":"JsonValue",
           "jsonvalue":true
@@ -970,13 +993,6 @@
         "ml.c5n.4xlarge",
         "ml.c5n.9xlarge",
         "ml.c5n.18xlarge",
-        "ml.p2.xlarge",
-        "ml.p2.8xlarge",
-        "ml.p2.16xlarge",
-        "ml.p3.2xlarge",
-        "ml.p3.8xlarge",
-        "ml.p3.16xlarge",
-        "ml.p3dn.24xlarge",
         "ml.p4d.24xlarge",
         "ml.g4dn.xlarge",
         "ml.g4dn.2xlarge",

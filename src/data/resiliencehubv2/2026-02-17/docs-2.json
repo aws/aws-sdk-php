@@ -769,7 +769,7 @@
       }
     },
     "DevOpsAgentConfiguration": {
-      "base": "<p>The AWS DevOps Agent (DevOps Agent) integration configuration that you supply when creating or updating a service. Connecting a service to a DevOps Agent Agent Space lets DevOps Agent investigate the service's resilience test runs and attach its analysis to the results. Include this block with an Agent Space Amazon Resource Name (ARN) to connect or reconnect the service to an Agent Space. Include it without an Agent Space ARN to disconnect the service. Omit it to leave the existing linkage unchanged.</p>",
+      "base": "<p>The Amazon Web Services DevOps Agent (DevOps Agent) integration configuration that you supply when creating or updating a service. Connecting a service to an Agent Space lets DevOps Agent investigate the service's resilience test runs and attach its analysis to the results. Include this block with an Agent Space Amazon Resource Name (ARN) to connect or reconnect the service to an Agent Space. Include it without an Agent Space ARN to disconnect the service. Omit it to leave the existing linkage unchanged.</p>",
       "refs": {
         "CreateServiceRequest$devOpsAgentConfiguration": "<p>The optional DevOps Agent integration configuration to apply to the new service. If you omit this field, the new service has no DevOps Agent integration.</p>",
         "UpdateServiceRequest$devOpsAgentConfiguration": "<p>The optional DevOps Agent integration configuration to set, replace, or disconnect for the service. If you omit this field, the existing DevOps Agent linkage stays unchanged.</p>"
@@ -830,7 +830,9 @@
       "base": "<p>Contains the effective disaster recovery approach value for a service.</p>",
       "refs": {
         "EffectivePolicyValues$multiAzDrApproach": "<p>The effective multi-AZ disaster recovery approach for the service.</p>",
-        "EffectivePolicyValues$multiRegionDrApproach": "<p>The effective multi-Region disaster recovery approach for the service.</p>"
+        "EffectivePolicyValues$multiRegionDrApproach": "<p>The effective multi-Region disaster recovery approach for the service.</p>",
+        "TestRunEffectivePolicyValues$multiAzDrApproach": "<p>The effective multi-Availability Zone (AZ) disaster recovery approach for the test run.</p>",
+        "TestRunEffectivePolicyValues$multiRegionDrApproach": "<p>The effective multi-Region disaster recovery approach for the test run.</p>"
       }
     },
     "Double": {
@@ -1245,7 +1247,7 @@
     "InsightsCategory": {
       "base": null,
       "refs": {
-        "DependencyInsight$category": "<p>The category of the insight. Valid values:</p> <ul> <li> <p>CROSS_REGION - The insight relates to dependencies used across multiple Regions.</p> </li> <li> <p>NEW_DEPENDENCY - The insight relates to a recently detected dependency.</p> </li> <li> <p>THIRD_PARTY - The insight relates to a third-party dependency.</p> </li> <li> <p>UNEVEN_USAGE - The insight relates to a dependency with uneven usage across the service.</p> </li> <li> <p>AWS_SERVICE - The insight relates to a dependency on an Amazon Web Services service.</p> </li> </ul>"
+        "DependencyInsight$category": "<p>The category of the insight. Valid values:</p> <ul> <li> <p>CROSS_REGION - The insight relates to dependencies used across multiple Regions.</p> </li> <li> <p>NEW_DEPENDENCY - The insight relates to a recently detected dependency.</p> </li> <li> <p>THIRD_PARTY - The insight relates to a third-party dependency.</p> </li> <li> <p>UNEVEN_USAGE - The insight relates to a dependency with uneven usage across the service.</p> </li> <li> <p>AWS_SERVICE - The insight relates to a dependency on an Amazon Web Services service. Resilience Hub doesn't currently return this value.</p> </li> </ul>"
       }
     },
     "Integer": {
@@ -1552,6 +1554,7 @@
         "ListTestRunSourcesRequest$maxResults": null,
         "ListTestRunsRequest$maxResults": null,
         "ListTestSourcesRequest$maxResults": null,
+        "ListTestTemplatesRequest$maxResults": null,
         "ListTestsRequest$maxResults": null,
         "ListUserJourneysRequest$maxResults": null
       }
@@ -1661,6 +1664,8 @@
         "ListTestRunsResponse$nextToken": null,
         "ListTestSourcesRequest$nextToken": null,
         "ListTestSourcesResponse$nextToken": null,
+        "ListTestTemplatesRequest$nextToken": null,
+        "ListTestTemplatesResponse$nextToken": null,
         "ListTestsRequest$nextToken": null,
         "ListTestsResponse$nextToken": null,
         "ListUserJourneysRequest$nextToken": null,
@@ -2355,7 +2360,8 @@
     "SloSource": {
       "base": "<p>Contains the effective availability SLO value and its source.</p>",
       "refs": {
-        "EffectivePolicyValues$availabilitySlo": "<p>The effective availability SLO value for the service.</p>"
+        "EffectivePolicyValues$availabilitySlo": "<p>The effective availability SLO value for the service.</p>",
+        "TestRunEffectivePolicyValues$availabilitySlo": "<p>The effective availability SLO value for the test run.</p>"
       }
     },
     "SortOrder": {
@@ -2752,7 +2758,12 @@
         "EffectivePolicyValues$multiAzRpo": "<p>The effective multi-AZ RPO value for the service, in minutes.</p>",
         "EffectivePolicyValues$multiRegionRto": "<p>The effective multi-Region RTO value for the service, in minutes.</p>",
         "EffectivePolicyValues$multiRegionRpo": "<p>The effective multi-Region RPO value for the service, in minutes.</p>",
-        "EffectivePolicyValues$dataRecoveryTimeBetweenBackups": "<p>The effective data recovery time between backups value for the service.</p>"
+        "EffectivePolicyValues$dataRecoveryTimeBetweenBackups": "<p>The effective data recovery time between backups value for the service.</p>",
+        "TestRunEffectivePolicyValues$multiAzRto": "<p>The effective multi-AZ RTO value for the test run, in minutes.</p>",
+        "TestRunEffectivePolicyValues$multiAzRpo": "<p>The effective multi-AZ RPO value for the test run, in minutes.</p>",
+        "TestRunEffectivePolicyValues$multiRegionRto": "<p>The effective multi-Region RTO value for the test run, in minutes.</p>",
+        "TestRunEffectivePolicyValues$multiRegionRpo": "<p>The effective multi-Region RPO value for the test run, in minutes.</p>",
+        "TestRunEffectivePolicyValues$dataRecoveryTimeBetweenBackups": "<p>The effective data recovery time between backups value for the test run.</p>"
       }
     },
     "Test": {
@@ -2848,6 +2859,12 @@
       "base": null,
       "refs": {
         "TestRunDependencySummary$provider": "<p>The provider of the dependency.</p>"
+      }
+    },
+    "TestRunEffectivePolicyValues": {
+      "base": "<p>Contains the effective resilience policy values captured onto a test run from the service when the run was started.</p>",
+      "refs": {
+        "TestRun$effectivePolicyValues": "<p>The effective resilience policy values snapshotted from the service when the run was started. The test run is evaluated against these values.</p>"
       }
     },
     "TestRunEvent": {

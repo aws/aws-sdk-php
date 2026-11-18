@@ -618,9 +618,9 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result listTestTemplates(array $args = [])
- * @phpstan-method \Aws\Result listTestTemplates(array{...} $args = [])
+ * @phpstan-method \Aws\Result listTestTemplates(array{maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listTestTemplatesAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listTestTemplatesAsync(array{...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listTestTemplatesAsync(array{maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result listTests(array $args = [])
  * @phpstan-method \Aws\Result listTests(array{serviceArn?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listTestsAsync(array $args = [])
