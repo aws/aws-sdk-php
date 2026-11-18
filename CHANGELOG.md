@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.405.0 - 2026-11-18
 
 * `Aws\CleanRooms` - Adds support for populating intermediate tables with results from PySpark analysis templates.
 * `Aws\Braket` - Supporting a new PAUSED device status and a DeviceStatusReason.
