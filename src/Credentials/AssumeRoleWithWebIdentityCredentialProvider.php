@@ -18,11 +18,10 @@ class AssumeRoleWithWebIdentityCredentialProvider
     const ENV_RETRIES = 'AWS_METADATA_SERVICE_NUM_ATTEMPTS';
 
     /**
-     * STS error codes for an expired web identity token. The provider re-reads
-     * the token file and retries, as the Assume Role with Web Identity SEP
-     * requires. STS returns `ExpiredTokenException`. The SEP names
-     * `ExpiredToken`. `IDPCommunicationError` is left out because the STS
-     * client already retries it with the same token in every retry mode.
+     * STS error codes for an expired web identity token. The token file may
+     * already hold a newer token, so the provider re-reads it and retries.
+     * STS sends `ExpiredTokenException` for this case, and the spec names it
+     * `ExpiredToken`, so both are listed.
      */
     private const RETRYABLE_STS_ERROR_CODES = [
         'ExpiredToken',

@@ -7,9 +7,7 @@ final class CredentialsUtils
     // Request timeout, in seconds, for the service clients that credential
     // providers create (STS, SSO, SSO OIDC, Sign-In, Cognito). Guzzle sets
     // none by default, and a refresh runs in the calling process, so a source
-    // that connects but never answers would block it indefinitely. The
-    // timeout covers the whole request, connecting included. Matches the
-    // Java v2 SDK's default read timeout.
+    // that connects but never answers would block it indefinitely.
     private const SOURCE_CLIENT_TIMEOUT = 30;
 
     /**
