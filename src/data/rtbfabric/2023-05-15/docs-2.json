@@ -17,6 +17,8 @@
     "DeleteRequesterGateway": "<p>Deletes a requester gateway.</p>",
     "DeleteResponderGateway": "<p>Deletes a responder gateway.</p>",
     "DisassociateCertificate": "<p>Removes a certificate association from a responder gateway.</p>",
+    "GetAvailableModule": "<p>Returns a module that you can attach. If you can't attach the module, the operation returns ResourceNotFoundException, the same as for a missing one.</p>",
+    "GetAvailableModuleVersion": "<p>Returns an ACTIVE or DEPRECATED version of a module that you can attach. If you can't attach the module, or the version is in another status, the operation returns ResourceNotFoundException, the same as for a missing one.</p>",
     "GetCertificateAssociation": "<p>Retrieves the details of a certificate association with a responder gateway.</p>",
     "GetInboundExternalLink": "<p>Retrieves information about an inbound external link.</p>",
     "GetLink": "<p>Retrieves information about a link between gateways.</p> <p>Returns detailed information about the link configuration, status, and associated gateways.</p>",
@@ -24,12 +26,17 @@
     "GetOutboundExternalLink": "<p>Retrieves information about an outbound external link.</p>",
     "GetRequesterGateway": "<p>Retrieves information about a requester gateway.</p>",
     "GetResponderGateway": "<p>Retrieves information about a responder gateway.</p>",
+    "GetUpdate": "<p>Returns ResourceNotFoundException for an updateId past the 90-day retention window, indistinguishable in the response from an id that never existed.</p>",
+    "ListAvailableModuleVersions": "<p>Lists the ACTIVE and DEPRECATED versions of a module that you can attach, highest version first (numerically by MAJOR, then MINOR, then PATCH). If you can't attach the module, the operation returns ResourceNotFoundException, the same as for a missing one. If the module has no ACTIVE or DEPRECATED versions, the operation returns an empty list. The operation lists DEPRECATED versions so that you can inspect one that you've attached, but you can't attach them. Results are paginated. Use <code>nextToken</code> to get the next page.</p>",
+    "ListAvailableModules": "<p>Lists the modules that you can attach, newest first by <code>createdAt</code>. Results are paginated. Use <code>nextToken</code> to get the next page.</p>",
     "ListCertificateAssociations": "<p>Lists the certificate associations for a responder gateway.</p>",
     "ListLinkRoutingRules": "<p>Lists the routing rules for a link.</p>",
     "ListLinks": "<p>Lists links associated with gateways.</p> <p>Returns a list of all links for the specified gateways, including their status and configuration details.</p>",
     "ListRequesterGateways": "<p>Lists requester gateways.</p>",
     "ListResponderGateways": "<p>Lists reponder gateways.</p>",
     "ListTagsForResource": "<p>Lists tags for a resource.</p>",
+    "ListUpdates": "<p>Lists the updates on a gateway. Results are paginated. Use <code>nextToken</code> to get the next page.</p>",
+    "PutLinkFlows": "<p>Replaces a link's flow configuration. The change applies asynchronously. The call returns once the change is accepted, and the link serves its prior flows until the update commits atomically. RTB Fabric validates the request before accepting it, and a request that fails validation changes nothing. After the call, use GetLink. Once the change completes, the link's status is ACTIVE again and its flows show the change.</p>",
     "RejectLink": "<p>Rejects a link request between gateways.</p> <p>When a requester gateway requests to link with a responder gateway, the responder can use this operation to decline the link request.</p>",
     "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified resource.</p>",
     "UntagResource": "<p>Removes a tag or tags from a resource.</p>",
@@ -70,6 +77,12 @@
         "OpenRtbAttributeModuleParameters$action": "<p>Describes a bid action.</p>"
       }
     },
+    "ActivationPercentage": {
+      "base": null,
+      "refs": {
+        "FlowModule$activationPercentage": "<p>The percentage of the flow's requests that the module runs on. The flow skips the module on the rest of the requests. The default is 100.</p>"
+      }
+    },
     "AssociateCertificateRequest": {
       "base": null,
       "refs": {}
@@ -100,6 +113,42 @@
       "base": null,
       "refs": {
         "AutoScalingGroupsConfiguration$roleArn": "<p>The role ARN of the auto scaling group.</p>"
+      }
+    },
+    "AvailableModuleSummary": {
+      "base": "<p>A module that you can attach, as ListAvailableModules returns it. ListAvailableModules and GetAvailableModule never return how a module is implemented.</p>",
+      "refs": {
+        "AvailableModuleSummaryList$member": null
+      }
+    },
+    "AvailableModuleSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAvailableModulesResponse$modules": "<p>The modules on this page, newest first.</p>"
+      }
+    },
+    "AvailableModuleVersionSummary": {
+      "base": "<p>A version of a module that you can attach, as ListAvailableModuleVersions returns it. ListAvailableModuleVersions and GetAvailableModuleVersion never return how a version is implemented.</p>",
+      "refs": {
+        "AvailableModuleVersionSummaryList$member": null
+      }
+    },
+    "AvailableModuleVersionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAvailableModuleVersionsResponse$versions": "<p>The versions on this page, highest version first.</p>"
+      }
+    },
+    "AwsResourceId": {
+      "base": null,
+      "refs": {
+        "AwsResourceIdList$member": null
+      }
+    },
+    "AwsResourceIdList": {
+      "base": null,
+      "refs": {
+        "ErrorDetail$resourceIds": "<p>The IDs of the resources involved, such as a subnet or security group.</p>"
       }
     },
     "Base64EncodedCertificateChain": {
@@ -149,8 +198,40 @@
         "CreateResponderGatewayRequest$clientRoutingPolicy": "<p>The client routing policy of the gateway. This policy controls which Availability Zones RTB Fabric uses to reach the gateway for the requester gateways that send traffic to it. Valid values are the following:</p> <ul> <li> <p> <code>AVAILABILITY_ZONE_AFFINITY</code>: RTB Fabric routes each requester's traffic to gateway capacity in the requester's own Availability Zone when the gateway has capacity available there. Otherwise, RTB Fabric routes the traffic to gateway capacity in the other Availability Zones of the gateway.</p> </li> <li> <p> <code>ANY_AVAILABILITY_ZONE</code>: RTB Fabric routes each requester's traffic to gateway capacity in every Availability Zone that the subnets of the gateway span. The Availability Zone that the requester is in does not change this.</p> </li> </ul> <p>If you don't specify a value, RTB Fabric uses <code>AVAILABILITY_ZONE_AFFINITY</code>. To get the behavior of <code>ANY_AVAILABILITY_ZONE</code>, create the gateway with subnets in more than one Availability Zone. RTB Fabric does not support partial Availability Zone affinity, so <code>PARTIAL_AVAILABILITY_ZONE_AFFINITY</code> is not a valid value. For more information, see <a href=\"https://docs.aws.amazon.com/rtb-fabric/latest/userguide/working-with-responder-gateways.html#configuring-availability-zone-affinity\">Configuring Availability Zone affinity</a> in the <i>Amazon Web Services RTB Fabric User Guide</i>.</p>",
         "CreateResponderGatewayResponse$clientRoutingPolicy": "<p>The client routing policy of the gateway. This policy controls which Availability Zones RTB Fabric uses to reach the gateway for the requester gateways that send traffic to it. For more information, see <a href=\"https://docs.aws.amazon.com/rtb-fabric/latest/userguide/working-with-responder-gateways.html#configuring-availability-zone-affinity\">Configuring Availability Zone affinity</a> in the <i>Amazon Web Services RTB Fabric User Guide</i>.</p>",
         "GetResponderGatewayResponse$clientRoutingPolicy": "<p>The client routing policy of the gateway. This policy controls which Availability Zones RTB Fabric uses to reach the gateway for the requester gateways that send traffic to it. RTB Fabric omits this member if the gateway has never had a client routing policy. An omitted value means that the gateway uses <code>AVAILABILITY_ZONE_AFFINITY</code>. For more information, see <a href=\"https://docs.aws.amazon.com/rtb-fabric/latest/userguide/working-with-responder-gateways.html#configuring-availability-zone-affinity\">Configuring Availability Zone affinity</a> in the <i>Amazon Web Services RTB Fabric User Guide</i>.</p>",
+        "ResponderGatewayConfigParameters$clientRoutingPolicy": "<p>The gateway's client routing policy.</p>",
         "UpdateResponderGatewayRequest$clientRoutingPolicy": "<p>The client routing policy of the gateway. This policy controls which Availability Zones RTB Fabric uses to reach the gateway for the requester gateways that send traffic to it. Valid values are the following:</p> <ul> <li> <p> <code>AVAILABILITY_ZONE_AFFINITY</code>: RTB Fabric routes each requester's traffic to gateway capacity in the requester's own Availability Zone when the gateway has capacity available there. Otherwise, RTB Fabric routes the traffic to gateway capacity in the other Availability Zones of the gateway.</p> </li> <li> <p> <code>ANY_AVAILABILITY_ZONE</code>: RTB Fabric routes each requester's traffic to gateway capacity in every Availability Zone that the subnets of the gateway span. The Availability Zone that the requester is in does not change this.</p> </li> </ul> <p>If you don't specify a value, the gateway keeps its current client routing policy. Changing the policy sets the gateway status to <code>PENDING_UPDATE</code> until the change is complete. RTB Fabric does not support partial Availability Zone affinity, so <code>PARTIAL_AVAILABILITY_ZONE_AFFINITY</code> is not a valid value. For more information, see <a href=\"https://docs.aws.amazon.com/rtb-fabric/latest/userguide/working-with-responder-gateways.html#configuring-availability-zone-affinity\">Configuring Availability Zone affinity</a> in the <i>Amazon Web Services RTB Fabric User Guide</i>.</p>",
         "UpdateResponderGatewayResponse$clientRoutingPolicy": "<p>The client routing policy of the gateway. If the operation changed this policy, the gateway uses the new policy after its status returns to <code>ACTIVE</code>. For more information, see <a href=\"https://docs.aws.amazon.com/rtb-fabric/latest/userguide/working-with-responder-gateways.html#configuring-availability-zone-affinity\">Configuring Availability Zone affinity</a> in the <i>Amazon Web Services RTB Fabric User Guide</i>.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": "<p>An idempotency token of 1–64 printable ASCII characters. If you don't provide one, the SDK generates one.</p>",
+      "refs": {
+        "PutLinkFlowsRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure that the operation completes no more than one time. If you retry with the same token and parameters, you get the original response without an error. If you retry with the same token but different parameters, the call fails with ValidationException. If you don't provide a token, the SDK generates one, and RTB Fabric remembers it for 8 hours. A retry returns the original <code>updateId</code> before <code>lockToken</code> is checked.</p>"
+      }
+    },
+    "ConfigurableAction": {
+      "base": "<p>A capability that you can turn on when you attach a version, such as FILTER or OBSERVE. Each capability needs a minimum permission.</p>",
+      "refs": {
+        "ConfigurableActionList$member": null,
+        "SelectedActionList$member": null
+      }
+    },
+    "ConfigurableActionList": {
+      "base": null,
+      "refs": {
+        "GetAvailableModuleVersionResponse$configurableActions": "<p>The capabilities that you can turn on when you attach the version.</p>"
+      }
+    },
+    "ConfigurationSchema": {
+      "base": "<p>A JSON Schema (draft-07), as a string, for the parameters that you pass in <code>configurationValues</code>.</p>",
+      "refs": {
+        "GetAvailableModuleVersionResponse$configurationSchema": "<p>The JSON Schema for the parameters that you can set in <code>configurationValues</code> when you attach the version.</p>"
+      }
+    },
+    "ConfigurationValues": {
+      "base": "<p>Module parameters as a JSON string, validated against the version's configurationSchema (JSON Schema draft-07).</p>",
+      "refs": {
+        "FlowModule$configurationValues": "<p>RTB Fabric validates the value against the version's <code>configurationSchema</code> and rejects a value that fails with ValidationException. Omit it when the schema is empty or fully defaulted.</p>"
       }
     },
     "ConflictException": {
@@ -338,6 +419,7 @@
         "GetRequesterGatewayResponse$domainName": "<p>The domain name of the requester gateway.</p>",
         "GetResponderGatewayResponse$domainName": "<p>The domain name of the responder gateway.</p>",
         "GetResponderGatewayResponse$externalInboundEndpoint": "<p>The external inbound endpoint for the responder gateway.</p>",
+        "ResponderGatewayConfigParameters$domainName": "<p>The gateway's domain name.</p>",
         "UpdateResponderGatewayRequest$domainName": "<p>Domain name for the responder gateway. This operation does not change the domain name of an existing gateway. To use a different domain name, delete the gateway and create a new one.</p>"
       }
     },
@@ -351,6 +433,48 @@
       "base": null,
       "refs": {
         "EksEndpointsConfiguration$roleArn": "<p>The role ARN for the cluster.</p>"
+      }
+    },
+    "ErrorCode": {
+      "base": "<p>Why a resource, or a change to it, failed.</p>",
+      "refs": {
+        "ErrorDetail$code": "<p>The error code for what failed.</p>"
+      }
+    },
+    "ErrorDetail": {
+      "base": "<p>Describes one cause of a failure of a resource or an update, with an error code, a description, and the IDs of the resources involved.</p>",
+      "refs": {
+        "ErrorDetails$member": null
+      }
+    },
+    "ErrorDetailMessageString": {
+      "base": null,
+      "refs": {
+        "ErrorDetail$message": "<p>A description of the failure.</p>"
+      }
+    },
+    "ErrorDetails": {
+      "base": null,
+      "refs": {
+        "AcceptLinkResponse$errorDetails": "<p>The causes of the failure, such as a deleted subnet. Present only when the resource has failed.</p>",
+        "CreateLinkResponse$errorDetails": "<p>The causes of the failure, such as a deleted subnet. Present only when the resource has failed.</p>",
+        "GetCertificateAssociationResponse$errorDetails": "<p>The causes of the failure, such as a deleted subnet. Present only when the resource has failed.</p>",
+        "GetInboundExternalLinkResponse$errorDetails": "<p>The causes of the failure, such as a deleted subnet. Present only when the resource has failed.</p>",
+        "GetLinkResponse$errorDetails": "<p>The causes of the failure, such as a deleted subnet. Present only when the resource has failed.</p>",
+        "GetLinkRoutingRuleResponse$errorDetails": "<p>The causes of the failure, such as a deleted subnet. Present only when the resource has failed.</p>",
+        "GetOutboundExternalLinkResponse$errorDetails": "<p>The causes of the failure, such as a deleted subnet. Present only when the resource has failed.</p>",
+        "GetRequesterGatewayResponse$errorDetails": "<p>The causes of the failure, such as a deleted subnet. Present only when the resource has failed.</p>",
+        "GetResponderGatewayResponse$errorDetails": "<p>The causes of the failure, such as a deleted subnet. Present only when the resource has failed.</p>",
+        "LinkRoutingRuleSummary$errorDetails": "<p>The causes of the failure, such as a deleted subnet. Present only when the resource has failed.</p>",
+        "ListLinksResponseStructure$errorDetails": "<p>The causes of the failure, such as a deleted subnet. Present only when the resource has failed.</p>",
+        "RejectLinkResponse$errorDetails": "<p>The causes of the failure, such as a deleted subnet. Present only when the resource has failed.</p>",
+        "Update$errorDetails": "<p>The causes of the failure. Present only when the update has failed.</p>"
+      }
+    },
+    "FailureMode": {
+      "base": "<p>What the flow does when the module fails or times out.</p>",
+      "refs": {
+        "FlowModule$failureMode": "<p>Specifies what happens when the module fails – when its call fails or times out, or when an express module's dataset is stale. The default is OPEN.</p>"
       }
     },
     "Filter": {
@@ -395,6 +519,35 @@
         "RateLimiterModuleParameters$tps": "<p>The transactions per second rate limit.</p>"
       }
     },
+    "Flow": {
+      "base": "<p>One flow on a link: a set of modules that runs on the link's bid requests.</p>",
+      "refs": {
+        "FlowList$member": null
+      }
+    },
+    "FlowList": {
+      "base": "<p>A link's flows: at most one.</p>",
+      "refs": {
+        "GetInboundExternalLinkResponse$flows": "<p>The link's active flows, in the form PutLinkFlows takes. Empty when the link has no modules, and absent when its modules were set with UpdateLinkModuleFlow.</p>",
+        "GetLinkResponse$flows": "<p>The link's active flows, in the form PutLinkFlows takes. Empty when the link has no modules, and absent when its modules were set with UpdateLinkModuleFlow.</p>",
+        "GetOutboundExternalLinkResponse$flows": "<p>The link's active flows, in the form PutLinkFlows takes. Empty when the link has no modules, and absent when its modules were set with UpdateLinkModuleFlow.</p>",
+        "LinkFlowParameters$flows": null,
+        "PutLinkFlowsRequest$flows": "<p>The link's flows, replacing the current ones. An empty list removes every flow.</p>"
+      }
+    },
+    "FlowModule": {
+      "base": "<p>A version attached to a flow, with its settings.</p>",
+      "refs": {
+        "FlowModuleList$member": null
+      }
+    },
+    "FlowModuleList": {
+      "base": null,
+      "refs": {
+        "FlowPhase$modules": "<p>At most one MUTATE_REQUEST_BODY module.</p>",
+        "SequentialPipeline$modules": "<p>In execution order.</p>"
+      }
+    },
     "FlowModuleName": {
       "base": null,
       "refs": {
@@ -406,6 +559,30 @@
       "base": null,
       "refs": {
         "ModuleConfiguration$dependsOn": "<p>The dependencies of the module.</p>"
+      }
+    },
+    "FlowName": {
+      "base": null,
+      "refs": {
+        "Flow$name": "<p>The flow's name, unique within the link.</p>"
+      }
+    },
+    "FlowPhase": {
+      "base": "<p>One phase of a phased pipeline. Its modules run concurrently on the previous phase's output.</p>",
+      "refs": {
+        "FlowPhaseList$member": null
+      }
+    },
+    "FlowPhaseList": {
+      "base": null,
+      "refs": {
+        "PhasedPipeline$phases": "<p>At most 8 modules in total across the phases; more fails with ValidationException.</p>"
+      }
+    },
+    "FlowPipeline": {
+      "base": "<p>How a flow's modules run. In <code>sequential</code>, each module sees the previous module's output; in <code>phased</code>, a phase's modules see the prior phase's output, not each other's. Set exactly one. New members can be added, so handle an unknown one.</p>",
+      "refs": {
+        "Flow$pipeline": "<p>The pipeline that the flow's modules run in. In a sequential pipeline, each module sees the previous module's output. In a phased pipeline, a phase's modules see the prior phase's output, not each other's.</p>"
       }
     },
     "GatewayId": {
@@ -453,11 +630,15 @@
         "GetRequesterGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "GetResponderGatewayRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "GetResponderGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "GetUpdateRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "ListCertificateAssociationsRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "ListLinkRoutingRulesRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "ListLinksRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "ListLinksResponseStructure$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "ListLinksResponseStructure$peerGatewayId": "<p>The unique identifier of the peer gateway.</p>",
+        "ListUpdatesRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "PutLinkFlowsRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "PutLinkFlowsResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "RejectLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "RejectLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
         "RejectLinkResponse$peerGatewayId": "<p>The unique identifier of the peer gateway.</p>",
@@ -484,6 +665,22 @@
         "CreateResponderGatewayRequest$gatewayType": "<p>The type of gateway. Valid values are <code>EXTERNAL</code> or <code>INTERNAL</code>.</p>",
         "GetResponderGatewayResponse$gatewayType": "<p>The type of gateway. Valid values are <code>EXTERNAL</code> or <code>INTERNAL</code>.</p>"
       }
+    },
+    "GetAvailableModuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAvailableModuleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAvailableModuleVersionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAvailableModuleVersionResponse": {
+      "base": null,
+      "refs": {}
     },
     "GetCertificateAssociationRequest": {
       "base": null,
@@ -583,6 +780,14 @@
         "GetResponderGatewayResponse$subnetIds": "<p>The unique identifiers of the subnets.</p>"
       }
     },
+    "GetUpdateRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetUpdateResponse": {
+      "base": null,
+      "refs": {}
+    },
     "HeaderTagAction": {
       "base": "<p>Describes the header tag for a bid action.</p>",
       "refs": {
@@ -639,7 +844,8 @@
         "GetResponderGatewayResponse$activeLinksCount": "<p>The count of active links for the responder gateway.</p>",
         "GetResponderGatewayResponse$totalLinksCount": "<p>The total count of links for the responder gateway.</p>",
         "GetResponderGatewayResponse$linksRequestedCount": "<p>The count of requested links waiting for the responder gateway to accept or reject.</p>",
-        "ListLinksRequest$maxResults": "<p>The maximum number of results that are returned per call. You can use <code>nextToken</code> to obtain further pages of results.</p> <p>This is only an upper limit. The actual number of results returned per call might be fewer than the specified maximum.</p>"
+        "ListLinksRequest$maxResults": "<p>The maximum number of results that are returned per call. You can use <code>nextToken</code> to obtain further pages of results.</p> <p>This is only an upper limit. The actual number of results returned per call might be fewer than the specified maximum.</p>",
+        "ResponderGatewayConfigParameters$port": "<p>The networking port.</p>"
       }
     },
     "InternalServerException": {
@@ -704,6 +910,12 @@
         "RejectLinkResponse$attributes": "<p>Attributes of the link.</p>"
       }
     },
+    "LinkConfigParameters": {
+      "base": "<p>A requested link configuration.</p>",
+      "refs": {
+        "UpdateParameters$linkConfig": "<p>The requested link configuration.</p>"
+      }
+    },
     "LinkDirection": {
       "base": null,
       "refs": {
@@ -712,6 +924,12 @@
         "GetLinkResponse$direction": "<p>The direction of the link.</p>",
         "ListLinksResponseStructure$direction": "<p>The direction of the link.</p>",
         "RejectLinkResponse$direction": "<p>The direction of the link.</p>"
+      }
+    },
+    "LinkFlowParameters": {
+      "base": "<p>A requested link flow.</p>",
+      "refs": {
+        "UpdateParameters$linkFlow": "<p>The requested link flow.</p>"
       }
     },
     "LinkId": {
@@ -738,10 +956,15 @@
         "GetLinkRoutingRuleResponse$linkId": "<p>The unique identifier of the link.</p>",
         "GetOutboundExternalLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
         "GetOutboundExternalLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "LinkTarget$linkId": "<p>The unique identifier of the link.</p>",
         "ListLinkRoutingRulesRequest$linkId": "<p>The unique identifier of the link.</p>",
         "ListLinksResponseStructure$linkId": "<p>The unique identifier of the link.</p>",
+        "ListUpdatesRequest$linkId": "<p>The ID of a link on this gateway, to list only that link's updates. Omit both <code>linkId</code> and <code>ruleId</code> to list the gateway's own updates.</p>",
+        "PutLinkFlowsRequest$linkId": "<p>The unique identifier of the link.</p>",
+        "PutLinkFlowsResponse$linkId": "<p>The unique identifier of the link.</p>",
         "RejectLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
         "RejectLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "RoutingRuleTarget$linkId": "<p>The unique identifier of the rule's link.</p>",
         "UpdateLinkModuleFlowRequest$linkId": "<p>The unique identifier of the link.</p>",
         "UpdateLinkModuleFlowResponse$linkId": "<p>The unique identifier of the link.</p>",
         "UpdateLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
@@ -767,6 +990,7 @@
         "GetInboundExternalLinkResponse$logSettings": "<p>Settings for the application logs.</p>",
         "GetLinkResponse$logSettings": "<p>Settings for the application logs.</p>",
         "GetOutboundExternalLinkResponse$logSettings": "<p>Settings for the application logs.</p>",
+        "LinkConfigParameters$logSettings": null,
         "ListLinksResponseStructure$logSettings": null,
         "RejectLinkResponse$logSettings": null,
         "UpdateLinkRequest$logSettings": "<p>Settings for the application logs.</p>"
@@ -798,9 +1022,16 @@
         "GetLinkResponse$status": "<p>The status of the link.</p>",
         "GetOutboundExternalLinkResponse$status": "<p>The status of the request.</p>",
         "ListLinksResponseStructure$status": "<p>The status of the link.</p>",
+        "PutLinkFlowsResponse$status": "<p>The link's status. A successful call returns PENDING_UPDATE, and the link serves its prior flows until the change completes.</p>",
         "RejectLinkResponse$status": "<p>The status of the link.</p>",
         "UpdateLinkModuleFlowResponse$status": "<p>The status of the request.</p>",
         "UpdateLinkResponse$status": "<p>The status of the request.</p>"
+      }
+    },
+    "LinkTarget": {
+      "base": "<p>The link an update targeted.</p>",
+      "refs": {
+        "UpdateTarget$link": "<p>A link on the gateway.</p>"
       }
     },
     "LinkTimeoutInMillis": {
@@ -809,8 +1040,37 @@
         "AcceptLinkRequest$timeoutInMillis": "<p>The timeout value in milliseconds.</p>",
         "CreateLinkRequest$timeoutInMillis": "<p>The timeout value in milliseconds.</p>",
         "GetLinkResponse$timeoutInMillis": "<p>The timeout value in milliseconds.</p>",
+        "LinkConfigParameters$timeoutInMillis": "<p>The timeout value in milliseconds.</p>",
         "UpdateLinkRequest$timeoutInMillis": "<p>The timeout value in milliseconds.</p>"
       }
+    },
+    "ListAvailableModuleVersionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAvailableModuleVersionsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAvailableModuleVersionsRequest$maxResults": "<p>The maximum number of results for each page, from 1 to 10. The default is 10.</p>"
+      }
+    },
+    "ListAvailableModuleVersionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAvailableModulesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAvailableModulesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAvailableModulesRequest$maxResults": "<p>The maximum number of results for each page, from 1 to 10. The default is 10.</p>"
+      }
+    },
+    "ListAvailableModulesResponse": {
+      "base": null,
+      "refs": {}
     },
     "ListCertificateAssociationsRequest": {
       "base": null,
@@ -890,13 +1150,49 @@
       "base": null,
       "refs": {}
     },
+    "ListUpdatesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListUpdatesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListUpdatesRequest$maxResults": "<p>The maximum number of results to return for each call.</p>"
+      }
+    },
+    "ListUpdatesRequestNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListUpdatesRequest$nextToken": "<p>If nextToken is returned, there are more results available. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged.</p>"
+      }
+    },
+    "ListUpdatesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListUpdatesResponseNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListUpdatesResponse$nextToken": "<p>If nextToken is returned, there are more results available. Make the call again using the returned token to retrieve the next page.</p>"
+      }
+    },
     "ListenerConfig": {
       "base": "<p>Listener configuration for the protocols (HTTP, HTTPS, or both) accepted by the gateway.</p>",
       "refs": {
         "CreateResponderGatewayRequest$listenerConfig": null,
         "CreateResponderGatewayResponse$listenerConfig": "<p>The listener configuration for the responder gateway.</p>",
         "GetResponderGatewayResponse$listenerConfig": "<p>The listener configuration for the responder gateway.</p>",
+        "ResponderGatewayConfigParameters$listenerConfig": null,
         "UpdateResponderGatewayRequest$listenerConfig": "<p>The listener configuration for the responder gateway.</p>"
+      }
+    },
+    "LockToken": {
+      "base": "<p>A concurrency precondition that you read from GetLink. It's opaque, so pass it back unchanged. It has no time limit. It goes stale only when a change to the link is accepted, by any operation, including a call made with this token. Until then, reads return the same token, so a failed call leaves it valid. A token is valid only for the link that it was read from.</p>",
+      "refs": {
+        "GetInboundExternalLinkResponse$lockToken": "<p>The link's concurrency token. Pass it to PutLinkFlows unchanged; it changes whenever the link does.</p>",
+        "GetLinkResponse$lockToken": "<p>The link's concurrency token. Pass it to PutLinkFlows unchanged; it changes whenever the link does.</p>",
+        "GetOutboundExternalLinkResponse$lockToken": "<p>The link's concurrency token. Pass it to PutLinkFlows unchanged; it changes whenever the link does.</p>",
+        "PutLinkFlowsRequest$lockToken": "<p>The concurrency token that you read from GetLink. If the link changed since that read, by any operation, the call fails with ConflictException.</p>"
       }
     },
     "ManagedEndpointConfiguration": {
@@ -904,7 +1200,15 @@
       "refs": {
         "CreateResponderGatewayRequest$managedEndpointConfiguration": "<p>The configuration for the managed endpoint.</p>",
         "GetResponderGatewayResponse$managedEndpointConfiguration": "<p>The configuration of the managed endpoint.</p>",
+        "ResponderGatewayConfigParameters$managedEndpointConfiguration": null,
         "UpdateResponderGatewayRequest$managedEndpointConfiguration": "<p>The configuration for the managed endpoint.</p>"
+      }
+    },
+    "ModuleArn": {
+      "base": "<p>ARN of a module: arn:aws:rtbfabric:{region}::modules/{moduleId}. The account field is empty.</p>",
+      "refs": {
+        "AvailableModuleSummary$moduleArn": "<p>The module's ARN.</p>",
+        "GetAvailableModuleResponse$moduleArn": "<p>The module's ARN.</p>"
       }
     },
     "ModuleConfiguration": {
@@ -926,6 +1230,7 @@
         "GetLinkResponse$pendingFlowModules": "<p>The configuration of pending flow modules.</p>",
         "GetOutboundExternalLinkResponse$flowModules": "<p>The configuration of flow modules.</p>",
         "GetOutboundExternalLinkResponse$pendingFlowModules": "<p>The configuration of pending flow modules.</p>",
+        "LinkFlowParameters$modules": "<p>The requested modules.</p>",
         "ListLinksResponseStructure$flowModules": "<p>Describes the configuration of flow modules.</p>",
         "ListLinksResponseStructure$pendingFlowModules": "<p>Describes the configuration of pending flow modules.</p>",
         "RejectLinkResponse$flowModules": "<p>The configuration of flow modules.</p>",
@@ -933,10 +1238,64 @@
         "UpdateLinkModuleFlowRequest$modules": "<p>The configuration of a module.</p>"
       }
     },
+    "ModuleDescription": {
+      "base": "<p>Description of a module</p>",
+      "refs": {
+        "GetAvailableModuleResponse$description": "<p>The module's description.</p>"
+      }
+    },
+    "ModuleId": {
+      "base": "<p>The unique identifier of a module, for example <code>module-8kq2p9wx3fnv1c5htj7bd0ral</code> or <code>module-openrtbAttributeFilter</code>.</p>",
+      "refs": {
+        "AvailableModuleSummary$moduleId": "<p>The module's ID.</p>",
+        "GetAvailableModuleRequest$moduleId": "<p>The module's ID.</p>",
+        "GetAvailableModuleResponse$moduleId": "<p>The module's ID.</p>",
+        "GetAvailableModuleVersionRequest$moduleId": "<p>The module's ID.</p>",
+        "GetAvailableModuleVersionResponse$moduleId": "<p>The module's ID.</p>",
+        "ListAvailableModuleVersionsRequest$moduleId": "<p>The module's ID.</p>",
+        "ListAvailableModuleVersionsResponse$moduleId": "<p>The module's ID.</p>"
+      }
+    },
+    "ModuleName": {
+      "base": null,
+      "refs": {
+        "AvailableModuleSummary$moduleName": "<p>A label, not unique: modules can share a name.</p>",
+        "FlowModule$name": "<p>The module's name, unique within the flow.</p>",
+        "GetAvailableModuleResponse$moduleName": "<p>A label, not unique: modules can share a name.</p>"
+      }
+    },
     "ModuleParameters": {
       "base": "<p>Describes the parameters of a module.</p>",
       "refs": {
         "ModuleConfiguration$moduleParameters": "<p>Describes the parameters of a module.</p>"
+      }
+    },
+    "ModulePermission": {
+      "base": "<p>A data-access grant that a version holds.</p>",
+      "refs": {
+        "ModulePermissionList$member": null
+      }
+    },
+    "ModulePermissionList": {
+      "base": null,
+      "refs": {
+        "GetAvailableModuleVersionResponse$permissions": "<p>The data-access grants the version holds.</p>"
+      }
+    },
+    "ModuleVersionArn": {
+      "base": "<p>arn:aws:rtbfabric:{REGION}::modules/{MODULE_ID}/versions/{VERSION}. The account field is empty: a module's ARN doesn't carry its owner's account.</p>",
+      "refs": {
+        "AvailableModuleVersionSummary$moduleVersionArn": "<p>The version's ARN.</p>",
+        "FlowModule$moduleVersionArn": "<p>The version to attach. It must be ACTIVE and available to you (see ListAvailableModuleVersions). You can keep a version that's already in the link's flows after it's deprecated, but you can't give it a higher share of traffic.</p>",
+        "GetAvailableModuleVersionResponse$moduleVersionArn": "<p>The version's ARN.</p>"
+      }
+    },
+    "ModuleVersionStatus": {
+      "base": "<p>A version is CREATING while it is validated, then ACTIVE or CREATE_FAILED. An ACTIVE version becomes DEPRECATED at the time its vendor schedules.</p>",
+      "refs": {
+        "AvailableModuleVersionSummary$status": "<p>ACTIVE or DEPRECATED.</p>",
+        "GetAvailableModuleVersionResponse$status": "<p>ACTIVE or DEPRECATED.</p>",
+        "ListAvailableModuleVersionsRequest$status": "<p>Lists only versions in this status. Only ACTIVE and DEPRECATED versions are listed, so another value returns an empty list.</p>"
       }
     },
     "NoBidAction": {
@@ -987,6 +1346,12 @@
         "OpenRtbAttributeModuleParameters$holdbackPercentage": "<p>The hold back percentage.</p>"
       }
     },
+    "PhasedPipeline": {
+      "base": "<p>Phases that run in order; each starts after the previous one completes.</p>",
+      "refs": {
+        "FlowPipeline$phased": "<p>Phases run in order; a phase's modules run concurrently on the same input. Use it when a phase's modules don't depend on each other.</p>"
+      }
+    },
     "Protocol": {
       "base": null,
       "refs": {
@@ -994,6 +1359,7 @@
         "GetResponderGatewayResponse$protocol": "<p>The networking protocol.</p>",
         "HealthCheckConfig$protocol": "<p>The protocol to use for health check probes.</p>",
         "ProtocolList$member": null,
+        "ResponderGatewayConfigParameters$protocol": "<p>The networking protocol.</p>",
         "UpdateResponderGatewayRequest$protocol": "<p>Networking protocol to use. This operation does not change the protocol of an existing gateway. To use a different protocol, delete the gateway and create a new one.</p>"
       }
     },
@@ -1002,6 +1368,14 @@
       "refs": {
         "ListenerConfig$protocols": "<p>The protocol for connections from clients to the gateway</p>"
       }
+    },
+    "PutLinkFlowsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutLinkFlowsResponse": {
+      "base": null,
+      "refs": {}
     },
     "QueryStringKeyValuePair": {
       "base": "<p>A key-value pair for query string matching in a routing rule condition.</p>",
@@ -1034,6 +1408,12 @@
     "RejectLinkResponse": {
       "base": null,
       "refs": {}
+    },
+    "ReleaseNotes": {
+      "base": "<p>The release notes for a version.</p>",
+      "refs": {
+        "GetAvailableModuleVersionResponse$releaseNotes": "<p>The vendor's release notes.</p>"
+      }
     },
     "RequesterGatewayStatus": {
       "base": null,
@@ -1090,6 +1470,12 @@
         "ResponderErrorMaskingForHttpCode$loggingTypes": "<p>The error log type.</p>"
       }
     },
+    "ResponderGatewayConfigParameters": {
+      "base": "<p>A requested responder gateway configuration.</p>",
+      "refs": {
+        "UpdateParameters$responderGatewayConfig": "<p>The requested responder gateway configuration.</p>"
+      }
+    },
     "ResponderGatewayStatus": {
       "base": null,
       "refs": {
@@ -1097,6 +1483,18 @@
         "DeleteResponderGatewayResponse$status": "<p>The status of the request.</p>",
         "GetResponderGatewayResponse$status": "<p>The status of the request.</p>",
         "UpdateResponderGatewayResponse$status": "<p>The status of the request.</p>"
+      }
+    },
+    "RoutingRuleParameters": {
+      "base": "<p>A requested routing rule.</p>",
+      "refs": {
+        "UpdateParameters$routingRule": "<p>The requested routing rule.</p>"
+      }
+    },
+    "RoutingRuleTarget": {
+      "base": "<p>The routing rule an update targeted.</p>",
+      "refs": {
+        "UpdateTarget$routingRule": "<p>A routing rule on one of the gateway's links.</p>"
       }
     },
     "RtbTaggableResourceArn": {
@@ -1113,6 +1511,7 @@
         "CreateLinkRoutingRuleRequest$conditions": "<p>The conditions for the routing rule. All specified fields must match for the rule to apply. At least one condition field must be set.</p>",
         "GetLinkRoutingRuleResponse$conditions": "<p>The conditions for the routing rule.</p>",
         "LinkRoutingRuleSummary$conditions": "<p>The conditions for the routing rule.</p>",
+        "RoutingRuleParameters$conditions": null,
         "UpdateLinkRoutingRuleRequest$conditions": "<p>The updated conditions for the routing rule. All specified fields must match for the rule to apply. At least one condition field must be set.</p>"
       }
     },
@@ -1155,6 +1554,8 @@
         "GetLinkRoutingRuleRequest$ruleId": "<p>The unique identifier of the routing rule.</p>",
         "GetLinkRoutingRuleResponse$ruleId": "<p>The unique identifier of the routing rule.</p>",
         "LinkRoutingRuleSummary$ruleId": "<p>The unique identifier of the routing rule.</p>",
+        "ListUpdatesRequest$ruleId": "<p>The ID of a routing rule, to list only that rule's updates. Requires <code>linkId</code>, because you address a rule through its link. A <code>ruleId</code> without <code>linkId</code> fails with ValidationException.</p>",
+        "RoutingRuleTarget$ruleId": null,
         "UpdateLinkRoutingRuleRequest$ruleId": "<p>The unique identifier of the routing rule.</p>",
         "UpdateLinkRoutingRuleResponse$ruleId": "<p>The unique identifier of the routing rule.</p>"
       }
@@ -1165,6 +1566,7 @@
         "CreateLinkRoutingRuleRequest$priority": "<p>The priority of the routing rule. Lower numbers are evaluated first. Valid values are 1 to 1000. Priority must be unique among non-deleted rules within a link.</p>",
         "GetLinkRoutingRuleResponse$priority": "<p>The priority of the routing rule.</p>",
         "LinkRoutingRuleSummary$priority": "<p>The priority of the routing rule.</p>",
+        "RoutingRuleParameters$priority": null,
         "UpdateLinkRoutingRuleRequest$priority": "<p>The updated priority of the routing rule. Lower numbers are evaluated first. Valid values are 1 to 1000. Priority must be unique among non-deleted rules within a link.</p>"
       }
     },
@@ -1187,6 +1589,26 @@
         "GetResponderGatewayResponseSecurityGroupIdsList$member": null
       }
     },
+    "SelectedActionList": {
+      "base": null,
+      "refs": {
+        "FlowModule$selectedActions": "<p>The capabilities to turn on, chosen from the version's <code>configurableActions</code>. If the version exposes one, it's the default. If the version exposes more than one, this field is required. If it exposes none, omit this field.</p>"
+      }
+    },
+    "SemanticVersion": {
+      "base": "<p>A three-part semantic version with no leading zeros, for example <code>1.0.0</code>. Each number is at most 2,147,483,647. The vendor sets it, and a version is never reused.</p>",
+      "refs": {
+        "AvailableModuleVersionSummary$version": "<p>The version.</p>",
+        "GetAvailableModuleVersionRequest$version": "<p>The version.</p>",
+        "GetAvailableModuleVersionResponse$version": "<p>The version.</p>"
+      }
+    },
+    "SequentialPipeline": {
+      "base": "<p>Modules that run one after another, each on the previous module's output.</p>",
+      "refs": {
+        "FlowPipeline$sequential": "<p>Modules run in list order. Use it when each module needs the previous module's output.</p>"
+      }
+    },
     "ServiceQuotaExceededException": {
       "base": "<p>The request could not be completed because you exceeded a service quota.</p>",
       "refs": {}
@@ -1202,6 +1624,7 @@
       "refs": {
         "AccessDeniedException$message": null,
         "AssociateCertificateRequest$clientToken": "<p>Specifies a unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This lets you safely retry the request without accidentally performing the same operation a second time. Passing the same value to a later call to an operation requires that you also pass the same value for all other parameters. We recommend that you use a <a href=\"https://wikipedia.org/wiki/Universally_unique_identifier\">UUID type of value</a>.</p> <p>If you don't provide this value, then Amazon Web Services generates a random one for you.</p> <p>If you retry the operation with the same <code>clientToken</code>, but with different parameters, the retry fails with an <code>IdempotentParameterMismatch</code> error.</p>",
+        "AvailableModuleSummary$marketplaceProductId": "<p>The Marketplace product the module is sold under. Present only when subscriptionType is MARKETPLACE.</p>",
         "ConflictException$message": null,
         "CreateInboundExternalLinkRequest$clientToken": "<p>Specifies a unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This lets you safely retry the request without accidentally performing the same operation a second time. Passing the same value to a later call to an operation requires that you also pass the same value for all other parameters. We recommend that you use a <a href=\"https://wikipedia.org/wiki/Universally_unique_identifier\">UUID type of value</a>.</p> <p>If you don't provide this value, then Amazon Web Services generates a random one for you.</p> <p>If you retry the operation with the same <code>clientToken</code>, but with different parameters, the retry fails with an <code>IdempotentParameterMismatch</code> error.</p>",
         "CreateLinkRoutingRuleRequest$clientToken": "<p>Specifies a unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This lets you safely retry the request without accidentally performing the same operation a second time. Passing the same value to a later call to an operation requires that you also pass the same value for all other parameters. We recommend that you use a <a href=\"https://wikipedia.org/wiki/Universally_unique_identifier\">UUID type of value</a>.</p> <p>If you don't provide this value, then Amazon Web Services generates a random one for you.</p> <p>If you retry the operation with the same <code>clientToken</code>, but with different parameters, the retry fails with an <code>IdempotentParameterMismatch</code> error.</p>",
@@ -1210,9 +1633,14 @@
         "CreateResponderGatewayRequest$clientToken": "<p>Specifies a unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This lets you safely retry the request without accidentally performing the same operation a second time. Passing the same value to a later call to an operation requires that you also pass the same value for all other parameters. We recommend that you use a <a href=\"https://wikipedia.org/wiki/Universally_unique_identifier\">UUID type of value</a>.</p> <p>If you don't provide this value, then Amazon Web Services generates a random one for you.</p> <p>If you retry the operation with the same <code>clientToken</code>, but with different parameters, the retry fails with an <code>IdempotentParameterMismatch</code> error.</p>",
         "FilterCriterion$path": "<p>The path to filter.</p>",
         "FilterCriterionValuesList$member": null,
+        "GetAvailableModuleResponse$marketplaceProductId": "<p>The Marketplace product the module is sold under. Present only when subscriptionType is MARKETPLACE.</p>",
         "HeaderTagAction$name": "<p>The name of the bid action.</p>",
         "HeaderTagAction$value": "<p>The value of the bid action.</p>",
         "InternalServerException$message": null,
+        "ListAvailableModuleVersionsRequest$nextToken": "<p>If nextToken is returned, there are more results available. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours; using an expired token fails with ValidationException.</p>",
+        "ListAvailableModuleVersionsResponse$nextToken": "<p>If nextToken is returned, there are more results available. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours; using an expired token fails with ValidationException.</p>",
+        "ListAvailableModulesRequest$nextToken": "<p>If nextToken is returned, there are more results available. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours; using an expired token fails with ValidationException.</p>",
+        "ListAvailableModulesResponse$nextToken": "<p>If nextToken is returned, there are more results available. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours; using an expired token fails with ValidationException.</p>",
         "ListCertificateAssociationsRequest$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
         "ListCertificateAssociationsResponse$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
         "ListLinkRoutingRulesRequest$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
@@ -1224,6 +1652,7 @@
         "ListResponderGatewaysRequest$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
         "ListResponderGatewaysResponse$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
         "ResourceNotFoundException$message": null,
+        "ResponderGatewayConfigParameters$description": "<p>The gateway's description.</p>",
         "ServiceQuotaExceededException$message": null,
         "ThrottlingException$message": null,
         "UpdateLinkModuleFlowRequest$clientToken": "<p>Specifies a unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This lets you safely retry the request without accidentally performing the same operation a second time. Passing the same value to a later call to an operation requires that you also pass the same value for all other parameters. We recommend that you use a <a href=\"https://wikipedia.org/wiki/Universally_unique_identifier\">UUID type of value</a>.</p> <p>If you don't provide this value, then Amazon Web Services generates a random one for you.</p> <p>If you retry the operation with the same <code>clientToken</code>, but with different parameters, the retry fails with an <code>IdempotentParameterMismatch</code> error.</p>",
@@ -1239,6 +1668,21 @@
         "CreateResponderGatewayRequestSubnetIdsList$member": null,
         "GetRequesterGatewayResponseSubnetIdsList$member": null,
         "GetResponderGatewayResponseSubnetIdsList$member": null
+      }
+    },
+    "SubscriptionStatus": {
+      "base": "<p>Specifies whether your access to the module is current.</p>",
+      "refs": {
+        "AvailableModuleSummary$subscriptionStatus": "<p>Specifies whether your access to the module is current.</p>",
+        "GetAvailableModuleResponse$subscriptionStatus": "<p>Specifies whether your access to the module is current.</p>"
+      }
+    },
+    "SubscriptionType": {
+      "base": "<p>Indicates the type of access that you have to a module, such as a subscription, a private share, or a built-in.</p>",
+      "refs": {
+        "AvailableModuleSummary$subscriptionType": "<p>The type of access that you have to the module.</p>",
+        "GetAvailableModuleResponse$subscriptionType": "<p>The type of access that you have to the module.</p>",
+        "ListAvailableModulesRequest$subscriptionType": "<p>Lists only modules that you have access to this way.</p>"
       }
     },
     "TagKey": {
@@ -1297,11 +1741,15 @@
       "refs": {
         "AcceptLinkResponse$createdAt": "<p>The timestamp of when the link was created.</p>",
         "AcceptLinkResponse$updatedAt": "<p>The timestamp of when the link was updated.</p>",
+        "AvailableModuleVersionSummary$createdAt": "<p>The time when the version was created.</p>",
         "CertificateAssociationSummary$associatedAt": "<p>The timestamp of when the certificate was associated.</p>",
         "CertificateAssociationSummary$updatedAt": "<p>The timestamp of when the certificate association was last updated.</p>",
         "CreateLinkResponse$createdAt": "<p>The timestamp of when the link was created.</p>",
         "CreateLinkResponse$updatedAt": "<p>The timestamp of when the link was updated.</p>",
         "CreateLinkRoutingRuleResponse$createdAt": "<p>The timestamp of when the routing rule was created.</p>",
+        "GetAvailableModuleResponse$createdAt": "<p>The time when the module was created.</p>",
+        "GetAvailableModuleVersionResponse$createdAt": "<p>The time when the version was created.</p>",
+        "GetAvailableModuleVersionResponse$updatedAt": "<p>The time when the version last changed.</p>",
         "GetCertificateAssociationResponse$associatedAt": "<p>The timestamp of when the certificate was associated.</p>",
         "GetCertificateAssociationResponse$updatedAt": "<p>The timestamp of when the certificate association was last updated.</p>",
         "GetInboundExternalLinkResponse$createdAt": "<p>The timestamp of when the inbound external link was created.</p>",
@@ -1322,7 +1770,9 @@
         "ListLinksResponseStructure$updatedAt": "<p>The timestamp of when the link was updated.</p>",
         "RejectLinkResponse$createdAt": "<p>The timestamp of when the link was created.</p>",
         "RejectLinkResponse$updatedAt": "<p>The timestamp of when the link was updated.</p>",
-        "UpdateLinkRoutingRuleResponse$updatedAt": "<p>The timestamp of when the routing rule was last updated.</p>"
+        "Update$createdAt": "<p>The timestamp of when the update was created.</p>",
+        "UpdateLinkRoutingRuleResponse$updatedAt": "<p>The timestamp of when the routing rule was last updated.</p>",
+        "UpdateSummary$createdAt": "<p>The timestamp of when the update was created.</p>"
       }
     },
     "TrustStoreConfiguration": {
@@ -1330,6 +1780,7 @@
       "refs": {
         "CreateResponderGatewayRequest$trustStoreConfiguration": "<p>The configuration of the trust store.</p>",
         "GetResponderGatewayResponse$trustStoreConfiguration": "<p>The configuration of the trust store.</p>",
+        "ResponderGatewayConfigParameters$trustStoreConfiguration": null,
         "UpdateResponderGatewayRequest$trustStoreConfiguration": "<p>The configuration of the trust store.</p>"
       }
     },
@@ -1347,6 +1798,12 @@
         "ListLinksResponseStructure$publicEndpoint": "<p>The public endpoint of the outbound link.</p>"
       }
     },
+    "Unit": {
+      "base": null,
+      "refs": {
+        "UpdateTarget$gateway": "<p>The gateway itself.</p>"
+      }
+    },
     "UntagResourceRequest": {
       "base": null,
       "refs": {}
@@ -1354,6 +1811,25 @@
     "UntagResourceResponse": {
       "base": null,
       "refs": {}
+    },
+    "Update": {
+      "base": "<p>An accepted configuration change and its status.</p>",
+      "refs": {
+        "GetUpdateResponse$update": "<p>The update.</p>"
+      }
+    },
+    "UpdateId": {
+      "base": null,
+      "refs": {
+        "GetUpdateRequest$updateId": "<p>The unique identifier of the update.</p>",
+        "PutLinkFlowsResponse$updateId": "<p>The ID of the update this call started.</p>",
+        "Update$updateId": "<p>The unique identifier of the update.</p>",
+        "UpdateLinkModuleFlowResponse$updateId": "<p>The ID of the update this call started.</p>",
+        "UpdateLinkResponse$updateId": "<p>The ID of the update this call started.</p>",
+        "UpdateLinkRoutingRuleResponse$updateId": "<p>The ID of the update this call started.</p>",
+        "UpdateResponderGatewayResponse$updateId": "<p>The ID of the update this call started.</p>",
+        "UpdateSummary$updateId": "<p>The unique identifier of the update.</p>"
+      }
     },
     "UpdateLinkModuleFlowRequest": {
       "base": null,
@@ -1367,6 +1843,12 @@
       "base": null,
       "refs": {}
     },
+    "UpdateLinkRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "UpdateLinkRequest$clientToken": "<p>A unique, case-sensitive identifier for the request. The SDK generates one when you don't.</p>"
+      }
+    },
     "UpdateLinkResponse": {
       "base": null,
       "refs": {}
@@ -1375,9 +1857,21 @@
       "base": null,
       "refs": {}
     },
+    "UpdateLinkRoutingRuleRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "UpdateLinkRoutingRuleRequest$clientToken": "<p>A unique, case-sensitive identifier for the request. The SDK generates one when you don't.</p>"
+      }
+    },
     "UpdateLinkRoutingRuleResponse": {
       "base": null,
       "refs": {}
+    },
+    "UpdateParameters": {
+      "base": "<p>What an update requested.</p>",
+      "refs": {
+        "Update$parameters": "<p>The changes that the update requested.</p>"
+      }
     },
     "UpdateRequesterGatewayRequest": {
       "base": null,
@@ -1412,6 +1906,40 @@
     "UpdateResponderGatewayResponse": {
       "base": null,
       "refs": {}
+    },
+    "UpdateStatus": {
+      "base": null,
+      "refs": {
+        "ListUpdatesRequest$status": "<p>Lists only updates in this status.</p>",
+        "Update$status": "<p>The status of the update.</p>",
+        "UpdateSummary$status": "<p>The status of the update.</p>"
+      }
+    },
+    "UpdateSummary": {
+      "base": "<p>A summary of an update.</p>",
+      "refs": {
+        "UpdateSummaryList$member": null
+      }
+    },
+    "UpdateSummaryList": {
+      "base": null,
+      "refs": {
+        "ListUpdatesResponse$updates": "<p>The updates on this page.</p>"
+      }
+    },
+    "UpdateTarget": {
+      "base": "<p>What an update targeted.</p>",
+      "refs": {
+        "Update$target": "<p>The resource that the update targeted.</p>"
+      }
+    },
+    "UpdateType": {
+      "base": null,
+      "refs": {
+        "ListUpdatesRequest$type": "<p>Lists only updates of this type.</p>",
+        "Update$type": "<p>The type of change.</p>",
+        "UpdateSummary$type": "<p>The type of change.</p>"
+      }
     },
     "ValidationException": {
       "base": "<p>The request could not be completed because it fails satisfy the constraints specified by the service.</p>",

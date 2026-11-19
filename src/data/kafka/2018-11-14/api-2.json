@@ -52,6 +52,46 @@
         }
       ]
     },
+    "CreateAssessment": {
+      "name": "CreateAssessment",
+      "http": {
+        "method": "POST",
+        "requestUri": "/v1/clusters/{clusterArn}/assessments",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "CreateAssessmentRequest"
+      },
+      "output": {
+        "shape": "CreateAssessmentResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
     "CreateCluster": {
       "name": "CreateCluster",
       "http": {
@@ -345,6 +385,47 @@
         }
       ]
     },
+    "DeleteAssessment": {
+      "name": "DeleteAssessment",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/v1/clusters/{clusterArn}/assessments/{assessmentArn}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DeleteAssessmentRequest"
+      },
+      "output": {
+        "shape": "DeleteAssessmentResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ],
+      "idempotent": true
+    },
     "DeleteCluster": {
       "name": "DeleteCluster",
       "http": {
@@ -555,6 +636,44 @@
           "shape": "KafkaRequestException"
         }
       ]
+    },
+    "DescribeAssessment": {
+      "name": "DescribeAssessment",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/clusters/{clusterArn}/assessments/{assessmentArn}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeAssessmentRequest"
+      },
+      "output": {
+        "shape": "DescribeAssessmentResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ],
+      "readonly": true
     },
     "DescribeCluster": {
       "name": "DescribeCluster",
@@ -891,6 +1010,44 @@
         }
       ]
     },
+    "DescribeTopicReassignment": {
+      "name": "DescribeTopicReassignment",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/clusters/{clusterArn}/topic-reassignments/{topicReassignmentOperationArn}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeTopicReassignmentRequest"
+      },
+      "output": {
+        "shape": "DescribeTopicReassignmentResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ],
+      "readonly": true
+    },
     "DescribeVpcConnection": {
       "name": "DescribeVpcConnection",
       "http": {
@@ -1029,6 +1186,85 @@
           "shape": "TooManyRequestsException"
         }
       ]
+    },
+    "ListAssessmentFindings": {
+      "name": "ListAssessmentFindings",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/clusters/{clusterArn}/assessments/{assessmentArn}/findings",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListAssessmentFindingsRequest"
+      },
+      "output": {
+        "shape": "ListAssessmentFindingsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ],
+      "readonly": true
+    },
+    "ListAssessments": {
+      "name": "ListAssessments",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/clusters/{clusterArn}/assessments",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListAssessmentsRequest"
+      },
+      "output": {
+        "shape": "ListAssessmentsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ],
+      "readonly": true
     },
     "ListChannels": {
       "name": "ListChannels",
@@ -1440,6 +1676,44 @@
         }
       ]
     },
+    "ListTopicReassignments": {
+      "name": "ListTopicReassignments",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/clusters/{clusterArn}/topic-reassignments",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListTopicReassignmentsRequest"
+      },
+      "output": {
+        "shape": "ListTopicReassignmentsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ],
+      "readonly": true
+    },
     "ListVpcConnections": {
       "name": "ListVpcConnections",
       "http": {
@@ -1648,6 +1922,83 @@
         },
         {
           "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "StartTopicReassignment": {
+      "name": "StartTopicReassignment",
+      "http": {
+        "method": "POST",
+        "requestUri": "/v1/clusters/{clusterArn}/topic-reassignments",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "StartTopicReassignmentRequest"
+      },
+      "output": {
+        "shape": "StartTopicReassignmentResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "StopTopicReassignment": {
+      "name": "StopTopicReassignment",
+      "http": {
+        "method": "POST",
+        "requestUri": "/v1/clusters/{clusterArn}/topic-reassignments/{topicReassignmentOperationArn}/stop",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "StopTopicReassignmentRequest"
+      },
+      "output": {
+        "shape": "StopTopicReassignmentResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "UnauthorizedException"
         },
         {
           "shape": "ForbiddenException"
@@ -2251,6 +2602,119 @@
         "BootstrapBrokerString"
       ]
     },
+    "AssessmentFinding": {
+      "type": "structure",
+      "members": {
+        "Category": {
+          "shape": "FindingCategory",
+          "locationName": "category"
+        },
+        "FindingId": {
+          "shape": "__string",
+          "locationName": "findingId"
+        },
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
+        },
+        "Remediation": {
+          "shape": "FindingRemediation",
+          "locationName": "remediation"
+        },
+        "Resource": {
+          "shape": "__string",
+          "locationName": "resource"
+        },
+        "Severity": {
+          "shape": "FindingSeverity",
+          "locationName": "severity"
+        }
+      },
+      "required": [
+        "Category",
+        "Message",
+        "Severity",
+        "FindingId"
+      ]
+    },
+    "AssessmentInfo": {
+      "type": "structure",
+      "members": {
+        "AssessmentArn": {
+          "shape": "__stringMax2048",
+          "locationName": "assessmentArn"
+        },
+        "AssessmentType": {
+          "shape": "AssessmentType",
+          "locationName": "assessmentType"
+        },
+        "ClusterArn": {
+          "shape": "__stringMax2048",
+          "locationName": "clusterArn"
+        },
+        "CreationTime": {
+          "shape": "__timestampIso8601",
+          "locationName": "creationTime"
+        },
+        "Status": {
+          "shape": "AssessmentStatus",
+          "locationName": "status"
+        },
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
+        }
+      }
+    },
+    "AssessmentParameters": {
+      "type": "structure",
+      "members": {
+        "TargetInstanceType": {
+          "shape": "__stringMax256",
+          "locationName": "targetInstanceType"
+        }
+      }
+    },
+    "AssessmentStatus": {
+      "type": "string",
+      "enum": [
+        "IN_PROGRESS",
+        "COMPLETE",
+        "FAILED",
+        "DELETING"
+      ]
+    },
+    "AssessmentSummary": {
+      "type": "structure",
+      "members": {
+        "ByCategory": {
+          "shape": "__mapOf__integer",
+          "locationName": "byCategory"
+        },
+        "BySeverity": {
+          "shape": "__mapOf__integer",
+          "locationName": "bySeverity"
+        },
+        "FindingsCapped": {
+          "shape": "__boolean",
+          "locationName": "findingsCapped"
+        },
+        "HasBlockingFindings": {
+          "shape": "__boolean",
+          "locationName": "hasBlockingFindings"
+        },
+        "TotalFindings": {
+          "shape": "__integer",
+          "locationName": "totalFindings"
+        }
+      }
+    },
+    "AssessmentType": {
+      "type": "string",
+      "enum": [
+        "UPDATE_BROKER_TYPE"
+      ]
+    },
     "AuthorizerLogs": {
       "type": "structure",
       "members": {
@@ -2371,7 +2835,7 @@
           "locationName": "clientSubnets"
         },
         "InstanceType": {
-          "shape": "__stringMin5Max32",
+          "shape": "__stringMin5Max64",
           "locationName": "instanceType"
         },
         "SecurityGroups": {
@@ -2407,6 +2871,10 @@
           "shape": "__double",
           "locationName": "brokerId"
         },
+        "BrokerNodeType": {
+          "shape": "BrokerNodeType",
+          "locationName": "brokerNodeType"
+        },
         "ClientSubnet": {
           "shape": "__string",
           "locationName": "clientSubnet"
@@ -2425,6 +2893,13 @@
         }
       }
     },
+    "BrokerNodeType": {
+      "type": "string",
+      "enum": [
+        "STANDARD",
+        "EXPRESS"
+      ]
+    },
     "BrokerSoftwareInfo": {
       "type": "structure",
       "members": {
@@ -2439,6 +2914,19 @@
         "KafkaVersion": {
           "shape": "__string",
           "locationName": "kafkaVersion"
+        }
+      }
+    },
+    "BrokerTypeUpgradeInfo": {
+      "type": "structure",
+      "members": {
+        "TopicReassignmentMode": {
+          "shape": "TopicReassignmentMode",
+          "locationName": "topicReassignmentMode"
+        },
+        "TopicReassignmentOperationArn": {
+          "shape": "__stringMax2048",
+          "locationName": "topicReassignmentOperationArn"
         }
       }
     },
@@ -2520,6 +3008,57 @@
         "Message": {
           "shape": "__string",
           "locationName": "message"
+        }
+      }
+    },
+    "CreateAssessmentRequest": {
+      "type": "structure",
+      "members": {
+        "AssessmentParameters": {
+          "shape": "AssessmentParameters",
+          "locationName": "assessmentParameters"
+        },
+        "AssessmentType": {
+          "shape": "AssessmentType",
+          "locationName": "assessmentType"
+        },
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "ClusterArn",
+        "AssessmentType"
+      ]
+    },
+    "CreateAssessmentResponse": {
+      "type": "structure",
+      "members": {
+        "AssessmentArn": {
+          "shape": "__stringMax2048",
+          "locationName": "assessmentArn"
+        },
+        "AssessmentType": {
+          "shape": "AssessmentType",
+          "locationName": "assessmentType"
+        },
+        "ClusterArn": {
+          "shape": "__stringMax2048",
+          "locationName": "clusterArn"
+        },
+        "CreationTime": {
+          "shape": "__timestampIso8601",
+          "locationName": "creationTime"
+        },
+        "Status": {
+          "shape": "AssessmentStatus",
+          "locationName": "status"
         }
       }
     },
@@ -2712,6 +3251,10 @@
     "ClusterOperationInfo": {
       "type": "structure",
       "members": {
+        "BrokerTypeUpgradeInfo": {
+          "shape": "BrokerTypeUpgradeInfo",
+          "locationName": "brokerTypeUpgradeInfo"
+        },
         "ClientRequestId": {
           "shape": "__string",
           "locationName": "clientRequestId"
@@ -2828,6 +3371,10 @@
     "ClusterOperationV2Provisioned": {
       "type": "structure",
       "members": {
+        "BrokerTypeUpgradeInfo": {
+          "shape": "BrokerTypeUpgradeInfo",
+          "locationName": "brokerTypeUpgradeInfo"
+        },
         "OperationSteps": {
           "shape": "__listOfClusterOperationStep",
           "locationName": "operationSteps"
@@ -3506,6 +4053,38 @@
         }
       }
     },
+    "DeleteAssessmentRequest": {
+      "type": "structure",
+      "members": {
+        "AssessmentArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "assessmentArn"
+        },
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        }
+      },
+      "required": [
+        "ClusterArn",
+        "AssessmentArn"
+      ]
+    },
+    "DeleteAssessmentResponse": {
+      "type": "structure",
+      "members": {
+        "AssessmentArn": {
+          "shape": "__stringMax2048",
+          "locationName": "assessmentArn"
+        },
+        "Status": {
+          "shape": "AssessmentStatus",
+          "locationName": "status"
+        }
+      }
+    },
     "DeleteClusterRequest": {
       "type": "structure",
       "members": {
@@ -3653,6 +4232,70 @@
         "State": {
           "shape": "VpcConnectionState",
           "locationName": "state"
+        }
+      }
+    },
+    "DescribeAssessmentRequest": {
+      "type": "structure",
+      "members": {
+        "AssessmentArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "assessmentArn"
+        },
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        }
+      },
+      "required": [
+        "ClusterArn",
+        "AssessmentArn"
+      ]
+    },
+    "DescribeAssessmentResponse": {
+      "type": "structure",
+      "members": {
+        "AssessmentArn": {
+          "shape": "__stringMax2048",
+          "locationName": "assessmentArn"
+        },
+        "AssessmentParameters": {
+          "shape": "AssessmentParameters",
+          "locationName": "assessmentParameters"
+        },
+        "AssessmentType": {
+          "shape": "AssessmentType",
+          "locationName": "assessmentType"
+        },
+        "ClusterArn": {
+          "shape": "__stringMax2048",
+          "locationName": "clusterArn"
+        },
+        "CompletionTime": {
+          "shape": "__timestampIso8601",
+          "locationName": "completionTime"
+        },
+        "CreationTime": {
+          "shape": "__timestampIso8601",
+          "locationName": "creationTime"
+        },
+        "Status": {
+          "shape": "AssessmentStatus",
+          "locationName": "status"
+        },
+        "StatusMessage": {
+          "shape": "__string",
+          "locationName": "statusMessage"
+        },
+        "Summary": {
+          "shape": "AssessmentSummary",
+          "locationName": "summary"
+        },
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
         }
       }
     },
@@ -3896,6 +4539,82 @@
         }
       }
     },
+    "DescribeTopicReassignmentRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "TopicReassignmentOperationArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "topicReassignmentOperationArn"
+        }
+      },
+      "required": [
+        "TopicReassignmentOperationArn",
+        "ClusterArn"
+      ]
+    },
+    "DescribeTopicReassignmentResponse": {
+      "type": "structure",
+      "members": {
+        "ClusterArn": {
+          "shape": "__stringMax2048",
+          "locationName": "clusterArn"
+        },
+        "CompletedTopics": {
+          "shape": "__integer",
+          "locationName": "completedTopics"
+        },
+        "CreationTime": {
+          "shape": "__timestampIso8601",
+          "locationName": "creationTime"
+        },
+        "ErrorInfo": {
+          "shape": "ErrorInfo",
+          "locationName": "errorInfo"
+        },
+        "LastUpdateTime": {
+          "shape": "__timestampIso8601",
+          "locationName": "lastUpdateTime"
+        },
+        "MigratedPartitions": {
+          "shape": "__integer",
+          "locationName": "migratedPartitions"
+        },
+        "Status": {
+          "shape": "TopicReassignmentStatus",
+          "locationName": "status"
+        },
+        "TargetInstanceType": {
+          "shape": "__string",
+          "locationName": "targetInstanceType"
+        },
+        "TopicReassignmentOperationArn": {
+          "shape": "__stringMax2048",
+          "locationName": "topicReassignmentOperationArn"
+        },
+        "TopicsToExclude": {
+          "shape": "__listOf__string",
+          "locationName": "topicsToExclude"
+        },
+        "TopicsToInclude": {
+          "shape": "__listOf__string",
+          "locationName": "topicsToInclude"
+        },
+        "TotalPartitions": {
+          "shape": "__integer",
+          "locationName": "totalPartitions"
+        },
+        "TotalTopics": {
+          "shape": "__integer",
+          "locationName": "totalTopics"
+        }
+      }
+    },
     "DescribeTopicRequest": {
       "type": "structure",
       "members": {
@@ -3987,6 +4706,10 @@
         "Status": {
           "shape": "TopicState",
           "locationName": "status"
+        },
+        "ReplicaIds": {
+          "shape": "__listOf__integer",
+          "locationName": "replicaIds"
         }
       }
     },
@@ -4269,6 +4992,37 @@
           "locationName": "message"
         }
       }
+    },
+    "FindingCategory": {
+      "type": "string",
+      "enum": [
+        "INFRASTRUCTURE",
+        "BROKER_CONFIGURATION",
+        "TOPIC_CONFIGURATION",
+        "CAPACITY",
+        "HEALTH"
+      ]
+    },
+    "FindingRemediation": {
+      "type": "structure",
+      "members": {
+        "Action": {
+          "shape": "__string",
+          "locationName": "action"
+        },
+        "DocumentationUrl": {
+          "shape": "__stringMax2048",
+          "locationName": "documentationUrl"
+        }
+      }
+    },
+    "FindingSeverity": {
+      "type": "string",
+      "enum": [
+        "ERROR",
+        "WARNING",
+        "INFO"
+      ]
     },
     "Firehose": {
       "type": "structure",
@@ -4769,6 +5523,99 @@
         "ACTIVE",
         "DEPRECATED"
       ]
+    },
+    "ListAssessmentFindingsRequest": {
+      "type": "structure",
+      "members": {
+        "AssessmentArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "assessmentArn"
+        },
+        "Category": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "category"
+        },
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "MaxResults": {
+          "shape": "__integerMin1Max500",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        },
+        "Severity": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "severity"
+        }
+      },
+      "required": [
+        "ClusterArn",
+        "AssessmentArn"
+      ]
+    },
+    "ListAssessmentFindingsResponse": {
+      "type": "structure",
+      "members": {
+        "Findings": {
+          "shape": "__listOfAssessmentFinding",
+          "locationName": "findings"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListAssessmentsRequest": {
+      "type": "structure",
+      "members": {
+        "AssessmentType": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "assessmentType"
+        },
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        }
+      },
+      "required": [
+        "ClusterArn"
+      ]
+    },
+    "ListAssessmentsResponse": {
+      "type": "structure",
+      "members": {
+        "Assessments": {
+          "shape": "__listOfAssessmentInfo",
+          "locationName": "assessments"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
     },
     "ListClusterOperationsRequest": {
       "type": "structure",
@@ -5793,6 +6640,47 @@
         }
       }
     },
+    "ListTopicReassignmentsRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        },
+        "StatusFilter": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "statusFilter"
+        }
+      },
+      "required": [
+        "ClusterArn"
+      ]
+    },
+    "ListTopicReassignmentsResponse": {
+      "type": "structure",
+      "members": {
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        },
+        "Reassignments": {
+          "shape": "__listOfTopicReassignmentInfo",
+          "locationName": "reassignments"
+        }
+      }
+    },
     "ListTopicsRequest": {
       "type": "structure",
       "members": {
@@ -6394,6 +7282,54 @@
         "httpStatusCode": 503
       }
     },
+    "StartTopicReassignmentRequest": {
+      "type": "structure",
+      "members": {
+        "ClientToken": {
+          "shape": "__stringMin1Max64",
+          "locationName": "clientToken"
+        },
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "TargetInstanceType": {
+          "shape": "__stringMin1Max256",
+          "locationName": "targetInstanceType"
+        },
+        "TopicsToExclude": {
+          "shape": "__listOf__stringMin1Max256",
+          "locationName": "topicsToExclude"
+        },
+        "TopicsToInclude": {
+          "shape": "__listOf__stringMin1Max256",
+          "locationName": "topicsToInclude"
+        }
+      },
+      "required": [
+        "ClusterArn",
+        "TopicsToInclude",
+        "TargetInstanceType"
+      ]
+    },
+    "StartTopicReassignmentResponse": {
+      "type": "structure",
+      "members": {
+        "ClusterArn": {
+          "shape": "__stringMax2048",
+          "locationName": "clusterArn"
+        },
+        "Status": {
+          "shape": "TopicReassignmentStatus",
+          "locationName": "status"
+        },
+        "TopicReassignmentOperationArn": {
+          "shape": "__stringMax2048",
+          "locationName": "topicReassignmentOperationArn"
+        }
+      }
+    },
     "StateInfo": {
       "type": "structure",
       "members": {
@@ -6404,6 +7340,38 @@
         "Message": {
           "shape": "__string",
           "locationName": "message"
+        }
+      }
+    },
+    "StopTopicReassignmentRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "TopicReassignmentOperationArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "topicReassignmentOperationArn"
+        }
+      },
+      "required": [
+        "TopicReassignmentOperationArn",
+        "ClusterArn"
+      ]
+    },
+    "StopTopicReassignmentResponse": {
+      "type": "structure",
+      "members": {
+        "Status": {
+          "shape": "TopicReassignmentStatus",
+          "locationName": "status"
+        },
+        "TopicReassignmentOperationArn": {
+          "shape": "__stringMax2048",
+          "locationName": "topicReassignmentOperationArn"
         }
       }
     },
@@ -6458,6 +7426,60 @@
         "SNAPPY",
         "LZ4",
         "ZSTD"
+      ]
+    },
+    "TopicReassignment": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "MANUAL"
+      ]
+    },
+    "TopicReassignmentInfo": {
+      "type": "structure",
+      "members": {
+        "CompletedTopics": {
+          "shape": "__integer",
+          "locationName": "completedTopics"
+        },
+        "CreationTime": {
+          "shape": "__timestampIso8601",
+          "locationName": "creationTime"
+        },
+        "Status": {
+          "shape": "TopicReassignmentStatus",
+          "locationName": "status"
+        },
+        "TargetInstanceType": {
+          "shape": "__string",
+          "locationName": "targetInstanceType"
+        },
+        "TopicReassignmentOperationArn": {
+          "shape": "__stringMax2048",
+          "locationName": "topicReassignmentOperationArn"
+        },
+        "TotalTopics": {
+          "shape": "__integer",
+          "locationName": "totalTopics"
+        }
+      }
+    },
+    "TopicReassignmentMode": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "MANUAL"
+      ]
+    },
+    "TopicReassignmentStatus": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "IN_PROGRESS",
+        "STOPPING",
+        "COMPLETE",
+        "FAILED",
+        "STOPPED"
       ]
     },
     "TopicReplication": {
@@ -6584,6 +7606,10 @@
         "OutOfSyncReplicaCount": {
           "shape": "__integer",
           "locationName": "outOfSyncReplicaCount"
+        },
+        "ReplicaIds": {
+          "shape": "__listOf__integer",
+          "locationName": "replicaIds"
         }
       }
     },
@@ -6843,6 +7869,10 @@
         "TargetInstanceType": {
           "shape": "__string",
           "locationName": "targetInstanceType"
+        },
+        "TopicReassignment": {
+          "shape": "TopicReassignment",
+          "locationName": "topicReassignment"
         }
       },
       "required": [
@@ -7848,6 +8878,23 @@
       "type": "integer",
       "min": 1
     },
+    "__integerMin1Max500": {
+      "type": "integer",
+      "min": 1,
+      "max": 500
+    },
+    "__listOfAssessmentFinding": {
+      "type": "list",
+      "member": {
+        "shape": "AssessmentFinding"
+      }
+    },
+    "__listOfAssessmentInfo": {
+      "type": "list",
+      "member": {
+        "shape": "AssessmentInfo"
+      }
+    },
     "__listOfChannelInfo": {
       "type": "list",
       "member": {
@@ -8004,6 +9051,12 @@
         "shape": "TopicPartitionInfo"
       }
     },
+    "__listOfTopicReassignmentInfo": {
+      "type": "list",
+      "member": {
+        "shape": "TopicReassignmentInfo"
+      }
+    },
     "__listOfVpcConnection": {
       "type": "list",
       "member": {
@@ -8046,8 +9099,23 @@
         "shape": "__stringMax256"
       }
     },
+    "__listOf__stringMin1Max256": {
+      "type": "list",
+      "member": {
+        "shape": "__stringMin1Max256"
+      }
+    },
     "__long": {
       "type": "long"
+    },
+    "__mapOf__integer": {
+      "type": "map",
+      "key": {
+        "shape": "__string"
+      },
+      "value": {
+        "shape": "__integer"
+      }
     },
     "__mapOf__string": {
       "type": "map",
@@ -8064,6 +9132,10 @@
     "__stringMax1024": {
       "type": "string",
       "max": 1024
+    },
+    "__stringMax2048": {
+      "type": "string",
+      "max": 2048
     },
     "__stringMax249": {
       "type": "string",
@@ -8084,15 +9156,20 @@
       "max": 128,
       "pattern": "^[0-9A-Za-z][0-9A-Za-z-]{0,}$"
     },
+    "__stringMin1Max256": {
+      "type": "string",
+      "min": 1,
+      "max": 256
+    },
     "__stringMin1Max64": {
       "type": "string",
       "min": 1,
       "max": 64
     },
-    "__stringMin5Max32": {
+    "__stringMin5Max64": {
       "type": "string",
       "min": 5,
-      "max": 32
+      "max": 64
     },
     "__timestampIso8601": {
       "type": "timestamp",

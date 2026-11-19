@@ -33,7 +33,8 @@
         {"shape":"MalformedPolicyDocumentException"},
         {"shape":"PackedPolicyTooLargeException"},
         {"shape":"RegionDisabledException"},
-        {"shape":"ExpiredTokenException"}
+        {"shape":"ExpiredTokenException"},
+        {"shape":"InvalidContextAssertionException"}
       ]
     },
     "AssumeRoleWithSAML":{
@@ -170,6 +171,24 @@
         {"shape":"RegionDisabledException"}
       ]
     },
+    "GetScopedCredentials":{
+      "name":"GetScopedCredentials",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetScopedCredentialsRequest"},
+      "output":{
+        "shape":"GetScopedCredentialsResponse",
+        "resultWrapper":"GetScopedCredentialsResult"
+      },
+      "errors":[
+        {"shape":"MalformedPolicyDocumentException"},
+        {"shape":"PackedPolicyTooLargeException"},
+        {"shape":"InsufficientSessionLifetimeException"},
+        {"shape":"InvalidSubjectCredentialsException"}
+      ]
+    },
     "GetSessionToken":{
       "name":"GetSessionToken",
       "http":{
@@ -277,7 +296,8 @@
         "NameQualifier":{"shape":"NameQualifier"},
         "SourceIdentity":{"shape":"sourceIdentityType"},
         "SessionTokenUtilization":{"shape":"sessionTokenUtilizationType"},
-        "SessionTokenSize":{"shape":"sessionTokenSizeType"}
+        "SessionTokenSize":{"shape":"sessionTokenSizeType"},
+        "TrustedIdentityPropagationContext":{"shape":"TrustedIdentityPropagationContext"}
       }
     },
     "AssumeRoleWithWebIdentityRequest":{
@@ -314,7 +334,8 @@
         "Audience":{"shape":"Audience"},
         "SourceIdentity":{"shape":"sourceIdentityType"},
         "SessionTokenUtilization":{"shape":"sessionTokenUtilizationType"},
-        "SessionTokenSize":{"shape":"sessionTokenSizeType"}
+        "SessionTokenSize":{"shape":"sessionTokenSizeType"},
+        "TrustedIdentityPropagationContext":{"shape":"TrustedIdentityPropagationContext"}
       }
     },
     "AssumeRootRequest":{
@@ -486,6 +507,26 @@
         "SessionTokenSize":{"shape":"sessionTokenSizeType"}
       }
     },
+    "GetScopedCredentialsRequest":{
+      "type":"structure",
+      "members":{
+        "Policy":{"shape":"sessionPolicyDocumentType"},
+        "DurationSeconds":{"shape":"scopedCredentialDurationSecondsType"},
+        "MinimumSessionTokenSize":{"shape":"minimumSessionTokenSizeType"},
+        "ScopedSessionDescription":{"shape":"scopedSessionDescriptionType"}
+      }
+    },
+    "GetScopedCredentialsResponse":{
+      "type":"structure",
+      "members":{
+        "Credentials":{"shape":"Credentials"},
+        "SessionInfo":{"shape":"ScopedSession"},
+        "SessionTokenUtilization":{"shape":"sessionTokenUtilizationType"},
+        "SessionTokenSize":{"shape":"sessionTokenSizeType"},
+        "ScopedPoliciesCount":{"shape":"scopedPoliciesCountType"},
+        "SourceIdentity":{"shape":"sourceIdentityType"}
+      }
+    },
     "GetSessionTokenRequest":{
       "type":"structure",
       "members":{
@@ -513,6 +554,8 @@
         "Audience":{"shape":"webIdentityTokenAudienceListType"},
         "DurationSeconds":{"shape":"webIdentityTokenDurationSecondsType"},
         "SigningAlgorithm":{"shape":"jwtAlgorithmType"},
+        "Scope":{"shape":"webIdentityTokenScopeType"},
+        "SubjectMode":{"shape":"webIdentityTokenSubjectModeType"},
         "Tags":{"shape":"tagListType"}
       }
     },
@@ -547,6 +590,18 @@
       },
       "exception":true
     },
+    "InsufficientSessionLifetimeException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"insufficientSessionLifetimeMessage"}
+      },
+      "error":{
+        "code":"InsufficientSessionLifetime",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "InvalidAuthorizationMessageException":{
       "type":"structure",
       "members":{
@@ -559,6 +614,19 @@
       },
       "exception":true
     },
+    "InvalidContextAssertionException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"InvalidContextAssertionMessage"}
+      },
+      "error":{
+        "code":"InvalidContextAssertion",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "InvalidContextAssertionMessage":{"type":"string"},
     "InvalidIdentityTokenException":{
       "type":"structure",
       "members":{
@@ -571,6 +639,19 @@
       },
       "exception":true
     },
+    "InvalidSubjectCredentialsException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"InvalidSubjectCredentialsMessage"}
+      },
+      "error":{
+        "code":"InvalidSubjectCredentials",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "InvalidSubjectCredentialsMessage":{"type":"string"},
     "Issuer":{"type":"string"},
     "JWTPayloadSizeExceededException":{
       "type":"structure",
@@ -597,6 +678,15 @@
       "exception":true
     },
     "NameQualifier":{"type":"string"},
+    "OriginIdentity":{
+      "type":"structure",
+      "members":{
+        "Subject":{"shape":"originIdentitySubjectType"},
+        "SubjectType":{"shape":"originIdentitySubjectTypeType"},
+        "Issuer":{"shape":"originIdentityIssuerType"},
+        "FederatedProviderArn":{"shape":"arnType"}
+      }
+    },
     "OutboundWebIdentityFederationDisabledException":{
       "type":"structure",
       "members":{
@@ -663,6 +753,17 @@
       "min":4,
       "sensitive":true
     },
+    "ScopedSession":{
+      "type":"structure",
+      "required":[
+        "ScopedSessionId",
+        "Arn"
+      ],
+      "members":{
+        "ScopedSessionId":{"shape":"scopedSessionIdType"},
+        "Arn":{"shape":"arnType"}
+      }
+    },
     "SessionDurationEscalationException":{
       "type":"structure",
       "members":{
@@ -692,6 +793,20 @@
       "type":"string",
       "max":2048,
       "min":12
+    },
+    "TransactionContext":{
+      "type":"structure",
+      "members":{
+        "IdentityProvider":{"shape":"transactionContextIdentityProviderMapType"}
+      }
+    },
+    "TrustedIdentityPropagationContext":{
+      "type":"structure",
+      "members":{
+        "OriginIdentity":{"shape":"OriginIdentity"},
+        "TransactionContext":{"shape":"TransactionContext"}
+      },
+      "sensitive":true
     },
     "accessKeyIdType":{
       "type":"string",
@@ -724,7 +839,7 @@
     },
     "contextAssertionType":{
       "type":"string",
-      "max":2048,
+      "max":3072,
       "min":4
     },
     "dateType":{"type":"timestamp"},
@@ -755,6 +870,7 @@
     },
     "idpCommunicationErrorMessage":{"type":"string"},
     "idpRejectedClaimMessage":{"type":"string"},
+    "insufficientSessionLifetimeMessage":{"type":"string"},
     "invalidAuthorizationMessage":{"type":"string"},
     "invalidIdentityTokenMessage":{"type":"string"},
     "jwtAlgorithmType":{
@@ -773,6 +889,18 @@
       "type":"integer",
       "min":0
     },
+    "originIdentityIssuerType":{
+      "type":"string",
+      "sensitive":true
+    },
+    "originIdentitySubjectType":{
+      "type":"string",
+      "sensitive":true
+    },
+    "originIdentitySubjectTypeType":{
+      "type":"string",
+      "sensitive":true
+    },
     "outboundWebIdentityFederationDisabledException":{"type":"string"},
     "packedPolicyTooLargeMessage":{"type":"string"},
     "policyDescriptorListType":{
@@ -790,6 +918,27 @@
       "max":64,
       "min":2,
       "pattern":"[\\w+=,.@-]*"
+    },
+    "scopedCredentialDurationSecondsType":{
+      "type":"integer",
+      "max":129600,
+      "min":1
+    },
+    "scopedPoliciesCountType":{
+      "type":"integer",
+      "min":0
+    },
+    "scopedSessionDescriptionType":{
+      "type":"string",
+      "max":256,
+      "min":2,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*"
+    },
+    "scopedSessionIdType":{
+      "type":"string",
+      "max":193,
+      "min":2,
+      "pattern":"[\\w+=,.@:-]*"
     },
     "serialNumberType":{
       "type":"string",
@@ -814,7 +963,7 @@
     },
     "sourceIdentityType":{
       "type":"string",
-      "max":64,
+      "max":256,
       "min":2,
       "pattern":"[\\w+=,.@-]*"
     },
@@ -849,6 +998,17 @@
     "tokenType":{"type":"string"},
     "tradeInTokenType":{
       "type":"string",
+      "sensitive":true
+    },
+    "transactionContextIdentityProviderMapType":{
+      "type":"map",
+      "key":{"shape":"transactionContextKeyType"},
+      "value":{"shape":"transactionContextValueType"}
+    },
+    "transactionContextKeyType":{"type":"string"},
+    "transactionContextValueType":{
+      "type":"string",
+      "max":128,
       "sensitive":true
     },
     "unrestrictedSessionPolicyDocumentType":{
@@ -888,6 +1048,19 @@
       "type":"integer",
       "max":3600,
       "min":60
+    },
+    "webIdentityTokenScopeType":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\x21\\x23-\\x2B\\x2D-\\x5B\\x5D-\\x7E]+( [\\x21\\x23-\\x2B\\x2D-\\x5B\\x5D-\\x7E]+)*"
+    },
+    "webIdentityTokenSubjectModeType":{
+      "type":"string",
+      "enum":[
+        "AWSIdentity",
+        "OriginIdentity"
+      ]
     },
     "webIdentityTokenType":{
       "type":"string",

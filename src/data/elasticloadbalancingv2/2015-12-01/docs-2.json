@@ -9,7 +9,7 @@
     "CreateLoadBalancer": "<p>Creates an Application Load Balancer, Network Load Balancer, or Gateway Load Balancer.</p> <p>For more information, see the following:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html\">Application Load Balancers</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancers.html\">Network Load Balancers</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/gateway-load-balancers.html\">Gateway Load Balancers</a> </p> </li> </ul> <p>This operation is idempotent, which means that it completes at most one time. If you attempt to create multiple load balancers with the same settings, each call succeeds.</p>",
     "CreateRule": "<p>Creates a rule for the specified listener. The listener must be associated with an Application Load Balancer or a dual-stack Network Load Balancer.</p> <p>Each rule consists of a priority, one or more actions, and one or more conditions. Rules are evaluated in priority order, from the lowest value to the highest value. When the conditions for a rule are met, its actions are performed. If the conditions for no rules are met, the actions for the default rule are performed. For more information, see <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-listeners.html#listener-rules\">Listener rules</a> in the <i>Application Load Balancers Guide</i> or <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-listeners.html#listener-rules\">Listener rules</a> in the <i>Network Load Balancers Guide</i>.</p>",
     "CreateTargetGroup": "<p>Creates a target group.</p> <p>For more information, see the following:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html\">Target groups for your Application Load Balancers</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html\">Target groups for your Network Load Balancers</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/target-groups.html\">Target groups for your Gateway Load Balancers</a> </p> </li> </ul> <p>This operation is idempotent, which means that it completes at most one time. If you attempt to create multiple target groups with the same settings, each call succeeds.</p>",
-    "CreateTrustStore": "<p>Creates a trust store.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/application/mutual-authentication.html\">Mutual TLS for Application Load Balancers</a>.</p>",
+    "CreateTrustStore": "<p>Creates a trust store.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/application/mutual-authentication.html\">Mutual TLS for Application Load Balancers</a> or <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/network/mutual-authentication.html\">Mutual TLS for Network Load Balancers</a>.</p>",
     "DeleteListener": "<p>Deletes the specified listener.</p> <p>Alternatively, your listener is deleted when you delete the load balancer to which it is attached.</p>",
     "DeleteLoadBalancer": "<p>Deletes the specified Application Load Balancer, Network Load Balancer, or Gateway Load Balancer. Deleting a load balancer also deletes its listeners.</p> <p>You can't delete a load balancer if deletion protection is enabled. If the load balancer does not exist or has already been deleted, the call succeeds.</p> <p>Deleting a load balancer does not affect its registered targets. For example, your EC2 instances continue to run and are still registered to their target groups. If you no longer need these EC2 instances, you can stop or terminate them.</p>",
     "DeleteRule": "<p>Deletes the specified rule.</p> <p>You can't delete the default rule.</p>",
@@ -430,6 +430,42 @@
       "base": null,
       "refs": {
         "SslPolicy$Ciphers": "<p>The ciphers.</p>"
+      }
+    },
+    "ClientCertificateIdentityFilter": {
+      "base": "<p>Describes a client certificate identity filter.</p>",
+      "refs": {
+        "ClientCertificateIdentityFilters$member": null
+      }
+    },
+    "ClientCertificateIdentityFilterAction": {
+      "base": null,
+      "refs": {
+        "ClientCertificateIdentityFilter$Action": "<p>The action to take when the client certificate matches the filter. The only supported action is <code>accept</code>.</p>"
+      }
+    },
+    "ClientCertificateIdentityFilterField": {
+      "base": null,
+      "refs": {
+        "ClientCertificateIdentityFilter$Field": "<p>The client certificate field to match. The possible values are:</p> <ul> <li> <p> <code>subject-cn</code> – The common name in the certificate subject.</p> </li> <li> <p> <code>subject-ou</code> – The organizational unit in the certificate subject.</p> </li> <li> <p> <code>san-dns</code> – A DNS name in the subject alternative name (SAN).</p> </li> <li> <p> <code>san-uri</code> – A URI in the subject alternative name (SAN).</p> </li> </ul> <p>If the client certificate doesn't contain the field, the filter doesn't match. If the field has multiple values, the filter matches if it matches any one of the values.</p>"
+      }
+    },
+    "ClientCertificateIdentityFilterMatchType": {
+      "base": null,
+      "refs": {
+        "ClientCertificateIdentityFilter$MatchType": "<p>The match type. The possible values are <code>exact</code> and <code>prefix</code>.</p> <p>For the <code>subject-cn</code>, <code>subject-ou</code>, and <code>san-dns</code> fields, matching is case-insensitive. For the <code>san-uri</code> field, the scheme and host are matched case-insensitively, and the rest of the URI is matched case-sensitively.</p>"
+      }
+    },
+    "ClientCertificateIdentityFilterValue": {
+      "base": null,
+      "refs": {
+        "ClientCertificateIdentityFilter$Value": "<p>The value to match. The value must be 1–256 printable ASCII characters.</p> <p>If the field is <code>san-uri</code>, the value must begin with a letter. Before the first colon, the value can contain only letters, digits, plus signs (+), hyphens (-), or periods (.). If the match type is <code>exact</code>, the value must contain a colon. For example, <code>spiffe://example.com/workload</code> is a valid value.</p>"
+      }
+    },
+    "ClientCertificateIdentityFilters": {
+      "base": null,
+      "refs": {
+        "MutualAuthenticationAttributes$ClientCertificateIdentityFilters": "<p>[Network Load Balancers] The client certificate identity filters. The load balancer admits a connection only if the client certificate matches at least one filter. If you don't specify any filters, the load balancer admits every client certificate that passes trust store validation and revocation checks.</p> <p>You can specify filters only when the mode is <code>verify</code>. You can specify up to 100 filters per listener.</p>"
       }
     },
     "ConditionFieldName": {
@@ -1347,7 +1383,7 @@
     "Mode": {
       "base": null,
       "refs": {
-        "MutualAuthenticationAttributes$Mode": "<p>The client certificate handling method. Options are <code>off</code>, <code>passthrough</code> or <code>verify</code>. The default value is <code>off</code>.</p>"
+        "MutualAuthenticationAttributes$Mode": "<p>The client certificate handling method. The default value is <code>off</code>.</p> <p>[Application Load Balancers] The possible values are <code>off</code>, <code>passthrough</code>, and <code>verify</code>.</p> <p>[Network Load Balancers] The possible values are <code>off</code> and <code>verify</code>.</p>"
       }
     },
     "ModifyCapacityReservationInput": {
@@ -1425,9 +1461,9 @@
     "MutualAuthenticationAttributes": {
       "base": "<p>Information about the mutual authentication attributes of a listener.</p>",
       "refs": {
-        "CreateListenerInput$MutualAuthentication": "<p>[HTTPS listeners] The mutual authentication configuration information.</p>",
+        "CreateListenerInput$MutualAuthentication": "<p>[HTTPS and TLS listeners] The mutual authentication configuration information.</p>",
         "Listener$MutualAuthentication": "<p>The mutual authentication configuration information.</p>",
-        "ModifyListenerInput$MutualAuthentication": "<p>[HTTPS listeners] The mutual authentication configuration information.</p>"
+        "ModifyListenerInput$MutualAuthentication": "<p>[HTTPS and TLS listeners] The mutual authentication configuration information.</p>"
       }
     },
     "Name": {

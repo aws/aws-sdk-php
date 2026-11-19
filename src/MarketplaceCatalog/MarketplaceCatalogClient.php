@@ -37,7 +37,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listAssessments(array{
  *     Catalog?: string,
  *     FrameworkId?: string,
- *     AssessmentTargetFilter?: array{EntityId?: string, ChangeSetId?: string, ...},
+ *     AssessmentTargetFilter?: array{EntityId?: string, ChangeSetId?: string, EntityIds?: list<string>, ...},
  *     FrameworkFilters?: array{
  *         AMISecurityFilters?: array{DeliveryOptionId?: string, ...},
  *         ContainerSecurityFilters?: array{DeliveryOptionId?: string, ...},
@@ -51,7 +51,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise listAssessmentsAsync(array{
  *     Catalog?: string,
  *     FrameworkId?: string,
- *     AssessmentTargetFilter?: array{EntityId?: string, ChangeSetId?: string, ...},
+ *     AssessmentTargetFilter?: array{EntityId?: string, ChangeSetId?: string, EntityIds?: list<string>, ...},
  *     FrameworkFilters?: array{
  *         AMISecurityFilters?: array{DeliveryOptionId?: string, ...},
  *         ContainerSecurityFilters?: array{DeliveryOptionId?: string, ...},
@@ -97,6 +97,7 @@ use Aws\AwsClient;
  *             Name?: array,
  *             ProductId?: array,
  *             ResaleAuthorizationId?: array,
+ *             SubsidiaryAuthorizationId?: array,
  *             ReleaseDate?: array,
  *             AvailabilityEndDate?: array,
  *             BuyerAccounts?: array,
@@ -171,7 +172,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         OfferSort?: array{
- *             SortBy?: 'AvailabilityEndDate'|'BuyerAccounts'|'CreatedBySource'|'EntityId'|'LastModifiedDate'|'Name'|'OfferSetId'|'ProductId'|'ReleaseDate'|'ResaleAuthorizationId'|'State'|'TargetAgreementId'|'TargetAgreementIntent'|'Targeting',
+ *             SortBy?: 'AvailabilityEndDate'|'BuyerAccounts'|'CreatedBySource'|'EntityId'|'LastModifiedDate'|'Name'|'OfferSetId'|'ProductId'|'ReleaseDate'|'ResaleAuthorizationId'|'State'|'SubsidiaryAuthorizationId'|'TargetAgreementId'|'TargetAgreementIntent'|'Targeting',
  *             SortOrder?: 'ASCENDING'|'DESCENDING',
  *             ...,
  *         },
@@ -223,6 +224,7 @@ use Aws\AwsClient;
  *             Name?: array,
  *             ProductId?: array,
  *             ResaleAuthorizationId?: array,
+ *             SubsidiaryAuthorizationId?: array,
  *             ReleaseDate?: array,
  *             AvailabilityEndDate?: array,
  *             BuyerAccounts?: array,
@@ -297,7 +299,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         OfferSort?: array{
- *             SortBy?: 'AvailabilityEndDate'|'BuyerAccounts'|'CreatedBySource'|'EntityId'|'LastModifiedDate'|'Name'|'OfferSetId'|'ProductId'|'ReleaseDate'|'ResaleAuthorizationId'|'State'|'TargetAgreementId'|'TargetAgreementIntent'|'Targeting',
+ *             SortBy?: 'AvailabilityEndDate'|'BuyerAccounts'|'CreatedBySource'|'EntityId'|'LastModifiedDate'|'Name'|'OfferSetId'|'ProductId'|'ReleaseDate'|'ResaleAuthorizationId'|'State'|'SubsidiaryAuthorizationId'|'TargetAgreementId'|'TargetAgreementIntent'|'Targeting',
  *             SortOrder?: 'ASCENDING'|'DESCENDING',
  *             ...,
  *         },
@@ -339,6 +341,26 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result putResourcePolicy(array{ResourceArn?: string, Policy?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise putResourcePolicyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise putResourcePolicyAsync(array{ResourceArn?: string, Policy?: string, ...} $args = [])
+ * @method \Aws\Result startAssessment(array $args = [])
+ * @phpstan-method \Aws\Result startAssessment(array{
+ *     Catalog?: string,
+ *     ClientToken?: string,
+ *     FrameworkId?: string,
+ *     EntityId?: string,
+ *     Controls?: list<array{ControlId?: string, Input?: array, ...}>,
+ *     Tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise startAssessmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startAssessmentAsync(array{
+ *     Catalog?: string,
+ *     ClientToken?: string,
+ *     FrameworkId?: string,
+ *     EntityId?: string,
+ *     Controls?: list<array{ControlId?: string, Input?: array, ...}>,
+ *     Tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result startChangeSet(array $args = [])
  * @phpstan-method \Aws\Result startChangeSet(array{
  *     Catalog?: string,

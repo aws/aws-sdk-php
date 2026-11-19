@@ -85,6 +85,13 @@
       "base": "<p>Access to the requested resource is denied due to insufficient permissions.</p>",
       "refs": {}
     },
+    "AccountIdList": {
+      "base": null,
+      "refs": {
+        "OrgSourceIssue$accountIds": "<p>The Amazon Web Services account IDs affected by this issue.</p>",
+        "SourceAwsOrgUnit$accountIds": "<p>The Amazon Web Services account IDs that belong to this organizational unit and are targeted for source monitoring.</p>"
+      }
+    },
     "AdditionalServiceDetails": {
       "base": "<p>Union of service-specific details for different service types.</p>",
       "refs": {
@@ -473,6 +480,20 @@
       "refs": {
         "DisableOperatorAppInput$authFlow": "<p>The authentication flow configured for the operator App. e.g. idc</p>",
         "EnableOperatorAppInput$authFlow": "<p>The authentication flow configured for the operator App. e.g. iam or idc</p>"
+      }
+    },
+    "AwsAccountId": {
+      "base": null,
+      "refs": {
+        "AccountIdList$member": null
+      }
+    },
+    "AwsSourceMode": {
+      "base": null,
+      "refs": {
+        "AgentSpace$awsSourceMode": "<p>The Amazon Web Services source mode for the AgentSpace, indicating whether its Amazon Web Services source configuration targets an individual Amazon Web Services account or an Amazon Web Services Organization.</p>",
+        "CreateAgentSpaceInput$awsSourceMode": "<p>Specifies whether the AgentSpace's Amazon Web Services source configuration targets an individual Amazon Web Services account or an Amazon Web Services Organization.</p>",
+        "UpdateAgentSpaceInput$awsSourceMode": "<p>Specifies whether the AgentSpace's Amazon Web Services source configuration targets an individual Amazon Web Services account or an Amazon Web Services Organization. Use this parameter to switch an existing AgentSpace between source modes.</p>"
       }
     },
     "AzureConfiguration": {
@@ -2135,6 +2156,54 @@
         "ListJournalRecordsRequest$order": "<p>Sort order for the records based on timestamp (default: DESC)</p>"
       }
     },
+    "OrgSourceAccountReasonCode": {
+      "base": null,
+      "refs": {
+        "OrgSourceIssue$reasonCode": "<p>A code that identifies the reason for the issue.</p>"
+      }
+    },
+    "OrgSourceDeploymentState": {
+      "base": "<p>Describes the current rollout state of an Amazon Web Services Organization source configuration, including the number of accounts that have been deployed to and any issues encountered during deployment.</p>",
+      "refs": {
+        "SourceAwsOrgConfiguration$deploymentState": "<p>The current deployment state of the Amazon Web Services Organization-wide source configuration.</p>"
+      }
+    },
+    "OrgSourceDeploymentStateDeployedAccountCountInteger": {
+      "base": null,
+      "refs": {
+        "OrgSourceDeploymentState$deployedAccountCount": "<p>The number of accounts in the targeted Amazon Web Services Organization or organizational unit that have successfully been deployed to.</p>"
+      }
+    },
+    "OrgSourceIssue": {
+      "base": "<p>Describes an issue encountered while deploying or evaluating an Amazon Web Services Organization source configuration.</p>",
+      "refs": {
+        "OrgSourceIssueList$member": null
+      }
+    },
+    "OrgSourceIssueAccountCountInteger": {
+      "base": null,
+      "refs": {
+        "OrgSourceIssue$accountCount": "<p>The number of accounts affected by this issue.</p>"
+      }
+    },
+    "OrgSourceIssueList": {
+      "base": null,
+      "refs": {
+        "OrgSourceDeploymentState$issues": "<p>The issues encountered while deploying the source configuration across the accounts in the Amazon Web Services Organization.</p>"
+      }
+    },
+    "OrgSourceIssueMessage": {
+      "base": null,
+      "refs": {
+        "OrgSourceIssue$message": "<p>A description of the issue.</p>"
+      }
+    },
+    "OrgUnitId": {
+      "base": null,
+      "refs": {
+        "SourceAwsOrgUnit$organizationalUnitId": "<p>The identifier of the Organizations organizational unit.</p>"
+      }
+    },
     "PagerDutyAuthorizationConfig": {
       "base": "<p>Authorization configuration options for PagerDuty service.</p>",
       "refs": {
@@ -2739,6 +2808,7 @@
       "refs": {
         "AWSConfiguration$assumableRoleArn": "<p>Role ARN to be assumed by AIDevOps to operate on behalf of customer.</p>",
         "AWSConfiguration$agentElevatedRoleArn": "<p>Optional IAM role ARN to be assumed by AIDevOps for elevated directed actions on behalf of the customer. Used for mutating operations gated by elevatedActionsEnabled on the AgentSpace. When not provided, only non-elevated directed actions are available for this AWS account.</p>",
+        "AWSConfiguration$serviceManagementRoleArn": "<p>The Amazon Resource Name (ARN) of the Organizations service-managed role that AIDevOps uses to deploy and manage resources across the accounts in your Amazon Web Services Organization.</p>",
         "EnableOperatorAppInput$operatorAppRoleArn": "<p>The IAM role end users assume to access AIDevOps APIs</p>",
         "GitHubConfiguration$runtimeRoleArn": "<p>Optional role ARN that AIDevOps assumes at runtime for automatic verification testing and VPC connectivity on this association.</p>",
         "GitLabConfiguration$runtimeRoleArn": "<p>Optional role ARN that AIDevOps assumes at runtime for automatic verification testing and VPC connectivity on this association.</p>",
@@ -3044,7 +3114,8 @@
     "SourceAccountType": {
       "base": "<p>AWS association type for source account.</p>",
       "refs": {
-        "SourceAwsConfiguration$accountType": "<p>Account Type 'source' for AIDevOps monitoring.</p>"
+        "SourceAwsConfiguration$accountType": "<p>Account Type 'source' for AIDevOps monitoring.</p>",
+        "SourceAwsOrgConfiguration$accountType": "<p>The account type for this configuration. For Amazon Web Services Organization-level configurations, this value is <code>source</code>.</p>"
       }
     },
     "SourceAwsConfiguration": {
@@ -3057,6 +3128,18 @@
       "base": null,
       "refs": {
         "SourceAwsConfiguration$accountId": "<p>AWS Account Id corresponding to provided resources.</p>"
+      }
+    },
+    "SourceAwsOrgConfiguration": {
+      "base": "<p>Configuration for Amazon Web Services Organization-wide source account integration. Use this configuration to monitor Amazon Web Services resources across multiple accounts within an organization or within targeted organizational units.</p>",
+      "refs": {
+        "ServiceConfiguration$sourceAwsOrg": "<p>The Amazon Web Services Organization source configuration used to monitor resources across an entire Amazon Web Services Organization or specified organizational units.</p>"
+      }
+    },
+    "SourceAwsOrgUnit": {
+      "base": "<p>Identifies an Organizations organizational unit and its member accounts that are targeted for source monitoring.</p>",
+      "refs": {
+        "SourceAwsOrgConfiguration$organizationalUnit": "<p>The organizational units within the Amazon Web Services Organization that are targeted for source monitoring.</p>"
       }
     },
     "String": {
@@ -3224,6 +3307,7 @@
         "IdcAuthConfiguration$updatedAt": "<p>The timestamp when the Operator App IdC auth flow was updated.</p>",
         "IdpAuthConfiguration$createdAt": "<p>The timestamp when the Operator App IdP auth flow was enabled.</p>",
         "IdpAuthConfiguration$updatedAt": "<p>The timestamp when the Operator App IdP auth flow was updated.</p>",
+        "OrgSourceDeploymentState$lastEvaluatedAt": "<p>The timestamp of the most recent evaluation of the organization-wide deployment state.</p>",
         "PrivateConnectionSummary$certificateExpiryTime": "<p>The expiry time of the certificate associated with the Private Connection. Only present when a certificate is associated.</p>",
         "RegisteredService$createdAt": "<p>The timestamp when the service was registered.</p>",
         "RegisteredService$updatedAt": "<p>The timestamp when the service was last updated.</p>",

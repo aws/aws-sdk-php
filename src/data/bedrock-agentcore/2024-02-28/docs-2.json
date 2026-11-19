@@ -406,6 +406,30 @@
         "PaymentSession$availableLimits": "<p>The current available spending limits.</p>"
       }
     },
+    "AwsBillingPaymentOptions": {
+      "base": "<p>Optional settings for an AWS Billing payment.</p>",
+      "refs": {
+        "AwsBillingX402PaymentInput$options": "<p>Optional settings for the AWS Billing payment.</p>"
+      }
+    },
+    "AwsBillingPaymentToken": {
+      "base": "<p>A payment token for an AWS Billing payment.</p>",
+      "refs": {
+        "AwsBillingX402PaymentOutput$paymentToken": "<p>The payment token, a signed JSON Web Token (JWT). Include it when you retry your request to the seller. Treat the payment token as a credential: don't log or share it.</p>"
+      }
+    },
+    "AwsBillingX402PaymentInput": {
+      "base": "<p>The input for an AWS Billing x402 payment. The payment pays an AWS Marketplace seller's x402 (HTTP 402) payment requirement and is billed to the AWS account that owns the payment manager, through the payment manager's AWS Billing payment connector.</p>",
+      "refs": {
+        "PaymentInput$awsBillingX402": "<p>Input for an AWS Billing x402 payment, which pays an AWS Marketplace seller's quote and charges it to the AWS account that owns the payment manager.</p>"
+      }
+    },
+    "AwsBillingX402PaymentOutput": {
+      "base": "<p>The output of an AWS Billing x402 payment.</p>",
+      "refs": {
+        "PaymentOutput$awsBillingX402": "<p>Output from an AWS Billing x402 payment.</p>"
+      }
+    },
     "BasicAuth": {
       "base": "<p>Configuration for HTTP Basic Authentication using credentials stored in Amazon Web Services Secrets Manager. The secret must contain a JSON object with <code>username</code> and <code>password</code> string fields. Username allows alphanumeric characters and <code>@._+=-</code> symbols (pattern: <code>^[a-zA-Z0-9@._+=\\-]+$</code>). Password allows alphanumeric characters and <code>@._+=-!#$%&amp;*</code> symbols (pattern: <code>^[a-zA-Z0-9@._+=\\-!#$%&amp;*]+$</code>). Both fields have a maximum length of 256 characters.</p>",
       "refs": {
@@ -1485,6 +1509,24 @@
         "VariantResult$absoluteChange": "<p>The absolute change in mean score compared to the control variant.</p>",
         "VariantResult$percentChange": "<p>The percentage change in mean score compared to the control variant.</p>",
         "VariantResult$pValue": "<p>The p-value indicating the statistical significance of the observed difference.</p>"
+      }
+    },
+    "DpopJwk": {
+      "base": "<p>An elliptic curve public key in JSON Web Key (JWK) format, as described in RFC 7518 section 6.2, used to bind a payment token to the agent.</p>",
+      "refs": {
+        "AwsBillingPaymentOptions$dpopJwk": "<p>The agent's public key for Demonstrating Proof of Possession (DPoP), as described in RFC 9449. If you specify a key, the payment token is bound to it, and the seller can verify that the token is presented by the holder of the matching private key. If you don't specify a key, the payment token isn't bound to a key.</p>"
+      }
+    },
+    "DpopJwkXString": {
+      "base": null,
+      "refs": {
+        "DpopJwk$x": "<p>The x-coordinate of the elliptic curve point, base64url-encoded.</p>"
+      }
+    },
+    "DpopJwkYString": {
+      "base": null,
+      "refs": {
+        "DpopJwk$y": "<p>The y-coordinate of the elliptic curve point, base64url-encoded.</p>"
       }
     },
     "DuplicateIdException": {
@@ -3352,6 +3394,18 @@
       "base": "<p>Response for the <code>InvokeWebSearch</code> operation.</p>",
       "refs": {}
     },
+    "JwkEllipticCurve": {
+      "base": "<p>The elliptic curve of a JSON Web Key.</p>",
+      "refs": {
+        "DpopJwk$crv": "<p>The elliptic curve of the key.</p>"
+      }
+    },
+    "JwkKeyType": {
+      "base": "<p>The JSON Web Key type.</p>",
+      "refs": {
+        "DpopJwk$kty": "<p>The key type. The only valid value is <code>EC</code>.</p>"
+      }
+    },
     "JwtKeyId": {
       "base": "<p>JWT Key ID (kid) from the JWT header.</p>",
       "refs": {
@@ -4362,6 +4416,7 @@
     "PaymentDocument": {
       "base": "<p>Custom document type for payment payloads.</p>",
       "refs": {
+        "AwsBillingX402PaymentInput$payload": "<p>The seller's x402 payment requirement for AWS Billing, passed unchanged as a JSON object. The service reads the seller-signed quote token from <code>extra.quoteToken</code> and returns a <code>ValidationException</code> if it is missing or invalid. Any change to the quote token invalidates its signature.</p>",
         "CryptoX402PaymentInput$payload": "<p>The X402 payment payload.</p>",
         "CryptoX402PaymentOutput$payload": "<p>The X402 payment response payload.</p>"
       }
@@ -4401,8 +4456,8 @@
         "GetPaymentInstrumentRequest$paymentInstrumentId": "<p>The ID of the payment instrument to retrieve.</p>",
         "PaymentInstrument$paymentInstrumentId": "<p>The unique identifier for this payment instrument.</p>",
         "PaymentInstrumentSummary$paymentInstrumentId": "<p>The unique identifier for this payment instrument.</p>",
-        "ProcessPaymentRequest$paymentInstrumentId": "<p>The ID of the payment instrument to use.</p>",
-        "ProcessPaymentResponse$paymentInstrumentId": "<p>The ID of the payment instrument used.</p>"
+        "ProcessPaymentRequest$paymentInstrumentId": "<p>The ID of the payment instrument to use. For the <code>CRYPTO_X402</code> and <code>MPP</code> payment types, specify the ID of a payment instrument that you created. For the <code>AWS_BILLING_X402</code> payment type, specify the service-managed instrument ID <code>aws.agentcorepayments.awsbilling.v1</code>. You don't create this instrument; it's available for any payment manager that has an AWS Billing payment connector.</p>",
+        "ProcessPaymentResponse$paymentInstrumentId": "<p>The ID of the payment instrument used. For the <code>AWS_BILLING_X402</code> payment type, this is the service-managed instrument ID <code>aws.agentcorepayments.awsbilling.v1</code>.</p>"
       }
     },
     "PaymentInstrumentStatus": {
@@ -6359,6 +6414,8 @@
     "Version": {
       "base": "<p>A protocol version identifier, as a bare numeric string. For example, \"1\" or \"2\".</p>",
       "refs": {
+        "AwsBillingX402PaymentInput$version": "<p>The x402 protocol version of the seller's HTTP 402 response, from its <code>x402Version</code> field. For example, <code>2</code>.</p>",
+        "AwsBillingX402PaymentOutput$version": "<p>The x402 protocol version. This is the same value as the <code>version</code> in the request.</p>",
         "MppPaymentInput$version": "<p>The MPP protocol version, for example \"1\" or \"2\".</p>",
         "MppPaymentOutput$version": "<p>The MPP protocol version, for example \"1\" or \"2\".</p>"
       }

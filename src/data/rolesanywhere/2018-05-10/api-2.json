@@ -554,7 +554,8 @@
         "enabled":{"shape":"Boolean"},
         "tags":{"shape":"TagList"},
         "acceptRoleSessionName":{"shape":"Boolean"},
-        "aliasName":{"shape":"AliasName"}
+        "aliasName":{"shape":"AliasName"},
+        "tipConfiguration":{"shape":"TipConfiguration"}
       }
     },
     "CreateProfileRequestDurationSecondsInteger":{
@@ -922,6 +923,7 @@
         "attributeMappings":{"shape":"AttributeMappings"},
         "aliasName":{"shape":"AliasName"},
         "aliasArn":{"shape":"ProfileAliasArn"},
+        "tipConfiguration":{"shape":"TipConfiguration"},
         "previousAliasName":{"shape":"AliasName"}
       }
     },
@@ -1209,6 +1211,36 @@
       "pattern":"[ a-zA-Z0-9_.:/=+@-]*",
       "sensitive":true
     },
+    "TipConfiguration":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"TipStatus"},
+        "subjectType":{"shape":"TipSubjectType"},
+        "subjectSource":{"shape":"TipSubjectSource"}
+      }
+    },
+    "TipStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "TipSubjectSource":{
+      "type":"string",
+      "enum":[
+        "x509SAN/URI",
+        "x509Subject/CN"
+      ]
+    },
+    "TipSubjectType":{
+      "type":"string",
+      "enum":[
+        "user",
+        "workload"
+      ]
+    },
     "TooManyTagsException":{
       "type":"structure",
       "members":{
@@ -1329,7 +1361,8 @@
         "managedPolicyArns":{"shape":"ManagedPolicyList"},
         "durationSeconds":{"shape":"UpdateProfileRequestDurationSecondsInteger"},
         "acceptRoleSessionName":{"shape":"Boolean"},
-        "aliasName":{"shape":"AliasName"}
+        "aliasName":{"shape":"AliasName"},
+        "tipConfiguration":{"shape":"TipConfiguration"}
       }
     },
     "UpdateProfileRequestDurationSecondsInteger":{

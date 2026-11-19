@@ -357,7 +357,10 @@
     "AgentSkillsAdditionalData":{
       "type":"structure",
       "members":{
-        "skillMd":{"shape":"AgentSkillsMdDescriptor"}
+        "skillMd":{"shape":"AgentSkillsMdDescriptor"},
+        "skillPackage":{"shape":"AgentSkillsPackageDescriptor"},
+        "repositoryProvider":{"shape":"AgentSkillsRepositoryProvider"},
+        "sourceConfiguration":{"shape":"AgentSkillsSourceConfiguration"}
       }
     },
     "AgentSkillsDefinitionDescriptor":{
@@ -375,6 +378,23 @@
         "dataSchemaVersion":{"shape":"DataSchemaVersion"},
         "source":{"shape":"DescriptorSource"}
       }
+    },
+    "AgentSkillsPackageDescriptor":{
+      "type":"structure",
+      "members":{
+        "source":{"shape":"DescriptorSource"}
+      }
+    },
+    "AgentSkillsRepositoryProvider":{
+      "type":"string",
+      "enum":["GITHUB"]
+    },
+    "AgentSkillsSourceConfiguration":{
+      "type":"structure",
+      "members":{
+        "s3":{"shape":"S3SourceConfiguration"}
+      },
+      "union":true
     },
     "AllowedAudience":{
       "type":"string",
@@ -412,6 +432,23 @@
       "members":{
         "autoApprovalRules":{"shape":"AutoApprovalRuleList"}
       }
+    },
+    "ArtifactContent":{
+      "type":"blob",
+      "sensitive":true
+    },
+    "AuthorizationAttemptId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z0-9_-]+"
+    },
+    "AuthorizationData":{
+      "type":"structure",
+      "members":{
+        "oauth2":{"shape":"OAuth2AuthorizationData"}
+      },
+      "union":true
     },
     "AuthorizerConfiguration":{
       "type":"structure",
@@ -531,6 +568,7 @@
         "description":{"shape":"Description"},
         "recordType":{"shape":"RecordType"},
         "descriptors":{"shape":"Descriptors"},
+        "artifact":{"shape":"RegistryRecordArtifactUpload"},
         "recordVersion":{"shape":"RegistryRecordVersion"},
         "clientToken":{
           "shape":"ClientToken",
@@ -549,7 +587,8 @@
       ],
       "members":{
         "recordArn":{"shape":"RegistryRecordArn"},
-        "status":{"shape":"RegistryRecordStatus"}
+        "status":{"shape":"RegistryRecordStatus"},
+        "authorizationData":{"shape":"AuthorizationData"}
       }
     },
     "CreateRegistryRequest":{
@@ -656,7 +695,8 @@
     "CustomParameterMap":{
       "type":"map",
       "key":{"shape":"String"},
-      "value":{"shape":"String"}
+      "value":{"shape":"String"},
+      "sensitive":true
     },
     "DataSchemaVersion":{
       "type":"string",
@@ -738,7 +778,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"https://.*"
+      "pattern":"(https|s3)://.*"
     },
     "Descriptors":{
       "type":"structure",
@@ -838,7 +878,9 @@
         "createdByAutoDetection":{"shape":"Boolean"},
         "createdBy":{"shape":"CreatorAccountId"},
         "customMetadata":{"shape":"CustomMetadataDocument"},
-        "customMetadataSchemaComplianceStatus":{"shape":"CustomMetadataSchemaComplianceStatus"}
+        "customMetadataSchemaComplianceStatus":{"shape":"CustomMetadataSchemaComplianceStatus"},
+        "artifact":{"shape":"RegistryRecordArtifactDownload"},
+        "synchronizedSource":{"shape":"RegistryRecordSynchronizedSource"}
       }
     },
     "GetRegistryRequest":{
@@ -876,6 +918,25 @@
         "autoDetection":{"shape":"AutoDetection"},
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "GitCommitId":{
+      "type":"string",
+      "max":64,
+      "min":40,
+      "pattern":"([0-9a-f]{40}|[0-9a-f]{64})"
+    },
+    "GitHubSynchronizedSource":{
+      "type":"structure",
+      "required":[
+        "url",
+        "synchronizedAt",
+        "commitId"
+      ],
+      "members":{
+        "url":{"shape":"SynchronizedSourceUrl"},
+        "synchronizedAt":{"shape":"DateTimestamp"},
+        "commitId":{"shape":"GitCommitId"}
       }
     },
     "HttpDescriptor":{
@@ -1052,6 +1113,38 @@
       "min":1,
       "pattern":"[\\s\\S]+"
     },
+    "OAuth2AuthorizationData":{
+      "type":"structure",
+      "required":["authorizationUrl"],
+      "members":{
+        "authorizationUrl":{"shape":"OAuthAuthorizationUrl"},
+        "userId":{"shape":"OAuthUserId"},
+        "authorizationAttemptId":{"shape":"AuthorizationAttemptId"},
+        "expiresAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "OAuthAuthorizationUrl":{
+      "type":"string",
+      "sensitive":true
+    },
+    "OAuthReturnUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"\\w+:(\\/?\\/?)[^\\s]+"
+    },
+    "OAuthUserId":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "sensitive":true
+    },
+    "PresignedDownloadUrl":{
+      "type":"string",
+      "max":4096,
+      "min":1,
+      "sensitive":true
+    },
     "PrivateEndpoint":{
       "type":"structure",
       "members":{
@@ -1217,6 +1310,21 @@
       "min":1,
       "pattern":"arn:aws(-[^:]+)?:agent-registry:[a-z0-9-]+:[0-9]{12}:registry/[a-zA-Z0-9]{12,16}/record/[a-zA-Z0-9]{12}"
     },
+    "RegistryRecordArtifactDownload":{
+      "type":"structure",
+      "members":{
+        "sha256":{"shape":"Sha256Hash"},
+        "downloadUrl":{"shape":"PresignedDownloadUrl"}
+      }
+    },
+    "RegistryRecordArtifactUpload":{
+      "type":"structure",
+      "required":["content"],
+      "members":{
+        "content":{"shape":"ArtifactContent"},
+        "sha256":{"shape":"Sha256Hash"}
+      }
+    },
     "RegistryRecordCredentialProviderConfiguration":{
       "type":"structure",
       "required":[
@@ -1306,12 +1414,16 @@
         "providerArn":{"shape":"CredentialProviderArn"},
         "grantType":{"shape":"RegistryRecordOAuthGrantType"},
         "scopes":{"shape":"ScopeList"},
-        "customParameters":{"shape":"CustomParameterMap"}
+        "customParameters":{"shape":"CustomParameterMap"},
+        "returnUrl":{"shape":"OAuthReturnUrl"}
       }
     },
     "RegistryRecordOAuthGrantType":{
       "type":"string",
-      "enum":["CLIENT_CREDENTIALS"]
+      "enum":[
+        "CLIENT_CREDENTIALS",
+        "AUTHORIZATION_CODE"
+      ]
     },
     "RegistryRecordStatus":{
       "type":"string",
@@ -1324,7 +1436,9 @@
         "CREATING",
         "UPDATING",
         "CREATE_FAILED",
-        "UPDATE_FAILED"
+        "UPDATE_FAILED",
+        "CREATE_PENDING_AUTH",
+        "UPDATE_PENDING_AUTH"
       ]
     },
     "RegistryRecordSummary":{
@@ -1361,6 +1475,14 @@
     "RegistryRecordSummaryList":{
       "type":"list",
       "member":{"shape":"RegistryRecordSummary"}
+    },
+    "RegistryRecordSynchronizedSource":{
+      "type":"structure",
+      "members":{
+        "s3":{"shape":"S3SynchronizedSource"},
+        "gitHub":{"shape":"GitHubSynchronizedSource"}
+      },
+      "union":true
     },
     "RegistryRecordVersion":{
       "type":"string",
@@ -1441,6 +1563,41 @@
       "max":255,
       "min":3
     },
+    "S3BucketOwnerAccountId":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"[0-9]{12}"
+    },
+    "S3ObjectETag":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "S3ObjectVersionId":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "S3SourceConfiguration":{
+      "type":"structure",
+      "members":{
+        "bucketOwnerAccountId":{"shape":"S3BucketOwnerAccountId"}
+      }
+    },
+    "S3SynchronizedSource":{
+      "type":"structure",
+      "required":[
+        "url",
+        "synchronizedAt"
+      ],
+      "members":{
+        "url":{"shape":"SynchronizedSourceUrl"},
+        "synchronizedAt":{"shape":"DateTimestamp"},
+        "versionId":{"shape":"S3ObjectVersionId"},
+        "eTag":{"shape":"S3ObjectETag"}
+      }
+    },
     "ScopeList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -1474,6 +1631,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "Sha256Hash":{
+      "type":"string",
+      "max":64,
+      "min":64,
+      "pattern":"[0-9a-f]{64}"
     },
     "SourceDetails":{
       "type":"structure",
@@ -1542,6 +1705,12 @@
     "SubnetIds":{
       "type":"list",
       "member":{"shape":"SubnetId"}
+    },
+    "SynchronizedSourceUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "sensitive":true
     },
     "TagKey":{
       "type":"string",
@@ -1643,9 +1812,11 @@
         "description":{"shape":"UpdatedDescription"},
         "recordType":{"shape":"RecordType"},
         "descriptors":{"shape":"UpdatedDescriptors"},
+        "artifact":{"shape":"UpdatedRegistryRecordArtifact"},
         "recordVersion":{"shape":"RegistryRecordVersion"},
         "customMetadata":{"shape":"UpdatedCustomMetadataMap"},
         "triggerSynchronization":{"shape":"Boolean"},
+        "forceAuthentication":{"shape":"Boolean"},
         "provenance":{"shape":"ProvenanceList"}
       }
     },
@@ -1679,7 +1850,8 @@
         "createdByAutoDetection":{"shape":"Boolean"},
         "createdBy":{"shape":"CreatorAccountId"},
         "customMetadata":{"shape":"CustomMetadataDocument"},
-        "customMetadataSchemaComplianceStatus":{"shape":"CustomMetadataSchemaComplianceStatus"}
+        "customMetadataSchemaComplianceStatus":{"shape":"CustomMetadataSchemaComplianceStatus"},
+        "authorizationData":{"shape":"AuthorizationData"}
       }
     },
     "UpdateRegistryRecordStatusRequest":{
@@ -1807,7 +1979,10 @@
     "UpdatedAgentSkillsAdditionalDataFields":{
       "type":"structure",
       "members":{
-        "skillMd":{"shape":"UpdatedAgentSkillsMdDescriptor"}
+        "skillMd":{"shape":"UpdatedAgentSkillsMdDescriptor"},
+        "skillPackage":{"shape":"UpdatedAgentSkillsPackageDescriptor"},
+        "repositoryProvider":{"shape":"UpdatedAgentSkillsRepositoryProvider"},
+        "sourceConfiguration":{"shape":"UpdatedAgentSkillsSourceConfiguration"}
       }
     },
     "UpdatedAgentSkillsDefinitionDescriptor":{
@@ -1836,6 +2011,24 @@
         "data":{"shape":"UpdatedDescriptorData"},
         "dataSchemaVersion":{"shape":"UpdatedDataSchemaVersion"},
         "source":{"shape":"UpdatedDescriptorSource"}
+      }
+    },
+    "UpdatedAgentSkillsPackageDescriptor":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"AgentSkillsPackageDescriptor"}
+      }
+    },
+    "UpdatedAgentSkillsRepositoryProvider":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"AgentSkillsRepositoryProvider"}
+      }
+    },
+    "UpdatedAgentSkillsSourceConfiguration":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"AgentSkillsSourceConfiguration"}
       }
     },
     "UpdatedApprovalConfiguration":{
@@ -1985,6 +2178,12 @@
         "dataSchemaVersion":{"shape":"UpdatedDataSchemaVersion"}
       }
     },
+    "UpdatedRegistryRecordArtifact":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"RegistryRecordArtifactUpload"}
+      }
+    },
     "ValidationException":{
       "type":"structure",
       "required":[
@@ -2024,7 +2223,8 @@
         "FieldValidationFailed",
         "IdempotentParameterMismatchException",
         "EventInOtherSession",
-        "ResourceConflict"
+        "ResourceConflict",
+        "UnsupportedInRegion"
       ]
     },
     "VpcIdentifier":{

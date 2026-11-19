@@ -834,6 +834,26 @@
       "authtype":"none",
       "auth":["smithy.api#noAuth"]
     },
+    "CreateCIMDPolicy":{
+      "name":"CreateCIMDPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateCIMDPolicyRequest"},
+      "output":{"shape":"CreateCIMDPolicyResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"OperationNotEnabledException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"FeatureUnavailableInTierException"}
+      ]
+    },
     "CreateGroup":{
       "name":"CreateGroup",
       "http":{
@@ -1028,6 +1048,24 @@
         {"shape":"InternalErrorException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"FeatureUnavailableInTierException"}
+      ]
+    },
+    "DeleteCIMDPolicy":{
+      "name":"DeleteCIMDPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteCIMDPolicyRequest"},
+      "output":{"shape":"DeleteCIMDPolicyResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"OperationNotEnabledException"},
+        {"shape":"InternalErrorException"}
       ]
     },
     "DeleteGroup":{
@@ -1263,6 +1301,22 @@
       ],
       "authtype":"none",
       "auth":["smithy.api#noAuth"]
+    },
+    "DescribeCIMDPolicy":{
+      "name":"DescribeCIMDPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCIMDPolicyRequest"},
+      "output":{"shape":"DescribeCIMDPolicyResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalErrorException"}
+      ]
     },
     "DescribeIdentityProvider":{
       "name":"DescribeIdentityProvider",
@@ -1924,6 +1978,38 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"NotAuthorizedException"},
         {"shape":"OperationNotEnabledException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
+    "ListCIMDPolicies":{
+      "name":"ListCIMDPolicies",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListCIMDPoliciesRequest"},
+      "output":{"shape":"ListCIMDPoliciesResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
+    "ListClientMetadataURLs":{
+      "name":"ListClientMetadataURLs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListClientMetadataURLsRequest"},
+      "output":{"shape":"ListClientMetadataURLsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"TooManyRequestsException"},
         {"shape":"InternalErrorException"}
       ]
     },
@@ -2643,6 +2729,45 @@
       ],
       "authtype":"none",
       "auth":["smithy.api#noAuth"]
+    },
+    "UpdateCIMDPolicy":{
+      "name":"UpdateCIMDPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateCIMDPolicyRequest"},
+      "output":{"shape":"UpdateCIMDPolicyResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"OperationNotEnabledException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"FeatureUnavailableInTierException"}
+      ]
+    },
+    "UpdateClientMetadataURLState":{
+      "name":"UpdateClientMetadataURLState",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateClientMetadataURLStateRequest"},
+      "output":{"shape":"UpdateClientMetadataURLStateResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"CachedCIMDURLDoesNotExistException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"OperationNotEnabledException"},
+        {"shape":"InternalErrorException"},
+        {"shape":"FeatureUnavailableInTierException"}
+      ]
     },
     "UpdateDeviceStatus":{
       "name":"UpdateDeviceStatus",
@@ -3902,12 +4027,80 @@
       "max":200
     },
     "BooleanType":{"type":"boolean"},
+    "CIMDCacheActionType":{
+      "type":"string",
+      "enum":[
+        "REFRESH",
+        "INVALIDATE"
+      ]
+    },
+    "CIMDPolicyIdType":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-z0-9]+$"
+    },
+    "CIMDPolicyNameType":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\p{Z}]+"
+    },
+    "CIMDPolicySummaryListType":{
+      "type":"list",
+      "member":{"shape":"CIMDPolicySummaryType"}
+    },
+    "CIMDPolicySummaryType":{
+      "type":"structure",
+      "required":[
+        "CIMDPolicyId",
+        "PolicyName"
+      ],
+      "members":{
+        "CIMDPolicyId":{"shape":"CIMDPolicyIdType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "PolicyName":{"shape":"CIMDPolicyNameType"},
+        "CacheDuration":{"shape":"CacheDurationType"},
+        "CreationDate":{"shape":"DateType"},
+        "LastModifiedDate":{"shape":"DateType"}
+      }
+    },
+    "CIMDPolicyType":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "CIMDPolicyId",
+        "PolicyName"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "CIMDPolicyId":{"shape":"CIMDPolicyIdType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "PolicyName":{"shape":"CIMDPolicyNameType"},
+        "CacheDuration":{"shape":"CacheDurationType"},
+        "URLPatterns":{"shape":"URLPatternListType"},
+        "CreationDate":{"shape":"DateType"},
+        "LastModifiedDate":{"shape":"DateType"}
+      }
+    },
     "CSSType":{
       "type":"string",
       "max":131072,
       "min":0
     },
     "CSSVersionType":{"type":"string"},
+    "CacheDurationType":{
+      "type":"integer",
+      "max":31556952,
+      "min":86400
+    },
+    "CachedCIMDURLDoesNotExistException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"MessageType"}
+      },
+      "exception":true
+    },
     "CallbackURLsListType":{
       "type":"list",
       "member":{"shape":"RedirectUrlType"},
@@ -4024,6 +4217,21 @@
       "key":{"shape":"StringType"},
       "value":{"shape":"StringType"}
     },
+    "ClientMetadataURLListType":{
+      "type":"list",
+      "member":{"shape":"ClientMetadataURLType"},
+      "max":60,
+      "min":0
+    },
+    "ClientMetadataURLType":{
+      "type":"structure",
+      "required":["URL"],
+      "members":{
+        "URL":{"shape":"MetadataURLType"},
+        "CachedDate":{"shape":"DateType"},
+        "ExpirationDate":{"shape":"DateType"}
+      }
+    },
     "ClientNameType":{
       "type":"string",
       "max":128,
@@ -4045,6 +4253,12 @@
       "members":{
         "MaxValidityMinutes":{"shape":"SSOSessionMaxValidityMinutesType"}
       }
+    },
+    "ClientSecretArnType":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn\\:(aws|aws-us-gov|aws-eusc)\\:secretsmanager\\:([\\d\\w\\-]+):(\\d{12})\\:secret\\/[\\w+=\\/,.@\\-]+$"
     },
     "ClientSecretDescriptorListType":{
       "type":"list",
@@ -4262,6 +4476,29 @@
         "EncodedData":{"shape":"StringType"}
       }
     },
+    "CreateCIMDPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "ClientId",
+        "PolicyName",
+        "URLPatterns"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "PolicyName":{"shape":"CIMDPolicyNameType"},
+        "CacheDuration":{"shape":"CacheDurationType"},
+        "URLPatterns":{"shape":"URLPatternListType"}
+      }
+    },
+    "CreateCIMDPolicyResponse":{
+      "type":"structure",
+      "required":["CIMDPolicy"],
+      "members":{
+        "CIMDPolicy":{"shape":"CIMDPolicyType"}
+      }
+    },
     "CreateGroupRequest":{
       "type":"structure",
       "required":[
@@ -4422,7 +4659,8 @@
         "EnableTokenRevocation":{"shape":"WrappedBooleanType"},
         "EnablePropagateAdditionalUserContextData":{"shape":"WrappedBooleanType"},
         "AuthSessionValidity":{"shape":"AuthSessionValidityType"},
-        "RefreshTokenRotation":{"shape":"RefreshTokenRotationType"}
+        "RefreshTokenRotation":{"shape":"RefreshTokenRotationType"},
+        "PublishSecretsInAWSSecretsManager":{"shape":"WrappedBooleanType"}
       }
     },
     "CreateUserPoolClientResponse":{
@@ -4578,6 +4816,21 @@
         "CONFIRM_WITH_LINK",
         "CONFIRM_WITH_CODE"
       ]
+    },
+    "DeleteCIMDPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "CIMDPolicyId"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "CIMDPolicyId":{"shape":"CIMDPolicyIdType"}
+      }
+    },
+    "DeleteCIMDPolicyResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteGroupRequest":{
       "type":"structure",
@@ -4755,6 +5008,24 @@
         "SMS",
         "EMAIL"
       ]
+    },
+    "DescribeCIMDPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "CIMDPolicyId"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "CIMDPolicyId":{"shape":"CIMDPolicyIdType"}
+      }
+    },
+    "DescribeCIMDPolicyResponse":{
+      "type":"structure",
+      "required":["CIMDPolicy"],
+      "members":{
+        "CIMDPolicy":{"shape":"CIMDPolicyType"}
+      }
     },
     "DescribeIdentityProviderRequest":{
       "type":"structure",
@@ -6005,6 +6276,44 @@
       "max":13,
       "min":1
     },
+    "ListCIMDPoliciesRequest":{
+      "type":"structure",
+      "required":["UserPoolId"],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "NextToken":{"shape":"PaginationKeyType"},
+        "MaxResults":{"shape":"PoolQueryLimitType"}
+      }
+    },
+    "ListCIMDPoliciesResponse":{
+      "type":"structure",
+      "required":["CIMDPolicies"],
+      "members":{
+        "NextToken":{"shape":"PaginationKeyType"},
+        "CIMDPolicies":{"shape":"CIMDPolicySummaryListType"}
+      }
+    },
+    "ListClientMetadataURLsRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "CIMDPolicyId"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "CIMDPolicyId":{"shape":"CIMDPolicyIdType"},
+        "NextToken":{"shape":"PaginationKeyType"},
+        "MaxResults":{"shape":"PoolQueryLimitType"}
+      }
+    },
+    "ListClientMetadataURLsResponse":{
+      "type":"structure",
+      "required":["ClientMetadataURLs"],
+      "members":{
+        "NextToken":{"shape":"PaginationKeyType"},
+        "ClientMetadataURLs":{"shape":"ClientMetadataURLListType"}
+      }
+    },
     "ListDevicesRequest":{
       "type":"structure",
       "required":["AccessToken"],
@@ -6398,6 +6707,12 @@
       }
     },
     "MessageType":{"type":"string"},
+    "MetadataURLType":{
+      "type":"string",
+      "max":256,
+      "min":12,
+      "pattern":"^https://[^\\s]+$"
+    },
     "NewDeviceMetadataType":{
       "type":"structure",
       "members":{
@@ -7671,6 +7986,18 @@
         "CreationDate":{"shape":"DateType"}
       }
     },
+    "URLPatternListType":{
+      "type":"list",
+      "member":{"shape":"URLPatternType"},
+      "max":5,
+      "min":1
+    },
+    "URLPatternType":{
+      "type":"string",
+      "max":256,
+      "min":12,
+      "pattern":"^https://[!$-;=@-\\[\\]_a-z~]+$"
+    },
     "UnauthorizedException":{
       "type":"structure",
       "members":{
@@ -7746,6 +8073,49 @@
       }
     },
     "UpdateAuthEventFeedbackResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateCIMDPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "CIMDPolicyId",
+        "ClientId",
+        "URLPatterns"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "CIMDPolicyId":{"shape":"CIMDPolicyIdType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "PolicyName":{"shape":"CIMDPolicyNameType"},
+        "CacheDuration":{"shape":"CacheDurationType"},
+        "URLPatterns":{"shape":"URLPatternListType"}
+      }
+    },
+    "UpdateCIMDPolicyResponse":{
+      "type":"structure",
+      "required":["CIMDPolicy"],
+      "members":{
+        "CIMDPolicy":{"shape":"CIMDPolicyType"}
+      }
+    },
+    "UpdateClientMetadataURLStateRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "CIMDPolicyId",
+        "URL",
+        "Action"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "CIMDPolicyId":{"shape":"CIMDPolicyIdType"},
+        "URL":{"shape":"MetadataURLType"},
+        "Action":{"shape":"CIMDCacheActionType"}
+      }
+    },
+    "UpdateClientMetadataURLStateResponse":{
       "type":"structure",
       "members":{}
     },
@@ -7937,7 +8307,8 @@
         "EnableTokenRevocation":{"shape":"WrappedBooleanType"},
         "EnablePropagateAdditionalUserContextData":{"shape":"WrappedBooleanType"},
         "AuthSessionValidity":{"shape":"AuthSessionValidityType"},
-        "RefreshTokenRotation":{"shape":"RefreshTokenRotationType"}
+        "RefreshTokenRotation":{"shape":"RefreshTokenRotationType"},
+        "PublishSecretsInAWSSecretsManager":{"shape":"WrappedBooleanType"}
       }
     },
     "UpdateUserPoolClientResponse":{
@@ -8156,6 +8527,7 @@
         "ClientName":{"shape":"ClientNameType"},
         "ClientId":{"shape":"ClientIdType"},
         "ClientSecret":{"shape":"ClientSecretType"},
+        "ClientSecretArn":{"shape":"ClientSecretArnType"},
         "LastModifiedDate":{"shape":"DateType"},
         "CreationDate":{"shape":"DateType"},
         "RefreshTokenValidity":{"shape":"RefreshTokenValidityType"},

@@ -110,6 +110,7 @@
       "errors":[
         {"shape":"InvalidInput"},
         {"shape":"NoSuchHealthCheck"},
+        {"shape":"NoSuchHealthCheckSource"},
         {"shape":"NoSuchHostedZone"},
         {"shape":"PriorRequestNotComplete"},
         {"shape":"ThrottlingException"}
@@ -152,6 +153,26 @@
         {"shape":"TooManyHealthChecks"},
         {"shape":"HealthCheckAlreadyExists"},
         {"shape":"InvalidInput"}
+      ]
+    },
+    "CreateHealthCheckSource":{
+      "name":"CreateHealthCheckSource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2013-04-01/healthchecksource",
+        "responseCode":201
+      },
+      "input":{
+        "shape":"CreateHealthCheckSourceRequest",
+        "locationName":"CreateHealthCheckSourceRequest",
+        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"}
+      },
+      "output":{"shape":"CreateHealthCheckSourceResponse"},
+      "errors":[
+        {"shape":"HealthCheckSourceAlreadyExists"},
+        {"shape":"InvalidInput"},
+        {"shape":"InvalidVPCId"},
+        {"shape":"TooManyHealthCheckSources"}
       ]
     },
     "CreateHostedZone":{
@@ -398,6 +419,20 @@
         {"shape":"NoSuchHealthCheck"},
         {"shape":"HealthCheckInUse"},
         {"shape":"InvalidInput"}
+      ]
+    },
+    "DeleteHealthCheckSource":{
+      "name":"DeleteHealthCheckSource",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2013-04-01/healthchecksource/{HealthCheckSourceId}"
+      },
+      "input":{"shape":"DeleteHealthCheckSourceRequest"},
+      "output":{"shape":"DeleteHealthCheckSourceResponse"},
+      "errors":[
+        {"shape":"NoSuchHealthCheckSource"},
+        {"shape":"InvalidInput"},
+        {"shape":"PriorRequestNotComplete"}
       ]
     },
     "DeleteHostedZone":{
@@ -686,6 +721,19 @@
         {"shape":"InvalidInput"}
       ]
     },
+    "GetHealthCheckSource":{
+      "name":"GetHealthCheckSource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2013-04-01/healthchecksource/{HealthCheckSourceId}"
+      },
+      "input":{"shape":"GetHealthCheckSourceRequest"},
+      "output":{"shape":"GetHealthCheckSourceResponse"},
+      "errors":[
+        {"shape":"NoSuchHealthCheckSource"},
+        {"shape":"InvalidInput"}
+      ]
+    },
     "GetHealthCheckStatus":{
       "name":"GetHealthCheckStatus",
       "http":{
@@ -864,6 +912,18 @@
         {"shape":"InvalidInput"}
       ]
     },
+    "ListHealthCheckSources":{
+      "name":"ListHealthCheckSources",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2013-04-01/healthchecksource"
+      },
+      "input":{"shape":"ListHealthCheckSourcesRequest"},
+      "output":{"shape":"ListHealthCheckSourcesResponse"},
+      "errors":[
+        {"shape":"InvalidInput"}
+      ]
+    },
     "ListHealthChecks":{
       "name":"ListHealthChecks",
       "http":{
@@ -875,6 +935,19 @@
       "errors":[
         {"shape":"InvalidInput"},
         {"shape":"IncompatibleVersion"}
+      ]
+    },
+    "ListHealthChecksBySource":{
+      "name":"ListHealthChecksBySource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2013-04-01/healthchecks/source/{HealthCheckSourceId}"
+      },
+      "input":{"shape":"ListHealthChecksBySourceRequest"},
+      "output":{"shape":"ListHealthChecksBySourceResponse"},
+      "errors":[
+        {"shape":"InvalidInput"},
+        {"shape":"NoSuchHealthCheckSource"}
       ]
     },
     "ListHostedZones":{
@@ -981,6 +1054,7 @@
       "errors":[
         {"shape":"InvalidInput"},
         {"shape":"NoSuchHealthCheck"},
+        {"shape":"NoSuchHealthCheckSource"},
         {"shape":"NoSuchHostedZone"},
         {"shape":"PriorRequestNotComplete"},
         {"shape":"ThrottlingException"}
@@ -1001,6 +1075,7 @@
       "errors":[
         {"shape":"InvalidInput"},
         {"shape":"NoSuchHealthCheck"},
+        {"shape":"NoSuchHealthCheckSource"},
         {"shape":"NoSuchHostedZone"},
         {"shape":"PriorRequestNotComplete"},
         {"shape":"ThrottlingException"}
@@ -1238,7 +1313,8 @@
         "MAX_HOSTED_ZONES_BY_OWNER",
         "MAX_TRAFFIC_POLICY_INSTANCES_BY_OWNER",
         "MAX_REUSABLE_DELEGATION_SETS_BY_OWNER",
-        "MAX_TRAFFIC_POLICIES_BY_OWNER"
+        "MAX_TRAFFIC_POLICIES_BY_OWNER",
+        "MAX_HEALTH_CHECK_SOURCES_BY_OWNER"
       ]
     },
     "ActivateKeySigningKeyRequest":{
@@ -1320,6 +1396,11 @@
       "members":{
         "ChangeInfo":{"shape":"ChangeInfo"}
       }
+    },
+    "AvailabilityZoneId":{
+      "type":"string",
+      "max":64,
+      "min":1
     },
     "Bias":{
       "type":"integer",
@@ -1780,6 +1861,35 @@
         }
       }
     },
+    "CreateHealthCheckSourceRequest":{
+      "type":"structure",
+      "required":["HealthCheckSourceConfig"],
+      "members":{
+        "CallerReference":{
+          "shape":"HealthCheckNonce",
+          "idempotencyToken":true
+        },
+        "HealthCheckSourceConfig":{"shape":"HealthCheckSourceConfig"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateHealthCheckSourceResponse":{
+      "type":"structure",
+      "required":[
+        "HealthCheckSourceId",
+        "HealthCheckSourceStatus",
+        "Location"
+      ],
+      "members":{
+        "HealthCheckSourceId":{"shape":"HealthCheckSourceId"},
+        "HealthCheckSourceStatus":{"shape":"HealthCheckSourceStatus"},
+        "Location":{
+          "shape":"ResourceURI",
+          "location":"header",
+          "locationName":"Location"
+        }
+      }
+    },
     "CreateHostedZoneRequest":{
       "type":"structure",
       "required":[
@@ -2167,6 +2277,28 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteHealthCheckSourceRequest":{
+      "type":"structure",
+      "required":["HealthCheckSourceId"],
+      "members":{
+        "HealthCheckSourceId":{
+          "shape":"HealthCheckSourceId",
+          "location":"uri",
+          "locationName":"HealthCheckSourceId"
+        }
+      }
+    },
+    "DeleteHealthCheckSourceResponse":{
+      "type":"structure",
+      "required":[
+        "HealthCheckSourceId",
+        "HealthCheckSourceStatus"
+      ],
+      "members":{
+        "HealthCheckSourceId":{"shape":"HealthCheckSourceId"},
+        "HealthCheckSourceStatus":{"shape":"HealthCheckSourceStatus"}
+      }
+    },
     "DeleteHostedZoneRequest":{
       "type":"structure",
       "required":["Id"],
@@ -2403,6 +2535,13 @@
       }
     },
     "EnableSNI":{"type":"boolean"},
+    "EndpointType":{
+      "type":"string",
+      "enum":[
+        "PUBLIC",
+        "PRIVATE"
+      ]
+    },
     "ErrorMessage":{"type":"string"},
     "ErrorMessages":{
       "type":"list",
@@ -2635,6 +2774,24 @@
       "required":["HealthCheck"],
       "members":{
         "HealthCheck":{"shape":"HealthCheck"}
+      }
+    },
+    "GetHealthCheckSourceRequest":{
+      "type":"structure",
+      "required":["HealthCheckSourceId"],
+      "members":{
+        "HealthCheckSourceId":{
+          "shape":"HealthCheckSourceId",
+          "location":"uri",
+          "locationName":"HealthCheckSourceId"
+        }
+      }
+    },
+    "GetHealthCheckSourceResponse":{
+      "type":"structure",
+      "required":["HealthCheckSource"],
+      "members":{
+        "HealthCheckSource":{"shape":"HealthCheckSource"}
       }
     },
     "GetHealthCheckStatusRequest":{
@@ -2883,7 +3040,9 @@
         "Regions":{"shape":"HealthCheckRegionList"},
         "AlarmIdentifier":{"shape":"AlarmIdentifier"},
         "InsufficientDataHealthStatus":{"shape":"InsufficientDataHealthStatus"},
-        "RoutingControlArn":{"shape":"RoutingControlArn"}
+        "RoutingControlArn":{"shape":"RoutingControlArn"},
+        "EndpointType":{"shape":"EndpointType"},
+        "HealthCheckSourceId":{"shape":"HealthCheckSourceId"}
       }
     },
     "HealthCheckCount":{"type":"long"},
@@ -2943,6 +3102,78 @@
       },
       "max":64,
       "min":3
+    },
+    "HealthCheckSource":{
+      "type":"structure",
+      "required":[
+        "HealthCheckSourceId",
+        "HealthCheckSourceStatus",
+        "HealthCheckSourceConfig"
+      ],
+      "members":{
+        "HealthCheckSourceId":{"shape":"HealthCheckSourceId"},
+        "HealthCheckSourceStatus":{"shape":"HealthCheckSourceStatus"},
+        "HealthCheckSourceConfig":{"shape":"HealthCheckSourceConfig"},
+        "StatusReasonCode":{"shape":"HealthCheckSourceStatusReasonCode"},
+        "StatusReason":{"shape":"HealthCheckSourceStatusReason"}
+      }
+    },
+    "HealthCheckSourceAlreadyExists":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{"httpStatusCode":409},
+      "exception":true
+    },
+    "HealthCheckSourceConfig":{
+      "type":"structure",
+      "required":[
+        "VpcId",
+        "SubnetConfigurationList"
+      ],
+      "members":{
+        "VpcId":{"shape":"VPCId"},
+        "SubnetConfigurationList":{"shape":"SubnetConfigurationList"}
+      }
+    },
+    "HealthCheckSourceId":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "HealthCheckSourceStatus":{
+      "type":"string",
+      "enum":[
+        "CREATE_PENDING",
+        "CREATE_IN_PROGRESS",
+        "CREATE_COMPLETED",
+        "CREATE_FAILED",
+        "DELETE_PENDING",
+        "DELETE_IN_PROGRESS",
+        "DELETE_COMPLETED",
+        "DELETE_FAILED"
+      ]
+    },
+    "HealthCheckSourceStatusReason":{"type":"string"},
+    "HealthCheckSourceStatusReasonCode":{
+      "type":"string",
+      "enum":[
+        "INSUFFICIENT_SUBNET_IPS",
+        "EC2_LIMIT_EXCEEDED",
+        "INVALID_SUBNET",
+        "INVALID_SECURITY_GROUP",
+        "INVALID_CONFIGURATION",
+        "SLR_MISSING_OR_NOT_ASSUMABLE",
+        "INTERNAL_ERROR"
+      ]
+    },
+    "HealthCheckSources":{
+      "type":"list",
+      "member":{
+        "shape":"HealthCheckSource",
+        "locationName":"HealthCheckSource"
+      }
     },
     "HealthCheckType":{
       "type":"string",
@@ -3452,6 +3683,65 @@
         "NextContinentCode":{"shape":"GeoLocationContinentCode"},
         "NextCountryCode":{"shape":"GeoLocationCountryCode"},
         "NextSubdivisionCode":{"shape":"GeoLocationSubdivisionCode"},
+        "MaxItems":{"shape":"PageMaxItems"}
+      }
+    },
+    "ListHealthCheckSourcesRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"PageMarker",
+          "location":"querystring",
+          "locationName":"nexttoken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxresults"
+        }
+      }
+    },
+    "ListHealthCheckSourcesResponse":{
+      "type":"structure",
+      "required":["HealthCheckSources"],
+      "members":{
+        "HealthCheckSources":{"shape":"HealthCheckSources"},
+        "NextToken":{"shape":"PageMarker"}
+      }
+    },
+    "ListHealthChecksBySourceRequest":{
+      "type":"structure",
+      "required":["HealthCheckSourceId"],
+      "members":{
+        "HealthCheckSourceId":{
+          "shape":"HealthCheckSourceId",
+          "location":"uri",
+          "locationName":"HealthCheckSourceId"
+        },
+        "Marker":{
+          "shape":"PageMarker",
+          "location":"querystring",
+          "locationName":"marker"
+        },
+        "MaxItems":{
+          "shape":"PageMaxItems",
+          "location":"querystring",
+          "locationName":"maxitems"
+        }
+      }
+    },
+    "ListHealthChecksBySourceResponse":{
+      "type":"structure",
+      "required":[
+        "HealthChecks",
+        "IsTruncated",
+        "MaxItems"
+      ],
+      "members":{
+        "HealthChecks":{"shape":"HealthChecks"},
+        "Marker":{"shape":"PageMarker"},
+        "IsTruncated":{"shape":"PageTruncated"},
+        "NextMarker":{"shape":"PageMarker"},
         "MaxItems":{"shape":"PageMaxItems"}
       }
     },
@@ -4131,6 +4421,14 @@
       "error":{"httpStatusCode":404},
       "exception":true
     },
+    "NoSuchHealthCheckSource":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{"httpStatusCode":404},
+      "exception":true
+    },
     "NoSuchHostedZone":{
       "type":"structure",
       "members":{
@@ -4570,6 +4868,20 @@
       "type":"string",
       "max":255
     },
+    "SecurityGroupId":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "SecurityGroupIdList":{
+      "type":"list",
+      "member":{
+        "shape":"SecurityGroupId",
+        "locationName":"SecurityGroupId"
+      },
+      "max":10,
+      "min":1
+    },
     "ServeSignature":{
       "type":"string",
       "max":1024,
@@ -4618,6 +4930,33 @@
         "Status":{"shape":"Status"},
         "CheckedTime":{"shape":"TimeStamp"}
       }
+    },
+    "SubnetConfiguration":{
+      "type":"structure",
+      "required":[
+        "SubnetId",
+        "AvailabilityZoneId",
+        "SecurityGroupIdList"
+      ],
+      "members":{
+        "SubnetId":{"shape":"SubnetId"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
+        "SecurityGroupIdList":{"shape":"SecurityGroupIdList"}
+      }
+    },
+    "SubnetConfigurationList":{
+      "type":"list",
+      "member":{
+        "shape":"SubnetConfiguration",
+        "locationName":"SubnetConfiguration"
+      },
+      "max":3,
+      "min":2
+    },
+    "SubnetId":{
+      "type":"string",
+      "max":64,
+      "min":1
     },
     "SubnetMask":{
       "type":"string",
@@ -4675,7 +5014,8 @@
       "type":"string",
       "enum":[
         "healthcheck",
-        "hostedzone"
+        "hostedzone",
+        "healthchecksource"
       ]
     },
     "TagValue":{
@@ -4751,6 +5091,13 @@
       "exception":true
     },
     "TimeStamp":{"type":"timestamp"},
+    "TooManyHealthCheckSources":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
     "TooManyHealthChecks":{
       "type":"structure",
       "members":{
@@ -4972,7 +5319,8 @@
         "Regions":{"shape":"HealthCheckRegionList"},
         "AlarmIdentifier":{"shape":"AlarmIdentifier"},
         "InsufficientDataHealthStatus":{"shape":"InsufficientDataHealthStatus"},
-        "ResetElements":{"shape":"ResettableElementNameList"}
+        "ResetElements":{"shape":"ResettableElementNameList"},
+        "HealthCheckSourceId":{"shape":"HealthCheckSourceId"}
       }
     },
     "UpdateHealthCheckResponse":{

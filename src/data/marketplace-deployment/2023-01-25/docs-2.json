@@ -1,39 +1,125 @@
 {
   "version": "2.0",
-  "service": "<p>The AWS Marketplace Deployment Service supports the Quick Launch experience, which is a deployment option for software as a service (SaaS) products. Quick Launch simplifies and reduces the time, resources, and steps required to configure, deploy, and launch a products. The AWS Marketplace Deployment Service provides sellers with a secure method for passing deployment parameters, such as API keys and external IDs, to buyers during the Quick Launch experience.</p>",
+  "service": "<p>The AWS Marketplace Deployment Service supports the Quick Launch experience, which is a deployment option for software as a service (SaaS) products. Quick Launch simplifies and reduces the time, resources, and steps required to configure, deploy, and launch a product. The AWS Marketplace Deployment Service provides sellers with a secure method for passing deployment parameters, such as API keys and external IDs, to buyers during the Quick Launch experience.</p> <p>You can also use the AWS Marketplace Deployment Service to publish deployment configurations. A deployment configuration defines how buyers access a product's delivery option after they subscribe. For example, for the Data as a Service delivery option, it specifies the seller's fulfillment URL.</p>",
   "operations": {
-    "ListTagsForResource": "<p>Lists all tags that have been added to a deployment parameter resource.</p>",
+    "GetDeploymentConfiguration": "<p>Returns the active deployment configuration for a product and delivery option. The active deployment configuration is the configuration from the most recent successful deployment configuration job. The seller that owns the product and buyers entitled to the product can call this operation.</p> <p>If the product and delivery option have no active deployment configuration, the operation returns a <code>ResourceNotFoundException</code>.</p>",
+    "GetDeploymentConfigurationJob": "<p>Returns the details of a deployment configuration job. Only the seller that started the job can call this operation.</p> <p>If the job doesn't belong to the product and delivery option in the request path, the operation returns a <code>ResourceNotFoundException</code>.</p>",
+    "ListDeploymentConfigurationJobs": "<p>Lists the deployment configuration jobs that you started for a product and delivery option, ordered from newest to oldest. Results are paginated. Use the <code>nextToken</code> parameter to retrieve additional results.</p> <p>If you haven't started any jobs for the product and delivery option, the operation returns an empty <code>jobs</code> list.</p>",
+    "ListTagsForResource": "<p>Lists all tags that have been added to a resource.</p>",
     "PutDeploymentParameter": "<p>Creates or updates a deployment parameter and is targeted by <code>catalog</code> and <code>agreementId</code>.</p>",
+    "StartDeploymentConfigurationJob": "<p>Starts a job that publishes a deployment configuration for a product and delivery option. The job runs asynchronously. Use <code>GetDeploymentConfigurationJob</code> to track its status. When the job reaches the <code>SUCCEEDED</code> status, its configuration becomes the active deployment configuration for the product and delivery option.</p> <p>The populated member of <code>configuration</code> must match the <code>deliveryOptionType</code> in the request path.</p>",
     "TagResource": "<p>Tags a resource.</p>",
     "UntagResource": "<p>Removes a tag or list of tags from a resource.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Catalog": {
       "base": null,
       "refs": {
-        "PutDeploymentParameterRequest$catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>"
+        "GetDeploymentConfigurationJobRequest$catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>",
+        "GetDeploymentConfigurationRequest$catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>",
+        "ListDeploymentConfigurationJobsRequest$catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>",
+        "PutDeploymentParameterRequest$catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>",
+        "StartDeploymentConfigurationJobRequest$catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>"
       }
     },
     "ClientToken": {
       "base": null,
       "refs": {
-        "PutDeploymentParameterRequest$clientToken": "<p>The idempotency token for deployment parameters. A unique identifier for the new version.</p> <note> <p>This field is not required if you're calling using an AWS SDK. Otherwise, a <code>clientToken</code> must be provided with the request.</p> </note>"
+        "PutDeploymentParameterRequest$clientToken": "<p>The idempotency token for deployment parameters. A unique identifier for the new version.</p> <note> <p>This field is not required if you're calling using an AWS SDK. Otherwise, a <code>clientToken</code> must be provided with the request.</p> </note>",
+        "StartDeploymentConfigurationJobRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure that the operation completes no more than one time. If you retry a request with the same token and the same input, the service returns the original job instead of starting a new one. If you reuse a token with different input, the request fails with a <code>ConflictException</code>.</p> <note> <p>This field is not required if you're calling using an AWS SDK. Otherwise, a <code>clientToken</code> must be provided with the request.</p> </note>"
       }
     },
     "ConflictException": {
       "base": "<p>The request configuration has conflicts. For details, see the accompanying error message.</p>",
+      "refs": {}
+    },
+    "DataAsAServiceConfigurationDetail": {
+      "base": "<p>Contains the deployment configuration settings for the Data as a Service delivery option, including the fulfillment URL that AWS Marketplace redirects buyers to after they subscribe.</p>",
       "refs": {
+        "DeploymentConfigurationDetail$dataAsAService": "<p>The deployment configuration settings for the Data as a Service delivery option, including the fulfillment URL that AWS Marketplace redirects buyers to after they subscribe.</p>"
+      }
+    },
+    "DeliveryOptionType": {
+      "base": "<p>The delivery option type of a deployment configuration.</p>",
+      "refs": {
+        "GetDeploymentConfigurationJobRequest$deliveryOptionType": "<p>The delivery option type of the deployment configuration.</p>",
+        "GetDeploymentConfigurationRequest$deliveryOptionType": "<p>The delivery option type of the deployment configuration.</p>",
+        "ListDeploymentConfigurationJobsRequest$deliveryOptionType": "<p>The delivery option type of the deployment configuration.</p>",
+        "StartDeploymentConfigurationJobRequest$deliveryOptionType": "<p>The delivery option type of the deployment configuration.</p>"
+      }
+    },
+    "DeploymentConfigurationDetail": {
+      "base": "<p>The deployment configuration. Exactly one member must be set, and it must match the delivery option type.</p>",
+      "refs": {
+        "DeploymentConfigurationJobSummary$configuration": "<p>The deployment configuration submitted with the job.</p>",
+        "GetDeploymentConfigurationJobResponse$configuration": "<p>The deployment configuration submitted with the job.</p>",
+        "GetDeploymentConfigurationResponse$configuration": "<p>The active deployment configuration.</p>",
+        "StartDeploymentConfigurationJobRequest$configuration": "<p>The deployment configuration to publish.</p>",
+        "StartDeploymentConfigurationJobResponse$configuration": "<p>The deployment configuration submitted with the job.</p>"
+      }
+    },
+    "DeploymentConfigurationFulfillmentUrl": {
+      "base": "<p>An HTTPS URL that conforms to RFC 3986.</p>",
+      "refs": {
+        "DataAsAServiceConfigurationDetail$fulfillmentUrl": "<p>The HTTPS URL that AWS Marketplace redirects buyers to after they subscribe to the product. The value must be a valid URI that uses the HTTPS scheme. Maximum length: 2,048 characters.</p>"
+      }
+    },
+    "DeploymentConfigurationJobErrorCode": {
+      "base": "<p>The error code that describes why a deployment configuration job failed.</p>",
+      "refs": {
+        "GetDeploymentConfigurationJobResponse$errorCode": "<p>The error code that describes why the job failed. This field is present only when the job status is <code>FAILED</code>.</p>"
+      }
+    },
+    "DeploymentConfigurationJobId": {
+      "base": null,
+      "refs": {
+        "DeploymentConfigurationJobSummary$jobId": "<p>The unique identifier of the deployment configuration job.</p>",
+        "GetDeploymentConfigurationJobRequest$jobId": "<p>The unique identifier of the deployment configuration job.</p>",
+        "GetDeploymentConfigurationJobResponse$jobId": "<p>The unique identifier of the deployment configuration job.</p>",
+        "StartDeploymentConfigurationJobResponse$jobId": "<p>The unique identifier of the deployment configuration job.</p>"
+      }
+    },
+    "DeploymentConfigurationJobStatus": {
+      "base": "<p>The status of a deployment configuration job.</p>",
+      "refs": {
+        "DeploymentConfigurationJobSummary$status": "<p>The status of the deployment configuration job.</p>",
+        "GetDeploymentConfigurationJobResponse$status": "<p>The status of the deployment configuration job.</p>",
+        "StartDeploymentConfigurationJobResponse$status": "<p>The status of the deployment configuration job. The value is <code>IN_PROGRESS</code>.</p>"
+      }
+    },
+    "DeploymentConfigurationJobSummaries": {
+      "base": null,
+      "refs": {
+        "ListDeploymentConfigurationJobsResponse$jobs": "<p>A list of deployment configuration job summaries, ordered from newest to oldest.</p>"
+      }
+    },
+    "DeploymentConfigurationJobSummary": {
+      "base": "<p>Contains summary information about a deployment configuration job, including its identifier, status, configuration, and creation time.</p>",
+      "refs": {
+        "DeploymentConfigurationJobSummaries$member": null
+      }
+    },
+    "DeploymentConfigurationMaxResults": {
+      "base": null,
+      "refs": {
+        "ListDeploymentConfigurationJobsRequest$maxResults": "<p>The maximum number of jobs to return in a single page. Valid values are 1 through 100. The default is 20.</p>"
+      }
+    },
+    "DeploymentConfigurationNextToken": {
+      "base": null,
+      "refs": {
+        "ListDeploymentConfigurationJobsRequest$nextToken": "<p>The token for the next page of results. Use the value returned in the previous response.</p>",
+        "ListDeploymentConfigurationJobsResponse$nextToken": "<p>The token for the next page of results. This value is absent when there are no more results.</p>"
       }
     },
     "DeploymentParameterInput": {
-      "base": "<p>The shape containing the requested deployment parameter name and secretString.</p> <note> <p>To support AWS CloudFormation dynamic references to this resource using Quick Launch, this value must match a parameter defined in the CloudFormation templated provided to buyers.</p> </note>",
+      "base": "<p>The shape containing the requested deployment parameter name and secretString.</p> <note> <p>To support AWS CloudFormation dynamic references to this resource using Quick Launch, this value must match a parameter defined in the CloudFormation template provided to buyers.</p> </note>",
       "refs": {
-        "PutDeploymentParameterRequest$deploymentParameter": "<p>The deployment parameter targeted to the acceptor of an agreement for which to create the AWS Secret Manager resource.</p>"
+        "PutDeploymentParameterRequest$deploymentParameter": "<p>The deployment parameter targeted to the acceptor of an agreement for which to create the AWS Secrets Manager resource.</p>"
       }
     },
     "DeploymentParameterName": {
@@ -48,34 +134,54 @@
         "PutDeploymentParameterResponse$deploymentParameterId": "<p>The unique identifier of the deployment parameter.</p>"
       }
     },
+    "GetDeploymentConfigurationJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDeploymentConfigurationJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDeploymentConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDeploymentConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "InternalServerException": {
       "base": "<p>There was an internal service exception.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ListDeploymentConfigurationJobsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDeploymentConfigurationJobsResponse": {
+      "base": null,
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDeploymentParameterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDeploymentParameterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceArn": {
       "base": null,
       "refs": {
+        "GetDeploymentConfigurationJobResponse$configurationArn": "<p>The Amazon Resource Name (ARN) of the deployment configuration. This field is present only when the job status is <code>SUCCEEDED</code>.</p>",
         "PutDeploymentParameterResponse$resourceArn": "<p>The Amazon Resource Name (ARN) associated with the deployment parameter resource you want to create or update.</p>"
       }
     },
@@ -83,15 +189,18 @@
       "base": null,
       "refs": {
         "ConflictException$resourceId": "<p>The unique identifier for the resource associated with the error.</p>",
-        "PutDeploymentParameterRequest$agreementId": "<p>The unique identifier of the agreement.</p>",
+        "GetDeploymentConfigurationJobRequest$productId": "<p>The ID of the AWS Marketplace product, for example <code>prod-1234567890abc</code>.</p>",
+        "GetDeploymentConfigurationRequest$productId": "<p>The ID of the AWS Marketplace product, for example <code>prod-1234567890abc</code>.</p>",
+        "ListDeploymentConfigurationJobsRequest$productId": "<p>The ID of the AWS Marketplace product, for example <code>prod-1234567890abc</code>.</p>",
         "PutDeploymentParameterRequest$productId": "<p>The product for which AWS Marketplace will save secrets for the buyer’s account.</p>",
-        "PutDeploymentParameterResponse$agreementId": "<p>The unique identifier of the agreement.</p>"
+        "PutDeploymentParameterRequest$agreementId": "<p>The unique identifier of the agreement.</p>",
+        "PutDeploymentParameterResponse$agreementId": "<p>The unique identifier of the agreement.</p>",
+        "StartDeploymentConfigurationJobRequest$productId": "<p>The ID of the AWS Marketplace product, for example <code>prod-1234567890abc</code>.</p>"
       }
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource wasn't found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SecretString": {
       "base": null,
@@ -101,16 +210,24 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The maximum number of requests per account has been exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "StartDeploymentConfigurationJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartDeploymentConfigurationJobResponse": {
+      "base": null,
+      "refs": {}
     },
     "String": {
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
         "ConflictException$message": null,
+        "GetDeploymentConfigurationJobResponse$message": "<p>A message that describes why the job failed. This field is present only when the job status is <code>FAILED</code>.</p>",
         "InternalServerException$message": null,
-        "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) associated with the deployment parameter resource you want to list tags on.</p>",
+        "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource you want to list tags on.</p>",
         "ResourceNotFoundException$message": null,
         "ServiceQuotaExceededException$message": null,
         "StringList$member": null,
@@ -119,8 +236,8 @@
         "Tags$value": null,
         "ThrottlingException$message": null,
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) associated with the resource you want to remove the tag from.</p>",
-        "ValidationException$fieldName": "<p>The field name associated with the error.</p>",
-        "ValidationException$message": null
+        "ValidationException$message": null,
+        "ValidationException$fieldName": "<p>The field name associated with the error.</p>"
       }
     },
     "StringList": {
@@ -132,7 +249,11 @@
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
-        "PutDeploymentParameterRequest$expirationDate": "<p>The date when deployment parameters expire and are scheduled for deletion.</p>"
+        "DeploymentConfigurationJobSummary$createdAt": "<p>The date and time when the job was created.</p>",
+        "GetDeploymentConfigurationJobResponse$createdAt": "<p>The date and time when the job was created.</p>",
+        "GetDeploymentConfigurationJobResponse$endedAt": "<p>The date and time when the job reached the <code>SUCCEEDED</code> or <code>FAILED</code> status.</p>",
+        "PutDeploymentParameterRequest$expirationDate": "<p>The date when deployment parameters expire and are scheduled for deletion.</p>",
+        "StartDeploymentConfigurationJobResponse$createdAt": "<p>The date and time when the job was created.</p>"
       }
     },
     "TagKey": {
@@ -143,13 +264,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -168,28 +287,25 @@
       "base": null,
       "refs": {
         "PutDeploymentParameterRequest$tags": "<p>A map of key-value pairs, where each pair represents a tag saved to the resource. Tags will only be applied for create operations, and they'll be ignored if the resource already exists.</p>",
-        "PutDeploymentParameterResponse$tags": "<p>A map of key-value pairs, where each pair represents a tag saved to the resource. Tags will only be applied for create operations, and they'll be ignored if the resource already exists.</p>"
+        "PutDeploymentParameterResponse$tags": "<p>A map of key-value pairs, where each pair represents a tag saved to the resource. Tags will only be applied for create operations, and they'll be ignored if the resource already exists.</p>",
+        "StartDeploymentConfigurationJobRequest$tags": "<p>A map of key-value pairs, where each pair represents a tag to apply to the deployment configuration. Only the request that creates the deployment configuration can apply tags. If the deployment configuration already exists, a request that includes one or more tags fails with a <code>ValidationException</code>. To change tags on an existing deployment configuration, use <code>TagResource</code> and <code>UntagResource</code>.</p>"
       }
     },
     "ThrottlingException": {
       "base": "<p>Too many requests.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>An error occurred during validation.</p>",
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }

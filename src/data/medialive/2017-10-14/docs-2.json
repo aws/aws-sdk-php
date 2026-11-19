@@ -1830,7 +1830,8 @@
     "InputCodec": {
       "base": "codec in increasing order of complexity",
       "refs": {
-        "InputSpecification$Codec": "Input codec"
+        "InputSpecification$Codec": "Input codec",
+        "JpegXsInputSpecification$Codec": "Input codec. Must be JPEGXS."
       }
     },
     "InputDeblockFilter": {
@@ -7898,6 +7899,27 @@
       "base": "Media Package V2 Caption Language Setting",
       "refs": {
         "MediaPackageV2GroupSettings$CaptionLanguageSetting": "Applies only to 608 Embedded output captions. Controls the CLOSED-CAPTIONS signaling that MediaPackage v2 writes into the HLS manifest it delivers.\nauto: The default. If captionLanguageMappings is non-empty, the HLS manifest includes a CLOSED-CAPTIONS line for each mapped caption channel. If captionLanguageMappings is empty, the HLS manifest omits any CLOSED-CAPTIONS line.\nnone: The HLS manifest carries CLOSED-CAPTIONS=NONE on each EXT-X-STREAM-INF tag, which signals to players that the stream has no closed captions, so they stop offering a CC track. The API rejects none combined with a non-empty captionLanguageMappings."
+      }
+    },
+    "JpegXsInputMaximumBitrate": {
+      "base": "Maximum JPEG XS input bitrate in megabits per second",
+      "refs": {
+        "JpegXsInputSpecification$MaximumBitrate": "Maximum JPEG XS input bitrate"
+      }
+    },
+    "JpegXsInputResolution": {
+      "base": "Maximum JPEG XS input resolution; HD is 720 to 1080 lines of vertical resolution",
+      "refs": {
+        "JpegXsInputSpecification$Resolution": "Maximum JPEG XS input resolution"
+      }
+    },
+    "JpegXsInputSpecification": {
+      "base": "Specification of the JPEG XS input for this channel. Use instead of inputSpecification when the input codec is JPEG XS.",
+      "refs": {
+        "Channel$JpegXsInputSpecification": "Specification of JPEG XS inputs for this channel",
+        "ChannelSummary$JpegXsInputSpecification": "Specification of JPEG XS inputs for this channel",
+        "CreateChannel$JpegXsInputSpecification": "Specification of JPEG XS inputs for this channel",
+        "UpdateChannel$JpegXsInputSpecification": "Specification of JPEG XS inputs for this channel"
       }
     }
   },

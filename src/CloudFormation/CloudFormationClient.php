@@ -287,6 +287,9 @@ use Aws\AwsClient;
  *     CallAs?: 'DELEGATED_ADMIN'|'SELF',
  *     ClientRequestToken?: string,
  *     ManagedExecution?: array{Active?: bool, ...},
+ *     ExecutionRoleTemplateBody?: string,
+ *     ExecutionRoleTemplateUrl?: string,
+ *     StackSetOutputBucket?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createStackSetAsync(array $args = [])
@@ -306,6 +309,9 @@ use Aws\AwsClient;
  *     CallAs?: 'DELEGATED_ADMIN'|'SELF',
  *     ClientRequestToken?: string,
  *     ManagedExecution?: array{Active?: bool, ...},
+ *     ExecutionRoleTemplateBody?: string,
+ *     ExecutionRoleTemplateUrl?: string,
+ *     StackSetOutputBucket?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result deactivateOrganizationsAccess(array $args = [])
@@ -1258,6 +1264,10 @@ use Aws\AwsClient;
  *     Regions?: list<string>,
  *     CallAs?: 'DELEGATED_ADMIN'|'SELF',
  *     ManagedExecution?: array{Active?: bool, ...},
+ *     ExecutionRoleTemplateBody?: string,
+ *     ExecutionRoleTemplateUrl?: string,
+ *     UseAdminExecutionRole?: bool,
+ *     StackSetOutputBucket?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStackSetAsync(array $args = [])
@@ -1296,6 +1306,10 @@ use Aws\AwsClient;
  *     Regions?: list<string>,
  *     CallAs?: 'DELEGATED_ADMIN'|'SELF',
  *     ManagedExecution?: array{Active?: bool, ...},
+ *     ExecutionRoleTemplateBody?: string,
+ *     ExecutionRoleTemplateUrl?: string,
+ *     UseAdminExecutionRole?: bool,
+ *     StackSetOutputBucket?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateTerminationProtection(array $args = [])

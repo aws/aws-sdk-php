@@ -379,6 +379,26 @@
       ],
       "idempotent":true
     },
+    "RotateWebhookCredentials":{
+      "name":"RotateWebhookCredentials",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RotateWebhookCredentialsRequest"},
+      "output":{"shape":"RotateWebhookCredentialsResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"IdempotentParameterMismatchException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"InvalidStateException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -446,6 +466,7 @@
       "input":{"shape":"UpdateEventSourceRequest"},
       "output":{"shape":"UpdateEventSourceResponse"},
       "errors":[
+        {"shape":"LimitExceededException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
@@ -593,6 +614,14 @@
       "min":1,
       "pattern":"arn:aws(-[a-z0-9]+)*:events:[a-z0-9-]+:\\d{12}:connection/.+"
     },
+    "ConnectivityState":{
+      "type":"string",
+      "enum":[
+        "PROVISIONING",
+        "PROVISION_FAILED",
+        "ACTIVE"
+      ]
+    },
     "ContentType":{
       "type":"string",
       "max":256,
@@ -656,6 +685,7 @@
         "Name":{"shape":"EventSourceName"},
         "EventBusArn":{"shape":"EventBusArn"},
         "State":{"shape":"EventSourceState"},
+        "EventSourceDetails":{"shape":"EventSourceDetails"},
         "CreationTime":{"shape":"Timestamp"}
       }
     },
@@ -701,7 +731,8 @@
         "StartingPosition":{"shape":"StartingPosition"},
         "PointInTimeConfiguration":{"shape":"PointInTimeConfiguration"},
         "State":{"shape":"SubscriberState"},
-        "CreationTime":{"shape":"Timestamp"}
+        "CreationTime":{"shape":"Timestamp"},
+        "SubscriberDetails":{"shape":"SubscriberDetails"}
       }
     },
     "DeadLetterQueueArn":{
@@ -816,6 +847,7 @@
         "Description":{"shape":"Description"},
         "State":{"shape":"EventSourceState"},
         "Revoked":{"shape":"Boolean"},
+        "EventSourceDetails":{"shape":"EventSourceDetails"},
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"}
       }
@@ -847,7 +879,8 @@
         "State":{"shape":"SubscriberState"},
         "Revoked":{"shape":"Boolean"},
         "CreationTime":{"shape":"Timestamp"},
-        "LastModifiedTime":{"shape":"Timestamp"}
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "SubscriberDetails":{"shape":"SubscriberDetails"}
       }
     },
     "Description":{
@@ -986,15 +1019,22 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"arn:aws(-[a-z0-9]+)*:events:[a-z][a-z0-9]*(-[a-z0-9]+)*:([0-9]{12}):event-sourcev2\\/(aws\\.service|aws\\.partner)\\/[A-Za-z0-9][\\.\\-_A-Za-z0-9]{0,255}\\/[a-z0-9]{25}"
+      "pattern":"arn:aws(-[a-z0-9]+)*:events:[a-z][a-z0-9]*(-[a-z0-9]+)*:([0-9]{12}):event-sourcev2\\/(aws\\.service|aws\\.partner|webhook)\\/[A-Za-z0-9][\\.\\-_A-Za-z0-9]{0,255}\\/[a-z0-9]{25}"
     },
     "EventSourceConfiguration":{
       "type":"structure",
       "members":{
         "AwsServiceEventsConfiguration":{"shape":"AwsServiceEventsSourceConfiguration"},
-        "PartnerEventsConfiguration":{"shape":"PartnerEventsSourceConfiguration"}
+        "PartnerEventsConfiguration":{"shape":"PartnerEventsSourceConfiguration"},
+        "WebhookEventsConfiguration":{"shape":"WebhookEventsSourceConfiguration"}
       },
       "union":true
+    },
+    "EventSourceDetails":{
+      "type":"structure",
+      "members":{
+        "WebhookDetails":{"shape":"WebhookDetails"}
+      }
     },
     "EventSourceName":{
       "type":"string",
@@ -1036,7 +1076,8 @@
       "type":"string",
       "enum":[
         "AWS_SERVICE_EVENTS",
-        "PARTNER_EVENTS"
+        "PARTNER_EVENTS",
+        "WEBHOOK_EVENTS"
       ]
     },
     "Filter":{
@@ -1204,6 +1245,7 @@
         "HttpParameters":{"shape":"HttpParameters"},
         "UniversalTargetParameters":{"shape":"UniversalTargetParameters"},
         "EventBusV2Parameters":{"shape":"EventBusV2Parameters"},
+        "MskParameters":{"shape":"MskParameters"},
         "TargetArn":{"shape":"TargetResourceArn"}
       }
     },
@@ -1398,6 +1440,94 @@
       "type":"string",
       "max":8192,
       "min":0
+    },
+    "MskAcks":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "LEADER"
+      ]
+    },
+    "MskClientId":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "MskCompression":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "GZIP",
+        "SNAPPY",
+        "LZ4",
+        "ZSTD"
+      ]
+    },
+    "MskConnectivity":{
+      "type":"string",
+      "enum":[
+        "PUBLIC",
+        "PRIVATE"
+      ]
+    },
+    "MskDetails":{
+      "type":"structure",
+      "members":{
+        "ConnectivityState":{"shape":"ConnectivityState"},
+        "StateReason":{"shape":"StateReason"},
+        "VpcConnectionArn":{"shape":"VpcConnectionArn"}
+      }
+    },
+    "MskHeader":{
+      "type":"structure",
+      "required":["Key"],
+      "members":{
+        "Key":{"shape":"MskHeaderKeyString"},
+        "Value":{"shape":"MskHeaderValueString"}
+      }
+    },
+    "MskHeaderKeyString":{
+      "type":"string",
+      "max":8192,
+      "min":0
+    },
+    "MskHeaderList":{
+      "type":"list",
+      "member":{"shape":"MskHeader"},
+      "max":100,
+      "min":0
+    },
+    "MskHeaderValueString":{
+      "type":"string",
+      "max":8192,
+      "min":0
+    },
+    "MskParameters":{
+      "type":"structure",
+      "required":[
+        "TopicName",
+        "Connectivity"
+      ],
+      "members":{
+        "TopicName":{"shape":"MskTopicName"},
+        "Compression":{"shape":"MskCompression"},
+        "Acks":{"shape":"MskAcks"},
+        "PartitionKey":{"shape":"MskParametersPartitionKeyString"},
+        "Headers":{"shape":"MskHeaderList"},
+        "ClientId":{"shape":"MskClientId"},
+        "Connectivity":{"shape":"MskConnectivity"}
+      },
+      "sensitive":true
+    },
+    "MskParametersPartitionKeyString":{
+      "type":"string",
+      "max":8192,
+      "min":0
+    },
+    "MskTopicName":{
+      "type":"string",
+      "max":8192,
+      "min":1
     },
     "NextToken":{
       "type":"string",
@@ -1773,7 +1903,7 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"arn:aws(-[a-z0-9]+)*:events:[a-z][a-z0-9]*(-[a-z0-9]+)*:([0-9]{12}):(subscriber|event-sourcev2\\/(aws\\.service|aws\\.partner))\\/[A-Za-z0-9][\\.\\-_A-Za-z0-9]{0,255}\\/[a-z0-9]{25}"
+      "pattern":"arn:aws(-[a-z0-9]+)*:events:[a-z][a-z0-9]*(-[a-z0-9]+)*:([0-9]{12}):(subscriber|event-sourcev2\\/(aws\\.service|aws\\.partner|webhook))\\/[A-Za-z0-9][\\.\\-_A-Za-z0-9]{0,255}\\/[a-z0-9]{25}"
     },
     "RevokeResourceRequest":{
       "type":"structure",
@@ -1793,6 +1923,25 @@
       "max":1600,
       "min":1,
       "pattern":"arn:aws(-[a-z0-9]+)*:iam::\\d{12}:role\\/[\\w+=,.@/-]+"
+    },
+    "RotateWebhookCredentialsRequest":{
+      "type":"structure",
+      "required":["EventSourceArn"],
+      "members":{
+        "EventSourceArn":{"shape":"WebhookEventSourceArn"},
+        "Credential":{"shape":"WebhookCredential"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "RotateWebhookCredentialsResponse":{
+      "type":"structure",
+      "required":["SecretArn"],
+      "members":{
+        "SecretArn":{"shape":"WebhookSecretArn"}
+      }
     },
     "SchemaRegistryConfiguration":{
       "type":"structure",
@@ -1984,6 +2133,12 @@
       "min":1,
       "pattern":"arn:aws(-[a-z0-9]+)*:events:[a-z][a-z0-9]*(-[a-z0-9]+)*:([0-9]{12}):subscriber\\/[A-Za-z0-9][\\.\\-_A-Za-z0-9]{0,255}\\/[a-z0-9]{25}"
     },
+    "SubscriberDetails":{
+      "type":"structure",
+      "members":{
+        "MskDetails":{"shape":"MskDetails"}
+      }
+    },
     "SubscriberName":{
       "type":"string",
       "max":256,
@@ -2067,7 +2222,7 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"arn:aws(-[a-z0-9]+)*:events:[a-z][a-z0-9]*(-[a-z0-9]+)*:([0-9]{12}):(event-busv2|subscriber|event-sourcev2\\/(aws\\.service|aws\\.partner))\\/[A-Za-z0-9][\\.\\-_A-Za-z0-9]{0,255}\\/[a-z0-9]{25}"
+      "pattern":"arn:aws(-[a-z0-9]+)*:events:[a-z][a-z0-9]*(-[a-z0-9]+)*:([0-9]{12}):(event-busv2|subscriber|event-sourcev2\\/(aws\\.service|aws\\.partner|webhook))\\/[A-Za-z0-9][\\.\\-_A-Za-z0-9]{0,255}\\/[a-z0-9]{25}"
     },
     "TargetResourceArn":{
       "type":"string",
@@ -2194,7 +2349,8 @@
         "StepFunctionsParameters":{"shape":"StepFunctionsParameters"},
         "HttpParameters":{"shape":"HttpParameters"},
         "UniversalTargetParameters":{"shape":"UniversalTargetParameters"},
-        "EventBusV2Parameters":{"shape":"EventBusV2Parameters"}
+        "EventBusV2Parameters":{"shape":"EventBusV2Parameters"},
+        "MskParameters":{"shape":"MskParameters"}
       }
     },
     "UpdateSubscriberRequest":{
@@ -2224,8 +2380,204 @@
         "StartingPosition":{"shape":"StartingPosition"},
         "PointInTimeConfiguration":{"shape":"PointInTimeConfiguration"},
         "State":{"shape":"SubscriberState"},
-        "LastModifiedTime":{"shape":"Timestamp"}
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "SubscriberDetails":{"shape":"SubscriberDetails"}
       }
+    },
+    "VpcConnectionArn":{
+      "type":"string",
+      "max":1011,
+      "min":1
+    },
+    "WebhookAuthConfiguration":{
+      "type":"structure",
+      "members":{
+        "StaticTokenAuthConfiguration":{"shape":"WebhookStaticTokenAuthConfiguration"},
+        "BasicHttpAuthConfiguration":{"shape":"WebhookBasicHttpAuthConfiguration"},
+        "HmacAuthConfiguration":{"shape":"WebhookHmacAuthConfiguration"}
+      },
+      "union":true
+    },
+    "WebhookBasicHttpAuthConfiguration":{
+      "type":"structure",
+      "members":{
+        "Username":{"shape":"WebhookUsername"},
+        "Password":{"shape":"WebhookSecretValue"}
+      }
+    },
+    "WebhookCredential":{
+      "type":"structure",
+      "members":{
+        "StaticTokenSecretValue":{"shape":"WebhookSecretValue"},
+        "BasicHttpPassword":{"shape":"WebhookSecretValue"},
+        "HmacSecretValue":{"shape":"WebhookSecretValue"}
+      },
+      "union":true
+    },
+    "WebhookDeduplicationConfiguration":{
+      "type":"structure",
+      "required":["DeduplicationType"],
+      "members":{
+        "DeduplicationType":{"shape":"WebhookDeduplicationType"}
+      }
+    },
+    "WebhookDeduplicationType":{
+      "type":"string",
+      "enum":["CONTENT_BASED"]
+    },
+    "WebhookDelimiter":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\u0020-\\u007E]+"
+    },
+    "WebhookDetails":{
+      "type":"structure",
+      "members":{
+        "WebhookUrl":{"shape":"WebhookUrl"},
+        "SecretArn":{"shape":"WebhookSecretArn"}
+      }
+    },
+    "WebhookEventSourceArn":{
+      "type":"string",
+      "max":1011,
+      "min":1,
+      "pattern":"arn:aws(-[a-z0-9]+)*:events:[a-z][a-z0-9]*(-[a-z0-9]+)*:([0-9]{12}):event-sourcev2\\/webhook\\/[A-Za-z0-9][\\.\\-_A-Za-z0-9]{0,255}\\/[a-z0-9]{25}"
+    },
+    "WebhookEventsSourceConfiguration":{
+      "type":"structure",
+      "required":[
+        "AuthConfiguration",
+        "RoleArn"
+      ],
+      "members":{
+        "AuthConfiguration":{"shape":"WebhookAuthConfiguration"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
+        "RoleArn":{"shape":"RoleArn"},
+        "MetadataHttpHeaders":{"shape":"WebhookMetadataHttpHeaderList"},
+        "DeduplicationConfiguration":{"shape":"WebhookDeduplicationConfiguration"},
+        "LogConfiguration":{"shape":"LogConfiguration"}
+      }
+    },
+    "WebhookHeaderName":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[!#$%&'*+\\-.^_`|~0-9A-Za-z]+"
+    },
+    "WebhookHmacAlgorithm":{
+      "type":"string",
+      "enum":[
+        "SHA256",
+        "SHA1"
+      ]
+    },
+    "WebhookHmacAuthConfiguration":{
+      "type":"structure",
+      "required":[
+        "Algorithm",
+        "Encoding",
+        "SignatureHttpHeader",
+        "SignedMessageComposition"
+      ],
+      "members":{
+        "Algorithm":{"shape":"WebhookHmacAlgorithm"},
+        "Encoding":{"shape":"WebhookHmacEncoding"},
+        "SignatureHttpHeader":{"shape":"WebhookHeaderName"},
+        "SignaturePrefix":{"shape":"WebhookSignaturePrefix"},
+        "Delimiter":{"shape":"WebhookDelimiter"},
+        "TimestampHttpHeader":{"shape":"WebhookHeaderName"},
+        "TimestampPrefix":{"shape":"WebhookTimestampPrefix"},
+        "TimestampToleranceInSeconds":{"shape":"WebhookTimestampToleranceInSeconds"},
+        "MessageIdHttpHeader":{"shape":"WebhookHeaderName"},
+        "SignedMessageComposition":{"shape":"WebhookSignedMessageComposition"},
+        "SecretValue":{"shape":"WebhookSecretValue"},
+        "SecretEncoding":{"shape":"WebhookSecretEncoding"}
+      }
+    },
+    "WebhookHmacEncoding":{
+      "type":"string",
+      "enum":[
+        "HEX",
+        "BASE64"
+      ]
+    },
+    "WebhookMetadataHttpHeaderList":{
+      "type":"list",
+      "member":{"shape":"WebhookMetadataHttpHeaderName"},
+      "max":20,
+      "min":0
+    },
+    "WebhookMetadataHttpHeaderName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[!#$%&'*+\\-.^_`|~0-9A-Za-z]+"
+    },
+    "WebhookSecretArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-[a-z0-9]+)*:secretsmanager:[a-z][a-z0-9]*(-[a-z0-9]+)*:([0-9]{12}):secret:events-webhook(-preprod)?[!/].+"
+    },
+    "WebhookSecretEncoding":{
+      "type":"string",
+      "enum":[
+        "RAW",
+        "BASE64"
+      ]
+    },
+    "WebhookSecretValue":{
+      "type":"string",
+      "max":512,
+      "min":6,
+      "sensitive":true
+    },
+    "WebhookSignaturePrefix":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\u0020-\\u007E]+"
+    },
+    "WebhookSignedMessageComposition":{
+      "type":"string",
+      "enum":[
+        "BODY",
+        "TIMESTAMP_DOT_BODY",
+        "MESSAGE_ID_DOT_TIMESTAMP_DOT_BODY"
+      ]
+    },
+    "WebhookStaticTokenAuthConfiguration":{
+      "type":"structure",
+      "required":["TokenHttpHeader"],
+      "members":{
+        "TokenHttpHeader":{"shape":"WebhookHeaderName"},
+        "SecretValue":{"shape":"WebhookSecretValue"}
+      }
+    },
+    "WebhookTimestampPrefix":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\u0020-\\u007E]+"
+    },
+    "WebhookTimestampToleranceInSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":900,
+      "min":1
+    },
+    "WebhookUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "sensitive":true
+    },
+    "WebhookUsername":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[^:\\s]+"
     }
   }
 }

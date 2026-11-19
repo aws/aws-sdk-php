@@ -805,6 +805,12 @@
         "S3Configuration$bucketOwnerAccountId": "<p>The account ID of the Amazon S3 bucket owner. This ID is used for cross-account access to the bucket.</p>"
       }
     },
+    "AwsBillingConnectorConfiguration": {
+      "base": "<p>The configuration for an AWS Billing payment connector. Payments made through an AWS Billing payment connector are charged to the AWS account that owns the payment manager, and appear on that account's AWS bill as AWS Marketplace charges.</p>",
+      "refs": {
+        "CredentialsProviderConfiguration$awsBilling": "<p>The configuration for an AWS Billing payment connector. The service sets this configuration when it creates the connector and returns it in responses. Don't specify it when you create an AWS Billing payment connector.</p>"
+      }
+    },
     "BatchPutGatewayRateLimitsRequest": {
       "base": null,
       "refs": {}
@@ -1904,6 +1910,12 @@
         "ContentConfiguration$type": "<p>Type of content to stream.</p>"
       }
     },
+    "CpuOptions": {
+      "base": "<p>The CPU configuration for capacity provider instances, including nested virtualization.</p>",
+      "refs": {
+        "LaunchParameters$cpuOptions": "<p>The central processing unit (CPU) options for the instances that the capacity provider launches.</p>"
+      }
+    },
     "CreateAgentRuntimeEndpointRequest": {
       "base": null,
       "refs": {}
@@ -2250,7 +2262,7 @@
       }
     },
     "CredentialsProviderConfiguration": {
-      "base": "<p>The credential provider configuration for a payment connector. Specifies the payment provider type and its associated credential provider.</p>",
+      "base": "<p>The configuration for a payment connector. Specifies the payment provider type and either its associated credential provider or, for an AWS Billing payment connector, its billing configuration.</p>",
       "refs": {
         "CredentialsProviderConfigurations$member": null
       }
@@ -2258,7 +2270,7 @@
     "CredentialsProviderConfigurations": {
       "base": null,
       "refs": {
-        "CreatePaymentConnectorRequest$credentialProviderConfigurations": "<p>The credential provider configurations for the payment connector. These configurations specify how the connector authenticates with the payment provider.</p>",
+        "CreatePaymentConnectorRequest$credentialProviderConfigurations": "<p>The credential provider configurations for the payment connector. These configurations specify how the connector authenticates with the payment provider.</p> <p>For an <code>AwsBilling</code> payment connector, omit this parameter or specify an empty list. The service uses the AWS Marketplace service-linked role in your account, which must exist before you create the connector, and you must have permission to call <code>iam:GetRole</code> on it.</p>",
         "CreatePaymentConnectorResponse$credentialProviderConfigurations": "<p>The credential provider configurations for the created payment connector.</p>",
         "GetPaymentConnectorResponse$credentialProviderConfigurations": "<p>The credential provider configurations for the payment connector.</p>",
         "UpdatePaymentConnectorRequest$credentialProviderConfigurations": "<p>The updated credential provider configurations for the payment connector.</p>",
@@ -6830,6 +6842,12 @@
         "PolicyGenerationAsset$rawTextFragment": "<p>The portion of the original natural language input that this generated policy asset addresses. This helps users understand which part of their policy description was translated into this specific Dogwood policy statement, enabling better policy selection and refinement. When a single natural language input describes multiple authorization requirements, the generation process creates separate policy assets for each requirement, with each asset's rawTextFragment showing which requirement it addresses. Use this mapping to verify that all parts of your natural language input were correctly translated into Dogwood policies.</p>"
       }
     },
+    "NestedVirtualization": {
+      "base": null,
+      "refs": {
+        "CpuOptions$nestedVirtualization": "<p>Specifies whether your agents can use hardware virtualization on their instances. The following values are possible:</p> <ul> <li> <p> <code>ENABLED</code> – Your agents can use hardware virtualization on their instances. To use this value, choose the <code>LINUX_X86_64</code> operating system and instance types that support nested virtualization.</p> </li> <li> <p> <code>DISABLED</code> – Your agents can't use hardware virtualization on their instances. This is the default.</p> </li> </ul>"
+      }
+    },
     "NetworkConfiguration": {
       "base": "<p>SecurityConfig for the Agent.</p>",
       "refs": {
@@ -8358,6 +8376,7 @@
     "RoleArn": {
       "base": null,
       "refs": {
+        "AwsBillingConnectorConfiguration$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the AWS Marketplace service-linked role in the account that owns the payment manager. The service sets this value when it creates the connector.</p>",
         "CreateAgentRuntimeRequest$roleArn": "<p>The IAM role ARN that provides permissions for the AgentCore Runtime.</p>",
         "CreateBrowserRequest$executionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the browser to access Amazon Web Services services.</p>",
         "CreateCodeInterpreterRequest$executionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the code interpreter to access Amazon Web Services services.</p>",

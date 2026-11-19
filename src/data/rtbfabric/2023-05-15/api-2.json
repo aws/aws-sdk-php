@@ -306,6 +306,42 @@
       ],
       "idempotent":true
     },
+    "GetAvailableModule":{
+      "name":"GetAvailableModule",
+      "http":{
+        "method":"GET",
+        "requestUri":"/available-modules/{moduleId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAvailableModuleRequest"},
+      "output":{"shape":"GetAvailableModuleResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "GetAvailableModuleVersion":{
+      "name":"GetAvailableModuleVersion",
+      "http":{
+        "method":"GET",
+        "requestUri":"/available-modules/{moduleId}/versions/{version}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAvailableModuleVersionRequest"},
+      "output":{"shape":"GetAvailableModuleVersionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
     "GetCertificateAssociation":{
       "name":"GetCertificateAssociation",
       "http":{
@@ -433,6 +469,59 @@
       ],
       "readonly":true
     },
+    "GetUpdate":{
+      "name":"GetUpdate",
+      "http":{
+        "method":"GET",
+        "requestUri":"/gateway/{gatewayId}/updates/{updateId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetUpdateRequest"},
+      "output":{"shape":"GetUpdateResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListAvailableModuleVersions":{
+      "name":"ListAvailableModuleVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/available-modules/{moduleId}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAvailableModuleVersionsRequest"},
+      "output":{"shape":"ListAvailableModuleVersionsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListAvailableModules":{
+      "name":"ListAvailableModules",
+      "http":{
+        "method":"GET",
+        "requestUri":"/available-modules",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAvailableModulesRequest"},
+      "output":{"shape":"ListAvailableModulesResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
     "ListCertificateAssociations":{
       "name":"ListCertificateAssociations",
       "http":{
@@ -534,6 +623,44 @@
         {"shape":"ValidationException"}
       ],
       "readonly":true
+    },
+    "ListUpdates":{
+      "name":"ListUpdates",
+      "http":{
+        "method":"GET",
+        "requestUri":"/gateway/{gatewayId}/updates",
+        "responseCode":200
+      },
+      "input":{"shape":"ListUpdatesRequest"},
+      "output":{"shape":"ListUpdatesResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "PutLinkFlows":{
+      "name":"PutLinkFlows",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/gateway/{gatewayId}/link/{linkId}/flows",
+        "responseCode":200
+      },
+      "input":{"shape":"PutLinkFlowsRequest"},
+      "output":{"shape":"PutLinkFlowsResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
     },
     "RejectLink":{
       "name":"RejectLink",
@@ -733,6 +860,7 @@
         "attributes":{"shape":"LinkAttributes"},
         "logSettings":{"shape":"LinkLogSettings"},
         "connectivityType":{"shape":"ConnectivityType"},
+        "errorDetails":{"shape":"ErrorDetails"},
         "linkId":{"shape":"LinkId"}
       }
     },
@@ -761,6 +889,12 @@
         "headerTag":{"shape":"HeaderTagAction"}
       },
       "union":true
+    },
+    "ActivationPercentage":{
+      "type":"float",
+      "box":true,
+      "max":100,
+      "min":0
     },
     "AssociateCertificateRequest":{
       "type":"structure",
@@ -820,6 +954,58 @@
       "type":"string",
       "pattern":"arn:aws:iam::[0-9]{12}:role/.{1,2048}"
     },
+    "AvailableModuleSummary":{
+      "type":"structure",
+      "required":[
+        "moduleId",
+        "moduleArn",
+        "moduleName",
+        "subscriptionType",
+        "subscriptionStatus"
+      ],
+      "members":{
+        "moduleId":{"shape":"ModuleId"},
+        "moduleArn":{"shape":"ModuleArn"},
+        "moduleName":{"shape":"ModuleName"},
+        "subscriptionType":{"shape":"SubscriptionType"},
+        "subscriptionStatus":{"shape":"SubscriptionStatus"},
+        "marketplaceProductId":{"shape":"String"}
+      }
+    },
+    "AvailableModuleSummaryList":{
+      "type":"list",
+      "member":{"shape":"AvailableModuleSummary"}
+    },
+    "AvailableModuleVersionSummary":{
+      "type":"structure",
+      "required":[
+        "version",
+        "moduleVersionArn",
+        "status",
+        "createdAt"
+      ],
+      "members":{
+        "version":{"shape":"SemanticVersion"},
+        "moduleVersionArn":{"shape":"ModuleVersionArn"},
+        "status":{"shape":"ModuleVersionStatus"},
+        "createdAt":{"shape":"Timestamp"}
+      }
+    },
+    "AvailableModuleVersionSummaryList":{
+      "type":"list",
+      "member":{"shape":"AvailableModuleVersionSummary"}
+    },
+    "AwsResourceId":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "AwsResourceIdList":{
+      "type":"list",
+      "member":{"shape":"AwsResourceId"},
+      "max":10,
+      "min":0
+    },
     "Base64EncodedCertificateChain":{
       "type":"string",
       "max":2097152,
@@ -869,6 +1055,37 @@
         "AVAILABILITY_ZONE_AFFINITY",
         "ANY_AVAILABILITY_ZONE"
       ]
+    },
+    "ClientToken":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[!-~]+"
+    },
+    "ConfigurableAction":{
+      "type":"string",
+      "enum":[
+        "FILTER",
+        "ENRICH_REQUEST_EXT",
+        "ENRICH_REQUEST_HEADERS",
+        "OBSERVE"
+      ]
+    },
+    "ConfigurableActionList":{
+      "type":"list",
+      "member":{"shape":"ConfigurableAction"},
+      "max":16,
+      "min":1
+    },
+    "ConfigurationSchema":{
+      "type":"string",
+      "max":32768,
+      "min":0
+    },
+    "ConfigurationValues":{
+      "type":"string",
+      "max":10240,
+      "min":1
     },
     "ConflictException":{
       "type":"structure",
@@ -971,6 +1188,7 @@
         "attributes":{"shape":"LinkAttributes"},
         "logSettings":{"shape":"LinkLogSettings"},
         "connectivityType":{"shape":"ConnectivityType"},
+        "errorDetails":{"shape":"ErrorDetails"},
         "linkId":{"shape":"LinkId"},
         "customerProvidedId":{"shape":"CreateLinkResponseCustomerProvidedIdString"}
       }
@@ -1410,6 +1628,47 @@
       "type":"string",
       "pattern":"arn:aws:iam::[0-9]{12}:role/.{1,2048}"
     },
+    "ErrorCode":{
+      "type":"string",
+      "enum":[
+        "VPC_NOT_FOUND",
+        "EC2_SUBNET_NOT_FOUND",
+        "EC2_SECURITY_GROUP_NOT_FOUND",
+        "EC2_SUBNET_IP_EXHAUSTION",
+        "IAM_ASSUME_ROLE_ACCESS_DENIED",
+        "INTERNAL_ERROR"
+      ]
+    },
+    "ErrorDetail":{
+      "type":"structure",
+      "required":[
+        "code",
+        "message"
+      ],
+      "members":{
+        "code":{"shape":"ErrorCode"},
+        "message":{"shape":"ErrorDetailMessageString"},
+        "resourceIds":{"shape":"AwsResourceIdList"}
+      }
+    },
+    "ErrorDetailMessageString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "ErrorDetails":{
+      "type":"list",
+      "member":{"shape":"ErrorDetail"},
+      "max":10,
+      "min":0
+    },
+    "FailureMode":{
+      "type":"string",
+      "enum":[
+        "OPEN",
+        "CLOSED"
+      ]
+    },
     "Filter":{
       "type":"structure",
       "required":["criteria"],
@@ -1452,6 +1711,44 @@
       "type":"float",
       "box":true
     },
+    "Flow":{
+      "type":"structure",
+      "required":[
+        "name",
+        "pipeline"
+      ],
+      "members":{
+        "name":{"shape":"FlowName"},
+        "pipeline":{"shape":"FlowPipeline"}
+      }
+    },
+    "FlowList":{
+      "type":"list",
+      "member":{"shape":"Flow"},
+      "max":1,
+      "min":0
+    },
+    "FlowModule":{
+      "type":"structure",
+      "required":[
+        "name",
+        "moduleVersionArn"
+      ],
+      "members":{
+        "name":{"shape":"ModuleName"},
+        "moduleVersionArn":{"shape":"ModuleVersionArn"},
+        "selectedActions":{"shape":"SelectedActionList"},
+        "failureMode":{"shape":"FailureMode"},
+        "activationPercentage":{"shape":"ActivationPercentage"},
+        "configurationValues":{"shape":"ConfigurationValues"}
+      }
+    },
+    "FlowModuleList":{
+      "type":"list",
+      "member":{"shape":"FlowModule"},
+      "max":8,
+      "min":1
+    },
     "FlowModuleName":{
       "type":"string",
       "max":255,
@@ -1461,6 +1758,33 @@
     "FlowModuleNameList":{
       "type":"list",
       "member":{"shape":"FlowModuleName"}
+    },
+    "FlowName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z0-9][A-Za-z0-9-]*"
+    },
+    "FlowPhase":{
+      "type":"structure",
+      "required":["modules"],
+      "members":{
+        "modules":{"shape":"FlowModuleList"}
+      }
+    },
+    "FlowPhaseList":{
+      "type":"list",
+      "member":{"shape":"FlowPhase"},
+      "max":8,
+      "min":1
+    },
+    "FlowPipeline":{
+      "type":"structure",
+      "members":{
+        "sequential":{"shape":"SequentialPipeline"},
+        "phased":{"shape":"PhasedPipeline"}
+      },
+      "union":true
     },
     "GatewayId":{
       "type":"string",
@@ -1478,6 +1802,82 @@
         "EXTERNAL",
         "INTERNAL"
       ]
+    },
+    "GetAvailableModuleRequest":{
+      "type":"structure",
+      "required":["moduleId"],
+      "members":{
+        "moduleId":{
+          "shape":"ModuleId",
+          "location":"uri",
+          "locationName":"moduleId"
+        }
+      }
+    },
+    "GetAvailableModuleResponse":{
+      "type":"structure",
+      "required":[
+        "moduleId",
+        "moduleArn",
+        "moduleName",
+        "subscriptionType",
+        "subscriptionStatus",
+        "createdAt"
+      ],
+      "members":{
+        "moduleId":{"shape":"ModuleId"},
+        "moduleArn":{"shape":"ModuleArn"},
+        "moduleName":{"shape":"ModuleName"},
+        "description":{"shape":"ModuleDescription"},
+        "subscriptionType":{"shape":"SubscriptionType"},
+        "subscriptionStatus":{"shape":"SubscriptionStatus"},
+        "marketplaceProductId":{"shape":"String"},
+        "createdAt":{"shape":"Timestamp"}
+      }
+    },
+    "GetAvailableModuleVersionRequest":{
+      "type":"structure",
+      "required":[
+        "moduleId",
+        "version"
+      ],
+      "members":{
+        "moduleId":{
+          "shape":"ModuleId",
+          "location":"uri",
+          "locationName":"moduleId"
+        },
+        "version":{
+          "shape":"SemanticVersion",
+          "location":"uri",
+          "locationName":"version"
+        }
+      }
+    },
+    "GetAvailableModuleVersionResponse":{
+      "type":"structure",
+      "required":[
+        "moduleId",
+        "version",
+        "moduleVersionArn",
+        "status",
+        "permissions",
+        "configurableActions",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "moduleId":{"shape":"ModuleId"},
+        "version":{"shape":"SemanticVersion"},
+        "moduleVersionArn":{"shape":"ModuleVersionArn"},
+        "status":{"shape":"ModuleVersionStatus"},
+        "permissions":{"shape":"ModulePermissionList"},
+        "configurableActions":{"shape":"ConfigurableActionList"},
+        "configurationSchema":{"shape":"ConfigurationSchema"},
+        "releaseNotes":{"shape":"ReleaseNotes"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
     },
     "GetCertificateAssociationRequest":{
       "type":"structure",
@@ -1510,7 +1910,8 @@
         "acmCertificateArn":{"shape":"AcmCertificateArn"},
         "status":{"shape":"CertificateAssociationStatus"},
         "associatedAt":{"shape":"Timestamp"},
-        "updatedAt":{"shape":"Timestamp"}
+        "updatedAt":{"shape":"Timestamp"},
+        "errorDetails":{"shape":"ErrorDetails"}
       }
     },
     "GetInboundExternalLinkRequest":{
@@ -1552,7 +1953,10 @@
         "updatedAt":{"shape":"Timestamp"},
         "tags":{"shape":"TagsMap"},
         "logSettings":{"shape":"LinkLogSettings"},
-        "connectivityType":{"shape":"ConnectivityType"}
+        "connectivityType":{"shape":"ConnectivityType"},
+        "errorDetails":{"shape":"ErrorDetails"},
+        "lockToken":{"shape":"LockToken"},
+        "flows":{"shape":"FlowList"}
       }
     },
     "GetLinkRequest":{
@@ -1596,10 +2000,13 @@
         "attributes":{"shape":"LinkAttributes"},
         "logSettings":{"shape":"LinkLogSettings"},
         "connectivityType":{"shape":"ConnectivityType"},
+        "errorDetails":{"shape":"ErrorDetails"},
         "linkId":{"shape":"LinkId"},
         "tags":{"shape":"TagsMap"},
         "httpResponderAllowed":{"shape":"Boolean"},
-        "timeoutInMillis":{"shape":"LinkTimeoutInMillis"}
+        "timeoutInMillis":{"shape":"LinkTimeoutInMillis"},
+        "lockToken":{"shape":"LockToken"},
+        "flows":{"shape":"FlowList"}
       }
     },
     "GetLinkRoutingRuleRequest":{
@@ -1648,7 +2055,8 @@
         "status":{"shape":"RuleStatus"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
-        "tags":{"shape":"TagsMap"}
+        "tags":{"shape":"TagsMap"},
+        "errorDetails":{"shape":"ErrorDetails"}
       }
     },
     "GetOutboundExternalLinkRequest":{
@@ -1690,7 +2098,10 @@
         "updatedAt":{"shape":"Timestamp"},
         "tags":{"shape":"TagsMap"},
         "logSettings":{"shape":"LinkLogSettings"},
-        "connectivityType":{"shape":"ConnectivityType"}
+        "connectivityType":{"shape":"ConnectivityType"},
+        "errorDetails":{"shape":"ErrorDetails"},
+        "lockToken":{"shape":"LockToken"},
+        "flows":{"shape":"FlowList"}
       }
     },
     "GetRequesterGatewayRequest":{
@@ -1720,6 +2131,7 @@
         "description":{"shape":"GetRequesterGatewayResponseDescriptionString"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
+        "errorDetails":{"shape":"ErrorDetails"},
         "vpcId":{"shape":"VpcId"},
         "subnetIds":{"shape":"GetRequesterGatewayResponseSubnetIdsList"},
         "securityGroupIds":{"shape":"GetRequesterGatewayResponseSecurityGroupIdsList"},
@@ -1773,6 +2185,7 @@
         "description":{"shape":"GetResponderGatewayResponseDescriptionString"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
+        "errorDetails":{"shape":"ErrorDetails"},
         "domainName":{"shape":"DomainName"},
         "port":{"shape":"GetResponderGatewayResponsePortInteger"},
         "protocol":{"shape":"Protocol"},
@@ -1808,6 +2221,32 @@
       "type":"list",
       "member":{"shape":"SubnetId"},
       "min":1
+    },
+    "GetUpdateRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayId",
+        "updateId"
+      ],
+      "members":{
+        "gatewayId":{
+          "shape":"GatewayId",
+          "location":"uri",
+          "locationName":"gatewayId"
+        },
+        "updateId":{
+          "shape":"UpdateId",
+          "location":"uri",
+          "locationName":"updateId"
+        }
+      }
+    },
+    "GetUpdateResponse":{
+      "type":"structure",
+      "required":["update"],
+      "members":{
+        "update":{"shape":"Update"}
+      }
     },
     "HeaderTagAction":{
       "type":"structure",
@@ -1943,12 +2382,27 @@
         "customerProvidedId":{"shape":"CustomerProvidedId"}
       }
     },
+    "LinkConfigParameters":{
+      "type":"structure",
+      "members":{
+        "logSettings":{"shape":"LinkLogSettings"},
+        "timeoutInMillis":{"shape":"LinkTimeoutInMillis"}
+      }
+    },
     "LinkDirection":{
       "type":"string",
       "enum":[
         "RESPONSE",
         "REQUEST"
       ]
+    },
+    "LinkFlowParameters":{
+      "type":"structure",
+      "members":{
+        "modules":{"shape":"ModuleConfigurationList"},
+        "flows":{"shape":"FlowList"}
+      },
+      "union":true
     },
     "LinkId":{
       "type":"string",
@@ -1987,7 +2441,8 @@
         "conditions":{"shape":"RuleCondition"},
         "status":{"shape":"RuleStatus"},
         "createdAt":{"shape":"Timestamp"},
-        "updatedAt":{"shape":"Timestamp"}
+        "updatedAt":{"shape":"Timestamp"},
+        "errorDetails":{"shape":"ErrorDetails"}
       }
     },
     "LinkStatus":{
@@ -2005,14 +2460,101 @@
         "PENDING_UPDATE",
         "PENDING_ISOLATION",
         "ISOLATED",
-        "PENDING_RESTORATION"
+        "PENDING_RESTORATION",
+        "CREATE_FAILED",
+        "DELETE_FAILED"
       ]
+    },
+    "LinkTarget":{
+      "type":"structure",
+      "required":["linkId"],
+      "members":{
+        "linkId":{"shape":"LinkId"}
+      }
     },
     "LinkTimeoutInMillis":{
       "type":"long",
       "box":true,
       "max":5000,
       "min":100
+    },
+    "ListAvailableModuleVersionsRequest":{
+      "type":"structure",
+      "required":["moduleId"],
+      "members":{
+        "moduleId":{
+          "shape":"ModuleId",
+          "location":"uri",
+          "locationName":"moduleId"
+        },
+        "status":{
+          "shape":"ModuleVersionStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "maxResults":{
+          "shape":"ListAvailableModuleVersionsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListAvailableModuleVersionsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":1
+    },
+    "ListAvailableModuleVersionsResponse":{
+      "type":"structure",
+      "required":[
+        "moduleId",
+        "versions"
+      ],
+      "members":{
+        "moduleId":{"shape":"ModuleId"},
+        "versions":{"shape":"AvailableModuleVersionSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListAvailableModulesRequest":{
+      "type":"structure",
+      "members":{
+        "subscriptionType":{
+          "shape":"SubscriptionType",
+          "location":"querystring",
+          "locationName":"subscriptionType"
+        },
+        "maxResults":{
+          "shape":"ListAvailableModulesRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListAvailableModulesRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":1
+    },
+    "ListAvailableModulesResponse":{
+      "type":"structure",
+      "required":["modules"],
+      "members":{
+        "modules":{"shape":"AvailableModuleSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
     },
     "ListCertificateAssociationsRequest":{
       "type":"structure",
@@ -2141,6 +2683,7 @@
         "attributes":{"shape":"LinkAttributes"},
         "logSettings":{"shape":"LinkLogSettings"},
         "connectivityType":{"shape":"ConnectivityType"},
+        "errorDetails":{"shape":"ErrorDetails"},
         "linkId":{"shape":"LinkId"},
         "tags":{"shape":"TagsMap"},
         "publicEndpoint":{"shape":"URL"}
@@ -2219,12 +2762,82 @@
         "tags":{"shape":"TagsMap"}
       }
     },
+    "ListUpdatesRequest":{
+      "type":"structure",
+      "required":["gatewayId"],
+      "members":{
+        "gatewayId":{
+          "shape":"GatewayId",
+          "location":"uri",
+          "locationName":"gatewayId"
+        },
+        "linkId":{
+          "shape":"LinkId",
+          "location":"querystring",
+          "locationName":"linkId"
+        },
+        "ruleId":{
+          "shape":"RuleId",
+          "location":"querystring",
+          "locationName":"ruleId"
+        },
+        "type":{
+          "shape":"UpdateType",
+          "location":"querystring",
+          "locationName":"type"
+        },
+        "status":{
+          "shape":"UpdateStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "nextToken":{
+          "shape":"ListUpdatesRequestNextTokenString",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListUpdatesRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListUpdatesRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListUpdatesRequestNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
+    "ListUpdatesResponse":{
+      "type":"structure",
+      "required":["updates"],
+      "members":{
+        "updates":{"shape":"UpdateSummaryList"},
+        "nextToken":{"shape":"ListUpdatesResponseNextTokenString"}
+      }
+    },
+    "ListUpdatesResponseNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
     "ListenerConfig":{
       "type":"structure",
       "required":["protocols"],
       "members":{
         "protocols":{"shape":"ProtocolList"}
       }
+    },
+    "LockToken":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "ManagedEndpointConfiguration":{
       "type":"structure",
@@ -2233,6 +2846,12 @@
         "eksEndpoints":{"shape":"EksEndpointsConfiguration"}
       },
       "union":true
+    },
+    "ModuleArn":{
+      "type":"string",
+      "max":1011,
+      "min":0,
+      "pattern":"arn:aws[a-zA-Z-]*:rtbfabric:[a-z0-9-]+::modules/module-[a-zA-Z0-9]{1,25}"
     },
     "ModuleConfiguration":{
       "type":"structure",
@@ -2248,6 +2867,21 @@
       "type":"list",
       "member":{"shape":"ModuleConfiguration"}
     },
+    "ModuleDescription":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "ModuleId":{
+      "type":"string",
+      "pattern":"module-[a-zA-Z0-9]{1,25}"
+    },
+    "ModuleName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z0-9][A-Za-z0-9-]*"
+    },
     "ModuleParameters":{
       "type":"structure",
       "members":{
@@ -2256,6 +2890,38 @@
         "rateLimiter":{"shape":"RateLimiterModuleParameters"}
       },
       "union":true
+    },
+    "ModulePermission":{
+      "type":"string",
+      "enum":[
+        "READ_REQUEST_BODY",
+        "READ_REQUEST_HEADERS",
+        "MUTATE_REQUEST_BODY",
+        "ENRICH_REQUEST_HEADERS",
+        "ENRICH_REQUEST_EXT",
+        "FILTER"
+      ]
+    },
+    "ModulePermissionList":{
+      "type":"list",
+      "member":{"shape":"ModulePermission"},
+      "max":16,
+      "min":1
+    },
+    "ModuleVersionArn":{
+      "type":"string",
+      "max":1011,
+      "min":0,
+      "pattern":"arn:aws[a-zA-Z-]*:rtbfabric:[a-z0-9-]+::modules/module-[a-zA-Z0-9]{1,25}/versions/(0|[1-9]\\d{0,9})\\.(0|[1-9]\\d{0,9})\\.(0|[1-9]\\d{0,9})"
+    },
+    "ModuleVersionStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATE_FAILED",
+        "ACTIVE",
+        "DEPRECATED"
+      ]
     },
     "NoBidAction":{
       "type":"structure",
@@ -2315,6 +2981,13 @@
       "max":100,
       "min":0
     },
+    "PhasedPipeline":{
+      "type":"structure",
+      "required":["phases"],
+      "members":{
+        "phases":{"shape":"FlowPhaseList"}
+      }
+    },
     "Protocol":{
       "type":"string",
       "enum":[
@@ -2327,6 +3000,48 @@
       "member":{"shape":"Protocol"},
       "max":2,
       "min":1
+    },
+    "PutLinkFlowsRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayId",
+        "linkId",
+        "lockToken",
+        "flows"
+      ],
+      "members":{
+        "gatewayId":{
+          "shape":"GatewayId",
+          "location":"uri",
+          "locationName":"gatewayId"
+        },
+        "linkId":{
+          "shape":"LinkId",
+          "location":"uri",
+          "locationName":"linkId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "lockToken":{"shape":"LockToken"},
+        "flows":{"shape":"FlowList"}
+      }
+    },
+    "PutLinkFlowsResponse":{
+      "type":"structure",
+      "required":[
+        "gatewayId",
+        "linkId",
+        "status",
+        "updateId"
+      ],
+      "members":{
+        "gatewayId":{"shape":"GatewayId"},
+        "linkId":{"shape":"LinkId"},
+        "status":{"shape":"LinkStatus"},
+        "updateId":{"shape":"UpdateId"}
+      }
     },
     "QueryStringKeyValuePair":{
       "type":"structure",
@@ -2398,8 +3113,14 @@
         "attributes":{"shape":"LinkAttributes"},
         "logSettings":{"shape":"LinkLogSettings"},
         "connectivityType":{"shape":"ConnectivityType"},
+        "errorDetails":{"shape":"ErrorDetails"},
         "linkId":{"shape":"LinkId"}
       }
+    },
+    "ReleaseNotes":{
+      "type":"string",
+      "max":4096,
+      "min":0
     },
     "RequesterGatewayStatus":{
       "type":"string",
@@ -2412,7 +3133,9 @@
         "PENDING_UPDATE",
         "ISOLATED",
         "PENDING_ISOLATION",
-        "PENDING_RESTORATION"
+        "PENDING_RESTORATION",
+        "CREATE_FAILED",
+        "DELETE_FAILED"
       ]
     },
     "ResourceNotFoundException":{
@@ -2480,6 +3203,23 @@
       "max":2,
       "min":1
     },
+    "ResponderGatewayConfigParameters":{
+      "type":"structure",
+      "required":[
+        "port",
+        "protocol"
+      ],
+      "members":{
+        "description":{"shape":"String"},
+        "clientRoutingPolicy":{"shape":"ClientRoutingPolicy"},
+        "domainName":{"shape":"DomainName"},
+        "port":{"shape":"Integer"},
+        "protocol":{"shape":"Protocol"},
+        "listenerConfig":{"shape":"ListenerConfig"},
+        "trustStoreConfiguration":{"shape":"TrustStoreConfiguration"},
+        "managedEndpointConfiguration":{"shape":"ManagedEndpointConfiguration"}
+      }
+    },
     "ResponderGatewayStatus":{
       "type":"string",
       "enum":[
@@ -2491,8 +3231,32 @@
         "PENDING_UPDATE",
         "ISOLATED",
         "PENDING_ISOLATION",
-        "PENDING_RESTORATION"
+        "PENDING_RESTORATION",
+        "CREATE_FAILED",
+        "DELETE_FAILED"
       ]
+    },
+    "RoutingRuleParameters":{
+      "type":"structure",
+      "required":[
+        "priority",
+        "conditions"
+      ],
+      "members":{
+        "priority":{"shape":"RulePriority"},
+        "conditions":{"shape":"RuleCondition"}
+      }
+    },
+    "RoutingRuleTarget":{
+      "type":"structure",
+      "required":[
+        "linkId",
+        "ruleId"
+      ],
+      "members":{
+        "linkId":{"shape":"LinkId"},
+        "ruleId":{"shape":"RuleId"}
+      }
     },
     "RtbTaggableResourceArn":{
       "type":"string",
@@ -2561,7 +3325,9 @@
         "UPDATE_IN_PROGRESS",
         "DELETION_IN_PROGRESS",
         "DELETED",
-        "FAILED"
+        "FAILED",
+        "CREATE_FAILED",
+        "DELETE_FAILED"
       ]
     },
     "SecurityGroupId":{
@@ -2569,6 +3335,25 @@
       "max":43,
       "min":11,
       "pattern":"sg-[0-9a-f]{8,40}"
+    },
+    "SelectedActionList":{
+      "type":"list",
+      "member":{"shape":"ConfigurableAction"},
+      "max":16,
+      "min":1
+    },
+    "SemanticVersion":{
+      "type":"string",
+      "max":64,
+      "min":0,
+      "pattern":"(0|[1-9]\\d{0,9})\\.(0|[1-9]\\d{0,9})\\.(0|[1-9]\\d{0,9})"
+    },
+    "SequentialPipeline":{
+      "type":"structure",
+      "required":["modules"],
+      "members":{
+        "modules":{"shape":"FlowModuleList"}
+      }
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -2593,6 +3378,21 @@
       "max":24,
       "min":15,
       "pattern":"subnet-\\w{8,17}"
+    },
+    "SubscriptionStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "EXPIRED"
+      ]
+    },
+    "SubscriptionType":{
+      "type":"string",
+      "enum":[
+        "MARKETPLACE",
+        "PRIVATE",
+        "AWS_BUILT_IN"
+      ]
     },
     "TagKey":{
       "type":"string",
@@ -2668,6 +3468,10 @@
       "min":0,
       "pattern":"(https|http)://.+"
     },
+    "Unit":{
+      "type":"structure",
+      "members":{}
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -2690,6 +3494,31 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{}
+    },
+    "Update":{
+      "type":"structure",
+      "required":[
+        "updateId",
+        "type",
+        "status",
+        "target",
+        "createdAt"
+      ],
+      "members":{
+        "updateId":{"shape":"UpdateId"},
+        "type":{"shape":"UpdateType"},
+        "status":{"shape":"UpdateStatus"},
+        "target":{"shape":"UpdateTarget"},
+        "createdAt":{"shape":"Timestamp"},
+        "parameters":{"shape":"UpdateParameters"},
+        "errorDetails":{"shape":"ErrorDetails"}
+      }
+    },
+    "UpdateId":{
+      "type":"string",
+      "max":64,
+      "min":8,
+      "pattern":"update-[a-z0-9]{1,57}"
     },
     "UpdateLinkModuleFlowRequest":{
       "type":"structure",
@@ -2722,12 +3551,14 @@
       "required":[
         "gatewayId",
         "linkId",
-        "status"
+        "status",
+        "updateId"
       ],
       "members":{
         "gatewayId":{"shape":"GatewayId"},
         "linkId":{"shape":"LinkId"},
-        "status":{"shape":"LinkStatus"}
+        "status":{"shape":"LinkStatus"},
+        "updateId":{"shape":"UpdateId"}
       }
     },
     "UpdateLinkRequest":{
@@ -2748,18 +3579,30 @@
           "locationName":"linkId"
         },
         "logSettings":{"shape":"LinkLogSettings"},
-        "timeoutInMillis":{"shape":"LinkTimeoutInMillis"}
+        "timeoutInMillis":{"shape":"LinkTimeoutInMillis"},
+        "clientToken":{
+          "shape":"UpdateLinkRequestClientTokenString",
+          "idempotencyToken":true
+        }
       }
+    },
+    "UpdateLinkRequestClientTokenString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[!-~]+"
     },
     "UpdateLinkResponse":{
       "type":"structure",
       "required":[
         "linkId",
-        "status"
+        "status",
+        "updateId"
       ],
       "members":{
         "linkId":{"shape":"LinkId"},
-        "status":{"shape":"LinkStatus"}
+        "status":{"shape":"LinkStatus"},
+        "updateId":{"shape":"UpdateId"}
       }
     },
     "UpdateLinkRoutingRuleRequest":{
@@ -2788,21 +3631,43 @@
           "locationName":"ruleId"
         },
         "priority":{"shape":"RulePriority"},
-        "conditions":{"shape":"RuleCondition"}
+        "conditions":{"shape":"RuleCondition"},
+        "clientToken":{
+          "shape":"UpdateLinkRoutingRuleRequestClientTokenString",
+          "idempotencyToken":true
+        }
       }
+    },
+    "UpdateLinkRoutingRuleRequestClientTokenString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[!-~]+"
     },
     "UpdateLinkRoutingRuleResponse":{
       "type":"structure",
       "required":[
         "ruleId",
         "status",
-        "updatedAt"
+        "updatedAt",
+        "updateId"
       ],
       "members":{
         "ruleId":{"shape":"RuleId"},
         "status":{"shape":"RuleStatus"},
-        "updatedAt":{"shape":"Timestamp"}
+        "updatedAt":{"shape":"Timestamp"},
+        "updateId":{"shape":"UpdateId"}
       }
+    },
+    "UpdateParameters":{
+      "type":"structure",
+      "members":{
+        "responderGatewayConfig":{"shape":"ResponderGatewayConfigParameters"},
+        "linkConfig":{"shape":"LinkConfigParameters"},
+        "linkFlow":{"shape":"LinkFlowParameters"},
+        "routingRule":{"shape":"RoutingRuleParameters"}
+      },
+      "union":true
     },
     "UpdateRequesterGatewayRequest":{
       "type":"structure",
@@ -2880,13 +3745,60 @@
       "type":"structure",
       "required":[
         "gatewayId",
-        "status"
+        "status",
+        "updateId"
       ],
       "members":{
         "gatewayId":{"shape":"GatewayId"},
         "status":{"shape":"ResponderGatewayStatus"},
-        "clientRoutingPolicy":{"shape":"ClientRoutingPolicy"}
+        "clientRoutingPolicy":{"shape":"ClientRoutingPolicy"},
+        "updateId":{"shape":"UpdateId"}
       }
+    },
+    "UpdateStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "SUCCESSFUL",
+        "FAILED"
+      ]
+    },
+    "UpdateSummary":{
+      "type":"structure",
+      "required":[
+        "updateId",
+        "type",
+        "status",
+        "createdAt"
+      ],
+      "members":{
+        "updateId":{"shape":"UpdateId"},
+        "type":{"shape":"UpdateType"},
+        "status":{"shape":"UpdateStatus"},
+        "createdAt":{"shape":"Timestamp"}
+      }
+    },
+    "UpdateSummaryList":{
+      "type":"list",
+      "member":{"shape":"UpdateSummary"}
+    },
+    "UpdateTarget":{
+      "type":"structure",
+      "members":{
+        "gateway":{"shape":"Unit"},
+        "link":{"shape":"LinkTarget"},
+        "routingRule":{"shape":"RoutingRuleTarget"}
+      },
+      "union":true
+    },
+    "UpdateType":{
+      "type":"string",
+      "enum":[
+        "GATEWAY_CONFIG_UPDATE",
+        "LINK_CONFIG_UPDATE",
+        "LINK_FLOW_UPDATE",
+        "ROUTING_RULE_UPDATE"
+      ]
     },
     "ValidationException":{
       "type":"structure",

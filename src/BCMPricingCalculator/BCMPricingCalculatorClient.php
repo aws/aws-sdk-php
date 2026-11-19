@@ -183,6 +183,18 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getPreferences(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getPreferencesAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getPreferencesAsync(array{...} $args = [])
+ * @method \Aws\Result getUsageLinesEstimatedCost(array $args = [])
+ * @phpstan-method \Aws\Result getUsageLinesEstimatedCost(array{
+ *     usage?: list<array{serviceCode?: string, usageType?: string, operation?: string, key?: string, amount?: float, ...}>,
+ *     rateType?: 'AFTER_DISCOUNTS'|'AFTER_DISCOUNTS_AND_COMMITMENTS'|'BEFORE_DISCOUNTS',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise getUsageLinesEstimatedCostAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getUsageLinesEstimatedCostAsync(array{
+ *     usage?: list<array{serviceCode?: string, usageType?: string, operation?: string, key?: string, amount?: float, ...}>,
+ *     rateType?: 'AFTER_DISCOUNTS'|'AFTER_DISCOUNTS_AND_COMMITMENTS'|'BEFORE_DISCOUNTS',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result getWorkloadEstimate(array $args = [])
  * @phpstan-method \Aws\Result getWorkloadEstimate(array{identifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getWorkloadEstimateAsync(array $args = [])

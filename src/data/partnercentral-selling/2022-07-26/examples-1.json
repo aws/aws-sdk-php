@@ -1,4 +1,72 @@
 {
   "version": "1.0",
-  "examples": {}
+  "examples": {
+    "ListEngagementGroups": [
+      {
+        "input": {
+          "Catalog": "AWS",
+          "MaxResults": 10,
+          "ReadinessLevel": "SalesReady",
+          "Sort": {
+            "SortBy": "Count",
+            "SortOrder": "DESCENDING"
+          }
+        },
+        "output": {
+          "EngagementGroupSummaries": [
+            {
+              "Arn": "arn:aws:partnercentral:us-east-1::catalog/AWS/engagement-group/eng-grp-0a1b2c3d4e5f6g",
+              "Catalog": "AWS",
+              "Count": 42,
+              "Description": "Retail customers in the United States that are likely to adopt data analytics solutions.",
+              "Id": "eng-grp-0a1b2c3d4e5f6g",
+              "Name": "US retail data analytics",
+              "ReadinessLevel": "SalesReady",
+              "UpdatedAt": "2026-10-22T18:30:00Z"
+            }
+          ]
+        },
+        "description": "Returns the sales-ready engagement groups available in the AWS catalog, largest first.",
+        "id": "example-1",
+        "title": "List sales-ready engagement groups"
+      }
+    ],
+    "SearchEngagements": [
+      {
+        "input": {
+          "Catalog": "AWS",
+          "Filter": {
+            "EqualsTo": {
+              "Key": "ProspectingCustomerCountry",
+              "Value": {
+                "StringValue": "US"
+              }
+            }
+          },
+          "Keyword": "data analytics",
+          "MaxResults": 20,
+          "Sort": {
+            "SortBy": "CreatedAt",
+            "SortOrder": "DESCENDING"
+          }
+        },
+        "output": {
+          "EngagementSearchSummaries": [
+            {
+              "Arn": "arn:aws:partnercentral:us-east-1::catalog/AWS/engagement/eng-0a1b2c3d4e5f6g",
+              "CreatedAt": "2026-10-01T18:30:00Z",
+              "CreatedBy": "123456789012",
+              "Description": "Prospecting engagement for a retail customer evaluating a data analytics platform.",
+              "Id": "eng-0a1b2c3d4e5f6g",
+              "MemberCount": 1,
+              "Title": "Data analytics modernization"
+            }
+          ]
+        },
+        "description": "Returns AWS catalog engagements whose text matches the keyword and whose prospected customer is in the United States, newest first.",
+        "id": "example-1",
+        "title": "Search engagements by keyword and customer country"
+      }
+    ]
+  }
 }

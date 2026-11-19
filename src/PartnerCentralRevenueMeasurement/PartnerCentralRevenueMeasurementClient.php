@@ -9,7 +9,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result createMarketplaceRevenueShare(array{
  *     Catalog?: 'AWS'|'Sandbox',
  *     ClientToken?: string,
- *     ProductId?: string,
+ *     Products?: list<array{ProductId?: string, Accounts?: list<array>, ...}>,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])
@@ -17,15 +17,16 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise createMarketplaceRevenueShareAsync(array{
  *     Catalog?: 'AWS'|'Sandbox',
  *     ClientToken?: string,
- *     ProductId?: string,
+ *     Products?: list<array{ProductId?: string, Accounts?: list<array>, ...}>,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createMarketplaceRevenueShareAllocation(array $args = [])
  * @phpstan-method \Aws\Result createMarketplaceRevenueShareAllocation(array{
  *     Catalog?: 'AWS'|'Sandbox',
- *     ProductId?: string,
+ *     MarketplaceRevenueShareIdentifier?: string,
  *     ClientToken?: string,
+ *     MarketplaceRevenueShareRevision?: string,
  *     EffectiveFrom?: string,
  *     EffectiveUntil?: string,
  *     RevenueSharePercent?: string,
@@ -34,8 +35,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createMarketplaceRevenueShareAllocationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createMarketplaceRevenueShareAllocationAsync(array{
  *     Catalog?: 'AWS'|'Sandbox',
- *     ProductId?: string,
+ *     MarketplaceRevenueShareIdentifier?: string,
  *     ClientToken?: string,
+ *     MarketplaceRevenueShareRevision?: string,
  *     EffectiveFrom?: string,
  *     EffectiveUntil?: string,
  *     RevenueSharePercent?: string,
@@ -50,6 +52,7 @@ use Aws\AwsClient;
  *     TenancyModel?: 'MULTI_TENANT'|'SINGLE_TENANT',
  *     ProductIdentifier?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     Context?: array<string, string>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createRevenueAttributionAsync(array $args = [])
@@ -61,16 +64,17 @@ use Aws\AwsClient;
  *     TenancyModel?: 'MULTI_TENANT'|'SINGLE_TENANT',
  *     ProductIdentifier?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     Context?: array<string, string>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result getMarketplaceRevenueShare(array $args = [])
- * @phpstan-method \Aws\Result getMarketplaceRevenueShare(array{Catalog?: 'AWS'|'Sandbox', ProductId?: string, Revision?: int, ...} $args = [])
+ * @phpstan-method \Aws\Result getMarketplaceRevenueShare(array{Catalog?: 'AWS'|'Sandbox', Identifier?: string, Revision?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getMarketplaceRevenueShareAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise getMarketplaceRevenueShareAsync(array{Catalog?: 'AWS'|'Sandbox', ProductId?: string, Revision?: int, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getMarketplaceRevenueShareAsync(array{Catalog?: 'AWS'|'Sandbox', Identifier?: string, Revision?: string, ...} $args = [])
  * @method \Aws\Result getMarketplaceRevenueShareAllocation(array $args = [])
  * @phpstan-method \Aws\Result getMarketplaceRevenueShareAllocation(array{
  *     Catalog?: 'AWS'|'Sandbox',
- *     ProductId?: string,
+ *     MarketplaceRevenueShareIdentifier?: string,
  *     MarketplaceRevenueShareAllocationId?: string,
  *     MarketplaceRevenueShareRevision?: string,
  *     ...,
@@ -78,7 +82,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getMarketplaceRevenueShareAllocationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getMarketplaceRevenueShareAllocationAsync(array{
  *     Catalog?: 'AWS'|'Sandbox',
- *     ProductId?: string,
+ *     MarketplaceRevenueShareIdentifier?: string,
  *     MarketplaceRevenueShareAllocationId?: string,
  *     MarketplaceRevenueShareRevision?: string,
  *     ...,
@@ -110,10 +114,12 @@ use Aws\AwsClient;
  * @method \Aws\Result listMarketplaceRevenueShareAllocations(array $args = [])
  * @phpstan-method \Aws\Result listMarketplaceRevenueShareAllocations(array{
  *     Catalog?: 'AWS'|'Sandbox',
- *     ProductId?: string,
- *     Status?: 'ACTIVE'|'INACTIVE',
+ *     MarketplaceRevenueShareIdentifier?: string,
+ *     StatusFilter?: 'ACTIVE'|'INACTIVE',
  *     AfterEffectiveFrom?: string,
  *     BeforeEffectiveFrom?: string,
+ *     AfterEffectiveUntil?: string,
+ *     BeforeEffectiveUntil?: string,
  *     SortBy?: 'EffectiveFrom',
  *     SortOrder?: 'ASCENDING'|'DESCENDING',
  *     MaxResults?: int,
@@ -124,10 +130,12 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listMarketplaceRevenueShareAllocationsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listMarketplaceRevenueShareAllocationsAsync(array{
  *     Catalog?: 'AWS'|'Sandbox',
- *     ProductId?: string,
- *     Status?: 'ACTIVE'|'INACTIVE',
+ *     MarketplaceRevenueShareIdentifier?: string,
+ *     StatusFilter?: 'ACTIVE'|'INACTIVE',
  *     AfterEffectiveFrom?: string,
  *     BeforeEffectiveFrom?: string,
+ *     AfterEffectiveUntil?: string,
+ *     BeforeEffectiveUntil?: string,
  *     SortBy?: 'EffectiveFrom',
  *     SortOrder?: 'ASCENDING'|'DESCENDING',
  *     MaxResults?: int,
@@ -138,6 +146,7 @@ use Aws\AwsClient;
  * @method \Aws\Result listMarketplaceRevenueShares(array $args = [])
  * @phpstan-method \Aws\Result listMarketplaceRevenueShares(array{
  *     Catalog?: 'AWS'|'Sandbox',
+ *     Identifiers?: list<string>,
  *     ProductIds?: list<string>,
  *     ProductCodes?: list<string>,
  *     MaxResults?: int,
@@ -151,6 +160,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listMarketplaceRevenueSharesAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listMarketplaceRevenueSharesAsync(array{
  *     Catalog?: 'AWS'|'Sandbox',
+ *     Identifiers?: list<string>,
  *     ProductIds?: list<string>,
  *     ProductCodes?: list<string>,
  *     MaxResults?: int,
@@ -209,6 +219,7 @@ use Aws\AwsClient;
  *     SortOrder?: 'ASCENDING'|'DESCENDING',
  *     MaxResults?: int,
  *     NextToken?: string,
+ *     ContextFilters?: list<array{Key?: string, Values?: list<string>, ...}>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listRevenueAttributionsAsync(array $args = [])
@@ -221,6 +232,7 @@ use Aws\AwsClient;
  *     SortOrder?: 'ASCENDING'|'DESCENDING',
  *     MaxResults?: int,
  *     NextToken?: string,
+ *     ContextFilters?: list<array{Key?: string, Values?: list<string>, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
@@ -277,15 +289,31 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result untagResource(array{resourceArn?: string, tagKeys?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise untagResourceAsync(array{resourceArn?: string, tagKeys?: list<string>, ...} $args = [])
+ * @method \Aws\Result updateMarketplaceRevenueShare(array $args = [])
+ * @phpstan-method \Aws\Result updateMarketplaceRevenueShare(array{
+ *     Catalog?: 'AWS'|'Sandbox',
+ *     Identifier?: string,
+ *     ClientToken?: string,
+ *     Revision?: string,
+ *     Products?: list<array{ProductId?: string, Accounts?: list<array>, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateMarketplaceRevenueShareAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateMarketplaceRevenueShareAsync(array{
+ *     Catalog?: 'AWS'|'Sandbox',
+ *     Identifier?: string,
+ *     ClientToken?: string,
+ *     Revision?: string,
+ *     Products?: list<array{ProductId?: string, Accounts?: list<array>, ...}>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateMarketplaceRevenueShareAllocation(array $args = [])
  * @phpstan-method \Aws\Result updateMarketplaceRevenueShareAllocation(array{
  *     Catalog?: 'AWS'|'Sandbox',
- *     ProductId?: string,
+ *     MarketplaceRevenueShareIdentifier?: string,
  *     MarketplaceRevenueShareAllocationId?: string,
  *     MarketplaceRevenueShareRevision?: string,
  *     ClientToken?: string,
- *     EffectiveFrom?: string,
- *     EffectiveUntil?: string,
  *     RevenueSharePercent?: string,
  *     Status?: 'ACTIVE'|'INACTIVE',
  *     ...,
@@ -293,12 +321,10 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateMarketplaceRevenueShareAllocationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateMarketplaceRevenueShareAllocationAsync(array{
  *     Catalog?: 'AWS'|'Sandbox',
- *     ProductId?: string,
+ *     MarketplaceRevenueShareIdentifier?: string,
  *     MarketplaceRevenueShareAllocationId?: string,
  *     MarketplaceRevenueShareRevision?: string,
  *     ClientToken?: string,
- *     EffectiveFrom?: string,
- *     EffectiveUntil?: string,
  *     RevenueSharePercent?: string,
  *     Status?: 'ACTIVE'|'INACTIVE',
  *     ...,
@@ -310,6 +336,7 @@ use Aws\AwsClient;
  *     ClientToken?: string,
  *     Description?: string,
  *     Revision?: string,
+ *     Context?: array<string, string>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRevenueAttributionAsync(array $args = [])
@@ -319,6 +346,7 @@ use Aws\AwsClient;
  *     ClientToken?: string,
  *     Description?: string,
  *     Revision?: string,
+ *     Context?: array<string, string>,
  *     ...,
  * } $args = [])
  */

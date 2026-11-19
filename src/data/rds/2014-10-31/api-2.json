@@ -3593,7 +3593,9 @@
         "AllocatedStorage":{"shape":"IntegerOptional"},
         "RdsCustomClusterConfiguration":{"shape":"RdsCustomClusterConfiguration"},
         "Iops":{"shape":"IntegerOptional"},
-        "CertificateDetails":{"shape":"CertificateDetails"}
+        "CertificateDetails":{"shape":"CertificateDetails"},
+        "VPCNetworkingEnabled":{"shape":"BooleanOptional"},
+        "InternetAccessGatewayEnabled":{"shape":"BooleanOptional"}
       }
     },
     "ClusterScalabilityType":{
@@ -3910,7 +3912,9 @@
         "EngineLifecycleSupport":{"shape":"String"},
         "TagSpecifications":{"shape":"TagSpecificationList"},
         "MasterUserAuthenticationType":{"shape":"MasterUserAuthenticationType"},
+        "EnableVPCNetworking":{"shape":"BooleanOptional"},
         "WithExpressConfiguration":{"shape":"BooleanOptional"},
+        "EnableInternetAccessGateway":{"shape":"BooleanOptional"},
         "AssociatedRoles":{"shape":"DBClusterAssociatedRoles"}
       }
     },
@@ -5152,6 +5156,7 @@
         "MasterUsername":{"shape":"String"},
         "DBName":{"shape":"String"},
         "Endpoint":{"shape":"Endpoint"},
+        "PrimaryEndpoint":{"shape":"PrimaryEndpoint"},
         "AllocatedStorage":{"shape":"Integer"},
         "InstanceCreateTime":{"shape":"TStamp"},
         "PreferredBackupWindow":{"shape":"String"},
@@ -5238,7 +5243,8 @@
         "StorageVolumeStatus":{"shape":"String"},
         "StorageOperationStatus":{"shape":"String"},
         "StorageOperationPercentProgress":{"shape":"IntegerOptional"},
-        "DBCapacityReservationIdentifier":{"shape":"DBCapacityReservationIdentifier"}
+        "DBCapacityReservationIdentifier":{"shape":"DBCapacityReservationIdentifier"},
+        "VPCNetworkingEnabled":{"shape":"BooleanOptional"}
       },
       "wrapper":true
     },
@@ -8437,7 +8443,10 @@
         "EnableLimitlessDatabase":{"shape":"BooleanOptional"},
         "CACertificateIdentifier":{"shape":"String"},
         "MasterUserAuthenticationType":{"shape":"MasterUserAuthenticationType"},
-        "EngineLifecycleSupport":{"shape":"String"}
+        "EngineLifecycleSupport":{"shape":"String"},
+        "EnableInternetAccessGateway":{"shape":"BooleanOptional"},
+        "EnableVPCNetworking":{"shape":"BooleanOptional"},
+        "DBSubnetGroupName":{"shape":"String"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{
@@ -9216,6 +9225,13 @@
       "sensitive":true
     },
     "PotentiallySensitiveParameterValue":{"type":"string"},
+    "PrimaryEndpoint":{
+      "type":"structure",
+      "members":{
+        "Address":{"shape":"String"},
+        "HostedZoneId":{"shape":"String"}
+      }
+    },
     "ProcessorFeature":{
       "type":"structure",
       "members":{

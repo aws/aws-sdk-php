@@ -9,6 +9,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result batchAssociateScramSecret(array{ClusterArn?: string, SecretArnList?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise batchAssociateScramSecretAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise batchAssociateScramSecretAsync(array{ClusterArn?: string, SecretArnList?: list<string>, ...} $args = [])
+ * @method \Aws\Result createAssessment(array $args = [])
+ * @phpstan-method \Aws\Result createAssessment(array{
+ *     AssessmentParameters?: array{TargetInstanceType?: string, ...},
+ *     AssessmentType?: 'UPDATE_BROKER_TYPE',
+ *     ClusterArn?: string,
+ *     Tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createAssessmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createAssessmentAsync(array{
+ *     AssessmentParameters?: array{TargetInstanceType?: string, ...},
+ *     AssessmentType?: 'UPDATE_BROKER_TYPE',
+ *     ClusterArn?: string,
+ *     Tags?: array<string, string>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createCluster(array $args = [])
  * @phpstan-method \Aws\Result createCluster(array{
  *     BrokerNodeGroupInfo?: array{
@@ -339,6 +355,10 @@ use Aws\AwsClient;
  *     Tags?: array<string, string>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result deleteAssessment(array $args = [])
+ * @phpstan-method \Aws\Result deleteAssessment(array{AssessmentArn?: string, ClusterArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteAssessmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteAssessmentAsync(array{AssessmentArn?: string, ClusterArn?: string, ...} $args = [])
  * @method \Aws\Result deleteCluster(array $args = [])
  * @phpstan-method \Aws\Result deleteCluster(array{ClusterArn?: string, CurrentVersion?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteClusterAsync(array $args = [])
@@ -363,6 +383,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteVpcConnection(array{Arn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteVpcConnectionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteVpcConnectionAsync(array{Arn?: string, ...} $args = [])
+ * @method \Aws\Result describeAssessment(array $args = [])
+ * @phpstan-method \Aws\Result describeAssessment(array{AssessmentArn?: string, ClusterArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeAssessmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeAssessmentAsync(array{AssessmentArn?: string, ClusterArn?: string, ...} $args = [])
  * @method \Aws\Result describeCluster(array $args = [])
  * @phpstan-method \Aws\Result describeCluster(array{ClusterArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeClusterAsync(array $args = [])
@@ -403,6 +427,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeTopicPartitions(array{ClusterArn?: string, TopicName?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeTopicPartitionsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeTopicPartitionsAsync(array{ClusterArn?: string, TopicName?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result describeTopicReassignment(array $args = [])
+ * @phpstan-method \Aws\Result describeTopicReassignment(array{ClusterArn?: string, TopicReassignmentOperationArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeTopicReassignmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeTopicReassignmentAsync(array{ClusterArn?: string, TopicReassignmentOperationArn?: string, ...} $args = [])
  * @method \Aws\Result describeVpcConnection(array $args = [])
  * @phpstan-method \Aws\Result describeVpcConnection(array{Arn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeVpcConnectionAsync(array $args = [])
@@ -419,6 +447,30 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getCompatibleKafkaVersions(array{ClusterArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getCompatibleKafkaVersionsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getCompatibleKafkaVersionsAsync(array{ClusterArn?: string, ...} $args = [])
+ * @method \Aws\Result listAssessmentFindings(array $args = [])
+ * @phpstan-method \Aws\Result listAssessmentFindings(array{
+ *     AssessmentArn?: string,
+ *     Category?: string,
+ *     ClusterArn?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     Severity?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAssessmentFindingsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listAssessmentFindingsAsync(array{
+ *     AssessmentArn?: string,
+ *     Category?: string,
+ *     ClusterArn?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     Severity?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listAssessments(array $args = [])
+ * @phpstan-method \Aws\Result listAssessments(array{AssessmentType?: string, ClusterArn?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAssessmentsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listAssessmentsAsync(array{AssessmentType?: string, ClusterArn?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \Aws\Result listChannels(array $args = [])
  * @phpstan-method \Aws\Result listChannels(array{ClusterArn?: string, MaxResults?: int, NextToken?: string, TopicNameFilter?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listChannelsAsync(array $args = [])
@@ -471,6 +523,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listClientVpcConnections(array{ClusterArn?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listClientVpcConnectionsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listClientVpcConnectionsAsync(array{ClusterArn?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result listTopicReassignments(array $args = [])
+ * @phpstan-method \Aws\Result listTopicReassignments(array{ClusterArn?: string, MaxResults?: int, NextToken?: string, StatusFilter?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTopicReassignmentsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listTopicReassignmentsAsync(array{ClusterArn?: string, MaxResults?: int, NextToken?: string, StatusFilter?: string, ...} $args = [])
  * @method \Aws\Result listVpcConnections(array $args = [])
  * @phpstan-method \Aws\Result listVpcConnections(array{MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listVpcConnectionsAsync(array $args = [])
@@ -499,6 +555,28 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result rebootBroker(array{BrokerIds?: list<string>, ClusterArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise rebootBrokerAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise rebootBrokerAsync(array{BrokerIds?: list<string>, ClusterArn?: string, ...} $args = [])
+ * @method \Aws\Result startTopicReassignment(array $args = [])
+ * @phpstan-method \Aws\Result startTopicReassignment(array{
+ *     ClientToken?: string,
+ *     ClusterArn?: string,
+ *     TargetInstanceType?: string,
+ *     TopicsToExclude?: list<string>,
+ *     TopicsToInclude?: list<string>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise startTopicReassignmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startTopicReassignmentAsync(array{
+ *     ClientToken?: string,
+ *     ClusterArn?: string,
+ *     TargetInstanceType?: string,
+ *     TopicsToExclude?: list<string>,
+ *     TopicsToInclude?: list<string>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result stopTopicReassignment(array $args = [])
+ * @phpstan-method \Aws\Result stopTopicReassignment(array{ClusterArn?: string, TopicReassignmentOperationArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopTopicReassignmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise stopTopicReassignmentAsync(array{ClusterArn?: string, TopicReassignmentOperationArn?: string, ...} $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @phpstan-method \Aws\Result tagResource(array{ResourceArn?: string, Tags?: array<string, string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
@@ -512,9 +590,21 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateBrokerCountAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateBrokerCountAsync(array{ClusterArn?: string, CurrentVersion?: string, TargetNumberOfBrokerNodes?: int, ...} $args = [])
  * @method \Aws\Result updateBrokerType(array $args = [])
- * @phpstan-method \Aws\Result updateBrokerType(array{ClusterArn?: string, CurrentVersion?: string, TargetInstanceType?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result updateBrokerType(array{
+ *     ClusterArn?: string,
+ *     CurrentVersion?: string,
+ *     TargetInstanceType?: string,
+ *     TopicReassignment?: 'AUTO'|'MANUAL',
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateBrokerTypeAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise updateBrokerTypeAsync(array{ClusterArn?: string, CurrentVersion?: string, TargetInstanceType?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateBrokerTypeAsync(array{
+ *     ClusterArn?: string,
+ *     CurrentVersion?: string,
+ *     TargetInstanceType?: string,
+ *     TopicReassignment?: 'AUTO'|'MANUAL',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateBrokerStorage(array $args = [])
  * @phpstan-method \Aws\Result updateBrokerStorage(array{
  *     ClusterArn?: string,

@@ -29,7 +29,9 @@
       "errors":[
         {"shape":"LimitExceededException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ResourceUnavailableException"}
+        {"shape":"ResourceUnavailableException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"UnsupportedProviderTypeException"}
       ]
     },
     "CreateHost":{
@@ -59,6 +61,7 @@
         {"shape":"InvalidInputException"},
         {"shape":"LimitExceededException"},
         {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -77,6 +80,7 @@
         {"shape":"InvalidInputException"},
         {"shape":"LimitExceededException"},
         {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -495,14 +499,15 @@
         "ProviderType":{"shape":"ProviderType"},
         "OwnerAccountId":{"shape":"AccountId"},
         "ConnectionStatus":{"shape":"ConnectionStatus"},
-        "HostArn":{"shape":"HostArn"}
+        "HostArn":{"shape":"HostArn"},
+        "ProviderEndpoint":{"shape":"Url"}
       }
     },
     "ConnectionArn":{
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"arn:aws(-[\\w]+)*:.+:.+:[0-9]{12}:.+"
+      "pattern":"arn:aws(-[\\w]+)*:(codestar-connections|codeconnections):[a-z0-9\\-]+:[0-9]{12}:connection\\/[\\w\\-]+"
     },
     "ConnectionList":{
       "type":"list",
@@ -529,7 +534,8 @@
         "ProviderType":{"shape":"ProviderType"},
         "ConnectionName":{"shape":"ConnectionName"},
         "Tags":{"shape":"TagList"},
-        "HostArn":{"shape":"HostArn"}
+        "HostArn":{"shape":"HostArn"},
+        "ProviderEndpoint":{"shape":"Url"}
       }
     },
     "CreateConnectionOutput":{
@@ -873,8 +879,8 @@
     "ListConnectionsInput":{
       "type":"structure",
       "members":{
-        "ProviderTypeFilter":{"shape":"ProviderType"},
         "HostArnFilter":{"shape":"HostArn"},
+        "ProviderTypeFilter":{"shape":"ProviderType"},
         "MaxResults":{"shape":"MaxResults"},
         "NextToken":{"shape":"NextToken"}
       }
@@ -975,7 +981,7 @@
     },
     "NextToken":{
       "type":"string",
-      "max":1024,
+      "max":2048,
       "min":1,
       "pattern":"^.*$"
     },
@@ -994,7 +1000,8 @@
         "GitHubEnterpriseServer",
         "GitLab",
         "GitLabSelfManaged",
-        "AzureDevOps"
+        "AzureDevOps",
+        "GitHubEnterpriseCloudDataResidency"
       ]
     },
     "PublishDeploymentStatus":{

@@ -3256,7 +3256,8 @@
       "type":"structure",
       "members":{
         "comment":{"shape":"CommentUpdateContent"},
-        "custom":{"shape":"CustomUpdateContent"}
+        "custom":{"shape":"CustomUpdateContent"},
+        "sla":{"shape":"SlaUpdateContent"}
       },
       "union":true
     },
@@ -3664,6 +3665,20 @@
     "SlaType":{
       "type":"string",
       "enum":["CaseField"]
+    },
+    "SlaUpdateConfiguration":{
+      "type":"structure",
+      "required":["targetSlaMinutes"],
+      "members":{
+        "targetSlaMinutes":{"shape":"TargetSlaMinutes"}
+      }
+    },
+    "SlaUpdateContent":{
+      "type":"structure",
+      "members":{
+        "slaUpdateConfiguration":{"shape":"SlaUpdateConfiguration"}
+      },
+      "union":true
     },
     "Sort":{
       "type":"structure",

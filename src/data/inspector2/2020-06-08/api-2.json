@@ -2872,6 +2872,10 @@
       },
       "union":true
     },
+    "CodeConnectionsHostArn":{
+      "type":"string",
+      "pattern":"arn:aws(-[\\w]+)*:(codestar-connections|codeconnections):.+:[0-9]{12}:host\\/.+"
+    },
     "CodeFilePath":{
       "type":"structure",
       "required":[
@@ -3042,6 +3046,21 @@
         "statusReason":{"shape":"String"},
         "createdOn":{"shape":"Timestamp"},
         "lastUpdateOn":{"shape":"Timestamp"}
+      }
+    },
+    "CodeSecurityIntegrationVpcConfiguration":{
+      "type":"structure",
+      "required":[
+        "vpcId",
+        "vpcEndpointId"
+      ],
+      "members":{
+        "vpcId":{"shape":"VpcId"},
+        "vpcEndpointId":{"shape":"VpcEndpointId"},
+        "codeConnectionsHostArn":{"shape":"CodeConnectionsHostArn"},
+        "subnetIds":{"shape":"SubnetIdList"},
+        "securityGroups":{"shape":"SecurityGroupIdList"},
+        "tlsCertificate":{"shape":"TlsCertificate"}
       }
     },
     "CodeSecurityResource":{
@@ -3835,6 +3854,14 @@
         "reportId":{"shape":"ReportId"}
       }
     },
+    "CreateGitHubEnterpriseIntegrationDetail":{
+      "type":"structure",
+      "required":["instanceUrl"],
+      "members":{
+        "instanceUrl":{"shape":"InstanceUrl"},
+        "vpcConfiguration":{"shape":"CodeSecurityIntegrationVpcConfiguration"}
+      }
+    },
     "CreateGitLabSelfManagedIntegrationDetail":{
       "type":"structure",
       "required":[
@@ -3843,13 +3870,15 @@
       ],
       "members":{
         "instanceUrl":{"shape":"InstanceUrl"},
-        "accessToken":{"shape":"GitLabAccessToken"}
+        "accessToken":{"shape":"GitLabAccessToken"},
+        "vpcConfiguration":{"shape":"CodeSecurityIntegrationVpcConfiguration"}
       }
     },
     "CreateIntegrationDetail":{
       "type":"structure",
       "members":{
-        "gitlabSelfManaged":{"shape":"CreateGitLabSelfManagedIntegrationDetail"}
+        "gitlabSelfManaged":{"shape":"CreateGitLabSelfManagedIntegrationDetail"},
+        "githubEnterprise":{"shape":"CreateGitHubEnterpriseIntegrationDetail"}
       },
       "union":true
     },
@@ -5170,6 +5199,8 @@
         "createdOn":{"shape":"Timestamp"},
         "lastUpdateOn":{"shape":"Timestamp"},
         "authorizationUrl":{"shape":"AuthorizationUrl"},
+        "vpcConfiguration":{"shape":"CodeSecurityIntegrationVpcConfiguration"},
+        "instanceUrl":{"shape":"InstanceUrl"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -5367,6 +5398,20 @@
       "min":1,
       "sensitive":true
     },
+    "GitHubEnterpriseServerAppRegistrationDetail":{
+      "type":"structure",
+      "required":["manifestCode"],
+      "members":{
+        "manifestCode":{"shape":"GitHubEnterpriseServerManifestCode"}
+      }
+    },
+    "GitHubEnterpriseServerManifestCode":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[a-zA-Z0-9._~+/-]+",
+      "sensitive":true
+    },
     "GitHubInstallationId":{
       "type":"string",
       "max":1024,
@@ -5502,7 +5547,13 @@
         "IN_PROGRESS",
         "ACTIVE",
         "INACTIVE",
-        "DISABLING"
+        "DISABLING",
+        "ESTABLISHING_CONNECTION_IN_PROGRESS",
+        "ESTABLISHING_CONNECTION_COMPLETED",
+        "ESTABLISHING_CONNECTION_FAILED",
+        "PENDING_MANIFEST_CODE",
+        "DELETE_IN_PROGRESS",
+        "DELETE_FAILED"
       ]
     },
     "IntegrationSummaries":{
@@ -5515,7 +5566,8 @@
       "type":"string",
       "enum":[
         "GITLAB_SELF_MANAGED",
-        "GITHUB"
+        "GITHUB",
+        "GITHUB_ENTERPRISE_SERVER"
       ]
     },
     "InternalServerException":{
@@ -6575,6 +6627,13 @@
       "member":{"shape":"Permission"},
       "max":1024,
       "min":0
+    },
+    "PkceState":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[A-Za-z0-9_-]+",
+      "sensitive":true
     },
     "Platform":{
       "type":"string",
@@ -7984,6 +8043,13 @@
         "ALL"
       ]
     },
+    "TlsCertificate":{
+      "type":"string",
+      "max":16384,
+      "min":1,
+      "pattern":"[\\s\\S]*",
+      "sensitive":true
+    },
     "Tool":{
       "type":"string",
       "min":0
@@ -8197,6 +8263,26 @@
         "arn":{"shape":"FilterArn"}
       }
     },
+    "UpdateGitHubEnterpriseServerAppInstallationDetail":{
+      "type":"structure",
+      "required":[
+        "code",
+        "installationId"
+      ],
+      "members":{
+        "code":{"shape":"GitHubAuthCode"},
+        "installationId":{"shape":"GitHubInstallationId"},
+        "stateToken":{"shape":"PkceState"}
+      }
+    },
+    "UpdateGitHubEnterpriseServerIntegrationDetail":{
+      "type":"structure",
+      "members":{
+        "appInstallation":{"shape":"UpdateGitHubEnterpriseServerAppInstallationDetail"},
+        "appRegistration":{"shape":"GitHubEnterpriseServerAppRegistrationDetail"}
+      },
+      "union":true
+    },
     "UpdateGitHubIntegrationDetail":{
       "type":"structure",
       "required":[
@@ -8205,21 +8291,24 @@
       ],
       "members":{
         "code":{"shape":"GitHubAuthCode"},
-        "installationId":{"shape":"GitHubInstallationId"}
+        "installationId":{"shape":"GitHubInstallationId"},
+        "stateToken":{"shape":"PkceState"}
       }
     },
     "UpdateGitLabSelfManagedIntegrationDetail":{
       "type":"structure",
       "required":["authCode"],
       "members":{
-        "authCode":{"shape":"GitLabAuthCode"}
+        "authCode":{"shape":"GitLabAuthCode"},
+        "stateToken":{"shape":"PkceState"}
       }
     },
     "UpdateIntegrationDetails":{
       "type":"structure",
       "members":{
         "gitlabSelfManaged":{"shape":"UpdateGitLabSelfManagedIntegrationDetail"},
-        "github":{"shape":"UpdateGitHubIntegrationDetail"}
+        "github":{"shape":"UpdateGitHubIntegrationDetail"},
+        "githubEnterpriseServer":{"shape":"UpdateGitHubEnterpriseServerIntegrationDetail"}
       },
       "union":true
     },
@@ -8471,6 +8560,10 @@
         "LINUX",
         "UNKNOWN"
       ]
+    },
+    "VpcEndpointId":{
+      "type":"string",
+      "pattern":"vpce-[0-9a-f]{8}([0-9a-f]{9})?"
     },
     "VpcId":{
       "type":"string",

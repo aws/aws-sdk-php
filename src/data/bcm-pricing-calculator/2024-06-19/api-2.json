@@ -353,6 +353,23 @@
       ],
       "readonly":true
     },
+    "GetUsageLinesEstimatedCost":{
+      "name":"GetUsageLinesEstimatedCost",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetUsageLinesEstimatedCostRequest"},
+      "output":{"shape":"GetUsageLinesEstimatedCostResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"DataUnavailableException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
+    },
     "GetWorkloadEstimate":{
       "name":"GetWorkloadEstimate",
       "http":{
@@ -1731,6 +1748,111 @@
         "managementAccountRateTypeSelections":{"shape":"RateTypes"},
         "memberAccountRateTypeSelections":{"shape":"RateTypes"},
         "standaloneAccountRateTypeSelections":{"shape":"RateTypes"}
+      }
+    },
+    "GetUsageLinesEstimatedCostAmount":{
+      "type":"double",
+      "box":true,
+      "min":0.0
+    },
+    "GetUsageLinesEstimatedCostError":{
+      "type":"structure",
+      "required":[
+        "key",
+        "serviceCode",
+        "usageType",
+        "operation",
+        "errorCode",
+        "errorMessage"
+      ],
+      "members":{
+        "key":{"shape":"Key"},
+        "serviceCode":{"shape":"ServiceCode"},
+        "usageType":{"shape":"UsageType"},
+        "operation":{"shape":"Operation"},
+        "errorCode":{"shape":"GetUsageLinesEstimatedCostErrorCode"},
+        "errorMessage":{"shape":"String"}
+      }
+    },
+    "GetUsageLinesEstimatedCostErrorCode":{
+      "type":"string",
+      "enum":[
+        "BAD_REQUEST",
+        "NOT_FOUND",
+        "CONFLICT",
+        "INTERNAL_SERVER_ERROR"
+      ]
+    },
+    "GetUsageLinesEstimatedCostErrors":{
+      "type":"list",
+      "member":{"shape":"GetUsageLinesEstimatedCostError"}
+    },
+    "GetUsageLinesEstimatedCostEstimatedCost":{
+      "type":"structure",
+      "members":{
+        "usageAmount":{"shape":"Double"},
+        "usageUnit":{"shape":"String"},
+        "cost":{"shape":"Double"},
+        "currency":{"shape":"CurrencyCode"}
+      }
+    },
+    "GetUsageLinesEstimatedCostInput":{
+      "type":"structure",
+      "required":[
+        "serviceCode",
+        "usageType",
+        "operation",
+        "key",
+        "amount"
+      ],
+      "members":{
+        "serviceCode":{"shape":"ServiceCode"},
+        "usageType":{"shape":"UsageType"},
+        "operation":{"shape":"Operation"},
+        "key":{"shape":"Key"},
+        "amount":{"shape":"GetUsageLinesEstimatedCostAmount"}
+      }
+    },
+    "GetUsageLinesEstimatedCostLineItem":{
+      "type":"structure",
+      "required":["key"],
+      "members":{
+        "key":{"shape":"Key"},
+        "serviceCode":{"shape":"ServiceCode"},
+        "usageType":{"shape":"UsageType"},
+        "operation":{"shape":"Operation"},
+        "estimatedCost":{"shape":"GetUsageLinesEstimatedCostEstimatedCost"}
+      }
+    },
+    "GetUsageLinesEstimatedCostLineItemList":{
+      "type":"list",
+      "member":{"shape":"GetUsageLinesEstimatedCostLineItem"}
+    },
+    "GetUsageLinesEstimatedCostRequest":{
+      "type":"structure",
+      "required":[
+        "usage",
+        "rateType"
+      ],
+      "members":{
+        "usage":{"shape":"GetUsageLinesEstimatedCostRequestUsageList"},
+        "rateType":{"shape":"RateType"}
+      }
+    },
+    "GetUsageLinesEstimatedCostRequestUsageList":{
+      "type":"list",
+      "member":{"shape":"GetUsageLinesEstimatedCostInput"},
+      "max":500,
+      "min":1
+    },
+    "GetUsageLinesEstimatedCostResponse":{
+      "type":"structure",
+      "members":{
+        "rateType":{"shape":"RateType"},
+        "totalCost":{"shape":"Double"},
+        "currency":{"shape":"CurrencyCode"},
+        "lineItems":{"shape":"GetUsageLinesEstimatedCostLineItemList"},
+        "errors":{"shape":"GetUsageLinesEstimatedCostErrors"}
       }
     },
     "GetWorkloadEstimateRequest":{

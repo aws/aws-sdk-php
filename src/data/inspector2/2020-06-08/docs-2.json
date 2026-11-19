@@ -338,7 +338,7 @@
       "base": null,
       "refs": {
         "ArchitectureList$member": null,
-        "MachineImageDetails$architecture": "<p>CPU architecture (x86_64/arm64)</p>"
+        "MachineImageDetails$architecture": "<p>The CPU architecture of the machine image, for example <code>x86_64</code> or <code>arm64</code>.</p>"
       }
     },
     "ArchitectureList": {
@@ -685,7 +685,7 @@
         "GcpProviderDetailCreate$autoInstallVMScanner": "<p>Specifies whether to automatically install the VM scanner on connected GCP resources. Defaults to <code>true</code>.</p>",
         "GcpProviderDetailUpdate$autoInstallVMScanner": "<p>Specifies whether to automatically install the VM scanner on connected GCP resources.</p>",
         "ListMembersRequest$onlyAssociated": "<p>Specifies whether to list only currently associated members if <code>True</code> or to list all members within the organization if <code>False</code>.</p>",
-        "MachineImageDetails$isPublic": "<p>Whether the image is publicly shared</p>",
+        "MachineImageDetails$isPublic": "<p>Indicates whether the machine image is shared publicly.</p>",
         "MemberAccountEc2DeepInspectionStatus$activateDeepInspection": "<p>Whether Amazon Inspector deep inspection is active in the account. If <code>TRUE</code> Amazon Inspector deep inspection is active, if <code>FALSE</code> it is not active.</p>",
         "UpdateEc2DeepInspectionConfigurationRequest$activateDeepInspection": "<p>Specify <code>TRUE</code> to activate Amazon Inspector deep inspection in your account, or <code>FALSE</code> to deactivate. Member accounts in an organization cannot deactivate deep inspection, instead the delegated administrator for the organization can deactivate a member account using <a href=\"https://docs.aws.amazon.com/inspector/v2/APIReference/API_BatchUpdateMemberEc2DeepInspectionStatus.html\">BatchUpdateMemberEc2DeepInspectionStatus</a>.</p>",
         "VMScannerState$activated": "<p>Whether the VM scanner is activated.</p>"
@@ -1268,6 +1268,12 @@
         "ClusterDetails$clusterMetadata": null
       }
     },
+    "CodeConnectionsHostArn": {
+      "base": null,
+      "refs": {
+        "CodeSecurityIntegrationVpcConfiguration$codeConnectionsHostArn": "<p>The Amazon Resource Name (ARN) of the AWS CodeConnections host used for the connection.</p>"
+      }
+    },
     "CodeFilePath": {
       "base": "<p>Contains information on where a code vulnerability is located in your Lambda function.</p>",
       "refs": {
@@ -1395,6 +1401,14 @@
       "base": "<p>A summary of information about a code security integration.</p>",
       "refs": {
         "IntegrationSummaries$member": null
+      }
+    },
+    "CodeSecurityIntegrationVpcConfiguration": {
+      "base": "<p>The VPC configuration that Amazon Inspector uses to connect to a source code repository provider that is hosted in a private network.</p>",
+      "refs": {
+        "CreateGitHubEnterpriseIntegrationDetail$vpcConfiguration": "<p>The VPC configuration used to connect to the GitHub Enterprise Server instance in a private network. For publicly accessible instances, omit this field.</p>",
+        "CreateGitLabSelfManagedIntegrationDetail$vpcConfiguration": "<p>The VPC configuration used to connect to the self-managed GitLab instance in a private network. For publicly accessible instances, omit this field.</p>",
+        "GetCodeSecurityIntegrationResponse$vpcConfiguration": "<p>The VPC configuration associated with the integration, if it connects to a repository provider in a private network.</p>"
       }
     },
     "CodeSecurityResource": {
@@ -1948,6 +1962,12 @@
       "base": null,
       "refs": {}
     },
+    "CreateGitHubEnterpriseIntegrationDetail": {
+      "base": "<p>Contains the details required to create an integration with a GitHub Enterprise Server instance.</p>",
+      "refs": {
+        "CreateIntegrationDetail$githubEnterprise": "<p>Details specific to creating an integration with a GitHub Enterprise Server instance.</p>"
+      }
+    },
     "CreateGitLabSelfManagedIntegrationDetail": {
       "base": "<p>Contains details required to create an integration with a self-managed GitLab instance.</p>",
       "refs": {
@@ -2112,7 +2132,7 @@
         "Image$pushedAt": "<p>The date and time the container image was pushed.</p>",
         "Image$lastInUseAt": "<p>The last time the container image was in use.</p>",
         "LambdaFunctionAggregationResponse$lastModifiedAt": "<p>The date that the Amazon Web Services Lambda function included in the aggregation results was last changed.</p>",
-        "MachineImageDetails$creationDate": "<p>When the image was created</p>",
+        "MachineImageDetails$creationDate": "<p>The date and time that the machine image was created.</p>",
         "Member$updatedAt": "<p>A timestamp showing when the status of this member was last updated.</p>",
         "PackageVulnerabilityDetails$vendorCreatedAt": "<p>The date and time that this vulnerability was first added to the vendor's database.</p>",
         "PackageVulnerabilityDetails$vendorUpdatedAt": "<p>The date and time the vendor last updated this vulnerability in their database.</p>",
@@ -3045,12 +3065,26 @@
     "GitHubAuthCode": {
       "base": null,
       "refs": {
+        "UpdateGitHubEnterpriseServerAppInstallationDetail$code": "<p>The authorization code received from GitHub Enterprise Server.</p>",
         "UpdateGitHubIntegrationDetail$code": "<p>The authorization code received from GitHub to update the integration.</p>"
+      }
+    },
+    "GitHubEnterpriseServerAppRegistrationDetail": {
+      "base": "<p>Contains the details required to register the GitHub App on the GitHub Enterprise Server instance.</p>",
+      "refs": {
+        "UpdateGitHubEnterpriseServerIntegrationDetail$appRegistration": "<p>Details for completing the GitHub App manifest registration step of the GitHub Enterprise Server integration.</p>"
+      }
+    },
+    "GitHubEnterpriseServerManifestCode": {
+      "base": null,
+      "refs": {
+        "GitHubEnterpriseServerAppRegistrationDetail$manifestCode": "<p>The manifest code used to register the GitHub App on the GitHub Enterprise Server instance.</p>"
       }
     },
     "GitHubInstallationId": {
       "base": null,
       "refs": {
+        "UpdateGitHubEnterpriseServerAppInstallationDetail$installationId": "<p>The installation ID of the GitHub App associated with the integration.</p>",
         "UpdateGitHubIntegrationDetail$installationId": "<p>The installation ID of the GitHub App associated with the integration.</p>"
       }
     },
@@ -3133,7 +3167,9 @@
     "InstanceUrl": {
       "base": null,
       "refs": {
-        "CreateGitLabSelfManagedIntegrationDetail$instanceUrl": "<p>The URL of the self-managed GitLab instance.</p>"
+        "CreateGitHubEnterpriseIntegrationDetail$instanceUrl": "<p>The URL of the GitHub Enterprise Server instance.</p>",
+        "CreateGitLabSelfManagedIntegrationDetail$instanceUrl": "<p>The URL of the self-managed GitLab instance.</p>",
+        "GetCodeSecurityIntegrationResponse$instanceUrl": "<p>The URL of the self-managed GitLab or GitHub Enterprise Server instance associated with the integration.</p>"
       }
     },
     "Integer": {
@@ -3619,21 +3655,21 @@
       }
     },
     "MachineImageDetails": {
-      "base": "<p>Details about a machine image resource scanned directly by Inspector.</p>",
+      "base": "<p>Contains details about an Amazon Machine Image (AMI) that Amazon Inspector scanned directly.</p>",
       "refs": {
-        "ResourceDetails$machineImage": null
+        "ResourceDetails$machineImage": "<p>An object that contains details about the Amazon Machine Image (AMI) involved in the finding.</p>"
       }
     },
     "MachineImageDetailsMachineImageIdString": {
       "base": null,
       "refs": {
-        "MachineImageDetails$machineImageId": "<p>The machine image ID (e.g., ami-0abcdef1234567890)</p>"
+        "MachineImageDetails$machineImageId": "<p>The ID of the machine image, for example <code>ami-0abcdef1234567890</code>.</p>"
       }
     },
     "MachineImageDetailsSourceResourceIdString": {
       "base": null,
       "refs": {
-        "MachineImageDetails$sourceResourceId": "<p>Source resource the image was created from (nullable)</p>"
+        "MachineImageDetails$sourceResourceId": "<p>The ID of the Amazon EC2 instance that the machine image was created from, if available.</p>"
       }
     },
     "MachineImageMetadata": {
@@ -3855,10 +3891,10 @@
         "LambdaLayerAggregationResponse$functionName": "<p>The names of the Amazon Web Services Lambda functions associated with the layers.</p>",
         "LambdaLayerAggregationResponse$resourceId": "<p>The Resource ID of the Amazon Web Services Lambda function layer.</p>",
         "LambdaLayerAggregationResponse$layerArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Lambda function layer.</p>",
-        "MachineImageDetails$name": "<p>Human-readable image name</p>",
-        "MachineImageDetails$state": "<p>Image state (available/pending/deregistered)</p>",
-        "MachineImageDetails$rootDeviceType": "<p>Root device type (ebs/instance-store) — AWS-specific</p>",
-        "MachineImageDetails$virtualizationType": "<p>Virtualization type (hvm/paravirtual) — AWS-specific</p>",
+        "MachineImageDetails$name": "<p>The name of the machine image.</p>",
+        "MachineImageDetails$state": "<p>The state of the machine image, for example <code>available</code>, <code>pending</code>, or <code>deregistered</code>.</p>",
+        "MachineImageDetails$rootDeviceType": "<p>The root device type of the machine image, either <code>ebs</code> or <code>instance-store</code>.</p>",
+        "MachineImageDetails$virtualizationType": "<p>The virtualization type of the machine image, either <code>hvm</code> or <code>paravirtual</code>.</p>",
         "MemberAccountEc2DeepInspectionStatusState$errorMessage": "<p>The error message explaining why the account failed to activate Amazon Inspector deep inspection.</p>",
         "NonEmptyStringList$member": null,
         "PackageAggregationResponse$packageName": "<p>The name of the operating system package.</p>",
@@ -4111,13 +4147,21 @@
         "ListAccountPermissionsResponse$permissions": "<p>Contains details on the permissions an account has to configure Amazon Inspector.</p>"
       }
     },
+    "PkceState": {
+      "base": null,
+      "refs": {
+        "UpdateGitHubEnterpriseServerAppInstallationDetail$stateToken": "<p>The PKCE state token used to validate the authorization request.</p>",
+        "UpdateGitHubIntegrationDetail$stateToken": "<p>The PKCE state token used to validate the authorization request.</p>",
+        "UpdateGitLabSelfManagedIntegrationDetail$stateToken": "<p>The PKCE state token used to validate the authorization request.</p>"
+      }
+    },
     "Platform": {
       "base": null,
       "refs": {
         "AwsEc2InstanceDetails$platform": "<p>The platform of the Amazon EC2 instance.</p>",
         "AwsEcrContainerImageDetails$platform": "<p>The platform of the Amazon ECR container image.</p>",
         "Image$platform": "<p>The platform of the container image.</p>",
-        "MachineImageDetails$platform": "<p>OS platform (Linux/Windows)</p>",
+        "MachineImageDetails$platform": "<p>The operating system platform of the machine image.</p>",
         "Vm$platform": "<p>The platform of the VM instance.</p>"
       }
     },
@@ -4227,7 +4271,7 @@
         "AmiAggregationResponse$cloudAccountId": "<p>The cloud account ID for the AMI aggregation.</p>",
         "ContainerImageAggregationResponse$cloudAccountId": "<p>The cloud account ID for the container image aggregation.</p>",
         "CoveredResource$providerAccountId": "<p>The cloud provider account ID of the covered resource. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services account ID.</p> </li> <li> <p>An Azure subscription ID.</p> </li> <li> <p>A Google Cloud Platform (GCP) project ID, such as <code>my-project</code>.</p> </li> </ul>",
-        "MachineImageDetails$ownerAccountId": "<p>Account ID that owns the image</p>",
+        "MachineImageDetails$ownerAccountId": "<p>The ID of the account that owns the machine image.</p>",
         "RepositoryAggregationResponse$cloudAccountId": "<p>The cloud account ID for the repository aggregation.</p>",
         "Resource$providerAccountId": "<p>The cloud provider account ID of the resource. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services account ID.</p> </li> <li> <p>An Azure subscription ID.</p> </li> <li> <p>A Google Cloud Platform (GCP) project ID, such as <code>my-project</code>.</p> </li> </ul>",
         "ServerlessFunctionAggregationResponse$cloudAccountId": "<p>The cloud account ID for the serverless function aggregation.</p>",
@@ -4760,6 +4804,7 @@
     "SecurityGroupIdList": {
       "base": null,
       "refs": {
+        "CodeSecurityIntegrationVpcConfiguration$securityGroups": "<p>The IDs of the security groups used for the connection.</p>",
         "LambdaVpcConfig$securityGroupIds": "<p>The VPC security groups and subnets that are attached to an Amazon Web Services Lambda function. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html\">VPC Settings</a>.</p>"
       }
     },
@@ -5250,6 +5295,7 @@
     "SubnetIdList": {
       "base": null,
       "refs": {
+        "CodeSecurityIntegrationVpcConfiguration$subnetIds": "<p>The IDs of the subnets used for the connection.</p>",
         "LambdaVpcConfig$subnetIds": "<p>A list of VPC subnet IDs.</p>"
       }
     },
@@ -5500,6 +5546,12 @@
         "TitleAggregation$sortBy": "<p>The value to sort results by.</p>"
       }
     },
+    "TlsCertificate": {
+      "base": null,
+      "refs": {
+        "CodeSecurityIntegrationVpcConfiguration$tlsCertificate": "<p>The TLS certificate used to establish a trusted connection to the repository provider.</p>"
+      }
+    },
     "Tool": {
       "base": null,
       "refs": {
@@ -5629,6 +5681,18 @@
     "UpdateFilterResponse": {
       "base": null,
       "refs": {}
+    },
+    "UpdateGitHubEnterpriseServerAppInstallationDetail": {
+      "base": "<p>Contains the details required to complete the GitHub App installation for a GitHub Enterprise Server integration.</p>",
+      "refs": {
+        "UpdateGitHubEnterpriseServerIntegrationDetail$appInstallation": "<p>Details for completing the GitHub App installation step of the GitHub Enterprise Server integration.</p>"
+      }
+    },
+    "UpdateGitHubEnterpriseServerIntegrationDetail": {
+      "base": "<p>Contains the details required to update an integration with a GitHub Enterprise Server instance. Provide one of the following, depending on the step of the setup flow.</p>",
+      "refs": {
+        "UpdateIntegrationDetails$githubEnterpriseServer": "<p>Details specific to updating an integration with a GitHub Enterprise Server instance.</p>"
+      }
     },
     "UpdateGitHubIntegrationDetail": {
       "base": "<p>Contains details required to update an integration with GitHub.</p>",
@@ -5824,9 +5888,16 @@
         "VmInstanceMetadata$platform": "<p>The platform of the VM instance.</p>"
       }
     },
+    "VpcEndpointId": {
+      "base": null,
+      "refs": {
+        "CodeSecurityIntegrationVpcConfiguration$vpcEndpointId": "<p>The ID of the VPC endpoint used for the connection.</p>"
+      }
+    },
     "VpcId": {
       "base": null,
       "refs": {
+        "CodeSecurityIntegrationVpcConfiguration$vpcId": "<p>The ID of the VPC that Amazon Inspector connects through to reach the repository provider.</p>",
         "LambdaVpcConfig$vpcId": "<p>The ID of the VPC.</p>"
       }
     },

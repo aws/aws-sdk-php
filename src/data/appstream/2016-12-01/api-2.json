@@ -2204,6 +2204,7 @@
         "EmbedHostDomains":{"shape":"EmbedHostDomains"},
         "StreamingExperienceSettings":{"shape":"StreamingExperienceSettings"},
         "ContentRedirection":{"shape":"ContentRedirection"},
+        "WebAuthnRedirection":{"shape":"WebAuthnRedirection"},
         "AgentAccessConfig":{"shape":"AgentAccessConfig"},
         "StorageConnectorAuthentication":{"shape":"StorageConnectorAuthentication"}
       }
@@ -3723,6 +3724,18 @@
         "UDP"
       ]
     },
+    "ProcessCompatibilityList":{
+      "type":"list",
+      "member":{"shape":"ProcessImageName"},
+      "max":100,
+      "min":1
+    },
+    "ProcessImageName":{
+      "type":"string",
+      "max":260,
+      "min":1,
+      "pattern":"^[\\p{L}0-9_](?:[\\p{L}0-9._ ()+-]*[\\p{L}0-9._()+-])?(?<!\\.[eE][xX][eE])\\.[eE][xX][eE]$"
+    },
     "RedirectURL":{
       "type":"string",
       "max":1000
@@ -3964,6 +3977,7 @@
         "EmbedHostDomains":{"shape":"EmbedHostDomains"},
         "StreamingExperienceSettings":{"shape":"StreamingExperienceSettings"},
         "ContentRedirection":{"shape":"ContentRedirection"},
+        "WebAuthnRedirection":{"shape":"WebAuthnRedirection"},
         "AgentAccessConfig":{"shape":"AgentAccessConfig"},
         "StorageConnectorAuthentication":{"shape":"StorageConnectorAuthentication"}
       }
@@ -3984,6 +3998,7 @@
         "ACCESS_ENDPOINTS",
         "STREAMING_EXPERIENCE_SETTINGS",
         "CONTENT_REDIRECTION",
+        "WEB_AUTHN_REDIRECTION",
         "AGENT_ACCESS_CONFIG",
         "STORAGE_CONNECTOR_AUTHENTICATION",
         "AGENT_ACCESS_CONFIG_KMS_KEY_ARN"
@@ -4464,6 +4479,7 @@
         "EmbedHostDomains":{"shape":"EmbedHostDomains"},
         "StreamingExperienceSettings":{"shape":"StreamingExperienceSettings"},
         "ContentRedirection":{"shape":"ContentRedirection"},
+        "WebAuthnRedirection":{"shape":"WebAuthnRedirection"},
         "AgentAccessConfig":{"shape":"AgentAccessConfigForUpdate"},
         "StorageConnectorAuthentication":{"shape":"StorageConnectorAuthentication"}
       }
@@ -4671,6 +4687,14 @@
       "members":{
         "SubnetIds":{"shape":"SubnetIdList"},
         "SecurityGroupIds":{"shape":"SecurityGroupIdList"}
+      }
+    },
+    "WebAuthnRedirection":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"BooleanObject"},
+        "ProcessCompatibilityList":{"shape":"ProcessCompatibilityList"}
       }
     },
     "WorkspaceImageId":{

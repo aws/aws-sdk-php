@@ -119,7 +119,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     InputSpecification?: array{
- *         Codec?: 'AVC'|'HEVC'|'MPEG2',
+ *         Codec?: 'AVC'|'HEVC'|'JPEGXS'|'MPEG2',
  *         MaximumBitrate?: 'MAX_10_MBPS'|'MAX_20_MBPS'|'MAX_50_MBPS',
  *         Resolution?: 'HD'|'SD'|'UHD',
  *         ...,
@@ -156,6 +156,7 @@ use Aws\AwsClient;
  *         EnrichmentMethods?: list<'SCTE35_ELEMENTAL_INFERENCE_QUERY_PARAMS'>,
  *         ...,
  *     },
+ *     JpegXsInputSpecification?: array{Codec?: 'AVC'|'HEVC'|'JPEGXS'|'MPEG2', MaximumBitrate?: 'MAX_500_MBPS', Resolution?: 'HD', ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createChannelAsync(array $args = [])
@@ -222,7 +223,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     InputSpecification?: array{
- *         Codec?: 'AVC'|'HEVC'|'MPEG2',
+ *         Codec?: 'AVC'|'HEVC'|'JPEGXS'|'MPEG2',
  *         MaximumBitrate?: 'MAX_10_MBPS'|'MAX_20_MBPS'|'MAX_50_MBPS',
  *         Resolution?: 'HD'|'SD'|'UHD',
  *         ...,
@@ -259,6 +260,7 @@ use Aws\AwsClient;
  *         EnrichmentMethods?: list<'SCTE35_ELEMENTAL_INFERENCE_QUERY_PARAMS'>,
  *         ...,
  *     },
+ *     JpegXsInputSpecification?: array{Codec?: 'AVC'|'HEVC'|'JPEGXS'|'MPEG2', MaximumBitrate?: 'MAX_500_MBPS', Resolution?: 'HD', ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result createInput(array $args = [])
@@ -683,7 +685,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     InputSpecification?: array{
- *         Codec?: 'AVC'|'HEVC'|'MPEG2',
+ *         Codec?: 'AVC'|'HEVC'|'JPEGXS'|'MPEG2',
  *         MaximumBitrate?: 'MAX_10_MBPS'|'MAX_20_MBPS'|'MAX_50_MBPS',
  *         Resolution?: 'HD'|'SD'|'UHD',
  *         ...,
@@ -713,6 +715,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     SpecialRouterSettings?: array{RouterArn?: string, ...},
+ *     JpegXsInputSpecification?: array{Codec?: 'AVC'|'HEVC'|'JPEGXS'|'MPEG2', MaximumBitrate?: 'MAX_500_MBPS', Resolution?: 'HD', ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateChannelAsync(array $args = [])
@@ -779,7 +782,7 @@ use Aws\AwsClient;
  *         ...,
  *     }>,
  *     InputSpecification?: array{
- *         Codec?: 'AVC'|'HEVC'|'MPEG2',
+ *         Codec?: 'AVC'|'HEVC'|'JPEGXS'|'MPEG2',
  *         MaximumBitrate?: 'MAX_10_MBPS'|'MAX_20_MBPS'|'MAX_50_MBPS',
  *         Resolution?: 'HD'|'SD'|'UHD',
  *         ...,
@@ -809,6 +812,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     SpecialRouterSettings?: array{RouterArn?: string, ...},
+ *     JpegXsInputSpecification?: array{Codec?: 'AVC'|'HEVC'|'JPEGXS'|'MPEG2', MaximumBitrate?: 'MAX_500_MBPS', Resolution?: 'HD', ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateChannelClass(array $args = [])

@@ -298,6 +298,54 @@
         "title": "Disassociate a certificate from a responder gateway"
       }
     ],
+    "GetAvailableModule": [
+      {
+        "input": {
+          "moduleId": "module-8kq2p9wx3fnv1c5htj7bd0ral"
+        },
+        "output": {
+          "createdAt": "2026-10-01T12:00:00Z",
+          "description": "Drops bid requests whose floor price is below a value that you set.",
+          "marketplaceProductId": "prod-abcd1234efgh5",
+          "moduleArn": "arn:aws:rtbfabric:us-east-1::modules/module-8kq2p9wx3fnv1c5htj7bd0ral",
+          "moduleId": "module-8kq2p9wx3fnv1c5htj7bd0ral",
+          "moduleName": "bid-floor-filter",
+          "subscriptionStatus": "ACTIVE",
+          "subscriptionType": "MARKETPLACE"
+        },
+        "description": "Gets a Marketplace module that you can attach.",
+        "id": "example-1",
+        "title": "Get a module"
+      }
+    ],
+    "GetAvailableModuleVersion": [
+      {
+        "input": {
+          "version": "1.2.0",
+          "moduleId": "module-8kq2p9wx3fnv1c5htj7bd0ral"
+        },
+        "output": {
+          "version": "1.2.0",
+          "configurableActions": [
+            "FILTER"
+          ],
+          "configurationSchema": "{\"type\":\"object\",\"properties\":{\"floorPrice\":{\"type\":\"number\"}}}",
+          "createdAt": "2026-10-15T09:00:00Z",
+          "moduleId": "module-8kq2p9wx3fnv1c5htj7bd0ral",
+          "moduleVersionArn": "arn:aws:rtbfabric:us-east-1::modules/module-8kq2p9wx3fnv1c5htj7bd0ral/versions/1.2.0",
+          "permissions": [
+            "READ_REQUEST_BODY",
+            "FILTER"
+          ],
+          "releaseNotes": "Adds a configurable floor price.",
+          "status": "ACTIVE",
+          "updatedAt": "2026-10-15T09:00:00Z"
+        },
+        "description": "Gets a version of a module that you can attach, with what it can do and the parameters it accepts.",
+        "id": "example-1",
+        "title": "Get a module version"
+      }
+    ],
     "GetCertificateAssociation": [
       {
         "input": {
@@ -456,6 +504,90 @@
         "title": "Get responder gateway details"
       }
     ],
+    "GetUpdate": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "updateId": "update-1a2b3c4d5e6f"
+        },
+        "output": {
+          "update": {
+            "type": "ROUTING_RULE_UPDATE",
+            "createdAt": "2026-10-01T12:00:00Z",
+            "parameters": {
+              "routingRule": {
+                "conditions": {
+                  "hostHeader": "api.customer.com"
+                },
+                "priority": 20
+              }
+            },
+            "status": "SUCCESSFUL",
+            "target": {
+              "routingRule": {
+                "linkId": "link-87654321",
+                "ruleId": "rule-abc123def456"
+              }
+            },
+            "updateId": "update-1a2b3c4d5e6f"
+          }
+        },
+        "description": "Get one routing rule update on a responder gateway",
+        "id": "example-1",
+        "title": "Get an update"
+      }
+    ],
+    "ListAvailableModuleVersions": [
+      {
+        "input": {
+          "maxResults": 10,
+          "moduleId": "module-8kq2p9wx3fnv1c5htj7bd0ral"
+        },
+        "output": {
+          "moduleId": "module-8kq2p9wx3fnv1c5htj7bd0ral",
+          "versions": [
+            {
+              "version": "1.2.0",
+              "createdAt": "2026-10-15T09:00:00Z",
+              "moduleVersionArn": "arn:aws:rtbfabric:us-east-1::modules/module-8kq2p9wx3fnv1c5htj7bd0ral/versions/1.2.0",
+              "status": "ACTIVE"
+            },
+            {
+              "version": "1.1.0",
+              "createdAt": "2026-10-01T12:00:00Z",
+              "moduleVersionArn": "arn:aws:rtbfabric:us-east-1::modules/module-8kq2p9wx3fnv1c5htj7bd0ral/versions/1.1.0",
+              "status": "DEPRECATED"
+            }
+          ]
+        },
+        "description": "Lists the versions of a module that you can attach, highest version first.",
+        "id": "example-1",
+        "title": "List a module's versions"
+      }
+    ],
+    "ListAvailableModules": [
+      {
+        "input": {
+          "maxResults": 10,
+          "subscriptionType": "MARKETPLACE"
+        },
+        "output": {
+          "modules": [
+            {
+              "marketplaceProductId": "prod-abcd1234efgh5",
+              "moduleArn": "arn:aws:rtbfabric:us-east-1::modules/module-8kq2p9wx3fnv1c5htj7bd0ral",
+              "moduleId": "module-8kq2p9wx3fnv1c5htj7bd0ral",
+              "moduleName": "bid-floor-filter",
+              "subscriptionStatus": "ACTIVE",
+              "subscriptionType": "MARKETPLACE"
+            }
+          ]
+        },
+        "description": "Lists the Marketplace modules that you can attach.",
+        "id": "example-1",
+        "title": "List the modules you subscribe to through AWS Marketplace"
+      }
+    ],
     "ListCertificateAssociations": [
       {
         "input": {
@@ -608,6 +740,135 @@
         "title": "List tags for a resource"
       }
     ],
+    "ListUpdates": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "maxResults": 10
+        },
+        "output": {
+          "updates": [
+            {
+              "type": "LINK_CONFIG_UPDATE",
+              "createdAt": "2026-10-01T12:00:00Z",
+              "status": "FAILED",
+              "updateId": "update-1a2b3c4d5e6f"
+            }
+          ]
+        },
+        "description": "List the updates that targeted one link on a responder gateway",
+        "id": "example-1",
+        "title": "List a link's updates"
+      }
+    ],
+    "PutLinkFlows": [
+      {
+        "input": {
+          "clientToken": "3f1c2a7e-0b5d-4c1e-9a8f-2d6b7e9c0a14",
+          "flows": [
+            {
+              "name": "main",
+              "pipeline": {
+                "sequential": {
+                  "modules": [
+                    {
+                      "name": "domain-filter",
+                      "moduleVersionArn": "arn:aws:rtbfabric:us-east-1::modules/module-a1b2c3d4e5f6g7h8i9j0k1l2m/versions/1.2.0",
+                      "selectedActions": [
+                        "FILTER"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "gatewayId": "rtb-gw-a1b2c3d4e5",
+          "linkId": "link-f6g7h8i9j0",
+          "lockToken": "c2VxPTQy"
+        },
+        "output": {
+          "gatewayId": "rtb-gw-a1b2c3d4e5",
+          "linkId": "link-f6g7h8i9j0",
+          "status": "PENDING_UPDATE",
+          "updateId": "update-1a2b3c4d5e6f"
+        },
+        "id": "example-1",
+        "title": "Attach a filter module in one sequential flow"
+      },
+      {
+        "input": {
+          "clientToken": "6b1d84f2-0a97-4e53-b8c1-3d5f7a2e9048",
+          "flows": [
+            {
+              "name": "default",
+              "pipeline": {
+                "phased": {
+                  "phases": [
+                    {
+                      "modules": [
+                        {
+                          "name": "GeoFilter",
+                          "configurationValues": "{\"filterType\":\"INCLUDE\",\"filterConfiguration\":[{\"criteria\":[{\"path\":\"$.device.geo.country\",\"values\":[\"USA\"]}]}]}",
+                          "failureMode": "CLOSED",
+                          "moduleVersionArn": "arn:aws:rtbfabric:us-east-1::modules/module-openrtbAttributeFilter/versions/2.0.0"
+                        }
+                      ]
+                    },
+                    {
+                      "modules": [
+                        {
+                          "name": "IVTDetection",
+                          "configurationValues": "{\"threshold\":0.7}",
+                          "failureMode": "OPEN",
+                          "moduleVersionArn": "arn:aws:rtbfabric:us-east-1::modules/module-0a1b2c3d4e5f/versions/1.0.0"
+                        },
+                        {
+                          "name": "Viewability",
+                          "failureMode": "OPEN",
+                          "moduleVersionArn": "arn:aws:rtbfabric:us-east-1::modules/module-9f8e7d6c5b4a/versions/1.0.0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "lockToken": "lt-7f3a9c2e1b"
+        },
+        "output": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "status": "PENDING_UPDATE",
+          "updateId": "update-4d5e6f7a8b9c"
+        },
+        "description": "Filters first, then runs two enrichment modules at the same time. The second phase costs the slower of the two modules rather than their sum. Both enrichment modules fail open, so a slow vendor drops its enrichment instead of losing the bid.",
+        "id": "example-2",
+        "title": "Run enrichment modules concurrently in a phased flow"
+      },
+      {
+        "input": {
+          "clientToken": "9c4e2a71-5d38-4b0f-8e62-7f1a4c9d3b05",
+          "flows": [],
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "lockToken": "lt-7f3a9c2e1b"
+        },
+        "output": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "status": "PENDING_UPDATE",
+          "updateId": "update-7a8b9c1d2e3f"
+        },
+        "description": "Puts an empty set of flows. There is no separate detach operation: removal is expressed by putting the flows the caller wants to keep, and keeping none removes all of them.",
+        "id": "example-3",
+        "title": "Detach every module from a link"
+      }
+    ],
     "RejectLink": [
       {
         "input": {
@@ -673,7 +934,8 @@
         },
         "output": {
           "linkId": "link-87654321",
-          "status": "ACTIVE"
+          "status": "ACTIVE",
+          "updateId": "update-1a2b3c4d5e6f"
         },
         "description": "Updates configuration settings for an existing link",
         "id": "example-1",
@@ -704,7 +966,8 @@
         "output": {
           "gatewayId": "rtb-gw-12345678",
           "linkId": "link-87654321",
-          "status": "ACTIVE"
+          "status": "ACTIVE",
+          "updateId": "update-3c4d5e6f7a8b"
         },
         "description": "Update link module flow for link",
         "id": "example-1",
@@ -726,6 +989,7 @@
         "output": {
           "ruleId": "rule-abc123def456",
           "status": "UPDATE_IN_PROGRESS",
+          "updateId": "update-2b3c4d5e6f7a",
           "updatedAt": "2024-01-01T12:30:00Z"
         },
         "description": "Update the conditions of a routing rule",
@@ -760,7 +1024,8 @@
         },
         "output": {
           "gatewayId": "rtb-gw-12345678",
-          "status": "PENDING_UPDATE"
+          "status": "PENDING_UPDATE",
+          "updateId": "update-4d5e6f7a8b9c"
         },
         "description": "Update responder gateway",
         "id": "example-1",

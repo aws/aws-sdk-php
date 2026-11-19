@@ -26,8 +26,24 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result searchDiscoverableRegistryRecords(array $args = [])
- * @phpstan-method \Aws\Result searchDiscoverableRegistryRecords(array{searchQuery?: string, registryIds?: list<string>, maxResults?: int, filters?: array, ...} $args = [])
+ * @phpstan-method \Aws\Result searchDiscoverableRegistryRecords(array{
+ *     searchQuery?: string,
+ *     registryIds?: list<string>,
+ *     maxResults?: int,
+ *     filters?: array,
+ *     searchType?: 'HYBRID'|'KEYWORD'|'SEMANTIC',
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise searchDiscoverableRegistryRecordsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise searchDiscoverableRegistryRecordsAsync(array{searchQuery?: string, registryIds?: list<string>, maxResults?: int, filters?: array, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise searchDiscoverableRegistryRecordsAsync(array{
+ *     searchQuery?: string,
+ *     registryIds?: list<string>,
+ *     maxResults?: int,
+ *     filters?: array,
+ *     searchType?: 'HYBRID'|'KEYWORD'|'SEMANTIC',
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  */
 class AgentRegistryClient extends AwsClient {}

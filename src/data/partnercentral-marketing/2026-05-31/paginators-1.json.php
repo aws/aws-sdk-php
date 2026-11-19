@@ -1,0 +1,3 @@
+<?php
+// This file was auto-generated from sdk-root/src/data/partnercentral-marketing/2026-05-31/paginators-1.json
+return [ 'pagination' => [ 'ListCampaignAssets' => [ 'input_token' => 'NextToken', 'output_token' => 'NextToken', 'limit_key' => 'MaxResults', 'result_key' => 'Items', ], 'ListCampaigns' => [ 'input_token' => 'NextToken', 'output_token' => 'NextToken', 'limit_key' => 'MaxResults', 'result_key' => 'Items', ], 'ListSocialConnections' => [ 'input_token' => 'NextToken', 'output_token' => 'NextToken', 'limit_key' => 'MaxResults', 'result_key' => 'Items', ], 'SearchCampaignTemplates' => [ 'input_token' => 'NextToken', 'output_token' => 'NextToken', 'limit_key' => 'MaxResults', 'result_key' => 'CampaignTemplates', ], ],];

@@ -1268,6 +1268,51 @@
       "type":"list",
       "member":{"shape":"Cipher"}
     },
+    "ClientCertificateIdentityFilter":{
+      "type":"structure",
+      "required":[
+        "Field",
+        "Action",
+        "MatchType",
+        "Value"
+      ],
+      "members":{
+        "Field":{"shape":"ClientCertificateIdentityFilterField"},
+        "Action":{"shape":"ClientCertificateIdentityFilterAction"},
+        "MatchType":{"shape":"ClientCertificateIdentityFilterMatchType"},
+        "Value":{"shape":"ClientCertificateIdentityFilterValue"}
+      }
+    },
+    "ClientCertificateIdentityFilterAction":{
+      "type":"string",
+      "enum":["accept"]
+    },
+    "ClientCertificateIdentityFilterField":{
+      "type":"string",
+      "enum":[
+        "subject-cn",
+        "subject-ou",
+        "san-dns",
+        "san-uri"
+      ]
+    },
+    "ClientCertificateIdentityFilterMatchType":{
+      "type":"string",
+      "enum":[
+        "exact",
+        "prefix"
+      ]
+    },
+    "ClientCertificateIdentityFilterValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ClientCertificateIdentityFilters":{
+      "type":"list",
+      "member":{"shape":"ClientCertificateIdentityFilter"},
+      "max":100
+    },
     "ConditionFieldName":{
       "type":"string",
       "max":64
@@ -2496,7 +2541,8 @@
         "TrustStoreArn":{"shape":"TrustStoreArn"},
         "IgnoreClientCertificateExpiry":{"shape":"IgnoreClientCertificateExpiry"},
         "TrustStoreAssociationStatus":{"shape":"TrustStoreAssociationStatusEnum"},
-        "AdvertiseTrustStoreCaNames":{"shape":"AdvertiseTrustStoreCaNamesEnum"}
+        "AdvertiseTrustStoreCaNames":{"shape":"AdvertiseTrustStoreCaNamesEnum"},
+        "ClientCertificateIdentityFilters":{"shape":"ClientCertificateIdentityFilters"}
       }
     },
     "Name":{"type":"string"},

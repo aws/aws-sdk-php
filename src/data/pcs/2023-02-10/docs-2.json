@@ -425,6 +425,56 @@
       "base": "<p>PCS can't process your request right now. Try again later.</p>",
       "refs": {}
     },
+    "JobSubmitPlugin": {
+      "base": "<p>A job submit plugin configuration, including its name, runtime language, and script source.</p>",
+      "refs": {
+        "JobSubmitPluginList$member": null
+      }
+    },
+    "JobSubmitPluginList": {
+      "base": null,
+      "refs": {
+        "ClusterSlurmConfiguration$jobSubmitPlugins": "<p>The job submit plugins to run on the cluster controller. Use job submit plugins to execute custom scripts during job submission and job modification to validate or modify the job's configuration. Custom scripts can accept or reject jobs based on their configuration or modify the configuration before job execution.</p>",
+        "ClusterSlurmConfigurationRequest$jobSubmitPlugins": "<p>The job submit plugins to run on the cluster controller. Use job submit plugins to execute custom scripts during job submission and job modification to validate or modify the job's configuration. Custom scripts can accept or reject jobs based on their configuration or modify the configuration before job execution.</p>",
+        "UpdateClusterSlurmConfigurationRequest$jobSubmitPlugins": "<p>The job submit plugins to run on the cluster controller. Use job submit plugins to execute custom scripts during job submission and job modification to validate or modify the job's configuration. Custom scripts can accept or reject jobs based on their configuration or modify the configuration before job execution.</p>"
+      }
+    },
+    "JobSubmitPluginNameString": {
+      "base": null,
+      "refs": {
+        "JobSubmitPlugin$name": "<p>A unique name for the plugin. The name can be up to 64 characters long. Valid characters are letters, numbers, spaces, underscores (<code>_</code>), and hyphens (<code>-</code>). The first character must be a letter or a number.</p>"
+      }
+    },
+    "JobSubmitPluginType": {
+      "base": "<p>The runtime language used to execute the custom script. Valid values:</p> <ul> <li> <p> <code>STARLARK</code> – The script uses Starlark syntax.</p> </li> </ul>",
+      "refs": {
+        "JobSubmitPlugin$type": "<p>The runtime language used to execute the custom script. Valid values:</p> <ul> <li> <p> <code>STARLARK</code> – The script uses Starlark syntax.</p> </li> </ul>"
+      }
+    },
+    "JobSubmitScriptSource": {
+      "base": "<p>The source location and integrity information for the script.</p>",
+      "refs": {
+        "JobSubmitPlugin$scriptSource": "<p>The source location and integrity information for the script.</p>"
+      }
+    },
+    "JobSubmitScriptSourceChecksumString": {
+      "base": null,
+      "refs": {
+        "JobSubmitScriptSource$checksum": "<p>The SHA-256 checksum of the script content, as a 64-character hexadecimal string. This value is optional. When specified, PCS uses this value to verify the integrity of the downloaded script.</p>"
+      }
+    },
+    "JobSubmitScriptSourceS3VersionIdString": {
+      "base": null,
+      "refs": {
+        "JobSubmitScriptSource$s3VersionId": "<p>The Amazon S3 version ID of the script. Use this value to pin the script to a specific version in a versioned Amazon S3 bucket.</p>"
+      }
+    },
+    "JobSubmitScriptSourceScriptLocationString": {
+      "base": null,
+      "refs": {
+        "JobSubmitScriptSource$scriptLocation": "<p>The location of the script. Specify an Amazon S3 URI in the format <code>s3://bucket-name/key</code>.</p>"
+      }
+    },
     "JwtAuth": {
       "base": "<p>The JWT authentication configuration for Slurm REST API access.</p>",
       "refs": {

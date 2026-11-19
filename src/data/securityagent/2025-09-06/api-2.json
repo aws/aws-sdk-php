@@ -2271,6 +2271,16 @@
       "type":"list",
       "member":{"shape":"CodeLocation"}
     },
+    "CodeRemediationJobStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED",
+        "NO_CHANGE_REQUIRED",
+        "UNKNOWN"
+      ]
+    },
     "CodeRemediationStrategy":{
       "type":"string",
       "enum":[
@@ -2292,7 +2302,10 @@
       "members":{
         "repoName":{"shape":"String"},
         "codeDiffLink":{"shape":"String"},
-        "pullRequestLink":{"shape":"String"}
+        "pullRequestLink":{"shape":"String"},
+        "status":{"shape":"CodeRemediationJobStatus"},
+        "statusCode":{"shape":"String"},
+        "statusReason":{"shape":"String"}
       }
     },
     "CodeRemediationTaskDetailsList":{

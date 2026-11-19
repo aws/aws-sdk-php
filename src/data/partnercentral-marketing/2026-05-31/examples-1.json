@@ -1,0 +1,596 @@
+{
+  "version": "1.0",
+  "examples": {
+    "BatchCreateCampaignAsset": [
+      {
+        "input": {
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS",
+          "Entries": [
+            {
+              "SourceAssetTemplateIdentifier": "ta000000email"
+            },
+            {
+              "SourceAssetTemplateIdentifier": "ta0000000lp01"
+            }
+          ]
+        },
+        "output": {
+          "Errors": [],
+          "Successful": [
+            {
+              "Id": "ast-4b81e0c9f2a7b",
+              "SourceAssetTemplateId": "ta000000email"
+            },
+            {
+              "Id": "ast-9f3c1a2b7d40e",
+              "SourceAssetTemplateId": "ta0000000lp01"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Instantiate two of the kit's blueprints"
+      },
+      {
+        "input": {
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS",
+          "Entries": [
+            {
+              "SourceAssetTemplateIdentifier": "ta000000email"
+            },
+            {
+              "SourceAssetTemplateIdentifier": "ta00000absent"
+            }
+          ]
+        },
+        "output": {
+          "Errors": [
+            {
+              "Code": "ResourceNotFoundException",
+              "Message": "No asset template ta00000absent on this campaign's template.",
+              "SourceAssetTemplateId": "ta00000absent"
+            }
+          ],
+          "Successful": [
+            {
+              "Id": "ast-4b81e0c9f2a7b",
+              "SourceAssetTemplateId": "ta000000email"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "A partial batch: one entry names a blueprint the campaign's template does not carry"
+      }
+    ],
+    "CreateCampaign": [
+      {
+        "input": {
+          "CampaignTemplateId": "tmpl-a1b2c3d4e5f6g",
+          "Catalog": "AWS",
+          "EndOn": "2026-12-31",
+          "Name": "Q4 GenAI Campaign",
+          "StartOn": "2026-11-01",
+          "TotalBudget": {
+            "Amount": "25000.00",
+            "CurrencyCode": "USD"
+          }
+        },
+        "output": {
+          "Arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/campaign/camp-5Hq2m8x4k1p9w",
+          "Id": "camp-5Hq2m8x4k1p9w"
+        },
+        "id": "example-1",
+        "title": "Create a campaign"
+      }
+    ],
+    "DeleteCampaign": [
+      {
+        "input": {
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS"
+        },
+        "id": "example-1",
+        "title": "Delete a campaign"
+      }
+    ],
+    "DeleteCampaignAsset": [
+      {
+        "input": {
+          "CampaignAssetIdentifier": "ast-4b81e0c9f2a7b",
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS"
+        },
+        "id": "example-1",
+        "title": "Delete an asset"
+      }
+    ],
+    "GetCampaign": [
+      {
+        "input": {
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS"
+        },
+        "output": {
+          "Campaign": {
+            "ActivationIssues": [
+              {
+                "AffectedAssetIds": [
+                  "ast-4b81e0c9f2a7b"
+                ],
+                "CampaignSetting": "EMAIL_TARGET",
+                "Code": "RECIPIENT_LIST_MISSING",
+                "Message": "The campaign has no recipient list."
+              }
+            ],
+            "Arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/campaign/camp-5Hq2m8x4k1p9w",
+            "CampaignId": "camp-5Hq2m8x4k1p9w",
+            "Name": "Q4 GenAI Campaign",
+            "PartnerProfile": {
+              "DisplayName": "Example Partner",
+              "LogoUrl": "https://d111111abcdef8.cloudfront.net/logos/0f1e2d3c4b5a69788796a5b4c3d2e1f0.png",
+              "RefreshedAt": "2026-10-05T12:00:00Z",
+              "WebsiteUrl": "https://example.com"
+            },
+            "State": "DRAFT"
+          }
+        },
+        "id": "example-1",
+        "title": "Get a campaign"
+      }
+    ],
+    "GetCampaignAsset": [
+      {
+        "input": {
+          "CampaignAssetIdentifier": "ast-4b81e0c9f2a7b",
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS"
+        },
+        "output": {
+          "Asset": {
+            "ActivationIssues": [],
+            "CampaignId": "camp-5Hq2m8x4k1p9w",
+            "Category": "EMAIL",
+            "DeliveryStatus": "PENDING",
+            "FileFormat": "HTML",
+            "Id": "ast-4b81e0c9f2a7b",
+            "LastActivationStatus": "SUCCEEDED",
+            "Name": "Intro email",
+            "State": "ACTIVE"
+          }
+        },
+        "id": "example-1",
+        "title": "Get an asset"
+      }
+    ],
+    "GetCampaignAssetActivationTask": [
+      {
+        "input": {
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS"
+        },
+        "output": {
+          "Assets": [
+            {
+              "CampaignAssetId": "ast-4b81e0c9f2a7b",
+              "Status": "SUCCEEDED"
+            },
+            {
+              "CampaignAssetId": "ast-9f3c1a2b7d40e",
+              "Status": "SUCCEEDED"
+            },
+            {
+              "CampaignAssetId": "ast-2k7m4p9x1c6qd",
+              "Status": "SUCCEEDED"
+            },
+            {
+              "CampaignAssetId": "ast-7w3n8r5t2h1ya",
+              "Message": "The connected social account is no longer authorized.",
+              "Reason": "SOCIAL_CONNECTION_EXPIRED",
+              "Status": "FAILED"
+            }
+          ],
+          "CampaignId": "camp-5Hq2m8x4k1p9w",
+          "EndedAt": 1764547431,
+          "StartedAt": 1764547200,
+          "TaskId": "atsk-7k2M9x4qp1w8n",
+          "TaskStatus": "PARTIAL_FAILURE"
+        },
+        "id": "example-1",
+        "title": "Read a finished task where one asset failed"
+      }
+    ],
+    "GetCampaignTemplate": [
+      {
+        "input": {
+          "Catalog": "AWS",
+          "Identifier": "tmpl-987xyz654abcd"
+        },
+        "output": {
+          "CampaignTemplate": {
+            "Collection": "GENERAL",
+            "Id": "tmpl-987xyz654abcd",
+            "Name": "GenAI for Financial Services"
+          }
+        },
+        "id": "example-1",
+        "title": "Get a campaign template"
+      }
+    ],
+    "ListCampaignAssets": [
+      {
+        "input": {
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS"
+        },
+        "output": {
+          "Items": []
+        },
+        "id": "example-1",
+        "title": "List assets for a campaign"
+      }
+    ],
+    "ListCampaigns": [
+      {
+        "input": {
+          "Catalog": "AWS"
+        },
+        "output": {
+          "Items": []
+        },
+        "id": "example-1",
+        "title": "List campaigns"
+      },
+      {
+        "input": {
+          "CampaignIdentifiers": [
+            "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/campaign/camp-5Hq2m8x4k1p9w",
+            "camp-8Rt3w6y1n4b2v"
+          ],
+          "Catalog": "AWS"
+        },
+        "output": {
+          "Items": [
+            {
+              "Arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/campaign/camp-5Hq2m8x4k1p9w",
+              "CampaignId": "camp-5Hq2m8x4k1p9w",
+              "Name": "Q4 GenAI Campaign",
+              "StartOn": "2026-11-01",
+              "State": "ACTIVE"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "Name the campaigns a page links to"
+      },
+      {
+        "input": {
+          "Catalog": "AWS",
+          "MaxResults": 20,
+          "Name": "genai",
+          "Sort": {
+            "SortBy": "START_ON",
+            "SortOrder": "ASCENDING"
+          },
+          "States": [
+            "ACTIVE"
+          ]
+        },
+        "output": {
+          "Items": [
+            {
+              "Arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/campaign/camp-5Hq2m8x4k1p9w",
+              "CampaignId": "camp-5Hq2m8x4k1p9w",
+              "Name": "Q4 GenAI Campaign",
+              "StartOn": "2026-11-01",
+              "State": "ACTIVE"
+            }
+          ]
+        },
+        "id": "example-3",
+        "title": "Search active campaigns by name, by launch date"
+      }
+    ],
+    "SearchCampaignTemplates": [
+      {
+        "input": {
+          "Catalog": "AWS"
+        },
+        "output": {
+          "CampaignTemplates": [],
+          "TotalResults": 0
+        },
+        "id": "example-1",
+        "title": "Browse the whole catalog"
+      },
+      {
+        "input": {
+          "Catalog": "AWS",
+          "Industry": [
+            "TELECOMMUNICATIONS"
+          ],
+          "SearchText": "contact center"
+        },
+        "output": {
+          "CampaignTemplates": [],
+          "TotalResults": 0
+        },
+        "id": "example-2",
+        "title": "Search with a facet filter"
+      },
+      {
+        "input": {
+          "Catalog": "AWS",
+          "Collection": [
+            "BUILD_WITH_AI"
+          ],
+          "Language": [
+            "ja"
+          ]
+        },
+        "output": {
+          "CampaignTemplates": [
+            {
+              "Collection": "BUILD_WITH_AI",
+              "Id": "tmpl-z7icunek7m2x8",
+              "LanguageCode": "ja",
+              "Name": "Build with AI (Japanese)"
+            }
+          ],
+          "TotalResults": 1
+        },
+        "id": "example-3",
+        "title": "Browse the Build with AI collection in one language"
+      }
+    ],
+    "StartCampaignAssetActivationTask": [
+      {
+        "input": {
+          "CampaignAssetIdentifiers": [
+            "ast-4b81e0c9f2a7b",
+            "ast-9f3c1a2b7d40e",
+            "ast-2k7m4p9x1c6qd",
+            "ast-7w3n8r5t2h1ya"
+          ],
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS"
+        },
+        "output": {
+          "Assets": [
+            {
+              "CampaignAssetId": "ast-4b81e0c9f2a7b",
+              "Status": "IN_PROGRESS"
+            },
+            {
+              "CampaignAssetId": "ast-9f3c1a2b7d40e",
+              "Status": "IN_PROGRESS"
+            },
+            {
+              "CampaignAssetId": "ast-2k7m4p9x1c6qd",
+              "Status": "IN_PROGRESS"
+            },
+            {
+              "CampaignAssetId": "ast-7w3n8r5t2h1ya",
+              "Status": "IN_PROGRESS"
+            }
+          ],
+          "CampaignId": "camp-5Hq2m8x4k1p9w",
+          "StartedAt": 1764547200,
+          "TaskId": "atsk-7k2M9x4qp1w8n",
+          "TaskStatus": "IN_PROGRESS"
+        },
+        "id": "example-1",
+        "title": "Activate a whole campaign kit"
+      },
+      {
+        "input": {
+          "CampaignAssetIdentifiers": [
+            "ast-4b81e0c9f2a7b",
+            "ast-9f3c1a2b7d40e",
+            "ast-2k7m4p9x1c6qd",
+            "ast-7w3n8r5t2h1ya"
+          ],
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS"
+        },
+        "output": {
+          "Assets": [
+            {
+              "CampaignAssetId": "ast-4b81e0c9f2a7b",
+              "Message": "An asset this one embeds is not live.",
+              "Reason": "PREREQUISITE_ASSET_NOT_ACTIVE",
+              "Status": "FAILED"
+            },
+            {
+              "CampaignAssetId": "ast-9f3c1a2b7d40e",
+              "Message": "An asset this one embeds is not live.",
+              "Reason": "PREREQUISITE_ASSET_NOT_ACTIVE",
+              "Status": "FAILED"
+            },
+            {
+              "CampaignAssetId": "ast-2k7m4p9x1c6qd",
+              "Message": "Required fields are empty.",
+              "Reason": "REQUIRED_FIELD_MISSING",
+              "Status": "FAILED"
+            },
+            {
+              "CampaignAssetId": "ast-7w3n8r5t2h1ya",
+              "Status": "IN_PROGRESS"
+            }
+          ],
+          "CampaignId": "camp-5Hq2m8x4k1p9w",
+          "StartedAt": 1764547200,
+          "TaskId": "atsk-3n7V2h5r9t4kc",
+          "TaskStatus": "IN_PROGRESS"
+        },
+        "id": "example-2",
+        "title": "Some assets refused, the rest started anyway"
+      },
+      {
+        "input": {
+          "CampaignAssetIdentifiers": [
+            "ast-2k7m4p9x1c6qd"
+          ],
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS"
+        },
+        "output": {
+          "Assets": [
+            {
+              "CampaignAssetId": "ast-2k7m4p9x1c6qd",
+              "Message": "This kind of asset is downloaded rather than published.",
+              "Reason": "ASSET_NOT_STARTABLE",
+              "Status": "FAILED"
+            }
+          ],
+          "CampaignId": "camp-5Hq2m8x4k1p9w",
+          "EndedAt": 1764547200,
+          "StartedAt": 1764547200,
+          "TaskId": "atsk-9p4W2k7m3x8qa",
+          "TaskStatus": "FAILED"
+        },
+        "id": "example-3",
+        "title": "Every asset refused, so the task is FAILED at once"
+      }
+    ],
+    "UpdateCampaign": [
+      {
+        "input": {
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS",
+          "Name": "Q4 GenAI Campaign (EMEA)",
+          "TotalBudget": {
+            "Amount": "40000.00",
+            "CurrencyCode": "USD"
+          }
+        },
+        "output": {
+          "Id": "camp-5Hq2m8x4k1p9w"
+        },
+        "id": "example-1",
+        "title": "Rename a campaign and raise its budget"
+      }
+    ],
+    "UpdateCampaignAsset": [
+      {
+        "input": {
+          "CampaignAssetIdentifier": "ast-4b81e0c9f2a7b",
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS",
+          "FieldValues": [
+            {
+              "FieldId": "Subject",
+              "Value": {
+                "Text": "New subject line"
+              }
+            }
+          ]
+        },
+        "output": {
+          "ActivationIssues": [
+            {
+              "Code": "REQUIRED_FIELD_MISSING",
+              "FieldId": "Headline",
+              "Message": "This required field is empty."
+            }
+          ],
+          "Id": "ast-4b81e0c9f2a7b",
+          "State": "ACTIVE"
+        },
+        "id": "example-1",
+        "title": "Update asset content"
+      },
+      {
+        "input": {
+          "CampaignAssetIdentifier": "ast-4b81e0c9f2a7b",
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS",
+          "ClientToken": "f2a7c1e4-9b3d-4a51-8e6f-0c2d5b8a7e13",
+          "ScheduledSendAt": 1793491200,
+          "SendMode": "SCHEDULED"
+        },
+        "output": {
+          "ActivationIssues": [],
+          "Id": "ast-4b81e0c9f2a7b",
+          "State": "INACTIVE"
+        },
+        "id": "example-2",
+        "title": "Reschedule a sendable asset"
+      },
+      {
+        "input": {
+          "CampaignAssetIdentifier": "ast-4b81e0c9f2a7b",
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS",
+          "FieldValues": [
+            {
+              "FieldId": "HeaderImage",
+              "Value": {
+                "CampaignAssetImage": {
+                  "CampaignAssetIdentifier": "ast-0f9e8d7c6b5a2",
+                  "CampaignIdentifier": "camp-2Lp7d9f3j6s1z",
+                  "FieldId": "HeaderImage"
+                }
+              }
+            }
+          ]
+        },
+        "output": {
+          "ActivationIssues": [],
+          "Id": "ast-4b81e0c9f2a7b",
+          "State": "INACTIVE"
+        },
+        "description": "The image already stored on another of your assets is copied into this field. It is checked\nagainst this field's constraints and not scanned again. The call also needs\npartnercentral:GetCampaignAsset on the source campaign.",
+        "id": "example-3",
+        "title": "Copy an image from a previous campaign's asset"
+      },
+      {
+        "input": {
+          "CampaignAssetIdentifier": "ast-4b81e0c9f2a7b",
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS",
+          "FieldValues": [
+            {
+              "FieldId": "HeaderImage",
+              "Value": {
+                "ImageReference": "https://d111111abcdef8.cloudfront.net/suggested-image-url-from-build-with-ai.jpg"
+              }
+            }
+          ]
+        },
+        "output": {
+          "ActivationIssues": [],
+          "Id": "ast-4b81e0c9f2a7b",
+          "State": "INACTIVE"
+        },
+        "description": "The URL Build with AI returned for a suggested image is sent unchanged as imageReference. The\nimage is copied into this asset and not scanned. Any other URL is refused.",
+        "id": "example-4",
+        "title": "Use a suggested image from Build with AI"
+      },
+      {
+        "input": {
+          "CampaignAssetIdentifier": "ast-4b81e0c9f2a7b",
+          "CampaignIdentifier": "camp-5Hq2m8x4k1p9w",
+          "Catalog": "AWS",
+          "FieldValues": [
+            {
+              "FieldId": "HeaderImage",
+              "Value": {
+                "ImageReference": "s3://staging-bucket/123456789012/hero.png?versionId=v1"
+              }
+            },
+            {
+              "FieldId": "Headline",
+              "Value": {
+                "Text": "This headline is far longer than the field allows"
+              }
+            }
+          ]
+        },
+        "description": "Every failed field is reported in one refusal, and nothing applies — a declined image and an\nover-long headline arrive together in `fieldList`, each with its own `code`. This replaced a\nread-path `fileDetails[]` report (DG-040 Decision 11), so a partner handles image and text\nfailures the same way.",
+        "id": "example-5",
+        "title": "An update refused for two fields at once"
+      }
+    ]
+  }
+}

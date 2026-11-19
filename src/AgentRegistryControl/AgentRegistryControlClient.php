@@ -55,6 +55,7 @@ use Aws\AwsClient;
  *         agui?: array{source?: array, ...},
  *         ...,
  *     },
+ *     artifact?: array{content?: string|resource|\Psr\Http\Message\StreamInterface, sha256?: string, ...},
  *     recordVersion?: string,
  *     clientToken?: string,
  *     provenance?: list<array{
@@ -84,6 +85,7 @@ use Aws\AwsClient;
  *         agui?: array{source?: array, ...},
  *         ...,
  *     },
+ *     artifact?: array{content?: string|resource|\Psr\Http\Message\StreamInterface, sha256?: string, ...},
  *     recordVersion?: string,
  *     clientToken?: string,
  *     provenance?: list<array{
@@ -201,9 +203,14 @@ use Aws\AwsClient;
  *         },
  *         ...,
  *     },
+ *     artifact?: array{
+ *         optionalValue?: array{content?: string|resource|\Psr\Http\Message\StreamInterface, sha256?: string, ...},
+ *         ...,
+ *     },
  *     recordVersion?: string,
  *     customMetadata?: array{optionalValue?: array, ...},
  *     triggerSynchronization?: bool,
+ *     forceAuthentication?: bool,
  *     provenance?: list<array{
  *         relation?: 'DETECTED_FROM',
  *         sourceId?: string,
@@ -233,9 +240,14 @@ use Aws\AwsClient;
  *         },
  *         ...,
  *     },
+ *     artifact?: array{
+ *         optionalValue?: array{content?: string|resource|\Psr\Http\Message\StreamInterface, sha256?: string, ...},
+ *         ...,
+ *     },
  *     recordVersion?: string,
  *     customMetadata?: array{optionalValue?: array, ...},
  *     triggerSynchronization?: bool,
+ *     forceAuthentication?: bool,
  *     provenance?: list<array{
  *         relation?: 'DETECTED_FROM',
  *         sourceId?: string,
@@ -249,7 +261,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateRegistryRecordStatus(array{
  *     registryId?: string,
  *     recordId?: string,
- *     status?: 'APPROVED'|'CREATE_FAILED'|'CREATING'|'DEPRECATED'|'DRAFT'|'PENDING_APPROVAL'|'REJECTED'|'UPDATE_FAILED'|'UPDATING',
+ *     status?: 'APPROVED'|'CREATE_FAILED'|'CREATE_PENDING_AUTH'|'CREATING'|'DEPRECATED'|'DRAFT'|'PENDING_APPROVAL'|'REJECTED'|'UPDATE_FAILED'|'UPDATE_PENDING_AUTH'|'UPDATING',
  *     statusReason?: string,
  *     ...,
  * } $args = [])
@@ -257,7 +269,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise updateRegistryRecordStatusAsync(array{
  *     registryId?: string,
  *     recordId?: string,
- *     status?: 'APPROVED'|'CREATE_FAILED'|'CREATING'|'DEPRECATED'|'DRAFT'|'PENDING_APPROVAL'|'REJECTED'|'UPDATE_FAILED'|'UPDATING',
+ *     status?: 'APPROVED'|'CREATE_FAILED'|'CREATE_PENDING_AUTH'|'CREATING'|'DEPRECATED'|'DRAFT'|'PENDING_APPROVAL'|'REJECTED'|'UPDATE_FAILED'|'UPDATE_PENDING_AUTH'|'UPDATING',
  *     statusReason?: string,
  *     ...,
  * } $args = [])

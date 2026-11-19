@@ -471,6 +471,7 @@
         "slurmCustomSettings":{"shape":"SlurmCustomSettings"},
         "slurmdbdCustomSettings":{"shape":"SlurmdbdCustomSettings"},
         "cgroupCustomSettings":{"shape":"CgroupCustomSettings"},
+        "jobSubmitPlugins":{"shape":"JobSubmitPluginList"},
         "authKey":{"shape":"SlurmAuthKey"},
         "jwtAuth":{"shape":"JwtAuth"},
         "accounting":{"shape":"Accounting"},
@@ -484,6 +485,7 @@
         "slurmCustomSettings":{"shape":"SlurmCustomSettings"},
         "slurmdbdCustomSettings":{"shape":"SlurmdbdCustomSettings"},
         "cgroupCustomSettings":{"shape":"CgroupCustomSettings"},
+        "jobSubmitPlugins":{"shape":"JobSubmitPluginList"},
         "accounting":{"shape":"AccountingRequest"},
         "slurmRest":{"shape":"SlurmRestRequest"}
       }
@@ -958,6 +960,61 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "JobSubmitPlugin":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type",
+        "scriptSource"
+      ],
+      "members":{
+        "name":{"shape":"JobSubmitPluginNameString"},
+        "type":{"shape":"JobSubmitPluginType"},
+        "scriptSource":{"shape":"JobSubmitScriptSource"}
+      }
+    },
+    "JobSubmitPluginList":{
+      "type":"list",
+      "member":{"shape":"JobSubmitPlugin"},
+      "max":1,
+      "min":0
+    },
+    "JobSubmitPluginNameString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z0-9][A-Za-z0-9_-]*"
+    },
+    "JobSubmitPluginType":{
+      "type":"string",
+      "enum":["STARLARK"]
+    },
+    "JobSubmitScriptSource":{
+      "type":"structure",
+      "required":["scriptLocation"],
+      "members":{
+        "scriptLocation":{"shape":"JobSubmitScriptSourceScriptLocationString"},
+        "s3VersionId":{"shape":"JobSubmitScriptSourceS3VersionIdString"},
+        "checksum":{"shape":"JobSubmitScriptSourceChecksumString"}
+      }
+    },
+    "JobSubmitScriptSourceChecksumString":{
+      "type":"string",
+      "max":64,
+      "min":64,
+      "pattern":"[a-fA-F0-9]{64}"
+    },
+    "JobSubmitScriptSourceS3VersionIdString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "JobSubmitScriptSourceScriptLocationString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"s3://[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]/.+"
     },
     "JwtAuth":{
       "type":"structure",
@@ -1637,6 +1694,7 @@
         "slurmCustomSettings":{"shape":"SlurmCustomSettings"},
         "slurmdbdCustomSettings":{"shape":"SlurmdbdCustomSettings"},
         "cgroupCustomSettings":{"shape":"CgroupCustomSettings"},
+        "jobSubmitPlugins":{"shape":"JobSubmitPluginList"},
         "accounting":{"shape":"UpdateAccountingRequest"},
         "slurmRest":{"shape":"UpdateSlurmRestRequest"}
       }

@@ -19,6 +19,43 @@
         ]
     },
     "operations": {
+        "CreateVoice": {
+            "name": "CreateVoice",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/v1\/voices",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "CreateVoiceInput"
+            },
+            "output": {
+                "shape": "CreateVoiceOutput"
+            },
+            "errors": [
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "ServiceFailureException"
+                },
+                {
+                    "shape": "ServiceQuotaExceededException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                },
+                {
+                    "shape": "TooManyTagsException"
+                },
+                {
+                    "shape": "InvalidTagParameterException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                }
+            ]
+        },
         "DeleteLexicon": {
             "name": "DeleteLexicon",
             "http": {
@@ -40,6 +77,38 @@
                     "shape": "ServiceFailureException"
                 }
             ]
+        },
+        "DeleteVoice": {
+            "name": "DeleteVoice",
+            "http": {
+                "method": "DELETE",
+                "requestUri": "\/v1\/voices\/{VoiceId}",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "DeleteVoiceInput"
+            },
+            "output": {
+                "shape": "DeleteVoiceOutput"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ConflictException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "ServiceFailureException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                }
+            ],
+            "idempotent": true
         },
         "DescribeVoices": {
             "name": "DescribeVoices",
@@ -109,6 +178,35 @@
                     "shape": "SynthesisTaskNotFoundException"
                 }
             ]
+        },
+        "GetVoice": {
+            "name": "GetVoice",
+            "http": {
+                "method": "GET",
+                "requestUri": "\/v1\/voices\/{VoiceId}",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "GetVoiceInput"
+            },
+            "output": {
+                "shape": "GetVoiceOutput"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "ServiceFailureException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                }
+            ],
+            "readonly": true
         },
         "ListLexicons": {
             "name": "ListLexicons",
@@ -183,7 +281,8 @@
                 {
                     "shape": "ThrottlingException"
                 }
-            ]
+            ],
+            "readonly": true
         },
         "PutLexicon": {
             "name": "PutLexicon",
@@ -280,6 +379,12 @@
                 },
                 {
                     "shape": "LanguageNotSupportedException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ConflictException"
                 }
             ]
         },
@@ -323,6 +428,12 @@
                 },
                 {
                     "shape": "EngineNotSupportedException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ConflictException"
                 }
             ]
         },
@@ -393,6 +504,19 @@
         }
     },
     "shapes": {
+        "AccessDeniedException": {
+            "type": "structure",
+            "members": {
+                "Message": {
+                    "shape": "ServiceErrorMessage"
+                }
+            },
+            "error": {
+                "httpStatusCode": 403
+            },
+            "exception": true,
+            "synthetic": true
+        },
         "Alphabet": {
             "type": "string"
         },
@@ -414,6 +538,15 @@
             },
             "event": true
         },
+        "AudioFormat": {
+            "type": "string",
+            "enum": [
+                "wav",
+                "flac",
+                "ogg_vorbis",
+                "mp3"
+            ]
+        },
         "AudioStream": {
             "type": "blob",
             "streaming": true
@@ -421,10 +554,39 @@
         "AvailabilityErrorMessage": {
             "type": "string"
         },
+        "ClientToken": {
+            "type": "string",
+            "max": 64,
+            "min": 1,
+            "pattern": "^[!-~]+$"
+        },
         "CloseStreamEvent": {
             "type": "structure",
             "members": [],
             "event": true
+        },
+        "ConflictException": {
+            "type": "structure",
+            "required": [
+                "message",
+                "resourceId",
+                "resourceType"
+            ],
+            "members": {
+                "message": {
+                    "shape": "ErrorMessage"
+                },
+                "resourceId": {
+                    "shape": "ResourceId"
+                },
+                "resourceType": {
+                    "shape": "ResourceType"
+                }
+            },
+            "error": {
+                "httpStatusCode": 409
+            },
+            "exception": true
         },
         "ContentType": {
             "type": "string"
@@ -434,6 +596,84 @@
         },
         "CoralAvailabilityThrottlingReason": {
             "type": "string"
+        },
+        "CreateVoiceInput": {
+            "type": "structure",
+            "required": [
+                "Name",
+                "LanguageCode",
+                "TermsAccepted",
+                "VoiceCreationData"
+            ],
+            "members": {
+                "Name": {
+                    "shape": "CustomVoiceName"
+                },
+                "LanguageCode": {
+                    "shape": "CustomVoiceLanguageCode"
+                },
+                "TermsAccepted": {
+                    "shape": "TermsAccepted"
+                },
+                "VoiceCreationData": {
+                    "shape": "VoiceCreationData"
+                },
+                "CustomerManagedEncryption": {
+                    "shape": "CustomerManagedEncryption"
+                },
+                "Tags": {
+                    "shape": "TagMap"
+                },
+                "ClientToken": {
+                    "shape": "ClientToken",
+                    "idempotencyToken": true
+                }
+            }
+        },
+        "CreateVoiceOutput": {
+            "type": "structure",
+            "members": {
+                "Voice": {
+                    "shape": "Voice"
+                }
+            }
+        },
+        "CustomVoiceId": {
+            "type": "string",
+            "max": 32,
+            "pattern": "^vc-[0-9a-f]+$"
+        },
+        "CustomVoiceLanguageCode": {
+            "type": "string",
+            "enum": [
+                "de-DE",
+                "en-US",
+                "es-US",
+                "fr-FR",
+                "hi-IN",
+                "it-IT",
+                "pt-BR"
+            ]
+        },
+        "CustomVoiceName": {
+            "type": "string",
+            "max": 64,
+            "min": 1,
+            "pattern": "^[a-zA-Z0-9_-]+$"
+        },
+        "CustomerManagedEncryption": {
+            "type": "structure",
+            "required": [
+                "KmsKeyArn"
+            ],
+            "members": {
+                "KmsKeyArn": {
+                    "shape": "KmsKeyArn"
+                },
+                "EncryptionContext": {
+                    "shape": "EncryptionContext"
+                }
+            }
         },
         "DateTime": {
             "type": "timestamp"
@@ -452,6 +692,23 @@
             }
         },
         "DeleteLexiconOutput": {
+            "type": "structure",
+            "members": []
+        },
+        "DeleteVoiceInput": {
+            "type": "structure",
+            "required": [
+                "VoiceId"
+            ],
+            "members": {
+                "VoiceId": {
+                    "shape": "CustomVoiceId",
+                    "location": "uri",
+                    "locationName": "VoiceId"
+                }
+            }
+        },
+        "DeleteVoiceOutput": {
             "type": "structure",
             "members": []
         },
@@ -490,6 +747,26 @@
                     "shape": "NextToken"
                 }
             }
+        },
+        "EncryptionContext": {
+            "type": "map",
+            "key": {
+                "shape": "EncryptionContextKey"
+            },
+            "value": {
+                "shape": "EncryptionContextValue"
+            },
+            "max": 10
+        },
+        "EncryptionContextKey": {
+            "type": "string",
+            "max": 128,
+            "min": 1
+        },
+        "EncryptionContextValue": {
+            "type": "string",
+            "max": 256,
+            "min": 1
         },
         "Engine": {
             "type": "string",
@@ -584,6 +861,27 @@
             "members": {
                 "SynthesisTask": {
                     "shape": "SynthesisTask"
+                }
+            }
+        },
+        "GetVoiceInput": {
+            "type": "structure",
+            "required": [
+                "VoiceId"
+            ],
+            "members": {
+                "VoiceId": {
+                    "shape": "CustomVoiceId",
+                    "location": "uri",
+                    "locationName": "VoiceId"
+                }
+            }
+        },
+        "GetVoiceOutput": {
+            "type": "structure",
+            "members": {
+                "Voice": {
+                    "shape": "Voice"
                 }
             }
         },
@@ -697,6 +995,12 @@
                 "httpStatusCode": 400
             },
             "exception": true
+        },
+        "KmsKeyArn": {
+            "type": "string",
+            "max": 2048,
+            "min": 20,
+            "pattern": "^arn:aws(-(cn|iso(-b)?|us-gov|eusc))?:kms:[a-z0-9_-]{1,50}:\\d{12}:key\/[a-zA-Z0-9-]+$"
         },
         "LanguageCode": {
             "type": "string",
@@ -1035,8 +1339,48 @@
             "type": "string",
             "enum": [
                 "input-stream-inbound-event-timeout",
-                "input-stream-timeout"
+                "input-stream-timeout",
+                "custom-voice-max-count"
             ]
+        },
+        "Recording": {
+            "type": "structure",
+            "required": [
+                "Format",
+                "Data"
+            ],
+            "members": {
+                "Format": {
+                    "shape": "AudioFormat"
+                },
+                "Data": {
+                    "shape": "RecordingData"
+                }
+            }
+        },
+        "RecordingBytes": {
+            "type": "blob",
+            "max": 5242880,
+            "sensitive": true
+        },
+        "RecordingData": {
+            "type": "structure",
+            "members": {
+                "S3Url": {
+                    "shape": "S3Url"
+                },
+                "Bytes": {
+                    "shape": "RecordingBytes"
+                }
+            }
+        },
+        "RecordingList": {
+            "type": "list",
+            "member": {
+                "shape": "Recording"
+            },
+            "max": 10,
+            "min": 1
         },
         "RequestCharacters": {
             "type": "integer"
@@ -1070,8 +1414,14 @@
         "ResourceType": {
             "type": "string",
             "enum": [
-                "lexicon"
+                "lexicon",
+                "voice"
             ]
+        },
+        "S3Url": {
+            "type": "string",
+            "max": 1024,
+            "pattern": "^s3:\/\/[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9]\/.+$"
         },
         "SampleRate": {
             "type": "string"
@@ -1081,6 +1431,9 @@
             "enum": [
                 "polly"
             ]
+        },
+        "ServiceErrorMessage": {
+            "type": "string"
         },
         "ServiceFailureException": {
             "type": "structure",
@@ -1297,6 +1650,9 @@
                 }
             }
         },
+        "StatusReason": {
+            "type": "string"
+        },
         "StreamClosedEvent": {
             "type": "structure",
             "members": {
@@ -1494,6 +1850,9 @@
         "TaskStatusReason": {
             "type": "string"
         },
+        "TermsAccepted": {
+            "type": "boolean"
+        },
         "Text": {
             "type": "string"
         },
@@ -1677,12 +2036,17 @@
                 "unsupportedOperation",
                 "fieldValidationFailed",
                 "other",
-                "invalidInboundEvent"
+                "invalidInboundEvent",
+                "kmsKeyNotFound",
+                "kmsKeyUnusable"
             ]
         },
         "Voice": {
             "type": "structure",
             "members": {
+                "Arn": {
+                    "shape": "VoiceArn"
+                },
                 "Gender": {
                     "shape": "Gender"
                 },
@@ -1698,11 +2062,44 @@
                 "Name": {
                     "shape": "VoiceName"
                 },
+                "Origin": {
+                    "shape": "VoiceOrigin"
+                },
+                "Status": {
+                    "shape": "VoiceStatus"
+                },
+                "StatusReason": {
+                    "shape": "StatusReason"
+                },
                 "AdditionalLanguageCodes": {
                     "shape": "LanguageCodeList"
                 },
                 "SupportedEngines": {
                     "shape": "EngineList"
+                },
+                "VoiceCreationData": {
+                    "shape": "VoiceCreationData"
+                },
+                "CustomerManagedEncryption": {
+                    "shape": "CustomerManagedEncryption"
+                },
+                "CreationTime": {
+                    "shape": "DateTime"
+                }
+            }
+        },
+        "VoiceArn": {
+            "type": "string",
+            "pattern": "^arn:aws(-(cn|iso(-b)?|us-gov|eusc))?:polly:[a-z0-9_-]{1,50}:\\d{12}:voice\/[a-zA-Z0-9_-]+$"
+        },
+        "VoiceCreationData": {
+            "type": "structure",
+            "required": [
+                "Recordings"
+            ],
+            "members": {
+                "Recordings": {
+                    "shape": "RecordingList"
                 }
             }
         },
@@ -1835,6 +2232,21 @@
         },
         "VoiceName": {
             "type": "string"
+        },
+        "VoiceOrigin": {
+            "type": "string",
+            "enum": [
+                "aws",
+                "customer"
+            ]
+        },
+        "VoiceStatus": {
+            "type": "string",
+            "enum": [
+                "pending",
+                "active",
+                "failed"
+            ]
         }
     }
 }

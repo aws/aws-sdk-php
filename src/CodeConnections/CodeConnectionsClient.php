@@ -7,24 +7,26 @@ use Aws\AwsClient;
  * This client is used to interact with the **AWS CodeConnections** service.
  * @method \Aws\Result createConnection(array $args = [])
  * @phpstan-method \Aws\Result createConnection(array{
- *     ProviderType?: 'AzureDevOps'|'Bitbucket'|'GitHub'|'GitHubEnterpriseServer'|'GitLab'|'GitLabSelfManaged',
+ *     ProviderType?: 'AzureDevOps'|'Bitbucket'|'GitHub'|'GitHubEnterpriseCloudDataResidency'|'GitHubEnterpriseServer'|'GitLab'|'GitLabSelfManaged',
  *     ConnectionName?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     HostArn?: string,
+ *     ProviderEndpoint?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createConnectionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createConnectionAsync(array{
- *     ProviderType?: 'AzureDevOps'|'Bitbucket'|'GitHub'|'GitHubEnterpriseServer'|'GitLab'|'GitLabSelfManaged',
+ *     ProviderType?: 'AzureDevOps'|'Bitbucket'|'GitHub'|'GitHubEnterpriseCloudDataResidency'|'GitHubEnterpriseServer'|'GitLab'|'GitLabSelfManaged',
  *     ConnectionName?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     HostArn?: string,
+ *     ProviderEndpoint?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createHost(array $args = [])
  * @phpstan-method \Aws\Result createHost(array{
  *     Name?: string,
- *     ProviderType?: 'AzureDevOps'|'Bitbucket'|'GitHub'|'GitHubEnterpriseServer'|'GitLab'|'GitLabSelfManaged',
+ *     ProviderType?: 'AzureDevOps'|'Bitbucket'|'GitHub'|'GitHubEnterpriseCloudDataResidency'|'GitHubEnterpriseServer'|'GitLab'|'GitLabSelfManaged',
  *     ProviderEndpoint?: string,
  *     VpcConfiguration?: array{VpcId?: string, SubnetIds?: list<string>, SecurityGroupIds?: list<string>, TlsCertificate?: string, ...},
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
@@ -33,7 +35,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createHostAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createHostAsync(array{
  *     Name?: string,
- *     ProviderType?: 'AzureDevOps'|'Bitbucket'|'GitHub'|'GitHubEnterpriseServer'|'GitLab'|'GitLabSelfManaged',
+ *     ProviderType?: 'AzureDevOps'|'Bitbucket'|'GitHub'|'GitHubEnterpriseCloudDataResidency'|'GitHubEnterpriseServer'|'GitLab'|'GitLabSelfManaged',
  *     ProviderEndpoint?: string,
  *     VpcConfiguration?: array{VpcId?: string, SubnetIds?: list<string>, SecurityGroupIds?: list<string>, TlsCertificate?: string, ...},
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
@@ -129,16 +131,16 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise getSyncConfigurationAsync(array{SyncType?: 'CFN_STACK_SYNC', ResourceName?: string, ...} $args = [])
  * @method \Aws\Result listConnections(array $args = [])
  * @phpstan-method \Aws\Result listConnections(array{
- *     ProviderTypeFilter?: 'AzureDevOps'|'Bitbucket'|'GitHub'|'GitHubEnterpriseServer'|'GitLab'|'GitLabSelfManaged',
  *     HostArnFilter?: string,
+ *     ProviderTypeFilter?: 'AzureDevOps'|'Bitbucket'|'GitHub'|'GitHubEnterpriseCloudDataResidency'|'GitHubEnterpriseServer'|'GitLab'|'GitLabSelfManaged',
  *     MaxResults?: int,
  *     NextToken?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listConnectionsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listConnectionsAsync(array{
- *     ProviderTypeFilter?: 'AzureDevOps'|'Bitbucket'|'GitHub'|'GitHubEnterpriseServer'|'GitLab'|'GitLabSelfManaged',
  *     HostArnFilter?: string,
+ *     ProviderTypeFilter?: 'AzureDevOps'|'Bitbucket'|'GitHub'|'GitHubEnterpriseCloudDataResidency'|'GitHubEnterpriseServer'|'GitLab'|'GitLabSelfManaged',
  *     MaxResults?: int,
  *     NextToken?: string,
  *     ...,

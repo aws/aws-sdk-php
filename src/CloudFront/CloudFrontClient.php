@@ -839,6 +839,7 @@ use Aws\AwsClient;
  *     Tags?: array{Items?: list<array>, ...},
  *     AnycastIpListId?: string,
  *     Enabled?: bool,
+ *     ViewerFallback?: array{DistributionId?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createConnectionGroupAsync(array $args = []) (supported in versions 2020-05-31)
@@ -848,6 +849,7 @@ use Aws\AwsClient;
  *     Tags?: array{Items?: list<array>, ...},
  *     AnycastIpListId?: string,
  *     Enabled?: bool,
+ *     ViewerFallback?: array{DistributionId?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result createContinuousDeploymentPolicy(array $args = []) (supported in versions 2020-05-31)
@@ -874,7 +876,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result createDistributionTenant(array{
  *     DistributionId?: string,
  *     Name?: string,
- *     Domains?: list<array{Domain?: string, ...}>,
+ *     Domains?: list<array{Domain?: string, ServeOn?: 'any'|'anycast-ip-list-only', ...}>,
  *     Tags?: array{Items?: list<array>, ...},
  *     Customizations?: array{
  *         WebAcl?: array{Action?: 'disable'|'override', Arn?: string, ...},
@@ -891,13 +893,14 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     Enabled?: bool,
+ *     OnDomainTakeover?: 'allow'|'reject',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createDistributionTenantAsync(array $args = []) (supported in versions 2020-05-31)
  * @phpstan-method \GuzzleHttp\Promise\Promise createDistributionTenantAsync(array{
  *     DistributionId?: string,
  *     Name?: string,
- *     Domains?: list<array{Domain?: string, ...}>,
+ *     Domains?: list<array{Domain?: string, ServeOn?: 'any'|'anycast-ip-list-only', ...}>,
  *     Tags?: array{Items?: list<array>, ...},
  *     Customizations?: array{
  *         WebAcl?: array{Action?: 'disable'|'override', Arn?: string, ...},
@@ -914,6 +917,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     Enabled?: bool,
+ *     OnDomainTakeover?: 'allow'|'reject',
  *     ...,
  * } $args = [])
  * @method \Aws\Result createFunction(array $args = []) (supported in versions 2020-05-31)
@@ -1655,9 +1659,25 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateConnectionGroup(array $args = []) (supported in versions 2020-05-31)
- * @phpstan-method \Aws\Result updateConnectionGroup(array{Id?: string, Ipv6Enabled?: bool, IfMatch?: string, AnycastIpListId?: string, Enabled?: bool, ...} $args = [])
+ * @phpstan-method \Aws\Result updateConnectionGroup(array{
+ *     Id?: string,
+ *     Ipv6Enabled?: bool,
+ *     IfMatch?: string,
+ *     AnycastIpListId?: string,
+ *     Enabled?: bool,
+ *     ViewerFallback?: array{DistributionId?: string, ...},
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateConnectionGroupAsync(array $args = []) (supported in versions 2020-05-31)
- * @phpstan-method \GuzzleHttp\Promise\Promise updateConnectionGroupAsync(array{Id?: string, Ipv6Enabled?: bool, IfMatch?: string, AnycastIpListId?: string, Enabled?: bool, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateConnectionGroupAsync(array{
+ *     Id?: string,
+ *     Ipv6Enabled?: bool,
+ *     IfMatch?: string,
+ *     AnycastIpListId?: string,
+ *     Enabled?: bool,
+ *     ViewerFallback?: array{DistributionId?: string, ...},
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateContinuousDeploymentPolicy(array $args = []) (supported in versions 2020-05-31)
  * @phpstan-method \Aws\Result updateContinuousDeploymentPolicy(array{
  *     ContinuousDeploymentPolicyConfig?: array{
@@ -1686,7 +1706,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateDistributionTenant(array{
  *     Id?: string,
  *     DistributionId?: string,
- *     Domains?: list<array{Domain?: string, ...}>,
+ *     Domains?: list<array{Domain?: string, ServeOn?: 'any'|'anycast-ip-list-only', ...}>,
  *     Customizations?: array{
  *         WebAcl?: array{Action?: 'disable'|'override', Arn?: string, ...},
  *         Certificate?: array{Arn?: string, ...},
@@ -1703,13 +1723,14 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     Enabled?: bool,
+ *     OnDomainTakeover?: 'allow'|'reject',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDistributionTenantAsync(array $args = []) (supported in versions 2020-05-31)
  * @phpstan-method \GuzzleHttp\Promise\Promise updateDistributionTenantAsync(array{
  *     Id?: string,
  *     DistributionId?: string,
- *     Domains?: list<array{Domain?: string, ...}>,
+ *     Domains?: list<array{Domain?: string, ServeOn?: 'any'|'anycast-ip-list-only', ...}>,
  *     Customizations?: array{
  *         WebAcl?: array{Action?: 'disable'|'override', Arn?: string, ...},
  *         Certificate?: array{Arn?: string, ...},
@@ -1726,6 +1747,7 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     Enabled?: bool,
+ *     OnDomainTakeover?: 'allow'|'reject',
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateDistributionWithStagingConfig(array $args = []) (supported in versions 2020-05-31)

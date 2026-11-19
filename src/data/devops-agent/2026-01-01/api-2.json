@@ -1498,7 +1498,8 @@
         "accountId":{"shape":"AWSConfigurationAccountIdString"},
         "accountType":{"shape":"MonitorAccountType"},
         "agentElevatedRoleArn":{"shape":"RoleArn"},
-        "agentElevatedRoleArnStatus":{"shape":"ValidationStatus"}
+        "agentElevatedRoleArnStatus":{"shape":"ValidationStatus"},
+        "serviceManagementRoleArn":{"shape":"RoleArn"}
       }
     },
     "AWSConfigurationAccountIdString":{
@@ -1516,6 +1517,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "AccountIdList":{
+      "type":"list",
+      "member":{"shape":"AwsAccountId"},
+      "max":1000,
+      "min":1
     },
     "AdditionalServiceDetails":{
       "type":"structure",
@@ -1561,7 +1568,8 @@
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
         "agentSpaceId":{"shape":"AgentSpaceId"},
-        "preferences":{"shape":"AgentSpacePreferences"}
+        "preferences":{"shape":"AgentSpacePreferences"},
+        "awsSourceMode":{"shape":"AwsSourceMode"}
       }
     },
     "AgentSpaceId":{
@@ -1924,6 +1932,17 @@
         "idp"
       ]
     },
+    "AwsAccountId":{
+      "type":"string",
+      "pattern":"\\d{12}"
+    },
+    "AwsSourceMode":{
+      "type":"string",
+      "enum":[
+        "standalone",
+        "organization"
+      ]
+    },
     "AzureConfiguration":{
       "type":"structure",
       "required":["subscriptionId"],
@@ -2075,7 +2094,8 @@
           "idempotencyToken":true
         },
         "tags":{"shape":"Tags"},
-        "preferences":{"shape":"AgentSpacePreferences"}
+        "preferences":{"shape":"AgentSpacePreferences"},
+        "awsSourceMode":{"shape":"AwsSourceMode"}
       }
     },
     "CreateAgentSpaceInputClientTokenString":{
@@ -4633,6 +4653,66 @@
         "DESC"
       ]
     },
+    "OrgSourceAccountReasonCode":{
+      "type":"string",
+      "enum":[
+        "accountSuspended",
+        "accountNotInScope",
+        "managementAccountNotSupported",
+        "stackInstanceInoperable",
+        "accessDenied",
+        "deploymentFailed",
+        "secondaryAccountLimitExceeded"
+      ]
+    },
+    "OrgSourceDeploymentState":{
+      "type":"structure",
+      "members":{
+        "deployedAccountCount":{"shape":"OrgSourceDeploymentStateDeployedAccountCountInteger"},
+        "issues":{"shape":"OrgSourceIssueList"},
+        "lastEvaluatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "OrgSourceDeploymentStateDeployedAccountCountInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "OrgSourceIssue":{
+      "type":"structure",
+      "required":[
+        "reasonCode",
+        "accountCount",
+        "accountIds"
+      ],
+      "members":{
+        "reasonCode":{"shape":"OrgSourceAccountReasonCode"},
+        "accountCount":{"shape":"OrgSourceIssueAccountCountInteger"},
+        "accountIds":{"shape":"AccountIdList"},
+        "message":{"shape":"OrgSourceIssueMessage"}
+      }
+    },
+    "OrgSourceIssueAccountCountInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "OrgSourceIssueList":{
+      "type":"list",
+      "member":{"shape":"OrgSourceIssue"},
+      "max":20,
+      "min":0
+    },
+    "OrgSourceIssueMessage":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "sensitive":true
+    },
+    "OrgUnitId":{
+      "type":"string",
+      "pattern":"(r-[0-9a-z]{4,32}|ou-[0-9a-z]{4,32}-[a-z0-9]{8,32})"
+    },
     "PagerDutyAuthorizationConfig":{
       "type":"structure",
       "members":{
@@ -5674,6 +5754,7 @@
       "type":"structure",
       "members":{
         "sourceAws":{"shape":"SourceAwsConfiguration"},
+        "sourceAwsOrg":{"shape":"SourceAwsOrgConfiguration"},
         "aws":{"shape":"AWSConfiguration"},
         "github":{"shape":"GitHubConfiguration"},
         "slack":{"shape":"SlackConfiguration"},
@@ -5894,6 +5975,26 @@
     "SourceAwsConfigurationAccountIdString":{
       "type":"string",
       "pattern":"\\d{12}"
+    },
+    "SourceAwsOrgConfiguration":{
+      "type":"structure",
+      "required":[
+        "accountType",
+        "organizationalUnit"
+      ],
+      "members":{
+        "accountType":{"shape":"SourceAccountType"},
+        "organizationalUnit":{"shape":"SourceAwsOrgUnit"},
+        "deploymentState":{"shape":"OrgSourceDeploymentState"}
+      }
+    },
+    "SourceAwsOrgUnit":{
+      "type":"structure",
+      "required":["organizationalUnitId"],
+      "members":{
+        "organizationalUnitId":{"shape":"OrgUnitId"},
+        "accountIds":{"shape":"AccountIdList"}
+      }
     },
     "String":{"type":"string"},
     "SubnetId":{
@@ -6233,7 +6334,8 @@
         "name":{"shape":"AgentSpaceName"},
         "description":{"shape":"Description"},
         "locale":{"shape":"Locale"},
-        "preferences":{"shape":"AgentSpacePreferences"}
+        "preferences":{"shape":"AgentSpacePreferences"},
+        "awsSourceMode":{"shape":"AwsSourceMode"}
       }
     },
     "UpdateAgentSpaceOutput":{

@@ -622,7 +622,7 @@ use Aws\AwsClient;
  * @method \Aws\Result getCostForecast(array $args = [])
  * @phpstan-method \Aws\Result getCostForecast(array{
  *     TimePeriod?: array{Start?: string, End?: string, ...},
- *     Metric?: 'AMORTIZED_COST'|'BLENDED_COST'|'NET_AMORTIZED_COST'|'NET_UNBLENDED_COST'|'NORMALIZED_USAGE_AMOUNT'|'UNBLENDED_COST'|'USAGE_QUANTITY',
+ *     Metric?: 'AMORTIZED_COST'|'BILLED_COST'|'BLENDED_COST'|'CONTRACTED_COST'|'LIST_COST'|'NET_AMORTIZED_COST'|'NET_UNBLENDED_COST'|'NORMALIZED_USAGE_AMOUNT'|'PUBLIC_EQUIVALENT_BILLED_COST'|'PUBLIC_ON_DEMAND_COST'|'UNBLENDED_COST'|'USAGE_QUANTITY',
  *     Granularity?: 'DAILY'|'HOURLY'|'MONTHLY',
  *     Filter?: array{
  *         Or?: list<array>,
@@ -661,7 +661,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getCostForecastAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getCostForecastAsync(array{
  *     TimePeriod?: array{Start?: string, End?: string, ...},
- *     Metric?: 'AMORTIZED_COST'|'BLENDED_COST'|'NET_AMORTIZED_COST'|'NET_UNBLENDED_COST'|'NORMALIZED_USAGE_AMOUNT'|'UNBLENDED_COST'|'USAGE_QUANTITY',
+ *     Metric?: 'AMORTIZED_COST'|'BILLED_COST'|'BLENDED_COST'|'CONTRACTED_COST'|'LIST_COST'|'NET_AMORTIZED_COST'|'NET_UNBLENDED_COST'|'NORMALIZED_USAGE_AMOUNT'|'PUBLIC_EQUIVALENT_BILLED_COST'|'PUBLIC_ON_DEMAND_COST'|'UNBLENDED_COST'|'USAGE_QUANTITY',
  *     Granularity?: 'DAILY'|'HOURLY'|'MONTHLY',
  *     Filter?: array{
  *         Or?: list<array>,
@@ -1512,7 +1512,7 @@ use Aws\AwsClient;
  * @method \Aws\Result getUsageForecast(array $args = [])
  * @phpstan-method \Aws\Result getUsageForecast(array{
  *     TimePeriod?: array{Start?: string, End?: string, ...},
- *     Metric?: 'AMORTIZED_COST'|'BLENDED_COST'|'NET_AMORTIZED_COST'|'NET_UNBLENDED_COST'|'NORMALIZED_USAGE_AMOUNT'|'UNBLENDED_COST'|'USAGE_QUANTITY',
+ *     Metric?: 'AMORTIZED_COST'|'BILLED_COST'|'BLENDED_COST'|'CONTRACTED_COST'|'LIST_COST'|'NET_AMORTIZED_COST'|'NET_UNBLENDED_COST'|'NORMALIZED_USAGE_AMOUNT'|'PUBLIC_EQUIVALENT_BILLED_COST'|'PUBLIC_ON_DEMAND_COST'|'UNBLENDED_COST'|'USAGE_QUANTITY',
  *     Granularity?: 'DAILY'|'HOURLY'|'MONTHLY',
  *     Filter?: array{
  *         Or?: list<array>,
@@ -1551,7 +1551,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getUsageForecastAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getUsageForecastAsync(array{
  *     TimePeriod?: array{Start?: string, End?: string, ...},
- *     Metric?: 'AMORTIZED_COST'|'BLENDED_COST'|'NET_AMORTIZED_COST'|'NET_UNBLENDED_COST'|'NORMALIZED_USAGE_AMOUNT'|'UNBLENDED_COST'|'USAGE_QUANTITY',
+ *     Metric?: 'AMORTIZED_COST'|'BILLED_COST'|'BLENDED_COST'|'CONTRACTED_COST'|'LIST_COST'|'NET_AMORTIZED_COST'|'NET_UNBLENDED_COST'|'NORMALIZED_USAGE_AMOUNT'|'PUBLIC_EQUIVALENT_BILLED_COST'|'PUBLIC_ON_DEMAND_COST'|'UNBLENDED_COST'|'USAGE_QUANTITY',
  *     Granularity?: 'DAILY'|'HOURLY'|'MONTHLY',
  *     Filter?: array{
  *         Or?: list<array>,

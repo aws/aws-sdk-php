@@ -14,6 +14,7 @@
     "ListEntities": "<p>Provides the list of entities of a given type.</p>",
     "ListTagsForResource": "<p>Lists all tags that have been added to a resource (either an <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#catalog-api-entities\">entity</a> or <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#working-with-change-sets\">change set</a>).</p>",
     "PutResourcePolicy": "<p>Attaches a resource-based policy to an entity. Examples of an entity include: <code>AmiProduct</code> and <code>ContainerProduct</code>.</p>",
+    "StartAssessment": "<p>Starts an assessment of a product entity against a framework. An <i>assessment</i> is the result of evaluating an entity against the controls of a framework. You choose the controls to run and provide the input that each control needs.</p> <p>The assessment runs asynchronously. This action returns the ID of the assessment immediately. To get its status and the results of each control, use the <code>DescribeAssessment</code> action. To find assessments that you started earlier, use the <code>ListAssessments</code> action.</p>",
     "StartChangeSet": "<p>Allows you to request changes for your entities. Within a single <code>ChangeSet</code>, you can't start the same change type against the same entity multiple times. Additionally, when a <code>ChangeSet</code> is running, all the entities targeted by the different changes are locked until the change set has completed (either succeeded, cancelled, or failed). If you try to start a change set containing a change against an entity that is already locked, you will receive a <code>ResourceInUseException</code> error.</p> <p>For example, you can't start the <code>ChangeSet</code> described in the <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/API_StartChangeSet.html#API_StartChangeSet_Examples\">example</a> later in this topic because it contains two changes to run the same change type (<code>AddRevisions</code>) against the same entity (<code>entity-id@1</code>).</p> <p>For more information about working with change sets, see <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#working-with-change-sets\"> Working with change sets</a>. For information about change types for single-AMI products, see <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/ami-products.html#working-with-single-AMI-products\">Working with single-AMI products</a>. Also, for more information about change types available for container-based products, see <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/container-products.html#working-with-container-products\">Working with container products</a>.</p> <p>To download \"DetailsDocument\" shapes, see <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-python\">Python</a> and <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-java/tree/main\">Java</a> shapes on GitHub.</p>",
     "TagResource": "<p>Tags a resource (either an <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#catalog-api-entities\">entity</a> or <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#working-with-change-sets\">change set</a>).</p>",
     "UntagResource": "<p>Removes a tag or list of tags from a resource (either an <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#catalog-api-entities\">entity</a> or <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#working-with-change-sets\">change set</a>).</p>"
@@ -48,6 +49,30 @@
     "AccessDeniedException": {
       "base": "<p>Access is denied.</p> <p>HTTP status code: 403</p>",
       "refs": {}
+    },
+    "AdditionalResource": {
+      "base": "<p>An additional resource for a listing, with its type, display text, and URL.</p>",
+      "refs": {
+        "AdditionalResourceList$member": null
+      }
+    },
+    "AdditionalResourceList": {
+      "base": null,
+      "refs": {
+        "AdditionalResourcesAlternative$Value": "<p>The proposed additional resources.</p>"
+      }
+    },
+    "AdditionalResourcesAlternative": {
+      "base": "<p>A proposed set of additional resources for a listing.</p>",
+      "refs": {
+        "AdditionalResourcesAlternativeList$member": null
+      }
+    },
+    "AdditionalResourcesAlternativeList": {
+      "base": null,
+      "refs": {
+        "ContentAlternatives$AdditionalResources": "<p>The proposed values for <code>AdditionalResources</code>. You can have up to 3 alternatives.</p>"
+      }
     },
     "AmiProductEntityIdFilter": {
       "base": "<p>Object that allows filtering on entity id of an AMI product.</p>",
@@ -145,7 +170,8 @@
     "AssessmentIdentifier": {
       "base": null,
       "refs": {
-        "DescribeAssessmentRequest$AssessmentIdentifier": "<p>The unique identifier of the assessment to describe. You can provide either the assessment ID (for example, <code>assessment-12345</code>) or the full assessment ARN (for example, <code>arn:aws:aws-marketplace:us-east-1::AWSMarketplace/Assessment/assessment-12345</code>).</p>"
+        "DescribeAssessmentRequest$AssessmentIdentifier": "<p>The unique identifier of the assessment to describe. You can provide either the assessment ID (for example, <code>assessment-12345</code>) or the full assessment ARN (for example, <code>arn:aws:aws-marketplace:us-east-1::AWSMarketplace/Assessment/assessment-12345</code>).</p>",
+        "StartAssessmentResponse$AssessmentId": "<p>The unique ID of the assessment that was started.</p>"
       }
     },
     "AssessmentResult": {
@@ -214,6 +240,30 @@
       "base": null,
       "refs": {}
     },
+    "CaseStudiesAlternative": {
+      "base": "<p>A proposed set of case studies for a solution.</p>",
+      "refs": {
+        "CaseStudiesAlternativeList$member": null
+      }
+    },
+    "CaseStudiesAlternativeList": {
+      "base": null,
+      "refs": {
+        "ContentAlternatives$CaseStudies": "<p>The proposed values for <code>CaseStudies</code>. You can have up to 3 alternatives.</p>"
+      }
+    },
+    "CaseStudyList": {
+      "base": null,
+      "refs": {
+        "CaseStudiesAlternative$Value": "<p>The proposed case studies.</p>"
+      }
+    },
+    "CaseStudyTitle": {
+      "base": null,
+      "refs": {
+        "ListingCaseStudy$Title": "<p>The title of the case study.</p>"
+      }
+    },
     "Catalog": {
       "base": null,
       "refs": {
@@ -225,6 +275,7 @@
         "ListAssessmentsRequest$Catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>",
         "ListChangeSetsRequest$Catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>",
         "ListEntitiesRequest$Catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>",
+        "StartAssessmentRequest$Catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>",
         "StartChangeSetRequest$Catalog": "<p>The catalog related to the request. Fixed value: <code>AWSMarketplace</code> </p>"
       }
     },
@@ -288,9 +339,23 @@
         "ValidationExceptionField$ChangeType": "<p>The change type the failing field applies to, if the field is part of a change request. For example, <code>AddDeliveryOptions</code>.</p>"
       }
     },
+    "CitationList": {
+      "base": null,
+      "refs": {
+        "ProductContentRecommendations$Citations": "<p>The sources that the recommendations are based on. You can have up to 5 sources. The list is empty if there are none.</p>",
+        "SolutionContentRecommendations$Citations": "<p>The sources that the recommendations are based on. You can have up to 5 sources. The list is empty if there are none.</p>"
+      }
+    },
+    "CitationUrl": {
+      "base": null,
+      "refs": {
+        "RecommendationCitation$Url": "<p>The HTTPS URL of the source.</p>"
+      }
+    },
     "ClientRequestToken": {
       "base": null,
       "refs": {
+        "StartAssessmentRequest$ClientToken": "<p>A unique token to identify the request to ensure idempotency.</p>",
         "StartChangeSetRequest$ClientRequestToken": "<p>A unique token to identify the request to ensure idempotency.</p>"
       }
     },
@@ -399,6 +464,38 @@
         "FrameworkSummary$ContainerSecuritySummary": "<p>The details of the resource assessed under the Container Security framework.</p>"
       }
     },
+    "ContentAlternatives": {
+      "base": "<p>The proposed values for a listing field. Exactly one member is set, depending on the field. The list in that member is empty if the status of the recommendation is <code>INSUFFICIENT_CONTEXT</code>.</p>",
+      "refs": {
+        "ContentRecommendation$Alternatives": "<p>The proposed values for the field, in ranked order.</p>"
+      }
+    },
+    "ContentRecommendation": {
+      "base": "<p>A recommendation for a listing field.</p>",
+      "refs": {
+        "ProductContentRecommendations$ProductTitle": "<p>The recommendation for the product title.</p>",
+        "ProductContentRecommendations$ShortDescription": "<p>The recommendation for the short description.</p>",
+        "ProductContentRecommendations$LongDescription": "<p>The recommendation for the long description.</p>",
+        "ProductContentRecommendations$SupportDescription": "<p>The recommendation for the support description.</p>",
+        "ProductContentRecommendations$Highlights": "<p>The recommendation for the highlights.</p>",
+        "ProductContentRecommendations$SearchKeywords": "<p>The recommendation for the search keywords.</p>",
+        "ProductContentRecommendations$Categories": "<p>The recommendation for the categories.</p>",
+        "ProductContentRecommendations$AdditionalResources": "<p>The recommendation for the additional resources. Each alternative has up to 3 resources.</p>",
+        "SolutionContentRecommendations$Title": "<p>The recommendation for the external title of the solution.</p>",
+        "SolutionContentRecommendations$ShortDescription": "<p>The recommendation for the value proposition of the solution.</p>",
+        "SolutionContentRecommendations$LongDescription": "<p>The recommendation for the long description of the solution.</p>",
+        "SolutionContentRecommendations$IntegrationDetails": "<p>The recommendation for the integration details of the solution.</p>",
+        "SolutionContentRecommendations$AdditionalResources": "<p>The recommendation for the additional resources. Each alternative has up to 8 resources.</p>",
+        "SolutionContentRecommendations$UseCases": "<p>The recommendation for the use cases of the solution.</p>",
+        "SolutionContentRecommendations$CaseStudies": "<p>The recommendation for the case studies of the solution. Each alternative has up to 20 case studies.</p>"
+      }
+    },
+    "ContentRecommendationStatus": {
+      "base": null,
+      "refs": {
+        "ContentRecommendation$Status": "<p>The status of the recommendation. Valid values are:</p> <ul> <li> <p> <code>GENERATED</code> - The service proposed values for the field.</p> </li> <li> <p> <code>INSUFFICIENT_CONTEXT</code> - The service couldn't propose a value. The follow-up questions say what is missing.</p> </li> </ul>"
+      }
+    },
     "ControlAssessment": {
       "base": "<p>The result of evaluating a single control as part of an assessment.</p>",
       "refs": {
@@ -427,6 +524,24 @@
       "base": null,
       "refs": {
         "ControlAssessment$Errors": "<p>An array of <code>ControlError</code> objects associated with the control evaluation.</p>"
+      }
+    },
+    "ControlInput": {
+      "base": "<p>A control to run as part of an assessment, and the input to run it with.</p>",
+      "refs": {
+        "ControlInputList$member": null
+      }
+    },
+    "ControlInputList": {
+      "base": null,
+      "refs": {
+        "StartAssessmentRequest$Controls": "<p>The controls to provide input for. Every control in the framework is included in the assessment, and a control that you don't specify gets no input. You can specify 1–100 controls.</p>"
+      }
+    },
+    "ControlSummary": {
+      "base": "<p>A summary of what a control produced. Exactly one member is set, corresponding to the kind of control.</p>",
+      "refs": {
+        "ControlAssessment$ControlSummary": "<p>A summary of what the control produced, such as recommendations for the listing.</p>"
       }
     },
     "DataProductEntityIdFilter": {
@@ -639,7 +754,14 @@
         "EntityDetails$key": null,
         "EntityRequest$EntityId": "<p>The ID of the entity.</p>",
         "Errors$key": null,
+        "ListingCaseStudy$Id": "<p>The ID of the case study entity. Identify a case study by this ID and not by <code>Title</code>, which you can edit.</p>",
         "ValidationExceptionField$EntityId": "<p>The entity identifier the failing field applies to, if the field is on a specific entity.</p>"
+      }
+    },
+    "EntityIdList": {
+      "base": null,
+      "refs": {
+        "AssessmentTargetFilter$EntityIds": "<p>A list of up to 50 entity IDs whose assessments you want to list. The response includes only the latest published assessment of each entity. You must also specify <code>FrameworkId</code> in the request, and you can't combine <code>EntityIds</code> with <code>EntityId</code> or <code>ChangeSetId</code>.</p>"
       }
     },
     "EntityNameString": {
@@ -658,6 +780,13 @@
       "base": null,
       "refs": {
         "BatchDescribeEntitiesRequest$EntityRequestList": "<p>List of entity IDs and the catalogs the entities are present in.</p>"
+      }
+    },
+    "EntityRevision": {
+      "base": null,
+      "refs": {
+        "ListingQualitySummary$EntityRevision": "<p>The revision of the entity that the tier was evaluated against. To check whether the tier is out of date, compare this value with the current revision of the entity.</p>",
+        "ListingRecommendationsSummary$EntityRevision": "<p>The revision of the entity that the recommendations were generated against. To check whether the recommendations are out of date, compare this value with the current revision of the entity.</p>"
       }
     },
     "EntitySummary": {
@@ -846,10 +975,46 @@
         "DescribeChangeSetResponse$FailureCode": "<p>Returned if the change set is in <code>FAILED</code> status. Can be either <code>CLIENT_ERROR</code>, which means that there are issues with the request (see the <code>ErrorDetailList</code>), or <code>SERVER_FAULT</code>, which means that there is a problem in the system, and you should retry your request.</p>"
       }
     },
+    "FeatureRecommendation": {
+      "base": "<p>A recommended AWS Marketplace feature for a listing.</p>",
+      "refs": {
+        "FeatureRecommendationList$member": null
+      }
+    },
+    "FeatureRecommendationList": {
+      "base": null,
+      "refs": {
+        "FeatureRecommendations$Recommendations": "<p>The recommended features, in ranked order. The list has at most one entry for each feature and up to 5 entries.</p>"
+      }
+    },
+    "FeatureRecommendations": {
+      "base": "<p>The feature recommendations for a listing, for a product or a solution.</p>",
+      "refs": {
+        "ListingRecommendations$FeatureRecommendations": "<p>The recommendations for AWS Marketplace features to use with the listing, for a product or a solution.</p>"
+      }
+    },
     "FieldName": {
       "base": null,
       "refs": {
         "ValidationExceptionField$Field": "<p>The name of the request field that failed validation, expressed as a JSON path (for example, <code>Details.DeliveryOptions[0].Type</code>).</p>"
+      }
+    },
+    "FieldText": {
+      "base": null,
+      "refs": {
+        "TextAlternative$Value": "<p>The proposed text. The limit of the field itself, such as 255 characters for a title, applies.</p>"
+      }
+    },
+    "FieldTextItem": {
+      "base": null,
+      "refs": {
+        "FieldTextList$member": null
+      }
+    },
+    "FieldTextList": {
+      "base": null,
+      "refs": {
+        "TextListAlternative$Value": "<p>The proposed list of text values. The list has 1–15 items.</p>"
       }
     },
     "Filter": {
@@ -877,6 +1042,42 @@
         "ValueList$member": null
       }
     },
+    "FindingDescription": {
+      "base": null,
+      "refs": {
+        "ListingFinding$Description": "<p>What the criterion asks for. The text is the same for every listing. The reasoning for a specific listing is in the rationale of the alternatives.</p>"
+      }
+    },
+    "FindingList": {
+      "base": null,
+      "refs": {
+        "ContentRecommendation$Findings": "<p>The checklist of criteria for the field, in ranked order. It includes the criteria that the field passes and the criteria that it fails. The list is empty if there are none.</p>"
+      }
+    },
+    "FollowUpQuestion": {
+      "base": "<p>A question that you can answer to get a better recommendation, and the reason that it's asked.</p>",
+      "refs": {
+        "FollowUpQuestionList$member": null
+      }
+    },
+    "FollowUpQuestionJustification": {
+      "base": null,
+      "refs": {
+        "FollowUpQuestion$Justification": "<p>Why the question is asked.</p>"
+      }
+    },
+    "FollowUpQuestionList": {
+      "base": null,
+      "refs": {
+        "ContentRecommendation$FollowUpQuestions": "<p>Questions that you can answer to get a better recommendation. The list is empty if there are none.</p>"
+      }
+    },
+    "FollowUpQuestionText": {
+      "base": null,
+      "refs": {
+        "FollowUpQuestion$Question": "<p>The question to answer.</p>"
+      }
+    },
     "FrameworkFilters": {
       "base": "<p>Framework-specific filters used to scope <code>ListAssessments</code> results. Set exactly one member, corresponding to the framework you want to filter by.</p>",
       "refs": {
@@ -886,7 +1087,8 @@
     "FrameworkId": {
       "base": null,
       "refs": {
-        "ListAssessmentsRequest$FrameworkId": "<p>The unique identifier of a framework. When specified, only assessments performed against this framework are returned. For example, <code>AMISecurity</code>.</p>"
+        "ListAssessmentsRequest$FrameworkId": "<p>The unique identifier of a framework. When specified, only assessments performed against this framework are returned. For example, <code>AMISecurity</code>. Required when you use <code>EntityIds</code> in <code>AssessmentTargetFilter</code>.</p>",
+        "StartAssessmentRequest$FrameworkId": "<p>The unique identifier of the framework that defines the controls to run.</p>"
       }
     },
     "FrameworkSummary": {
@@ -936,6 +1138,7 @@
       "refs": {
         "Change$DetailsDocument": "<p>Alternative field that accepts a JSON value instead of a string for <code>ChangeType</code> details. You can use either <code>Details</code> or <code>DetailsDocument</code>, but not both.</p> <p>To download the \"DetailsDocument\" shapes, see the <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-python\">Python</a> and <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-java/tree/main\">Java</a> shapes on GitHub.</p>",
         "ChangeSummary$DetailsDocument": "<p>The JSON value of the details specific to the change type of the requested change.</p> <p>To download the \"DetailsDocument\" shapes, see the <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-python\">Python</a> and <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-java/tree/main\">Java</a> shapes on GitHub.</p>",
+        "ControlInput$Input": "<p>Optional. The input for the control, as a JSON document. The fields that a control accepts depend on the control.</p>",
         "DescribeEntityResponse$DetailsDocument": "<p>The JSON value of the details specific to the entity.</p> <p>To download \"DetailsDocument\" shapes, see the <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-python\">Python</a> and <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-java/tree/main\">Java</a> shapes on GitHub.</p>",
         "EntityDetail$DetailsDocument": "<p>An object that contains all the details of the entity.</p>"
       }
@@ -989,6 +1192,55 @@
     "ListTagsForResourceResponse": {
       "base": null,
       "refs": {}
+    },
+    "ListingCaseStudy": {
+      "base": "<p>A recommended case study.</p>",
+      "refs": {
+        "CaseStudyList$member": null
+      }
+    },
+    "ListingFinding": {
+      "base": "<p>One row of the checklist of criteria for a listing field. A row is either a criterion that the field already meets or advice for a criterion that it doesn't.</p>",
+      "refs": {
+        "FindingList$member": null
+      }
+    },
+    "ListingFindingStatus": {
+      "base": null,
+      "refs": {
+        "ListingFinding$Status": "<p>The result for the criterion. Valid values are:</p> <ul> <li> <p> <code>PASS</code> - The criterion is met and no action is needed.</p> </li> <li> <p> <code>FAIL</code> - The criterion isn't met or wasn't scored.</p> </li> </ul> <p>This value is different from the status of the content recommendation.</p>"
+      }
+    },
+    "ListingQualitySummary": {
+      "base": "<p>The details of the resource assessed under the Listing Quality framework.</p>",
+      "refs": {
+        "FrameworkSummary$ListingQualitySummary": "<p>The details of the resource assessed under the Listing Quality framework.</p>"
+      }
+    },
+    "ListingQualityTier": {
+      "base": null,
+      "refs": {
+        "ListingQualitySummary$Tier": "<p>The quality tier of the listing. Valid values are <code>NEEDS_IMPROVEMENT</code>, <code>BASIC</code>, <code>STRONG</code>, and <code>EXCELLENT</code>.</p>",
+        "ListingRecommendationsSummary$Tier": "<p>The quality tier of the listing. Valid values are <code>NEEDS_IMPROVEMENT</code>, <code>BASIC</code>, <code>STRONG</code>, and <code>EXCELLENT</code>.</p>"
+      }
+    },
+    "ListingRecommendations": {
+      "base": "<p>The recommendations that a listing recommendations control produced. Exactly one member is set, corresponding to the control: content recommendations for a product, content recommendations for a solution, or feature recommendations.</p>",
+      "refs": {
+        "ControlSummary$ListingRecommendations": "<p>The recommendations that a listing recommendations control produced for the listing.</p>"
+      }
+    },
+    "ListingRecommendationsSummary": {
+      "base": "<p>The details of the resource assessed under the Listing Recommendations framework.</p>",
+      "refs": {
+        "FrameworkSummary$ListingRecommendationsSummary": "<p>The details of the resource assessed under the Listing Recommendations framework.</p>"
+      }
+    },
+    "ListingUseCase": {
+      "base": "<p>A use case from the AWS Marketplace use case taxonomy.</p>",
+      "refs": {
+        "UseCaseList$member": null
+      }
     },
     "MachineLearningProductEntityIdFilter": {
       "base": "<p>The filter for machine learning product entity IDs.</p>",
@@ -1455,6 +1707,25 @@
         "OfferSummary$State": "<p>The status of the offer.</p>"
       }
     },
+    "OfferSubsidiaryAuthorizationIdFilter": {
+      "base": "<p>A filter that matches offers by the ID of the subsidiary authorization they were created from.</p> <note> <p>Not all offers have a <code>SubsidiaryAuthorizationId</code>.</p> </note>",
+      "refs": {
+        "OfferFilters$SubsidiaryAuthorizationId": "<p>A filter that matches offers by the ID of the subsidiary authorization that they were created from.</p> <note> <p>Not all offers have a <code>SubsidiaryAuthorizationId</code>.</p> </note>"
+      }
+    },
+    "OfferSubsidiaryAuthorizationIdFilterValueList": {
+      "base": null,
+      "refs": {
+        "OfferSubsidiaryAuthorizationIdFilter$ValueList": "<p>A list of subsidiary authorization IDs to filter offers by. You can include up to 10 subsidiary authorization IDs in this list.</p>"
+      }
+    },
+    "OfferSubsidiaryAuthorizationIdString": {
+      "base": null,
+      "refs": {
+        "OfferSubsidiaryAuthorizationIdFilterValueList$member": null,
+        "OfferSummary$SubsidiaryAuthorizationId": "<p>The ID of the subsidiary authorization that the offer was created from. The ID begins with <code>subauthz-</code> followed by 13 alphanumeric characters.</p>"
+      }
+    },
     "OfferSummary": {
       "base": "<p>Summarized information about an offer.</p>",
       "refs": {
@@ -1530,6 +1801,12 @@
         "ListEntitiesRequest$OwnershipType": "<p>Filters the returned set of entities based on their owner. The default is <code>SELF</code>. To list entities shared with you through AWS Resource Access Manager (AWS RAM), set to <code>SHARED</code>. Entities shared through the AWS Marketplace Catalog API <code>PutResourcePolicy</code> operation can't be discovered through the <code>SHARED</code> parameter.</p>"
       }
     },
+    "ProductContentRecommendations": {
+      "base": "<p>The content recommendations for a product listing, with one member for each listing field. A member is absent if nothing is recommended for that field.</p>",
+      "refs": {
+        "ListingRecommendations$ProductContentRecommendations": "<p>The content recommendations for a product listing.</p>"
+      }
+    },
     "PutResourcePolicyRequest": {
       "base": null,
       "refs": {}
@@ -1537,6 +1814,51 @@
     "PutResourcePolicyResponse": {
       "base": null,
       "refs": {}
+    },
+    "Rationale": {
+      "base": null,
+      "refs": {
+        "AdditionalResourcesAlternative$Rationale": "<p>Why this alternative is recommended.</p>",
+        "CaseStudiesAlternative$Rationale": "<p>Why this set of case studies fits the solution.</p>",
+        "FeatureRecommendation$Rationale": "<p>Why the feature is recommended.</p>",
+        "ListingCaseStudy$Rationale": "<p>Why this case study was selected.</p>",
+        "ListingUseCase$Rationale": "<p>Why this use case is recommended.</p>",
+        "TextAlternative$Rationale": "<p>Why this alternative is recommended.</p>",
+        "TextListAlternative$Rationale": "<p>Why this alternative is recommended.</p>",
+        "UseCasesAlternative$Rationale": "<p>Why this alternative is recommended.</p>"
+      }
+    },
+    "RecommendationCitation": {
+      "base": "<p>A source that the recommendations are based on.</p>",
+      "refs": {
+        "CitationList$member": null
+      }
+    },
+    "RecommendationSeverity": {
+      "base": null,
+      "refs": {
+        "FeatureRecommendation$Severity": "<p>How much the recommendation blocks the listing. Valid values are <code>BLOCKING</code> and <code>ADVISORY</code>.</p>",
+        "ListingFinding$Severity": "<p>How much the criterion blocks the listing. It is set on every row. For a row with a status of <code>PASS</code>, it is the weight of a criterion that is already met. Valid values are <code>BLOCKING</code> and <code>ADVISORY</code>.</p>"
+      }
+    },
+    "RecommendedAction": {
+      "base": null,
+      "refs": {
+        "FeatureRecommendation$Action": "<p>What you should do. It might contain a link to the console.</p>",
+        "ListingFinding$Action": "<p>What you should do to meet the criterion.</p>"
+      }
+    },
+    "RecommendedFeatureId": {
+      "base": null,
+      "refs": {
+        "FeatureRecommendation$FeatureId": "<p>The feature that is recommended. Valid values are <code>REQUEST_PRIVATE_OFFER</code>, <code>REQUEST_A_DEMO</code>, <code>PROMOTIONAL_MEDIA</code>, <code>FREE_TRIAL</code>, and <code>QUICK_LAUNCH</code>.</p>"
+      }
+    },
+    "RecommendedFeatureStatus": {
+      "base": null,
+      "refs": {
+        "FeatureRecommendation$Status": "<p>Whether the listing has the feature. Valid values are:</p> <ul> <li> <p> <code>PASS</code> - The listing already has the feature.</p> </li> <li> <p> <code>FAIL</code> - The feature is one to turn on.</p> </li> </ul>"
+      }
     },
     "RequestedChangeList": {
       "base": null,
@@ -1932,12 +2254,15 @@
         "ContainerSecurityFilters$DeliveryOptionId": "<p>The unique ID of the delivery option whose Container Security assessments you want to list.</p>",
         "ContainerSecuritySummary$DeliveryOptionId": "<p>The unique ID of the delivery option that was evaluated.</p>",
         "ControlAssessment$ControlId": "<p>The unique ID of the control that was evaluated.</p>",
+        "ControlInput$ControlId": "<p>The unique identifier of the control to run.</p>",
         "DescribeAssessmentResponse$AssessmentId": "<p>The unique ID of the assessment.</p>",
         "DescribeChangeSetRequest$ChangeSetId": "<p>Required. The unique identifier for the <code>StartChangeSet</code> request that you want to describe the details for.</p>",
         "DescribeChangeSetResponse$ChangeSetId": "<p>Required. The unique identifier for the change set referenced in this request.</p>",
         "DescribeEntityRequest$EntityId": "<p>Required. The unique ID of the entity to describe.</p>",
+        "EntityIdList$member": null,
         "EntitySummary$EntityId": "<p>The unique identifier for the entity.</p>",
         "ResourceIdList$member": null,
+        "StartAssessmentRequest$EntityId": "<p>The unique ID of the product entity to assess.</p>",
         "StartChangeSetResponse$ChangeSetId": "<p>Unique identifier generated for the request.</p>"
       }
     },
@@ -1964,6 +2289,24 @@
       "refs": {
         "GetResourcePolicyResponse$Policy": "<p>The policy document to set; formatted in JSON.</p>",
         "PutResourcePolicyRequest$Policy": "<p>The policy document to set; formatted in JSON.</p>"
+      }
+    },
+    "ResourceText": {
+      "base": null,
+      "refs": {
+        "AdditionalResource$Text": "<p>The text to display for the resource.</p>"
+      }
+    },
+    "ResourceType": {
+      "base": null,
+      "refs": {
+        "AdditionalResource$Type": "<p>The type of the resource. Currently, the only value that the service returns is <code>Link</code>.</p>"
+      }
+    },
+    "ResourceUrl": {
+      "base": null,
+      "refs": {
+        "AdditionalResource$Url": "<p>The URL of the resource.</p>"
       }
     },
     "SaaSProductEntityIdFilter": {
@@ -2075,6 +2418,12 @@
       "base": "<p>The maximum number of open requests per account has been exceeded.</p>",
       "refs": {}
     },
+    "SolutionContentRecommendations": {
+      "base": "<p>The content recommendations for a solution listing, with one member for each listing field. A member is absent if nothing is recommended for that field.</p>",
+      "refs": {
+        "ListingRecommendations$SolutionContentRecommendations": "<p>The content recommendations for a solution listing.</p>"
+      }
+    },
     "Sort": {
       "base": "<p>An object that contains two attributes, <code>SortBy</code> and <code>SortOrder</code>.</p>",
       "refs": {
@@ -2103,6 +2452,14 @@
         "Sort$SortOrder": "<p>The sorting order. Can be <code>ASCENDING</code> or <code>DESCENDING</code>. The default value is <code>DESCENDING</code>.</p>",
         "SubsidiaryAuthorizationSort$SortOrder": "<p>The sorting order. Can be <code>ASCENDING</code> or <code>DESCENDING</code>. The default value is <code>DESCENDING</code>.</p>"
       }
+    },
+    "StartAssessmentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartAssessmentResponse": {
+      "base": null,
+      "refs": {}
     },
     "StartChangeSetRequest": {
       "base": null,
@@ -2320,7 +2677,8 @@
       "base": null,
       "refs": {
         "Tag$Key": "<p>The key associated with the tag.</p>",
-        "TagKeyList$member": null
+        "TagKeyList$member": null,
+        "TagMap$key": null
       }
     },
     "TagKeyList": {
@@ -2338,6 +2696,12 @@
         "TagResourceRequest$Tags": "<p>Required. A list of objects specifying each key name and value. Number of objects allowed: 1-50.</p>"
       }
     },
+    "TagMap": {
+      "base": null,
+      "refs": {
+        "StartAssessmentRequest$Tags": "<p>A map of tags to apply to the assessment when you create it. Each tag is a key-value pair. You can specify 1–200 tags.</p>"
+      }
+    },
     "TagResourceRequest": {
       "base": null,
       "refs": {}
@@ -2349,7 +2713,32 @@
     "TagValue": {
       "base": null,
       "refs": {
-        "Tag$Value": "<p>The value associated with the tag.</p>"
+        "Tag$Value": "<p>The value associated with the tag.</p>",
+        "TagMap$value": null
+      }
+    },
+    "TextAlternative": {
+      "base": "<p>A proposed text value for a listing field.</p>",
+      "refs": {
+        "TextAlternativeList$member": null
+      }
+    },
+    "TextAlternativeList": {
+      "base": null,
+      "refs": {
+        "ContentAlternatives$Text": "<p>The proposed values for a text field, such as <code>ProductTitle</code> or <code>LongDescription</code>. You can have up to 3 alternatives.</p>"
+      }
+    },
+    "TextListAlternative": {
+      "base": "<p>A proposed list of text values for a listing field.</p>",
+      "refs": {
+        "TextListAlternativeList$member": null
+      }
+    },
+    "TextListAlternativeList": {
+      "base": null,
+      "refs": {
+        "ContentAlternatives$TextList": "<p>The proposed values for <code>Highlights</code>, <code>SearchKeywords</code>, or <code>Categories</code>. You can have up to 3 alternatives.</p>"
       }
     },
     "ThrottlingException": {
@@ -2363,6 +2752,50 @@
     "UntagResourceResponse": {
       "base": null,
       "refs": {}
+    },
+    "UseCaseDetails": {
+      "base": null,
+      "refs": {
+        "ListingUseCase$UseCaseDetails": "<p>How the solution serves the use case.</p>"
+      }
+    },
+    "UseCaseId": {
+      "base": null,
+      "refs": {
+        "ListingUseCase$Id": "<p>The unique identifier of the use case.</p>"
+      }
+    },
+    "UseCaseList": {
+      "base": null,
+      "refs": {
+        "UseCasesAlternative$Value": "<p>The proposed use cases, in ranked order.</p>"
+      }
+    },
+    "UseCaseRank": {
+      "base": null,
+      "refs": {
+        "ListingUseCase$Rank": "<p>The rank of the use case. A rank of 1 is the strongest match. Valid values range from 1 to 5.</p>"
+      }
+    },
+    "UseCaseTaxonomyValue": {
+      "base": null,
+      "refs": {
+        "ListingUseCase$Name": "<p>The name of the use case.</p>",
+        "ListingUseCase$Group": "<p>The group of the use case in the taxonomy.</p>",
+        "ListingUseCase$Subgroup": "<p>The subgroup of the use case in the taxonomy.</p>"
+      }
+    },
+    "UseCasesAlternative": {
+      "base": "<p>A proposed set of use cases for a solution.</p>",
+      "refs": {
+        "UseCasesAlternativeList$member": null
+      }
+    },
+    "UseCasesAlternativeList": {
+      "base": null,
+      "refs": {
+        "ContentAlternatives$UseCases": "<p>The proposed values for <code>UseCases</code>. You can have up to 3 alternatives.</p>"
+      }
     },
     "ValidationException": {
       "base": "<p>An error occurred during validation.</p> <p>HTTP status code: 422</p>",
@@ -2390,6 +2823,12 @@
       "base": null,
       "refs": {
         "Filter$ValueList": "<p> <code>ListEntities</code> - This is a list of unique <code>EntityId</code>s.</p> <p> <code>ListChangeSets</code> - The supported filter names and associated <code>ValueList</code>s is as follows:</p> <ul> <li> <p> <code>ChangeSetName</code> - The supported <code>ValueList</code> is a list of non-unique <code>ChangeSetName</code>s. These are defined when you call the <code>StartChangeSet</code> action.</p> </li> <li> <p> <code>Status</code> - The supported <code>ValueList</code> is a list of statuses for all change set requests.</p> </li> <li> <p> <code>EntityId</code> - The supported <code>ValueList</code> is a list of unique <code>EntityId</code>s.</p> </li> <li> <p> <code>BeforeStartTime</code> - The supported <code>ValueList</code> is a list of all change sets that started before the filter value.</p> </li> <li> <p> <code>AfterStartTime</code> - The supported <code>ValueList</code> is a list of all change sets that started after the filter value.</p> </li> <li> <p> <code>BeforeEndTime</code> - The supported <code>ValueList</code> is a list of all change sets that ended before the filter value.</p> </li> <li> <p> <code>AfterEndTime</code> - The supported <code>ValueList</code> is a list of all change sets that ended after the filter value.</p> </li> </ul>"
+      }
+    },
+    "VerificationSource": {
+      "base": null,
+      "refs": {
+        "ControlAssessment$VerificationSource": "<p>Where the result of the control came from. This value doesn't say whether the control passed. A control that you attested to can still have a result of <code>PASS</code>. Valid values are:</p> <ul> <li> <p> <code>AWS_VERIFIED</code> - AWS evaluated the control.</p> </li> <li> <p> <code>SELF_ATTESTED</code> - You attested to the result of the control.</p> </li> </ul>"
       }
     },
     "VersionedFrameworkId": {

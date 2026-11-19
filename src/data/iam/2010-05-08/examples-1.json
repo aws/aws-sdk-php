@@ -234,6 +234,38 @@
         "description": "The following example defines a new OIDC provider in IAM with a client ID of my-application-id and pointing at the server with a URL of https://server.example.com.",
         "id": "4e4a6bff-cc97-4406-922e-0ab4a82cdb63",
         "title": "To create an instance profile"
+      },
+      {
+        "input": {
+          "ClientIDList": [
+            "my-application-id"
+          ],
+          "ContextProvider": {
+            "KeyDefinitionList": [
+              {
+                "SourceKey": "department",
+                "TargetKey": "department"
+              }
+            ],
+            "SubjectSourceKey": "sub",
+            "SubjectTypeValue": "user"
+          },
+          "IdentityCenterInstanceArn": "arn:aws:sso:::instance/ssoins-1234567890abcdef",
+          "ThumbprintList": [
+            "3768084dfb3d2b68b7897bf5f565da8efEXAMPLE"
+          ],
+          "Url": "https://server.example.com"
+        },
+        "output": {
+          "OpenIDConnectProviderArn": "arn:aws:iam::123456789012:oidc-provider/server.example.com"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example creates an OIDC provider with a context provider that uses the sub claim as the subject and maps the department claim to a trusted context key. It also associates an IAM Identity Center instance with the provider.",
+        "id": "87c3409b-70c1-44c2-991e-aa631914144f",
+        "title": "To create an OIDC provider with trusted identity propagation"
       }
     ],
     "CreateRole": [
@@ -260,6 +292,51 @@
         "description": "The following command creates a role named Test-Role and attaches a trust policy that you must convert from JSON to a string. Upon success, the response includes the same policy as a URL-encoded JSON string.",
         "id": "eaaa4b5f-51f1-4f73-b0d3-30127040eff8",
         "title": "To create an IAM role"
+      }
+    ],
+    "CreateSAMLProvider": [
+      {
+        "input": {
+          "Name": "MyUniversity",
+          "SAMLMetadataDocument": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><md:EntityDescriptor xmlns:md=\"urn:oasis:names:tc:SAML:2.0:metadata\" entityID=\"https://idp.example.com/saml\"><md:IDPSSODescriptor WantAuthnRequestsSigned=\"false\" protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\"><md:KeyDescriptor use=\"signing\"><ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"><ds:X509Data><ds:X509Certificate>MIIDdzCCAl+gAwIBAgIEbySuqTANBgkqhkiG9w0BAQsFADBsMRAwDgYDVQQGEwdVbmtub3duMRAwDgYDVQQIEwdVbmtub3duMRAwDgYDVQQHEwdVbmtub3duMRAwDgYDVQQKEwdVbmtub3duMRAwDgYDVQQLEwdVbmtub3duMRAwDgYDVQQDEwdFWEFNUExFMB4XDTI2MTEwMTAwMDAwMFoXDTM2MTEwMTAwMDAwMFowbDEQMA4GA1UEBhMHVW5rbm93bjEQMA4GA1UECBMHVW5rbm93bjEQMA4GA1UEBxMHVW5rbm93bjEQMA4GA1UEChMHVW5rbm93bjEQMA4GA1UECxMHVW5rbm93bjEQMA4GA1UEAxMHRVhBTVBMRTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAEXAMPLE</ds:X509Certificate></ds:X509Data></ds:KeyInfo></md:KeyDescriptor><md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat><md:SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"https://idp.example.com/saml/sso\"/></md:IDPSSODescriptor></md:EntityDescriptor>"
+        },
+        "output": {
+          "SAMLProviderArn": "arn:aws:iam::123456789012:saml-provider/MyUniversity"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example creates a SAML provider named MyUniversity from a SAML metadata document.",
+        "id": "170f2da8-8146-4808-a1d2-64931f37f8ec",
+        "title": "To create a SAML provider"
+      },
+      {
+        "input": {
+          "ContextProvider": {
+            "KeyDefinitionList": [
+              {
+                "SourceKey": "department",
+                "TargetKey": "department"
+              }
+            ],
+            "SubjectSourceKey": "email",
+            "SubjectTypeValue": "user"
+          },
+          "IdentityCenterInstanceArn": "arn:aws:sso:::instance/ssoins-1234567890abcdef",
+          "Name": "MyUniversity",
+          "SAMLMetadataDocument": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><md:EntityDescriptor xmlns:md=\"urn:oasis:names:tc:SAML:2.0:metadata\" entityID=\"https://idp.example.com/saml\"><md:IDPSSODescriptor WantAuthnRequestsSigned=\"false\" protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\"><md:KeyDescriptor use=\"signing\"><ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"><ds:X509Data><ds:X509Certificate>MIIDdzCCAl+gAwIBAgIEbySuqTANBgkqhkiG9w0BAQsFADBsMRAwDgYDVQQGEwdVbmtub3duMRAwDgYDVQQIEwdVbmtub3duMRAwDgYDVQQHEwdVbmtub3duMRAwDgYDVQQKEwdVbmtub3duMRAwDgYDVQQLEwdVbmtub3duMRAwDgYDVQQDEwdFWEFNUExFMB4XDTI2MTEwMTAwMDAwMFoXDTM2MTEwMTAwMDAwMFowbDEQMA4GA1UEBhMHVW5rbm93bjEQMA4GA1UECBMHVW5rbm93bjEQMA4GA1UEBxMHVW5rbm93bjEQMA4GA1UEChMHVW5rbm93bjEQMA4GA1UECxMHVW5rbm93bjEQMA4GA1UEAxMHRVhBTVBMRTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAEXAMPLE</ds:X509Certificate></ds:X509Data></ds:KeyInfo></md:KeyDescriptor><md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat><md:SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"https://idp.example.com/saml/sso\"/></md:IDPSSODescriptor></md:EntityDescriptor>"
+        },
+        "output": {
+          "SAMLProviderArn": "arn:aws:iam::123456789012:saml-provider/MyUniversity"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example creates a SAML provider with a context provider that uses the email attribute as the subject and maps the department attribute to a trusted context key. It also associates an IAM Identity Center instance with the provider.",
+        "id": "507a3c89-7d27-4fd7-98ae-598c271daa79",
+        "title": "To create a SAML provider with trusted identity propagation"
       }
     ],
     "CreateUser": [
@@ -681,6 +758,43 @@
         "title": "To get password information for an IAM user"
       }
     ],
+    "GetOpenIDConnectProvider": [
+      {
+        "input": {
+          "OpenIDConnectProviderArn": "arn:aws:iam::123456789012:oidc-provider/server.example.com"
+        },
+        "output": {
+          "ClientIDList": [
+            "my-application-id"
+          ],
+          "ContextProvider": {
+            "KeyDefinitionList": [
+              {
+                "SourceKey": "department",
+                "TargetKey": "department"
+              }
+            ],
+            "SubjectSourceKey": "sub",
+            "SubjectTypeValue": "user"
+          },
+          "CreateDate": "2026-11-01T17:22:18Z",
+          "IdentityCenterInstanceArn": "arn:aws:sso:::instance/ssoins-1234567890abcdef",
+          "IdentityStoreArn": "arn:aws:identitystore::123456789012:identitystore/d-1234567890",
+          "Tags": [],
+          "ThumbprintList": [
+            "3768084dfb3d2b68b7897bf5f565da8efEXAMPLE"
+          ],
+          "Url": "server.example.com"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example returns the configuration of an OIDC provider, including its trusted identity propagation context provider and the associated IAM Identity Center instance.",
+        "id": "92f509ec-d96d-4f92-b7a9-c3f98251e479",
+        "title": "To get information about an OIDC provider"
+      }
+    ],
     "GetOrganizationsAccessReport": [
       {
         "input": {
@@ -753,6 +867,47 @@
         "description": "The following command gets information about the role named Test-Role.",
         "id": "5b7d03a6-340c-472d-aa77-56425950d8b0",
         "title": "To get information about an IAM role"
+      }
+    ],
+    "GetSAMLProvider": [
+      {
+        "input": {
+          "SAMLProviderArn": "arn:aws:iam::123456789012:saml-provider/MyUniversity"
+        },
+        "output": {
+          "AssertionEncryptionMode": "Allowed",
+          "ContextProvider": {
+            "KeyDefinitionList": [
+              {
+                "SourceKey": "department",
+                "TargetKey": "department"
+              }
+            ],
+            "SubjectSourceKey": "email",
+            "SubjectTypeValue": "user"
+          },
+          "CreateDate": "2026-11-01T17:22:18Z",
+          "IdentityCenterInstanceArn": "arn:aws:sso:::instance/ssoins-1234567890abcdef",
+          "IdentityStoreArn": "arn:aws:identitystore::123456789012:identitystore/d-1234567890",
+          "SAMLKeyHashes": [
+            {
+              "IssuerURL": "https://idp.example.com/saml",
+              "KeyHashes": [
+                "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8EXAMPLE"
+              ]
+            }
+          ],
+          "SAMLProviderUUID": "SAMLPROVIDERUUIDEXAMPLE",
+          "Tags": [],
+          "ValidUntil": "2036-11-01T17:22:18Z"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example returns the configuration of a SAML provider, including its trusted identity propagation context provider, the issuer key hashes, and the associated IAM Identity Center instance.",
+        "id": "aec4ea7b-4c28-490b-beee-89e1bb8375ce",
+        "title": "To get information about a SAML provider"
       }
     ],
     "GetServiceLastAccessedDetails": [
@@ -990,6 +1145,30 @@
         "title": "To list the groups that an IAM user belongs to"
       }
     ],
+    "ListOpenIDConnectProviders": [
+      {
+        "input": {},
+        "output": {
+          "OpenIDConnectProviderList": [
+            {
+              "Arn": "arn:aws:iam::123456789012:oidc-provider/server.example.com",
+              "IsTrustedIdentityPropagationEnabled": true
+            },
+            {
+              "Arn": "arn:aws:iam::123456789012:oidc-provider/server.example.org",
+              "IsTrustedIdentityPropagationEnabled": false
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example lists the OIDC providers in the current account and shows whether trusted identity propagation is enabled for each provider.",
+        "id": "1d3fdb14-7ead-4387-9597-5cd237d2eccc",
+        "title": "To list the OIDC providers in an account"
+      }
+    ],
     "ListOrganizationsFeatures": [
       {
         "input": {},
@@ -1082,6 +1261,34 @@
         "description": "The following example shows how to list the tags attached to a role.",
         "id": "to-list-the-tags-attached-to-an-iam-role-1506719238376",
         "title": "To list the tags attached to an IAM role"
+      }
+    ],
+    "ListSAMLProviders": [
+      {
+        "input": {},
+        "output": {
+          "SAMLProviderList": [
+            {
+              "Arn": "arn:aws:iam::123456789012:saml-provider/MyUniversity",
+              "CreateDate": "2026-11-01T17:22:18Z",
+              "IsTrustedIdentityPropagationEnabled": true,
+              "ValidUntil": "2036-11-01T17:22:18Z"
+            },
+            {
+              "Arn": "arn:aws:iam::123456789012:saml-provider/MyCompany",
+              "CreateDate": "2020-03-11T13:11:02Z",
+              "IsTrustedIdentityPropagationEnabled": false,
+              "ValidUntil": "2030-03-11T13:11:02Z"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example lists the SAML providers in the current account and shows whether trusted identity propagation is enabled for each provider.",
+        "id": "b7430547-2133-4f01-bb30-c83b9aacf452",
+        "title": "To list the SAML providers in an account"
       }
     ],
     "ListSigningCertificates": [
@@ -1438,6 +1645,88 @@
         "description": "The following command creates or changes the password for the IAM user named Bob.",
         "id": "036d9498-ecdb-4ed6-a8d8-366c383d1487",
         "title": "To change the password for an IAM user"
+      }
+    ],
+    "UpdateOpenIDConnectProvider": [
+      {
+        "input": {
+          "ContextProvider": {
+            "KeyDefinitionList": [
+              {
+                "SourceKey": "department",
+                "TargetKey": "department"
+              }
+            ],
+            "SubjectSourceKey": "sub",
+            "SubjectTypeValue": "user"
+          },
+          "OpenIDConnectProviderArn": "arn:aws:iam::123456789012:oidc-provider/server.example.com"
+        },
+        "output": {},
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example sets a trusted identity propagation context provider on an existing OIDC provider. The context provider uses the sub claim as the subject and maps the department claim to a trusted context key.",
+        "id": "cad28ccc-0240-4bf5-aea0-70a19d13d0cd",
+        "title": "To set the context provider for an OIDC provider"
+      },
+      {
+        "input": {
+          "IdentityCenterInstanceArn": "arn:aws:sso:::instance/ssoins-1234567890abcdef",
+          "OpenIDConnectProviderArn": "arn:aws:iam::123456789012:oidc-provider/server.example.com"
+        },
+        "output": {},
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example associates an IAM Identity Center instance with an existing OIDC provider.",
+        "id": "cb61b25e-4a7f-46f8-a087-1190a80b6e5c",
+        "title": "To associate an IAM Identity Center instance with an OIDC provider"
+      }
+    ],
+    "UpdateSAMLProvider": [
+      {
+        "input": {
+          "ContextProvider": {
+            "KeyDefinitionList": [
+              {
+                "SourceKey": "department",
+                "TargetKey": "department"
+              }
+            ],
+            "SubjectSourceKey": "email",
+            "SubjectTypeValue": "user"
+          },
+          "SAMLProviderArn": "arn:aws:iam::123456789012:saml-provider/MyUniversity"
+        },
+        "output": {
+          "SAMLProviderArn": "arn:aws:iam::123456789012:saml-provider/MyUniversity"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example sets a trusted identity propagation context provider on an existing SAML provider. The context provider uses the email attribute as the subject and maps the department attribute to a trusted context key.",
+        "id": "4f6d2b1a-9c3e-4a7b-8d5f-2e1c0b9a8f7d",
+        "title": "To set the context provider for a SAML provider"
+      },
+      {
+        "input": {
+          "IdentityCenterInstanceArn": "arn:aws:sso:::instance/ssoins-1234567890abcdef",
+          "SAMLProviderArn": "arn:aws:iam::123456789012:saml-provider/MyUniversity"
+        },
+        "output": {
+          "SAMLProviderArn": "arn:aws:iam::123456789012:saml-provider/MyUniversity"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example associates an IAM Identity Center instance with an existing SAML provider.",
+        "id": "8e2a7c4d-1b6f-4e3a-9d0c-5f7b2a1e6c3d",
+        "title": "To associate an IAM Identity Center instance with a SAML provider"
       }
     ],
     "UpdateSigningCertificate": [

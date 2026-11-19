@@ -2,9 +2,9 @@
   "version": "2.0",
   "service": "<p>Agent Registry lets callers discover, list, and retrieve approved records published to a registry.</p>",
   "operations": {
-    "BatchGetDiscoverableRegistryRecord": "<p> Retrieves multiple discoverable registry records by ID from a single registry. Records that cannot be retrieved are reported individually in the <code>errors</code> list rather than failing the entire request.</p>",
+    "BatchGetDiscoverableRegistryRecord": "<p> Retrieves multiple discoverable registry records by ID from a single registry. Records that cannot be retrieved are reported individually in the <code>errors</code> list rather than failing the entire request. For each skill record that has a skill package, the operation also returns <code>artifact</code>. It contains a short-lived download URL and a SHA-256 checksum for the package of the record's latest approved revision. If the registry can't create a download URL for a package, the whole request fails.</p>",
     "ListDiscoverableRegistryRecords": "<p> Lists the discoverable registry records in a registry. You can optionally filter and paginate the results.</p>",
-    "SearchDiscoverableRegistryRecords": "<p> Searches the discoverable registry records in a registry using a natural language query. Returns metadata for the matching records ordered by relevance.</p>"
+    "SearchDiscoverableRegistryRecords": "<p> Searches the discoverable registry records in a registry using a natural language query. Returns metadata for the matching records ordered by relevance.</p> <p> Returns at most 1000 results across all pages when <code>searchType</code> is <code>KEYWORD</code>, and at most 20 results when it is <code>HYBRID</code> or <code>SEMANTIC</code>. To retrieve more records, refine the query or filters, or use <code>ListDiscoverableRegistryRecords</code> to list every record.</p>"
   },
   "shapes": {
     "A2aAgentCardDescriptor": {
@@ -139,9 +139,9 @@
       }
     },
     "DescriptorSourceUrl": {
-      "base": "<p>URL source for descriptor content</p>",
+      "base": "<p>The URL of a descriptor source, up to 2,048 characters, that starts with <code>https://</code> or <code>s3://</code>. The registry accepts <code>s3://</code> URLs only for agent skill sources, and its discovery operations never return them.</p>",
       "refs": {
-        "DescriptorSourceFromUrl$url": "<p> The URL from which the descriptor content is retrieved.</p>"
+        "DescriptorSourceFromUrl$url": "<p> The URL from which the descriptor content is retrieved. For an agent skill that synchronizes its SKILL.md from GitHub, this is the GitHub folder URL. The data plane doesn't return Amazon S3 (<code>s3://</code>) source URLs.</p>"
       }
     },
     "DescriptorTypeList": {
@@ -244,6 +244,12 @@
         "UnauthorizedException$message": null
       }
     },
+    "PresignedDownloadUrl": {
+      "base": "<p>A presigned URL that downloads a stored file until the URL expires. It's a bearer credential. Anyone who has the URL can download the file, so don't log, store, or share it.</p>",
+      "refs": {
+        "RegistryRecordArtifactDownload$downloadUrl": "<p>A presigned Amazon S3 URL that downloads the package. The URL is valid for up to 5 minutes, and the response doesn't include its expiry time. To get a new URL, call the operation again. Anyone who has the URL can download the package until it expires, so don't log, store, or share it.</p>"
+      }
+    },
     "RecordIdentifier": {
       "base": "<p>Record identifier that accepts either ARN or ID format</p>",
       "refs": {
@@ -279,6 +285,12 @@
       "refs": {
         "DiscoverableRegistryRecordSummary$recordArn": "<p> The Amazon Resource Name (ARN) of the registry record.</p>",
         "RegistryRecordSummary$recordArn": "<p> The Amazon Resource Name (ARN) of the registry record.</p>"
+      }
+    },
+    "RegistryRecordArtifactDownload": {
+      "base": "<p>The skill package of a registry record, as a short-lived download URL and the package's SHA-256 checksum. Responses never include the package bytes.</p>",
+      "refs": {
+        "RegistryRecordSummary$artifact": "<p> The skill package of the record's latest approved revision, as the package's SHA-256 checksum and a download URL that is valid for up to 5 minutes. Only <code>BatchGetDiscoverableRegistryRecord</code> returns this member, not <code>SearchDiscoverableRegistryRecords</code>. Absent when the record has no skill package.</p>"
       }
     },
     "RegistryRecordDisplayName": {
@@ -321,7 +333,7 @@
       }
     },
     "RegistryRecordStatus": {
-      "base": "<p>Registry record status</p>",
+      "base": "<p>The lifecycle status of a registry record. A record is <code>DRAFT</code> before it is submitted, <code>PENDING_APPROVAL</code> while it awaits curator review, and <code>APPROVED</code> after it is approved and discoverable. Rejecting a newer revision keeps the last approved revision discoverable. A <code>DEPRECATED</code> record isn't discoverable. <code>CREATING</code>, <code>UPDATING</code>, <code>CREATE_FAILED</code>, and <code>UPDATE_FAILED</code> reflect an asynchronous change that is in progress or has failed. <code>CREATE_PENDING_AUTH</code> and <code>UPDATE_PENDING_AUTH</code> mean that the record waits for a GitHub user to authorize access before it synchronizes from its GitHub source.</p>",
       "refs": {
         "DiscoverableRegistryRecordSummary$status": "<p> The lifecycle status of the registry record. A record is <code>DRAFT</code> before it is submitted, <code>PENDING_APPROVAL</code> while awaiting curator review, and <code>APPROVED</code> once it is approved and discoverable. <code>REJECTED</code> and <code>DEPRECATED</code> records are not discoverable. The <code>CREATING</code>, <code>UPDATING</code>, <code>CREATE_FAILED</code>, and <code>UPDATE_FAILED</code> values reflect the state of an in-progress or failed asynchronous change.</p>",
         "RegistryRecordSummary$status": "<p> The lifecycle status of the registry record. A record is <code>DRAFT</code> before it is submitted, <code>PENDING_APPROVAL</code> while awaiting curator review, and <code>APPROVED</code> once it is approved and discoverable. <code>REJECTED</code> and <code>DEPRECATED</code> records are not discoverable. The <code>CREATING</code>, <code>UPDATING</code>, <code>CREATE_FAILED</code>, and <code>UPDATE_FAILED</code> values reflect the state of an in-progress or failed asynchronous change.</p>"
@@ -337,7 +349,7 @@
       "base": null,
       "refs": {
         "BatchGetDiscoverableRegistryRecordResponse$registryRecords": "<p> The records that were successfully retrieved. Each record correlates to the request by its <code>recordId</code>.</p>",
-        "SearchDiscoverableRegistryRecordsResponse$registryRecords": "<p> The registry records that match the search query, ordered by relevance.</p>"
+        "SearchDiscoverableRegistryRecordsResponse$registryRecords": "<p> The registry records that match the search query, ordered by relevance. A page can contain fewer than <code>maxResults</code> records, or none, even when the response includes a <code>nextToken</code>. To retrieve every result, continue until the response has no <code>nextToken</code>.</p>"
       }
     },
     "RegistryRecordVersion": {
@@ -370,7 +382,13 @@
     "SearchDiscoverableRegistryRecordsRequestMaxResultsInteger": {
       "base": null,
       "refs": {
-        "SearchDiscoverableRegistryRecordsRequest$maxResults": "<p> The maximum number of results to return. Valid values are 1 through 20. The default value is 10.</p>"
+        "SearchDiscoverableRegistryRecordsRequest$maxResults": "<p> The maximum number of results to return in one page. Valid values are 1 through 50 when <code>searchType</code> is <code>KEYWORD</code>, and 1 through 20 when it is <code>HYBRID</code> or <code>SEMANTIC</code>. The default value is 10.</p>"
+      }
+    },
+    "SearchDiscoverableRegistryRecordsRequestNextTokenString": {
+      "base": null,
+      "refs": {
+        "SearchDiscoverableRegistryRecordsRequest$nextToken": "<p> The pagination token from a previous response. Use it to retrieve the next page of results, and send the same <code>searchQuery</code>, <code>registryIds</code>, <code>filters</code>, and <code>searchType</code> that you used for the first page. If any of them differ, the request fails with a <code>ValidationException</code>. A pagination token expires 15 minutes after the service returns the first page.</p>"
       }
     },
     "SearchDiscoverableRegistryRecordsRequestRegistryIdsList": {
@@ -386,7 +404,20 @@
     "SearchQuery": {
       "base": null,
       "refs": {
-        "SearchDiscoverableRegistryRecordsRequest$searchQuery": "<p> The natural language query to search for matching registry records.</p>"
+        "SearchDiscoverableRegistryRecordsRequest$searchQuery": "<p> The natural language query to search for matching registry records. If you specify an empty string, the operation returns the records that match the <code>filters</code>, most recently updated first, up to the result limit for the <code>searchType</code>.</p>"
+      }
+    },
+    "SearchType": {
+      "base": "<p> Specifies the ranking method for a search request.</p>",
+      "refs": {
+        "SearchDiscoverableRegistryRecordsRequest$searchType": "<p> Specifies how the service ranks registry records against the search query. If you omit this parameter, the service uses <code>HYBRID</code> in Amazon Web Services Regions that support semantic search and <code>KEYWORD</code> in Regions that do not. The response reports the search type that the service used. Valid values are the following:</p> <ul> <li> <p> <code>KEYWORD</code> – Ranks records by keyword match between the query terms and the record name, description, descriptors, and custom metadata text values. Available in every Amazon Web Services Region.</p> </li> <li> <p> <code>SEMANTIC</code> – Ranks records by semantic similarity to the query and returns the most similar records, up to <code>maxResults</code>, even when none of them closely matches the query.</p> </li> <li> <p> <code>HYBRID</code> – Combines keyword ranking and semantic ranking.</p> </li> </ul> <p> <code>HYBRID</code> and <code>SEMANTIC</code> are available in a limited number of Regions. If you specify either one in a Region that does not support semantic search, the request fails with a <code>ValidationException</code> that has the reason <code>UnsupportedInRegion</code>.</p>",
+        "SearchDiscoverableRegistryRecordsResponse$searchType": "<p> Specifies the search type that the service used to rank the returned records. If you omitted <code>searchType</code> in the request, this is the default for the Amazon Web Services Region: <code>HYBRID</code> where semantic search is supported, and <code>KEYWORD</code> elsewhere.</p>"
+      }
+    },
+    "Sha256Hash": {
+      "base": "<p>A SHA-256 checksum, as 64 lowercase hexadecimal characters.</p>",
+      "refs": {
+        "RegistryRecordArtifactDownload$sha256": "<p>The SHA-256 checksum of the package, as 64 lowercase hexadecimal characters. The download response carries no signature that you can check, so compare the checksum of the file that you download with this value before you use the package.</p>"
       }
     },
     "String": {
@@ -395,6 +426,7 @@
         "BatchGetDiscoverableRegistryRecordError$message": "<p> An optional human-readable detail about the error. Do not parse this value programmatically.</p>",
         "DescriptorTypeList$member": null,
         "ListDiscoverableRegistryRecordsResponse$nextToken": "<p> The pagination token to pass to a subsequent request to retrieve the next page of results. This field is absent when there are no more results.</p>",
+        "SearchDiscoverableRegistryRecordsResponse$nextToken": "<p> The pagination token to pass to a subsequent request to retrieve the next page of results. This field is absent when there are no more results, or when the search has returned the maximum number of results for its search type.</p>",
         "ValidationException$message": null,
         "ValidationExceptionField$name": "<p>The name of the field that failed validation.</p>",
         "ValidationExceptionField$message": "<p>A description of why the field failed validation.</p>"

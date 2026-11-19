@@ -563,7 +563,8 @@
         "UpdateAppBlockBuilderRequest$DisableIMDSV1": "<p>Set to true to disable Instance Metadata Service Version 1 (IMDSv1) and enforce IMDSv2. Set to false to enable both IMDSv1 and IMDSv2.</p>",
         "UpdateFleetRequest$EnableDefaultInternetAccess": "<p>Enables or disables default internet access for the fleet.</p>",
         "UpdateFleetRequest$DisableIMDSV1": "<p>Set to true to disable Instance Metadata Service Version 1 (IMDSv1) and enforce IMDSv2. Set to false to enable both IMDSv1 and IMDSv2.</p> <note> <p>Before disabling IMDSv1, ensure your WorkSpaces Applications images are running the agent version or managed image update released on or after January 16, 2024 to support IMDSv2 enforcement.</p> </note>",
-        "UrlRedirectionConfig$Enabled": "<p>Whether URL redirection is enabled for this direction.</p>"
+        "UrlRedirectionConfig$Enabled": "<p>Whether URL redirection is enabled for this direction.</p>",
+        "WebAuthnRedirection$Enabled": "<p>Specifies whether WebAuthn redirection is enabled for the stack.</p>"
       }
     },
     "CertificateBasedAuthProperties": {
@@ -1875,6 +1876,18 @@
         "StreamingExperienceSettings$PreferredProtocol": "<p>The preferred protocol that you want to use while streaming your application.</p>"
       }
     },
+    "ProcessCompatibilityList": {
+      "base": "<p>The list of process executable names on the remote host for which you enable WebAuthn redirection. Matching is case-insensitive, and duplicates are not allowed.</p> <p>If you omit this field on a Windows fleet, WorkSpaces Applications uses a built-in default list of common browser and sign-in processes. If you specify a list, your list replaces the default list rather than adding to it. Include any default entries that your workloads still need.</p> <p>WorkSpaces Applications does not support this field on Linux fleets.</p>",
+      "refs": {
+        "WebAuthnRedirection$ProcessCompatibilityList": "<p>The list of process executable names for which you enable WebAuthn redirection. For example, chrome.exe.</p>"
+      }
+    },
+    "ProcessImageName": {
+      "base": "<p>The file name of a process executable on the remote host for which you want to redirect WebAuthn requests. For example, chrome.exe.</p>",
+      "refs": {
+        "ProcessCompatibilityList$member": null
+      }
+    },
     "RedirectURL": {
       "base": null,
       "refs": {
@@ -2085,7 +2098,7 @@
       }
     },
     "StackAttribute": {
-      "base": "<p>The stack attributes to delete.</p> <ul> <li> <p>STORAGE_CONNECTORS</p> </li> <li> <p>STORAGE_CONNECTOR_HOMEFOLDERS</p> </li> <li> <p>STORAGE_CONNECTOR_GOOGLE_DRIVE</p> </li> <li> <p>STORAGE_CONNECTOR_ONE_DRIVE</p> </li> <li> <p>REDIRECT_URL</p> </li> <li> <p>FEEDBACK_URL</p> </li> <li> <p>THEME_NAME</p> </li> <li> <p>USER_SETTINGS</p> </li> <li> <p>EMBED_HOST_DOMAINS</p> </li> <li> <p>IAM_ROLE_ARN</p> </li> <li> <p>ACCESS_ENDPOINTS</p> </li> <li> <p>STREAMING_EXPERIENCE_SETTINGS</p> </li> <li> <p>AGENT_ACCESS_CONFIG</p> </li> <li> <p>AGENT_ACCESS_CONFIG_KMS_KEY_ARN</p> </li> <li> <p>STORAGE_CONNECTOR_AUTHENTICATION</p> </li> </ul>",
+      "base": "<p>The stack attributes to delete.</p> <ul> <li> <p>STORAGE_CONNECTORS</p> </li> <li> <p>STORAGE_CONNECTOR_HOMEFOLDERS</p> </li> <li> <p>STORAGE_CONNECTOR_GOOGLE_DRIVE</p> </li> <li> <p>STORAGE_CONNECTOR_ONE_DRIVE</p> </li> <li> <p>REDIRECT_URL</p> </li> <li> <p>FEEDBACK_URL</p> </li> <li> <p>THEME_NAME</p> </li> <li> <p>USER_SETTINGS</p> </li> <li> <p>EMBED_HOST_DOMAINS</p> </li> <li> <p>IAM_ROLE_ARN</p> </li> <li> <p>ACCESS_ENDPOINTS</p> </li> <li> <p>STREAMING_EXPERIENCE_SETTINGS</p> </li> <li> <p>AGENT_ACCESS_CONFIG</p> </li> <li> <p>AGENT_ACCESS_CONFIG_KMS_KEY_ARN</p> </li> <li> <p>STORAGE_CONNECTOR_AUTHENTICATION</p> </li> <li> <p>WEB_AUTHN_REDIRECTION</p> </li> </ul>",
       "refs": {
         "StackAttributes$member": null
       }
@@ -2646,7 +2659,7 @@
       "refs": {}
     },
     "UrlPattern": {
-      "base": "<p>A glob pattern using wildcards (* for zero or more characters, ? for exactly one character) to match URLs for redirection rules. Patterns do not include a protocol prefix; HTTPS is enforced automatically. Valid examples: *, *.example.com, github.com/myorg/*, api?.example.com Invalid examples: https://example.com (no protocol), empty string</p>",
+      "base": "<p>A glob pattern using wildcards (* for zero or more characters, ? for exactly one character) to match URLs for redirection rules. The pattern must begin with a supported scheme prefix — http://, https://, ftp://, sftp://, or mailto: — and cannot contain whitespace, commas, semicolons, or angle brackets; maximum length 2048 characters. Valid examples: https://*.example.com, , sftp://files.example.com/*, mailto:*@example.com. Invalid examples: *.example.com (no scheme), https://exam ple.com (contains whitespace), empty string.</p>",
       "refs": {
         "UrlPatternList$member": null
       }
@@ -2828,6 +2841,14 @@
         "ImageBuilder$VpcConfig": "<p>The VPC configuration of the image builder.</p>",
         "UpdateAppBlockBuilderRequest$VpcConfig": "<p>The VPC configuration for the app block builder.</p> <p>App block builders require that you specify at least two subnets in different availability zones.</p>",
         "UpdateFleetRequest$VpcConfig": "<p>The VPC configuration for the fleet. This is required for Elastic fleets, but not required for other fleet types. Elastic fleets require that you specify at least two subnets in different availability zones. </p>"
+      }
+    },
+    "WebAuthnRedirection": {
+      "base": "<p>Describes the WebAuthn redirection configuration for a stack. With WebAuthn redirection, your users can complete passkey and security-key authentication from a streaming session by using an authenticator attached to their local device.</p>",
+      "refs": {
+        "CreateStackRequest$WebAuthnRedirection": "<p>Configuration for WebAuthn redirection between the streaming session and the user's local device. Use ProcessCompatibilityList to specify which processes can use WebAuthn redirection on Windows fleets.</p>",
+        "Stack$WebAuthnRedirection": "<p>Configuration for WebAuthn redirection between the streaming session and the user's local device. Use ProcessCompatibilityList to specify which processes can use WebAuthn redirection on Windows fleets.</p>",
+        "UpdateStackRequest$WebAuthnRedirection": "<p>Configuration for WebAuthn redirection between the streaming session and the user's local device. Use ProcessCompatibilityList to specify which processes can use WebAuthn redirection on Windows fleets. To remove WebAuthn redirection, use AttributesToDelete with the WEB_AUTHN_REDIRECTION value.</p>"
       }
     },
     "WorkspaceImageId": {

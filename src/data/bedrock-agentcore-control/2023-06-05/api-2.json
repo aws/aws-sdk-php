@@ -3917,6 +3917,13 @@
       "type":"string",
       "pattern":"[0-9]{12}"
     },
+    "AwsBillingConnectorConfiguration":{
+      "type":"structure",
+      "required":["iamRoleArn"],
+      "members":{
+        "iamRoleArn":{"shape":"RoleArn"}
+      }
+    },
     "BatchPutGatewayRateLimitsRequest":{
       "type":"structure",
       "required":[
@@ -4972,6 +4979,12 @@
       "type":"string",
       "enum":["MEMORY_RECORDS"]
     },
+    "CpuOptions":{
+      "type":"structure",
+      "members":{
+        "nestedVirtualization":{"shape":"NestedVirtualization"}
+      }
+    },
     "CreateAgentRuntimeEndpointRequest":{
       "type":"structure",
       "required":[
@@ -5813,8 +5826,7 @@
       "required":[
         "paymentManagerId",
         "name",
-        "type",
-        "credentialProviderConfigurations"
+        "type"
       ],
       "members":{
         "paymentManagerId":{
@@ -6188,7 +6200,8 @@
       "type":"structure",
       "members":{
         "coinbaseCDP":{"shape":"PaymentCredentialProviderConfiguration"},
-        "stripePrivy":{"shape":"PaymentCredentialProviderConfiguration"}
+        "stripePrivy":{"shape":"PaymentCredentialProviderConfiguration"},
+        "awsBilling":{"shape":"AwsBillingConnectorConfiguration"}
       },
       "union":true
     },
@@ -11195,7 +11208,8 @@
         "capacityReservationSpecification":{"shape":"CapacityReservationSpecification"},
         "sshKeyName":{"shape":"SSHKeyName"},
         "instanceProfileArn":{"shape":"InstanceProfileArn"},
-        "propagatedTags":{"shape":"TagsMap"}
+        "propagatedTags":{"shape":"TagsMap"},
+        "cpuOptions":{"shape":"CpuOptions"}
       }
     },
     "LaunchParametersEphemeralVolumesList":{
@@ -13150,6 +13164,13 @@
       "max":2000,
       "min":1
     },
+    "NestedVirtualization":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "NetworkConfiguration":{
       "type":"structure",
       "required":["networkMode"],
@@ -13613,7 +13634,8 @@
       "type":"string",
       "enum":[
         "CoinbaseCDP",
-        "StripePrivy"
+        "StripePrivy",
+        "AwsBilling"
       ]
     },
     "PaymentCredentialProviderArn":{

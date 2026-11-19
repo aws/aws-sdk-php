@@ -1715,7 +1715,9 @@ use Aws\PresignUrlMiddleware;
  *     EngineLifecycleSupport?: string,
  *     TagSpecifications?: list<array{ResourceType?: string, Tags?: list<array>, ...}>,
  *     MasterUserAuthenticationType?: 'iam-db-auth'|'password',
+ *     EnableVPCNetworking?: bool,
  *     WithExpressConfiguration?: bool,
+ *     EnableInternetAccessGateway?: bool,
  *     AssociatedRoles?: list<array{RoleArn?: string, FeatureName?: string, ...}>,
  *     ...,
  * } $args = [])
@@ -1792,7 +1794,9 @@ use Aws\PresignUrlMiddleware;
  *     EngineLifecycleSupport?: string,
  *     TagSpecifications?: list<array{ResourceType?: string, Tags?: list<array>, ...}>,
  *     MasterUserAuthenticationType?: 'iam-db-auth'|'password',
+ *     EnableVPCNetworking?: bool,
  *     WithExpressConfiguration?: bool,
+ *     EnableInternetAccessGateway?: bool,
  *     AssociatedRoles?: list<array{RoleArn?: string, FeatureName?: string, ...}>,
  *     ...,
  * } $args = [])
@@ -2730,6 +2734,9 @@ use Aws\PresignUrlMiddleware;
  *     CACertificateIdentifier?: string,
  *     MasterUserAuthenticationType?: 'iam-db-auth'|'password',
  *     EngineLifecycleSupport?: string,
+ *     EnableInternetAccessGateway?: bool,
+ *     EnableVPCNetworking?: bool,
+ *     DBSubnetGroupName?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyDBClusterAsync(array $args = []) (supported in versions 2014-10-31)
@@ -2790,6 +2797,9 @@ use Aws\PresignUrlMiddleware;
  *     CACertificateIdentifier?: string,
  *     MasterUserAuthenticationType?: 'iam-db-auth'|'password',
  *     EngineLifecycleSupport?: string,
+ *     EnableInternetAccessGateway?: bool,
+ *     EnableVPCNetworking?: bool,
+ *     DBSubnetGroupName?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result modifyDBClusterEndpoint(array $args = []) (supported in versions 2014-10-31)

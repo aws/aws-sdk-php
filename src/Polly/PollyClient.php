@@ -10,10 +10,36 @@ use GuzzleHttp\Psr7;
 
 /**
  * This client is used to interact with the **Amazon Polly** service.
+ * @method \Aws\Result createVoice(array $args = [])
+ * @phpstan-method \Aws\Result createVoice(array{
+ *     Name?: string,
+ *     LanguageCode?: 'de-DE'|'en-US'|'es-US'|'fr-FR'|'hi-IN'|'it-IT'|'pt-BR',
+ *     TermsAccepted?: bool,
+ *     VoiceCreationData?: array{Recordings?: list<array>, ...},
+ *     CustomerManagedEncryption?: array{KmsKeyArn?: string, EncryptionContext?: array<string, string>, ...},
+ *     Tags?: array<string, string>,
+ *     ClientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createVoiceAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createVoiceAsync(array{
+ *     Name?: string,
+ *     LanguageCode?: 'de-DE'|'en-US'|'es-US'|'fr-FR'|'hi-IN'|'it-IT'|'pt-BR',
+ *     TermsAccepted?: bool,
+ *     VoiceCreationData?: array{Recordings?: list<array>, ...},
+ *     CustomerManagedEncryption?: array{KmsKeyArn?: string, EncryptionContext?: array<string, string>, ...},
+ *     Tags?: array<string, string>,
+ *     ClientToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result deleteLexicon(array $args = [])
  * @phpstan-method \Aws\Result deleteLexicon(array{Name?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteLexiconAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteLexiconAsync(array{Name?: string, ...} $args = [])
+ * @method \Aws\Result deleteVoice(array $args = [])
+ * @phpstan-method \Aws\Result deleteVoice(array{VoiceId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteVoiceAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteVoiceAsync(array{VoiceId?: string, ...} $args = [])
  * @method \Aws\Result describeVoices(array $args = [])
  * @phpstan-method \Aws\Result describeVoices(array{
  *     Engine?: 'generative'|'long-form'|'neural'|'standard',
@@ -38,6 +64,10 @@ use GuzzleHttp\Psr7;
  * @phpstan-method \Aws\Result getSpeechSynthesisTask(array{TaskId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getSpeechSynthesisTaskAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getSpeechSynthesisTaskAsync(array{TaskId?: string, ...} $args = [])
+ * @method \Aws\Result getVoice(array $args = [])
+ * @phpstan-method \Aws\Result getVoice(array{VoiceId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getVoiceAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getVoiceAsync(array{VoiceId?: string, ...} $args = [])
  * @method \Aws\Result listLexicons(array $args = [])
  * @phpstan-method \Aws\Result listLexicons(array{NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listLexiconsAsync(array $args = [])

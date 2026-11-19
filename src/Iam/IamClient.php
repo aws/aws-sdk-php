@@ -108,6 +108,14 @@ use Aws\AwsClient;
  *     ClientIDList?: list<string>,
  *     ThumbprintList?: list<string>,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ContextProvider?: array{
+ *         KeyDefinitionList?: list<array>,
+ *         SubjectSourceKey?: string,
+ *         SubjectTypeValue?: string,
+ *         SubjectTypeSourceKey?: string,
+ *         ...,
+ *     },
+ *     IdentityCenterInstanceArn?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createOpenIDConnectProviderAsync(array $args = [])
@@ -116,6 +124,14 @@ use Aws\AwsClient;
  *     ClientIDList?: list<string>,
  *     ThumbprintList?: list<string>,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ContextProvider?: array{
+ *         KeyDefinitionList?: list<array>,
+ *         SubjectSourceKey?: string,
+ *         SubjectTypeValue?: string,
+ *         SubjectTypeSourceKey?: string,
+ *         ...,
+ *     },
+ *     IdentityCenterInstanceArn?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createPolicy(array $args = [])
@@ -171,6 +187,14 @@ use Aws\AwsClient;
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     AssertionEncryptionMode?: 'Allowed'|'Required',
  *     AddPrivateKey?: string,
+ *     ContextProvider?: array{
+ *         KeyDefinitionList?: list<array>,
+ *         SubjectSourceKey?: string,
+ *         SubjectTypeValue?: string,
+ *         SubjectTypeSourceKey?: string,
+ *         ...,
+ *     },
+ *     IdentityCenterInstanceArn?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createSAMLProviderAsync(array $args = [])
@@ -180,6 +204,14 @@ use Aws\AwsClient;
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     AssertionEncryptionMode?: 'Allowed'|'Required',
  *     AddPrivateKey?: string,
+ *     ContextProvider?: array{
+ *         KeyDefinitionList?: list<array>,
+ *         SubjectSourceKey?: string,
+ *         SubjectTypeValue?: string,
+ *         SubjectTypeSourceKey?: string,
+ *         ...,
+ *     },
+ *     IdentityCenterInstanceArn?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createServiceLinkedRole(array $args = [])
@@ -994,6 +1026,36 @@ use Aws\AwsClient;
  *     ResetMaxSigninSessionDuration?: bool,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result updateOpenIDConnectProvider(array $args = [])
+ * @phpstan-method \Aws\Result updateOpenIDConnectProvider(array{
+ *     OpenIDConnectProviderArn?: string,
+ *     ContextProvider?: array{
+ *         KeyDefinitionList?: list<array>,
+ *         SubjectSourceKey?: string,
+ *         SubjectTypeValue?: string,
+ *         SubjectTypeSourceKey?: string,
+ *         ...,
+ *     },
+ *     IdentityCenterInstanceArn?: string,
+ *     RemoveContextProvider?: bool,
+ *     RemoveIdentityCenterInstance?: bool,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateOpenIDConnectProviderAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateOpenIDConnectProviderAsync(array{
+ *     OpenIDConnectProviderArn?: string,
+ *     ContextProvider?: array{
+ *         KeyDefinitionList?: list<array>,
+ *         SubjectSourceKey?: string,
+ *         SubjectTypeValue?: string,
+ *         SubjectTypeSourceKey?: string,
+ *         ...,
+ *     },
+ *     IdentityCenterInstanceArn?: string,
+ *     RemoveContextProvider?: bool,
+ *     RemoveIdentityCenterInstance?: bool,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateOpenIDConnectProviderThumbprint(array $args = [])
  * @phpstan-method \Aws\Result updateOpenIDConnectProviderThumbprint(array{OpenIDConnectProviderArn?: string, ThumbprintList?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateOpenIDConnectProviderThumbprintAsync(array $args = [])
@@ -1027,6 +1089,16 @@ use Aws\AwsClient;
  *     AssertionEncryptionMode?: 'Allowed'|'Required',
  *     AddPrivateKey?: string,
  *     RemovePrivateKey?: string,
+ *     ContextProvider?: array{
+ *         KeyDefinitionList?: list<array>,
+ *         SubjectSourceKey?: string,
+ *         SubjectTypeValue?: string,
+ *         SubjectTypeSourceKey?: string,
+ *         ...,
+ *     },
+ *     IdentityCenterInstanceArn?: string,
+ *     RemoveContextProvider?: bool,
+ *     RemoveIdentityCenterInstance?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSAMLProviderAsync(array $args = [])
@@ -1036,6 +1108,16 @@ use Aws\AwsClient;
  *     AssertionEncryptionMode?: 'Allowed'|'Required',
  *     AddPrivateKey?: string,
  *     RemovePrivateKey?: string,
+ *     ContextProvider?: array{
+ *         KeyDefinitionList?: list<array>,
+ *         SubjectSourceKey?: string,
+ *         SubjectTypeValue?: string,
+ *         SubjectTypeSourceKey?: string,
+ *         ...,
+ *     },
+ *     IdentityCenterInstanceArn?: string,
+ *     RemoveContextProvider?: bool,
+ *     RemoveIdentityCenterInstance?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateSSHPublicKey(array $args = [])

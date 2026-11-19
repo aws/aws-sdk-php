@@ -17,6 +17,12 @@ use Aws\AwsClient;
  *     tags?: list<array{key?: string, value?: string, ...}>,
  *     acceptRoleSessionName?: bool,
  *     aliasName?: string,
+ *     tipConfiguration?: array{
+ *         status?: 'DISABLED'|'ENABLED',
+ *         subjectType?: 'user'|'workload',
+ *         subjectSource?: 'x509SAN/URI'|'x509Subject/CN',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createProfileAsync(array $args = [])
@@ -31,6 +37,12 @@ use Aws\AwsClient;
  *     tags?: list<array{key?: string, value?: string, ...}>,
  *     acceptRoleSessionName?: bool,
  *     aliasName?: string,
+ *     tipConfiguration?: array{
+ *         status?: 'DISABLED'|'ENABLED',
+ *         subjectType?: 'user'|'workload',
+ *         subjectSource?: 'x509SAN/URI'|'x509Subject/CN',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result createTrustAnchor(array $args = [])
@@ -265,6 +277,12 @@ use Aws\AwsClient;
  *     durationSeconds?: int,
  *     acceptRoleSessionName?: bool,
  *     aliasName?: string,
+ *     tipConfiguration?: array{
+ *         status?: 'DISABLED'|'ENABLED',
+ *         subjectType?: 'user'|'workload',
+ *         subjectSource?: 'x509SAN/URI'|'x509Subject/CN',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateProfileAsync(array $args = [])
@@ -277,6 +295,12 @@ use Aws\AwsClient;
  *     durationSeconds?: int,
  *     acceptRoleSessionName?: bool,
  *     aliasName?: string,
+ *     tipConfiguration?: array{
+ *         status?: 'DISABLED'|'ENABLED',
+ *         subjectType?: 'user'|'workload',
+ *         subjectSource?: 'x509SAN/URI'|'x509Subject/CN',
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateTrustAnchor(array $args = [])

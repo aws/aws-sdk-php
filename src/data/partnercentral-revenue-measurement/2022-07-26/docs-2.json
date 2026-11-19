@@ -3,7 +3,7 @@
   "service": "<p>AWS Partner Central Revenue Measurement API for creating, managing, and tracking revenue attributions and their allocations with deal entities such as offers and opportunities.</p>",
   "operations": {
     "CreateMarketplaceRevenueShare": "<p>Creates a new marketplace revenue share resource in the specified catalog.</p>",
-    "CreateMarketplaceRevenueShareAllocation": "<p>Creates a new marketplace revenue share allocation for the specified product.</p>",
+    "CreateMarketplaceRevenueShareAllocation": "<p>Creates a new allocation under the specified marketplace revenue share.</p>",
     "CreateRevenueAttribution": "<p>Creates a new revenue attribution record in the specified catalog.</p>",
     "GetMarketplaceRevenueShare": "<p>Retrieves the details of a specific marketplace revenue share.</p>",
     "GetMarketplaceRevenueShareAllocation": "<p>Retrieves the details of a specific marketplace revenue share allocation.</p>",
@@ -18,7 +18,8 @@
     "StartRevenueAttributionAllocationsTask": "<p>Submits a batch of up to 250 allocation changes (CREATE and/or UPDATE) for asynchronous processing. Returns a TaskId for tracking.</p>",
     "TagResource": "<p>Adds or overwrites one or more tags for the specified resource.</p>",
     "UntagResource": "<p>Removes one or more tags from the specified resource.</p>",
-    "UpdateMarketplaceRevenueShareAllocation": "<p>Updates an existing marketplace revenue share allocation. Supports modifying effective dates, revenue share percentage, and status with time-based mutability rules.</p>",
+    "UpdateMarketplaceRevenueShare": "<p>Replaces the products of a marketplace revenue share. The request carries the complete desired set of products and their typed account lists; a product not listed is removed and its account lists cleared, and an empty Products list closes the marketplace revenue share. Closing is one-way.</p>",
+    "UpdateMarketplaceRevenueShareAllocation": "<p>Updates an existing marketplace revenue share allocation. Supports modifying the revenue share percentage and status only, with time-based mutability rules.</p>",
     "UpdateRevenueAttribution": "<p>Updates an existing revenue attribution record.</p>"
   },
   "shapes": {
@@ -37,8 +38,12 @@
       "refs": {
         "AttributionSummary$TotalActiveRevenueAttributionAllocationCount": "<p>The total number of allocations under this revenue attribution whose Status is ACTIVE.</p>",
         "AttributionSummary$TotalRevenueAttributionAllocationCount": "<p>The total number of allocations under this revenue attribution, counting both ACTIVE and INACTIVE.</p>",
+        "GetMarketplaceRevenueShareOutput$TotalActiveMarketplaceRevenueShareAllocationCount": "<p>The number of active allocations under this marketplace revenue share.</p>",
+        "GetMarketplaceRevenueShareOutput$TotalMarketplaceRevenueShareAllocationCount": "<p>The total number of allocations under this marketplace revenue share.</p>",
         "GetRevenueAttributionOutput$TotalActiveRevenueAttributionAllocationCount": "<p>The total number of allocations under this revenue attribution whose Status is ACTIVE.</p>",
-        "GetRevenueAttributionOutput$TotalRevenueAttributionAllocationCount": "<p>The total number of allocations under this revenue attribution, counting both ACTIVE and INACTIVE.</p>"
+        "GetRevenueAttributionOutput$TotalRevenueAttributionAllocationCount": "<p>The total number of allocations under this revenue attribution, counting both ACTIVE and INACTIVE.</p>",
+        "MarketplaceRevenueShareSummary$TotalActiveMarketplaceRevenueShareAllocationCount": "<p>The number of active allocations under this share.</p>",
+        "MarketplaceRevenueShareSummary$TotalMarketplaceRevenueShareAllocationCount": "<p>The total number of allocations under this share.</p>"
       }
     },
     "AllocationEffectiveDateString": {
@@ -47,33 +52,37 @@
         "AttributionSummary$EffectiveFrom": "<p>The date from which this revenue attribution is effective, derived from the earliest allocation start date (YYYY-MM-DD).</p>",
         "AttributionSummary$EffectiveUntil": "<p>The date until which this revenue attribution is effective, derived from the latest allocation end date (YYYY-MM-DD).</p>",
         "CreateMarketplaceRevenueShareAllocationInput$EffectiveFrom": "<p>The effective start date for the allocation. Must be the first day of a month.</p>",
-        "CreateMarketplaceRevenueShareAllocationInput$EffectiveUntil": "<p>The effective end date for the allocation. Must be the last day of a month (YYYY-MM-DD). Omit for open-ended allocations.</p>",
+        "CreateMarketplaceRevenueShareAllocationInput$EffectiveUntil": "<p>The effective end date for the allocation. Must be the last day of a month (YYYY-MM-DD).</p>",
         "CreateMarketplaceRevenueShareAllocationOutput$EffectiveFrom": "<p>The effective start date of the allocation.</p>",
-        "CreateMarketplaceRevenueShareAllocationOutput$EffectiveUntil": "<p>The effective end date of the allocation, or null if open-ended.</p>",
+        "CreateMarketplaceRevenueShareAllocationOutput$EffectiveUntil": "<p>The effective end date of the allocation.</p>",
         "GetMarketplaceRevenueShareAllocationOutput$EffectiveFrom": "<p>The effective start date of the allocation.</p>",
-        "GetMarketplaceRevenueShareAllocationOutput$EffectiveUntil": "<p>The effective end date of the allocation, or null if open-ended.</p>",
+        "GetMarketplaceRevenueShareAllocationOutput$EffectiveUntil": "<p>The effective end date of the allocation.</p>",
+        "GetMarketplaceRevenueShareOutput$EffectiveFrom": "<p>The date from which this share is effective, derived from the earliest ACTIVE allocation start date (YYYY-MM-DD). Absent when no ACTIVE allocation remains.</p>",
+        "GetMarketplaceRevenueShareOutput$EffectiveUntil": "<p>The date until which this share is effective, derived from the latest ACTIVE allocation end date (YYYY-MM-DD). Absent when no ACTIVE allocation remains.</p>",
         "GetRevenueAttributionAllocationOutput$EffectiveFrom": "<p>First day of the effective month.</p>",
         "GetRevenueAttributionAllocationOutput$EffectiveUntil": "<p>Last day of the effective month.</p>",
         "GetRevenueAttributionOutput$EffectiveFrom": "<p>The date from which this revenue attribution is effective, derived from the earliest allocation start date (YYYY-MM-DD).</p>",
         "GetRevenueAttributionOutput$EffectiveUntil": "<p>The date until which this revenue attribution is effective, derived from the latest allocation end date (YYYY-MM-DD).</p>",
         "ListMarketplaceRevenueShareAllocationsInput$AfterEffectiveFrom": "<p>Inclusive lower bound for EffectiveFrom date filter.</p>",
         "ListMarketplaceRevenueShareAllocationsInput$BeforeEffectiveFrom": "<p>Exclusive upper bound for EffectiveFrom date filter (half-open range).</p>",
+        "ListMarketplaceRevenueShareAllocationsInput$AfterEffectiveUntil": "<p>Inclusive lower bound for EffectiveUntil date filter.</p>",
+        "ListMarketplaceRevenueShareAllocationsInput$BeforeEffectiveUntil": "<p>Exclusive upper bound for EffectiveUntil date filter (half-open range).</p>",
         "ListRevenueAttributionAllocationsInput$AfterEffectiveFrom": "<p>Inclusive lower bound for EffectiveFrom date filter.</p>",
         "ListRevenueAttributionAllocationsInput$BeforeEffectiveFrom": "<p>Exclusive upper bound for EffectiveFrom date filter (half-open range).</p>",
         "ListRevenueAttributionAllocationsInput$AfterEffectiveUntil": "<p>Inclusive lower bound for EffectiveUntil date filter.</p>",
         "ListRevenueAttributionAllocationsInput$BeforeEffectiveUntil": "<p>Exclusive upper bound for EffectiveUntil date filter (half-open range).</p>",
         "MarketplaceRevenueShareAllocationSummary$EffectiveFrom": "<p>The effective start date of the allocation.</p>",
-        "MarketplaceRevenueShareAllocationSummary$EffectiveUntil": "<p>The effective end date of the allocation, or null if open-ended.</p>",
+        "MarketplaceRevenueShareAllocationSummary$EffectiveUntil": "<p>The effective end date of the allocation.</p>",
+        "MarketplaceRevenueShareSummary$EffectiveFrom": "<p>The date from which this share is effective, derived from the earliest ACTIVE allocation start date (YYYY-MM-DD). Absent when no ACTIVE allocation remains.</p>",
+        "MarketplaceRevenueShareSummary$EffectiveUntil": "<p>The date until which this share is effective, derived from the latest ACTIVE allocation end date (YYYY-MM-DD). Absent when no ACTIVE allocation remains.</p>",
         "RevenueAttributionAllocationErrorDetail$EffectiveFrom": "<p>Effective start date of the failing record.</p>",
         "RevenueAttributionAllocationErrorDetail$EffectiveUntil": "<p>Effective end date of the failing record.</p>",
         "RevenueAttributionAllocationSummary$EffectiveFrom": "<p>First day of the effective month.</p>",
         "RevenueAttributionAllocationSummary$EffectiveUntil": "<p>Last day of the effective month.</p>",
         "RevenueShareAllocation$EffectiveFrom": "<p>The effective start date for this allocation.</p>",
         "RevenueShareAllocation$EffectiveUntil": "<p>The effective end date for this allocation.</p>",
-        "UpdateMarketplaceRevenueShareAllocationInput$EffectiveFrom": "<p>The new effective start date. Must be the first day of a month. Only modifiable on future-dated allocations.</p>",
-        "UpdateMarketplaceRevenueShareAllocationInput$EffectiveUntil": "<p>The new effective end date. Must be the last day of a month and on or after today.</p>",
         "UpdateMarketplaceRevenueShareAllocationOutput$EffectiveFrom": "<p>The effective start date of the allocation.</p>",
-        "UpdateMarketplaceRevenueShareAllocationOutput$EffectiveUntil": "<p>The effective end date of the allocation, or null if open-ended.</p>"
+        "UpdateMarketplaceRevenueShareAllocationOutput$EffectiveUntil": "<p>The effective end date of the allocation.</p>"
       }
     },
     "AllocationStatus": {
@@ -82,7 +91,7 @@
         "CreateMarketplaceRevenueShareAllocationOutput$Status": "<p>The status of the allocation.</p>",
         "GetMarketplaceRevenueShareAllocationOutput$Status": "<p>The status of the allocation.</p>",
         "GetRevenueAttributionAllocationOutput$Status": "<p>Current allocation status.</p>",
-        "ListMarketplaceRevenueShareAllocationsInput$Status": "<p>Filter by allocation status.</p>",
+        "ListMarketplaceRevenueShareAllocationsInput$StatusFilter": "<p>Filter by allocation status.</p>",
         "ListRevenueAttributionAllocationsInput$StatusFilter": "<p>Filter by allocation status.</p>",
         "MarketplaceRevenueShareAllocationSummary$Status": "<p>The status of the allocation.</p>",
         "RevenueAttributionAllocationSummary$Status": "<p>Current allocation status.</p>",
@@ -133,6 +142,7 @@
         "StartRevenueAttributionAllocationsTaskInput$Catalog": "<p>The catalog context for this operation.</p>",
         "StartRevenueAttributionAllocationsTaskOutput$Catalog": "<p>The catalog used for this task.</p>",
         "UpdateMarketplaceRevenueShareAllocationInput$Catalog": "<p>The catalog containing the allocation.</p>",
+        "UpdateMarketplaceRevenueShareInput$Catalog": "<p>The catalog that the marketplace revenue share belongs to.</p>",
         "UpdateRevenueAttributionInput$Catalog": "<p>The catalog that the revenue attribution belongs to.</p>"
       }
     },
@@ -144,6 +154,7 @@
         "CreateRevenueAttributionInput$ClientToken": "<p>A unique token to ensure idempotency of the create request.</p>",
         "StartRevenueAttributionAllocationsTaskInput$ClientToken": "<p>Idempotency token for deduplication and retry.</p>",
         "UpdateMarketplaceRevenueShareAllocationInput$ClientToken": "<p>A unique token to ensure idempotency of the update request.</p>",
+        "UpdateMarketplaceRevenueShareInput$ClientToken": "<p>A unique token to ensure idempotency of the update request.</p>",
         "UpdateRevenueAttributionInput$ClientToken": "<p>A unique token to ensure idempotency of the update request.</p>"
       }
     },
@@ -155,6 +166,38 @@
       "base": null,
       "refs": {
         "ConflictException$Reason": "<p>The reason for the conflict.</p>"
+      }
+    },
+    "ContextFilter": {
+      "base": "<p>Filters revenue attributions by a context key and, optionally, a set of values.</p>",
+      "refs": {
+        "ContextFilterList$member": null
+      }
+    },
+    "ContextFilterList": {
+      "base": null,
+      "refs": {
+        "ListRevenueAttributionsInput$ContextFilters": "<p>Filter results by context. Filters are combined with AND; values within a filter are combined with OR.</p>"
+      }
+    },
+    "ContextFilterValueList": {
+      "base": null,
+      "refs": {
+        "ContextFilter$Values": "<p>Matches when the stored value equals any of these values. When omitted, matches when the key is present.</p>"
+      }
+    },
+    "ContextKey": {
+      "base": null,
+      "refs": {
+        "ContextFilter$Key": "<p>The context key to filter on.</p>",
+        "RevenueAttributionContext$key": null
+      }
+    },
+    "ContextValue": {
+      "base": null,
+      "refs": {
+        "ContextFilterValueList$member": null,
+        "RevenueAttributionContext$value": null
       }
     },
     "CreateMarketplaceRevenueShareAllocationInput": {
@@ -169,15 +212,15 @@
       "base": null,
       "refs": {}
     },
+    "CreateMarketplaceRevenueShareInputProductsList": {
+      "base": null,
+      "refs": {
+        "CreateMarketplaceRevenueShareInput$Products": "<p>The products in the marketplace revenue share, each with its typed account lists. 1 to 25 products.</p>"
+      }
+    },
     "CreateMarketplaceRevenueShareOutput": {
       "base": null,
       "refs": {}
-    },
-    "CreateMarketplaceRevenueShareOutputRevisionInteger": {
-      "base": null,
-      "refs": {
-        "CreateMarketplaceRevenueShareOutput$Revision": "<p>The revision number of the newly created marketplace revenue share.</p>"
-      }
     },
     "CreateRevenueAttributionInput": {
       "base": null,
@@ -271,27 +314,9 @@
       "base": null,
       "refs": {}
     },
-    "GetMarketplaceRevenueShareInputRevisionInteger": {
-      "base": null,
-      "refs": {
-        "GetMarketplaceRevenueShareInput$Revision": "<p>The revision of the marketplace revenue share to retrieve. Omit to return the latest revision.</p>"
-      }
-    },
     "GetMarketplaceRevenueShareOutput": {
       "base": null,
       "refs": {}
-    },
-    "GetMarketplaceRevenueShareOutputLatestRevisionInteger": {
-      "base": null,
-      "refs": {
-        "GetMarketplaceRevenueShareOutput$LatestRevision": "<p>The latest revision number of the marketplace revenue share.</p>"
-      }
-    },
-    "GetMarketplaceRevenueShareOutputRevisionInteger": {
-      "base": null,
-      "refs": {
-        "GetMarketplaceRevenueShareOutput$Revision": "<p>The revision number of the retrieved marketplace revenue share.</p>"
-      }
     },
     "GetRevenueAttributionAllocationInput": {
       "base": null,
@@ -332,12 +357,7 @@
     "Integer": {
       "base": null,
       "refs": {
-        "GetMarketplaceRevenueShareOutput$TotalActiveMarketplaceRevenueShareAllocationCount": "<p>The number of active allocations under this marketplace revenue share.</p>",
-        "GetMarketplaceRevenueShareOutput$TotalMarketplaceRevenueShareAllocationCount": "<p>The total number of allocations under this marketplace revenue share.</p>",
         "GetRevenueAttributionAllocationsTaskOutput$TotalRevenueAttributionAllocationRecords": "<p>Total revenue attribution allocation records in the batch.</p>",
-        "MarketplaceRevenueShareSummary$LatestRevision": "<p>The latest revision number of the marketplace revenue share.</p>",
-        "MarketplaceRevenueShareSummary$TotalActiveMarketplaceRevenueShareAllocationCount": "<p>The number of active allocations under this share.</p>",
-        "MarketplaceRevenueShareSummary$TotalMarketplaceRevenueShareAllocationCount": "<p>The total number of allocations under this share.</p>",
         "StartRevenueAttributionAllocationsTaskOutput$TotalRevenueAttributionAllocationRecords": "<p>Total revenue attribution allocation records in the batch.</p>"
       }
     },
@@ -412,26 +432,21 @@
     "MarketplaceProductId": {
       "base": null,
       "refs": {
-        "CreateMarketplaceRevenueShareAllocationInput$ProductId": "<p>The AWS Marketplace product identifier for the parent revenue share.</p>",
-        "CreateMarketplaceRevenueShareAllocationOutput$ProductId": "<p>The AWS Marketplace product identifier.</p>",
-        "CreateMarketplaceRevenueShareInput$ProductId": "<p>The AWS Marketplace product identifier for this revenue share.</p>",
-        "CreateMarketplaceRevenueShareOutput$ProductId": "<p>The AWS Marketplace product identifier of the newly created revenue share.</p>",
-        "GetMarketplaceRevenueShareAllocationInput$ProductId": "<p>The AWS Marketplace product identifier of the parent revenue share.</p>",
-        "GetMarketplaceRevenueShareAllocationOutput$ProductId": "<p>The AWS Marketplace product identifier.</p>",
-        "GetMarketplaceRevenueShareInput$ProductId": "<p>The AWS Marketplace product identifier of the revenue share to retrieve.</p>",
-        "GetMarketplaceRevenueShareOutput$ProductId": "<p>The AWS Marketplace product identifier of the revenue share.</p>",
-        "ListMarketplaceRevenueShareAllocationsInput$ProductId": "<p>The AWS Marketplace product identifier for the parent revenue share.</p>",
-        "MarketplaceProductIdList$member": null,
-        "MarketplaceRevenueShareAllocationSummary$ProductId": "<p>The AWS Marketplace product identifier.</p>",
-        "MarketplaceRevenueShareSummary$ProductId": "<p>The AWS Marketplace product identifier.</p>",
-        "UpdateMarketplaceRevenueShareAllocationInput$ProductId": "<p>The AWS Marketplace product identifier for the parent revenue share.</p>",
-        "UpdateMarketplaceRevenueShareAllocationOutput$ProductId": "<p>The AWS Marketplace product identifier.</p>"
+        "MarketplaceRevenueShareProductDetail$ProductId": "<p>The AWS Marketplace product identifier.</p>",
+        "MarketplaceRevenueShareProductSummary$ProductId": "<p>The AWS Marketplace product identifier.</p>"
       }
     },
     "MarketplaceProductIdList": {
       "base": null,
       "refs": {
-        "ListMarketplaceRevenueSharesInput$ProductIds": "<p>Filter results to only include shares with these product identifiers.</p>"
+        "ListMarketplaceRevenueSharesInput$ProductIds": "<p>Filter results to the marketplace revenue shares that contain any of these products. 1 to 10 product IDs or product ARNs. Shares the caller does not own are never returned.</p>"
+      }
+    },
+    "MarketplaceProductIdentifier": {
+      "base": null,
+      "refs": {
+        "MarketplaceProductIdList$member": null,
+        "MarketplaceRevenueShareProductEntry$ProductId": "<p>The AWS Marketplace product ID or product ARN. The share stores and returns the product ID.</p>"
       }
     },
     "MarketplaceProductSummary": {
@@ -477,6 +492,85 @@
         "ListMarketplaceRevenueShareAllocationsOutput$MarketplaceRevenueShareAllocationSummaries": "<p>The list of allocation summaries for the current page.</p>"
       }
     },
+    "MarketplaceRevenueShareArn": {
+      "base": null,
+      "refs": {
+        "CreateMarketplaceRevenueShareOutput$Arn": "<p>The Amazon Resource Name (ARN) of the newly created marketplace revenue share.</p>",
+        "GetMarketplaceRevenueShareOutput$Arn": "<p>The Amazon Resource Name (ARN) of the marketplace revenue share.</p>",
+        "MarketplaceRevenueShareSummary$Arn": "<p>The Amazon Resource Name (ARN) of the marketplace revenue share.</p>",
+        "UpdateMarketplaceRevenueShareOutput$Arn": "<p>The Amazon Resource Name (ARN) of the updated marketplace revenue share.</p>"
+      }
+    },
+    "MarketplaceRevenueShareId": {
+      "base": null,
+      "refs": {
+        "CreateMarketplaceRevenueShareAllocationOutput$MarketplaceRevenueShareIdentifier": "<p>The parent marketplace revenue share, short ID form (mrs-...).</p>",
+        "CreateMarketplaceRevenueShareOutput$Id": "<p>The unique identifier of the newly created marketplace revenue share, short ID form (mrs-...).</p>",
+        "GetMarketplaceRevenueShareAllocationOutput$MarketplaceRevenueShareIdentifier": "<p>The parent marketplace revenue share, short ID form (mrs-...).</p>",
+        "GetMarketplaceRevenueShareOutput$Id": "<p>The unique identifier of the marketplace revenue share, short ID form (mrs-...).</p>",
+        "MarketplaceRevenueShareAllocationSummary$MarketplaceRevenueShareIdentifier": "<p>The parent marketplace revenue share, short ID form (mrs-...).</p>",
+        "MarketplaceRevenueShareSummary$Id": "<p>The unique identifier of the marketplace revenue share, short ID form (mrs-...).</p>",
+        "UpdateMarketplaceRevenueShareAllocationOutput$MarketplaceRevenueShareIdentifier": "<p>The parent marketplace revenue share, short ID form (mrs-...).</p>",
+        "UpdateMarketplaceRevenueShareOutput$Id": "<p>The unique identifier of the updated marketplace revenue share, short ID form (mrs-...).</p>"
+      }
+    },
+    "MarketplaceRevenueShareIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateMarketplaceRevenueShareAllocationInput$MarketplaceRevenueShareIdentifier": "<p>The parent marketplace revenue share, by ID (mrs-...) or ARN.</p>",
+        "GetMarketplaceRevenueShareAllocationInput$MarketplaceRevenueShareIdentifier": "<p>The parent marketplace revenue share, by ID (mrs-...) or ARN.</p>",
+        "GetMarketplaceRevenueShareInput$Identifier": "<p>The marketplace revenue share to retrieve, by ID (mrs-...) or ARN.</p>",
+        "ListMarketplaceRevenueShareAllocationsInput$MarketplaceRevenueShareIdentifier": "<p>The parent marketplace revenue share, by ID (mrs-...) or ARN.</p>",
+        "MarketplaceRevenueShareIdentifierList$member": null,
+        "UpdateMarketplaceRevenueShareAllocationInput$MarketplaceRevenueShareIdentifier": "<p>The parent marketplace revenue share, by ID (mrs-...) or ARN.</p>",
+        "UpdateMarketplaceRevenueShareInput$Identifier": "<p>The marketplace revenue share to update, by ID (mrs-...) or ARN.</p>"
+      }
+    },
+    "MarketplaceRevenueShareIdentifierList": {
+      "base": null,
+      "refs": {
+        "ListMarketplaceRevenueSharesInput$Identifiers": "<p>Filter results to only include these marketplace revenue shares, by ID or ARN. 1 to 100 identifiers. When several filters are sent, a share must match all of them.</p>"
+      }
+    },
+    "MarketplaceRevenueShareProductDetail": {
+      "base": "<p>A product in a marketplace revenue share, as returned by GetMarketplaceRevenueShare, with the full typed account lists.</p>",
+      "refs": {
+        "MarketplaceRevenueShareProductDetailList$member": null
+      }
+    },
+    "MarketplaceRevenueShareProductDetailList": {
+      "base": null,
+      "refs": {
+        "GetMarketplaceRevenueShareOutput$Products": "<p>The products in the marketplace revenue share, each with its typed account lists and full account IDs. Empty when the share is closed.</p>"
+      }
+    },
+    "MarketplaceRevenueShareProductEntry": {
+      "base": "<p>A product and its typed account lists as supplied in a CreateMarketplaceRevenueShare or UpdateMarketplaceRevenueShare request.</p>",
+      "refs": {
+        "CreateMarketplaceRevenueShareInputProductsList$member": null,
+        "MarketplaceRevenueShareProductEntryList$member": null
+      }
+    },
+    "MarketplaceRevenueShareProductEntryList": {
+      "base": null,
+      "refs": {
+        "UpdateMarketplaceRevenueShareInput$Products": "<p>The complete desired set of products in the marketplace revenue share, each with its typed account lists. 0 to 25 products; an empty list closes the marketplace revenue share.</p>"
+      }
+    },
+    "MarketplaceRevenueShareProductSummary": {
+      "base": "<p>A product in a marketplace revenue share, as returned in Create, Update and List responses, with per-type account counts but no account IDs.</p>",
+      "refs": {
+        "MarketplaceRevenueShareProductSummaryList$member": null
+      }
+    },
+    "MarketplaceRevenueShareProductSummaryList": {
+      "base": null,
+      "refs": {
+        "CreateMarketplaceRevenueShareOutput$Products": "<p>The products in the newly created marketplace revenue share, each with per-type account counts.</p>",
+        "MarketplaceRevenueShareSummary$Products": "<p>The products in the marketplace revenue share, each with per-type account counts. Empty when the share is closed.</p>",
+        "UpdateMarketplaceRevenueShareOutput$Products": "<p>The products in the marketplace revenue share after the update, each with per-type account counts. Empty when the marketplace revenue share is closed.</p>"
+      }
+    },
     "MarketplaceRevenueShareSortBy": {
       "base": null,
       "refs": {
@@ -495,12 +589,6 @@
         "ListMarketplaceRevenueSharesOutput$MarketplaceRevenueShareSummaries": "<p>The list of marketplace revenue share summaries.</p>"
       }
     },
-    "MarketplaceRevenueShareTagList": {
-      "base": null,
-      "refs": {
-        "CreateMarketplaceRevenueShareInput$Tags": "<p>Tags to associate with the marketplace revenue share upon creation.</p>"
-      }
-    },
     "NextToken": {
       "base": null,
       "refs": {
@@ -514,10 +602,18 @@
         "ListRevenueAttributionsOutput$NextToken": "<p>Token for pagination. Present if there are more results available.</p>"
       }
     },
+    "ProductCode": {
+      "base": null,
+      "refs": {
+        "MarketplaceRevenueShareProductDetail$ProductCode": "<p>The AWS Marketplace product code, resolved by the service.</p>",
+        "MarketplaceRevenueShareProductSummary$ProductCode": "<p>The AWS Marketplace product code, resolved by the service.</p>",
+        "ProductCodeList$member": null
+      }
+    },
     "ProductCodeList": {
       "base": null,
       "refs": {
-        "ListMarketplaceRevenueSharesInput$ProductCodes": "<p>Filter results to only include shares with these product codes.</p>"
+        "ListMarketplaceRevenueSharesInput$ProductCodes": "<p>Filter results to the marketplace revenue shares that contain a product with any of these product codes. 1 to 10 product codes.</p>"
       }
     },
     "ResourceARN": {
@@ -605,6 +701,17 @@
         "StartRevenueAttributionAllocationsTaskOutput$Status": "<p>Initial task status. Always IN_PROGRESS on successful submission.</p>"
       }
     },
+    "RevenueAttributionContext": {
+      "base": null,
+      "refs": {
+        "AttributionSummary$Context": "<p>Program-defined key-value attributes for the revenue attribution.</p>",
+        "CreateRevenueAttributionInput$Context": "<p>Program-defined key-value attributes for the revenue attribution.</p>",
+        "CreateRevenueAttributionOutput$Context": "<p>Program-defined key-value attributes for the revenue attribution.</p>",
+        "GetRevenueAttributionOutput$Context": "<p>Program-defined key-value attributes for the revenue attribution.</p>",
+        "UpdateRevenueAttributionInput$Context": "<p>Full-replacement context map. Omit to leave the stored context unchanged; pass an empty map to clear it.</p>",
+        "UpdateRevenueAttributionOutput$Context": "<p>The context stored on the revenue attribution after the update.</p>"
+      }
+    },
     "RevenueAttributionId": {
       "base": null,
       "refs": {
@@ -666,14 +773,85 @@
         "UpdateMarketplaceRevenueShareAllocationOutput$RevenueSharePercent": "<p>The revenue share percentage.</p>"
       }
     },
+    "RevenueShareProductAccountCount": {
+      "base": null,
+      "refs": {
+        "RevenueShareProductAccountDetail$Count": "<p>The number of accounts of this type.</p>",
+        "RevenueShareProductAccountSummary$Count": "<p>The number of accounts of this type.</p>"
+      }
+    },
+    "RevenueShareProductAccountDetail": {
+      "base": "<p>A typed account list returned by GetMarketplaceRevenueShare, with its count and full list of IDs.</p>",
+      "refs": {
+        "RevenueShareProductAccountDetailList$member": null
+      }
+    },
+    "RevenueShareProductAccountDetailList": {
+      "base": null,
+      "refs": {
+        "MarketplaceRevenueShareProductDetail$Accounts": "<p>The typed account lists for this product, each with its count and full list of IDs.</p>"
+      }
+    },
+    "RevenueShareProductAccountEntry": {
+      "base": "<p>A typed account list supplied for a product in a CreateMarketplaceRevenueShare or UpdateMarketplaceRevenueShare request.</p>",
+      "refs": {
+        "RevenueShareProductAccountEntryList$member": null
+      }
+    },
+    "RevenueShareProductAccountEntryList": {
+      "base": null,
+      "refs": {
+        "MarketplaceRevenueShareProductEntry$Accounts": "<p>The typed account lists for this product. Omit to have the service determine the accounts. At most one entry per type; each entry must carry at least one account. An empty list is the same as omitting the field.</p>"
+      }
+    },
+    "RevenueShareProductAccountId": {
+      "base": null,
+      "refs": {
+        "RevenueShareProductAccountIdList$member": null
+      }
+    },
+    "RevenueShareProductAccountIdList": {
+      "base": null,
+      "refs": {
+        "RevenueShareProductAccountDetail$AccountIds": "<p>The full list of AWS account identifiers of this type.</p>",
+        "RevenueShareProductAccountEntry$AccountIds": "<p>The AWS account identifiers for this type. Each ID must be a 12-digit AWS account ID. Account ownership is verified after the request is accepted.</p>"
+      }
+    },
+    "RevenueShareProductAccountSummary": {
+      "base": "<p>A per-type count of accounts associated with a product.</p>",
+      "refs": {
+        "RevenueShareProductAccountSummaryList$member": null
+      }
+    },
+    "RevenueShareProductAccountSummaryList": {
+      "base": null,
+      "refs": {
+        "MarketplaceRevenueShareProductSummary$Accounts": "<p>Per-type counts of the accounts associated with this product.</p>"
+      }
+    },
+    "RevenueShareProductAccountType": {
+      "base": null,
+      "refs": {
+        "RevenueShareProductAccountDetail$AccountType": "<p>The type of account list.</p>",
+        "RevenueShareProductAccountEntry$AccountType": "<p>The type of account list.</p>",
+        "RevenueShareProductAccountSummary$AccountType": "<p>The type of account list.</p>"
+      }
+    },
     "RevisionToken": {
       "base": null,
       "refs": {
         "AttributionSummary$LatestRevision": "<p>The latest revision of the revenue attribution resource.</p>",
-        "CreateMarketplaceRevenueShareAllocationOutput$LatestMarketplaceRevenueShareRevision": "<p>The latest revision of the parent marketplace revenue share.</p>",
+        "CreateMarketplaceRevenueShareAllocationInput$MarketplaceRevenueShareRevision": "<p>The revision of the parent marketplace revenue share that the caller last read, for optimistic concurrency control. A stale value returns ConflictException with Reason REVISION_MISMATCH.</p>",
+        "CreateMarketplaceRevenueShareAllocationOutput$MarketplaceRevenueShareRevision": "<p>The revision of the parent marketplace revenue share at which the allocation was created.</p>",
+        "CreateMarketplaceRevenueShareAllocationOutput$MarketplaceRevenueShareLatestRevision": "<p>The latest revision of the parent marketplace revenue share.</p>",
+        "CreateMarketplaceRevenueShareOutput$Revision": "<p>The revision of the newly created marketplace revenue share.</p>",
         "CreateRevenueAttributionOutput$Revision": "<p>The revision of the newly created attribution resource.</p>",
         "GetMarketplaceRevenueShareAllocationInput$MarketplaceRevenueShareRevision": "<p>The revision of the parent marketplace revenue share at which to retrieve the allocation. Omit to return the latest.</p>",
-        "GetMarketplaceRevenueShareAllocationOutput$LatestMarketplaceRevenueShareRevision": "<p>The latest revision of the parent marketplace revenue share.</p>",
+        "GetMarketplaceRevenueShareAllocationOutput$MarketplaceRevenueShareRevision": "<p>The revision of the parent marketplace revenue share at which the allocation was read.</p>",
+        "GetMarketplaceRevenueShareAllocationOutput$MarketplaceRevenueShareLatestRevision": "<p>The latest revision of the parent marketplace revenue share.</p>",
+        "GetMarketplaceRevenueShareInput$Revision": "<p>The revision of the marketplace revenue share to retrieve. Omit to return the latest revision.</p>",
+        "GetMarketplaceRevenueShareOutput$Revision": "<p>The revision of the retrieved marketplace revenue share.</p>",
+        "GetMarketplaceRevenueShareOutput$LatestRevision": "<p>The latest revision of the marketplace revenue share.</p>",
         "GetRevenueAttributionAllocationInput$RevenueAttributionRevision": "<p>Point-in-time revision number to query.</p>",
         "GetRevenueAttributionAllocationOutput$RevenueAttributionRevision": "<p>The revision of this allocation version.</p>",
         "GetRevenueAttributionAllocationOutput$RevenueAttributionLatestRevision": "<p>The latest committed revision.</p>",
@@ -683,9 +861,13 @@
         "GetRevenueAttributionOutput$LatestRevision": "<p>The latest revision of the attribution.</p>",
         "ListMarketplaceRevenueShareAllocationsInput$MarketplaceRevenueShareRevision": "<p>Optional share revision for historical list. Returns allocations as they existed at this revision.</p>",
         "ListRevenueAttributionAllocationsInput$RevenueAttributionRevision": "<p>Point-in-time revision number to query.</p>",
+        "MarketplaceRevenueShareSummary$LatestRevision": "<p>The latest revision of the marketplace revenue share.</p>",
         "StartRevenueAttributionAllocationsTaskInput$RevenueAttributionRevision": "<p>Current revision of the revenue attribution for optimistic locking.</p>",
         "UpdateMarketplaceRevenueShareAllocationInput$MarketplaceRevenueShareRevision": "<p>The current revision of the parent share. Must match for optimistic concurrency control.</p>",
-        "UpdateMarketplaceRevenueShareAllocationOutput$LatestMarketplaceRevenueShareRevision": "<p>The latest revision of the parent marketplace revenue share after the update.</p>",
+        "UpdateMarketplaceRevenueShareAllocationOutput$MarketplaceRevenueShareRevision": "<p>The revision of the parent marketplace revenue share at which the update was committed.</p>",
+        "UpdateMarketplaceRevenueShareAllocationOutput$MarketplaceRevenueShareLatestRevision": "<p>The latest revision of the parent marketplace revenue share after the update.</p>",
+        "UpdateMarketplaceRevenueShareInput$Revision": "<p>The current revision of the marketplace revenue share, for optimistic concurrency control. A stale value returns ConflictException with Reason REVISION_MISMATCH.</p>",
+        "UpdateMarketplaceRevenueShareOutput$LatestRevision": "<p>The latest revision of the marketplace revenue share after the update.</p>",
         "UpdateRevenueAttributionInput$Revision": "<p>The current revision of the revenue attribution. Must match the server's current value.</p>",
         "UpdateRevenueAttributionOutput$LatestRevision": "<p>The latest revision of the attribution after the update.</p>"
       }
@@ -703,7 +885,7 @@
     "SortOrder": {
       "base": null,
       "refs": {
-        "ListMarketplaceRevenueShareAllocationsInput$SortOrder": "<p>The direction to sort results. Defaults to DESCENDING.</p>",
+        "ListMarketplaceRevenueShareAllocationsInput$SortOrder": "<p>The direction to sort results. Defaults to ASCENDING.</p>",
         "ListMarketplaceRevenueSharesInput$SortOrder": "<p>The direction to sort results.</p>",
         "ListRevenueAttributionAllocationsInput$SortOrder": "<p>Sort direction. Defaults to ASCENDING.</p>",
         "ListRevenueAttributionsInput$SortOrder": "<p>The direction to sort results.</p>"
@@ -726,48 +908,32 @@
     "String": {
       "base": null,
       "refs": {
-        "AccessDeniedException$Message": null,
+        "AccessDeniedException$Message": "<p>A human-readable message describing the access denial reason.</p>",
         "AttributionSummary$Arn": "<p>The Amazon Resource Name (ARN) of the revenue attribution.</p>",
-        "ConflictException$Message": null,
-        "CreateMarketplaceRevenueShareAllocationOutput$ProductName": "<p>The display name of the AWS Marketplace product.</p>",
-        "CreateMarketplaceRevenueShareAllocationOutput$Arn": "<p>The Amazon Resource Name (ARN) of the allocation.</p>",
-        "CreateMarketplaceRevenueShareOutput$Arn": "<p>The Amazon Resource Name (ARN) of the newly created marketplace revenue share.</p>",
-        "CreateMarketplaceRevenueShareOutput$ProductCode": "<p>The AWS Marketplace product code.</p>",
-        "CreateMarketplaceRevenueShareOutput$ProductName": "<p>The display name of the AWS Marketplace product.</p>",
+        "ConflictException$Message": "<p>A human-readable message describing the conflict that occurred.</p>",
         "CreateRevenueAttributionOutput$Arn": "<p>The Amazon Resource Name (ARN) of the newly created revenue attribution.</p>",
         "CreateRevenueAttributionOutput$Name": "<p>The name of the revenue attribution.</p>",
         "CreateRevenueAttributionOutput$Description": "<p>The description of the revenue attribution.</p>",
-        "GetMarketplaceRevenueShareAllocationOutput$ProductName": "<p>The display name of the AWS Marketplace product.</p>",
-        "GetMarketplaceRevenueShareAllocationOutput$Arn": "<p>The Amazon Resource Name (ARN) of the allocation.</p>",
-        "GetMarketplaceRevenueShareOutput$Arn": "<p>The Amazon Resource Name (ARN) of the marketplace revenue share.</p>",
-        "GetMarketplaceRevenueShareOutput$ProductCode": "<p>The AWS Marketplace product code.</p>",
-        "GetMarketplaceRevenueShareOutput$ProductName": "<p>The display name of the AWS Marketplace product.</p>",
         "GetRevenueAttributionAllocationOutput$EntityName": "<p>The display name of the associated deal entity.</p>",
         "GetRevenueAttributionAllocationsTaskOutput$RevenueAttributionArn": "<p>ARN of the revenue attribution resource.</p>",
         "GetRevenueAttributionAllocationsTaskOutput$Description": "<p>Human-readable description, if provided at creation.</p>",
         "GetRevenueAttributionOutput$Arn": "<p>The Amazon Resource Name (ARN) of the revenue attribution.</p>",
-        "InternalServerException$Message": null,
+        "InternalServerException$Message": "<p>A human-readable message describing the internal server error.</p>",
         "MarketplaceProductSummary$ProductCode": "<p>The AWS Marketplace product code resolved using the product identifier.</p>",
         "MarketplaceProductSummary$ProductName": "<p>The display name of the AWS Marketplace product.</p>",
-        "MarketplaceRevenueShareAllocationSummary$ProductName": "<p>The display name of the AWS Marketplace product.</p>",
-        "MarketplaceRevenueShareAllocationSummary$Arn": "<p>The Amazon Resource Name (ARN) of the parent marketplace revenue share.</p>",
-        "MarketplaceRevenueShareSummary$Arn": "<p>The Amazon Resource Name (ARN) of the marketplace revenue share.</p>",
-        "MarketplaceRevenueShareSummary$ProductCode": "<p>The AWS Marketplace product code.</p>",
-        "MarketplaceRevenueShareSummary$ProductName": "<p>The display name of the AWS Marketplace product.</p>",
-        "ProductCodeList$member": null,
-        "ResourceNotFoundException$Message": null,
+        "MarketplaceRevenueShareProductDetail$ProductName": "<p>The display name of the AWS Marketplace product, resolved by the service.</p>",
+        "MarketplaceRevenueShareProductSummary$ProductName": "<p>The display name of the AWS Marketplace product, resolved by the service.</p>",
+        "ResourceNotFoundException$Message": "<p>A human-readable message describing which resource was not found.</p>",
         "RevenueAttributionAllocationErrorDetail$ErrorMessage": "<p>Human-readable error description.</p>",
         "RevenueAttributionAllocationSummary$EntityName": "<p>The display name of the associated deal entity.</p>",
-        "ServiceQuotaExceededException$Message": null,
+        "ServiceQuotaExceededException$Message": "<p>A human-readable message describing which service quota would be exceeded.</p>",
         "StartRevenueAttributionAllocationsTaskOutput$RevenueAttributionArn": "<p>ARN of the revenue attribution resource.</p>",
-        "ThrottlingException$Message": null,
+        "ThrottlingException$Message": "<p>A human-readable message indicating that the request rate limit has been exceeded.</p>",
         "ThrottlingException$ServiceCode": "<p>The service code associated with the throttling error.</p>",
         "ThrottlingException$QuotaCode": "<p>The quota code associated with the throttling error.</p>",
-        "UpdateMarketplaceRevenueShareAllocationOutput$ProductName": "<p>The display name of the AWS Marketplace product.</p>",
-        "UpdateMarketplaceRevenueShareAllocationOutput$Arn": "<p>The Amazon Resource Name (ARN) of the parent marketplace revenue share.</p>",
         "UpdateRevenueAttributionOutput$Arn": "<p>The Amazon Resource Name (ARN) of the updated revenue attribution.</p>",
         "UpdateRevenueAttributionOutput$Description": "<p>The updated description of the revenue attribution.</p>",
-        "ValidationException$Message": null,
+        "ValidationException$Message": "<p>A human-readable message describing the validation failure.</p>",
         "ValidationExceptionField$Name": "<p>The name of the field that failed validation.</p>",
         "ValidationExceptionField$Message": "<p>A human-readable message describing why the field validation failed.</p>"
       }
@@ -775,7 +941,6 @@
     "Tag": {
       "base": "<p>A key-value pair used for organizing and managing resources through metadata tags.</p>",
       "refs": {
-        "MarketplaceRevenueShareTagList$member": null,
         "TagList$member": null
       }
     },
@@ -795,6 +960,7 @@
     "TagList": {
       "base": null,
       "refs": {
+        "CreateMarketplaceRevenueShareInput$Tags": "<p>Tags to associate with the marketplace revenue share upon creation.</p>",
         "CreateRevenueAttributionInput$Tags": "<p>Tags to associate with the revenue attribution upon creation.</p>",
         "ListTagsForResourceOutput$tags": "<p>The tags associated with the resource.</p>",
         "TagResourceInput$tags": "<p>The tags to add to the resource.</p>"
@@ -842,8 +1008,8 @@
         "GetRevenueAttributionAllocationsTaskOutput$EndedAt": "<p>When processing ended. Only present when COMPLETE or FAILED.</p>",
         "GetRevenueAttributionOutput$CreatedDate": "<p>The date when the revenue attribution was created.</p>",
         "GetRevenueAttributionOutput$LastModifiedDate": "<p>The date when the revenue attribution was last modified.</p>",
-        "ListMarketplaceRevenueSharesInput$CreatedAfter": "<p>Filter results to only include marketplace revenue shares created after this timestamp.</p>",
-        "ListMarketplaceRevenueSharesInput$CreatedBefore": "<p>Filter results to only include marketplace revenue shares created before this timestamp.</p>",
+        "ListMarketplaceRevenueSharesInput$CreatedAfter": "<p>Filter results to marketplace revenue shares created at or after this timestamp (inclusive).</p>",
+        "ListMarketplaceRevenueSharesInput$CreatedBefore": "<p>Filter results to marketplace revenue shares created before this timestamp (exclusive).</p>",
         "ListRevenueAttributionsInput$CreatedAfter": "<p>Filter results to only include revenue attributions created after this timestamp.</p>",
         "ListRevenueAttributionsInput$CreatedBefore": "<p>Filter results to only include revenue attributions created before this timestamp.</p>",
         "MarketplaceRevenueShareAllocationSummary$CreatedDate": "<p>The date when the allocation was created.</p>",
@@ -853,6 +1019,7 @@
         "StartRevenueAttributionAllocationsTaskOutput$StartedAt": "<p>When processing started.</p>",
         "UpdateMarketplaceRevenueShareAllocationOutput$CreatedDate": "<p>The date when the allocation was created.</p>",
         "UpdateMarketplaceRevenueShareAllocationOutput$LastModifiedDate": "<p>The date when the allocation was last modified.</p>",
+        "UpdateMarketplaceRevenueShareOutput$LastModifiedDate": "<p>The date when the marketplace revenue share was last modified.</p>",
         "UpdateRevenueAttributionOutput$LastModifiedDate": "<p>The date when the attribution was last modified.</p>"
       }
     },
@@ -865,6 +1032,14 @@
       "refs": {}
     },
     "UpdateMarketplaceRevenueShareAllocationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateMarketplaceRevenueShareInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateMarketplaceRevenueShareOutput": {
       "base": null,
       "refs": {}
     },

@@ -5,11 +5,38 @@
       {
         "input": {
           "Catalog": "AWS",
-          "ProductId": "prod-abc123def4567"
+          "Products": [
+            {
+              "Accounts": [
+                {
+                  "AccountIds": [
+                    "111122223333"
+                  ],
+                  "AccountType": "DEPLOYMENT"
+                }
+              ],
+              "ProductId": "prod-abc123def4567"
+            }
+          ]
         },
         "output": {
-          "Arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/marketplace-revenue-share/prod-abc123def4567",
-          "ProductId": "prod-abc123def4567"
+          "Arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/marketplace-revenue-share/mrs-abc123def4567",
+          "Catalog": "AWS",
+          "CreatedDate": 1784419200,
+          "Id": "mrs-abc123def4567",
+          "LastModifiedDate": 1784419200,
+          "Products": [
+            {
+              "Accounts": [
+                {
+                  "AccountType": "DEPLOYMENT",
+                  "Count": 1
+                }
+              ],
+              "ProductId": "prod-abc123def4567"
+            }
+          ],
+          "Revision": "1"
         },
         "id": "example-1",
         "title": "Example for CreateMarketplaceRevenueShare"
@@ -20,14 +47,20 @@
         "input": {
           "Catalog": "AWS",
           "EffectiveFrom": "2026-07-01",
-          "ProductId": "prod-abc123def4567",
+          "EffectiveUntil": "2026-12-31",
+          "MarketplaceRevenueShareIdentifier": "mrs-abc123def4567",
+          "MarketplaceRevenueShareRevision": "1",
           "RevenueSharePercent": "15.50"
         },
         "output": {
-          "Arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/marketplace-revenue-share-allocation/mrsa-abc123def4567",
+          "CreatedDate": 1784505600,
           "EffectiveFrom": "2026-07-01",
+          "EffectiveUntil": "2026-12-31",
+          "LastModifiedDate": 1784505600,
           "MarketplaceRevenueShareAllocationId": "mrsa-abc123def4567",
-          "ProductId": "prod-abc123def4567",
+          "MarketplaceRevenueShareIdentifier": "mrs-abc123def4567",
+          "MarketplaceRevenueShareLatestRevision": "2",
+          "MarketplaceRevenueShareRevision": "2",
           "RevenueSharePercent": "15.50",
           "Status": "ACTIVE"
         },
@@ -55,12 +88,34 @@
       {
         "input": {
           "Catalog": "AWS",
-          "ProductId": "prod-abc123def4567"
+          "Identifier": "mrs-abc123def4567"
         },
         "output": {
-          "Arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/marketplace-revenue-share/prod-abc123def4567",
+          "Arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/marketplace-revenue-share/mrs-abc123def4567",
           "Catalog": "AWS",
-          "ProductId": "prod-abc123def4567"
+          "CreatedDate": 1784419200,
+          "EffectiveFrom": "2026-07-01",
+          "EffectiveUntil": "2026-12-31",
+          "Id": "mrs-abc123def4567",
+          "LastModifiedDate": 1784505600,
+          "LatestRevision": "2",
+          "Products": [
+            {
+              "Accounts": [
+                {
+                  "AccountIds": [
+                    "111122223333"
+                  ],
+                  "AccountType": "DEPLOYMENT",
+                  "Count": 1
+                }
+              ],
+              "ProductId": "prod-abc123def4567"
+            }
+          ],
+          "Revision": "2",
+          "TotalActiveMarketplaceRevenueShareAllocationCount": 1,
+          "TotalMarketplaceRevenueShareAllocationCount": 1
         },
         "id": "example-1",
         "title": "Example for GetMarketplaceRevenueShare"
@@ -71,13 +126,17 @@
         "input": {
           "Catalog": "AWS",
           "MarketplaceRevenueShareAllocationId": "mrsa-abc123def4567",
-          "ProductId": "prod-abc123def4567"
+          "MarketplaceRevenueShareIdentifier": "mrs-abc123def4567"
         },
         "output": {
-          "Arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/marketplace-revenue-share-allocation/mrsa-abc123def4567",
+          "CreatedDate": 1784505600,
           "EffectiveFrom": "2026-07-01",
+          "EffectiveUntil": "2026-12-31",
+          "LastModifiedDate": 1784505600,
           "MarketplaceRevenueShareAllocationId": "mrsa-abc123def4567",
-          "ProductId": "prod-abc123def4567",
+          "MarketplaceRevenueShareIdentifier": "mrs-abc123def4567",
+          "MarketplaceRevenueShareLatestRevision": "2",
+          "MarketplaceRevenueShareRevision": "2",
           "RevenueSharePercent": "15.50",
           "Status": "ACTIVE"
         },
@@ -149,10 +208,22 @@
       {
         "input": {
           "Catalog": "AWS",
-          "ProductId": "prod-abc123def4567"
+          "MarketplaceRevenueShareIdentifier": "mrs-abc123def4567",
+          "StatusFilter": "ACTIVE"
         },
         "output": {
-          "MarketplaceRevenueShareAllocationSummaries": []
+          "MarketplaceRevenueShareAllocationSummaries": [
+            {
+              "CreatedDate": 1784505600,
+              "EffectiveFrom": "2026-07-01",
+              "EffectiveUntil": "2026-12-31",
+              "LastModifiedDate": 1784505600,
+              "MarketplaceRevenueShareAllocationId": "mrsa-abc123def4567",
+              "MarketplaceRevenueShareIdentifier": "mrs-abc123def4567",
+              "RevenueSharePercent": "15.50",
+              "Status": "ACTIVE"
+            }
+          ]
         },
         "id": "example-1",
         "title": "Example for ListMarketplaceRevenueShareAllocations"
@@ -165,7 +236,31 @@
           "MaxResults": 10
         },
         "output": {
-          "MarketplaceRevenueShareSummaries": []
+          "MarketplaceRevenueShareSummaries": [
+            {
+              "Arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/marketplace-revenue-share/mrs-abc123def4567",
+              "Catalog": "AWS",
+              "CreatedDate": 1784419200,
+              "EffectiveFrom": "2026-07-01",
+              "EffectiveUntil": "2026-12-31",
+              "Id": "mrs-abc123def4567",
+              "LastModifiedDate": 1784505600,
+              "LatestRevision": "2",
+              "Products": [
+                {
+                  "Accounts": [
+                    {
+                      "AccountType": "DEPLOYMENT",
+                      "Count": 1
+                    }
+                  ],
+                  "ProductId": "prod-abc123def4567"
+                }
+              ],
+              "TotalActiveMarketplaceRevenueShareAllocationCount": 1,
+              "TotalMarketplaceRevenueShareAllocationCount": 1
+            }
+          ]
         },
         "id": "example-1",
         "title": "Example for ListMarketplaceRevenueShares"
@@ -227,20 +322,82 @@
         "title": "Example for StartRevenueAttributionAllocationsTask"
       }
     ],
+    "UpdateMarketplaceRevenueShare": [
+      {
+        "input": {
+          "Catalog": "AWS",
+          "Identifier": "mrs-abc123def4567",
+          "Products": [
+            {
+              "Accounts": [
+                {
+                  "AccountIds": [
+                    "111122223333"
+                  ],
+                  "AccountType": "DEPLOYMENT"
+                }
+              ],
+              "ProductId": "prod-abc123def4567"
+            }
+          ],
+          "Revision": "1"
+        },
+        "output": {
+          "Arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/marketplace-revenue-share/mrs-abc123def4567",
+          "Id": "mrs-abc123def4567",
+          "LastModifiedDate": 1784505600,
+          "LatestRevision": "2",
+          "Products": [
+            {
+              "Accounts": [
+                {
+                  "AccountType": "DEPLOYMENT",
+                  "Count": 1
+                }
+              ],
+              "ProductId": "prod-abc123def4567"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Example for UpdateMarketplaceRevenueShare"
+      },
+      {
+        "input": {
+          "Catalog": "AWS",
+          "Identifier": "mrs-abc123def4567",
+          "Products": [],
+          "Revision": "2"
+        },
+        "output": {
+          "Arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/marketplace-revenue-share/mrs-abc123def4567",
+          "Id": "mrs-abc123def4567",
+          "LastModifiedDate": 1784592000,
+          "LatestRevision": "3",
+          "Products": []
+        },
+        "id": "example-2",
+        "title": "Example for closing a marketplace revenue share"
+      }
+    ],
     "UpdateMarketplaceRevenueShareAllocation": [
       {
         "input": {
           "Catalog": "AWS",
           "MarketplaceRevenueShareAllocationId": "mrsa-abc123def4567",
-          "MarketplaceRevenueShareRevision": "1",
-          "ProductId": "prod-abc123def4567",
+          "MarketplaceRevenueShareIdentifier": "mrs-abc123def4567",
+          "MarketplaceRevenueShareRevision": "2",
           "RevenueSharePercent": "20.00"
         },
         "output": {
-          "Arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/marketplace-revenue-share-allocation/mrsa-abc123def4567",
+          "CreatedDate": 1784505600,
           "EffectiveFrom": "2026-07-01",
+          "EffectiveUntil": "2026-12-31",
+          "LastModifiedDate": 1784592000,
           "MarketplaceRevenueShareAllocationId": "mrsa-abc123def4567",
-          "ProductId": "prod-abc123def4567",
+          "MarketplaceRevenueShareIdentifier": "mrs-abc123def4567",
+          "MarketplaceRevenueShareLatestRevision": "3",
+          "MarketplaceRevenueShareRevision": "3",
           "RevenueSharePercent": "20.00",
           "Status": "ACTIVE"
         },

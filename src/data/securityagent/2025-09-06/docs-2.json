@@ -868,6 +868,12 @@
         "Finding$codeLocations": "<p>The file locations involved in the vulnerability, as reported by the code scanner.</p>"
       }
     },
+    "CodeRemediationJobStatus": {
+      "base": "<p>Code remediation status for a particular repository.</p>",
+      "refs": {
+        "CodeRemediationTaskDetails$status": "<p>The current status of the code remediation task for the particular repository.</p>"
+      }
+    },
     "CodeRemediationStrategy": {
       "base": "<p>Strategy for automated code remediation.</p>",
       "refs": {
@@ -898,13 +904,13 @@
     "CodeRemediationTaskDetailsList": {
       "base": null,
       "refs": {
-        "CodeRemediationTask$taskDetails": "<p>The list of details for the code remediation task, including repository name, code diff link, and pull request link.</p>"
+        "CodeRemediationTask$taskDetails": "<p>The list of details for a code remediation task, including repository names, status of code remediation for each associated repository, and generated code diff or pull request links.</p>"
       }
     },
     "CodeRemediationTaskStatus": {
       "base": "<p>Code remediation task status.</p>",
       "refs": {
-        "CodeRemediationTask$status": "<p>The current status of the code remediation task.</p>"
+        "CodeRemediationTask$status": "<p>The current status of the overall code remediation task.</p>"
       }
     },
     "CodeReview": {
@@ -3097,10 +3103,12 @@
         "CloudWatchLog$logStream": "<p>The name of the CloudWatch log stream.</p>",
         "CodeLocation$filePath": "<p>The absolute path to the file containing the code location.</p>",
         "CodeLocation$label": "<p>The role of this location in the vulnerability, such as source or sink.</p>",
-        "CodeRemediationTask$statusReason": "<p>The reason for the current status of the code remediation task.</p>",
-        "CodeRemediationTaskDetails$repoName": "<p>The name of the repository where the remediation was applied.</p>",
+        "CodeRemediationTask$statusReason": "<p>The reason for the current status of the overall code remediation task.</p>",
+        "CodeRemediationTaskDetails$repoName": "<p>The name of an associated repository where the remediation was applied.</p>",
         "CodeRemediationTaskDetails$codeDiffLink": "<p>The link to the code diff for the remediation.</p>",
         "CodeRemediationTaskDetails$pullRequestLink": "<p>The link to the pull request created for the remediation.</p>",
+        "CodeRemediationTaskDetails$statusCode": "<p>A category classifier if a repository's code remediation fails.</p>",
+        "CodeRemediationTaskDetails$statusReason": "<p>A descriptive reason when a repository's code remediation fails.</p>",
         "CodeReview$codeReviewId": "<p>The unique identifier of the code review.</p>",
         "CodeReview$agentSpaceId": "<p>The unique identifier of the agent space that contains the code review.</p>",
         "CodeReview$title": "<p>The title of the code review.</p>",

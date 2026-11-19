@@ -651,6 +651,209 @@
       },
       {
         "input": {
+          "DBClusterIdentifier": "sample-cluster",
+          "EnableIAMDatabaseAuthentication": true,
+          "EnableInternetAccessGateway": true,
+          "EnableVPCNetworking": false,
+          "Engine": "aurora-postgresql",
+          "EngineVersion": "17.7",
+          "MasterUserAuthenticationType": "iam-db-auth",
+          "MasterUsername": "postgres"
+        },
+        "output": {
+          "DBCluster": {
+            "AllocatedStorage": 1,
+            "AssociatedRoles": [],
+            "AutoMinorVersionUpgrade": true,
+            "AvailabilityZones": [
+              "us-east-1c",
+              "us-east-1d",
+              "us-east-1b"
+            ],
+            "BackupRetentionPeriod": 1,
+            "ClusterCreateTime": "2026-06-29T16:11:56.556Z",
+            "CopyTagsToSnapshot": false,
+            "CrossAccountClone": false,
+            "DBClusterArn": "arn:aws:rds:us-east-1:123456789012:cluster:sample-cluster",
+            "DBClusterIdentifier": "sample-cluster",
+            "DBClusterMembers": [],
+            "DBClusterParameterGroup": "default.aurora-postgresql17",
+            "DatabaseInsightsMode": "standard",
+            "DbClusterResourceId": "cluster-EXAMPLE123456789",
+            "DeletionProtection": false,
+            "DomainMemberships": [],
+            "Engine": "aurora-postgresql",
+            "EngineLifecycleSupport": "open-source-rds-extended-support",
+            "EngineMode": "provisioned",
+            "EngineVersion": "17.7",
+            "HttpEndpointEnabled": false,
+            "IAMDatabaseAuthenticationEnabled": true,
+            "InternetAccessGatewayEnabled": true,
+            "LocalWriteForwardingStatus": "disabled",
+            "MasterUsername": "postgres",
+            "MultiAZ": false,
+            "Port": 5432,
+            "PreferredBackupWindow": "10:20-10:50",
+            "PreferredMaintenanceWindow": "fri:03:49-fri:04:19",
+            "ReadReplicaIdentifiers": [],
+            "Status": "creating",
+            "StorageEncrypted": false,
+            "TagList": [],
+            "VPCNetworkingEnabled": false,
+            "VpcSecurityGroups": []
+          }
+        },
+        "description": "The following example creates an Aurora PostgreSQL DB cluster without VPC networking. The cluster uses internet-based connectivity through an internet access gateway. IAM database authentication is required for this configuration.",
+        "id": "example-4",
+        "title": "To create an Aurora PostgreSQL cluster without VPC networking"
+      },
+      {
+        "input": {
+          "DBClusterIdentifier": "sample-express-cluster",
+          "Engine": "aurora-postgresql",
+          "WithExpressConfiguration": true
+        },
+        "output": {
+          "DBCluster": {
+            "AllocatedStorage": 1,
+            "AssociatedRoles": [],
+            "AutoMinorVersionUpgrade": true,
+            "AvailabilityZones": [
+              "us-east-1c",
+              "us-east-1a",
+              "us-east-1b"
+            ],
+            "BackupRetentionPeriod": 7,
+            "ClusterCreateTime": "2026-06-29T16:15:02Z",
+            "CopyTagsToSnapshot": false,
+            "CrossAccountClone": false,
+            "DBClusterArn": "arn:aws:rds:us-east-1:123456789012:cluster:sample-express-cluster",
+            "DBClusterIdentifier": "sample-express-cluster",
+            "DBClusterMembers": [
+              {
+                "DBClusterParameterGroupStatus": "in-sync",
+                "DBInstanceIdentifier": "sample-express-cluster-instance-1",
+                "IsClusterWriter": true,
+                "PromotionTier": 1
+              }
+            ],
+            "DBClusterParameterGroup": "default.aurora-postgresql17",
+            "DatabaseInsightsMode": "standard",
+            "DbClusterResourceId": "cluster-EXAMPLE987654321",
+            "DeletionProtection": false,
+            "DomainMemberships": [],
+            "Engine": "aurora-postgresql",
+            "EngineLifecycleSupport": "open-source-rds-extended-support",
+            "EngineMode": "provisioned",
+            "EngineVersion": "17.7",
+            "HttpEndpointEnabled": false,
+            "IAMDatabaseAuthenticationEnabled": true,
+            "InternetAccessGatewayEnabled": true,
+            "LocalWriteForwardingStatus": "disabled",
+            "MasterUsername": "postgres",
+            "MultiAZ": false,
+            "PerformanceInsightsEnabled": false,
+            "Port": 5432,
+            "PreferredBackupWindow": "06:15-06:45",
+            "PreferredMaintenanceWindow": "sat:03:44-sat:04:14",
+            "ReadReplicaIdentifiers": [],
+            "ServerlessV2PlatformVersion": "4",
+            "ServerlessV2ScalingConfiguration": {
+              "MaxCapacity": 16.0,
+              "MinCapacity": 0.0,
+              "SecondsUntilAutoPause": 300
+            },
+            "Status": "creating",
+            "StorageEncrypted": false,
+            "TagList": [],
+            "VPCNetworkingEnabled": false,
+            "VpcSecurityGroups": []
+          }
+        },
+        "description": "The following example creates an Aurora PostgreSQL DB cluster with express configuration and without VPC networking. Express configuration automatically sets default values and creates a writer instance. Express configuration creates the cluster without VPC networking by default, so you don't need to specify EnableVPCNetworking or EnableInternetAccessGateway. The cluster uses internet-based connectivity through an internet access gateway.",
+        "id": "example-5",
+        "title": "To create an Aurora DB cluster with express configuration without VPC networking"
+      },
+      {
+        "input": {
+          "DBClusterIdentifier": "sample-express-cluster",
+          "DBSubnetGroupName": "mysubnetgroup",
+          "EnableInternetAccessGateway": false,
+          "EnableVPCNetworking": true,
+          "Engine": "aurora-postgresql",
+          "NetworkType": "IPV4",
+          "VpcSecurityGroupIds": [
+            "sg-0b91305example"
+          ],
+          "WithExpressConfiguration": true
+        },
+        "output": {
+          "DBCluster": {
+            "AllocatedStorage": 1,
+            "AssociatedRoles": [],
+            "AutoMinorVersionUpgrade": true,
+            "AvailabilityZones": [
+              "us-east-1c",
+              "us-east-1a",
+              "us-east-1b"
+            ],
+            "BackupRetentionPeriod": 7,
+            "ClusterCreateTime": "2026-06-29T16:25:40Z",
+            "CopyTagsToSnapshot": false,
+            "CrossAccountClone": false,
+            "DBClusterArn": "arn:aws:rds:us-east-1:123456789012:cluster:sample-express-cluster",
+            "DBClusterIdentifier": "sample-express-cluster",
+            "DBClusterMembers": [
+              {
+                "DBClusterParameterGroupStatus": "in-sync",
+                "DBInstanceIdentifier": "sample-express-cluster-instance-1",
+                "IsClusterWriter": true,
+                "PromotionTier": 1
+              }
+            ],
+            "DBClusterParameterGroup": "default.aurora-postgresql17",
+            "DatabaseInsightsMode": "standard",
+            "DbClusterResourceId": "cluster-EXAMPLE887654321",
+            "DeletionProtection": false,
+            "DomainMemberships": [],
+            "Engine": "aurora-postgresql",
+            "EngineLifecycleSupport": "open-source-rds-extended-support",
+            "EngineMode": "provisioned",
+            "EngineVersion": "17.7",
+            "HttpEndpointEnabled": false,
+            "IAMDatabaseAuthenticationEnabled": true,
+            "InternetAccessGatewayEnabled": true,
+            "LocalWriteForwardingStatus": "disabled",
+            "MasterUsername": "postgres",
+            "MultiAZ": false,
+            "PendingModifiedValues": {
+              "InternetAccessGatewayEnabled": false,
+              "VPCNetworkingEnabled": true
+            },
+            "PerformanceInsightsEnabled": false,
+            "Port": 5432,
+            "PreferredBackupWindow": "06:15-06:45",
+            "PreferredMaintenanceWindow": "sat:03:44-sat:04:14",
+            "ReadReplicaIdentifiers": [],
+            "ServerlessV2PlatformVersion": "4",
+            "ServerlessV2ScalingConfiguration": {
+              "MaxCapacity": 16.0,
+              "MinCapacity": 0.0,
+              "SecondsUntilAutoPause": 300
+            },
+            "Status": "creating",
+            "StorageEncrypted": false,
+            "TagList": [],
+            "VPCNetworkingEnabled": false,
+            "VpcSecurityGroups": []
+          }
+        },
+        "description": "The following example creates an Aurora PostgreSQL DB cluster with express configuration in the VPC of the DB subnet group named mysubnetgroup. Express configuration uses an internet access gateway by default, so the example turns on VPC networking and turns off the internet access gateway. Aurora creates the DB cluster with an internet access gateway and then moves it into the VPC, so the response shows the VPC networking change under PendingModifiedValues. Call DescribeDBClusters to check when VPCNetworkingEnabled is true.",
+        "id": "example-6",
+        "title": "To create an Aurora DB cluster with express configuration with VPC networking"
+      },
+      {
+        "input": {
           "AssociatedRoles": [
             {
               "FeatureName": "s3Import",
@@ -707,7 +910,7 @@
           }
         },
         "description": "The following example creates an Aurora PostgreSQL-compatible DB cluster and associates an IAM role for Amazon S3 import in a single call.",
-        "id": "example-4",
+        "id": "example-7",
         "title": "To create an Aurora DB cluster with an associated IAM role for Amazon S3 import"
       }
     ],
@@ -3615,6 +3818,239 @@
         "description": "The following example changes the master user password for the DB cluster named cluster-2 and sets the backup retention period to 14 days. The ApplyImmediately parameter causes the changes to be made immediately, instead of waiting until the next maintenance window.",
         "id": "example-1",
         "title": "To modify a DB cluster"
+      },
+      {
+        "input": {
+          "ApplyImmediately": true,
+          "DBClusterIdentifier": "sample-cluster",
+          "EnableIAMDatabaseAuthentication": true,
+          "EnableInternetAccessGateway": true,
+          "EnableVPCNetworking": false,
+          "MasterUserAuthenticationType": "iam-db-auth"
+        },
+        "output": {
+          "DBCluster": {
+            "AllocatedStorage": 1,
+            "AssociatedRoles": [],
+            "AutoMinorVersionUpgrade": true,
+            "AvailabilityZones": [
+              "us-east-1c",
+              "us-east-1d",
+              "us-east-1b"
+            ],
+            "BackupRetentionPeriod": 7,
+            "ClusterCreateTime": "2026-06-24T18:56:02.248Z",
+            "CopyTagsToSnapshot": false,
+            "CrossAccountClone": false,
+            "DBClusterArn": "arn:aws:rds:us-east-1:123456789012:cluster:sample-cluster",
+            "DBClusterIdentifier": "sample-cluster",
+            "DBClusterMembers": [
+              {
+                "DBClusterParameterGroupStatus": "in-sync",
+                "DBInstanceIdentifier": "sample-cluster-instance-1",
+                "IsClusterWriter": true,
+                "PromotionTier": 1
+              }
+            ],
+            "DBClusterParameterGroup": "default.aurora-postgresql17",
+            "DBSubnetGroup": "default",
+            "DatabaseInsightsMode": "standard",
+            "DbClusterResourceId": "cluster-EXAMPLE123456789",
+            "DeletionProtection": false,
+            "DomainMemberships": [],
+            "EarliestRestorableTime": "2026-06-24T18:57:17.573Z",
+            "Endpoint": "sample-cluster.cluster-############.us-east-1.rds.amazonaws.com",
+            "Engine": "aurora-postgresql",
+            "EngineLifecycleSupport": "open-source-rds-extended-support",
+            "EngineMode": "provisioned",
+            "EngineVersion": "17.7",
+            "HostedZoneId": "Z1RLNU0EXAMPLE",
+            "HttpEndpointEnabled": false,
+            "IAMDatabaseAuthenticationEnabled": false,
+            "InternetAccessGatewayEnabled": false,
+            "LatestRestorableTime": "2026-06-29T22:22:17.460Z",
+            "LocalWriteForwardingStatus": "disabled",
+            "MasterUsername": "postgres",
+            "MultiAZ": false,
+            "NetworkType": "IPV4",
+            "PendingModifiedValues": {
+              "IAMDatabaseAuthenticationEnabled": true,
+              "InternetAccessGatewayEnabled": true,
+              "VPCNetworkingEnabled": false
+            },
+            "Port": 5432,
+            "PreferredBackupWindow": "03:05-03:35",
+            "PreferredMaintenanceWindow": "wed:03:36-wed:04:06",
+            "ReadReplicaIdentifiers": [],
+            "ReaderEndpoint": "sample-cluster.cluster-ro-############.us-east-1.rds.amazonaws.com",
+            "Status": "available",
+            "StorageEncrypted": false,
+            "TagList": [],
+            "VPCNetworkingEnabled": true,
+            "VpcSecurityGroups": [
+              {
+                "Status": "active",
+                "VpcSecurityGroupId": "sg-0b91305example"
+              }
+            ]
+          }
+        },
+        "description": "The following example modifies an Aurora PostgreSQL DB cluster to disable VPC networking and connect through an internet access gateway instead. The example also turns on IAM database authentication, which a cluster without VPC networking requires. Because Aurora applies the change asynchronously, the response still shows the current networking settings, and PendingModifiedValues shows the new ones. Call DescribeDBClusters to check when VPCNetworkingEnabled is false.",
+        "id": "example-2",
+        "title": "To modify a DB cluster to disable VPC networking"
+      },
+      {
+        "input": {
+          "ApplyImmediately": true,
+          "DBClusterIdentifier": "sample-cluster",
+          "DBSubnetGroupName": "default",
+          "EnableInternetAccessGateway": false,
+          "EnableVPCNetworking": true,
+          "NetworkType": "IPV4",
+          "VpcSecurityGroupIds": [
+            "sg-0b91305example"
+          ]
+        },
+        "output": {
+          "DBCluster": {
+            "AllocatedStorage": 1,
+            "AssociatedRoles": [],
+            "AutoMinorVersionUpgrade": true,
+            "AvailabilityZones": [
+              "us-east-1c",
+              "us-east-1d",
+              "us-east-1b"
+            ],
+            "BackupRetentionPeriod": 7,
+            "ClusterCreateTime": "2026-06-24T18:56:02.248Z",
+            "CopyTagsToSnapshot": false,
+            "CrossAccountClone": false,
+            "DBClusterArn": "arn:aws:rds:us-east-1:123456789012:cluster:sample-cluster",
+            "DBClusterIdentifier": "sample-cluster",
+            "DBClusterMembers": [
+              {
+                "DBClusterParameterGroupStatus": "in-sync",
+                "DBInstanceIdentifier": "sample-cluster-instance-1",
+                "IsClusterWriter": true,
+                "PromotionTier": 1
+              }
+            ],
+            "DBClusterParameterGroup": "default.aurora-postgresql17",
+            "DatabaseInsightsMode": "standard",
+            "DbClusterResourceId": "cluster-EXAMPLE123456789",
+            "DeletionProtection": false,
+            "DomainMemberships": [],
+            "EarliestRestorableTime": "2026-06-24T18:57:17.573Z",
+            "Endpoint": "sample-cluster.cluster-############.us-east-1.rds.amazonaws.com",
+            "Engine": "aurora-postgresql",
+            "EngineLifecycleSupport": "open-source-rds-extended-support",
+            "EngineMode": "provisioned",
+            "EngineVersion": "17.7",
+            "HostedZoneId": "Z1RLNU0EXAMPLE",
+            "HttpEndpointEnabled": false,
+            "IAMDatabaseAuthenticationEnabled": true,
+            "InternetAccessGatewayEnabled": true,
+            "LatestRestorableTime": "2026-06-29T22:22:17.460Z",
+            "LocalWriteForwardingStatus": "disabled",
+            "MasterUsername": "postgres",
+            "MultiAZ": false,
+            "PendingModifiedValues": {
+              "InternetAccessGatewayEnabled": false,
+              "VPCNetworkingEnabled": true
+            },
+            "Port": 5432,
+            "PreferredBackupWindow": "03:05-03:35",
+            "PreferredMaintenanceWindow": "wed:03:36-wed:04:06",
+            "ReadReplicaIdentifiers": [],
+            "ReaderEndpoint": "sample-cluster.cluster-ro-############.us-east-1.rds.amazonaws.com",
+            "Status": "available",
+            "StorageEncrypted": false,
+            "TagList": [],
+            "VPCNetworkingEnabled": false,
+            "VpcSecurityGroups": []
+          }
+        },
+        "description": "The following example modifies an Aurora PostgreSQL DB cluster that uses an internet access gateway so that it uses VPC networking instead. Aurora moves the DB cluster into the DB subnet group named default, with one security group and the IPV4 network type. Because Aurora applies the change asynchronously, the response still shows the current networking settings, and PendingModifiedValues shows the new ones. Call DescribeDBClusters to check when VPCNetworkingEnabled is true.",
+        "id": "example-3",
+        "title": "To modify a DB cluster to re-enable VPC networking"
+      },
+      {
+        "input": {
+          "ApplyImmediately": true,
+          "DBClusterIdentifier": "sample-cluster",
+          "DBSubnetGroupName": "mysubnetgroup-vpc2",
+          "VpcSecurityGroupIds": [
+            "sg-0d7e4a2example"
+          ]
+        },
+        "output": {
+          "DBCluster": {
+            "AllocatedStorage": 1,
+            "AssociatedRoles": [],
+            "AutoMinorVersionUpgrade": true,
+            "AvailabilityZones": [
+              "us-east-1c",
+              "us-east-1d",
+              "us-east-1b"
+            ],
+            "BackupRetentionPeriod": 7,
+            "ClusterCreateTime": "2026-06-24T18:56:02.248Z",
+            "CopyTagsToSnapshot": false,
+            "CrossAccountClone": false,
+            "DBClusterArn": "arn:aws:rds:us-east-1:123456789012:cluster:sample-cluster",
+            "DBClusterIdentifier": "sample-cluster",
+            "DBClusterMembers": [
+              {
+                "DBClusterParameterGroupStatus": "in-sync",
+                "DBInstanceIdentifier": "sample-cluster-instance-1",
+                "IsClusterWriter": true,
+                "PromotionTier": 1
+              }
+            ],
+            "DBClusterParameterGroup": "default.aurora-postgresql17",
+            "DBSubnetGroup": "mysubnetgroup",
+            "DatabaseInsightsMode": "standard",
+            "DbClusterResourceId": "cluster-EXAMPLE123456789",
+            "DeletionProtection": false,
+            "DomainMemberships": [],
+            "EarliestRestorableTime": "2026-06-24T18:57:17.573Z",
+            "Endpoint": "sample-cluster.cluster-############.us-east-1.rds.amazonaws.com",
+            "Engine": "aurora-postgresql",
+            "EngineLifecycleSupport": "open-source-rds-extended-support",
+            "EngineMode": "provisioned",
+            "EngineVersion": "17.7",
+            "HostedZoneId": "Z1RLNU0EXAMPLE",
+            "HttpEndpointEnabled": false,
+            "IAMDatabaseAuthenticationEnabled": false,
+            "InternetAccessGatewayEnabled": false,
+            "LatestRestorableTime": "2026-06-29T22:22:17.460Z",
+            "LocalWriteForwardingStatus": "disabled",
+            "MasterUsername": "postgres",
+            "MultiAZ": false,
+            "NetworkType": "IPV4",
+            "PendingModifiedValues": {
+              "VPCNetworkingEnabled": true
+            },
+            "Port": 5432,
+            "PreferredBackupWindow": "03:05-03:35",
+            "PreferredMaintenanceWindow": "wed:03:36-wed:04:06",
+            "ReadReplicaIdentifiers": [],
+            "ReaderEndpoint": "sample-cluster.cluster-ro-############.us-east-1.rds.amazonaws.com",
+            "Status": "available",
+            "StorageEncrypted": false,
+            "TagList": [],
+            "VPCNetworkingEnabled": true,
+            "VpcSecurityGroups": [
+              {
+                "Status": "active",
+                "VpcSecurityGroupId": "sg-0b91305example"
+              }
+            ]
+          }
+        },
+        "description": "The following example moves an Aurora PostgreSQL DB cluster that uses VPC networking to a different VPC. The DB subnet group and the security group belong to the new VPC. EnableVPCNetworking isn't set because the DB cluster already uses VPC networking. Because Aurora applies the move asynchronously, the response still shows the current DB subnet group and security group, and PendingModifiedValues shows the pending networking change. Call DescribeDBClusters to check whether the move has completed.",
+        "id": "example-4",
+        "title": "To move a DB cluster to a different VPC"
       }
     ],
     "ModifyDBClusterEndpoint": [

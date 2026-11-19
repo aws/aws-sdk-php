@@ -15,6 +15,7 @@
     "DeleteTableBucketReplication": "<p>Deletes the replication configuration for a table bucket. After deletion, new table updates will no longer be replicated to destination buckets, though existing replicated tables will remain in destination buckets.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:DeleteTableBucketReplication</code> permission to use this operation.</p> </dd> </dl>",
     "DeleteTablePolicy": "<p>Deletes a table policy. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-table-policy.html#table-policy-delete\">Deleting a table policy</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:DeleteTablePolicy</code> permission to use this operation. </p> </dd> </dl>",
     "DeleteTableReplication": "<p>Deletes the replication configuration for a specific table. After deletion, new updates to this table will no longer be replicated to destination tables, though existing replicated copies will remain in destination buckets.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:DeleteTableReplication</code> permission to use this operation.</p> </dd> </dl>",
+    "DisassociateTableReplication": "<p>Disassociates a replica table from replication, making it a standalone writable table. Any in-progress replication to the table stops, and in-flight commits fail without being committed to the table. Disassociating a table from replication is permanent and can't be reversed.</p> <p>You can only disassociate a replica table. If you call this operation on a table that isn't a replica table, including a table that you have already disassociated, the request fails.</p> <p>After you disassociate a table from replication, you can write to the table as you do any other table. <code>GetTable</code> no longer returns <code>managedByService</code> and <code>managedTableInformation</code> for the table, and <code>ListTables</code> no longer returns <code>managedByService</code> for it. On the source table, <code>GetTableReplicationStatus</code> reports a failure for this destination the next time replication to it is attempted.</p> <p>Disassociating a table from replication doesn't change its maintenance configuration. Review the maintenance settings of the table, such as compaction, after you disassociate it.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:DisassociateTableReplication</code> permission to use this operation.</p> </dd> </dl>",
     "GetNamespace": "<p>Gets details about a namespace. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-namespace.html\">Table namespaces</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetNamespace</code> permission to use this operation. </p> </dd> </dl>",
     "GetTable": "<p>Gets details about a table. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-tables.html\">S3 Tables</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTable</code> permission to use this operation. </p> </dd> </dl>",
     "GetTableBucket": "<p>Gets details on a table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-buckets-details.html\">Viewing details about an Amazon S3 table bucket</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableBucket</code> permission to use this operation. </p> </dd> </dl>",
@@ -206,6 +207,14 @@
       "refs": {
         "StartTableMigrationRequest$destinationTable": "<p>The table to create and migrate the source into.</p>"
       }
+    },
+    "DisassociateTableReplicationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateTableReplicationResponse": {
+      "base": null,
+      "refs": {}
     },
     "Document": {
       "base": null,
@@ -1269,6 +1278,7 @@
         "CompleteTableMigrationRequest$tableARN": "<p>The Amazon Resource Name (ARN) of the migrated table to complete the migration of.</p>",
         "CreateTableResponse$tableARN": "<p>The Amazon Resource Name (ARN) of the table.</p>",
         "DeleteTableReplicationRequest$tableArn": "<p>The Amazon Resource Name (ARN) of the table.</p>",
+        "DisassociateTableReplicationRequest$tableArn": "<p>The Amazon Resource Name (ARN) of the replica table to disassociate from replication.</p>",
         "GetTableMaintenanceConfigurationResponse$tableARN": "<p>The Amazon Resource Name (ARN) of the table.</p>",
         "GetTableMaintenanceJobStatusResponse$tableARN": "<p>The Amazon Resource Name (ARN) of the table.</p>",
         "GetTableMigrationRequest$tableARN": "<p>The Amazon Resource Name (ARN) of the destination table. Gets the table's most recent migration. Specify either <code>tableARN</code> or <code>migrationId</code>, not both.</p>",

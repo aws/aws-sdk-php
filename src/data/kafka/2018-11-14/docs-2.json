@@ -3,6 +3,7 @@
   "service" : "<p>The operations for managing an Amazon MSK cluster.</p>",
   "operations" : {
     "BatchAssociateScramSecret" : "<p>Associates one or more Scram Secrets with an Amazon MSK cluster.</p>",
+    "CreateAssessment" : "<p>Creates a new assessment for the specified cluster. Kicks off an asynchronous scan.</p>",
     "CreateCluster" : "<p>Creates a new MSK cluster.</p>",
     "CreateChannel" : "<p>Creates a Channel that streams records from an Amazon MSK Express cluster topic to Amazon S3 or Apache Iceberg.</p>",
     "CreateClusterV2" : "<p>Creates a new Amazon MSK cluster of either the provisioned or the serverless type.</p>",
@@ -10,12 +11,14 @@
     "CreateConfiguration" : "<p>Creates a new MSK configuration.</p>",
     "CreateTopic": "<p>Creates a topic in the specified MSK cluster.</p>",
     "CreateVpcConnection" : "<p>Creates a new Amazon MSK VPC connection.</p>",
+    "DeleteAssessment" : "<p>Deletes an assessment and its findings. Frees one slot against the cluster's assessment quota.</p>",
     "DeleteCluster" : "<p>Deletes the MSK cluster specified by the Amazon Resource Name (ARN) in the request.</p>",
     "DeleteChannel" : "<p>Deletes the channel specified by channelArn from the cluster specified by clusterArn. The channel transitions through DELETING and is removed when the asynchronous delete completes.</p>",
     "DeleteClusterPolicy" : "<p>Deletes the MSK cluster policy specified by the Amazon Resource Name (ARN) in your request.</p>",
     "DeleteConfiguration" : "<p>Deletes the specified MSK configuration. The configuration must be in the ACTIVE or DELETE_FAILED state.</p>",
     "DeleteReplicator" : "<p>Deletes a replicator.</p>",
     "DeleteVpcConnection" : "<p>Deletes the Amazon MSK VPC connection specified in your request.</p>",
+    "DescribeAssessment" : "<p>Returns the status and summary of an assessment.</p>",
     "DescribeCluster" : "<p>Returns a description of the MSK cluster whose Amazon Resource Name (ARN) is specified in the request.</p>",
     "DescribeChannel" : "<p>Returns the current configuration and state of a channel.</p>",
     "DescribeClusterV2" : "<p>Returns a description of the MSK cluster of either the provisioned or the serverless type whose Amazon Resource Name (ARN) is specified in the request.</p>",
@@ -27,11 +30,14 @@
     "DeleteTopic": "<p>Deletes a topic in the specified MSK cluster.</p>",
     "DescribeTopic": "<p>Returns topic details of this topic on a MSK cluster.</p>",
     "DescribeTopicPartitions": "<p>Returns partition details of this topic on a MSK cluster.</p>",
+    "DescribeTopicReassignment" : "<p>Returns the status and progress of a topic reassignment operation.</p>",
     "DescribeVpcConnection" : "<p>Displays information about the specified Amazon MSK VPC connection.</p>",
     "BatchDisassociateScramSecret" : "<p>Disassociates one or more Scram Secrets from an Amazon MSK cluster.</p>",
     "GetBootstrapBrokers" : "<p>A list of brokers that a client application can use to bootstrap. This list doesn't necessarily include all of the brokers in the cluster. The following Python 3.6 example shows how you can use the Amazon Resource Name (ARN) of a cluster to get its bootstrap brokers. If you don't know the ARN of your cluster, you can use the <code>ListClusters</code> operation to get the ARNs of all the clusters in this account and Region.</p>",
     "GetCompatibleKafkaVersions" : "<p>Gets the Apache Kafka versions to which you can update the MSK cluster.</p>",
     "GetClusterPolicy" : "<p>Retrieves the contents of the specified MSK cluster policy.</p>",
+    "ListAssessmentFindings" : "<p>Returns the findings for a completed assessment. Paginated.</p>",
+    "ListAssessments" : "<p>Returns a list of assessments for the specified cluster. Optionally filterable by assessment type.</p>",
     "ListChannels" : "<p>Returns the list of channels in a cluster.</p>",
     "ListClientVpcConnections" : "<p>Displays a list of client VPC connections.</p>",
     "ListClusterOperations" : "<p>Returns a list of all the operations that have been performed on the specified MSK cluster.</p>",
@@ -45,11 +51,14 @@
     "ListReplicators" : "<p>Lists the replicators.</p>",
     "ListScramSecrets" : "<p>Returns a list of the Scram Secrets associated with an Amazon MSK cluster.</p>",
     "ListTagsForResource" : "<p>Returns a list of the tags associated with the specified resource.</p>",
+    "ListTopicReassignments" : "<p>Lists topic reassignment operations for a cluster.</p>",
     "ListVpcConnections" : "<p>Displays a list of Amazon MSK VPC connections.</p>",
     "ListTopics": "<p>List topics in a MSK cluster.</p>",
     "PutClusterPolicy" : "<p>Creates or updates the specified MSK cluster policy. If updating the policy, the currentVersion field is required in the request payload.</p>",
     "RebootBroker" : "<p>Executes a reboot on a broker.</p>",
     "RejectClientVpcConnections" : "<p>Rejects a client VPC connection.</p>",
+    "StartTopicReassignment" : "<p>Initiates topic partition reassignment between broker types in a mixed-mode cluster.</p>",
+    "StopTopicReassignment" : "<p>Stops an active topic reassignment operation.</p>",
     "TagResource" : "<p>Adds tags to the specified MSK resource.</p>",
     "UntagResource" : "<p>Removes the tags associated with the keys that are provided in the query.</p>",
     "UpdateBrokerCount" : "<p>Updates the number of broker nodes in the cluster. You can use this operation to increase the number of brokers in an existing cluster. You can't decrease the number of brokers.</p>",
@@ -82,6 +91,49 @@
         "KafkaCluster$ApacheKafkaCluster" : "<p>Details of an Apache Kafka Cluster.</p>",
         "KafkaClusterDescription$ApacheKafkaCluster" : "<p>Details of an Apache Kafka Cluster.</p>",
         "KafkaClusterSummary$ApacheKafkaCluster" : "<p>Details of an Apache Kafka Cluster.</p>"
+      }
+    },
+    "AssessmentFinding" : {
+      "base" : "<p>A single finding from an assessment, describing a specific issue or observation.</p>",
+      "refs" : {
+        "__listOfAssessmentFinding$member" : null
+      }
+    },
+    "AssessmentInfo" : {
+      "base" : "<p>Summary information about an assessment, returned by ListAssessments.</p>",
+      "refs" : {
+        "__listOfAssessmentInfo$member" : null
+      }
+    },
+    "AssessmentParameters" : {
+      "base" : "<p>Type-specific parameters for the assessment. All fields are optional.</p>",
+      "refs" : {
+        "CreateAssessmentRequest$AssessmentParameters" : "<p>Optional type-specific parameters for the assessment.</p>",
+        "DescribeAssessmentResponse$AssessmentParameters" : "<p>The parameters that were provided when creating the assessment.</p>"
+      }
+    },
+    "AssessmentStatus" : {
+      "base" : "<p>The lifecycle status of an assessment.</p>",
+      "refs" : {
+        "AssessmentInfo$Status" : "<p>The current status of the assessment.</p>",
+        "CreateAssessmentResponse$Status" : "<p>The current status of the assessment.</p>",
+        "DeleteAssessmentResponse$Status" : "<p>The current status of the assessment. Will be DELETING.</p>",
+        "DescribeAssessmentResponse$Status" : "<p>The current status of the assessment.</p>"
+      }
+    },
+    "AssessmentSummary" : {
+      "base" : "<p>Summary of assessment findings broken down by category and severity.</p>",
+      "refs" : {
+        "DescribeAssessmentResponse$Summary" : "<p>Summary of findings by category and severity. Present only when status is COMPLETE.</p>"
+      }
+    },
+    "AssessmentType" : {
+      "base" : "<p>The type of assessment to perform.</p>",
+      "refs" : {
+        "AssessmentInfo$AssessmentType" : "<p>The type of assessment.</p>",
+        "CreateAssessmentRequest$AssessmentType" : "<p>The type of assessment to perform.</p>",
+        "CreateAssessmentResponse$AssessmentType" : "<p>The type of assessment.</p>",
+        "DescribeAssessmentResponse$AssessmentType" : "<p>The type of assessment.</p>"
       }
     },
     "AuthorizerLogs" : {
@@ -127,6 +179,13 @@
         "Provisioned$BrokerNodeGroupInfo" : "<p>Information about the brokers.</p>",
         "CreateClusterRequest$BrokerNodeGroupInfo" : "<p>Information about the brokers.</p>",
         "ProvisionedRequest$BrokerNodeGroupInfo" : "<p>Information about the brokers.</p>"
+      }
+    },
+    "BrokerTypeUpgradeInfo" : {
+      "base" : "<p>Information about the topic reassignment of an UpdateBrokerType operation that upgrades a cluster from Standard brokers to Express brokers. Present only on the operation that initiated the upgrade.</p>",
+      "refs" : {
+        "ClusterOperationInfo$BrokerTypeUpgradeInfo" : "<p>Topic reassignment details of the UpdateBrokerType operation that started an upgrade from Standard brokers to Express brokers.</p>",
+        "ClusterOperationV2Provisioned$BrokerTypeUpgradeInfo" : "<p>Topic reassignment details of the UpdateBrokerType operation that started an upgrade from Standard brokers to Express brokers.</p>"
       }
     },
     "Rebalancing" : {
@@ -202,6 +261,12 @@
         "NodeInfo$BrokerNodeInfo" : "<p>The broker node info.</p>"
       }
     },
+    "BrokerNodeType" : {
+      "base" : "<p>The broker type of an individual broker node. STANDARD: a Standard broker. EXPRESS: an Express broker. A cluster contains brokers of both types while an UpdateBrokerType operation upgrades it in place from Standard brokers to Express brokers.</p>",
+      "refs" : {
+        "BrokerNodeInfo$BrokerNodeType" : "<p>Whether this broker is a Standard broker or an Express broker. While an UpdateBrokerType operation upgrades a cluster in place from Standard brokers to Express brokers, the cluster contains brokers of both types and this field tells them apart.</p>"
+      }
+    },
     "BrokerSoftwareInfo" : {
       "base" : "<p>Information about the current software installed on the cluster.</p>",
       "refs" : {
@@ -241,6 +306,14 @@
       "refs" : {
         "DescribeChannelResponse$StateInfo" : "<p>Additional context for the current channel state, populated when the channel is in FAILED.</p>"
       }
+    },
+    "CreateAssessmentRequest" : {
+      "base" : "<p>Creates a new assessment for a cluster. Kicks off an asynchronous scan and returns immediately with an assessment ARN and status.</p>",
+      "refs" : { }
+    },
+    "CreateAssessmentResponse" : {
+      "base" : "<p>Returns information about the created assessment.</p>",
+      "refs" : { }
     },
     "CreateChannelRequest" : {
       "base" : "<p>Creates a Channel that streams records from an Amazon MSK Express cluster topic to Amazon S3 or Apache Iceberg.</p>",
@@ -485,6 +558,10 @@
         "S3DestinationConfiguration$DeadLetterQueueS3" : "<p>The Amazon S3 bucket and prefix where MSK writes records that fail to deliver.</p>"
       }
     },
+    "DeleteAssessmentResponse" : {
+      "base" : "<p>Returns the result of deleting an assessment.</p>",
+      "refs" : { }
+    },
     "DeleteChannelResponse" : {
       "base" : "<p>Returns the channel ARN and the cluster-operation ARN that tracks the asynchronous delete.</p>",
       "refs" : { }
@@ -529,6 +606,10 @@
       "base" : "<p>Response body for DeleteVpcConnection.</p>",
       "refs" : { }
     },
+    "DescribeAssessmentResponse" : {
+      "base" : "<p>Returns the status and summary of an assessment.</p>",
+      "refs" : { }
+    },
     "DescribeClusterOperationResponse" : {
       "base" : "<p>Information about a cluster operation.</p>",
       "refs" : { }
@@ -555,6 +636,10 @@
     },
     "DescribeConfigurationRevisionResponse" : {
       "base" : "<p>Response body for DescribeConfigurationRevision.</p>",
+      "refs" : { }
+    },
+    "DescribeTopicReassignmentResponse" : {
+      "base" : "<p>Returns the status and progress of a topic reassignment operation.</p>",
       "refs" : { }
     },
     "DescribeTopicRequest" : {
@@ -661,7 +746,26 @@
     "ErrorInfo" : {
       "base" : "<p>Returns information about an error state of the cluster.</p>",
       "refs" : {
-        "ClusterOperationInfo$ErrorInfo" : "<p>Describes the error if the operation fails.</p>"
+        "ClusterOperationInfo$ErrorInfo" : "<p>Describes the error if the operation fails.</p>",
+        "DescribeTopicReassignmentResponse$ErrorInfo" : "<p>Error details. Present only when status is FAILED.</p>"
+      }
+    },
+    "FindingCategory" : {
+      "base" : "<p>The category of an assessment finding.</p>",
+      "refs" : {
+        "AssessmentFinding$Category" : "<p>The category of this finding.</p>"
+      }
+    },
+    "FindingRemediation" : {
+      "base" : "<p>Guidance for resolving a finding.</p>",
+      "refs" : {
+        "AssessmentFinding$Remediation" : "<p>Guidance for resolving this finding. Absent when no specific remediation applies.</p>"
+      }
+    },
+    "FindingSeverity" : {
+      "base" : "<p>The severity level of an assessment finding.</p>",
+      "refs" : {
+        "AssessmentFinding$Severity" : "<p>The severity of this finding.</p>"
       }
     },
     "Firehose" : {
@@ -827,6 +931,14 @@
         "KafkaVersion$Status" : "<p>The status of the Apache Kafka version.</p>"
       }
     },
+    "ListAssessmentFindingsResponse" : {
+      "base" : "<p>Returns the findings for a completed assessment.</p>",
+      "refs" : { }
+    },
+    "ListAssessmentsResponse" : {
+      "base" : "<p>Returns a list of assessments.</p>",
+      "refs" : { }
+    },
     "ListClusterOperationsResponse" : {
       "base" : "<p>The response contains an array containing cluster operation information and a next token if the response is truncated.</p>",
       "refs" : { }
@@ -883,6 +995,10 @@
       "base" : "<p>The response contains an array of client VPC connections and a next token if the response is truncated.</p>",
       "refs" : { }
     },
+    "ListTopicReassignmentsResponse" : {
+      "base" : "<p>Returns a list of topic reassignment operations for a cluster.</p>",
+      "refs" : { }
+    },
     "ListTopicsRequest" : {
       "base" : "<p>Request body for ListTopics.</p>",
       "refs" : { }
@@ -923,6 +1039,13 @@
       "refs" : {
         "CreateChannelRequest$LoggingInfo" : "<p>The destinations to which the channel publishes operational logs.</p>",
         "DescribeChannelResponse$LoggingInfo" : "<p>The destinations to which the channel publishes operational logs.</p>"
+      }
+    },
+    "MaxResults" : {
+      "base" : null,
+      "refs" : {
+        "ListAssessmentsRequest$MaxResults" : "<p>Maximum number of assessments to return. Default 25, maximum 100.</p>",
+        "ListTopicReassignmentsRequest$MaxResults" : "<p>Maximum number of reassignment operations to return. Default 50, maximum 100.</p>"
       }
     },
     "MutableClusterInfo" : {
@@ -1169,11 +1292,23 @@
       "base" : "<p>Returns information about an error.</p>",
       "refs" : { }
     },
+    "StartTopicReassignmentRequest" : {
+      "base" : "<p>Initiates topic partition reassignment between broker types in a mixed-mode cluster.</p>",
+      "refs" : { }
+    },
+    "StartTopicReassignmentResponse" : {
+      "base" : "<p>Returns information about the initiated topic reassignment operation.</p>",
+      "refs" : { }
+    },
     "StateInfo" : {
       "base" : "<p>Contains information about the state of the Amazon MSK cluster.</p>",
       "refs" : {
         "ClusterInfo$StateInfo" : "<p>Contains information about the state of the Amazon MSK cluster.</p>"
       }
+    },
+    "StopTopicReassignmentResponse" : {
+      "base" : "<p>Returns the result of stopping a topic reassignment operation.</p>",
+      "refs" : { }
     },
     "StorageInfo" : {
       "base" : "<p>Contains information about storage volumes attached to MSK broker nodes.</p>",
@@ -1213,6 +1348,33 @@
       "base" : "<p>Configuration of an Apache Kafka topic that feeds a channel.</p>",
       "refs" : {
         "__listOfTopicConfiguration$member" : null
+      }
+    },
+    "TopicReassignment" : {
+      "base" : "<p>Controls automatic topic reassignment when entering mixed broker mode.</p>",
+      "refs" : {
+        "UpdateBrokerTypeRequest$TopicReassignment" : "<p>Controls automatic topic reassignment when entering mixed broker mode. When set to AUTO, MSK automatically reassigns all topics to the target broker type after adding new brokers. When set to MANUAL (default), customers manage topic reassignment using the StartTopicReassignment API. Only valid when targetInstanceType is a composite mixed-mode value. Must be set to MANUAL before completing the upgrade or rolling back.</p>"
+      }
+    },
+    "TopicReassignmentInfo" : {
+      "base" : "<p>Summary information about a topic reassignment operation.</p>",
+      "refs" : {
+        "__listOfTopicReassignmentInfo$member" : null
+      }
+    },
+    "TopicReassignmentMode" : {
+      "base" : "<p>How topics are reassigned to the target broker type after an UpdateBrokerType operation adds brokers of that type. AUTO: Amazon MSK reassigns all topics. MANUAL: you reassign topics with the StartTopicReassignment operation.</p>",
+      "refs" : {
+        "BrokerTypeUpgradeInfo$TopicReassignmentMode" : "<p>How topics are reassigned to the Express brokers.</p>"
+      }
+    },
+    "TopicReassignmentStatus" : {
+      "base" : "<p>The lifecycle status of a topic reassignment operation.</p>",
+      "refs" : {
+        "DescribeTopicReassignmentResponse$Status" : "<p>The current status of the reassignment operation.</p>",
+        "StartTopicReassignmentResponse$Status" : "<p>The current status of the reassignment operation.</p>",
+        "StopTopicReassignmentResponse$Status" : "<p>The current status of the operation. Will be STOPPING.</p>",
+        "TopicReassignmentInfo$Status" : "<p>The current status of the reassignment operation.</p>"
       }
     },
     "TopicReplication" : {
@@ -1508,6 +1670,8 @@
     "__boolean" : {
       "base" : null,
       "refs" : {
+        "AssessmentSummary$FindingsCapped" : "<p>True when the assessment detected more findings than it stores. Resolve the reported findings and re-run the assessment to surface the remaining ones.</p>",
+        "AssessmentSummary$HasBlockingFindings" : "<p>True when the assessment detected at least one ERROR-severity finding. ERROR findings block the migration until resolved.</p>",
         "CloudWatchLogs$Enabled" : "<p>Specifies whether broker logs get sent to the specified CloudWatch Logs destination.</p>",
         "ConsumerGroupReplication$DetectAndCopyNewConsumerGroups" : "<p>Enables synchronization of consumer groups to target cluster.</p>",
         "ConsumerGroupReplication$SynchroniseConsumerGroupOffsets" : "<p>Enables synchronization of consumer group offsets to target cluster. The translated offsets will be written to topic __consumer_offsets.</p>",
@@ -1554,16 +1718,24 @@
     "__integer" : {
       "base" : null,
       "refs" : {
+        "AssessmentSummary$TotalFindings" : "<p>The total number of findings detected by the assessment, including any findings beyond the stored-findings cap.</p>",
         "BrokerEBSVolumeInfo$VolumeSizeGB" : "\n            <p>Size of the EBS volume to update.</p>\n         ",
         "ClusterInfo$NumberOfBrokerNodes" : "\n            <p>The number of broker nodes in the cluster.</p>\n         ",
         "CreateClusterRequest$NumberOfBrokerNodes" : "\n            <p>The number of broker nodes in the cluster.</p>\n         ",
+        "DescribeTopicReassignmentResponse$CompletedTopics" : "<p>Number of topics fully migrated to the target broker type.</p>",
+        "DescribeTopicReassignmentResponse$MigratedPartitions" : "<p>Number of partitions confirmed on the target broker type.</p>",
+        "DescribeTopicReassignmentResponse$TotalPartitions" : "<p>Total number of partitions across all matched topics.</p>",
+        "DescribeTopicReassignmentResponse$TotalTopics" : "<p>Total number of topics matching the selector at resolution time.</p>",
         "MutableClusterInfo$NumberOfBrokerNodes" : "\n            <p>The number of broker nodes in the cluster.</p>\n         ",
         "ProvisionedThroughput$VolumeThroughput" : "\n            <p>Throughput value of the EBS volumes for the data drive on each kafka broker node in MiB per second.</p>\n         ",
+        "TopicReassignmentInfo$CompletedTopics" : "<p>Number of topics fully migrated.</p>",
+        "TopicReassignmentInfo$TotalTopics" : "<p>Total number of topics matching the selector.</p>",
         "UpdateStorageRequest$VolumeSizeGB" : "\n            <p>size of the EBS volume to update.</p>\n         ",
         "IcebergDestinationUpdate$DataFreshnessInSeconds" : "<p>The maximum time, in seconds, that records buffer in MSK before being flushed to the destination. Allowed range: 300 to 900.</p>",
         "S3DestinationUpdate$DataFreshnessInSeconds" : "<p>The maximum time, in seconds, that records buffer in MSK before being flushed to the destination. Allowed range: 300 to 900.</p>",
         "IcebergDestinationConfiguration$DataFreshnessInSeconds" : "<p>The maximum time, in seconds, that records buffer in MSK before being flushed to the destination. Allowed range: 300 to 900. Default: 600.</p>",
-        "S3DestinationConfiguration$DataFreshnessInSeconds" : "<p>The maximum time, in seconds, that records buffer in MSK before being flushed to the destination. Allowed range: 300 to 900. Default: 600.</p>"
+        "S3DestinationConfiguration$DataFreshnessInSeconds" : "<p>The maximum time, in seconds, that records buffer in MSK before being flushed to the destination. Allowed range: 300 to 900. Default: 600.</p>",
+        "__mapOf__integer$member" : null
       }
     },
     "__integerMin1Max15" : {
@@ -1577,6 +1749,24 @@
       "base" : null,
       "refs" : {
         "EBSStorageInfo$VolumeSize" : "<p>The size in GiB of the EBS volume for the data drive on each broker node.</p>"
+      }
+    },
+    "__integerMin1Max500" : {
+      "base" : null,
+      "refs" : {
+        "ListAssessmentFindingsRequest$MaxResults" : "<p>Maximum number of findings to return. Default 100, maximum 500.</p>"
+      }
+    },
+    "__listOfAssessmentFinding" : {
+      "base" : null,
+      "refs" : {
+        "ListAssessmentFindingsResponse$Findings" : "<p>A list of findings from the assessment.</p>"
+      }
+    },
+    "__listOfAssessmentInfo" : {
+      "base" : null,
+      "refs" : {
+        "ListAssessmentsResponse$Assessments" : "<p>A list of assessment summaries.</p>"
       }
     },
     "__listOfBrokerEBSVolumeInfo" : {
@@ -1733,11 +1923,24 @@
         "DescribeChannelResponse$TopicConfigurationList" : "<p>The list of topic configurations for the channel.</p>"
       }
     },
+    "__listOfTopicReassignmentInfo" : {
+      "base" : null,
+      "refs" : {
+        "ListTopicReassignmentsResponse$Reassignments" : "<p>A list of topic reassignment operation summaries.</p>"
+      }
+    },
     "__listOf__double" : {
       "base" : null,
       "refs" : {
         "BrokerCountUpdateInfo$CreatedBrokerIds" : "<p>List of Broker Ids when creating new Brokers in a cluster.</p>",
         "BrokerCountUpdateInfo$DeletedBrokerIds" : "<p>List of Broker Ids when deleting existing Brokers in a cluster.</p>"
+      }
+    },
+    "__listOf__integer" : {
+      "base" : null,
+      "refs" : {
+        "DescribeTopicResponse$ReplicaIds" : "<p>The broker IDs hosting replicas of this topic's partitions.</p>",
+        "TopicInfo$ReplicaIds" : "<p>The broker IDs hosting replicas of this topic's partitions.</p>"
       }
     },
     "__listOf__string" : {
@@ -1757,6 +1960,8 @@
         "CreateVpcConnectionResponse$ClientSubnets" : "<p>The list of subnets in the client VPC.</p>",
         "CreateVpcConnectionResponse$SecurityGroups" : "<p>The list of security groups attached to the VPC connection.</p>",
         "DescribeConfigurationResponse$KafkaVersions" : "<p>The versions of Apache Kafka with which you can use this MSK configuration.</p>",
+        "DescribeTopicReassignmentResponse$TopicsToExclude" : "<p>The original exclude patterns provided in the request.</p>",
+        "DescribeTopicReassignmentResponse$TopicsToInclude" : "<p>The original include patterns provided in the request.</p>",
         "DescribeVpcConnectionResponse$SecurityGroups" : "<p>The list of security groups attached to the VPC connection.</p>",
         "DescribeVpcConnectionResponse$Subnets" : "<p>The list of subnets in the client VPC.</p>",
         "ListScramSecretsResponse$SecretArnList" : "<p>The list of scram secrets associated with the cluster.</p>",
@@ -1785,6 +1990,13 @@
         "ConsumerGroupReplicationUpdate$ConsumerGroupsToReplicate" : "<p>List of regular expression patterns indicating the consumer groups to copy.</p>"
       }
     },
+    "__listOf__stringMin1Max256" : {
+      "base" : null,
+      "refs" : {
+        "StartTopicReassignmentRequest$TopicsToExclude" : "<p>Regex patterns for topics to exclude from reassignment. Evaluated after include patterns.</p>",
+        "StartTopicReassignmentRequest$TopicsToInclude" : "<p>Regex patterns for topics to reassign. Use ['.*'] for all topics. Max 10 patterns.</p>"
+      }
+    },
     "__long" : {
       "base" : null,
       "refs" : {
@@ -1794,15 +2006,25 @@
         "ConfigurationInfo$Revision" : "<p>The revision of the configuration to use.</p>"
       }
     },
+    "__mapOf__integer" : {
+      "base" : null,
+      "refs" : {
+        "AssessmentSummary$ByCategory" : "<p>Count of findings grouped by category.</p>",
+        "AssessmentSummary$BySeverity" : "<p>Count of findings grouped by severity.</p>"
+      }
+    },
     "__mapOf__string" : {
       "base" : null,
       "refs" : {
+        "AssessmentInfo$Tags" : "<p>The tags attached to the assessment.</p>",
         "ClusterInfo$Tags" : "<p>Tags attached to the cluster.</p>",
+        "CreateAssessmentRequest$Tags" : "<p>The tags to attach to the assessment.</p>",
         "CreateClusterRequest$Tags" : "<p>Create tags when creating the cluster.</p>",
         "CreateChannelRequest$Tags" : "<p>The tags attached to the channel.</p>",
         "CreateReplicatorRequest$Tags" : "<p>List of tags to attach to created Replicator.</p>",
         "CreateVpcConnectionRequest$Tags" : "<p>Create tags when creating the VPC connection.</p>",
         "CreateVpcConnectionResponse$Tags" : "<p>Tags attached to the VPC connection.</p>",
+        "DescribeAssessmentResponse$Tags" : "<p>The tags attached to the assessment.</p>",
         "DescribeReplicatorResponse$Tags" : "<p>List of tags attached to the Replicator.</p>",
         "DescribeVpcConnectionResponse$Tags" : "<p>Tags attached to the VPC connection.</p>",
         "ListTagsForResourceResponse$Tags" : "<p>The key-value pair for the resource tag.</p>",
@@ -1817,6 +2039,9 @@
         "AmazonMskCluster$MskClusterArn" : "<p>The Amazon Resource Name (ARN) of an Amazon MSK cluster.</p>",
         "ApacheKafkaCluster$ApacheKafkaClusterId" : "<p>The ID of the Apache Kafka cluster.</p>",
         "ApacheKafkaCluster$BootstrapBrokerString" : "<p>The bootstrap broker string of the Apache Kafka cluster.</p>",
+        "AssessmentFinding$FindingId" : "<p>A deterministic content-based identifier for this finding. Generated from hash(category + resource + check_type). The same resource with the same problem always produces the same findingId across assessment runs.</p>",
+        "AssessmentFinding$Message" : "<p>Human-readable description of what is wrong, why it matters, and what to do.</p>",
+        "AssessmentFinding$Resource" : "<p>The specific resource affected (e.g., topic name). Absent for cluster-level findings.</p>",
         "BatchAssociateScramSecretResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "BatchDisassociateScramSecretResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "BrokerEBSVolumeInfo$KafkaBrokerNodeId" : "<p>The ID of the broker to update.</p>",
@@ -1832,11 +2057,17 @@
         "ClientVpcConnection$VpcConnectionArn" : "<p>The Amazon Resource Name (ARN) of the VPC connection.</p>",
         "ChannelInfo$ChannelArn" : "<p>The Amazon Resource Name (ARN) that uniquely identifies the channel.</p>",
         "ChannelInfo$ChannelName" : "<p>The name of the channel.</p>",
+        "CreateAssessmentRequest$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster to assess.</p>",
         "CreateChannelRequest$ChannelName" : "<p>The name of the channel. Must be unique within the cluster.</p>",
         "CreateChannelResponse$ChannelArn" : "<p>The Amazon Resource Name (ARN) that uniquely identifies the channel.</p>",
         "CreateChannelResponse$ClusterOperationArn" : "<p>The Amazon Resource Name (ARN) of the cluster operation.</p>",
+        "DeleteAssessmentRequest$AssessmentArn" : "<p>The Amazon Resource Name (ARN) of the assessment to delete.</p>",
+        "DeleteAssessmentRequest$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "DeleteChannelResponse$ChannelArn" : "<p>The Amazon Resource Name (ARN) that uniquely identifies the channel.</p>",
         "DeleteChannelResponse$ClusterOperationArn" : "<p>The Amazon Resource Name (ARN) of the cluster operation.</p>",
+        "DescribeAssessmentRequest$AssessmentArn" : "<p>The Amazon Resource Name (ARN) of the assessment.</p>",
+        "DescribeAssessmentRequest$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
+        "DescribeAssessmentResponse$StatusMessage" : "<p>Additional information about the current status. Present when status is FAILED.</p>",
         "DescribeChannelResponse$ClusterOperationArn" : "<p>The Amazon Resource Name (ARN) of the in-flight cluster operation. Returned only while the channel is in CREATING, UPDATING, or DELETING.</p>",
         "ChannelInfo$ClusterOperationArn" : "<p>The Amazon Resource Name (ARN) of the in-flight cluster operation. Returned only while the channel is in CREATING, UPDATING, or DELETING.</p>",
         "DeadLetterQueueS3$BucketArn" : "<p>The Amazon Resource Name (ARN) of the dead-letter Amazon S3 bucket.</p>",
@@ -1854,6 +2085,16 @@
         "ChannelStateInfo$Message" : "<p>A human-readable message describing the failure.</p>",
         "DestinationTable$DestinationDatabaseName" : "<p>The name of the destination namespace (database) in the AWS Glue Data Catalog.</p>",
         "DestinationTable$DestinationTableName" : "<p>The name of the destination Apache Iceberg table.</p>",
+        "ListAssessmentFindingsRequest$AssessmentArn" : "<p>The Amazon Resource Name (ARN) of the assessment.</p>",
+        "ListAssessmentFindingsRequest$Category" : "<p>Optional filter. Only return findings matching this category.</p>",
+        "ListAssessmentFindingsRequest$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
+        "ListAssessmentFindingsRequest$NextToken" : "<p>If the response is truncated, it returns a nextToken. Send this in the subsequent request to get the remaining results.</p>",
+        "ListAssessmentFindingsRequest$Severity" : "<p>Optional filter. Only return findings matching this severity.</p>",
+        "ListAssessmentFindingsResponse$NextToken" : "<p>If the response is truncated, it returns a nextToken. Send this in the subsequent request to get the remaining results.</p>",
+        "ListAssessmentsRequest$AssessmentType" : "<p>Optional filter. The type of assessment to filter by.</p>",
+        "ListAssessmentsRequest$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster to list assessments for.</p>",
+        "ListAssessmentsRequest$NextToken" : "<p>If the response is truncated, it returns a nextToken. Send this in the subsequent request to get the remaining results.</p>",
+        "ListAssessmentsResponse$NextToken" : "<p>If the response is truncated, it returns a nextToken. Send this in the subsequent request to get the remaining results.</p>",
         "ListChannelsResponse$NextToken" : "<p>If the response from ListChannels is truncated, this token is included. Send it as the nextToken parameter on a subsequent ListChannels call to retrieve the next page.</p>",
         "CloudWatchLogs$LogGroup" : "<p>The CloudWatch log group that is the destination for broker logs.</p>",
         "ClusterInfo$ActiveOperationArn" : "<p>Arn of active cluster operation.</p>",
@@ -1903,6 +2144,9 @@
         "DescribeReplicatorResponse$ReplicatorName" : "<p>The name of the replicator.</p>",
         "DescribeReplicatorResponse$ReplicatorResourceArn" : "<p>The Amazon Resource Name (ARN) of the replicator resource in the region where the replicator was created.</p>",
         "DescribeReplicatorResponse$ServiceExecutionRoleArn" : "<p>The Amazon Resource Name (ARN) of the IAM role used by the replicator to access resources in the customer's account (e.g source and target clusters)</p>",
+        "DescribeTopicReassignmentRequest$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
+        "DescribeTopicReassignmentRequest$TopicReassignmentOperationArn" : "<p>The Amazon Resource Name (ARN) of the topic reassignment operation.</p>",
+        "DescribeTopicReassignmentResponse$TargetInstanceType" : "<p>The target broker instance type for this reassignment.</p>",
         "DescribeVpcConnectionResponse$Authentication" : "<p>The authentication type of the VPC connection.</p>",
         "DescribeVpcConnectionResponse$TargetClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "DescribeVpcConnectionResponse$VpcConnectionArn" : "<p>The Amazon Resource Name (ARN) of the VPC connection.</p>",
@@ -1913,6 +2157,7 @@
         "Error$Message" : "<p>The description of the error.</p>",
         "ErrorInfo$ErrorCode" : "<p>A number describing the error programmatically.</p>",
         "ErrorInfo$ErrorString" : "<p>An optional field to provide more details about the error.</p>",
+        "FindingRemediation$Action" : "<p>The recommended action to resolve this finding.</p>",
         "Firehose$DeliveryStream" : "<p>The Kinesis Data Firehose delivery stream that is the destination for broker logs.</p>",
         "ReplicatorCloudWatchLogs$LogGroup" : "<p>The CloudWatch log group that is the destination for replicator logs.</p>",
         "ReplicatorFirehose$DeliveryStream" : "<p>The Kinesis Data Firehose delivery stream that is the destination for replicator logs.</p>",
@@ -1958,7 +2203,12 @@
         "ListNodesResponse$NextToken" : "<p>The paginated results marker. When the result of a ListNodes operation is truncated, the call returns NextToken in the response. To get another batch of nodes, provide this token in your next request.</p>",
         "ListReplicatorsResponse$NextToken" : "<p>If the response of ListReplicators is truncated, it returns a NextToken in the response. This NextToken should be sent in the subsequent request to ListReplicators.</p>",
         "ListScramSecretsResponse$NextToken" : "<p>Paginated results marker.</p>",
+        "ListTopicReassignmentsRequest$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
+        "ListTopicReassignmentsRequest$NextToken" : "<p>If the response is truncated, it returns a nextToken. Send this in the subsequent request to get the remaining results.</p>",
+        "ListTopicReassignmentsRequest$StatusFilter" : "<p>Optional filter. Only return reassignments matching these statuses.</p>",
+        "ListTopicReassignmentsResponse$NextToken" : "<p>If the response is truncated, it returns a nextToken. Send this in the subsequent request to get the remaining results.</p>",
         "ListVpcConnectionsResponse$NextToken" : "<p>If the response of ListVpcConnections is truncated, it returns a NextToken in the response. This NextToken should be sent in the subsequent request to ListVpcConnections.</p>",
+        "MutableClusterInfo$InstanceType" : "<p>The Amazon MSK broker type that you want all of the brokers in this cluster to be.</p>",
         "MutableClusterInfo$KafkaVersion" : "<p>The Apache Kafka version.</p>",
         "NodeInfo$AddedToClusterTime" : "<p>The start time.</p>",
         "NodeInfo$InstanceType" : "<p>The instance type.</p>",
@@ -1983,13 +2233,16 @@
         "ReplicatorSummary$ReplicatorResourceArn" : "The Amazon Resource Name (ARN) of the replicator resource in the region where the replicator was created.</p>",
         "S3$Bucket" : "<p>The name of the S3 bucket that is the destination for broker logs.</p>",
         "S3$Prefix" : "<p>The S3 prefix that is the destination for broker logs.</p>",
+        "StartTopicReassignmentRequest$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "StateInfo$Code" : "<p>If the cluster is in an unusable state, this field contains the code that describes the issue.</p>",
         "StateInfo$Message" : "<p>If the cluster is in an unusable state, this field contains a message that describes the issue.</p>",
+        "StopTopicReassignmentRequest$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
+        "StopTopicReassignmentRequest$TopicReassignmentOperationArn" : "<p>The Amazon Resource Name (ARN) of the topic reassignment operation to stop.</p>",
         "UpdateBrokerCountRequest$CurrentVersion" : "<p>The current version of the cluster.</p>",
         "UpdateBrokerCountResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "UpdateBrokerCountResponse$ClusterOperationArn" : "<p>The Amazon Resource Name (ARN) of the cluster operation.</p>",
         "UpdateBrokerTypeRequest$CurrentVersion": "<p>The current version of the cluster.</p>",
-        "UpdateBrokerTypeRequest$TargetInstanceType": "<p>The Amazon MSK broker type that you want all of the brokers in this cluster to be.</p>",
+        "UpdateBrokerTypeRequest$TargetInstanceType": "<p>The type of Amazon EC2 instances to use for Kafka brokers. For in-place upgrades to Express, use the composite format to initiate mixed mode, the Express instance type to complete the upgrade, or the Standard instance type to rollback.</p>",
         "UpdateBrokerTypeResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "UpdateBrokerTypeResponse$ClusterOperationArn" : "<p>The Amazon Resource Name (ARN) of the cluster operation.</p>",
         "UpdateBrokerStorageRequest$CurrentVersion" : "<p>The version of cluster to update from. A successful operation will then generate a new version.</p>",
@@ -2049,13 +2302,34 @@
         "ListChannelsRequest$MaxResults" : "<p>Maximum number of channels to return in a single response.</p>",
         "ListChannelsRequest$NextToken" : "<p>If the response of ListChannels is truncated, it returns a nextToken in the response. This nextToken should be sent in the subsequent request to ListChannels.</p>",
         "ListChannelsRequest$TopicNameFilter" : "<p>Filters results to channels whose topic name matches the specified value.</p>",
-        "TopicConfiguration$TopicArn" : "<p>The Amazon Resource Name (ARN) that uniquely identifies the topic.</p>"
+        "TopicConfiguration$TopicArn" : "<p>The Amazon Resource Name (ARN) that uniquely identifies the topic.</p>",
+        "TopicReassignmentInfo$TargetInstanceType" : "<p>The target broker instance type for this reassignment.</p>"
       }
     },
     "__stringMax1024" : {
       "base" : null,
       "refs" : {
         "CreateReplicatorRequest$Description" : "<p>A summary description of the replicator.</p>"
+      }
+    },
+    "__stringMax2048" : {
+      "base" : null,
+      "refs" : {
+        "AssessmentInfo$AssessmentArn" : "<p>The Amazon Resource Name (ARN) of the assessment.</p>",
+        "AssessmentInfo$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster that was assessed.</p>",
+        "BrokerTypeUpgradeInfo$TopicReassignmentOperationArn" : "<p>The Amazon Resource Name (ARN) of the topic reassignment operation that Amazon MSK started for this upgrade. Present once that reassignment has started. Under MANUAL you start reassignments yourself, so Amazon MSK starts none.</p>",
+        "CreateAssessmentResponse$AssessmentArn" : "<p>The Amazon Resource Name (ARN) of the assessment.</p>",
+        "CreateAssessmentResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster being assessed.</p>",
+        "DeleteAssessmentResponse$AssessmentArn" : "<p>The Amazon Resource Name (ARN) of the assessment being deleted.</p>",
+        "DescribeAssessmentResponse$AssessmentArn" : "<p>The Amazon Resource Name (ARN) of the assessment.</p>",
+        "DescribeAssessmentResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster that was assessed.</p>",
+        "DescribeTopicReassignmentResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
+        "DescribeTopicReassignmentResponse$TopicReassignmentOperationArn" : "<p>The Amazon Resource Name (ARN) of the topic reassignment operation.</p>",
+        "FindingRemediation$DocumentationUrl" : "<p>A link to documentation with more detail about this finding and how to resolve it.</p>",
+        "StartTopicReassignmentResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
+        "StartTopicReassignmentResponse$TopicReassignmentOperationArn" : "<p>The Amazon Resource Name (ARN) of the topic reassignment operation.</p>",
+        "StopTopicReassignmentResponse$TopicReassignmentOperationArn" : "<p>The Amazon Resource Name (ARN) of the topic reassignment operation.</p>",
+        "TopicReassignmentInfo$TopicReassignmentOperationArn" : "<p>The Amazon Resource Name (ARN) of the topic reassignment operation.</p>"
       }
     },
     "__stringMax249" : {
@@ -2067,6 +2341,7 @@
     "__stringMax256" : {
       "base" : null,
       "refs" : {
+        "AssessmentParameters$TargetInstanceType" : "<p>The target instance type to assess against (for example, express.m7g.large). Optional: when omitted, the assessment reports a recommended instance type as a CAPACITY finding. Supply it to assess readiness for a specific instance type.</p>",
         "__listOf__stringMax256$member" : null
       }
     },
@@ -2089,10 +2364,18 @@
         "PutClusterPolicyRequest$Policy" : "<p>Cluster policy for cluster.</p>"
       }
     },
+    "__stringMin1Max256" : {
+      "base" : null,
+      "refs" : {
+        "StartTopicReassignmentRequest$TargetInstanceType" : "<p>Instance type of the target brokers. Must exist in the cluster. Use Express instance type (e.g., express.m7g.large) for Standard-to-Express migration. Use Standard instance type (e.g., kafka.m7g.large) to move topics back to Standard.</p>",
+        "__listOf__stringMin1Max256$member" : null
+      }
+    },
     "__stringMin1Max64" : {
       "base" : null,
       "refs" : {
-        "CreateClusterRequest$ClusterName" : "<p>The name of the cluster.</p>"
+        "CreateClusterRequest$ClusterName" : "<p>The name of the cluster.</p>",
+        "StartTopicReassignmentRequest$ClientToken" : "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request with the same client token within 24 hours, the API returns the original response without creating a duplicate operation.</p>"
       }
     },
     "__stringMin3Max10" : {
@@ -2102,11 +2385,10 @@
         "CreateVpcConnectionResponse$Authentication" : "<p>The authentication type for the VPC connection.</p>"
       }
     },
-    "__stringMin5Max32" : {
+    "__stringMin5Max64" : {
       "base" : null,
       "refs" : {
-        "BrokerNodeGroupInfo$InstanceType" : "<p>The type of broker used in the Amazon MSK cluster.</p>",
-        "MutableClusterInfo$InstanceType": "<p>The Amazon MSK broker type that you want all of the brokers in this cluster to be.</p>"
+        "BrokerNodeGroupInfo$InstanceType" : "<p>The type of broker used in the Amazon MSK cluster.</p>"
       }
     },
     "__stringMin1Max128Pattern09AZaZ09AZaZ0" : {
@@ -2118,6 +2400,7 @@
     "__timestampIso8601" : {
       "base" : null,
       "refs" : {
+        "AssessmentInfo$CreationTime" : "<p>The time when the assessment was created.</p>",
         "ChannelInfo$CreationTime" : "<p>The time when the channel was created.</p>",
         "ClientVpcConnection$CreationTime" : "<p>The creation time of the VPC connection.</p>",
         "ClusterInfo$CreationTime" : "<p>The time when the cluster was created.</p>",
@@ -2125,14 +2408,20 @@
         "ClusterOperationInfo$EndTime" : "<p>The time at which the operation finished.</p>",
         "Configuration$CreationTime" : "<p>The time when the configuration was created.</p>",
         "ConfigurationRevision$CreationTime" : "<p>The time when the configuration revision was created.</p>",
+        "CreateAssessmentResponse$CreationTime" : "<p>The time when the assessment was created.</p>",
         "CreateConfigurationResponse$CreationTime" : "<p>The time when the configuration was created.</p>",
         "CreateVpcConnectionResponse$CreationTime" : "<p>The time when the VPC connection was created.</p>",
+        "DescribeAssessmentResponse$CompletionTime" : "<p>The time when the assessment completed. Present only when status is COMPLETE or FAILED.</p>",
+        "DescribeAssessmentResponse$CreationTime" : "<p>The time when the assessment was created.</p>",
         "DescribeChannelResponse$CreationTime" : "<p>The time when the channel was created.</p>",
         "DescribeConfigurationResponse$CreationTime" : "<p>The time when the configuration was created.</p>",
         "DescribeConfigurationRevisionResponse$CreationTime" : "<p>The time when the configuration was created.</p>",
+        "DescribeTopicReassignmentResponse$CreationTime" : "<p>When the operation was created.</p>",
+        "DescribeTopicReassignmentResponse$LastUpdateTime" : "<p>Last time the status or progress counters were updated.</p>",
         "DescribeVpcConnectionResponse$CreationTime" : "<p>The creation time of the VPC connection.</p>",
         "DescribeReplicatorResponse$CreationTime" : "<p>The time when the replicator was created.</p>",
         "ReplicatorSummary$CreationTime" : "<p>The time the replicator was created.</p>",
+        "TopicReassignmentInfo$CreationTime" : "<p>When the operation was created.</p>",
         "VpcConnection$CreationTime" : "<p>The creation time of the VPC connection.</p>"
       }
     }

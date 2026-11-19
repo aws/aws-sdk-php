@@ -48,7 +48,8 @@
         {"shape":"ResourceExistsException"},
         {"shape":"InternalServiceErrorException"},
         {"shape":"LimitExceededException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "AssociateResolverQueryLogConfig":{
@@ -86,7 +87,8 @@
         {"shape":"ResourceUnavailableException"},
         {"shape":"ResourceExistsException"},
         {"shape":"InternalServiceErrorException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "BatchCreateFirewallRule":{
@@ -340,7 +342,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServiceErrorException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DeleteResolverQueryLogConfig":{
@@ -374,7 +377,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceInUseException"},
         {"shape":"InternalServiceErrorException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DisassociateFirewallRuleGroup":{
@@ -408,7 +412,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceExistsException"},
         {"shape":"InternalServiceErrorException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DisassociateResolverQueryLogConfig":{
@@ -441,7 +446,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InternalServiceErrorException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "GetFirewallConfig":{
@@ -583,7 +589,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InternalServiceErrorException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "GetResolverQueryLogConfig":{
@@ -648,7 +655,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InternalServiceErrorException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "GetResolverRuleAssociation":{
@@ -663,7 +671,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InternalServiceErrorException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "GetResolverRulePolicy":{
@@ -737,6 +746,22 @@
       },
       "input":{"shape":"ListFirewallDomainsRequest"},
       "output":{"shape":"ListFirewallDomainsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceErrorException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListFirewallRuleDomains":{
+      "name":"ListFirewallRuleDomains",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListFirewallRuleDomainsRequest"},
+      "output":{"shape":"ListFirewallRuleDomainsResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
@@ -870,7 +895,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"InternalServiceErrorException"},
         {"shape":"InvalidNextTokenException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "ListResolverEndpoints":{
@@ -886,7 +912,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InternalServiceErrorException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "ListResolverQueryLogConfigAssociations":{
@@ -936,7 +963,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InternalServiceErrorException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "ListResolverRules":{
@@ -952,7 +980,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InternalServiceErrorException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "ListTagsForResource":{
@@ -969,7 +998,8 @@
         {"shape":"InvalidNextTokenException"},
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServiceErrorException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "PutFirewallRuleGroupPolicy":{
@@ -1036,7 +1066,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidTagException"},
         {"shape":"InternalServiceErrorException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "UntagResource":{
@@ -1052,7 +1083,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServiceErrorException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "UpdateFirewallConfig":{
@@ -1325,6 +1357,21 @@
       "type":"structure",
       "members":{
         "ResolverRuleAssociation":{"shape":"ResolverRuleAssociation"}
+      }
+    },
+    "AutoAllowlistConfig":{
+      "type":"structure",
+      "required":["InitialDataTimeframeHours"],
+      "members":{
+        "InitialDataTimeframeHours":{"shape":"InitialDataTimeframeHours"},
+        "ImportFromFirewallDomainListId":{
+          "shape":"ResourceId",
+          "box":true
+        },
+        "AutoAllowlistFirewallDomainListId":{
+          "shape":"ResourceId",
+          "box":true
+        }
       }
     },
     "AutodefinedReverseFlag":{
@@ -2022,7 +2069,8 @@
       "type":"string",
       "enum":[
         "THREAT",
-        "CONTENT"
+        "CONTENT",
+        "AUTOALLOWLIST"
       ]
     },
     "DomainName":{
@@ -2123,7 +2171,16 @@
         "CreatorRequestId":{"shape":"CreatorRequestId"},
         "ManagedOwnerName":{"shape":"ServicePrinciple"},
         "ManagedListType":{"shape":"DomainListType"},
-        "Category":{"shape":"Category"}
+        "Category":{"shape":"Category"},
+        "FirewallRuleGroupId":{
+          "shape":"ResourceId",
+          "box":true
+        },
+        "FirewallThreatProtectionId":{
+          "shape":"ResourceId",
+          "box":true
+        },
+        "Status":{"shape":"FirewallDomainListStatus"}
       }
     },
     "FirewallDomainListMetadataList":{
@@ -2152,12 +2209,30 @@
         "TRUST_REDIRECTION_DOMAIN"
       ]
     },
+    "FirewallDomainStatus":{
+      "type":"string",
+      "enum":[
+        "OBSERVED",
+        "ALLOWED",
+        "DENIED",
+        "UNKNOWN"
+      ]
+    },
+    "FirewallDomainStatusFilter":{
+      "type":"string",
+      "enum":[
+        "OBSERVED",
+        "ALLOWED",
+        "DENIED"
+      ]
+    },
     "FirewallDomainUpdateOperation":{
       "type":"string",
       "enum":[
         "ADD",
         "REMOVE",
-        "REPLACE"
+        "REPLACE",
+        "DENY"
       ]
     },
     "FirewallDomains":{
@@ -2196,6 +2271,42 @@
         "Status":{"shape":"FirewallRuleStatus"},
         "StatusMessage":{"shape":"FirewallRuleStatusMessage"}
       }
+    },
+    "FirewallRuleDomain":{
+      "type":"structure",
+      "members":{
+        "DomainName":{"shape":"FirewallDomainName"},
+        "DomainStatus":{"shape":"FirewallDomainStatus"},
+        "Last24HourRequests":{
+          "shape":"FirewallRuleDomainRequestCount",
+          "box":true
+        },
+        "TotalRequests":{
+          "shape":"FirewallRuleDomainRequestCount",
+          "box":true
+        },
+        "AddedTime":{"shape":"Rfc3339TimeString"}
+      }
+    },
+    "FirewallRuleDomainRequestCount":{"type":"long"},
+    "FirewallRuleDomainSortBy":{
+      "type":"string",
+      "enum":[
+        "TIME_ADDED",
+        "DAILY_TOTAL",
+        "TOTAL_REQUESTS"
+      ]
+    },
+    "FirewallRuleDomainSortOrder":{
+      "type":"string",
+      "enum":[
+        "ASC",
+        "DESC"
+      ]
+    },
+    "FirewallRuleDomains":{
+      "type":"list",
+      "member":{"shape":"FirewallRuleDomain"}
     },
     "FirewallRuleGroup":{
       "type":"structure",
@@ -2296,6 +2407,10 @@
         "DnsThreatProtection":{
           "shape":"DnsThreatProtectionRuleTypeConfig",
           "box":true
+        },
+        "AutoAllowlist":{
+          "shape":"AutoAllowlistConfig",
+          "box":true
         }
       }
     },
@@ -2343,7 +2458,15 @@
     "GetFirewallDomainListResponse":{
       "type":"structure",
       "members":{
-        "FirewallDomainList":{"shape":"FirewallDomainList"}
+        "FirewallDomainList":{"shape":"FirewallDomainList"},
+        "FirewallRuleGroupId":{
+          "shape":"ResourceId",
+          "box":true
+        },
+        "FirewallThreatProtectionId":{
+          "shape":"ResourceId",
+          "box":true
+        }
       }
     },
     "GetFirewallRuleGroupAssociationRequest":{
@@ -2536,6 +2659,11 @@
         "Status":{"shape":"FirewallDomainListStatus"},
         "StatusMessage":{"shape":"StatusMessage"}
       }
+    },
+    "InitialDataTimeframeHours":{
+      "type":"integer",
+      "max":168,
+      "min":1
     },
     "InstanceCount":{"type":"integer"},
     "InternalServiceErrorException":{
@@ -2750,6 +2878,40 @@
       "members":{
         "NextToken":{"shape":"NextToken"},
         "Domains":{"shape":"FirewallDomains"}
+      }
+    },
+    "ListFirewallRuleDomainsQueryOptions":{
+      "type":"structure",
+      "members":{
+        "DomainStatus":{"shape":"FirewallDomainStatusFilter"},
+        "SortBy":{"shape":"FirewallRuleDomainSortBy"},
+        "SortOrder":{"shape":"FirewallRuleDomainSortOrder"},
+        "DomainNameFilter":{"shape":"FirewallDomainName"}
+      }
+    },
+    "ListFirewallRuleDomainsRequest":{
+      "type":"structure",
+      "required":["FirewallRuleGroupId"],
+      "members":{
+        "FirewallRuleGroupId":{"shape":"ResourceId"},
+        "FirewallThreatProtectionId":{"shape":"ResourceId"},
+        "FirewallDomainListId":{"shape":"ResourceId"},
+        "QueryOptions":{"shape":"ListFirewallRuleDomainsQueryOptions"},
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "box":true
+        }
+      }
+    },
+    "ListFirewallRuleDomainsResponse":{
+      "type":"structure",
+      "members":{
+        "Domains":{"shape":"FirewallRuleDomains"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "ListFirewallRuleGroupAssociationsRequest":{

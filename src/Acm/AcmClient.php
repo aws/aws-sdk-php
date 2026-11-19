@@ -166,6 +166,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listCertificates(array{
  *     CertificateStatuses?: list<'EXPIRED'|'FAILED'|'INACTIVE'|'ISSUED'|'PENDING_VALIDATION'|'REVOKED'|'VALIDATION_TIMED_OUT'>,
  *     CertificateKeyPairOrigins?: list<'ACME'|'AWS_MANAGED'|'CUSTOMER_PROVIDED'>,
+ *     RootHierarchyTypes?: list<'N2_AMAZON_MANAGED'|'N2_SFG2_AMAZON_MANAGED'>,
  *     Includes?: array{
  *         extendedKeyUsage?: list<'ANY'|'CODE_SIGNING'|'CUSTOM'|'EMAIL_PROTECTION'|'IPSEC_END_SYSTEM'|'IPSEC_TUNNEL'|'IPSEC_USER'|'NONE'|'OCSP_SIGNING'|'TIME_STAMPING'|'TLS_WEB_CLIENT_AUTHENTICATION'|'TLS_WEB_SERVER_AUTHENTICATION'>,
  *         keyUsage?: list<'ANY'|'CERTIFICATE_SIGNING'|'CRL_SIGNING'|'CUSTOM'|'DATA_ENCIPHERMENT'|'DECIPHER_ONLY'|'DIGITAL_SIGNATURE'|'ENCIPHER_ONLY'|'KEY_AGREEMENT'|'KEY_ENCIPHERMENT'|'NON_REPUDIATION'>,
@@ -184,6 +185,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise listCertificatesAsync(array{
  *     CertificateStatuses?: list<'EXPIRED'|'FAILED'|'INACTIVE'|'ISSUED'|'PENDING_VALIDATION'|'REVOKED'|'VALIDATION_TIMED_OUT'>,
  *     CertificateKeyPairOrigins?: list<'ACME'|'AWS_MANAGED'|'CUSTOMER_PROVIDED'>,
+ *     RootHierarchyTypes?: list<'N2_AMAZON_MANAGED'|'N2_SFG2_AMAZON_MANAGED'>,
  *     Includes?: array{
  *         extendedKeyUsage?: list<'ANY'|'CODE_SIGNING'|'CUSTOM'|'EMAIL_PROTECTION'|'IPSEC_END_SYSTEM'|'IPSEC_TUNNEL'|'IPSEC_USER'|'NONE'|'OCSP_SIGNING'|'TIME_STAMPING'|'TLS_WEB_CLIENT_AUTHENTICATION'|'TLS_WEB_SERVER_AUTHENTICATION'>,
  *         keyUsage?: list<'ANY'|'CERTIFICATE_SIGNING'|'CRL_SIGNING'|'CUSTOM'|'DATA_ENCIPHERMENT'|'DECIPHER_ONLY'|'DIGITAL_SIGNATURE'|'ENCIPHER_ONLY'|'KEY_AGREEMENT'|'KEY_ENCIPHERMENT'|'NON_REPUDIATION'>,
@@ -235,6 +237,8 @@ use Aws\AwsClient;
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     KeyAlgorithm?: 'EC_prime256v1'|'EC_secp384r1'|'EC_secp521r1'|'RSA_1024'|'RSA_2048'|'RSA_3072'|'RSA_4096',
  *     ManagedBy?: 'CLOUDFRONT',
+ *     CertificateUsage?: 'CLIENT_AND_SERVER_AUTH'|'CLIENT_AUTH_ONLY',
+ *     RootHierarchyType?: 'N2_AMAZON_MANAGED'|'N2_SFG2_AMAZON_MANAGED',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise requestCertificateAsync(array $args = [])
@@ -254,6 +258,8 @@ use Aws\AwsClient;
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     KeyAlgorithm?: 'EC_prime256v1'|'EC_secp384r1'|'EC_secp521r1'|'RSA_1024'|'RSA_2048'|'RSA_3072'|'RSA_4096',
  *     ManagedBy?: 'CLOUDFRONT',
+ *     CertificateUsage?: 'CLIENT_AND_SERVER_AUTH'|'CLIENT_AUTH_ONLY',
+ *     RootHierarchyType?: 'N2_AMAZON_MANAGED'|'N2_SFG2_AMAZON_MANAGED',
  *     ...,
  * } $args = [])
  * @method \Aws\Result resendValidationEmail(array $args = [])

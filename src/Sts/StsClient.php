@@ -149,6 +149,22 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
  *     MinimumSessionTokenSize?: int,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result getScopedCredentials(array $args = [])
+ * @phpstan-method \Aws\Result getScopedCredentials(array{
+ *     Policy?: string,
+ *     DurationSeconds?: int,
+ *     MinimumSessionTokenSize?: int,
+ *     ScopedSessionDescription?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise getScopedCredentialsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getScopedCredentialsAsync(array{
+ *     Policy?: string,
+ *     DurationSeconds?: int,
+ *     MinimumSessionTokenSize?: int,
+ *     ScopedSessionDescription?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result getSessionToken(array $args = [])
  * @phpstan-method \Aws\Result getSessionToken(array{DurationSeconds?: int, SerialNumber?: string, TokenCode?: string, MinimumSessionTokenSize?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getSessionTokenAsync(array $args = [])
@@ -158,6 +174,8 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
  *     Audience?: list<string>,
  *     DurationSeconds?: int,
  *     SigningAlgorithm?: string,
+ *     Scope?: string,
+ *     SubjectMode?: 'AWSIdentity'|'OriginIdentity',
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])
@@ -166,6 +184,8 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
  *     Audience?: list<string>,
  *     DurationSeconds?: int,
  *     SigningAlgorithm?: string,
+ *     Scope?: string,
+ *     SubjectMode?: 'AWSIdentity'|'OriginIdentity',
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])

@@ -1,5 +1,343 @@
 {
   "version": "1.0",
   "examples": {
+    "GetDeploymentConfiguration": [
+      {
+        "input": {
+          "catalog": "AWSMarketplace",
+          "deliveryOptionType": "data-as-a-service",
+          "productId": "product-1234"
+        },
+        "output": {
+          "configuration": {
+            "dataAsAService": {
+              "fulfillmentUrl": "https://example.com/daas/register"
+            }
+          }
+        },
+        "description": "Returns only the current active configuration for the owning seller or an entitled buyer.",
+        "id": "example-1",
+        "title": "Get the active deployment configuration"
+      },
+      {
+        "input": {
+          "catalog": "AWSMarketplace",
+          "deliveryOptionType": "data-as-a-service",
+          "productId": "product-1234"
+        },
+        "description": "If the product and delivery option have no active deployment configuration, the operation returns a ResourceNotFoundException.",
+        "id": "example-2",
+        "title": "Get active configuration fails when none exists"
+      },
+      {
+        "input": {
+          "catalog": "AWSMarketplace",
+          "deliveryOptionType": "data-as-a-service",
+          "productId": "product-1234"
+        },
+        "description": "If the caller is neither the seller of the product nor a buyer entitled to it, the operation returns an AccessDeniedException.",
+        "id": "example-3",
+        "title": "Get active configuration fails for an unauthorized caller"
+      }
+    ],
+    "GetDeploymentConfigurationJob": [
+      {
+        "input": {
+          "catalog": "AWSMarketplace",
+          "deliveryOptionType": "data-as-a-service",
+          "jobId": "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d",
+          "productId": "product-1234"
+        },
+        "output": {
+          "configuration": {
+            "dataAsAService": {
+              "fulfillmentUrl": "https://example.com/daas/register"
+            }
+          },
+          "configurationArn": "arn:aws:aws-marketplace:us-east-1:123456789012:DeploymentConfiguration:catalogs/AWSMarketplace/products/product-1234/delivery-options/data-as-a-service",
+          "createdAt": "2026-09-18T08:52:46.397Z",
+          "endedAt": "2026-09-18T08:53:10.001Z",
+          "jobId": "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d",
+          "status": "SUCCEEDED"
+        },
+        "description": "A succeeded job includes endedAt and the ARN of the deployment configuration that it published.",
+        "id": "example-1",
+        "title": "Get a succeeded job"
+      },
+      {
+        "input": {
+          "catalog": "AWSMarketplace",
+          "deliveryOptionType": "data-as-a-service",
+          "jobId": "9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c",
+          "productId": "product-1234"
+        },
+        "output": {
+          "configuration": {
+            "dataAsAService": {
+              "fulfillmentUrl": "https://example.com/daas/register"
+            }
+          },
+          "createdAt": "2026-09-18T08:52:46.397Z",
+          "endedAt": "2026-09-18T08:53:05.221Z",
+          "errorCode": "FULFILLMENT_URL_UNREACHABLE",
+          "jobId": "9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c",
+          "message": "The fulfillment URL could not be reached. Verify the endpoint is publicly reachable over HTTPS and responding.",
+          "status": "FAILED"
+        },
+        "description": "A failed job includes errorCode, message, and endedAt.",
+        "id": "example-2",
+        "title": "Get a failed job"
+      },
+      {
+        "input": {
+          "catalog": "AWSMarketplace",
+          "deliveryOptionType": "data-as-a-service",
+          "jobId": "abcd1234abcd1234abcd1234abcd1234",
+          "productId": "product-1234"
+        },
+        "description": "If the job doesn't exist, or doesn't belong to the product and delivery option in the request path, the operation returns a ResourceNotFoundException.",
+        "id": "example-3",
+        "title": "Get job fails when the job isn't found"
+      },
+      {
+        "input": {
+          "catalog": "AWSMarketplace",
+          "deliveryOptionType": "data-as-a-service",
+          "jobId": "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d",
+          "productId": "product-1234"
+        },
+        "description": "If the job exists but the caller isn't the seller that started it, the operation returns an AccessDeniedException.",
+        "id": "example-4",
+        "title": "Get job fails for a caller that didn't start the job"
+      },
+      {
+        "input": {
+          "catalog": "AWSMarketplace",
+          "deliveryOptionType": "data-as-a-service",
+          "jobId": "abcd1234abcd1234abcd1234abcd1234",
+          "productId": "product-1234"
+        },
+        "description": "When the job does not exist and the caller is not authorized for the product, the result is AccessDeniedException.",
+        "id": "example-5",
+        "title": "Get job fails for a caller not authorized for the product"
+      }
+    ],
+    "ListDeploymentConfigurationJobs": [
+      {
+        "input": {
+          "catalog": "AWSMarketplace",
+          "deliveryOptionType": "data-as-a-service",
+          "maxResults": 20,
+          "productId": "product-1234"
+        },
+        "output": {
+          "jobs": [
+            {
+              "configuration": {
+                "dataAsAService": {
+                  "fulfillmentUrl": "https://example.com/daas/register"
+                }
+              },
+              "createdAt": "2026-09-18T09:10:00.000Z",
+              "jobId": "9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c",
+              "status": "FAILED"
+            },
+            {
+              "configuration": {
+                "dataAsAService": {
+                  "fulfillmentUrl": "https://example.com/daas/register"
+                }
+              },
+              "createdAt": "2026-09-18T08:52:46.397Z",
+              "jobId": "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d",
+              "status": "SUCCEEDED"
+            }
+          ],
+          "nextToken": "b3BhcXVlLXBhZ2luYXRpb24tY3Vyc29y"
+        },
+        "description": "Returns the caller's jobs ordered by newest createdAt first, with an optional nextToken when more pages exist.",
+        "id": "example-1",
+        "title": "List jobs, newest first"
+      },
+      {
+        "input": {
+          "catalog": "AWSMarketplace",
+          "deliveryOptionType": "data-as-a-service",
+          "productId": "product-1234"
+        },
+        "output": {
+          "jobs": []
+        },
+        "description": "When the caller is authorized for the product and has not started any jobs, the result is an empty jobs list with no nextToken.",
+        "id": "example-2",
+        "title": "List jobs returns an empty list when an authorized seller has no jobs"
+      },
+      {
+        "input": {
+          "catalog": "AWSMarketplace",
+          "deliveryOptionType": "data-as-a-service",
+          "productId": "product-1234"
+        },
+        "description": "If the caller isn't authorized for the product, the operation returns an AccessDeniedException.",
+        "id": "example-3",
+        "title": "List jobs fails for a caller not authorized for the product"
+      }
+    ],
+    "ListTagsForResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:aws-marketplace:us-east-1:123456789012:DeploymentParameter:catalogs/AWSMarketplace/products/product-1234/dp-uniqueidentifier"
+        },
+        "output": {
+          "tags": {
+            "FooKey": "BarValue",
+            "HelloKey": "WorldValue"
+          }
+        },
+        "description": "The following example demonstrates listing the tags for a deployment parameter. If no tags are present, the API will return an empty map.",
+        "id": "example-1",
+        "title": "Listing tags for a deployment parameter"
+      }
+    ],
+    "PutDeploymentParameter": [
+      {
+        "input": {
+          "agreementId": "agmt-1234",
+          "catalog": "AWSMarketplace",
+          "clientToken": "some-unique-uuid-between-32-and-64-characters",
+          "deploymentParameter": {
+            "name": "ExampleDeploymentParameterName",
+            "secretString": "{\"apiKey\": \"helloWorldApiKey\", \"entityId\": \"fooBarEntityId\"}"
+          },
+          "productId": "product-1234"
+        },
+        "output": {
+          "agreementId": "agmt-1234",
+          "deploymentParameterId": "dp-uniqueidentifier",
+          "resourceArn": "arn:aws:aws-marketplace:us-east-1:123456789012:DeploymentParameter:catalogs/AWSMarketplace/products/product-1234/dp-uniqueidentifier",
+          "tags": {}
+        },
+        "description": "The following example demonstrates creating or updating a deployment parameter named \"ExampleDeploymentParameterName\". The secret will be saved in the Buyer account associated with the passed `agreementId`, with the value set to the provided `secretString`. Note that the deployment parameter `secretString` can be passed in JSON string format, allowing [json-key specific CloudFormation dynamic references](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/dynamic-references.html) from a single deployment parameter.",
+        "id": "example-1",
+        "title": "Creating or updating a deployment parameter"
+      },
+      {
+        "input": {
+          "agreementId": "agmt-1234",
+          "catalog": "AWSMarketplace",
+          "clientToken": "some-unique-uuid-between-32-and-64-characters",
+          "deploymentParameter": {
+            "name": "ExampleSimpleDeploymentParameterName",
+            "secretString": "MySimpleValue"
+          },
+          "expirationDate": "2099-11-18T08:52:46.397Z",
+          "productId": "product-1234",
+          "tags": {
+            "FooKey": "BarValue",
+            "HelloKey": "WorldValue"
+          }
+        },
+        "output": {
+          "agreementId": "agmt-1234",
+          "deploymentParameterId": "dp-uniqueidentifier",
+          "resourceArn": "arn:aws:aws-marketplace:us-east-1:123456789012:DeploymentParameter:catalogs/AWSMarketplace/products/product-1234/dp-uniqueidentifier",
+          "tags": {
+            "FooKey": "BarValue",
+            "HelloKey": "WorldValue"
+          }
+        },
+        "description": "The following example demonstrates creating a simple deployment parameter named \"ExampleSimpleDeploymentParameterName\". If multiple secrets are not required, the `secretString` may be provided in String format. The provided tags are only applied on resource creation and will be ignored if the operation results in an update. The API response includes the tags present on the resource after completion of the operation.",
+        "id": "example-2",
+        "title": "Creating a simple deployment parameter, with tags and expiration."
+      }
+    ],
+    "StartDeploymentConfigurationJob": [
+      {
+        "input": {
+          "catalog": "AWSMarketplace",
+          "clientToken": "some-unique-uuid-between-32-and-64-characters",
+          "configuration": {
+            "dataAsAService": {
+              "fulfillmentUrl": "https://example.com/daas/register"
+            }
+          },
+          "deliveryOptionType": "data-as-a-service",
+          "productId": "product-1234"
+        },
+        "output": {
+          "configuration": {
+            "dataAsAService": {
+              "fulfillmentUrl": "https://example.com/daas/register"
+            }
+          },
+          "createdAt": "2026-09-18T08:52:46.397Z",
+          "jobId": "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d",
+          "status": "IN_PROGRESS"
+        },
+        "description": "Starts a job that publishes a Data-as-a-Service deployment configuration. The job starts in the IN_PROGRESS status. Call GetDeploymentConfigurationJob to check when it reaches SUCCEEDED or FAILED.",
+        "id": "example-1",
+        "title": "Start a Data-as-a-Service deployment configuration job"
+      },
+      {
+        "input": {
+          "catalog": "AWSMarketplace",
+          "configuration": {
+            "dataAsAService": {
+              "fulfillmentUrl": "https://example.com/daas/register"
+            }
+          },
+          "deliveryOptionType": "data-as-a-service",
+          "productId": "product-does-not-exist"
+        },
+        "description": "If the product or catalog doesn't exist, the operation returns a ResourceNotFoundException.",
+        "id": "example-2",
+        "title": "Start fails when the product or catalog doesn't exist"
+      },
+      {
+        "input": {
+          "catalog": "AWSMarketplace",
+          "configuration": {
+            "dataAsAService": {
+              "fulfillmentUrl": "https://example.com/daas/register"
+            }
+          },
+          "deliveryOptionType": "data-as-a-service",
+          "productId": "product-1234"
+        },
+        "description": "If the caller isn't the seller of the product, the operation returns an AccessDeniedException.",
+        "id": "example-3",
+        "title": "Start fails when the caller is not the product seller"
+      }
+    ],
+    "TagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:aws-marketplace:us-east-1:123456789012:DeploymentParameter:catalogs/AWSMarketplace/products/product-1234/dp-uniqueidentifier",
+          "tags": {
+            "FooKey": "BarValue",
+            "HelloKey": "WorldValue"
+          }
+        },
+        "output": {},
+        "description": "The following example demonstrates adding two tags to a deployment parameter. There is no output from this API.",
+        "id": "example-1",
+        "title": "Adding tags to a deployment parameter"
+      }
+    ],
+    "UntagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:aws-marketplace:us-east-1:123456789012:DeploymentParameter:catalogs/AWSMarketplace/products/product-1234/dp-uniqueidentifier",
+          "tagKeys": [
+            "FooKey",
+            "HelloKey"
+          ]
+        },
+        "output": {},
+        "description": "The following example demonstrates removing two tags from a deployment parameter. For each, both the tag and the associated value are removed. There is no output from this API.",
+        "id": "example-1",
+        "title": "Removing tags from a deployment parameter"
+      }
+    ]
   }
 }

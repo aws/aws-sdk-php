@@ -1997,7 +1997,10 @@
           "shape":"ClientRequestToken",
           "idempotencyToken":true
         },
-        "ManagedExecution":{"shape":"ManagedExecution"}
+        "ManagedExecution":{"shape":"ManagedExecution"},
+        "ExecutionRoleTemplateBody":{"shape":"TemplateBody"},
+        "ExecutionRoleTemplateUrl":{"shape":"TemplateURL"},
+        "StackSetOutputBucket":{"shape":"StackSetOutputBucket"}
       }
     },
     "CreateStackSetOutput":{
@@ -5325,7 +5328,8 @@
         "PermissionModel":{"shape":"PermissionModels"},
         "OrganizationalUnitIds":{"shape":"OrganizationalUnitIdList"},
         "ManagedExecution":{"shape":"ManagedExecution"},
-        "Regions":{"shape":"RegionList"}
+        "Regions":{"shape":"RegionList"},
+        "StackSetOutputBucketPath":{"shape":"StackSetOutputBucketPath"}
       }
     },
     "StackSetARN":{"type":"string"},
@@ -5509,6 +5513,8 @@
       "type":"integer",
       "min":0
     },
+    "StackSetOutputBucket":{"type":"string"},
+    "StackSetOutputBucketPath":{"type":"string"},
     "StackSetStatus":{
       "type":"string",
       "enum":[
@@ -6119,7 +6125,11 @@
         "Accounts":{"shape":"AccountList"},
         "Regions":{"shape":"RegionList"},
         "CallAs":{"shape":"CallAs"},
-        "ManagedExecution":{"shape":"ManagedExecution"}
+        "ManagedExecution":{"shape":"ManagedExecution"},
+        "ExecutionRoleTemplateBody":{"shape":"TemplateBody"},
+        "ExecutionRoleTemplateUrl":{"shape":"TemplateURL"},
+        "UseAdminExecutionRole":{"shape":"UseAdminExecutionRoleNullable"},
+        "StackSetOutputBucket":{"shape":"StackSetOutputBucket"}
       }
     },
     "UpdateStackSetOutput":{
@@ -6146,6 +6156,7 @@
       }
     },
     "Url":{"type":"string"},
+    "UseAdminExecutionRoleNullable":{"type":"boolean"},
     "UsePreviousTemplate":{"type":"boolean"},
     "UsePreviousValue":{"type":"boolean"},
     "ValidateTemplateInput":{

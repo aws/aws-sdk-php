@@ -182,6 +182,12 @@ use Aws\AwsClient;
  *         FirewallAdvancedContentCategory?: array{Category?: string, ...},
  *         FirewallAdvancedThreatCategory?: array{Category?: string, ...},
  *         DnsThreatProtection?: array{Value?: string, ConfidenceThreshold?: 'HIGH'|'LOW'|'MEDIUM', ...},
+ *         AutoAllowlist?: array{
+ *             InitialDataTimeframeHours?: int,
+ *             ImportFromFirewallDomainListId?: string,
+ *             AutoAllowlistFirewallDomainListId?: string,
+ *             ...,
+ *         },
  *         ...,
  *     },
  *     ...,
@@ -207,6 +213,12 @@ use Aws\AwsClient;
  *         FirewallAdvancedContentCategory?: array{Category?: string, ...},
  *         FirewallAdvancedThreatCategory?: array{Category?: string, ...},
  *         DnsThreatProtection?: array{Value?: string, ConfidenceThreshold?: 'HIGH'|'LOW'|'MEDIUM', ...},
+ *         AutoAllowlist?: array{
+ *             InitialDataTimeframeHours?: int,
+ *             ImportFromFirewallDomainListId?: string,
+ *             AutoAllowlistFirewallDomainListId?: string,
+ *             ...,
+ *         },
  *         ...,
  *     },
  *     ...,
@@ -465,6 +477,38 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listFirewallDomains(array{FirewallDomainListId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listFirewallDomainsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listFirewallDomainsAsync(array{FirewallDomainListId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result listFirewallRuleDomains(array $args = [])
+ * @phpstan-method \Aws\Result listFirewallRuleDomains(array{
+ *     FirewallRuleGroupId?: string,
+ *     FirewallThreatProtectionId?: string,
+ *     FirewallDomainListId?: string,
+ *     QueryOptions?: array{
+ *         DomainStatus?: 'ALLOWED'|'DENIED'|'OBSERVED',
+ *         SortBy?: 'DAILY_TOTAL'|'TIME_ADDED'|'TOTAL_REQUESTS',
+ *         SortOrder?: 'ASC'|'DESC',
+ *         DomainNameFilter?: string,
+ *         ...,
+ *     },
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listFirewallRuleDomainsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listFirewallRuleDomainsAsync(array{
+ *     FirewallRuleGroupId?: string,
+ *     FirewallThreatProtectionId?: string,
+ *     FirewallDomainListId?: string,
+ *     QueryOptions?: array{
+ *         DomainStatus?: 'ALLOWED'|'DENIED'|'OBSERVED',
+ *         SortBy?: 'DAILY_TOTAL'|'TIME_ADDED'|'TOTAL_REQUESTS',
+ *         SortOrder?: 'ASC'|'DESC',
+ *         DomainNameFilter?: string,
+ *         ...,
+ *     },
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listFirewallRuleGroupAssociations(array $args = [])
  * @phpstan-method \Aws\Result listFirewallRuleGroupAssociations(array{
  *     FirewallRuleGroupId?: string,
@@ -644,9 +688,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateFirewallConfigAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateFirewallConfigAsync(array{ResourceId?: string, FirewallFailOpen?: 'DISABLED'|'ENABLED'|'USE_LOCAL_RESOURCE_SETTING', ...} $args = [])
  * @method \Aws\Result updateFirewallDomains(array $args = [])
- * @phpstan-method \Aws\Result updateFirewallDomains(array{FirewallDomainListId?: string, Operation?: 'ADD'|'REMOVE'|'REPLACE', Domains?: list<string>, ...} $args = [])
+ * @phpstan-method \Aws\Result updateFirewallDomains(array{FirewallDomainListId?: string, Operation?: 'ADD'|'DENY'|'REMOVE'|'REPLACE', Domains?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFirewallDomainsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise updateFirewallDomainsAsync(array{FirewallDomainListId?: string, Operation?: 'ADD'|'REMOVE'|'REPLACE', Domains?: list<string>, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateFirewallDomainsAsync(array{FirewallDomainListId?: string, Operation?: 'ADD'|'DENY'|'REMOVE'|'REPLACE', Domains?: list<string>, ...} $args = [])
  * @method \Aws\Result updateFirewallRule(array $args = [])
  * @phpstan-method \Aws\Result updateFirewallRule(array{
  *     FirewallRuleGroupId?: string,
@@ -668,6 +712,12 @@ use Aws\AwsClient;
  *         FirewallAdvancedContentCategory?: array{Category?: string, ...},
  *         FirewallAdvancedThreatCategory?: array{Category?: string, ...},
  *         DnsThreatProtection?: array{Value?: string, ConfidenceThreshold?: 'HIGH'|'LOW'|'MEDIUM', ...},
+ *         AutoAllowlist?: array{
+ *             InitialDataTimeframeHours?: int,
+ *             ImportFromFirewallDomainListId?: string,
+ *             AutoAllowlistFirewallDomainListId?: string,
+ *             ...,
+ *         },
  *         ...,
  *     },
  *     ...,
@@ -693,6 +743,12 @@ use Aws\AwsClient;
  *         FirewallAdvancedContentCategory?: array{Category?: string, ...},
  *         FirewallAdvancedThreatCategory?: array{Category?: string, ...},
  *         DnsThreatProtection?: array{Value?: string, ConfidenceThreshold?: 'HIGH'|'LOW'|'MEDIUM', ...},
+ *         AutoAllowlist?: array{
+ *             InitialDataTimeframeHours?: int,
+ *             ImportFromFirewallDomainListId?: string,
+ *             AutoAllowlistFirewallDomainListId?: string,
+ *             ...,
+ *         },
  *         ...,
  *     },
  *     ...,

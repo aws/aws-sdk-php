@@ -39,13 +39,70 @@ use Aws\AwsClient;
  *     RelatedEntityIdentifier?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createCustomerAccount(array $args = [])
+ * @phpstan-method \Aws\Result createCustomerAccount(array{
+ *     Catalog?: string,
+ *     Account?: array{
+ *         CompanyName?: string,
+ *         WebsiteUrl?: string,
+ *         Duns?: string,
+ *         Address?: array{
+ *             City?: string,
+ *             PostalCode?: string,
+ *             StateOrRegion?: string,
+ *             CountryCode?: 'AD'|'AE'|'AF'|'AG'|'AI'|'AL'|'AM'|'AN'|'AO'|'AQ'|'AR'|'AS'|'AT'|'AU'|'AW'|'AX'|'AZ'|'BA'|'BB'|'BD'|'BE'|'BF'|'BG'|'BH'|'BI'|'BJ'|'BL'|'BM'|'BN'|'BO'|'BQ'|'BR'|'BS'|'BT'|'BV'|'BW'|'BY'|'BZ'|'CA'|'CC'|'CD'|'CF'|'CG'|'CH'|'CI'|'CK'|'CL'|'CM'|'CN'|'CO'|'CR'|'CU'|'CV'|'CW'|'CX'|'CY'|'CZ'|'DE'|'DJ'|'DK'|'DM'|'DO'|'DZ'|'EC'|'EE'|'EG'|'EH'|'ER'|'ES'|'ET'|'FI'|'FJ'|'FK'|'FM'|'FO'|'FR'|'GA'|'GB'|'GD'|'GE'|'GF'|'GG'|'GH'|'GI'|'GL'|'GM'|'GN'|'GP'|'GQ'|'GR'|'GS'|'GT'|'GU'|'GW'|'GY'|'HK'|'HM'|'HN'|'HR'|'HT'|'HU'|'ID'|'IE'|'IL'|'IM'|'IN'|'IO'|'IQ'|'IR'|'IS'|'IT'|'JE'|'JM'|'JO'|'JP'|'KE'|'KG'|'KH'|'KI'|'KM'|'KN'|'KR'|'KW'|'KY'|'KZ'|'LA'|'LB'|'LC'|'LI'|'LK'|'LR'|'LS'|'LT'|'LU'|'LV'|'LY'|'MA'|'MC'|'MD'|'ME'|'MF'|'MG'|'MH'|'MK'|'ML'|'MM'|'MN'|'MO'|'MP'|'MQ'|'MR'|'MS'|'MT'|'MU'|'MV'|'MW'|'MX'|'MY'|'MZ'|'NA'|'NC'|'NE'|'NF'|'NG'|'NI'|'NL'|'NO'|'NP'|'NR'|'NU'|'NZ'|'OM'|'PA'|'PE'|'PF'|'PG'|'PH'|'PK'|'PL'|'PM'|'PN'|'PR'|'PS'|'PT'|'PW'|'PY'|'QA'|'RE'|'RO'|'RS'|'RU'|'RW'|'SA'|'SB'|'SC'|'SD'|'SE'|'SG'|'SH'|'SI'|'SJ'|'SK'|'SL'|'SM'|'SN'|'SO'|'SR'|'SS'|'ST'|'SV'|'SX'|'SY'|'SZ'|'TC'|'TD'|'TF'|'TG'|'TH'|'TJ'|'TK'|'TL'|'TM'|'TN'|'TO'|'TR'|'TT'|'TV'|'TW'|'TZ'|'UA'|'UG'|'UM'|'US'|'UY'|'UZ'|'VA'|'VC'|'VE'|'VG'|'VI'|'VN'|'VU'|'WF'|'WS'|'YE'|'YT'|'ZA'|'ZM'|'ZW',
+ *             StreetAddress?: string,
+ *             ...,
+ *         },
+ *         Industry?: string,
+ *         OtherIndustry?: string,
+ *         Domain?: string,
+ *         ParentCompanyName?: string,
+ *         ...,
+ *     },
+ *     PartnerAccountIdentifier?: string,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ClientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createCustomerAccountAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createCustomerAccountAsync(array{
+ *     Catalog?: string,
+ *     Account?: array{
+ *         CompanyName?: string,
+ *         WebsiteUrl?: string,
+ *         Duns?: string,
+ *         Address?: array{
+ *             City?: string,
+ *             PostalCode?: string,
+ *             StateOrRegion?: string,
+ *             CountryCode?: 'AD'|'AE'|'AF'|'AG'|'AI'|'AL'|'AM'|'AN'|'AO'|'AQ'|'AR'|'AS'|'AT'|'AU'|'AW'|'AX'|'AZ'|'BA'|'BB'|'BD'|'BE'|'BF'|'BG'|'BH'|'BI'|'BJ'|'BL'|'BM'|'BN'|'BO'|'BQ'|'BR'|'BS'|'BT'|'BV'|'BW'|'BY'|'BZ'|'CA'|'CC'|'CD'|'CF'|'CG'|'CH'|'CI'|'CK'|'CL'|'CM'|'CN'|'CO'|'CR'|'CU'|'CV'|'CW'|'CX'|'CY'|'CZ'|'DE'|'DJ'|'DK'|'DM'|'DO'|'DZ'|'EC'|'EE'|'EG'|'EH'|'ER'|'ES'|'ET'|'FI'|'FJ'|'FK'|'FM'|'FO'|'FR'|'GA'|'GB'|'GD'|'GE'|'GF'|'GG'|'GH'|'GI'|'GL'|'GM'|'GN'|'GP'|'GQ'|'GR'|'GS'|'GT'|'GU'|'GW'|'GY'|'HK'|'HM'|'HN'|'HR'|'HT'|'HU'|'ID'|'IE'|'IL'|'IM'|'IN'|'IO'|'IQ'|'IR'|'IS'|'IT'|'JE'|'JM'|'JO'|'JP'|'KE'|'KG'|'KH'|'KI'|'KM'|'KN'|'KR'|'KW'|'KY'|'KZ'|'LA'|'LB'|'LC'|'LI'|'LK'|'LR'|'LS'|'LT'|'LU'|'LV'|'LY'|'MA'|'MC'|'MD'|'ME'|'MF'|'MG'|'MH'|'MK'|'ML'|'MM'|'MN'|'MO'|'MP'|'MQ'|'MR'|'MS'|'MT'|'MU'|'MV'|'MW'|'MX'|'MY'|'MZ'|'NA'|'NC'|'NE'|'NF'|'NG'|'NI'|'NL'|'NO'|'NP'|'NR'|'NU'|'NZ'|'OM'|'PA'|'PE'|'PF'|'PG'|'PH'|'PK'|'PL'|'PM'|'PN'|'PR'|'PS'|'PT'|'PW'|'PY'|'QA'|'RE'|'RO'|'RS'|'RU'|'RW'|'SA'|'SB'|'SC'|'SD'|'SE'|'SG'|'SH'|'SI'|'SJ'|'SK'|'SL'|'SM'|'SN'|'SO'|'SR'|'SS'|'ST'|'SV'|'SX'|'SY'|'SZ'|'TC'|'TD'|'TF'|'TG'|'TH'|'TJ'|'TK'|'TL'|'TM'|'TN'|'TO'|'TR'|'TT'|'TV'|'TW'|'TZ'|'UA'|'UG'|'UM'|'US'|'UY'|'UZ'|'VA'|'VC'|'VE'|'VG'|'VI'|'VN'|'VU'|'WF'|'WS'|'YE'|'YT'|'ZA'|'ZM'|'ZW',
+ *             StreetAddress?: string,
+ *             ...,
+ *         },
+ *         Industry?: string,
+ *         OtherIndustry?: string,
+ *         Domain?: string,
+ *         ParentCompanyName?: string,
+ *         ...,
+ *     },
+ *     PartnerAccountIdentifier?: string,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ClientToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createEngagement(array $args = [])
  * @phpstan-method \Aws\Result createEngagement(array{
  *     Catalog?: string,
  *     ClientToken?: string,
  *     Title?: string,
  *     Description?: string,
- *     Contexts?: list<array{Id?: string, Type?: 'CustomerProject'|'Lead'|'ProspectingResult', Payload?: array, ...}>,
+ *     Contexts?: list<array{
+ *         Id?: string,
+ *         Type?: 'CustomerAccount'|'CustomerProject'|'Lead'|'ProspectingResult',
+ *         Payload?: array,
+ *         ...,
+ *     }>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createEngagementAsync(array $args = [])
@@ -54,7 +111,12 @@ use Aws\AwsClient;
  *     ClientToken?: string,
  *     Title?: string,
  *     Description?: string,
- *     Contexts?: list<array{Id?: string, Type?: 'CustomerProject'|'Lead'|'ProspectingResult', Payload?: array, ...}>,
+ *     Contexts?: list<array{
+ *         Id?: string,
+ *         Type?: 'CustomerAccount'|'CustomerProject'|'Lead'|'ProspectingResult',
+ *         Payload?: array,
+ *         ...,
+ *     }>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createEngagementContext(array $args = [])
@@ -62,11 +124,12 @@ use Aws\AwsClient;
  *     Catalog?: string,
  *     EngagementIdentifier?: string,
  *     ClientToken?: string,
- *     Type?: 'CustomerProject'|'Lead'|'ProspectingResult',
+ *     Type?: 'CustomerAccount'|'CustomerProject'|'Lead'|'ProspectingResult',
  *     Payload?: array{
  *         CustomerProject?: array{Customer?: array, Project?: array, ...},
  *         Lead?: array{Insights?: array, QualificationStatus?: string, Customer?: array, Interactions?: list<array>, ...},
  *         ProspectingResult?: array{Aws?: array, ...},
+ *         CustomerAccount?: array{AccountIdentifier?: string, Customer?: array, ...},
  *         ...,
  *     },
  *     ...,
@@ -76,11 +139,12 @@ use Aws\AwsClient;
  *     Catalog?: string,
  *     EngagementIdentifier?: string,
  *     ClientToken?: string,
- *     Type?: 'CustomerProject'|'Lead'|'ProspectingResult',
+ *     Type?: 'CustomerAccount'|'CustomerProject'|'Lead'|'ProspectingResult',
  *     Payload?: array{
  *         CustomerProject?: array{Customer?: array, Project?: array, ...},
  *         Lead?: array{Insights?: array, QualificationStatus?: string, Customer?: array, Interactions?: list<array>, ...},
  *         ProspectingResult?: array{Aws?: array, ...},
+ *         CustomerAccount?: array{AccountIdentifier?: string, Customer?: array, ...},
  *         ...,
  *     },
  *     ...,
@@ -93,7 +157,7 @@ use Aws\AwsClient;
  *     Invitation?: array{
  *         Message?: string,
  *         Receiver?: array{Account?: array, ...},
- *         Payload?: array{OpportunityInvitation?: array, LeadInvitation?: array, ...},
+ *         Payload?: array{OpportunityInvitation?: array, LeadInvitation?: array, AccountPlanningInvitation?: array, ...},
  *         ...,
  *     },
  *     ...,
@@ -106,7 +170,7 @@ use Aws\AwsClient;
  *     Invitation?: array{
  *         Message?: string,
  *         Receiver?: array{Account?: array, ...},
- *         Payload?: array{OpportunityInvitation?: array, LeadInvitation?: array, ...},
+ *         Payload?: array{OpportunityInvitation?: array, LeadInvitation?: array, AccountPlanningInvitation?: array, ...},
  *         ...,
  *     },
  *     ...,
@@ -301,6 +365,10 @@ use Aws\AwsClient;
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result deleteCustomerAccount(array $args = [])
+ * @phpstan-method \Aws\Result deleteCustomerAccount(array{Catalog?: string, Identifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteCustomerAccountAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteCustomerAccountAsync(array{Catalog?: string, Identifier?: string, ...} $args = [])
  * @method \Aws\Result deleteResourceSnapshotJob(array $args = [])
  * @phpstan-method \Aws\Result deleteResourceSnapshotJob(array{Catalog?: string, ResourceSnapshotJobIdentifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteResourceSnapshotJobAsync(array $args = [])
@@ -325,6 +393,120 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getAwsOpportunitySummary(array{Catalog?: string, RelatedOpportunityIdentifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getAwsOpportunitySummaryAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getAwsOpportunitySummaryAsync(array{Catalog?: string, RelatedOpportunityIdentifier?: string, ...} $args = [])
+ * @method \Aws\Result getCustomerAccount(array $args = [])
+ * @phpstan-method \Aws\Result getCustomerAccount(array{Catalog?: string, Identifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getCustomerAccountAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getCustomerAccountAsync(array{Catalog?: string, Identifier?: string, ...} $args = [])
+ * @method \Aws\Result getCustomerAccountBulkJob(array $args = [])
+ * @phpstan-method \Aws\Result getCustomerAccountBulkJob(array{Catalog?: string, Identifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getCustomerAccountBulkJobAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getCustomerAccountBulkJobAsync(array{Catalog?: string, Identifier?: string, ...} $args = [])
+ * @method \Aws\Result getCustomerAccountBulkJobReportUrl(array $args = [])
+ * @phpstan-method \Aws\Result getCustomerAccountBulkJobReportUrl(array{Catalog?: string, Identifier?: string, ReportType?: 'ALL_RECORDS'|'FAILED_RECORDS', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getCustomerAccountBulkJobReportUrlAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getCustomerAccountBulkJobReportUrlAsync(array{Catalog?: string, Identifier?: string, ReportType?: 'ALL_RECORDS'|'FAILED_RECORDS', ...} $args = [])
+ * @method \Aws\Result getCustomerAccountStatistics(array $args = [])
+ * @phpstan-method \Aws\Result getCustomerAccountStatistics(array{
+ *     Catalog?: string,
+ *     Filter?: array{
+ *         AndAllFilters?: list<array>,
+ *         OrAllFilters?: list<array>,
+ *         NotFilter?: array,
+ *         EqualsTo?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAny?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAll?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThan?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThanOrEquals?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThan?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThanOrEquals?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     Aggregations?: list<array{
+ *         GroupBy?: list<'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COUNTRY'|'ENRICHMENT_STATUS'|'GEO'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'REGION'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE'>,
+ *         ...,
+ *     }>,
+ *     IncludeMissing?: bool,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise getCustomerAccountStatisticsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getCustomerAccountStatisticsAsync(array{
+ *     Catalog?: string,
+ *     Filter?: array{
+ *         AndAllFilters?: list<array>,
+ *         OrAllFilters?: list<array>,
+ *         NotFilter?: array,
+ *         EqualsTo?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAny?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAll?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThan?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThanOrEquals?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThan?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThanOrEquals?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     Aggregations?: list<array{
+ *         GroupBy?: list<'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COUNTRY'|'ENRICHMENT_STATUS'|'GEO'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'REGION'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE'>,
+ *         ...,
+ *     }>,
+ *     IncludeMissing?: bool,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result getEngagement(array $args = [])
  * @phpstan-method \Aws\Result getEngagement(array{Catalog?: string, Identifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getEngagementAsync(array $args = [])
@@ -337,6 +519,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getOpportunity(array{Catalog?: string, Identifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getOpportunityAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getOpportunityAsync(array{Catalog?: string, Identifier?: string, ...} $args = [])
+ * @method \Aws\Result getOpportunityBulkJobReportUrl(array $args = [])
+ * @phpstan-method \Aws\Result getOpportunityBulkJobReportUrl(array{
+ *     Catalog?: string,
+ *     JobId?: string,
+ *     ReportFormat?: 'CSV',
+ *     ReportType?: 'ALL_RECORDS'|'FAILED_RECORDS',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise getOpportunityBulkJobReportUrlAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getOpportunityBulkJobReportUrlAsync(array{
+ *     Catalog?: string,
+ *     JobId?: string,
+ *     ReportFormat?: 'CSV',
+ *     ReportType?: 'ALL_RECORDS'|'FAILED_RECORDS',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result getProspectingFromEngagementTask(array $args = [])
  * @phpstan-method \Aws\Result getProspectingFromEngagementTask(array{Catalog?: string, TaskIdentifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getProspectingFromEngagementTaskAsync(array $args = [])
@@ -369,6 +567,40 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getSellingSystemSettings(array{Catalog?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getSellingSystemSettingsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getSellingSystemSettingsAsync(array{Catalog?: string, ...} $args = [])
+ * @method \Aws\Result listCustomerAccountBulkJobResults(array $args = [])
+ * @phpstan-method \Aws\Result listCustomerAccountBulkJobResults(array{
+ *     Catalog?: string,
+ *     Identifier?: string,
+ *     Status?: 'FAILED'|'SUCCEEDED',
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listCustomerAccountBulkJobResultsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listCustomerAccountBulkJobResultsAsync(array{
+ *     Catalog?: string,
+ *     Identifier?: string,
+ *     Status?: 'FAILED'|'SUCCEEDED',
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listCustomerAccountBulkJobs(array $args = [])
+ * @phpstan-method \Aws\Result listCustomerAccountBulkJobs(array{
+ *     Catalog?: string,
+ *     Filter?: array{Identifier?: string, Status?: 'COMPLETED'|'FAILED'|'IN_PROGRESS'|'SUBMITTED', ...},
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listCustomerAccountBulkJobsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listCustomerAccountBulkJobsAsync(array{
+ *     Catalog?: string,
+ *     Filter?: array{Identifier?: string, Status?: 'COMPLETED'|'FAILED'|'IN_PROGRESS'|'SUBMITTED', ...},
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listEngagementByAcceptingInvitationTasks(array $args = [])
  * @phpstan-method \Aws\Result listEngagementByAcceptingInvitationTasks(array{
  *     MaxResults?: int,
@@ -417,13 +649,33 @@ use Aws\AwsClient;
  *     EngagementIdentifier?: list<string>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listEngagementGroups(array $args = [])
+ * @phpstan-method \Aws\Result listEngagementGroups(array{
+ *     Catalog?: string,
+ *     ReadinessLevel?: 'LowPotential'|'MarketingReady'|'SalesReady',
+ *     Sort?: array{SortBy?: 'Count'|'UpdatedAt', SortOrder?: 'ASCENDING'|'DESCENDING', ...},
+ *     EngagementGroupIdentifiers?: list<string>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listEngagementGroupsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listEngagementGroupsAsync(array{
+ *     Catalog?: string,
+ *     ReadinessLevel?: 'LowPotential'|'MarketingReady'|'SalesReady',
+ *     Sort?: array{SortBy?: 'Count'|'UpdatedAt', SortOrder?: 'ASCENDING'|'DESCENDING', ...},
+ *     EngagementGroupIdentifiers?: list<string>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listEngagementInvitations(array $args = [])
  * @phpstan-method \Aws\Result listEngagementInvitations(array{
  *     Catalog?: string,
  *     MaxResults?: int,
  *     NextToken?: string,
  *     Sort?: array{SortOrder?: 'ASCENDING'|'DESCENDING', SortBy?: 'InvitationDate', ...},
- *     PayloadType?: list<'LeadInvitation'|'OpportunityInvitation'>,
+ *     PayloadType?: list<'AccountPlanningInvitation'|'LeadInvitation'|'OpportunityInvitation'>,
  *     ParticipantType?: 'RECEIVER'|'SENDER',
  *     Status?: list<'ACCEPTED'|'EXPIRED'|'PENDING'|'REJECTED'>,
  *     EngagementIdentifier?: list<string>,
@@ -436,7 +688,7 @@ use Aws\AwsClient;
  *     MaxResults?: int,
  *     NextToken?: string,
  *     Sort?: array{SortOrder?: 'ASCENDING'|'DESCENDING', SortBy?: 'InvitationDate', ...},
- *     PayloadType?: list<'LeadInvitation'|'OpportunityInvitation'>,
+ *     PayloadType?: list<'AccountPlanningInvitation'|'LeadInvitation'|'OpportunityInvitation'>,
  *     ParticipantType?: 'RECEIVER'|'SENDER',
  *     Status?: list<'ACCEPTED'|'EXPIRED'|'PENDING'|'REJECTED'>,
  *     EngagementIdentifier?: list<string>,
@@ -474,8 +726,8 @@ use Aws\AwsClient;
  *     Catalog?: string,
  *     CreatedBy?: list<string>,
  *     ExcludeCreatedBy?: list<string>,
- *     ContextTypes?: list<'CustomerProject'|'Lead'|'ProspectingResult'>,
- *     ExcludeContextTypes?: list<'CustomerProject'|'Lead'|'ProspectingResult'>,
+ *     ContextTypes?: list<'CustomerAccount'|'CustomerProject'|'Lead'|'ProspectingResult'>,
+ *     ExcludeContextTypes?: list<'CustomerAccount'|'CustomerProject'|'Lead'|'ProspectingResult'>,
  *     Sort?: array{SortOrder?: 'ASCENDING'|'DESCENDING', SortBy?: 'CreatedDate', ...},
  *     MaxResults?: int,
  *     NextToken?: string,
@@ -487,8 +739,8 @@ use Aws\AwsClient;
  *     Catalog?: string,
  *     CreatedBy?: list<string>,
  *     ExcludeCreatedBy?: list<string>,
- *     ContextTypes?: list<'CustomerProject'|'Lead'|'ProspectingResult'>,
- *     ExcludeContextTypes?: list<'CustomerProject'|'Lead'|'ProspectingResult'>,
+ *     ContextTypes?: list<'CustomerAccount'|'CustomerProject'|'Lead'|'ProspectingResult'>,
+ *     ExcludeContextTypes?: list<'CustomerAccount'|'CustomerProject'|'Lead'|'ProspectingResult'>,
  *     Sort?: array{SortOrder?: 'ASCENDING'|'DESCENDING', SortBy?: 'CreatedDate', ...},
  *     MaxResults?: int,
  *     NextToken?: string,
@@ -547,6 +799,42 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     TargetCloseDate?: array{AfterTargetCloseDate?: string, BeforeTargetCloseDate?: string, ...},
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listOpportunityBulkJobResults(array $args = [])
+ * @phpstan-method \Aws\Result listOpportunityBulkJobResults(array{
+ *     Catalog?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     JobId?: string,
+ *     Status?: 'FAILED'|'SUCCEEDED',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listOpportunityBulkJobResultsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listOpportunityBulkJobResultsAsync(array{
+ *     Catalog?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     JobId?: string,
+ *     Status?: 'FAILED'|'SUCCEEDED',
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listOpportunityBulkJobs(array $args = [])
+ * @phpstan-method \Aws\Result listOpportunityBulkJobs(array{
+ *     Catalog?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     JobId?: string,
+ *     Status?: 'COMPLETED'|'FAILED'|'IN_PROGRESS'|'SUBMITTED',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listOpportunityBulkJobsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listOpportunityBulkJobsAsync(array{
+ *     Catalog?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     JobId?: string,
+ *     Status?: 'COMPLETED'|'FAILED'|'IN_PROGRESS'|'SUBMITTED',
  *     ...,
  * } $args = [])
  * @method \Aws\Result listOpportunityFromEngagementTasks(array $args = [])
@@ -687,6 +975,334 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result rejectEngagementInvitation(array{Catalog?: string, Identifier?: string, RejectionReason?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise rejectEngagementInvitationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise rejectEngagementInvitationAsync(array{Catalog?: string, Identifier?: string, RejectionReason?: string, ...} $args = [])
+ * @method \Aws\Result searchCustomerAccounts(array $args = [])
+ * @phpstan-method \Aws\Result searchCustomerAccounts(array{
+ *     Catalog?: string,
+ *     Filter?: array{
+ *         AndAllFilters?: list<array>,
+ *         OrAllFilters?: list<array>,
+ *         NotFilter?: array,
+ *         EqualsTo?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAny?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAll?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThan?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThanOrEquals?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThan?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThanOrEquals?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     Sort?: array{
+ *         SortBy?: 'COMPANY_NAME'|'CREATED_DATE'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'SOLUTION_SCORE',
+ *         SortOrder?: 'ASCENDING'|'DESCENDING',
+ *         ...,
+ *     },
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchCustomerAccountsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise searchCustomerAccountsAsync(array{
+ *     Catalog?: string,
+ *     Filter?: array{
+ *         AndAllFilters?: list<array>,
+ *         OrAllFilters?: list<array>,
+ *         NotFilter?: array,
+ *         EqualsTo?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAny?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAll?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThan?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThanOrEquals?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThan?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThanOrEquals?: array{
+ *             Key?: 'ACCOUNT_PLANNING_QUALIFICATION'|'AWS_INDUSTRY'|'COMPANY_NAME'|'COUNTRY'|'CREATED_DATE'|'ENRICHMENT_STATUS'|'GEO'|'IMPORT_ID'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'PROGRAM_ELIGIBILITY'|'SEGMENT'|'SOLUTION_CATEGORY'|'SOLUTION_SCORE',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     Sort?: array{
+ *         SortBy?: 'COMPANY_NAME'|'CREATED_DATE'|'LAST_MODIFIED_DATE'|'MARKETPLACE_ENGAGEMENT_SCORE'|'SOLUTION_SCORE',
+ *         SortOrder?: 'ASCENDING'|'DESCENDING',
+ *         ...,
+ *     },
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result searchEngagements(array $args = [])
+ * @phpstan-method \Aws\Result searchEngagements(array{
+ *     Catalog?: string,
+ *     Keyword?: string,
+ *     Filter?: array{
+ *         AndAllFilters?: list<array>,
+ *         OrAllFilters?: list<array>,
+ *         NotFilter?: array,
+ *         EqualsTo?: array{
+ *             Key?: 'ContextType'|'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsSourceName'|'LeadInteractionsSourceType'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAny?: array{
+ *             Key?: 'ContextType'|'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsSourceName'|'LeadInteractionsSourceType'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAll?: array{
+ *             Key?: 'ContextType'|'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsSourceName'|'LeadInteractionsSourceType'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThan?: array{
+ *             Key?: 'ContextType'|'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsSourceName'|'LeadInteractionsSourceType'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThanOrEquals?: array{
+ *             Key?: 'ContextType'|'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsSourceName'|'LeadInteractionsSourceType'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThan?: array{
+ *             Key?: 'ContextType'|'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsSourceName'|'LeadInteractionsSourceType'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThanOrEquals?: array{
+ *             Key?: 'ContextType'|'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsSourceName'|'LeadInteractionsSourceType'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     GroupId?: string,
+ *     Sort?: array{
+ *         SortBy?: 'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *         SortOrder?: 'ASCENDING'|'DESCENDING',
+ *         ...,
+ *     },
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchEngagementsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise searchEngagementsAsync(array{
+ *     Catalog?: string,
+ *     Keyword?: string,
+ *     Filter?: array{
+ *         AndAllFilters?: list<array>,
+ *         OrAllFilters?: list<array>,
+ *         NotFilter?: array,
+ *         EqualsTo?: array{
+ *             Key?: 'ContextType'|'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsSourceName'|'LeadInteractionsSourceType'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAny?: array{
+ *             Key?: 'ContextType'|'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsSourceName'|'LeadInteractionsSourceType'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAll?: array{
+ *             Key?: 'ContextType'|'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsSourceName'|'LeadInteractionsSourceType'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThan?: array{
+ *             Key?: 'ContextType'|'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsSourceName'|'LeadInteractionsSourceType'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThanOrEquals?: array{
+ *             Key?: 'ContextType'|'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsSourceName'|'LeadInteractionsSourceType'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThan?: array{
+ *             Key?: 'ContextType'|'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsSourceName'|'LeadInteractionsSourceType'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThanOrEquals?: array{
+ *             Key?: 'ContextType'|'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsSourceName'|'LeadInteractionsSourceType'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     GroupId?: string,
+ *     Sort?: array{
+ *         SortBy?: 'CreatedAt'|'EngagementId'|'LastModifiedAt'|'LeadCustomerAwsMaturity'|'LeadCustomerCompanyName'|'LeadCustomerCountryCode'|'LeadCustomerIndustry'|'LeadCustomerMarketSegment'|'LeadInteractionsContactBusinessTitle'|'LeadInteractionsContactFirstName'|'LeadInteractionsContactLastName'|'LeadInteractionsUsecase'|'LeadQualificationStatus'|'LeadReadinessScore'|'MemberCount'|'PartnerId'|'ProspectingCustomerCompanySize'|'ProspectingCustomerCountry'|'ProspectingCustomerGeo'|'ProspectingCustomerIndustry'|'ProspectingCustomerRegion'|'ProspectingCustomerSegment'|'ProspectingInsightsMarketplaceEngagementScore'|'ProspectingInsightsSolutionCategory'|'ProspectingInsightsSolutionSubCategory'|'Title',
+ *         SortOrder?: 'ASCENDING'|'DESCENDING',
+ *         ...,
+ *     },
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result searchOpportunities(array $args = [])
+ * @phpstan-method \Aws\Result searchOpportunities(array{
+ *     Catalog?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     Keyword?: string,
+ *     Filter?: array{
+ *         AndAllFilters?: list<array>,
+ *         OrAllFilters?: list<array>,
+ *         NotFilter?: array,
+ *         EqualsTo?: array{
+ *             Key?: 'ApnPrograms'|'AwsAccountId'|'AwsMarketplaceSolution'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAny?: array{
+ *             Key?: 'ApnPrograms'|'AwsAccountId'|'AwsMarketplaceSolution'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAll?: array{
+ *             Key?: 'ApnPrograms'|'AwsAccountId'|'AwsMarketplaceSolution'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThan?: array{
+ *             Key?: 'ApnPrograms'|'AwsAccountId'|'AwsMarketplaceSolution'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThanOrEquals?: array{
+ *             Key?: 'ApnPrograms'|'AwsAccountId'|'AwsMarketplaceSolution'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThan?: array{
+ *             Key?: 'ApnPrograms'|'AwsAccountId'|'AwsMarketplaceSolution'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThanOrEquals?: array{
+ *             Key?: 'ApnPrograms'|'AwsAccountId'|'AwsMarketplaceSolution'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     Sort?: array{
+ *         SortBy?: 'ApnPrograms'|'AwsAccountId'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *         SortOrder?: 'ASCENDING'|'DESCENDING',
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchOpportunitiesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise searchOpportunitiesAsync(array{
+ *     Catalog?: string,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     Keyword?: string,
+ *     Filter?: array{
+ *         AndAllFilters?: list<array>,
+ *         OrAllFilters?: list<array>,
+ *         NotFilter?: array,
+ *         EqualsTo?: array{
+ *             Key?: 'ApnPrograms'|'AwsAccountId'|'AwsMarketplaceSolution'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAny?: array{
+ *             Key?: 'ApnPrograms'|'AwsAccountId'|'AwsMarketplaceSolution'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ContainsAll?: array{
+ *             Key?: 'ApnPrograms'|'AwsAccountId'|'AwsMarketplaceSolution'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThan?: array{
+ *             Key?: 'ApnPrograms'|'AwsAccountId'|'AwsMarketplaceSolution'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         GreaterThanOrEquals?: array{
+ *             Key?: 'ApnPrograms'|'AwsAccountId'|'AwsMarketplaceSolution'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThan?: array{
+ *             Key?: 'ApnPrograms'|'AwsAccountId'|'AwsMarketplaceSolution'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         LessThanOrEquals?: array{
+ *             Key?: 'ApnPrograms'|'AwsAccountId'|'AwsMarketplaceSolution'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *             Value?: array,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     Sort?: array{
+ *         SortBy?: 'ApnPrograms'|'AwsAccountId'|'CosellMotion'|'CountryCode'|'CreatedDate'|'CustomerCompanyName'|'EngagementScore'|'EstimatedMrr'|'Industry'|'LastModifiedDate'|'NextStep'|'OfferId'|'OfferSetId'|'OpportunityId'|'OpportunityOwner'|'OpportunityType'|'Origin'|'PartnerOpportunityIdentifier'|'PartnerProjectTitle'|'ReviewStatus'|'Stage'|'Tags'|'TargetCloseDate',
+ *         SortOrder?: 'ASCENDING'|'DESCENDING',
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result startCustomerAccountBulkJob(array $args = [])
+ * @phpstan-method \Aws\Result startCustomerAccountBulkJob(array{Catalog?: string, ClientToken?: string, FileUri?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise startCustomerAccountBulkJobAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startCustomerAccountBulkJobAsync(array{Catalog?: string, ClientToken?: string, FileUri?: string, ...} $args = [])
  * @method \Aws\Result startEngagementByAcceptingInvitationTask(array $args = [])
  * @phpstan-method \Aws\Result startEngagementByAcceptingInvitationTask(array{
  *     Catalog?: string,
@@ -721,6 +1337,10 @@ use Aws\AwsClient;
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result startOpportunityBulkJob(array $args = [])
+ * @phpstan-method \Aws\Result startOpportunityBulkJob(array{Catalog?: string, ClientToken?: string, FileURI?: string, FileFormat?: 'CSV', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise startOpportunityBulkJobAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startOpportunityBulkJobAsync(array{Catalog?: string, ClientToken?: string, FileURI?: string, FileFormat?: 'CSV', ...} $args = [])
  * @method \Aws\Result startOpportunityFromEngagementTask(array $args = [])
  * @phpstan-method \Aws\Result startOpportunityFromEngagementTask(array{
  *     Catalog?: string,
@@ -775,13 +1395,65 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result untagResource(array{ResourceArn?: string, TagKeys?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise untagResourceAsync(array{ResourceArn?: string, TagKeys?: list<string>, ...} $args = [])
+ * @method \Aws\Result updateCustomerAccount(array $args = [])
+ * @phpstan-method \Aws\Result updateCustomerAccount(array{
+ *     Catalog?: string,
+ *     Identifier?: string,
+ *     Account?: array{
+ *         CompanyName?: string,
+ *         WebsiteUrl?: string,
+ *         Duns?: string,
+ *         Address?: array{
+ *             City?: string,
+ *             PostalCode?: string,
+ *             StateOrRegion?: string,
+ *             CountryCode?: 'AD'|'AE'|'AF'|'AG'|'AI'|'AL'|'AM'|'AN'|'AO'|'AQ'|'AR'|'AS'|'AT'|'AU'|'AW'|'AX'|'AZ'|'BA'|'BB'|'BD'|'BE'|'BF'|'BG'|'BH'|'BI'|'BJ'|'BL'|'BM'|'BN'|'BO'|'BQ'|'BR'|'BS'|'BT'|'BV'|'BW'|'BY'|'BZ'|'CA'|'CC'|'CD'|'CF'|'CG'|'CH'|'CI'|'CK'|'CL'|'CM'|'CN'|'CO'|'CR'|'CU'|'CV'|'CW'|'CX'|'CY'|'CZ'|'DE'|'DJ'|'DK'|'DM'|'DO'|'DZ'|'EC'|'EE'|'EG'|'EH'|'ER'|'ES'|'ET'|'FI'|'FJ'|'FK'|'FM'|'FO'|'FR'|'GA'|'GB'|'GD'|'GE'|'GF'|'GG'|'GH'|'GI'|'GL'|'GM'|'GN'|'GP'|'GQ'|'GR'|'GS'|'GT'|'GU'|'GW'|'GY'|'HK'|'HM'|'HN'|'HR'|'HT'|'HU'|'ID'|'IE'|'IL'|'IM'|'IN'|'IO'|'IQ'|'IR'|'IS'|'IT'|'JE'|'JM'|'JO'|'JP'|'KE'|'KG'|'KH'|'KI'|'KM'|'KN'|'KR'|'KW'|'KY'|'KZ'|'LA'|'LB'|'LC'|'LI'|'LK'|'LR'|'LS'|'LT'|'LU'|'LV'|'LY'|'MA'|'MC'|'MD'|'ME'|'MF'|'MG'|'MH'|'MK'|'ML'|'MM'|'MN'|'MO'|'MP'|'MQ'|'MR'|'MS'|'MT'|'MU'|'MV'|'MW'|'MX'|'MY'|'MZ'|'NA'|'NC'|'NE'|'NF'|'NG'|'NI'|'NL'|'NO'|'NP'|'NR'|'NU'|'NZ'|'OM'|'PA'|'PE'|'PF'|'PG'|'PH'|'PK'|'PL'|'PM'|'PN'|'PR'|'PS'|'PT'|'PW'|'PY'|'QA'|'RE'|'RO'|'RS'|'RU'|'RW'|'SA'|'SB'|'SC'|'SD'|'SE'|'SG'|'SH'|'SI'|'SJ'|'SK'|'SL'|'SM'|'SN'|'SO'|'SR'|'SS'|'ST'|'SV'|'SX'|'SY'|'SZ'|'TC'|'TD'|'TF'|'TG'|'TH'|'TJ'|'TK'|'TL'|'TM'|'TN'|'TO'|'TR'|'TT'|'TV'|'TW'|'TZ'|'UA'|'UG'|'UM'|'US'|'UY'|'UZ'|'VA'|'VC'|'VE'|'VG'|'VI'|'VN'|'VU'|'WF'|'WS'|'YE'|'YT'|'ZA'|'ZM'|'ZW',
+ *             StreetAddress?: string,
+ *             ...,
+ *         },
+ *         Industry?: string,
+ *         OtherIndustry?: string,
+ *         Domain?: string,
+ *         ParentCompanyName?: string,
+ *         ...,
+ *     },
+ *     PartnerAccountIdentifier?: string,
+ *     LastModifiedDate?: int|string|\DateTimeInterface,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateCustomerAccountAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateCustomerAccountAsync(array{
+ *     Catalog?: string,
+ *     Identifier?: string,
+ *     Account?: array{
+ *         CompanyName?: string,
+ *         WebsiteUrl?: string,
+ *         Duns?: string,
+ *         Address?: array{
+ *             City?: string,
+ *             PostalCode?: string,
+ *             StateOrRegion?: string,
+ *             CountryCode?: 'AD'|'AE'|'AF'|'AG'|'AI'|'AL'|'AM'|'AN'|'AO'|'AQ'|'AR'|'AS'|'AT'|'AU'|'AW'|'AX'|'AZ'|'BA'|'BB'|'BD'|'BE'|'BF'|'BG'|'BH'|'BI'|'BJ'|'BL'|'BM'|'BN'|'BO'|'BQ'|'BR'|'BS'|'BT'|'BV'|'BW'|'BY'|'BZ'|'CA'|'CC'|'CD'|'CF'|'CG'|'CH'|'CI'|'CK'|'CL'|'CM'|'CN'|'CO'|'CR'|'CU'|'CV'|'CW'|'CX'|'CY'|'CZ'|'DE'|'DJ'|'DK'|'DM'|'DO'|'DZ'|'EC'|'EE'|'EG'|'EH'|'ER'|'ES'|'ET'|'FI'|'FJ'|'FK'|'FM'|'FO'|'FR'|'GA'|'GB'|'GD'|'GE'|'GF'|'GG'|'GH'|'GI'|'GL'|'GM'|'GN'|'GP'|'GQ'|'GR'|'GS'|'GT'|'GU'|'GW'|'GY'|'HK'|'HM'|'HN'|'HR'|'HT'|'HU'|'ID'|'IE'|'IL'|'IM'|'IN'|'IO'|'IQ'|'IR'|'IS'|'IT'|'JE'|'JM'|'JO'|'JP'|'KE'|'KG'|'KH'|'KI'|'KM'|'KN'|'KR'|'KW'|'KY'|'KZ'|'LA'|'LB'|'LC'|'LI'|'LK'|'LR'|'LS'|'LT'|'LU'|'LV'|'LY'|'MA'|'MC'|'MD'|'ME'|'MF'|'MG'|'MH'|'MK'|'ML'|'MM'|'MN'|'MO'|'MP'|'MQ'|'MR'|'MS'|'MT'|'MU'|'MV'|'MW'|'MX'|'MY'|'MZ'|'NA'|'NC'|'NE'|'NF'|'NG'|'NI'|'NL'|'NO'|'NP'|'NR'|'NU'|'NZ'|'OM'|'PA'|'PE'|'PF'|'PG'|'PH'|'PK'|'PL'|'PM'|'PN'|'PR'|'PS'|'PT'|'PW'|'PY'|'QA'|'RE'|'RO'|'RS'|'RU'|'RW'|'SA'|'SB'|'SC'|'SD'|'SE'|'SG'|'SH'|'SI'|'SJ'|'SK'|'SL'|'SM'|'SN'|'SO'|'SR'|'SS'|'ST'|'SV'|'SX'|'SY'|'SZ'|'TC'|'TD'|'TF'|'TG'|'TH'|'TJ'|'TK'|'TL'|'TM'|'TN'|'TO'|'TR'|'TT'|'TV'|'TW'|'TZ'|'UA'|'UG'|'UM'|'US'|'UY'|'UZ'|'VA'|'VC'|'VE'|'VG'|'VI'|'VN'|'VU'|'WF'|'WS'|'YE'|'YT'|'ZA'|'ZM'|'ZW',
+ *             StreetAddress?: string,
+ *             ...,
+ *         },
+ *         Industry?: string,
+ *         OtherIndustry?: string,
+ *         Domain?: string,
+ *         ParentCompanyName?: string,
+ *         ...,
+ *     },
+ *     PartnerAccountIdentifier?: string,
+ *     LastModifiedDate?: int|string|\DateTimeInterface,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateEngagementContext(array $args = [])
  * @phpstan-method \Aws\Result updateEngagementContext(array{
  *     Catalog?: string,
  *     EngagementIdentifier?: string,
  *     ContextIdentifier?: string,
  *     EngagementLastModifiedAt?: int|string|\DateTimeInterface,
- *     Type?: 'CustomerProject'|'Lead'|'ProspectingResult',
+ *     Type?: 'CustomerAccount'|'CustomerProject'|'Lead'|'ProspectingResult',
  *     Payload?: array{
  *         Lead?: array{QualificationStatus?: string, Customer?: array, Interaction?: array, Insights?: array, ...},
  *         CustomerProject?: array{Customer?: array, Project?: array, ...},
@@ -796,7 +1468,7 @@ use Aws\AwsClient;
  *     EngagementIdentifier?: string,
  *     ContextIdentifier?: string,
  *     EngagementLastModifiedAt?: int|string|\DateTimeInterface,
- *     Type?: 'CustomerProject'|'Lead'|'ProspectingResult',
+ *     Type?: 'CustomerAccount'|'CustomerProject'|'Lead'|'ProspectingResult',
  *     Payload?: array{
  *         Lead?: array{QualificationStatus?: string, Customer?: array, Interaction?: array, Insights?: array, ...},
  *         CustomerProject?: array{Customer?: array, Project?: array, ...},

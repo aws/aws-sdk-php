@@ -568,6 +568,7 @@
       "errors":[
         {"shape":"InvalidInputException"},
         {"shape":"NoSuchEntityException"},
+        {"shape":"ConcurrentModificationException"},
         {"shape":"ServiceFailureException"}
       ]
     },
@@ -655,6 +656,7 @@
         {"shape":"InvalidInputException"},
         {"shape":"LimitExceededException"},
         {"shape":"NoSuchEntityException"},
+        {"shape":"ConcurrentModificationException"},
         {"shape":"ServiceFailureException"}
       ]
     },
@@ -2613,6 +2615,20 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "UpdateOpenIDConnectProvider":{
+      "name":"UpdateOpenIDConnectProvider",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateOpenIDConnectProviderRequest"},
+      "errors":[
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"NoSuchEntityException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "UpdateOpenIDConnectProviderThumbprint":{
       "name":"UpdateOpenIDConnectProviderThumbprint",
       "http":{
@@ -3111,6 +3127,24 @@
       "member":{"shape":"ContextKeyValueType"}
     },
     "ContextKeyValueType":{"type":"string"},
+    "ContextProvider":{
+      "type":"structure",
+      "required":["SubjectSourceKey"],
+      "members":{
+        "KeyDefinitionList":{"shape":"keyDefinitionListType"},
+        "SubjectSourceKey":{"shape":"contextProviderSourceKeyType"},
+        "SubjectTypeValue":{"shape":"subjectTypeValueType"},
+        "SubjectTypeSourceKey":{"shape":"contextProviderSourceKeyType"}
+      }
+    },
+    "ContextProviderKeyDefinition":{
+      "type":"structure",
+      "required":["SourceKey"],
+      "members":{
+        "SourceKey":{"shape":"contextProviderSourceKeyType"},
+        "TargetKey":{"shape":"contextProviderTargetKeyType"}
+      }
+    },
     "CreateAccessKeyRequest":{
       "type":"structure",
       "members":{
@@ -3213,7 +3247,9 @@
         "Url":{"shape":"OpenIDConnectProviderUrlType"},
         "ClientIDList":{"shape":"clientIDListType"},
         "ThumbprintList":{"shape":"thumbprintListType"},
-        "Tags":{"shape":"tagListType"}
+        "Tags":{"shape":"tagListType"},
+        "ContextProvider":{"shape":"ContextProvider"},
+        "IdentityCenterInstanceArn":{"shape":"identityCenterInstanceArnType"}
       }
     },
     "CreateOpenIDConnectProviderResponse":{
@@ -3296,7 +3332,9 @@
         "Name":{"shape":"SAMLProviderNameType"},
         "Tags":{"shape":"tagListType"},
         "AssertionEncryptionMode":{"shape":"assertionEncryptionModeType"},
-        "AddPrivateKey":{"shape":"privateKeyType"}
+        "AddPrivateKey":{"shape":"privateKeyType"},
+        "ContextProvider":{"shape":"ContextProvider"},
+        "IdentityCenterInstanceArn":{"shape":"identityCenterInstanceArnType"}
       }
     },
     "CreateSAMLProviderResponse":{
@@ -4180,7 +4218,10 @@
         "ClientIDList":{"shape":"clientIDListType"},
         "ThumbprintList":{"shape":"thumbprintListType"},
         "CreateDate":{"shape":"dateType"},
-        "Tags":{"shape":"tagListType"}
+        "Tags":{"shape":"tagListType"},
+        "ContextProvider":{"shape":"ContextProvider"},
+        "IdentityCenterInstanceArn":{"shape":"identityCenterInstanceArnType"},
+        "IdentityStoreArn":{"shape":"arnType"}
       }
     },
     "GetOrganizationsAccessReportRequest":{
@@ -4313,11 +4354,15 @@
       "members":{
         "SAMLProviderUUID":{"shape":"privateKeyIdType"},
         "SAMLMetadataDocument":{"shape":"SAMLMetadataDocumentType"},
+        "ContextProvider":{"shape":"ContextProvider"},
+        "SAMLKeyHashes":{"shape":"SAMLKeyHashListType"},
         "CreateDate":{"shape":"dateType"},
         "ValidUntil":{"shape":"dateType"},
         "Tags":{"shape":"tagListType"},
         "AssertionEncryptionMode":{"shape":"assertionEncryptionModeType"},
-        "PrivateKeyList":{"shape":"privateKeyList"}
+        "PrivateKeyList":{"shape":"privateKeyList"},
+        "IdentityCenterInstanceArn":{"shape":"identityCenterInstanceArnType"},
+        "IdentityStoreArn":{"shape":"arnType"}
       }
     },
     "GetSSHPublicKeyRequest":{
@@ -4596,6 +4641,10 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "KeyHashListType":{
+      "type":"list",
+      "member":{"shape":"stringType"}
     },
     "KeyPairMismatchException":{
       "type":"structure",
@@ -5344,7 +5393,8 @@
     "OpenIDConnectProviderListEntry":{
       "type":"structure",
       "members":{
-        "Arn":{"shape":"arnType"}
+        "Arn":{"shape":"arnType"},
+        "IsTrustedIdentityPropagationEnabled":{"shape":"booleanType"}
       }
     },
     "OpenIDConnectProviderListType":{
@@ -5960,6 +6010,22 @@
         "Resources":{"shape":"ArnListType"}
       }
     },
+    "SAMLIssuerURLType":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "SAMLKeyHashEntry":{
+      "type":"structure",
+      "members":{
+        "IssuerURL":{"shape":"SAMLIssuerURLType"},
+        "KeyHashes":{"shape":"KeyHashListType"}
+      }
+    },
+    "SAMLKeyHashListType":{
+      "type":"list",
+      "member":{"shape":"SAMLKeyHashEntry"}
+    },
     "SAMLMetadataDocumentType":{
       "type":"string",
       "max":10000000,
@@ -5977,7 +6043,8 @@
       "members":{
         "Arn":{"shape":"arnType"},
         "ValidUntil":{"shape":"dateType"},
-        "CreateDate":{"shape":"dateType"}
+        "CreateDate":{"shape":"dateType"},
+        "IsTrustedIdentityPropagationEnabled":{"shape":"booleanType"}
       }
     },
     "SAMLProviderListType":{
@@ -6571,6 +6638,17 @@
         "ResetMaxSigninSessionDuration":{"shape":"booleanObjectType"}
       }
     },
+    "UpdateOpenIDConnectProviderRequest":{
+      "type":"structure",
+      "required":["OpenIDConnectProviderArn"],
+      "members":{
+        "OpenIDConnectProviderArn":{"shape":"arnType"},
+        "ContextProvider":{"shape":"ContextProvider"},
+        "IdentityCenterInstanceArn":{"shape":"identityCenterInstanceArnType"},
+        "RemoveContextProvider":{"shape":"booleanType"},
+        "RemoveIdentityCenterInstance":{"shape":"booleanType"}
+      }
+    },
     "UpdateOpenIDConnectProviderThumbprintRequest":{
       "type":"structure",
       "required":[
@@ -6622,7 +6700,11 @@
         "SAMLProviderArn":{"shape":"arnType"},
         "AssertionEncryptionMode":{"shape":"assertionEncryptionModeType"},
         "AddPrivateKey":{"shape":"privateKeyType"},
-        "RemovePrivateKey":{"shape":"privateKeyIdType"}
+        "RemovePrivateKey":{"shape":"privateKeyIdType"},
+        "ContextProvider":{"shape":"ContextProvider"},
+        "IdentityCenterInstanceArn":{"shape":"identityCenterInstanceArnType"},
+        "RemoveContextProvider":{"shape":"booleanType"},
+        "RemoveIdentityCenterInstance":{"shape":"booleanType"}
       }
     },
     "UpdateSAMLProviderResponse":{
@@ -6908,6 +6990,16 @@
       "max":255,
       "min":1
     },
+    "contextProviderSourceKeyType":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "contextProviderTargetKeyType":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "credentialAgeDays":{
       "type":"integer",
       "max":36600,
@@ -7001,6 +7093,11 @@
       "min":16,
       "pattern":"[\\w]+"
     },
+    "identityCenterInstanceArnType":{
+      "type":"string",
+      "max":1224,
+      "min":1
+    },
     "inlinePolicyTemplateListType":{
       "type":"list",
       "member":{"shape":"InlinePolicy"}
@@ -7033,6 +7130,12 @@
         "COMPLETED",
         "FAILED"
       ]
+    },
+    "keyDefinitionListType":{
+      "type":"list",
+      "member":{"shape":"ContextProviderKeyDefinition"},
+      "max":10,
+      "min":0
     },
     "keyPairMismatchMessage":{"type":"string"},
     "limitExceededMessage":{"type":"string"},
@@ -7509,6 +7612,11 @@
       ]
     },
     "stringType":{"type":"string"},
+    "subjectTypeValueType":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
     "summaryContentType":{
       "type":"string",
       "max":10000,

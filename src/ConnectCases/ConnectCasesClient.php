@@ -527,6 +527,7 @@ use Aws\AwsClient;
  *     content?: array{
  *         comment?: array{body?: string, contentType?: 'Text/Plain', ...},
  *         custom?: array{fields?: list<array>, ...},
+ *         sla?: array{slaUpdateConfiguration?: array, ...},
  *         ...,
  *     },
  *     performedBy?: array{userArn?: string, customEntity?: string, ...},
@@ -540,6 +541,7 @@ use Aws\AwsClient;
  *     content?: array{
  *         comment?: array{body?: string, contentType?: 'Text/Plain', ...},
  *         custom?: array{fields?: list<array>, ...},
+ *         sla?: array{slaUpdateConfiguration?: array, ...},
  *         ...,
  *     },
  *     performedBy?: array{userArn?: string, customEntity?: string, ...},

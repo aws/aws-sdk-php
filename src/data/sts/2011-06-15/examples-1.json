@@ -249,6 +249,35 @@
         "title": "To get temporary credentials for a role by using GetFederationToken"
       }
     ],
+    "GetScopedCredentials": [
+      {
+        "input": {
+          "DurationSeconds": 3600,
+          "Policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":\"s3:GetObject\",\"Resource\":\"arn:aws:s3:::example-bucket/*\"}]}"
+        },
+        "output": {
+          "Credentials": {
+            "AccessKeyId": "AKIAIOSFODNN7EXAMPLE",
+            "Expiration": "2011-07-15T23:28:33.359Z",
+            "SecretAccessKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYzEXAMPLEKEY",
+            "SessionToken": "AQoEXAMPLEH4aoAH0gNCAPyJxz4BlCFFxWNE1OPTgk5TthT+FvwqnKwRcOIfrRh3c/LTo6UDdyJwOOvEVPvLXCrrrUtdnniCEXAMPLE/IvU1dYUg2RVAJBanLiHb4IgRmpRV3zrkuWJOgQs8IZZaIv2BXIa2R4OlgkBN9bkUDNCJiBeb/AXlzBBko7b15fjrBs2+cTQtpZ3CYWFXG8C5zqx37wnOE49mRl/+OtkIKGO7fAE"
+          },
+          "ScopedPoliciesCount": 1,
+          "SessionInfo": {
+            "Arn": "arn:aws:sts::123456789012:assumed-role/example-role/example-session",
+            "ScopedSessionId": "AROAEXAMPLEID:example-session"
+          },
+          "SourceIdentity": "example-source-identity"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "",
+        "id": "to-scope-down-existing-temporary-credentials-1480540814038",
+        "title": "To scope down existing temporary credentials"
+      }
+    ],
     "GetSessionToken": [
       {
         "input": {

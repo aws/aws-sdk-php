@@ -2,18 +2,70 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2023-01-25",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"deployment-marketplace",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"AWS Marketplace Deployment Service",
     "serviceId":"Marketplace Deployment",
     "signatureVersion":"v4",
     "signingName":"aws-marketplace",
-    "uid":"marketplace-deployment-2023-01-25",
-    "auth":["aws.auth#sigv4"]
+    "uid":"marketplace-deployment-2023-01-25"
   },
   "operations":{
+    "GetDeploymentConfiguration":{
+      "name":"GetDeploymentConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/catalogs/{catalog}/products/{productId}/delivery-options/{deliveryOptionType}/deployment-configuration",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDeploymentConfigurationRequest"},
+      "output":{"shape":"GetDeploymentConfigurationResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetDeploymentConfigurationJob":{
+      "name":"GetDeploymentConfigurationJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/catalogs/{catalog}/products/{productId}/delivery-options/{deliveryOptionType}/deployment-configuration/jobs/{jobId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDeploymentConfigurationJobRequest"},
+      "output":{"shape":"GetDeploymentConfigurationJobResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListDeploymentConfigurationJobs":{
+      "name":"ListDeploymentConfigurationJobs",
+      "http":{
+        "method":"GET",
+        "requestUri":"/catalogs/{catalog}/products/{productId}/delivery-options/{deliveryOptionType}/deployment-configuration/jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDeploymentConfigurationJobsRequest"},
+      "output":{"shape":"ListDeploymentConfigurationJobsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -29,7 +81,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutDeploymentParameter":{
       "name":"PutDeploymentParameter",
@@ -45,11 +98,29 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
+    },
+    "StartDeploymentConfigurationJob":{
+      "name":"StartDeploymentConfigurationJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/catalogs/{catalog}/products/{productId}/delivery-options/{deliveryOptionType}/deployment-configuration/jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"StartDeploymentConfigurationJobRequest"},
+      "output":{"shape":"StartDeploymentConfigurationJobResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ]
     },
     "TagResource":{
       "name":"TagResource",
@@ -106,13 +177,13 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z_-]+$"
+      "pattern":"[a-zA-Z_-]+"
     },
     "ClientToken":{
       "type":"string",
       "max":64,
       "min":32,
-      "pattern":"^[a-zA-Z0-9/_+=.:@-]+$"
+      "pattern":"[a-zA-Z0-9/_+=.:@-]+"
     },
     "ConflictException":{
       "type":"structure",
@@ -130,6 +201,81 @@
       },
       "exception":true
     },
+    "DataAsAServiceConfigurationDetail":{
+      "type":"structure",
+      "required":["fulfillmentUrl"],
+      "members":{
+        "fulfillmentUrl":{"shape":"DeploymentConfigurationFulfillmentUrl"}
+      }
+    },
+    "DeliveryOptionType":{
+      "type":"string",
+      "enum":["data-as-a-service"]
+    },
+    "DeploymentConfigurationDetail":{
+      "type":"structure",
+      "members":{
+        "dataAsAService":{"shape":"DataAsAServiceConfigurationDetail"}
+      },
+      "union":true
+    },
+    "DeploymentConfigurationFulfillmentUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DeploymentConfigurationJobErrorCode":{
+      "type":"string",
+      "enum":[
+        "FULFILLMENT_URL_UNREACHABLE",
+        "INTERNAL_ERROR",
+        "ENDPOINT_INVALID"
+      ]
+    },
+    "DeploymentConfigurationJobId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-z0-9]+"
+    },
+    "DeploymentConfigurationJobStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
+    "DeploymentConfigurationJobSummaries":{
+      "type":"list",
+      "member":{"shape":"DeploymentConfigurationJobSummary"}
+    },
+    "DeploymentConfigurationJobSummary":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "status",
+        "configuration",
+        "createdAt"
+      ],
+      "members":{
+        "jobId":{"shape":"DeploymentConfigurationJobId"},
+        "status":{"shape":"DeploymentConfigurationJobStatus"},
+        "configuration":{"shape":"DeploymentConfigurationDetail"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "DeploymentConfigurationMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "DeploymentConfigurationNextToken":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "DeploymentParameterInput":{
       "type":"structure",
       "required":[
@@ -145,13 +291,95 @@
       "type":"string",
       "max":400,
       "min":1,
-      "pattern":"^[a-zA-Z0-9/_+=.@-]+$"
+      "pattern":"[a-zA-Z0-9/_+=.@-]+"
     },
     "DeploymentParameterResourceIdentifier":{
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"^dp-[a-zA-Z0-9]+$"
+      "pattern":"dp-[a-zA-Z0-9]+"
+    },
+    "GetDeploymentConfigurationJobRequest":{
+      "type":"structure",
+      "required":[
+        "catalog",
+        "productId",
+        "deliveryOptionType",
+        "jobId"
+      ],
+      "members":{
+        "catalog":{
+          "shape":"Catalog",
+          "location":"uri",
+          "locationName":"catalog"
+        },
+        "productId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"productId"
+        },
+        "deliveryOptionType":{
+          "shape":"DeliveryOptionType",
+          "location":"uri",
+          "locationName":"deliveryOptionType"
+        },
+        "jobId":{
+          "shape":"DeploymentConfigurationJobId",
+          "location":"uri",
+          "locationName":"jobId"
+        }
+      }
+    },
+    "GetDeploymentConfigurationJobResponse":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "configuration",
+        "status",
+        "createdAt"
+      ],
+      "members":{
+        "jobId":{"shape":"DeploymentConfigurationJobId"},
+        "configuration":{"shape":"DeploymentConfigurationDetail"},
+        "status":{"shape":"DeploymentConfigurationJobStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "configurationArn":{"shape":"ResourceArn"},
+        "endedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "errorCode":{"shape":"DeploymentConfigurationJobErrorCode"},
+        "message":{"shape":"String"}
+      }
+    },
+    "GetDeploymentConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "catalog",
+        "productId",
+        "deliveryOptionType"
+      ],
+      "members":{
+        "catalog":{
+          "shape":"Catalog",
+          "location":"uri",
+          "locationName":"catalog"
+        },
+        "productId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"productId"
+        },
+        "deliveryOptionType":{
+          "shape":"DeliveryOptionType",
+          "location":"uri",
+          "locationName":"deliveryOptionType"
+        }
+      }
+    },
+    "GetDeploymentConfigurationResponse":{
+      "type":"structure",
+      "required":["configuration"],
+      "members":{
+        "configuration":{"shape":"DeploymentConfigurationDetail"}
+      }
     },
     "InternalServerException":{
       "type":"structure",
@@ -163,6 +391,49 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "ListDeploymentConfigurationJobsRequest":{
+      "type":"structure",
+      "required":[
+        "catalog",
+        "productId",
+        "deliveryOptionType"
+      ],
+      "members":{
+        "catalog":{
+          "shape":"Catalog",
+          "location":"uri",
+          "locationName":"catalog"
+        },
+        "productId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"productId"
+        },
+        "deliveryOptionType":{
+          "shape":"DeliveryOptionType",
+          "location":"uri",
+          "locationName":"deliveryOptionType"
+        },
+        "maxResults":{
+          "shape":"DeploymentConfigurationMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"DeploymentConfigurationNextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListDeploymentConfigurationJobsResponse":{
+      "type":"structure",
+      "required":["jobs"],
+      "members":{
+        "jobs":{"shape":"DeploymentConfigurationJobSummaries"},
+        "nextToken":{"shape":"DeploymentConfigurationNextToken"}
+      }
     },
     "ListTagsForResourceRequest":{
       "type":"structure",
@@ -184,43 +455,43 @@
     "PutDeploymentParameterRequest":{
       "type":"structure",
       "required":[
-        "agreementId",
         "catalog",
-        "deploymentParameter",
-        "productId"
+        "productId",
+        "agreementId",
+        "deploymentParameter"
       ],
       "members":{
-        "agreementId":{"shape":"ResourceId"},
         "catalog":{
           "shape":"Catalog",
           "location":"uri",
           "locationName":"catalog"
         },
-        "clientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true
-        },
-        "deploymentParameter":{"shape":"DeploymentParameterInput"},
-        "expirationDate":{"shape":"SyntheticTimestamp_date_time"},
         "productId":{
           "shape":"ResourceId",
           "location":"uri",
           "locationName":"productId"
         },
-        "tags":{"shape":"TagsMap"}
+        "agreementId":{"shape":"ResourceId"},
+        "deploymentParameter":{"shape":"DeploymentParameterInput"},
+        "tags":{"shape":"TagsMap"},
+        "expirationDate":{"shape":"SyntheticTimestamp_date_time"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "PutDeploymentParameterResponse":{
       "type":"structure",
       "required":[
+        "resourceArn",
         "agreementId",
-        "deploymentParameterId",
-        "resourceArn"
+        "deploymentParameterId"
       ],
       "members":{
+        "resourceArn":{"shape":"ResourceArn"},
         "agreementId":{"shape":"ResourceId"},
         "deploymentParameterId":{"shape":"DeploymentParameterResourceIdentifier"},
-        "resourceArn":{"shape":"ResourceArn"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -228,13 +499,13 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^[a-zA-Z0-9:*/-]+$"
+      "pattern":"[a-zA-Z0-9:*/-]+"
     },
     "ResourceId":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[A-Za-z0-9_/-]+$"
+      "pattern":"[A-Za-z0-9_/-]+"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -266,6 +537,53 @@
       },
       "exception":true
     },
+    "StartDeploymentConfigurationJobRequest":{
+      "type":"structure",
+      "required":[
+        "catalog",
+        "productId",
+        "deliveryOptionType",
+        "configuration"
+      ],
+      "members":{
+        "catalog":{
+          "shape":"Catalog",
+          "location":"uri",
+          "locationName":"catalog"
+        },
+        "productId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"productId"
+        },
+        "deliveryOptionType":{
+          "shape":"DeliveryOptionType",
+          "location":"uri",
+          "locationName":"deliveryOptionType"
+        },
+        "configuration":{"shape":"DeploymentConfigurationDetail"},
+        "tags":{"shape":"TagsMap"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartDeploymentConfigurationJobResponse":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "configuration",
+        "status",
+        "createdAt"
+      ],
+      "members":{
+        "jobId":{"shape":"DeploymentConfigurationJobId"},
+        "configuration":{"shape":"DeploymentConfigurationDetail"},
+        "status":{"shape":"DeploymentConfigurationJobStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
     "String":{"type":"string"},
     "StringList":{
       "type":"list",
@@ -279,7 +597,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[a-zA-Z0-9/_+=.:@-]+$"
+      "pattern":"[a-zA-Z0-9/_+=.:@-]+"
     },
     "TagResourceRequest":{
       "type":"structure",
@@ -295,14 +613,13 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[a-zA-Z0-9/_+=.:@-]+$"
+      "pattern":"[a-zA-Z0-9/_+=.:@-]+"
     },
     "Tags":{
       "type":"map",
@@ -350,18 +667,17 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ValidationException":{
       "type":"structure",
       "required":[
-        "fieldName",
-        "message"
+        "message",
+        "fieldName"
       ],
       "members":{
-        "fieldName":{"shape":"String"},
-        "message":{"shape":"String"}
+        "message":{"shape":"String"},
+        "fieldName":{"shape":"String"}
       },
       "error":{
         "httpStatusCode":400,

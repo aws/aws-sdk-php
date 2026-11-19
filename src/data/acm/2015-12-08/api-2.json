@@ -805,7 +805,9 @@
         "ValidationMethod":{"shape":"ValidationMethod"},
         "CertificateKeyPairOrigin":{"shape":"CertificateKeyPairOrigin"},
         "AcmeEndpointArn":{"shape":"Arn"},
-        "AcmeAccountId":{"shape":"AcmeAccountId"}
+        "AcmeAccountId":{"shape":"AcmeAccountId"},
+        "CertificateUsage":{"shape":"CertificateUsage"},
+        "RootHierarchyType":{"shape":"RootHierarchyType"}
       }
     },
     "AcmCertificateMetadataFilter":{
@@ -821,7 +823,8 @@
         "ValidationMethod":{"shape":"ValidationMethod"},
         "CertificateKeyPairOrigin":{"shape":"CertificateKeyPairOrigin"},
         "AcmeEndpointArn":{"shape":"Arn"},
-        "AcmeAccountId":{"shape":"AcmeAccountId"}
+        "AcmeAccountId":{"shape":"AcmeAccountId"},
+        "RootHierarchyType":{"shape":"RootHierarchyType"}
       },
       "union":true
     },
@@ -1107,7 +1110,9 @@
         "UpdateSummary":{"shape":"UpdateSummary"},
         "CertificateKeyPairOrigin":{"shape":"CertificateKeyPairOrigin"},
         "AcmeEndpointArn":{"shape":"Arn"},
-        "AcmeAccountId":{"shape":"AcmeAccountId"}
+        "AcmeAccountId":{"shape":"AcmeAccountId"},
+        "CertificateUsage":{"shape":"CertificateUsage"},
+        "RootHierarchyType":{"shape":"RootHierarchyType"}
       }
     },
     "CertificateExport":{
@@ -1231,7 +1236,9 @@
         "ImportedAt":{"shape":"TStamp"},
         "RevokedAt":{"shape":"TStamp"},
         "ManagedBy":{"shape":"CertificateManagedBy"},
-        "CertificateKeyPairOrigin":{"shape":"CertificateKeyPairOrigin"}
+        "CertificateKeyPairOrigin":{"shape":"CertificateKeyPairOrigin"},
+        "CertificateUsage":{"shape":"CertificateUsage"},
+        "RootHierarchyType":{"shape":"RootHierarchyType"}
       }
     },
     "CertificateSummaryList":{
@@ -1254,6 +1261,13 @@
         "IMPORTED",
         "AMAZON_ISSUED",
         "PRIVATE"
+      ]
+    },
+    "CertificateUsage":{
+      "type":"string",
+      "enum":[
+        "CLIENT_AND_SERVER_AUTH",
+        "CLIENT_AUTH_ONLY"
       ]
     },
     "CommonNameFilter":{
@@ -2059,6 +2073,7 @@
       "members":{
         "CertificateStatuses":{"shape":"CertificateStatuses"},
         "CertificateKeyPairOrigins":{"shape":"CertificateKeyPairOrigins"},
+        "RootHierarchyTypes":{"shape":"RootHierarchyTypes"},
         "Includes":{"shape":"Filters"},
         "NextToken":{"shape":"NextToken"},
         "MaxItems":{"shape":"MaxItems"},
@@ -2265,7 +2280,9 @@
         "CertificateAuthorityArn":{"shape":"PcaArn"},
         "Tags":{"shape":"TagList"},
         "KeyAlgorithm":{"shape":"KeyAlgorithm"},
-        "ManagedBy":{"shape":"CertificateManagedBy"}
+        "ManagedBy":{"shape":"CertificateManagedBy"},
+        "CertificateUsage":{"shape":"CertificateUsage"},
+        "RootHierarchyType":{"shape":"RootHierarchyType"}
       }
     },
     "RequestCertificateResponse":{
@@ -2377,6 +2394,19 @@
       "max":2048,
       "min":1,
       "pattern":"arn:aws[a-z-]*:iam::[0-9]{12}:role/.+"
+    },
+    "RootHierarchyType":{
+      "type":"string",
+      "enum":[
+        "N2_AMAZON_MANAGED",
+        "N2_SFG2_AMAZON_MANAGED"
+      ]
+    },
+    "RootHierarchyTypes":{
+      "type":"list",
+      "member":{"shape":"RootHierarchyType"},
+      "max":5,
+      "min":1
     },
     "SearchCertificatesRequest":{
       "type":"structure",

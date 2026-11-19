@@ -677,6 +677,8 @@
         "ViewVersionSummary$Arn": "<p>The Amazon Resource Name (ARN) of the view version.</p>",
         "Vocabulary$Arn": "<p>The Amazon Resource Name (ARN) of the custom vocabulary.</p>",
         "VocabularySummary$Arn": "<p>The Amazon Resource Name (ARN) of the custom vocabulary.</p>",
+        "VoicemailAnalysisReference$Arn": "<p>The Amazon Resource Name (ARN) of the voicemail analysis reference.</p>",
+        "VoicemailRecordingReference$Arn": "<p>The Amazon Resource Name (ARN) of the voicemail recording reference.</p>",
         "WisdomInfo$SessionArn": "<p>The Amazon Resource Name (ARN) of the Wisdom session.</p>",
         "Workspace$Arn": "<p>The Amazon Resource Name (ARN) of the workspace.</p>",
         "WorkspaceAssociationSearchSummary$WorkspaceArn": "<p>The Amazon Resource Name (ARN) of the workspace.</p>",
@@ -10331,6 +10333,12 @@
         "EvaluationSearchCriteria$NumberCondition": null
       }
     },
+    "NumberOfVoicemails": {
+      "base": null,
+      "refs": {
+        "VoicemailInfo$NumberOfVoicemails": "<p>The number of voicemails recorded for the contact. Valid range is 1-3.</p>"
+      }
+    },
     "NumberReference": {
       "base": "<p>Information about a reference when the <code>referenceType</code> is <code>NUMBER</code>. Otherwise, null.</p>",
       "refs": {
@@ -12228,7 +12236,9 @@
         "EmailReference$Name": "<p>Identifier of the email reference.</p>",
         "NumberReference$Name": "<p>Identifier of the number reference.</p>",
         "StringReference$Name": "<p>Identifier of the string reference.</p>",
-        "UrlReference$Name": "<p>Identifier of the URL reference.</p>"
+        "UrlReference$Name": "<p>Identifier of the URL reference.</p>",
+        "VoicemailAnalysisReference$Name": "<p>Identifier of the voicemail analysis reference.</p>",
+        "VoicemailRecordingReference$Name": "<p>Identifier of the voicemail recording reference.</p>"
       }
     },
     "ReferenceStatus": {
@@ -12236,7 +12246,9 @@
       "refs": {
         "AttachmentReference$Status": "<p>Status of the attachment reference type.</p>",
         "ContactAnalysisReference$Status": "<p>Status of the contact analysis reference type.</p>",
-        "Reference$Status": "<p>Status of the attachment reference type.</p>"
+        "Reference$Status": "<p>Status of the attachment reference type.</p>",
+        "VoicemailAnalysisReference$Status": "<p>Status of the voicemail analysis reference type.</p>",
+        "VoicemailRecordingReference$Status": "<p>Status of the voicemail recording reference type.</p>"
       }
     },
     "ReferenceStatusReason": {
@@ -12280,7 +12292,9 @@
         "NumberReference$Value": "<p>A valid number.</p>",
         "Reference$Value": "<p>A valid value for the reference. For example, for a URL reference, a formatted URL that is displayed to an agent in the Contact Control Panel (CCP).</p>",
         "StringReference$Value": "<p>A valid string.</p>",
-        "UrlReference$Value": "<p>A valid URL.</p>"
+        "UrlReference$Value": "<p>A valid URL.</p>",
+        "VoicemailAnalysisReference$Value": "<p>The location path of the voicemail analysis reference.</p>",
+        "VoicemailRecordingReference$Value": "<p>The location path of the voicemail recording reference.</p>"
       }
     },
     "RefreshRate": {
@@ -16526,6 +16540,26 @@
       "base": null,
       "refs": {
         "VoiceRecordingConfiguration$VoiceRecordingTrack": "<p>Identifies which track is being recorded.</p>"
+      }
+    },
+    "VoicemailAnalysisReference": {
+      "base": "<p>Information about a reference when the <code>referenceType</code> is <code>VOICEMAIL_ANALYSIS</code> or <code>VOICEMAIL_ANALYSIS_REDACTED</code>. Otherwise, null.</p>",
+      "refs": {
+        "ReferenceSummary$VoicemailAnalysis": "<p>Information about the reference when the <code>referenceType</code> is <code>VOICEMAIL_ANALYSIS</code>. Otherwise, null.</p>",
+        "ReferenceSummary$VoicemailAnalysisRedacted": "<p>Information about the reference when the <code>referenceType</code> is <code>VOICEMAIL_ANALYSIS_REDACTED</code>. Otherwise, null.</p>"
+      }
+    },
+    "VoicemailInfo": {
+      "base": "<p>Information about the voicemails recorded for a voice contact.</p>",
+      "refs": {
+        "Contact$VoicemailInfo": "<p>If one or more voicemails were recorded for the contact, this contains information about the voicemails.</p>"
+      }
+    },
+    "VoicemailRecordingReference": {
+      "base": "<p>Information about a reference when the <code>referenceType</code> is <code>VOICEMAIL_RECORDING</code> or <code>VOICEMAIL_RECORDING_REDACTED</code>. Otherwise, null.</p>",
+      "refs": {
+        "ReferenceSummary$VoicemailRecording": "<p>Information about the reference when the <code>referenceType</code> is <code>VOICEMAIL_RECORDING</code>. Otherwise, null.</p>",
+        "ReferenceSummary$VoicemailRecordingRedacted": "<p>Information about the reference when the <code>referenceType</code> is <code>VOICEMAIL_RECORDING_REDACTED</code>. Otherwise, null.</p>"
       }
     },
     "WebBrowserId": {

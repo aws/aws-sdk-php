@@ -19,12 +19,14 @@ use Aws\AwsClient;
  *             agentElevatedRoleArnStatus?: 'invalid'|'pending-confirmation'|'valid',
  *             ...,
  *         },
+ *         sourceAwsOrg?: array{accountType?: 'source', organizationalUnit?: array, deploymentState?: array, ...},
  *         aws?: array{
  *             assumableRoleArn?: string,
  *             accountId?: string,
  *             accountType?: 'monitor',
  *             agentElevatedRoleArn?: string,
  *             agentElevatedRoleArnStatus?: 'invalid'|'pending-confirmation'|'valid',
+ *             serviceManagementRoleArn?: string,
  *             ...,
  *         },
  *         github?: array{
@@ -87,12 +89,14 @@ use Aws\AwsClient;
  *             agentElevatedRoleArnStatus?: 'invalid'|'pending-confirmation'|'valid',
  *             ...,
  *         },
+ *         sourceAwsOrg?: array{accountType?: 'source', organizationalUnit?: array, deploymentState?: array, ...},
  *         aws?: array{
  *             assumableRoleArn?: string,
  *             accountId?: string,
  *             accountType?: 'monitor',
  *             agentElevatedRoleArn?: string,
  *             agentElevatedRoleArnStatus?: 'invalid'|'pending-confirmation'|'valid',
+ *             serviceManagementRoleArn?: string,
  *             ...,
  *         },
  *         github?: array{
@@ -150,6 +154,7 @@ use Aws\AwsClient;
  *     clientToken?: string,
  *     tags?: array<string, string>,
  *     preferences?: array<string, bool>,
+ *     awsSourceMode?: 'organization'|'standalone',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createAgentSpaceAsync(array $args = [])
@@ -161,6 +166,7 @@ use Aws\AwsClient;
  *     clientToken?: string,
  *     tags?: array<string, string>,
  *     preferences?: array<string, bool>,
+ *     awsSourceMode?: 'organization'|'standalone',
  *     ...,
  * } $args = [])
  * @method \Aws\Result createAsset(array $args = [])
@@ -746,6 +752,7 @@ use Aws\AwsClient;
  *     description?: string,
  *     locale?: string,
  *     preferences?: array<string, bool>,
+ *     awsSourceMode?: 'organization'|'standalone',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAgentSpaceAsync(array $args = [])
@@ -755,6 +762,7 @@ use Aws\AwsClient;
  *     description?: string,
  *     locale?: string,
  *     preferences?: array<string, bool>,
+ *     awsSourceMode?: 'organization'|'standalone',
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateApprovalAction(array $args = [])
@@ -841,12 +849,14 @@ use Aws\AwsClient;
  *             agentElevatedRoleArnStatus?: 'invalid'|'pending-confirmation'|'valid',
  *             ...,
  *         },
+ *         sourceAwsOrg?: array{accountType?: 'source', organizationalUnit?: array, deploymentState?: array, ...},
  *         aws?: array{
  *             assumableRoleArn?: string,
  *             accountId?: string,
  *             accountType?: 'monitor',
  *             agentElevatedRoleArn?: string,
  *             agentElevatedRoleArnStatus?: 'invalid'|'pending-confirmation'|'valid',
+ *             serviceManagementRoleArn?: string,
  *             ...,
  *         },
  *         github?: array{
@@ -909,12 +919,14 @@ use Aws\AwsClient;
  *             agentElevatedRoleArnStatus?: 'invalid'|'pending-confirmation'|'valid',
  *             ...,
  *         },
+ *         sourceAwsOrg?: array{accountType?: 'source', organizationalUnit?: array, deploymentState?: array, ...},
  *         aws?: array{
  *             assumableRoleArn?: string,
  *             accountId?: string,
  *             accountType?: 'monitor',
  *             agentElevatedRoleArn?: string,
  *             agentElevatedRoleArnStatus?: 'invalid'|'pending-confirmation'|'valid',
+ *             serviceManagementRoleArn?: string,
  *             ...,
  *         },
  *         github?: array{

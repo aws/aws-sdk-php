@@ -1626,6 +1626,18 @@
         "Resource$RLSPolicy": "<p>A row-level security policy resource. Specify this when granting or revoking permissions on a row-level security policy.</p>"
       }
     },
+    "RLSPolicyStatus": {
+      "base": null,
+      "refs": {
+        "RLSPolicy$Status": "<p>Whether the row-level security policy can be evaluated. <code>VALID</code> means that every lookup table and user-defined function the filter expression references exists. <code>INVALID</code> means that a lookup table or user-defined function the filter expression references was deleted.</p>"
+      }
+    },
+    "RLSPolicyStatusReason": {
+      "base": null,
+      "refs": {
+        "RLSPolicy$StatusReason": "<p>The reason the row-level security policy is <code>INVALID</code>. <code>REFERENCED_LOOKUP_TABLE_DELETED</code> means that a lookup table the filter expression references was deleted. <code>REFERENCED_UDF_DELETED</code> means that a user-defined function the filter expression references was deleted. Not returned when the status is <code>VALID</code>.</p>"
+      }
+    },
     "RedshiftConnect": {
       "base": "<p>Configuration for enabling trusted identity propagation with Redshift Connect.</p>",
       "refs": {

@@ -88,16 +88,24 @@ use Aws\AwsClient;
  * @method \Aws\Result createCodeSecurityIntegration(array $args = [])
  * @phpstan-method \Aws\Result createCodeSecurityIntegration(array{
  *     name?: string,
- *     type?: 'GITHUB'|'GITLAB_SELF_MANAGED',
- *     details?: array{gitlabSelfManaged?: array{instanceUrl?: string, accessToken?: string, ...}, ...},
+ *     type?: 'GITHUB'|'GITHUB_ENTERPRISE_SERVER'|'GITLAB_SELF_MANAGED',
+ *     details?: array{
+ *         gitlabSelfManaged?: array{instanceUrl?: string, accessToken?: string, vpcConfiguration?: array, ...},
+ *         githubEnterprise?: array{instanceUrl?: string, vpcConfiguration?: array, ...},
+ *         ...,
+ *     },
  *     tags?: array<string, string>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createCodeSecurityIntegrationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createCodeSecurityIntegrationAsync(array{
  *     name?: string,
- *     type?: 'GITHUB'|'GITLAB_SELF_MANAGED',
- *     details?: array{gitlabSelfManaged?: array{instanceUrl?: string, accessToken?: string, ...}, ...},
+ *     type?: 'GITHUB'|'GITHUB_ENTERPRISE_SERVER'|'GITLAB_SELF_MANAGED',
+ *     details?: array{
+ *         gitlabSelfManaged?: array{instanceUrl?: string, accessToken?: string, vpcConfiguration?: array, ...},
+ *         githubEnterprise?: array{instanceUrl?: string, vpcConfiguration?: array, ...},
+ *         ...,
+ *     },
  *     tags?: array<string, string>,
  *     ...,
  * } $args = [])
@@ -1725,8 +1733,9 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateCodeSecurityIntegration(array{
  *     integrationArn?: string,
  *     details?: array{
- *         gitlabSelfManaged?: array{authCode?: string, ...},
- *         github?: array{code?: string, installationId?: string, ...},
+ *         gitlabSelfManaged?: array{authCode?: string, stateToken?: string, ...},
+ *         github?: array{code?: string, installationId?: string, stateToken?: string, ...},
+ *         githubEnterpriseServer?: array{appInstallation?: array, appRegistration?: array, ...},
  *         ...,
  *     },
  *     ...,
@@ -1735,8 +1744,9 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise updateCodeSecurityIntegrationAsync(array{
  *     integrationArn?: string,
  *     details?: array{
- *         gitlabSelfManaged?: array{authCode?: string, ...},
- *         github?: array{code?: string, installationId?: string, ...},
+ *         gitlabSelfManaged?: array{authCode?: string, stateToken?: string, ...},
+ *         github?: array{code?: string, installationId?: string, stateToken?: string, ...},
+ *         githubEnterpriseServer?: array{appInstallation?: array, appRegistration?: array, ...},
  *         ...,
  *     },
  *     ...,

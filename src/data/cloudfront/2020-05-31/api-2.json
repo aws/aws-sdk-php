@@ -2768,6 +2768,7 @@
         {"shape":"InvalidFunctionAssociation"},
         {"shape":"TooManyDistributionsWithLambdaAssociations"},
         {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
+        {"shape":"EntityLimitExceeded"},
         {"shape":"NoSuchOrigin"},
         {"shape":"TooManyCacheBehaviors"}
       ]
@@ -2889,6 +2890,8 @@
         {"shape":"PreconditionFailed"},
         {"shape":"AccessDenied"},
         {"shape":"EntityNotFound"},
+        {"shape":"InvalidAssociation"},
+        {"shape":"EntityLimitExceeded"},
         {"shape":"IllegalUpdate"},
         {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
@@ -3957,7 +3960,8 @@
         "AnycastIpListId":{"shape":"string"},
         "Status":{"shape":"string"},
         "Enabled":{"shape":"boolean"},
-        "IsDefault":{"shape":"boolean"}
+        "IsDefault":{"shape":"boolean"},
+        "ViewerFallback":{"shape":"ViewerFallback"}
       }
     },
     "ConnectionGroupAssociationFilter":{
@@ -3988,7 +3992,8 @@
         "AnycastIpListId":{"shape":"string"},
         "Enabled":{"shape":"boolean"},
         "Status":{"shape":"string"},
-        "IsDefault":{"shape":"boolean"}
+        "IsDefault":{"shape":"boolean"},
+        "ViewerFallback":{"shape":"ViewerFallback"}
       }
     },
     "ConnectionGroupSummaryList":{
@@ -4329,7 +4334,8 @@
         "Ipv6Enabled":{"shape":"boolean"},
         "Tags":{"shape":"Tags"},
         "AnycastIpListId":{"shape":"string"},
-        "Enabled":{"shape":"boolean"}
+        "Enabled":{"shape":"boolean"},
+        "ViewerFallback":{"shape":"ViewerFallback"}
       }
     },
     "CreateConnectionGroupResult":{
@@ -4418,7 +4424,8 @@
         "Parameters":{"shape":"Parameters"},
         "ConnectionGroupId":{"shape":"string"},
         "ManagedCertificateRequest":{"shape":"ManagedCertificateRequest"},
-        "Enabled":{"shape":"boolean"}
+        "Enabled":{"shape":"boolean"},
+        "OnDomainTakeover":{"shape":"OnDomainTakeover"}
       }
     },
     "CreateDistributionTenantRequestNameString":{
@@ -5926,7 +5933,8 @@
       "type":"structure",
       "required":["Domain"],
       "members":{
-        "Domain":{"shape":"string"}
+        "Domain":{"shape":"string"},
+        "ServeOn":{"shape":"ServeOn"}
       }
     },
     "DomainList":{
@@ -5938,7 +5946,8 @@
       "required":["Domain"],
       "members":{
         "Domain":{"shape":"string"},
-        "Status":{"shape":"DomainStatus"}
+        "Status":{"shape":"DomainStatus"},
+        "ServeOn":{"shape":"ServeOn"}
       }
     },
     "DomainResultList":{
@@ -9322,6 +9331,13 @@
       },
       "exception":true
     },
+    "OnDomainTakeover":{
+      "type":"string",
+      "enum":[
+        "allow",
+        "reject"
+      ]
+    },
     "Origin":{
       "type":"structure",
       "required":[
@@ -10539,6 +10555,13 @@
       "box":true,
       "max":100.0,
       "min":0.0
+    },
+    "ServeOn":{
+      "type":"string",
+      "enum":[
+        "any",
+        "anycast-ip-list-only"
+      ]
     },
     "ServerCertificateId":{
       "type":"string",
@@ -11813,7 +11836,8 @@
           "locationName":"If-Match"
         },
         "AnycastIpListId":{"shape":"string"},
-        "Enabled":{"shape":"boolean"}
+        "Enabled":{"shape":"boolean"},
+        "ViewerFallback":{"shape":"ViewerFallback"}
       }
     },
     "UpdateConnectionGroupResult":{
@@ -11925,7 +11949,8 @@
           "locationName":"If-Match"
         },
         "ManagedCertificateRequest":{"shape":"ManagedCertificateRequest"},
-        "Enabled":{"shape":"boolean"}
+        "Enabled":{"shape":"boolean"},
+        "OnDomainTakeover":{"shape":"OnDomainTakeover"}
       }
     },
     "UpdateDistributionTenantResult":{
@@ -12511,6 +12536,12 @@
           "shape":"CertificateSource",
           "deprecated":true
         }
+      }
+    },
+    "ViewerFallback":{
+      "type":"structure",
+      "members":{
+        "DistributionId":{"shape":"string"}
       }
     },
     "ViewerMtlsConfig":{

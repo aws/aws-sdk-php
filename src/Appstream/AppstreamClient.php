@@ -451,6 +451,7 @@ use Aws\AwsClient;
  *     EmbedHostDomains?: list<string>,
  *     StreamingExperienceSettings?: array{PreferredProtocol?: 'TCP'|'UDP', ...},
  *     ContentRedirection?: array{HostToClient?: array{Enabled?: bool, AllowedUrls?: list<string>, DeniedUrls?: list<string>, ...}, ...},
+ *     WebAuthnRedirection?: array{Enabled?: bool, ProcessCompatibilityList?: list<string>, ...},
  *     AgentAccessConfig?: array{
  *         Settings?: list<array>,
  *         S3BucketArn?: string,
@@ -491,6 +492,7 @@ use Aws\AwsClient;
  *     EmbedHostDomains?: list<string>,
  *     StreamingExperienceSettings?: array{PreferredProtocol?: 'TCP'|'UDP', ...},
  *     ContentRedirection?: array{HostToClient?: array{Enabled?: bool, AllowedUrls?: list<string>, DeniedUrls?: list<string>, ...}, ...},
+ *     WebAuthnRedirection?: array{Enabled?: bool, ProcessCompatibilityList?: list<string>, ...},
  *     AgentAccessConfig?: array{
  *         Settings?: list<array>,
  *         S3BucketArn?: string,
@@ -1084,7 +1086,7 @@ use Aws\AwsClient;
  *     DeleteStorageConnectors?: bool,
  *     RedirectURL?: string,
  *     FeedbackURL?: string,
- *     AttributesToDelete?: list<'ACCESS_ENDPOINTS'|'AGENT_ACCESS_CONFIG'|'AGENT_ACCESS_CONFIG_KMS_KEY_ARN'|'CONTENT_REDIRECTION'|'EMBED_HOST_DOMAINS'|'FEEDBACK_URL'|'IAM_ROLE_ARN'|'REDIRECT_URL'|'STORAGE_CONNECTORS'|'STORAGE_CONNECTOR_AUTHENTICATION'|'STORAGE_CONNECTOR_GOOGLE_DRIVE'|'STORAGE_CONNECTOR_HOMEFOLDERS'|'STORAGE_CONNECTOR_ONE_DRIVE'|'STREAMING_EXPERIENCE_SETTINGS'|'THEME_NAME'|'USER_SETTINGS'>,
+ *     AttributesToDelete?: list<'ACCESS_ENDPOINTS'|'AGENT_ACCESS_CONFIG'|'AGENT_ACCESS_CONFIG_KMS_KEY_ARN'|'CONTENT_REDIRECTION'|'EMBED_HOST_DOMAINS'|'FEEDBACK_URL'|'IAM_ROLE_ARN'|'REDIRECT_URL'|'STORAGE_CONNECTORS'|'STORAGE_CONNECTOR_AUTHENTICATION'|'STORAGE_CONNECTOR_GOOGLE_DRIVE'|'STORAGE_CONNECTOR_HOMEFOLDERS'|'STORAGE_CONNECTOR_ONE_DRIVE'|'STREAMING_EXPERIENCE_SETTINGS'|'THEME_NAME'|'USER_SETTINGS'|'WEB_AUTHN_REDIRECTION'>,
  *     UserSettings?: list<array{
  *         Action?: 'AUTO_TIME_ZONE_REDIRECTION'|'CLIPBOARD_COPY_FROM_LOCAL_DEVICE'|'CLIPBOARD_COPY_TO_LOCAL_DEVICE'|'DOMAIN_PASSWORD_SIGNIN'|'DOMAIN_SMART_CARD_SIGNIN'|'FILE_DOWNLOAD'|'FILE_UPLOAD'|'PRINTING_TO_LOCAL_DEVICE'|'SMART_CARD_REDIRECTION',
  *         Permission?: 'DISABLED'|'ENABLED',
@@ -1096,6 +1098,7 @@ use Aws\AwsClient;
  *     EmbedHostDomains?: list<string>,
  *     StreamingExperienceSettings?: array{PreferredProtocol?: 'TCP'|'UDP', ...},
  *     ContentRedirection?: array{HostToClient?: array{Enabled?: bool, AllowedUrls?: list<string>, DeniedUrls?: list<string>, ...}, ...},
+ *     WebAuthnRedirection?: array{Enabled?: bool, ProcessCompatibilityList?: list<string>, ...},
  *     AgentAccessConfig?: array{
  *         Settings?: list<array>,
  *         S3BucketArn?: string,
@@ -1125,7 +1128,7 @@ use Aws\AwsClient;
  *     DeleteStorageConnectors?: bool,
  *     RedirectURL?: string,
  *     FeedbackURL?: string,
- *     AttributesToDelete?: list<'ACCESS_ENDPOINTS'|'AGENT_ACCESS_CONFIG'|'AGENT_ACCESS_CONFIG_KMS_KEY_ARN'|'CONTENT_REDIRECTION'|'EMBED_HOST_DOMAINS'|'FEEDBACK_URL'|'IAM_ROLE_ARN'|'REDIRECT_URL'|'STORAGE_CONNECTORS'|'STORAGE_CONNECTOR_AUTHENTICATION'|'STORAGE_CONNECTOR_GOOGLE_DRIVE'|'STORAGE_CONNECTOR_HOMEFOLDERS'|'STORAGE_CONNECTOR_ONE_DRIVE'|'STREAMING_EXPERIENCE_SETTINGS'|'THEME_NAME'|'USER_SETTINGS'>,
+ *     AttributesToDelete?: list<'ACCESS_ENDPOINTS'|'AGENT_ACCESS_CONFIG'|'AGENT_ACCESS_CONFIG_KMS_KEY_ARN'|'CONTENT_REDIRECTION'|'EMBED_HOST_DOMAINS'|'FEEDBACK_URL'|'IAM_ROLE_ARN'|'REDIRECT_URL'|'STORAGE_CONNECTORS'|'STORAGE_CONNECTOR_AUTHENTICATION'|'STORAGE_CONNECTOR_GOOGLE_DRIVE'|'STORAGE_CONNECTOR_HOMEFOLDERS'|'STORAGE_CONNECTOR_ONE_DRIVE'|'STREAMING_EXPERIENCE_SETTINGS'|'THEME_NAME'|'USER_SETTINGS'|'WEB_AUTHN_REDIRECTION'>,
  *     UserSettings?: list<array{
  *         Action?: 'AUTO_TIME_ZONE_REDIRECTION'|'CLIPBOARD_COPY_FROM_LOCAL_DEVICE'|'CLIPBOARD_COPY_TO_LOCAL_DEVICE'|'DOMAIN_PASSWORD_SIGNIN'|'DOMAIN_SMART_CARD_SIGNIN'|'FILE_DOWNLOAD'|'FILE_UPLOAD'|'PRINTING_TO_LOCAL_DEVICE'|'SMART_CARD_REDIRECTION',
  *         Permission?: 'DISABLED'|'ENABLED',
@@ -1137,6 +1140,7 @@ use Aws\AwsClient;
  *     EmbedHostDomains?: list<string>,
  *     StreamingExperienceSettings?: array{PreferredProtocol?: 'TCP'|'UDP', ...},
  *     ContentRedirection?: array{HostToClient?: array{Enabled?: bool, AllowedUrls?: list<string>, DeniedUrls?: list<string>, ...}, ...},
+ *     WebAuthnRedirection?: array{Enabled?: bool, ProcessCompatibilityList?: list<string>, ...},
  *     AgentAccessConfig?: array{
  *         Settings?: list<array>,
  *         S3BucketArn?: string,

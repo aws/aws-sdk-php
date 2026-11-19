@@ -2,7 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2025-12-01",
-    "auth":["aws.auth#sigv4"],
+    "auth":[
+      "aws.auth#sigv4",
+      "smithy.api#httpBearerAuth"
+    ],
     "endpointPrefix":"agent-registry",
     "protocol":"rest-json",
     "protocols":["rest-json"],
@@ -29,7 +32,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"UnauthorizedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDiscoverableRegistryRecords":{
       "name":"ListDiscoverableRegistryRecords",
@@ -66,7 +70,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"UnauthorizedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     }
   },
   "shapes":{
@@ -217,7 +222,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"https://.*"
+      "pattern":"(https|s3)://.*"
     },
     "DescriptorTypeList":{
       "type":"list",
@@ -361,6 +366,12 @@
       "min":1,
       "pattern":"[\\s\\S]+"
     },
+    "PresignedDownloadUrl":{
+      "type":"string",
+      "max":4096,
+      "min":1,
+      "sensitive":true
+    },
     "RecordIdentifier":{
       "type":"string",
       "max":2048,
@@ -394,6 +405,13 @@
       "max":2048,
       "min":1,
       "pattern":"arn:aws(-[^:]+)?:agent-registry:[a-z0-9-]+:[0-9]{12}:registry/[a-zA-Z0-9]{12,16}/record/[a-zA-Z0-9]{12}"
+    },
+    "RegistryRecordArtifactDownload":{
+      "type":"structure",
+      "members":{
+        "sha256":{"shape":"Sha256Hash"},
+        "downloadUrl":{"shape":"PresignedDownloadUrl"}
+      }
     },
     "RegistryRecordDisplayName":{
       "type":"string",
@@ -447,7 +465,9 @@
         "CREATING",
         "UPDATING",
         "CREATE_FAILED",
-        "UPDATE_FAILED"
+        "UPDATE_FAILED",
+        "CREATE_PENDING_AUTH",
+        "UPDATE_PENDING_AUTH"
       ]
     },
     "RegistryRecordSummary":{
@@ -477,7 +497,8 @@
         "status":{"shape":"RegistryRecordStatus"},
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
-        "customMetadata":{"shape":"CustomMetadataDocument"}
+        "customMetadata":{"shape":"CustomMetadataDocument"},
+        "artifact":{"shape":"RegistryRecordArtifactDownload"}
       }
     },
     "RegistryRecordSummaryList":{
@@ -528,13 +549,20 @@
         "searchQuery":{"shape":"SearchQuery"},
         "registryIds":{"shape":"SearchDiscoverableRegistryRecordsRequestRegistryIdsList"},
         "maxResults":{"shape":"SearchDiscoverableRegistryRecordsRequestMaxResultsInteger"},
-        "filters":{"shape":"MetadataFilterExpression"}
+        "filters":{"shape":"MetadataFilterExpression"},
+        "searchType":{"shape":"SearchType"},
+        "nextToken":{"shape":"SearchDiscoverableRegistryRecordsRequestNextTokenString"}
       }
     },
     "SearchDiscoverableRegistryRecordsRequestMaxResultsInteger":{
       "type":"integer",
       "box":true,
-      "max":20,
+      "max":50,
+      "min":1
+    },
+    "SearchDiscoverableRegistryRecordsRequestNextTokenString":{
+      "type":"string",
+      "max":4096,
       "min":1
     },
     "SearchDiscoverableRegistryRecordsRequestRegistryIdsList":{
@@ -547,7 +575,9 @@
       "type":"structure",
       "required":["registryRecords"],
       "members":{
-        "registryRecords":{"shape":"RegistryRecordSummaryList"}
+        "registryRecords":{"shape":"RegistryRecordSummaryList"},
+        "searchType":{"shape":"SearchType"},
+        "nextToken":{"shape":"String"}
       }
     },
     "SearchQuery":{
@@ -555,6 +585,20 @@
       "max":256,
       "min":0,
       "sensitive":true
+    },
+    "SearchType":{
+      "type":"string",
+      "enum":[
+        "HYBRID",
+        "SEMANTIC",
+        "KEYWORD"
+      ]
+    },
+    "Sha256Hash":{
+      "type":"string",
+      "max":64,
+      "min":64,
+      "pattern":"[0-9a-f]{64}"
     },
     "String":{"type":"string"},
     "ThrottlingException":{
@@ -618,7 +662,8 @@
         "FieldValidationFailed",
         "IdempotentParameterMismatchException",
         "EventInOtherSession",
-        "ResourceConflict"
+        "ResourceConflict",
+        "UnsupportedInRegion"
       ]
     }
   }

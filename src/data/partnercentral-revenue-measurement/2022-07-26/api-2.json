@@ -45,6 +45,7 @@
       "input":{"shape":"CreateMarketplaceRevenueShareAllocationInput"},
       "output":{"shape":"CreateMarketplaceRevenueShareAllocationOutput"},
       "errors":[
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -188,7 +189,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
       ],
       "readonly":true
     },
@@ -293,6 +295,25 @@
         {"shape":"ConflictException"}
       ]
     },
+    "UpdateMarketplaceRevenueShare":{
+      "name":"UpdateMarketplaceRevenueShare",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateMarketplaceRevenueShareInput"},
+      "output":{"shape":"UpdateMarketplaceRevenueShareOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "UpdateMarketplaceRevenueShareAllocation":{
       "name":"UpdateMarketplaceRevenueShareAllocation",
       "http":{
@@ -389,7 +410,8 @@
         "EffectiveFrom":{"shape":"AllocationEffectiveDateString"},
         "EffectiveUntil":{"shape":"AllocationEffectiveDateString"},
         "TotalActiveRevenueAttributionAllocationCount":{"shape":"AllocationCount"},
-        "TotalRevenueAttributionAllocationCount":{"shape":"AllocationCount"}
+        "TotalRevenueAttributionAllocationCount":{"shape":"AllocationCount"},
+        "Context":{"shape":"RevenueAttributionContext"}
       }
     },
     "AttributionSummaryNameString":{
@@ -435,21 +457,56 @@
         "REVISION_MISMATCH"
       ]
     },
+    "ContextFilter":{
+      "type":"structure",
+      "required":["Key"],
+      "members":{
+        "Key":{"shape":"ContextKey"},
+        "Values":{"shape":"ContextFilterValueList"}
+      }
+    },
+    "ContextFilterList":{
+      "type":"list",
+      "member":{"shape":"ContextFilter"},
+      "max":5,
+      "min":1
+    },
+    "ContextFilterValueList":{
+      "type":"list",
+      "member":{"shape":"ContextValue"},
+      "max":20,
+      "min":1
+    },
+    "ContextKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\x21-\\x7E]+"
+    },
+    "ContextValue":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[\\x20-\\x7E]+"
+    },
     "CreateMarketplaceRevenueShareAllocationInput":{
       "type":"structure",
       "required":[
         "Catalog",
-        "ProductId",
+        "MarketplaceRevenueShareIdentifier",
+        "MarketplaceRevenueShareRevision",
         "EffectiveFrom",
+        "EffectiveUntil",
         "RevenueSharePercent"
       ],
       "members":{
         "Catalog":{"shape":"CatalogName"},
-        "ProductId":{"shape":"MarketplaceProductId"},
+        "MarketplaceRevenueShareIdentifier":{"shape":"MarketplaceRevenueShareIdentifier"},
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
+        "MarketplaceRevenueShareRevision":{"shape":"RevisionToken"},
         "EffectiveFrom":{"shape":"AllocationEffectiveDateString"},
         "EffectiveUntil":{"shape":"AllocationEffectiveDateString"},
         "RevenueSharePercent":{"shape":"RevenueSharePercent"}
@@ -459,31 +516,34 @@
       "type":"structure",
       "required":[
         "MarketplaceRevenueShareAllocationId",
-        "ProductId",
-        "Arn",
+        "MarketplaceRevenueShareIdentifier",
         "EffectiveFrom",
+        "EffectiveUntil",
         "RevenueSharePercent",
-        "Status"
+        "Status",
+        "CreatedDate",
+        "LastModifiedDate",
+        "MarketplaceRevenueShareRevision",
+        "MarketplaceRevenueShareLatestRevision"
       ],
       "members":{
         "MarketplaceRevenueShareAllocationId":{"shape":"MarketplaceRevenueShareAllocationId"},
-        "ProductId":{"shape":"MarketplaceProductId"},
-        "ProductName":{"shape":"String"},
-        "Arn":{"shape":"String"},
+        "MarketplaceRevenueShareIdentifier":{"shape":"MarketplaceRevenueShareId"},
         "EffectiveFrom":{"shape":"AllocationEffectiveDateString"},
         "EffectiveUntil":{"shape":"AllocationEffectiveDateString"},
         "RevenueSharePercent":{"shape":"RevenueSharePercent"},
         "Status":{"shape":"AllocationStatus"},
         "CreatedDate":{"shape":"Timestamp"},
         "LastModifiedDate":{"shape":"Timestamp"},
-        "LatestMarketplaceRevenueShareRevision":{"shape":"RevisionToken"}
+        "MarketplaceRevenueShareRevision":{"shape":"RevisionToken"},
+        "MarketplaceRevenueShareLatestRevision":{"shape":"RevisionToken"}
       }
     },
     "CreateMarketplaceRevenueShareInput":{
       "type":"structure",
       "required":[
         "Catalog",
-        "ProductId"
+        "Products"
       ],
       "members":{
         "Catalog":{"shape":"CatalogName"},
@@ -491,31 +551,36 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "ProductId":{"shape":"MarketplaceProductId"},
-        "Tags":{"shape":"MarketplaceRevenueShareTagList"}
+        "Products":{"shape":"CreateMarketplaceRevenueShareInputProductsList"},
+        "Tags":{"shape":"TagList"}
       }
+    },
+    "CreateMarketplaceRevenueShareInputProductsList":{
+      "type":"list",
+      "member":{"shape":"MarketplaceRevenueShareProductEntry"},
+      "max":25,
+      "min":1
     },
     "CreateMarketplaceRevenueShareOutput":{
       "type":"structure",
       "required":[
-        "ProductId",
-        "Arn"
+        "Id",
+        "Arn",
+        "Catalog",
+        "Products",
+        "CreatedDate",
+        "LastModifiedDate",
+        "Revision"
       ],
       "members":{
-        "ProductId":{"shape":"MarketplaceProductId"},
-        "Arn":{"shape":"String"},
+        "Id":{"shape":"MarketplaceRevenueShareId"},
+        "Arn":{"shape":"MarketplaceRevenueShareArn"},
         "Catalog":{"shape":"CatalogName"},
-        "ProductCode":{"shape":"String"},
-        "ProductName":{"shape":"String"},
+        "Products":{"shape":"MarketplaceRevenueShareProductSummaryList"},
         "CreatedDate":{"shape":"Timestamp"},
         "LastModifiedDate":{"shape":"Timestamp"},
-        "Revision":{"shape":"CreateMarketplaceRevenueShareOutputRevisionInteger"}
+        "Revision":{"shape":"RevisionToken"}
       }
-    },
-    "CreateMarketplaceRevenueShareOutputRevisionInteger":{
-      "type":"integer",
-      "box":true,
-      "min":1
     },
     "CreateRevenueAttributionInput":{
       "type":"structure",
@@ -534,7 +599,8 @@
         "Description":{"shape":"CreateRevenueAttributionInputDescriptionString"},
         "TenancyModel":{"shape":"TenancyModel"},
         "ProductIdentifier":{"shape":"CreateRevenueAttributionInputProductIdentifierString"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "Context":{"shape":"RevenueAttributionContext"}
       }
     },
     "CreateRevenueAttributionInputDescriptionString":{
@@ -569,7 +635,8 @@
         "Description":{"shape":"String"},
         "TenancyModel":{"shape":"TenancyModel"},
         "MarketplaceProduct":{"shape":"MarketplaceProductSummary"},
-        "Revision":{"shape":"RevisionToken"}
+        "Revision":{"shape":"RevisionToken"},
+        "Context":{"shape":"RevenueAttributionContext"}
       }
     },
     "CustomerAwsAccountId":{
@@ -628,12 +695,12 @@
       "type":"structure",
       "required":[
         "Catalog",
-        "ProductId",
+        "MarketplaceRevenueShareIdentifier",
         "MarketplaceRevenueShareAllocationId"
       ],
       "members":{
         "Catalog":{"shape":"CatalogName"},
-        "ProductId":{"shape":"MarketplaceProductId"},
+        "MarketplaceRevenueShareIdentifier":{"shape":"MarketplaceRevenueShareIdentifier"},
         "MarketplaceRevenueShareAllocationId":{"shape":"MarketplaceRevenueShareAllocationId"},
         "MarketplaceRevenueShareRevision":{"shape":"RevisionToken"}
       }
@@ -642,73 +709,69 @@
       "type":"structure",
       "required":[
         "MarketplaceRevenueShareAllocationId",
-        "ProductId",
-        "Arn",
+        "MarketplaceRevenueShareIdentifier",
         "EffectiveFrom",
+        "EffectiveUntil",
         "RevenueSharePercent",
-        "Status"
+        "Status",
+        "CreatedDate",
+        "LastModifiedDate",
+        "MarketplaceRevenueShareRevision",
+        "MarketplaceRevenueShareLatestRevision"
       ],
       "members":{
         "MarketplaceRevenueShareAllocationId":{"shape":"MarketplaceRevenueShareAllocationId"},
-        "ProductId":{"shape":"MarketplaceProductId"},
-        "ProductName":{"shape":"String"},
-        "Arn":{"shape":"String"},
+        "MarketplaceRevenueShareIdentifier":{"shape":"MarketplaceRevenueShareId"},
         "EffectiveFrom":{"shape":"AllocationEffectiveDateString"},
         "EffectiveUntil":{"shape":"AllocationEffectiveDateString"},
         "RevenueSharePercent":{"shape":"RevenueSharePercent"},
         "Status":{"shape":"AllocationStatus"},
         "CreatedDate":{"shape":"Timestamp"},
         "LastModifiedDate":{"shape":"Timestamp"},
-        "LatestMarketplaceRevenueShareRevision":{"shape":"RevisionToken"}
+        "MarketplaceRevenueShareRevision":{"shape":"RevisionToken"},
+        "MarketplaceRevenueShareLatestRevision":{"shape":"RevisionToken"}
       }
     },
     "GetMarketplaceRevenueShareInput":{
       "type":"structure",
       "required":[
         "Catalog",
-        "ProductId"
+        "Identifier"
       ],
       "members":{
         "Catalog":{"shape":"CatalogName"},
-        "ProductId":{"shape":"MarketplaceProductId"},
-        "Revision":{"shape":"GetMarketplaceRevenueShareInputRevisionInteger"}
+        "Identifier":{"shape":"MarketplaceRevenueShareIdentifier"},
+        "Revision":{"shape":"RevisionToken"}
       }
-    },
-    "GetMarketplaceRevenueShareInputRevisionInteger":{
-      "type":"integer",
-      "box":true,
-      "min":1
     },
     "GetMarketplaceRevenueShareOutput":{
       "type":"structure",
       "required":[
-        "ProductId",
+        "Id",
         "Arn",
-        "Catalog"
+        "Catalog",
+        "Products",
+        "CreatedDate",
+        "LastModifiedDate",
+        "Revision",
+        "LatestRevision",
+        "TotalActiveMarketplaceRevenueShareAllocationCount",
+        "TotalMarketplaceRevenueShareAllocationCount"
       ],
       "members":{
-        "ProductId":{"shape":"MarketplaceProductId"},
-        "Arn":{"shape":"String"},
+        "Id":{"shape":"MarketplaceRevenueShareId"},
+        "Arn":{"shape":"MarketplaceRevenueShareArn"},
         "Catalog":{"shape":"CatalogName"},
-        "ProductCode":{"shape":"String"},
-        "ProductName":{"shape":"String"},
+        "Products":{"shape":"MarketplaceRevenueShareProductDetailList"},
         "CreatedDate":{"shape":"Timestamp"},
         "LastModifiedDate":{"shape":"Timestamp"},
-        "Revision":{"shape":"GetMarketplaceRevenueShareOutputRevisionInteger"},
-        "LatestRevision":{"shape":"GetMarketplaceRevenueShareOutputLatestRevisionInteger"},
-        "TotalActiveMarketplaceRevenueShareAllocationCount":{"shape":"Integer"},
-        "TotalMarketplaceRevenueShareAllocationCount":{"shape":"Integer"}
+        "Revision":{"shape":"RevisionToken"},
+        "LatestRevision":{"shape":"RevisionToken"},
+        "EffectiveFrom":{"shape":"AllocationEffectiveDateString"},
+        "EffectiveUntil":{"shape":"AllocationEffectiveDateString"},
+        "TotalActiveMarketplaceRevenueShareAllocationCount":{"shape":"AllocationCount"},
+        "TotalMarketplaceRevenueShareAllocationCount":{"shape":"AllocationCount"}
       }
-    },
-    "GetMarketplaceRevenueShareOutputLatestRevisionInteger":{
-      "type":"integer",
-      "box":true,
-      "min":1
-    },
-    "GetMarketplaceRevenueShareOutputRevisionInteger":{
-      "type":"integer",
-      "box":true,
-      "min":1
     },
     "GetRevenueAttributionAllocationInput":{
       "type":"structure",
@@ -827,7 +890,8 @@
         "EffectiveFrom":{"shape":"AllocationEffectiveDateString"},
         "EffectiveUntil":{"shape":"AllocationEffectiveDateString"},
         "TotalActiveRevenueAttributionAllocationCount":{"shape":"AllocationCount"},
-        "TotalRevenueAttributionAllocationCount":{"shape":"AllocationCount"}
+        "TotalRevenueAttributionAllocationCount":{"shape":"AllocationCount"},
+        "Context":{"shape":"RevenueAttributionContext"}
       }
     },
     "GetRevenueAttributionOutputDescriptionString":{
@@ -859,14 +923,16 @@
       "type":"structure",
       "required":[
         "Catalog",
-        "ProductId"
+        "MarketplaceRevenueShareIdentifier"
       ],
       "members":{
         "Catalog":{"shape":"CatalogName"},
-        "ProductId":{"shape":"MarketplaceProductId"},
-        "Status":{"shape":"AllocationStatus"},
+        "MarketplaceRevenueShareIdentifier":{"shape":"MarketplaceRevenueShareIdentifier"},
+        "StatusFilter":{"shape":"AllocationStatus"},
         "AfterEffectiveFrom":{"shape":"AllocationEffectiveDateString"},
         "BeforeEffectiveFrom":{"shape":"AllocationEffectiveDateString"},
+        "AfterEffectiveUntil":{"shape":"AllocationEffectiveDateString"},
+        "BeforeEffectiveUntil":{"shape":"AllocationEffectiveDateString"},
         "SortBy":{"shape":"MarketplaceRevenueShareAllocationSortField"},
         "SortOrder":{"shape":"SortOrder"},
         "MaxResults":{"shape":"ListMarketplaceRevenueShareAllocationsInputMaxResultsInteger"},
@@ -893,6 +959,7 @@
       "required":["Catalog"],
       "members":{
         "Catalog":{"shape":"CatalogName"},
+        "Identifiers":{"shape":"MarketplaceRevenueShareIdentifierList"},
         "ProductIds":{"shape":"MarketplaceProductIdList"},
         "ProductCodes":{"shape":"ProductCodeList"},
         "MaxResults":{"shape":"ListMarketplaceRevenueSharesInputMaxResultsInteger"},
@@ -966,7 +1033,8 @@
         "SortBy":{"shape":"AttributionSortBy"},
         "SortOrder":{"shape":"SortOrder"},
         "MaxResults":{"shape":"ListRevenueAttributionsInputMaxResultsInteger"},
-        "NextToken":{"shape":"NextToken"}
+        "NextToken":{"shape":"NextToken"},
+        "ContextFilters":{"shape":"ContextFilterList"}
       }
     },
     "ListRevenueAttributionsInputMaxResultsInteger":{
@@ -997,15 +1065,21 @@
     },
     "MarketplaceProductId":{
       "type":"string",
-      "max":18,
-      "min":18,
-      "pattern":"prod-[a-z0-9]{13}"
+      "max":256,
+      "min":3,
+      "pattern":"[a-zA-Z0-9][.a-zA-Z0-9/-]{1,254}[a-zA-Z0-9]"
     },
     "MarketplaceProductIdList":{
       "type":"list",
-      "member":{"shape":"MarketplaceProductId"},
+      "member":{"shape":"MarketplaceProductIdentifier"},
       "max":10,
       "min":1
+    },
+    "MarketplaceProductIdentifier":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[\\w\\-:/.]+"
     },
     "MarketplaceProductSummary":{
       "type":"structure",
@@ -1025,7 +1099,7 @@
       "type":"string",
       "max":18,
       "min":18,
-      "pattern":"mrsa-[A-Za-z0-9]{13}"
+      "pattern":"mrsa-[a-z0-9]{13}"
     },
     "MarketplaceRevenueShareAllocationSortField":{
       "type":"string",
@@ -1035,17 +1109,17 @@
       "type":"structure",
       "required":[
         "MarketplaceRevenueShareAllocationId",
-        "ProductId",
-        "Arn",
+        "MarketplaceRevenueShareIdentifier",
         "EffectiveFrom",
+        "EffectiveUntil",
         "RevenueSharePercent",
-        "Status"
+        "Status",
+        "CreatedDate",
+        "LastModifiedDate"
       ],
       "members":{
         "MarketplaceRevenueShareAllocationId":{"shape":"MarketplaceRevenueShareAllocationId"},
-        "ProductId":{"shape":"MarketplaceProductId"},
-        "ProductName":{"shape":"String"},
-        "Arn":{"shape":"String"},
+        "MarketplaceRevenueShareIdentifier":{"shape":"MarketplaceRevenueShareId"},
         "EffectiveFrom":{"shape":"AllocationEffectiveDateString"},
         "EffectiveUntil":{"shape":"AllocationEffectiveDateString"},
         "RevenueSharePercent":{"shape":"RevenueSharePercent"},
@@ -1058,6 +1132,76 @@
       "type":"list",
       "member":{"shape":"MarketplaceRevenueShareAllocationSummary"}
     },
+    "MarketplaceRevenueShareArn":{
+      "type":"string",
+      "max":1011,
+      "min":1,
+      "pattern":"arn:aws:partnercentral:[a-z0-9-]+:[0-9]{12}:catalog/[a-zA-Z]+/marketplace-revenue-share/mrs-[a-z0-9]{13}"
+    },
+    "MarketplaceRevenueShareId":{
+      "type":"string",
+      "max":17,
+      "min":17,
+      "pattern":"mrs-[a-z0-9]{13}"
+    },
+    "MarketplaceRevenueShareIdentifier":{
+      "type":"string",
+      "max":1011,
+      "min":17,
+      "pattern":"(arn:[a-z-]+:partnercentral:[a-z0-9-]+:[0-9]{12}:catalog/[a-zA-Z]+/marketplace-revenue-share/mrs-[a-z0-9]{13}|mrs-[a-z0-9]{13})"
+    },
+    "MarketplaceRevenueShareIdentifierList":{
+      "type":"list",
+      "member":{"shape":"MarketplaceRevenueShareIdentifier"},
+      "max":100,
+      "min":1
+    },
+    "MarketplaceRevenueShareProductDetail":{
+      "type":"structure",
+      "required":["ProductId"],
+      "members":{
+        "ProductId":{"shape":"MarketplaceProductId"},
+        "ProductCode":{"shape":"ProductCode"},
+        "ProductName":{"shape":"String"},
+        "Accounts":{"shape":"RevenueShareProductAccountDetailList"}
+      }
+    },
+    "MarketplaceRevenueShareProductDetailList":{
+      "type":"list",
+      "member":{"shape":"MarketplaceRevenueShareProductDetail"},
+      "max":25,
+      "min":0
+    },
+    "MarketplaceRevenueShareProductEntry":{
+      "type":"structure",
+      "required":["ProductId"],
+      "members":{
+        "ProductId":{"shape":"MarketplaceProductIdentifier"},
+        "Accounts":{"shape":"RevenueShareProductAccountEntryList"}
+      }
+    },
+    "MarketplaceRevenueShareProductEntryList":{
+      "type":"list",
+      "member":{"shape":"MarketplaceRevenueShareProductEntry"},
+      "max":25,
+      "min":0
+    },
+    "MarketplaceRevenueShareProductSummary":{
+      "type":"structure",
+      "required":["ProductId"],
+      "members":{
+        "ProductId":{"shape":"MarketplaceProductId"},
+        "ProductCode":{"shape":"ProductCode"},
+        "ProductName":{"shape":"String"},
+        "Accounts":{"shape":"RevenueShareProductAccountSummaryList"}
+      }
+    },
+    "MarketplaceRevenueShareProductSummaryList":{
+      "type":"list",
+      "member":{"shape":"MarketplaceRevenueShareProductSummary"},
+      "max":25,
+      "min":0
+    },
     "MarketplaceRevenueShareSortBy":{
       "type":"string",
       "enum":["LastModifiedDate"]
@@ -1065,31 +1209,33 @@
     "MarketplaceRevenueShareSummary":{
       "type":"structure",
       "required":[
-        "ProductId",
-        "Arn"
+        "Id",
+        "Arn",
+        "Catalog",
+        "Products",
+        "CreatedDate",
+        "LastModifiedDate",
+        "LatestRevision",
+        "TotalActiveMarketplaceRevenueShareAllocationCount",
+        "TotalMarketplaceRevenueShareAllocationCount"
       ],
       "members":{
-        "ProductId":{"shape":"MarketplaceProductId"},
-        "Arn":{"shape":"String"},
+        "Id":{"shape":"MarketplaceRevenueShareId"},
+        "Arn":{"shape":"MarketplaceRevenueShareArn"},
         "Catalog":{"shape":"CatalogName"},
-        "ProductCode":{"shape":"String"},
-        "ProductName":{"shape":"String"},
+        "Products":{"shape":"MarketplaceRevenueShareProductSummaryList"},
         "CreatedDate":{"shape":"Timestamp"},
         "LastModifiedDate":{"shape":"Timestamp"},
-        "LatestRevision":{"shape":"Integer"},
-        "TotalActiveMarketplaceRevenueShareAllocationCount":{"shape":"Integer"},
-        "TotalMarketplaceRevenueShareAllocationCount":{"shape":"Integer"}
+        "LatestRevision":{"shape":"RevisionToken"},
+        "EffectiveFrom":{"shape":"AllocationEffectiveDateString"},
+        "EffectiveUntil":{"shape":"AllocationEffectiveDateString"},
+        "TotalActiveMarketplaceRevenueShareAllocationCount":{"shape":"AllocationCount"},
+        "TotalMarketplaceRevenueShareAllocationCount":{"shape":"AllocationCount"}
       }
     },
     "MarketplaceRevenueShareSummaryList":{
       "type":"list",
       "member":{"shape":"MarketplaceRevenueShareSummary"}
-    },
-    "MarketplaceRevenueShareTagList":{
-      "type":"list",
-      "member":{"shape":"Tag"},
-      "max":50,
-      "min":0
     },
     "NextToken":{
       "type":"string",
@@ -1097,9 +1243,15 @@
       "min":1,
       "pattern":"[\\S]+"
     },
+    "ProductCode":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z0-9]+"
+    },
     "ProductCodeList":{
       "type":"list",
-      "member":{"shape":"String"},
+      "member":{"shape":"ProductCode"},
       "max":10,
       "min":1
     },
@@ -1107,7 +1259,7 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"arn:aws:partnercentral:[a-z0-9-]+:[0-9]{12}:catalog/[a-zA-Z]+/(revenue-attribution/[a-zA-Z0-9-]+|marketplace-revenue-share/prod-[a-z0-9]{13})"
+      "pattern":"arn:aws:partnercentral:[a-z0-9-]+:[0-9]{12}:catalog/[a-zA-Z]+/(revenue-attribution/[a-zA-Z0-9-]+|marketplace-revenue-share/mrs-[a-z0-9]{13})"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1230,6 +1382,13 @@
         "FAILED"
       ]
     },
+    "RevenueAttributionContext":{
+      "type":"map",
+      "key":{"shape":"ContextKey"},
+      "value":{"shape":"ContextValue"},
+      "max":10,
+      "min":0
+    },
     "RevenueAttributionId":{
       "type":"string",
       "max":1011,
@@ -1286,6 +1445,84 @@
       "max":6,
       "min":1,
       "pattern":"\\d{1,3}(\\.\\d{1,2})?"
+    },
+    "RevenueShareProductAccountCount":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "RevenueShareProductAccountDetail":{
+      "type":"structure",
+      "required":[
+        "AccountType",
+        "Count",
+        "AccountIds"
+      ],
+      "members":{
+        "AccountType":{"shape":"RevenueShareProductAccountType"},
+        "Count":{"shape":"RevenueShareProductAccountCount"},
+        "AccountIds":{"shape":"RevenueShareProductAccountIdList"}
+      }
+    },
+    "RevenueShareProductAccountDetailList":{
+      "type":"list",
+      "member":{"shape":"RevenueShareProductAccountDetail"},
+      "max":2,
+      "min":0
+    },
+    "RevenueShareProductAccountEntry":{
+      "type":"structure",
+      "required":[
+        "AccountType",
+        "AccountIds"
+      ],
+      "members":{
+        "AccountType":{"shape":"RevenueShareProductAccountType"},
+        "AccountIds":{"shape":"RevenueShareProductAccountIdList"}
+      }
+    },
+    "RevenueShareProductAccountEntryList":{
+      "type":"list",
+      "member":{"shape":"RevenueShareProductAccountEntry"},
+      "max":2,
+      "min":0
+    },
+    "RevenueShareProductAccountId":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"[0-9]{12}",
+      "sensitive":true
+    },
+    "RevenueShareProductAccountIdList":{
+      "type":"list",
+      "member":{"shape":"RevenueShareProductAccountId"},
+      "max":1000,
+      "min":1
+    },
+    "RevenueShareProductAccountSummary":{
+      "type":"structure",
+      "required":[
+        "AccountType",
+        "Count"
+      ],
+      "members":{
+        "AccountType":{"shape":"RevenueShareProductAccountType"},
+        "Count":{"shape":"RevenueShareProductAccountCount"}
+      }
+    },
+    "RevenueShareProductAccountSummaryList":{
+      "type":"list",
+      "member":{"shape":"RevenueShareProductAccountSummary"},
+      "max":2,
+      "min":0
+    },
+    "RevenueShareProductAccountType":{
+      "type":"string",
+      "enum":[
+        "DEPLOYMENT",
+        "ORGANIZATION"
+      ]
     },
     "RevisionToken":{
       "type":"string",
@@ -1451,21 +1688,19 @@
       "type":"structure",
       "required":[
         "Catalog",
-        "ProductId",
+        "MarketplaceRevenueShareIdentifier",
         "MarketplaceRevenueShareAllocationId",
         "MarketplaceRevenueShareRevision"
       ],
       "members":{
         "Catalog":{"shape":"CatalogName"},
-        "ProductId":{"shape":"MarketplaceProductId"},
+        "MarketplaceRevenueShareIdentifier":{"shape":"MarketplaceRevenueShareIdentifier"},
         "MarketplaceRevenueShareAllocationId":{"shape":"MarketplaceRevenueShareAllocationId"},
         "MarketplaceRevenueShareRevision":{"shape":"RevisionToken"},
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "EffectiveFrom":{"shape":"AllocationEffectiveDateString"},
-        "EffectiveUntil":{"shape":"AllocationEffectiveDateString"},
         "RevenueSharePercent":{"shape":"RevenueSharePercent"},
         "Status":{"shape":"AllocationStatus"}
       }
@@ -1474,24 +1709,63 @@
       "type":"structure",
       "required":[
         "MarketplaceRevenueShareAllocationId",
-        "ProductId",
-        "Arn",
+        "MarketplaceRevenueShareIdentifier",
         "EffectiveFrom",
+        "EffectiveUntil",
         "RevenueSharePercent",
-        "Status"
+        "Status",
+        "CreatedDate",
+        "LastModifiedDate",
+        "MarketplaceRevenueShareRevision",
+        "MarketplaceRevenueShareLatestRevision"
       ],
       "members":{
         "MarketplaceRevenueShareAllocationId":{"shape":"MarketplaceRevenueShareAllocationId"},
-        "ProductId":{"shape":"MarketplaceProductId"},
-        "ProductName":{"shape":"String"},
-        "Arn":{"shape":"String"},
+        "MarketplaceRevenueShareIdentifier":{"shape":"MarketplaceRevenueShareId"},
         "EffectiveFrom":{"shape":"AllocationEffectiveDateString"},
         "EffectiveUntil":{"shape":"AllocationEffectiveDateString"},
         "RevenueSharePercent":{"shape":"RevenueSharePercent"},
         "Status":{"shape":"AllocationStatus"},
         "CreatedDate":{"shape":"Timestamp"},
         "LastModifiedDate":{"shape":"Timestamp"},
-        "LatestMarketplaceRevenueShareRevision":{"shape":"RevisionToken"}
+        "MarketplaceRevenueShareRevision":{"shape":"RevisionToken"},
+        "MarketplaceRevenueShareLatestRevision":{"shape":"RevisionToken"}
+      }
+    },
+    "UpdateMarketplaceRevenueShareInput":{
+      "type":"structure",
+      "required":[
+        "Catalog",
+        "Identifier",
+        "Revision",
+        "Products"
+      ],
+      "members":{
+        "Catalog":{"shape":"CatalogName"},
+        "Identifier":{"shape":"MarketplaceRevenueShareIdentifier"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "Revision":{"shape":"RevisionToken"},
+        "Products":{"shape":"MarketplaceRevenueShareProductEntryList"}
+      }
+    },
+    "UpdateMarketplaceRevenueShareOutput":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Arn",
+        "Products",
+        "LastModifiedDate",
+        "LatestRevision"
+      ],
+      "members":{
+        "Id":{"shape":"MarketplaceRevenueShareId"},
+        "Arn":{"shape":"MarketplaceRevenueShareArn"},
+        "Products":{"shape":"MarketplaceRevenueShareProductSummaryList"},
+        "LastModifiedDate":{"shape":"Timestamp"},
+        "LatestRevision":{"shape":"RevisionToken"}
       }
     },
     "UpdateRevenueAttributionInput":{
@@ -1509,7 +1783,8 @@
           "idempotencyToken":true
         },
         "Description":{"shape":"UpdateRevenueAttributionInputDescriptionString"},
-        "Revision":{"shape":"RevisionToken"}
+        "Revision":{"shape":"RevisionToken"},
+        "Context":{"shape":"RevenueAttributionContext"}
       }
     },
     "UpdateRevenueAttributionInputDescriptionString":{
@@ -1530,7 +1805,8 @@
         "Arn":{"shape":"String"},
         "Description":{"shape":"String"},
         "LastModifiedDate":{"shape":"Timestamp"},
-        "LatestRevision":{"shape":"RevisionToken"}
+        "LatestRevision":{"shape":"RevisionToken"},
+        "Context":{"shape":"RevenueAttributionContext"}
       }
     },
     "ValidationException":{

@@ -2916,7 +2916,9 @@
         "CatalogId":{"shape":"CatalogIdString"},
         "Name":{"shape":"NameString"},
         "AttachmentColumns":{"shape":"ColumnList"},
-        "FilterExpression":{"shape":"PredicateString"}
+        "FilterExpression":{"shape":"PredicateString"},
+        "Status":{"shape":"RLSPolicyStatus"},
+        "StatusReason":{"shape":"RLSPolicyStatusReason"}
       }
     },
     "RLSPolicyAttachment":{
@@ -2945,6 +2947,20 @@
         "CatalogId":{"shape":"CatalogIdString"},
         "Name":{"shape":"NameString"}
       }
+    },
+    "RLSPolicyStatus":{
+      "type":"string",
+      "enum":[
+        "VALID",
+        "INVALID"
+      ]
+    },
+    "RLSPolicyStatusReason":{
+      "type":"string",
+      "enum":[
+        "REFERENCED_UDF_DELETED",
+        "REFERENCED_LOOKUP_TABLE_DELETED"
+      ]
     },
     "RedshiftConnect":{
       "type":"structure",

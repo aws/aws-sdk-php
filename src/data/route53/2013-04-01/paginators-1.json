@@ -18,10 +18,27 @@
       "output_token": "NextToken",
       "result_key": "CidrLocations"
     },
+    "ListHealthCheckSources": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "HealthCheckSources"
+    },
     "ListHealthChecks": {
       "input_token": "Marker",
       "limit_key": "MaxItems",
       "more_results": "IsTruncated",
+      "output_token": "NextMarker",
+      "result_key": "HealthChecks"
+    },
+    "ListHealthChecksBySource": {
+      "input_token": "Marker",
+      "limit_key": "MaxItems",
+      "more_results": "IsTruncated",
+      "non_aggregate_keys": [
+        "MaxItems",
+        "Marker"
+      ],
       "output_token": "NextMarker",
       "result_key": "HealthChecks"
     },

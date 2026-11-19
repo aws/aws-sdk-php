@@ -9159,7 +9159,8 @@
         "Attributes":{"shape":"Attributes"},
         "NextContacts":{"shape":"NextContacts"},
         "GlobalResiliencyMetadata":{"shape":"GlobalResiliencyMetadata"},
-        "ContactLens":{"shape":"ContactLens"}
+        "ContactLens":{"shape":"ContactLens"},
+        "VoicemailInfo":{"shape":"VoicemailInfo"}
       }
     },
     "ContactAnalysis":{
@@ -16553,7 +16554,11 @@
         "EMAIL_MESSAGE_REDACTED",
         "EMAIL_MESSAGE_PLAIN_TEXT_REDACTED",
         "ATTACHMENT",
-        "VOICE_RECORDING"
+        "VOICE_RECORDING",
+        "VOICEMAIL_RECORDING",
+        "VOICEMAIL_RECORDING_REDACTED",
+        "VOICEMAIL_ANALYSIS",
+        "VOICEMAIL_ANALYSIS_REDACTED"
       ]
     },
     "FilterId":{
@@ -21556,6 +21561,11 @@
         "ComparisonType":{"shape":"NumberComparisonType"}
       }
     },
+    "NumberOfVoicemails":{
+      "type":"integer",
+      "max":3,
+      "min":1
+    },
     "NumberReference":{
       "type":"structure",
       "members":{
@@ -23716,7 +23726,11 @@
         "Number":{"shape":"NumberReference"},
         "Date":{"shape":"DateReference"},
         "Email":{"shape":"EmailReference"},
-        "ContactAnalysis":{"shape":"ContactAnalysisReference"}
+        "ContactAnalysis":{"shape":"ContactAnalysisReference"},
+        "VoicemailRecording":{"shape":"VoicemailRecordingReference"},
+        "VoicemailRecordingRedacted":{"shape":"VoicemailRecordingReference"},
+        "VoicemailAnalysis":{"shape":"VoicemailAnalysisReference"},
+        "VoicemailAnalysisRedacted":{"shape":"VoicemailAnalysisReference"}
       },
       "union":true
     },
@@ -23737,7 +23751,11 @@
         "EMAIL_MESSAGE",
         "EMAIL_MESSAGE_PLAIN_TEXT",
         "EMAIL_MESSAGE_PLAIN_TEXT_REDACTED",
-        "EMAIL_MESSAGE_REDACTED"
+        "EMAIL_MESSAGE_REDACTED",
+        "VOICEMAIL_RECORDING",
+        "VOICEMAIL_RECORDING_REDACTED",
+        "VOICEMAIL_ANALYSIS",
+        "VOICEMAIL_ANALYSIS_REDACTED"
       ]
     },
     "ReferenceTypes":{
@@ -29962,6 +29980,30 @@
         "TO_AGENT",
         "ALL"
       ]
+    },
+    "VoicemailAnalysisReference":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"ReferenceKey"},
+        "Value":{"shape":"ReferenceValue"},
+        "Status":{"shape":"ReferenceStatus"},
+        "Arn":{"shape":"ARN"}
+      }
+    },
+    "VoicemailInfo":{
+      "type":"structure",
+      "members":{
+        "NumberOfVoicemails":{"shape":"NumberOfVoicemails"}
+      }
+    },
+    "VoicemailRecordingReference":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"ReferenceKey"},
+        "Value":{"shape":"ReferenceValue"},
+        "Status":{"shape":"ReferenceStatus"},
+        "Arn":{"shape":"ARN"}
+      }
     },
     "WebBrowserId":{
       "type":"string",

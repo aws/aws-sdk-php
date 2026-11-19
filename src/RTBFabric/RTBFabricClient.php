@@ -231,6 +231,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result disassociateCertificate(array{gatewayId?: string, acmCertificateArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateCertificateAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise disassociateCertificateAsync(array{gatewayId?: string, acmCertificateArn?: string, ...} $args = [])
+ * @method \Aws\Result getAvailableModule(array $args = [])
+ * @phpstan-method \Aws\Result getAvailableModule(array{moduleId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAvailableModuleAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAvailableModuleAsync(array{moduleId?: string, ...} $args = [])
+ * @method \Aws\Result getAvailableModuleVersion(array $args = [])
+ * @phpstan-method \Aws\Result getAvailableModuleVersion(array{moduleId?: string, version?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAvailableModuleVersionAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAvailableModuleVersionAsync(array{moduleId?: string, version?: string, ...} $args = [])
  * @method \Aws\Result getCertificateAssociation(array $args = [])
  * @phpstan-method \Aws\Result getCertificateAssociation(array{gatewayId?: string, acmCertificateArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getCertificateAssociationAsync(array $args = [])
@@ -259,6 +267,30 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getResponderGateway(array{gatewayId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getResponderGatewayAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getResponderGatewayAsync(array{gatewayId?: string, ...} $args = [])
+ * @method \Aws\Result getUpdate(array $args = [])
+ * @phpstan-method \Aws\Result getUpdate(array{gatewayId?: string, updateId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getUpdateAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getUpdateAsync(array{gatewayId?: string, updateId?: string, ...} $args = [])
+ * @method \Aws\Result listAvailableModuleVersions(array $args = [])
+ * @phpstan-method \Aws\Result listAvailableModuleVersions(array{
+ *     moduleId?: string,
+ *     status?: 'ACTIVE'|'CREATE_FAILED'|'CREATING'|'DEPRECATED',
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAvailableModuleVersionsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listAvailableModuleVersionsAsync(array{
+ *     moduleId?: string,
+ *     status?: 'ACTIVE'|'CREATE_FAILED'|'CREATING'|'DEPRECATED',
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listAvailableModules(array $args = [])
+ * @phpstan-method \Aws\Result listAvailableModules(array{subscriptionType?: 'AWS_BUILT_IN'|'MARKETPLACE'|'PRIVATE', maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAvailableModulesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listAvailableModulesAsync(array{subscriptionType?: 'AWS_BUILT_IN'|'MARKETPLACE'|'PRIVATE', maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result listCertificateAssociations(array $args = [])
  * @phpstan-method \Aws\Result listCertificateAssociations(array{gatewayId?: string, nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listCertificateAssociationsAsync(array $args = [])
@@ -283,6 +315,46 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listTagsForResource(array{resourceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array{resourceArn?: string, ...} $args = [])
+ * @method \Aws\Result listUpdates(array $args = [])
+ * @phpstan-method \Aws\Result listUpdates(array{
+ *     gatewayId?: string,
+ *     linkId?: string,
+ *     ruleId?: string,
+ *     type?: 'GATEWAY_CONFIG_UPDATE'|'LINK_CONFIG_UPDATE'|'LINK_FLOW_UPDATE'|'ROUTING_RULE_UPDATE',
+ *     status?: 'FAILED'|'IN_PROGRESS'|'SUCCESSFUL',
+ *     nextToken?: string,
+ *     maxResults?: int,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listUpdatesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listUpdatesAsync(array{
+ *     gatewayId?: string,
+ *     linkId?: string,
+ *     ruleId?: string,
+ *     type?: 'GATEWAY_CONFIG_UPDATE'|'LINK_CONFIG_UPDATE'|'LINK_FLOW_UPDATE'|'ROUTING_RULE_UPDATE',
+ *     status?: 'FAILED'|'IN_PROGRESS'|'SUCCESSFUL',
+ *     nextToken?: string,
+ *     maxResults?: int,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result putLinkFlows(array $args = [])
+ * @phpstan-method \Aws\Result putLinkFlows(array{
+ *     gatewayId?: string,
+ *     linkId?: string,
+ *     clientToken?: string,
+ *     lockToken?: string,
+ *     flows?: list<array{name?: string, pipeline?: array, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise putLinkFlowsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putLinkFlowsAsync(array{
+ *     gatewayId?: string,
+ *     linkId?: string,
+ *     clientToken?: string,
+ *     lockToken?: string,
+ *     flows?: list<array{name?: string, pipeline?: array, ...}>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result rejectLink(array $args = [])
  * @phpstan-method \Aws\Result rejectLink(array{gatewayId?: string, linkId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise rejectLinkAsync(array $args = [])
@@ -301,6 +373,7 @@ use Aws\AwsClient;
  *     linkId?: string,
  *     logSettings?: array{applicationLogs?: array{sampling?: array, ...}, ...},
  *     timeoutInMillis?: int,
+ *     clientToken?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLinkAsync(array $args = [])
@@ -309,6 +382,7 @@ use Aws\AwsClient;
  *     linkId?: string,
  *     logSettings?: array{applicationLogs?: array{sampling?: array, ...}, ...},
  *     timeoutInMillis?: int,
+ *     clientToken?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateLinkModuleFlow(array $args = [])
@@ -342,6 +416,7 @@ use Aws\AwsClient;
  *         queryStringExists?: string,
  *         ...,
  *     },
+ *     clientToken?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLinkRoutingRuleAsync(array $args = [])
@@ -359,6 +434,7 @@ use Aws\AwsClient;
  *         queryStringExists?: string,
  *         ...,
  *     },
+ *     clientToken?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateRequesterGateway(array $args = [])

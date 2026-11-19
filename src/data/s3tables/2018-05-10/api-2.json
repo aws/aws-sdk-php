@@ -250,6 +250,25 @@
       ],
       "idempotent":true
     },
+    "DisassociateTableReplication":{
+      "name":"DisassociateTableReplication",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/table-replication/disassociate",
+        "responseCode":200
+      },
+      "input":{"shape":"DisassociateTableReplicationRequest"},
+      "output":{"shape":"DisassociateTableReplicationResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
     "GetNamespace":{
       "name":"GetNamespace",
       "http":{
@@ -1432,6 +1451,21 @@
         "schema":{"shape":"IcebergSchemaV2"},
         "icebergSortOrder":{"shape":"IcebergSortOrder"}
       }
+    },
+    "DisassociateTableReplicationRequest":{
+      "type":"structure",
+      "required":["tableArn"],
+      "members":{
+        "tableArn":{
+          "shape":"TableARN",
+          "location":"querystring",
+          "locationName":"tableArn"
+        }
+      }
+    },
+    "DisassociateTableReplicationResponse":{
+      "type":"structure",
+      "members":{}
     },
     "Document":{
       "type":"structure",

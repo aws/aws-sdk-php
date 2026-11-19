@@ -2849,6 +2849,13 @@
       "base": "<p>The specified streaming distribution does not exist.</p>",
       "refs": {}
     },
+    "OnDomainTakeover": {
+      "base": null,
+      "refs": {
+        "CreateDistributionTenantRequest$OnDomainTakeover": "<p>Specifies whether CloudFront moves a domain in this request to this distribution tenant when the domain is already associated with another standard distribution or distribution tenant. Valid values are:</p> <ul> <li> <p> <code>allow</code> – CloudFront moves the domain to this distribution tenant when the domain's DNS points to this distribution tenant.</p> </li> <li> <p> <code>reject</code> – CloudFront doesn't move the domain, and the request fails if the domain is associated with another resource. This is the default if you don't specify a value.</p> </li> </ul>",
+        "UpdateDistributionTenantRequest$OnDomainTakeover": "<p>Specifies whether CloudFront moves a domain in this request to this distribution tenant when the domain is already associated with another standard distribution or distribution tenant. Valid values are:</p> <ul> <li> <p> <code>allow</code> – CloudFront moves the domain to this distribution tenant when the domain's DNS points to this distribution tenant.</p> </li> <li> <p> <code>reject</code> – CloudFront doesn't move the domain, and the request fails if the domain is associated with another resource. This is the default if you don't specify a value.</p> </li> </ul>"
+      }
+    },
     "Origin": {
       "base": "<p>An origin.</p> <p>An origin is the location where content is stored, and from which CloudFront gets content to serve to viewers. To specify an origin:</p> <ul> <li> <p>Use <code>S3OriginConfig</code> to specify an Amazon S3 bucket that is not configured with static website hosting.</p> </li> <li> <p>Use <code>VpcOriginConfig</code> to specify a VPC origin.</p> </li> <li> <p>Use <code>CustomOriginConfig</code> to specify all other kinds of origins, including:</p> <ul> <li> <p>An Amazon S3 bucket that is configured with static website hosting</p> </li> <li> <p>An Elastic Load Balancing load balancer</p> </li> <li> <p>An Elemental MediaPackage endpoint</p> </li> <li> <p>An Elemental MediaStore container</p> </li> <li> <p>Any other HTTP server, running on an Amazon EC2 instance or any other kind of host</p> </li> </ul> </li> </ul> <p>For the current maximum number of origins that you can specify per distribution, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cloudfront-limits.html#limits-web-distributions\">General Quotas on Web Distributions</a> in the <i>Amazon CloudFront Developer Guide</i> (quotas were formerly referred to as limits).</p>",
       "refs": {
@@ -3599,6 +3606,13 @@
         "ResponseHeadersPolicyServerTimingHeadersConfig$SamplingRate": "<p>A number 0–100 (inclusive) that specifies the percentage of responses that you want CloudFront to add the <code>Server-Timing</code> header to. When you set the sampling rate to 100, CloudFront adds the <code>Server-Timing</code> header to the HTTP response for every request that matches the cache behavior that this response headers policy is attached to. When you set it to 50, CloudFront adds the header to 50% of the responses for requests that match the cache behavior. You can set the sampling rate to any number 0–100 with up to four decimal places.</p>"
       }
     },
+    "ServeOn": {
+      "base": null,
+      "refs": {
+        "DomainItem$ServeOn": "<p>Specifies which requests for this domain CloudFront routes to the distribution tenant. Valid values are:</p> <ul> <li> <p> <code>any</code> – CloudFront routes requests for this domain to the distribution tenant regardless of the IP address that they arrive on. This is the default if you don't specify a value.</p> </li> <li> <p> <code>anycast-ip-list-only</code> – CloudFront routes requests for this domain to the distribution tenant only when they arrive on the Anycast static IPs of the distribution tenant's connection group. CloudFront treats requests that arrive on other IP addresses as requests for an unknown domain.</p> </li> </ul>",
+        "DomainResult$ServeOn": "<p>Specifies which requests for this domain CloudFront routes to the distribution tenant. Valid values are:</p> <ul> <li> <p> <code>any</code> – CloudFront routes requests for this domain to the distribution tenant regardless of the IP address that they arrive on. This is the default if you don't specify a value.</p> </li> <li> <p> <code>anycast-ip-list-only</code> – CloudFront routes requests for this domain to the distribution tenant only when they arrive on the Anycast static IPs of the distribution tenant's connection group. CloudFront treats requests that arrive on other IP addresses as requests for an unknown domain.</p> </li> </ul>"
+      }
+    },
     "ServerCertificateId": {
       "base": null,
       "refs": {
@@ -4319,6 +4333,15 @@
       "refs": {
         "DistributionConfig$ViewerCertificate": "<p>A complex type that determines the distribution's SSL/TLS configuration for communicating with viewers.</p>",
         "DistributionSummary$ViewerCertificate": "<p>A complex type that determines the distribution's SSL/TLS configuration for communicating with viewers.</p>"
+      }
+    },
+    "ViewerFallback": {
+      "base": "<p>The distribution whose certificate CloudFront uses for viewer requests that arrive on the connection group's Anycast static IPs without Server Name Indication (SNI). You can specify one distribution per Anycast static IP list.</p>",
+      "refs": {
+        "ConnectionGroup$ViewerFallback": "<p>The distribution whose certificate CloudFront uses for viewer requests that arrive on the connection group's Anycast static IPs without Server Name Indication (SNI).</p>",
+        "ConnectionGroupSummary$ViewerFallback": "<p>The distribution whose certificate CloudFront uses for viewer requests that arrive on the connection group's Anycast static IPs without Server Name Indication (SNI).</p>",
+        "CreateConnectionGroupRequest$ViewerFallback": "<p>The distribution whose certificate CloudFront uses for viewer requests that arrive on the connection group's Anycast static IPs without Server Name Indication (SNI).</p>",
+        "UpdateConnectionGroupRequest$ViewerFallback": "<p>The distribution whose certificate CloudFront uses for viewer requests that arrive on the connection group's Anycast static IPs without Server Name Indication (SNI).</p>"
       }
     },
     "ViewerMtlsConfig": {
@@ -5436,6 +5459,7 @@
         "VerifyDnsConfigurationRequest$Identifier": "<p>The identifier of the distribution tenant. You can specify the ARN, ID, or name of the distribution tenant.</p>",
         "ViewerCertificate$ACMCertificateArn": "<p>If the distribution uses <code>Aliases</code> (alternate domain names or CNAMEs) and the SSL/TLS certificate is stored in <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html\">Certificate Manager (ACM)</a>, provide the Amazon Resource Name (ARN) of the ACM certificate. CloudFront only supports ACM certificates in the US East (N. Virginia) Region (<code>us-east-1</code>).</p> <p>If you specify an ACM certificate ARN, you must also specify values for <code>MinimumProtocolVersion</code> and <code>SSLSupportMethod</code>.</p>",
         "ViewerCertificate$Certificate": "<p>This field is deprecated. Use one of the following fields instead:</p> <ul> <li> <p> <code>ACMCertificateArn</code> </p> </li> <li> <p> <code>IAMCertificateId</code> </p> </li> <li> <p> <code>CloudFrontDefaultCertificate</code> </p> </li> </ul>",
+        "ViewerFallback$DistributionId": "<p>The ID of the distribution whose certificate CloudFront uses to establish TLS connections for viewer requests that don't include SNI.</p>",
         "VpcOrigin$Id": "<p>The VPC origin ID.</p>",
         "VpcOrigin$Arn": "<p>The VPC origin ARN.</p>",
         "VpcOrigin$AccountId": "<p>The account ID of the Amazon Web Services account that owns the VPC origin.</p>",
