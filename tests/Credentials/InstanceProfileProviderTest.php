@@ -1043,52 +1043,28 @@ class InstanceProfileProviderTest extends TestCase
     }
 
     /**
+     * IMDS can return credentials that are already expired (for example when
+     * HOSM pushed the last credentials and is now unreachable). The provider
+     * returns them as-is. Static stability is owned by the caching layer, not
+     * this provider, so there is no expiration extension and no warning.
      *
      * @param $client
      */
     #[DataProvider('returnsExpiredCredsProvider')]
-    public function testExtendsExpirationAndSendsRequestIfImdsYieldsExpiredCreds($client)
+    public function testReturnsExpiredCredentialsWhenImdsYieldsExpiredCreds($client)
     {
-        //expect warning emitted from extension
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessageMatches(
-            '/Attempting credential expiration extension/'
+        $provider = new InstanceProfileProvider([
+            'client' => $client
+        ]);
+        $creds = $provider()->wait();
+
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertSame('baz', $creds->getSecretKey());
+        $this->assertTrue(
+            $creds->isExpired(),
+            'the provider returns IMDS credentials as-is, without extending them'
         );
-        set_error_handler(function ($errno, $errstr) {
-            throw new \RuntimeException($errstr, $errno);
-        }, E_USER_WARNING);
-
-        try {
-            $provider = new InstanceProfileProvider([
-                'client' => $client
-            ]);
-            $creds = $provider()->wait();
-
-            $this->assertSame('foo', $creds->getAccessKeyId());
-            $this->assertSame('baz', $creds->getSecretKey());
-            $this->assertFalse($creds->isExpired());
-
-            $requestHandler = new MockHandler([
-                new Result(['message' => 'Request sent']),
-                new Result(['message' => 'Request sent']),
-                new Result(['message' => 'Request sent'])
-            ]);
-
-            $s3Client = new S3Client([
-                'region' => 'us-west-2',
-                'version' => 'latest',
-                'credentials' => $creds,
-                'handler' => $requestHandler
-            ]);
-            $s3Client->listBuckets();
-            $s3Client->listBuckets();
-            $result = $s3Client->listBuckets();
-
-            $this->assertEquals('Request sent', $result['message']);
-            $this->assertLessThanOrEqual(3,$this->getPropertyValue($provider,'attempts'));
-        } finally {
-            restore_error_handler();
-        }
+        $this->assertLessThanOrEqual(3, $this->getPropertyValue($provider, 'attempts'));
     }
 
     public static function returnsExpiredCredsProvider(): array
@@ -1132,53 +1108,36 @@ class InstanceProfileProviderTest extends TestCase
     }
 
     /**
+     * When IMDS is unavailable (500 or a read timeout), the provider rejects
+     * rather than fabricating credentials from a previous set. The caching
+     * layer (memoize) is responsible for retaining cached credentials and
+     * applying the refresh backoff. `retries` is 0 so the failure surfaces
+     * without the retry backoff sleeps.
      *
      * @param $client
      */
     #[DataProvider('imdsUnavailableProvider')]
-    public function testExtendsExpirationAndSendsRequestIfImdsUnavailable($client)
+    public function testThrowsWhenImdsUnavailable($client)
     {
-        //expect warning emitted from extension
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessageMatches(
-            '/Attempting credential expiration extension/'
-        );
-        set_error_handler(function ($errno, $errstr) {
-            throw new \RuntimeException($errstr, $errno);
-        });
-        $expiredTime = time() - 1000;
-        $expiredCreds = new Credentials('foo', 'baz', null, $expiredTime);
+        $this->expectException(\Aws\Exception\CredentialsException::class);
+
+        // retries=0 so the failure surfaces on the first attempt. The env var
+        // takes precedence over config, so clear it (another test sets it) and
+        // restore it afterward.
+        $originalRetries = getenv(InstanceProfileProvider::ENV_RETRIES);
+        putenv(InstanceProfileProvider::ENV_RETRIES);
         try {
-            $this->assertTrue($expiredCreds->isExpired());
-
             $provider = new InstanceProfileProvider([
-                'client' => $client
+                'client' => $client,
+                'retries' => 0
             ]);
-            $creds = $provider($expiredCreds)->wait();
-            $this->assertSame('foo', $creds->getAccessKeyId());
-            $this->assertSame('baz', $creds->getSecretKey());
-            $this->assertFalse($expiredCreds->isExpired());
-
-            $requestHandler = new MockHandler([
-                new Result(['message' => 'Request sent']),
-                new Result(['message' => 'Request sent']),
-                new Result(['message' => 'Request sent'])
-            ]);
-
-            $s3Client = new S3Client([
-                'region' => 'us-west-2',
-                'version' => 'latest',
-                'credentials' => $creds,
-                'handler' => $requestHandler
-            ]);
-            $s3Client -> listBuckets();
-            $s3Client -> listBuckets();
-            $result = $s3Client->listBuckets();
-
-            $this->assertEquals('Request sent', $result['message']);
-            $this->assertLessThanOrEqual(3,$this->getPropertyValue($provider,'attempts'));
+            $provider()->wait();
         } finally {
-            restore_error_handler();
+            if ($originalRetries !== false) {
+                putenv(InstanceProfileProvider::ENV_RETRIES . '=' . $originalRetries);
+            } else {
+                putenv(InstanceProfileProvider::ENV_RETRIES);
+            }
         }
     }
 
@@ -1262,6 +1221,37 @@ class InstanceProfileProviderTest extends TestCase
                 )
             ]
         ];
+    }
+
+    public function testFailuresAreRecoverable()
+    {
+        $responseClass = self::getResponseClass();
+        $getRequest = new (self::getRequestClass())(
+            'GET',
+            '/latest/meta-data/iam/security-credentials/MockProfile'
+        );
+        $creds403 = Promise\Create::rejectionFor([
+            'exception' => self::createRequestException(
+                '403 Forbidden',
+                $getRequest,
+                new $responseClass(403)
+            )
+        ]);
+        $client = self::getSecureTestClient(
+            ['get_creds' => [$creds403]],
+            'MockProfile'
+        );
+
+        try {
+            $provider = new InstanceProfileProvider(['client' => $client]);
+            $provider()->wait();
+            $this->fail('Expected a CredentialsException.');
+        } catch (\Aws\Exception\CredentialsException $e) {
+            $this->assertNotInstanceOf(
+                \Aws\Exception\NonRecoverableCredentialsExceptionInterface::class,
+                $e
+            );
+        }
     }
 
     public function testResetsAttempts()

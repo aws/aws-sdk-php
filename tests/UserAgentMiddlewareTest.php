@@ -943,6 +943,50 @@ class UserAgentMiddlewareTest extends TestCase
     }
 
     /**
+     * Test user agent captures metric from Cognito Identity credentials.
+     *
+     * @return void
+     */
+    public function testUserAgentCaptureCredentialsCognitoMetric()
+    {
+        $cognito = new \Aws\CognitoIdentity\CognitoIdentityProvider('poolId', [
+            'region' => 'us-east-1',
+            'handler' => new \Aws\MockHandler([
+                new Result(['IdentityId' => 'foo:bar:baz']),
+                new Result([
+                    'Credentials' => [
+                        'AccessKeyId' => 'foo',
+                        'SecretKey' => 'bar',
+                        'SessionToken' => 'baz',
+                        'Expiration' => DateTimeResult::fromEpoch(time() + 3600),
+                    ],
+                ]),
+            ]),
+        ]);
+        $s3Client = new S3Client([
+            'region' => 'us-east-2',
+            'credentials' => CredentialProvider::memoize($cognito),
+            'http_handler' => function (
+                RequestInterface $request
+            ) {
+                $metrics = $this->getMetricsAsArray($request);
+
+                $this->assertTrue(
+                    in_array(MetricsBuilder::CREDENTIALS_COGNITO, $metrics)
+                );
+                $this->assertFalse(
+                    in_array(MetricsBuilder::CREDENTIALS_CODE, $metrics)
+                );
+
+                return new Response(
+                    200
+                );
+            }
+        ]);
+        $s3Client->listBuckets();
+    }
+
+    /**
      * Test user agent captures metric from environment credentials.
      *
      * @return void
