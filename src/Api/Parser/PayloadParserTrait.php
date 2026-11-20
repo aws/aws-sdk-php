@@ -44,7 +44,7 @@ trait PayloadParserTrait
             if ($error = libxml_get_last_error()) {
                 throw new \RuntimeException($error->message);
             }
-        } catch (\Exception $e) {
+        } catch (\Exception | \ValueError $e) {
             throw new ParserException(
                 "Error parsing XML: {$e->getMessage()}",
                 0,
