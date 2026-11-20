@@ -171,7 +171,7 @@ class TraceMiddleware
     private function commandArray(CommandInterface $cmd)
     {
         return [
-            'instance' => spl_object_hash($cmd),
+            'instance' => spl_object_id($cmd),
             'name'     => $cmd->getName(),
             'params'   => $this->redactValue(
                 $cmd->toArray(),
@@ -185,7 +185,7 @@ class TraceMiddleware
         return !$request instanceof RequestInterface
             ? []
             : array_filter([
-                'instance' => spl_object_hash($request),
+                'instance' => spl_object_id($request),
                 'method'   => $request->getMethod(),
                 'headers'  => $this->redactHeaders(
                     $request->getHeaders(),
@@ -209,7 +209,7 @@ class TraceMiddleware
         ?string $opName = null
     ) {
         return !$response ? [] : [
-            'instance'   => spl_object_hash($response),
+            'instance'   => spl_object_id($response),
             'statusCode' => $response->getStatusCode(),
             'headers'    => $this->redactHeaders(
                 $response->getHeaders(),
@@ -240,7 +240,7 @@ class TraceMiddleware
         }
 
         return [
-            'instance' => spl_object_hash($value),
+            'instance' => spl_object_id($value),
             'data'     => $data,
         ];
     }
@@ -252,7 +252,7 @@ class TraceMiddleware
         }
 
         $result = [
-            'instance'   => spl_object_hash($e),
+            'instance'   => spl_object_id($e),
             'class'      => get_class($e),
             'message'    => $e->getMessage(),
             'file'       => $e->getFile(),

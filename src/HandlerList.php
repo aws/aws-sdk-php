@@ -384,7 +384,7 @@ class HandlerList implements \Countable
             return "callable(['{$ele}', '{$fn[1]}'])";
         }
 
-        return 'callable(' . spl_object_hash($fn) . ')';
+        return 'callable(' . spl_object_id($fn) . ')';
     }
 
     /**
