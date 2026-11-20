@@ -101,7 +101,9 @@ final class ValidateResponseChecksumResultMutator implements S3ResultMutator
             'checksum' => $checksumToValidate,
             'checksumHeaderValue' => $checksumHeaderValue,
         ];
-        if ($this->isMultipartGetObject($command, $checksumValidationInfo)) {
+        if ($this->isMultipartGetObject($command, $checksumValidationInfo)
+            || $this->isDecodedResponse($command, $response)
+        ) {
             return $result;
         }
 
@@ -255,5 +257,24 @@ final class ValidateResponseChecksumResultMutator implements S3ResultMutator
         return is_numeric($endOfChecksum)
             && (int) $endOfChecksum > 1
             && (int) $endOfChecksum < 10000;
+    }
+
+    /**
+     * @param CommandInterface $command
+     * @param ResponseInterface $response
+     *
+     * @return bool
+     */
+    private function isDecodedResponse(
+        CommandInterface $command,
+        ResponseInterface $response
+    ): bool
+    {
+        if ($response->hasHeader('x-encoded-content-encoding')) {
+            return true;
+        }
+
+        return ($command['@http']['decode_content'] ?? true) !== false
+            && $response->hasHeader('Content-Encoding');
     }
 }

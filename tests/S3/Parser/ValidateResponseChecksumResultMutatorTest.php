@@ -360,6 +360,66 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
         $result['Body']->getContents();
     }
 
+    #[DataProvider('decodedResponseHeadersProvider')]
+    public function testSkipsValidationForDecodedResponseBody(string $header)
+    {
+        $response = new Response(
+            200,
+            [
+                $header => 'gzip',
+                'x-amz-checksum-crc32' => 'invalid'
+            ],
+            'response body'
+        );
+        $command = new Command(
+            'GetObject',
+            ['ChecksumMode' => 'enabled'],
+            new HandlerList()
+        );
+        $result = $this->getValidateResponseChecksumMutator()(
+            new Result(),
+            $command,
+            $response
+        );
+
+        $this->assertNull($result['ChecksumValidated']);
+    }
+
+    public static function decodedResponseHeadersProvider(): array
+    {
+        return [
+            ['Content-Encoding'],
+            ['x-encoded-content-encoding'],
+        ];
+    }
+
+    public function testValidatesEncodedResponseBodyWhenDecodingIsDisabled()
+    {
+        $response = new Response(
+            200,
+            [
+                'Content-Encoding' => 'gzip',
+                'x-amz-checksum-crc32' => 'DIt2Ng=='
+            ],
+            'response body'
+        );
+        $command = new Command(
+            'GetObject',
+            [
+                'ChecksumMode' => 'enabled',
+                '@http' => ['decode_content' => false]
+            ],
+            new HandlerList()
+        );
+        $result = $this->getValidateResponseChecksumMutator()(
+            new Result(),
+            $command,
+            $response
+        );
+
+        $this->assertSame('CRC32', $result['ChecksumValidated']);
+    }
+
     /**
      * Returns an instance of ValidateResponseChecksumResultMutator
      * for testing purposes.
