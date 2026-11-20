@@ -641,7 +641,8 @@ class HttpResponseBindingPlanTest extends TestCase
         $valid = '{"Body":"value"}';
         $invalid = '{';
         $prefixMessage = 'strlen(): Argument #1 ($string) must be of type string, array given';
-        $jsonMessage = 'Error parsing JSON: Syntax error';
+        json_decode($invalid);
+        $jsonMessage = 'Error parsing JSON: ' . json_last_error_msg();
 
         foreach ([true, false] as $knownSize) {
             foreach ([true, false] as $seekable) {

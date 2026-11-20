@@ -359,4 +359,13 @@ class XmlErrorParserTest extends TestCase
         $result = $parser($response);
         $this->assertSame('NotFound', $result['code']);
     }
+
+    public function testThrowsParserExceptionForBodyWithNullByte()
+    {
+        $this->expectException(\Aws\Api\Parser\Exception\ParserException::class);
+        $this->expectExceptionMessage('Error parsing XML:');
+
+        $parser = new XmlErrorParser();
+        $parser(new Psr7\Response(400, [], "<Error>\0</Error>"));
+    }
 }
