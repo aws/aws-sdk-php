@@ -393,6 +393,30 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
         ];
     }
 
+    public function testValidatesIdentityEncodedResponseBody()
+    {
+        $response = new Response(
+            200,
+            [
+                'x-encoded-content-encoding' => 'identity',
+                'x-amz-checksum-crc32' => 'DIt2Ng=='
+            ],
+            'response body'
+        );
+        $command = new Command(
+            'GetObject',
+            ['ChecksumMode' => 'enabled'],
+            new HandlerList()
+        );
+        $result = $this->getValidateResponseChecksumMutator()(
+            new Result(),
+            $command,
+            $response
+        );
+
+        $this->assertSame('CRC32', $result['ChecksumValidated']);
+    }
+
     public function testValidatesEncodedResponseBodyWhenDecodingIsDisabled()
     {
         $response = new Response(

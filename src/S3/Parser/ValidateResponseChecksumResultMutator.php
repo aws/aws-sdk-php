@@ -270,11 +270,13 @@ final class ValidateResponseChecksumResultMutator implements S3ResultMutator
         ResponseInterface $response
     ): bool
     {
-        if ($response->hasHeader('x-encoded-content-encoding')) {
-            return true;
+        $encoding = $response->getHeaderLine('x-encoded-content-encoding')
+            ?: $response->getHeaderLine('Content-Encoding');
+        if (in_array(strtolower($encoding), ['', 'identity'], true)) {
+            return false;
         }
 
-        return ($command['@http']['decode_content'] ?? true) !== false
-            && $response->hasHeader('Content-Encoding');
+        return $response->hasHeader('x-encoded-content-encoding')
+            || ($command['@http']['decode_content'] ?? true) !== false;
     }
 }
