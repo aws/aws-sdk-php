@@ -2,13 +2,16 @@
 namespace Aws\Test;
 
 use Aws\Api\Service;
-use Aws\AwsClient;
+use Aws\Backup\BackupClient;
+use Aws\BedrockAgentCoreControl\BedrockAgentCoreControlClient;
+use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\Command;
 use Aws\EventBridge\EventBridgeClient;
 use Aws\Exception\AwsException;
 use Aws\HandlerList;
 use Aws\MockHandler;
 use Aws\Result;
+use Aws\S3\S3Client;
 use Aws\TraceMiddleware;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\FnStream;
@@ -166,52 +169,352 @@ class TraceMiddlewareTest extends TestCase
         }
     }
 
-    public function testRedactsSensitiveTraits()
+    #[DataProvider('redactionProvider')]
+    public function testRedactsSensitiveCommandParams(
+        array $data,
+        string $leaked,
+        string $placeholder
+    ) {
+        $str = $this->traceOp('Op', $data, new Result());
+
+        $this->assertStringContainsString('command was set to array', $str);
+        $this->assertStringNotContainsString($leaked, $str);
+        $this->assertStringContainsString($placeholder, $str);
+        $this->assertStringContainsString('public-value', $str);
+    }
+
+    #[DataProvider('redactionProvider')]
+    public function testRedactsSensitiveResultData(
+        array $data,
+        string $leaked,
+        string $placeholder
+    ) {
+        $str = $this->traceOp('Op', [], new Result($data));
+
+        $this->assertStringContainsString('result was set to array', $str);
+        $this->assertStringNotContainsString($leaked, $str);
+        $this->assertStringContainsString($placeholder, $str);
+        $this->assertStringContainsString('public-value', $str);
+    }
+
+    public static function redactionProvider(): array
     {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service);
-        $command = $client->getCommand(
-            'SensitiveOp',
-             [
-                 "InputShape" => [
-                     "PublicParameter" => "PublicParameter not redacted",
-                     "SensitiveParameter" => "SensitiveParameter was redacted",
-                     "NestedParams" => [
-                         "NestedPublicParameter" => "NestedParams also not redacted",
-                         "NestedSensitiveParameter" => "NestedSensitiveParameter was also redacted",
-                     ],
-                     "SensitiveArray" => [
-                         "PublicParameter" => "SensitiveArray contents also redacted",
-                     ]
-                 ]
-             ]
+        $public = ['Public' => 'public-value'];
+        return [
+            'top-level member named like its target' => [
+                ['SecretString' => 'leak-top-level'] + $public,
+                'leak-top-level',
+                '[SecretString]',
+            ],
+            'member name differs from target' => [
+                ['Password' => 'leak-password'] + $public,
+                'leak-password',
+                '[SecretString]',
+            ],
+            'list member' => [
+                ['Items' => ['leak-list-1', 'leak-list-2']] + $public,
+                'leak-list',
+                '[SecretString]',
+            ],
+            'map value' => [
+                ['ValMap' => ['k' => 'leak-map-value']] + $public,
+                'leak-map-value',
+                '[SecretString]',
+            ],
+            'map key' => [
+                ['KeyMap' => ['leak-map-key' => 'v']] + $public,
+                'leak-map-key',
+                '[SecretString]#1',
+            ],
+            'union member' => [
+                ['Choice' => ['Choice' => 'leak-union']] + $public,
+                'leak-union',
+                '[SecretString]',
+            ],
+            'nested structure member' => [
+                ['Nested' => ['Inner' => 'leak-nested']] + $public,
+                'leak-nested',
+                '[SecretString]',
+            ],
+        ];
+    }
+
+    public function testDoesNotRedactMapKeyMatchingSensitiveShapeName()
+    {
+        $data = ['Plain' => ['SecretString' => 'plain-map-value']];
+
+        $params = $this->traceOp('Op', $data, new Result());
+        $this->assertStringContainsString('plain-map-value', $params);
+        $this->assertStringNotContainsString('[SecretString]', $params);
+
+        $result = $this->traceOp('Op', [], new Result($data));
+        $this->assertStringContainsString('plain-map-value', $result);
+        $this->assertStringNotContainsString('[SecretString]', $result);
+    }
+
+    public function testDistinctSensitiveMapKeysStayDistinct()
+    {
+        $str = $this->traceOp(
+            'Op',
+            ['KeyMap' => ['leak-a' => 'value-a', 'leak-b' => 'value-b']],
+            new Result()
         );
 
+        $this->assertStringNotContainsString('leak-a', $str);
+        $this->assertStringNotContainsString('leak-b', $str);
+        $this->assertStringContainsString('[SecretString]#1', $str);
+        $this->assertStringContainsString('[SecretString]#2', $str);
+        $this->assertStringContainsString('value-a', $str);
+        $this->assertStringContainsString('value-b', $str);
+    }
+
+    public function testMasksBodyOfOperationWithSensitiveInput()
+    {
+        $body = '{"Password":"leak-body-secret"}';
+        $str = $this->traceOp(
+            'Op',
+            [],
+            new Result(),
+            new Request('POST', '/', [], $body)
+        );
+
+        $this->assertStringNotContainsString('leak-body-secret', $str);
+        $this->assertStringContainsString(
+            '[REDACTED body, size=' . strlen($body) . ']',
+            $str
+        );
+    }
+
+    public function testKeepsBodyOfOperationWithoutSensitiveData()
+    {
+        $str = $this->traceOp(
+            'PublicOp',
+            ['Public' => 'public-value'],
+            new Result(),
+            new Request('POST', '/', [], '{"Public":"public-body"}')
+        );
+
+        $this->assertStringContainsString('public-body', $str);
+        $this->assertStringNotContainsString('[REDACTED', $str);
+    }
+
+    public function testMasksResponseBodyOfOperationWithSensitiveOutput()
+    {
         $str = '';
         $logfn = function ($value) use (&$str) { $str .= $value; };
         $list = new HandlerList();
-        $list->setHandler(function () {
-            return Promise\Create::promiseFor(new Result());
+        $list->setHandler(function ($cmd, $req) {
+            return new RejectedPromise(new AwsException('error', $cmd, [
+                'request'  => $req,
+                'response' => new Response(
+                    400,
+                    [],
+                    '{"Password":"leak-response-body"}'
+                ),
+            ]));
         });
         $list->appendInit(function ($handler) {
             return function ($cmd, $req) use ($handler) {
                 return $handler($cmd, $req);
             };
         });
-        $list->interpose(new TraceMiddleware(['logfn' => $logfn], $service));
-
+        $list->interpose(new TraceMiddleware(
+            ['logfn' => $logfn, 'http' => false],
+            $this->generateTestService()
+        ));
         $handler = $list->resolve();
-        $request = new Request('post', "/");
-        $handler($command, $request);
+        $handler(new Command('Op'), new Request('POST', '/'));
+        Promise\Utils::queue()->run();
 
-        $this->assertStringContainsString("NestedParams also not redacted", $str);
-        $this->assertStringContainsString("PublicParameter not redacted", $str);
-        $this->assertStringContainsString("[SensitiveParameter]", $str);
-        $this->assertStringNotContainsString("SensitiveParameter was redacted", $str);
-        $this->assertStringContainsString("[NestedSensitiveParameter]", $str);
-        $this->assertStringNotContainsString("NestedSensitiveParameter was also redacted", $str);
-        $this->assertStringContainsString("[SensitiveArray]", $str);
-        $this->assertStringNotContainsString("SensitiveArray contents also redacted", $str);
+        $this->assertStringContainsString('error was set to array', $str);
+        $this->assertStringNotContainsString('leak-response-body', $str);
+        $this->assertStringContainsString('[REDACTED body, size=', $str);
+    }
+
+    public function testUnknownCommandIsNotRedacted()
+    {
+        $data = ['Password' => 'unmodeled-value'];
+
+        $withService = $this->traceOp('foo', $data, new Result($data));
+        $this->assertStringContainsString('unmodeled-value', $withService);
+        $this->assertStringNotContainsString('[SecretString]', $withService);
+
+        $str = '';
+        $logfn = function ($value) use (&$str) { $str .= $value; };
+        $list = new HandlerList();
+        $list->setHandler(function () use ($data) {
+            return Promise\Create::promiseFor(new Result($data));
+        });
+        $list->appendInit(function ($handler) {
+            return function ($cmd, $req) use ($handler) {
+                return $handler($cmd, $req);
+            };
+        });
+        $list->interpose(new TraceMiddleware(['logfn' => $logfn, 'http' => false]));
+        $handler = $list->resolve();
+        $handler(new Command('Op', $data), new Request('POST', '/', [], 'body'));
+        Promise\Utils::queue()->run();
+
+        $this->assertStringContainsString('unmodeled-value', $str);
+        $this->assertStringContainsString('body', $str);
+    }
+
+    public function testRedactsCognitoSignUpPasswordInTrace()
+    {
+        $secret = 'Pw-Leak-Marker-7f3a9c';
+        $str = $this->traceCognitoSignUp($secret, [
+            'http' => false,
+            'stream_size' => 0,
+        ]);
+
+        $this->assertStringContainsString('command.params', $str);
+        $this->assertStringNotContainsString($secret, $str);
+        $this->assertStringContainsString('[PasswordType]', $str);
+    }
+
+    public function testRedactsCognitoSignUpPasswordInRequestBody()
+    {
+        $secret = 'Pw-Leak-Marker-7f3a9c';
+        $str = $this->traceCognitoSignUp($secret, ['http' => false]);
+
+        $this->assertStringContainsString('request.body', $str);
+        $this->assertStringNotContainsString($secret, $str);
+        $this->assertStringContainsString('[REDACTED body, size=', $str);
+    }
+
+    private function traceCognitoSignUp(string $secret, array $debug): string
+    {
+        $str = '';
+        $logfn = function ($value) use (&$str) { $str .= $value; };
+        $handler = new MockHandler();
+        $handler->append(new Result(['UserConfirmed' => false]));
+        $client = new CognitoIdentityProviderClient([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'AKIAEXAMPLE', 'secret' => 'example'],
+            'handler' => $handler,
+            'debug' => ['logfn' => $logfn] + $debug,
+        ]);
+        $client->signUp([
+            'ClientId' => 'client',
+            'Username' => 'alice',
+            'Password' => $secret,
+        ]);
+
+        return $str;
+    }
+
+    public function testRedactsSensitiveHeadersInTraceAndWireOutput()
+    {
+        $key = 'SseC-Leak-Marker-0123456789abcdef';
+        $str = $this->traceClientCall(S3Client::class, 'putObject', [
+            'Bucket' => 'bucket',
+            'Key' => 'key',
+            'Body' => 'x',
+            'SSECustomerAlgorithm' => 'AES256',
+            'SSECustomerKey' => $key,
+        ]);
+
+        $this->assertStringNotContainsString($key, $str);
+        $this->assertStringNotContainsString(base64_encode($key), $str);
+        $this->assertStringContainsString('[SSECustomerKey]', $str);
+        $this->assertStringContainsString(
+            '> x-amz-server-side-encryption-customer-key: [SSECustomerKey]',
+            $str
+        );
+    }
+
+    public function testRedactsSensitiveQueryParams()
+    {
+        $secret = 'Query-Leak-Marker-5e1d';
+        $str = $this->traceClientCall(
+            BackupClient::class,
+            'revokeRestoreAccessBackupVault',
+            [
+                'BackupVaultName' => 'vault',
+                'RestoreAccessBackupVaultArn' => 'arn',
+                'RequesterComment' => $secret,
+            ]
+        );
+
+        $this->assertStringNotContainsString($secret, $str);
+        $this->assertStringContainsString('requesterComment=[RequesterComment]', $str);
+        $this->assertStringContainsString('[REDACTED target]', $str);
+    }
+
+    public function testRedactsPathWithSensitiveLabels()
+    {
+        $endpoint = 'Path-Leak-Marker-9b2c';
+        $str = $this->traceClientCall(
+            BedrockAgentCoreControlClient::class,
+            'getAgentRuntimeEndpoint',
+            ['agentRuntimeId' => 'runtime', 'endpointName' => $endpoint]
+        );
+
+        $this->assertStringNotContainsString($endpoint, $str);
+        $this->assertStringContainsString('[REDACTED path]', $str);
+        $this->assertStringContainsString('[REDACTED target]', $str);
+    }
+
+    /**
+     * Calls a client with `http` debug on. Its HTTP handler writes
+     * curl-style request lines to the debug resource, as CURLOPT_VERBOSE
+     * does.
+     */
+    private function traceClientCall(string $class, string $method, array $args): string
+    {
+        $str = '';
+        $client = new $class([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'AKIAEXAMPLE', 'secret' => 'example'],
+            'http_handler' => function ($request, array $options) {
+                if (is_resource($options['debug'] ?? null)) {
+                    $lines = '> ' . $request->getMethod() . ' '
+                        . $request->getRequestTarget() . " HTTP/1.1\n";
+                    foreach ($request->getHeaders() as $name => $values) {
+                        $lines .= "> {$name}: " . implode(', ', $values) . "\n";
+                    }
+                    fwrite($options['debug'], $lines);
+                }
+                return Promise\Create::promiseFor(new Response(200));
+            },
+            'debug' => ['logfn' => function ($value) use (&$str) { $str .= $value; }],
+        ]);
+        $client->{$method}($args);
+
+        return $str;
+    }
+
+    private function traceOp(
+        string $name,
+        array $params,
+        Result $result,
+        ?Request $request = null
+    ): string {
+        $str = '';
+        $logfn = function ($value) use (&$str) { $str .= $value; };
+        $list = new HandlerList();
+        $list->setHandler(function () use ($result) {
+            return Promise\Create::promiseFor($result);
+        });
+        $list->appendInit(function ($handler) {
+            return function ($cmd, $req) use ($handler) {
+                return $handler($cmd, $req);
+            };
+        });
+        $list->interpose(new TraceMiddleware(
+            ['logfn' => $logfn, 'http' => false],
+            $this->generateTestService()
+        ));
+        $handler = $list->resolve();
+        $handler(
+            new Command($name, $params),
+            $request ?: new Request('POST', '/')
+        );
+        Promise\Utils::queue()->run();
+
+        return $str;
     }
 
     public function testEmitsForMiddlewareThatDoesNotReturnRequest()
@@ -329,96 +632,85 @@ class TraceMiddlewareTest extends TestCase
         $this->assertSame('payload', $result['Body']->read(7));
     }
 
-    private function generateTestClient(Service $service, $args = [])
-    {
-        return new AwsClient(
-            array_merge(
-                [
-                    'service'      => 'foo',
-                    'api_provider' => function () use ($service) {
-                        return $service->toArray();
-                    },
-                    'region'       => 'us-east-1',
-                    'version'      => 'latest',
-                ],
-                $args
-            )
-        );
-    }
-
     private function generateTestService()
     {
         return new Service(
             [
                 'metadata' => [
-                    "protocol" => "json",
-                    "apiVersion" => "2014-01-01",
-                    "jsonVersion" => "1.1"
+                    'protocol' => 'json',
+                    'apiVersion' => '2014-01-01',
+                    'jsonVersion' => '1.1',
                 ],
                 'shapes' => [
-                    "InputShape" => [
-                        "type" => "structure",
-                        "members" => [
-                            "PublicParameter" => [
-                                "shape" => "PublicParameter",
-                            ],
-                            "SensitiveParameter" => [
-                                "shape" => "SensitiveParameter",
-                            ],
-                            "NestedParams" => [
-                                "type" => "NestedParams",
-                                ],
-                            ],
-                            "SensitiveArray" => [
-                                "type" => "SensitiveArray",
-                            ],
-                        ],
-                    "PublicParameter"=> [
-                        "type"=> "string",
-                        "sensitive" => false
+                    'SecretString' => ['type' => 'string', 'sensitive' => true],
+                    'PlainString' => ['type' => 'string'],
+                    'SecretList' => [
+                        'type' => 'list',
+                        'member' => ['shape' => 'SecretString'],
                     ],
-                    "SensitiveParameter"=> [
-                        "type"=> "string",
-                        "sensitive" => true
+                    'SecretValueMap' => [
+                        'type' => 'map',
+                        'key' => ['shape' => 'PlainString'],
+                        'value' => ['shape' => 'SecretString'],
                     ],
-                    "NestedParams"=> [
-                        "type"=> "structure",
-                        "sensitive" => false,
-                        "members" => [
-                            "NestedPublicParameter" => [
-                                "shape" => "NestedPublicParameter"
-                            ],
-                            "NestedSensitiveParameter" => [
-                                "shape" => "NestedSensitiveParameter",
-                            ],
+                    'SecretKeyMap' => [
+                        'type' => 'map',
+                        'key' => ['shape' => 'SecretString'],
+                        'value' => ['shape' => 'PlainString'],
+                    ],
+                    'PlainMap' => [
+                        'type' => 'map',
+                        'key' => ['shape' => 'PlainString'],
+                        'value' => ['shape' => 'PlainString'],
+                    ],
+                    'SecretUnion' => [
+                        'type' => 'structure',
+                        'union' => true,
+                        'members' => [
+                            'Choice' => ['shape' => 'SecretString'],
+                            'Open' => ['shape' => 'PlainString'],
                         ],
                     ],
-                    "NestedPublicParameter"=> [
-                        "type"=> "string",
-                    ],
-                    "NestedSensitiveParameter"=> [
-                        "type"=> "string",
-                        "sensitive" => true
-                    ],
-                    "SensitiveArray"=> [
-                        "type"=> "string",
-                        "members" => [
-                            "NestedPublicParameter" => [
-                                "shape" => "string"
-                            ],
+                    'Nested' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'Inner' => ['shape' => 'SecretString'],
                         ],
-                        "sensitive" => true
+                    ],
+                    'Payload' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'SecretString' => ['shape' => 'SecretString'],
+                            'Password' => ['shape' => 'SecretString'],
+                            'Items' => ['shape' => 'SecretList'],
+                            'ValMap' => ['shape' => 'SecretValueMap'],
+                            'KeyMap' => ['shape' => 'SecretKeyMap'],
+                            'Plain' => ['shape' => 'PlainMap'],
+                            'Choice' => ['shape' => 'SecretUnion'],
+                            'Nested' => ['shape' => 'Nested'],
+                            'Public' => ['shape' => 'PlainString'],
+                        ],
+                    ],
+                    'PublicPayload' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'Public' => ['shape' => 'PlainString'],
+                            'Plain' => ['shape' => 'PlainMap'],
+                        ],
                     ],
                 ],
                 'operations' => [
-                    "SensitiveOp"=> [
-                        "name"=> "SensitiveOp",
-                        "http"=> [
-                            "method"=> "POST",
-                            "requestUri"=> "/",
-                            "responseCode"=> 200
-                        ],
-                        "input"=> ["shape"=> "InputShape"],
+                    'Op' => [
+                        'name' => 'Op',
+                        'http' => ['method' => 'POST', 'requestUri' => '/'],
+                        'input' => ['shape' => 'Payload'],
+                        'output' => ['shape' => 'Payload'],
+                    ],
+                    'PublicOp' => [
+                        'name' => 'PublicOp',
+                        'http' => ['method' => 'POST', 'requestUri' => '/'],
+                        'input' => ['shape' => 'PublicPayload'],
+                        'output' => ['shape' => 'PublicPayload'],
                     ],
                 ],
             ],
