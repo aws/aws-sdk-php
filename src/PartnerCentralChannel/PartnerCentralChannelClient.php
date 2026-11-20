@@ -9,10 +9,60 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result acceptChannelHandshake(array{catalog?: string, identifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise acceptChannelHandshakeAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise acceptChannelHandshakeAsync(array{catalog?: string, identifier?: string, ...} $args = [])
+ * @method \Aws\Result cancelChannelContract(array $args = [])
+ * @phpstan-method \Aws\Result cancelChannelContract(array{catalog?: string, identifier?: string, reason?: string, clientToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelChannelContractAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise cancelChannelContractAsync(array{catalog?: string, identifier?: string, reason?: string, clientToken?: string, ...} $args = [])
  * @method \Aws\Result cancelChannelHandshake(array $args = [])
  * @phpstan-method \Aws\Result cancelChannelHandshake(array{catalog?: string, identifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelChannelHandshakeAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise cancelChannelHandshakeAsync(array{catalog?: string, identifier?: string, ...} $args = [])
+ * @method \Aws\Result createChannelContract(array $args = [])
+ * @phpstan-method \Aws\Result createChannelContract(array{
+ *     contractType?: 'MANAGED_SERVICES_ATTESTATION',
+ *     catalog?: string,
+ *     payload?: array{
+ *         managedServicesAttestationPayload?: array{
+ *             legalEntityName?: string,
+ *             relationshipIdentifier?: string,
+ *             programManagementAccountIdentifier?: string,
+ *             memberAccountIds?: list<string>,
+ *             endDate?: int|string|\DateTimeInterface,
+ *             supportedServices?: list<'ARTIFICIAL_INTELLIGENCE_AND_MACHINE_LEARNING_OPERATIONS'|'BACKUP_AND_DISASTER_RECOVERY'|'FINANCIAL_OPERATIONS'|'INFRASTRUCTURE_AS_CODE_AND_AUTOMATION'|'MONITORING'|'PATCHING'|'SECURITY'|'WELL_ARCHITECTED'>,
+ *             legalEntityAddress?: array,
+ *             signatoryName?: string,
+ *             signatoryEmail?: string,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     clientToken?: string,
+ *     tags?: list<array{key?: string, value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createChannelContractAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createChannelContractAsync(array{
+ *     contractType?: 'MANAGED_SERVICES_ATTESTATION',
+ *     catalog?: string,
+ *     payload?: array{
+ *         managedServicesAttestationPayload?: array{
+ *             legalEntityName?: string,
+ *             relationshipIdentifier?: string,
+ *             programManagementAccountIdentifier?: string,
+ *             memberAccountIds?: list<string>,
+ *             endDate?: int|string|\DateTimeInterface,
+ *             supportedServices?: list<'ARTIFICIAL_INTELLIGENCE_AND_MACHINE_LEARNING_OPERATIONS'|'BACKUP_AND_DISASTER_RECOVERY'|'FINANCIAL_OPERATIONS'|'INFRASTRUCTURE_AS_CODE_AND_AUTOMATION'|'MONITORING'|'PATCHING'|'SECURITY'|'WELL_ARCHITECTED'>,
+ *             legalEntityAddress?: array,
+ *             signatoryName?: string,
+ *             signatoryEmail?: string,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     clientToken?: string,
+ *     tags?: list<array{key?: string, value?: string, ...}>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createChannelHandshake(array $args = [])
  * @phpstan-method \Aws\Result createChannelHandshake(array{
  *     handshakeType?: 'PROGRAM_MANAGEMENT_ACCOUNT'|'REVOKE_SERVICE_PERIOD'|'START_SERVICE_PERIOD',
@@ -58,27 +108,29 @@ use Aws\AwsClient;
  * @method \Aws\Result createProgramManagementAccount(array $args = [])
  * @phpstan-method \Aws\Result createProgramManagementAccount(array{
  *     catalog?: string,
- *     program?: 'DISTRIBUTION'|'DISTRIBUTION_SELLER'|'SOLUTION_PROVIDER',
+ *     program?: 'DISTRIBUTION'|'DISTRIBUTION_SELLER'|'MANAGED_SERVICES_PROVIDER'|'SOLUTION_PROVIDER',
  *     displayName?: string,
  *     accountId?: string,
  *     clientToken?: string,
  *     tags?: list<array{key?: string, value?: string, ...}>,
+ *     type?: 'MANAGED_SERVICES'|'RESALE_BILLING_TRANSFER',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createProgramManagementAccountAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createProgramManagementAccountAsync(array{
  *     catalog?: string,
- *     program?: 'DISTRIBUTION'|'DISTRIBUTION_SELLER'|'SOLUTION_PROVIDER',
+ *     program?: 'DISTRIBUTION'|'DISTRIBUTION_SELLER'|'MANAGED_SERVICES_PROVIDER'|'SOLUTION_PROVIDER',
  *     displayName?: string,
  *     accountId?: string,
  *     clientToken?: string,
  *     tags?: list<array{key?: string, value?: string, ...}>,
+ *     type?: 'MANAGED_SERVICES'|'RESALE_BILLING_TRANSFER',
  *     ...,
  * } $args = [])
  * @method \Aws\Result createRelationship(array $args = [])
  * @phpstan-method \Aws\Result createRelationship(array{
  *     catalog?: string,
- *     associationType?: 'DOWNSTREAM_SELLER'|'END_CUSTOMER'|'INTERNAL',
+ *     associationType?: 'DOWNSTREAM_SELLER'|'END_CUSTOMER'|'INTERNAL'|'MANAGED_SERVICES_END_CUSTOMER',
  *     programManagementAccountIdentifier?: string,
  *     associatedAccountId?: string,
  *     displayName?: string,
@@ -107,12 +159,14 @@ use Aws\AwsClient;
  *         },
  *         ...,
  *     },
+ *     accountScope?: 'ENTIRE_ORGANIZATION'|'SPECIFIC_MEMBER_ACCOUNTS',
+ *     startDate?: int|string|\DateTimeInterface,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createRelationshipAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createRelationshipAsync(array{
  *     catalog?: string,
- *     associationType?: 'DOWNSTREAM_SELLER'|'END_CUSTOMER'|'INTERNAL',
+ *     associationType?: 'DOWNSTREAM_SELLER'|'END_CUSTOMER'|'INTERNAL'|'MANAGED_SERVICES_END_CUSTOMER',
  *     programManagementAccountIdentifier?: string,
  *     associatedAccountId?: string,
  *     displayName?: string,
@@ -141,6 +195,8 @@ use Aws\AwsClient;
  *         },
  *         ...,
  *     },
+ *     accountScope?: 'ENTIRE_ORGANIZATION'|'SPECIFIC_MEMBER_ACCOUNTS',
+ *     startDate?: int|string|\DateTimeInterface,
  *     ...,
  * } $args = [])
  * @method \Aws\Result deleteProgramManagementAccount(array $args = [])
@@ -163,10 +219,48 @@ use Aws\AwsClient;
  *     clientToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result getChannelContract(array $args = [])
+ * @phpstan-method \Aws\Result getChannelContract(array{catalog?: string, identifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getChannelContractAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getChannelContractAsync(array{catalog?: string, identifier?: string, ...} $args = [])
  * @method \Aws\Result getRelationship(array $args = [])
  * @phpstan-method \Aws\Result getRelationship(array{catalog?: string, programManagementAccountIdentifier?: string, identifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getRelationshipAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getRelationshipAsync(array{catalog?: string, programManagementAccountIdentifier?: string, identifier?: string, ...} $args = [])
+ * @method \Aws\Result listChannelContracts(array $args = [])
+ * @phpstan-method \Aws\Result listChannelContracts(array{
+ *     catalog?: string,
+ *     contractType?: 'MANAGED_SERVICES_ATTESTATION',
+ *     statuses?: list<'ACCEPTED'|'CANCELED'|'EXPIRED'|'INACTIVE'|'PENDING'>,
+ *     contractTypeFilters?: array{
+ *         managedServicesAttestationTypeFilters?: array{relationshipIdentifiers?: list<string>, legalEntityNames?: list<string>, ...},
+ *         ...,
+ *     },
+ *     contractTypeSort?: array{
+ *         managedServicesAttestationTypeSort?: array{sortOrder?: 'Ascending'|'Descending', sortBy?: 'UpdatedAt', ...},
+ *         ...,
+ *     },
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listChannelContractsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listChannelContractsAsync(array{
+ *     catalog?: string,
+ *     contractType?: 'MANAGED_SERVICES_ATTESTATION',
+ *     statuses?: list<'ACCEPTED'|'CANCELED'|'EXPIRED'|'INACTIVE'|'PENDING'>,
+ *     contractTypeFilters?: array{
+ *         managedServicesAttestationTypeFilters?: array{relationshipIdentifiers?: list<string>, legalEntityNames?: list<string>, ...},
+ *         ...,
+ *     },
+ *     contractTypeSort?: array{
+ *         managedServicesAttestationTypeSort?: array{sortOrder?: 'Ascending'|'Descending', sortBy?: 'UpdatedAt', ...},
+ *         ...,
+ *     },
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listChannelHandshakes(array $args = [])
  * @phpstan-method \Aws\Result listChannelHandshakes(array{
  *     handshakeType?: 'PROGRAM_MANAGEMENT_ACCOUNT'|'REVOKE_SERVICE_PERIOD'|'START_SERVICE_PERIOD',
@@ -178,7 +272,10 @@ use Aws\AwsClient;
  *     handshakeTypeFilters?: array{
  *         startServicePeriodTypeFilters?: array{servicePeriodTypes?: list<'FIXED_COMMITMENT_PERIOD'|'MINIMUM_NOTICE_PERIOD'>, ...},
  *         revokeServicePeriodTypeFilters?: array{servicePeriodTypes?: list<'FIXED_COMMITMENT_PERIOD'|'MINIMUM_NOTICE_PERIOD'>, ...},
- *         programManagementAccountTypeFilters?: array{programs?: list<'DISTRIBUTION'|'DISTRIBUTION_SELLER'|'SOLUTION_PROVIDER'>, ...},
+ *         programManagementAccountTypeFilters?: array{
+ *             programs?: list<'DISTRIBUTION'|'DISTRIBUTION_SELLER'|'MANAGED_SERVICES_PROVIDER'|'SOLUTION_PROVIDER'>,
+ *             ...,
+ *         },
  *         ...,
  *     },
  *     handshakeTypeSort?: array{
@@ -201,7 +298,10 @@ use Aws\AwsClient;
  *     handshakeTypeFilters?: array{
  *         startServicePeriodTypeFilters?: array{servicePeriodTypes?: list<'FIXED_COMMITMENT_PERIOD'|'MINIMUM_NOTICE_PERIOD'>, ...},
  *         revokeServicePeriodTypeFilters?: array{servicePeriodTypes?: list<'FIXED_COMMITMENT_PERIOD'|'MINIMUM_NOTICE_PERIOD'>, ...},
- *         programManagementAccountTypeFilters?: array{programs?: list<'DISTRIBUTION'|'DISTRIBUTION_SELLER'|'SOLUTION_PROVIDER'>, ...},
+ *         programManagementAccountTypeFilters?: array{
+ *             programs?: list<'DISTRIBUTION'|'DISTRIBUTION_SELLER'|'MANAGED_SERVICES_PROVIDER'|'SOLUTION_PROVIDER'>,
+ *             ...,
+ *         },
  *         ...,
  *     },
  *     handshakeTypeSort?: array{
@@ -218,11 +318,12 @@ use Aws\AwsClient;
  *     catalog?: string,
  *     maxResults?: int,
  *     displayNames?: list<string>,
- *     programs?: list<'DISTRIBUTION'|'DISTRIBUTION_SELLER'|'SOLUTION_PROVIDER'>,
+ *     programs?: list<'DISTRIBUTION'|'DISTRIBUTION_SELLER'|'MANAGED_SERVICES_PROVIDER'|'SOLUTION_PROVIDER'>,
  *     accountIds?: list<string>,
  *     statuses?: list<'ACTIVE'|'INACTIVE'|'PENDING'>,
  *     sort?: array{sortOrder?: 'Ascending'|'Descending', sortBy?: 'UpdatedAt', ...},
  *     nextToken?: string,
+ *     type?: 'MANAGED_SERVICES'|'RESALE_BILLING_TRANSFER',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listProgramManagementAccountsAsync(array $args = [])
@@ -230,11 +331,12 @@ use Aws\AwsClient;
  *     catalog?: string,
  *     maxResults?: int,
  *     displayNames?: list<string>,
- *     programs?: list<'DISTRIBUTION'|'DISTRIBUTION_SELLER'|'SOLUTION_PROVIDER'>,
+ *     programs?: list<'DISTRIBUTION'|'DISTRIBUTION_SELLER'|'MANAGED_SERVICES_PROVIDER'|'SOLUTION_PROVIDER'>,
  *     accountIds?: list<string>,
  *     statuses?: list<'ACTIVE'|'INACTIVE'|'PENDING'>,
  *     sort?: array{sortOrder?: 'Ascending'|'Descending', sortBy?: 'UpdatedAt', ...},
  *     nextToken?: string,
+ *     type?: 'MANAGED_SERVICES'|'RESALE_BILLING_TRANSFER',
  *     ...,
  * } $args = [])
  * @method \Aws\Result listRelationships(array $args = [])
@@ -242,7 +344,7 @@ use Aws\AwsClient;
  *     catalog?: string,
  *     maxResults?: int,
  *     associatedAccountIds?: list<string>,
- *     associationTypes?: list<'DOWNSTREAM_SELLER'|'END_CUSTOMER'|'INTERNAL'>,
+ *     associationTypes?: list<'DOWNSTREAM_SELLER'|'END_CUSTOMER'|'INTERNAL'|'MANAGED_SERVICES_END_CUSTOMER'>,
  *     displayNames?: list<string>,
  *     programManagementAccountIdentifiers?: list<string>,
  *     sort?: array{sortOrder?: 'Ascending'|'Descending', sortBy?: 'UpdatedAt', ...},
@@ -254,7 +356,7 @@ use Aws\AwsClient;
  *     catalog?: string,
  *     maxResults?: int,
  *     associatedAccountIds?: list<string>,
- *     associationTypes?: list<'DOWNSTREAM_SELLER'|'END_CUSTOMER'|'INTERNAL'>,
+ *     associationTypes?: list<'DOWNSTREAM_SELLER'|'END_CUSTOMER'|'INTERNAL'|'MANAGED_SERVICES_END_CUSTOMER'>,
  *     displayNames?: list<string>,
  *     programManagementAccountIdentifiers?: list<string>,
  *     sort?: array{sortOrder?: 'Ascending'|'Descending', sortBy?: 'UpdatedAt', ...},

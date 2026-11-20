@@ -85,6 +85,28 @@
       ],
       "idempotent":true
     },
+    "DeleteOrganizationEnrollmentConfiguration":{
+      "name":"DeleteOrganizationEnrollmentConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteOrganizationEnrollmentConfigurationRequest"},
+      "output":{"shape":"DeleteOrganizationEnrollmentConfigurationResponse"},
+      "errors":[
+        {"shape":"ForbiddenException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"OptInRequiredException"},
+        {"shape":"IdempotentParameterMismatchException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"IdempotencyTokenInUseException"}
+      ],
+      "idempotent":true
+    },
     "DisassociateAccounts":{
       "name":"DisassociateAccounts",
       "http":{
@@ -296,6 +318,44 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "ListOrganizationEnrollmentConfigurations":{
+      "name":"ListOrganizationEnrollmentConfigurations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListOrganizationEnrollmentConfigurationsRequest"},
+      "output":{"shape":"ListOrganizationEnrollmentConfigurationsResponse"},
+      "errors":[
+        {"shape":"ForbiddenException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"OptInRequiredException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "readonly":true
+    },
+    "ListOrganizationalUnits":{
+      "name":"ListOrganizationalUnits",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListOrganizationalUnitsRequest"},
+      "output":{"shape":"ListOrganizationalUnitsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"OptInRequiredException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "readonly":true
+    },
     "ListRecommendedActionSummaries":{
       "name":"ListRecommendedActionSummaries",
       "http":{
@@ -351,6 +411,28 @@
         {"shape":"ServiceUnavailableException"}
       ],
       "readonly":true
+    },
+    "PutOrganizationEnrollmentConfiguration":{
+      "name":"PutOrganizationEnrollmentConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutOrganizationEnrollmentConfigurationRequest"},
+      "output":{"shape":"PutOrganizationEnrollmentConfigurationResponse"},
+      "errors":[
+        {"shape":"ForbiddenException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"OptInRequiredException"},
+        {"shape":"IdempotentParameterMismatchException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"IdempotencyTokenInUseException"}
+      ],
+      "idempotent":true
     },
     "RollbackAutomationEvent":{
       "name":"RollbackAutomationEvent",
@@ -519,6 +601,7 @@
         "accountId":{"shape":"AccountId"},
         "status":{"shape":"EnrollmentStatus"},
         "organizationRuleMode":{"shape":"OrganizationRuleMode"},
+        "organizationRuleModeSource":{"shape":"OrganizationRuleModeSource"},
         "statusReason":{"shape":"String"},
         "lastUpdatedTimestamp":{"shape":"Timestamp"}
       }
@@ -544,6 +627,13 @@
         "accountIds":{"shape":"AccountIdList"},
         "errors":{"shape":"StringList"}
       }
+    },
+    "AutoEnrollMemberAccounts":{
+      "type":"string",
+      "enum":[
+        "All",
+        "None"
+      ]
     },
     "AutomationEvent":{
       "type":"structure",
@@ -694,6 +784,17 @@
         "NumericGreaterThanEqualsIfExists"
       ]
     },
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "CreateAutomationRuleRequest":{
       "type":"structure",
       "required":[
@@ -768,6 +869,25 @@
       }
     },
     "DeleteAutomationRuleResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteOrganizationEnrollmentConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "target",
+        "configurationTypes"
+      ],
+      "members":{
+        "target":{"shape":"OrganizationTarget"},
+        "configurationTypes":{"shape":"OrganizationEnrollmentConfigurationTypes"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "DeleteOrganizationEnrollmentConfigurationResponse":{
       "type":"structure",
       "members":{}
     },
@@ -974,7 +1094,8 @@
         "status":{"shape":"EnrollmentStatus"},
         "statusReason":{"shape":"String"},
         "organizationRuleMode":{"shape":"OrganizationRuleMode"},
-        "lastUpdatedTimestamp":{"shape":"Timestamp"}
+        "lastUpdatedTimestamp":{"shape":"Timestamp"},
+        "organizationEnrollmentConfigurationStatus":{"shape":"OrganizationEnrollmentConfigurationStatus"}
       }
     },
     "IdempotencyTokenInUseException":{
@@ -1085,6 +1206,7 @@
       "type":"structure",
       "members":{
         "filters":{"shape":"AutomationEventFilterList"},
+        "organizationalUnitIds":{"shape":"OrganizationalUnitIds"},
         "startDateInclusive":{"shape":"String"},
         "endDateExclusive":{"shape":"String"},
         "maxResults":{"shape":"ListAutomationEventSummariesRequestMaxResultsInteger"},
@@ -1108,6 +1230,7 @@
       "type":"structure",
       "members":{
         "filters":{"shape":"AutomationEventFilterList"},
+        "organizationalUnitIds":{"shape":"OrganizationalUnitIds"},
         "startTimeInclusive":{"shape":"Timestamp"},
         "endTimeExclusive":{"shape":"Timestamp"},
         "maxResults":{"shape":"ListAutomationEventsRequestMaxResultsInteger"},
@@ -1204,10 +1327,55 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListOrganizationEnrollmentConfigurationsRequest":{
+      "type":"structure",
+      "members":{
+        "targetType":{"shape":"OrganizationTargetType"},
+        "maxResults":{"shape":"ListOrganizationEnrollmentConfigurationsRequestMaxResultsInteger"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListOrganizationEnrollmentConfigurationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListOrganizationEnrollmentConfigurationsResponse":{
+      "type":"structure",
+      "required":["organizationEnrollmentConfigurations"],
+      "members":{
+        "organizationEnrollmentConfigurations":{"shape":"OrganizationEnrollmentConfigurations"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListOrganizationalUnitsRequest":{
+      "type":"structure",
+      "members":{
+        "organizationalUnitIds":{"shape":"OrganizationalUnitIds"},
+        "maxResults":{"shape":"ListOrganizationalUnitsRequestMaxResultsInteger"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListOrganizationalUnitsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListOrganizationalUnitsResponse":{
+      "type":"structure",
+      "required":["organizationalUnits"],
+      "members":{
+        "organizationalUnits":{"shape":"OrganizationalUnitInfoList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListRecommendedActionSummariesRequest":{
       "type":"structure",
       "members":{
         "filters":{"shape":"RecommendedActionFilterList"},
+        "organizationalUnitIds":{"shape":"OrganizationalUnitIds"},
         "maxResults":{"shape":"ListRecommendedActionSummariesRequestMaxResultsInteger"},
         "nextToken":{"shape":"NextToken"}
       }
@@ -1229,6 +1397,7 @@
       "type":"structure",
       "members":{
         "filters":{"shape":"RecommendedActionFilterList"},
+        "organizationalUnitIds":{"shape":"OrganizationalUnitIds"},
         "maxResults":{"shape":"ListRecommendedActionsRequestMaxResultsInteger"},
         "nextToken":{"shape":"NextToken"}
       }
@@ -1293,7 +1462,10 @@
       "type":"structure",
       "members":{
         "ruleApplyOrder":{"shape":"RuleApplyOrder"},
-        "accountIds":{"shape":"OrganizationConfigurationAccountIds"}
+        "accountIds":{"shape":"OrganizationConfigurationAccountIds"},
+        "organizationalUnitIds":{"shape":"OrganizationConfigurationOrganizationalUnitIds"},
+        "excludedOrganizationalUnitIds":{"shape":"OrganizationConfigurationOrganizationalUnitIds"},
+        "excludedAccountIds":{"shape":"OrganizationConfigurationAccountIds"}
       }
     },
     "OrganizationConfigurationAccountIds":{
@@ -1302,6 +1474,45 @@
       "max":50,
       "min":1
     },
+    "OrganizationConfigurationOrganizationalUnitIds":{
+      "type":"list",
+      "member":{"shape":"OrganizationalUnitId"},
+      "max":150,
+      "min":1
+    },
+    "OrganizationEnrollmentConfiguration":{
+      "type":"structure",
+      "required":[
+        "targetId",
+        "targetType"
+      ],
+      "members":{
+        "targetId":{"shape":"String"},
+        "targetType":{"shape":"OrganizationTargetType"},
+        "organizationRuleMode":{"shape":"OrganizationRuleMode"}
+      }
+    },
+    "OrganizationEnrollmentConfigurationStatus":{
+      "type":"string",
+      "enum":[
+        "Active",
+        "Inactive"
+      ]
+    },
+    "OrganizationEnrollmentConfigurationType":{
+      "type":"string",
+      "enum":["OrganizationRuleMode"]
+    },
+    "OrganizationEnrollmentConfigurationTypes":{
+      "type":"list",
+      "member":{"shape":"OrganizationEnrollmentConfigurationType"},
+      "max":1,
+      "min":1
+    },
+    "OrganizationEnrollmentConfigurations":{
+      "type":"list",
+      "member":{"shape":"OrganizationEnrollmentConfiguration"}
+    },
     "OrganizationRuleMode":{
       "type":"string",
       "enum":[
@@ -1309,11 +1520,77 @@
         "NoneAllowed"
       ]
     },
+    "OrganizationRuleModeSource":{
+      "type":"structure",
+      "required":["sourceType"],
+      "members":{
+        "sourceType":{"shape":"OrganizationRuleModeSourceType"},
+        "sourceTargetId":{"shape":"String"}
+      }
+    },
+    "OrganizationRuleModeSourceType":{
+      "type":"string",
+      "enum":[
+        "Applied",
+        "Inherited",
+        "Direct",
+        "Default"
+      ]
+    },
     "OrganizationScope":{
       "type":"structure",
       "members":{
-        "accountIds":{"shape":"OrganizationConfigurationAccountIds"}
+        "accountIds":{"shape":"OrganizationConfigurationAccountIds"},
+        "organizationalUnitIds":{"shape":"OrganizationConfigurationOrganizationalUnitIds"},
+        "excludedOrganizationalUnitIds":{"shape":"OrganizationConfigurationOrganizationalUnitIds"},
+        "excludedAccountIds":{"shape":"OrganizationConfigurationAccountIds"}
       }
+    },
+    "OrganizationTarget":{
+      "type":"structure",
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "organizationalUnitId":{"shape":"OrganizationalUnitId"}
+      },
+      "union":true
+    },
+    "OrganizationTargetType":{
+      "type":"string",
+      "enum":[
+        "Account",
+        "OrganizationalUnit"
+      ]
+    },
+    "OrganizationalUnitId":{
+      "type":"string",
+      "max":68,
+      "min":1,
+      "pattern":"(r-[0-9a-z]{4,32}|ou-[0-9a-z]{4,32}-[a-z0-9]{8,32})"
+    },
+    "OrganizationalUnitIds":{
+      "type":"list",
+      "member":{"shape":"OrganizationalUnitId"},
+      "max":50,
+      "min":1
+    },
+    "OrganizationalUnitInfo":{
+      "type":"structure",
+      "required":[
+        "organizationalUnitId",
+        "autoEnrollMemberAccounts",
+        "organizationRuleMode",
+        "organizationRuleModeSource"
+      ],
+      "members":{
+        "organizationalUnitId":{"shape":"OrganizationalUnitId"},
+        "autoEnrollMemberAccounts":{"shape":"AutoEnrollMemberAccounts"},
+        "organizationRuleMode":{"shape":"OrganizationRuleMode"},
+        "organizationRuleModeSource":{"shape":"OrganizationRuleModeSource"}
+      }
+    },
+    "OrganizationalUnitInfoList":{
+      "type":"list",
+      "member":{"shape":"OrganizationalUnitInfo"}
     },
     "PreviewResult":{
       "type":"structure",
@@ -1353,6 +1630,22 @@
     "PreviewResults":{
       "type":"list",
       "member":{"shape":"PreviewResult"}
+    },
+    "PutOrganizationEnrollmentConfigurationRequest":{
+      "type":"structure",
+      "required":["target"],
+      "members":{
+        "target":{"shape":"OrganizationTarget"},
+        "organizationRuleMode":{"shape":"OrganizationRuleMode"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "PutOrganizationEnrollmentConfigurationResponse":{
+      "type":"structure",
+      "members":{}
     },
     "RecommendedAction":{
       "type":"structure",

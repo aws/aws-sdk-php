@@ -1017,22 +1017,6 @@
         {"shape":"ThrottlingException"}
       ]
     },
-    "DeleteAssetType":{
-      "name":"DeleteAssetType",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"DeleteAssetTypeRequest"},
-      "output":{"shape":"DeleteAssetTypeResponse"},
-      "errors":[
-        {"shape":"AccessDeniedException"},
-        {"shape":"InternalServiceException"},
-        {"shape":"InvalidInputException"},
-        {"shape":"ConcurrentModificationException"},
-        {"shape":"ThrottlingException"}
-      ]
-    },
     "DeleteAttachment":{
       "name":"DeleteAttachment",
       "http":{
@@ -2092,6 +2076,7 @@
       "input":{"shape":"GetDataCatalogExportConfigurationInput"},
       "output":{"shape":"GetDataCatalogExportConfigurationOutput"},
       "errors":[
+        {"shape":"AccessDeniedException"},
         {"shape":"InvalidInputException"},
         {"shape":"EntityNotFoundException"},
         {"shape":"InternalServiceException"},
@@ -2346,6 +2331,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"EntityNotFoundException"},
         {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -2361,6 +2347,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"EntityNotFoundException"},
         {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -3767,23 +3754,6 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"InternalServiceException"},
         {"shape":"InvalidInputException"},
-        {"shape":"ThrottlingException"}
-      ]
-    },
-    "PutAssetType":{
-      "name":"PutAssetType",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"PutAssetTypeRequest"},
-      "output":{"shape":"PutAssetTypeResponse"},
-      "errors":[
-        {"shape":"AccessDeniedException"},
-        {"shape":"InternalServiceException"},
-        {"shape":"InvalidInputException"},
-        {"shape":"EntityNotFoundException"},
-        {"shape":"ConcurrentModificationException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -5317,7 +5287,11 @@
       "max":2048,
       "min":20
     },
-    "AssetDescription":{"type":"string"},
+    "AssetDescription":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
     "AssetFormEntry":{
       "type":"structure",
       "members":{
@@ -5325,7 +5299,23 @@
         "Content":{"shape":"FormContent"}
       }
     },
-    "AssetFormKey":{"type":"string"},
+    "AssetFormInput":{
+      "type":"structure",
+      "members":{
+        "FormTypeIdentifier":{"shape":"FormTypeId"},
+        "Content":{"shape":"FormContent"}
+      }
+    },
+    "AssetFormInputMap":{
+      "type":"map",
+      "key":{"shape":"AssetFormKey"},
+      "value":{"shape":"AssetFormInput"}
+    },
+    "AssetFormKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "AssetFormMap":{
       "type":"map",
       "key":{"shape":"AssetFormKey"},
@@ -5337,26 +5327,27 @@
       "min":1,
       "pattern":"[a-zA-Z0-9\\-\\:\\/\\.\\_\\*]+"
     },
-    "AssetName":{"type":"string"},
+    "AssetName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "AssetTypeFormKey":{
       "type":"string",
       "max":128,
       "min":1,
       "pattern":"^(?![0-9_])\\w+$|^_\\w*[a-zA-Z0-9]\\w*$"
     },
-    "AssetTypeFormReference":{
+    "AssetTypeFormOutput":{
       "type":"structure",
-      "required":["FormTypeIdentifier"],
       "members":{
-        "FormTypeIdentifier":{"shape":"FormTypeId"}
+        "FormTypeId":{"shape":"FormTypeId"}
       }
     },
-    "AssetTypeFormsMap":{
+    "AssetTypeFormOutputMap":{
       "type":"map",
       "key":{"shape":"AssetTypeFormKey"},
-      "value":{"shape":"AssetTypeFormReference"},
-      "max":100,
-      "min":1
+      "value":{"shape":"AssetTypeFormOutput"}
     },
     "AssetTypeId":{
       "type":"string",
@@ -5374,11 +5365,30 @@
       "type":"list",
       "member":{"shape":"AssetTypeItem"}
     },
+    "AssetTypeMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
     "AssetTypeName":{
       "type":"string",
       "max":128,
       "min":1,
       "pattern":"^(?![0-9_])\\w+$|^_\\w*[a-zA-Z0-9]\\w*$"
+    },
+    "AssetsExport":{
+      "type":"structure",
+      "members":{
+        "S3TablesExport":{"shape":"ExportSetting"}
+      }
+    },
+    "AssetsExportResult":{
+      "type":"structure",
+      "members":{
+        "S3TablesExport":{"shape":"ExportSetting"},
+        "S3TablesExportState":{"shape":"S3TablesExportState"}
+      }
     },
     "AssociateGlossaryTermsRequest":{
       "type":"structure",
@@ -5400,10 +5410,10 @@
     "AssociateGlossaryTermsResponse":{
       "type":"structure",
       "members":{
-        "AssetIdentifier":{"shape":"AssetId"},
+        "AssetId":{"shape":"AssetId"},
         "IterableFormName":{"shape":"IterableFormName"},
-        "ItemIdentifier":{"shape":"ItemIdentifier"},
-        "GlossaryTerms":{"shape":"GlossaryTermIdList"}
+        "ItemId":{"shape":"ItemId"},
+        "GlossaryTerms":{"shape":"GlossaryTermIdOutputList"}
       }
     },
     "AthenaConnectorSource":{
@@ -8103,8 +8113,8 @@
       "members":{
         "GlossaryIdentifier":{"shape":"GlossaryId"},
         "Name":{"shape":"GlossaryTermName"},
-        "ShortDescription":{"shape":"GlossaryShortDescription"},
-        "LongDescription":{"shape":"GlossaryLongDescription"},
+        "ShortDescription":{"shape":"GlossaryTermShortDescription"},
+        "LongDescription":{"shape":"GlossaryTermLongDescription"},
         "ClientToken":{
           "shape":"HashString",
           "idempotencyToken":true
@@ -8117,8 +8127,8 @@
         "Id":{"shape":"GlossaryTermId"},
         "GlossaryId":{"shape":"GlossaryId"},
         "Name":{"shape":"GlossaryTermName"},
-        "ShortDescription":{"shape":"GlossaryShortDescription"},
-        "LongDescription":{"shape":"GlossaryLongDescription"}
+        "ShortDescription":{"shape":"GlossaryTermShortDescription"},
+        "LongDescription":{"shape":"GlossaryTermLongDescription"}
       }
     },
     "CreateGlueIdentityCenterConfigurationRequest":{
@@ -9599,17 +9609,6 @@
       "type":"structure",
       "members":{}
     },
-    "DeleteAssetTypeRequest":{
-      "type":"structure",
-      "required":["Identifier"],
-      "members":{
-        "Identifier":{"shape":"AssetTypeId"}
-      }
-    },
-    "DeleteAssetTypeResponse":{
-      "type":"structure",
-      "members":{}
-    },
     "DeleteAttachmentRequest":{
       "type":"structure",
       "required":[
@@ -9626,9 +9625,9 @@
     "DeleteAttachmentResponse":{
       "type":"structure",
       "members":{
-        "AssetIdentifier":{"shape":"AssetId"},
+        "AssetId":{"shape":"AssetId"},
         "IterableFormName":{"shape":"IterableFormName"},
-        "ItemIdentifier":{"shape":"ItemIdentifier"}
+        "ItemId":{"shape":"ItemId"}
       }
     },
     "DeleteBehavior":{
@@ -10424,10 +10423,10 @@
     "DisassociateGlossaryTermsResponse":{
       "type":"structure",
       "members":{
-        "AssetIdentifier":{"shape":"AssetId"},
+        "AssetId":{"shape":"AssetId"},
         "IterableFormName":{"shape":"IterableFormName"},
-        "ItemIdentifier":{"shape":"ItemIdentifier"},
-        "GlossaryTerms":{"shape":"GlossaryTermIdList"}
+        "ItemId":{"shape":"ItemId"},
+        "GlossaryTerms":{"shape":"GlossaryTermIdOutputList"}
       }
     },
     "DisplayName":{
@@ -11189,7 +11188,8 @@
     "FormTypeId":{
       "type":"string",
       "max":256,
-      "min":1
+      "min":1,
+      "pattern":"^(?![\\.:])([\\w.]+(::))?[A-Z]\\w*$"
     },
     "FormTypeItem":{
       "type":"structure",
@@ -11201,6 +11201,12 @@
     "FormTypeItemList":{
       "type":"list",
       "member":{"shape":"FormTypeItem"}
+    },
+    "FormTypeMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
     },
     "FormTypeName":{
       "type":"string",
@@ -11267,7 +11273,7 @@
         "CreatedAt":{"shape":"CreatedAt"},
         "UpdatedAt":{"shape":"UpdatedAt"},
         "AssetTypeId":{"shape":"AssetTypeId"},
-        "GlossaryTerms":{"shape":"GlossaryTermIdList"},
+        "GlossaryTerms":{"shape":"GlossaryTermIdOutputList"},
         "Forms":{"shape":"AssetFormMap"},
         "Attachments":{"shape":"AssetFormMap"},
         "IterableForms":{"shape":"IterableFormMap"}
@@ -11285,7 +11291,7 @@
       "members":{
         "Id":{"shape":"AssetTypeId"},
         "Name":{"shape":"AssetTypeName"},
-        "Forms":{"shape":"AssetTypeFormsMap"}
+        "Forms":{"shape":"AssetTypeFormOutputMap"}
       }
     },
     "GetBlueprintRequest":{
@@ -11645,12 +11651,10 @@
     "GetDataCatalogExportConfigurationOutput":{
       "type":"structure",
       "members":{
-        "ExportSetting":{"shape":"ExportSetting"},
-        "Status":{"shape":"ExportStatus"},
-        "EncryptionConfiguration":{"shape":"ExportEncryptionConfiguration"},
-        "S3TableBucketArn":{"shape":"S3TableBucketArn"},
         "CreatedAt":{"shape":"CreatedAt"},
-        "UpdatedAt":{"shape":"UpdatedAt"}
+        "UpdatedAt":{"shape":"UpdatedAt"},
+        "S3TablesConfiguration":{"shape":"S3TablesConfigurationResult"},
+        "Assets":{"shape":"AssetsExportResult"}
       }
     },
     "GetDataQualityEvaluationConfigRequest":{
@@ -11993,8 +11997,8 @@
         "Id":{"shape":"GlossaryTermId"},
         "GlossaryId":{"shape":"GlossaryId"},
         "Name":{"shape":"GlossaryTermName"},
-        "ShortDescription":{"shape":"GlossaryShortDescription"},
-        "LongDescription":{"shape":"GlossaryLongDescription"}
+        "ShortDescription":{"shape":"GlossaryTermShortDescription"},
+        "LongDescription":{"shape":"GlossaryTermLongDescription"}
       }
     },
     "GetGlueIdentityCenterConfigurationRequest":{
@@ -12981,7 +12985,12 @@
         "NextToken":{"shape":"GenericString"}
       }
     },
-    "GlossaryId":{"type":"string"},
+    "GlossaryId":{
+      "type":"string",
+      "max":36,
+      "min":1,
+      "pattern":"^[a-z0-9]+$"
+    },
     "GlossaryItem":{
       "type":"structure",
       "members":{
@@ -12994,9 +13003,10 @@
       "type":"list",
       "member":{"shape":"GlossaryItem"}
     },
-    "GlossaryLongDescription":{
-      "type":"string",
-      "max":4096,
+    "GlossaryMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
       "min":1
     },
     "GlossaryName":{
@@ -13004,33 +13014,53 @@
       "max":256,
       "min":1
     },
-    "GlossaryShortDescription":{
+    "GlossaryTermId":{
       "type":"string",
-      "max":1024,
-      "min":1
+      "max":36,
+      "min":1,
+      "pattern":"^[a-z0-9]+$"
     },
-    "GlossaryTermId":{"type":"string"},
     "GlossaryTermIdList":{
       "type":"list",
       "member":{"shape":"GlossaryTermId"},
       "max":10,
       "min":1
     },
+    "GlossaryTermIdOutputList":{
+      "type":"list",
+      "member":{"shape":"GlossaryTermId"}
+    },
     "GlossaryTermItem":{
       "type":"structure",
       "members":{
         "Id":{"shape":"GlossaryTermId"},
         "Name":{"shape":"GlossaryTermName"},
-        "ShortDescription":{"shape":"GlossaryShortDescription"}
+        "ShortDescription":{"shape":"GlossaryTermShortDescription"}
       }
     },
     "GlossaryTermItemList":{
       "type":"list",
       "member":{"shape":"GlossaryTermItem"}
     },
+    "GlossaryTermLongDescription":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
+    "GlossaryTermMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
     "GlossaryTermName":{
       "type":"string",
       "max":256,
+      "min":1
+    },
+    "GlossaryTermShortDescription":{
+      "type":"string",
+      "max":1024,
       "min":1
     },
     "GlueEncryptionException":{
@@ -13957,7 +13987,7 @@
     "IterableFormEntry":{
       "type":"structure",
       "members":{
-        "FormTypeId":{"shape":"FormTypeId"}
+        "FormTypeId":{"shape":"IterableFormTypeId"}
       }
     },
     "IterableFormItem":{
@@ -13965,7 +13995,7 @@
       "members":{
         "ItemId":{"shape":"ItemId"},
         "ItemName":{"shape":"ItemName"},
-        "GlossaryTerms":{"shape":"GlossaryTermIdList"},
+        "GlossaryTerms":{"shape":"GlossaryTermIdOutputList"},
         "Forms":{"shape":"AssetFormMap"},
         "Attachments":{"shape":"AssetFormMap"}
       }
@@ -13981,7 +14011,7 @@
         "ItemId":{"shape":"ItemId"},
         "ItemName":{"shape":"ItemName"},
         "Description":{"shape":"ItemDescription"},
-        "GlossaryTerms":{"shape":"GlossaryTermIdList"}
+        "GlossaryTerms":{"shape":"GlossaryTermIdOutputList"}
       }
     },
     "IterableFormListItemList":{
@@ -13998,6 +14028,11 @@
       "max":256,
       "min":1,
       "pattern":"^[a-zA-Z][a-zA-Z0-9_]*(::[a-zA-Z][a-zA-Z0-9_]*)?$"
+    },
+    "IterableFormTypeId":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "JDBCConnectionType":{
       "type":"string",
@@ -14576,7 +14611,7 @@
     "ListAssetTypesRequest":{
       "type":"structure",
       "members":{
-        "MaxResults":{"shape":"PageSize"},
+        "MaxResults":{"shape":"AssetTypeMaxResults"},
         "NextToken":{"shape":"Token"}
       }
     },
@@ -14840,7 +14875,7 @@
     "ListFormTypesRequest":{
       "type":"structure",
       "members":{
-        "MaxResults":{"shape":"PageSize"},
+        "MaxResults":{"shape":"FormTypeMaxResults"},
         "NextToken":{"shape":"Token"}
       }
     },
@@ -14855,7 +14890,7 @@
     "ListGlossariesRequest":{
       "type":"structure",
       "members":{
-        "MaxResults":{"shape":"PageSize"},
+        "MaxResults":{"shape":"GlossaryMaxResults"},
         "NextToken":{"shape":"Token"}
       }
     },
@@ -14871,7 +14906,7 @@
       "required":["GlossaryIdentifier"],
       "members":{
         "GlossaryIdentifier":{"shape":"GlossaryId"},
-        "MaxResults":{"shape":"PageSize"},
+        "MaxResults":{"shape":"GlossaryTermMaxResults"},
         "NextToken":{"shape":"Token"}
       }
     },
@@ -16515,17 +16550,16 @@
     "PutAssetRequest":{
       "type":"structure",
       "required":[
-        "AssetTypeId",
         "Identifier",
         "Name",
         "Forms"
       ],
       "members":{
-        "AssetTypeId":{"shape":"AssetTypeId"},
+        "AssetTypeIdentifier":{"shape":"AssetTypeId"},
         "Identifier":{"shape":"AssetId"},
         "Name":{"shape":"AssetName"},
         "Description":{"shape":"AssetDescription"},
-        "Forms":{"shape":"AssetFormMap"},
+        "Forms":{"shape":"AssetFormInputMap"},
         "ClientToken":{
           "shape":"HashString",
           "idempotencyToken":true
@@ -16536,37 +16570,16 @@
       "type":"structure",
       "required":[
         "Id",
-        "Name"
+        "Name",
+        "AssetTypeId"
       ],
       "members":{
         "Id":{"shape":"AssetId"},
         "Name":{"shape":"AssetName"},
         "Description":{"shape":"AssetDescription"},
+        "AssetTypeId":{"shape":"AssetTypeId"},
         "CreatedAt":{"shape":"CreatedAt"},
         "Forms":{"shape":"AssetFormMap"}
-      }
-    },
-    "PutAssetTypeRequest":{
-      "type":"structure",
-      "required":[
-        "Name",
-        "Forms"
-      ],
-      "members":{
-        "Name":{"shape":"AssetTypeName"},
-        "Forms":{"shape":"AssetTypeFormsMap"},
-        "ClientToken":{
-          "shape":"HashString",
-          "idempotencyToken":true
-        }
-      }
-    },
-    "PutAssetTypeResponse":{
-      "type":"structure",
-      "members":{
-        "Id":{"shape":"AssetTypeId"},
-        "Name":{"shape":"AssetTypeName"},
-        "Forms":{"shape":"AssetTypeFormsMap"}
       }
     },
     "PutAttachmentRequest":{
@@ -16574,8 +16587,7 @@
       "required":[
         "AssetIdentifier",
         "AttachmentName",
-        "Content",
-        "FormTypeId"
+        "Content"
       ],
       "members":{
         "AssetIdentifier":{"shape":"AssetId"},
@@ -16583,7 +16595,7 @@
         "ItemIdentifier":{"shape":"ItemIdentifier"},
         "AttachmentName":{"shape":"AttachmentName"},
         "Content":{"shape":"FormContent"},
-        "FormTypeId":{"shape":"FormTypeId"},
+        "FormTypeIdentifier":{"shape":"FormTypeId"},
         "ClientToken":{
           "shape":"HashString",
           "idempotencyToken":true
@@ -16593,9 +16605,9 @@
     "PutAttachmentResponse":{
       "type":"structure",
       "members":{
-        "AssetIdentifier":{"shape":"AssetId"},
+        "AssetId":{"shape":"AssetId"},
         "IterableFormName":{"shape":"IterableFormName"},
-        "ItemIdentifier":{"shape":"ItemIdentifier"},
+        "ItemId":{"shape":"ItemId"},
         "AttachmentName":{"shape":"AttachmentName"},
         "FormTypeId":{"shape":"FormTypeId"}
       }
@@ -16614,21 +16626,20 @@
     },
     "PutDataCatalogExportConfigurationInput":{
       "type":"structure",
-      "required":["ExportSetting"],
       "members":{
-        "ExportSetting":{"shape":"ExportSetting"},
-        "EncryptionConfiguration":{"shape":"ExportEncryptionConfiguration"},
         "ClientToken":{
           "shape":"HashString",
           "idempotencyToken":true
-        }
+        },
+        "S3TablesConfiguration":{"shape":"S3TablesConfiguration"},
+        "Assets":{"shape":"AssetsExport"}
       }
     },
     "PutDataCatalogExportConfigurationOutput":{
       "type":"structure",
       "members":{
-        "ExportSetting":{"shape":"ExportSetting"},
-        "EncryptionConfiguration":{"shape":"ExportEncryptionConfiguration"}
+        "S3TablesConfiguration":{"shape":"S3TablesConfiguration"},
+        "Assets":{"shape":"AssetsExport"}
       }
     },
     "PutDataQualityProfileAnnotationRequest":{
@@ -17690,6 +17701,25 @@
       }
     },
     "S3TableBucketArn":{"type":"string"},
+    "S3TablesConfiguration":{
+      "type":"structure",
+      "members":{
+        "EncryptionConfiguration":{"shape":"ExportEncryptionConfiguration"}
+      }
+    },
+    "S3TablesConfigurationResult":{
+      "type":"structure",
+      "members":{
+        "TableBucketArn":{"shape":"S3TableBucketArn"},
+        "EncryptionConfiguration":{"shape":"ExportEncryptionConfiguration"}
+      }
+    },
+    "S3TablesExportState":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"ExportStatus"}
+      }
+    },
     "S3Target":{
       "type":"structure",
       "members":{
@@ -17920,13 +17950,10 @@
     },
     "SearchAttributeFilter":{
       "type":"structure",
-      "required":[
-        "Attribute",
-        "Operator"
-      ],
+      "required":["Attribute"],
       "members":{
         "Attribute":{"shape":"SearchAttribute"},
-        "Operator":{"shape":"SearchFilterOperator"},
+        "Comparator":{"shape":"SearchFilterComparator"},
         "Value":{"shape":"SearchFilterValue"}
       }
     },
@@ -17946,18 +17973,18 @@
       "max":10,
       "min":1
     },
-    "SearchFilterLongValue":{"type":"long"},
-    "SearchFilterOperator":{
+    "SearchFilterComparator":{
       "type":"string",
       "enum":[
-        "equals",
-        "greaterThan",
-        "greaterThanOrEquals",
-        "lessThan",
-        "lessThanOrEquals",
-        "notExists"
+        "EQUALS",
+        "GREATER_THAN",
+        "GREATER_THAN_OR_EQUALS",
+        "LESS_THAN",
+        "LESS_THAN_OR_EQUALS",
+        "NOT_EXISTS"
       ]
     },
+    "SearchFilterLongValue":{"type":"long"},
     "SearchFilterStringValue":{
       "type":"string",
       "max":256,
@@ -18011,8 +18038,9 @@
       "type":"structure",
       "members":{
         "Id":{"shape":"AssetId"},
-        "AssetName":{"shape":"SearchResultName"},
-        "AssetDescription":{"shape":"AssetDescription"},
+        "Name":{"shape":"AssetName"},
+        "Description":{"shape":"AssetDescription"},
+        "CreatedAt":{"shape":"CreatedAt"},
         "UpdatedAt":{"shape":"UpdatedAt"},
         "AssetTypeId":{"shape":"AssetTypeId"}
       }
@@ -18021,7 +18049,6 @@
       "type":"list",
       "member":{"shape":"SearchResultItem"}
     },
-    "SearchResultName":{"type":"string"},
     "SearchSort":{
       "type":"structure",
       "required":["Attribute"],
@@ -20205,13 +20232,18 @@
       "type":"structure",
       "members":{}
     },
+    "UpdateGlossaryDescription":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
     "UpdateGlossaryRequest":{
       "type":"structure",
       "required":["Identifier"],
       "members":{
         "Identifier":{"shape":"GlossaryId"},
         "Name":{"shape":"GlossaryName"},
-        "Description":{"shape":"MetadataDescription"},
+        "Description":{"shape":"UpdateGlossaryDescription"},
         "ClientToken":{
           "shape":"HashString",
           "idempotencyToken":true
@@ -20226,14 +20258,19 @@
         "Description":{"shape":"MetadataDescription"}
       }
     },
+    "UpdateGlossaryTermLongDescription":{
+      "type":"string",
+      "max":4096,
+      "min":0
+    },
     "UpdateGlossaryTermRequest":{
       "type":"structure",
       "required":["Identifier"],
       "members":{
         "Identifier":{"shape":"GlossaryTermId"},
         "Name":{"shape":"GlossaryTermName"},
-        "ShortDescription":{"shape":"GlossaryShortDescription"},
-        "LongDescription":{"shape":"GlossaryLongDescription"},
+        "ShortDescription":{"shape":"UpdateGlossaryTermShortDescription"},
+        "LongDescription":{"shape":"UpdateGlossaryTermLongDescription"},
         "ClientToken":{
           "shape":"HashString",
           "idempotencyToken":true
@@ -20246,9 +20283,14 @@
         "Id":{"shape":"GlossaryTermId"},
         "GlossaryId":{"shape":"GlossaryId"},
         "Name":{"shape":"GlossaryTermName"},
-        "ShortDescription":{"shape":"GlossaryShortDescription"},
-        "LongDescription":{"shape":"GlossaryLongDescription"}
+        "ShortDescription":{"shape":"GlossaryTermShortDescription"},
+        "LongDescription":{"shape":"GlossaryTermLongDescription"}
       }
+    },
+    "UpdateGlossaryTermShortDescription":{
+      "type":"string",
+      "max":1024,
+      "min":0
     },
     "UpdateGlueIdentityCenterConfigurationRequest":{
       "type":"structure",

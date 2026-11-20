@@ -433,15 +433,21 @@
       }
     },
     "Av1AdaptiveQuantization": {
-      "base": "Specify the strength of any adaptive quantization filters that you enable. The value that you choose here applies to Spatial adaptive quantization.",
+      "base": "Specify whether MediaConvert applies adaptive quantization in this output. With AV1, adaptive quantization is on or off; there is no strength to choose. Choose Auto to let MediaConvert manage adaptive quantization for you. MediaConvert enables both Spatial adaptive quantization and Temporal adaptive quantization, and you can't specify either one yourself. To choose the filters yourself, set Adaptive quantization to any of the strength values, Low, Medium, High, Higher or Max, and then use the related settings Spatial adaptive quantization and Temporal adaptive quantization. With AV1 these strength values all behave the same, because AV1 adaptive quantization has no strength. If you don't want MediaConvert to do any adaptive quantization in this transcode, set Adaptive quantization to Off. Related settings: The value that you choose here applies to the following settings: Av1SpatialAdaptiveQuantization and Av1TemporalAdaptiveQuantization.",
       "refs": {
-        "Av1Settings$AdaptiveQuantization": "Specify the strength of any adaptive quantization filters that you enable. The value that you choose here applies to Spatial adaptive quantization."
+        "Av1Settings$AdaptiveQuantization": "Specify whether MediaConvert applies adaptive quantization in this output. With AV1, adaptive quantization is on or off; there is no strength to choose. Choose Auto to let MediaConvert manage adaptive quantization for you. MediaConvert enables both Spatial adaptive quantization and Temporal adaptive quantization, and you can't specify either one yourself. To choose the filters yourself, set Adaptive quantization to any of the strength values, Low, Medium, High, Higher or Max, and then use the related settings Spatial adaptive quantization and Temporal adaptive quantization. With AV1 these strength values all behave the same, because AV1 adaptive quantization has no strength. If you don't want MediaConvert to do any adaptive quantization in this transcode, set Adaptive quantization to Off. Related settings: The value that you choose here applies to the following settings: Av1SpatialAdaptiveQuantization and Av1TemporalAdaptiveQuantization."
       }
     },
     "Av1BitDepth": {
       "base": "Specify the Bit depth. You can choose 8-bit or 10-bit.",
       "refs": {
         "Av1Settings$BitDepth": "Specify the Bit depth. You can choose 8-bit or 10-bit."
+      }
+    },
+    "Av1FastDecode": {
+      "base": "Choose Enabled to limit the AV1 feature set that MediaConvert uses, which reduces the complexity of decoding your output in software. Keep the default value, Disabled, unless your playback devices need the simpler bitstream. Encoding with Fast decode is slightly slower and gives comparable video quality.",
+      "refs": {
+        "Av1Settings$FastDecode": "Choose Enabled to limit the AV1 feature set that MediaConvert uses, which reduces the complexity of decoding your output in software. Keep the default value, Disabled, unless your playback devices need the simpler bitstream. Encoding with Fast decode is slightly slower and gives comparable video quality."
       }
     },
     "Av1FilmGrainSynthesis": {
@@ -462,6 +468,12 @@
         "Av1Settings$FramerateConversionAlgorithm": "Choose the method that you want MediaConvert to use when increasing or decreasing your video's frame rate. For numerically simple conversions, such as 60 fps to 30 fps: We recommend that you keep the default value, Drop duplicate. For numerically complex conversions, to avoid stutter: Choose Interpolate. This results in a smooth picture, but might introduce undesirable video artifacts. For complex frame rate conversions, especially if your source video has already been converted from its original cadence: Choose FrameFormer to do motion-compensated interpolation. FrameFormer uses the best conversion method frame by frame. Note that using FrameFormer increases the transcoding time and incurs a significant add-on cost. When you choose FrameFormer, your input video resolution must be at least 128x96. To create an output with the same number of frames as your input: Choose Maintain frame count. When you do, MediaConvert will not drop, interpolate, add, or otherwise change the frame count from your input to your output. Note that since the frame count is maintained, the duration of your output will become shorter at higher frame rates and longer at lower frame rates."
       }
     },
+    "Av1GopSizeUnits": {
+      "base": "Specify the units for GOP size. If you don't specify a value, MediaConvert treats GOP size as a number of frames. With AV1, MediaConvert can't choose the GOP length for you, so there is no automatic option here: specify the GOP length in the related setting GOP size, in frames or in seconds.",
+      "refs": {
+        "Av1Settings$GopSizeUnits": "Specify the units for GOP size. If you don't specify a value, MediaConvert treats GOP size as a number of frames. With AV1, MediaConvert can't choose the GOP length for you, so there is no automatic option here: specify the GOP length in the related setting GOP size, in frames or in seconds."
+      }
+    },
     "Av1QvbrSettings": {
       "base": "Settings for quality-defined variable bitrate encoding with the AV1 codec. Use these settings only when you set QVBR for Rate control mode.",
       "refs": {
@@ -475,9 +487,9 @@
       }
     },
     "Av1SceneChangeDetect": {
-      "base": "Optional. Use this setting to have the service insert I-frames at scene changes that it automatically detects. For AV1, scene change detection is disabled by default. Choose Enabled to insert I-frames at detected scene changes, which can improve video quality. If this output uses QVBR, you can instead choose Transition detection for further video quality improvement. For more information about QVBR, see https://docs.aws.amazon.com/console/mediaconvert/cbr-vbr-qvbr.",
+      "base": "Keep the default value, Enabled, to have MediaConvert insert I-frames at scene changes that it automatically detects, which improves video quality. Choose Disabled if you need a strictly fixed keyframe cadence instead. With AV1, MediaConvert doesn't support Transition detection. Transition detection is accepted for backward compatibility but behaves exactly the same as Enabled, so we recommend that you use Enabled instead. It also keeps the QVBR requirement it has for other codecs: if you choose Transition detection in an AV1 output, Rate control mode must be QVBR. Choose Enabled to get the same result with any rate control mode.",
       "refs": {
-        "Av1Settings$SceneChangeDetect": "Optional. Use this setting to have the service insert I-frames at scene changes that it automatically detects. For AV1, scene change detection is disabled by default. Choose Enabled to insert I-frames at detected scene changes, which can improve video quality. If this output uses QVBR, you can instead choose Transition detection for further video quality improvement. For more information about QVBR, see https://docs.aws.amazon.com/console/mediaconvert/cbr-vbr-qvbr."
+        "Av1Settings$SceneChangeDetect": "Keep the default value, Enabled, to have MediaConvert insert I-frames at scene changes that it automatically detects, which improves video quality. Choose Disabled if you need a strictly fixed keyframe cadence instead. With AV1, MediaConvert doesn't support Transition detection. Transition detection is accepted for backward compatibility but behaves exactly the same as Enabled, so we recommend that you use Enabled instead. It also keeps the QVBR requirement it has for other codecs: if you choose Transition detection in an AV1 output, Rate control mode must be QVBR. Choose Enabled to get the same result with any rate control mode."
       }
     },
     "Av1Settings": {
@@ -487,9 +499,15 @@
       }
     },
     "Av1SpatialAdaptiveQuantization": {
-      "base": "Keep the default value, Enabled, to adjust quantization within each frame based on spatial variation of content complexity. When you enable this feature, the encoder uses fewer bits on areas that can sustain more distortion with no noticeable visual degradation and uses more bits on areas where any small distortion will be noticeable. For example, complex textured blocks are encoded with fewer bits and smooth textured blocks are encoded with more bits. Enabling this feature will almost always improve your video quality. Note, though, that this feature doesn't take into account where the viewer's attention is likely to be. If viewers are likely to be focusing their attention on a part of the screen with a lot of complex texture, you might choose to disable this feature. Related setting: When you enable spatial adaptive quantization, set the value for Adaptive quantization depending on your content. For homogeneous content, such as cartoons and video games, set it to Low. For content with a wider variety of textures, set it to High or Higher.",
+      "base": "Only use this setting when you set Adaptive quantization to one of the strength values, Low, Medium, High, Higher or Max. When you set Adaptive quantization to Auto, MediaConvert enables this feature for you and you can't specify it manually. When you enable adaptive quantization, the default value for Av1SpatialAdaptiveQuantization is Enabled. Keep this default value to adjust quantization within each frame based on spatial variation of content complexity. When you enable this feature, the encoder uses fewer bits on areas that can sustain more distortion with no noticeable visual degradation and uses more bits on areas where any small distortion will be noticeable. For example, complex textured blocks are encoded with fewer bits and smooth textured blocks are encoded with more bits. Enabling this feature will almost always improve your video quality. Note, though, that this feature doesn't take into account where the viewer's attention is likely to be. If viewers are likely to be focusing their attention on a part of the screen with a lot of complex texture, you might choose to disable this feature. Related setting: With AV1 this filter is on or off; the Adaptive quantization value does not change its strength.",
       "refs": {
-        "Av1Settings$SpatialAdaptiveQuantization": "Keep the default value, Enabled, to adjust quantization within each frame based on spatial variation of content complexity. When you enable this feature, the encoder uses fewer bits on areas that can sustain more distortion with no noticeable visual degradation and uses more bits on areas where any small distortion will be noticeable. For example, complex textured blocks are encoded with fewer bits and smooth textured blocks are encoded with more bits. Enabling this feature will almost always improve your video quality. Note, though, that this feature doesn't take into account where the viewer's attention is likely to be. If viewers are likely to be focusing their attention on a part of the screen with a lot of complex texture, you might choose to disable this feature. Related setting: When you enable spatial adaptive quantization, set the value for Adaptive quantization depending on your content. For homogeneous content, such as cartoons and video games, set it to Low. For content with a wider variety of textures, set it to High or Higher."
+        "Av1Settings$SpatialAdaptiveQuantization": "Only use this setting when you set Adaptive quantization to one of the strength values, Low, Medium, High, Higher or Max. When you set Adaptive quantization to Auto, MediaConvert enables this feature for you and you can't specify it manually. When you enable adaptive quantization, the default value for Av1SpatialAdaptiveQuantization is Enabled. Keep this default value to adjust quantization within each frame based on spatial variation of content complexity. When you enable this feature, the encoder uses fewer bits on areas that can sustain more distortion with no noticeable visual degradation and uses more bits on areas where any small distortion will be noticeable. For example, complex textured blocks are encoded with fewer bits and smooth textured blocks are encoded with more bits. Enabling this feature will almost always improve your video quality. Note, though, that this feature doesn't take into account where the viewer's attention is likely to be. If viewers are likely to be focusing their attention on a part of the screen with a lot of complex texture, you might choose to disable this feature. Related setting: With AV1 this filter is on or off; the Adaptive quantization value does not change its strength."
+      }
+    },
+    "Av1TemporalAdaptiveQuantization": {
+      "base": "Only use this setting when you set Adaptive quantization to one of the strength values, Low, Medium, High, Higher or Max. When you set Adaptive quantization to Auto, MediaConvert enables this feature for you and you can't specify it manually. When you enable adaptive quantization, the default value for Av1TemporalAdaptiveQuantization is Enabled. Keep this default value to adjust quantization within each frame based on temporal variation of content complexity. When you enable this feature, the encoder uses fewer bits on areas of the frame that aren't moving and uses more bits on complex objects with sharp edges that move a lot. For example, this feature improves the readability of text tickers on newscasts and scoreboards on sports matches. Enabling this feature will almost always improve your video quality. Note, though, that this feature doesn't take into account where the viewer's attention is likely to be. If viewers are likely to be focusing their attention on a part of the screen that doesn't have moving objects with sharp edges, such as sports athletes' faces, you might choose to set Av1TemporalAdaptiveQuantization to Disabled. Related setting: With AV1 this filter is on or off; the Adaptive quantization value does not change its strength.",
+      "refs": {
+        "Av1Settings$TemporalAdaptiveQuantization": "Only use this setting when you set Adaptive quantization to one of the strength values, Low, Medium, High, Higher or Max. When you set Adaptive quantization to Auto, MediaConvert enables this feature for you and you can't specify it manually. When you enable adaptive quantization, the default value for Av1TemporalAdaptiveQuantization is Enabled. Keep this default value to adjust quantization within each frame based on temporal variation of content complexity. When you enable this feature, the encoder uses fewer bits on areas of the frame that aren't moving and uses more bits on complex objects with sharp edges that move a lot. For example, this feature improves the readability of text tickers on newscasts and scoreboards on sports matches. Enabling this feature will almost always improve your video quality. Note, though, that this feature doesn't take into account where the viewer's attention is likely to be. If viewers are likely to be focusing their attention on a part of the screen that doesn't have moving objects with sharp edges, such as sports athletes' faces, you might choose to set Av1TemporalAdaptiveQuantization to Disabled. Related setting: With AV1 this filter is on or off; the Adaptive quantization value does not change its strength."
       }
     },
     "AvailBlanking": {
@@ -1385,6 +1403,24 @@
         "VideoDescription$DropFrameTimecode": "Applies only to 29.97 fps outputs. When this feature is enabled, the service will use drop-frame timecode on outputs. If it is not possible to use drop-frame timecode, the system will fall back to non-drop-frame. This setting is enabled by default when Timecode insertion or Timecode track is enabled."
       }
     },
+    "DtscSettings": {
+      "base": "Required when you set Codec to the value DTSC.",
+      "refs": {
+        "AudioCodecSettings$DtscSettings": "Required when you set Codec to the value DTSC."
+      }
+    },
+    "DtsxCodingMode": {
+      "base": "DTS:X coding mode. Determines the number of input channels and the channel layout that the encoder emits. - CODING_MODE_5_1: 5.1 surround - CODING_MODE_5_1_4: 5.1.4 immersive",
+      "refs": {
+        "DtsxSettings$CodingMode": "DTS:X coding mode. Determines the number of input channels and the channel layout that the encoder emits. - CODING_MODE_5_1: 5.1 surround - CODING_MODE_5_1_4: 5.1.4 immersive"
+      }
+    },
+    "DtsxSettings": {
+      "base": "Required when you set Codec to the value DTSX.",
+      "refs": {
+        "AudioCodecSettings$DtsxSettings": "Required when you set Codec to the value DTSX."
+      }
+    },
     "DurationControl": {
       "base": "Settings for integer-second duration normalization. When this preprocessor is present, the output duration will be adjusted to an exact integer-second boundary. If the input is within the trim threshold of an integer second, trailing frames are dropped. If within the compression threshold and less than 500ms over the previous integer second, the output is sped up slightly. Otherwise, black frames are padded to the next integer second.",
       "refs": {
@@ -1497,6 +1533,18 @@
       "base": "Specify which audio tracks to dynamically select from your source. To select all audio tracks: Keep the default value, All tracks. To select all audio tracks with a specific language code: Choose Language code. When you do, you must also specify a language code under the Language code setting. If there is no matching Language code in your source, then no track will be selected.",
       "refs": {
         "DynamicAudioSelector$SelectorType": "Specify which audio tracks to dynamically select from your source. To select all audio tracks: Keep the default value, All tracks. To select all audio tracks with a specific language code: Choose Language code. When you do, you must also specify a language code under the Language code setting. If there is no matching Language code in your source, then no track will be selected."
+      }
+    },
+    "DynamicMultiviewSettings": {
+      "base": "Dynamic Multiview settings. Encodes this video output so that a downstream packager can combine it with other outputs in a Dynamic Multiview presentation, or replace parts of it. Available for H.264 and H.265 outputs. Enabling Dynamic Multiview reduces compression efficiency.",
+      "refs": {
+        "VideoDescription$DynamicMultiviewSettings": "Dynamic Multiview settings. Encodes this video output so that a downstream packager can combine it with other outputs in a Dynamic Multiview presentation, or replace parts of it. Available for H.264 and H.265 outputs. Enabling Dynamic Multiview reduces compression efficiency."
+      }
+    },
+    "DynamicMultiviewSettingsEnabled": {
+      "base": "Choose Enabled to encode this video output for Dynamic Multiview. With no regions, the whole frame is one view in the presentation. With regions, only those rectangles can be replaced. Keep the default value, Disabled, to leave Dynamic Multiview off; regions must then be empty. Dynamic Multiview outputs must be progressive and use a Dynamic sub-GOP of Static. MediaConvert also overrides some encoder settings on these outputs: Explicit weighted prediction for H.264, and Tree block size and MV temporal predictor for H.265.",
+      "refs": {
+        "DynamicMultiviewSettings$Enabled": "Choose Enabled to encode this video output for Dynamic Multiview. With no regions, the whole frame is one view in the presentation. With regions, only those rectangles can be replaced. Keep the default value, Disabled, to leave Dynamic Multiview off; regions must then be empty. Dynamic Multiview outputs must be progressive and use a Dynamic sub-GOP of Static. MediaConvert also overrides some encoder settings on these outputs: Explicit weighted prediction for H.264, and Tree block size and MV temporal predictor for H.265."
       }
     },
     "Eac3AtmosBitstreamMode": {
@@ -1944,7 +1992,7 @@
       }
     },
     "H264DynamicSubGop": {
-      "base": "Choose Adaptive to improve subjective video quality for high-motion content. This will cause the service to use fewer B-frames (which infer information based on other frames) for high-motion portions of the video and more B-frames for low-motion portions. The maximum number of B-frames is limited by the value you provide for the setting B frames between reference frames.",
+      "base": "Choose Adaptive to improve subjective video quality for high-motion content. This will cause the service to use fewer B-frames (which infer information based on other frames) for high-motion portions of the video and more B-frames for low-motion portions. The maximum number of B-frames is limited by the value you provide for the setting B frames between reference frames. How MediaConvert applies Adaptive depends on your output frame rate. At 30 fps and below, MediaConvert uses at most 3 B-frames, even when you specify a larger value for B frames between reference frames. Above 30 fps, consecutive frames are similar enough that varying the B-frame count costs more bits than it saves, so MediaConvert keeps the B-frame count you specified and Adaptive has no effect. To always use the B-frame count you specify, choose Static.",
       "refs": {
         "H264Settings$DynamicSubGop": "Specify whether to allow the number of B-frames in your output GOP structure to vary or not depending on your input video content. To improve the subjective video quality of your output that has high-motion content: Leave blank or keep the default value Adaptive. MediaConvert will use fewer B-frames for high-motion video content than low-motion content. The maximum number of B- frames is limited by the value that you choose for B-frames between reference frames. To use the same number B-frames for all types of content: Choose Static."
       }
@@ -2136,7 +2184,7 @@
       }
     },
     "H265DynamicSubGop": {
-      "base": "Choose Adaptive to improve subjective video quality for high-motion content. This will cause the service to use fewer B-frames (which infer information based on other frames) for high-motion portions of the video and more B-frames for low-motion portions. The maximum number of B-frames is limited by the value you provide for the setting B frames between reference frames.",
+      "base": "Choose Adaptive to improve subjective video quality for high-motion content. This will cause the service to use fewer B-frames (which infer information based on other frames) for high-motion portions of the video and more B-frames for low-motion portions. The maximum number of B-frames is limited by the value you provide for the setting B frames between reference frames. How MediaConvert applies Adaptive depends on your output frame rate. At 30 fps and below, MediaConvert uses at most 3 B-frames, even when you specify a larger value for B frames between reference frames. Above 30 fps, consecutive frames are similar enough that varying the B-frame count costs more bits than it saves, so MediaConvert keeps the B-frame count you specified and Adaptive has no effect. To always use the B-frame count you specify, choose Static.",
       "refs": {
         "H265Settings$DynamicSubGop": "Specify whether to allow the number of B-frames in your output GOP structure to vary or not depending on your input video content. To improve the subjective video quality of your output that has high-motion content: Leave blank or keep the default value Adaptive. MediaConvert will use fewer B-frames for high-motion video content than low-motion content. The maximum number of B- frames is limited by the value that you choose for B-frames between reference frames. To use the same number B-frames for all types of content: Choose Static."
       }
@@ -3461,7 +3509,7 @@
       }
     },
     "NoiseReducer": {
-      "base": "Enable the Noise reducer feature to remove noise from your video output if necessary. Enable or disable this feature for each output individually. This setting is disabled by default. When you enable Noise reducer, you must also select a value for Noise reducer filter. For AVC outputs, when you include Noise reducer, you cannot include the Bandwidth reduction filter.",
+      "base": "Enable the Noise reducer feature to remove noise from your video output if necessary. Enable or disable this feature for each output individually. When you enable Noise reducer, you must also select a value for Noise reducer filter. Note that MediaConvert applies the Perceptual filter at Strength 1 by default to AVC, HEVC, AV1, MPEG-2, VP8, and VP9 outputs, whether or not you enable Noise reducer. To turn that off, enable Noise reducer and set Noise reducer filter to None. For AVC outputs, when you include Noise reducer, you cannot include the Bandwidth reduction filter.",
       "refs": {
         "VideoPreprocessor$NoiseReducer": "Enable the Noise reducer feature to remove noise from your video output if necessary. Enable or disable this feature for each output individually. This setting is disabled by default. When you enable Noise reducer, you must also select a value for Noise reducer filter. For AVC outputs, when you include Noise reducer, you cannot include the Bandwidth reduction filter."
       }
@@ -3764,7 +3812,8 @@
         "InputTemplate$Crop": "Use Cropping selection to specify the video area that the service will include in the output video frame. If you specify a value here, it will override any value that you specify in the output setting Cropping selection.",
         "InputTemplate$Position": "Use Selection placement to define the video area in your output frame. The area outside of the rectangle that you specify here is black. If you specify a value here, it will override any value that you specify in the output setting Selection placement. If you specify a value here, this will override any AFD values in your input, even if you set Respond to AFD to Respond. If you specify a value here, this will ignore anything that you specify for the setting Scaling Behavior.",
         "VideoDescription$Crop": "Use Cropping selection to specify the video area that the service will include in the output video frame.",
-        "VideoDescription$Position": "Use Selection placement to define the video area in your output frame. The area outside of the rectangle that you specify here is black."
+        "VideoDescription$Position": "Use Selection placement to define the video area in your output frame. The area outside of the rectangle that you specify here is black.",
+        "__listOfRectangle$member": null
       }
     },
     "RemixSettings": {
@@ -3891,7 +3940,7 @@
       }
     },
     "SearchJobsRequest": {
-      "base": "Retrieve a JSON array that includes job details for up to twenty of your most recent jobs. Optionally filter results further according to input file, queue, or status. To retrieve the twenty next most recent jobs, use the nextToken string returned with the array.",
+      "base": "Retrieve a JSON array that includes job details for up to twenty of your most recent jobs. Optionally filter results further according to input file, queue, or status. To retrieve the twenty next most recent jobs, use the nextToken string returned with the array. Note that SearchJobs has been deprecated. We recommend that you instead use the StartJobsQuery and GetJobsQueryResults APIs to query your job history.",
       "refs": {}
     },
     "SearchJobsResponse": {
@@ -4697,7 +4746,7 @@
     "__doubleMin0": {
       "base": null,
       "refs": {
-        "Av1Settings$GopSize": "Specify the GOP length (keyframe interval) in frames. With AV1, MediaConvert doesn't support GOP length in seconds. This value must be greater than zero and preferably equal to 1 + ((numberBFrames + 1) * x), where x is an integer value.",
+        "Av1Settings$GopSize": "Specify the GOP length (keyframe interval). Use GOP size units to say whether this value is in frames or in seconds. This value must be greater than zero. With AV1, MediaConvert can't choose the GOP length for you, so you must specify it.",
         "H264Settings$GopSize": "Use this setting only when you set GOP mode control to Specified, frames or Specified, seconds. Specify the GOP length using a whole number of frames or a decimal value of seconds. MediaConvert will interpret this value as frames or seconds depending on the value you choose for GOP mode control. If you want to allow MediaConvert to automatically determine GOP size, leave GOP size blank and set GOP mode control to Auto. If your output group specifies HLS, DASH, or CMAF, leave GOP size blank and set GOP mode control to Auto in each output in your output group.",
         "H265Settings$GopSize": "Use this setting only when you set GOP mode control to Specified, frames or Specified, seconds. Specify the GOP length using a whole number of frames or a decimal value of seconds. MediaConvert will interpret this value as frames or seconds depending on the value you choose for GOP mode control. If you want to allow MediaConvert to automatically determine GOP size, leave GOP size blank and set GOP mode control to Auto. If your output group specifies HLS, DASH, or CMAF, leave GOP size blank and set GOP mode control to Auto in each output in your output group.",
         "KantarWatermarkSettings$FileOffset": "Optional. Specify an offset, in whole seconds, from the start of your output and the beginning of the watermarking. When you don't specify an offset, Kantar defaults to zero.",
@@ -4929,7 +4978,7 @@
     "__integerMin0Max15": {
       "base": null,
       "refs": {
-        "Av1Settings$NumberBFramesBetweenReferenceFrames": "Specify from the number of B-frames, in the range of 0-15. For AV1 encoding, we recommend using 7 or 15. Choose a larger number for a lower bitrate and smaller file size; choose a smaller number for better video quality.",
+        "Av1Settings$NumberBFramesBetweenReferenceFrames": "Specify the number of B-frames between reference frames, in the range of 0-15. For AV1 encoding, we recommend the default value, 15, which gives the lowest bitrate and smallest file size. Choose a smaller number for better video quality at a higher bitrate.",
         "VideoDescription$FixedAfd": "Applies only if you set AFD Signaling to Fixed. Use Fixed to specify a four-bit AFD value which the service will write on all frames of this video output."
       }
     },
@@ -5233,6 +5282,12 @@
         "TimecodeBurnin$FontSize": "Use Font size to set the font size of any burned-in timecode. Valid values are 10, 16, 32, 48."
       }
     },
+    "__integerMin160000Max448000": {
+      "base": null,
+      "refs": {
+        "DtsxSettings$Bitrate": "Specify the average bitrate for the DTS:X Profile 2 stream, in bits per second. Valid values depend on the coding mode: 160000, 192000, 224000, 256000, 288000 and 320000 for CODING_MODE_5_1, and 288000, 384000 and 448000 for CODING_MODE_5_1_4."
+      }
+    },
     "__integerMin16000Max320000": {
       "base": null,
       "refs": {
@@ -5297,8 +5352,8 @@
     "__integerMin1Max150": {
       "base": null,
       "refs": {
-        "JobSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings. MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs.",
-        "JobTemplateSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings. MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs."
+        "JobSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings.  MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all  outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs.",
+        "JobTemplateSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings.  MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all  outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs."
       }
     },
     "__integerMin1Max17895697": {
@@ -5607,6 +5662,8 @@
       "refs": {
         "Ac3Settings$SampleRate": "This value is always 48000. It represents the sample rate in Hz.",
         "Ac4Settings$SampleRate": "This value is always 48000. It represents the sample rate in Hz.",
+        "DtscSettings$SampleRate": "This value must be 48000. It represents the sample rate in Hz.",
+        "DtsxSettings$SampleRate": "This value must be 48000. It represents the sample rate in Hz.",
         "Eac3AtmosSettings$SampleRate": "This value is always 48000. It represents the sample rate in Hz.",
         "Eac3Settings$SampleRate": "This value is always 48000. It represents the sample rate in Hz."
       }
@@ -5645,6 +5702,12 @@
       "base": null,
       "refs": {
         "AacSettings$TargetLoudnessRange": "Specify the xHE-AAC loudness target. Enter an integer from 6 to 16, representing \"loudness units\". For more information, see the following specification: Supplementary information for R 128 EBU Tech 3342-2023."
+      }
+    },
+    "__integerMin768000Max768000": {
+      "base": null,
+      "refs": {
+        "DtscSettings$Bitrate": "Specify the bitrate for the DTS Digital Surround stream, in bits per second. The only valid value is 768000."
       }
     },
     "__integerMin8000Max192000": {
@@ -6070,6 +6133,12 @@
       "base": null,
       "refs": {
         "Job$QueueTransitions": "The job's queue hopping history."
+      }
+    },
+    "__listOfRectangle": {
+      "base": null,
+      "refs": {
+        "DynamicMultiviewSettings$Regions": "Optional rectangles that a downstream packager can replace with other content, such as an ad. MediaConvert fills each region with black and encodes it independently of the rest of the frame. Leave empty to use the whole frame as one view. H.264 outputs support up to 8 regions; H.265 outputs support 1."
       }
     },
     "__listOfServiceOverride": {

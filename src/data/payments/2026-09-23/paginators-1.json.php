@@ -1,0 +1,3 @@
+<?php
+// This file was auto-generated from sdk-root/src/data/payments/2026-09-23/paginators-1.json
+return [ 'pagination' => [ 'GetAccountBalance' => [ 'input_token' => 'nextToken', 'output_token' => 'nextToken', 'limit_key' => 'maxResults', 'result_key' => 'accountBalances', ], 'ListFinancialRecords' => [ 'input_token' => 'nextToken', 'output_token' => 'nextToken', 'limit_key' => 'maxResults', 'result_key' => 'financialRecordSummaries', ], 'ListPaymentInstruments' => [ 'input_token' => 'nextToken', 'output_token' => 'nextToken', 'limit_key' => 'maxResults', 'result_key' => 'paymentInstrumentSummaries', ], ],];

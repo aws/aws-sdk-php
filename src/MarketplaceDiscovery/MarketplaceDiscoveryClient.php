@@ -29,6 +29,24 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listFulfillmentOptions(array{locale?: string, productId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listFulfillmentOptionsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listFulfillmentOptionsAsync(array{locale?: string, productId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listListingAttributes(array $args = [])
+ * @phpstan-method \Aws\Result listListingAttributes(array{
+ *     locale?: string,
+ *     listingId?: string,
+ *     attributeTypes?: list<'CASE_STUDY'|'SPECIALIZATION_DETAIL'|'TRUST_CENTER_CERTIFICATION'|'TRUST_CENTER_CONTROL'|'TRUST_CENTER_DOCUMENT'|'TRUST_CENTER_FAQ'|'TRUST_CENTER_SOURCE'|'TRUST_CENTER_UPDATE'>,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listListingAttributesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listListingAttributesAsync(array{
+ *     locale?: string,
+ *     listingId?: string,
+ *     attributeTypes?: list<'CASE_STUDY'|'SPECIALIZATION_DETAIL'|'TRUST_CENTER_CERTIFICATION'|'TRUST_CENTER_CONTROL'|'TRUST_CENTER_DOCUMENT'|'TRUST_CENTER_FAQ'|'TRUST_CENTER_SOURCE'|'TRUST_CENTER_UPDATE'>,
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listPurchaseOptions(array $args = [])
  * @phpstan-method \Aws\Result listPurchaseOptions(array{
  *     locale?: string,
@@ -58,11 +76,11 @@ use Aws\AwsClient;
  *     locale?: string,
  *     searchText?: string,
  *     filters?: list<array{
- *         filterType?: 'CATEGORY'|'DEPLOYED_ON_AWS'|'FULFILLMENT_OPTION_TYPE'|'MAX_AVERAGE_CUSTOMER_RATING'|'MIN_AVERAGE_CUSTOMER_RATING'|'NUMBER_OF_PRODUCTS'|'PRICING_MODEL'|'PRICING_UNIT'|'PUBLISHER',
+ *         filterType?: 'CATEGORY'|'CERTIFICATES'|'DEPLOYED_ON_AWS'|'FULFILLMENT_OPTION_TYPE'|'MAX_AVERAGE_CUSTOMER_RATING'|'MIN_AVERAGE_CUSTOMER_RATING'|'NUMBER_OF_PRODUCTS'|'PRICING_MODEL'|'PRICING_UNIT'|'PRODUCT_ID'|'PUBLISHER'|'SELLER_ENGAGEMENT'|'SPECIALIZATION'|'SPECIALIZATION_CATEGORY'|'TRUST_CENTER',
  *         filterValues?: list<string>,
  *         ...,
  *     }>,
- *     facetTypes?: list<'AVERAGE_CUSTOMER_RATING'|'CATEGORY'|'DEPLOYED_ON_AWS'|'FULFILLMENT_OPTION_TYPE'|'NUMBER_OF_PRODUCTS'|'PRICING_MODEL'|'PRICING_UNIT'|'PUBLISHER'>,
+ *     facetTypes?: list<'AVERAGE_CUSTOMER_RATING'|'CATEGORY'|'CERTIFICATES'|'DEPLOYED_ON_AWS'|'FULFILLMENT_OPTION_TYPE'|'NUMBER_OF_PRODUCTS'|'PRICING_MODEL'|'PRICING_UNIT'|'PUBLISHER'|'SELLER_ENGAGEMENT'|'SPECIALIZATION'|'SPECIALIZATION_CATEGORY'|'TRUST_CENTER'>,
  *     nextToken?: string,
  *     ...,
  * } $args = [])
@@ -71,11 +89,11 @@ use Aws\AwsClient;
  *     locale?: string,
  *     searchText?: string,
  *     filters?: list<array{
- *         filterType?: 'CATEGORY'|'DEPLOYED_ON_AWS'|'FULFILLMENT_OPTION_TYPE'|'MAX_AVERAGE_CUSTOMER_RATING'|'MIN_AVERAGE_CUSTOMER_RATING'|'NUMBER_OF_PRODUCTS'|'PRICING_MODEL'|'PRICING_UNIT'|'PUBLISHER',
+ *         filterType?: 'CATEGORY'|'CERTIFICATES'|'DEPLOYED_ON_AWS'|'FULFILLMENT_OPTION_TYPE'|'MAX_AVERAGE_CUSTOMER_RATING'|'MIN_AVERAGE_CUSTOMER_RATING'|'NUMBER_OF_PRODUCTS'|'PRICING_MODEL'|'PRICING_UNIT'|'PRODUCT_ID'|'PUBLISHER'|'SELLER_ENGAGEMENT'|'SPECIALIZATION'|'SPECIALIZATION_CATEGORY'|'TRUST_CENTER',
  *         filterValues?: list<string>,
  *         ...,
  *     }>,
- *     facetTypes?: list<'AVERAGE_CUSTOMER_RATING'|'CATEGORY'|'DEPLOYED_ON_AWS'|'FULFILLMENT_OPTION_TYPE'|'NUMBER_OF_PRODUCTS'|'PRICING_MODEL'|'PRICING_UNIT'|'PUBLISHER'>,
+ *     facetTypes?: list<'AVERAGE_CUSTOMER_RATING'|'CATEGORY'|'CERTIFICATES'|'DEPLOYED_ON_AWS'|'FULFILLMENT_OPTION_TYPE'|'NUMBER_OF_PRODUCTS'|'PRICING_MODEL'|'PRICING_UNIT'|'PUBLISHER'|'SELLER_ENGAGEMENT'|'SPECIALIZATION'|'SPECIALIZATION_CATEGORY'|'TRUST_CENTER'>,
  *     nextToken?: string,
  *     ...,
  * } $args = [])
@@ -84,7 +102,7 @@ use Aws\AwsClient;
  *     locale?: string,
  *     searchText?: string,
  *     filters?: list<array{
- *         filterType?: 'CATEGORY'|'DEPLOYED_ON_AWS'|'FULFILLMENT_OPTION_TYPE'|'MAX_AVERAGE_CUSTOMER_RATING'|'MIN_AVERAGE_CUSTOMER_RATING'|'NUMBER_OF_PRODUCTS'|'PRICING_MODEL'|'PRICING_UNIT'|'PUBLISHER',
+ *         filterType?: 'CATEGORY'|'CERTIFICATES'|'DEPLOYED_ON_AWS'|'FULFILLMENT_OPTION_TYPE'|'MAX_AVERAGE_CUSTOMER_RATING'|'MIN_AVERAGE_CUSTOMER_RATING'|'NUMBER_OF_PRODUCTS'|'PRICING_MODEL'|'PRICING_UNIT'|'PRODUCT_ID'|'PUBLISHER'|'SELLER_ENGAGEMENT'|'SPECIALIZATION'|'SPECIALIZATION_CATEGORY'|'TRUST_CENTER',
  *         filterValues?: list<string>,
  *         ...,
  *     }>,
@@ -99,7 +117,7 @@ use Aws\AwsClient;
  *     locale?: string,
  *     searchText?: string,
  *     filters?: list<array{
- *         filterType?: 'CATEGORY'|'DEPLOYED_ON_AWS'|'FULFILLMENT_OPTION_TYPE'|'MAX_AVERAGE_CUSTOMER_RATING'|'MIN_AVERAGE_CUSTOMER_RATING'|'NUMBER_OF_PRODUCTS'|'PRICING_MODEL'|'PRICING_UNIT'|'PUBLISHER',
+ *         filterType?: 'CATEGORY'|'CERTIFICATES'|'DEPLOYED_ON_AWS'|'FULFILLMENT_OPTION_TYPE'|'MAX_AVERAGE_CUSTOMER_RATING'|'MIN_AVERAGE_CUSTOMER_RATING'|'NUMBER_OF_PRODUCTS'|'PRICING_MODEL'|'PRICING_UNIT'|'PRODUCT_ID'|'PUBLISHER'|'SELLER_ENGAGEMENT'|'SPECIALIZATION'|'SPECIALIZATION_CATEGORY'|'TRUST_CENTER',
  *         filterValues?: list<string>,
  *         ...,
  *     }>,

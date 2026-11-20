@@ -172,6 +172,29 @@
         "errors":{"shape":"BatchGetDiscoverableRegistryRecordErrorList"}
       }
     },
+    "BotCategory":{
+      "type":"string",
+      "enum":[
+        "advertising",
+        "archiver",
+        "content_fetcher",
+        "email_client",
+        "http_library",
+        "link_checker",
+        "miscellaneous",
+        "monitoring",
+        "page_preview",
+        "scraping_framework",
+        "search_engine",
+        "security",
+        "seo",
+        "social_media",
+        "ai_training",
+        "ai_search",
+        "ai_assistant",
+        "ai_content_optimization"
+      ]
+    },
     "CustomDescriptor":{
       "type":"structure",
       "members":{
@@ -238,7 +261,8 @@
         "agentSkillsDefinition":{"shape":"AgentSkillsDefinitionDescriptor"},
         "custom":{"shape":"CustomDescriptor"},
         "http":{"shape":"HttpDescriptor"},
-        "agui":{"shape":"AgUiDescriptor"}
+        "agui":{"shape":"AgUiDescriptor"},
+        "signatureAgentCard":{"shape":"SignatureAgentCardDescriptor"}
       }
     },
     "DiscoverableFilterValues":{
@@ -385,7 +409,8 @@
         "AGENT",
         "CUSTOM",
         "SKILL",
-        "GATEWAY"
+        "GATEWAY",
+        "WEB_BOT"
       ]
     },
     "RegistryArn":{
@@ -599,6 +624,21 @@
       "max":64,
       "min":64,
       "pattern":"[0-9a-f]{64}"
+    },
+    "SignatureAgentCardAdditionalData":{
+      "type":"structure",
+      "members":{
+        "category":{"shape":"BotCategory"}
+      }
+    },
+    "SignatureAgentCardDescriptor":{
+      "type":"structure",
+      "members":{
+        "data":{"shape":"DescriptorData"},
+        "dataSchemaVersion":{"shape":"DataSchemaVersion"},
+        "source":{"shape":"DescriptorSource"},
+        "additionalData":{"shape":"SignatureAgentCardAdditionalData"}
+      }
     },
     "String":{"type":"string"},
     "ThrottlingException":{

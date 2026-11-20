@@ -29,6 +29,22 @@
         {"shape":"ResourceLimitExceeded"}
       ]
     },
+    "AddInferenceGateway":{
+      "name":"AddInferenceGateway",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AddInferenceGatewayRequest"},
+      "output":{"shape":"AddInferenceGatewayResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
+      ],
+      "idempotent":true
+    },
     "AddTags":{
       "name":"AddTags",
       "http":{
@@ -475,6 +491,19 @@
       },
       "input":{"shape":"CreateFlowDefinitionRequest"},
       "output":{"shape":"CreateFlowDefinitionResponse"},
+      "errors":[
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
+      ]
+    },
+    "CreateGlobalInferenceGateway":{
+      "name":"CreateGlobalInferenceGateway",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateGlobalInferenceGatewayRequest"},
+      "output":{"shape":"CreateGlobalInferenceGatewayResponse"},
       "errors":[
         {"shape":"ResourceInUse"},
         {"shape":"ResourceLimitExceeded"}
@@ -1383,6 +1412,19 @@
         {"shape":"ResourceInUse"}
       ]
     },
+    "DeleteGlobalInferenceGateway":{
+      "name":"DeleteGlobalInferenceGateway",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteGlobalInferenceGatewayRequest"},
+      "output":{"shape":"DeleteGlobalInferenceGatewayResponse"},
+      "errors":[
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "DeleteHub":{
       "name":"DeleteHub",
       "http":{
@@ -2201,6 +2243,19 @@
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
+    },
+    "DescribeGlobalInferenceGateway":{
+      "name":"DescribeGlobalInferenceGateway",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeGlobalInferenceGatewayRequest"},
+      "output":{"shape":"DescribeGlobalInferenceGatewayResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ],
+      "readonly":true
     },
     "DescribeHub":{
       "name":"DescribeHub",
@@ -3232,6 +3287,16 @@
       "input":{"shape":"ListFlowDefinitionsRequest"},
       "output":{"shape":"ListFlowDefinitionsResponse"}
     },
+    "ListGlobalInferenceGateways":{
+      "name":"ListGlobalInferenceGateways",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListGlobalInferenceGatewaysRequest"},
+      "output":{"shape":"ListGlobalInferenceGatewaysResponse"},
+      "readonly":true
+    },
     "ListHubContentVersions":{
       "name":"ListHubContentVersions",
       "http":{
@@ -3321,6 +3386,19 @@
       },
       "input":{"shape":"ListInferenceExperimentsRequest"},
       "output":{"shape":"ListInferenceExperimentsResponse"}
+    },
+    "ListInferenceGateways":{
+      "name":"ListInferenceGateways",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListInferenceGatewaysRequest"},
+      "output":{"shape":"ListInferenceGatewaysResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ],
+      "readonly":true
     },
     "ListInferenceRecommendationsJobSteps":{
       "name":"ListInferenceRecommendationsJobSteps",
@@ -3839,6 +3917,18 @@
       "input":{"shape":"ListWorkteamsRequest"},
       "output":{"shape":"ListWorkteamsResponse"}
     },
+    "MoveClusterNodes":{
+      "name":"MoveClusterNodes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"MoveClusterNodesRequest"},
+      "output":{"shape":"MoveClusterNodesResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
     "PutEndpointPolicy":{
       "name":"PutEndpointPolicy",
       "http":{
@@ -3885,6 +3975,20 @@
       "errors":[
         {"shape":"ResourceLimitExceeded"}
       ]
+    },
+    "RemoveInferenceGateway":{
+      "name":"RemoveInferenceGateway",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RemoveInferenceGatewayRequest"},
+      "output":{"shape":"RemoveInferenceGatewayResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
+      ],
+      "idempotent":true
     },
     "RenderUiTemplate":{
       "name":"RenderUiTemplate",
@@ -4501,6 +4605,20 @@
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
+    },
+    "UpdateGlobalInferenceGateway":{
+      "name":"UpdateGlobalInferenceGateway",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateGlobalInferenceGatewayRequest"},
+      "output":{"shape":"UpdateGlobalInferenceGatewayResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
+      ],
+      "idempotent":true
     },
     "UpdateHub":{
       "name":"UpdateHub",
@@ -5635,6 +5753,37 @@
       "member":{"shape":"AddClusterNodeSpecification"},
       "max":5,
       "min":1
+    },
+    "AddInferenceGatewayRequest":{
+      "type":"structure",
+      "required":[
+        "Identifier",
+        "ClusterArn",
+        "Namespace",
+        "Name"
+      ],
+      "members":{
+        "Identifier":{"shape":"GlobalInferenceGatewayIdentifier"},
+        "ClusterArn":{"shape":"GlobalInferenceGatewayClusterArn"},
+        "Namespace":{"shape":"GlobalInferenceGatewayKubernetesNamespace"},
+        "Name":{"shape":"GlobalInferenceGatewayKubernetesResourceName"}
+      }
+    },
+    "AddInferenceGatewayResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Id",
+        "Name",
+        "Gateway"
+      ],
+      "members":{
+        "Arn":{"shape":"GlobalInferenceGatewayArn"},
+        "Id":{"shape":"GlobalInferenceGatewayId"},
+        "Name":{"shape":"GlobalInferenceGatewayName"},
+        "Gateway":{"shape":"GlobalInferenceGatewayMember"},
+        "Status":{"shape":"GlobalInferenceGatewayMemberStatus"}
+      }
     },
     "AddTagsInput":{
       "type":"structure",
@@ -8879,7 +9028,9 @@
         "ShuttingDown",
         "SystemUpdating",
         "DeepHealthCheckInProgress",
-        "NotFound"
+        "NotFound",
+        "DetachInProgress",
+        "AttachInProgress"
       ]
     },
     "ClusterInstanceStatusDetails":{
@@ -10983,6 +11134,43 @@
         "FlowDefinitionArn":{"shape":"FlowDefinitionArn"}
       }
     },
+    "CreateGlobalInferenceGatewayRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "ExecutionRoleArn",
+        "Gateways"
+      ],
+      "members":{
+        "Name":{"shape":"GlobalInferenceGatewayName"},
+        "Routing":{"shape":"GlobalInferenceGatewayRouting"},
+        "ExecutionRoleArn":{"shape":"GlobalInferenceGatewayExecutionRoleArn"},
+        "Gateways":{"shape":"GlobalInferenceGatewayMembers"},
+        "ClientToken":{
+          "shape":"GlobalInferenceGatewayClientToken",
+          "idempotencyToken":true
+        },
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateGlobalInferenceGatewayResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Id",
+        "Name",
+        "Status"
+      ],
+      "members":{
+        "Arn":{"shape":"GlobalInferenceGatewayArn"},
+        "Id":{"shape":"GlobalInferenceGatewayId"},
+        "Name":{"shape":"GlobalInferenceGatewayName"},
+        "Status":{"shape":"GlobalInferenceGatewayStatus"},
+        "ExecutionRoleArn":{"shape":"GlobalInferenceGatewayExecutionRoleArn"},
+        "Routing":{"shape":"GlobalInferenceGatewayRouting"},
+        "Gateways":{"shape":"GlobalInferenceGatewayMembers"}
+      }
+    },
     "CreateHubContentPresignedUrlsRequest":{
       "type":"structure",
       "required":[
@@ -12907,6 +13095,21 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteGlobalInferenceGatewayRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"GlobalInferenceGatewayIdentifier"}
+      }
+    },
+    "DeleteGlobalInferenceGatewayResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"GlobalInferenceGatewayArn"},
+        "Id":{"shape":"GlobalInferenceGatewayId"},
+        "Name":{"shape":"GlobalInferenceGatewayName"}
+      }
+    },
     "DeleteHubContentReferenceRequest":{
       "type":"structure",
       "required":[
@@ -14422,6 +14625,35 @@
         "OutputConfig":{"shape":"FlowDefinitionOutputConfig"},
         "RoleArn":{"shape":"RoleArn"},
         "FailureReason":{"shape":"FailureReason"}
+      }
+    },
+    "DescribeGlobalInferenceGatewayRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"GlobalInferenceGatewayIdentifier"}
+      }
+    },
+    "DescribeGlobalInferenceGatewayResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Id",
+        "Name",
+        "ExecutionRoleArn",
+        "Status"
+      ],
+      "members":{
+        "Arn":{"shape":"GlobalInferenceGatewayArn"},
+        "Id":{"shape":"GlobalInferenceGatewayId"},
+        "Name":{"shape":"GlobalInferenceGatewayName"},
+        "ExecutionRoleArn":{"shape":"GlobalInferenceGatewayExecutionRoleArn"},
+        "Status":{"shape":"GlobalInferenceGatewayStatus"},
+        "EndpointUrl":{"shape":"GlobalInferenceGatewayEndpointUrl"},
+        "VpcEndpointServiceName":{"shape":"GlobalInferenceGatewayVpcEndpointServiceName"},
+        "Routing":{"shape":"GlobalInferenceGatewayRouting"},
+        "CreationTime":{"shape":"Timestamp"},
+        "FailureReason":{"shape":"GlobalInferenceGatewayFailureReason"}
       }
     },
     "DescribeHubContentRequest":{
@@ -18228,6 +18460,243 @@
       "min":11,
       "pattern":"https://([^/]+)/?.{3,1016}"
     },
+    "GlobalInferenceGatewayArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]+:[0-9]{12}:global-inference-gateway/[a-z0-9]{12}"
+    },
+    "GlobalInferenceGatewayClientToken":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-]+"
+    },
+    "GlobalInferenceGatewayClusterArn":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]+:[0-9]{12}:cluster/[a-z0-9]{12}"
+    },
+    "GlobalInferenceGatewayEndpointUrl":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "GlobalInferenceGatewayExecutionRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[a-z\\-]*:iam::[0-9]{12}:role/[\\w+=,.@\\-/]{1,1017}"
+    },
+    "GlobalInferenceGatewayFailureReason":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "GlobalInferenceGatewayFilter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Value"
+      ],
+      "members":{
+        "Name":{"shape":"GlobalInferenceGatewayFilterName"},
+        "Value":{"shape":"GlobalInferenceGatewayFilterValue"}
+      }
+    },
+    "GlobalInferenceGatewayFilterName":{
+      "type":"string",
+      "enum":["Status"]
+    },
+    "GlobalInferenceGatewayFilterValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "GlobalInferenceGatewayFilters":{
+      "type":"list",
+      "member":{"shape":"GlobalInferenceGatewayFilter"},
+      "max":10,
+      "min":0
+    },
+    "GlobalInferenceGatewayId":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"[a-z0-9]{12}"
+    },
+    "GlobalInferenceGatewayIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "GlobalInferenceGatewayKubernetesNamespace":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-z0-9]([-a-z0-9]*[a-z0-9])?"
+    },
+    "GlobalInferenceGatewayKubernetesResourceName":{
+      "type":"string",
+      "max":253,
+      "min":1,
+      "pattern":"[a-z0-9]([-a-z0-9.]*[a-z0-9])?"
+    },
+    "GlobalInferenceGatewayMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "GlobalInferenceGatewayMember":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Namespace",
+        "ClusterArn"
+      ],
+      "members":{
+        "Name":{"shape":"GlobalInferenceGatewayKubernetesResourceName"},
+        "Namespace":{"shape":"GlobalInferenceGatewayKubernetesNamespace"},
+        "ClusterArn":{"shape":"GlobalInferenceGatewayClusterArn"}
+      }
+    },
+    "GlobalInferenceGatewayMemberFilter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Value"
+      ],
+      "members":{
+        "Name":{"shape":"GlobalInferenceGatewayMemberFilterName"},
+        "Value":{"shape":"GlobalInferenceGatewayMemberFilterValue"}
+      }
+    },
+    "GlobalInferenceGatewayMemberFilterName":{
+      "type":"string",
+      "enum":[
+        "Status",
+        "ClusterArn"
+      ]
+    },
+    "GlobalInferenceGatewayMemberFilterValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "GlobalInferenceGatewayMemberFilters":{
+      "type":"list",
+      "member":{"shape":"GlobalInferenceGatewayMemberFilter"},
+      "max":10,
+      "min":0
+    },
+    "GlobalInferenceGatewayMemberStatus":{
+      "type":"string",
+      "enum":[
+        "ADDING",
+        "ACTIVE",
+        "REMOVING",
+        "FAILED"
+      ]
+    },
+    "GlobalInferenceGatewayMemberSummaries":{
+      "type":"list",
+      "member":{"shape":"GlobalInferenceGatewayMemberSummary"},
+      "max":100,
+      "min":0
+    },
+    "GlobalInferenceGatewayMemberSummary":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Namespace",
+        "ClusterArn"
+      ],
+      "members":{
+        "Name":{"shape":"GlobalInferenceGatewayKubernetesResourceName"},
+        "Namespace":{"shape":"GlobalInferenceGatewayKubernetesNamespace"},
+        "ClusterArn":{"shape":"GlobalInferenceGatewayClusterArn"},
+        "Status":{"shape":"GlobalInferenceGatewayMemberStatus"},
+        "FailureReason":{"shape":"GlobalInferenceGatewayFailureReason"}
+      }
+    },
+    "GlobalInferenceGatewayMembers":{
+      "type":"list",
+      "member":{"shape":"GlobalInferenceGatewayMember"},
+      "max":10,
+      "min":1
+    },
+    "GlobalInferenceGatewayName":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+    },
+    "GlobalInferenceGatewayNextToken":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
+    "GlobalInferenceGatewayRouting":{
+      "type":"structure",
+      "required":["Weights"],
+      "members":{
+        "Weights":{"shape":"GlobalInferenceGatewayRoutingWeights"}
+      }
+    },
+    "GlobalInferenceGatewayRoutingWeight":{
+      "type":"float",
+      "box":true,
+      "max":1,
+      "min":0
+    },
+    "GlobalInferenceGatewayRoutingWeights":{
+      "type":"structure",
+      "members":{
+        "KVHeadroom":{"shape":"GlobalInferenceGatewayRoutingWeight"},
+        "QueueDepth":{"shape":"GlobalInferenceGatewayRoutingWeight"},
+        "RegionProximity":{"shape":"GlobalInferenceGatewayRoutingWeight"},
+        "ErrorRate":{"shape":"GlobalInferenceGatewayRoutingWeight"}
+      }
+    },
+    "GlobalInferenceGatewayStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING",
+        "FAILED"
+      ]
+    },
+    "GlobalInferenceGatewaySummaries":{
+      "type":"list",
+      "member":{"shape":"GlobalInferenceGatewaySummary"},
+      "max":100,
+      "min":0
+    },
+    "GlobalInferenceGatewaySummary":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Id",
+        "Name",
+        "Status"
+      ],
+      "members":{
+        "Arn":{"shape":"GlobalInferenceGatewayArn"},
+        "Id":{"shape":"GlobalInferenceGatewayId"},
+        "Name":{"shape":"GlobalInferenceGatewayName"},
+        "Status":{"shape":"GlobalInferenceGatewayStatus"},
+        "CreationTime":{"shape":"Timestamp"}
+      }
+    },
+    "GlobalInferenceGatewayVpcEndpointServiceName":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "Group":{
       "type":"string",
       "max":63,
@@ -21931,6 +22400,22 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListGlobalInferenceGatewaysRequest":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"GlobalInferenceGatewayFilters"},
+        "NextToken":{"shape":"GlobalInferenceGatewayNextToken"},
+        "MaxResults":{"shape":"GlobalInferenceGatewayMaxResults"}
+      }
+    },
+    "ListGlobalInferenceGatewaysResponse":{
+      "type":"structure",
+      "required":["GlobalInferenceGatewaySummaries"],
+      "members":{
+        "GlobalInferenceGatewaySummaries":{"shape":"GlobalInferenceGatewaySummaries"},
+        "NextToken":{"shape":"GlobalInferenceGatewayNextToken"}
+      }
+    },
     "ListHubContentVersionsRequest":{
       "type":"structure",
       "required":[
@@ -22139,6 +22624,24 @@
       "members":{
         "InferenceExperiments":{"shape":"InferenceExperimentList"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListInferenceGatewaysRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"GlobalInferenceGatewayIdentifier"},
+        "Filters":{"shape":"GlobalInferenceGatewayMemberFilters"},
+        "NextToken":{"shape":"GlobalInferenceGatewayNextToken"},
+        "MaxResults":{"shape":"GlobalInferenceGatewayMaxResults"}
+      }
+    },
+    "ListInferenceGatewaysResponse":{
+      "type":"structure",
+      "required":["InferenceGatewaySummaries"],
+      "members":{
+        "InferenceGatewaySummaries":{"shape":"GlobalInferenceGatewayMemberSummaries"},
+        "NextToken":{"shape":"GlobalInferenceGatewayNextToken"}
       }
     },
     "ListInferenceRecommendationsJobStepsRequest":{
@@ -25357,6 +25860,108 @@
       "max":1024,
       "min":0,
       "pattern":"\\/.*"
+    },
+    "MoveClusterNodeIds":{
+      "type":"list",
+      "member":{"shape":"ClusterNodeId"},
+      "max":50,
+      "min":1
+    },
+    "MoveClusterNodeLogicalIds":{
+      "type":"list",
+      "member":{"shape":"ClusterNodeLogicalId"},
+      "max":50,
+      "min":1
+    },
+    "MoveClusterNodeLogicalIdsError":{
+      "type":"structure",
+      "required":[
+        "Code",
+        "Message",
+        "NodeLogicalId"
+      ],
+      "members":{
+        "Code":{"shape":"MoveClusterNodesErrorCode"},
+        "Message":{"shape":"String"},
+        "NodeLogicalId":{"shape":"ClusterNodeLogicalId"}
+      }
+    },
+    "MoveClusterNodeLogicalIdsErrorList":{
+      "type":"list",
+      "member":{"shape":"MoveClusterNodeLogicalIdsError"},
+      "max":50,
+      "min":1
+    },
+    "MoveClusterNodesError":{
+      "type":"structure",
+      "required":[
+        "Code",
+        "Message",
+        "NodeId"
+      ],
+      "members":{
+        "Code":{"shape":"MoveClusterNodesErrorCode"},
+        "Message":{"shape":"String"},
+        "NodeId":{"shape":"ClusterNodeId"}
+      }
+    },
+    "MoveClusterNodesErrorCode":{
+      "type":"string",
+      "enum":[
+        "NodeIdNotFound",
+        "InvalidNodeStatus",
+        "NodeIdInUse",
+        "NodeInstanceTypeMismatch"
+      ]
+    },
+    "MoveClusterNodesErrorList":{
+      "type":"list",
+      "member":{"shape":"MoveClusterNodesError"},
+      "max":50,
+      "min":1
+    },
+    "MoveClusterNodesInstanceCount":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
+    },
+    "MoveClusterNodesRequest":{
+      "type":"structure",
+      "required":[
+        "SourceClusterArn",
+        "SourceInstanceGroupName",
+        "TargetClusterArn",
+        "TargetInstanceGroupName"
+      ],
+      "members":{
+        "SourceClusterArn":{"shape":"ClusterArn"},
+        "SourceInstanceGroupName":{"shape":"ClusterInstanceGroupName"},
+        "TargetClusterArn":{"shape":"ClusterArn"},
+        "TargetInstanceGroupName":{"shape":"ClusterInstanceGroupName"},
+        "InstanceCount":{"shape":"MoveClusterNodesInstanceCount"},
+        "NodeIds":{"shape":"MoveClusterNodeIds"},
+        "NodeLogicalIds":{"shape":"MoveClusterNodeLogicalIds"},
+        "ClientToken":{
+          "shape":"MoveClusterNodesRequestClientTokenString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "MoveClusterNodesRequestClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\x21-\\x7E]+"
+    },
+    "MoveClusterNodesResponse":{
+      "type":"structure",
+      "members":{
+        "Successful":{"shape":"MoveClusterNodeIds"},
+        "Failed":{"shape":"MoveClusterNodesErrorList"},
+        "SuccessfulNodeLogicalIds":{"shape":"MoveClusterNodeLogicalIds"},
+        "FailedNodeLogicalIds":{"shape":"MoveClusterNodeLogicalIdsErrorList"}
+      }
     },
     "MultiModelConfig":{
       "type":"structure",
@@ -28617,6 +29222,37 @@
       "type":"structure",
       "members":{
         "EnableRemoteDebug":{"shape":"EnableRemoteDebug"}
+      }
+    },
+    "RemoveInferenceGatewayRequest":{
+      "type":"structure",
+      "required":[
+        "Identifier",
+        "ClusterArn",
+        "Namespace",
+        "Name"
+      ],
+      "members":{
+        "Identifier":{"shape":"GlobalInferenceGatewayIdentifier"},
+        "ClusterArn":{"shape":"GlobalInferenceGatewayClusterArn"},
+        "Namespace":{"shape":"GlobalInferenceGatewayKubernetesNamespace"},
+        "Name":{"shape":"GlobalInferenceGatewayKubernetesResourceName"}
+      }
+    },
+    "RemoveInferenceGatewayResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Id",
+        "Name",
+        "Gateway"
+      ],
+      "members":{
+        "Arn":{"shape":"GlobalInferenceGatewayArn"},
+        "Id":{"shape":"GlobalInferenceGatewayId"},
+        "Name":{"shape":"GlobalInferenceGatewayName"},
+        "Gateway":{"shape":"GlobalInferenceGatewayMember"},
+        "Status":{"shape":"GlobalInferenceGatewayMemberStatus"}
       }
     },
     "RenderUiTemplateRequest":{
@@ -33320,6 +33956,33 @@
         "Description":{"shape":"FeatureDescription"},
         "ParameterAdditions":{"shape":"FeatureParameterAdditions"},
         "ParameterRemovals":{"shape":"FeatureParameterRemovals"}
+      }
+    },
+    "UpdateGlobalInferenceGatewayRequest":{
+      "type":"structure",
+      "required":[
+        "Identifier",
+        "Routing"
+      ],
+      "members":{
+        "Identifier":{"shape":"GlobalInferenceGatewayIdentifier"},
+        "Routing":{"shape":"GlobalInferenceGatewayRouting"}
+      }
+    },
+    "UpdateGlobalInferenceGatewayResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Id",
+        "Name",
+        "Status"
+      ],
+      "members":{
+        "Arn":{"shape":"GlobalInferenceGatewayArn"},
+        "Id":{"shape":"GlobalInferenceGatewayId"},
+        "Name":{"shape":"GlobalInferenceGatewayName"},
+        "Status":{"shape":"GlobalInferenceGatewayStatus"},
+        "Routing":{"shape":"GlobalInferenceGatewayRouting"}
       }
     },
     "UpdateHubContentReferenceRequest":{

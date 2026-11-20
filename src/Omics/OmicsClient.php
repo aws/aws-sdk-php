@@ -1214,6 +1214,8 @@ use Aws\AwsClient;
  *     sessionPolicy?: string,
  *     engineSettings?: array,
  *     outputUriPrefixMode?: 'NONE_WITH_OVERWRITE'|'SERVICE_DEFINED',
+ *     requesterPaysEnabled?: bool,
+ *     parametersUri?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise startRunAsync(array $args = [])
@@ -1243,6 +1245,8 @@ use Aws\AwsClient;
  *     sessionPolicy?: string,
  *     engineSettings?: array,
  *     outputUriPrefixMode?: 'NONE_WITH_OVERWRITE'|'SERVICE_DEFINED',
+ *     requesterPaysEnabled?: bool,
+ *     parametersUri?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result startRunBatch(array $args = [])
@@ -1274,6 +1278,7 @@ use Aws\AwsClient;
  *         sessionPolicy?: string,
  *         engineSettings?: array,
  *         scratchStorageMode?: 'LOCAL'|'SHARED',
+ *         requesterPaysEnabled?: bool,
  *         ...,
  *     },
  *     batchRunSettings?: array{inlineSettings?: list<array>, s3UriSettings?: string, ...},
@@ -1308,6 +1313,7 @@ use Aws\AwsClient;
  *         sessionPolicy?: string,
  *         engineSettings?: array,
  *         scratchStorageMode?: 'LOCAL'|'SHARED',
+ *         requesterPaysEnabled?: bool,
  *         ...,
  *     },
  *     batchRunSettings?: array{inlineSettings?: list<array>, s3UriSettings?: string, ...},

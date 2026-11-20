@@ -62,7 +62,6 @@
     "CreateUserDefinedFunction": "<p>Creates a new function definition in the Data Catalog.</p>",
     "CreateWorkflow": "<p>Creates a new workflow.</p>",
     "DeleteAsset": "<p>Deletes an asset from Glue Data Catalog.</p>",
-    "DeleteAssetType": "<p>Deletes an asset type from Glue Data Catalog.</p>",
     "DeleteAttachment": "<p>Deletes a form attachment from an asset in Glue Data Catalog.</p>",
     "DeleteBlueprint": "<p>Deletes an existing blueprint.</p>",
     "DeleteCatalog": "<p>Removes the specified catalog from the Glue Data Catalog.</p> <p>After completing this operation, you no longer have access to the databases, tables (and all table versions and partitions that might belong to the tables) and the user-defined functions in the deleted catalog. Glue deletes these \"orphaned\" resources asynchronously in a timely manner, at the discretion of the service.</p> <p>To ensure the immediate deletion of all related resources before calling the <code>DeleteCatalog</code> operation, use <code>DeleteTableVersion</code> (or <code>BatchDeleteTableVersion</code>), <code>DeletePartition</code> (or <code>BatchDeletePartition</code>), <code>DeleteTable</code> (or <code>BatchDeleteTable</code>), <code>DeleteUserDefinedFunction</code> and <code>DeleteDatabase</code> to delete any resources that belong to the catalog.</p>",
@@ -238,7 +237,6 @@
     "ModifyIntegration": "<p>Modifies a Zero-ETL integration in the caller's account.</p>",
     "PublishDataQualityResultV2": "<note> <p>This operation is intended for internal use. Do not call it directly.</p> </note> <p>AWS Glue Data Quality uses this operation to publish a data quality result.</p>",
     "PutAsset": "<p>Creates or updates an asset in Glue Data Catalog. If the asset already exists, this operation updates it; otherwise, a new asset is created.</p>",
-    "PutAssetType": "<p>Creates or updates an asset type in Glue Data Catalog. An asset type defines the structure of assets by specifying which forms they include. If an asset type with the given name already exists, it is updated.</p>",
     "PutAttachment": "<p>Attaches a form to an asset or an iterable form item in Glue Data Catalog. If an attachment with the same name already exists, it is overwritten.</p>",
     "PutDataCatalogEncryptionSettings": "<p>Sets the security configuration for a specified catalog. After the configuration has been set, the specified encryption is applied to every catalog write thereafter.</p>",
     "PutDataCatalogExportConfiguration": "<p>Creates or updates the export configuration for the Glue Data Catalog. Use this operation to enable or disable the export of catalog metadata to S3 Tables.</p>",
@@ -254,7 +252,7 @@
     "ResetJobBookmark": "<p>Resets a bookmark entry.</p> <p>For more information about enabling and using job bookmarks, see:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-continuations.html\">Tracking processed data using job bookmarks</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html\">Job parameters used by Glue</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-jobs-job.html#aws-glue-api-jobs-job-Job\">Job structure</a> </p> </li> </ul>",
     "ResumeWorkflowRun": "<p>Restarts selected nodes of a previous partially completed workflow run and resumes the workflow run. The selected nodes and all nodes that are downstream from the selected nodes are run.</p>",
     "RunStatement": "<p>Executes the statement.</p>",
-    "SearchAssets": "<p>Searches for assets in Glue Data Catalog using full-text search, filters, sorting, and aggregations. Returns matching assets with relevance-ranked results.</p>",
+    "SearchAssets": "<p>Searches for assets in Glue Data Catalog using full-text search, filters, and sorting. Returns matching assets with relevance-ranked results.</p>",
     "SearchTables": "<p>Searches a set of tables based on properties in the table metadata as well as on the parent database. You can search against text or filter conditions. </p> <p>You can only get tables that you have access to based on the security policies defined in Lake Formation. You need at least a read-only access to the table for it to be returned. If you do not have access to all the columns in the table, these columns will not be searched against when returning the list of tables back to you. If you have access to the columns but not the data in the columns, those columns and the associated metadata for those columns will be included in the search. </p>",
     "StartBlueprintRun": "<p>Starts a new run of the specified blueprint.</p>",
     "StartColumnStatisticsTaskRun": "<p>Starts a column statistics task run, for a specified table and columns.</p>",
@@ -556,7 +554,7 @@
         "GetAssetOutput$Description": "<p>The description of the asset.</p>",
         "PutAssetRequest$Description": "<p>The description of the asset.</p>",
         "PutAssetResponse$Description": "<p>The description of the asset.</p>",
-        "SearchResultItem$AssetDescription": "<p>The description of the matched asset.</p>",
+        "SearchResultItem$Description": "<p>The description of the matched asset.</p>",
         "UpdateAssetRequest$Description": "<p>The new description of the asset.</p>",
         "UpdateAssetResponse$Description": "<p>The description of the asset.</p>"
       }
@@ -567,9 +565,22 @@
         "AssetFormMap$value": null
       }
     },
+    "AssetFormInput": {
+      "base": "<p>A form to set on an asset, consisting of the form type identifier and its JSON content.</p>",
+      "refs": {
+        "AssetFormInputMap$value": null
+      }
+    },
+    "AssetFormInputMap": {
+      "base": null,
+      "refs": {
+        "PutAssetRequest$Forms": "<p>The forms to set on the asset, keyed by form name. Each entry specifies the form type and its JSON content.</p>"
+      }
+    },
     "AssetFormKey": {
       "base": null,
       "refs": {
+        "AssetFormInputMap$key": null,
         "AssetFormMap$key": null
       }
     },
@@ -580,7 +591,6 @@
         "GetAssetOutput$Attachments": "<p>Additional attachments on the asset for more context, keyed by attachment name.</p>",
         "IterableFormItem$Forms": "<p>The forms on the item, keyed by form name.</p>",
         "IterableFormItem$Attachments": "<p>Additional attachments on the item for more context, keyed by attachment name.</p>",
-        "PutAssetRequest$Forms": "<p>The forms to set on the asset, keyed by form name. Each entry specifies the form type and its JSON content.</p>",
         "PutAssetResponse$Forms": "<p>The forms attached to the asset, keyed by form name.</p>"
       }
     },
@@ -588,20 +598,20 @@
       "base": null,
       "refs": {
         "AssociateGlossaryTermsRequest$AssetIdentifier": "<p>The unique identifier of the asset to associate glossary terms with.</p>",
-        "AssociateGlossaryTermsResponse$AssetIdentifier": "<p>The unique identifier of the asset.</p>",
+        "AssociateGlossaryTermsResponse$AssetId": "<p>The unique identifier of the asset.</p>",
         "BatchGetIterableFormsRequest$AssetIdentifier": "<p>The unique identifier of the asset.</p>",
         "DeleteAssetRequest$Identifier": "<p>The unique identifier of the asset to delete.</p>",
         "DeleteAttachmentRequest$AssetIdentifier": "<p>The unique identifier of the asset from which to delete the attachment.</p>",
-        "DeleteAttachmentResponse$AssetIdentifier": "<p>The unique identifier of the asset.</p>",
+        "DeleteAttachmentResponse$AssetId": "<p>The unique identifier of the asset.</p>",
         "DisassociateGlossaryTermsRequest$AssetIdentifier": "<p>The unique identifier of the asset to disassociate glossary terms from.</p>",
-        "DisassociateGlossaryTermsResponse$AssetIdentifier": "<p>The unique identifier of the asset.</p>",
+        "DisassociateGlossaryTermsResponse$AssetId": "<p>The unique identifier of the asset.</p>",
         "GetAssetInput$Identifier": "<p>The unique identifier of the asset to retrieve.</p>",
         "GetAssetOutput$Id": "<p>The unique identifier of the asset.</p>",
         "ListIterableFormsRequest$AssetIdentifier": "<p>The unique identifier of the asset.</p>",
         "PutAssetRequest$Identifier": "<p>The unique identifier of the asset. If an asset with this identifier already exists, it is updated.</p>",
         "PutAssetResponse$Id": "<p>The unique identifier of the asset.</p>",
         "PutAttachmentRequest$AssetIdentifier": "<p>The unique identifier of the asset to attach the form to.</p>",
-        "PutAttachmentResponse$AssetIdentifier": "<p>The unique identifier of the asset.</p>",
+        "PutAttachmentResponse$AssetId": "<p>The unique identifier of the asset.</p>",
         "SearchResultItem$Id": "<p>The unique identifier of the matched asset.</p>",
         "UpdateAssetRequest$Identifier": "<p>The unique identifier of the asset to update.</p>",
         "UpdateAssetResponse$Id": "<p>The unique identifier of the asset.</p>"
@@ -613,6 +623,7 @@
         "GetAssetOutput$Name": "<p>The name of the asset.</p>",
         "PutAssetRequest$Name": "<p>The name of the asset.</p>",
         "PutAssetResponse$Name": "<p>The name of the asset.</p>",
+        "SearchResultItem$Name": "<p>The name of the matched asset.</p>",
         "UpdateAssetRequest$Name": "<p>The new name of the asset.</p>",
         "UpdateAssetResponse$Name": "<p>The name of the asset.</p>"
       }
@@ -620,33 +631,30 @@
     "AssetTypeFormKey": {
       "base": null,
       "refs": {
-        "AssetTypeFormsMap$key": null
+        "AssetTypeFormOutputMap$key": null
       }
     },
-    "AssetTypeFormReference": {
-      "base": "<p>A reference to a form type that is included in an asset type.</p>",
+    "AssetTypeFormOutput": {
+      "base": "<p>A form that is included in an asset type, identified by the form type that defines its schema.</p>",
       "refs": {
-        "AssetTypeFormsMap$value": null
+        "AssetTypeFormOutputMap$value": null
       }
     },
-    "AssetTypeFormsMap": {
+    "AssetTypeFormOutputMap": {
       "base": null,
       "refs": {
-        "GetAssetTypeResponse$Forms": "<p>The forms that make up the asset type, keyed by form name.</p>",
-        "PutAssetTypeRequest$Forms": "<p>The forms that make up the asset type, keyed by form name. Each entry references the form type that defines the form's schema.</p>",
-        "PutAssetTypeResponse$Forms": "<p>The forms that make up the asset type, keyed by form name.</p>"
+        "GetAssetTypeResponse$Forms": "<p>The forms that make up the asset type, keyed by form name.</p>"
       }
     },
     "AssetTypeId": {
       "base": null,
       "refs": {
         "AssetTypeItem$Id": "<p>The identifier of the asset type.</p>",
-        "DeleteAssetTypeRequest$Identifier": "<p>The identifier of the asset type to delete.</p>",
         "GetAssetOutput$AssetTypeId": "<p>The identifier of the asset type for this asset.</p>",
         "GetAssetTypeRequest$Identifier": "<p>The identifier of the asset type to retrieve.</p>",
         "GetAssetTypeResponse$Id": "<p>The identifier of the asset type.</p>",
-        "PutAssetRequest$AssetTypeId": "<p>The identifier of the asset type for the asset.</p>",
-        "PutAssetTypeResponse$Id": "<p>The identifier of the asset type.</p>",
+        "PutAssetRequest$AssetTypeIdentifier": "<p>The identifier of the asset type for the asset. This field is required.</p>",
+        "PutAssetResponse$AssetTypeId": "<p>The identifier of the asset type for this asset.</p>",
         "SearchResultItem$AssetTypeId": "<p>The identifier of the asset type for the matched asset.</p>"
       }
     },
@@ -662,13 +670,30 @@
         "ListAssetTypesResponse$Items": "<p>The list of asset type items.</p>"
       }
     },
+    "AssetTypeMaxResults": {
+      "base": null,
+      "refs": {
+        "ListAssetTypesRequest$MaxResults": "<p>The maximum number of results to return in the response.</p>"
+      }
+    },
     "AssetTypeName": {
       "base": null,
       "refs": {
         "AssetTypeItem$Name": "<p>The name of the asset type.</p>",
-        "GetAssetTypeResponse$Name": "<p>The name of the asset type.</p>",
-        "PutAssetTypeRequest$Name": "<p>The name of the asset type.</p>",
-        "PutAssetTypeResponse$Name": "<p>The name of the asset type.</p>"
+        "GetAssetTypeResponse$Name": "<p>The name of the asset type.</p>"
+      }
+    },
+    "AssetsExport": {
+      "base": "<p>The export setting for asset metadata.</p>",
+      "refs": {
+        "PutDataCatalogExportConfigurationInput$Assets": "<p>The export setting for asset metadata. Set <code>S3TablesExport</code> to <code>ENABLED</code> to start exporting asset metadata to S3 Tables, or to <code>DISABLED</code> to stop exporting.</p>",
+        "PutDataCatalogExportConfigurationOutput$Assets": "<p>The export setting for asset metadata.</p>"
+      }
+    },
+    "AssetsExportResult": {
+      "base": "<p>The export setting and current export state for asset metadata.</p>",
+      "refs": {
+        "GetDataCatalogExportConfigurationOutput$Assets": "<p>The export setting and current export state for asset metadata.</p>"
       }
     },
     "AssociateGlossaryTermsRequest": {
@@ -2922,7 +2947,8 @@
       "refs": {
         "GetAssetOutput$CreatedAt": "<p>The timestamp at which the asset was created.</p>",
         "GetDataCatalogExportConfigurationOutput$CreatedAt": "<p>The timestamp at which the export configuration was created.</p>",
-        "PutAssetResponse$CreatedAt": "<p>The timestamp at which the asset was created.</p>"
+        "PutAssetResponse$CreatedAt": "<p>The timestamp at which the asset was created.</p>",
+        "SearchResultItem$CreatedAt": "<p>The timestamp at which the matched asset was created.</p>"
       }
     },
     "CreatedTimestamp": {
@@ -3799,14 +3825,6 @@
       "refs": {}
     },
     "DeleteAssetResponse": {
-      "base": null,
-      "refs": {}
-    },
-    "DeleteAssetTypeRequest": {
-      "base": null,
-      "refs": {}
-    },
-    "DeleteAssetTypeResponse": {
       "base": null,
       "refs": {}
     },
@@ -4896,9 +4914,8 @@
     "ExportEncryptionConfiguration": {
       "base": "<p>The encryption configuration for exported data catalog metadata.</p>",
       "refs": {
-        "GetDataCatalogExportConfigurationOutput$EncryptionConfiguration": "<p>The encryption configuration for the exported data.</p>",
-        "PutDataCatalogExportConfigurationInput$EncryptionConfiguration": "<p>The encryption configuration for the exported data. If not specified, the default encryption settings are used.</p>",
-        "PutDataCatalogExportConfigurationOutput$EncryptionConfiguration": "<p>The encryption configuration for the exported data.</p>"
+        "S3TablesConfiguration$EncryptionConfiguration": "<p>The encryption configuration for the table bucket that holds the exported catalog metadata. It applies only when Glue creates the table bucket.</p>",
+        "S3TablesConfigurationResult$EncryptionConfiguration": "<p>The encryption configuration for the table bucket that holds the exported catalog metadata.</p>"
       }
     },
     "ExportLabelsTaskRunProperties": {
@@ -4910,15 +4927,14 @@
     "ExportSetting": {
       "base": "<p>The export setting for the data catalog.</p>",
       "refs": {
-        "GetDataCatalogExportConfigurationOutput$ExportSetting": "<p>The export setting for the data catalog. Valid values are <code>ENABLED</code> and <code>DISABLED</code>.</p>",
-        "PutDataCatalogExportConfigurationInput$ExportSetting": "<p>The export setting for the data catalog. Specify <code>ENABLED</code> to start exporting catalog metadata to S3 Tables, or <code>DISABLED</code> to stop exporting. This field is required.</p>",
-        "PutDataCatalogExportConfigurationOutput$ExportSetting": "<p>The export setting for the data catalog.</p>"
+        "AssetsExport$S3TablesExport": "<p>Whether asset metadata is exported to S3 Tables. Valid values are <code>ENABLED</code> and <code>DISABLED</code>.</p>",
+        "AssetsExportResult$S3TablesExport": "<p>Whether asset metadata is exported to S3 Tables. Valid values are <code>ENABLED</code> and <code>DISABLED</code>.</p>"
       }
     },
     "ExportStatus": {
       "base": "<p>The current status of the data catalog export.</p>",
       "refs": {
-        "GetDataCatalogExportConfigurationOutput$Status": "<p>The current status of the export. Valid values are <code>ENABLING</code>, <code>ENABLED</code>, <code>DISABLING</code>, <code>DISABLED</code>, and <code>FAILED</code>.</p>"
+        "S3TablesExportState$Status": "<p>The current status of the export. Valid values are <code>ENABLING</code>, <code>ENABLED</code>, <code>DISABLING</code>, <code>DISABLED</code>, and <code>FAILED</code>.</p>"
       }
     },
     "ExtendedString": {
@@ -5178,6 +5194,7 @@
       "base": null,
       "refs": {
         "AssetFormEntry$Content": "<p>The JSON content of the form, conforming to the schema of the specified form type.</p>",
+        "AssetFormInput$Content": "<p>The JSON content of the form, conforming to the schema of the specified form type.</p>",
         "PutAttachmentRequest$Content": "<p>The JSON content of the form, conforming to the schema of the specified form type.</p>"
       }
     },
@@ -5185,13 +5202,13 @@
       "base": null,
       "refs": {
         "AssetFormEntry$FormTypeId": "<p>The identifier of the form type that defines this form's schema.</p>",
-        "AssetTypeFormReference$FormTypeIdentifier": "<p>The identifier of the referenced form type.</p>",
+        "AssetFormInput$FormTypeIdentifier": "<p>The identifier of the form type that defines this form's schema. This field is required.</p>",
+        "AssetTypeFormOutput$FormTypeId": "<p>The identifier of the form type that defines the form's schema.</p>",
         "DeleteFormTypeRequest$Identifier": "<p>The identifier of the form type to delete.</p>",
         "FormTypeItem$Id": "<p>The identifier of the form type.</p>",
         "GetFormTypeRequest$Identifier": "<p>The identifier of the form type to retrieve.</p>",
         "GetFormTypeResponse$Id": "<p>The identifier of the form type.</p>",
-        "IterableFormEntry$FormTypeId": "<p>The form type identifier of the iterable form (for example, <code>columns</code>), used to retrieve its items via <code>ListIterableForms</code> or <code>BatchGetIterableForms</code>.</p>",
-        "PutAttachmentRequest$FormTypeId": "<p>The identifier of the form type for this attachment.</p>",
+        "PutAttachmentRequest$FormTypeIdentifier": "<p>The identifier of the form type for this attachment. This field is required.</p>",
         "PutAttachmentResponse$FormTypeId": "<p>The identifier of the form type for this attachment.</p>",
         "PutFormTypeResponse$Id": "<p>The identifier of the form type.</p>"
       }
@@ -5206,6 +5223,12 @@
       "base": null,
       "refs": {
         "ListFormTypesResponse$Items": "<p>The list of form type items.</p>"
+      }
+    },
+    "FormTypeMaxResults": {
+      "base": null,
+      "refs": {
+        "ListFormTypesRequest$MaxResults": "<p>The maximum number of results to return in the response.</p>"
       }
     },
     "FormTypeName": {
@@ -6220,14 +6243,10 @@
         "ListGlossariesResponse$Items": "<p>The list of glossary items.</p>"
       }
     },
-    "GlossaryLongDescription": {
+    "GlossaryMaxResults": {
       "base": null,
       "refs": {
-        "CreateGlossaryTermRequest$LongDescription": "<p>A long description of the glossary term.</p>",
-        "CreateGlossaryTermResponse$LongDescription": "<p>The long description of the glossary term.</p>",
-        "GetGlossaryTermResponse$LongDescription": "<p>The long description of the glossary term.</p>",
-        "UpdateGlossaryTermRequest$LongDescription": "<p>The updated long description of the glossary term.</p>",
-        "UpdateGlossaryTermResponse$LongDescription": "<p>The long description of the glossary term.</p>"
+        "ListGlossariesRequest$MaxResults": "<p>The maximum number of results to return in the response.</p>"
       }
     },
     "GlossaryName": {
@@ -6241,17 +6260,6 @@
         "UpdateGlossaryResponse$Name": "<p>The name of the glossary.</p>"
       }
     },
-    "GlossaryShortDescription": {
-      "base": null,
-      "refs": {
-        "CreateGlossaryTermRequest$ShortDescription": "<p>A short description of the glossary term.</p>",
-        "CreateGlossaryTermResponse$ShortDescription": "<p>The short description of the glossary term.</p>",
-        "GetGlossaryTermResponse$ShortDescription": "<p>The short description of the glossary term.</p>",
-        "GlossaryTermItem$ShortDescription": "<p>The short description of the glossary term.</p>",
-        "UpdateGlossaryTermRequest$ShortDescription": "<p>The updated short description of the glossary term.</p>",
-        "UpdateGlossaryTermResponse$ShortDescription": "<p>The short description of the glossary term.</p>"
-      }
-    },
     "GlossaryTermId": {
       "base": null,
       "refs": {
@@ -6260,6 +6268,7 @@
         "GetGlossaryTermRequest$Identifier": "<p>The unique identifier of the glossary term to retrieve.</p>",
         "GetGlossaryTermResponse$Id": "<p>The unique identifier of the glossary term.</p>",
         "GlossaryTermIdList$member": null,
+        "GlossaryTermIdOutputList$member": null,
         "GlossaryTermItem$Id": "<p>The unique identifier of the glossary term.</p>",
         "UpdateGlossaryTermRequest$Identifier": "<p>The unique identifier of the glossary term to update.</p>",
         "UpdateGlossaryTermResponse$Id": "<p>The unique identifier of the glossary term.</p>"
@@ -6269,8 +6278,13 @@
       "base": null,
       "refs": {
         "AssociateGlossaryTermsRequest$GlossaryTermIdentifiers": "<p>The list of glossary term identifiers to associate with the asset.</p>",
+        "DisassociateGlossaryTermsRequest$GlossaryTermIdentifiers": "<p>The list of glossary term identifiers to disassociate from the asset.</p>"
+      }
+    },
+    "GlossaryTermIdOutputList": {
+      "base": null,
+      "refs": {
         "AssociateGlossaryTermsResponse$GlossaryTerms": "<p>The glossary terms now associated with the asset.</p>",
-        "DisassociateGlossaryTermsRequest$GlossaryTermIdentifiers": "<p>The list of glossary term identifiers to disassociate from the asset.</p>",
         "DisassociateGlossaryTermsResponse$GlossaryTerms": "<p>The remaining glossary terms associated with the asset.</p>",
         "GetAssetOutput$GlossaryTerms": "<p>The identifiers of the glossary terms associated with the asset.</p>",
         "IterableFormItem$GlossaryTerms": "<p>The identifiers of the glossary terms associated with the item.</p>",
@@ -6289,6 +6303,21 @@
         "ListGlossaryTermsResponse$Items": "<p>The list of glossary term items.</p>"
       }
     },
+    "GlossaryTermLongDescription": {
+      "base": null,
+      "refs": {
+        "CreateGlossaryTermRequest$LongDescription": "<p>A long description of the glossary term.</p>",
+        "CreateGlossaryTermResponse$LongDescription": "<p>The long description of the glossary term.</p>",
+        "GetGlossaryTermResponse$LongDescription": "<p>The long description of the glossary term.</p>",
+        "UpdateGlossaryTermResponse$LongDescription": "<p>The long description of the glossary term.</p>"
+      }
+    },
+    "GlossaryTermMaxResults": {
+      "base": null,
+      "refs": {
+        "ListGlossaryTermsRequest$MaxResults": "<p>The maximum number of results to return in the response.</p>"
+      }
+    },
     "GlossaryTermName": {
       "base": null,
       "refs": {
@@ -6298,6 +6327,16 @@
         "GlossaryTermItem$Name": "<p>The name of the glossary term.</p>",
         "UpdateGlossaryTermRequest$Name": "<p>The updated name of the glossary term.</p>",
         "UpdateGlossaryTermResponse$Name": "<p>The name of the glossary term.</p>"
+      }
+    },
+    "GlossaryTermShortDescription": {
+      "base": null,
+      "refs": {
+        "CreateGlossaryTermRequest$ShortDescription": "<p>A short description of the glossary term.</p>",
+        "CreateGlossaryTermResponse$ShortDescription": "<p>The short description of the glossary term.</p>",
+        "GetGlossaryTermResponse$ShortDescription": "<p>The short description of the glossary term.</p>",
+        "GlossaryTermItem$ShortDescription": "<p>The short description of the glossary term.</p>",
+        "UpdateGlossaryTermResponse$ShortDescription": "<p>The short description of the glossary term.</p>"
       }
     },
     "GlueEncryptionException": {
@@ -6617,7 +6656,6 @@
         "PublishDataQualityResultV2Request$RulesetName": "<p>The ruleset name for the result.</p>",
         "PublishDataQualityResultV2Response$ResultId": "<p>The ID of the result.</p>",
         "PutAssetRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
-        "PutAssetTypeRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "PutAttachmentRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "PutDataCatalogExportConfigurationInput$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "PutDataQualityProfileAnnotationRequest$ProfileId": "<p>The ID of the data quality monitoring profile to annotate.</p>",
@@ -7399,23 +7437,23 @@
     "ItemId": {
       "base": null,
       "refs": {
+        "AssociateGlossaryTermsResponse$ItemId": "<p>The identifier of the item within the iterable form, if applicable.</p>",
+        "DeleteAttachmentResponse$ItemId": "<p>The identifier of the item within the iterable form, if applicable.</p>",
+        "DisassociateGlossaryTermsResponse$ItemId": "<p>The identifier of the item within the iterable form, if applicable.</p>",
         "IterableFormItem$ItemId": "<p>The unique identifier of the item.</p>",
-        "IterableFormListItem$ItemId": "<p>The unique identifier of the item.</p>"
+        "IterableFormListItem$ItemId": "<p>The unique identifier of the item.</p>",
+        "PutAttachmentResponse$ItemId": "<p>The identifier of the item within the iterable form, if applicable.</p>"
       }
     },
     "ItemIdentifier": {
       "base": null,
       "refs": {
         "AssociateGlossaryTermsRequest$ItemIdentifier": "<p>The identifier of the item within the iterable form. Required when <code>iterableFormName</code> is specified.</p>",
-        "AssociateGlossaryTermsResponse$ItemIdentifier": "<p>The identifier of the item within the iterable form, if applicable.</p>",
         "DeleteAttachmentRequest$ItemIdentifier": "<p>The identifier of the item within the iterable form. Required when <code>iterableFormName</code> is specified.</p>",
-        "DeleteAttachmentResponse$ItemIdentifier": "<p>The identifier of the item within the iterable form, if applicable.</p>",
         "DisassociateGlossaryTermsRequest$ItemIdentifier": "<p>The identifier of the item within the iterable form. Required when <code>iterableFormName</code> is specified.</p>",
-        "DisassociateGlossaryTermsResponse$ItemIdentifier": "<p>The identifier of the item within the iterable form, if applicable.</p>",
         "ItemError$ItemIdentifier": "<p>The identifier of the item that caused the error.</p>",
         "ItemIdentifierList$member": null,
-        "PutAttachmentRequest$ItemIdentifier": "<p>The identifier of the item within the iterable form. Required when <code>iterableFormName</code> is specified.</p>",
-        "PutAttachmentResponse$ItemIdentifier": "<p>The identifier of the item within the iterable form, if applicable.</p>"
+        "PutAttachmentRequest$ItemIdentifier": "<p>The identifier of the item within the iterable form. Required when <code>iterableFormName</code> is specified.</p>"
       }
     },
     "ItemIdentifierList": {
@@ -7486,6 +7524,12 @@
         "ListIterableFormsRequest$IterableFormName": "<p>The name of the iterable form to list items from.</p>",
         "PutAttachmentRequest$IterableFormName": "<p>The name of the iterable form. When specified along with <code>itemIdentifier</code>, the attachment targets an item within the iterable form rather than the asset itself.</p>",
         "PutAttachmentResponse$IterableFormName": "<p>The name of the iterable form, if the attachment targets an item.</p>"
+      }
+    },
+    "IterableFormTypeId": {
+      "base": null,
+      "refs": {
+        "IterableFormEntry$FormTypeId": "<p>The form type identifier of the iterable form (for example, <code>columns</code>), used to retrieve its items via <code>ListIterableForms</code> or <code>BatchGetIterableForms</code>.</p>"
       }
     },
     "JDBCConnectionType": {
@@ -8468,7 +8512,6 @@
         "CreateGlossaryResponse$Description": "<p>The description of the glossary.</p>",
         "GetGlossaryResponse$Description": "<p>The description of the glossary.</p>",
         "GlossaryItem$Description": "<p>The description of the glossary.</p>",
-        "UpdateGlossaryRequest$Description": "<p>The updated description of the glossary.</p>",
         "UpdateGlossaryResponse$Description": "<p>The description of the glossary.</p>"
       }
     },
@@ -9840,7 +9883,6 @@
         "GetSecurityConfigurationsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "GetUnfilteredPartitionsMetadataRequest$MaxResults": "<p>The maximum number of partitions to return in a single response.</p>",
         "GetWorkflowRunsRequest$MaxResults": "<p>The maximum number of workflow runs to be included in the response.</p>",
-        "ListAssetTypesRequest$MaxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListColumnStatisticsTaskRunsRequest$MaxResults": "<p>The maximum size of the response.</p>",
         "ListCrawlersRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListCrawlsRequest$MaxResults": "<p>The maximum number of results to return. The default is 20, and maximum is 100.</p>",
@@ -9853,9 +9895,6 @@
         "ListDataQualityStatisticAnnotationsRequest$MaxResults": "<p>The maximum number of results to return in this request.</p>",
         "ListDataQualityStatisticsRequest$MaxResults": "<p>The maximum number of results to return in this request.</p>",
         "ListDevEndpointsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
-        "ListFormTypesRequest$MaxResults": "<p>The maximum number of results to return in the response.</p>",
-        "ListGlossariesRequest$MaxResults": "<p>The maximum number of results to return in the response.</p>",
-        "ListGlossaryTermsRequest$MaxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListIterableFormsRequest$MaxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListJobsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListMLTransformsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
@@ -10394,14 +10433,6 @@
       "refs": {}
     },
     "PutAssetResponse": {
-      "base": null,
-      "refs": {}
-    },
-    "PutAssetTypeRequest": {
-      "base": null,
-      "refs": {}
-    },
-    "PutAssetTypeResponse": {
       "base": null,
       "refs": {}
     },
@@ -11090,7 +11121,26 @@
     "S3TableBucketArn": {
       "base": null,
       "refs": {
-        "GetDataCatalogExportConfigurationOutput$S3TableBucketArn": "<p>The ARN of the S3 Tables bucket where catalog metadata is exported.</p>"
+        "S3TablesConfigurationResult$TableBucketArn": "<p>The ARN of the S3 table bucket that holds the exported catalog metadata.</p>"
+      }
+    },
+    "S3TablesConfiguration": {
+      "base": "<p>The S3 Tables configuration for a data catalog export.</p>",
+      "refs": {
+        "PutDataCatalogExportConfigurationInput$S3TablesConfiguration": "<p>The S3 Tables configuration for the export. The encryption configuration applies only when Glue creates the table bucket that holds the exported catalog metadata. If not specified, the default encryption settings are used.</p>",
+        "PutDataCatalogExportConfigurationOutput$S3TablesConfiguration": "<p>The S3 Tables configuration for the export.</p>"
+      }
+    },
+    "S3TablesConfigurationResult": {
+      "base": "<p>The S3 Tables configuration for a data catalog export, including the table bucket that holds the exported catalog metadata.</p>",
+      "refs": {
+        "GetDataCatalogExportConfigurationOutput$S3TablesConfiguration": "<p>The S3 Tables configuration for the export, including the table bucket that holds the exported catalog metadata and its encryption configuration.</p>"
+      }
+    },
+    "S3TablesExportState": {
+      "base": "<p>The state of an export to S3 Tables. Glue sets this state.</p>",
+      "refs": {
+        "AssetsExportResult$S3TablesExportState": "<p>The current state of the asset metadata export to S3 Tables.</p>"
       }
     },
     "S3Target": {
@@ -11401,16 +11451,16 @@
         "SearchFilterClause$OrAnyFilters": "<p>A list of filter clauses where at least one must match (logical OR).</p>"
       }
     },
+    "SearchFilterComparator": {
+      "base": null,
+      "refs": {
+        "SearchAttributeFilter$Comparator": "<p>The comparison operator. Valid values are <code>EQUALS</code>, <code>GREATER_THAN</code>, <code>GREATER_THAN_OR_EQUALS</code>, <code>LESS_THAN</code>, <code>LESS_THAN_OR_EQUALS</code>, and <code>NOT_EXISTS</code>. This field is required.</p>"
+      }
+    },
     "SearchFilterLongValue": {
       "base": null,
       "refs": {
         "SearchFilterValue$LongValue": "<p>A long integer filter value.</p>"
-      }
-    },
-    "SearchFilterOperator": {
-      "base": null,
-      "refs": {
-        "SearchAttributeFilter$Operator": "<p>The comparison operator. Valid values are <code>equals</code>, <code>greaterThan</code>, <code>greaterThanOrEquals</code>, <code>lessThan</code>, <code>lessThanOrEquals</code>, and <code>notExists</code>.</p>"
       }
     },
     "SearchFilterStringValue": {
@@ -11473,12 +11523,6 @@
       "base": null,
       "refs": {
         "SearchAssetsOutput$Items": "<p>The list of assets matching the search criteria.</p>"
-      }
-    },
-    "SearchResultName": {
-      "base": null,
-      "refs": {
-        "SearchResultItem$AssetName": "<p>The name of the matched asset.</p>"
       }
     },
     "SearchSort": {
@@ -13392,6 +13436,12 @@
       "base": null,
       "refs": {}
     },
+    "UpdateGlossaryDescription": {
+      "base": null,
+      "refs": {
+        "UpdateGlossaryRequest$Description": "The new description. Omit it to keep the current description; set it to an empty string to clear it."
+      }
+    },
     "UpdateGlossaryRequest": {
       "base": null,
       "refs": {}
@@ -13400,6 +13450,12 @@
       "base": null,
       "refs": {}
     },
+    "UpdateGlossaryTermLongDescription": {
+      "base": null,
+      "refs": {
+        "UpdateGlossaryTermRequest$LongDescription": "The new long description. Omit it to keep the current one; set it to an empty string to clear it."
+      }
+    },
     "UpdateGlossaryTermRequest": {
       "base": null,
       "refs": {}
@@ -13407,6 +13463,12 @@
     "UpdateGlossaryTermResponse": {
       "base": null,
       "refs": {}
+    },
+    "UpdateGlossaryTermShortDescription": {
+      "base": null,
+      "refs": {
+        "UpdateGlossaryTermRequest$ShortDescription": "The new short description. Omit it to keep the current one; set it to an empty string to clear it."
+      }
     },
     "UpdateGlueIdentityCenterConfigurationRequest": {
       "base": "<p>Request to update an existing Glue Identity Center configuration.</p>",

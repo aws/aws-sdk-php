@@ -3239,7 +3239,8 @@
       "type":"structure",
       "members":{
         "ResourceTypeOptInPreference":{"shape":"ResourceTypeOptInPreference"},
-        "ResourceTypeManagementPreference":{"shape":"ResourceTypeManagementPreference"}
+        "ResourceTypeManagementPreference":{"shape":"ResourceTypeManagementPreference"},
+        "ResourceTypeOptInIncremental":{"shape":"ResourceTypeOptInIncremental"}
       }
     },
     "DescribeReportJobInput":{
@@ -5706,6 +5707,11 @@
       "key":{"shape":"ResourceType"},
       "value":{"shape":"IsEnabled"}
     },
+    "ResourceTypeOptInIncremental":{
+      "type":"map",
+      "key":{"shape":"ResourceType"},
+      "value":{"shape":"IsEnabled"}
+    },
     "ResourceTypeOptInPreference":{
       "type":"map",
       "key":{"shape":"ResourceType"},
@@ -6649,7 +6655,8 @@
       "type":"structure",
       "members":{
         "ResourceTypeOptInPreference":{"shape":"ResourceTypeOptInPreference"},
-        "ResourceTypeManagementPreference":{"shape":"ResourceTypeManagementPreference"}
+        "ResourceTypeManagementPreference":{"shape":"ResourceTypeManagementPreference"},
+        "ResourceTypeOptInIncremental":{"shape":"ResourceTypeOptInIncremental"}
       }
     },
     "UpdateReportPlanInput":{

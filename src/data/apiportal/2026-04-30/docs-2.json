@@ -1,0 +1,1686 @@
+{
+  "version": "2.0",
+  "service": "<p>API Portal discovers the APIs running in your AWS accounts and organization, lets you manage them as Managed APIs, and publishes their documentation to developer portals.</p>",
+  "operations": {
+    "AssociateManagedApis": "<p>Associate one or more Managed APIs with a product. Best-effort — IDs that fail are returned in {@link AssociateManagedApisResponse#failedItems}; IDs that succeed are omitted. Associating an already-associated Managed API is a no-op (not reported as failure).</p>",
+    "CreateManagedApi": "<p>Promote a discovered API in the API inventory into the managed API list.</p>",
+    "CreatePortal": "<p>Creates a portal that publishes documentation for the products it includes. Use UpdatePortalPublishStatus to publish it.</p>",
+    "CreatePortalPreview": "<p>Starts building a preview of the portal's current content. Use GetPortal to check the preview status and get the preview URL.</p>",
+    "CreateProduct": "<p>Creates a product. A product groups Managed APIs with their API pages and product pages so a portal can publish them together.</p>",
+    "CreateProductApiPage": "<p>Creates an API page that documents a Managed API in a product. The page content is generated asynchronously. Use <code>status</code> to track it.</p>",
+    "CreateProductPage": "<p>Creates a product page with free-form documentation. A product can have up to 40 pages.</p>",
+    "DeleteDiscoveryConfiguration": "<p>Deletes the discovery configuration and stops any running discovery.</p>",
+    "DeleteManagedApi": "<p>Deletes a Managed API.</p>",
+    "DeleteOrganizationDiscoveryConfiguration": "<p>Deletes the organization-wide discovery configuration and stops any running discovery across the organization. Only the organization management account may call this operation.</p>",
+    "DeletePortal": "<p>Deletes a portal.</p>",
+    "DeleteProduct": "<p>Deletes a product.</p>",
+    "DeleteProductApiPage": "<p>Deletes an API page.</p>",
+    "DeleteProductPage": "<p>Deletes a product page.</p>",
+    "DeleteProductSharingPolicy": "<p>Deletes the sharing policy of a product. The product is no longer shared.</p>",
+    "DisassociateManagedApis": "<p>Disassociate one or more Managed APIs from a product. Best-effort — IDs that fail are returned in {@link DisassociateManagedApisResponse#failedItems}; IDs that succeed are omitted. Disassociating an unmapped Managed API is a no-op (not reported as failure).</p>",
+    "GetApiInventoryItem": "<p>Gets full details of a single API inventory item.</p>",
+    "GetDiscoveryConfiguration": "<p>Retrieves the discovery configuration for the account and region.</p>",
+    "GetManagedApi": "<p>Returns a Managed API, including its security posture findings.</p>",
+    "GetOrganizationDiscoveryConfiguration": "<p>Retrieves the organization-wide discovery configuration. Only the organization management account and registered delegated administrators may call this operation.</p>",
+    "GetPortal": "<p>Returns the configuration, publish status, and preview status of a portal.</p>",
+    "GetProduct": "<p>Returns a product. To read a product shared with you by another account, supply <code>resourceOwnerAccountId</code>.</p>",
+    "GetProductApiPage": "<p>Returns an API page, including its body.</p>",
+    "GetProductPage": "<p>Returns a product page, including its body.</p>",
+    "GetProductSharingPolicy": "<p>Returns the sharing policy of a product.</p>",
+    "ListApiInventoryItems": "<p>Lists discovered API inventory items with filtering and pagination.</p>",
+    "ListDiscoveryStatuses": "<p>Lists discovery statuses for services.</p>",
+    "ListManagedApiEvents": "<p>Lists API-security events for a single managed API, most recent first. Returns up to 20 of the most recent events (not paginated).</p>",
+    "ListManagedApis": "<p>Lists the Managed APIs in your account.</p>",
+    "ListPortals": "<p>Lists the portals in your account.</p>",
+    "ListProductApiPages": "<p>Lists the API pages in a product. The results do not include page bodies.</p>",
+    "ListProductPages": "<p>Lists the product pages in a product. The results do not include page bodies.</p>",
+    "ListProducts": "<p>Lists products you own, products shared with you, or both.</p>",
+    "ListTagsForResource": "<p>Lists the tags for an API Portal resource. One of the three basic tagging operations generated for Tagris integration (ListTagsForResource / TagResource / UntagResource).</p>",
+    "PutDiscoveryConfiguration": "<p>Creates or updates the discovery configuration</p>",
+    "PutOrganizationDiscoveryConfiguration": "<p>Creates or updates the organization-wide discovery configuration. This is a singleton per organization. Only the organization management account and registered delegated administrators may call this operation.</p>",
+    "PutProductSharingPolicy": "<p>Creates or replaces the sharing policy of a product. The policy controls which other accounts can read the product.</p>",
+    "StartDiscovery": "<p>Starts the API discovery process.</p>",
+    "StopDiscovery": "<p>Stops the running API discovery process.</p>",
+    "TagResource": "<p>Adds or updates tags on an API Portal resource. One of the three basic tagging operations generated for Tagris integration (ListTagsForResource / TagResource / UntagResource).</p>",
+    "UntagResource": "<p>Removes tags from an API Portal resource. One of the three basic tagging operations generated for Tagris integration (ListTagsForResource / TagResource / UntagResource).</p> <p>tagKeys is a query string parameter: for tag-based access control (TBAC/ABAC) to work correctly, API Gateway requires the keys to be removed to be passed as a query string parameter.</p>",
+    "UpdatePortal": "<p>Updates a portal. Only the fields supplied in the request are changed.</p>",
+    "UpdatePortalPublishStatus": "<p>Publishes or disables a portal. The change runs asynchronously. Use GetPortal to track <code>publishStatus</code>.</p>",
+    "UpdateProduct": "<p>Updates a product. Only the fields supplied in the request are changed.</p>",
+    "UpdateProductApiPage": "<p>Updates an API page. Only the fields supplied in the request are changed.</p>",
+    "UpdateProductPage": "<p>Updates a product page.</p>"
+  },
+  "shapes": {
+    "ACMManaged": {
+      "base": "<p>A custom domain for the portal and the ACM certificate that covers it.</p>",
+      "refs": {
+        "EndpointConfigurationRequest$acmManaged": "<p>Serve the portal on your own domain, using a certificate from AWS Certificate Manager.</p>"
+      }
+    },
+    "AccessDeniedException": {
+      "base": "<p>You do not have permission to perform this operation.</p>",
+      "refs": {}
+    },
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "AccountIdList$member": null,
+        "ApiInventoryItem$accountId": "<p>The AWS account ID that owns the API.</p>",
+        "ApiInventoryItemDetail$accountId": "<p>The AWS account ID that owns the API.</p>",
+        "DiscoveryStatus$accountId": "<p>The AWS account ID the status applies to.</p>",
+        "GetProductApiPageRequest$resourceOwnerAccountId": "<p>The AWS account ID that owns the product. Supply it to read a product shared with you by another account. Omit it for products in your own account.</p>",
+        "GetProductPageRequest$resourceOwnerAccountId": "<p>The AWS account ID that owns the product. Supply it to read a product shared with you by another account. Omit it for products in your own account.</p>",
+        "GetProductRequest$resourceOwnerAccountId": "<p>The AWS account ID that owns the product. Supply it to read a product shared with you by another account. Omit it for products in your own account.</p>",
+        "ListProductApiPagesRequest$resourceOwnerAccountId": "<p>The AWS account ID that owns the product. Supply it to read a product shared with you by another account. Omit it for products in your own account.</p>",
+        "ListProductPagesRequest$resourceOwnerAccountId": "<p>The AWS account ID that owns the product. Supply it to read a product shared with you by another account. Omit it for products in your own account.</p>"
+      }
+    },
+    "AccountIdList": {
+      "base": null,
+      "refs": {
+        "DiscoveryExclusionFilters$accountIds": "<p>List of AWS account IDs to exclude from discovery.</p>",
+        "DiscoveryInclusionFilters$accountIds": "<p>List of AWS account IDs to include in discovery.</p>"
+      }
+    },
+    "ApiEndpoint": {
+      "base": null,
+      "refs": {
+        "ApiPageDisplayContentResponse$apiUrl": "<p>The invoke URL shown on the page and used by Try-It.</p>",
+        "ProductApiPageSummaryNoBody$apiUrl": "<p>The invoke URL shown on the page and used by Try-It.</p>"
+      }
+    },
+    "ApiId": {
+      "base": "<p>Identifies the API an API page documents.</p>",
+      "refs": {
+        "CreateProductApiPageResponse$apiId": "<p>The API the page documents.</p>",
+        "GetProductApiPageResponse$apiId": "<p>The API the page documents.</p>",
+        "ProductApiPageSummaryNoBody$apiId": "<p>The API the page documents.</p>",
+        "UpdateProductApiPageResponse$apiId": "<p>The API the page documents.</p>"
+      }
+    },
+    "ApiInventoryFilters": {
+      "base": "<p>Filters for listing API inventory items. All supplied filters must match.</p>",
+      "refs": {
+        "ListApiInventoryItemsRequest$filters": "<p>Filters that limit the results. Omit it to list every discovered API.</p>"
+      }
+    },
+    "ApiInventoryItem": {
+      "base": "<p>An API found by discovery.</p>",
+      "refs": {
+        "ApiInventoryItemList$member": null
+      }
+    },
+    "ApiInventoryItemDetail": {
+      "base": "<p>The full details of an API found by discovery.</p>",
+      "refs": {
+        "GetApiInventoryItemResponse$item": "<p>The details of the API inventory item.</p>"
+      }
+    },
+    "ApiInventoryItemList": {
+      "base": null,
+      "refs": {
+        "ListApiInventoryItemsResponse$items": "<p>The discovered APIs in this page of results.</p>"
+      }
+    },
+    "ApiPageBody": {
+      "base": null,
+      "refs": {
+        "ApiPageDisplayContentResponse$body": "<p>The Markdown body of the page. Absent while the page is <code>IN_PROGRESS</code>.</p>",
+        "DisplayContentOverrides$body": "<p>The Markdown body of the page, from 1 to 32,768 characters.</p>"
+      }
+    },
+    "ApiPageDisplayContent": {
+      "base": "<p>Exactly one of the members is set: <code>none</code> to use default display content, or <code>overrides</code> to customize it. Modeled as a union so the &quot;exactly one&quot; choice is enforced by type.</p>",
+      "refs": {
+        "CreateProductApiPageRequest$displayContent": null,
+        "UpdateProductApiPageRequest$displayContent": null
+      }
+    },
+    "ApiPageDisplayContentResponse": {
+      "base": "<p>The content shown on an API page.</p>",
+      "refs": {
+        "CreateProductApiPageResponse$displayContent": "<p>The content shown on the page.</p>",
+        "GetProductApiPageResponse$displayContent": "<p>The content shown on the page.</p>",
+        "UpdateProductApiPageResponse$displayContent": "<p>The content shown on the page.</p>"
+      }
+    },
+    "ApiSelectionConfiguration": {
+      "base": "<p>How Managed APIs are selected for a product. With <code>CUSTOM</code>, you associate APIs yourself. With <code>RULE_BASED</code>, the APIs that match <code>ruleFilters</code> are selected.</p>",
+      "refs": {
+        "CreateProductRequest$apiSelectionConfiguration": "<p>How Managed APIs are selected for the product. The selection mode can't be changed after the product is created.</p>",
+        "CreateProductResponse$apiSelectionConfiguration": "<p>How Managed APIs are selected for the product.</p>",
+        "GetProductResponse$apiSelectionConfiguration": "<p>How Managed APIs are selected for the product.</p>",
+        "ProductSummary$apiSelectionConfiguration": "<p>How Managed APIs are selected for the product.</p>",
+        "UpdateProductRequest$apiSelectionConfiguration": "<p>The new API selection settings. The selection mode must match the mode the product was created with. Omit it to keep the current settings.</p>",
+        "UpdateProductResponse$apiSelectionConfiguration": "<p>How Managed APIs are selected for the product.</p>"
+      }
+    },
+    "ApiSelectionMode": {
+      "base": "<p>How a product's member Managed APIs are chosen. CUSTOM - the customer associates and disassociates Managed APIs explicitly. RULE_BASED - membership is derived from ruleFilters: every Managed API in the account that matches is associated, and nothing else is. BatchAssociateManagedApi and BatchDisassociateManagedApi are rejected for these products.</p> <p>Fixed at create time. UpdateProduct cannot change the mode of an existing product.</p>",
+      "refs": {
+        "ApiSelectionConfiguration$apiSelectionMode": null
+      }
+    },
+    "ApiSignature": {
+      "base": "<p>The attributes that identify an API.</p>",
+      "refs": {
+        "CreateManagedApiRequest$apiSignature": "<p>The resource, method, host, port, and path that identify the API.</p>",
+        "CreateManagedApiResponse$apiSignature": "<p>The attributes that identify the API.</p>",
+        "GetManagedApiResponse$apiSignature": "<p>The attributes that identify the API.</p>",
+        "ManagedApiSummary$apiSignature": "<p>The attributes that identify the API.</p>"
+      }
+    },
+    "ApiSignatureHostnameString": {
+      "base": null,
+      "refs": {
+        "ApiSignature$hostname": "<p>The host name the API is served on.</p>"
+      }
+    },
+    "ApiSignaturePathString": {
+      "base": null,
+      "refs": {
+        "ApiSignature$path": "<p>The request path of the API.</p>"
+      }
+    },
+    "ApiSignaturePortInteger": {
+      "base": null,
+      "refs": {
+        "ApiSignature$port": "<p>The port the API listens on, from 0 to 65535.</p>"
+      }
+    },
+    "AppClientId": {
+      "base": null,
+      "refs": {
+        "CognitoConfig$appClientId": "<p>The ID of the user pool app client the portal uses.</p>"
+      }
+    },
+    "AssociateManagedApisRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateManagedApisResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Authorization": {
+      "base": "<p>How readers sign in to a portal.</p>",
+      "refs": {
+        "CreatePortalRequest$authorization": "<p>How readers sign in to the portal, and whether fine-grained access control is on.</p>",
+        "CreatePortalResponse$authorization": "<p>How readers sign in to the portal, and whether fine-grained access control is on.</p>",
+        "GetPortalResponse$authorization": "<p>How readers sign in to the portal, and whether fine-grained access control is on.</p>",
+        "PortalSummary$authorization": "<p>How readers sign in to the portal, and whether fine-grained access control is on.</p>",
+        "UpdatePortalRequest$authorization": "<p>The new authorization settings. Omit it to keep the current settings.</p>",
+        "UpdatePortalResponse$authorization": "<p>How readers sign in to the portal, and whether fine-grained access control is on.</p>"
+      }
+    },
+    "AuthorizationConfig": {
+      "base": "<p>Exactly one of the members is set: <code>none</code> for no authorization, or <code>cognitoConfig</code> for Cognito. Modeled as a union so the &quot;exactly one&quot; choice is enforced by type.</p>",
+      "refs": {
+        "Authorization$authorizationConfig": null
+      }
+    },
+    "BadRequestException": {
+      "base": "<p>The request is not valid. The message identifies the field or value that failed validation.</p>",
+      "refs": {}
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "GetProductApiPageRequest$includeRawDisplayContent": "<p>Set to <code>true</code> to also return the page body in <code>rawDisplayContent</code>.</p>"
+      }
+    },
+    "CertificateArn": {
+      "base": null,
+      "refs": {
+        "ACMManaged$certificateArn": "<p>The ARN of the ACM certificate for the domain. The certificate must be in us-east-1, issued, not private, and must cover the domain name.</p>",
+        "EndpointConfigurationResponse$certificateArn": "<p>The ARN of the ACM certificate for the custom domain. Absent if the portal has no custom domain.</p>"
+      }
+    },
+    "Classification": {
+      "base": "<p>Whether any account has created a ManagedApi for a discovered API, and for a managed API whether it is unused or no longer in the caller's organization. SHADOW - no account has created a ManagedApi for this item. MANAGED - some account in the caller's organization has created a ManagedApi for this item. MANAGED_ZOMBIE - managed and unused: no traffic for at least the account's no-traffic window. The API is still reachable, so this clears once traffic resumes. MANAGED_ORPHANED - managed, but the account hosting the API has left the caller's organization or been closed. The item is a last-known snapshot: it is no longer rediscovered, and its findings are not authorized for the caller. An organizational unit move is not a trigger.</p> <p>MANAGED_ZOMBIE and MANAGED_ORPHANED add detail to a MANAGED item, so neither is returned for an item the caller does not manage, and MANAGED_ORPHANED takes priority over MANAGED_ZOMBIE. Both are derived per request rather than stored, so neither expires on its own.</p>",
+      "refs": {
+        "ApiInventoryItem$classification": null,
+        "ApiInventoryItemDetail$classification": null
+      }
+    },
+    "CognitoConfig": {
+      "base": "<p>The Amazon Cognito resources readers use to sign in to a portal.</p>",
+      "refs": {
+        "AuthorizationConfig$cognitoConfig": "<p>Readers sign in through an Amazon Cognito user pool.</p>"
+      }
+    },
+    "Color": {
+      "base": null,
+      "refs": {
+        "CustomColors$backgroundColor": "<p>The page background color.</p>",
+        "CustomColors$navigationColor": "<p>The navigation pane color.</p>",
+        "CustomColors$headerColor": "<p>The header color.</p>",
+        "CustomColors$textColor": "<p>The text color.</p>",
+        "CustomColors$accentColor": "<p>The color of links, buttons, and other highlighted elements.</p>",
+        "CustomColors$errorValidationColor": "<p>The color of error and validation messages.</p>"
+      }
+    },
+    "Confidence": {
+      "base": "<p>Confidence tier of a detection.</p>",
+      "refs": {
+        "WafApiSecurityEventDetail$confidence": "<p>Confidence tier of the detection.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request conflicts with the current state of the resource, for example because another operation on it is still in progress.</p>",
+      "refs": {}
+    },
+    "Contents": {
+      "base": "<p>Sections in a product's navigation. No service-side limit exists today; this bound caps request size.</p>",
+      "refs": {
+        "DisplayOrder$contents": null
+      }
+    },
+    "CreateManagedApiRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateManagedApiResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePortalPreviewRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePortalRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePortalResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateProductApiPageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateProductApiPageResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateProductPageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateProductPageResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateProductRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateProductResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CustomColors": {
+      "base": "<p>The colors of a portal. Each value is a color string of up to 16 characters.</p>",
+      "refs": {
+        "PortalTheme$customColors": "<p>The colors used in the portal.</p>"
+      }
+    },
+    "DeleteDiscoveryConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteManagedApiRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteManagedApiResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteOrganizationDiscoveryConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeletePortalRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteProductApiPageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteProductPageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteProductRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteProductSharingPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DesiredPublishStatus": {
+      "base": "<p>The terminal publish state a caller can request for a portal via UpdatePortalPublishStatus. Only the two client-requestable targets are modeled here; the transient and failed states in PublishStatus are set by the service and are not valid caller input.</p>",
+      "refs": {
+        "UpdatePortalPublishStatusRequest$status": null
+      }
+    },
+    "DisassociateManagedApisRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateManagedApisResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DiscoveryConfigurationArn": {
+      "base": null,
+      "refs": {
+        "DiscoveryConfigurationData$arn": "<p>The ARN of the discovery configuration.</p>"
+      }
+    },
+    "DiscoveryConfigurationData": {
+      "base": "<p>An account-level discovery configuration.</p>",
+      "refs": {
+        "GetDiscoveryConfigurationResponse$discoveryConfiguration": "<p>The discovery configuration for the account.</p>",
+        "PutDiscoveryConfigurationResponse$discoveryConfiguration": "<p>The discovery configuration for the account.</p>"
+      }
+    },
+    "DiscoveryConfigurationStatus": {
+      "base": null,
+      "refs": {
+        "DiscoveryConfigurationData$status": "<p>The current status of the discovery configuration.</p>",
+        "OrganizationDiscoveryConfigurationData$status": "<p>The current status of the discovery configuration.</p>"
+      }
+    },
+    "DiscoveryExclusionFilters": {
+      "base": "<p>Exclusion filters for organization-scoped discovery. Resources matching any of these filters are excluded from discovery.</p>",
+      "refs": {
+        "OrganizationDiscoveryConfigurationData$exclusionFilters": "<p>Exclusion filters for organization-scoped discovery. @deprecated. Remove this once client (Console) moves to discoveryFilters</p>",
+        "OrganizationDiscoveryFilters$exclusionFilters": null,
+        "PutOrganizationDiscoveryConfigurationRequest$exclusionFilters": "<p>Exclusion filters for organization-scoped discovery. @deprecated. Remove this once client (Console) moves to discoveryFilters</p>"
+      }
+    },
+    "DiscoveryFailureReason": {
+      "base": "<p>Machine-readable reason discovery failed for a given account/service, present only when <code>status</code> is <code>FAILED</code>. Clients should branch recovery logic off this enum rather than parsing <code>message</code>, whose text is informational and may change. New reasons may be added over time, so clients MUST treat any unrecognized value as <code>UNKNOWN</code> and fall back to generic handling.</p>",
+      "refs": {
+        "DiscoveryStatus$failureReason": "<p>Typed reason for failure, present only when <code>status</code> is <code>FAILED</code></p>"
+      }
+    },
+    "DiscoveryFeature": {
+      "base": "<p>An optional discovery capability, enabled per discovery configuration. AI_DISCOVERY - also identify AI protocols (MCP, LLM, A2A) in each API's traffic and report them as the API's workloads.</p>",
+      "refs": {
+        "DiscoveryFeatureList$member": null
+      }
+    },
+    "DiscoveryFeatureList": {
+      "base": null,
+      "refs": {
+        "DiscoveryConfigurationData$features": "<p>Optional capabilities enabled for this configuration. Absent when none are.</p>",
+        "OrganizationDiscoveryConfigurationData$features": "<p>Optional capabilities enabled for this configuration. Absent when none are.</p>",
+        "PutDiscoveryConfigurationRequest$features": "<p>Optional capabilities to enable. Omitting it disables all of them, as with the other fields.</p>",
+        "PutOrganizationDiscoveryConfigurationRequest$features": "<p>Optional capabilities to enable. Omitting it disables all of them, as with the other fields.</p>"
+      }
+    },
+    "DiscoveryInclusionFilters": {
+      "base": "<p>Inclusion filters for organization-scoped discovery. Only Resources matching any of these filters are included in discovery.</p>",
+      "refs": {
+        "OrganizationDiscoveryFilters$inclusionFilters": null
+      }
+    },
+    "DiscoverySource": {
+      "base": "<p>The AWS service that is the SOURCE of discovered APIs — i.e. the front-door service type whose resources discovery crawls to find APIs. New source services may be added over time, so clients MUST treat any unrecognized value gracefully.</p>",
+      "refs": {
+        "ApiInventoryFilters$discoverySource": null,
+        "ApiInventoryItem$discoverySource": null,
+        "ApiInventoryItemDetail$discoverySource": null,
+        "DiscoverySourceList$member": null,
+        "DiscoveryStatus$discoverySource": null,
+        "ListDiscoveryStatusesRequest$discoverySource": null,
+        "NonEmptyDiscoverySourceList$member": null
+      }
+    },
+    "DiscoverySourceList": {
+      "base": null,
+      "refs": {
+        "DiscoveryConfigurationData$discoverySources": "<p>The sources APIs are discovered from.</p>",
+        "OrganizationDiscoveryConfigurationData$discoverySources": "<p>The sources APIs are discovered from.</p>"
+      }
+    },
+    "DiscoveryStatus": {
+      "base": "<p>The state of API discovery for one discovery source.</p>",
+      "refs": {
+        "DiscoveryStatusList$member": null
+      }
+    },
+    "DiscoveryStatusList": {
+      "base": null,
+      "refs": {
+        "ListDiscoveryStatusesResponse$items": "<p>The discovery status for each account and discovery source.</p>"
+      }
+    },
+    "DiscoveryStatusValue": {
+      "base": null,
+      "refs": {
+        "DiscoveryStatus$status": "<p>The current state of discovery for this source.</p>"
+      }
+    },
+    "DisplayContent": {
+      "base": "<p>The content of a product page.</p>",
+      "refs": {
+        "CreateProductPageRequest$displayContent": "<p>The title and body of the page.</p>",
+        "CreateProductPageResponse$displayContent": "<p>The title and body of the page.</p>",
+        "GetProductPageResponse$displayContent": "<p>The title and body of the page.</p>",
+        "UpdateProductPageRequest$displayContent": "<p>The new title and body of the page. Omit it to keep the current content.</p>",
+        "UpdateProductPageResponse$displayContent": "<p>The title and body of the page.</p>"
+      }
+    },
+    "DisplayContentOverrides": {
+      "base": "<p>Content that replaces the defaults generated for an API page.</p>",
+      "refs": {
+        "ApiPageDisplayContent$overrides": "<p>Replace the generated content with your own.</p>"
+      }
+    },
+    "DisplayContentOverridesApiUrlString": {
+      "base": null,
+      "refs": {
+        "DisplayContentOverrides$apiUrl": "<p>The invoke URL shown on the page and used for Try-It and the portal's allowed-domain list: http(s)://host[:port][/path], with no whitespace, quotes or angle brackets. On this request member only, as ApiEndpoint is also returned in responses.</p>"
+      }
+    },
+    "DisplayOrder": {
+      "base": "<p>The order of a product's content in the portal navigation.</p>",
+      "refs": {
+        "CreateProductResponse$displayOrder": "<p>The order of the product's pages and API page sections in the portal navigation.</p>",
+        "GetProductResponse$displayOrder": "<p>The order of the product's pages and API page sections in the portal navigation.</p>",
+        "UpdateProductRequest$displayOrder": "<p>The new page order. Omit it to keep the current order.</p>",
+        "UpdateProductResponse$displayOrder": "<p>The order of the product's pages and API page sections in the portal navigation.</p>"
+      }
+    },
+    "EndpointConfigurationRequest": {
+      "base": "<p>Exactly one of the members is set: <code>none</code> for no custom domain, or <code>acmManaged</code> to bring a domain + ACM certificate. Modeled as a union so the &quot;exactly one&quot; choice is enforced by type.</p>",
+      "refs": {
+        "CreatePortalRequest$endpointConfiguration": null,
+        "UpdatePortalRequest$endpointConfiguration": null
+      }
+    },
+    "EndpointConfigurationResponse": {
+      "base": "<p>The domains a portal is served on.</p>",
+      "refs": {
+        "CreatePortalResponse$endpointConfiguration": "<p>The domain configuration of the portal.</p>",
+        "GetPortalResponse$endpointConfiguration": "<p>The domain configuration of the portal.</p>",
+        "PortalSummary$endpointConfiguration": "<p>The domain configuration of the portal.</p>",
+        "UpdatePortalResponse$endpointConfiguration": "<p>The domain configuration of the portal.</p>"
+      }
+    },
+    "EventId": {
+      "base": "<p>Identifier of a security event. Opaque; the key that will be used if we implement the GetManagedApiEvent drill-in.</p>",
+      "refs": {
+        "ManagedApiEventSummary$eventId": "<p>Event identifier; row identity and input to GetManagedApiEvent.</p>"
+      }
+    },
+    "EventStatus": {
+      "base": "<p>Lifecycle status of a security event.</p>",
+      "refs": {
+        "ManagedApiEventSummary$status": null
+      }
+    },
+    "EventType": {
+      "base": "<p>The kind of security event surfaced for a managed API. Only WAF_API_SECURITY events are returned today; kept as a discriminator so additional per-API event categories can be added later without reshaping the summary.</p>",
+      "refs": {
+        "ManagedApiEventSummary$eventType": "<p>Always WAF_API_SECURITY today.</p>"
+      }
+    },
+    "FailedItemErrorCode": {
+      "base": "<p>Machine-readable reason a Managed API ID couldn't be processed in a batch call. Clients should key retry logic off this enum rather than parsing errorMessage.</p>",
+      "refs": {
+        "FailedManagedApiItem$errorCode": null
+      }
+    },
+    "FailedManagedApiItem": {
+      "base": "<p>One entry per Managed API ID that could not be processed in a batch call. Ids that succeed are omitted from the response — callers infer success by absence.</p>",
+      "refs": {
+        "FailedManagedApiItemList$member": null
+      }
+    },
+    "FailedManagedApiItemErrorMessageString": {
+      "base": null,
+      "refs": {
+        "FailedManagedApiItem$errorMessage": "<p>A description of the failure.</p>"
+      }
+    },
+    "FailedManagedApiItemList": {
+      "base": null,
+      "refs": {
+        "AssociateManagedApisResponse$failedItems": "<p>The Managed APIs that could not be processed. IDs not listed here succeeded.</p>",
+        "DisassociateManagedApisResponse$failedItems": "<p>The Managed APIs that could not be processed. IDs not listed here succeeded.</p>"
+      }
+    },
+    "FindingReason": {
+      "base": "<p>Why a posture is not satisfied, or why no verdict was reached. Present only when <code>postureStatus</code> is <code>FALSE</code> or <code>INSUFFICIENT_DATA</code>. New reasons may be added over time, so clients MUST treat any unrecognized value as <code>UNKNOWN</code> and fall back to generic handling.</p>",
+      "refs": {
+        "ManagedApiFinding$reason": null
+      }
+    },
+    "FineGrainedAccessControl": {
+      "base": null,
+      "refs": {
+        "Authorization$fineGrainedAccessControl": "<p>Whether access to individual products in the portal is controlled per reader.</p>"
+      }
+    },
+    "GetApiInventoryItemRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetApiInventoryItemRequestPortInteger": {
+      "base": null,
+      "refs": {
+        "GetApiInventoryItemRequest$port": "<p>The port the API listens on, from 0 to 65535.</p>"
+      }
+    },
+    "GetApiInventoryItemResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDiscoveryConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDiscoveryConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetManagedApiRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetManagedApiResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOrganizationDiscoveryConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOrganizationDiscoveryConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPortalRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPortalResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProductApiPageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProductApiPageResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProductPageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProductPageResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProductRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProductResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProductSharingPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProductSharingPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Host": {
+      "base": "<p>A discovered API's front-door hostname (e.g. an ALB, CloudFront, or API Gateway DNS name), bounded by the DNS name limit (RFC 1035). Usually literal, but may contain placeholders: &lt;<em>&gt; - stands for one dot-separated part of the hostname. When 10 or more hosts differ only in that part, they fold into one, e.g. a.example.com, b.example.com, ... become &quot;&lt;</em>&gt;.example.com&quot;. Deeper levels fold the same way (&quot;&lt;<em>&gt;.&lt;</em>&gt;.example.com&quot;). The registrable domain never folds. <ip> - an IP-literal host.</p>",
+      "refs": {
+        "ApiInventoryItem$host": null,
+        "ApiInventoryItemDetail$host": null,
+        "GetApiInventoryItemRequest$host": null
+      }
+    },
+    "HostedZoneId": {
+      "base": null,
+      "refs": {
+        "EndpointConfigurationResponse$portalDomainHostedZoneId": "<p>The ID of the hosted zone for the portal's distribution. Use it to create an alias record for a custom domain.</p>"
+      }
+    },
+    "HttpMethod": {
+      "base": null,
+      "refs": {
+        "ApiInventoryItem$method": "<p>The HTTP method of the API.</p>",
+        "ApiInventoryItemDetail$method": "<p>The HTTP method of the API.</p>",
+        "ApiSignature$method": "<p>The HTTP method of the API.</p>",
+        "GetApiInventoryItemRequest$method": "<p>The HTTP method of the API.</p>"
+      }
+    },
+    "IdentifierParts": {
+      "base": "<p>The parts that together identify an API.</p>",
+      "refs": {
+        "ApiId$identifierParts": "<p>The resource, method, and path that identify the API.</p>"
+      }
+    },
+    "IdentityPoolId": {
+      "base": null,
+      "refs": {
+        "CognitoConfig$identityPoolId": "<p>The ID of the Cognito identity pool. Required only for fine-grained access control.</p>"
+      }
+    },
+    "IncludedProductArns": {
+      "base": null,
+      "refs": {
+        "CreatePortalRequest$includedProductArns": "<p>The ARNs of the products the portal includes, up to 200.</p>",
+        "CreatePortalResponse$includedProductArns": "<p>The ARNs of the products the portal includes.</p>",
+        "GetPortalResponse$includedProductArns": "<p>The ARNs of the products the portal includes.</p>",
+        "PortalSummary$includedProductArns": "<p>The ARNs of the products the portal includes.</p>",
+        "UpdatePortalRequest$includedProductArns": "<p>The new list of product ARNs, up to 200. It replaces the current list. Omit it to keep the current list.</p>",
+        "UpdatePortalResponse$includedProductArns": "<p>The ARNs of the products the portal includes.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "ApiInventoryItem$port": "<p>The port the API listens on, from 0 to 65535.</p>",
+        "ApiInventoryItemDetail$port": "<p>The port the API listens on, from 0 to 65535.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>The service encountered an internal error. Try the request again.</p>",
+      "refs": {}
+    },
+    "LimitExceededException": {
+      "base": "<p>The request rate or a service quota was exceeded. Reduce the request rate or the number of resources and try again.</p>",
+      "refs": {}
+    },
+    "ListApiInventoryItemsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListApiInventoryItemsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDiscoveryStatusesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDiscoveryStatusesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListManagedApiEventsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListManagedApiEventsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListManagedApisRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListManagedApisResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPortalsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPortalsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProductApiPagesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProductApiPagesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProductPagesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProductPagesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProductsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProductsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "LogoUri": {
+      "base": null,
+      "refs": {
+        "CreatePortalRequest$logoUri": "<p>The S3 location of the portal logo, in the form <code>s3://bucket/key</code>.</p>",
+        "UpdatePortalRequest$logoUri": "<p>The new S3 location of the portal logo, in the form <code>s3://bucket/key</code>. An empty string removes the logo. Omit it to keep the current logo.</p>"
+      }
+    },
+    "ManagedApiArn": {
+      "base": null,
+      "refs": {
+        "CreateManagedApiResponse$managedApiArn": "<p>The ARN of the Managed API.</p>",
+        "GetManagedApiResponse$managedApiArn": "<p>The ARN of the Managed API.</p>",
+        "ManagedApiSummary$managedApiArn": "<p>The ARN of the Managed API.</p>"
+      }
+    },
+    "ManagedApiEventMaxResults": {
+      "base": null,
+      "refs": {
+        "ListManagedApiEventsRequest$maxResults": "<p>The maximum number of results to return in one page, from 1 to 20.</p>"
+      }
+    },
+    "ManagedApiEventSummary": {
+      "base": "<p>Summary of a single security event attributed to a managed API. This is the list view; full per-event detail will come from GetManagedApiEvent in future.</p>",
+      "refs": {
+        "ManagedApiEventSummaryList$member": null
+      }
+    },
+    "ManagedApiEventSummaryList": {
+      "base": "<p>A page of security events for a managed API. Page size is bounded by the operation's maxResults; callers retrieve all events by following nextToken.</p>",
+      "refs": {
+        "ListManagedApiEventsResponse$items": null
+      }
+    },
+    "ManagedApiFinding": {
+      "base": "<p>Security posture finding attached to this API. Shape mirrors the inventory's Finding sub-document.</p>",
+      "refs": {
+        "ManagedApiFindingList$member": null
+      }
+    },
+    "ManagedApiFindingList": {
+      "base": null,
+      "refs": {
+        "GetManagedApiResponse$findings": "<p>The security posture findings for the API, up to 100.</p>"
+      }
+    },
+    "ManagedApiFindingPostureIdString": {
+      "base": null,
+      "refs": {
+        "ManagedApiFinding$postureId": "<p>The identifier of the posture check that produced the finding.</p>"
+      }
+    },
+    "ManagedApiId": {
+      "base": null,
+      "refs": {
+        "ApiInventoryItemDetail$managedApiId": "<p>The identifier of the Managed API created from this API. Absent if there is none.</p>",
+        "CreateManagedApiResponse$managedApiId": "<p>The identifier of the Managed API.</p>",
+        "CreateProductApiPageRequest$managedApiId": "<p>The Managed API this page documents. It must already be associated with the product, and the page's API identifier is taken from the Managed API rather than supplied by the caller.</p>",
+        "DeleteManagedApiRequest$managedApiId": "<p>The identifier of the Managed API.</p>",
+        "FailedManagedApiItem$managedApiId": "<p>The identifier of the Managed API that could not be processed.</p>",
+        "GetManagedApiRequest$managedApiId": "<p>The identifier of the Managed API.</p>",
+        "GetManagedApiResponse$managedApiId": "<p>The identifier of the Managed API.</p>",
+        "ListManagedApiEventsRequest$managedApiId": "<p>The identifier of the Managed API.</p>",
+        "ListProductsRequest$managedApiId": "<p>Optional filter: when supplied, only Products this Managed API is associated with are returned.</p>",
+        "ManagedApiIdList$member": null,
+        "ManagedApiSummary$managedApiId": "<p>The identifier of the Managed API.</p>"
+      }
+    },
+    "ManagedApiIdList": {
+      "base": "<p>Bounded list of Managed API IDs, used as the request payload for batch associate/disassociate.</p>",
+      "refs": {
+        "AssociateManagedApisRequest$managedApiIds": null,
+        "DisassociateManagedApisRequest$managedApiIds": null
+      }
+    },
+    "ManagedApiList": {
+      "base": null,
+      "refs": {
+        "ListManagedApisResponse$items": "<p>The Managed APIs in this page of results.</p>"
+      }
+    },
+    "ManagedApiSummary": {
+      "base": "<p>A summary of a Managed API.</p>",
+      "refs": {
+        "ManagedApiList$member": null
+      }
+    },
+    "ManagedBy": {
+      "base": "<p>Who manages a MANAGED item, relative to the caller. Absent when the item is SHADOW. SELF - the caller account has created the ManagedApi. ORGANIZATION - some other account in the caller's organization has, but the caller has not.</p>",
+      "refs": {
+        "ApiInventoryItem$managedBy": null,
+        "ApiInventoryItemDetail$managedBy": null
+      }
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListApiInventoryItemsRequest$maxResults": "<p>The maximum number of results to return in one page, from 1 to 100.</p>",
+        "ListDiscoveryStatusesRequest$maxResults": "<p>The maximum number of results to return in one page, from 1 to 100.</p>",
+        "ListManagedApisRequest$maxResults": "<p>The maximum number of results to return in one page, from 1 to 100.</p>",
+        "ListPortalsRequest$maxResults": "<p>The maximum number of results to return in one page, from 1 to 100.</p>",
+        "ListProductApiPagesRequest$maxResults": "<p>The maximum number of results to return in one page, from 1 to 100.</p>",
+        "ListProductPagesRequest$maxResults": "<p>The maximum number of results to return in one page, from 1 to 100.</p>",
+        "ListProductsRequest$maxResults": "<p>The maximum number of results to return in one page, from 1 to 100.</p>"
+      }
+    },
+    "Message": {
+      "base": null,
+      "refs": {
+        "PortalStatusException$message": "<p>A description of the failure.</p>",
+        "ProductApiPageStatusException$message": "<p>A description of the failure.</p>"
+      }
+    },
+    "Method": {
+      "base": null,
+      "refs": {
+        "IdentifierParts$method": "<p>The HTTP method of the API.</p>"
+      }
+    },
+    "NextToken": {
+      "base": null,
+      "refs": {
+        "ListApiInventoryItemsRequest$nextToken": "<p>The pagination token returned by a previous call. Omit it to get the first page.</p>",
+        "ListApiInventoryItemsResponse$nextToken": "<p>The token to pass in the next request to get the next page. Absent when there are no more results.</p>",
+        "ListDiscoveryStatusesRequest$nextToken": "<p>The pagination token returned by a previous call. Omit it to get the first page.</p>",
+        "ListDiscoveryStatusesResponse$nextToken": "<p>The token to pass in the next request to get the next page. Absent when there are no more results.</p>",
+        "ListManagedApiEventsRequest$nextToken": "<p>The pagination token returned by a previous call. Omit it to get the first page.</p>",
+        "ListManagedApiEventsResponse$nextToken": "<p>The token to pass in the next request to get the next page. Absent when there are no more results.</p>",
+        "ListManagedApisRequest$nextToken": "<p>The pagination token returned by a previous call. Omit it to get the first page.</p>",
+        "ListManagedApisResponse$nextToken": "<p>The token to pass in the next request to get the next page. Absent when there are no more results.</p>",
+        "ListPortalsRequest$nextToken": "<p>The pagination token returned by a previous call. Omit it to get the first page.</p>",
+        "ListPortalsResponse$nextToken": "<p>The token to pass in the next request to get the next page. Absent when there are no more results.</p>",
+        "ListProductApiPagesRequest$nextToken": "<p>The pagination token returned by a previous call. Omit it to get the first page.</p>",
+        "ListProductApiPagesResponse$nextToken": "<p>The token to pass in the next request to get the next page. Absent when there are no more results.</p>",
+        "ListProductPagesRequest$nextToken": "<p>The pagination token returned by a previous call. Omit it to get the first page.</p>",
+        "ListProductPagesResponse$nextToken": "<p>The token to pass in the next request to get the next page. Absent when there are no more results.</p>",
+        "ListProductsRequest$nextToken": "<p>The pagination token returned by a previous call. Omit it to get the first page.</p>",
+        "ListProductsResponse$nextToken": "<p>The token to pass in the next request to get the next page. Absent when there are no more results.</p>"
+      }
+    },
+    "NonEmptyDiscoverySourceList": {
+      "base": null,
+      "refs": {
+        "PutDiscoveryConfigurationRequest$discoverySources": "<p>The sources to discover APIs from. Omitting it removes all sources, which stops discovery for this configuration.</p>",
+        "PutOrganizationDiscoveryConfigurationRequest$discoverySources": "<p>The sources to discover APIs from. Omitting it removes all sources, which stops discovery for this configuration.</p>"
+      }
+    },
+    "None": {
+      "base": "<p>An empty value, used in a union to choose the option that has no settings.</p>",
+      "refs": {
+        "ApiPageDisplayContent$none": "<p>Use the content generated from the Managed API.</p>",
+        "AuthorizationConfig$none": "<p>The portal is public and readers do not sign in.</p>",
+        "EndpointConfigurationRequest$none": "<p>Serve the portal only on its default domain.</p>"
+      }
+    },
+    "OperationName": {
+      "base": null,
+      "refs": {
+        "ApiPageDisplayContentResponse$operationName": "<p>The operation name shown as the page title.</p>",
+        "DisplayContentOverrides$operationName": "<p>The operation name shown as the page title, from 1 to 255 characters.</p>",
+        "ProductApiPageSummaryNoBody$operationName": "<p>The operation name shown as the page title.</p>"
+      }
+    },
+    "OrgDiscoveryConfigurationArn": {
+      "base": null,
+      "refs": {
+        "OrganizationDiscoveryConfigurationData$arn": "<p>The ARN of the organization discovery configuration.</p>"
+      }
+    },
+    "OrganizationDiscoveryConfigurationData": {
+      "base": "<p>An organization-level discovery configuration.</p>",
+      "refs": {
+        "GetOrganizationDiscoveryConfigurationResponse$discoveryConfiguration": "<p>The discovery configuration for the organization.</p>",
+        "PutOrganizationDiscoveryConfigurationResponse$discoveryConfiguration": "<p>The discovery configuration for the organization.</p>"
+      }
+    },
+    "OrganizationDiscoveryFilters": {
+      "base": "<p>Limits organization-scoped discovery. Set exactly one member: <code>inclusionFilters</code> to discover only the matching targets, or <code>exclusionFilters</code> to discover everything except them.</p>",
+      "refs": {
+        "OrganizationDiscoveryConfigurationData$discoveryFilters": "<p>The accounts or organizational units included in or excluded from discovery.</p>",
+        "PutOrganizationDiscoveryConfigurationRequest$discoveryFilters": "<p>The accounts or organizational units to include in or exclude from discovery.</p>"
+      }
+    },
+    "OrganizationalUnitId": {
+      "base": null,
+      "refs": {
+        "OrganizationalUnitIdList$member": null
+      }
+    },
+    "OrganizationalUnitIdList": {
+      "base": null,
+      "refs": {
+        "DiscoveryExclusionFilters$organizationalUnitIds": "<p>List of organizational unit IDs to exclude from discovery.</p>",
+        "DiscoveryInclusionFilters$organizationalUnitIds": "<p>List of organizational unit IDs to include in discovery.</p>"
+      }
+    },
+    "PageBody": {
+      "base": null,
+      "refs": {
+        "DisplayContent$body": "<p>The Markdown body of the page, from 1 to 32,768 characters.</p>"
+      }
+    },
+    "PageTitle": {
+      "base": null,
+      "refs": {
+        "DisplayContent$title": "<p>The page title, from 1 to 255 characters.</p>",
+        "ProductPageSummaryNoBody$pageTitle": "<p>The page title.</p>"
+      }
+    },
+    "Path": {
+      "base": null,
+      "refs": {
+        "ApiInventoryItem$path": "<p>The request path of the API.</p>",
+        "ApiInventoryItemDetail$path": "<p>The request path of the API.</p>",
+        "GetApiInventoryItemRequest$path": "<p>The request path of the API.</p>",
+        "IdentifierParts$path": "<p>The request path of the API.</p>"
+      }
+    },
+    "PolicyDocument": {
+      "base": null,
+      "refs": {
+        "GetProductSharingPolicyResponse$policyDocument": "<p>The sharing policy as a JSON resource policy document.</p>",
+        "PutProductSharingPolicyRequest$policyDocument": "<p>The sharing policy as a JSON resource policy document.</p>"
+      }
+    },
+    "PortalArn": {
+      "base": null,
+      "refs": {
+        "CreatePortalResponse$portalArn": "<p>The ARN of the portal.</p>",
+        "GetPortalResponse$portalArn": "<p>The ARN of the portal.</p>",
+        "PortalSummary$portalArn": "<p>The ARN of the portal.</p>",
+        "UpdatePortalResponse$portalArn": "<p>The ARN of the portal.</p>"
+      }
+    },
+    "PortalContent": {
+      "base": "<p>The display settings of a portal.</p>",
+      "refs": {
+        "CreatePortalRequest$portalContent": "<p>The portal's display name, description, and theme.</p>",
+        "CreatePortalResponse$portalContent": "<p>The portal's display name, description, and theme.</p>",
+        "GetPortalResponse$portalContent": "<p>The portal's display name, description, and theme.</p>",
+        "PortalSummary$portalContent": "<p>The portal's display name, description, and theme.</p>",
+        "UpdatePortalRequest$portalContent": "<p>The new display name, description, and theme. Omit it to keep the current values.</p>",
+        "UpdatePortalResponse$portalContent": "<p>The portal's display name, description, and theme.</p>"
+      }
+    },
+    "PortalDescription": {
+      "base": null,
+      "refs": {
+        "PortalContent$description": "<p>A description of the portal, up to 1024 characters.</p>"
+      }
+    },
+    "PortalDomainName": {
+      "base": null,
+      "refs": {
+        "ACMManaged$domainName": "<p>The custom domain name for the portal.</p>",
+        "EndpointConfigurationResponse$domainName": "<p>The custom domain name of the portal. Absent if the portal has no custom domain.</p>",
+        "EndpointConfigurationResponse$portalDefaultDomainName": "<p>The default domain name assigned to the portal.</p>"
+      }
+    },
+    "PortalId": {
+      "base": null,
+      "refs": {
+        "CreatePortalPreviewRequest$portalId": "<p>The identifier of the portal.</p>",
+        "CreatePortalResponse$portalId": "<p>The identifier of the portal.</p>",
+        "DeletePortalRequest$portalId": "<p>The identifier of the portal.</p>",
+        "GetPortalRequest$portalId": "<p>The identifier of the portal.</p>",
+        "GetPortalResponse$portalId": "<p>The identifier of the portal.</p>",
+        "PortalSummary$portalId": "<p>The identifier of the portal.</p>",
+        "UpdatePortalPublishStatusRequest$portalId": "<p>The identifier of the portal.</p>",
+        "UpdatePortalRequest$portalId": "<p>The identifier of the portal.</p>",
+        "UpdatePortalResponse$portalId": "<p>The identifier of the portal.</p>"
+      }
+    },
+    "PortalList": {
+      "base": null,
+      "refs": {
+        "ListPortalsResponse$items": "<p>The portals in this page of results.</p>"
+      }
+    },
+    "PortalName": {
+      "base": null,
+      "refs": {
+        "PortalContent$displayName": "<p>The name shown in the portal, from 3 to 255 characters.</p>"
+      }
+    },
+    "PortalStatusException": {
+      "base": "<p>Failure detail attached to a Portal's publish/preview status: a typed reason plus an optional human-readable message.</p>",
+      "refs": {
+        "CreatePortalResponse$statusException": null,
+        "GetPortalResponse$statusException": null,
+        "PortalSummary$statusException": null,
+        "Preview$statusException": null,
+        "UpdatePortalResponse$statusException": null
+      }
+    },
+    "PortalStatusExceptionType": {
+      "base": "<p>Treat any unrecognized value as INTERNAL_FAILURE.</p>",
+      "refs": {
+        "PortalStatusException$exception": null
+      }
+    },
+    "PortalSummary": {
+      "base": "<p>A summary of a portal.</p>",
+      "refs": {
+        "PortalList$member": null
+      }
+    },
+    "PortalTheme": {
+      "base": "<p>The visual theme of a portal.</p>",
+      "refs": {
+        "PortalContent$theme": "<p>The colors and logo of the portal.</p>"
+      }
+    },
+    "PostureStatus": {
+      "base": "<p>Values are spelled exactly as the inventory document stores them, so the same string means the same thing at both layers and no second translation sits between the index and the wire.</p>",
+      "refs": {
+        "ManagedApiFinding$postureStatus": null
+      }
+    },
+    "Preview": {
+      "base": "<p>A preview of a portal.</p>",
+      "refs": {
+        "GetPortalResponse$preview": "<p>The most recent preview of the portal. Absent if no preview has been created.</p>",
+        "PortalSummary$preview": "<p>The most recent preview of the portal. Absent if no preview has been created.</p>",
+        "UpdatePortalResponse$preview": "<p>The most recent preview of the portal. Absent if no preview has been created.</p>"
+      }
+    },
+    "PreviewStatus": {
+      "base": null,
+      "refs": {
+        "Preview$previewStatus": "<p>The status of the preview.</p>"
+      }
+    },
+    "ProductApiPageArn": {
+      "base": null,
+      "refs": {
+        "CreateProductApiPageResponse$productApiPageArn": "<p>The ARN of the API page.</p>",
+        "GetProductApiPageResponse$productApiPageArn": "<p>The ARN of the API page.</p>",
+        "ProductApiPageArnList$member": null,
+        "ProductApiPageSummaryNoBody$productApiPageArn": "<p>The ARN of the API page.</p>",
+        "UpdateProductApiPageResponse$productApiPageArn": "<p>The ARN of the API page.</p>"
+      }
+    },
+    "ProductApiPageArnList": {
+      "base": "<p>API pages in one section. No service-side limit exists today; this bound caps request size.</p>",
+      "refs": {
+        "Section$productApiPageArns": null
+      }
+    },
+    "ProductApiPageId": {
+      "base": null,
+      "refs": {
+        "CreateProductApiPageResponse$productApiPageId": "<p>The identifier of the API page.</p>",
+        "DeleteProductApiPageRequest$productApiPageId": "<p>The identifier of the API page.</p>",
+        "GetProductApiPageRequest$productApiPageId": "<p>The identifier of the API page.</p>",
+        "GetProductApiPageResponse$productApiPageId": "<p>The identifier of the API page.</p>",
+        "ProductApiPageSummaryNoBody$productApiPageId": "<p>The identifier of the API page.</p>",
+        "UpdateProductApiPageRequest$productApiPageId": "<p>The identifier of the API page.</p>",
+        "UpdateProductApiPageResponse$productApiPageId": "<p>The identifier of the API page.</p>"
+      }
+    },
+    "ProductApiPageList": {
+      "base": null,
+      "refs": {
+        "ListProductApiPagesResponse$items": "<p>The API pages in this page of results.</p>"
+      }
+    },
+    "ProductApiPageStatusException": {
+      "base": "<p>Failure detail attached to a ProductApiPage's status: a typed reason plus an optional human-readable message.</p>",
+      "refs": {
+        "CreateProductApiPageResponse$statusException": null,
+        "GetProductApiPageResponse$statusException": null,
+        "ProductApiPageSummaryNoBody$statusException": null,
+        "UpdateProductApiPageResponse$statusException": null
+      }
+    },
+    "ProductApiPageStatusExceptionType": {
+      "base": "<p>treat any unrecognized value as INTERNAL_FAILURE.</p>",
+      "refs": {
+        "ProductApiPageStatusException$exception": null
+      }
+    },
+    "ProductApiPageSummaryNoBody": {
+      "base": "<p>A summary of an API page, without its body.</p>",
+      "refs": {
+        "ProductApiPageList$member": null
+      }
+    },
+    "ProductArn": {
+      "base": null,
+      "refs": {
+        "CreateProductResponse$productArn": "<p>The ARN of the product.</p>",
+        "GetProductResponse$productArn": "<p>The ARN of the product.</p>",
+        "IncludedProductArns$member": null,
+        "ProductSummary$productArn": "<p>The ARN of the product.</p>",
+        "UpdateProductResponse$productArn": "<p>The ARN of the product.</p>"
+      }
+    },
+    "ProductDescription": {
+      "base": null,
+      "refs": {
+        "CreateProductRequest$description": "<p>A description of the product, up to 1024 characters.</p>",
+        "CreateProductResponse$description": "<p>A description of the product, up to 1024 characters.</p>",
+        "GetProductResponse$description": "<p>A description of the product, up to 1024 characters.</p>",
+        "ProductSummary$description": "<p>A description of the product, up to 1024 characters.</p>",
+        "UpdateProductRequest$description": "<p>The new description of the product. Omit it to keep the current description.</p>",
+        "UpdateProductResponse$description": "<p>A description of the product, up to 1024 characters.</p>"
+      }
+    },
+    "ProductFailureReason": {
+      "base": "<p>Reason a product's rules could not be fully applied, present only when <code>status</code> is <code>FAILED</code>. New reasons may be added over time, so clients MUST treat any unrecognized value as <code>UNKNOWN</code> and fall back to generic handling.</p>",
+      "refs": {
+        "CreateProductResponse$failureReason": null,
+        "GetProductResponse$failureReason": null,
+        "ProductSummary$failureReason": null,
+        "UpdateProductResponse$failureReason": null
+      }
+    },
+    "ProductId": {
+      "base": null,
+      "refs": {
+        "AssociateManagedApisRequest$productId": "<p>The identifier of the product to associate the Managed APIs with.</p>",
+        "CreateProductApiPageRequest$productId": "<p>The identifier of the product.</p>",
+        "CreateProductPageRequest$productId": "<p>The identifier of the product.</p>",
+        "CreateProductResponse$productId": "<p>The identifier of the product.</p>",
+        "DeleteProductApiPageRequest$productId": "<p>The identifier of the product.</p>",
+        "DeleteProductPageRequest$productId": "<p>The identifier of the product.</p>",
+        "DeleteProductRequest$productId": "<p>The identifier of the product.</p>",
+        "DeleteProductSharingPolicyRequest$productId": "<p>The identifier of the product.</p>",
+        "DisassociateManagedApisRequest$productId": "<p>The identifier of the product to disassociate the Managed APIs from.</p>",
+        "GetProductApiPageRequest$productId": "<p>The identifier of the product.</p>",
+        "GetProductPageRequest$productId": "<p>The identifier of the product.</p>",
+        "GetProductRequest$productId": "<p>The identifier of the product.</p>",
+        "GetProductResponse$productId": "<p>The identifier of the product.</p>",
+        "GetProductSharingPolicyRequest$productId": "<p>The identifier of the product.</p>",
+        "GetProductSharingPolicyResponse$productId": "<p>The identifier of the product.</p>",
+        "ListManagedApisRequest$productId": "<p>Optional filter: when supplied, only Managed APIs associated with this product are returned.</p>",
+        "ListProductApiPagesRequest$productId": "<p>The identifier of the product.</p>",
+        "ListProductPagesRequest$productId": "<p>The identifier of the product.</p>",
+        "ProductSummary$productId": "<p>The identifier of the product.</p>",
+        "PutProductSharingPolicyRequest$productId": "<p>The identifier of the product.</p>",
+        "UpdateProductApiPageRequest$productId": "<p>The identifier of the product.</p>",
+        "UpdateProductPageRequest$productId": "<p>The identifier of the product.</p>",
+        "UpdateProductRequest$productId": "<p>The identifier of the product.</p>",
+        "UpdateProductResponse$productId": "<p>The identifier of the product.</p>"
+      }
+    },
+    "ProductList": {
+      "base": null,
+      "refs": {
+        "ListProductsResponse$items": "<p>The products in this page of results.</p>"
+      }
+    },
+    "ProductName": {
+      "base": null,
+      "refs": {
+        "CreateProductRequest$displayName": "<p>The name of the product, from 1 to 255 characters.</p>",
+        "CreateProductResponse$displayName": "<p>The name of the product, from 1 to 255 characters.</p>",
+        "GetProductResponse$displayName": "<p>The name of the product, from 1 to 255 characters.</p>",
+        "ProductSummary$displayName": "<p>The name of the product, from 1 to 255 characters.</p>",
+        "UpdateProductRequest$displayName": "<p>The new name of the product. Omit it to keep the current name.</p>",
+        "UpdateProductResponse$displayName": "<p>The name of the product, from 1 to 255 characters.</p>"
+      }
+    },
+    "ProductPageArn": {
+      "base": null,
+      "refs": {
+        "CreateProductPageResponse$productPageArn": "<p>The ARN of the product page.</p>",
+        "DisplayOrder$overviewPageArn": "<p>The ARN of the product page shown as the product overview.</p>",
+        "GetProductPageResponse$productPageArn": "<p>The ARN of the product page.</p>",
+        "ProductPageArnList$member": null,
+        "ProductPageSummaryNoBody$productPageArn": "<p>The ARN of the product page.</p>",
+        "UpdateProductPageResponse$productPageArn": "<p>The ARN of the product page.</p>"
+      }
+    },
+    "ProductPageArnList": {
+      "base": "<p>A product has at most DocHubLimits.DEFAULT_PAGES_PER_PRODUCT_LIMIT (40) pages, enforced by LimitsHelper.</p>",
+      "refs": {
+        "DisplayOrder$productPageArns": null
+      }
+    },
+    "ProductPageId": {
+      "base": null,
+      "refs": {
+        "CreateProductPageResponse$productPageId": "<p>The identifier of the product page.</p>",
+        "DeleteProductPageRequest$productPageId": "<p>The identifier of the product page.</p>",
+        "GetProductPageRequest$productPageId": "<p>The identifier of the product page.</p>",
+        "GetProductPageResponse$productPageId": "<p>The identifier of the product page.</p>",
+        "ProductPageSummaryNoBody$productPageId": "<p>The identifier of the product page.</p>",
+        "UpdateProductPageRequest$productPageId": "<p>The identifier of the product page.</p>",
+        "UpdateProductPageResponse$productPageId": "<p>The identifier of the product page.</p>"
+      }
+    },
+    "ProductPageList": {
+      "base": null,
+      "refs": {
+        "ListProductPagesResponse$items": "<p>The product pages in this page of results.</p>"
+      }
+    },
+    "ProductPageSummaryNoBody": {
+      "base": "<p>A summary of a product page, without its body.</p>",
+      "refs": {
+        "ProductPageList$member": null
+      }
+    },
+    "ProductStatus": {
+      "base": "<p>Whether the product's member APIs match its apiSelectionConfiguration. ACTIVE - membership matches. The only status a CUSTOM product reports. IN_PROGRESS - ruleFilters changed and membership is still being evaluated. FAILED - evaluation could not finish and membership is incomplete; failureReason says why.</p>",
+      "refs": {
+        "CreateProductResponse$status": null,
+        "GetProductResponse$status": null,
+        "ProductSummary$status": null,
+        "UpdateProductResponse$status": null
+      }
+    },
+    "ProductSummary": {
+      "base": "<p>A summary of a product.</p>",
+      "refs": {
+        "ProductList$member": null
+      }
+    },
+    "PublishDescription": {
+      "base": null,
+      "refs": {
+        "CreatePortalResponse$publishDescription": "<p>The description supplied with the most recent publish request.</p>",
+        "GetPortalResponse$publishDescription": "<p>The description supplied with the most recent publish request.</p>",
+        "PortalSummary$publishDescription": "<p>The description supplied with the most recent publish request.</p>",
+        "UpdatePortalPublishStatusRequest$description": "<p>A description of this publish request, up to 1024 characters.</p>",
+        "UpdatePortalResponse$publishDescription": "<p>The description supplied with the most recent publish request.</p>"
+      }
+    },
+    "PublishStatus": {
+      "base": null,
+      "refs": {
+        "CreatePortalResponse$publishStatus": "<p>The publish status of the portal. Absent if the portal has never been published.</p>",
+        "GetPortalResponse$publishStatus": "<p>The publish status of the portal. Absent if the portal has never been published.</p>",
+        "PortalSummary$publishStatus": "<p>The publish status of the portal. Absent if the portal has never been published.</p>",
+        "UpdatePortalResponse$publishStatus": "<p>The publish status of the portal. Absent if the portal has never been published.</p>"
+      }
+    },
+    "PutDiscoveryConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutDiscoveryConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "PutOrganizationDiscoveryConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutOrganizationDiscoveryConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "PutProductSharingPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RUMAppMonitorName": {
+      "base": null,
+      "refs": {
+        "CreatePortalRequest$rumAppMonitorName": "<p>The name of the CloudWatch RUM app monitor that collects reader telemetry for the portal.</p>",
+        "CreatePortalResponse$rumAppMonitorName": "<p>The name of the CloudWatch RUM app monitor that collects reader telemetry for the portal.</p>",
+        "GetPortalResponse$rumAppMonitorName": "<p>The name of the CloudWatch RUM app monitor that collects reader telemetry for the portal.</p>",
+        "PortalSummary$rumAppMonitorName": "<p>The name of the CloudWatch RUM app monitor that collects reader telemetry for the portal.</p>",
+        "UpdatePortalRequest$rumAppMonitorName": "<p>The new CloudWatch RUM app monitor name. Omit it to keep the current value.</p>",
+        "UpdatePortalResponse$rumAppMonitorName": "<p>The name of the CloudWatch RUM app monitor that collects reader telemetry for the portal.</p>"
+      }
+    },
+    "ResourceArn": {
+      "base": null,
+      "refs": {
+        "ApiInventoryFilters$resourceArn": "<p>Return only APIs served by this resource.</p>",
+        "ApiInventoryItem$resourceArn": "<p>The ARN of the resource that serves the API, such as an API Gateway stage or a load balancer.</p>",
+        "ApiInventoryItemDetail$resourceArn": "<p>The ARN of the resource that serves the API, such as an API Gateway stage or a load balancer.</p>",
+        "ApiSignature$resourceArn": "<p>The ARN of the resource that serves the API.</p>",
+        "GetApiInventoryItemRequest$resourceArn": "<p>The ARN of the resource that serves the API, such as an API Gateway stage or a load balancer.</p>",
+        "IdentifierParts$resourceArn": "<p>The ARN of the resource that serves the API.</p>",
+        "ListTagsForResourceRequest$resourceArn": "<p>The ARN of the resource.</p>",
+        "ResourceArnList$member": null,
+        "TagResourceRequest$resourceArn": "<p>The ARN of the resource.</p>",
+        "UntagResourceRequest$resourceArn": "<p>The ARN of the resource.</p>"
+      }
+    },
+    "ResourceArnList": {
+      "base": null,
+      "refs": {
+        "DiscoveryConfigurationData$excludedResources": "<p>The ARNs of resources left out of discovery.</p>",
+        "DiscoveryExclusionFilters$resourceArns": "<p>List of resource ARNs to exclude. Only ELB and CloudFront resource ARNs are supported.</p>",
+        "PutDiscoveryConfigurationRequest$excludedResources": "<p>The ARNs of resources to leave out of discovery, up to 50.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The requested resource does not exist, or you do not have access to it.</p>",
+      "refs": {}
+    },
+    "ResourceOwner": {
+      "base": null,
+      "refs": {
+        "ListProductsRequest$resourceOwner": "<p>Whose products to return: <code>SELF</code> for your own, <code>OTHER_ACCOUNTS</code> for products shared with you, or <code>ALL</code>. Defaults to <code>ALL</code>, or to <code>SELF</code> when <code>managedApiId</code> is supplied.</p>"
+      }
+    },
+    "RuleFilter": {
+      "base": "<p>Values are compared to the attribute as literals: exact and case-sensitive, no wildcards.</p>",
+      "refs": {
+        "RuleFilterList$member": null
+      }
+    },
+    "RuleFilterKey": {
+      "base": "<p>The Managed API attribute a RuleFilter compares against. RESOURCE_ARN - apiSignature.resourceArn HOST - apiSignature.hostname METHOD - apiSignature.method, so values must be HttpMethod names PATH - apiSignature.path PORT - apiSignature.port, compared as its decimal string, so values must be 0-65535 with no leading zeros ACCOUNT - the account hosting the API, which for an ORGANIZATION-scoped Managed API is the member account rather than the account that created it</p>",
+      "refs": {
+        "RuleFilter$key": null
+      }
+    },
+    "RuleFilterList": {
+      "base": "<p>One filter per RuleFilterKey: filters are AND-ed, so two on the same key never both match.</p>",
+      "refs": {
+        "ApiSelectionConfiguration$ruleFilters": "<p>Required for RULE_BASED, rejected for CUSTOM. Filters are combined with AND, the values within one filter with OR, and evaluated only over the account's Managed APIs. Replaced as a whole on update, not merged.</p>"
+      }
+    },
+    "RuleFilterValue": {
+      "base": "<p>Bounded by the longest matchable attribute, apiSignature.path.</p> <p>No whitespace: none of the matchable attributes (ARN, hostname, method, path, port, account) contain any. Per-key formats (METHOD, PORT, ACCOUNT) are enforced in ProductValidator.validateRuleFilterValue, since one pattern cannot express them for a value shared by every key.</p>",
+      "refs": {
+        "RuleFilterValueList$member": null
+      }
+    },
+    "RuleFilterValueList": {
+      "base": null,
+      "refs": {
+        "RuleFilter$values": "<p>The values to match. The filter matches when the attribute equals any of them.</p>"
+      }
+    },
+    "Section": {
+      "base": "<p>A named group of API pages in the portal navigation.</p>",
+      "refs": {
+        "Contents$member": null
+      }
+    },
+    "SectionSectionNameString": {
+      "base": null,
+      "refs": {
+        "Section$sectionName": "<p>Shown in the portal navigation. Same bound as page titles and operation names, and no control characters (the service rejects a blank name).</p>"
+      }
+    },
+    "StartDiscoveryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "Status": {
+      "base": null,
+      "refs": {
+        "CreateProductApiPageResponse$status": "<p>The status of the page content: <code>IN_PROGRESS</code> while it is generated, then <code>AVAILABLE</code> or <code>FAILED</code>.</p>",
+        "GetProductApiPageResponse$status": "<p>The status of the page content: <code>IN_PROGRESS</code> while it is generated, then <code>AVAILABLE</code> or <code>FAILED</code>.</p>",
+        "ProductApiPageSummaryNoBody$status": "<p>The status of the page content: <code>IN_PROGRESS</code> while it is generated, then <code>AVAILABLE</code> or <code>FAILED</code>.</p>",
+        "UpdateProductApiPageResponse$status": "<p>The status of the page content: <code>IN_PROGRESS</code> while it is generated, then <code>AVAILABLE</code> or <code>FAILED</code>.</p>"
+      }
+    },
+    "StopDiscoveryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "ApiInventoryItem$region": "<p>The AWS Region the API was discovered in.</p>",
+        "ApiInventoryItemDetail$region": "<p>The AWS Region the API was discovered in.</p>",
+        "BadRequestException$message": null,
+        "ConflictException$message": null,
+        "GetProductApiPageResponse$rawDisplayContent": "<p>The Markdown body of the page. Returned only when <code>includeRawDisplayContent</code> is <code>true</code>.</p>",
+        "InternalServerException$message": null,
+        "LimitExceededException$message": null,
+        "Preview$previewUrl": "<p>The URL to view the preview. Present when <code>previewStatus</code> is <code>PREVIEW_READY</code>.</p>",
+        "ResourceNotFoundException$message": null
+      }
+    },
+    "StringWithLengthBetween1And1600": {
+      "base": null,
+      "refs": {
+        "StartDiscoveryRequest$id": "<p>Identifier of the discovery configuration to start. Required. Today this is the configuration ARN, which carries the owner account id so a delegated admin or org admin can start an org-scoped configuration that lives in a different account.</p>",
+        "StopDiscoveryRequest$id": "<p>Identifier of the discovery configuration to stop. Required. Today this is the configuration ARN, which carries the owner account id so a delegated admin or org admin can stop an org-scoped configuration that lives in a different account.</p>"
+      }
+    },
+    "TagKey": {
+      "base": "<p>A tag key of 1-128 Unicode characters, per the AWS tagging limits.</p>",
+      "refs": {
+        "TagKeys$member": null,
+        "Tags$key": null
+      }
+    },
+    "TagKeys": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p>The keys of the tags to remove, up to 50.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": "<p>A tag value of 0-256 Unicode characters, per the AWS tagging limits; an empty value is valid.</p>",
+      "refs": {
+        "Tags$value": null
+      }
+    },
+    "Tags": {
+      "base": "<p>Up to 50 tags per request, matching API Gateway's limit of 50 tags per resource.</p>",
+      "refs": {
+        "CreateManagedApiRequest$tags": null,
+        "CreateManagedApiResponse$tags": null,
+        "CreatePortalRequest$tags": null,
+        "CreatePortalResponse$tags": null,
+        "CreateProductApiPageRequest$tags": null,
+        "CreateProductApiPageResponse$tags": null,
+        "CreateProductPageRequest$tags": null,
+        "CreateProductPageResponse$tags": null,
+        "CreateProductRequest$tags": null,
+        "CreateProductResponse$tags": null,
+        "GetDiscoveryConfigurationResponse$tags": null,
+        "GetManagedApiResponse$tags": null,
+        "GetOrganizationDiscoveryConfigurationResponse$tags": null,
+        "GetPortalResponse$tags": null,
+        "GetProductApiPageResponse$tags": null,
+        "GetProductPageResponse$tags": null,
+        "GetProductResponse$tags": null,
+        "GetProductSharingPolicyResponse$tags": null,
+        "ListTagsForResourceResponse$tags": null,
+        "PutDiscoveryConfigurationRequest$tags": null,
+        "PutDiscoveryConfigurationResponse$tags": null,
+        "PutOrganizationDiscoveryConfigurationRequest$tags": null,
+        "PutOrganizationDiscoveryConfigurationResponse$tags": null,
+        "PutProductSharingPolicyRequest$tags": null,
+        "TagResourceRequest$tags": null
+      }
+    },
+    "ThreatCategory": {
+      "base": "<p>OWASP API Security category, e.g. &quot;API2:2023&quot;. Open string — OWASP revises the list per edition.</p>",
+      "refs": {
+        "WafApiSecurityEventDetail$category": "<p>OWASP class — the primary display value (e.g. &quot;API2:2023&quot;).</p>"
+      }
+    },
+    "ThreatLabel": {
+      "base": "<p>Detection label describing the attack and its confidence tier, e.g. &quot;awswaf:managed:aws:api-security:credential-stuffing-high&quot;.</p>",
+      "refs": {
+        "WafApiSecurityEventDetail$label": "<p>Detection label (attack type + confidence tier).</p>"
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "ApiInventoryItem$firstSeen": "<p>When discovery first observed the API.</p>",
+        "ApiInventoryItem$lastSeen": "<p>When discovery most recently observed the API.</p>",
+        "CreateManagedApiResponse$createdAt": "<p>When the resource was created.</p>",
+        "CreateManagedApiResponse$updatedAt": "<p>When the resource was last updated.</p>",
+        "CreatePortalResponse$updatedAt": "<p>When the resource was last updated.</p>",
+        "CreatePortalResponse$publishedAt": "<p>When the portal was last published.</p>",
+        "CreateProductApiPageResponse$updatedAt": "<p>When the resource was last updated.</p>",
+        "CreateProductPageResponse$updatedAt": "<p>When the resource was last updated.</p>",
+        "CreateProductResponse$updatedAt": "<p>When the resource was last updated.</p>",
+        "DiscoveryConfigurationData$createdAt": "<p>When the resource was created.</p>",
+        "DiscoveryConfigurationData$updatedAt": "<p>When the resource was last updated.</p>",
+        "GetManagedApiResponse$createdAt": "<p>When the resource was created.</p>",
+        "GetManagedApiResponse$updatedAt": "<p>When the resource was last updated.</p>",
+        "GetPortalResponse$updatedAt": "<p>When the resource was last updated.</p>",
+        "GetPortalResponse$publishedAt": "<p>When the portal was last published.</p>",
+        "GetProductApiPageResponse$updatedAt": "<p>When the resource was last updated.</p>",
+        "GetProductPageResponse$updatedAt": "<p>When the resource was last updated.</p>",
+        "GetProductResponse$updatedAt": "<p>When the resource was last updated.</p>",
+        "ListManagedApiEventsRequest$startedAfter": "<p>Inclusive lower bound on each event's start time; only events that started at or after this time are returned. Optional; defaults to 30 days before the current time.</p>",
+        "ListManagedApiEventsRequest$startedBefore": "<p>Exclusive upper bound on each event's start time; only events that started before this time are returned. Optional; defaults to the current time.</p>",
+        "ManagedApiEventSummary$startedAt": "<p>When the event was first observed.</p>",
+        "ManagedApiEventSummary$endedAt": "<p>When the event completed; absent while it is still in progress.</p>",
+        "ManagedApiEventSummary$updatedAt": "<p>When the event was last updated.</p>",
+        "ManagedApiFinding$updatedAt": "<p>When the finding was last updated.</p>",
+        "ManagedApiSummary$createdAt": "<p>When the resource was created.</p>",
+        "ManagedApiSummary$updatedAt": "<p>When the resource was last updated.</p>",
+        "OrganizationDiscoveryConfigurationData$createdAt": "<p>When the resource was created.</p>",
+        "OrganizationDiscoveryConfigurationData$updatedAt": "<p>When the resource was last updated.</p>",
+        "PortalSummary$updatedAt": "<p>When the resource was last updated.</p>",
+        "PortalSummary$publishedAt": "<p>When the portal was last published.</p>",
+        "PortalTheme$logoUploadedAt": "<p>When the portal logo was last uploaded. Absent if the portal has no logo.</p>",
+        "ProductApiPageSummaryNoBody$updatedAt": "<p>When the resource was last updated.</p>",
+        "ProductPageSummaryNoBody$updatedAt": "<p>When the resource was last updated.</p>",
+        "ProductSummary$updatedAt": "<p>When the resource was last updated.</p>",
+        "UpdatePortalResponse$updatedAt": "<p>When the resource was last updated.</p>",
+        "UpdatePortalResponse$publishedAt": "<p>When the portal was last published.</p>",
+        "UpdateProductApiPageResponse$updatedAt": "<p>When the resource was last updated.</p>",
+        "UpdateProductPageResponse$updatedAt": "<p>When the resource was last updated.</p>",
+        "UpdateProductResponse$updatedAt": "<p>When the resource was last updated.</p>"
+      }
+    },
+    "TryItState": {
+      "base": null,
+      "refs": {
+        "CreateProductApiPageRequest$tryItState": "<p>Whether readers can call the API from the page with Try-It. Defaults to <code>DISABLED</code>. To enable it, the page's API URL must use HTTPS on a domain that supports Try-It.</p>",
+        "CreateProductApiPageResponse$tryItState": "<p>Whether Try-It is enabled on the page.</p>",
+        "GetProductApiPageResponse$tryItState": "<p>Whether Try-It is enabled on the page.</p>",
+        "ProductApiPageSummaryNoBody$tryItState": "<p>Whether Try-It is enabled on the page.</p>",
+        "UpdateProductApiPageRequest$tryItState": "<p>The new Try-It setting. Omit it to keep the current setting. To enable it, the page's API URL must use HTTPS on a domain that supports Try-It.</p>",
+        "UpdateProductApiPageResponse$tryItState": "<p>Whether Try-It is enabled on the page.</p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePortalPublishStatusRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePortalRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePortalResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProductApiPageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProductApiPageResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProductPageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProductPageResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProductRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProductResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UserPoolArn": {
+      "base": null,
+      "refs": {
+        "CognitoConfig$userPoolArn": "<p>The ARN of the Cognito user pool.</p>"
+      }
+    },
+    "UserPoolDomain": {
+      "base": null,
+      "refs": {
+        "CognitoConfig$userPoolDomain": "<p>The domain of the user pool's hosted sign-in pages.</p>"
+      }
+    },
+    "Visibility": {
+      "base": "<p>Whether a discovered API is reachable publicly or only from within a private network.</p>",
+      "refs": {
+        "ApiInventoryItem$visibility": null,
+        "ApiInventoryItemDetail$visibility": null
+      }
+    },
+    "WafApiSecurityEventDetail": {
+      "base": "<p>Detail specific to a WAF API-security event.</p>",
+      "refs": {
+        "ManagedApiEventSummary$wafApiSecurityEventDetail": "<p>Detail specific to a WAF API-security event; populated when eventType is WAF_API_SECURITY.</p>"
+      }
+    },
+    "WafStatus": {
+      "base": "<p>Whether a WAF web ACL is attached to the API's front-door service.</p>",
+      "refs": {
+        "ApiInventoryItem$wafStatus": null,
+        "ApiInventoryItemDetail$wafStatus": null
+      }
+    },
+    "WebAclArn": {
+      "base": "<p>ARN of the WebACL that produced the event. Carried on the event detail so GetManagedApiEvent can fetch the event's full detail; scope and region are derived from it.</p>",
+      "refs": {
+        "WafApiSecurityEventDetail$webAclArn": "<p>WebACL that produced the event.</p>"
+      }
+    },
+    "Workload": {
+      "base": "<p>An AI protocol seen in an API's traffic, detected by the front door from request or response headers (and, for A2A, a query parameter). MCP - Model Context Protocol. LLM - traffic to or from an LLM inference server or gateway. A2A - Agent2Agent protocol.</p>",
+      "refs": {
+        "WorkloadList$member": null
+      }
+    },
+    "WorkloadList": {
+      "base": null,
+      "refs": {
+        "ApiInventoryItem$workloads": "<p>AI protocols seen in this API's traffic, each listed at most once. Absent when none has been reported, which includes an account that has not enabled AI discovery.</p>",
+        "ApiInventoryItemDetail$workloads": "<p>AI protocols seen in this API's traffic, each listed at most once. Absent when none has been reported, which includes an account that has not enabled AI discovery.</p>"
+      }
+    }
+  }
+}

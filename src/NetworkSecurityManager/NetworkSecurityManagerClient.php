@@ -40,13 +40,18 @@ use Aws\AwsClient;
  *     policyDescription?: string,
  *     priority?: int,
  *     associatedTemplateAndRuleList?: list<array{templateIdentifier?: string, ruleIdentifier?: string, ...}>,
- *     firewallType?: 'SHIELD_ADVANCED'|'WAF',
+ *     firewallType?: 'IGW_FIREWALL'|'SHIELD_ADVANCED'|'WAF',
  *     policyConfiguration?: array{
  *         remediationEnabled?: bool,
  *         resourcesCleanUp?: bool,
  *         wafConfig?: array{
  *             existingCustomerWebACLResolution?: 'NO_REMEDIATION'|'OVERRIDE_ASSOCIATION'|'RETROFIT',
  *             conflictResolution?: 'MERGE_WHERE_APPLICABLE',
+ *             ...,
+ *         },
+ *         igwFirewallConfig?: array{
+ *             defaultSubnetConnectivity?: 'bidirectional'|'flexible'|'outbound-only',
+ *             subnetConnectivityOverrides?: list<array>,
  *             ...,
  *         },
  *         ...,
@@ -62,13 +67,18 @@ use Aws\AwsClient;
  *     policyDescription?: string,
  *     priority?: int,
  *     associatedTemplateAndRuleList?: list<array{templateIdentifier?: string, ruleIdentifier?: string, ...}>,
- *     firewallType?: 'SHIELD_ADVANCED'|'WAF',
+ *     firewallType?: 'IGW_FIREWALL'|'SHIELD_ADVANCED'|'WAF',
  *     policyConfiguration?: array{
  *         remediationEnabled?: bool,
  *         resourcesCleanUp?: bool,
  *         wafConfig?: array{
  *             existingCustomerWebACLResolution?: 'NO_REMEDIATION'|'OVERRIDE_ASSOCIATION'|'RETROFIT',
  *             conflictResolution?: 'MERGE_WHERE_APPLICABLE',
+ *             ...,
+ *         },
+ *         igwFirewallConfig?: array{
+ *             defaultSubnetConnectivity?: 'bidirectional'|'flexible'|'outbound-only',
+ *             subnetConnectivityOverrides?: list<array>,
  *             ...,
  *         },
  *         ...,
@@ -85,7 +95,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result createRule(array{
  *     clientToken?: string,
  *     ruleName?: string,
- *     firewallType?: 'WAF',
+ *     firewallType?: 'IGW_FIREWALL'|'WAF',
  *     ruleType?: 'CONFIGURATION'|'INSPECTION',
  *     ruleDescription?: string,
  *     configuration?: array,
@@ -97,7 +107,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise createRuleAsync(array{
  *     clientToken?: string,
  *     ruleName?: string,
- *     firewallType?: 'WAF',
+ *     firewallType?: 'IGW_FIREWALL'|'WAF',
  *     ruleType?: 'CONFIGURATION'|'INSPECTION',
  *     ruleDescription?: string,
  *     configuration?: array,
@@ -119,6 +129,7 @@ use Aws\AwsClient;
  *         resourceScopes?: array<string, array>,
  *         ...,
  *     },
+ *     specializedScopeType?: 'IGW_FIREWALL_SUBNET_CONNECTIVITY_OVERRIDE',
  *     isPublished?: bool,
  *     tags?: array<string, string>,
  *     ...,
@@ -133,6 +144,7 @@ use Aws\AwsClient;
  *         resourceScopes?: array<string, array>,
  *         ...,
  *     },
+ *     specializedScopeType?: 'IGW_FIREWALL_SUBNET_CONNECTIVITY_OVERRIDE',
  *     isPublished?: bool,
  *     tags?: array<string, string>,
  *     ...,
@@ -147,7 +159,7 @@ use Aws\AwsClient;
  *     templateName?: string,
  *     templateDescription?: string,
  *     associatedRuleList?: list<array{ruleIdentifier?: string, ...}>,
- *     firewallType?: 'WAF',
+ *     firewallType?: 'IGW_FIREWALL'|'WAF',
  *     isPublished?: bool,
  *     tags?: array<string, string>,
  *     ...,
@@ -158,7 +170,7 @@ use Aws\AwsClient;
  *     templateName?: string,
  *     templateDescription?: string,
  *     associatedRuleList?: list<array{ruleIdentifier?: string, ...}>,
- *     firewallType?: 'WAF',
+ *     firewallType?: 'IGW_FIREWALL'|'WAF',
  *     isPublished?: bool,
  *     tags?: array<string, string>,
  *     ...,
@@ -194,7 +206,7 @@ use Aws\AwsClient;
  * @method \Aws\Result generateRuleConfiguration(array $args = [])
  * @phpstan-method \Aws\Result generateRuleConfiguration(array{
  *     prompt?: string,
- *     ruleFirewallType?: 'WAF',
+ *     ruleFirewallType?: 'IGW_FIREWALL'|'WAF',
  *     ruleType?: 'CONFIGURATION'|'INSPECTION',
  *     wafConfigDataType?: 'AssociationConfig'|'CaptchaConfig'|'ChallengeConfig'|'CustomResponseBodies'|'DataProtectionConfig'|'DefaultAction'|'LoggingConfiguration'|'OnSourceDDoSProtectionConfig'|'TokenDomains'|'VisibilityConfig',
  *     currentConfiguration?: string,
@@ -204,7 +216,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise generateRuleConfigurationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise generateRuleConfigurationAsync(array{
  *     prompt?: string,
- *     ruleFirewallType?: 'WAF',
+ *     ruleFirewallType?: 'IGW_FIREWALL'|'WAF',
  *     ruleType?: 'CONFIGURATION'|'INSPECTION',
  *     wafConfigDataType?: 'AssociationConfig'|'CaptchaConfig'|'ChallengeConfig'|'CustomResponseBodies'|'DataProtectionConfig'|'DefaultAction'|'LoggingConfiguration'|'OnSourceDDoSProtectionConfig'|'TokenDomains'|'VisibilityConfig',
  *     currentConfiguration?: string,
@@ -261,6 +273,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listDeployments(array{maxResults?: int, nextToken?: string, status?: 'ACTIVE'|'DISABLED'|'DRAFT', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listDeploymentsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listDeploymentsAsync(array{maxResults?: int, nextToken?: string, status?: 'ACTIVE'|'DISABLED'|'DRAFT', ...} $args = [])
+ * @method \Aws\Result listEntityCoverages(array $args = [])
+ * @phpstan-method \Aws\Result listEntityCoverages(array{entityArn?: string, resourceOwnerAccountId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listEntityCoveragesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listEntityCoveragesAsync(array{entityArn?: string, resourceOwnerAccountId?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result listPolicies(array $args = [])
  * @phpstan-method \Aws\Result listPolicies(array{maxResults?: int, nextToken?: string, status?: 'ACTIVE'|'DISABLED'|'DRAFT', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listPoliciesAsync(array $args = [])
@@ -269,6 +285,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listPolicySnapshots(array{policyIdentifier?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listPolicySnapshotsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listPolicySnapshotsAsync(array{policyIdentifier?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listProtectedResourceCoverages(array $args = [])
+ * @phpstan-method \Aws\Result listProtectedResourceCoverages(array{
+ *     resourceArn?: string,
+ *     entityType?: 'Deployment'|'Policy'|'Rule'|'Scope'|'Template',
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listProtectedResourceCoveragesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listProtectedResourceCoveragesAsync(array{
+ *     resourceArn?: string,
+ *     entityType?: 'Deployment'|'Policy'|'Rule'|'Scope'|'Template',
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listResourceAssociations(array $args = [])
  * @phpstan-method \Aws\Result listResourceAssociations(array{resourceIdentifier?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listResourceAssociationsAsync(array $args = [])
@@ -314,16 +346,28 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTemplateSnapshotsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listTemplateSnapshotsAsync(array{templateIdentifier?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result listTemplates(array $args = [])
- * @phpstan-method \Aws\Result listTemplates(array{maxResults?: int, nextToken?: string, status?: 'ACTIVE'|'DISABLED'|'DRAFT', ...} $args = [])
+ * @phpstan-method \Aws\Result listTemplates(array{
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     status?: 'ACTIVE'|'DISABLED'|'DRAFT',
+ *     templateOwner?: 'AWS'|'CUSTOMER',
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listTemplatesAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listTemplatesAsync(array{maxResults?: int, nextToken?: string, status?: 'ACTIVE'|'DISABLED'|'DRAFT', ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listTemplatesAsync(array{
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     status?: 'ACTIVE'|'DISABLED'|'DRAFT',
+ *     templateOwner?: 'AWS'|'CUSTOMER',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result putAdminAccount(array $args = [])
  * @phpstan-method \Aws\Result putAdminAccount(array{
  *     accountId?: string,
  *     priority?: int,
  *     adminScope?: array{
  *         scopeFilter?: array{includeAll?: array, includeOnly?: array, excludeOnly?: array, ...},
- *         firewallTypeScope?: array{allFirewallTypesEnabled?: bool, firewallTypes?: list<'SHIELD_ADVANCED'|'WAF'>, ...},
+ *         firewallTypeScope?: array{allFirewallTypesEnabled?: bool, firewallTypes?: list<'IGW_FIREWALL'|'SHIELD_ADVANCED'|'WAF'>, ...},
  *         ...,
  *     },
  *     ...,
@@ -334,7 +378,7 @@ use Aws\AwsClient;
  *     priority?: int,
  *     adminScope?: array{
  *         scopeFilter?: array{includeAll?: array, includeOnly?: array, excludeOnly?: array, ...},
- *         firewallTypeScope?: array{allFirewallTypesEnabled?: bool, firewallTypes?: list<'SHIELD_ADVANCED'|'WAF'>, ...},
+ *         firewallTypeScope?: array{allFirewallTypesEnabled?: bool, firewallTypes?: list<'IGW_FIREWALL'|'SHIELD_ADVANCED'|'WAF'>, ...},
  *         ...,
  *     },
  *     ...,
@@ -386,6 +430,11 @@ use Aws\AwsClient;
  *             conflictResolution?: 'MERGE_WHERE_APPLICABLE',
  *             ...,
  *         },
+ *         igwFirewallConfig?: array{
+ *             defaultSubnetConnectivity?: 'bidirectional'|'flexible'|'outbound-only',
+ *             subnetConnectivityOverrides?: list<array>,
+ *             ...,
+ *         },
  *         ...,
  *     },
  *     isPublished?: bool,
@@ -405,6 +454,11 @@ use Aws\AwsClient;
  *         wafConfig?: array{
  *             existingCustomerWebACLResolution?: 'NO_REMEDIATION'|'OVERRIDE_ASSOCIATION'|'RETROFIT',
  *             conflictResolution?: 'MERGE_WHERE_APPLICABLE',
+ *             ...,
+ *         },
+ *         igwFirewallConfig?: array{
+ *             defaultSubnetConnectivity?: 'bidirectional'|'flexible'|'outbound-only',
+ *             subnetConnectivityOverrides?: list<array>,
  *             ...,
  *         },
  *         ...,

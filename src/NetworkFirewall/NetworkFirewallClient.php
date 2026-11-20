@@ -15,6 +15,7 @@ use Aws\AwsClient;
  *     FirewallArn?: string,
  *     FirewallName?: string,
  *     AvailabilityZoneMappings?: list<array{AvailabilityZone?: string, ...}>,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise associateAvailabilityZonesAsync(array $args = [])
@@ -23,12 +24,27 @@ use Aws\AwsClient;
  *     FirewallArn?: string,
  *     FirewallName?: string,
  *     AvailabilityZoneMappings?: list<array{AvailabilityZone?: string, ...}>,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
  *     ...,
  * } $args = [])
  * @method \Aws\Result associateFirewallPolicy(array $args = [])
- * @phpstan-method \Aws\Result associateFirewallPolicy(array{UpdateToken?: string, FirewallArn?: string, FirewallName?: string, FirewallPolicyArn?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result associateFirewallPolicy(array{
+ *     UpdateToken?: string,
+ *     FirewallArn?: string,
+ *     FirewallName?: string,
+ *     FirewallPolicyArn?: string,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise associateFirewallPolicyAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise associateFirewallPolicyAsync(array{UpdateToken?: string, FirewallArn?: string, FirewallName?: string, FirewallPolicyArn?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise associateFirewallPolicyAsync(array{
+ *     UpdateToken?: string,
+ *     FirewallArn?: string,
+ *     FirewallName?: string,
+ *     FirewallPolicyArn?: string,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result associateSubnets(array $args = [])
  * @phpstan-method \Aws\Result associateSubnets(array{
  *     UpdateToken?: string,
@@ -81,6 +97,7 @@ use Aws\AwsClient;
  *     TransitGatewayId?: string,
  *     AvailabilityZoneMappings?: list<array{AvailabilityZone?: string, ...}>,
  *     AvailabilityZoneChangeProtection?: bool,
+ *     IgwFirewallConfiguration?: array{EnforcementMode?: 'POLICY_CONTROLLED', ...},
  *     NatGatewayCreateMappings?: list<array{SubnetId?: string, AllocationIds?: list<string>, PrivateIps?: list<string>, ...}>,
  *     ProxySettings?: array{ListenerProperties?: list<array>, CertificateArn?: string, DomainName?: string, ...},
  *     VpcEndpoint?: array{VpcId?: string, SubnetMappings?: list<array>, ...},
@@ -103,6 +120,7 @@ use Aws\AwsClient;
  *     TransitGatewayId?: string,
  *     AvailabilityZoneMappings?: list<array{AvailabilityZone?: string, ...}>,
  *     AvailabilityZoneChangeProtection?: bool,
+ *     IgwFirewallConfiguration?: array{EnforcementMode?: 'POLICY_CONTROLLED', ...},
  *     NatGatewayCreateMappings?: list<array{SubnetId?: string, AllocationIds?: list<string>, PrivateIps?: list<string>, ...}>,
  *     ProxySettings?: array{ListenerProperties?: list<array>, CertificateArn?: string, DomainName?: string, ...},
  *     VpcEndpoint?: array{VpcId?: string, SubnetMappings?: list<array>, ...},
@@ -354,9 +372,21 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteContainerAssociationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteContainerAssociationAsync(array{ContainerAssociationName?: string, ContainerAssociationArn?: string, ...} $args = [])
  * @method \Aws\Result deleteFirewall(array $args = [])
- * @phpstan-method \Aws\Result deleteFirewall(array{FirewallName?: string, FirewallArn?: string, DeleteAssociatedNatGateways?: bool, ...} $args = [])
+ * @phpstan-method \Aws\Result deleteFirewall(array{
+ *     FirewallName?: string,
+ *     FirewallArn?: string,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
+ *     DeleteAssociatedNatGateways?: bool,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteFirewallAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise deleteFirewallAsync(array{FirewallName?: string, FirewallArn?: string, DeleteAssociatedNatGateways?: bool, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteFirewallAsync(array{
+ *     FirewallName?: string,
+ *     FirewallArn?: string,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
+ *     DeleteAssociatedNatGateways?: bool,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result deleteFirewallPolicy(array $args = [])
  * @phpstan-method \Aws\Result deleteFirewallPolicy(array{FirewallPolicyName?: string, FirewallPolicyArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteFirewallPolicyAsync(array $args = [])
@@ -404,9 +434,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeContainerAssociationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeContainerAssociationAsync(array{ContainerAssociationName?: string, ContainerAssociationArn?: string, ...} $args = [])
  * @method \Aws\Result describeFirewall(array $args = [])
- * @phpstan-method \Aws\Result describeFirewall(array{FirewallName?: string, FirewallArn?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result describeFirewall(array{FirewallName?: string, FirewallArn?: string, FirewallType?: 'FIREWALL'|'IGW_FIREWALL', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeFirewallAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise describeFirewallAsync(array{FirewallName?: string, FirewallArn?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeFirewallAsync(array{FirewallName?: string, FirewallArn?: string, FirewallType?: 'FIREWALL'|'IGW_FIREWALL', ...} $args = [])
  * @method \Aws\Result describeFirewallMetadata(array $args = [])
  * @phpstan-method \Aws\Result describeFirewallMetadata(array{FirewallArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeFirewallMetadataAsync(array $args = [])
@@ -450,9 +480,9 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result describeLoggingConfiguration(array $args = [])
- * @phpstan-method \Aws\Result describeLoggingConfiguration(array{FirewallArn?: string, FirewallName?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result describeLoggingConfiguration(array{FirewallArn?: string, FirewallName?: string, FirewallType?: 'FIREWALL'|'IGW_FIREWALL', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeLoggingConfigurationAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise describeLoggingConfigurationAsync(array{FirewallArn?: string, FirewallName?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeLoggingConfigurationAsync(array{FirewallArn?: string, FirewallName?: string, FirewallType?: 'FIREWALL'|'IGW_FIREWALL', ...} $args = [])
  * @method \Aws\Result describeProxy(array $args = [])
  * @phpstan-method \Aws\Result describeProxy(array{ProxyName?: string, ProxyArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeProxyAsync(array $args = [])
@@ -521,6 +551,7 @@ use Aws\AwsClient;
  *     FirewallArn?: string,
  *     FirewallName?: string,
  *     AvailabilityZoneMappings?: list<array{AvailabilityZone?: string, ...}>,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateAvailabilityZonesAsync(array $args = [])
@@ -529,6 +560,7 @@ use Aws\AwsClient;
  *     FirewallArn?: string,
  *     FirewallName?: string,
  *     AvailabilityZoneMappings?: list<array{AvailabilityZone?: string, ...}>,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
  *     ...,
  * } $args = [])
  * @method \Aws\Result disassociateSubnets(array $args = [])
@@ -574,9 +606,21 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listFirewallPoliciesV2Async(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listFirewallPoliciesV2Async(array{NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \Aws\Result listFirewalls(array $args = [])
- * @phpstan-method \Aws\Result listFirewalls(array{NextToken?: string, VpcIds?: list<string>, MaxResults?: int, ...} $args = [])
+ * @phpstan-method \Aws\Result listFirewalls(array{
+ *     NextToken?: string,
+ *     VpcIds?: list<string>,
+ *     MaxResults?: int,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listFirewallsAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listFirewallsAsync(array{NextToken?: string, VpcIds?: list<string>, MaxResults?: int, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listFirewallsAsync(array{
+ *     NextToken?: string,
+ *     VpcIds?: list<string>,
+ *     MaxResults?: int,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listFlowOperationResults(array $args = [])
  * @phpstan-method \Aws\Result listFlowOperationResults(array{
  *     FirewallArn?: string,
@@ -809,6 +853,7 @@ use Aws\AwsClient;
  *     FirewallArn?: string,
  *     FirewallName?: string,
  *     UpdateToken?: string,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFirewallAnalysisSettingsAsync(array $args = [])
@@ -817,22 +862,52 @@ use Aws\AwsClient;
  *     FirewallArn?: string,
  *     FirewallName?: string,
  *     UpdateToken?: string,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateFirewallDeleteProtection(array $args = [])
- * @phpstan-method \Aws\Result updateFirewallDeleteProtection(array{UpdateToken?: string, FirewallArn?: string, FirewallName?: string, DeleteProtection?: bool, ...} $args = [])
+ * @phpstan-method \Aws\Result updateFirewallDeleteProtection(array{
+ *     UpdateToken?: string,
+ *     FirewallArn?: string,
+ *     FirewallName?: string,
+ *     DeleteProtection?: bool,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFirewallDeleteProtectionAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise updateFirewallDeleteProtectionAsync(array{UpdateToken?: string, FirewallArn?: string, FirewallName?: string, DeleteProtection?: bool, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateFirewallDeleteProtectionAsync(array{
+ *     UpdateToken?: string,
+ *     FirewallArn?: string,
+ *     FirewallName?: string,
+ *     DeleteProtection?: bool,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateFirewallDescription(array $args = [])
- * @phpstan-method \Aws\Result updateFirewallDescription(array{UpdateToken?: string, FirewallArn?: string, FirewallName?: string, Description?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result updateFirewallDescription(array{
+ *     UpdateToken?: string,
+ *     FirewallArn?: string,
+ *     FirewallName?: string,
+ *     Description?: string,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFirewallDescriptionAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise updateFirewallDescriptionAsync(array{UpdateToken?: string, FirewallArn?: string, FirewallName?: string, Description?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateFirewallDescriptionAsync(array{
+ *     UpdateToken?: string,
+ *     FirewallArn?: string,
+ *     FirewallName?: string,
+ *     Description?: string,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateFirewallEncryptionConfiguration(array $args = [])
  * @phpstan-method \Aws\Result updateFirewallEncryptionConfiguration(array{
  *     UpdateToken?: string,
  *     FirewallArn?: string,
  *     FirewallName?: string,
  *     EncryptionConfiguration?: array{KeyId?: string, Type?: 'AWS_OWNED_KMS_KEY'|'CUSTOMER_KMS', ...},
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFirewallEncryptionConfigurationAsync(array $args = [])
@@ -841,6 +916,7 @@ use Aws\AwsClient;
  *     FirewallArn?: string,
  *     FirewallName?: string,
  *     EncryptionConfiguration?: array{KeyId?: string, Type?: 'AWS_OWNED_KMS_KEY'|'CUSTOMER_KMS', ...},
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateFirewallPolicy(array $args = [])
@@ -921,6 +997,7 @@ use Aws\AwsClient;
  *     FirewallArn?: string,
  *     FirewallName?: string,
  *     FirewallPolicyChangeProtection?: bool,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFirewallPolicyChangeProtectionAsync(array $args = [])
@@ -929,6 +1006,7 @@ use Aws\AwsClient;
  *     FirewallArn?: string,
  *     FirewallName?: string,
  *     FirewallPolicyChangeProtection?: bool,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateFirewallPolicyV2(array $args = [])
@@ -991,6 +1069,7 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateLoggingConfiguration(array{
  *     FirewallArn?: string,
  *     FirewallName?: string,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
  *     LoggingConfiguration?: array{LogDestinationConfigs?: list<array>, ...},
  *     EnableMonitoringDashboard?: bool,
  *     ...,
@@ -999,6 +1078,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise updateLoggingConfigurationAsync(array{
  *     FirewallArn?: string,
  *     FirewallName?: string,
+ *     FirewallType?: 'FIREWALL'|'IGW_FIREWALL',
  *     LoggingConfiguration?: array{LogDestinationConfigs?: list<array>, ...},
  *     EnableMonitoringDashboard?: bool,
  *     ...,

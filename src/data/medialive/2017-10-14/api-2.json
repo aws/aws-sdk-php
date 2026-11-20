@@ -5999,6 +5999,10 @@
         "SmartSubtitleSourceSettings": {
           "shape": "SmartSubtitleSourceSettings",
           "locationName": "smartSubtitleSourceSettings"
+        },
+        "WebvttSourceSettings": {
+          "shape": "WebvttSourceSettings",
+          "locationName": "webvttSourceSettings"
         }
       }
     },
@@ -8661,6 +8665,14 @@
         "StyleControl": {
           "shape": "EmbeddedDestinationStyleControl",
           "locationName": "styleControl"
+        },
+        "CaptionServiceChannel": {
+          "shape": "__integerMin1Max63",
+          "locationName": "captionServiceChannel"
+        },
+        "EmbeddedMode": {
+          "shape": "EmbeddedModeType",
+          "locationName": "embeddedMode"
         }
       }
     },
@@ -26349,6 +26361,30 @@
           "locationName": "resolution"
         }
       }
+    },
+    "EmbeddedModeType": {
+      "type": "string",
+      "enum": [
+        "EMBEDDED_608_AND_708",
+        "EMBEDDED_608_ONLY",
+        "EMBEDDED_708_ONLY"
+      ]
+    },
+    "WebvttSourceSettings": {
+      "type": "structure",
+      "members": {
+        "GroupId": {
+          "shape": "__stringMin1",
+          "locationName": "groupId"
+        },
+        "Name": {
+          "shape": "__stringMin1",
+          "locationName": "name"
+        }
+      }
+    },
+    "__integerMin1Max63": {
+      "type": "integer"
     }
   }
 }

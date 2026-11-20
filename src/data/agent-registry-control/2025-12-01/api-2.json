@@ -13,6 +13,43 @@
     "uid":"agent-registry-control-2025-12-01"
   },
   "operations":{
+    "AssociatePublisher":{
+      "name":"AssociatePublisher",
+      "http":{
+        "method":"POST",
+        "requestUri":"/associations",
+        "responseCode":201
+      },
+      "input":{"shape":"AssociatePublisherRequest"},
+      "output":{"shape":"AssociatePublisherResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"DependencyException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "CreatePublisher":{
+      "name":"CreatePublisher",
+      "http":{
+        "method":"POST",
+        "requestUri":"/publishers",
+        "responseCode":201
+      },
+      "input":{"shape":"CreatePublisherRequest"},
+      "output":{"shape":"CreatePublisherResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "CreateRegistry":{
       "name":"CreateRegistry",
       "http":{
@@ -48,6 +85,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "DeletePublisher":{
+      "name":"DeletePublisher",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/publishers/{publisherArn}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeletePublisherRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
         {"shape":"ConflictException"}
       ],
       "idempotent":true
@@ -90,6 +145,40 @@
       ],
       "idempotent":true
     },
+    "DisassociatePublisher":{
+      "name":"DisassociatePublisher",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/associations/{recordArn+}",
+        "responseCode":204
+      },
+      "input":{"shape":"DisassociatePublisherRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
+    "GetPublisher":{
+      "name":"GetPublisher",
+      "http":{
+        "method":"GET",
+        "requestUri":"/publishers/{publisherArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPublisherRequest"},
+      "output":{"shape":"Publisher"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
     "GetRegistry":{
       "name":"GetRegistry",
       "http":{
@@ -124,6 +213,40 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"}
+      ],
+      "readonly":true
+    },
+    "ListPublisherAssociations":{
+      "name":"ListPublisherAssociations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/associations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPublisherAssociationsRequest"},
+      "output":{"shape":"ListPublisherAssociationsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListPublishers":{
+      "name":"ListPublishers",
+      "http":{
+        "method":"GET",
+        "requestUri":"/publishers",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPublishersRequest"},
+      "output":{"shape":"ListPublishersResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
       ],
       "readonly":true
     },
@@ -236,6 +359,24 @@
       ],
       "idempotent":true
     },
+    "UpdatePublisherAssociationApprovalStatus":{
+      "name":"UpdatePublisherAssociationApprovalStatus",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/associations/{recordArn+}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdatePublisherAssociationApprovalStatusRequest"},
+      "output":{"shape":"UpdatePublisherAssociationApprovalStatusResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "UpdateRegistry":{
       "name":"UpdateRegistry",
       "http":{
@@ -286,6 +427,23 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "ValidatePublisher":{
+      "name":"ValidatePublisher",
+      "http":{
+        "method":"POST",
+        "requestUri":"/publishers/{publisherArn}/verification",
+        "responseCode":200
+      },
+      "input":{"shape":"ValidatePublisherRequest"},
+      "output":{"shape":"ValidatePublisherResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"}
@@ -437,6 +595,55 @@
       "type":"blob",
       "sensitive":true
     },
+    "AssociatePublisherRequest":{
+      "type":"structure",
+      "required":[
+        "recordArn",
+        "publisherArn"
+      ],
+      "members":{
+        "recordArn":{"shape":"RegistryRecordArn"},
+        "publisherArn":{"shape":"PublisherIdentifierArn"},
+        "subdomain":{"shape":"Subdomain"},
+        "categories":{"shape":"CategoryList"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "AssociatePublisherResponse":{
+      "type":"structure",
+      "required":[
+        "recordArn",
+        "publicIdentifier",
+        "publisher",
+        "status"
+      ],
+      "members":{
+        "recordArn":{"shape":"RegistryRecordArn"},
+        "publicIdentifier":{"shape":"PublicIdentifier"},
+        "publisher":{"shape":"PublisherIdentifierArn"},
+        "status":{"shape":"AssociationStatus"},
+        "statusReason":{"shape":"StatusReason"}
+      }
+    },
+    "AssociationApprovalStatus":{
+      "type":"string",
+      "enum":[
+        "APPROVED",
+        "REJECTED"
+      ]
+    },
+    "AssociationStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING_APPROVAL",
+        "APPROVED",
+        "REJECTED",
+        "SUSPENDED"
+      ]
+    },
     "AuthorizationAttemptId":{
       "type":"string",
       "max":64,
@@ -516,6 +723,51 @@
       "type":"boolean",
       "box":true
     },
+    "BotCategory":{
+      "type":"string",
+      "enum":[
+        "advertising",
+        "archiver",
+        "content_fetcher",
+        "email_client",
+        "http_library",
+        "link_checker",
+        "miscellaneous",
+        "monitoring",
+        "page_preview",
+        "scraping_framework",
+        "search_engine",
+        "security",
+        "seo",
+        "social_media",
+        "ai_training",
+        "ai_search",
+        "ai_assistant",
+        "ai_content_optimization"
+      ]
+    },
+    "Category":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-z0-9._-]+"
+    },
+    "CategoryList":{
+      "type":"list",
+      "member":{"shape":"Category"},
+      "max":8,
+      "min":0
+    },
+    "ChallengeRecordName":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "ChallengeRecordValue":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "ClaimMatchOperatorType":{
       "type":"string",
       "enum":[
@@ -548,6 +800,39 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "CreatePublisherRequest":{
+      "type":"structure",
+      "required":["value"],
+      "members":{
+        "value":{"shape":"Identifier"},
+        "tags":{"shape":"TagMap"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreatePublisherResponse":{
+      "type":"structure",
+      "required":[
+        "value",
+        "status",
+        "createdAt",
+        "updatedAt",
+        "publisherArn"
+      ],
+      "members":{
+        "value":{"shape":"Identifier"},
+        "identifierType":{"shape":"IdentifierType"},
+        "status":{"shape":"VerificationStatus"},
+        "statusReason":{"shape":"StatusReason"},
+        "domainChallenge":{"shape":"DomainChallenge"},
+        "tags":{"shape":"TagMap"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "publisherArn":{"shape":"PublisherIdentifierArn"}
+      }
     },
     "CreateRegistryRecordRequest":{
       "type":"structure",
@@ -707,6 +992,17 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
+    "DeletePublisherRequest":{
+      "type":"structure",
+      "required":["publisherArn"],
+      "members":{
+        "publisherArn":{
+          "shape":"PublisherIdentifierArn",
+          "location":"uri",
+          "locationName":"publisherArn"
+        }
+      }
+    },
     "DeleteRegistryRecordRequest":{
       "type":"structure",
       "required":[
@@ -748,6 +1044,16 @@
         "status":{"shape":"RegistryStatus"}
       }
     },
+    "DependencyException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"errorMessage"}
+      },
+      "error":{"httpStatusCode":503},
+      "exception":true,
+      "fault":true,
+      "retryable":{"throttling":false}
+    },
     "Description":{
       "type":"string",
       "max":4096,
@@ -788,7 +1094,19 @@
         "agentSkillsDefinition":{"shape":"AgentSkillsDefinitionDescriptor"},
         "custom":{"shape":"CustomDescriptor"},
         "http":{"shape":"HttpDescriptor"},
-        "agui":{"shape":"AgUiDescriptor"}
+        "agui":{"shape":"AgUiDescriptor"},
+        "signatureAgentCard":{"shape":"SignatureAgentCardDescriptor"}
+      }
+    },
+    "DisassociatePublisherRequest":{
+      "type":"structure",
+      "required":["recordArn"],
+      "members":{
+        "recordArn":{
+          "shape":"RegistryRecordArn",
+          "location":"uri",
+          "locationName":"recordArn"
+        }
       }
     },
     "DiscoveryConfiguration":{
@@ -803,6 +1121,23 @@
       "max":2048,
       "min":1,
       "pattern":"[^\\s?#]+/\\.well-known/(openid-configuration|oauth-authorization-server)(/[^\\s?#]+)?"
+    },
+    "DomainChallenge":{
+      "type":"structure",
+      "required":[
+        "recordName",
+        "recordValue"
+      ],
+      "members":{
+        "recordName":{"shape":"ChallengeRecordName"},
+        "recordValue":{"shape":"ChallengeRecordValue"}
+      }
+    },
+    "DomainName":{
+      "type":"string",
+      "max":253,
+      "min":1,
+      "pattern":"(?=.{1,253}$)([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,63}"
     },
     "EncryptionConfiguration":{
       "type":"structure",
@@ -828,6 +1163,17 @@
       "member":{"shape":"FilterValue"},
       "max":1,
       "min":1
+    },
+    "GetPublisherRequest":{
+      "type":"structure",
+      "required":["publisherArn"],
+      "members":{
+        "publisherArn":{
+          "shape":"PublisherIdentifierArn",
+          "location":"uri",
+          "locationName":"publisherArn"
+        }
+      }
     },
     "GetRegistryRecordRequest":{
       "type":"structure",
@@ -963,6 +1309,17 @@
       "min":1,
       "pattern":"[a-zA-Z0-9_-]+"
     },
+    "Identifier":{
+      "type":"structure",
+      "members":{
+        "domain":{"shape":"DomainName"}
+      },
+      "union":true
+    },
+    "IdentifierType":{
+      "type":"string",
+      "enum":["DOMAIN"]
+    },
     "InboundTokenClaimNameType":{
       "type":"string",
       "max":255,
@@ -990,6 +1347,57 @@
       "max":2048,
       "min":1,
       "pattern":"arn:aws(|-cn|-us-gov):kms:[a-zA-Z0-9-]*:[0-9]{12}:key/[a-zA-Z0-9-]{36}"
+    },
+    "ListPublisherAssociationsRequest":{
+      "type":"structure",
+      "members":{
+        "publisherArn":{
+          "shape":"PublisherIdentifierArn",
+          "location":"querystring",
+          "locationName":"publisherArn"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListPublisherAssociationsResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"PublisherAssociationList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListPublishersRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListPublishersResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"PublisherSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
     },
     "ListRegistriesRequest":{
       "type":"structure",
@@ -1216,6 +1624,91 @@
       "max":1,
       "min":0
     },
+    "PublicIdentifier":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"urn:air:([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,63}(:[a-z0-9._-]+)*:[a-zA-Z0-9._/-]+([#;+$@][a-z][a-z0-9-]*)?"
+    },
+    "Publisher":{
+      "type":"structure",
+      "required":[
+        "value",
+        "status",
+        "createdAt",
+        "updatedAt",
+        "publisherArn"
+      ],
+      "members":{
+        "value":{"shape":"Identifier"},
+        "identifierType":{"shape":"IdentifierType"},
+        "status":{"shape":"VerificationStatus"},
+        "statusReason":{"shape":"StatusReason"},
+        "domainChallenge":{"shape":"DomainChallenge"},
+        "tags":{"shape":"TagMap"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "publisherArn":{"shape":"PublisherIdentifierArn"}
+      }
+    },
+    "PublisherAssociation":{
+      "type":"structure",
+      "required":[
+        "recordArn",
+        "publicIdentifier",
+        "publisher",
+        "status"
+      ],
+      "members":{
+        "recordArn":{"shape":"RegistryRecordArn"},
+        "publicIdentifier":{"shape":"PublicIdentifier"},
+        "publisher":{"shape":"PublisherIdentifierArn"},
+        "status":{"shape":"AssociationStatus"},
+        "statusReason":{"shape":"StatusReason"}
+      }
+    },
+    "PublisherAssociationList":{
+      "type":"list",
+      "member":{"shape":"PublisherAssociation"}
+    },
+    "PublisherIdentifierArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:(aws|aws-cn|aws-us-gov):[a-z0-9-]+::[0-9]{12}:[a-zA-Z0-9._/-]+"
+    },
+    "PublisherSummary":{
+      "type":"structure",
+      "required":[
+        "value",
+        "status",
+        "createdAt",
+        "publisherArn"
+      ],
+      "members":{
+        "value":{"shape":"Identifier"},
+        "identifierType":{"shape":"IdentifierType"},
+        "status":{"shape":"VerificationStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "publisherArn":{"shape":"PublisherIdentifierArn"},
+        "associationCount":{"shape":"PublisherSummaryAssociationCountInteger"},
+        "pendingAssociationApprovalCount":{"shape":"PublisherSummaryPendingAssociationApprovalCountInteger"}
+      }
+    },
+    "PublisherSummaryAssociationCountInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "PublisherSummaryList":{
+      "type":"list",
+      "member":{"shape":"PublisherSummary"}
+    },
+    "PublisherSummaryPendingAssociationApprovalCountInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
     "RecordIdentifier":{
       "type":"string",
       "max":2048,
@@ -1229,7 +1722,8 @@
         "AGENT",
         "CUSTOM",
         "SKILL",
-        "GATEWAY"
+        "GATEWAY",
+        "WEB_BOT"
       ]
     },
     "RecordTypeSchemaOverride":{
@@ -1638,6 +2132,21 @@
       "min":64,
       "pattern":"[0-9a-f]{64}"
     },
+    "SignatureAgentCardAdditionalData":{
+      "type":"structure",
+      "members":{
+        "category":{"shape":"BotCategory"}
+      }
+    },
+    "SignatureAgentCardDescriptor":{
+      "type":"structure",
+      "members":{
+        "data":{"shape":"DescriptorData"},
+        "dataSchemaVersion":{"shape":"DataSchemaVersion"},
+        "source":{"shape":"DescriptorSource"},
+        "additionalData":{"shape":"SignatureAgentCardAdditionalData"}
+      }
+    },
     "SourceDetails":{
       "type":"structure",
       "members":{
@@ -1659,7 +2168,18 @@
         "AWS::BedrockAgentCore::Gateway"
       ]
     },
+    "StatusReason":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
     "String":{"type":"string"},
+    "Subdomain":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?"
+    },
     "SubmitRegistryRecordForApprovalRequest":{
       "type":"structure",
       "required":[
@@ -1724,6 +2244,13 @@
       "max":50,
       "min":1
     },
+    "TagMap":{
+      "type":"map",
+      "key":{"shape":"TagKey"},
+      "value":{"shape":"TagValue"},
+      "max":50,
+      "min":0
+    },
     "TagResourceRequest":{
       "type":"structure",
       "required":[
@@ -1767,6 +2294,7 @@
       },
       "exception":true
     },
+    "Timestamp":{"type":"timestamp"},
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -1787,6 +2315,27 @@
       }
     },
     "UntagResourceResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdatePublisherAssociationApprovalStatusRequest":{
+      "type":"structure",
+      "required":[
+        "recordArn",
+        "approvalStatus",
+        "approvalStatusReason"
+      ],
+      "members":{
+        "recordArn":{
+          "shape":"RegistryRecordArn",
+          "location":"uri",
+          "locationName":"recordArn"
+        },
+        "approvalStatus":{"shape":"AssociationApprovalStatus"},
+        "approvalStatusReason":{"shape":"StatusReason"}
+      }
+    },
+    "UpdatePublisherAssociationApprovalStatusResponse":{
       "type":"structure",
       "members":{}
     },
@@ -2049,6 +2598,12 @@
         "optionalValue":{"shape":"AutoDetectionConfiguration"}
       }
     },
+    "UpdatedBotCategory":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"BotCategory"}
+      }
+    },
     "UpdatedCustomDescriptor":{
       "type":"structure",
       "members":{
@@ -2111,7 +2666,8 @@
         "agentSkillsDefinition":{"shape":"UpdatedAgentSkillsDefinitionDescriptor"},
         "custom":{"shape":"UpdatedCustomDescriptor"},
         "http":{"shape":"UpdatedHttpDescriptor"},
-        "agui":{"shape":"UpdatedAgUiDescriptor"}
+        "agui":{"shape":"UpdatedAgUiDescriptor"},
+        "signatureAgentCard":{"shape":"UpdatedSignatureAgentCardDescriptor"}
       }
     },
     "UpdatedDiscoveryConfiguration":{
@@ -2184,6 +2740,65 @@
         "optionalValue":{"shape":"RegistryRecordArtifactUpload"}
       }
     },
+    "UpdatedSignatureAgentCardAdditionalData":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"UpdatedSignatureAgentCardAdditionalDataFields"}
+      }
+    },
+    "UpdatedSignatureAgentCardAdditionalDataFields":{
+      "type":"structure",
+      "members":{
+        "category":{"shape":"UpdatedBotCategory"}
+      }
+    },
+    "UpdatedSignatureAgentCardDescriptor":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"UpdatedSignatureAgentCardDescriptorFields"}
+      }
+    },
+    "UpdatedSignatureAgentCardDescriptorFields":{
+      "type":"structure",
+      "members":{
+        "data":{"shape":"UpdatedDescriptorData"},
+        "dataSchemaVersion":{"shape":"UpdatedDataSchemaVersion"},
+        "source":{"shape":"UpdatedDescriptorSource"},
+        "additionalData":{"shape":"UpdatedSignatureAgentCardAdditionalData"}
+      }
+    },
+    "ValidatePublisherRequest":{
+      "type":"structure",
+      "required":["publisherArn"],
+      "members":{
+        "publisherArn":{
+          "shape":"PublisherIdentifierArn",
+          "location":"uri",
+          "locationName":"publisherArn"
+        }
+      }
+    },
+    "ValidatePublisherResponse":{
+      "type":"structure",
+      "required":[
+        "value",
+        "status",
+        "createdAt",
+        "updatedAt",
+        "publisherArn"
+      ],
+      "members":{
+        "value":{"shape":"Identifier"},
+        "identifierType":{"shape":"IdentifierType"},
+        "status":{"shape":"VerificationStatus"},
+        "statusReason":{"shape":"StatusReason"},
+        "domainChallenge":{"shape":"DomainChallenge"},
+        "tags":{"shape":"TagMap"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "publisherArn":{"shape":"PublisherIdentifierArn"}
+      }
+    },
     "ValidationException":{
       "type":"structure",
       "required":[
@@ -2227,6 +2842,16 @@
         "UnsupportedInRegion"
       ]
     },
+    "VerificationStatus":{
+      "type":"string",
+      "enum":[
+        "ACTION_REQUIRED",
+        "ACTIVE",
+        "FAILED",
+        "SUSPENDED",
+        "DELETING"
+      ]
+    },
     "VpcIdentifier":{
       "type":"string",
       "max":48,
@@ -2244,6 +2869,7 @@
       "type":"string",
       "max":1024,
       "min":1
-    }
+    },
+    "errorMessage":{"type":"string"}
   }
 }

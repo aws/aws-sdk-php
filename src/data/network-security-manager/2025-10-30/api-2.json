@@ -47,6 +47,7 @@
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"},
+        {"shape":"TagPolicyViolationException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
@@ -88,6 +89,7 @@
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"},
+        {"shape":"TagPolicyViolationException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
@@ -129,6 +131,7 @@
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"},
+        {"shape":"TagPolicyViolationException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
@@ -170,6 +173,7 @@
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"},
+        {"shape":"TagPolicyViolationException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
@@ -211,6 +215,7 @@
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"},
+        {"shape":"TagPolicyViolationException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
@@ -512,6 +517,23 @@
       ],
       "readonly":true
     },
+    "ListEntityCoverages":{
+      "name":"ListEntityCoverages",
+      "http":{
+        "method":"GET",
+        "requestUri":"/resource-coverage/entities",
+        "responseCode":200
+      },
+      "input":{"shape":"ListEntityCoveragesInput"},
+      "output":{"shape":"ListEntityCoveragesOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
+    },
     "ListPolicies":{
       "name":"ListPolicies",
       "http":{
@@ -543,6 +565,23 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
+    },
+    "ListProtectedResourceCoverages":{
+      "name":"ListProtectedResourceCoverages",
+      "http":{
+        "method":"GET",
+        "requestUri":"/resource-coverage/protected-resources",
+        "responseCode":200
+      },
+      "input":{"shape":"ListProtectedResourceCoveragesInput"},
+      "output":{"shape":"ListProtectedResourceCoveragesOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
       ],
       "readonly":true
@@ -1119,6 +1158,13 @@
       },
       "exception":true
     },
+    "CoverageStatus":{
+      "type":"string",
+      "enum":[
+        "IN_EFFECT",
+        "SUPERSEDED"
+      ]
+    },
     "CreateDeploymentInput":{
       "type":"structure",
       "required":[
@@ -1416,6 +1462,7 @@
         "scopeName":{"shape":"ScopeName"},
         "scopeDescription":{"shape":"Description"},
         "scopeConfiguration":{"shape":"ScopeConfiguration"},
+        "specializedScopeType":{"shape":"SpecializedScopeType"},
         "isPublished":{"shape":"IsPublished"},
         "tags":{"shape":"TagMap"}
       }
@@ -1435,6 +1482,7 @@
         "scopeName":{"shape":"ScopeName"},
         "scopeDescription":{"shape":"Description"},
         "scopeConfiguration":{"shape":"ScopeConfiguration"},
+        "specializedScopeType":{"shape":"SpecializedScopeType"},
         "status":{"shape":"EntityStatus"},
         "version":{"shape":"EntityVersion"},
         "updateToken":{"shape":"UpdateToken"},
@@ -1474,6 +1522,7 @@
         "scopeName":{"shape":"ScopeName"},
         "scopeDescription":{"shape":"Description"},
         "scopeConfiguration":{"shape":"ScopeConfiguration"},
+        "specializedScopeType":{"shape":"SpecializedScopeType"},
         "status":{"shape":"EntityStatus"},
         "version":{"shape":"EntityVersion"},
         "updateToken":{"shape":"UpdateToken"},
@@ -1574,6 +1623,14 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
+    "DefaultSubnetConnectivity":{
+      "type":"string",
+      "enum":[
+        "flexible",
+        "bidirectional",
+        "outbound-only"
+      ]
+    },
     "DeleteAdminAccountRequest":{
       "type":"structure",
       "required":["accountId"],
@@ -1645,6 +1702,12 @@
       "max":1010,
       "min":20,
       "pattern":"arn(:[a-z0-9]+([.-][a-z0-9]+)*){2}(:([a-z0-9]+([.-][a-z0-9]+)*)?){2}:(.+)"
+    },
+    "DeploymentArnSet":{
+      "type":"list",
+      "member":{"shape":"Arn"},
+      "max":100,
+      "min":0
     },
     "DeploymentConfiguration":{
       "type":"structure",
@@ -1786,7 +1849,8 @@
       "type":"structure",
       "members":{
         "missingFirewall":{"shape":"String"},
-        "invalidFirewall":{"shape":"InvalidFirewallReasons"}
+        "invalidFirewall":{"shape":"InvalidFirewallReasons"},
+        "invalidResource":{"shape":"InvalidResourcesByType"}
       },
       "union":true
     },
@@ -2001,6 +2065,7 @@
         "scopeName":{"shape":"ScopeName"},
         "scopeDescription":{"shape":"Description"},
         "scopeConfiguration":{"shape":"ScopeConfiguration"},
+        "specializedScopeType":{"shape":"SpecializedScopeType"},
         "status":{"shape":"EntityStatus"},
         "version":{"shape":"EntityVersion"},
         "updateToken":{"shape":"UpdateToken"},
@@ -2056,6 +2121,13 @@
       "min":1,
       "pattern":"[\\x21-\\x7E]+"
     },
+    "IgwFirewallConfig":{
+      "type":"structure",
+      "members":{
+        "defaultSubnetConnectivity":{"shape":"DefaultSubnetConnectivity"},
+        "subnetConnectivityOverrides":{"shape":"SubnetConnectivityOverrideList"}
+      }
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -2081,6 +2153,27 @@
         "missingMergeableConfigurationValues":{"shape":"ConfigurationIssueList"},
         "unexpectedMergeableConfigurationValues":{"shape":"ConfigurationIssueList"}
       }
+    },
+    "InvalidResourceIssue":{
+      "type":"structure",
+      "members":{
+        "resourceId":{"shape":"String"},
+        "expectedValue":{"shape":"String"},
+        "actualValue":{"shape":"String"}
+      }
+    },
+    "InvalidResourceIssueList":{
+      "type":"list",
+      "member":{"shape":"InvalidResourceIssue"},
+      "max":100,
+      "min":0
+    },
+    "InvalidResourcesByType":{
+      "type":"map",
+      "key":{"shape":"ScopeResourceType"},
+      "value":{"shape":"InvalidResourceIssueList"},
+      "max":10,
+      "min":0
     },
     "IpAddressType":{
       "type":"string",
@@ -2211,6 +2304,40 @@
         "deployments":{"shape":"DeploymentSummaryList"}
       }
     },
+    "ListEntityCoveragesInput":{
+      "type":"structure",
+      "required":["entityArn"],
+      "members":{
+        "entityArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"entityArn"
+        },
+        "resourceOwnerAccountId":{
+          "shape":"AccountId",
+          "location":"querystring",
+          "locationName":"resourceOwnerAccountId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListEntityCoveragesOutput":{
+      "type":"structure",
+      "required":["resourceCoverages"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "resourceCoverages":{"shape":"ResourceCoverageSummaryList"}
+      }
+    },
     "ListPoliciesInput":{
       "type":"structure",
       "members":{
@@ -2266,6 +2393,40 @@
       "members":{
         "nextToken":{"shape":"NextToken"},
         "snapshots":{"shape":"PolicySummaryList"}
+      }
+    },
+    "ListProtectedResourceCoveragesInput":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"resourceArn"
+        },
+        "entityType":{
+          "shape":"ServiceResourceType",
+          "location":"querystring",
+          "locationName":"entityType"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListProtectedResourceCoveragesOutput":{
+      "type":"structure",
+      "required":["resourceCoverages"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "resourceCoverages":{"shape":"ResourceCoverageSummaryList"}
       }
     },
     "ListResourceAssociationsInput":{
@@ -2508,6 +2669,11 @@
           "shape":"EntityStatusFilter",
           "location":"querystring",
           "locationName":"status"
+        },
+        "templateOwner":{
+          "shape":"TemplateOwner",
+          "location":"querystring",
+          "locationName":"templateOwner"
         }
       }
     },
@@ -2605,14 +2771,16 @@
       "members":{
         "remediationEnabled":{"shape":"RemediationEnabled"},
         "resourcesCleanUp":{"shape":"ResourcesCleanUp"},
-        "wafConfig":{"shape":"WafConfig"}
+        "wafConfig":{"shape":"WafConfig"},
+        "igwFirewallConfig":{"shape":"IgwFirewallConfig"}
       }
     },
     "PolicyFirewallType":{
       "type":"string",
       "enum":[
         "WAF",
-        "SHIELD_ADVANCED"
+        "SHIELD_ADVANCED",
+        "IGW_FIREWALL"
       ]
     },
     "PolicyId":{
@@ -2742,6 +2910,26 @@
       "max":100,
       "min":0
     },
+    "ResourceCoverageSummary":{
+      "type":"structure",
+      "members":{
+        "resourceArn":{"shape":"Arn"},
+        "entityType":{"shape":"ServiceResourceType"},
+        "entityArn":{"shape":"Arn"},
+        "resourceOwnerAccountId":{"shape":"AccountId"},
+        "resourceType":{"shape":"ScopeResourceType"},
+        "firewallType":{"shape":"PolicyFirewallType"},
+        "coverageStatus":{"shape":"CoverageStatus"},
+        "deploymentArns":{"shape":"DeploymentArnSet"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "ResourceCoverageSummaryList":{
+      "type":"list",
+      "member":{"shape":"ResourceCoverageSummary"},
+      "max":100,
+      "min":0
+    },
     "ResourceCriteria":{
       "type":"structure",
       "members":{
@@ -2843,7 +3031,8 @@
         "AWS::ElasticLoadBalancing::LoadBalancer",
         "AWS::WAFv2::WebACL",
         "AWS::Shield::Protection",
-        "AWS::ShieldRegional::Protection"
+        "AWS::ShieldRegional::Protection",
+        "AWS::EC2::VPC"
       ]
     },
     "ResourcesCleanUp":{
@@ -2858,7 +3047,10 @@
     },
     "RuleFirewallType":{
       "type":"string",
-      "enum":["WAF"]
+      "enum":[
+        "WAF",
+        "IGW_FIREWALL"
+      ]
     },
     "RuleId":{
       "type":"string",
@@ -2980,7 +3172,9 @@
         "AWS::CloudFront::Distribution",
         "AWS::EC2::EIP",
         "AWS::ElasticLoadBalancingV2::LoadBalancer::application",
-        "AWS::ElasticLoadBalancing::LoadBalancer"
+        "AWS::ElasticLoadBalancing::LoadBalancer",
+        "AWS::EC2::VPC",
+        "AWS::EC2::Subnet"
       ]
     },
     "ScopeSummary":{
@@ -2993,6 +3187,7 @@
         "scopeId":{"shape":"ScopeId"},
         "scopeArn":{"shape":"ScopeArn"},
         "scopeName":{"shape":"ScopeName"},
+        "specializedScopeType":{"shape":"SpecializedScopeType"},
         "status":{"shape":"EntityStatus"},
         "version":{"shape":"EntityVersion"},
         "hasPublishedVersion":{"shape":"HasPublishedVersion"},
@@ -3067,12 +3262,48 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
+    "SpecializedScopeType":{
+      "type":"string",
+      "enum":["IGW_FIREWALL_SUBNET_CONNECTIVITY_OVERRIDE"]
+    },
     "String":{"type":"string"},
     "StringMap":{
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"String"},
       "max":100,
+      "min":0
+    },
+    "SubnetConnectivity":{
+      "type":"string",
+      "enum":[
+        "flexible",
+        "bidirectional",
+        "outbound-only",
+        "exclude"
+      ]
+    },
+    "SubnetConnectivityOverride":{
+      "type":"structure",
+      "required":[
+        "connectivityType",
+        "scopes"
+      ],
+      "members":{
+        "connectivityType":{"shape":"SubnetConnectivity"},
+        "scopes":{"shape":"SubnetConnectivityScopeArnList"}
+      }
+    },
+    "SubnetConnectivityOverrideList":{
+      "type":"list",
+      "member":{"shape":"SubnetConnectivityOverride"},
+      "max":4,
+      "min":0
+    },
+    "SubnetConnectivityScopeArnList":{
+      "type":"list",
+      "member":{"shape":"Arn"},
+      "max":1,
       "min":0
     },
     "SynchronizationStatus":{
@@ -3152,7 +3383,10 @@
     },
     "TemplateFirewallType":{
       "type":"string",
-      "enum":["WAF"]
+      "enum":[
+        "WAF",
+        "IGW_FIREWALL"
+      ]
     },
     "TemplateId":{
       "type":"string",
@@ -3179,6 +3413,13 @@
       },
       "union":true
     },
+    "TemplateOwner":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER",
+        "AWS"
+      ]
+    },
     "TemplateSummary":{
       "type":"structure",
       "required":[
@@ -3190,6 +3431,7 @@
         "templateId":{"shape":"TemplateId"},
         "templateArn":{"shape":"TemplateArn"},
         "templateName":{"shape":"TemplateName"},
+        "templateOwner":{"shape":"TemplateOwner"},
         "status":{"shape":"EntityStatus"},
         "version":{"shape":"EntityVersion"},
         "hasPublishedVersion":{"shape":"HasPublishedVersion"},
@@ -3441,6 +3683,7 @@
         "scopeName":{"shape":"ScopeName"},
         "scopeDescription":{"shape":"Description"},
         "scopeConfiguration":{"shape":"ScopeConfiguration"},
+        "specializedScopeType":{"shape":"SpecializedScopeType"},
         "status":{"shape":"EntityStatus"},
         "version":{"shape":"EntityVersion"},
         "updateToken":{"shape":"UpdateToken"},

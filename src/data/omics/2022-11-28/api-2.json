@@ -3309,7 +3309,8 @@
         "configurationName":{"shape":"ConfigurationName"},
         "sessionPolicy":{"shape":"SessionPolicy"},
         "engineSettings":{"shape":"EngineSettings"},
-        "scratchStorageMode":{"shape":"ScratchStorageMode"}
+        "scratchStorageMode":{"shape":"ScratchStorageMode"},
+        "requesterPaysEnabled":{"shape":"Boolean"}
       }
     },
     "DefaultRunSettingPriorityInteger":{
@@ -4520,7 +4521,9 @@
         "vpcConfig":{"shape":"VpcConfigResponse"},
         "engineSettings":{"shape":"EngineSettings"},
         "sessionPolicy":{"shape":"SessionPolicy"},
-        "outputUriPrefixMode":{"shape":"RunOutputUriPrefixMode"}
+        "outputUriPrefixMode":{"shape":"RunOutputUriPrefixMode"},
+        "requesterPaysEnabled":{"shape":"Boolean"},
+        "parametersUri":{"shape":"RunParametersUriOrPresignedUrl"}
       }
     },
     "GetRunResponsePriorityInteger":{
@@ -6984,6 +6987,17 @@
       "members":{},
       "document":true
     },
+    "RunParametersUri":{
+      "type":"string",
+      "max":1093,
+      "min":1,
+      "pattern":"s3://[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]/.+"
+    },
+    "RunParametersUriOrPresignedUrl":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
     "RunRequestId":{
       "type":"string",
       "max":128,
@@ -7658,7 +7672,9 @@
         "configurationName":{"shape":"ConfigurationName"},
         "sessionPolicy":{"shape":"SessionPolicy"},
         "engineSettings":{"shape":"EngineSettings"},
-        "outputUriPrefixMode":{"shape":"RunOutputUriPrefixMode"}
+        "outputUriPrefixMode":{"shape":"RunOutputUriPrefixMode"},
+        "requesterPaysEnabled":{"shape":"Boolean"},
+        "parametersUri":{"shape":"RunParametersUri"}
       }
     },
     "StartRunRequestPriorityInteger":{

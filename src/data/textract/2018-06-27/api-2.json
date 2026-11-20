@@ -125,6 +125,65 @@
       ],
       "idempotent":true
     },
+    "CreateBlueprint":{
+      "name":"CreateBlueprint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateBlueprintRequest"},
+      "output":{"shape":"CreateBlueprintResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InternalServerError"}
+      ],
+      "idempotent":true
+    },
+    "CreateBlueprintVersion":{
+      "name":"CreateBlueprintVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateBlueprintVersionRequest"},
+      "output":{"shape":"CreateBlueprintVersionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InternalServerError"}
+      ],
+      "idempotent":true
+    },
+    "CreateProject":{
+      "name":"CreateProject",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateProjectRequest"},
+      "output":{"shape":"CreateProjectResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InternalServerError"}
+      ],
+      "idempotent":true
+    },
     "DeleteAdapter":{
       "name":"DeleteAdapter",
       "http":{
@@ -162,6 +221,43 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteBlueprint":{
+      "name":"DeleteBlueprint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteBlueprintRequest"},
+      "output":{"shape":"DeleteBlueprintResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InternalServerError"}
+      ],
+      "idempotent":true
+    },
+    "DeleteProject":{
+      "name":"DeleteProject",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteProjectRequest"},
+      "output":{"shape":"DeleteProjectResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InternalServerError"}
       ],
       "idempotent":true
     },
@@ -221,6 +317,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetBlueprint":{
+      "name":"GetBlueprint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetBlueprintRequest"},
+      "output":{"shape":"GetBlueprintResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InternalServerError"}
+      ]
+    },
     "GetDocumentAnalysis":{
       "name":"GetDocumentAnalysis",
       "http":{
@@ -238,6 +351,23 @@
         {"shape":"ThrottlingException"},
         {"shape":"InvalidS3ObjectException"},
         {"shape":"InvalidKMSKeyException"}
+      ]
+    },
+    "GetDocumentInsights":{
+      "name":"GetDocumentInsights",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDocumentInsightsRequest"},
+      "output":{"shape":"GetDocumentInsightsResponse"},
+      "errors":[
+        {"shape":"InvalidJobIdException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InternalServerError"}
       ]
     },
     "GetDocumentTextDetection":{
@@ -316,6 +446,23 @@
         {"shape":"InvalidKMSKeyException"}
       ]
     },
+    "GetProject":{
+      "name":"GetProject",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetProjectRequest"},
+      "output":{"shape":"GetProjectResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InternalServerError"}
+      ]
+    },
     "ListAdapterVersions":{
       "name":"ListAdapterVersions",
       "http":{
@@ -349,6 +496,40 @@
         {"shape":"InternalServerError"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "ListBlueprints":{
+      "name":"ListBlueprints",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListBlueprintsRequest"},
+      "output":{"shape":"ListBlueprintsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InternalServerError"}
+      ]
+    },
+    "ListProjects":{
+      "name":"ListProjects",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListProjectsRequest"},
+      "output":{"shape":"ListProjectsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InternalServerError"}
       ]
     },
     "ListTagsForResource":{
@@ -390,6 +571,24 @@
         {"shape":"IdempotentParameterMismatchException"},
         {"shape":"ThrottlingException"},
         {"shape":"LimitExceededException"}
+      ]
+    },
+    "StartDocumentInsights":{
+      "name":"StartDocumentInsights",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartDocumentInsightsRequest"},
+      "output":{"shape":"StartDocumentInsightsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalServerError"}
       ]
     },
     "StartDocumentTextDetection":{
@@ -516,6 +715,45 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "UpdateBlueprint":{
+      "name":"UpdateBlueprint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateBlueprintRequest"},
+      "output":{"shape":"UpdateBlueprintResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InternalServerError"}
+      ],
+      "idempotent":true
+    },
+    "UpdateProject":{
+      "name":"UpdateProject",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateProjectRequest"},
+      "output":{"shape":"UpdateProjectResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InternalServerError"}
+      ],
+      "idempotent":true
     }
   },
   "shapes":{
@@ -776,6 +1014,71 @@
         "LAYOUT_KEY_VALUE"
       ]
     },
+    "BlueprintArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^arn:aws(|-cn|-iso|-iso-[a-z]|-us-gov):textract:[a-zA-Z0-9-]*:(aws|[0-9]{12}):blueprint/(public-[a-zA-Z0-9-_]{1,30}|[a-zA-Z0-9-]{12,36})$"
+    },
+    "BlueprintFilter":{
+      "type":"structure",
+      "required":["BlueprintArn"],
+      "members":{
+        "BlueprintArn":{"shape":"BlueprintArn"},
+        "BlueprintVersion":{"shape":"BlueprintVersion"}
+      }
+    },
+    "BlueprintItem":{
+      "type":"structure",
+      "required":["BlueprintArn"],
+      "members":{
+        "BlueprintArn":{"shape":"BlueprintArn"},
+        "BlueprintVersion":{"shape":"BlueprintVersion"}
+      }
+    },
+    "BlueprintItems":{
+      "type":"list",
+      "member":{"shape":"BlueprintItem"},
+      "max":1000,
+      "min":0
+    },
+    "BlueprintName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9-_]+$"
+    },
+    "BlueprintSchema":{
+      "type":"string",
+      "max":100000,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9\\s!\"\\#\\$%'&\\(\\)\\*\\+\\,\\-\\./:;=\\?@\\[\\\\\\]\\^_`\\{\\|\\}~><À-ÖØ-Üßà-öø-üẞ¿¡Œ-œ°£¥₹€§©ª®™¹±-µ✓⑆-⑉฿₽₱₦₣₩₫₺\\u4E00-\\u9FFF\\u3040-\\u309F\\u30A0-\\u30FF\\uAC00-\\uD7AF\\u3400-\\u4DBF]+$"
+    },
+    "BlueprintSummary":{
+      "type":"structure",
+      "required":[
+        "BlueprintArn",
+        "CreationTime"
+      ],
+      "members":{
+        "BlueprintArn":{"shape":"BlueprintArn"},
+        "BlueprintName":{"shape":"BlueprintName"},
+        "BlueprintVersion":{"shape":"BlueprintVersion"},
+        "ResourceOwner":{"shape":"ResourceOwner"},
+        "CreationTime":{"shape":"DateTime"},
+        "LastModifiedTime":{"shape":"DateTime"}
+      }
+    },
+    "BlueprintSummaryList":{
+      "type":"list",
+      "member":{"shape":"BlueprintSummary"}
+    },
+    "BlueprintVersion":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[0-9]*$"
+    },
     "BoundingBox":{
       "type":"structure",
       "members":{
@@ -783,6 +1086,13 @@
         "Height":{"shape":"Float"},
         "Left":{"shape":"Float"},
         "Top":{"shape":"Float"}
+      }
+    },
+    "BoundingBoxConfiguration":{
+      "type":"structure",
+      "required":["State"],
+      "members":{
+        "State":{"shape":"State"}
       }
     },
     "ClientRequestToken":{
@@ -858,6 +1168,90 @@
         "AdapterVersion":{"shape":"AdapterVersion"}
       }
     },
+    "CreateBlueprintRequest":{
+      "type":"structure",
+      "required":[
+        "BlueprintName",
+        "Schema"
+      ],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "BlueprintName":{"shape":"BlueprintName"},
+        "Schema":{"shape":"BlueprintSchema"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateBlueprintResponse":{
+      "type":"structure",
+      "required":["BlueprintArn"],
+      "members":{
+        "BlueprintArn":{"shape":"BlueprintArn"}
+      }
+    },
+    "CreateBlueprintVersionRequest":{
+      "type":"structure",
+      "required":["BlueprintArn"],
+      "members":{
+        "BlueprintArn":{"shape":"BlueprintArn"},
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateBlueprintVersionResponse":{
+      "type":"structure",
+      "required":[
+        "BlueprintArn",
+        "BlueprintVersion"
+      ],
+      "members":{
+        "BlueprintArn":{"shape":"BlueprintArn"},
+        "BlueprintVersion":{"shape":"BlueprintVersion"}
+      }
+    },
+    "CreateProjectRequest":{
+      "type":"structure",
+      "required":[
+        "ProjectName",
+        "ExtractionConfiguration"
+      ],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "ProjectName":{"shape":"ProjectName"},
+        "ProjectDescription":{"shape":"ProjectDescription"},
+        "ExtractionConfiguration":{"shape":"ExtractionConfiguration"},
+        "GenerativeConfiguration":{"shape":"GenerativeConfiguration"},
+        "CustomConfiguration":{"shape":"CustomConfiguration"},
+        "SplitterConfiguration":{"shape":"SplitterConfiguration"},
+        "SensitiveDataConfiguration":{"shape":"SensitiveDataConfiguration"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateProjectResponse":{
+      "type":"structure",
+      "required":["ProjectArn"],
+      "members":{
+        "ProjectArn":{"shape":"ProjectArn"},
+        "Status":{"shape":"ProjectStatus"}
+      }
+    },
+    "CustomConfiguration":{
+      "type":"structure",
+      "required":["Blueprints"],
+      "members":{
+        "Blueprints":{"shape":"BlueprintItems"},
+        "FallbackBlueprints":{"shape":"FallbackBlueprintItems"}
+      }
+    },
     "DateTime":{"type":"timestamp"},
     "DeleteAdapterRequest":{
       "type":"structure",
@@ -882,6 +1276,29 @@
       }
     },
     "DeleteAdapterVersionResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteBlueprintRequest":{
+      "type":"structure",
+      "required":["BlueprintArn"],
+      "members":{
+        "BlueprintArn":{"shape":"BlueprintArn"},
+        "BlueprintVersion":{"shape":"BlueprintVersion"}
+      }
+    },
+    "DeleteBlueprintResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteProjectRequest":{
+      "type":"structure",
+      "required":["ProjectArn"],
+      "members":{
+        "ProjectArn":{"shape":"ProjectArn"}
+      }
+    },
+    "DeleteProjectResponse":{
       "type":"structure",
       "members":{}
     },
@@ -953,6 +1370,31 @@
       "members":{},
       "exception":true
     },
+    "EncryptionConfiguration":{
+      "type":"structure",
+      "required":["KmsKeyId"],
+      "members":{
+        "KmsKeyId":{"shape":"EncryptionKmsKeyId"},
+        "KmsEncryptionContext":{"shape":"KmsEncryptionContext"}
+      }
+    },
+    "EncryptionContextKey":{
+      "type":"string",
+      "max":2000,
+      "min":1,
+      "pattern":"^.*\\S.*$"
+    },
+    "EncryptionContextValue":{
+      "type":"string",
+      "max":2000,
+      "min":1,
+      "pattern":"^.*\\S.*$"
+    },
+    "EncryptionKmsKeyId":{
+      "type":"string",
+      "max":2048,
+      "pattern":"^([A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,2047})?$"
+    },
     "EntityType":{
       "type":"string",
       "enum":[
@@ -972,12 +1414,21 @@
       "member":{"shape":"EntityType"}
     },
     "ErrorCode":{"type":"string"},
+    "ErrorMessage":{"type":"string"},
+    "ErrorType":{"type":"string"},
     "EvaluationMetric":{
       "type":"structure",
       "members":{
         "F1Score":{"shape":"Float"},
         "Precision":{"shape":"Float"},
         "Recall":{"shape":"Float"}
+      }
+    },
+    "EventBridgeConfiguration":{
+      "type":"structure",
+      "required":["State"],
+      "members":{
+        "State":{"shape":"State"}
       }
     },
     "ExpenseCurrency":{
@@ -1049,9 +1500,50 @@
         "IdentityDocument":{"shape":"IdentityDocument"}
       }
     },
+    "ExtractionConfiguration":{
+      "type":"structure",
+      "required":[
+        "BoundingBox",
+        "Granularity",
+        "OutputFormat"
+      ],
+      "members":{
+        "BoundingBox":{"shape":"BoundingBoxConfiguration"},
+        "Granularity":{"shape":"ExtractionGranularity"},
+        "OutputFormat":{"shape":"OutputFormat"}
+      }
+    },
+    "ExtractionGranularity":{
+      "type":"structure",
+      "members":{
+        "Types":{"shape":"ExtractionGranularityTypes"}
+      }
+    },
+    "ExtractionGranularityType":{
+      "type":"string",
+      "enum":[
+        "DOCUMENT",
+        "PAGE",
+        "ELEMENT",
+        "WORD",
+        "LINE"
+      ]
+    },
+    "ExtractionGranularityTypes":{
+      "type":"list",
+      "member":{"shape":"ExtractionGranularityType"},
+      "max":5,
+      "min":1
+    },
     "ExtractionList":{
       "type":"list",
       "member":{"shape":"Extraction"}
+    },
+    "FallbackBlueprintItems":{
+      "type":"list",
+      "member":{"shape":"BlueprintItem"},
+      "max":1,
+      "min":0
     },
     "FeatureType":{
       "type":"string",
@@ -1067,10 +1559,24 @@
       "type":"list",
       "member":{"shape":"FeatureType"}
     },
+    "FigureCaptionConfiguration":{
+      "type":"structure",
+      "required":["State"],
+      "members":{
+        "State":{"shape":"State"}
+      }
+    },
     "Float":{"type":"float"},
     "FlowDefinitionArn":{
       "type":"string",
       "max":256
+    },
+    "GenerativeConfiguration":{
+      "type":"structure",
+      "members":{
+        "Summarization":{"shape":"SummarizationConfiguration"},
+        "FigureCaption":{"shape":"FigureCaptionConfiguration"}
+      }
     },
     "Geometry":{
       "type":"structure",
@@ -1126,6 +1632,34 @@
         "Tags":{"shape":"TagMap"}
       }
     },
+    "GetBlueprintRequest":{
+      "type":"structure",
+      "required":["BlueprintArn"],
+      "members":{
+        "BlueprintArn":{"shape":"BlueprintArn"},
+        "BlueprintVersion":{"shape":"BlueprintVersion"}
+      }
+    },
+    "GetBlueprintResponse":{
+      "type":"structure",
+      "required":[
+        "BlueprintArn",
+        "BlueprintName",
+        "Schema",
+        "CreationTime",
+        "LastModifiedTime"
+      ],
+      "members":{
+        "BlueprintArn":{"shape":"BlueprintArn"},
+        "BlueprintName":{"shape":"BlueprintName"},
+        "BlueprintVersion":{"shape":"BlueprintVersion"},
+        "Schema":{"shape":"BlueprintSchema"},
+        "KmsKeyId":{"shape":"KMSKeyId"},
+        "KmsEncryptionContext":{"shape":"KmsEncryptionContext"},
+        "CreationTime":{"shape":"DateTime"},
+        "LastModifiedTime":{"shape":"DateTime"}
+      }
+    },
     "GetDocumentAnalysisRequest":{
       "type":"structure",
       "required":["JobId"],
@@ -1145,6 +1679,23 @@
         "Warnings":{"shape":"Warnings"},
         "StatusMessage":{"shape":"StatusMessage"},
         "AnalyzeDocumentModelVersion":{"shape":"String"}
+      }
+    },
+    "GetDocumentInsightsRequest":{
+      "type":"structure",
+      "required":["JobArn"],
+      "members":{
+        "JobArn":{"shape":"JobArn"}
+      }
+    },
+    "GetDocumentInsightsResponse":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Status":{"shape":"JobStatus"},
+        "OutputConfiguration":{"shape":"OutputConfiguration"},
+        "ErrorType":{"shape":"ErrorType"},
+        "ErrorMessage":{"shape":"ErrorMessage"}
       }
     },
     "GetDocumentTextDetectionRequest":{
@@ -1226,6 +1777,37 @@
         "Warnings":{"shape":"Warnings"},
         "StatusMessage":{"shape":"StatusMessage"},
         "AnalyzeLendingModelVersion":{"shape":"String"}
+      }
+    },
+    "GetProjectRequest":{
+      "type":"structure",
+      "required":["ProjectArn"],
+      "members":{
+        "ProjectArn":{"shape":"ProjectArn"}
+      }
+    },
+    "GetProjectResponse":{
+      "type":"structure",
+      "required":[
+        "ProjectArn",
+        "ProjectName",
+        "Status",
+        "CreationTime",
+        "LastModifiedTime"
+      ],
+      "members":{
+        "ProjectArn":{"shape":"ProjectArn"},
+        "ProjectName":{"shape":"ProjectName"},
+        "ProjectDescription":{"shape":"ProjectDescription"},
+        "Status":{"shape":"ProjectStatus"},
+        "ExtractionConfiguration":{"shape":"ExtractionConfiguration"},
+        "GenerativeConfiguration":{"shape":"GenerativeConfiguration"},
+        "CustomConfiguration":{"shape":"CustomConfiguration"},
+        "SplitterConfiguration":{"shape":"SplitterConfiguration"},
+        "SensitiveDataConfiguration":{"shape":"SensitiveDataConfiguration"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "CreationTime":{"shape":"DateTime"},
+        "LastModifiedTime":{"shape":"DateTime"}
       }
     },
     "HumanLoopActivationConditionsEvaluationResults":{
@@ -1324,6 +1906,19 @@
       "max":10485760,
       "min":1
     },
+    "InputConfiguration":{
+      "type":"structure",
+      "required":["S3Uri"],
+      "members":{
+        "S3Uri":{"shape":"S3Uri"}
+      }
+    },
+    "IntelligencePaginationToken":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":".*\\S.*"
+    },
     "InternalServerError":{
       "type":"structure",
       "members":{},
@@ -1349,6 +1944,12 @@
       "type":"structure",
       "members":{},
       "exception":true
+    },
+    "JobArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^arn:aws(|-cn|-iso|-iso-[a-z]|-us-gov):textract:[a-zA-Z0-9-]*:[0-9]{12}:job/[a-zA-Z0-9-_]+$"
     },
     "JobId":{
       "type":"string",
@@ -1376,6 +1977,12 @@
       "max":2048,
       "min":1,
       "pattern":"^[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,2048}$"
+    },
+    "KmsEncryptionContext":{
+      "type":"map",
+      "key":{"shape":"EncryptionContextKey"},
+      "value":{"shape":"EncryptionContextValue"},
+      "max":10
     },
     "LendingDetection":{
       "type":"structure",
@@ -1487,6 +2094,40 @@
         "NextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListBlueprintsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"IntelligencePaginationToken"},
+        "BlueprintArn":{"shape":"BlueprintArn"},
+        "ProjectFilter":{"shape":"ProjectFilter"},
+        "ResourceOwner":{"shape":"ResourceOwner"}
+      }
+    },
+    "ListBlueprintsResponse":{
+      "type":"structure",
+      "required":["Blueprints"],
+      "members":{
+        "Blueprints":{"shape":"BlueprintSummaryList"},
+        "NextToken":{"shape":"IntelligencePaginationToken"}
+      }
+    },
+    "ListProjectsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"IntelligencePaginationToken"},
+        "BlueprintFilter":{"shape":"BlueprintFilter"}
+      }
+    },
+    "ListProjectsResponse":{
+      "type":"structure",
+      "required":["Projects"],
+      "members":{
+        "Projects":{"shape":"ProjectSummaryList"},
+        "NextToken":{"shape":"IntelligencePaginationToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["ResourceARN"],
@@ -1526,6 +2167,20 @@
         "RoleArn":{"shape":"RoleArn"}
       }
     },
+    "NotificationConfiguration":{
+      "type":"structure",
+      "required":["EventBridgeConfiguration"],
+      "members":{
+        "EventBridgeConfiguration":{"shape":"EventBridgeConfiguration"}
+      }
+    },
+    "OutputAdditionalFileFormat":{
+      "type":"structure",
+      "required":["State"],
+      "members":{
+        "State":{"shape":"State"}
+      }
+    },
     "OutputConfig":{
       "type":"structure",
       "required":["S3Bucket"],
@@ -1533,6 +2188,106 @@
         "S3Bucket":{"shape":"S3Bucket"},
         "S3Prefix":{"shape":"S3ObjectName"}
       }
+    },
+    "OutputConfiguration":{
+      "type":"structure",
+      "required":["S3Uri"],
+      "members":{
+        "S3Uri":{"shape":"S3Uri"}
+      }
+    },
+    "OutputFormat":{
+      "type":"structure",
+      "required":[
+        "AdditionalFileFormat",
+        "TextFormat"
+      ],
+      "members":{
+        "AdditionalFileFormat":{"shape":"OutputAdditionalFileFormat"},
+        "TextFormat":{"shape":"OutputTextFormat"}
+      }
+    },
+    "OutputTextFormat":{
+      "type":"structure",
+      "members":{
+        "Types":{"shape":"OutputTextFormatTypes"}
+      }
+    },
+    "OutputTextFormatType":{
+      "type":"string",
+      "enum":[
+        "PLAIN_TEXT",
+        "MARKDOWN",
+        "HTML",
+        "CSV"
+      ]
+    },
+    "OutputTextFormatTypes":{
+      "type":"list",
+      "member":{"shape":"OutputTextFormatType"},
+      "max":4,
+      "min":1
+    },
+    "PIIEntitiesConfiguration":{
+      "type":"structure",
+      "required":[
+        "PiiEntityTypes",
+        "RedactionMaskMode"
+      ],
+      "members":{
+        "PiiEntityTypes":{"shape":"PIIEntityTypes"},
+        "RedactionMaskMode":{"shape":"PIIRedactionMaskMode"}
+      }
+    },
+    "PIIEntityType":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "ADDRESS",
+        "AGE",
+        "NAME",
+        "EMAIL",
+        "PHONE",
+        "USERNAME",
+        "PASSWORD",
+        "DRIVER_ID",
+        "LICENSE_PLATE",
+        "VEHICLE_IDENTIFICATION_NUMBER",
+        "CREDIT_DEBIT_CARD_CVV",
+        "CREDIT_DEBIT_CARD_EXPIRY",
+        "CREDIT_DEBIT_CARD_NUMBER",
+        "PIN",
+        "INTERNATIONAL_BANK_ACCOUNT_NUMBER",
+        "SWIFT_CODE",
+        "IP_ADDRESS",
+        "MAC_ADDRESS",
+        "URL",
+        "AWS_ACCESS_KEY",
+        "AWS_SECRET_KEY",
+        "US_BANK_ACCOUNT_NUMBER",
+        "US_BANK_ROUTING_NUMBER",
+        "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER",
+        "US_PASSPORT_NUMBER",
+        "US_SOCIAL_SECURITY_NUMBER",
+        "CA_HEALTH_NUMBER",
+        "CA_SOCIAL_INSURANCE_NUMBER",
+        "UK_NATIONAL_HEALTH_SERVICE_NUMBER",
+        "UK_NATIONAL_INSURANCE_NUMBER",
+        "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER"
+      ]
+    },
+    "PIIEntityTypes":{
+      "type":"list",
+      "member":{"shape":"PIIEntityType"},
+      "max":32,
+      "min":1
+    },
+    "PIIRedactionMaskMode":{
+      "type":"string",
+      "enum":[
+        "PII",
+        "ENTITY_TYPE"
+      ]
     },
     "PageClassification":{
       "type":"structure",
@@ -1585,6 +2340,55 @@
     "PredictionList":{
       "type":"list",
       "member":{"shape":"Prediction"}
+    },
+    "ProjectArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^arn:aws(|-cn|-iso|-iso-[a-z]|-us-gov):textract:[a-zA-Z0-9-]*:(aws|[0-9]{12}):project/[a-zA-Z0-9-]{12,36}$"
+    },
+    "ProjectDescription":{
+      "type":"string",
+      "max":300,
+      "min":0,
+      "pattern":"^[a-zA-Z0-9\\s!\"\\#\\$%'&\\(\\)\\*\\+\\,\\-\\./:;=\\?@\\[\\\\\\]\\^_`\\{\\|\\}~><À-ÖØ-Üßà-öø-üẞ¿¡Œ-œ°£¥₹€§©ª®™¹±-µ✓⑆-⑉฿₽₱₦₣₩₫₺]*$"
+    },
+    "ProjectFilter":{
+      "type":"structure",
+      "required":["ProjectArn"],
+      "members":{
+        "ProjectArn":{"shape":"ProjectArn"}
+      }
+    },
+    "ProjectName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9-_]+$"
+    },
+    "ProjectStatus":{
+      "type":"string",
+      "enum":[
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
+    "ProjectSummary":{
+      "type":"structure",
+      "required":[
+        "ProjectArn",
+        "CreationTime"
+      ],
+      "members":{
+        "ProjectArn":{"shape":"ProjectArn"},
+        "ProjectName":{"shape":"ProjectName"},
+        "CreationTime":{"shape":"DateTime"},
+        "LastModifiedTime":{"shape":"DateTime"}
+      }
+    },
+    "ProjectSummaryList":{
+      "type":"list",
+      "member":{"shape":"ProjectSummary"}
     },
     "ProvisionedThroughputExceededException":{
       "type":"structure",
@@ -1659,6 +2463,13 @@
       "members":{},
       "exception":true
     },
+    "ResourceOwner":{
+      "type":"string",
+      "enum":[
+        "ACCOUNT",
+        "SERVICE"
+      ]
+    },
     "RoleArn":{
       "type":"string",
       "max":2048,
@@ -1691,6 +2502,12 @@
       "min":1,
       "pattern":".*\\S.*"
     },
+    "S3Uri":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^s3://[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9](/.*)?$"
+    },
     "SNSTopicArn":{
       "type":"string",
       "max":1024,
@@ -1702,6 +2519,22 @@
       "enum":[
         "SELECTED",
         "NOT_SELECTED"
+      ]
+    },
+    "SensitiveDataConfiguration":{
+      "type":"structure",
+      "required":["DetectionMode"],
+      "members":{
+        "DetectionMode":{"shape":"SensitiveDataDetectionMode"},
+        "PiiEntitiesConfiguration":{"shape":"PIIEntitiesConfiguration"}
+      }
+    },
+    "SensitiveDataDetectionMode":{
+      "type":"string",
+      "enum":[
+        "DETECTION",
+        "DETECTION_AND_REDACTION",
+        "DISABLED"
       ]
     },
     "ServiceQuotaExceededException":{
@@ -1731,6 +2564,13 @@
       "type":"list",
       "member":{"shape":"SplitDocument"}
     },
+    "SplitterConfiguration":{
+      "type":"structure",
+      "required":["State"],
+      "members":{
+        "State":{"shape":"State"}
+      }
+    },
     "StartDocumentAnalysisRequest":{
       "type":"structure",
       "required":[
@@ -1753,6 +2593,29 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"}
+      }
+    },
+    "StartDocumentInsightsRequest":{
+      "type":"structure",
+      "required":[
+        "InputConfiguration",
+        "OutputConfiguration"
+      ],
+      "members":{
+        "InputConfiguration":{"shape":"InputConfiguration"},
+        "OutputConfiguration":{"shape":"OutputConfiguration"},
+        "ProjectArn":{"shape":"ProjectArn"},
+        "Blueprints":{"shape":"BlueprintItems"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "NotificationConfiguration":{"shape":"NotificationConfiguration"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "StartDocumentInsightsResponse":{
+      "type":"structure",
+      "required":["JobArn"],
+      "members":{
+        "JobArn":{"shape":"JobArn"}
       }
     },
     "StartDocumentTextDetectionRequest":{
@@ -1809,17 +2672,31 @@
         "JobId":{"shape":"JobId"}
       }
     },
+    "State":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "StatusMessage":{"type":"string"},
     "String":{"type":"string"},
     "StringList":{
       "type":"list",
       "member":{"shape":"String"}
     },
+    "SummarizationConfiguration":{
+      "type":"structure",
+      "required":["State"],
+      "members":{
+        "State":{"shape":"State"}
+      }
+    },
     "TagKey":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(?!aws:)[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*$"
+      "pattern":"^[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*$"
     },
     "TagKeyList":{
       "type":"list",
@@ -1925,6 +2802,44 @@
         "Description":{"shape":"AdapterDescription"},
         "FeatureTypes":{"shape":"FeatureTypes"},
         "AutoUpdate":{"shape":"AutoUpdate"}
+      }
+    },
+    "UpdateBlueprintRequest":{
+      "type":"structure",
+      "required":["BlueprintArn"],
+      "members":{
+        "BlueprintArn":{"shape":"BlueprintArn"},
+        "Schema":{"shape":"BlueprintSchema"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
+      }
+    },
+    "UpdateBlueprintResponse":{
+      "type":"structure",
+      "required":["BlueprintArn"],
+      "members":{
+        "BlueprintArn":{"shape":"BlueprintArn"}
+      }
+    },
+    "UpdateProjectRequest":{
+      "type":"structure",
+      "required":["ProjectArn"],
+      "members":{
+        "ProjectArn":{"shape":"ProjectArn"},
+        "ProjectDescription":{"shape":"ProjectDescription"},
+        "ExtractionConfiguration":{"shape":"ExtractionConfiguration"},
+        "GenerativeConfiguration":{"shape":"GenerativeConfiguration"},
+        "CustomConfiguration":{"shape":"CustomConfiguration"},
+        "SplitterConfiguration":{"shape":"SplitterConfiguration"},
+        "SensitiveDataConfiguration":{"shape":"SensitiveDataConfiguration"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
+      }
+    },
+    "UpdateProjectResponse":{
+      "type":"structure",
+      "required":["ProjectArn"],
+      "members":{
+        "ProjectArn":{"shape":"ProjectArn"},
+        "Status":{"shape":"ProjectStatus"}
       }
     },
     "ValidationException":{

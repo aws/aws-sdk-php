@@ -1629,6 +1629,7 @@
         "modelId":{"shape":"String"},
         "formFactor":{"shape":"DeviceFormFactor"},
         "platform":{"shape":"DevicePlatform"},
+        "type":{"shape":"DeviceType"},
         "os":{"shape":"String"},
         "cpu":{"shape":"CPU"},
         "resolution":{"shape":"Resolution"},
@@ -1656,6 +1657,7 @@
         "ARN",
         "PLATFORM",
         "FORM_FACTOR",
+        "DEVICE_TYPE",
         "MANUFACTURER",
         "REMOTE_ACCESS_ENABLED",
         "REMOTE_DEBUG_ENABLED",
@@ -1705,6 +1707,7 @@
         "MODEL",
         "AVAILABILITY",
         "FORM_FACTOR",
+        "DEVICE_TYPE",
         "MANUFACTURER",
         "REMOTE_ACCESS_ENABLED",
         "REMOTE_DEBUG_ENABLED",
@@ -1837,6 +1840,13 @@
         "matchedDevicesCount":{"shape":"Integer"},
         "maxDevices":{"shape":"Integer"}
       }
+    },
+    "DeviceType":{
+      "type":"string",
+      "enum":[
+        "PHYSICAL",
+        "VIRTUAL"
+      ]
     },
     "Devices":{
       "type":"list",

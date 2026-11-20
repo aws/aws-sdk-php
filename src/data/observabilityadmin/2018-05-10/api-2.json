@@ -1594,6 +1594,13 @@
         "DestinationRegion":{"shape":"Region"}
       }
     },
+    "CentralizeWithDataProtection":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "ClientToken":{
       "type":"string",
       "max":64,
@@ -2362,7 +2369,7 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"[0-9A-Za-z_\\-:]+"
+      "pattern":"[0-9A-Za-z_\\-:.]+"
     },
     "ListCentralizationRulesForOrganizationInput":{
       "type":"structure",
@@ -2659,7 +2666,10 @@
         "S3_SERVER_ACCESS_LOGS",
         "ALB_ACCESS_LOGS",
         "ALB_CONNECTION_LOGS",
-        "ALB_HEALTH_CHECK_LOGS"
+        "ALB_HEALTH_CHECK_LOGS",
+        "FLOW_LOGS",
+        "ALERT_LOGS",
+        "TLS_LOGS"
       ]
     },
     "LogTypes":{
@@ -2910,7 +2920,9 @@
         "AWS::MSK::Cluster",
         "AWS::S3::Bucket",
         "AWS::Bedrock::KnowledgeBase",
-        "AWS::XRay::TransactionSearchConfig"
+        "AWS::XRay::TransactionSearchConfig",
+        "AWS::CloudWatchOmni",
+        "AWS::NetworkFirewall::Firewall"
       ]
     },
     "ResourceTypes":{
@@ -3065,7 +3077,8 @@
       "members":{
         "LogGroupSelectionCriteria":{"shape":"LogsFilterString"},
         "DataSourceSelectionCriteria":{"shape":"DataSourceFilterString"},
-        "EncryptedLogGroupStrategy":{"shape":"EncryptedLogGroupStrategy"}
+        "EncryptedLogGroupStrategy":{"shape":"EncryptedLogGroupStrategy"},
+        "CentralizeWithDataProtection":{"shape":"CentralizeWithDataProtection"}
       }
     },
     "SourceMetricsConfiguration":{

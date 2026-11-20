@@ -31026,6 +31026,22 @@
         "unknown"
       ]
     },
+    "FirewallArn":{"type":"string"},
+    "FirewallMode":{
+      "type":"string",
+      "enum":[
+        "monitor",
+        "enforce"
+      ]
+    },
+    "FirewallOnboardingStatus":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "active",
+        "disabling"
+      ]
+    },
     "FirewallStatefulRule":{
       "type":"structure",
       "members":{
@@ -35377,6 +35393,19 @@
         "enable",
         "disable"
       ]
+    },
+    "IgwFirewall":{
+      "type":"structure",
+      "members":{
+        "FirewallArn":{
+          "shape":"FirewallArn",
+          "locationName":"firewallArn"
+        },
+        "Status":{
+          "shape":"FirewallOnboardingStatus",
+          "locationName":"status"
+        }
+      }
     },
     "Image":{
       "type":"structure",
@@ -41802,7 +41831,9 @@
         "alb",
         "eip",
         "rds",
-        "rnat"
+        "rnat",
+        "lambda-network-connector",
+        "igw-firewall"
       ]
     },
     "IpamPolicySet":{
@@ -43056,7 +43087,8 @@
         "update-in-progress",
         "update-complete",
         "delete-in-progress",
-        "delete-complete"
+        "delete-complete",
+        "disable-complete"
       ]
     },
     "IpamRpkiStatus":{
@@ -49324,6 +49356,40 @@
         "locationName":"item"
       }
     },
+    "NetworkFirewallAssociation":{
+      "type":"structure",
+      "members":{
+        "FirewallArn":{
+          "shape":"FirewallArn",
+          "locationName":"firewallArn"
+        },
+        "FirewallOnboardingStatus":{
+          "shape":"FirewallOnboardingStatus",
+          "locationName":"firewallOnboardingStatus"
+        },
+        "FirewallMode":{
+          "shape":"FirewallMode",
+          "locationName":"firewallMode"
+        }
+      }
+    },
+    "NetworkFirewallAssociationSet":{
+      "type":"list",
+      "member":{
+        "shape":"NetworkFirewallAssociation",
+        "locationName":"item"
+      }
+    },
+    "NetworkFirewallConnectivityType":{
+      "type":"string",
+      "enum":[
+        "flexible",
+        "outbound-only",
+        "bidirectional",
+        "exclude",
+        "az-unsupported"
+      ]
+    },
     "NetworkFunctionAttachmentAZIdList":{
       "type":"list",
       "member":{
@@ -55123,6 +55189,10 @@
         "IpAddress":{
           "shape":"String",
           "locationName":"ipAddress"
+        },
+        "IgwFirewall":{
+          "shape":"IgwFirewall",
+          "locationName":"igwFirewall"
         }
       }
     },
@@ -57505,7 +57575,9 @@
         "alb",
         "nlb",
         "rnat",
-        "rds"
+        "rds",
+        "lambda-network-connector",
+        "igw-firewall"
       ]
     },
     "ServiceNetworkArn":{"type":"string"},
@@ -59074,6 +59146,10 @@
         "Type":{
           "shape":"String",
           "locationName":"type"
+        },
+        "NetworkFirewallConnectivityType":{
+          "shape":"NetworkFirewallConnectivityType",
+          "locationName":"networkFirewallConnectivityType"
         },
         "SubnetId":{
           "shape":"String",
@@ -62453,7 +62529,8 @@
         "t3",
         "t3a",
         "t4g",
-        "t8i"
+        "t8i",
+        "t9g"
       ]
     },
     "UnlockSnapshotRequest":{
@@ -64469,6 +64546,10 @@
         "BlockPublicAccessStates":{
           "shape":"BlockPublicAccessStates",
           "locationName":"blockPublicAccessStates"
+        },
+        "NetworkFirewallAssociations":{
+          "shape":"NetworkFirewallAssociationSet",
+          "locationName":"networkFirewallAssociationSet"
         },
         "VpcId":{
           "shape":"String",

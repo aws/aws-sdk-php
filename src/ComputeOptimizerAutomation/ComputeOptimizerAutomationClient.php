@@ -14,7 +14,14 @@ use Aws\AwsClient;
  *     name?: string,
  *     description?: string,
  *     ruleType?: 'AccountRule'|'OrganizationRule',
- *     organizationConfiguration?: array{ruleApplyOrder?: 'AfterAccountRules'|'BeforeAccountRules', accountIds?: list<string>, ...},
+ *     organizationConfiguration?: array{
+ *         ruleApplyOrder?: 'AfterAccountRules'|'BeforeAccountRules',
+ *         accountIds?: list<string>,
+ *         organizationalUnitIds?: list<string>,
+ *         excludedOrganizationalUnitIds?: list<string>,
+ *         excludedAccountIds?: list<string>,
+ *         ...,
+ *     },
  *     priority?: string,
  *     recommendedActionTypes?: list<'SnapshotAndDeleteUnattachedEbsVolume'|'UpgradeEbsVolumeType'>,
  *     criteria?: array{
@@ -39,7 +46,14 @@ use Aws\AwsClient;
  *     name?: string,
  *     description?: string,
  *     ruleType?: 'AccountRule'|'OrganizationRule',
- *     organizationConfiguration?: array{ruleApplyOrder?: 'AfterAccountRules'|'BeforeAccountRules', accountIds?: list<string>, ...},
+ *     organizationConfiguration?: array{
+ *         ruleApplyOrder?: 'AfterAccountRules'|'BeforeAccountRules',
+ *         accountIds?: list<string>,
+ *         organizationalUnitIds?: list<string>,
+ *         excludedOrganizationalUnitIds?: list<string>,
+ *         excludedAccountIds?: list<string>,
+ *         ...,
+ *     },
  *     priority?: string,
  *     recommendedActionTypes?: list<'SnapshotAndDeleteUnattachedEbsVolume'|'UpgradeEbsVolumeType'>,
  *     criteria?: array{
@@ -63,6 +77,20 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteAutomationRule(array{ruleArn?: string, ruleRevision?: int, clientToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAutomationRuleAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteAutomationRuleAsync(array{ruleArn?: string, ruleRevision?: int, clientToken?: string, ...} $args = [])
+ * @method \Aws\Result deleteOrganizationEnrollmentConfiguration(array $args = [])
+ * @phpstan-method \Aws\Result deleteOrganizationEnrollmentConfiguration(array{
+ *     target?: array{accountId?: string, organizationalUnitId?: string, ...},
+ *     configurationTypes?: list<'OrganizationRuleMode'>,
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteOrganizationEnrollmentConfigurationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteOrganizationEnrollmentConfigurationAsync(array{
+ *     target?: array{accountId?: string, organizationalUnitId?: string, ...},
+ *     configurationTypes?: list<'OrganizationRuleMode'>,
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result disassociateAccounts(array $args = [])
  * @phpstan-method \Aws\Result disassociateAccounts(array{accountIds?: list<string>, clientToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateAccountsAsync(array $args = [])
@@ -90,6 +118,7 @@ use Aws\AwsClient;
  * @method \Aws\Result listAutomationEventSummaries(array $args = [])
  * @phpstan-method \Aws\Result listAutomationEventSummaries(array{
  *     filters?: list<array{name?: 'AccountId'|'EventStatus'|'EventType'|'ResourceType', values?: list<string>, ...}>,
+ *     organizationalUnitIds?: list<string>,
  *     startDateInclusive?: string,
  *     endDateExclusive?: string,
  *     maxResults?: int,
@@ -99,6 +128,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listAutomationEventSummariesAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listAutomationEventSummariesAsync(array{
  *     filters?: list<array{name?: 'AccountId'|'EventStatus'|'EventType'|'ResourceType', values?: list<string>, ...}>,
+ *     organizationalUnitIds?: list<string>,
  *     startDateInclusive?: string,
  *     endDateExclusive?: string,
  *     maxResults?: int,
@@ -108,6 +138,7 @@ use Aws\AwsClient;
  * @method \Aws\Result listAutomationEvents(array $args = [])
  * @phpstan-method \Aws\Result listAutomationEvents(array{
  *     filters?: list<array{name?: 'AccountId'|'EventStatus'|'EventType'|'ResourceType', values?: list<string>, ...}>,
+ *     organizationalUnitIds?: list<string>,
  *     startTimeInclusive?: int|string|\DateTimeInterface,
  *     endTimeExclusive?: int|string|\DateTimeInterface,
  *     maxResults?: int,
@@ -117,6 +148,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listAutomationEventsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listAutomationEventsAsync(array{
  *     filters?: list<array{name?: 'AccountId'|'EventStatus'|'EventType'|'ResourceType', values?: list<string>, ...}>,
+ *     organizationalUnitIds?: list<string>,
  *     startTimeInclusive?: int|string|\DateTimeInterface,
  *     endTimeExclusive?: int|string|\DateTimeInterface,
  *     maxResults?: int,
@@ -126,7 +158,13 @@ use Aws\AwsClient;
  * @method \Aws\Result listAutomationRulePreview(array $args = [])
  * @phpstan-method \Aws\Result listAutomationRulePreview(array{
  *     ruleType?: 'AccountRule'|'OrganizationRule',
- *     organizationScope?: array{accountIds?: list<string>, ...},
+ *     organizationScope?: array{
+ *         accountIds?: list<string>,
+ *         organizationalUnitIds?: list<string>,
+ *         excludedOrganizationalUnitIds?: list<string>,
+ *         excludedAccountIds?: list<string>,
+ *         ...,
+ *     },
  *     recommendedActionTypes?: list<'SnapshotAndDeleteUnattachedEbsVolume'|'UpgradeEbsVolumeType'>,
  *     criteria?: array{
  *         region?: list<array>,
@@ -146,7 +184,13 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listAutomationRulePreviewAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listAutomationRulePreviewAsync(array{
  *     ruleType?: 'AccountRule'|'OrganizationRule',
- *     organizationScope?: array{accountIds?: list<string>, ...},
+ *     organizationScope?: array{
+ *         accountIds?: list<string>,
+ *         organizationalUnitIds?: list<string>,
+ *         excludedOrganizationalUnitIds?: list<string>,
+ *         excludedAccountIds?: list<string>,
+ *         ...,
+ *     },
  *     recommendedActionTypes?: list<'SnapshotAndDeleteUnattachedEbsVolume'|'UpgradeEbsVolumeType'>,
  *     criteria?: array{
  *         region?: list<array>,
@@ -166,7 +210,13 @@ use Aws\AwsClient;
  * @method \Aws\Result listAutomationRulePreviewSummaries(array $args = [])
  * @phpstan-method \Aws\Result listAutomationRulePreviewSummaries(array{
  *     ruleType?: 'AccountRule'|'OrganizationRule',
- *     organizationScope?: array{accountIds?: list<string>, ...},
+ *     organizationScope?: array{
+ *         accountIds?: list<string>,
+ *         organizationalUnitIds?: list<string>,
+ *         excludedOrganizationalUnitIds?: list<string>,
+ *         excludedAccountIds?: list<string>,
+ *         ...,
+ *     },
  *     recommendedActionTypes?: list<'SnapshotAndDeleteUnattachedEbsVolume'|'UpgradeEbsVolumeType'>,
  *     criteria?: array{
  *         region?: list<array>,
@@ -186,7 +236,13 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listAutomationRulePreviewSummariesAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listAutomationRulePreviewSummariesAsync(array{
  *     ruleType?: 'AccountRule'|'OrganizationRule',
- *     organizationScope?: array{accountIds?: list<string>, ...},
+ *     organizationScope?: array{
+ *         accountIds?: list<string>,
+ *         organizationalUnitIds?: list<string>,
+ *         excludedOrganizationalUnitIds?: list<string>,
+ *         excludedAccountIds?: list<string>,
+ *         ...,
+ *     },
  *     recommendedActionTypes?: list<'SnapshotAndDeleteUnattachedEbsVolume'|'UpgradeEbsVolumeType'>,
  *     criteria?: array{
  *         region?: list<array>,
@@ -225,6 +281,14 @@ use Aws\AwsClient;
  *     nextToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listOrganizationEnrollmentConfigurations(array $args = [])
+ * @phpstan-method \Aws\Result listOrganizationEnrollmentConfigurations(array{targetType?: 'Account'|'OrganizationalUnit', maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listOrganizationEnrollmentConfigurationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listOrganizationEnrollmentConfigurationsAsync(array{targetType?: 'Account'|'OrganizationalUnit', maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listOrganizationalUnits(array $args = [])
+ * @phpstan-method \Aws\Result listOrganizationalUnits(array{organizationalUnitIds?: list<string>, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listOrganizationalUnitsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listOrganizationalUnitsAsync(array{organizationalUnitIds?: list<string>, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result listRecommendedActionSummaries(array $args = [])
  * @phpstan-method \Aws\Result listRecommendedActionSummaries(array{
  *     filters?: list<array{
@@ -232,6 +296,7 @@ use Aws\AwsClient;
  *         values?: list<string>,
  *         ...,
  *     }>,
+ *     organizationalUnitIds?: list<string>,
  *     maxResults?: int,
  *     nextToken?: string,
  *     ...,
@@ -243,6 +308,7 @@ use Aws\AwsClient;
  *         values?: list<string>,
  *         ...,
  *     }>,
+ *     organizationalUnitIds?: list<string>,
  *     maxResults?: int,
  *     nextToken?: string,
  *     ...,
@@ -254,6 +320,7 @@ use Aws\AwsClient;
  *         values?: list<string>,
  *         ...,
  *     }>,
+ *     organizationalUnitIds?: list<string>,
  *     maxResults?: int,
  *     nextToken?: string,
  *     ...,
@@ -265,6 +332,7 @@ use Aws\AwsClient;
  *         values?: list<string>,
  *         ...,
  *     }>,
+ *     organizationalUnitIds?: list<string>,
  *     maxResults?: int,
  *     nextToken?: string,
  *     ...,
@@ -273,6 +341,20 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listTagsForResource(array{resourceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array{resourceArn?: string, ...} $args = [])
+ * @method \Aws\Result putOrganizationEnrollmentConfiguration(array $args = [])
+ * @phpstan-method \Aws\Result putOrganizationEnrollmentConfiguration(array{
+ *     target?: array{accountId?: string, organizationalUnitId?: string, ...},
+ *     organizationRuleMode?: 'AnyAllowed'|'NoneAllowed',
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise putOrganizationEnrollmentConfigurationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putOrganizationEnrollmentConfigurationAsync(array{
+ *     target?: array{accountId?: string, organizationalUnitId?: string, ...},
+ *     organizationRuleMode?: 'AnyAllowed'|'NoneAllowed',
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result rollbackAutomationEvent(array $args = [])
  * @phpstan-method \Aws\Result rollbackAutomationEvent(array{eventId?: string, clientToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise rollbackAutomationEventAsync(array $args = [])
@@ -308,7 +390,14 @@ use Aws\AwsClient;
  *     name?: string,
  *     description?: string,
  *     ruleType?: 'AccountRule'|'OrganizationRule',
- *     organizationConfiguration?: array{ruleApplyOrder?: 'AfterAccountRules'|'BeforeAccountRules', accountIds?: list<string>, ...},
+ *     organizationConfiguration?: array{
+ *         ruleApplyOrder?: 'AfterAccountRules'|'BeforeAccountRules',
+ *         accountIds?: list<string>,
+ *         organizationalUnitIds?: list<string>,
+ *         excludedOrganizationalUnitIds?: list<string>,
+ *         excludedAccountIds?: list<string>,
+ *         ...,
+ *     },
  *     priority?: string,
  *     recommendedActionTypes?: list<'SnapshotAndDeleteUnattachedEbsVolume'|'UpgradeEbsVolumeType'>,
  *     criteria?: array{
@@ -334,7 +423,14 @@ use Aws\AwsClient;
  *     name?: string,
  *     description?: string,
  *     ruleType?: 'AccountRule'|'OrganizationRule',
- *     organizationConfiguration?: array{ruleApplyOrder?: 'AfterAccountRules'|'BeforeAccountRules', accountIds?: list<string>, ...},
+ *     organizationConfiguration?: array{
+ *         ruleApplyOrder?: 'AfterAccountRules'|'BeforeAccountRules',
+ *         accountIds?: list<string>,
+ *         organizationalUnitIds?: list<string>,
+ *         excludedOrganizationalUnitIds?: list<string>,
+ *         excludedAccountIds?: list<string>,
+ *         ...,
+ *     },
  *     priority?: string,
  *     recommendedActionTypes?: list<'SnapshotAndDeleteUnattachedEbsVolume'|'UpgradeEbsVolumeType'>,
  *     criteria?: array{

@@ -269,7 +269,7 @@ use Aws\AwsClient;
  *     OntapConfiguration?: array{
  *         AutomaticBackupRetentionDays?: int,
  *         DailyAutomaticBackupStartTime?: string,
- *         DeploymentType?: 'MULTI_AZ_1'|'MULTI_AZ_2'|'SINGLE_AZ_1'|'SINGLE_AZ_2',
+ *         DeploymentType?: 'MULTI_AZ_1'|'MULTI_AZ_2'|'MULTI_AZ_3'|'SINGLE_AZ_1'|'SINGLE_AZ_2'|'SINGLE_AZ_3',
  *         EndpointIpAddressRange?: string,
  *         FsxAdminPassword?: string,
  *         DiskIopsConfiguration?: array{Mode?: 'AUTOMATIC'|'USER_PROVISIONED', Iops?: int, ...},
@@ -375,7 +375,7 @@ use Aws\AwsClient;
  *     OntapConfiguration?: array{
  *         AutomaticBackupRetentionDays?: int,
  *         DailyAutomaticBackupStartTime?: string,
- *         DeploymentType?: 'MULTI_AZ_1'|'MULTI_AZ_2'|'SINGLE_AZ_1'|'SINGLE_AZ_2',
+ *         DeploymentType?: 'MULTI_AZ_1'|'MULTI_AZ_2'|'MULTI_AZ_3'|'SINGLE_AZ_1'|'SINGLE_AZ_2'|'SINGLE_AZ_3',
  *         EndpointIpAddressRange?: string,
  *         FsxAdminPassword?: string,
  *         DiskIopsConfiguration?: array{Mode?: 'AUTOMATIC'|'USER_PROVISIONED', Iops?: int, ...},

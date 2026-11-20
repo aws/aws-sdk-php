@@ -139,6 +139,12 @@
         "Address$AddressDefinition": "<p>Specify an IP address or a block of IP addresses in Classless Inter-Domain Routing (CIDR) notation. Network Firewall supports all address ranges for IPv4 and IPv6. </p> <p>Examples: </p> <ul> <li> <p>To configure Network Firewall to inspect for the IP address 192.0.2.44, specify <code>192.0.2.44/32</code>.</p> </li> <li> <p>To configure Network Firewall to inspect for IP addresses from 192.0.2.0 to 192.0.2.255, specify <code>192.0.2.0/24</code>.</p> </li> <li> <p>To configure Network Firewall to inspect for the IP address 1111:0000:0000:0000:0000:0000:0000:0111, specify <code>1111:0000:0000:0000:0000:0000:0000:0111/128</code>.</p> </li> <li> <p>To configure Network Firewall to inspect for IP addresses from 1111:0000:0000:0000:0000:0000:0000:0000 to 1111:0000:0000:0000:ffff:ffff:ffff:ffff, specify <code>1111:0000:0000:0000:0000:0000:0000:0000/64</code>.</p> </li> </ul> <p>For more information about CIDR notation, see the Wikipedia entry <a href=\"https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing\">Classless Inter-Domain Routing</a>.</p>"
       }
     },
+    "AddressTranslations": {
+      "base": "<p>The public IP addresses that an internet gateway firewall uses for network address translation in one Availability Zone. Resources that don't have a public IP address reach the internet through these addresses. Network Firewall manages the addresses for you: it allocates them in your account and adds or removes addresses automatically based on traffic.</p>",
+      "refs": {
+        "SyncState$AddressTranslations": "<p>The public IP addresses that an internet gateway firewall uses for network address translation in this Availability Zone. Network Firewall allocates these addresses in your account and adds or removes addresses automatically based on traffic. This setting is only present for an internet gateway firewall.</p>"
+      }
+    },
     "Addresses": {
       "base": null,
       "refs": {
@@ -260,7 +266,7 @@
     "AttachmentStatus": {
       "base": null,
       "refs": {
-        "Attachment$Status": "<p>The current status of the firewall endpoint instantiation in the subnet. </p> <p>When this value is <code>READY</code>, the endpoint is available to handle network traffic. Otherwise, this value reflects its state, for example <code>CREATING</code> or <code>DELETING</code>.</p>"
+        "Attachment$Status": "<p>The current status of the firewall endpoint instantiation in the subnet. </p> <p>When this value is <code>READY</code>, the endpoint is available to handle network traffic. Otherwise, this value reflects its state, for example <code>CREATING</code> or <code>DELETING</code>.</p> <p>For an internet gateway firewall, <code>STANDBY</code> indicates an Availability Zone that has no resources yet. Network Firewall provisions the endpoint there when the first resource is launched in that Availability Zone.</p>"
       }
     },
     "AttachmentType": {
@@ -1059,6 +1065,12 @@
         "Attachment$EndpointId": "<p>The identifier of the firewall endpoint that Network Firewall has instantiated in the subnet. You use this to identify the firewall endpoint in the VPC route tables, when you redirect the VPC traffic through the endpoint. </p>"
       }
     },
+    "EnforcementMode": {
+      "base": null,
+      "refs": {
+        "IgwFirewallConfiguration$EnforcementMode": "<p>How the internet gateway firewall enforces its rules. The only supported value is <code>POLICY_CONTROLLED</code>, which means that the enforcement mode is set by the firewall policy that Amazon Web Services Network Security Manager associates with the firewall.</p>"
+      }
+    },
     "ErrorMessage": {
       "base": null,
       "refs": {
@@ -1247,9 +1259,27 @@
     "FirewallStatusValue": {
       "base": null,
       "refs": {
-        "DescribeFirewallMetadataResponse$Status": "<p>The readiness of the configured firewall to handle network traffic across all of the Availability Zones where you have it configured. This setting is <code>READY</code> only when the <code>ConfigurationSyncStateSummary</code> value is <code>IN_SYNC</code> and the <code>Attachment</code> <code>Status</code> values for all of the configured subnets are <code>READY</code>. </p>",
-        "FirewallStatus$Status": "<p>The readiness of the configured firewall to handle network traffic across all of the Availability Zones where you have it configured. This setting is <code>READY</code> only when the <code>ConfigurationSyncStateSummary</code> value is <code>IN_SYNC</code> and the <code>Attachment</code> <code>Status</code> values for all of the configured subnets are <code>READY</code>. </p>",
+        "DescribeFirewallMetadataResponse$Status": "<p>The readiness of the configured firewall to handle network traffic across all of the Availability Zones where you have it configured. This setting is <code>READY</code> only when the <code>ConfigurationSyncStateSummary</code> value is <code>IN_SYNC</code> and the <code>Attachment</code> <code>Status</code> values for all of the configured subnets are <code>READY</code>. </p> <p>For an internet gateway firewall, this setting is <code>STANDBY</code> while no Availability Zone in the VPC has resources that need the firewall. Network Firewall provisions the firewall in an Availability Zone when the first resource is launched there.</p>",
+        "FirewallStatus$Status": "<p>The readiness of the configured firewall to handle network traffic across all of the Availability Zones where you have it configured. This setting is <code>READY</code> only when the <code>ConfigurationSyncStateSummary</code> value is <code>IN_SYNC</code> and the <code>Attachment</code> <code>Status</code> values for all of the configured subnets are <code>READY</code>. </p> <p>For an internet gateway firewall, this setting is <code>STANDBY</code> while no Availability Zone in the VPC has resources that need the firewall. Network Firewall provisions the firewall in an Availability Zone when the first resource is launched there.</p>",
         "VpcEndpointAssociationStatus$Status": "<p>The readiness of the configured firewall endpoint to handle network traffic. </p>"
+      }
+    },
+    "FirewallType": {
+      "base": null,
+      "refs": {
+        "AssociateAvailabilityZonesRequest$FirewallType": "<p>The type of firewall that the request targets. Network Firewall supports the following firewall types:</p> <ul> <li> <p> <code>IGW_FIREWALL</code> - An internet gateway firewall, which Amazon Web Services Network Security Manager creates and manages for a VPC.</p> </li> <li> <p> <code>FIREWALL</code> - A standard Network Firewall firewall.</p> </li> </ul> <p>If you specify the firewall ARN, the type must match the resource type in the ARN. If you specify only the firewall name, Network Firewall uses this value to identify the firewall. If you don't specify a type, the default is <code>FIREWALL</code>.</p>",
+        "AssociateFirewallPolicyRequest$FirewallType": "<p>The type of firewall that the request targets. Network Firewall supports the following firewall types:</p> <ul> <li> <p> <code>IGW_FIREWALL</code> - An internet gateway firewall, which Amazon Web Services Network Security Manager creates and manages for a VPC.</p> </li> <li> <p> <code>FIREWALL</code> - A standard Network Firewall firewall.</p> </li> </ul> <p>If you specify the firewall ARN, the type must match the resource type in the ARN. If you specify only the firewall name, Network Firewall uses this value to identify the firewall. If you don't specify a type, the default is <code>FIREWALL</code>.</p>",
+        "DeleteFirewallRequest$FirewallType": "<p>The type of firewall that the request targets. Network Firewall supports the following firewall types:</p> <ul> <li> <p> <code>IGW_FIREWALL</code> - An internet gateway firewall, which Amazon Web Services Network Security Manager creates and manages for a VPC.</p> </li> <li> <p> <code>FIREWALL</code> - A standard Network Firewall firewall.</p> </li> </ul> <p>If you specify the firewall ARN, the type must match the resource type in the ARN. If you specify only the firewall name, Network Firewall uses this value to identify the firewall. If you don't specify a type, the default is <code>FIREWALL</code>.</p>",
+        "DescribeFirewallRequest$FirewallType": "<p>The type of firewall that the request targets. Network Firewall supports the following firewall types:</p> <ul> <li> <p> <code>IGW_FIREWALL</code> - An internet gateway firewall, which Amazon Web Services Network Security Manager creates and manages for a VPC.</p> </li> <li> <p> <code>FIREWALL</code> - A standard Network Firewall firewall.</p> </li> </ul> <p>If you specify the firewall ARN, the type must match the resource type in the ARN. If you specify only the firewall name, Network Firewall uses this value to identify the firewall. If you don't specify a type, the default is <code>FIREWALL</code>.</p>",
+        "DescribeLoggingConfigurationRequest$FirewallType": "<p>The type of firewall that the request targets. Network Firewall supports the following firewall types:</p> <ul> <li> <p> <code>IGW_FIREWALL</code> - An internet gateway firewall, which Amazon Web Services Network Security Manager creates and manages for a VPC.</p> </li> <li> <p> <code>FIREWALL</code> - A standard Network Firewall firewall.</p> </li> </ul> <p>If you specify the firewall ARN, the type must match the resource type in the ARN. If you specify only the firewall name, Network Firewall uses this value to identify the firewall. If you don't specify a type, the default is <code>FIREWALL</code>.</p>",
+        "DisassociateAvailabilityZonesRequest$FirewallType": "<p>The type of firewall that the request targets. Network Firewall supports the following firewall types:</p> <ul> <li> <p> <code>IGW_FIREWALL</code> - An internet gateway firewall, which Amazon Web Services Network Security Manager creates and manages for a VPC.</p> </li> <li> <p> <code>FIREWALL</code> - A standard Network Firewall firewall.</p> </li> </ul> <p>If you specify the firewall ARN, the type must match the resource type in the ARN. If you specify only the firewall name, Network Firewall uses this value to identify the firewall. If you don't specify a type, the default is <code>FIREWALL</code>.</p>",
+        "ListFirewallsRequest$FirewallType": "<p>Specifies the firewall type to filter the results by. You can specify one of the following values:</p> <ul> <li> <p> <code>IGW_FIREWALL</code> - Returns only internet gateway firewalls, which Amazon Web Services Network Security Manager creates and manages for your VPCs.</p> </li> <li> <p> <code>FIREWALL</code> - Returns only standard Network Firewall firewalls.</p> </li> </ul> <p>If you don't specify a type, the default is to return firewalls of both types.</p>",
+        "UpdateFirewallAnalysisSettingsRequest$FirewallType": "<p>The type of firewall that the request targets. Network Firewall supports the following firewall types:</p> <ul> <li> <p> <code>IGW_FIREWALL</code> - An internet gateway firewall, which Amazon Web Services Network Security Manager creates and manages for a VPC.</p> </li> <li> <p> <code>FIREWALL</code> - A standard Network Firewall firewall.</p> </li> </ul> <p>If you specify the firewall ARN, the type must match the resource type in the ARN. If you specify only the firewall name, Network Firewall uses this value to identify the firewall. If you don't specify a type, the default is <code>FIREWALL</code>.</p>",
+        "UpdateFirewallDeleteProtectionRequest$FirewallType": "<p>The type of firewall that the request targets. Network Firewall supports the following firewall types:</p> <ul> <li> <p> <code>IGW_FIREWALL</code> - An internet gateway firewall, which Amazon Web Services Network Security Manager creates and manages for a VPC.</p> </li> <li> <p> <code>FIREWALL</code> - A standard Network Firewall firewall.</p> </li> </ul> <p>If you specify the firewall ARN, the type must match the resource type in the ARN. If you specify only the firewall name, Network Firewall uses this value to identify the firewall. If you don't specify a type, the default is <code>FIREWALL</code>.</p>",
+        "UpdateFirewallDescriptionRequest$FirewallType": "<p>The type of firewall that the request targets. Network Firewall supports the following firewall types:</p> <ul> <li> <p> <code>IGW_FIREWALL</code> - An internet gateway firewall, which Amazon Web Services Network Security Manager creates and manages for a VPC.</p> </li> <li> <p> <code>FIREWALL</code> - A standard Network Firewall firewall.</p> </li> </ul> <p>If you specify the firewall ARN, the type must match the resource type in the ARN. If you specify only the firewall name, Network Firewall uses this value to identify the firewall. If you don't specify a type, the default is <code>FIREWALL</code>.</p>",
+        "UpdateFirewallEncryptionConfigurationRequest$FirewallType": "<p>The type of firewall that the request targets. Network Firewall supports the following firewall types:</p> <ul> <li> <p> <code>IGW_FIREWALL</code> - An internet gateway firewall, which Amazon Web Services Network Security Manager creates and manages for a VPC.</p> </li> <li> <p> <code>FIREWALL</code> - A standard Network Firewall firewall.</p> </li> </ul> <p>If you specify the firewall ARN, the type must match the resource type in the ARN. If you specify only the firewall name, Network Firewall uses this value to identify the firewall. If you don't specify a type, the default is <code>FIREWALL</code>.</p>",
+        "UpdateFirewallPolicyChangeProtectionRequest$FirewallType": "<p>The type of firewall that the request targets. Network Firewall supports the following firewall types:</p> <ul> <li> <p> <code>IGW_FIREWALL</code> - An internet gateway firewall, which Amazon Web Services Network Security Manager creates and manages for a VPC.</p> </li> <li> <p> <code>FIREWALL</code> - A standard Network Firewall firewall.</p> </li> </ul> <p>If you specify the firewall ARN, the type must match the resource type in the ARN. If you specify only the firewall name, Network Firewall uses this value to identify the firewall. If you don't specify a type, the default is <code>FIREWALL</code>.</p>",
+        "UpdateLoggingConfigurationRequest$FirewallType": "<p>The type of firewall that the request targets. Network Firewall supports the following firewall types:</p> <ul> <li> <p> <code>IGW_FIREWALL</code> - An internet gateway firewall, which Amazon Web Services Network Security Manager creates and manages for a VPC.</p> </li> <li> <p> <code>FIREWALL</code> - A standard Network Firewall firewall.</p> </li> </ul> <p>If you specify the firewall ARN, the type must match the resource type in the ARN. If you specify only the firewall name, Network Firewall uses this value to identify the firewall. If you don't specify a type, the default is <code>FIREWALL</code>.</p>"
       }
     },
     "Firewalls": {
@@ -1460,10 +1490,29 @@
         "RuleVariables$IPSets": "<p>A list of IP addresses and address ranges, in CIDR notation. </p>"
       }
     },
+    "IPv4AddressDefinition": {
+      "base": null,
+      "refs": {
+        "PublicIPv4Addresses$member": null
+      }
+    },
+    "IPv6AddressDefinition": {
+      "base": null,
+      "refs": {
+        "PublicIPv6Addresses$member": null
+      }
+    },
     "IdentifiedType": {
       "base": null,
       "refs": {
         "AnalysisResult$IdentifiedType": "<p>The types of rule configurations that Network Firewall analyzes your rule groups for. Network Firewall analyzes stateless rule groups for the following types of rule configurations:</p> <ul> <li> <p> <code>STATELESS_RULE_FORWARDING_ASYMMETRICALLY</code> </p> <p>Cause: One or more stateless rules with the action <code>pass</code> or <code>forward</code> are forwarding traffic asymmetrically. Specifically, the rule's set of source IP addresses or their associated port numbers, don't match the set of destination IP addresses or their associated port numbers.</p> <p>To mitigate: Make sure that there's an existing return path. For example, if the rule allows traffic from source 10.1.0.0/24 to destination 20.1.0.0/24, you should allow return traffic from source 20.1.0.0/24 to destination 10.1.0.0/24.</p> </li> <li> <p> <code>STATELESS_RULE_CONTAINS_TCP_FLAGS</code> </p> <p>Cause: At least one stateless rule with the action <code>pass</code> or<code>forward</code> contains TCP flags that are inconsistent in the forward and return directions.</p> <p>To mitigate: Prevent asymmetric routing issues caused by TCP flags by following these actions:</p> <ul> <li> <p>Remove unnecessary TCP flag inspections from the rules.</p> </li> <li> <p>If you need to inspect TCP flags, check that the rules correctly account for changes in TCP flags throughout the TCP connection cycle, for example <code>SYN</code> and <code>ACK</code> flags used in a 3-way TCP handshake.</p> </li> </ul> </li> </ul>"
+      }
+    },
+    "IgwFirewallConfiguration": {
+      "base": "<p>Contains the settings that configure an internet gateway firewall. An internet gateway firewall inspects all traffic between your VPC and its internet gateway, without changes to your subnets or route tables. You can describe and list internet gateway firewalls in Network Firewall, but you can't create, modify, or delete them directly, because Amazon Web Services Network Security Manager creates and manages them on your behalf.</p>",
+      "refs": {
+        "CreateFirewallRequest$IgwFirewallConfiguration": "<p>Settings that make this firewall an internet gateway firewall. An internet gateway firewall inspects all traffic between a VPC and its internet gateway, without changes to your subnets or route tables. Amazon Web Services Network Security Manager creates and manages internet gateway firewalls on your behalf, so you don't include this setting when you create a standard Network Firewall firewall.</p> <p>When this setting is present, <code>FirewallName</code> must equal the <code>VpcId</code>, <code>AvailabilityZoneMappings</code> is required and must use Availability Zone IDs, and you can't specify <code>SubnetMappings</code> or a transit gateway.</p>",
+        "Firewall$IgwFirewallConfiguration": "<p>Contains the settings that configure an internet gateway firewall, which Amazon Web Services Network Security Manager creates and manages for a VPC. Network Firewall returns this setting only for an internet gateway firewall. For a standard firewall, this setting isn't present.</p>"
       }
     },
     "InsufficientCapacityException": {
@@ -2020,6 +2069,18 @@
       "base": null,
       "refs": {
         "DescribeProxyResource$ProxyState": "<p>Current attachment/detachment status of the Proxy. </p>"
+      }
+    },
+    "PublicIPv4Addresses": {
+      "base": null,
+      "refs": {
+        "AddressTranslations$PublicIPv4Addresses": "<p>The public IPv4 addresses that the internet gateway firewall uses for network address translation in this Availability Zone.</p>"
+      }
+    },
+    "PublicIPv6Addresses": {
+      "base": null,
+      "refs": {
+        "AddressTranslations$PublicIPv6Addresses": "<p>The public IPv6 addresses that the internet gateway firewall uses for network address translation in this Availability Zone.</p>"
       }
     },
     "PublicId": {

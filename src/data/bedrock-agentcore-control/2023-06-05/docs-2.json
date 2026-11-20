@@ -6336,6 +6336,12 @@
         "ClaimMatchValueType$matchValueStringList": "<p>An array of strings to check for a match.</p>"
       }
     },
+    "MaxEventsPerInvocation": {
+      "base": null,
+      "refs": {
+        "ResponseStreamingConfiguration$maxEventsPerInvocation": "<p>Specifies the maximum number of response events that the gateway sends to the interceptor in one invocation. The interceptor's output for the first batch determines the status code and headers of the response. The gateway ignores the status code and headers that the interceptor returns for later batches.</p>"
+      }
+    },
     "MaxResults": {
       "base": null,
       "refs": {
@@ -8338,10 +8344,22 @@
         "ListCodeInterpretersRequest$type": "<p>The type of code interpreters to list.</p>"
       }
     },
+    "ResponseInterceptionMode": {
+      "base": null,
+      "refs": {
+        "GatewayInterceptorConfiguration$responseInterceptionMode": "<p>Specifies how the interceptor processes streamed target responses. You can set this field only on an interceptor that includes the <code>RESPONSE</code> interception point. Valid values include:</p> <ul> <li> <p> <code>BUFFERED</code> - The gateway collects the complete target response and then invokes the interceptor once. This is the default.</p> </li> <li> <p> <code>STREAM</code> - The gateway sends a streamed target response to the interceptor in batches of events and returns each processed batch to the client as soon as it's ready. Non-streamed responses still use <code>BUFFERED</code> processing. If you specify <code>STREAM</code>, you must also specify <code>responseStreamingConfiguration</code>, and the input configuration can't exclude the response body.</p> </li> </ul>"
+      }
+    },
     "ResponseListType": {
       "base": null,
       "refs": {
         "Oauth2AuthorizationServerMetadata$responseTypes": "<p>The supported response types for the OAuth2 authorization server.</p>"
+      }
+    },
+    "ResponseStreamingConfiguration": {
+      "base": "<p>Specifies the settings that the gateway uses to send a streamed target response to the interceptor in batches.</p>",
+      "refs": {
+        "GatewayInterceptorConfiguration$responseStreamingConfiguration": "<p>Specifies the batching settings for a streamed response. Specify this field only when <code>responseInterceptionMode</code> is <code>STREAM</code>. You must specify it for <code>STREAM</code>.</p>"
       }
     },
     "ResponseType": {

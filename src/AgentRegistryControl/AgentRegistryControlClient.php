@@ -5,6 +5,28 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Agent Registry Control** service.
+ * @method \Aws\Result associatePublisher(array $args = [])
+ * @phpstan-method \Aws\Result associatePublisher(array{
+ *     recordArn?: string,
+ *     publisherArn?: string,
+ *     subdomain?: string,
+ *     categories?: list<string>,
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise associatePublisherAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise associatePublisherAsync(array{
+ *     recordArn?: string,
+ *     publisherArn?: string,
+ *     subdomain?: string,
+ *     categories?: list<string>,
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createPublisher(array $args = [])
+ * @phpstan-method \Aws\Result createPublisher(array{value?: array{domain?: string, ...}, tags?: array<string, string>, clientToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise createPublisherAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createPublisherAsync(array{value?: array{domain?: string, ...}, tags?: array<string, string>, clientToken?: string, ...} $args = [])
  * @method \Aws\Result createRegistry(array $args = [])
  * @phpstan-method \Aws\Result createRegistry(array{
  *     name?: string,
@@ -45,7 +67,7 @@ use Aws\AwsClient;
  *     name?: string,
  *     displayName?: string,
  *     description?: string,
- *     recordType?: 'AGENT'|'CUSTOM'|'GATEWAY'|'MCP'|'SKILL',
+ *     recordType?: 'AGENT'|'CUSTOM'|'GATEWAY'|'MCP'|'SKILL'|'WEB_BOT',
  *     descriptors?: array{
  *         mcpServer?: array{data?: string, dataSchemaVersion?: string, additionalData?: array, source?: array, ...},
  *         a2aAgentCard?: array{data?: string, dataSchemaVersion?: string, source?: array, ...},
@@ -53,6 +75,7 @@ use Aws\AwsClient;
  *         custom?: array{data?: string, ...},
  *         http?: array{source?: array, ...},
  *         agui?: array{source?: array, ...},
+ *         signatureAgentCard?: array{data?: string, dataSchemaVersion?: string, source?: array, additionalData?: array, ...},
  *         ...,
  *     },
  *     artifact?: array{content?: string|resource|\Psr\Http\Message\StreamInterface, sha256?: string, ...},
@@ -75,7 +98,7 @@ use Aws\AwsClient;
  *     name?: string,
  *     displayName?: string,
  *     description?: string,
- *     recordType?: 'AGENT'|'CUSTOM'|'GATEWAY'|'MCP'|'SKILL',
+ *     recordType?: 'AGENT'|'CUSTOM'|'GATEWAY'|'MCP'|'SKILL'|'WEB_BOT',
  *     descriptors?: array{
  *         mcpServer?: array{data?: string, dataSchemaVersion?: string, additionalData?: array, source?: array, ...},
  *         a2aAgentCard?: array{data?: string, dataSchemaVersion?: string, source?: array, ...},
@@ -83,6 +106,7 @@ use Aws\AwsClient;
  *         custom?: array{data?: string, ...},
  *         http?: array{source?: array, ...},
  *         agui?: array{source?: array, ...},
+ *         signatureAgentCard?: array{data?: string, dataSchemaVersion?: string, source?: array, additionalData?: array, ...},
  *         ...,
  *     },
  *     artifact?: array{content?: string|resource|\Psr\Http\Message\StreamInterface, sha256?: string, ...},
@@ -99,6 +123,10 @@ use Aws\AwsClient;
  *     tags?: array<string, string>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result deletePublisher(array $args = [])
+ * @phpstan-method \Aws\Result deletePublisher(array{publisherArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deletePublisherAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deletePublisherAsync(array{publisherArn?: string, ...} $args = [])
  * @method \Aws\Result deleteRegistry(array $args = [])
  * @phpstan-method \Aws\Result deleteRegistry(array{registryId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteRegistryAsync(array $args = [])
@@ -107,6 +135,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteRegistryRecord(array{registryId?: string, recordId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteRegistryRecordAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteRegistryRecordAsync(array{registryId?: string, recordId?: string, ...} $args = [])
+ * @method \Aws\Result disassociatePublisher(array $args = [])
+ * @phpstan-method \Aws\Result disassociatePublisher(array{recordArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociatePublisherAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise disassociatePublisherAsync(array{recordArn?: string, ...} $args = [])
+ * @method \Aws\Result getPublisher(array $args = [])
+ * @phpstan-method \Aws\Result getPublisher(array{publisherArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getPublisherAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getPublisherAsync(array{publisherArn?: string, ...} $args = [])
  * @method \Aws\Result getRegistry(array $args = [])
  * @phpstan-method \Aws\Result getRegistry(array{registryId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getRegistryAsync(array $args = [])
@@ -115,6 +151,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getRegistryRecord(array{registryId?: string, recordId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getRegistryRecordAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getRegistryRecordAsync(array{registryId?: string, recordId?: string, ...} $args = [])
+ * @method \Aws\Result listPublisherAssociations(array $args = [])
+ * @phpstan-method \Aws\Result listPublisherAssociations(array{publisherArn?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listPublisherAssociationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listPublisherAssociationsAsync(array{publisherArn?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \Aws\Result listPublishers(array $args = [])
+ * @phpstan-method \Aws\Result listPublishers(array{maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listPublishersAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listPublishersAsync(array{maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result listRegistries(array $args = [])
  * @phpstan-method \Aws\Result listRegistries(array{
  *     maxResults?: int,
@@ -161,6 +205,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result untagResource(array{resourceArn?: string, tagKeys?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise untagResourceAsync(array{resourceArn?: string, tagKeys?: list<string>, ...} $args = [])
+ * @method \Aws\Result updatePublisherAssociationApprovalStatus(array $args = [])
+ * @phpstan-method \Aws\Result updatePublisherAssociationApprovalStatus(array{recordArn?: string, approvalStatus?: 'APPROVED'|'REJECTED', approvalStatusReason?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise updatePublisherAssociationApprovalStatusAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updatePublisherAssociationApprovalStatusAsync(array{recordArn?: string, approvalStatus?: 'APPROVED'|'REJECTED', approvalStatusReason?: string, ...} $args = [])
  * @method \Aws\Result updateRegistry(array $args = [])
  * @phpstan-method \Aws\Result updateRegistry(array{
  *     registryId?: string,
@@ -190,7 +238,7 @@ use Aws\AwsClient;
  *     name?: string,
  *     displayName?: array{optionalValue?: string, ...},
  *     description?: array{optionalValue?: string, ...},
- *     recordType?: 'AGENT'|'CUSTOM'|'GATEWAY'|'MCP'|'SKILL',
+ *     recordType?: 'AGENT'|'CUSTOM'|'GATEWAY'|'MCP'|'SKILL'|'WEB_BOT',
  *     descriptors?: array{
  *         optionalValue?: array{
  *             mcpServer?: array,
@@ -199,6 +247,7 @@ use Aws\AwsClient;
  *             custom?: array,
  *             http?: array,
  *             agui?: array,
+ *             signatureAgentCard?: array,
  *             ...,
  *         },
  *         ...,
@@ -227,7 +276,7 @@ use Aws\AwsClient;
  *     name?: string,
  *     displayName?: array{optionalValue?: string, ...},
  *     description?: array{optionalValue?: string, ...},
- *     recordType?: 'AGENT'|'CUSTOM'|'GATEWAY'|'MCP'|'SKILL',
+ *     recordType?: 'AGENT'|'CUSTOM'|'GATEWAY'|'MCP'|'SKILL'|'WEB_BOT',
  *     descriptors?: array{
  *         optionalValue?: array{
  *             mcpServer?: array,
@@ -236,6 +285,7 @@ use Aws\AwsClient;
  *             custom?: array,
  *             http?: array,
  *             agui?: array,
+ *             signatureAgentCard?: array,
  *             ...,
  *         },
  *         ...,
@@ -273,5 +323,9 @@ use Aws\AwsClient;
  *     statusReason?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result validatePublisher(array $args = [])
+ * @phpstan-method \Aws\Result validatePublisher(array{publisherArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise validatePublisherAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise validatePublisherAsync(array{publisherArn?: string, ...} $args = [])
  */
 class AgentRegistryControlClient extends AwsClient {}

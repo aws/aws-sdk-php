@@ -35,6 +35,24 @@
       ],
       "idempotent":true
     },
+    "CancelChannelContract":{
+      "name":"CancelChannelContract",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CancelChannelContractRequest"},
+      "output":{"shape":"CancelChannelContractResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "CancelChannelHandshake":{
       "name":"CancelChannelHandshake",
       "http":{
@@ -49,6 +67,25 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "CreateChannelContract":{
+      "name":"CreateChannelContract",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateChannelContractRequest"},
+      "output":{"shape":"CreateChannelContractResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
     },
@@ -145,6 +182,23 @@
       ],
       "idempotent":true
     },
+    "GetChannelContract":{
+      "name":"GetChannelContract",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetChannelContractRequest"},
+      "output":{"shape":"GetChannelContractResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "GetRelationship":{
       "name":"GetRelationship",
       "http":{
@@ -153,6 +207,23 @@
       },
       "input":{"shape":"GetRelationshipRequest"},
       "output":{"shape":"GetRelationshipResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListChannelContracts":{
+      "name":"ListChannelContracts",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListChannelContractsRequest"},
+      "output":{"shape":"ListChannelContractsResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
@@ -364,6 +435,38 @@
       "type":"list",
       "member":{"shape":"AccountId"}
     },
+    "AccountScope":{
+      "type":"string",
+      "enum":[
+        "ENTIRE_ORGANIZATION",
+        "SPECIFIC_MEMBER_ACCOUNTS"
+      ]
+    },
+    "Address":{
+      "type":"structure",
+      "required":[
+        "city",
+        "stateOrRegion",
+        "postalCode",
+        "countryCode",
+        "addressLine"
+      ],
+      "members":{
+        "city":{"shape":"City"},
+        "stateOrRegion":{"shape":"StateOrRegion"},
+        "postalCode":{"shape":"PostalCode"},
+        "countryCode":{"shape":"CountryCode"},
+        "addressLine":{"shape":"AddressLine"},
+        "addressLine2":{"shape":"AddressLine"}
+      },
+      "sensitive":true
+    },
+    "AddressLine":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"\\p{Z}*[^\\p{C}\\p{Z}][^\\p{C}]*"
+    },
     "Arn":{
       "type":"string",
       "max":1011,
@@ -390,12 +493,44 @@
       "enum":[
         "DOWNSTREAM_SELLER",
         "END_CUSTOMER",
-        "INTERNAL"
+        "INTERNAL",
+        "MANAGED_SERVICES_END_CUSTOMER"
       ]
     },
     "AssociationTypeList":{
       "type":"list",
       "member":{"shape":"AssociationType"}
+    },
+    "CancelChannelContractDetail":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"ChannelContractId"},
+        "arn":{"shape":"Arn"},
+        "status":{"shape":"ChannelContractStatus"},
+        "cancellationReason":{"shape":"CancellationReason"}
+      }
+    },
+    "CancelChannelContractRequest":{
+      "type":"structure",
+      "required":[
+        "catalog",
+        "identifier"
+      ],
+      "members":{
+        "catalog":{"shape":"Catalog"},
+        "identifier":{"shape":"ChannelContractIdentifier"},
+        "reason":{"shape":"CancellationReason"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CancelChannelContractResponse":{
+      "type":"structure",
+      "members":{
+        "channelContractDetail":{"shape":"CancelChannelContractDetail"}
+      }
     },
     "CancelChannelHandshakeDetail":{
       "type":"structure",
@@ -422,11 +557,146 @@
         "channelHandshakeDetail":{"shape":"CancelChannelHandshakeDetail"}
       }
     },
+    "CancellationReason":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[^\\x00-\\x1F\\x7F]*"
+    },
     "Catalog":{
       "type":"string",
       "max":64,
       "min":1,
       "pattern":"[a-zA-Z]*"
+    },
+    "ChannelContractDetail":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn",
+        "catalog",
+        "contractType",
+        "status",
+        "createdAt",
+        "updatedAt",
+        "details"
+      ],
+      "members":{
+        "id":{"shape":"ChannelContractId"},
+        "arn":{"shape":"Arn"},
+        "catalog":{"shape":"Catalog"},
+        "contractType":{"shape":"ChannelContractType"},
+        "status":{"shape":"ChannelContractStatus"},
+        "createdAt":{"shape":"DateTime"},
+        "updatedAt":{"shape":"DateTime"},
+        "respondedAt":{"shape":"DateTime"},
+        "cancellationReason":{"shape":"CancellationReason"},
+        "details":{"shape":"ChannelContractDetails"}
+      }
+    },
+    "ChannelContractDetails":{
+      "type":"structure",
+      "members":{
+        "managedServicesAttestationDetails":{"shape":"ManagedServicesAttestationDetails"}
+      },
+      "union":true
+    },
+    "ChannelContractId":{
+      "type":"string",
+      "max":16,
+      "min":16,
+      "pattern":"cc-[a-z0-9]{13}"
+    },
+    "ChannelContractIdentifier":{
+      "type":"string",
+      "max":1011,
+      "min":16,
+      "pattern":"(arn:[a-z-]+:partnercentral:[a-z0-9-]+:[0-9]{12}:catalog/[a-zA-Z]+/channel-contract/)?cc-[a-z0-9]{13}"
+    },
+    "ChannelContractLegalEntityName":{
+      "type":"string",
+      "max":300,
+      "min":1,
+      "pattern":"[^\\x00-\\x1F\\x7F]*",
+      "sensitive":true
+    },
+    "ChannelContractLegalEntityNameFilterList":{
+      "type":"list",
+      "member":{"shape":"ChannelContractLegalEntityName"}
+    },
+    "ChannelContractPayload":{
+      "type":"structure",
+      "members":{
+        "managedServicesAttestationPayload":{"shape":"ManagedServicesAttestationPayload"}
+      },
+      "union":true
+    },
+    "ChannelContractSignatoryEmail":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^\\s@]+@[^\\s@]+\\.[^\\s@]+",
+      "sensitive":true
+    },
+    "ChannelContractSignatoryName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^\\x00-\\x1F\\x7F]*",
+      "sensitive":true
+    },
+    "ChannelContractStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "ACCEPTED",
+        "EXPIRED",
+        "CANCELED",
+        "INACTIVE"
+      ]
+    },
+    "ChannelContractStatusFilterList":{
+      "type":"list",
+      "member":{"shape":"ChannelContractStatus"}
+    },
+    "ChannelContractSummaries":{
+      "type":"list",
+      "member":{"shape":"ChannelContractSummary"}
+    },
+    "ChannelContractSummary":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn",
+        "catalog",
+        "contractType",
+        "status",
+        "createdAt",
+        "updatedAt",
+        "details"
+      ],
+      "members":{
+        "id":{"shape":"ChannelContractId"},
+        "arn":{"shape":"Arn"},
+        "catalog":{"shape":"Catalog"},
+        "contractType":{"shape":"ChannelContractType"},
+        "status":{"shape":"ChannelContractStatus"},
+        "createdAt":{"shape":"DateTime"},
+        "updatedAt":{"shape":"DateTime"},
+        "respondedAt":{"shape":"DateTime"},
+        "details":{"shape":"ChannelContractSummaryDetails"}
+      }
+    },
+    "ChannelContractSummaryDetails":{
+      "type":"structure",
+      "members":{
+        "managedServicesAttestationDetails":{"shape":"ManagedServicesAttestationSummaryDetails"}
+      },
+      "union":true
+    },
+    "ChannelContractType":{
+      "type":"string",
+      "enum":["MANAGED_SERVICES_ATTESTATION"]
     },
     "ChannelHandshakeId":{
       "type":"string",
@@ -470,6 +740,12 @@
         "status":{"shape":"HandshakeStatus"}
       }
     },
+    "City":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"\\p{Z}*[^\\p{C}\\p{Z}][^\\p{C}]*"
+    },
     "ClientToken":{
       "type":"string",
       "max":64,
@@ -490,12 +766,49 @@
       },
       "exception":true
     },
+    "CountryCode":{
+      "type":"string",
+      "max":2,
+      "min":2,
+      "pattern":"[A-Z]{2}"
+    },
     "Coverage":{
       "type":"string",
       "enum":[
         "ENTIRE_ORGANIZATION",
         "MANAGEMENT_ACCOUNT_ONLY"
       ]
+    },
+    "CreateChannelContractDetail":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"ChannelContractId"},
+        "arn":{"shape":"Arn"}
+      }
+    },
+    "CreateChannelContractRequest":{
+      "type":"structure",
+      "required":[
+        "contractType",
+        "catalog",
+        "payload"
+      ],
+      "members":{
+        "contractType":{"shape":"ChannelContractType"},
+        "catalog":{"shape":"Catalog"},
+        "payload":{"shape":"ChannelContractPayload"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "CreateChannelContractResponse":{
+      "type":"structure",
+      "members":{
+        "channelContractDetail":{"shape":"CreateChannelContractDetail"}
+      }
     },
     "CreateChannelHandshakeDetail":{
       "type":"structure",
@@ -553,7 +866,8 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "type":{"shape":"ProgramManagementAccountType"}
       }
     },
     "CreateProgramManagementAccountResponse":{
@@ -575,7 +889,6 @@
         "catalog",
         "associationType",
         "programManagementAccountIdentifier",
-        "associatedAccountId",
         "displayName",
         "sector"
       ],
@@ -592,7 +905,9 @@
           "idempotencyToken":true
         },
         "tags":{"shape":"TagList"},
-        "requestedSupportPlan":{"shape":"SupportPlan"}
+        "requestedSupportPlan":{"shape":"SupportPlan"},
+        "accountScope":{"shape":"AccountScope"},
+        "startDate":{"shape":"DateTime"}
       }
     },
     "CreateRelationshipResponse":{
@@ -644,6 +959,23 @@
     "DeleteRelationshipResponse":{
       "type":"structure",
       "members":{}
+    },
+    "GetChannelContractRequest":{
+      "type":"structure",
+      "required":[
+        "catalog",
+        "identifier"
+      ],
+      "members":{
+        "catalog":{"shape":"Catalog"},
+        "identifier":{"shape":"ChannelContractIdentifier"}
+      }
+    },
+    "GetChannelContractResponse":{
+      "type":"structure",
+      "members":{
+        "channelContractDetail":{"shape":"ChannelContractDetail"}
+      }
     },
     "GetRelationshipRequest":{
       "type":"structure",
@@ -704,6 +1036,50 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "ListChannelContractsRequest":{
+      "type":"structure",
+      "required":[
+        "catalog",
+        "contractType"
+      ],
+      "members":{
+        "catalog":{"shape":"Catalog"},
+        "contractType":{"shape":"ChannelContractType"},
+        "statuses":{"shape":"ChannelContractStatusFilterList"},
+        "contractTypeFilters":{"shape":"ListChannelContractsTypeFilters"},
+        "contractTypeSort":{"shape":"ListChannelContractsTypeSort"},
+        "maxResults":{"shape":"ListChannelContractsRequestMaxResultsInteger"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListChannelContractsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListChannelContractsResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"ChannelContractSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListChannelContractsTypeFilters":{
+      "type":"structure",
+      "members":{
+        "managedServicesAttestationTypeFilters":{"shape":"ManagedServicesAttestationTypeFilters"}
+      },
+      "union":true
+    },
+    "ListChannelContractsTypeSort":{
+      "type":"structure",
+      "members":{
+        "managedServicesAttestationTypeSort":{"shape":"ManagedServicesAttestationTypeSort"}
+      },
+      "union":true
     },
     "ListChannelHandshakesRequest":{
       "type":"structure",
@@ -766,7 +1142,8 @@
         "accountIds":{"shape":"AccountIdList"},
         "statuses":{"shape":"ProgramManagementAccountStatusList"},
         "sort":{"shape":"ListProgramManagementAccountsSortBase"},
-        "nextToken":{"shape":"NextToken"}
+        "nextToken":{"shape":"NextToken"},
+        "type":{"shape":"ProgramManagementAccountType"}
       }
     },
     "ListProgramManagementAccountsRequestMaxResultsInteger":{
@@ -852,6 +1229,114 @@
         "tags":{"shape":"TagList"}
       }
     },
+    "ManagedServicesAttestationDetails":{
+      "type":"structure",
+      "required":[
+        "legalEntityName",
+        "relationshipIdentifier",
+        "programManagementAccountIdentifier",
+        "endDate",
+        "supportedServices",
+        "signatoryName",
+        "signatoryEmail"
+      ],
+      "members":{
+        "legalEntityName":{"shape":"ChannelContractLegalEntityName"},
+        "relationshipIdentifier":{"shape":"RelationshipIdentifier"},
+        "programManagementAccountIdentifier":{"shape":"ProgramManagementAccountIdentifier"},
+        "memberAccountIds":{"shape":"MemberAccountIdList"},
+        "endDate":{"shape":"DateTime"},
+        "supportedServices":{"shape":"ManagedServicesSupportedServiceList"},
+        "signatoryName":{"shape":"ChannelContractSignatoryName"},
+        "signatoryEmail":{"shape":"ChannelContractSignatoryEmail"},
+        "legalEntityAddress":{"shape":"Address"}
+      }
+    },
+    "ManagedServicesAttestationPayload":{
+      "type":"structure",
+      "required":[
+        "legalEntityName",
+        "relationshipIdentifier",
+        "programManagementAccountIdentifier",
+        "endDate",
+        "supportedServices",
+        "legalEntityAddress",
+        "signatoryName",
+        "signatoryEmail"
+      ],
+      "members":{
+        "legalEntityName":{"shape":"ChannelContractLegalEntityName"},
+        "relationshipIdentifier":{"shape":"RelationshipIdentifier"},
+        "programManagementAccountIdentifier":{"shape":"ProgramManagementAccountIdentifier"},
+        "memberAccountIds":{"shape":"MemberAccountIdList"},
+        "endDate":{"shape":"DateTime"},
+        "supportedServices":{"shape":"ManagedServicesSupportedServiceList"},
+        "legalEntityAddress":{"shape":"Address"},
+        "signatoryName":{"shape":"ChannelContractSignatoryName"},
+        "signatoryEmail":{"shape":"ChannelContractSignatoryEmail"}
+      }
+    },
+    "ManagedServicesAttestationSummaryDetails":{
+      "type":"structure",
+      "required":[
+        "legalEntityName",
+        "relationshipIdentifier",
+        "programManagementAccountIdentifier",
+        "endDate",
+        "supportedServices"
+      ],
+      "members":{
+        "legalEntityName":{"shape":"ChannelContractLegalEntityName"},
+        "relationshipIdentifier":{"shape":"RelationshipIdentifier"},
+        "programManagementAccountIdentifier":{"shape":"ProgramManagementAccountIdentifier"},
+        "memberAccountIds":{"shape":"MemberAccountIdList"},
+        "endDate":{"shape":"DateTime"},
+        "supportedServices":{"shape":"ManagedServicesSupportedServiceList"}
+      }
+    },
+    "ManagedServicesAttestationTypeFilters":{
+      "type":"structure",
+      "members":{
+        "relationshipIdentifiers":{"shape":"RelationshipIdentifierFilterList"},
+        "legalEntityNames":{"shape":"ChannelContractLegalEntityNameFilterList"}
+      }
+    },
+    "ManagedServicesAttestationTypeSort":{
+      "type":"structure",
+      "required":[
+        "sortOrder",
+        "sortBy"
+      ],
+      "members":{
+        "sortOrder":{"shape":"SortOrder"},
+        "sortBy":{"shape":"ManagedServicesAttestationTypeSortName"}
+      }
+    },
+    "ManagedServicesAttestationTypeSortName":{
+      "type":"string",
+      "enum":["UpdatedAt"]
+    },
+    "ManagedServicesSupportedService":{
+      "type":"string",
+      "enum":[
+        "MONITORING",
+        "PATCHING",
+        "SECURITY",
+        "BACKUP_AND_DISASTER_RECOVERY",
+        "FINANCIAL_OPERATIONS",
+        "INFRASTRUCTURE_AS_CODE_AND_AUTOMATION",
+        "WELL_ARCHITECTED",
+        "ARTIFICIAL_INTELLIGENCE_AND_MACHINE_LEARNING_OPERATIONS"
+      ]
+    },
+    "ManagedServicesSupportedServiceList":{
+      "type":"list",
+      "member":{"shape":"ManagedServicesSupportedService"}
+    },
+    "MemberAccountIdList":{
+      "type":"list",
+      "member":{"shape":"AccountId"}
+    },
     "MinimumNoticeDays":{
       "type":"string",
       "max":10,
@@ -895,12 +1380,19 @@
       "min":1,
       "pattern":"[\\x00-\\x7E\\xA9\\xAE\\xA2-\\xA5\\u202F]+"
     },
+    "PostalCode":{
+      "type":"string",
+      "max":10,
+      "min":1,
+      "pattern":"\\p{Z}*[^\\p{C}\\p{Z}][^\\p{C}]*"
+    },
     "Program":{
       "type":"string",
       "enum":[
         "SOLUTION_PROVIDER",
         "DISTRIBUTION",
-        "DISTRIBUTION_SELLER"
+        "DISTRIBUTION_SELLER",
+        "MANAGED_SERVICES_PROVIDER"
       ]
     },
     "ProgramList":{
@@ -968,8 +1460,16 @@
         "createdAt":{"shape":"DateTime"},
         "updatedAt":{"shape":"DateTime"},
         "startDate":{"shape":"DateTime"},
-        "status":{"shape":"ProgramManagementAccountStatus"}
+        "status":{"shape":"ProgramManagementAccountStatus"},
+        "type":{"shape":"ProgramManagementAccountType"}
       }
+    },
+    "ProgramManagementAccountType":{
+      "type":"string",
+      "enum":[
+        "RESALE_BILLING_TRANSFER",
+        "MANAGED_SERVICES"
+      ]
     },
     "ProgramManagementAccountTypeFilters":{
       "type":"structure",
@@ -1037,9 +1537,12 @@
         "displayName":{"shape":"RelationshipDisplayName"},
         "resaleAccountModel":{"shape":"ResaleAccountModel"},
         "sector":{"shape":"Sector"},
+        "accountScope":{"shape":"AccountScope"},
+        "channelContractId":{"shape":"ChannelContractId"},
         "createdAt":{"shape":"DateTime"},
         "updatedAt":{"shape":"DateTime"},
-        "startDate":{"shape":"DateTime"}
+        "startDate":{"shape":"DateTime"},
+        "endDate":{"shape":"DateTime"}
       }
     },
     "RelationshipDisplayName":{
@@ -1063,6 +1566,10 @@
       "max":1011,
       "min":16,
       "pattern":"(arn:[a-z-]+:partnercentral:[a-z0-9-]+:[0-9]{12}:catalog/[a-zA-Z]+/program-management-account/pma-[a-z0-9]{13}/relationship/)?rs-[a-z0-9]{13}"
+    },
+    "RelationshipIdentifierFilterList":{
+      "type":"list",
+      "member":{"shape":"RelationshipIdentifier"}
     },
     "RelationshipSummaries":{
       "type":"list",
@@ -1260,6 +1767,12 @@
       "type":"string",
       "enum":["UpdatedAt"]
     },
+    "StateOrRegion":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"\\p{Z}*[^\\p{C}\\p{Z}][^\\p{C}]*"
+    },
     "String":{"type":"string"},
     "SupportPlan":{
       "type":"structure",
@@ -1320,7 +1833,7 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"arn:[a-z-]+:partnercentral:[a-z0-9-]+:[0-9]{12}:catalog/[a-zA-Z]+/(program-management-account/pma-[a-z0-9]{13}(/relationship/rs-[a-z0-9]{13})?|channel-handshake/ch-[a-z0-9]{13})"
+      "pattern":"arn:[a-z-]+:partnercentral:[a-z0-9-]+:[0-9]{12}:catalog/[a-zA-Z]+/(program-management-account/pma-[a-z0-9]{13}(/relationship/rs-[a-z0-9]{13})?|channel-handshake/ch-[a-z0-9]{13}|channel-contract/cc-[a-z0-9]{13})"
     },
     "ThrottlingException":{
       "type":"structure",

@@ -347,7 +347,10 @@
         "franceAdditionalInfo":{"shape":"FranceAdditionalInfo"},
         "monacoAdditionalInfo":{"shape":"MonacoAdditionalInfo"},
         "germanyAdditionalInfo":{"shape":"GermanyAdditionalInfo"},
-        "mexicoAdditionalInfo":{"shape":"MexicoAdditionalInfo"}
+        "mexicoAdditionalInfo":{"shape":"MexicoAdditionalInfo"},
+        "unitedArabEmiratesAdditionalInfo":{"shape":"UnitedArabEmiratesAdditionalInfo"},
+        "norwayAdditionalInfo":{"shape":"NorwayAdditionalInfo"},
+        "newZealandAdditionalInfo":{"shape":"NewZealandAdditionalInfo"}
       }
     },
     "AdditionalInfoResponse":{
@@ -381,7 +384,10 @@
         "monacoAdditionalInfo":{"shape":"MonacoAdditionalInfo"},
         "germanyAdditionalInfo":{"shape":"GermanyAdditionalInfo"},
         "mexicoAdditionalInfo":{"shape":"MexicoAdditionalInfo"},
-        "colombiaAdditionalInfo":{"shape":"ColombiaAdditionalInfo"}
+        "colombiaAdditionalInfo":{"shape":"ColombiaAdditionalInfo"},
+        "unitedArabEmiratesAdditionalInfo":{"shape":"UnitedArabEmiratesAdditionalInfo"},
+        "norwayAdditionalInfo":{"shape":"NorwayAdditionalInfo"},
+        "newZealandAdditionalInfo":{"shape":"NewZealandAdditionalInfo"}
       }
     },
     "Address":{
@@ -1174,6 +1180,34 @@
         "businessNumber":{"shape":"BusinessNumber"}
       }
     },
+    "NewZealandAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "peppolId":{"shape":"NewZealandPeppolId"}
+      }
+    },
+    "NewZealandPeppolId":{
+      "type":"string",
+      "pattern":"[0-9]{13}"
+    },
+    "NorwayAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "taxRegistrationNumberType":{"shape":"NorwayTaxRegistrationNumberType"},
+        "peppolId":{"shape":"NorwayPeppolId"}
+      }
+    },
+    "NorwayPeppolId":{
+      "type":"string",
+      "pattern":"[0-9]{9}"
+    },
+    "NorwayTaxRegistrationNumberType":{
+      "type":"string",
+      "enum":[
+        "TaxRegistrationNumber",
+        "LocalRegistrationNumber"
+      ]
+    },
     "PaginationTokenString":{
       "type":"string",
       "max":2000,
@@ -1186,7 +1220,7 @@
     },
     "PaymentVoucherNumber":{
       "type":"string",
-      "pattern":"(\\d{17}|[A-Za-z]{3}\\d{13}|(?=[^A-Za-z]*[A-Za-z][^A-Za-z]*$)[0-9A-Za-z]{17})"
+      "pattern":"(\\d{17}|\\d{20}|[A-Za-z]{3}\\d{13}|(?=[^A-Za-z]*[A-Za-z][^A-Za-z]*$)[0-9A-Za-z]{17})"
     },
     "PeppolId":{
       "type":"string",
@@ -1722,6 +1756,25 @@
         "industries":{"shape":"Industries"}
       }
     },
+    "UaeEmiratesId":{
+      "type":"string",
+      "pattern":"784-[0-9]{4}-[0-9]{7}-[0-9]"
+    },
+    "UaePeppolId":{
+      "type":"string",
+      "pattern":"[0-9]{10}"
+    },
+    "UaeTaxRegistrationNumberType":{
+      "type":"string",
+      "enum":[
+        "VATTaxRegistrationNumber",
+        "LocalTaxRegistrationNumber"
+      ]
+    },
+    "UaeTradeLicenseNumber":{
+      "type":"string",
+      "pattern":"[0-9]{10}"
+    },
     "UkraineAdditionalInfo":{
       "type":"structure",
       "required":["ukraineTrnType"],
@@ -1739,6 +1792,15 @@
     "UniqueIdentificationNumber":{
       "type":"string",
       "pattern":"[a-zA-Z0-9]{39}"
+    },
+    "UnitedArabEmiratesAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "taxRegistrationNumberType":{"shape":"UaeTaxRegistrationNumberType"},
+        "peppolId":{"shape":"UaePeppolId"},
+        "tradeLicenseNumber":{"shape":"UaeTradeLicenseNumber"},
+        "emiratesId":{"shape":"UaeEmiratesId"}
+      }
     },
     "Url":{
       "type":"string",
@@ -1817,7 +1879,8 @@
         "enterpriseIdentificationNumber":{"shape":"EnterpriseIdentificationNumber"},
         "electronicTransactionCodeNumber":{"shape":"ElectronicTransactionCodeNumber"},
         "paymentVoucherNumber":{"shape":"PaymentVoucherNumber"},
-        "paymentVoucherNumberDate":{"shape":"DateString"}
+        "paymentVoucherNumberDate":{"shape":"DateString"},
+        "vatCreditMethod":{"shape":"Boolean"}
       }
     }
   }

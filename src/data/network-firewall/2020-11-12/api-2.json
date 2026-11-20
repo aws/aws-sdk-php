@@ -1221,6 +1221,13 @@
       "min":1,
       "pattern":"^([a-fA-F\\d:\\.]+($|/\\d{1,3}))$"
     },
+    "AddressTranslations":{
+      "type":"structure",
+      "members":{
+        "PublicIPv6Addresses":{"shape":"PublicIPv6Addresses"},
+        "PublicIPv4Addresses":{"shape":"PublicIPv4Addresses"}
+      }
+    },
     "Addresses":{
       "type":"list",
       "member":{"shape":"Address"}
@@ -1285,7 +1292,8 @@
         "UpdateToken":{"shape":"UpdateToken"},
         "FirewallArn":{"shape":"ResourceArn"},
         "FirewallName":{"shape":"ResourceName"},
-        "AvailabilityZoneMappings":{"shape":"AvailabilityZoneMappings"}
+        "AvailabilityZoneMappings":{"shape":"AvailabilityZoneMappings"},
+        "FirewallType":{"shape":"FirewallType"}
       }
     },
     "AssociateAvailabilityZonesResponse":{
@@ -1304,7 +1312,8 @@
         "UpdateToken":{"shape":"UpdateToken"},
         "FirewallArn":{"shape":"ResourceArn"},
         "FirewallName":{"shape":"ResourceName"},
-        "FirewallPolicyArn":{"shape":"ResourceArn"}
+        "FirewallPolicyArn":{"shape":"ResourceArn"},
+        "FirewallType":{"shape":"FirewallType"}
       }
     },
     "AssociateFirewallPolicyResponse":{
@@ -1360,7 +1369,8 @@
         "FAILED",
         "ERROR",
         "SCALING",
-        "READY"
+        "READY",
+        "STANDBY"
       ]
     },
     "AttachmentType":{"type":"string"},
@@ -1684,6 +1694,7 @@
         "TransitGatewayId":{"shape":"TransitGatewayId"},
         "AvailabilityZoneMappings":{"shape":"AvailabilityZoneMappings"},
         "AvailabilityZoneChangeProtection":{"shape":"Boolean"},
+        "IgwFirewallConfiguration":{"shape":"IgwFirewallConfiguration"},
         "NatGatewayCreateMappings":{"shape":"NatGatewayCreateMappingsList"},
         "ProxySettings":{"shape":"ProxySettings"},
         "VpcEndpoint":{"shape":"VpcEndpoint"},
@@ -1865,6 +1876,7 @@
       "members":{
         "FirewallName":{"shape":"ResourceName"},
         "FirewallArn":{"shape":"ResourceArn"},
+        "FirewallType":{"shape":"FirewallType"},
         "DeleteAssociatedNatGateways":{"shape":"Boolean"}
       }
     },
@@ -2047,7 +2059,8 @@
       "type":"structure",
       "members":{
         "FirewallName":{"shape":"ResourceName"},
-        "FirewallArn":{"shape":"ResourceArn"}
+        "FirewallArn":{"shape":"ResourceArn"},
+        "FirewallType":{"shape":"FirewallType"}
       }
     },
     "DescribeFirewallResponse":{
@@ -2093,7 +2106,8 @@
       "type":"structure",
       "members":{
         "FirewallArn":{"shape":"ResourceArn"},
-        "FirewallName":{"shape":"ResourceName"}
+        "FirewallName":{"shape":"ResourceName"},
+        "FirewallType":{"shape":"FirewallType"}
       }
     },
     "DescribeLoggingConfigurationResponse":{
@@ -2291,7 +2305,8 @@
         "UpdateToken":{"shape":"UpdateToken"},
         "FirewallArn":{"shape":"ResourceArn"},
         "FirewallName":{"shape":"ResourceName"},
-        "AvailabilityZoneMappings":{"shape":"AvailabilityZoneMappings"}
+        "AvailabilityZoneMappings":{"shape":"AvailabilityZoneMappings"},
+        "FirewallType":{"shape":"FirewallType"}
       }
     },
     "DisassociateAvailabilityZonesResponse":{
@@ -2361,6 +2376,10 @@
     },
     "EndTime":{"type":"timestamp"},
     "EndpointId":{"type":"string"},
+    "EnforcementMode":{
+      "type":"string",
+      "enum":["POLICY_CONTROLLED"]
+    },
     "ErrorMessage":{"type":"string"},
     "FailureCode":{"type":"string"},
     "FailureMessage":{"type":"string"},
@@ -2391,6 +2410,7 @@
         "TransitGatewayOwnerAccountId":{"shape":"AWSAccountId"},
         "AvailabilityZoneMappings":{"shape":"AvailabilityZoneMappings"},
         "AvailabilityZoneChangeProtection":{"shape":"Boolean"},
+        "IgwFirewallConfiguration":{"shape":"IgwFirewallConfiguration"},
         "NatGatewayCreateMappings":{"shape":"NatGatewayCreateMappingsList"},
         "ProxySettings":{"shape":"ProxySettings"},
         "VpcEndpoint":{"shape":"VpcEndpoint"},
@@ -2677,7 +2697,15 @@
         "PROVISIONING",
         "DELETING",
         "READY",
-        "FAILED"
+        "FAILED",
+        "STANDBY"
+      ]
+    },
+    "FirewallType":{
+      "type":"string",
+      "enum":[
+        "FIREWALL",
+        "IGW_FIREWALL"
       ]
     },
     "Firewalls":{
@@ -3088,12 +3116,27 @@
       "key":{"shape":"RuleVariableName"},
       "value":{"shape":"IPSet"}
     },
+    "IPv4AddressDefinition":{
+      "type":"string",
+      "pattern":"^((25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)(/([0-9]|[12]\\d|3[0-2]))?$"
+    },
+    "IPv6AddressDefinition":{
+      "type":"string",
+      "pattern":"^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]+|::(ffff(:0{1,4})?:)?((25[0-5]|(2[0-4]|1?\\d)?\\d)\\.){3}(25[0-5]|(2[0-4]|1?\\d)?\\d)|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1?\\d)?\\d)\\.){3}(25[0-5]|(2[0-4]|1?\\d)?\\d))(/(12[0-8]|1[01]\\d|[1-9]?\\d))?$"
+    },
     "IdentifiedType":{
       "type":"string",
       "enum":[
         "STATELESS_RULE_FORWARDING_ASYMMETRICALLY",
         "STATELESS_RULE_CONTAINS_TCP_FLAGS"
       ]
+    },
+    "IgwFirewallConfiguration":{
+      "type":"structure",
+      "required":["EnforcementMode"],
+      "members":{
+        "EnforcementMode":{"shape":"EnforcementMode"}
+      }
     },
     "InsufficientCapacityException":{
       "type":"structure",
@@ -3272,7 +3315,8 @@
       "members":{
         "NextToken":{"shape":"PaginationToken"},
         "VpcIds":{"shape":"VpcIds"},
-        "MaxResults":{"shape":"PaginationMaxResults"}
+        "MaxResults":{"shape":"PaginationMaxResults"},
+        "FirewallType":{"shape":"FirewallType"}
       }
     },
     "ListFirewallsResponse":{
@@ -3719,6 +3763,14 @@
         "ATTACH_FAILED",
         "DETACH_FAILED"
       ]
+    },
+    "PublicIPv4Addresses":{
+      "type":"list",
+      "member":{"shape":"IPv4AddressDefinition"}
+    },
+    "PublicIPv6Addresses":{
+      "type":"list",
+      "member":{"shape":"IPv6AddressDefinition"}
     },
     "PublicId":{"type":"string"},
     "PublishMetricAction":{
@@ -4419,6 +4471,7 @@
       "members":{
         "Attachment":{"shape":"Attachment"},
         "Config":{"shape":"SyncStateConfig"},
+        "AddressTranslations":{"shape":"AddressTranslations"},
         "NatGatewayAttachments":{"shape":"NatGatewayAttachmentsList"}
       }
     },
@@ -4737,7 +4790,8 @@
         "EnabledAnalysisTypes":{"shape":"EnabledAnalysisTypes"},
         "FirewallArn":{"shape":"ResourceArn"},
         "FirewallName":{"shape":"ResourceName"},
-        "UpdateToken":{"shape":"UpdateToken"}
+        "UpdateToken":{"shape":"UpdateToken"},
+        "FirewallType":{"shape":"FirewallType"}
       }
     },
     "UpdateFirewallAnalysisSettingsResponse":{
@@ -4756,7 +4810,8 @@
         "UpdateToken":{"shape":"UpdateToken"},
         "FirewallArn":{"shape":"ResourceArn"},
         "FirewallName":{"shape":"ResourceName"},
-        "DeleteProtection":{"shape":"Boolean"}
+        "DeleteProtection":{"shape":"Boolean"},
+        "FirewallType":{"shape":"FirewallType"}
       }
     },
     "UpdateFirewallDeleteProtectionResponse":{
@@ -4774,7 +4829,8 @@
         "UpdateToken":{"shape":"UpdateToken"},
         "FirewallArn":{"shape":"ResourceArn"},
         "FirewallName":{"shape":"ResourceName"},
-        "Description":{"shape":"Description"}
+        "Description":{"shape":"Description"},
+        "FirewallType":{"shape":"FirewallType"}
       }
     },
     "UpdateFirewallDescriptionResponse":{
@@ -4792,7 +4848,8 @@
         "UpdateToken":{"shape":"UpdateToken"},
         "FirewallArn":{"shape":"ResourceArn"},
         "FirewallName":{"shape":"ResourceName"},
-        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "FirewallType":{"shape":"FirewallType"}
       }
     },
     "UpdateFirewallEncryptionConfigurationResponse":{
@@ -4811,7 +4868,8 @@
         "UpdateToken":{"shape":"UpdateToken"},
         "FirewallArn":{"shape":"ResourceArn"},
         "FirewallName":{"shape":"ResourceName"},
-        "FirewallPolicyChangeProtection":{"shape":"Boolean"}
+        "FirewallPolicyChangeProtection":{"shape":"Boolean"},
+        "FirewallType":{"shape":"FirewallType"}
       }
     },
     "UpdateFirewallPolicyChangeProtectionResponse":{
@@ -4882,6 +4940,7 @@
       "members":{
         "FirewallArn":{"shape":"ResourceArn"},
         "FirewallName":{"shape":"ResourceName"},
+        "FirewallType":{"shape":"FirewallType"},
         "LoggingConfiguration":{"shape":"LoggingConfiguration"},
         "EnableMonitoringDashboard":{"shape":"EnableMonitoringDashboard"}
       }

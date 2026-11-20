@@ -1416,6 +1416,7 @@
       "base": null,
       "refs": {
         "ResourceTypeManagementPreference$value": null,
+        "ResourceTypeOptInIncremental$value": null,
         "ResourceTypeOptInPreference$value": null
       }
     },
@@ -2216,6 +2217,7 @@
         "RecoveryPointMember$ResourceType": "<p>The Amazon Web Services resource type that is saved as a recovery point.</p>",
         "ResourceSelection$ResourceType": "<p>The type of Amazon Web Services resource; for example, <code>S3</code> for Amazon S3. For tiering configurations, this is currently limited to <code>S3</code>.</p>",
         "ResourceTypeManagementPreference$key": null,
+        "ResourceTypeOptInIncremental$key": null,
         "ResourceTypeOptInPreference$key": null,
         "ResourceTypes$member": null,
         "RestoreJobSummary$ResourceType": "<p>This value is the job count for the specified resource type. The request <code>GetSupportedResourceTypes</code> returns strings for supported resource types.</p>",
@@ -2235,6 +2237,13 @@
       "refs": {
         "DescribeRegionSettingsOutput$ResourceTypeManagementPreference": "<p>Returns whether Backup fully manages the backups for a resource type.</p> <p>For the benefits of full Backup management, see <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/whatisbackup.html#full-management\">Full Backup management</a>.</p> <p>For a list of resource types and whether each supports full Backup management, see the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a> table.</p> <p>If <code>\"DynamoDB\":false</code>, you can enable full Backup management for DynamoDB backup by enabling <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/advanced-ddb-backup.html#advanced-ddb-backup-enable-cli\"> Backup's advanced DynamoDB backup features</a>.</p>",
         "UpdateRegionSettingsInput$ResourceTypeManagementPreference": "<p>Enables or disables full Backup management of backups for a resource type. To enable full Backup management for DynamoDB along with <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/advanced-ddb-backup.html\"> Backup's advanced DynamoDB backup features</a>, follow the procedure to <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/advanced-ddb-backup.html#advanced-ddb-backup-enable-cli\"> enable advanced DynamoDB backup programmatically</a>.</p>"
+      }
+    },
+    "ResourceTypeOptInIncremental": {
+      "base": null,
+      "refs": {
+        "DescribeRegionSettingsOutput$ResourceTypeOptInIncremental": "<p>Specifies whether you have opted in to incremental backups for each resource type in the Region. When you opt in, each backup captures only the changes made since your previous backup. Incremental backup opt-in is currently available for Amazon DynamoDB.</p> <p>Consider opting in if your resources are large and change infrequently, because incremental backups can reduce your backup storage and backup time. To opt in, use the <code>UpdateRegionSettings</code> API. For a list of the Backup features that each resource type supports, see <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a>.</p>",
+        "UpdateRegionSettingsInput$ResourceTypeOptInIncremental": "<p>Specifies whether you opt in to incremental backups for each resource type in the Region. Opt in when you want to reduce backup storage and backup time for large resources that change infrequently. Incremental backup opt-in is currently available for Amazon DynamoDB.</p> <p>To view your current incremental backup settings, use the <code>DescribeRegionSettings</code> API. For the resource types that each Backup feature supports, see the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a> table.</p>"
       }
     },
     "ResourceTypeOptInPreference": {

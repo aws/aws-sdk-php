@@ -5002,7 +5002,8 @@
         "OriginReadTimeout":{"shape":"integer"},
         "OriginKeepaliveTimeout":{"shape":"integer"},
         "IpAddressType":{"shape":"IpAddressType"},
-        "OriginMtlsConfig":{"shape":"OriginMtlsConfig"}
+        "OriginMtlsConfig":{"shape":"OriginMtlsConfig"},
+        "OriginHttpVersion":{"shape":"OriginHttpVersion"}
       }
     },
     "CustomizationActionType":{
@@ -9561,6 +9562,13 @@
         "Items":{"shape":"OriginGroupList"}
       }
     },
+    "OriginHttpVersion":{
+      "type":"string",
+      "enum":[
+        "http1.1",
+        "http2"
+      ]
+    },
     "OriginList":{
       "type":"list",
       "member":{
@@ -12601,7 +12609,8 @@
         "VpcOriginId":{"shape":"string"},
         "OwnerAccountId":{"shape":"string"},
         "OriginReadTimeout":{"shape":"integer"},
-        "OriginKeepaliveTimeout":{"shape":"integer"}
+        "OriginKeepaliveTimeout":{"shape":"integer"},
+        "OriginHttpVersion":{"shape":"OriginHttpVersion"}
       }
     },
     "VpcOriginEndpointConfig":{

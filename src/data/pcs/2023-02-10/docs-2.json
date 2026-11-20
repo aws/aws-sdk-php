@@ -293,6 +293,32 @@
         "UpdateComputeNodeGroupRequest$customLaunchTemplate": "<p>The custom Amazon EC2 launch template to associate with the compute node group. To set or change the custom launch template, specify <code>id</code> and <code>version</code>. If you provide this value and omit <code>launchTemplateMode</code>, the compute node group must already use <code>CUSTOM</code> mode. To switch from <code>MANAGED</code> to <code>CUSTOM</code>, specify <code>launchTemplateMode</code> as <code>CUSTOM</code> and provide this value. If the compute node group already uses <code>CUSTOM</code>, omit this value while also omitting <code>launchTemplateMode</code>, or while specifying <code>CUSTOM</code>, to keep the existing custom launch template. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/working-with_cng_instance-settings-migrate.html\">Migrating a compute node group from a custom launch template</a> in the <i>PCS User Guide</i>.</p>"
       }
     },
+    "DeepHealthCheckOnStart": {
+      "base": "<p>The deep health check that runs each time an instance starts, including after a reboot, before the compute node accepts jobs.</p>",
+      "refs": {
+        "DeepHealthChecks$onStart": "<p>The deep health check to run each time an instance starts, including after a reboot, before the compute node accepts jobs. If the check fails after a reboot, PCS takes the same <code>repairAction</code> as at launch. For example, with <code>REPLACE</code>, PCS replaces the instance instead of returning it to service. If the compute node group has scripts in the <code>nodeBootstrapped</code> stage of <code>nodeLifecycleActions</code>, the deep health check runs after those scripts. If a script fails and its <code>onError</code> setting terminates the compute node, the deep health check doesn't run. This value is required when you specify <code>deepHealthChecks</code>.</p>"
+      }
+    },
+    "DeepHealthCheckOnStartProfile": {
+      "base": "<p>The deep health check profile to run each time an instance starts. Each profile other than <code>NONE</code> runs NVIDIA Data Center GPU Manager (DCGM) diagnostics. More thorough profiles run more tests and add more time to instance launch. Valid values:</p> <ul> <li> <p> <code>NONE</code> – Turns off the deep health check. You can't specify <code>repairAction</code> with this profile.</p> </li> <li> <p> <code>QUICK</code> – Runs basic GPU tests (DCGM diagnostics level 1). This profile adds the least time to instance launch.</p> </li> <li> <p> <code>MEDIUM</code> – Runs extended GPU tests (DCGM diagnostics level 2).</p> </li> <li> <p> <code>LONG</code> – Runs GPU stress and diagnostic tests (DCGM diagnostics level 3). This profile adds the most time to instance launch.</p> </li> </ul>",
+      "refs": {
+        "DeepHealthCheckOnStart$profile": "<p>The deep health check profile to run. Each profile other than <code>NONE</code> runs NVIDIA Data Center GPU Manager (DCGM) diagnostics. More thorough profiles run more tests and add more time to instance launch. A profile other than <code>NONE</code> requires instance types with NVIDIA GPUs. This value is required when you specify <code>onStart</code>. There is no default value. Valid values:</p> <ul> <li> <p> <code>NONE</code> – Turns off the deep health check. You can't specify <code>repairAction</code> with this profile.</p> </li> <li> <p> <code>QUICK</code> – Runs basic GPU tests (DCGM diagnostics level 1). This profile adds the least time to instance launch.</p> </li> <li> <p> <code>MEDIUM</code> – Runs extended GPU tests (DCGM diagnostics level 2).</p> </li> <li> <p> <code>LONG</code> – Runs GPU stress and diagnostic tests (DCGM diagnostics level 3). This profile adds the most time to instance launch.</p> </li> </ul>"
+      }
+    },
+    "DeepHealthCheckOnStartRepairAction": {
+      "base": "<p>The action that PCS takes when an instance fails the deep health check. Valid values:</p> <ul> <li> <p> <code>AUTO</code> – PCS chooses the repair action based on the fault.</p> </li> <li> <p> <code>REPLACE</code> – Replaces the instance before it accepts jobs.</p> </li> <li> <p> <code>ISOLATE</code> – Stops new jobs on the instance and keeps the instance running until you investigate.</p> </li> <li> <p> <code>NONE</code> – Records the fault in Slurm and leaves the instance available for jobs.</p> </li> </ul>",
+      "refs": {
+        "DeepHealthCheckOnStart$repairAction": "<p>The action that PCS takes when an instance fails the deep health check. You can't specify this value when <code>profile</code> is <code>NONE</code>. If you don't specify this value and <code>profile</code> isn't <code>NONE</code>, PCS uses <code>AUTO</code>. <code>GetComputeNodeGroup</code> doesn't return a <code>repairAction</code> that you didn't specify. Valid values:</p> <ul> <li> <p> <code>AUTO</code> – PCS chooses the repair action based on the fault.</p> </li> <li> <p> <code>REPLACE</code> – Replaces the instance before it accepts jobs.</p> </li> <li> <p> <code>ISOLATE</code> – Stops new jobs on the instance and keeps the instance running until you investigate.</p> </li> <li> <p> <code>NONE</code> – Records the fault in Slurm and leaves the instance available for jobs.</p> </li> </ul>"
+      }
+    },
+    "DeepHealthChecks": {
+      "base": "<p>The deep health check settings of a compute node group. Deep health checks test the graphics processing units (GPUs) of an instance each time it starts, including after a reboot, before it accepts jobs. Deep health checks with a profile other than <code>NONE</code> require instance types with NVIDIA GPUs.</p>",
+      "refs": {
+        "InstanceHealthChecks$deepHealthChecks": "<p>The deep health check settings. Deep health checks test the graphics processing units (GPUs) of an instance each time it starts, including after a reboot, before it accepts jobs.</p>",
+        "InstanceHealthChecksRequest$deepHealthChecks": "<p>The deep health check settings. Deep health checks test the graphics processing units (GPUs) of an instance each time it starts, including after a reboot, before it accepts jobs. If you specify this object, it can't be empty.</p>",
+        "UpdateInstanceHealthChecksRequest$deepHealthChecks": "<p>The deep health check settings. Deep health checks test the graphics processing units (GPUs) of an instance each time it starts, including after a reboot, before it accepts jobs. If you specify this object, it can't be empty. If you omit this object, deep health checks are turned off.</p>"
+      }
+    },
     "DeleteClusterRequest": {
       "base": null,
       "refs": {}
@@ -394,10 +420,43 @@
         "UpdateComputeNodeGroupSlurmConfigurationRequest$gresCustomSettings": "<p>The additional Slurm <code>gres.conf</code> records for the compute node group. Each item is a map of <code>gres.conf</code> attribute names to values that describes one <code>gres.conf</code> record, such as a GPU topology, MIG, MPS, or custom GRES entry. PCS adds the <code>NodeName=</code> prefix and merges these records with the GPU record it derives from the instance type.</p>"
       }
     },
+    "HealthMonitoring": {
+      "base": "<p>The health monitoring settings of a compute node group. Health monitoring continuously checks running instances for hardware and software faults.</p>",
+      "refs": {
+        "InstanceHealthChecks$healthMonitoring": "<p>The health monitoring settings. Health monitoring continuously checks running instances for hardware and software faults.</p>",
+        "InstanceHealthChecksRequest$healthMonitoring": "<p>The health monitoring settings. Health monitoring continuously checks running instances for hardware and software faults. If you specify this object, it can't be empty.</p>",
+        "UpdateInstanceHealthChecksRequest$healthMonitoring": "<p>The health monitoring settings. Health monitoring continuously checks running instances for hardware and software faults. If you specify this object, it can't be empty. If you omit this object, health monitoring is turned off.</p>"
+      }
+    },
+    "HealthMonitoringMode": {
+      "base": "<p>The health monitoring mode. Valid values:</p> <ul> <li> <p> <code>NONE</code> – Turns off health monitoring. You can't specify <code>repairAction</code> with this mode.</p> </li> <li> <p> <code>STANDARD</code> – Continuously checks running instances for hardware and software faults.</p> </li> </ul>",
+      "refs": {
+        "HealthMonitoring$mode": "<p>The health monitoring mode. This value is required when you specify <code>healthMonitoring</code>. There is no default value. Valid values:</p> <ul> <li> <p> <code>NONE</code> – Turns off health monitoring. You can't specify <code>repairAction</code> with this mode.</p> </li> <li> <p> <code>STANDARD</code> – Continuously checks running instances for hardware and software faults.</p> </li> </ul>"
+      }
+    },
+    "HealthMonitoringRepairAction": {
+      "base": "<p>The action that PCS takes when health monitoring finds a fault on an instance. Valid values:</p> <ul> <li> <p> <code>AUTO</code> – PCS chooses the repair action based on the fault.</p> </li> <li> <p> <code>REPLACE</code> – Replaces the instance after running jobs finish.</p> </li> <li> <p> <code>ISOLATE</code> – Stops new jobs on the instance and keeps the instance running until you investigate.</p> </li> <li> <p> <code>NONE</code> – Records the fault in Slurm and leaves the instance available for jobs.</p> </li> </ul>",
+      "refs": {
+        "HealthMonitoring$repairAction": "<p>The action that PCS takes when health monitoring finds a fault on an instance. You can't specify this value when <code>mode</code> is <code>NONE</code>. If you don't specify this value and <code>mode</code> isn't <code>NONE</code>, PCS uses <code>AUTO</code>. <code>GetComputeNodeGroup</code> doesn't return a <code>repairAction</code> that you didn't specify. Valid values:</p> <ul> <li> <p> <code>AUTO</code> – PCS chooses the repair action based on the fault.</p> </li> <li> <p> <code>REPLACE</code> – Replaces the instance after running jobs finish.</p> </li> <li> <p> <code>ISOLATE</code> – Stops new jobs on the instance and keeps the instance running until you investigate.</p> </li> <li> <p> <code>NONE</code> – Records the fault in Slurm and leaves the instance available for jobs.</p> </li> </ul>"
+      }
+    },
     "InstanceConfig": {
       "base": "<p>An EC2 instance configuration PCS uses to launch compute nodes.</p>",
       "refs": {
         "InstanceList$member": null
+      }
+    },
+    "InstanceHealthChecks": {
+      "base": "<p>The instance health check settings of a compute node group. Instance health checks detect faults on instances in the compute node group and respond with the repair action that you choose.</p>",
+      "refs": {
+        "ComputeNodeGroup$instanceHealthChecks": "<p>The instance health check settings of the compute node group. Instance health checks detect faults on instances in the compute node group and respond with the repair action that you choose.</p>",
+        "RegisterComputeNodeGroupInstanceResponse$instanceHealthChecks": "<p>The instance health check settings configured for the compute node group that the compute node registered into. The compute node uses these settings to configure health monitoring and deep health checks.</p>"
+      }
+    },
+    "InstanceHealthChecksRequest": {
+      "base": "<p>The instance health check settings to configure on a compute node group when you create it. Specify <code>healthMonitoring</code>, <code>deepHealthChecks</code>, or both. You can't specify an empty object (<code>{}</code>).</p>",
+      "refs": {
+        "CreateComputeNodeGroupRequest$instanceHealthChecks": "<p>The instance health check settings for the compute node group. Instance health checks detect faults on instances in the compute node group and respond with the repair action that you choose. You can configure health monitoring, deep health checks, or both. You can't specify an empty object (<code>{}</code>). Instance health checks require Slurm version 26.05 or later.</p>"
       }
     },
     "InstanceList": {
@@ -1136,6 +1195,12 @@
       "base": null,
       "refs": {
         "UpdateComputeNodeGroupSlurmConfigurationRequest$scaleDownIdleTimeInSeconds": "<p>The time (in seconds) before an idle node is scaled down. If not specified, the cluster-level setting applies. This overrides the cluster-level <code>scaleDownIdleTimeInSeconds</code> setting. A value of <code>-1</code> removes the override and applies the cluster-level setting to this compute node group. Requires Slurm version 25.11 or later.</p>"
+      }
+    },
+    "UpdateInstanceHealthChecksRequest": {
+      "base": "<p>The instance health check settings to configure on a compute node group when you update it. These settings replace all of the current instance health check settings of the compute node group. Specify <code>healthMonitoring</code>, <code>deepHealthChecks</code>, or both. You can't specify an empty object (<code>{}</code>).</p>",
+      "refs": {
+        "UpdateComputeNodeGroupRequest$instanceHealthChecks": "<p>The instance health check settings for the compute node group. Instance health checks detect faults on instances in the compute node group and respond with the repair action that you choose. You can configure health monitoring, deep health checks, or both. You can't specify an empty object (<code>{}</code>). Instance health checks require Slurm version 26.05 or later.</p> <p>The settings that you specify replace all of the current instance health check settings of the compute node group. Include every setting that you want to keep. If you omit this member, the current settings don't change. If you omit <code>healthMonitoring</code> or <code>deepHealthChecks</code>, that check is turned off. You can also turn off a check: set <code>healthMonitoring.mode</code> or <code>deepHealthChecks.onStart.profile</code> to <code>NONE</code> and omit its <code>repairAction</code>. When you change these settings, PCS drains and replaces the instances in the compute node group.</p>"
       }
     },
     "UpdateNodeLifecycleActionsRequest": {

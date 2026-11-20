@@ -260,6 +260,7 @@ use Aws\AwsClient;
  *     DocumentFormat?: 'JSON'|'TEXT'|'YAML',
  *     TargetType?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     CloudProviders?: list<'AWS'|'Azure'|'GCP'>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createDocumentAsync(array $args = [])
@@ -274,6 +275,7 @@ use Aws\AwsClient;
  *     DocumentFormat?: 'JSON'|'TEXT'|'YAML',
  *     TargetType?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     CloudProviders?: list<'AWS'|'Azure'|'GCP'>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createMaintenanceWindow(array $args = [])
@@ -2322,6 +2324,7 @@ use Aws\AwsClient;
  *     DocumentVersion?: string,
  *     DocumentFormat?: 'JSON'|'TEXT'|'YAML',
  *     TargetType?: string,
+ *     CloudProviders?: list<'AWS'|'Azure'|'GCP'>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDocumentAsync(array $args = [])
@@ -2334,6 +2337,7 @@ use Aws\AwsClient;
  *     DocumentVersion?: string,
  *     DocumentFormat?: 'JSON'|'TEXT'|'YAML',
  *     TargetType?: string,
+ *     CloudProviders?: list<'AWS'|'Azure'|'GCP'>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateDocumentDefaultVersion(array $args = [])

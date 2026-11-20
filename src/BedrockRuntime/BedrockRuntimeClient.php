@@ -36,6 +36,7 @@ use Aws\AwsClient;
  *         trace?: 'disabled'|'enabled'|'enabled_full',
  *         ...,
  *     },
+ *     projectIdentifier?: string,
  *     additionalModelRequestFields?: array,
  *     promptVariables?: array<string, array{text?: string, ...}>,
  *     additionalModelResponseFieldPaths?: list<string>,
@@ -58,6 +59,7 @@ use Aws\AwsClient;
  *         trace?: 'disabled'|'enabled'|'enabled_full',
  *         ...,
  *     },
+ *     projectIdentifier?: string,
  *     additionalModelRequestFields?: array,
  *     promptVariables?: array<string, array{text?: string, ...}>,
  *     additionalModelResponseFieldPaths?: list<string>,
@@ -81,6 +83,7 @@ use Aws\AwsClient;
  *         streamProcessingMode?: 'async'|'sync',
  *         ...,
  *     },
+ *     projectIdentifier?: string,
  *     additionalModelRequestFields?: array,
  *     promptVariables?: array<string, array{text?: string, ...}>,
  *     additionalModelResponseFieldPaths?: list<string>,
@@ -104,6 +107,7 @@ use Aws\AwsClient;
  *         streamProcessingMode?: 'async'|'sync',
  *         ...,
  *     },
+ *     projectIdentifier?: string,
  *     additionalModelRequestFields?: array,
  *     promptVariables?: array<string, array{text?: string, ...}>,
  *     additionalModelResponseFieldPaths?: list<string>,
@@ -183,6 +187,7 @@ use Aws\AwsClient;
  *     performanceConfigLatency?: 'optimized'|'standard',
  *     serviceTier?: 'default'|'flex'|'priority'|'reserved',
  *     requestMetadata?: string,
+ *     projectIdentifier?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise invokeModelAsync(array $args = [])
@@ -197,6 +202,7 @@ use Aws\AwsClient;
  *     performanceConfigLatency?: 'optimized'|'standard',
  *     serviceTier?: 'default'|'flex'|'priority'|'reserved',
  *     requestMetadata?: string,
+ *     projectIdentifier?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result invokeModelWithResponseStream(array $args = [])
@@ -211,6 +217,7 @@ use Aws\AwsClient;
  *     performanceConfigLatency?: 'optimized'|'standard',
  *     serviceTier?: 'default'|'flex'|'priority'|'reserved',
  *     requestMetadata?: string,
+ *     projectIdentifier?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise invokeModelWithResponseStreamAsync(array $args = [])
@@ -225,6 +232,7 @@ use Aws\AwsClient;
  *     performanceConfigLatency?: 'optimized'|'standard',
  *     serviceTier?: 'default'|'flex'|'priority'|'reserved',
  *     requestMetadata?: string,
+ *     projectIdentifier?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listAsyncInvokes(array $args = [])

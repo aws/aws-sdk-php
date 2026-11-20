@@ -3,6 +3,7 @@
   "service": "<p>Provides APIs for creating and managing SageMaker resources. </p> <p>Other Resources:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html#first-time-user\">SageMaker Developer Guide</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/augmented-ai/2019-11-07/APIReference/Welcome.html\">Amazon Augmented AI Runtime API Reference</a> </p> </li> </ul>",
   "operations": {
     "AddAssociation": "<p>Creates an <i>association</i> between the source and the destination. A source can be associated with multiple destinations, and a destination can be associated with multiple sources. An association is a lineage tracking entity. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/lineage-tracking.html\">Amazon SageMaker ML Lineage Tracking</a>.</p>",
+    "AddInferenceGateway": "<p>Adds an in-cluster inference gateway to a global inference gateway. This operation is asynchronous: the in-cluster inference gateway starts in the <code>ADDING</code> status. To check its status, call <code>ListInferenceGateways</code>. If the in-cluster inference gateway is already in the global inference gateway, the operation succeeds and returns its current status.</p> <p>An in-cluster inference gateway can belong to only one global inference gateway. If it already belongs to another global inference gateway, the operation fails with <code>ResourceInUse</code>. The operation fails with <code>ConflictException</code> while another operation is in progress on the global inference gateway, or if the global inference gateway failed to create.</p>",
     "AddTags": "<p>Adds or overwrites one or more tags for the specified SageMaker resource. You can add tags to notebook instances, training jobs, hyperparameter tuning jobs, batch transform jobs, models, labeling jobs, work teams, endpoint configurations, and endpoints.</p> <p>Each tag consists of a key and an optional value. Tag keys must be unique per resource. For more information about tags, see For more information, see <a href=\"https://aws.amazon.com/answers/account-management/aws-tagging-strategies/\">Amazon Web Services Tagging Strategies</a>.</p> <note> <p>Tags that you add to a hyperparameter tuning job by calling this API are also added to any training jobs that the hyperparameter tuning job launches after you call this API, but not to training jobs that the hyperparameter tuning job launched before you called this API. To make sure that the tags associated with a hyperparameter tuning job are also added to all training jobs that the hyperparameter tuning job launches, add the tags when you first create the tuning job by specifying them in the <code>Tags</code> parameter of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateHyperParameterTuningJob.html\">CreateHyperParameterTuningJob</a> </p> </note> <note> <p>Tags that you add to a SageMaker Domain or User Profile by calling this API are also added to any Apps that the Domain or User Profile launches after you call this API, but not to Apps that the Domain or User Profile launched before you called this API. To make sure that the tags associated with a Domain or User Profile are also added to all Apps that the Domain or User Profile launches, add the tags when you first create the Domain or User Profile by specifying them in the <code>Tags</code> parameter of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateDomain.html\">CreateDomain</a> or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateUserProfile.html\">CreateUserProfile</a>.</p> </note>",
     "AssociateTrialComponent": "<p>Associates a trial component with a trial. A trial component can be associated with multiple trials. To disassociate a trial component from a trial, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DisassociateTrialComponent.html\">DisassociateTrialComponent</a> API.</p>",
     "AttachClusterNodeNetworkInterface": "<p> Attaches an elastic network interface (ENI) to a node in a HyperPod cluster. </p> <p> To use this operation, you must have the <code>sagemaker:AttachClusterNodeNetworkInterface</code> permission. </p>",
@@ -40,6 +41,7 @@
     "CreateExperiment": "<p>Creates a SageMaker <i>experiment</i>. An experiment is a collection of <i>trials</i> that are observed, compared and evaluated as a group. A trial is a set of steps, called <i>trial components</i>, that produce a machine learning model.</p> <note> <p>In the Studio UI, trials are referred to as <i>run groups</i> and trial components are referred to as <i>runs</i>.</p> </note> <p>The goal of an experiment is to determine the components that produce the best model. Multiple trials are performed, each one isolating and measuring the impact of a change to one or more inputs, while keeping the remaining inputs constant.</p> <p>When you use SageMaker Studio or the SageMaker Python SDK, all experiments, trials, and trial components are automatically tracked, logged, and indexed. When you use the Amazon Web Services SDK for Python (Boto), you must use the logging APIs provided by the SDK.</p> <p>You can add tags to experiments, trials, trial components and then use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API to search for the tags.</p> <p>To add a description to an experiment, specify the optional <code>Description</code> parameter. To add a description later, or to change the description, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateExperiment.html\">UpdateExperiment</a> API.</p> <p>To get a list of all your experiments, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListExperiments.html\">ListExperiments</a> API. To view an experiment's properties, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeExperiment.html\">DescribeExperiment</a> API. To get a list of all the trials associated with an experiment, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListTrials.html\">ListTrials</a> API. To create a trial call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrial.html\">CreateTrial</a> API.</p>",
     "CreateFeatureGroup": "<p>Create a new <code>FeatureGroup</code>. A <code>FeatureGroup</code> is a group of <code>Features</code> defined in the <code>FeatureStore</code> to describe a <code>Record</code>. </p> <p>The <code>FeatureGroup</code> defines the schema and features contained in the <code>FeatureGroup</code>. A <code>FeatureGroup</code> definition is composed of a list of <code>Features</code>, a <code>RecordIdentifierFeatureName</code>, an <code>EventTimeFeatureName</code> and configurations for its <code>OnlineStore</code> and <code>OfflineStore</code>. Check <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html\">Amazon Web Services service quotas</a> to see the <code>FeatureGroup</code>s quota for your Amazon Web Services account.</p> <p>Note that it can take approximately 10-15 minutes to provision an <code>OnlineStore</code> <code>FeatureGroup</code> with the <code>InMemory</code> <code>StorageType</code>.</p> <important> <p>You must include at least one of <code>OnlineStoreConfig</code> and <code>OfflineStoreConfig</code> to create a <code>FeatureGroup</code>.</p> </important>",
     "CreateFlowDefinition": "<p>Creates a flow definition.</p>",
+    "CreateGlobalInferenceGateway": "<p>Creates a global inference gateway. This operation is asynchronous: the global inference gateway starts in the <code>CREATING</code> status. To check its status, call <code>DescribeGlobalInferenceGateway</code> until the status is <code>ACTIVE</code> or <code>FAILED</code>. The operation fails with <code>ResourceInUse</code> if the name is already in use, or if one of the in-cluster inference gateways in <code>Gateways</code> already belongs to another global inference gateway.</p>",
     "CreateHub": "<p>Create a hub.</p>",
     "CreateHubContentPresignedUrls": "<p>Creates presigned URLs for accessing hub content artifacts. This operation generates time-limited, secure URLs that allow direct download of model artifacts and associated files from Amazon SageMaker hub content, including gated models that require end-user license agreement acceptance.</p>",
     "CreateHubContentReference": "<p>Create a hub content reference in order to add a model in the JumpStart public hub to a private hub.</p>",
@@ -114,6 +116,7 @@
     "DeleteExperiment": "<p>Deletes an SageMaker experiment. All trials associated with the experiment must be deleted first. Use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListTrials.html\">ListTrials</a> API to get a list of the trials associated with the experiment.</p>",
     "DeleteFeatureGroup": "<p>Delete the <code>FeatureGroup</code> and any data that was written to the <code>OnlineStore</code> of the <code>FeatureGroup</code>. Data cannot be accessed from the <code>OnlineStore</code> immediately after <code>DeleteFeatureGroup</code> is called. </p> <p>Data written into the <code>OfflineStore</code> will not be deleted. The Amazon Web Services Glue database and tables that are automatically created for your <code>OfflineStore</code> are not deleted. </p> <p>Note that it can take approximately 10-15 minutes to delete an <code>OnlineStore</code> <code>FeatureGroup</code> with the <code>InMemory</code> <code>StorageType</code>.</p>",
     "DeleteFlowDefinition": "<p>Deletes the specified flow definition.</p>",
+    "DeleteGlobalInferenceGateway": "<p>Delete a global inference gateway and its member inference gateways, which are then free to join another global inference gateway. Asynchronous: the global inference gateway is DELETING while its managed endpoint resources are torn down; poll DescribeGlobalInferenceGateway until it returns ResourceNotFound. Does not touch the customer's clusters. Idempotent: a Delete whose Identifier matches no global inference gateway succeeds and echoes what the Identifier says (Arn and Id for an ARN or Id, Name for a name).</p>",
     "DeleteHub": "<p>Delete a hub.</p>",
     "DeleteHubContent": "<p>Delete the contents of a hub.</p>",
     "DeleteHubContentReference": "<p>Delete a hub content reference in order to remove a model from a private hub.</p>",
@@ -186,6 +189,7 @@
     "DescribeFeatureGroup": "<p>Use this operation to describe a <code>FeatureGroup</code>. The response includes information on the creation time, <code>FeatureGroup</code> name, the unique identifier for each <code>FeatureGroup</code>, and more.</p>",
     "DescribeFeatureMetadata": "<p>Shows the metadata for a feature within a feature group.</p>",
     "DescribeFlowDefinition": "<p>Returns information about the specified flow definition.</p>",
+    "DescribeGlobalInferenceGateway": "<p>Retrieves information about a global inference gateway, including its status, endpoints, and routing configuration. To list the in-cluster inference gateways of the global inference gateway, use <code>ListInferenceGateways</code>. To read the tags of the global inference gateway, use <code>ListTags</code>.</p>",
     "DescribeHub": "<p>Describes a hub.</p>",
     "DescribeHubContent": "<p>Describe the content of a hub.</p>",
     "DescribeHumanTaskUi": "<p>Returns information about the requested human task user interface (worker task template).</p>",
@@ -281,6 +285,7 @@
     "ListExperiments": "<p>Lists all the experiments in your account. The list can be filtered to show only experiments that were created in a specific time range. The list can be sorted by experiment name or creation time.</p>",
     "ListFeatureGroups": "<p>List <code>FeatureGroup</code>s based on given filter and order.</p>",
     "ListFlowDefinitions": "<p>Returns information about the flow definitions in your account.</p>",
+    "ListGlobalInferenceGateways": "<p>Lists summaries of the global inference gateways in your account. You can filter the results by status.</p>",
     "ListHubContentVersions": "<p>List hub content versions.</p>",
     "ListHubContents": "<p>List the contents of a hub.</p>",
     "ListHubs": "<p>List all existing hubs.</p>",
@@ -290,6 +295,7 @@
     "ListImages": "<p>Lists the images in your account and their properties. The list can be filtered by creation time or modified time, and whether the image name contains a specified string.</p>",
     "ListInferenceComponents": "<p>Lists the inference components in your account and their properties.</p>",
     "ListInferenceExperiments": "<p>Returns the list of all inference experiments.</p>",
+    "ListInferenceGateways": "<p>Lists the in-cluster inference gateways in a global inference gateway, in the order that they were added. Each summary includes the status of the in-cluster inference gateway and, if the status is <code>FAILED</code>, the reason for the failure. <code>DescribeGlobalInferenceGateway</code> doesn't return the in-cluster inference gateways; use this operation to list them.</p>",
     "ListInferenceRecommendationsJobSteps": "<p>Returns a list of the subtasks for an Inference Recommender job.</p> <p>The supported subtasks are benchmarks, which evaluate the performance of your model on different instance types.</p>",
     "ListInferenceRecommendationsJobs": "<p>Lists recommendation jobs that satisfy various filters.</p>",
     "ListInferenceRouters": "<p>Lists the inference routers in your account in the current Amazon Web Services Region. A router that you just created might not appear in the list right away.</p>",
@@ -342,10 +348,12 @@
     "ListUserProfiles": "<p>Lists user profiles.</p>",
     "ListWorkforces": "<p>Use this operation to list all private and vendor workforces in an Amazon Web Services Region. Note that you can only have one private workforce per Amazon Web Services Region.</p>",
     "ListWorkteams": "<p>Gets a list of private work teams that you have defined in a region. The list may be empty if no work team satisfies the filter specified in the <code>NameContains</code> parameter.</p>",
+    "MoveClusterNodes": "<p>Moves running nodes from one instance group to another instance group. The target instance group can be in the same HyperPod cluster or in a different HyperPod cluster in the same account and Region. The underlying instances aren't terminated.</p> <p>Each node keeps its instance ID, its <code>NodeLogicalId</code>, its network interfaces and IP addresses, and its capacity. The node then joins the target instance group with the target's configuration and lifecycle scripts.</p> <important> <p>The move replaces the node's root Amazon Elastic Block Store (Amazon EBS) volume and secondary EBS volume, which deletes any data stored on them. Back up any data that you need before you move the node.</p> </important> <p>Specify the nodes to move with exactly one of <code>NodeIds</code>, <code>NodeLogicalIds</code>, or <code>InstanceCount</code>. The operation is asynchronous and returns after it accepts the nodes for the move. While a node moves, its status is <code>DetachInProgress</code> and then <code>AttachInProgress</code>. The node appears in the source cluster while it detaches. After HyperPod hands the node off to the target instance group, the node appears in the target cluster. To track the node, call <code>DescribeClusterNode</code> or <code>ListClusterNodes</code> on the source or target cluster.</p> <note> <p>Both clusters must be <code>InService</code>, use Amazon EKS orchestration, and use <code>Continuous</code> as the <code>NodeProvisioningMode</code>.</p> <p>The source and target instance groups must also use compatible configurations.</p> </note>",
     "PutEndpointPolicy": "<p>Attaches a resource-based policy to an endpoint. With an endpoint policy, you can allow other Amazon Web Services accounts to send requests to your endpoint, or to inference components on it, through an inference router. The policy that you specify replaces the endpoint's existing policy, if it has one.</p> <p>You can't attach a policy to an endpoint whose status is <code>Deleting</code> or <code>Failed</code>. SageMaker AI rejects a policy that doesn't follow the endpoint policy rules. For information about the policy rules, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/inference-router-cross-account.html\">Use destinations in other accounts</a>.</p> <p>Policy changes typically take effect within 30 seconds, and can take up to 5 minutes. If you delete the endpoint, its policy is also deleted, and a new endpoint with the same name has no policy.</p>",
     "PutModelPackageGroupPolicy": "<p>Adds a resouce policy to control access to a model group. For information about resoure policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_identity-vs-resource.html\">Identity-based policies and resource-based policies</a> in the <i>Amazon Web Services Identity and Access Management User Guide.</i>.</p>",
     "QueryLineage": "<p>Use this action to inspect your lineage and discover relationships between entities. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/querying-lineage-entities.html\"> Querying Lineage Entities</a> in the <i>Amazon SageMaker Developer Guide</i>.</p>",
     "RegisterDevices": "<p>Register devices.</p>",
+    "RemoveInferenceGateway": "<p>Removes an in-cluster inference gateway from a global inference gateway. This operation is asynchronous: the in-cluster inference gateway moves to the <code>REMOVING</code> status, and then no longer appears in <code>ListInferenceGateways</code>. If the in-cluster inference gateway isn't in the global inference gateway, the operation succeeds and returns no status. The operation returns <code>ResourceNotFound</code> only if the global inference gateway doesn't exist.</p> <p>The operation fails with <code>ConflictException</code> while another operation is in progress on the global inference gateway. It fails with <code>ValidationException</code> if the in-cluster inference gateway is the last one, because a global inference gateway must have at least one.</p>",
     "RenderUiTemplate": "<p>Renders the UI template so that you can preview the worker's experience. </p>",
     "RetryPipelineExecution": "<p>Retry the execution of the pipeline.</p>",
     "Search": "<p>Finds SageMaker resources that match a search query. Matching resources are returned as a list of <code>SearchRecord</code> objects in the response. You can sort the search results by any resource property in a ascending or descending order.</p> <p>You can query against the following value types: numeric, text, Boolean, and timestamp.</p> <note> <p>The Search API may provide access to otherwise restricted data. See <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/api-permissions-reference.html\">Amazon SageMaker API Permissions: Actions, Permissions, and Resources Reference</a> for more information.</p> </note>",
@@ -398,6 +406,7 @@
     "UpdateExperiment": "<p>Adds, updates, or removes the description of an experiment. Updates the display name of an experiment.</p>",
     "UpdateFeatureGroup": "<p>Updates the feature group by either adding features or updating the online store configuration. Use one of the following request parameters at a time while using the <code>UpdateFeatureGroup</code> API.</p> <p>You can add features for your feature group using the <code>FeatureAdditions</code> request parameter. Features cannot be removed from a feature group.</p> <p>You can update the online store configuration by using the <code>OnlineStoreConfig</code> request parameter. If a <code>TtlDuration</code> is specified, the default <code>TtlDuration</code> applies for all records added to the feature group <i>after the feature group is updated</i>. If a record level <code>TtlDuration</code> exists from using the <code>PutRecord</code> API, the record level <code>TtlDuration</code> applies to that record instead of the default <code>TtlDuration</code>. To remove the default <code>TtlDuration</code> from an existing feature group, use the <code>UpdateFeatureGroup</code> API and set the <code>TtlDuration</code> <code>Unit</code> and <code>Value</code> to <code>null</code>.</p>",
     "UpdateFeatureMetadata": "<p>Updates the description and parameters of the feature group.</p>",
+    "UpdateGlobalInferenceGateway": "<p>Updates the routing configuration of a global inference gateway. To add or remove in-cluster inference gateways, use <code>AddInferenceGateway</code> and <code>RemoveInferenceGateway</code>. This operation is asynchronous: the global inference gateway moves to the <code>UPDATING</code> status. The operation fails with <code>ConflictException</code> while another operation is in progress on the global inference gateway.</p>",
     "UpdateHub": "<p>Update a hub.</p>",
     "UpdateHubContent": "<p>Updates SageMaker hub content (either a <code>Model</code> or <code>Notebook</code> resource).</p> <p>You can update the metadata that describes the resource. In addition to the required request fields, specify at least one of the following fields to update:</p> <ul> <li> <p> <code>HubContentDescription</code> </p> </li> <li> <p> <code>HubContentDisplayName</code> </p> </li> <li> <p> <code>HubContentMarkdown</code> </p> </li> <li> <p> <code>HubContentSearchKeywords</code> </p> </li> <li> <p> <code>SupportStatus</code> </p> </li> </ul> <p>For more information about hubs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-curated-hubs.html\">Private curated hubs for foundation model access control in JumpStart</a>.</p> <note> <p>If you want to update a <code>ModelReference</code> resource in your hub, use the <code>UpdateHubContentResource</code> API instead.</p> </note>",
     "UpdateHubContentReference": "<p>Updates the contents of a SageMaker hub for a <code>ModelReference</code> resource. A <code>ModelReference</code> allows you to access public SageMaker JumpStart models from within your private hub.</p> <p>When using this API, you can update the <code>MinVersion</code> field for additional flexibility in the model version. You shouldn't update any additional fields when using this API, because the metadata in your private hub should match the public JumpStart model's metadata.</p> <note> <p>If you want to update a <code>Model</code> or <code>Notebook</code> resource in your hub, use the <code>UpdateHubContent</code> API instead.</p> </note> <p>For more information about adding model references to your hub, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-curated-hubs-admin-guide-add-models.html\"> Add models to a private hub</a>.</p>",
@@ -1115,6 +1124,14 @@
       "refs": {
         "BatchAddClusterNodesRequest$NodesToAdd": "<p>A list of instance groups and the number of nodes to add to each. You can specify up to 5 instance groups in a single request, with a maximum of 50 nodes total across all instance groups.</p>"
       }
+    },
+    "AddInferenceGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AddInferenceGatewayResponse": {
+      "base": null,
+      "refs": {}
     },
     "AddTagsInput": {
       "base": null,
@@ -3385,6 +3402,8 @@
         "ListClusterExtensionsRequest$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster whose extensions you want to list.</p>",
         "ListClusterSchedulerConfigsRequest$ClusterArn": "<p>Filter for ARN of the cluster.</p>",
         "ListComputeQuotasRequest$ClusterArn": "<p>Filter for ARN of the cluster.</p>",
+        "MoveClusterNodesRequest$SourceClusterArn": "<p>The Amazon Resource Name (ARN) of the HyperPod cluster that the nodes are moved from.</p>",
+        "MoveClusterNodesRequest$TargetClusterArn": "<p>The Amazon Resource Name (ARN) of the HyperPod cluster that the nodes are moved to. The target cluster must be in the same account and Region as the source cluster, and can be the same cluster as the source.</p>",
         "StartClusterHealthCheckResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster on which the deep health checks were initiated.</p>",
         "UpdateClusterExtensionRequest$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster on which the extension is installed.</p>",
         "UpdateClusterResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the updated SageMaker HyperPod cluster.</p>",
@@ -3617,6 +3636,8 @@
         "InstanceGroupHealthCheckConfiguration$InstanceGroupName": "<p>The name of the instance group.</p>",
         "ListClusterEventsRequest$InstanceGroupName": "<p>The name of the instance group to filter events. If specified, only events related to this instance group are returned.</p>",
         "ListClusterNodesRequest$InstanceGroupNameContains": "<p>A filter that returns the instance groups whose name contain a specified string.</p>",
+        "MoveClusterNodesRequest$SourceInstanceGroupName": "<p>The name of the instance group in the source cluster that the nodes are moved from.</p>",
+        "MoveClusterNodesRequest$TargetInstanceGroupName": "<p>The name of the instance group in the target cluster that the nodes are moved to. If the target cluster is the same as the source cluster, the target instance group must be different from the source instance group.</p>",
         "NodeAdditionResult$InstanceGroupName": "<p>The name of the instance group to which the node was added.</p>",
         "UpdateClusterSoftwareInstanceGroupSpecification$InstanceGroupName": "<p>The name of the instance group to update.</p>"
       }
@@ -3919,7 +3940,9 @@
         "DetachClusterNodeVolumeRequest$NodeId": "<p> The unique identifier of the cluster node from which you want to detach the volume. </p>",
         "DetachClusterNodeVolumeResponse$NodeId": "<p> The unique identifier of the cluster node from which your volume was detached. </p>",
         "InstanceIds$member": null,
-        "ListClusterEventsRequest$NodeId": "<p>The EC2 instance ID to filter events. If specified, only events related to this instance are returned.</p>"
+        "ListClusterEventsRequest$NodeId": "<p>The EC2 instance ID to filter events. If specified, only events related to this instance are returned.</p>",
+        "MoveClusterNodeIds$member": null,
+        "MoveClusterNodesError$NodeId": "<p>The instance ID of the node that could not be moved.</p>"
       }
     },
     "ClusterNodeIds": {
@@ -3943,6 +3966,8 @@
         "ClusterNodeLogicalIdList$member": null,
         "DescribeClusterNodeRequest$NodeLogicalId": "<p>The logical identifier of the node to describe. You can specify either <code>NodeLogicalId</code> or <code>InstanceId</code>, but not both. <code>NodeLogicalId</code> can be used to describe nodes that are still being provisioned and don't yet have an <code>InstanceId</code> assigned.</p>",
         "InstanceMetadata$NodeLogicalId": "<p>The unique logical identifier of the node within the cluster. The ID used here is the same object as in the <code>BatchAddClusterNodes</code> API.</p>",
+        "MoveClusterNodeLogicalIds$member": null,
+        "MoveClusterNodeLogicalIdsError$NodeLogicalId": "<p>The <code>NodeLogicalId</code> of the node that could not be moved.</p>",
         "NodeAdditionResult$NodeLogicalId": "<p>A unique identifier assigned to the node that can be used to track its provisioning status through the <code>DescribeClusterNode</code> operation.</p>"
       }
     },
@@ -5055,6 +5080,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateGlobalInferenceGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateGlobalInferenceGatewayResponse": {
+      "base": "<p>Contains the identifiers and status of the new global inference gateway, and the parameters from the request except <code>Tags</code>. To read the tags, use <code>ListTags</code>.</p>",
+      "refs": {}
+    },
     "CreateHubContentPresignedUrlsRequest": {
       "base": null,
       "refs": {}
@@ -6029,6 +6062,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteGlobalInferenceGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteGlobalInferenceGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteHubContentReferenceRequest": {
       "base": null,
       "refs": {}
@@ -6590,6 +6631,14 @@
       "refs": {}
     },
     "DescribeFlowDefinitionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeGlobalInferenceGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeGlobalInferenceGatewayResponse": {
       "base": null,
       "refs": {}
     },
@@ -9297,6 +9346,259 @@
       "base": null,
       "refs": {
         "GitConfig$RepositoryUrl": "<p>The URL where the Git repository is located.</p>"
+      }
+    },
+    "GlobalInferenceGatewayArn": {
+      "base": null,
+      "refs": {
+        "AddInferenceGatewayResponse$Arn": "<p>The Amazon Resource Name (ARN) of the global inference gateway.</p>",
+        "CreateGlobalInferenceGatewayResponse$Arn": "<p>The Amazon Resource Name (ARN) of the global inference gateway.</p>",
+        "DeleteGlobalInferenceGatewayResponse$Arn": "<p>Set when a global inference gateway was deleted, and for an already-gone one when the Identifier was an ARN or Id.</p>",
+        "DescribeGlobalInferenceGatewayResponse$Arn": "<p>The Amazon Resource Name (ARN) of the global inference gateway.</p>",
+        "GlobalInferenceGatewaySummary$Arn": "<p>The Amazon Resource Name (ARN) of the global inference gateway.</p>",
+        "RemoveInferenceGatewayResponse$Arn": "<p>The Amazon Resource Name (ARN) of the global inference gateway.</p>",
+        "UpdateGlobalInferenceGatewayResponse$Arn": "<p>The Amazon Resource Name (ARN) of the global inference gateway.</p>"
+      }
+    },
+    "GlobalInferenceGatewayClientToken": {
+      "base": null,
+      "refs": {
+        "CreateGlobalInferenceGatewayRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. An idempotent operation completes no more than one time. If you don't specify a client token, the Amazon Web Services SDKs and the Amazon Web Services CLI generate one for you.</p>"
+      }
+    },
+    "GlobalInferenceGatewayClusterArn": {
+      "base": null,
+      "refs": {
+        "AddInferenceGatewayRequest$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster that runs the in-cluster inference gateway. The cluster must be in the same account and partition as the global inference gateway. It can be in a different Region, but not in an opt-in Region.</p>",
+        "GlobalInferenceGatewayMember$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster that runs the in-cluster inference gateway. The cluster must be in the same account and partition as the global inference gateway. It can be in a different Region, but not in an opt-in Region.</p>",
+        "GlobalInferenceGatewayMemberSummary$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster that runs the in-cluster inference gateway.</p>",
+        "RemoveInferenceGatewayRequest$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster that runs the in-cluster inference gateway.</p>"
+      }
+    },
+    "GlobalInferenceGatewayEndpointUrl": {
+      "base": "<p>The URL that you use to invoke the global inference gateway, for example <code>https://k3x9p2m7q1ab.001.sm-gateway.us-east-1.on.aws</code>.</p>",
+      "refs": {
+        "DescribeGlobalInferenceGatewayResponse$EndpointUrl": "<p>The URL that you use to invoke the global inference gateway. This value is set after the global inference gateway becomes <code>ACTIVE</code>.</p>"
+      }
+    },
+    "GlobalInferenceGatewayExecutionRoleArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of the IAM role that the global inference gateway assumes to access your SageMaker HyperPod clusters. The role must be in the same account and partition as the global inference gateway.</p>",
+      "refs": {
+        "CreateGlobalInferenceGatewayRequest$ExecutionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the global inference gateway assumes to access your SageMaker HyperPod clusters. The role must be in your account and partition, and you must have <code>iam:PassRole</code> permission for it. You can't change the role after you create the global inference gateway.</p>",
+        "CreateGlobalInferenceGatewayResponse$ExecutionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the global inference gateway assumes to access your SageMaker HyperPod clusters.</p>",
+        "DescribeGlobalInferenceGatewayResponse$ExecutionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the global inference gateway assumes to access your SageMaker HyperPod clusters. You can't change the role after you create the global inference gateway.</p>"
+      }
+    },
+    "GlobalInferenceGatewayFailureReason": {
+      "base": null,
+      "refs": {
+        "DescribeGlobalInferenceGatewayResponse$FailureReason": "<p>The reason that the global inference gateway failed. SageMaker returns this value only when the status is <code>FAILED</code>.</p>",
+        "GlobalInferenceGatewayMemberSummary$FailureReason": "<p>The reason that adding or removing the in-cluster inference gateway failed. This value is set only when the status is <code>FAILED</code>.</p>"
+      }
+    },
+    "GlobalInferenceGatewayFilter": {
+      "base": "<p>A filter for <code>ListGlobalInferenceGateways</code>. The filter matches the global inference gateways whose attribute named by <code>Name</code> equals <code>Value</code>.</p>",
+      "refs": {
+        "GlobalInferenceGatewayFilters$member": null
+      }
+    },
+    "GlobalInferenceGatewayFilterName": {
+      "base": "<p>The attribute to filter on when you call <code>ListGlobalInferenceGateways</code>.</p>",
+      "refs": {
+        "GlobalInferenceGatewayFilter$Name": "<p>The attribute to filter global inference gateways on. The only supported value is <code>Status</code>.</p>"
+      }
+    },
+    "GlobalInferenceGatewayFilterValue": {
+      "base": "<p>The value to match in a <code>ListGlobalInferenceGateways</code> filter. For the <code>Status</code> filter, specify a global inference gateway status.</p>",
+      "refs": {
+        "GlobalInferenceGatewayFilter$Value": "<p>The value to match. For the <code>Status</code> filter, specify a global inference gateway status.</p>"
+      }
+    },
+    "GlobalInferenceGatewayFilters": {
+      "base": "<p>The filters to apply to <code>ListGlobalInferenceGateways</code>. Multiple filters are combined with a logical AND.</p>",
+      "refs": {
+        "ListGlobalInferenceGatewaysRequest$Filters": "<p>The filters to apply to the results. You can filter by <code>Status</code>. Multiple filters are combined with a logical AND.</p>"
+      }
+    },
+    "GlobalInferenceGatewayId": {
+      "base": "<p>The ID of a global inference gateway. The ID is the last segment of the global inference gateway ARN and consists of 12 lowercase letters or digits.</p>",
+      "refs": {
+        "AddInferenceGatewayResponse$Id": "<p>The ID of the global inference gateway.</p>",
+        "CreateGlobalInferenceGatewayResponse$Id": "<p>The ID of the global inference gateway.</p>",
+        "DeleteGlobalInferenceGatewayResponse$Id": "<p>Set when a global inference gateway was deleted, and for an already-gone one when the Identifier was an ARN or Id.</p>",
+        "DescribeGlobalInferenceGatewayResponse$Id": "<p>The ID of the global inference gateway.</p>",
+        "GlobalInferenceGatewaySummary$Id": "<p>The ID of the global inference gateway.</p>",
+        "RemoveInferenceGatewayResponse$Id": "<p>The ID of the global inference gateway.</p>",
+        "UpdateGlobalInferenceGatewayResponse$Id": "<p>The ID of the global inference gateway.</p>"
+      }
+    },
+    "GlobalInferenceGatewayIdentifier": {
+      "base": "<p>The name, Amazon Resource Name (ARN), or ID of a global inference gateway.</p>",
+      "refs": {
+        "AddInferenceGatewayRequest$Identifier": "<p>The name, Amazon Resource Name (ARN), or ID of the global inference gateway.</p>",
+        "DeleteGlobalInferenceGatewayRequest$Identifier": "<p>The name, Amazon Resource Name (ARN), or ID of the global inference gateway to delete.</p>",
+        "DescribeGlobalInferenceGatewayRequest$Identifier": "<p>The name, Amazon Resource Name (ARN), or ID of the global inference gateway.</p>",
+        "ListInferenceGatewaysRequest$Identifier": "<p>The name, Amazon Resource Name (ARN), or ID of the global inference gateway.</p>",
+        "RemoveInferenceGatewayRequest$Identifier": "<p>The name, Amazon Resource Name (ARN), or ID of the global inference gateway.</p>",
+        "UpdateGlobalInferenceGatewayRequest$Identifier": "<p>The name, Amazon Resource Name (ARN), or ID of the global inference gateway to update.</p>"
+      }
+    },
+    "GlobalInferenceGatewayKubernetesNamespace": {
+      "base": null,
+      "refs": {
+        "AddInferenceGatewayRequest$Namespace": "<p>The Kubernetes namespace of the in-cluster inference gateway.</p>",
+        "GlobalInferenceGatewayMember$Namespace": "<p>The Kubernetes namespace of the in-cluster inference gateway.</p>",
+        "GlobalInferenceGatewayMemberSummary$Namespace": "<p>The Kubernetes namespace of the in-cluster inference gateway.</p>",
+        "RemoveInferenceGatewayRequest$Namespace": "<p>The Kubernetes namespace of the in-cluster inference gateway.</p>"
+      }
+    },
+    "GlobalInferenceGatewayKubernetesResourceName": {
+      "base": null,
+      "refs": {
+        "AddInferenceGatewayRequest$Name": "<p>The name of the <code>InferenceGatewayConfig</code> resource that defines the in-cluster inference gateway.</p>",
+        "GlobalInferenceGatewayMember$Name": "<p>The name of the <code>InferenceGatewayConfig</code> resource that defines the in-cluster inference gateway.</p>",
+        "GlobalInferenceGatewayMemberSummary$Name": "<p>The name of the <code>InferenceGatewayConfig</code> resource that defines the in-cluster inference gateway.</p>",
+        "RemoveInferenceGatewayRequest$Name": "<p>The name of the <code>InferenceGatewayConfig</code> resource that defines the in-cluster inference gateway.</p>"
+      }
+    },
+    "GlobalInferenceGatewayMaxResults": {
+      "base": null,
+      "refs": {
+        "ListGlobalInferenceGatewaysRequest$MaxResults": "<p>The maximum number of global inference gateways to return in the response.</p>",
+        "ListInferenceGatewaysRequest$MaxResults": "<p>The maximum number of in-cluster inference gateways to return in the response.</p>"
+      }
+    },
+    "GlobalInferenceGatewayMember": {
+      "base": "<p>An in-cluster inference gateway, identified by the SageMaker HyperPod cluster that runs it (<code>ClusterArn</code>), its Kubernetes namespace (<code>Namespace</code>), and the name of the <code>InferenceGatewayConfig</code> resource that defines it (<code>Name</code>).</p>",
+      "refs": {
+        "AddInferenceGatewayResponse$Gateway": "<p>The in-cluster inference gateway that you added.</p>",
+        "GlobalInferenceGatewayMembers$member": null,
+        "RemoveInferenceGatewayResponse$Gateway": "<p>The in-cluster inference gateway that you removed.</p>"
+      }
+    },
+    "GlobalInferenceGatewayMemberFilter": {
+      "base": "<p>A filter for <code>ListInferenceGateways</code>. The filter matches the in-cluster inference gateways whose attribute named by <code>Name</code> equals <code>Value</code>.</p>",
+      "refs": {
+        "GlobalInferenceGatewayMemberFilters$member": null
+      }
+    },
+    "GlobalInferenceGatewayMemberFilterName": {
+      "base": "<p>The attribute to filter on when you call <code>ListInferenceGateways</code>.</p>",
+      "refs": {
+        "GlobalInferenceGatewayMemberFilter$Name": "<p>The attribute to filter in-cluster inference gateways on. Supported values are <code>Status</code> and <code>ClusterArn</code>.</p>"
+      }
+    },
+    "GlobalInferenceGatewayMemberFilterValue": {
+      "base": "<p>The value to match in a <code>ListInferenceGateways</code> filter. For the <code>Status</code> filter, specify a status of an in-cluster inference gateway. For the <code>ClusterArn</code> filter, specify the ARN of a SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "GlobalInferenceGatewayMemberFilter$Value": "<p>The value to match. For the <code>Status</code> filter, specify a status of an in-cluster inference gateway. For the <code>ClusterArn</code> filter, specify the Amazon Resource Name (ARN) of a SageMaker HyperPod cluster.</p>"
+      }
+    },
+    "GlobalInferenceGatewayMemberFilters": {
+      "base": "<p>The filters to apply to <code>ListInferenceGateways</code>. Multiple filters are combined with a logical AND.</p>",
+      "refs": {
+        "ListInferenceGatewaysRequest$Filters": "<p>The filters to apply to the results. You can filter by <code>Status</code> and <code>ClusterArn</code>. Multiple filters are combined with a logical AND.</p>"
+      }
+    },
+    "GlobalInferenceGatewayMemberStatus": {
+      "base": "<p>The status of an in-cluster inference gateway in a global inference gateway. This status describes the membership in the global inference gateway, not the health of the in-cluster inference gateway.</p>",
+      "refs": {
+        "AddInferenceGatewayResponse$Status": "<p>The status of the in-cluster inference gateway in the global inference gateway.</p>",
+        "GlobalInferenceGatewayMemberSummary$Status": "<p>The status of the in-cluster inference gateway in the global inference gateway. This status describes the membership in the global inference gateway, not the health of the in-cluster inference gateway.</p>",
+        "RemoveInferenceGatewayResponse$Status": "<p>The status of the in-cluster inference gateway in the global inference gateway. This value is absent if the in-cluster inference gateway wasn't in the global inference gateway.</p>"
+      }
+    },
+    "GlobalInferenceGatewayMemberSummaries": {
+      "base": "<p>A list of summaries of the in-cluster inference gateways in a global inference gateway.</p>",
+      "refs": {
+        "ListInferenceGatewaysResponse$InferenceGatewaySummaries": "<p>The summaries of the in-cluster inference gateways, in the order that they were added.</p>"
+      }
+    },
+    "GlobalInferenceGatewayMemberSummary": {
+      "base": "<p>Summary information about an in-cluster inference gateway in a global inference gateway, including its status.</p>",
+      "refs": {
+        "GlobalInferenceGatewayMemberSummaries$member": null
+      }
+    },
+    "GlobalInferenceGatewayMembers": {
+      "base": "<p>A list of 1 to 10 in-cluster inference gateways. A global inference gateway always has at least one in-cluster inference gateway.</p>",
+      "refs": {
+        "CreateGlobalInferenceGatewayRequest$Gateways": "<p>The 1 to 10 in-cluster inference gateways to add to the global inference gateway. A global inference gateway must always have at least one in-cluster inference gateway, so <code>RemoveInferenceGateway</code> can't remove the last one.</p>",
+        "CreateGlobalInferenceGatewayResponse$Gateways": "<p>The in-cluster inference gateways that you specified in the request.</p>"
+      }
+    },
+    "GlobalInferenceGatewayName": {
+      "base": null,
+      "refs": {
+        "AddInferenceGatewayResponse$Name": "<p>The name of the global inference gateway.</p>",
+        "CreateGlobalInferenceGatewayRequest$Name": "<p>The name of the global inference gateway. The name must be unique in your account in the current Region, and is case-sensitive. The name can't be exactly 12 lowercase letters or digits, because the global inference gateway ID uses that format.</p>",
+        "CreateGlobalInferenceGatewayResponse$Name": "<p>The name of the global inference gateway.</p>",
+        "DeleteGlobalInferenceGatewayResponse$Name": "<p>Set when a global inference gateway was deleted, and for an already-gone one when the Identifier was a name.</p>",
+        "DescribeGlobalInferenceGatewayResponse$Name": "<p>The name of the global inference gateway.</p>",
+        "GlobalInferenceGatewaySummary$Name": "<p>The name of the global inference gateway.</p>",
+        "RemoveInferenceGatewayResponse$Name": "<p>The name of the global inference gateway.</p>",
+        "UpdateGlobalInferenceGatewayResponse$Name": "<p>The name of the global inference gateway.</p>"
+      }
+    },
+    "GlobalInferenceGatewayNextToken": {
+      "base": null,
+      "refs": {
+        "ListGlobalInferenceGatewaysRequest$NextToken": "<p>If the result of the previous <code>ListGlobalInferenceGateways</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of global inference gateways, use the token in the next request.</p>",
+        "ListGlobalInferenceGatewaysResponse$NextToken": "<p>If the result of the previous <code>ListGlobalInferenceGateways</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of global inference gateways, use the token in the next request.</p>",
+        "ListInferenceGatewaysRequest$NextToken": "<p>If the result of the previous <code>ListInferenceGateways</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of in-cluster inference gateways, use the token in the next request.</p>",
+        "ListInferenceGatewaysResponse$NextToken": "<p>If the result of the previous <code>ListInferenceGateways</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of in-cluster inference gateways, use the token in the next request.</p>"
+      }
+    },
+    "GlobalInferenceGatewayRouting": {
+      "base": "<p>The routing configuration of a global inference gateway. To add or remove in-cluster inference gateways, use <code>AddInferenceGateway</code> and <code>RemoveInferenceGateway</code>.</p>",
+      "refs": {
+        "CreateGlobalInferenceGatewayRequest$Routing": "<p>The routing configuration of the global inference gateway. If you omit it, the global inference gateway uses default routing weights.</p>",
+        "CreateGlobalInferenceGatewayResponse$Routing": "<p>The routing configuration of the global inference gateway.</p>",
+        "DescribeGlobalInferenceGatewayResponse$Routing": "<p>The routing configuration of the global inference gateway.</p>",
+        "UpdateGlobalInferenceGatewayRequest$Routing": "<p>The new routing configuration of the global inference gateway.</p>",
+        "UpdateGlobalInferenceGatewayResponse$Routing": "<p>The routing configuration that you specified in the request.</p>"
+      }
+    },
+    "GlobalInferenceGatewayRoutingWeight": {
+      "base": "<p>The relative weight of one routing signal, from 0 to 1. A weight of 0 turns the signal off. When you specify <code>Weights</code>, specify all four weights. The weights must sum to 1.0, within 0.001.</p>",
+      "refs": {
+        "GlobalInferenceGatewayRoutingWeights$KVHeadroom": "<p>The weight of the free key-value (KV) cache capacity on the cluster.</p>",
+        "GlobalInferenceGatewayRoutingWeights$QueueDepth": "<p>The weight of the number of requests that are waiting on the cluster.</p>",
+        "GlobalInferenceGatewayRoutingWeights$RegionProximity": "<p>The weight of how close the cluster is to the caller.</p>",
+        "GlobalInferenceGatewayRoutingWeights$ErrorRate": "<p>The weight of the recent error rate of the cluster.</p>"
+      }
+    },
+    "GlobalInferenceGatewayRoutingWeights": {
+      "base": "<p>The relative weights of the four routing signals, each from 0 to 1. Specify all four weights or none. If you specify them, they must sum to 1.0, within 0.001. If you specify none, the global inference gateway uses default weights.</p>",
+      "refs": {
+        "GlobalInferenceGatewayRouting$Weights": "<p>The weights that the global inference gateway applies to each routing signal when it scores the in-cluster inference gateways for a request.</p>"
+      }
+    },
+    "GlobalInferenceGatewayStatus": {
+      "base": "<p>The status of a global inference gateway.</p>",
+      "refs": {
+        "CreateGlobalInferenceGatewayResponse$Status": "<p>The status of the global inference gateway. A new global inference gateway starts in the <code>CREATING</code> status.</p>",
+        "DescribeGlobalInferenceGatewayResponse$Status": "<p>The status of the global inference gateway.</p>",
+        "GlobalInferenceGatewaySummary$Status": "<p>The status of the global inference gateway.</p>",
+        "UpdateGlobalInferenceGatewayResponse$Status": "<p>The status of the global inference gateway.</p>"
+      }
+    },
+    "GlobalInferenceGatewaySummaries": {
+      "base": "<p>A list of summaries of global inference gateways.</p>",
+      "refs": {
+        "ListGlobalInferenceGatewaysResponse$GlobalInferenceGatewaySummaries": "<p>The summaries of the global inference gateways.</p>"
+      }
+    },
+    "GlobalInferenceGatewaySummary": {
+      "base": "<p>Summary information about a global inference gateway.</p>",
+      "refs": {
+        "GlobalInferenceGatewaySummaries$member": null
+      }
+    },
+    "GlobalInferenceGatewayVpcEndpointServiceName": {
+      "base": "<p>The name of the VPC endpoint service of the global inference gateway. Use it to create an interface VPC endpoint (AWS PrivateLink), for example <code>com.amazonaws.vpce.us-east-1.vpce-svc-0123456789abcdef0</code>.</p>",
+      "refs": {
+        "DescribeGlobalInferenceGatewayResponse$VpcEndpointServiceName": "<p>The name of the VPC endpoint service to create an interface VPC endpoint (AWS PrivateLink) from, so that you can call <code>EndpointUrl</code> without going over the internet. This value is set after the global inference gateway becomes <code>ACTIVE</code>.</p>"
       }
     },
     "Group": {
@@ -12174,6 +12476,14 @@
       "base": null,
       "refs": {}
     },
+    "ListGlobalInferenceGatewaysRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGlobalInferenceGatewaysResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListHubContentVersionsRequest": {
       "base": null,
       "refs": {}
@@ -12243,6 +12553,14 @@
       "refs": {}
     },
     "ListInferenceExperimentsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListInferenceGatewaysRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListInferenceGatewaysResponse": {
       "base": null,
       "refs": {}
     },
@@ -14721,6 +15039,71 @@
         "FileSystemConfig$MountPath": "<p>The path within the image to mount the user's EFS home directory. The directory should be empty. If not specified, defaults to <i>/home/sagemaker-user</i>.</p>"
       }
     },
+    "MoveClusterNodeIds": {
+      "base": null,
+      "refs": {
+        "MoveClusterNodesRequest$NodeIds": "<p>A list of instance IDs of the nodes to move. You can specify up to 50 instance IDs. Each node is evaluated separately, so some nodes can be moved while others fail. The request fails if moving the eligible nodes would reduce the source instance group below its minimum instance count. Specify exactly one of <code>NodeIds</code>, <code>NodeLogicalIds</code>, or <code>InstanceCount</code>.</p>",
+        "MoveClusterNodesResponse$Successful": "<p>This list contains the instance IDs of the nodes that were accepted for the move. The response includes this list when you specify <code>NodeIds</code> or <code>InstanceCount</code>.</p>"
+      }
+    },
+    "MoveClusterNodeLogicalIds": {
+      "base": null,
+      "refs": {
+        "MoveClusterNodesRequest$NodeLogicalIds": "<p>A list of <code>NodeLogicalIds</code> of the nodes to move. You can specify up to 50 <code>NodeLogicalIds</code>. Each node is evaluated separately, so some nodes can be moved while others fail. The request fails if moving the eligible nodes would reduce the source instance group below its minimum instance count. Specify exactly one of <code>NodeIds</code>, <code>NodeLogicalIds</code>, or <code>InstanceCount</code>.</p>",
+        "MoveClusterNodesResponse$SuccessfulNodeLogicalIds": "<p>The <code>NodeLogicalIds</code> of the nodes that were accepted for the move. The response includes this list when you specify <code>NodeLogicalIds</code>.</p>"
+      }
+    },
+    "MoveClusterNodeLogicalIdsError": {
+      "base": "<p>Describes why a node, identified by its <code>NodeLogicalId</code>, could not be moved in a <code>MoveClusterNodes</code> request. Contains the <code>NodeLogicalId</code>, an error code, and an error message.</p>",
+      "refs": {
+        "MoveClusterNodeLogicalIdsErrorList$member": null
+      }
+    },
+    "MoveClusterNodeLogicalIdsErrorList": {
+      "base": null,
+      "refs": {
+        "MoveClusterNodesResponse$FailedNodeLogicalIds": "<p>The <code>NodeLogicalIds</code> that could not be moved, each with an error code and message. The response includes this list when you specify <code>NodeLogicalIds</code>. If none of the specified nodes can be moved, the request fails and no nodes are moved.</p>"
+      }
+    },
+    "MoveClusterNodesError": {
+      "base": "<p>Describes why a node, identified by its instance ID, could not be moved in a <code>MoveClusterNodes</code> request. Contains the instance ID, an error code, and an error message.</p>",
+      "refs": {
+        "MoveClusterNodesErrorList$member": null
+      }
+    },
+    "MoveClusterNodesErrorCode": {
+      "base": null,
+      "refs": {
+        "MoveClusterNodeLogicalIdsError$Code": "<p>The error code associated with the error encountered when moving the node. The error code is one of the following values:</p> <ul> <li> <p> <code>NodeIdNotFound</code>: The node does not exist in the source instance group.</p> </li> <li> <p> <code>InvalidNodeStatus</code>: The node is not in a state that allows the move. For example, the node is not <code>Running</code>, is not in a subnet of the target instance group, or has an attached Amazon EBS volume that you must detach first.</p> </li> <li> <p> <code>NodeIdInUse</code>: Another operation is already in progress for this node. Wait for the operation to complete before retrying.</p> </li> <li> <p> <code>NodeInstanceTypeMismatch</code>: The target instance group does not support the node's instance type.</p> </li> </ul>",
+        "MoveClusterNodesError$Code": "<p>The error code associated with the error encountered when moving the node. The error code is one of the following values:</p> <ul> <li> <p> <code>NodeIdNotFound</code>: The node does not exist in the source instance group.</p> </li> <li> <p> <code>InvalidNodeStatus</code>: The node is not in a state that allows the move. For example, the node is not <code>Running</code>, is not in a subnet of the target instance group, or has an attached Amazon EBS volume that you must detach first.</p> </li> <li> <p> <code>NodeIdInUse</code>: Another operation is already in progress for this node. Wait for the operation to complete before retrying.</p> </li> <li> <p> <code>NodeInstanceTypeMismatch</code>: The target instance group does not support the node's instance type.</p> </li> </ul>"
+      }
+    },
+    "MoveClusterNodesErrorList": {
+      "base": null,
+      "refs": {
+        "MoveClusterNodesResponse$Failed": "<p>The instance IDs that could not be moved, each with an error code and message. The response includes this list when you specify <code>NodeIds</code>. If none of the specified nodes can be moved, the request fails and no nodes are moved.</p>"
+      }
+    },
+    "MoveClusterNodesInstanceCount": {
+      "base": null,
+      "refs": {
+        "MoveClusterNodesRequest$InstanceCount": "<p>The number of nodes to move, from 1 to 50. HyperPod selects the nodes from the source instance group. If fewer than this number of nodes are eligible to move, the request fails and no nodes are moved. Specify exactly one of <code>NodeIds</code>, <code>NodeLogicalIds</code>, or <code>InstanceCount</code>.</p>"
+      }
+    },
+    "MoveClusterNodesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "MoveClusterNodesRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "MoveClusterNodesRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure that the operation completes no more than one time. If you retry the request with the same client token and the same parameters within 8 hours, the service returns the original response. It doesn't start a new move. If you reuse a client token with different parameters, the request fails.</p>"
+      }
+    },
+    "MoveClusterNodesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "MultiModelConfig": {
       "base": "<p>Specifies additional configuration for hosting multi-model endpoints.</p>",
       "refs": {
@@ -16075,7 +16458,7 @@
     "PipelineManagedBy": {
       "base": null,
       "refs": {
-        "ListPipelinesRequest$ManagedBy": "<p>Filters the pipelines by who manages them. Specify <code>AWS</code> to return pipelines that Amazon Web Services manages, or <code>CUSTOMER</code> to return pipelines that you created. If you don't specify a value, the response includes both.</p>"
+        "ListPipelinesRequest$ManagedBy": "<p>Filters the pipelines by who manages them. Specify <code>AWS</code> to return pipelines that Amazon Web Services manages, or <code>CUSTOMER</code> to return pipelines that you created. If you don't specify a value, the response includes only pipelines that you created.</p>"
       }
     },
     "PipelineName": {
@@ -17409,6 +17792,14 @@
       "refs": {
         "UpdateTrainingJobRequest$RemoteDebugConfig": "<p>Configuration for remote debugging while the training job is running. You can update the remote debugging configuration when the <code>SecondaryStatus</code> of the job is <code>Downloading</code> or <code>Training</code>.To learn more about the remote debugging functionality of SageMaker, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/train-remote-debugging.html\">Access a training container through Amazon Web Services Systems Manager (SSM) for remote debugging</a>.</p>"
       }
+    },
+    "RemoveInferenceGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RemoveInferenceGatewayResponse": {
+      "base": null,
+      "refs": {}
     },
     "RenderUiTemplateRequest": {
       "base": null,
@@ -19329,6 +19720,8 @@
         "ModelPackageContainerDefinition$NearestModelName": "<p>The name of a pre-trained machine learning benchmarked by Amazon SageMaker Inference Recommender model that matches your model. You can find a list of benchmarked models by calling <code>ListModelMetadata</code>.</p>",
         "ModelPackageContainerDefinition$ModelDataETag": "<p>The ETag associated with Model Data URL.</p>",
         "ModelPackageStatusItem$FailureReason": "<p>if the overall status is <code>Failed</code>, the reason for the failure.</p>",
+        "MoveClusterNodeLogicalIdsError$Message": "<p>A human-readable message describing the error encountered when moving the node.</p>",
+        "MoveClusterNodesError$Message": "<p>A human-readable message describing the error encountered when moving the node.</p>",
         "PredefinedMetricSpecification$PredefinedMetricType": "<p>The metric type. You can only apply SageMaker metric types to SageMaker endpoints.</p>",
         "ProcessingInput$InputName": "<p>The name for the processing job input.</p>",
         "ProcessingOutput$OutputName": "<p>The name for the processing job output.</p>",
@@ -19730,6 +20123,7 @@
         "CreateExperimentRequest$Tags": "<p>A list of tags to associate with the experiment. You can use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API to search on the tags.</p>",
         "CreateFeatureGroupRequest$Tags": "<p>Tags used to identify <code>Features</code> in each <code>FeatureGroup</code>.</p>",
         "CreateFlowDefinitionRequest$Tags": "<p>An array of key-value pairs that contain metadata to help you categorize and organize a flow definition. Each tag consists of a key and a value, both of which you define.</p>",
+        "CreateGlobalInferenceGatewayRequest$Tags": "<p>Custom tags for managing the global inference gateway as an Amazon Web Services resource. You can add tags to your global inference gateway in the same way you add them in other Amazon Web Services services that support tagging. For more information about tagging Amazon Web Services resources, see <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html\">Tagging your Amazon Web Services resources</a> in the <i>Tagging Amazon Web Services Resources User Guide</i>.</p> <p>The global inference gateway doesn't return tags in its responses. To read the tags, use <code>ListTags</code>.</p>",
         "CreateHubContentReferenceRequest$Tags": "<p>Any tags associated with the hub content to reference.</p>",
         "CreateHubRequest$Tags": "<p>Any tags to associate with the hub.</p>",
         "CreateHumanTaskUiRequest$Tags": "<p>An array of key-value pairs that contain metadata to help you categorize and organize a human review workflow user interface. Each tag consists of a key and a value, both of which you define.</p>",
@@ -20183,6 +20577,7 @@
         "DescribeExperimentResponse$CreationTime": "<p>When the experiment was created.</p>",
         "DescribeExperimentResponse$LastModifiedTime": "<p>When the experiment was last modified.</p>",
         "DescribeFlowDefinitionResponse$CreationTime": "<p>The timestamp when the flow definition was created.</p>",
+        "DescribeGlobalInferenceGatewayResponse$CreationTime": "<p>The time when the global inference gateway was created.</p>",
         "DescribeHubContentResponse$CreationTime": "<p>The date and time that hub content was created.</p>",
         "DescribeHubContentResponse$LastModifiedTime": "<p>The last modified time of the hub content.</p>",
         "DescribeHubResponse$CreationTime": "<p>The date and time that the hub was created.</p>",
@@ -20289,6 +20684,7 @@
         "FeatureGroupSummary$CreationTime": "<p>A timestamp indicating the time of creation time of the <code>FeatureGroup</code>.</p>",
         "FlowDefinitionSummary$CreationTime": "<p>The timestamp when SageMaker created the flow definition.</p>",
         "GetDeviceFleetReportResponse$ReportGenerated": "<p>Timestamp of when the report was generated.</p>",
+        "GlobalInferenceGatewaySummary$CreationTime": "<p>The time when the global inference gateway was created.</p>",
         "HubContent$CreationTime": "<p>The date and time that hub content was created.</p>",
         "HubContent$LastModifiedTime": "<p>The last modified time of the hub content.</p>",
         "HubContentInfo$CreationTime": "<p>The date and time that the hub content was created.</p>",
@@ -21925,6 +22321,14 @@
       "refs": {}
     },
     "UpdateFeatureMetadataRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateGlobalInferenceGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateGlobalInferenceGatewayResponse": {
       "base": null,
       "refs": {}
     },

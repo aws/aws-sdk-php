@@ -1187,12 +1187,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateRegionSettings(array{
  *     ResourceTypeOptInPreference?: array<string, bool>,
  *     ResourceTypeManagementPreference?: array<string, bool>,
+ *     ResourceTypeOptInIncremental?: array<string, bool>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRegionSettingsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateRegionSettingsAsync(array{
  *     ResourceTypeOptInPreference?: array<string, bool>,
  *     ResourceTypeManagementPreference?: array<string, bool>,
+ *     ResourceTypeOptInIncremental?: array<string, bool>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateReportPlan(array $args = [])

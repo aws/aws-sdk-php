@@ -2,10 +2,11 @@
   "version": "2.0",
   "service": "<p> Automation is a feature within Amazon Web Services Compute Optimizer that enables you to apply optimization recommendations to your Amazon Web Services resources, reducing costs and improving performance. You can apply recommended actions directly or create automation rules that implement recommendations on a recurring schedule when they match your specified criteria. With automation rules, set criteria such as Amazon Web Services Region and Resource Tags to target specific geographies and workloads. Configure rules to run daily, weekly, or monthly, and Compute Optimizer continuously evaluates new recommendations against your criteria. Track automation events over time, examine detailed step history, estimate savings achieved, and reverse actions directly from Compute Optimizer when needed. </p>",
   "operations": {
-    "AssociateAccounts": "<p>Associates one or more member accounts with your organization's management account, enabling centralized implementation of optimization actions across those accounts. Once associated, the management account (or a delegated administrator) can apply recommended actions to the member account. When you associate a member account, its organization rule mode is automatically set to \"Any allowed,\" which permits the management account to create Automation rules that automatically apply actions to that account. If the member account has not previously enabled the Automation feature, the association process automatically enables it.</p> <note> <p>Only the management account or a delegated administrator can perform this action.</p> </note>",
+    "AssociateAccounts": "<p>Associates one or more member accounts with your organization's management account, enabling centralized implementation of optimization actions across those accounts. Once associated, the management account (or a delegated administrator) can apply recommended actions to the member account. When you associate a member account, its organization rule mode is automatically set to \"Any allowed,\" which permits the management account to create Automation rules that automatically apply actions to that account. If the member account has not previously enabled the Automation feature, the association process automatically enables it.</p> <p>Requests that include an account to which an organization enrollment configuration applies are rejected.</p> <note> <p>Only the management account or a delegated administrator can perform this action.</p> </note>",
     "CreateAutomationRule": "<p> Creates a new automation rule to apply recommended actions to resources based on specified criteria. </p>",
     "DeleteAutomationRule": "<p> Deletes an existing automation rule. </p>",
-    "DisassociateAccounts": "<p> Disassociates member accounts from your organization's management account, removing centralized automation capabilities. Once disassociated, organization rules no longer apply to the member account, and the management account (or delegated administrator) cannot create Automation rules for that account. </p> <note> <p>Only the management account or a delegated administrator can perform this action.</p> </note>",
+    "DeleteOrganizationEnrollmentConfiguration": "<p> Deletes the specified configuration types from an organization enrollment configuration. After deletion, Automation stays enabled for affected accounts and earlier account associations aren't restored. Affected accounts inherit the organization rule mode from the closest parent that has an organization enrollment configuration, or get None allowed if no parent has one. </p> <note> <p>Only the management account or a delegated administrator can perform this action.</p> </note>",
+    "DisassociateAccounts": "<p> Disassociates member accounts from your organization's management account, removing centralized automation capabilities. Once disassociated, organization rules no longer apply to the member account, and the management account (or delegated administrator) can't create automation rules for that account. </p> <p>Requests that include an account to which an organization enrollment configuration applies are rejected.</p> <note> <p>Only the management account or a delegated administrator can perform this action.</p> </note>",
     "GetAutomationEvent": "<p> Retrieves details about a specific automation event. </p>",
     "GetAutomationRule": "<p> Retrieves details about a specific automation rule. </p>",
     "GetEnrollmentConfiguration": "<p> Retrieves the current enrollment configuration for Compute Optimizer Automation. </p>",
@@ -16,11 +17,14 @@
     "ListAutomationRulePreview": "<p>Returns a preview of the recommended actions that match your Automation rule's configuration and criteria. </p>",
     "ListAutomationRulePreviewSummaries": "<p>Returns a summary of the recommended actions that match your rule preview configuration and criteria. </p>",
     "ListAutomationRules": "<p> Lists the automation rules that match specified filters. </p>",
-    "ListRecommendedActionSummaries": "<p> Provides a summary of recommended actions based on specified filters. </p> <note> <p>Management accounts and delegated administrators can retrieve recommended actions that include associated member accounts. You can associate a member account using <code>AssociateAccounts</code>.</p> </note>",
-    "ListRecommendedActions": "<p> Lists the recommended actions based that match specified filters. </p> <note> <p>Management accounts and delegated administrators can retrieve recommended actions that include associated member accounts. You can associate a member account using <code>AssociateAccounts</code>.</p> </note>",
+    "ListOrganizationEnrollmentConfigurations": "<p> Lists the organization enrollment configurations that are stored directly on accounts, organizational units (OUs), and the organization root. </p> <note> <p>Only the management account or a delegated administrator can perform this action.</p> </note>",
+    "ListOrganizationalUnits": "<p> Lists the organization root and organizational units (OUs), including whether an applicable organization enrollment configuration enables Automation for member accounts and the effective organization rule mode for each root or OU. </p> <note> <p>Only the management account or a delegated administrator can perform this action.</p> </note>",
+    "ListRecommendedActionSummaries": "<p> Provides a summary of recommended actions based on specified filters. </p> <note> <p>Management accounts and delegated administrators can retrieve recommended action summaries for member accounts that are associated using <code>AssociateAccounts</code> or have an applicable organization enrollment configuration with <code>organizationRuleMode</code> set to <code>AnyAllowed</code>.</p> </note>",
+    "ListRecommendedActions": "<p> Lists the recommended actions that match the specified filters. </p> <note> <p>Management accounts and delegated administrators can retrieve recommended actions for member accounts that are associated using <code>AssociateAccounts</code> or have an applicable organization enrollment configuration with <code>organizationRuleMode</code> set to <code>AnyAllowed</code>.</p> </note>",
     "ListTagsForResource": "<p> Lists the tags for a specified resource. </p>",
-    "RollbackAutomationEvent": "<p> Initiates a rollback for a completed automation event. </p> <note> <p>Management accounts and delegated administrators can only initiate a rollback for events belonging to associated member accounts. You can associate a member account using <code>AssociateAccounts</code>.</p> </note>",
-    "StartAutomationEvent": "<p> Initiates a one-time, on-demand automation for the specified recommended action. </p> <note> <p>Management accounts and delegated administrators can only initiate recommended actions for associated member accounts. You can associate a member account using <code>AssociateAccounts</code>.</p> </note>",
+    "PutOrganizationEnrollmentConfiguration": "<p> Creates or updates an organization enrollment configuration. The organization enrollment configuration sets the organization rule mode on the specified account, organizational unit (OU), or organization root and enables Automation for affected member accounts that have opted in to Compute Optimizer, including accounts that join later. Changes on an OU or the organization root can take up to 5 minutes. Organization enrollment configurations take precedence over settings made by <code>AssociateAccounts</code> and <code>DisassociateAccounts</code>. You must specify at least one configuration in the request. </p> <note> <p>Only the management account or a delegated administrator can perform this action.</p> <p>Organization enrollment configurations can't be created for the management account.</p> </note>",
+    "RollbackAutomationEvent": "<p> Initiates a rollback for a completed automation event. </p> <note> <p>Management accounts and delegated administrators can initiate a rollback for events belonging to member accounts that are associated using <code>AssociateAccounts</code> or have an applicable organization enrollment configuration with <code>organizationRuleMode</code> set to <code>AnyAllowed</code>.</p> </note>",
+    "StartAutomationEvent": "<p> Initiates a one-time, on-demand automation for the specified recommended action. </p> <note> <p>Management accounts and delegated administrators can initiate recommended actions for member accounts that are associated using <code>AssociateAccounts</code> or have an applicable organization enrollment configuration with <code>organizationRuleMode</code> set to <code>AnyAllowed</code>.</p> </note>",
     "TagResource": "<p> Adds tags to the specified resource. </p>",
     "UntagResource": "<p> Removes tags from the specified resource. </p>",
     "UpdateAutomationRule": "<p> Updates an existing automation rule. </p>",
@@ -41,6 +45,7 @@
         "GetAutomationEventResponse$accountId": "<p>The Amazon Web Services account ID associated with the automation event.</p>",
         "GetAutomationRuleResponse$accountId": "<p>The 12-digit Amazon Web Services account ID that owns this automation rule.</p>",
         "OrganizationConfigurationAccountIds$member": null,
+        "OrganizationTarget$accountId": "<p>The ID of the member account to target. You can't specify the management account.</p>",
         "PreviewResult$accountId": "<p>The Amazon Web Services account ID associated with the resource.</p>",
         "RecommendedAction$accountId": "<p>The Amazon Web Services account ID that owns the resource.</p>"
       }
@@ -73,6 +78,12 @@
     "AssociateAccountsResponse": {
       "base": null,
       "refs": {}
+    },
+    "AutoEnrollMemberAccounts": {
+      "base": null,
+      "refs": {
+        "OrganizationalUnitInfo$autoEnrollMemberAccounts": "<p>Whether an applicable organization enrollment configuration enables Automation for eligible member accounts beneath the organizational unit (OU) or organization root.</p> <ul> <li> <p> <code>All</code> - An organization enrollment configuration applies and enables Automation for affected member accounts, including accounts that join later. This value applies to configurations with either <code>AnyAllowed</code> or <code>NoneAllowed</code>.</p> </li> <li> <p> <code>None</code> - No organization enrollment configuration applies, so Automation isn't enabled by an organization enrollment configuration.</p> </li> </ul>"
+      }
     },
     "AutomationEvent": {
       "base": "<p> Contains information about an automation event. </p>",
@@ -157,10 +168,12 @@
     "ClientToken": {
       "base": null,
       "refs": {
-        "AssociateAccountsRequest$clientToken": "<p> A unique identifier to ensure idempotency of the request. Valid for 24 hours after creation. </p>",
+        "AssociateAccountsRequest$clientToken": "<p> A unique identifier to ensure idempotency of the request. Valid for 30 minutes after creation. </p>",
         "CreateAutomationRuleRequest$clientToken": "<p> A unique identifier to ensure idempotency of the request. </p>",
         "DeleteAutomationRuleRequest$clientToken": "<p> A unique identifier to ensure idempotency of the request. </p>",
+        "DeleteOrganizationEnrollmentConfigurationRequest$clientToken": "<p> A unique identifier to ensure idempotency of the request. </p>",
         "DisassociateAccountsRequest$clientToken": "<p> A unique identifier to ensure idempotency of the request. </p>",
+        "PutOrganizationEnrollmentConfigurationRequest$clientToken": "<p> A unique identifier to ensure idempotency of the request. </p>",
         "RollbackAutomationEventRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Must be 1-64 characters long and contain only alphanumeric characters, underscores, and hyphens.</p>",
         "StartAutomationEventRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Must be 1-64 characters long and contain only alphanumeric characters, underscores, and hyphens.</p>",
         "TagResourceRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Must be 1-64 characters long and contain only alphanumeric characters, underscores, and hyphens.</p>",
@@ -172,11 +185,15 @@
     "ComparisonOperator": {
       "base": null,
       "refs": {
-        "DoubleCriteriaCondition$comparison": "<p>The comparison operator used to evaluate the attribute against the specified values.</p>",
-        "IntegerCriteriaCondition$comparison": "<p>The comparison operator used to evaluate the attribute against the specified values.</p>",
-        "ResourceTagsCriteriaCondition$comparison": "<p>The comparison operator used to evaluate the attribute against the specified values.</p>",
-        "StringCriteriaCondition$comparison": "<p>The comparison operator used to evaluate the attribute against the specified values.</p>"
+        "DoubleCriteriaCondition$comparison": "<p>The comparison operator used to evaluate the attribute against the specified values. Only operators that begin with <code>Numeric</code> are valid. Any other operator returns an <code>InvalidParameterValueException</code>.</p>",
+        "IntegerCriteriaCondition$comparison": "<p>The comparison operator used to evaluate the attribute against the specified values. Only operators that begin with <code>Numeric</code> are valid. Any other operator returns an <code>InvalidParameterValueException</code>.</p>",
+        "ResourceTagsCriteriaCondition$comparison": "<p>The comparison operator used to evaluate the attribute against the specified values. Only operators that begin with <code>String</code> are valid. Any other operator returns an <code>InvalidParameterValueException</code>.</p>",
+        "StringCriteriaCondition$comparison": "<p>The comparison operator used to evaluate the attribute against the specified values. Only operators that begin with <code>String</code> are valid. Any other operator returns an <code>InvalidParameterValueException</code>.</p>"
       }
+    },
+    "ConflictException": {
+      "base": "<p> The request conflicts with a concurrent change to the same resource. Retry the request. </p>",
+      "refs": {}
     },
     "CreateAutomationRuleRequest": {
       "base": null,
@@ -203,6 +220,14 @@
       "refs": {}
     },
     "DeleteAutomationRuleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteOrganizationEnrollmentConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteOrganizationEnrollmentConfigurationResponse": {
       "base": null,
       "refs": {}
     },
@@ -257,7 +282,7 @@
       "refs": {
         "AccountInfo$status": "<p> The enrollment status of the account: Active, Inactive, Pending, or Failed. </p>",
         "GetEnrollmentConfigurationResponse$status": "<p> The current enrollment status. </p>",
-        "UpdateEnrollmentConfigurationRequest$status": "<p>The desired enrollment status. </p> <ul> <li> <p>Active - Enables the Automation feature for your account.</p> </li> <li> <p>Inactive - Disables the Automation feature for your account and stops all of your automation rules. If you opt in again later, all rules will be inactive, and you must enable the rules you want to run. You must wait at least 24 hours after opting out to opt in again.</p> </li> </ul> <note> <p>The <code>Pending</code> and <code>Failed</code> options cannot be used to update the enrollment status of an account. They are returned in the response of a request to update the enrollment status of an account.</p> <p>If you are a member account, your account must be disassociated from your organization’s management account before you can disable Automation. Contact your administrator to make this change.</p> </note>",
+        "UpdateEnrollmentConfigurationRequest$status": "<p>The desired enrollment status. </p> <ul> <li> <p>Active - Enables the Automation feature for your account.</p> </li> <li> <p>Inactive - Disables the Automation feature for your account and stops all of your automation rules. If you opt in again later, all rules will be inactive, and you must enable the rules you want to run. You must wait at least 24 hours after opting out to opt in again.</p> </li> </ul> <note> <p>The <code>Pending</code> and <code>Failed</code> options can't be used to update the enrollment status of an account. They are returned in the response of a request to update the enrollment status of an account.</p> <p>If you are a member account, you can't disable Automation while an organization enrollment configuration applies. If no organization enrollment configuration applies, you also can't disable Automation while your organization rule mode is <code>AnyAllowed</code>. Ask your administrator to delete the organization enrollment configuration or disassociate your account, as applicable.</p> </note>",
         "UpdateEnrollmentConfigurationResponse$status": "<p> The updated enrollment status. </p>"
       }
     },
@@ -324,9 +349,9 @@
     "FilterValues": {
       "base": null,
       "refs": {
-        "AutomationEventFilter$values": "<p> The values to use for the specified filter. </p>",
+        "AutomationEventFilter$values": "<p> The values to use for the specified filter. For the <code>ResourceType</code>, <code>EventType</code>, and <code>EventStatus</code> filters, the value that you specify must exactly match the corresponding field of the automation event, including case. For example, specify <code>Complete</code>, not <code>complete</code>. Wildcards aren't supported. An asterisk (<code>*</code>) or a question mark (<code>?</code>) in a value matches only that literal character. </p> <p> Valid values for the <code>EventStatus</code> filter are <code>Ready</code>, <code>InProgress</code>, <code>Complete</code>, <code>Failed</code>, <code>Cancelled</code>, <code>RollbackReady</code>, <code>RollbackInProgress</code>, <code>RollbackComplete</code>, and <code>RollbackFailed</code>. </p>",
         "Filter$values": "<p>The list of values to filter by for the specified filter field.</p>",
-        "RecommendedActionFilter$values": "<p>List of filter values to match against the specified filter name. Used to narrow down recommended actions based on specific criteria.</p>"
+        "RecommendedActionFilter$values": "<p>The list of values to filter by for the specified filter name. Wildcards aren't supported. An asterisk (<code>*</code>) or a question mark (<code>?</code>) in a value matches only that literal character. How a value is matched depends on the filter name:</p> <dl> <dt>ResourceType, RecommendedActionType, ResourceId, and AccountId</dt> <dd> <p>The value that you specify must exactly match the corresponding field of the recommended action, including case. For example, specify <code>EbsVolume</code>, not <code>ebsvolume</code>.</p> </dd> <dt>CurrentResourceDetailsEbsVolumeType</dt> <dd> <p>Matches when the value appears anywhere in the current resource details of the recommended action, which include the volume type, size, IOPS, and throughput. Matching is case sensitive, and a partial value also matches. For example, <code>gp</code> matches both <code>gp2</code> and <code>gp3</code> volumes, and <code>100</code> matches any volume whose size, IOPS, or throughput contains 100. To filter by volume type, specify the complete volume type, such as <code>gp3</code> or <code>io2</code>.</p> </dd> <dt>ResourceTagsKey and ResourceTagsValue</dt> <dd> <p>Matches when the value appears anywhere in the tags of the resource. Both filter names search every tag key and tag value. Matching is case sensitive, and a partial value also matches. For example, a <code>ResourceTagsKey</code> value of <code>test</code> matches a resource that has a tag value of <code>test</code>.</p> </dd> <dt>LookBackPeriodInDays</dt> <dd> <p>Matches when the lookback period of the recommended action equals the value. Specify a number of days, such as <code>14</code>.</p> </dd> <dt>RestartNeeded</dt> <dd> <p>Matches recommended actions based on whether implementing them requires a resource restart. Specify <code>true</code> or <code>false</code>.</p> </dd> </dl>"
       }
     },
     "ForbiddenException": {
@@ -427,7 +452,7 @@
     "ListAutomationEventStepsRequestMaxResultsInteger": {
       "base": null,
       "refs": {
-        "ListAutomationEventStepsRequest$maxResults": "<p>The maximum number of automation event steps to return in a single response. Valid range is 1-1000.</p>"
+        "ListAutomationEventStepsRequest$maxResults": "<p>The maximum number of automation event steps to return in a single response. If you don't specify a value, the default is 100.</p>"
       }
     },
     "ListAutomationEventStepsResponse": {
@@ -441,7 +466,7 @@
     "ListAutomationEventSummariesRequestMaxResultsInteger": {
       "base": null,
       "refs": {
-        "ListAutomationEventSummariesRequest$maxResults": "<p>The maximum number of automation event summaries to return in a single response. Valid range is 1-1000.</p>"
+        "ListAutomationEventSummariesRequest$maxResults": "<p>The maximum number of automation event summaries to return in a single response. If you don't specify a value, the default is 100.</p>"
       }
     },
     "ListAutomationEventSummariesResponse": {
@@ -455,7 +480,7 @@
     "ListAutomationEventsRequestMaxResultsInteger": {
       "base": null,
       "refs": {
-        "ListAutomationEventsRequest$maxResults": "<p> The maximum number of results to return in a single call. </p>"
+        "ListAutomationEventsRequest$maxResults": "<p> The maximum number of automation events to return in a single response. If you don't specify a value, the default is 100. </p>"
       }
     },
     "ListAutomationEventsResponse": {
@@ -469,7 +494,7 @@
     "ListAutomationRulePreviewRequestMaxResultsInteger": {
       "base": null,
       "refs": {
-        "ListAutomationRulePreviewRequest$maxResults": "<p>The maximum number of automation rule preview results to return in a single response. Valid range is 1-1000.</p>"
+        "ListAutomationRulePreviewRequest$maxResults": "<p>The maximum number of automation rule preview results to return in a single response. If you don't specify a value, the default is 100.</p>"
       }
     },
     "ListAutomationRulePreviewResponse": {
@@ -483,7 +508,7 @@
     "ListAutomationRulePreviewSummariesRequestMaxResultsInteger": {
       "base": null,
       "refs": {
-        "ListAutomationRulePreviewSummariesRequest$maxResults": "<p>The maximum number of automation rule preview summaries to return in a single response. Valid range is 1-1000.</p>"
+        "ListAutomationRulePreviewSummariesRequest$maxResults": "<p>The maximum number of automation rule preview summaries to return in a single response. If you don't specify a value, the default is 100.</p>"
       }
     },
     "ListAutomationRulePreviewSummariesResponse": {
@@ -497,10 +522,38 @@
     "ListAutomationRulesRequestMaxResultsInteger": {
       "base": null,
       "refs": {
-        "ListAutomationRulesRequest$maxResults": "<p>The maximum number of automation rules to return in a single response. Valid range is 1-1000.</p>"
+        "ListAutomationRulesRequest$maxResults": "<p>The maximum number of automation rules to return in a single response. If you don't specify a value, the default is 100.</p>"
       }
     },
     "ListAutomationRulesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOrganizationEnrollmentConfigurationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOrganizationEnrollmentConfigurationsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListOrganizationEnrollmentConfigurationsRequest$maxResults": "<p> The maximum number of organization enrollment configurations to return in a single response. If you don't specify a value, the default is 1,000. </p>"
+      }
+    },
+    "ListOrganizationEnrollmentConfigurationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOrganizationalUnitsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOrganizationalUnitsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListOrganizationalUnitsRequest$maxResults": "<p> The maximum number of organizational units to return in a single response. If you don't specify a value, the default is 1,000. </p>"
+      }
+    },
+    "ListOrganizationalUnitsResponse": {
       "base": null,
       "refs": {}
     },
@@ -511,7 +564,7 @@
     "ListRecommendedActionSummariesRequestMaxResultsInteger": {
       "base": null,
       "refs": {
-        "ListRecommendedActionSummariesRequest$maxResults": "<p>The maximum number of recommended action summaries to return in a single response. Valid range is 1-1000.</p>"
+        "ListRecommendedActionSummariesRequest$maxResults": "<p>The maximum number of recommended action summaries to return in a single response. If you don't specify a value, the default is 100.</p>"
       }
     },
     "ListRecommendedActionSummariesResponse": {
@@ -525,7 +578,7 @@
     "ListRecommendedActionsRequestMaxResultsInteger": {
       "base": null,
       "refs": {
-        "ListRecommendedActionsRequest$maxResults": "<p>The maximum number of recommended actions to return in a single response. Valid range is 1-1000.</p>"
+        "ListRecommendedActionsRequest$maxResults": "<p>The maximum number of recommended actions to return in a single response. If you don't specify a value, the default is 100.</p>"
       }
     },
     "ListRecommendedActionsResponse": {
@@ -570,6 +623,10 @@
         "ListAutomationRulePreviewSummariesResponse$nextToken": "<p>A token used for pagination. If present, indicates there are more results available and can be used in subsequent requests.</p>",
         "ListAutomationRulesRequest$nextToken": "<p>A token used for pagination to retrieve the next set of results when the response is truncated.</p>",
         "ListAutomationRulesResponse$nextToken": "<p>A token used for pagination. If present, indicates there are more results available and can be used in subsequent requests.</p>",
+        "ListOrganizationEnrollmentConfigurationsRequest$nextToken": "<p> The token to use to retrieve the next page of results. </p>",
+        "ListOrganizationEnrollmentConfigurationsResponse$nextToken": "<p> The token to use to retrieve the next page of results. </p>",
+        "ListOrganizationalUnitsRequest$nextToken": "<p> The token to use to retrieve the next page of results. </p>",
+        "ListOrganizationalUnitsResponse$nextToken": "<p> The token to use to retrieve the next page of results. </p>",
         "ListRecommendedActionSummariesRequest$nextToken": "<p>A token used for pagination to retrieve the next set of results when the response is truncated.</p>",
         "ListRecommendedActionSummariesResponse$nextToken": "<p>A token used for pagination. If present, indicates there are more results available and can be used in subsequent requests.</p>",
         "ListRecommendedActionsRequest$nextToken": "<p>A token used for pagination to retrieve the next set of results when the response is truncated.</p>",
@@ -577,7 +634,7 @@
       }
     },
     "NotManagementAccountException": {
-      "base": "<p> The operation can only be performed by a management account. </p>",
+      "base": "<p> The operation can only be performed by an organization's management account or a delegated administrator. </p>",
       "refs": {}
     },
     "OptInRequiredException": {
@@ -585,7 +642,7 @@
       "refs": {}
     },
     "OrganizationConfiguration": {
-      "base": "<p>Configuration settings for organization-wide automation rules.</p>",
+      "base": "<p>Configuration settings that define the scope of an organization-wide automation rule. Each organizational unit (OU) list can contain up to 150 OUs or organization roots, and each account list can contain up to 50 accounts. Each included OU or organization root must have an effective organization rule mode of <code>AnyAllowed</code>. Exclusions take precedence over inclusions. An account that is in an included OU and is also excluded is excluded. The rule doesn't apply to the management account when the account is reached through an OU or the organization root.</p>",
       "refs": {
         "AutomationRule$organizationConfiguration": "<p>Configuration settings for organization-wide rules.</p>",
         "CreateAutomationRuleRequest$organizationConfiguration": "<p> Configuration for organization-level rules. Required for OrganizationRule type. </p>",
@@ -598,22 +655,124 @@
     "OrganizationConfigurationAccountIds": {
       "base": null,
       "refs": {
-        "OrganizationConfiguration$accountIds": "<p>List of specific Amazon Web Services account IDs where the organization rule should be applied.</p>",
-        "OrganizationScope$accountIds": "<p>List of Amazon Web Services account IDs to include in the organization scope.</p>"
+        "OrganizationConfiguration$accountIds": "<p>The specific Amazon Web Services account IDs where the organization rule should be applied. You can specify up to 50 account IDs.</p>",
+        "OrganizationConfiguration$excludedAccountIds": "<p>The Amazon Web Services account IDs to exclude from the organization rule scope. You can specify up to 50 account IDs. An excluded account remains excluded even if it is in an included OU.</p>",
+        "OrganizationScope$accountIds": "<p>List of Amazon Web Services account IDs to include in the organization scope.</p>",
+        "OrganizationScope$excludedAccountIds": "<p>The Amazon Web Services account IDs to exclude from the preview scope.</p>"
+      }
+    },
+    "OrganizationConfigurationOrganizationalUnitIds": {
+      "base": null,
+      "refs": {
+        "OrganizationConfiguration$organizationalUnitIds": "<p>The organizational unit (OU) or organization root IDs to include in the organization rule scope. The rule applies to accounts in the specified OUs and their child OUs. You can specify up to 150 IDs.</p>",
+        "OrganizationConfiguration$excludedOrganizationalUnitIds": "<p>The organizational unit (OU) or organization root IDs to exclude from the organization rule scope. The rule doesn't apply to accounts in the specified OUs or their child OUs. You can specify up to 150 IDs.</p>",
+        "OrganizationScope$organizationalUnitIds": "<p>The organizational unit (OU) or organization root IDs to include in the preview scope. The preview includes accounts in the specified OUs and their child OUs.</p>",
+        "OrganizationScope$excludedOrganizationalUnitIds": "<p>The organizational unit (OU) or organization root IDs to exclude from the preview scope. The preview doesn't include accounts in the specified OUs or their child OUs.</p>"
+      }
+    },
+    "OrganizationEnrollmentConfiguration": {
+      "base": "<p>An organization enrollment configuration sets the organization rule mode on an account, organizational unit (OU), or the organization root and enables Automation for affected member accounts that have opted in to Compute Optimizer.</p>",
+      "refs": {
+        "OrganizationEnrollmentConfigurations$member": null
+      }
+    },
+    "OrganizationEnrollmentConfigurationStatus": {
+      "base": null,
+      "refs": {
+        "GetEnrollmentConfigurationResponse$organizationEnrollmentConfigurationStatus": "<p> Specifies whether an organization enrollment configuration on your account, or inherited from a parent OU or the organization root, enables Automation for your member account. Associations made using <code>AssociateAccounts</code> don't affect this status. This field is returned for organization member accounts, including delegated administrators. It's omitted for management accounts and accounts that aren't in an organization. </p>"
+      }
+    },
+    "OrganizationEnrollmentConfigurationType": {
+      "base": null,
+      "refs": {
+        "OrganizationEnrollmentConfigurationTypes$member": null
+      }
+    },
+    "OrganizationEnrollmentConfigurationTypes": {
+      "base": null,
+      "refs": {
+        "DeleteOrganizationEnrollmentConfigurationRequest$configurationTypes": "<p> The organization enrollment configuration types to delete from the target. </p>"
+      }
+    },
+    "OrganizationEnrollmentConfigurations": {
+      "base": null,
+      "refs": {
+        "ListOrganizationEnrollmentConfigurationsResponse$organizationEnrollmentConfigurations": "<p> The organization enrollment configurations stored on each target in this page of results. </p>"
       }
     },
     "OrganizationRuleMode": {
       "base": null,
       "refs": {
         "AccountInfo$organizationRuleMode": "<p>Specifies whether the management account can create Automation rules that implement optimization actions for this account. </p>",
-        "GetEnrollmentConfigurationResponse$organizationRuleMode": "<p>Specifies whether the management account can create Automation rules that implement optimization actions for this account. </p>"
+        "GetEnrollmentConfigurationResponse$organizationRuleMode": "<p>Specifies whether the management account can create Automation rules that implement optimization actions for this account. </p>",
+        "OrganizationEnrollmentConfiguration$organizationRuleMode": "<p>The organization rule mode set on the target by the organization enrollment configuration.</p>",
+        "OrganizationalUnitInfo$organizationRuleMode": "<p>The effective organization rule mode for the organizational unit or organization root.</p>",
+        "PutOrganizationEnrollmentConfigurationRequest$organizationRuleMode": "<p> The organization rule mode to set on the target. An organization enrollment configuration with either <code>AnyAllowed</code> or <code>NoneAllowed</code> enables Automation for affected member accounts. <code>AnyAllowed</code> permits organization rules to apply to those accounts, while <code>NoneAllowed</code> doesn't. </p>"
+      }
+    },
+    "OrganizationRuleModeSource": {
+      "base": "<p>Information about the source of an effective organization rule mode.</p>",
+      "refs": {
+        "AccountInfo$organizationRuleModeSource": "<p>Information about the source of the account's effective organization rule mode. </p>",
+        "OrganizationalUnitInfo$organizationRuleModeSource": "<p>Information about the source of the effective organization rule mode.</p>"
+      }
+    },
+    "OrganizationRuleModeSourceType": {
+      "base": null,
+      "refs": {
+        "OrganizationRuleModeSource$sourceType": "<p>How the effective organization rule mode is supplied.</p> <ul> <li> <p> <code>Applied</code> - An organization enrollment configuration is on this organizational unit or account.</p> </li> <li> <p> <code>Inherited</code> - The organization enrollment configuration is on the parent organizational unit or root.</p> </li> <li> <p> <code>Direct</code> - The organization rule mode is set on the account itself, with no organization enrollment configuration applied.</p> </li> <li> <p> <code>Default</code> - No organization enrollment configuration applies, so the organization rule mode is None allowed.</p> </li> </ul>"
       }
     },
     "OrganizationScope": {
       "base": "<p> Defines the scope for organization-level rules when previewing matching actions.</p>",
       "refs": {
-        "ListAutomationRulePreviewRequest$organizationScope": "<p> The organizational scope for the rule preview. </p>",
-        "ListAutomationRulePreviewSummariesRequest$organizationScope": "<p>The organizational scope for the rule preview.</p>"
+        "ListAutomationRulePreviewRequest$organizationScope": "<p> The organizational scope for the rule preview. This parameter is required when <code>ruleType</code> is <code>OrganizationRule</code>. Don't specify it when <code>ruleType</code> is <code>AccountRule</code>. </p>",
+        "ListAutomationRulePreviewSummariesRequest$organizationScope": "<p>The organizational scope for the rule preview. This parameter is required when <code>ruleType</code> is <code>OrganizationRule</code>. Don't specify it when <code>ruleType</code> is <code>AccountRule</code>.</p>"
+      }
+    },
+    "OrganizationTarget": {
+      "base": "<p>An account, organizational unit (OU), or organization root to which an organization enrollment configuration applies. The management account can't be specified as an account target.</p>",
+      "refs": {
+        "DeleteOrganizationEnrollmentConfigurationRequest$target": "<p> The account, organizational unit (OU), or organization root whose organization enrollment configuration you want to delete. </p>",
+        "PutOrganizationEnrollmentConfigurationRequest$target": "<p> The account, organizational unit (OU), or organization root on which to create or update the organization enrollment configuration. You can't specify the management account. </p>"
+      }
+    },
+    "OrganizationTargetType": {
+      "base": null,
+      "refs": {
+        "ListOrganizationEnrollmentConfigurationsRequest$targetType": "<p> The target type to use to filter the results. If you specify <code>OrganizationalUnit</code>, the results also include configurations stored on the organization root. If you don't specify a target type, the operation returns configurations for every target type. </p>",
+        "OrganizationEnrollmentConfiguration$targetType": "<p>The type of target on which the configuration is stored.</p>"
+      }
+    },
+    "OrganizationalUnitId": {
+      "base": null,
+      "refs": {
+        "OrganizationConfigurationOrganizationalUnitIds$member": null,
+        "OrganizationTarget$organizationalUnitId": "<p>The ID of the organizational unit (OU) or organization root to target.</p>",
+        "OrganizationalUnitIds$member": null,
+        "OrganizationalUnitInfo$organizationalUnitId": "<p>The ID of the organizational unit (OU) or organization root.</p>"
+      }
+    },
+    "OrganizationalUnitIds": {
+      "base": null,
+      "refs": {
+        "ListAutomationEventSummariesRequest$organizationalUnitIds": "<p> The organizational unit (OU) or organization root IDs to use to filter the results. The response includes event summaries for accounts in the specified OUs and their child OUs. Only the management account or a delegated administrator can specify this parameter. </p>",
+        "ListAutomationEventsRequest$organizationalUnitIds": "<p> The organizational unit (OU) or organization root IDs to use to filter the results. The response includes events for accounts in the specified OUs and their child OUs. Only the management account or a delegated administrator can specify this parameter. </p>",
+        "ListOrganizationalUnitsRequest$organizationalUnitIds": "<p> The organizational unit (OU) or organization root IDs to return. If you don't specify this parameter, the operation returns the organization root and every OU. </p>",
+        "ListRecommendedActionSummariesRequest$organizationalUnitIds": "<p> The organizational unit (OU) or organization root IDs to use to filter the results. The response includes recommended action summaries for accounts in the specified OUs and their child OUs. Only the management account or a delegated administrator can specify this parameter. </p>",
+        "ListRecommendedActionsRequest$organizationalUnitIds": "<p> The organizational unit (OU) or organization root IDs to use to filter the results. The response includes recommended actions for accounts in the specified OUs and their child OUs. Only the management account or a delegated administrator can specify this parameter. </p>"
+      }
+    },
+    "OrganizationalUnitInfo": {
+      "base": "<p>Information about an organizational unit (OU) or the organization root, including whether an applicable organization enrollment configuration enables Automation for member accounts and the effective organization rule mode.</p>",
+      "refs": {
+        "OrganizationalUnitInfoList$member": null
+      }
+    },
+    "OrganizationalUnitInfoList": {
+      "base": null,
+      "refs": {
+        "ListOrganizationalUnitsResponse$organizationalUnits": "<p> The organizational units and organization root returned in this page of results, including the organization rule mode that applies to each. </p>"
       }
     },
     "PreviewResult": {
@@ -640,6 +799,14 @@
         "ListAutomationRulePreviewResponse$previewResults": "<p> The list of actions that would be taken based on the specified criteria. </p>"
       }
     },
+    "PutOrganizationEnrollmentConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutOrganizationEnrollmentConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "RecommendedAction": {
       "base": "<p>Contains information about a recommended action that can be applied to optimize an Amazon Web Services resource.</p>",
       "refs": {
@@ -647,7 +814,7 @@
       }
     },
     "RecommendedActionFilter": {
-      "base": "<p>A filter used to narrow down recommended action results based on specific criteria.</p>",
+      "base": "<p>A filter used to narrow down recommended action results based on specific criteria. If a filter has more than one value, a recommended action matches the filter when it matches any of the values. If you specify more than one filter, a recommended action must match all of the filters.</p>",
       "refs": {
         "RecommendedActionFilterList$member": null
       }
@@ -929,6 +1096,7 @@
         "AutomationEventSummary$key": "<p>The key identifier for this summary grouping.</p>",
         "AutomationRule$description": "<p>A description of the automation rule.</p>",
         "AutomationRule$priority": "<p>A string representation of a decimal number between 0 and 1 (having up to 30 digits after the decimal point) that determines the priority of the rule. When multiple rules match the same recommended action, Compute Optimizer assigns the action to the rule with the lowest priority value (highest priority), even if that rule is scheduled to run later than other matching rules.</p>",
+        "ConflictException$message": null,
         "CreateAutomationRuleRequest$priority": "<p>A string representation of a decimal number between 0 and 1 (having up to 30 digits after the decimal point) that determines the priority of the rule. When multiple rules match the same recommended action, Compute Optimizer assigns the action to the rule with the lowest priority value (highest priority), even if that rule is scheduled to run later than other matching rules. </p>",
         "CreateAutomationRuleResponse$description": "<p>A description of the automation rule. Can be up to 1024 characters long and contain alphanumeric characters, underscores, hyphens, spaces, and certain special characters.</p>",
         "CreateAutomationRuleResponse$priority": "<p>The priority level of the automation rule, used to determine execution order when multiple rules apply to the same resource.</p>",
@@ -949,6 +1117,8 @@
         "ListAutomationEventSummariesRequest$endDateExclusive": "<p>The end date for filtering automation event summaries, exclusive. Events created before this date will be included.</p>",
         "NotManagementAccountException$message": null,
         "OptInRequiredException$message": null,
+        "OrganizationEnrollmentConfiguration$targetId": "<p>The ID of the account, organizational unit (OU), or organization root on which the configuration is stored.</p>",
+        "OrganizationRuleModeSource$sourceTargetId": "<p>The ID of the account, organizational unit (OU), or organization root that has the organization enrollment configuration. This field is omitted when <code>sourceType</code> is <code>Direct</code> or <code>Default</code>.</p>",
         "PreviewResult$region": "<p>The Amazon Web Services Region where the resource is located.</p>",
         "PreviewResult$currentResourceSummary": "<p>A summary of the resource's current configuration.</p>",
         "PreviewResult$recommendedResourceSummary": "<p>A summary of the resource's recommended configuration.</p>",
@@ -984,7 +1154,7 @@
         "Criteria$region": "<p>Filter criteria for Amazon Web Services regions where resources must be located.</p>",
         "Criteria$resourceArn": "<p>Filter criteria for specific resource ARNs to include or exclude.</p>",
         "Criteria$ebsVolumeType": "<p>Filter criteria for EBS volume types, such as gp2, gp3, io1, io2, st1, or sc1.</p>",
-        "Criteria$restartNeeded": "<p>Filter criteria indicating whether the recommended action requires a resource restart.</p>"
+        "Criteria$restartNeeded": "<p>Filter criteria indicating whether the recommended action requires a resource restart. Valid values are <code>true</code> and <code>false</code>. Values are case-sensitive unless you use an <code>IgnoreCase</code> comparison operator. For example, <code>StringEquals</code> with the value <code>False</code> matches no recommended actions.</p>"
       }
     },
     "StringCriteriaValue": {

@@ -48,6 +48,7 @@
     "ListAutonomousDatabaseCharacterSets": "<p>Lists the available character sets for Autonomous Databases.</p>",
     "ListAutonomousDatabaseClones": "<p>Lists the clones of the specified Autonomous Database.</p>",
     "ListAutonomousDatabasePeers": "<p>Lists the peer databases of the specified Autonomous Database.</p>",
+    "ListAutonomousDatabaseRefreshableClones": "<p>Lists the refreshable clones of the specified Autonomous Database.</p>",
     "ListAutonomousDatabaseVersions": "<p>Lists the available Oracle Database software versions for Autonomous Databases.</p>",
     "ListAutonomousDatabases": "<p>Returns information about the Autonomous Databases owned by your Amazon Web Services account in the current Amazon Web Services Region.</p>",
     "ListAutonomousVirtualMachines": "<p>Lists all Autonomous VMs in an Autonomous VM cluster.</p>",
@@ -71,6 +72,7 @@
     "RestoreAutonomousDatabase": "<p>Restores the specified Autonomous Database to a point in time.</p>",
     "ShrinkAutonomousDatabase": "<p>Shrinks the storage of the specified Autonomous Database to reclaim unused space.</p>",
     "StartAutonomousDatabase": "<p>Starts the specified Autonomous Database.</p>",
+    "StartAutonomousDatabaseRefresh": "<p>Starts a refresh of the specified refreshable clone Autonomous Database with data from its source database. The refresh runs asynchronously. To track its progress, check the <code>refreshableStatus</code> of the Autonomous Database.</p>",
     "StartDbNode": "<p>Starts the specified DB node in a VM cluster.</p>",
     "StopAutonomousDatabase": "<p>Stops the specified Autonomous Database.</p>",
     "StopDbNode": "<p>Stops the specified DB node in a VM cluster.</p>",
@@ -279,6 +281,18 @@
         "AutonomousDatabasePeerList$member": null
       }
     },
+    "AutonomousDatabaseRefreshableCloneList": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseRefreshableClonesOutput$autonomousDatabaseRefreshableClones": "<p>The list of refreshable clones for the Autonomous Database.</p>"
+      }
+    },
+    "AutonomousDatabaseRefreshableCloneSummary": {
+      "base": "<p>A summary of a refreshable clone of an Autonomous Database.</p>",
+      "refs": {
+        "AutonomousDatabaseRefreshableCloneList$member": null
+      }
+    },
     "AutonomousDatabaseResourceStatus": {
       "base": null,
       "refs": {
@@ -291,6 +305,7 @@
         "RestoreAutonomousDatabaseOutput$status": "<p>The current status of the Autonomous Database after the restore operation.</p>",
         "ShrinkAutonomousDatabaseOutput$status": "<p>The current status of the Autonomous Database after the shrink operation.</p>",
         "StartAutonomousDatabaseOutput$status": "<p>The current status of the Autonomous Database after the start operation.</p>",
+        "StartAutonomousDatabaseRefreshOutput$status": "<p>The current status of the Autonomous Database.</p>",
         "StopAutonomousDatabaseOutput$status": "<p>The current status of the Autonomous Database after the stop operation.</p>",
         "SwitchoverAutonomousDatabaseOutput$status": "<p>The current status of the Autonomous Database after the switchover operation.</p>",
         "UpdateAutonomousDatabaseOutput$status": "<p>The current status of the Autonomous Database.</p>"
@@ -2177,6 +2192,26 @@
       "base": null,
       "refs": {}
     },
+    "ListAutonomousDatabaseRefreshableClonesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutonomousDatabaseRefreshableClonesInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseRefreshableClonesInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p>"
+      }
+    },
+    "ListAutonomousDatabaseRefreshableClonesInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseRefreshableClonesInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListAutonomousDatabaseRefreshableClonesOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListAutonomousDatabaseVersionsInput": {
       "base": null,
       "refs": {}
@@ -3006,7 +3041,8 @@
       "base": null,
       "refs": {
         "AutonomousDatabase$refreshableStatus": "<p>The refresh status of the refreshable clone Autonomous Database.</p>",
-        "AutonomousDatabaseSummary$refreshableStatus": "<p>The refresh status of the refreshable clone Autonomous Database.</p>"
+        "AutonomousDatabaseSummary$refreshableStatus": "<p>The refresh status of the refreshable clone Autonomous Database.</p>",
+        "StartAutonomousDatabaseRefreshOutput$refreshableStatus": "<p>The refresh status of the refreshable clone Autonomous Database.</p>"
       }
     },
     "RepeatCadence": {
@@ -3038,6 +3074,7 @@
         "AutonomousDatabaseBackup$autonomousDatabaseBackupArn": "<p>The Amazon Resource Name (ARN) of the Autonomous Database backup.</p>",
         "AutonomousDatabaseBackupSummary$autonomousDatabaseBackupArn": "<p>The Amazon Resource Name (ARN) of the Autonomous Database backup.</p>",
         "AutonomousDatabasePeerSummary$autonomousDatabaseArn": "<p>The Amazon Resource Name (ARN) of the peer Autonomous Database.</p>",
+        "AutonomousDatabaseRefreshableCloneSummary$autonomousDatabaseArn": "<p>The Amazon Resource Name (ARN) of the refreshable clone Autonomous Database.</p>",
         "AutonomousDatabaseSummary$autonomousDatabaseArn": "<p>The Amazon Resource Name (ARN) of the Autonomous Database.</p>",
         "AutonomousDatabaseSummary$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network associated with the Autonomous Database.</p>",
         "CloudAutonomousVmCluster$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network associated with this Autonomous VM cluster.</p>",
@@ -3115,6 +3152,7 @@
         "AutonomousDatabaseBackupSummary$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup.</p>",
         "AutonomousDatabaseBackupSummary$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that the backup was created from.</p>",
         "AutonomousDatabasePeerSummary$autonomousDatabaseId": "<p>The unique identifier of the peer Autonomous Database.</p>",
+        "AutonomousDatabaseRefreshableCloneSummary$autonomousDatabaseId": "<p>The unique identifier of the refreshable clone Autonomous Database.</p>",
         "AutonomousDatabaseSummary$odbNetworkId": "<p>The unique identifier of the ODB network associated with the Autonomous Database.</p>",
         "AutonomousVirtualMachineSummary$autonomousVirtualMachineId": "<p>The unique identifier of the Autonomous VM.</p>",
         "AutonomousVirtualMachineSummary$dbServerId": "<p>The unique identifier of the database server hosting this Autonomous VM.</p>",
@@ -3231,6 +3269,7 @@
         "GetOdbPeeringConnectionInput$odbPeeringConnectionId": "<p>The unique identifier of the ODB peering connection to retrieve information about.</p>",
         "ListAutonomousDatabaseClonesInput$autonomousDatabaseId": "<p>The unique identifier of the source Autonomous Database whose clones you want to list.</p>",
         "ListAutonomousDatabasePeersInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database whose peer databases you want to list.</p>",
+        "ListAutonomousDatabaseRefreshableClonesInput$autonomousDatabaseId": "<p>The unique identifier of the source Autonomous Database whose refreshable clones you want to list.</p>",
         "ListCloudAutonomousVmClustersInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Cloud Exadata Infrastructure that hosts the Autonomous VM clusters to be listed.</p>",
         "ListCloudVmClustersInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Oracle Exadata infrastructure.</p>",
         "ListDbServersInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Oracle Exadata infrastructure.</p>",
@@ -3247,6 +3286,7 @@
         "RestoreFromBackupConfiguration$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup to restore from.</p>",
         "ShrinkAutonomousDatabaseInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to shrink.</p>",
         "StartAutonomousDatabaseInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to start.</p>",
+        "StartAutonomousDatabaseRefreshInput$autonomousDatabaseId": "<p>The unique identifier of the refreshable clone Autonomous Database to refresh.</p>",
         "StopAutonomousDatabaseInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to stop.</p>",
         "SwitchoverAutonomousDatabaseInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to switch over.</p>",
         "UpdateAutonomousDatabaseInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to update.</p>",
@@ -3463,6 +3503,14 @@
       "base": null,
       "refs": {}
     },
+    "StartAutonomousDatabaseRefreshInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartAutonomousDatabaseRefreshOutput": {
+      "base": null,
+      "refs": {}
+    },
     "StartDbNodeInput": {
       "base": null,
       "refs": {}
@@ -3550,6 +3598,8 @@
         "AutonomousDatabaseConnectionUrls$sqlDevWebUrl": "<p>The URL for accessing Oracle SQL Developer Web for the Autonomous Database.</p>",
         "AutonomousDatabasePeerSummary$ocid": "<p>The Oracle Cloud Identifier (OCID) of the peer Autonomous Database.</p>",
         "AutonomousDatabasePeerSummary$region": "<p>The Amazon Web Services Region where the peer Autonomous Database is located.</p>",
+        "AutonomousDatabaseRefreshableCloneSummary$ocid": "<p>The Oracle Cloud Identifier (OCID) of the refreshable clone Autonomous Database.</p>",
+        "AutonomousDatabaseRefreshableCloneSummary$region": "<p>The Amazon Web Services Region where the refreshable clone Autonomous Database is located.</p>",
         "AutonomousDatabaseSummary$ociResourceAnchorName": "<p>The name of the Oracle Cloud Infrastructure (OCI) resource anchor associated with the Autonomous Database.</p>",
         "AutonomousDatabaseSummary$ocid": "<p>The Oracle Cloud Identifier (OCID) of the Autonomous Database.</p>",
         "AutonomousDatabaseSummary$ociUrl": "<p>The URL for accessing the OCI console page for the Autonomous Database.</p>",
@@ -3837,6 +3887,7 @@
         "ListAutonomousDatabaseCharacterSetsOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "ListAutonomousDatabaseClonesOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "ListAutonomousDatabasePeersOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "ListAutonomousDatabaseRefreshableClonesOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "ListAutonomousDatabaseVersionsOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "ListAutonomousDatabasesOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "ListAutonomousVirtualMachinesOutput$nextToken": "<p>The pagination token from which to continue listing.</p>",
@@ -3916,6 +3967,9 @@
         "StartAutonomousDatabaseOutput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that was started.</p>",
         "StartAutonomousDatabaseOutput$displayName": "<p>The user-friendly name of the Autonomous Database.</p>",
         "StartAutonomousDatabaseOutput$statusReason": "<p>Additional information about the status of the Autonomous Database after the start operation.</p>",
+        "StartAutonomousDatabaseRefreshOutput$autonomousDatabaseId": "<p>The unique identifier of the refreshable clone Autonomous Database that is being refreshed.</p>",
+        "StartAutonomousDatabaseRefreshOutput$displayName": "<p>The user-friendly name of the Autonomous Database.</p>",
+        "StartAutonomousDatabaseRefreshOutput$statusReason": "<p>Additional information about the current status of the Autonomous Database.</p>",
         "StartDbNodeOutput$dbNodeId": "<p>The unique identifier of the DB node that was started.</p>",
         "StartDbNodeOutput$statusReason": "<p>Additional information about the status of the DB node after the start operation.</p>",
         "StopAutonomousDatabaseOutput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that was stopped.</p>",
@@ -4146,6 +4200,7 @@
         "OdbPeeringConnectionSummary$createdAt": "<p>The timestamp when the ODB peering connection was created.</p>",
         "PointInTimeRestoreConfiguration$timestamp": "<p>The date and time to which to restore the Autonomous Database.</p>",
         "RestoreAutonomousDatabaseInput$timestamp": "<p>The date and time to which to restore the Autonomous Database.</p>",
+        "StartAutonomousDatabaseRefreshInput$timeOfRefreshCutoff": "<p>The date and time up to which the refreshable clone Autonomous Database is refreshed from its source database. Data committed on the source database after this time isn't applied to the refreshable clone. The time must be at least 1 minute and at most 7 days in the past, and later than the clone's last refresh point.</p>",
         "UpdateAutonomousDatabaseInput$timeOfAutoRefreshStart": "<p>The date and time at which the automatic refresh of the refreshable clone Autonomous Database starts.</p>"
       }
     },

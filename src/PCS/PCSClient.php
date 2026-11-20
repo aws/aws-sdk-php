@@ -71,6 +71,11 @@ use Aws\AwsClient;
  *         scriptCachingPolicy?: 'CACHE_ONCE'|'REFRESH_ON_REBOOT',
  *         ...,
  *     },
+ *     instanceHealthChecks?: array{
+ *         healthMonitoring?: array{mode?: 'NONE'|'STANDARD', repairAction?: 'AUTO'|'ISOLATE'|'NONE'|'REPLACE', ...},
+ *         deepHealthChecks?: array{onStart?: array, ...},
+ *         ...,
+ *     },
  *     clientToken?: string,
  *     tags?: array<string, string>,
  *     ...,
@@ -99,6 +104,11 @@ use Aws\AwsClient;
  *     nodeLifecycleActions?: array{
  *         stages?: array{nodeBootstrapped?: list<array>, nodeReady?: list<array>, ...},
  *         scriptCachingPolicy?: 'CACHE_ONCE'|'REFRESH_ON_REBOOT',
+ *         ...,
+ *     },
+ *     instanceHealthChecks?: array{
+ *         healthMonitoring?: array{mode?: 'NONE'|'STANDARD', repairAction?: 'AUTO'|'ISOLATE'|'NONE'|'REPLACE', ...},
+ *         deepHealthChecks?: array{onStart?: array, ...},
  *         ...,
  *     },
  *     clientToken?: string,
@@ -236,6 +246,11 @@ use Aws\AwsClient;
  *         scriptCachingPolicy?: 'CACHE_ONCE'|'REFRESH_ON_REBOOT',
  *         ...,
  *     },
+ *     instanceHealthChecks?: array{
+ *         healthMonitoring?: array{mode?: 'NONE'|'STANDARD', repairAction?: 'AUTO'|'ISOLATE'|'NONE'|'REPLACE', ...},
+ *         deepHealthChecks?: array{onStart?: array, ...},
+ *         ...,
+ *     },
  *     clientToken?: string,
  *     ...,
  * } $args = [])
@@ -262,6 +277,11 @@ use Aws\AwsClient;
  *     nodeLifecycleActions?: array{
  *         stages?: array{nodeBootstrapped?: list<array>, nodeReady?: list<array>, ...},
  *         scriptCachingPolicy?: 'CACHE_ONCE'|'REFRESH_ON_REBOOT',
+ *         ...,
+ *     },
+ *     instanceHealthChecks?: array{
+ *         healthMonitoring?: array{mode?: 'NONE'|'STANDARD', repairAction?: 'AUTO'|'ISOLATE'|'NONE'|'REPLACE', ...},
+ *         deepHealthChecks?: array{onStart?: array, ...},
  *         ...,
  *     },
  *     clientToken?: string,

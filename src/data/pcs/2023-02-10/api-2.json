@@ -572,6 +572,7 @@
         "spotOptions":{"shape":"SpotOptions"},
         "slurmConfiguration":{"shape":"ComputeNodeGroupSlurmConfiguration"},
         "nodeLifecycleActions":{"shape":"NodeLifecycleActions"},
+        "instanceHealthChecks":{"shape":"InstanceHealthChecks"},
         "errorInfo":{"shape":"ErrorInfoList"}
       }
     },
@@ -731,6 +732,7 @@
         "spotOptions":{"shape":"SpotOptions"},
         "slurmConfiguration":{"shape":"ComputeNodeGroupSlurmConfigurationRequest"},
         "nodeLifecycleActions":{"shape":"NodeLifecycleActionsRequest"},
+        "instanceHealthChecks":{"shape":"InstanceHealthChecksRequest"},
         "clientToken":{
           "shape":"SBClientToken",
           "idempotencyToken":true
@@ -777,6 +779,37 @@
       "members":{
         "id":{"shape":"String"},
         "version":{"shape":"String"}
+      }
+    },
+    "DeepHealthCheckOnStart":{
+      "type":"structure",
+      "members":{
+        "profile":{"shape":"DeepHealthCheckOnStartProfile"},
+        "repairAction":{"shape":"DeepHealthCheckOnStartRepairAction"}
+      }
+    },
+    "DeepHealthCheckOnStartProfile":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "QUICK",
+        "MEDIUM",
+        "LONG"
+      ]
+    },
+    "DeepHealthCheckOnStartRepairAction":{
+      "type":"string",
+      "enum":[
+        "AUTO",
+        "REPLACE",
+        "ISOLATE",
+        "NONE"
+      ]
+    },
+    "DeepHealthChecks":{
+      "type":"structure",
+      "members":{
+        "onStart":{"shape":"DeepHealthCheckOnStart"}
       }
     },
     "DeleteClusterRequest":{
@@ -933,10 +966,47 @@
       "type":"list",
       "member":{"shape":"GresCustomSettingMap"}
     },
+    "HealthMonitoring":{
+      "type":"structure",
+      "members":{
+        "mode":{"shape":"HealthMonitoringMode"},
+        "repairAction":{"shape":"HealthMonitoringRepairAction"}
+      }
+    },
+    "HealthMonitoringMode":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "STANDARD"
+      ]
+    },
+    "HealthMonitoringRepairAction":{
+      "type":"string",
+      "enum":[
+        "AUTO",
+        "REPLACE",
+        "ISOLATE",
+        "NONE"
+      ]
+    },
     "InstanceConfig":{
       "type":"structure",
       "members":{
         "instanceType":{"shape":"String"}
+      }
+    },
+    "InstanceHealthChecks":{
+      "type":"structure",
+      "members":{
+        "healthMonitoring":{"shape":"HealthMonitoring"},
+        "deepHealthChecks":{"shape":"DeepHealthChecks"}
+      }
+    },
+    "InstanceHealthChecksRequest":{
+      "type":"structure",
+      "members":{
+        "healthMonitoring":{"shape":"HealthMonitoring"},
+        "deepHealthChecks":{"shape":"DeepHealthChecks"}
       }
     },
     "InstanceList":{
@@ -1331,7 +1401,8 @@
         "computeNodeGroupId":{"shape":"String"},
         "computeNodeGroupName":{"shape":"String"},
         "nodeLifecycleActions":{"shape":"NodeLifecycleActions"},
-        "schedulerVersion":{"shape":"String"}
+        "schedulerVersion":{"shape":"String"},
+        "instanceHealthChecks":{"shape":"InstanceHealthChecks"}
       }
     },
     "RequestTagMap":{
@@ -1726,6 +1797,7 @@
         "iamInstanceProfileArn":{"shape":"InstanceProfileArn"},
         "slurmConfiguration":{"shape":"UpdateComputeNodeGroupSlurmConfigurationRequest"},
         "nodeLifecycleActions":{"shape":"UpdateNodeLifecycleActionsRequest"},
+        "instanceHealthChecks":{"shape":"UpdateInstanceHealthChecksRequest"},
         "clientToken":{
           "shape":"SBClientToken",
           "idempotencyToken":true
@@ -1751,6 +1823,13 @@
       "box":true,
       "max":10000000,
       "min":-1
+    },
+    "UpdateInstanceHealthChecksRequest":{
+      "type":"structure",
+      "members":{
+        "healthMonitoring":{"shape":"HealthMonitoring"},
+        "deepHealthChecks":{"shape":"DeepHealthChecks"}
+      }
     },
     "UpdateNodeLifecycleActionsRequest":{
       "type":"structure",

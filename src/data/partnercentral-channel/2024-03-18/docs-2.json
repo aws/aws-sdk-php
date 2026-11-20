@@ -3,13 +3,17 @@
   "service": "<p>AWS Partner Central Channel service for managing partner relationships, handshakes, and program management accounts.</p>",
   "operations": {
     "AcceptChannelHandshake": "<p>Accepts a pending channel handshake request from another AWS account.</p>",
+    "CancelChannelContract": "<p>Cancels a pending channel contract created within the last 30 days. A request for a channel contract that isn't PENDING, including one that is already CANCELED, fails with a ValidationException.</p>",
     "CancelChannelHandshake": "<p>Cancels a pending channel handshake request.</p>",
+    "CreateChannelContract": "<p>Creates a new channel contract and sends it to the signatory for signature. In the Sandbox catalog, the channel contract is accepted automatically.</p>",
     "CreateChannelHandshake": "<p>Creates a new channel handshake request to establish a partnership with another AWS account.</p>",
     "CreateProgramManagementAccount": "<p>Creates a new program management account for managing partner relationships.</p>",
     "CreateRelationship": "<p>Creates a new partner relationship between accounts.</p>",
     "DeleteProgramManagementAccount": "<p>Deletes a program management account.</p>",
     "DeleteRelationship": "<p>Deletes a partner relationship.</p>",
+    "GetChannelContract": "<p>Retrieves details of a specific channel contract.</p>",
     "GetRelationship": "<p>Retrieves details of a specific partner relationship.</p>",
+    "ListChannelContracts": "<p>Lists channel contracts based on specified criteria.</p>",
     "ListChannelHandshakes": "<p>Lists channel handshakes based on specified criteria.</p>",
     "ListProgramManagementAccounts": "<p>Lists program management accounts based on specified criteria.</p>",
     "ListRelationships": "<p>Lists partner relationships based on specified criteria.</p>",
@@ -48,6 +52,7 @@
         "ChannelHandshakeSummary$receiverAccountId": "<p>The AWS account ID of the handshake receiver.</p>",
         "CreateProgramManagementAccountRequest$accountId": "<p>The AWS account ID to associate with the program management account.</p>",
         "CreateRelationshipRequest$associatedAccountId": "<p>The AWS account ID to associate in this relationship.</p>",
+        "MemberAccountIdList$member": null,
         "ProgramManagementAccountSummary$accountId": "<p>The AWS account ID associated with the program management account.</p>",
         "RelationshipDetail$associatedAccountId": "<p>The AWS account ID associated in this relationship.</p>",
         "RelationshipSummary$associatedAccountId": "<p>The AWS account ID associated in this relationship.</p>",
@@ -62,12 +67,37 @@
         "ListRelationshipsRequest$associatedAccountIds": "<p>Filter by associated AWS account IDs.</p>"
       }
     },
+    "AccountScope": {
+      "base": null,
+      "refs": {
+        "CreateRelationshipRequest$accountScope": "<p>The account scope for a managed services relationship (for example, entire organization, specific member accounts). Applies only to managed services relationships.</p>",
+        "RelationshipDetail$accountScope": "<p>The account scope of the managed services relationship. Applies only to managed services relationships.</p>"
+      }
+    },
+    "Address": {
+      "base": "<p>The postal address of a legal entity.</p>",
+      "refs": {
+        "ManagedServicesAttestationDetails$legalEntityAddress": "<p>The address of the end customer's legal entity, if available.</p>",
+        "ManagedServicesAttestationPayload$legalEntityAddress": "<p>The address of the end customer's legal entity.</p>"
+      }
+    },
+    "AddressLine": {
+      "base": null,
+      "refs": {
+        "Address$addressLine": "<p>The first line of the street address.</p>",
+        "Address$addressLine2": "<p>The second line of the street address.</p>"
+      }
+    },
     "Arn": {
       "base": null,
       "refs": {
         "AcceptChannelHandshakeDetail$arn": "<p>The Amazon Resource Name (ARN) of the accepted handshake.</p>",
+        "CancelChannelContractDetail$arn": "<p>The Amazon Resource Name (ARN) of the canceled channel contract.</p>",
         "CancelChannelHandshakeDetail$arn": "<p>The Amazon Resource Name (ARN) of the canceled handshake.</p>",
+        "ChannelContractDetail$arn": "<p>The Amazon Resource Name (ARN) of the channel contract.</p>",
+        "ChannelContractSummary$arn": "<p>The Amazon Resource Name (ARN) of the channel contract.</p>",
         "ChannelHandshakeSummary$arn": "<p>The Amazon Resource Name (ARN) of the handshake.</p>",
+        "CreateChannelContractDetail$arn": "<p>The Amazon Resource Name (ARN) of the created channel contract.</p>",
         "CreateChannelHandshakeDetail$arn": "<p>The Amazon Resource Name (ARN) of the created handshake.</p>",
         "CreateProgramManagementAccountDetail$arn": "<p>The Amazon Resource Name (ARN) of the created program management account.</p>",
         "CreateRelationshipDetail$arn": "<p>The Amazon Resource Name (ARN) of the created relationship.</p>",
@@ -113,6 +143,20 @@
         "ListRelationshipsRequest$associationTypes": "<p>Filter by association types.</p>"
       }
     },
+    "CancelChannelContractDetail": {
+      "base": "<p>Contains details about a canceled channel contract.</p>",
+      "refs": {
+        "CancelChannelContractResponse$channelContractDetail": "<p>Details of the canceled channel contract.</p>"
+      }
+    },
+    "CancelChannelContractRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelChannelContractResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CancelChannelHandshakeDetail": {
       "base": "<p>Contains details about a canceled channel handshake.</p>",
       "refs": {
@@ -127,18 +171,32 @@
       "base": null,
       "refs": {}
     },
+    "CancellationReason": {
+      "base": null,
+      "refs": {
+        "CancelChannelContractDetail$cancellationReason": "<p>The reason the channel contract was canceled, if one was provided.</p>",
+        "CancelChannelContractRequest$reason": "<p>The reason for canceling the channel contract. Later requests don't change or remove it.</p>",
+        "ChannelContractDetail$cancellationReason": "<p>The reason the channel contract was canceled, if one was provided.</p>"
+      }
+    },
     "Catalog": {
       "base": null,
       "refs": {
         "AcceptChannelHandshakeRequest$catalog": "<p>The catalog identifier for the handshake request.</p>",
+        "CancelChannelContractRequest$catalog": "<p>The catalog identifier for the channel contract.</p>",
         "CancelChannelHandshakeRequest$catalog": "<p>The catalog identifier for the handshake request.</p>",
+        "ChannelContractDetail$catalog": "<p>The catalog identifier associated with the channel contract.</p>",
+        "ChannelContractSummary$catalog": "<p>The catalog identifier associated with the channel contract.</p>",
         "ChannelHandshakeSummary$catalog": "<p>The catalog identifier associated with the handshake.</p>",
+        "CreateChannelContractRequest$catalog": "<p>The catalog identifier for the channel contract.</p>",
         "CreateChannelHandshakeRequest$catalog": "<p>The catalog identifier for the handshake request.</p>",
         "CreateProgramManagementAccountRequest$catalog": "<p>The catalog identifier for the program management account.</p>",
         "CreateRelationshipRequest$catalog": "<p>The catalog identifier for the relationship.</p>",
         "DeleteProgramManagementAccountRequest$catalog": "<p>The catalog identifier for the program management account.</p>",
         "DeleteRelationshipRequest$catalog": "<p>The catalog identifier for the relationship.</p>",
+        "GetChannelContractRequest$catalog": "<p>The catalog identifier for the channel contract.</p>",
         "GetRelationshipRequest$catalog": "<p>The catalog identifier for the relationship.</p>",
+        "ListChannelContractsRequest$catalog": "<p>The catalog identifier to filter channel contracts.</p>",
         "ListChannelHandshakesRequest$catalog": "<p>The catalog identifier to filter handshakes.</p>",
         "ListProgramManagementAccountsRequest$catalog": "<p>The catalog identifier to filter accounts.</p>",
         "ListRelationshipsRequest$catalog": "<p>The catalog identifier to filter relationships.</p>",
@@ -148,6 +206,112 @@
         "RelationshipSummary$catalog": "<p>The catalog identifier associated with the relationship.</p>",
         "UpdateProgramManagementAccountRequest$catalog": "<p>The catalog identifier for the program management account.</p>",
         "UpdateRelationshipRequest$catalog": "<p>The catalog identifier for the relationship.</p>"
+      }
+    },
+    "ChannelContractDetail": {
+      "base": "<p>Detailed information about a channel contract.</p>",
+      "refs": {
+        "GetChannelContractResponse$channelContractDetail": "<p>Details of the requested channel contract.</p>"
+      }
+    },
+    "ChannelContractDetails": {
+      "base": "<p>Contains detailed information about different types of channel contracts.</p>",
+      "refs": {
+        "ChannelContractDetail$details": "<p>Type-specific details of the channel contract.</p>"
+      }
+    },
+    "ChannelContractId": {
+      "base": null,
+      "refs": {
+        "CancelChannelContractDetail$id": "<p>The unique identifier of the canceled channel contract.</p>",
+        "ChannelContractDetail$id": "<p>The unique identifier of the channel contract.</p>",
+        "ChannelContractSummary$id": "<p>The unique identifier of the channel contract.</p>",
+        "CreateChannelContractDetail$id": "<p>The unique identifier of the created channel contract.</p>",
+        "RelationshipDetail$channelContractId": "<p>The identifier of the channel contract currently in effect for the relationship. Applies only to managed services relationships.</p>"
+      }
+    },
+    "ChannelContractIdentifier": {
+      "base": null,
+      "refs": {
+        "CancelChannelContractRequest$identifier": "<p>The unique identifier of the channel contract to cancel.</p>",
+        "GetChannelContractRequest$identifier": "<p>The unique identifier of the channel contract to retrieve.</p>"
+      }
+    },
+    "ChannelContractLegalEntityName": {
+      "base": null,
+      "refs": {
+        "ChannelContractLegalEntityNameFilterList$member": null,
+        "ManagedServicesAttestationDetails$legalEntityName": "<p>The legal name of the end customer's legal entity.</p>",
+        "ManagedServicesAttestationPayload$legalEntityName": "<p>The legal name of the end customer's legal entity.</p>",
+        "ManagedServicesAttestationSummaryDetails$legalEntityName": "<p>The legal name of the end customer's legal entity.</p>"
+      }
+    },
+    "ChannelContractLegalEntityNameFilterList": {
+      "base": null,
+      "refs": {
+        "ManagedServicesAttestationTypeFilters$legalEntityNames": "<p>Filter by legal entity names.</p>"
+      }
+    },
+    "ChannelContractPayload": {
+      "base": "<p>Contains the payload data for different types of channel contracts.</p>",
+      "refs": {
+        "CreateChannelContractRequest$payload": "<p>The payload containing specific details for the contract type.</p>"
+      }
+    },
+    "ChannelContractSignatoryEmail": {
+      "base": null,
+      "refs": {
+        "ManagedServicesAttestationDetails$signatoryEmail": "<p>The email address of the signatory.</p>",
+        "ManagedServicesAttestationPayload$signatoryEmail": "<p>The email address to which the attestation is sent for signature.</p>"
+      }
+    },
+    "ChannelContractSignatoryName": {
+      "base": null,
+      "refs": {
+        "ManagedServicesAttestationDetails$signatoryName": "<p>The name of the person who signs the attestation for the end customer.</p>",
+        "ManagedServicesAttestationPayload$signatoryName": "<p>The name of the person who signs the attestation for the end customer.</p>"
+      }
+    },
+    "ChannelContractStatus": {
+      "base": null,
+      "refs": {
+        "CancelChannelContractDetail$status": "<p>The current status of the canceled channel contract.</p>",
+        "ChannelContractDetail$status": "<p>The current status of the channel contract.</p>",
+        "ChannelContractStatusFilterList$member": null,
+        "ChannelContractSummary$status": "<p>The current status of the channel contract.</p>"
+      }
+    },
+    "ChannelContractStatusFilterList": {
+      "base": null,
+      "refs": {
+        "ListChannelContractsRequest$statuses": "<p>Filter results by channel contract status.</p>"
+      }
+    },
+    "ChannelContractSummaries": {
+      "base": null,
+      "refs": {
+        "ListChannelContractsResponse$items": "<p>List of channel contracts matching the criteria.</p>"
+      }
+    },
+    "ChannelContractSummary": {
+      "base": "<p>Summary information about a channel contract.</p>",
+      "refs": {
+        "ChannelContractSummaries$member": null
+      }
+    },
+    "ChannelContractSummaryDetails": {
+      "base": "<p>Contains summary information about different types of channel contracts.</p>",
+      "refs": {
+        "ChannelContractSummary$details": "<p>Type-specific summary details of the channel contract.</p>"
+      }
+    },
+    "ChannelContractType": {
+      "base": null,
+      "refs": {
+        "ChannelContractDetail$contractType": "<p>The type of the channel contract.</p>",
+        "ChannelContractSummary$contractType": "<p>The type of the channel contract.</p>",
+        "CreateChannelContractRequest$contractType": "<p>The type of channel contract to create (for example, managed services attestation).</p>",
+        "ListChannelContractsRequest$contractType": "<p>Filter results by contract type.</p>"
       }
     },
     "ChannelHandshakeId": {
@@ -186,9 +350,17 @@
         "ChannelHandshakeSummaries$member": null
       }
     },
+    "City": {
+      "base": null,
+      "refs": {
+        "Address$city": "<p>The city or locality.</p>"
+      }
+    },
     "ClientToken": {
       "base": null,
       "refs": {
+        "CancelChannelContractRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "CreateChannelContractRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateChannelHandshakeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateProgramManagementAccountRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateRelationshipRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
@@ -200,6 +372,12 @@
       "base": "<p>The request could not be completed due to a conflict with the current state of the resource.</p>",
       "refs": {}
     },
+    "CountryCode": {
+      "base": null,
+      "refs": {
+        "Address$countryCode": "<p>The two-letter ISO 3166-1 country code.</p>"
+      }
+    },
     "Coverage": {
       "base": null,
       "refs": {
@@ -207,6 +385,20 @@
         "ResoldEnterprise$coverage": "<p>The coverage level for resold enterprise support.</p>",
         "ResoldUnifiedOperations$coverage": "<p>The coverage level for resold unified operations support.</p>"
       }
+    },
+    "CreateChannelContractDetail": {
+      "base": "<p>Contains details about a newly created channel contract.</p>",
+      "refs": {
+        "CreateChannelContractResponse$channelContractDetail": "<p>Details of the created channel contract.</p>"
+      }
+    },
+    "CreateChannelContractRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateChannelContractResponse": {
+      "base": null,
+      "refs": {}
     },
     "CreateChannelHandshakeDetail": {
       "base": "<p>Contains details about a newly created channel handshake.</p>",
@@ -253,14 +445,25 @@
     "DateTime": {
       "base": null,
       "refs": {
+        "ChannelContractDetail$createdAt": "<p>The timestamp when the channel contract was created.</p>",
+        "ChannelContractDetail$updatedAt": "<p>The timestamp when the channel contract was last updated.</p>",
+        "ChannelContractDetail$respondedAt": "<p>The timestamp when the channel contract was accepted, if applicable.</p>",
+        "ChannelContractSummary$createdAt": "<p>The timestamp when the channel contract was created.</p>",
+        "ChannelContractSummary$updatedAt": "<p>The timestamp when the channel contract was last updated.</p>",
+        "ChannelContractSummary$respondedAt": "<p>The timestamp when the channel contract was accepted, if applicable.</p>",
         "ChannelHandshakeSummary$createdAt": "<p>The timestamp when the handshake was created.</p>",
         "ChannelHandshakeSummary$updatedAt": "<p>The timestamp when the handshake was last updated.</p>",
+        "CreateRelationshipRequest$startDate": "<p>The start date of the managed services relationship. Applies only to managed services relationships.</p>",
+        "ManagedServicesAttestationDetails$endDate": "<p>The end date of the managed services attestation.</p>",
+        "ManagedServicesAttestationPayload$endDate": "<p>The end date of the attestation, which must be after the start date of the relationship.</p>",
+        "ManagedServicesAttestationSummaryDetails$endDate": "<p>The end date of the managed services attestation.</p>",
         "ProgramManagementAccountSummary$createdAt": "<p>The timestamp when the account was created.</p>",
         "ProgramManagementAccountSummary$updatedAt": "<p>The timestamp when the account was last updated.</p>",
         "ProgramManagementAccountSummary$startDate": "<p>The start date of the program management account.</p>",
         "RelationshipDetail$createdAt": "<p>The timestamp when the relationship was created.</p>",
         "RelationshipDetail$updatedAt": "<p>The timestamp when the relationship was last updated.</p>",
         "RelationshipDetail$startDate": "<p>The start date of the relationship.</p>",
+        "RelationshipDetail$endDate": "<p>The end date of the relationship.</p>",
         "RelationshipSummary$createdAt": "<p>The timestamp when the relationship was created.</p>",
         "RelationshipSummary$updatedAt": "<p>The timestamp when the relationship was last updated.</p>",
         "RelationshipSummary$startDate": "<p>The start date of the relationship.</p>",
@@ -284,6 +487,14 @@
       "refs": {}
     },
     "DeleteRelationshipResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetChannelContractRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetChannelContractResponse": {
       "base": null,
       "refs": {}
     },
@@ -328,6 +539,32 @@
     "InternalServerException": {
       "base": "<p>An internal server error occurred while processing the request.</p>",
       "refs": {}
+    },
+    "ListChannelContractsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListChannelContractsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListChannelContractsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>"
+      }
+    },
+    "ListChannelContractsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListChannelContractsTypeFilters": {
+      "base": "<p>Type-specific filters for listing channel contracts.</p>",
+      "refs": {
+        "ListChannelContractsRequest$contractTypeFilters": "<p>Type-specific filters for channel contracts.</p>"
+      }
+    },
+    "ListChannelContractsTypeSort": {
+      "base": "<p>Type-specific sorting options for listing channel contracts.</p>",
+      "refs": {
+        "ListChannelContractsRequest$contractTypeSort": "<p>Type-specific sorting options for channel contracts.</p>"
+      }
     },
     "ListChannelHandshakesRequest": {
       "base": null,
@@ -415,6 +652,64 @@
       "base": null,
       "refs": {}
     },
+    "ManagedServicesAttestationDetails": {
+      "base": "<p>Details specific to managed services attestation channel contracts. Applies only to managed services attestation channel contracts.</p>",
+      "refs": {
+        "ChannelContractDetails$managedServicesAttestationDetails": "<p>Details specific to managed services attestation channel contracts. Applies only to managed services attestation channel contracts.</p>"
+      }
+    },
+    "ManagedServicesAttestationPayload": {
+      "base": "<p>Payload for managed services attestation channel contract requests. Applies only to managed services attestation channel contracts.</p>",
+      "refs": {
+        "ChannelContractPayload$managedServicesAttestationPayload": "<p>Payload for creating a managed services attestation channel contract. Applies only to managed services attestation channel contracts.</p>"
+      }
+    },
+    "ManagedServicesAttestationSummaryDetails": {
+      "base": "<p>Summary information about a managed services attestation channel contract. Applies only to managed services attestation channel contracts.</p>",
+      "refs": {
+        "ChannelContractSummaryDetails$managedServicesAttestationDetails": "<p>Summary details specific to managed services attestation channel contracts. Applies only to managed services attestation channel contracts.</p>"
+      }
+    },
+    "ManagedServicesAttestationTypeFilters": {
+      "base": "<p>Filters specific to managed services attestation channel contracts. Applies only to managed services attestation channel contracts.</p>",
+      "refs": {
+        "ListChannelContractsTypeFilters$managedServicesAttestationTypeFilters": "<p>Filters specific to managed services attestation channel contracts. Applies only to managed services attestation channel contracts.</p>"
+      }
+    },
+    "ManagedServicesAttestationTypeSort": {
+      "base": "<p>Sorting options specific to managed services attestation channel contracts. Applies only to managed services attestation channel contracts.</p>",
+      "refs": {
+        "ListChannelContractsTypeSort$managedServicesAttestationTypeSort": "<p>Sorting options specific to managed services attestation channel contracts. Applies only to managed services attestation channel contracts.</p>"
+      }
+    },
+    "ManagedServicesAttestationTypeSortName": {
+      "base": null,
+      "refs": {
+        "ManagedServicesAttestationTypeSort$sortBy": "<p>The field to sort by.</p>"
+      }
+    },
+    "ManagedServicesSupportedService": {
+      "base": null,
+      "refs": {
+        "ManagedServicesSupportedServiceList$member": null
+      }
+    },
+    "ManagedServicesSupportedServiceList": {
+      "base": null,
+      "refs": {
+        "ManagedServicesAttestationDetails$supportedServices": "<p>The managed services that the partner provides to the end customer.</p>",
+        "ManagedServicesAttestationPayload$supportedServices": "<p>The managed services that the partner provides to the end customer.</p>",
+        "ManagedServicesAttestationSummaryDetails$supportedServices": "<p>The managed services that the partner provides to the end customer.</p>"
+      }
+    },
+    "MemberAccountIdList": {
+      "base": null,
+      "refs": {
+        "ManagedServicesAttestationDetails$memberAccountIds": "<p>The AWS account IDs of the end customer's member accounts covered by the managed services.</p>",
+        "ManagedServicesAttestationPayload$memberAccountIds": "<p>The AWS account IDs of the end customer's member accounts to cover, not allowed when the account scope is the entire organization.</p>",
+        "ManagedServicesAttestationSummaryDetails$memberAccountIds": "<p>The AWS account IDs of the end customer's member accounts covered by the managed services.</p>"
+      }
+    },
     "MinimumNoticeDays": {
       "base": null,
       "refs": {
@@ -426,6 +721,8 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "ListChannelContractsRequest$nextToken": "<p>Token for retrieving the next page of results.</p>",
+        "ListChannelContractsResponse$nextToken": "<p>Token for retrieving the next page of results, if available.</p>",
         "ListChannelHandshakesRequest$nextToken": "<p>Token for retrieving the next page of results.</p>",
         "ListChannelHandshakesResponse$nextToken": "<p>Token for retrieving the next page of results, if available.</p>",
         "ListProgramManagementAccountsRequest$nextToken": "<p>Token for retrieving the next page of results.</p>",
@@ -459,6 +756,12 @@
       "base": null,
       "refs": {
         "ChannelHandshakeSummary$senderDisplayName": "<p>The display name of the handshake sender.</p>"
+      }
+    },
+    "PostalCode": {
+      "base": null,
+      "refs": {
+        "Address$postalCode": "<p>The postal code.</p>"
       }
     },
     "Program": {
@@ -516,6 +819,9 @@
         "DeleteProgramManagementAccountRequest$identifier": "<p>The unique identifier of the program management account to delete.</p>",
         "DeleteRelationshipRequest$programManagementAccountIdentifier": "<p>The identifier of the program management account associated with the relationship.</p>",
         "GetRelationshipRequest$programManagementAccountIdentifier": "<p>The identifier of the program management account associated with the relationship.</p>",
+        "ManagedServicesAttestationDetails$programManagementAccountIdentifier": "<p>The identifier of the program management account.</p>",
+        "ManagedServicesAttestationPayload$programManagementAccountIdentifier": "<p>The identifier of the program management account for the relationship.</p>",
+        "ManagedServicesAttestationSummaryDetails$programManagementAccountIdentifier": "<p>The identifier of the program management account.</p>",
         "ProgramManagementAccountIdentifierList$member": null,
         "RevokeServicePeriodPayload$programManagementAccountIdentifier": "<p>The identifier of the program management account.</p>",
         "StartServicePeriodPayload$programManagementAccountIdentifier": "<p>The identifier of the program management account.</p>",
@@ -552,6 +858,14 @@
       "base": "<p>Summary information about a program management account.</p>",
       "refs": {
         "ProgramManagementAccountSummaries$member": null
+      }
+    },
+    "ProgramManagementAccountType": {
+      "base": null,
+      "refs": {
+        "CreateProgramManagementAccountRequest$type": "<p>The type of the program management account (for example, resale billing transfer, managed services), required for the managed services provider program.</p>",
+        "ListProgramManagementAccountsRequest$type": "<p>Filter by program management account type.</p>",
+        "ProgramManagementAccountSummary$type": "<p>The type of the program management account.</p>"
       }
     },
     "ProgramManagementAccountTypeFilters": {
@@ -629,7 +943,17 @@
       "refs": {
         "DeleteRelationshipRequest$identifier": "<p>The unique identifier of the relationship to delete.</p>",
         "GetRelationshipRequest$identifier": "<p>The unique identifier of the relationship to retrieve.</p>",
+        "ManagedServicesAttestationDetails$relationshipIdentifier": "<p>The identifier of the relationship covered by the attestation.</p>",
+        "ManagedServicesAttestationPayload$relationshipIdentifier": "<p>The identifier of the managed services relationship to cover with the attestation.</p>",
+        "ManagedServicesAttestationSummaryDetails$relationshipIdentifier": "<p>The identifier of the relationship covered by the attestation.</p>",
+        "RelationshipIdentifierFilterList$member": null,
         "UpdateRelationshipRequest$identifier": "<p>The unique identifier of the relationship to update.</p>"
+      }
+    },
+    "RelationshipIdentifierFilterList": {
+      "base": null,
+      "refs": {
+        "ManagedServicesAttestationTypeFilters$relationshipIdentifiers": "<p>Filter by relationship identifiers.</p>"
       }
     },
     "RelationshipSummaries": {
@@ -647,8 +971,8 @@
     "ResaleAccountModel": {
       "base": null,
       "refs": {
-        "CreateRelationshipRequest$resaleAccountModel": "<p>The resale account model for the relationship.</p>",
-        "RelationshipDetail$resaleAccountModel": "<p>The resale account model for the relationship.</p>"
+        "CreateRelationshipRequest$resaleAccountModel": "<p>The resale account model for the relationship. Applies only to billing transfer relationships.</p>",
+        "RelationshipDetail$resaleAccountModel": "<p>The resale account model for the relationship. Applies only to billing transfer relationships.</p>"
       }
     },
     "ResoldEnterprise": {
@@ -742,6 +1066,7 @@
       "refs": {
         "ListProgramManagementAccountsSortBase$sortOrder": "<p>The sort order (ascending or descending).</p>",
         "ListRelationshipsSortBase$sortOrder": "<p>The sort order (ascending or descending).</p>",
+        "ManagedServicesAttestationTypeSort$sortOrder": "<p>The sort order (ascending or descending).</p>",
         "ProgramManagementAccountTypeSort$sortOrder": "<p>The sort order (ascending or descending).</p>",
         "RevokeServicePeriodTypeSort$sortOrder": "<p>The sort order (ascending or descending).</p>",
         "StartServicePeriodTypeSort$sortOrder": "<p>The sort order (ascending or descending).</p>"
@@ -777,6 +1102,12 @@
         "StartServicePeriodTypeSort$sortBy": "<p>The field to sort by.</p>"
       }
     },
+    "StateOrRegion": {
+      "base": null,
+      "refs": {
+        "Address$stateOrRegion": "<p>The state, province, or prefecture.</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
@@ -808,8 +1139,8 @@
     "SupportPlan": {
       "base": "<p>Configuration for different types of support plans.</p>",
       "refs": {
-        "CreateRelationshipRequest$requestedSupportPlan": "<p>The support plan requested for this relationship.</p>",
-        "UpdateRelationshipRequest$requestedSupportPlan": "<p>The updated support plan for the relationship.</p>"
+        "CreateRelationshipRequest$requestedSupportPlan": "<p>The support plan requested for this relationship. Applies only to billing transfer relationships.</p>",
+        "UpdateRelationshipRequest$requestedSupportPlan": "<p>The updated support plan for the relationship. Applies only to billing transfer relationships.</p>"
       }
     },
     "Tag": {
@@ -834,6 +1165,7 @@
     "TagList": {
       "base": null,
       "refs": {
+        "CreateChannelContractRequest$tags": "<p>Key-value pairs to associate with the channel contract.</p>",
         "CreateChannelHandshakeRequest$tags": "<p>Key-value pairs to associate with the channel handshake.</p>",
         "CreateProgramManagementAccountRequest$tags": "<p>Key-value pairs to associate with the program management account.</p>",
         "CreateRelationshipRequest$tags": "<p>Key-value pairs to associate with the relationship.</p>",

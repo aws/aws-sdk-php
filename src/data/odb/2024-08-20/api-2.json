@@ -815,6 +815,23 @@
       ],
       "readonly":true
     },
+    "ListAutonomousDatabaseRefreshableClones":{
+      "name":"ListAutonomousDatabaseRefreshableClones",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAutonomousDatabaseRefreshableClonesInput"},
+      "output":{"shape":"ListAutonomousDatabaseRefreshableClonesOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "ListAutonomousDatabaseVersions":{
       "name":"ListAutonomousDatabaseVersions",
       "http":{
@@ -1184,6 +1201,23 @@
       },
       "input":{"shape":"StartAutonomousDatabaseInput"},
       "output":{"shape":"StartAutonomousDatabaseOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "StartAutonomousDatabaseRefresh":{
+      "name":"StartAutonomousDatabaseRefresh",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartAutonomousDatabaseRefreshInput"},
+      "output":{"shape":"StartAutonomousDatabaseRefreshOutput"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -1830,6 +1864,19 @@
       "member":{"shape":"AutonomousDatabasePeerSummary"}
     },
     "AutonomousDatabasePeerSummary":{
+      "type":"structure",
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceId"},
+        "autonomousDatabaseArn":{"shape":"ResourceArn"},
+        "ocid":{"shape":"String"},
+        "region":{"shape":"String"}
+      }
+    },
+    "AutonomousDatabaseRefreshableCloneList":{
+      "type":"list",
+      "member":{"shape":"AutonomousDatabaseRefreshableCloneSummary"}
+    },
+    "AutonomousDatabaseRefreshableCloneSummary":{
       "type":"structure",
       "members":{
         "autonomousDatabaseId":{"shape":"ResourceId"},
@@ -4557,6 +4604,34 @@
         "autonomousDatabasePeers":{"shape":"AutonomousDatabasePeerList"}
       }
     },
+    "ListAutonomousDatabaseRefreshableClonesInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "maxResults":{"shape":"ListAutonomousDatabaseRefreshableClonesInputMaxResultsInteger"},
+        "nextToken":{"shape":"ListAutonomousDatabaseRefreshableClonesInputNextTokenString"},
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"}
+      }
+    },
+    "ListAutonomousDatabaseRefreshableClonesInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListAutonomousDatabaseRefreshableClonesInputNextTokenString":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
+    "ListAutonomousDatabaseRefreshableClonesOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseRefreshableClones"],
+      "members":{
+        "nextToken":{"shape":"String"},
+        "autonomousDatabaseRefreshableClones":{"shape":"AutonomousDatabaseRefreshableCloneList"}
+      }
+    },
     "ListAutonomousDatabaseVersionsInput":{
       "type":"structure",
       "members":{
@@ -5905,6 +5980,25 @@
         "displayName":{"shape":"String"},
         "status":{"shape":"AutonomousDatabaseResourceStatus"},
         "statusReason":{"shape":"String"}
+      }
+    },
+    "StartAutonomousDatabaseRefreshInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"},
+        "timeOfRefreshCutoff":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "StartAutonomousDatabaseRefreshOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "status":{"shape":"AutonomousDatabaseResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "refreshableStatus":{"shape":"RefreshableStatus"}
       }
     },
     "StartDbNodeInput":{

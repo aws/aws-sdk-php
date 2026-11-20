@@ -18,6 +18,26 @@
         "title": "Example for AcceptChannelHandshake"
       }
     ],
+    "CancelChannelContract": [
+      {
+        "input": {
+          "catalog": "AWS",
+          "clientToken": "clientToken",
+          "identifier": "cc-4fj3bd2o3vb91",
+          "reason": "No longer providing managed services for this customer"
+        },
+        "output": {
+          "channelContractDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:111122223333:catalog/AWS/channel-contract/cc-4fj3bd2o3vb91",
+            "cancellationReason": "No longer providing managed services for this customer",
+            "id": "cc-4fj3bd2o3vb91",
+            "status": "CANCELED"
+          }
+        },
+        "id": "example-1",
+        "title": "Example for CancelChannelContract"
+      }
+    ],
     "CancelChannelHandshake": [
       {
         "input": {
@@ -33,6 +53,48 @@
         },
         "id": "example-1",
         "title": "Example for CancelChannelHandshake"
+      }
+    ],
+    "CreateChannelContract": [
+      {
+        "input": {
+          "catalog": "AWS",
+          "clientToken": "clientToken",
+          "contractType": "MANAGED_SERVICES_ATTESTATION",
+          "payload": {
+            "managedServicesAttestationPayload": {
+              "endDate": "2027-03-31T00:00:00Z",
+              "legalEntityAddress": {
+                "addressLine": "123 Any Street",
+                "addressLine2": "Suite 100",
+                "city": "Anytown",
+                "countryCode": "US",
+                "postalCode": "98101",
+                "stateOrRegion": "WA"
+              },
+              "legalEntityName": "Example Partner Corp",
+              "memberAccountIds": [
+                "111122224444"
+              ],
+              "programManagementAccountIdentifier": "pma-abcdef123456g",
+              "relationshipIdentifier": "rs-abc123def456g",
+              "signatoryEmail": "mary.major@example.com",
+              "signatoryName": "Mary Major",
+              "supportedServices": [
+                "MONITORING",
+                "SECURITY"
+              ]
+            }
+          }
+        },
+        "output": {
+          "channelContractDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:111122223333:catalog/AWS/channel-contract/cc-4fj3bd2o3vb91",
+            "id": "cc-4fj3bd2o3vb91"
+          }
+        },
+        "id": "example-1",
+        "title": "Example for CreateChannelContract - MANAGED_SERVICES_ATTESTATION"
       }
     ],
     "CreateChannelHandshake": [
@@ -140,6 +202,24 @@
         },
         "id": "example-1",
         "title": "Example for CreateProgramManagementAccount"
+      },
+      {
+        "input": {
+          "type": "MANAGED_SERVICES",
+          "accountId": "111122223333",
+          "catalog": "AWS",
+          "clientToken": "clientToken",
+          "displayName": "TestManagedServices",
+          "program": "MANAGED_SERVICES_PROVIDER"
+        },
+        "output": {
+          "programManagementAccountDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/program-management-account/pma-abcdef123456g",
+            "id": "pma-abcdef123456g"
+          }
+        },
+        "id": "example-2",
+        "title": "Example for CreateProgramManagementAccount - MANAGED_SERVICES"
       }
     ],
     "CreateRelationship": [
@@ -162,6 +242,27 @@
         },
         "id": "example-1",
         "title": "Example for CreateRelationship"
+      },
+      {
+        "input": {
+          "accountScope": "ENTIRE_ORGANIZATION",
+          "associatedAccountId": "987654321012",
+          "associationType": "MANAGED_SERVICES_END_CUSTOMER",
+          "catalog": "AWS",
+          "clientToken": "clientToken",
+          "displayName": "TestManagedCustomer",
+          "programManagementAccountIdentifier": "pma-abcdef123456g",
+          "sector": "COMMERCIAL",
+          "startDate": "2026-10-01T00:00:00Z"
+        },
+        "output": {
+          "relationshipDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/program-management-account/pma-abcdef123456g/relationship/rs-abc123def456g",
+            "id": "rs-abc123def456g"
+          }
+        },
+        "id": "example-2",
+        "title": "Example for CreateRelationship - MANAGED_SERVICES_END_CUSTOMER"
       }
     ],
     "DeleteProgramManagementAccount": [
@@ -189,6 +290,97 @@
         "title": "Example for DeleteRelationship"
       }
     ],
+    "GetChannelContract": [
+      {
+        "input": {
+          "catalog": "AWS",
+          "identifier": "cc-4fj3bd2o3vb91"
+        },
+        "output": {
+          "channelContractDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:111122223333:catalog/AWS/channel-contract/cc-4fj3bd2o3vb91",
+            "catalog": "AWS",
+            "contractType": "MANAGED_SERVICES_ATTESTATION",
+            "createdAt": "2026-09-08T16:18:16.000Z",
+            "details": {
+              "managedServicesAttestationDetails": {
+                "endDate": "2027-03-31T00:00:00Z",
+                "legalEntityAddress": {
+                  "addressLine": "123 Any Street",
+                  "addressLine2": "Suite 100",
+                  "city": "Anytown",
+                  "countryCode": "US",
+                  "postalCode": "98101",
+                  "stateOrRegion": "WA"
+                },
+                "legalEntityName": "Example Partner Corp",
+                "memberAccountIds": [
+                  "111122224444"
+                ],
+                "programManagementAccountIdentifier": "pma-abcdef123456g",
+                "relationshipIdentifier": "rs-abc123def456g",
+                "signatoryEmail": "mary.major@example.com",
+                "signatoryName": "Mary Major",
+                "supportedServices": [
+                  "MONITORING",
+                  "SECURITY"
+                ]
+              }
+            },
+            "id": "cc-4fj3bd2o3vb91",
+            "status": "PENDING",
+            "updatedAt": "2026-09-08T16:18:16.000Z"
+          }
+        },
+        "id": "example-1",
+        "title": "Example for GetChannelContract - MANAGED_SERVICES_ATTESTATION"
+      },
+      {
+        "input": {
+          "catalog": "AWS",
+          "identifier": "cc-9xq4rt6w2zp81"
+        },
+        "output": {
+          "channelContractDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:111122223333:catalog/AWS/channel-contract/cc-9xq4rt6w2zp81",
+            "cancellationReason": "No longer providing managed services for this customer",
+            "catalog": "AWS",
+            "contractType": "MANAGED_SERVICES_ATTESTATION",
+            "createdAt": "2026-09-08T16:18:16.000Z",
+            "details": {
+              "managedServicesAttestationDetails": {
+                "endDate": "2027-03-31T00:00:00Z",
+                "legalEntityAddress": {
+                  "addressLine": "123 Any Street",
+                  "addressLine2": "Suite 100",
+                  "city": "Anytown",
+                  "countryCode": "US",
+                  "postalCode": "98101",
+                  "stateOrRegion": "WA"
+                },
+                "legalEntityName": "Example Partner Corp",
+                "memberAccountIds": [
+                  "111122224444"
+                ],
+                "programManagementAccountIdentifier": "pma-abcdef123456g",
+                "relationshipIdentifier": "rs-abc123def456g",
+                "signatoryEmail": "mary.major@example.com",
+                "signatoryName": "Mary Major",
+                "supportedServices": [
+                  "MONITORING",
+                  "SECURITY"
+                ]
+              }
+            },
+            "id": "cc-9xq4rt6w2zp81",
+            "status": "CANCELED",
+            "updatedAt": "2026-09-10T09:30:00.000Z"
+          }
+        },
+        "id": "example-2",
+        "title": "Example for GetChannelContract - CANCELED"
+      }
+    ],
     "GetRelationship": [
       {
         "input": {
@@ -213,6 +405,92 @@
         },
         "id": "example-1",
         "title": "Example for GetRelationship"
+      },
+      {
+        "input": {
+          "catalog": "AWS",
+          "identifier": "rs-abc123def456g",
+          "programManagementAccountIdentifier": "pma-abcdef123456g"
+        },
+        "output": {
+          "relationshipDetail": {
+            "accountScope": "ENTIRE_ORGANIZATION",
+            "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/program-management-account/pma-abcdef123456g/relationship/rs-abc123def456g",
+            "associatedAccountId": "987654321012",
+            "associationType": "MANAGED_SERVICES_END_CUSTOMER",
+            "channelContractId": "cc-4fj3bd2o3vb91",
+            "createdAt": "2026-09-08T16:18:16Z",
+            "displayName": "TestManagedCustomer",
+            "endDate": "2027-03-31T00:00:00Z",
+            "id": "rs-abc123def456g",
+            "programManagementAccountId": "pma-abcdef123456g",
+            "revision": "2",
+            "sector": "COMMERCIAL",
+            "startDate": "2026-10-01T00:00:00Z",
+            "updatedAt": "2026-09-10T09:30:00Z"
+          }
+        },
+        "id": "example-2",
+        "title": "Example for GetRelationship - MANAGED_SERVICES_END_CUSTOMER"
+      }
+    ],
+    "ListChannelContracts": [
+      {
+        "input": {
+          "catalog": "AWS",
+          "contractType": "MANAGED_SERVICES_ATTESTATION",
+          "contractTypeFilters": {
+            "managedServicesAttestationTypeFilters": {
+              "legalEntityNames": [
+                "Example Partner Corp"
+              ],
+              "relationshipIdentifiers": [
+                "rs-abc123def456g"
+              ]
+            }
+          },
+          "contractTypeSort": {
+            "managedServicesAttestationTypeSort": {
+              "sortBy": "UpdatedAt",
+              "sortOrder": "Descending"
+            }
+          },
+          "maxResults": 20,
+          "statuses": [
+            "PENDING"
+          ]
+        },
+        "output": {
+          "items": [
+            {
+              "arn": "arn:aws:partnercentral:us-east-1:111122223333:catalog/AWS/channel-contract/cc-4fj3bd2o3vb91",
+              "catalog": "AWS",
+              "contractType": "MANAGED_SERVICES_ATTESTATION",
+              "createdAt": "2026-09-08T16:18:16.000Z",
+              "details": {
+                "managedServicesAttestationDetails": {
+                  "endDate": "2027-03-31T00:00:00Z",
+                  "legalEntityName": "Example Partner Corp",
+                  "memberAccountIds": [
+                    "111122224444"
+                  ],
+                  "programManagementAccountIdentifier": "pma-abcdef123456g",
+                  "relationshipIdentifier": "rs-abc123def456g",
+                  "supportedServices": [
+                    "MONITORING",
+                    "SECURITY"
+                  ]
+                }
+              },
+              "id": "cc-4fj3bd2o3vb91",
+              "status": "PENDING",
+              "updatedAt": "2026-09-08T16:18:16.000Z"
+            }
+          ],
+          "nextToken": "nextToken"
+        },
+        "id": "example-1",
+        "title": "Example for ListChannelContracts - MANAGED_SERVICES_ATTESTATION"
       }
     ],
     "ListChannelHandshakes": [
@@ -531,6 +809,20 @@
         "output": {},
         "id": "example-1",
         "title": "Example for TagResource"
+      },
+      {
+        "input": {
+          "resourceArn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/channel-contract/cc-4fj3bd2o3vb91",
+          "tags": [
+            {
+              "key": "ExampleKey",
+              "value": "ExampleValue"
+            }
+          ]
+        },
+        "output": {},
+        "id": "example-2",
+        "title": "Example for TagResource - ChannelContract"
       }
     ],
     "UntagResource": [

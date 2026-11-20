@@ -3518,6 +3518,20 @@
       "type":"list",
       "member":{"shape":"CloudConnectorSummary"}
     },
+    "CloudProvider":{
+      "type":"string",
+      "enum":[
+        "AWS",
+        "Azure",
+        "GCP"
+      ]
+    },
+    "CloudProviderList":{
+      "type":"list",
+      "member":{"shape":"CloudProvider"},
+      "max":10,
+      "min":1
+    },
     "CloudWatchLogGroupName":{
       "type":"string",
       "max":512,
@@ -4085,7 +4099,8 @@
         "DocumentType":{"shape":"DocumentType"},
         "DocumentFormat":{"shape":"DocumentFormat"},
         "TargetType":{"shape":"TargetType"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "CloudProviders":{"shape":"CloudProviderList"}
       }
     },
     "CreateDocumentResult":{
@@ -5308,7 +5323,8 @@
         "PendingReviewVersion":{"shape":"DocumentVersion"},
         "ReviewStatus":{"shape":"ReviewStatus"},
         "Category":{"shape":"CategoryList"},
-        "CategoryEnum":{"shape":"CategoryEnumList"}
+        "CategoryEnum":{"shape":"CategoryEnumList"},
+        "CloudProviders":{"shape":"CloudProviderList"}
       }
     },
     "DocumentDisplayName":{
@@ -5381,7 +5397,8 @@
         "Tags":{"shape":"TagList"},
         "Requires":{"shape":"DocumentRequiresList"},
         "ReviewStatus":{"shape":"ReviewStatus"},
-        "Author":{"shape":"DocumentAuthor"}
+        "Author":{"shape":"DocumentAuthor"},
+        "CloudProviders":{"shape":"CloudProviderList"}
       }
     },
     "DocumentIdentifierList":{
@@ -5599,7 +5616,8 @@
         "DocumentFormat":{"shape":"DocumentFormat"},
         "Status":{"shape":"DocumentStatus"},
         "StatusInformation":{"shape":"DocumentStatusInformation"},
-        "ReviewStatus":{"shape":"ReviewStatus"}
+        "ReviewStatus":{"shape":"ReviewStatus"},
+        "CloudProviders":{"shape":"CloudProviderList"}
       }
     },
     "DocumentVersionLimitExceeded":{
@@ -12057,7 +12075,8 @@
         "VersionName":{"shape":"DocumentVersionName"},
         "DocumentVersion":{"shape":"DocumentVersion"},
         "DocumentFormat":{"shape":"DocumentFormat"},
-        "TargetType":{"shape":"TargetType"}
+        "TargetType":{"shape":"TargetType"},
+        "CloudProviders":{"shape":"CloudProviderList"}
       }
     },
     "UpdateDocumentResult":{

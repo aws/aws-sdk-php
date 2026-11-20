@@ -6503,7 +6503,10 @@
         "architecture":{"shape":"StringFilter"},
         "sourceLayerHash":{"shape":"StringFilter"},
         "sourceLambdaLayerArn":{"shape":"StringFilter"},
-        "filePath":{"shape":"StringFilter"}
+        "filePath":{"shape":"StringFilter"},
+        "runtimeReachability":{"shape":"RuntimeReachabilityFilter"},
+        "runtimeReachabilityReason":{"shape":"RuntimeReachabilityReasonFilter"},
+        "purlQualifier":{"shape":"PurlQualifierFilter"}
       }
     },
     "PackageFilterList":{
@@ -6559,6 +6562,11 @@
         "IMAGE",
         "ZIP"
       ]
+    },
+    "PackageUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1
     },
     "PackageVersion":{
       "type":"string",
@@ -6791,6 +6799,39 @@
       "max":64,
       "min":1,
       "pattern":"([a-z]{2}(-[a-z]+)+-\\d+|[a-z][a-z0-9]+|[a-z]+-[a-z]+[0-9]+(-[a-z])?)"
+    },
+    "PurlQualifierFilter":{
+      "type":"structure",
+      "required":[
+        "comparison",
+        "key"
+      ],
+      "members":{
+        "comparison":{"shape":"MapComparison"},
+        "key":{"shape":"PurlQualifierKey"},
+        "value":{"shape":"MapValue"}
+      }
+    },
+    "PurlQualifierKey":{
+      "type":"string",
+      "enum":[
+        "arch",
+        "collector",
+        "dev_dependency",
+        "distro",
+        "epoch",
+        "go_toolchain",
+        "hardened",
+        "private",
+        "rust_toolchain",
+        "scope",
+        "skip_chromium_download",
+        "source",
+        "stream",
+        "transitive_dependency",
+        "unresolved",
+        "vendor"
+      ]
     },
     "Reason":{
       "type":"string",
@@ -7192,6 +7233,52 @@
         "DOTNET_8",
         "NODEJS_20_X"
       ]
+    },
+    "RuntimeReachability":{
+      "type":"string",
+      "enum":[
+        "REACHABLE",
+        "NOT_REACHABLE",
+        "UNKNOWN"
+      ]
+    },
+    "RuntimeReachabilityComparison":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "NOT_EQUALS"
+      ]
+    },
+    "RuntimeReachabilityFilter":{
+      "type":"structure",
+      "required":[
+        "comparison",
+        "value"
+      ],
+      "members":{
+        "comparison":{"shape":"RuntimeReachabilityComparison"},
+        "value":{"shape":"RuntimeReachability"}
+      }
+    },
+    "RuntimeReachabilityReason":{
+      "type":"string",
+      "enum":[
+        "PACKAGE_IN_DOCKERFILE_WORKLOAD_PATH",
+        "PACKAGE_NOT_IN_DOCKERFILE_WORKLOAD_PATH",
+        "PROCESS_OBSERVED_IN_EC2_RUNTIME",
+        "PROCESS_NOT_OBSERVED_IN_EC2_RUNTIME"
+      ]
+    },
+    "RuntimeReachabilityReasonFilter":{
+      "type":"structure",
+      "required":[
+        "comparison",
+        "value"
+      ],
+      "members":{
+        "comparison":{"shape":"RuntimeReachabilityComparison"},
+        "value":{"shape":"RuntimeReachabilityReason"}
+      }
     },
     "SbomReportFormat":{
       "type":"string",
@@ -8654,7 +8741,10 @@
         "filePath":{"shape":"FilePath"},
         "fixedInVersion":{"shape":"PackageVersion"},
         "remediation":{"shape":"VulnerablePackageRemediation"},
-        "sourceLambdaLayerArn":{"shape":"LambdaLayerArn"}
+        "sourceLambdaLayerArn":{"shape":"LambdaLayerArn"},
+        "runtimeReachability":{"shape":"RuntimeReachability"},
+        "runtimeReachabilityReason":{"shape":"RuntimeReachabilityReason"},
+        "purl":{"shape":"PackageUrl"}
       }
     },
     "VulnerablePackageList":{

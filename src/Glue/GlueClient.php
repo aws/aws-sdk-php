@@ -1547,10 +1547,6 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteAsset(array{Identifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAssetAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteAssetAsync(array{Identifier?: string, ...} $args = [])
- * @method \Aws\Result deleteAssetType(array $args = [])
- * @phpstan-method \Aws\Result deleteAssetType(array{Identifier?: string, ...} $args = [])
- * @method \GuzzleHttp\Promise\Promise deleteAssetTypeAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise deleteAssetTypeAsync(array{Identifier?: string, ...} $args = [])
  * @method \Aws\Result deleteAttachment(array $args = [])
  * @phpstan-method \Aws\Result deleteAttachment(array{
  *     AssetIdentifier?: string,
@@ -3317,35 +3313,21 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \Aws\Result putAsset(array $args = [])
  * @phpstan-method \Aws\Result putAsset(array{
- *     AssetTypeId?: string,
+ *     AssetTypeIdentifier?: string,
  *     Identifier?: string,
  *     Name?: string,
  *     Description?: string,
- *     Forms?: array<string, array{FormTypeId?: string, Content?: string, ...}>,
+ *     Forms?: array<string, array{FormTypeIdentifier?: string, Content?: string, ...}>,
  *     ClientToken?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise putAssetAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise putAssetAsync(array{
- *     AssetTypeId?: string,
+ *     AssetTypeIdentifier?: string,
  *     Identifier?: string,
  *     Name?: string,
  *     Description?: string,
- *     Forms?: array<string, array{FormTypeId?: string, Content?: string, ...}>,
- *     ClientToken?: string,
- *     ...,
- * } $args = [])
- * @method \Aws\Result putAssetType(array $args = [])
- * @phpstan-method \Aws\Result putAssetType(array{
- *     Name?: string,
- *     Forms?: array<string, array{FormTypeIdentifier?: string, ...}>,
- *     ClientToken?: string,
- *     ...,
- * } $args = [])
- * @method \GuzzleHttp\Promise\Promise putAssetTypeAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise putAssetTypeAsync(array{
- *     Name?: string,
- *     Forms?: array<string, array{FormTypeIdentifier?: string, ...}>,
+ *     Forms?: array<string, array{FormTypeIdentifier?: string, Content?: string, ...}>,
  *     ClientToken?: string,
  *     ...,
  * } $args = [])
@@ -3356,7 +3338,7 @@ use Aws\AwsClient;
  *     ItemIdentifier?: string,
  *     AttachmentName?: string,
  *     Content?: string,
- *     FormTypeId?: string,
+ *     FormTypeIdentifier?: string,
  *     ClientToken?: string,
  *     ...,
  * } $args = [])
@@ -3367,7 +3349,7 @@ use Aws\AwsClient;
  *     ItemIdentifier?: string,
  *     AttachmentName?: string,
  *     Content?: string,
- *     FormTypeId?: string,
+ *     FormTypeIdentifier?: string,
  *     ClientToken?: string,
  *     ...,
  * } $args = [])
@@ -3403,16 +3385,16 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \Aws\Result putDataCatalogExportConfiguration(array $args = [])
  * @phpstan-method \Aws\Result putDataCatalogExportConfiguration(array{
- *     ExportSetting?: 'DISABLED'|'ENABLED',
- *     EncryptionConfiguration?: array{SseAlgorithm?: string, KmsKeyArn?: string, ...},
  *     ClientToken?: string,
+ *     S3TablesConfiguration?: array{EncryptionConfiguration?: array{SseAlgorithm?: string, KmsKeyArn?: string, ...}, ...},
+ *     Assets?: array{S3TablesExport?: 'DISABLED'|'ENABLED', ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise putDataCatalogExportConfigurationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise putDataCatalogExportConfigurationAsync(array{
- *     ExportSetting?: 'DISABLED'|'ENABLED',
- *     EncryptionConfiguration?: array{SseAlgorithm?: string, KmsKeyArn?: string, ...},
  *     ClientToken?: string,
+ *     S3TablesConfiguration?: array{EncryptionConfiguration?: array{SseAlgorithm?: string, KmsKeyArn?: string, ...}, ...},
+ *     Assets?: array{S3TablesExport?: 'DISABLED'|'ENABLED', ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result putDataQualityProfileAnnotation(array $args = [])
@@ -3648,7 +3630,7 @@ use Aws\AwsClient;
  *         OrAnyFilters?: list<array>,
  *         AttributeFilter?: array{
  *             Attribute?: string,
- *             Operator?: 'equals'|'greaterThan'|'greaterThanOrEquals'|'lessThan'|'lessThanOrEquals'|'notExists',
+ *             Comparator?: 'EQUALS'|'GREATER_THAN'|'GREATER_THAN_OR_EQUALS'|'LESS_THAN'|'LESS_THAN_OR_EQUALS'|'NOT_EXISTS',
  *             Value?: array,
  *             ...,
  *         },
@@ -3668,7 +3650,7 @@ use Aws\AwsClient;
  *         OrAnyFilters?: list<array>,
  *         AttributeFilter?: array{
  *             Attribute?: string,
- *             Operator?: 'equals'|'greaterThan'|'greaterThanOrEquals'|'lessThan'|'lessThanOrEquals'|'notExists',
+ *             Comparator?: 'EQUALS'|'GREATER_THAN'|'GREATER_THAN_OR_EQUALS'|'LESS_THAN'|'LESS_THAN_OR_EQUALS'|'NOT_EXISTS',
  *             Value?: array,
  *             ...,
  *         },

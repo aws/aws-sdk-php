@@ -760,6 +760,21 @@
         {"shape":"InvalidInput"}
       ]
     },
+    "GetHostedZoneChangeBatch":{
+      "name":"GetHostedZoneChangeBatch",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2013-04-01/hostedzone/{Id}/changebatches/{ChangeId}"
+      },
+      "input":{"shape":"GetHostedZoneChangeBatchRequest"},
+      "output":{"shape":"GetHostedZoneChangeBatchResponse"},
+      "errors":[
+        {"shape":"NoSuchHostedZone"},
+        {"shape":"NoSuchChange"},
+        {"shape":"FeatureNotEnabled"},
+        {"shape":"InvalidInput"}
+      ]
+    },
     "GetHostedZoneCount":{
       "name":"GetHostedZoneCount",
       "http":{
@@ -950,6 +965,21 @@
         {"shape":"NoSuchHealthCheckSource"}
       ]
     },
+    "ListHostedZoneChangeBatches":{
+      "name":"ListHostedZoneChangeBatches",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2013-04-01/hostedzone/{Id}/changebatches"
+      },
+      "input":{"shape":"ListHostedZoneChangeBatchesRequest"},
+      "output":{"shape":"ListHostedZoneChangeBatchesResponse"},
+      "errors":[
+        {"shape":"NoSuchHostedZone"},
+        {"shape":"FeatureNotEnabled"},
+        {"shape":"InvalidInput"},
+        {"shape":"InvalidPaginationToken"}
+      ]
+    },
     "ListHostedZones":{
       "name":"ListHostedZones",
       "http":{
@@ -1002,6 +1032,21 @@
         {"shape":"InvalidInput"},
         {"shape":"InvalidPaginationToken"},
         {"shape":"NoSuchHostedZone"}
+      ]
+    },
+    "ListResourceRecordSetChanges":{
+      "name":"ListResourceRecordSetChanges",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2013-04-01/hostedzone/{Id}/rrsetchanges"
+      },
+      "input":{"shape":"ListResourceRecordSetChangesRequest"},
+      "output":{"shape":"ListResourceRecordSetChangesResponse"},
+      "errors":[
+        {"shape":"NoSuchHostedZone"},
+        {"shape":"FeatureNotEnabled"},
+        {"shape":"InvalidInput"},
+        {"shape":"InvalidPaginationToken"}
       ]
     },
     "ListResourceRecordSetProtections":{
@@ -1229,6 +1274,24 @@
         {"shape":"LimitsExceeded"}
       ]
     },
+    "UpdateHostedZoneTier":{
+      "name":"UpdateHostedZoneTier",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2013-04-01/hostedzone/{Id}/tier"
+      },
+      "input":{
+        "shape":"UpdateHostedZoneTierRequest",
+        "locationName":"UpdateHostedZoneTierRequest",
+        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"}
+      },
+      "output":{"shape":"UpdateHostedZoneTierResponse"},
+      "errors":[
+        {"shape":"NoSuchHostedZone"},
+        {"shape":"InvalidInput"},
+        {"shape":"PriorRequestNotComplete"}
+      ]
+    },
     "UpdateTrafficPolicyComment":{
       "name":"UpdateTrafficPolicyComment",
       "http":{
@@ -1280,6 +1343,28 @@
       "type":"string",
       "max":64,
       "min":1
+    },
+    "AZAffinity":{
+      "type":"structure",
+      "members":{
+        "LocationType":{"shape":"AZAffinityLocationType"},
+        "LocationId":{"shape":"AZAffinityLocationId"}
+      }
+    },
+    "AZAffinityLocationId":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "AZAffinityLocationType":{
+      "type":"string",
+      "enum":[
+        "AvailabilityZone",
+        "AvailabilityZoneGroup",
+        "Region",
+        "Partition",
+        "Global"
+      ]
     },
     "AcceleratedRecoveryEnabled":{"type":"boolean"},
     "AcceleratedRecoveryStatus":{
@@ -1434,6 +1519,31 @@
         "Changes":{"shape":"Changes"}
       }
     },
+    "ChangeBatchSummaries":{
+      "type":"list",
+      "member":{
+        "shape":"ChangeBatchSummary",
+        "locationName":"ChangeBatchSummary"
+      }
+    },
+    "ChangeBatchSummary":{
+      "type":"structure",
+      "required":[
+        "ChangeId",
+        "Operation",
+        "SubmittedAt",
+        "ChangeCount"
+      ],
+      "members":{
+        "ChangeId":{"shape":"ResourceId"},
+        "Operation":{"shape":"ChangeHistoryOperation"},
+        "SubmittedAt":{"shape":"TimeStamp"},
+        "SubmittedBy":{"shape":"ChangeSubmitter"},
+        "RequestId":{"shape":"ChangeRequestId"},
+        "Comment":{"shape":"ResourceDescription"},
+        "ChangeCount":{"shape":"ChangeCount"}
+      }
+    },
     "ChangeCidrCollectionRequest":{
       "type":"structure",
       "required":[
@@ -1457,6 +1567,74 @@
         "Id":{"shape":"ChangeId"}
       }
     },
+    "ChangeCount":{
+      "type":"long",
+      "min":0
+    },
+    "ChangeGuardrail":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Status"
+      ],
+      "members":{
+        "Name":{"shape":"ChangeGuardrailName"},
+        "Status":{"shape":"ChangeGuardrailStatus"}
+      }
+    },
+    "ChangeGuardrailName":{
+      "type":"string",
+      "enum":[
+        "NS_FORMAT_CHECK",
+        "NS_DELEGATION_AUTHORITY_CHECK",
+        "NS_OCCLUSION_CHECK",
+        "ALIAS_TARGET_CHECK",
+        "ACTIVE_RECORD_CHECK",
+        "ACTIVE_DELEGATION_CHECK"
+      ]
+    },
+    "ChangeGuardrailStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "ChangeGuardrails":{
+      "type":"list",
+      "member":{
+        "shape":"ChangeGuardrail",
+        "locationName":"ChangeGuardrail"
+      },
+      "min":1
+    },
+    "ChangeHistoryFeature":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"FeatureEnablement"},
+        "RetentionStartsAt":{"shape":"TimeStamp"}
+      }
+    },
+    "ChangeHistoryOperation":{
+      "type":"string",
+      "enum":[
+        "CreateHostedZone",
+        "DeleteHostedZone",
+        "ChangeResourceRecordSets"
+      ]
+    },
+    "ChangeHistorySortOrder":{
+      "type":"string",
+      "enum":[
+        "ASCENDING",
+        "DESCENDING"
+      ]
+    },
+    "ChangeHistoryTimeBound":{
+      "type":"string",
+      "max":35,
+      "pattern":"^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]{1,9})?(Z|[+-]([01][0-9]|2[0-3]):[0-5][0-9])$"
+    },
     "ChangeId":{
       "type":"string",
       "max":6500,
@@ -1475,6 +1653,11 @@
         "SubmittedAt":{"shape":"TimeStamp"},
         "Comment":{"shape":"ResourceDescription"}
       }
+    },
+    "ChangeRequestId":{
+      "type":"string",
+      "max":64,
+      "min":1
     },
     "ChangeResourceRecordSetsRequest":{
       "type":"structure",
@@ -1504,6 +1687,11 @@
         "PENDING",
         "INSYNC"
       ]
+    },
+    "ChangeSubmitter":{
+      "type":"string",
+      "max":2048,
+      "min":1
     },
     "ChangeTagsForResourceRequest":{
       "type":"structure",
@@ -1901,7 +2089,9 @@
         "VPC":{"shape":"VPC"},
         "CallerReference":{"shape":"Nonce"},
         "HostedZoneConfig":{"shape":"HostedZoneConfig"},
-        "DelegationSetId":{"shape":"ResourceId"}
+        "DelegationSetId":{"shape":"ResourceId"},
+        "EnablePublicDNSFallback":{"shape":"PublicDNSFallbackEnabled"},
+        "ChangeGuardrails":{"shape":"ChangeGuardrails"}
       }
     },
     "CreateHostedZoneResponse":{
@@ -2516,6 +2706,7 @@
         "ChangeInfo":{"shape":"ChangeInfo"}
       }
     },
+    "DryRun":{"type":"boolean"},
     "EnableHostedZoneDNSSECRequest":{
       "type":"structure",
       "required":["HostedZoneId"],
@@ -2559,6 +2750,30 @@
       "type":"integer",
       "max":10,
       "min":1
+    },
+    "FeatureEnablement":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "FeatureNotEnabled":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{"httpStatusCode":403},
+      "exception":true
+    },
+    "FeatureStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED",
+        "ENABLING",
+        "DISABLING"
+      ]
     },
     "FullyQualifiedDomainName":{
       "type":"string",
@@ -2810,6 +3025,36 @@
       "required":["HealthCheckObservations"],
       "members":{
         "HealthCheckObservations":{"shape":"HealthCheckObservations"}
+      }
+    },
+    "GetHostedZoneChangeBatchRequest":{
+      "type":"structure",
+      "required":[
+        "HostedZoneId",
+        "ChangeId"
+      ],
+      "members":{
+        "HostedZoneId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "ChangeId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"ChangeId"
+        }
+      }
+    },
+    "GetHostedZoneChangeBatchResponse":{
+      "type":"structure",
+      "required":[
+        "ChangeBatchSummary",
+        "ChangeBatch"
+      ],
+      "members":{
+        "ChangeBatchSummary":{"shape":"ChangeBatchSummary"},
+        "ChangeBatch":{"shape":"ChangeBatch"}
       }
     },
     "GetHostedZoneCountRequest":{
@@ -3241,7 +3486,8 @@
       "type":"structure",
       "members":{
         "Comment":{"shape":"ResourceDescription"},
-        "PrivateZone":{"shape":"IsPrivateZone"}
+        "PrivateZone":{"shape":"IsPrivateZone"},
+        "HostedZoneTier":{"shape":"HostedZoneTier"}
       }
     },
     "HostedZoneCount":{"type":"long"},
@@ -3255,7 +3501,10 @@
       "type":"structure",
       "members":{
         "AcceleratedRecoveryStatus":{"shape":"AcceleratedRecoveryStatus"},
-        "FailureReasons":{"shape":"HostedZoneFailureReasons"}
+        "PublicDNSFallbackStatus":{"shape":"FeatureStatus"},
+        "ChangeHistory":{"shape":"ChangeHistoryFeature"},
+        "FailureReasons":{"shape":"HostedZoneFailureReasons"},
+        "ChangeGuardrails":{"shape":"ChangeGuardrails"}
       }
     },
     "HostedZoneLimit":{
@@ -3336,6 +3585,13 @@
         "Name":{"shape":"DNSName"},
         "Owner":{"shape":"HostedZoneOwner"}
       }
+    },
+    "HostedZoneTier":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "ADVANCED"
+      ]
     },
     "HostedZoneType":{
       "type":"string",
@@ -3776,6 +4032,55 @@
         "MaxItems":{"shape":"PageMaxItems"}
       }
     },
+    "ListHostedZoneChangeBatchesRequest":{
+      "type":"structure",
+      "required":["HostedZoneId"],
+      "members":{
+        "HostedZoneId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "SubmittedAfter":{
+          "shape":"ChangeHistoryTimeBound",
+          "location":"querystring",
+          "locationName":"submittedafter"
+        },
+        "SubmittedBefore":{
+          "shape":"ChangeHistoryTimeBound",
+          "location":"querystring",
+          "locationName":"submittedbefore"
+        },
+        "StartAfterChangeId":{
+          "shape":"ResourceId",
+          "location":"querystring",
+          "locationName":"startafterchangeid"
+        },
+        "SortOrder":{
+          "shape":"ChangeHistorySortOrder",
+          "location":"querystring",
+          "locationName":"sortorder"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxresults"
+        },
+        "NextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nexttoken"
+        }
+      }
+    },
+    "ListHostedZoneChangeBatchesResponse":{
+      "type":"structure",
+      "required":["ChangeBatchSummaries"],
+      "members":{
+        "ChangeBatchSummaries":{"shape":"ChangeBatchSummaries"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListHostedZonesByNameRequest":{
       "type":"structure",
       "members":{
@@ -3920,6 +4225,60 @@
       "required":["QueryLoggingConfigs"],
       "members":{
         "QueryLoggingConfigs":{"shape":"QueryLoggingConfigs"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListResourceRecordSetChangesRequest":{
+      "type":"structure",
+      "required":["HostedZoneId"],
+      "members":{
+        "HostedZoneId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "RecordName":{
+          "shape":"DNSName",
+          "location":"querystring",
+          "locationName":"recordname"
+        },
+        "RecordType":{
+          "shape":"RRType",
+          "location":"querystring",
+          "locationName":"recordtype"
+        },
+        "SubmittedAfter":{
+          "shape":"ChangeHistoryTimeBound",
+          "location":"querystring",
+          "locationName":"submittedafter"
+        },
+        "SubmittedBefore":{
+          "shape":"ChangeHistoryTimeBound",
+          "location":"querystring",
+          "locationName":"submittedbefore"
+        },
+        "SortOrder":{
+          "shape":"ChangeHistorySortOrder",
+          "location":"querystring",
+          "locationName":"sortorder"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxresults"
+        },
+        "NextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nexttoken"
+        }
+      }
+    },
+    "ListResourceRecordSetChangesResponse":{
+      "type":"structure",
+      "required":["ResourceRecordSetChanges"],
+      "members":{
+        "ResourceRecordSetChanges":{"shape":"ResourceRecordSetChanges"},
         "NextToken":{"shape":"PaginationToken"}
       }
     },
@@ -4542,6 +4901,7 @@
         "locationName":"ProtectionError"
       }
     },
+    "PublicDNSFallbackEnabled":{"type":"boolean"},
     "PublicZoneVPCAssociation":{
       "type":"structure",
       "members":{
@@ -4685,7 +5045,34 @@
         "HealthCheckId":{"shape":"HealthCheckId"},
         "TrafficPolicyInstanceId":{"shape":"TrafficPolicyInstanceId"},
         "CidrRoutingConfig":{"shape":"CidrRoutingConfig"},
-        "GeoProximityLocation":{"shape":"GeoProximityLocation"}
+        "GeoProximityLocation":{"shape":"GeoProximityLocation"},
+        "AZAffinity":{"shape":"AZAffinity"}
+      }
+    },
+    "ResourceRecordSetChange":{
+      "type":"structure",
+      "required":[
+        "ChangeId",
+        "Operation",
+        "SubmittedAt",
+        "Action",
+        "ResourceRecordSet"
+      ],
+      "members":{
+        "ChangeId":{"shape":"ResourceId"},
+        "Operation":{"shape":"ChangeHistoryOperation"},
+        "SubmittedAt":{"shape":"TimeStamp"},
+        "SubmittedBy":{"shape":"ChangeSubmitter"},
+        "RequestId":{"shape":"ChangeRequestId"},
+        "Action":{"shape":"ChangeAction"},
+        "ResourceRecordSet":{"shape":"ResourceRecordSet"}
+      }
+    },
+    "ResourceRecordSetChanges":{
+      "type":"list",
+      "member":{
+        "shape":"ResourceRecordSetChange",
+        "locationName":"ResourceRecordSetChange"
       }
     },
     "ResourceRecordSetFailover":{
@@ -5358,10 +5745,33 @@
           "location":"uri",
           "locationName":"Id"
         },
-        "EnableAcceleratedRecovery":{"shape":"AcceleratedRecoveryEnabled"}
+        "EnableAcceleratedRecovery":{"shape":"AcceleratedRecoveryEnabled"},
+        "EnablePublicDNSFallback":{"shape":"PublicDNSFallbackEnabled"},
+        "ChangeGuardrails":{"shape":"ChangeGuardrails"},
+        "DryRun":{"shape":"DryRun"}
       }
     },
     "UpdateHostedZoneFeaturesResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateHostedZoneTierRequest":{
+      "type":"structure",
+      "required":[
+        "HostedZoneId",
+        "HostedZoneTier"
+      ],
+      "members":{
+        "HostedZoneId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "HostedZoneTier":{"shape":"HostedZoneTier"},
+        "DryRun":{"shape":"DryRun"}
+      }
+    },
+    "UpdateHostedZoneTierResponse":{
       "type":"structure",
       "members":{}
     },

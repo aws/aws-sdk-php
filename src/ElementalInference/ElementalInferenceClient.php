@@ -24,7 +24,7 @@ use Aws\AwsClient;
  * @method \Aws\Result createDictionary(array $args = [])
  * @phpstan-method \Aws\Result createDictionary(array{
  *     name?: string,
- *     language?: 'deu'|'eng'|'fra'|'ita'|'por'|'spa',
+ *     language?: 'ara'|'deu'|'eng'|'fra'|'ita'|'por'|'spa',
  *     entries?: string,
  *     tags?: array<string, string>,
  *     ...,
@@ -32,7 +32,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createDictionaryAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createDictionaryAsync(array{
  *     name?: string,
- *     language?: 'deu'|'eng'|'fra'|'ita'|'por'|'spa',
+ *     language?: 'ara'|'deu'|'eng'|'fra'|'ita'|'por'|'spa',
  *     entries?: string,
  *     tags?: array<string, string>,
  *     ...,
@@ -244,9 +244,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise untagResourceAsync(array{resourceArn?: string, tagKeys?: list<string>, ...} $args = [])
  * @method \Aws\Result updateDictionary(array $args = [])
- * @phpstan-method \Aws\Result updateDictionary(array{id?: string, name?: string, language?: 'deu'|'eng'|'fra'|'ita'|'por'|'spa', entries?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result updateDictionary(array{id?: string, name?: string, language?: 'ara'|'deu'|'eng'|'fra'|'ita'|'por'|'spa', entries?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDictionaryAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise updateDictionaryAsync(array{id?: string, name?: string, language?: 'deu'|'eng'|'fra'|'ita'|'por'|'spa', entries?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateDictionaryAsync(array{id?: string, name?: string, language?: 'ara'|'deu'|'eng'|'fra'|'ita'|'por'|'spa', entries?: string, ...} $args = [])
  * @method \Aws\Result updateFeed(array $args = [])
  * @phpstan-method \Aws\Result updateFeed(array{
  *     name?: string,

@@ -2,6 +2,7 @@
   "version": "2.0",
   "service": "<p>Describes the API operations for creating, managing, fine-turning, and evaluating Amazon Bedrock models.</p>",
   "operations": {
+    "ArchiveProject": "<p>Archives a project. Archiving is terminal; there is no delete. Archiving an already-archived project succeeds without effect. The default project cannot be archived.</p>",
     "BatchDeleteAdvancedPromptOptimizationJob": "<p>Deletes one or more advanced prompt optimization jobs.</p>",
     "BatchDeleteEvaluationJob": "<p>Deletes a batch of evaluation jobs. An evaluation job can only be deleted if it has following status <code>FAILED</code>, <code>COMPLETED</code>, and <code>STOPPED</code>. You can request up to 25 model evaluation jobs be deleted in a single request.</p>",
     "CancelAutomatedReasoningPolicyBuildWorkflow": "<p>Cancels a running Automated Reasoning policy build workflow. This stops the policy generation process and prevents further processing of the source documents.</p>",
@@ -21,8 +22,10 @@
     "CreateModelCustomizationJob": "<p>Creates a fine-tuning job to customize a base model.</p> <p>You specify the base foundation model and the location of the training data. After the model-customization job completes successfully, your custom model resource will be ready to use. Amazon Bedrock returns validation loss metrics and output generations after the job completes. </p> <p>For information on the format of training and validation data, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-prepare.html\">Prepare the datasets</a>.</p> <p> Model-customization jobs are asynchronous and the completion time depends on the base model and the training/validation data size. To monitor a job, use the <code>GetModelCustomizationJob</code> operation to retrieve the job status.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "CreateModelImportJob": "<p>Creates a model import job to import model that you have customized in other environments, such as Amazon SageMaker. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">Import a customized model</a> </p>",
     "CreateModelInvocationJob": "<p>Creates a batch inference job to invoke a model on multiple prompts. Format your data according to <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data\">Format your inference data</a> and upload it to an Amazon S3 bucket. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference.html\">Process multiple prompts with batch inference</a>.</p> <p>The response returns a <code>jobArn</code> that you can use to stop or get details about the job.</p>",
+    "CreateProject": "<p>Creates a project: a workload boundary within the account that inference requests can be associated with.</p>",
     "CreatePromptRouter": "<p>Creates a prompt router that manages the routing of requests between multiple foundation models based on the routing criteria.</p>",
     "CreateProvisionedModelThroughput": "<p>Creates dedicated throughput for a base or custom model with the model units and for the duration that you specify. For pricing details, see <a href=\"http://aws.amazon.com/bedrock/pricing/\">Amazon Bedrock Pricing</a>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "DeleteAccountDataRetentionStorage": "<p>Deletes your account's retention storage configuration for a model provider. Deleting an absent configuration succeeds. You do not need to participate in the program to delete the configuration. You can delete it even if your account is ineligible or its eligibility is revoked.</p>",
     "DeleteAutomatedReasoningPolicy": "<p>Deletes an Automated Reasoning policy or policy version. This operation is idempotent. If you delete a policy more than once, each call succeeds. Deleting a policy removes it permanently and cannot be undone.</p>",
     "DeleteAutomatedReasoningPolicyBuildWorkflow": "<p>Deletes an Automated Reasoning policy build workflow and its associated artifacts. This permanently removes the workflow history and any generated assets.</p>",
     "DeleteAutomatedReasoningPolicyTestCase": "<p>Deletes an Automated Reasoning policy test. This operation is idempotent; if you delete a test more than once, each call succeeds.</p>",
@@ -35,12 +38,15 @@
     "DeleteInferenceProfile": "<p>Deletes an application inference profile. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">Increase throughput and resilience with cross-region inference in Amazon Bedrock</a>. in the Amazon Bedrock User Guide.</p>",
     "DeleteMarketplaceModelEndpoint": "<p>Deletes an endpoint for a model from Amazon Bedrock Marketplace.</p>",
     "DeleteModelInvocationLoggingConfiguration": "<p>Delete the invocation logging. </p>",
+    "DeleteOrganizationDataRetentionStorage": "<p>Deletes the organization's retention storage configuration for a model provider. The caller must be the organization's management account or a delegated administrator. Deleting an absent configuration succeeds; no program participation is required to delete.</p>",
+    "DeleteProjectDataRetentionStorage": "<p>Deletes a project's retention storage configuration for a model provider. Deleting an absent configuration on an active project succeeds. If the project does not exist or your account does not own it, the operation returns <code>ResourceNotFoundException</code>. For an archived project, the operation returns <code>ValidationException</code>. You can read the archived project's stored configuration until Amazon Bedrock purges the project. You do not need to participate in the program to delete the configuration.</p>",
     "DeletePromptRouter": "<p>Deletes a specified prompt router. This action cannot be undone.</p>",
     "DeleteProvisionedModelThroughput": "<p>Deletes a Provisioned Throughput. You can't delete a Provisioned Throughput before the commitment term is over. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "DeleteResourcePolicy": "<p>Deletes a previously created Bedrock resource policy.</p>",
     "DeregisterMarketplaceModelEndpoint": "<p>Deregisters an endpoint for a model from Amazon Bedrock Marketplace. This operation removes the endpoint's association with Amazon Bedrock but does not delete the underlying Amazon SageMaker endpoint.</p>",
     "ExportAutomatedReasoningPolicyVersion": "<p>Exports the policy definition for an Automated Reasoning policy version. Returns the complete policy definition including rules, variables, and custom variable types in a structured format.</p>",
     "GetAccountDataRetention": "<p>Returns the account-wide data retention mode for Amazon Bedrock.</p>",
+    "GetAccountDataRetentionStorage": "<p>Returns your account's stored retention storage configuration for a model provider. Amazon Bedrock determines whether the configuration applies when processing an inference request. Returns <code>ResourceNotFoundException</code> when no configuration exists.</p>",
     "GetAdvancedPromptOptimizationJob": "<p>Gets information about an advanced prompt optimization job.</p>",
     "GetAutomatedReasoningPolicy": "<p>Retrieves details about an Automated Reasoning policy or policy version. Returns information including the policy definition, metadata, and timestamps.</p>",
     "GetAutomatedReasoningPolicyAnnotations": "<p>Retrieves the current annotations for an Automated Reasoning policy build workflow. Annotations contain corrections to the rules, variables and types to be applied to the policy.</p>",
@@ -63,9 +69,16 @@
     "GetModelImportJob": "<p>Retrieves the properties associated with import model job, including the status of the job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">Import a customized model</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "GetModelInvocationJob": "<p>Gets details about a batch inference job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-monitor\">Monitor batch inference jobs</a> </p>",
     "GetModelInvocationLoggingConfiguration": "<p>Get the current configuration values for model invocation logging.</p>",
+    "GetOrganizationDataRetentionStorage": "<p>Returns the organization's retention storage configuration for a model provider. The caller must be the organization's management account or a delegated administrator. Returns ResourceNotFoundException when no configuration exists.</p>",
+    "GetProject": "<p>Retrieves a project.</p>",
+    "GetProjectDataRetentionStorage": "<p>Returns a project's retention storage configuration for a model provider. Returns ResourceNotFoundException when the project does not exist, is not owned by the calling account, or has no configuration.</p>",
     "GetPromptRouter": "<p>Retrieves details about a prompt router.</p>",
     "GetProvisionedModelThroughput": "<p>Returns details for a Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "GetResourcePolicy": "<p>Gets the resource policy document for a Bedrock resource</p>",
+    "GetTrustedAccessProgram": "<p>Gets trusted access program details and resolves participation for your account and its current organization. If you specify a project, Amazon Bedrock resolves participation for the project, including inheritance from the account and organization. Archived projects remain readable until they expire. Returns the same flat summary as a ListTrustedAccessPrograms item. An absent or invisible program returns ResourceNotFoundException.</p>",
+    "GetTrustedAccessProgramAccountEnrollment": "<p>Gets the calling account's stored enrollment setting for a trusted access program. The account is derived from the authenticated caller. Use GetTrustedAccessProgram to retrieve the resolved participation status, including organization inheritance. If no enrollment is stored, returns inherit without timestamps.</p>",
+    "GetTrustedAccessProgramOrganizationEnrollment": "<p>Gets the current organization's stored enrollment setting for a trusted access program. The organization and payer account are derived from the authenticated context. Requires operation permission and management-account or Bedrock-specific delegated-administrator authority. The setting can differ from the caller's resolved status returned by GetTrustedAccessProgram. If no enrollment is stored, returns inherit without timestamps.</p>",
+    "GetTrustedAccessProgramProjectEnrollment": "<p>Gets a named project's stored enrollment setting for a trusted access program. The project must exist in this Region and be owned by the calling account. Archived projects remain readable until they expire. Use GetTrustedAccessProgram with projectIdentifier to retrieve resolved participation, including account and organization inheritance. If no enrollment is stored, returns inherit without timestamps.</p>",
     "GetUseCaseForModelAccess": "<p>Get usecase for model access.</p>",
     "ListAdvancedPromptOptimizationJobs": "<p>Lists the advanced prompt optimization jobs in your account.</p>",
     "ListAutomatedReasoningPolicies": "<p>Lists all Automated Reasoning policies in your account, with optional filtering by policy ARN. This helps you manage and discover existing policies.</p>",
@@ -86,17 +99,28 @@
     "ListModelCustomizationJobs": "<p>Returns a list of model customization jobs that you have submitted. You can filter the jobs to return based on one or more criteria.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListModelImportJobs": "<p>Returns a list of import jobs you've submitted. You can filter the results to return based on one or more criteria. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">Import a customized model</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListModelInvocationJobs": "<p>Lists all batch inference jobs in the account. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-view.html\">View details about a batch inference job</a>.</p>",
+    "ListProjects": "<p>Lists the account's projects. Results are paginated: when the response includes <code>nextToken</code>, pass it in the next request to fetch the following page. Page size is 1-100, default 20. By default every project is returned regardless of status; set <code>statusFilter</code> to list only active or only archived projects.</p>",
     "ListPromptRouters": "<p>Retrieves a list of prompt routers.</p>",
     "ListProvisionedModelThroughputs": "<p>Lists the Provisioned Throughputs in the account. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListTagsForResource": "<p>List the tags associated with the specified resource.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "ListTrustedAccessPrograms": "<p>Lists all trusted access programs visible to your account, ordered by program ID. Amazon Bedrock resolves participation for your account and its current organization. If you specify a project, Amazon Bedrock resolves participation for the project, including inheritance from the account and organization. Archived projects remain readable until they expire. Amazon Bedrock returns all visible programs in one response.</p>",
     "PutAccountDataRetention": "<p>Sets the account-wide data retention mode for Amazon Bedrock.</p>",
+    "PutAccountDataRetentionStorage": "<p>Creates or replaces the calling account's retention storage record for a model provider. Amazon Bedrock identifies the account from your authenticated request. Requires resolved trusted access eligibility for a storage-capable program of the provider at a covering scope; otherwise returns ConflictException. Writes replace the whole record; the last write wins.</p> <p>For <code>customer_managed</code> destinations, Amazon Bedrock validates the caller's and service's access to the bucket and key before saving the configuration. The bucket and key must be in the AWS Region where you register the configuration. Validation failures reject the write.</p>",
     "PutEnforcedGuardrailConfiguration": "<p>Sets the account-level enforced guardrail configuration.</p>",
     "PutModelInvocationLoggingConfiguration": "<p>Set the configuration values for model invocation logging.</p>",
+    "PutOrganizationDataRetentionStorage": "<p>Creates or replaces the organization's retention storage record for a model provider. The organization is resolved from the authenticated caller's management context; the caller must be the organization's management account or a delegated administrator. Requires resolved organization-scope trusted access eligibility for a storage-capable program of the provider; otherwise returns ConflictException. Writes replace the whole record; the last write wins.</p> <p>For <code>customer_managed</code> destinations, Amazon Bedrock validates the caller's and service's access to the bucket and key before saving the configuration. The bucket and key must be in the AWS Region where you register the configuration. Validation failures reject the write.</p>",
+    "PutProjectDataRetentionStorage": "<p>Creates or replaces a project's retention storage record for a model provider. The project must be active in this AWS Region and owned by the calling account. A missing or unowned project returns <code>ResourceNotFoundException</code>; an archived project returns <code>ValidationException</code>.</p> <p>Requires applicable project, account, or organization approval for a storage-capable trusted access program of the provider, with no applicable revocation. Otherwise, the operation returns <code>ConflictException</code>. Enrollment is not required to save the configuration.</p> <p>The request replaces the complete stored configuration. The last successful write wins.</p> <p>For <code>customer_managed</code> destinations, Amazon Bedrock validates the caller's and service's access to the bucket and key before saving the configuration. The bucket and key must be in the AWS Region where you register the configuration. Validation failures reject the write.</p>",
     "PutResourcePolicy": "<p>Adds a resource policy for a Bedrock resource.</p>",
+    "PutTrustedAccessProgramAccountEnrollment": "<p>Sets your account's enrollment preference for a trusted access program. Amazon Bedrock identifies the account from your authenticated request. To enable enrollment, your account needs applicable approval and no applicable revocation, including when you repeat an enabled setting. Otherwise, Amazon Bedrock returns <code>ConflictException</code> and preserves the stored setting. With the required permissions, you can set <code>disabled</code> or <code>inherit</code> even if your account is ineligible or its eligibility is revoked.</p>",
+    "PutTrustedAccessProgramOrganizationEnrollment": "<p>Sets the current organization's enrollment preference for a trusted access program. The organization and payer account are derived from the authenticated context. Every write requires operation permission and management-account or Bedrock-specific delegated-administrator authority. Enabling requires approval and no revocation for the organization, including when repeating an enabled setting; otherwise returns ConflictException and preserves the stored setting. Account approval alone is insufficient. If you have the required permissions, you can set the enrollment preference to <code>disabled</code> or <code>inherit</code> even if your organization is ineligible or its eligibility is revoked.</p>",
+    "PutTrustedAccessProgramProjectEnrollment": "<p>Sets a named project's enrollment preference for a trusted access program. The project must be active in this Region and owned by the calling account. Enabling requires applicable project, account, or organization approval and no applicable revocation, including when repeating an enabled setting; otherwise returns ConflictException and preserves the stored setting. Authorized disable and inherit writes are allowed while ineligible or revoked. Archived projects reject all writes with ValidationException.</p>",
     "PutUseCaseForModelAccess": "<p>Put usecase for model access.</p>",
     "RegisterMarketplaceModelEndpoint": "<p>Registers an existing Amazon SageMaker endpoint with Amazon Bedrock Marketplace, allowing it to be used with Amazon Bedrock APIs.</p>",
     "StartAutomatedReasoningPolicyBuildWorkflow": "<p>Starts a new build workflow for an Automated Reasoning policy. This initiates the process of analyzing source documents and generating policy rules, variables, and types.</p>",
     "StartAutomatedReasoningPolicyTestWorkflow": "<p>Initiates a test workflow to validate Automated Reasoning policy tests. The workflow executes the specified tests against the policy and generates validation results.</p>",
+    "StartTrustedAccessProgramAccountApplication": "<p>Prepare a provider application handoff for the calling account. This does not submit an application, grant eligibility, or change enrollment. Programs without self-service applications return ValidationException with guidance to contact the AWS account team. Repeated calls can issue fresh tokens. Successful responses use Cache-Control: no-store.</p>",
+    "StartTrustedAccessProgramOrganizationApplication": "<p>Prepare a provider application handoff for the calling account's current organization. Requires operation permission and management-account or Bedrock-specific delegated-administrator authority. This does not submit an application, grant eligibility, or change enrollment. Programs without self-service applications return ValidationException with guidance to contact the AWS account team. Repeated calls can issue fresh tokens. Successful responses use Cache-Control: no-store.</p>",
+    "StartTrustedAccessProgramProjectApplication": "<p>Prepare a provider application handoff for a named project. The project must be active in this Region and owned by the calling account. Archived projects return ValidationException. This does not submit an application, grant eligibility, or change enrollment. Programs without self-service applications return ValidationException with guidance to contact the AWS account team. Repeated calls can issue fresh tokens. Successful responses use Cache-Control: no-store.</p>",
     "StopAdvancedPromptOptimizationJob": "<p>Stops an advanced prompt optimization job that is in progress.</p>",
     "StopEvaluationJob": "<p>Stops an evaluation job that is current being created or running.</p>",
     "StopModelCustomizationJob": "<p>Stops an active model customization job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
@@ -109,6 +133,7 @@
     "UpdateCustomModelDeployment": "<p> Updates a custom model deployment with a new custom model. This allows you to deploy updated models without creating new deployment endpoints. </p>",
     "UpdateGuardrail": "<p>Updates a guardrail with the values you specify.</p> <ul> <li> <p>Specify a <code>name</code> and optional <code>description</code>.</p> </li> <li> <p>Specify messages for when the guardrail successfully blocks a prompt or a model response in the <code>blockedInputMessaging</code> and <code>blockedOutputsMessaging</code> fields.</p> </li> <li> <p>Specify topics for the guardrail to deny in the <code>topicPolicyConfig</code> object. Each <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailTopicConfig.html\">GuardrailTopicConfig</a> object in the <code>topicsConfig</code> list pertains to one topic.</p> <ul> <li> <p>Give a <code>name</code> and <code>description</code> so that the guardrail can properly identify the topic.</p> </li> <li> <p>Specify <code>DENY</code> in the <code>type</code> field.</p> </li> <li> <p>(Optional) Provide up to five prompts that you would categorize as belonging to the topic in the <code>examples</code> list.</p> </li> </ul> </li> <li> <p>Specify filter strengths for the harmful categories defined in Amazon Bedrock in the <code>contentPolicyConfig</code> object. Each <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailContentFilterConfig.html\">GuardrailContentFilterConfig</a> object in the <code>filtersConfig</code> list pertains to a harmful category. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-content-filters\">Content filters</a>. For more information about the fields in a content filter, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailContentFilterConfig.html\">GuardrailContentFilterConfig</a>.</p> <ul> <li> <p>Specify the category in the <code>type</code> field.</p> </li> <li> <p>Specify the strength of the filter for prompts in the <code>inputStrength</code> field and for model responses in the <code>strength</code> field of the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailContentFilterConfig.html\">GuardrailContentFilterConfig</a>.</p> </li> </ul> </li> <li> <p>(Optional) For security, include the ARN of a KMS key in the <code>kmsKeyId</code> field.</p> </li> </ul>",
     "UpdateMarketplaceModelEndpoint": "<p>Updates the configuration of an existing endpoint for a model from Amazon Bedrock Marketplace.</p>",
+    "UpdateProject": "<p>Updates one mutable project field per call: exactly one of <code>name</code> or <code>dataRetention</code> must be set. The default project and archived projects cannot be updated.</p>",
     "UpdateProvisionedModelThroughput": "<p>Updates the name or associated model for a Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>"
   },
   "shapes": {
@@ -153,11 +178,13 @@
       "base": null,
       "refs": {
         "CustomModelSummary$ownerAccountId": "<p>The unique identifier of the account that owns the model.</p>",
+        "DataRetentionStorageConfiguration$s3BucketOwner": "<p>The AWS account ID of the destination bucket's owner. You must specify the owner, even when the bucket belongs to another account. Amazon Bedrock uses this ID to verify bucket ownership for each delivery request.</p>",
         "GetModelCopyJobResponse$sourceAccountId": "<p>The unique identifier of the account that the model being copied originated from.</p>",
         "ListModelCopyJobsRequest$sourceAccountEquals": "<p>Filters for model copy jobs in which the account that the source model belongs to is equal to the value that you specify.</p>",
         "ModelCopyJobSummary$sourceAccountId": "<p>The unique identifier of the account that the model being copied originated from.</p>",
         "ModelInvocationJobS3InputDataConfig$s3BucketOwner": "<p>The ID of the Amazon Web Services account that owns the S3 bucket containing the input data.</p>",
-        "ModelInvocationJobS3OutputDataConfig$s3BucketOwner": "<p>The ID of the Amazon Web Services account that owns the S3 bucket containing the output data.</p>"
+        "ModelInvocationJobS3OutputDataConfig$s3BucketOwner": "<p>The ID of the Amazon Web Services account that owns the S3 bucket containing the output data.</p>",
+        "TrustedAccessResolutionContext$accountId": "<p>AWS account for which the program status was resolved, including applicable organization settings.</p>"
       }
     },
     "AcknowledgementFormDataBody": {
@@ -287,6 +314,14 @@
         "GetEvaluationJobResponse$applicationType": "<p>Specifies whether the evaluation job is for evaluating a model or evaluating a knowledge base (retrieval and response generation).</p>",
         "ListEvaluationJobsRequest$applicationTypeEquals": "<p>A filter to only list evaluation jobs that are either model evaluations or knowledge base evaluations.</p>"
       }
+    },
+    "ArchiveProjectRequest": {
+      "base": "<p>Identifies the project to archive.</p>",
+      "refs": {}
+    },
+    "ArchiveProjectResponse": {
+      "base": "<p>The project after the archive operation.</p>",
+      "refs": {}
     },
     "Arn": {
       "base": null,
@@ -1793,7 +1828,9 @@
         "FoundationModelDetails$modelName": "<p>The model name.</p>",
         "FoundationModelDetails$providerName": "<p>The model's provider name.</p>",
         "FoundationModelSummary$modelName": "<p>The name of the model.</p>",
-        "FoundationModelSummary$providerName": "<p>The model's provider name.</p>"
+        "FoundationModelSummary$providerName": "<p>The model's provider name.</p>",
+        "GetTrustedAccessProgramResponse$providerName": "<p>Name of the model provider offering the program.</p>",
+        "TrustedAccessProgramSummary$providerName": "<p>Name of the model provider offering the program.</p>"
       }
     },
     "BucketName": {
@@ -1978,6 +2015,14 @@
     },
     "CreateModelInvocationJobResponse": {
       "base": null,
+      "refs": {}
+    },
+    "CreateProjectRequest": {
+      "base": "<p>The display name, optional tags, and optional data retention setting for the new project.</p>",
+      "refs": {}
+    },
+    "CreateProjectResponse": {
+      "base": "<p>The newly created project.</p>",
       "refs": {}
     },
     "CreatePromptRouterRequest": {
@@ -2172,9 +2217,100 @@
       "base": "<p>The data retention mode for the account. Valid values are:</p> <ul> <li> <p> <code>default</code> – The standard data handling for the model applies.</p> </li> <li> <p> <code>none</code> – Zero data retention.</p> </li> <li> <p> <code>aws_review</code> – Amazon Web Services may review the request data. The data is not shared with the model provider. A model must support this mode to be invoked under it.</p> </li> <li> <p> <code>provider_data_share</code> – Data may be shared with the model provider.</p> </li> <li> <p> <code>inherit</code> – No data retention mode is set at this scope.</p> </li> </ul>",
       "refs": {
         "GetAccountDataRetentionResponse$mode": "<p>The data retention mode configured for the account.</p>",
+        "ProjectDataRetention$mode": "<p>The project's data retention mode. Use <code>inherit</code> to defer to the account setting or model default.</p>",
         "PutAccountDataRetentionRequest$mode": "<p>The data retention mode to set for the account.</p>",
         "PutAccountDataRetentionResponse$mode": "<p>The data retention mode set for the account.</p>"
       }
+    },
+    "DataRetentionStorageBucketArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of the Amazon S3 bucket for retained data.</p>",
+      "refs": {
+        "DataRetentionStorageConfiguration$s3BucketArn": "<p>The Amazon Resource Name (ARN) of the Amazon S3 bucket that receives retained data. The bucket must be in the AWS Region where you register the configuration.</p>"
+      }
+    },
+    "DataRetentionStorageConfiguration": {
+      "base": "<p>You provide the Amazon S3 destination and AWS Key Management Service (AWS KMS) key for retained data.</p> <p>Before saving a customer-managed destination, Amazon Bedrock validates that you can use the bucket and key and that their resource policies permit the required Amazon Bedrock access. If validation fails, Amazon Bedrock rejects the configuration without saving it.</p> <p>You need <code>s3:PutObject</code>, <code>s3:GetObject</code>, <code>kms:GenerateDataKey</code>, and <code>kms:Decrypt</code> permissions. The Amazon S3 bucket policy must allow the Amazon Bedrock service principal, <code>bedrock.amazonaws.com</code>, to put, get, and delete objects with conditions appropriate to the configuration scope.</p> <p>Use <code>aws:SourceAccount</code> for account scope, <code>aws:SourceOrgID</code> for organization scope, and both <code>aws:SourceAccount</code> and the project's <code>aws:SourceArn</code> for project scope. Validation rejects resource policies that allow the service principal to access the destination without the required scope conditions.</p> <p>The key policy must permit <code>kms:GenerateDataKey</code> and <code>kms:Decrypt</code> for both uses of the key: direct use by Amazon Bedrock with the scope conditions, and use through Amazon S3 with a <code>kms:ViaService</code> condition for the bucket's Region and <code>kms:EncryptionContext:aws:s3:arn</code> scoped to the bucket.</p>",
+      "refs": {
+        "GetAccountDataRetentionStorageResponse$storageConfiguration": "<p>The stored destination and key. Present only when storageDestination is customer_managed.</p>",
+        "GetOrganizationDataRetentionStorageResponse$storageConfiguration": "<p>The stored destination and key. Present only when storageDestination is customer_managed.</p>",
+        "GetProjectDataRetentionStorageResponse$storageConfiguration": "<p>The stored destination and key. Present only when storageDestination is customer_managed.</p>",
+        "PutAccountDataRetentionStorageRequest$storageConfiguration": "<p>Destination bucket and key. Required when storageDestination is customer_managed; rejected with ValidationException when amazon_managed.</p>",
+        "PutAccountDataRetentionStorageResponse$storageConfiguration": "<p>The stored destination and key. Present only when storageDestination is customer_managed.</p>",
+        "PutOrganizationDataRetentionStorageRequest$storageConfiguration": "<p>Destination bucket and key. Required when storageDestination is customer_managed; rejected with ValidationException when amazon_managed.</p>",
+        "PutOrganizationDataRetentionStorageResponse$storageConfiguration": "<p>The stored destination and key. Present only when storageDestination is customer_managed.</p>",
+        "PutProjectDataRetentionStorageRequest$storageConfiguration": "<p>Destination bucket and key. Required when storageDestination is customer_managed; rejected with ValidationException when amazon_managed.</p>",
+        "PutProjectDataRetentionStorageResponse$storageConfiguration": "<p>The stored destination and key. Present only when storageDestination is customer_managed.</p>"
+      }
+    },
+    "DataRetentionStorageDestination": {
+      "base": "<p>Where a scope's retained data is delivered. Clients must tolerate unknown values.</p>",
+      "refs": {
+        "GetAccountDataRetentionStorageResponse$storageDestination": "<p>Where this record delivers retained data.</p>",
+        "GetOrganizationDataRetentionStorageResponse$storageDestination": "<p>Where this record delivers retained data.</p>",
+        "GetProjectDataRetentionStorageResponse$storageDestination": "<p>Where this record delivers retained data.</p>",
+        "PutAccountDataRetentionStorageRequest$storageDestination": "<p>Where retained data is delivered for this scope. customer_managed requires storageConfiguration; amazon_managed forbids it.</p>",
+        "PutAccountDataRetentionStorageResponse$storageDestination": "<p>Where this record delivers retained data.</p>",
+        "PutOrganizationDataRetentionStorageRequest$storageDestination": "<p>Where retained data is delivered for this scope. customer_managed requires storageConfiguration; amazon_managed forbids it.</p>",
+        "PutOrganizationDataRetentionStorageResponse$storageDestination": "<p>Where this record delivers retained data.</p>",
+        "PutProjectDataRetentionStorageRequest$storageDestination": "<p>Where retained data is delivered for this scope. customer_managed requires storageConfiguration; amazon_managed forbids it.</p>",
+        "PutProjectDataRetentionStorageResponse$storageDestination": "<p>Where this record delivers retained data.</p>"
+      }
+    },
+    "DataRetentionStorageModelProvider": {
+      "base": "<p>Model provider owning a retention storage configuration. Clients must tolerate unknown values.</p>",
+      "refs": {
+        "DeleteAccountDataRetentionStorageRequest$modelProvider": "<p>The model provider whose retention storage configuration is addressed by this request.</p>",
+        "DeleteOrganizationDataRetentionStorageRequest$modelProvider": "<p>The model provider whose retention storage configuration is addressed by this request.</p>",
+        "DeleteProjectDataRetentionStorageRequest$modelProvider": "<p>The model provider whose retention storage configuration is addressed by this request.</p>",
+        "GetAccountDataRetentionStorageRequest$modelProvider": "<p>The model provider whose retention storage configuration is addressed by this request.</p>",
+        "GetAccountDataRetentionStorageResponse$modelProvider": "<p>Model provider this configuration applies to.</p>",
+        "GetOrganizationDataRetentionStorageRequest$modelProvider": "<p>The model provider whose retention storage configuration is addressed by this request.</p>",
+        "GetOrganizationDataRetentionStorageResponse$modelProvider": "<p>Model provider this configuration applies to.</p>",
+        "GetProjectDataRetentionStorageRequest$modelProvider": "<p>The model provider whose retention storage configuration is addressed by this request.</p>",
+        "GetProjectDataRetentionStorageResponse$modelProvider": "<p>Model provider this configuration applies to.</p>",
+        "PutAccountDataRetentionStorageRequest$modelProvider": "<p>The model provider whose retention storage configuration is addressed by this request.</p>",
+        "PutAccountDataRetentionStorageResponse$modelProvider": "<p>Model provider this configuration applies to.</p>",
+        "PutOrganizationDataRetentionStorageRequest$modelProvider": "<p>The model provider whose retention storage configuration is addressed by this request.</p>",
+        "PutOrganizationDataRetentionStorageResponse$modelProvider": "<p>Model provider this configuration applies to.</p>",
+        "PutProjectDataRetentionStorageRequest$modelProvider": "<p>The model provider whose retention storage configuration is addressed by this request.</p>",
+        "PutProjectDataRetentionStorageResponse$modelProvider": "<p>Model provider this configuration applies to.</p>"
+      }
+    },
+    "DataRetentionStorageResourceStatus": {
+      "base": "<p>Validation state of a configured destination resource. Clients must tolerate unknown values.</p>",
+      "refs": {
+        "GetAccountDataRetentionStorageResponse$kmsKeyStatus": "<p>Validation state of the KMS key. Present only when storageDestination is customer_managed.</p>",
+        "GetAccountDataRetentionStorageResponse$s3BucketStatus": "<p>Validation state of the bucket. Present only when storageDestination is customer_managed.</p>",
+        "GetOrganizationDataRetentionStorageResponse$kmsKeyStatus": "<p>Validation state of the KMS key. Present only when storageDestination is customer_managed.</p>",
+        "GetOrganizationDataRetentionStorageResponse$s3BucketStatus": "<p>Validation state of the bucket. Present only when storageDestination is customer_managed.</p>",
+        "GetProjectDataRetentionStorageResponse$kmsKeyStatus": "<p>Validation state of the KMS key. Present only when storageDestination is customer_managed.</p>",
+        "GetProjectDataRetentionStorageResponse$s3BucketStatus": "<p>Validation state of the bucket. Present only when storageDestination is customer_managed.</p>",
+        "PutAccountDataRetentionStorageResponse$kmsKeyStatus": "<p>Validation state of the KMS key. Present only when storageDestination is customer_managed.</p>",
+        "PutAccountDataRetentionStorageResponse$s3BucketStatus": "<p>Validation state of the bucket. Present only when storageDestination is customer_managed.</p>",
+        "PutOrganizationDataRetentionStorageResponse$kmsKeyStatus": "<p>Validation state of the KMS key. Present only when storageDestination is customer_managed.</p>",
+        "PutOrganizationDataRetentionStorageResponse$s3BucketStatus": "<p>Validation state of the bucket. Present only when storageDestination is customer_managed.</p>",
+        "PutProjectDataRetentionStorageResponse$kmsKeyStatus": "<p>Validation state of the KMS key. Present only when storageDestination is customer_managed.</p>",
+        "PutProjectDataRetentionStorageResponse$s3BucketStatus": "<p>Validation state of the bucket. Present only when storageDestination is customer_managed.</p>"
+      }
+    },
+    "DataRetentionStorageScope": {
+      "base": "<p>Scope addressed by a retention storage operation. Clients must tolerate unknown values.</p>",
+      "refs": {
+        "GetAccountDataRetentionStorageResponse$scope": "<p>Scope addressed by the operation that returned this record.</p>",
+        "GetOrganizationDataRetentionStorageResponse$scope": "<p>Scope addressed by the operation that returned this record.</p>",
+        "GetProjectDataRetentionStorageResponse$scope": "<p>Scope addressed by the operation that returned this record.</p>",
+        "PutAccountDataRetentionStorageResponse$scope": "<p>Scope addressed by the operation that returned this record.</p>",
+        "PutOrganizationDataRetentionStorageResponse$scope": "<p>Scope addressed by the operation that returned this record.</p>",
+        "PutProjectDataRetentionStorageResponse$scope": "<p>Scope addressed by the operation that returned this record.</p>"
+      }
+    },
+    "DeleteAccountDataRetentionStorageRequest": {
+      "base": "<p>Identifies the model provider whose account retention storage configuration to delete.</p>",
+      "refs": {}
+    },
+    "DeleteAccountDataRetentionStorageResponse": {
+      "base": "<p>A successful deletion returns no response fields.</p>",
+      "refs": {}
     },
     "DeleteAutomatedReasoningPolicyBuildWorkflowRequest": {
       "base": null,
@@ -2270,6 +2406,22 @@
     },
     "DeleteModelInvocationLoggingConfigurationResponse": {
       "base": null,
+      "refs": {}
+    },
+    "DeleteOrganizationDataRetentionStorageRequest": {
+      "base": "<p>Identifies the model provider whose organization retention storage configuration to delete.</p>",
+      "refs": {}
+    },
+    "DeleteOrganizationDataRetentionStorageResponse": {
+      "base": "<p>A successful deletion returns no response fields.</p>",
+      "refs": {}
+    },
+    "DeleteProjectDataRetentionStorageRequest": {
+      "base": "<p>Identifies the project and model provider whose retention storage configuration to delete.</p>",
+      "refs": {}
+    },
+    "DeleteProjectDataRetentionStorageResponse": {
+      "base": "<p>A successful deletion returns no response fields.</p>",
       "refs": {}
     },
     "DeletePromptRouterRequest": {
@@ -2822,6 +2974,14 @@
       "base": null,
       "refs": {}
     },
+    "GetAccountDataRetentionStorageRequest": {
+      "base": "<p>Identifies the model provider whose account retention storage configuration to retrieve.</p>",
+      "refs": {}
+    },
+    "GetAccountDataRetentionStorageResponse": {
+      "base": "<p>The calling account's stored retention storage configuration for the requested model provider.</p>",
+      "refs": {}
+    },
     "GetAdvancedPromptOptimizationJobRequest": {
       "base": "<p>Get Advanced Prompt Optimization Job Request</p>",
       "refs": {}
@@ -3004,6 +3164,30 @@
       "base": null,
       "refs": {}
     },
+    "GetOrganizationDataRetentionStorageRequest": {
+      "base": "<p>Identifies the model provider whose organization retention storage configuration to retrieve.</p>",
+      "refs": {}
+    },
+    "GetOrganizationDataRetentionStorageResponse": {
+      "base": "<p>The organization's stored retention storage configuration for the requested model provider.</p>",
+      "refs": {}
+    },
+    "GetProjectDataRetentionStorageRequest": {
+      "base": "<p>Identifies the project and model provider whose retention storage configuration to retrieve.</p>",
+      "refs": {}
+    },
+    "GetProjectDataRetentionStorageResponse": {
+      "base": "<p>The project's stored retention storage configuration for the requested model provider.</p>",
+      "refs": {}
+    },
+    "GetProjectRequest": {
+      "base": "<p>Identifies the project to retrieve.</p>",
+      "refs": {}
+    },
+    "GetProjectResponse": {
+      "base": "<p>The requested project's details and data retention setting.</p>",
+      "refs": {}
+    },
     "GetPromptRouterRequest": {
       "base": null,
       "refs": {}
@@ -3026,6 +3210,38 @@
     },
     "GetResourcePolicyResponse": {
       "base": null,
+      "refs": {}
+    },
+    "GetTrustedAccessProgramAccountEnrollmentRequest": {
+      "base": "<p>Identifies the trusted access program whose saved account enrollment preference to retrieve.</p>",
+      "refs": {}
+    },
+    "GetTrustedAccessProgramAccountEnrollmentResponse": {
+      "base": "<p>The account's stored enrollment. updatedAt is present whenever a row exists, including an explicit inherit setting.</p>",
+      "refs": {}
+    },
+    "GetTrustedAccessProgramOrganizationEnrollmentRequest": {
+      "base": "<p>Identifies the trusted access program whose saved organization enrollment preference to retrieve.</p>",
+      "refs": {}
+    },
+    "GetTrustedAccessProgramOrganizationEnrollmentResponse": {
+      "base": "<p>The organization's stored enrollment. updatedAt is present whenever a row exists, including an explicit inherit setting.</p>",
+      "refs": {}
+    },
+    "GetTrustedAccessProgramProjectEnrollmentRequest": {
+      "base": "<p>Identifies the trusted access program and named project whose saved enrollment preference to retrieve.</p>",
+      "refs": {}
+    },
+    "GetTrustedAccessProgramProjectEnrollmentResponse": {
+      "base": "<p>The project's stored enrollment. updatedAt is present whenever a row exists, including an explicit inherit setting.</p>",
+      "refs": {}
+    },
+    "GetTrustedAccessProgramRequest": {
+      "base": "<p>Identifies the trusted access program and optional named project for which to resolve participation.</p>",
+      "refs": {}
+    },
+    "GetTrustedAccessProgramResponse": {
+      "base": "<p>The program's details and participation resolved for the calling account or requested project.</p>",
       "refs": {}
     },
     "GetUseCaseForModelAccessRequest": {
@@ -4093,6 +4309,7 @@
       "refs": {
         "CreateAdvancedPromptOptimizationJobRequest$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used for encrypting the output data. If not specified, the output is encrypted with an Amazon-owned KMS key.</p>",
         "CreateCustomModelRequest$modelKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer managed KMS key to encrypt the custom model. If you don't provide a KMS key, Amazon Bedrock uses an Amazon Web Services-managed KMS key to encrypt the model. </p> <p>If you provide a customer managed KMS key, your Amazon Bedrock service role must have permissions to use it. For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/encryption-import-model.html\">Encryption of imported models</a>. </p>",
+        "DataRetentionStorageConfiguration$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer managed AWS Key Management Service (AWS KMS) key you use to encrypt retained data. Specify an enabled symmetric encryption key in the AWS Region where you register the configuration. You cannot specify a key alias.</p>",
         "GetAdvancedPromptOptimizationJobResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the output data.</p>",
         "GetAutomatedReasoningPolicyResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the automated reasoning policy and its associated artifacts. If a KMS key is not provided during the initial CreateAutomatedReasoningPolicyRequest, the kmsKeyArn won't be included in the GetAutomatedReasoningPolicyResponse. </p>",
         "GetCustomModelResponse$modelKmsKeyArn": "<p>The custom model is encrypted at rest using this key.</p>",
@@ -4328,6 +4545,14 @@
       "base": null,
       "refs": {}
     },
+    "ListProjectsRequest": {
+      "base": "<p>The page size, continuation token, and optional lifecycle status filter for listing projects.</p>",
+      "refs": {}
+    },
+    "ListProjectsResponse": {
+      "base": "<p>A page of projects and a continuation token when more results are available.</p>",
+      "refs": {}
+    },
     "ListPromptRoutersRequest": {
       "base": null,
       "refs": {}
@@ -4350,6 +4575,14 @@
     },
     "ListTagsForResourceResponse": {
       "base": null,
+      "refs": {}
+    },
+    "ListTrustedAccessProgramsRequest": {
+      "base": "<p>The optional named project for which to resolve participation in visible trusted access programs.</p>",
+      "refs": {}
+    },
+    "ListTrustedAccessProgramsResponse": {
+      "base": "<p>The visible trusted access programs and their resolved participation statuses.</p>",
       "refs": {}
     },
     "LogGroupName": {
@@ -4406,7 +4639,8 @@
         "ListModelImportJobsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListModelInvocationJobsRequest$maxResults": "<p>The maximum number of results to return. If there are more results than the number that you specify, a <code>nextToken</code> value is returned. Use the <code>nextToken</code> in a request to return the next batch of results.</p>",
         "ListPromptRoutersRequest$maxResults": "<p>The maximum number of prompt routers to return in one page of results.</p>",
-        "ListProvisionedModelThroughputsRequest$maxResults": "<p>THe maximum number of results to return in the response. If there are more results than the number you specified, the response returns a <code>nextToken</code> value. To see the next batch of results, send the <code>nextToken</code> value in another list request.</p>"
+        "ListProvisionedModelThroughputsRequest$maxResults": "<p>THe maximum number of results to return in the response. If there are more results than the number you specified, the response returns a <code>nextToken</code> value. To see the next batch of results, send the <code>nextToken</code> value in another list request.</p>",
+        "ListTrustedAccessProgramsRequest$maxResults": "<p>Reserved for future pagination support. Currently ignored; the response includes all visible programs.</p>"
       }
     },
     "MaxTokens": {
@@ -4927,10 +5161,14 @@
         "ListModelImportJobsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "ListModelInvocationJobsRequest$nextToken": "<p>If there were more results than the value you specified in the <code>maxResults</code> field in a previous <code>ListModelInvocationJobs</code> request, the response would have returned a <code>nextToken</code> value. To see the next batch of results, send the <code>nextToken</code> value in another request.</p>",
         "ListModelInvocationJobsResponse$nextToken": "<p>If there are more results than can fit in the response, a <code>nextToken</code> is returned. Use the <code>nextToken</code> in a request to return the next batch of results.</p>",
+        "ListProjectsRequest$nextToken": "<p>Continuation token from a previous ListProjects response.</p>",
+        "ListProjectsResponse$nextToken": "<p>Continuation token; present only when more results exist. Pass it in the next request to fetch the following page.</p>",
         "ListPromptRoutersRequest$nextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
         "ListPromptRoutersResponse$nextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
         "ListProvisionedModelThroughputsRequest$nextToken": "<p>If there are more results than the number you specified in the <code>maxResults</code> field, the response returns a <code>nextToken</code> value. To see the next batch of results, specify the <code>nextToken</code> value in this field.</p>",
-        "ListProvisionedModelThroughputsResponse$nextToken": "<p>If there are more results than the number you specified in the <code>maxResults</code> field, this value is returned. To see the next batch of results, include this value in the <code>nextToken</code> field in another list request.</p>"
+        "ListProvisionedModelThroughputsResponse$nextToken": "<p>If there are more results than the number you specified in the <code>maxResults</code> field, this value is returned. To see the next batch of results, include this value in the <code>nextToken</code> field in another list request.</p>",
+        "ListTrustedAccessProgramsRequest$nextToken": "<p>Reserved for future pagination support. Omit this field.</p>",
+        "ListTrustedAccessProgramsResponse$nextToken": "<p>Reserved for future pagination support. Currently omitted because the response contains the complete list.</p>"
       }
     },
     "PerformanceConfigLatency": {
@@ -4959,6 +5197,102 @@
       "base": "<p>Describes the usage-based pricing term.</p>",
       "refs": {
         "TermDetails$usageBasedPricingTerm": null
+      }
+    },
+    "ProjectArn": {
+      "base": "<p>The ARN of a project.</p>",
+      "refs": {
+        "ArchiveProjectResponse$arn": "<p>The Amazon Resource Name (ARN) of the project.</p>",
+        "CreateProjectResponse$arn": "<p>The Amazon Resource Name (ARN) of the project.</p>",
+        "GetProjectDataRetentionStorageResponse$projectArn": "<p>ARN of the configured project.</p>",
+        "GetProjectResponse$arn": "<p>The Amazon Resource Name (ARN) of the project.</p>",
+        "ProjectSummary$arn": "<p>The Amazon Resource Name (ARN) of the project.</p>",
+        "PutProjectDataRetentionStorageResponse$projectArn": "<p>ARN of the configured project.</p>",
+        "TrustedAccessResolutionContext$projectArn": "<p>The canonical ARN of the authorized named project for which participation was resolved. Omitted when the request has no project context.</p>",
+        "UpdateProjectResponse$arn": "<p>The Amazon Resource Name (ARN) of the project.</p>"
+      }
+    },
+    "ProjectDataRetention": {
+      "base": "<p>A project's data-retention setting: the project-scope mode, which may be <code>inherit</code> to defer to the account scope or the model default. Uses the same mode space as the account-level data-retention operations; the effective mode for a request resolves project, then account, then model default.</p>",
+      "refs": {
+        "ArchiveProjectResponse$dataRetention": "<p>The project's data retention setting. A mode of <code>inherit</code> defers to the account setting or model default.</p>",
+        "CreateProjectRequest$dataRetention": "<p>The project's data-retention mode. If you omit this field, Amazon Bedrock sets the mode to <code>inherit</code>. The project then uses the account setting or the model default.</p>",
+        "CreateProjectResponse$dataRetention": "<p>The project's data retention setting. A mode of <code>inherit</code> defers to the account setting or model default.</p>",
+        "GetProjectResponse$dataRetention": "<p>The project's data retention setting. A mode of <code>inherit</code> defers to the account setting or model default.</p>",
+        "ProjectSummary$dataRetention": "<p>The project's data retention setting. A mode of <code>inherit</code> defers to the account setting or model default.</p>",
+        "UpdateProjectRequest$dataRetention": "<p>The project's new data-retention mode. Must be set on its own.</p>",
+        "UpdateProjectResponse$dataRetention": "<p>The project's data retention setting. A mode of <code>inherit</code> defers to the account setting or model default.</p>"
+      }
+    },
+    "ProjectIdentifier": {
+      "base": "<p>Identifies a project by bare id or by full project ARN. An ARN must belong to the caller's account and this Region. When sent in a request path, an ARN's slash must be percent-encoded.</p>",
+      "refs": {
+        "ArchiveProjectRequest$projectIdentifier": "<p>The id or ARN of the project to archive.</p>",
+        "DeleteProjectDataRetentionStorageRequest$projectIdentifier": "<p>The ID or ARN of a named project owned by the calling account in this AWS Region. The default project is not supported; use the account-level retention storage operations instead.</p>",
+        "GetFoundationModelRequest$projectIdentifier": "<p>The ID or Amazon Resource Name (ARN) of a project. Amazon Bedrock uses the project's trusted access program participation when determining whether to return the model. The project must belong to your account in the same AWS Region and partition as the request.</p> <p>If you omit this parameter or specify <code>default</code>, Amazon Bedrock uses your account's participation, including organization inheritance.</p> <p>A project that doesn't exist or is archived causes a <code>ValidationException</code>. A model outside the project's available model catalog causes a <code>ResourceNotFoundException</code>.</p>",
+        "GetInferenceProfileRequest$projectIdentifier": "<p>The ID or Amazon Resource Name (ARN) of a project. Amazon Bedrock uses the project's trusted access program participation when determining whether to return a system-defined inference profile. The project must belong to your account in the same AWS Region and partition as the request.</p> <p>If you omit this parameter or specify <code>default</code>, Amazon Bedrock uses your account's participation, including organization inheritance.</p> <p>A project that doesn't exist or is archived causes a <code>ValidationException</code>. Specifying a project other than <code>default</code> for an application inference profile also causes a <code>ValidationException</code>.</p>",
+        "GetProjectDataRetentionStorageRequest$projectIdentifier": "<p>The ID or ARN of a named project owned by the calling account in this AWS Region. The default project is not supported; use the account-level retention storage operations instead.</p>",
+        "GetProjectRequest$projectIdentifier": "<p>The id or ARN of the project to retrieve.</p>",
+        "GetTrustedAccessProgramProjectEnrollmentRequest$projectIdentifier": "<p>The id or ARN of the named Bedrock project. The default project is not supported; use GetTrustedAccessProgramAccountEnrollment for account-level enrollment. An ARN from another account, Region, or partition returns ValidationException. A project that does not exist in the calling account returns ResourceNotFoundException.</p>",
+        "GetTrustedAccessProgramRequest$projectIdentifier": "<p>The ID or ARN of a named Bedrock project owned by the calling account in this Region. When omitted, resolves participation for the calling account, including participation inherited from its current organization. When specified, resolves participation for the project, including participation inherited from the account and its current organization. You cannot specify the default project. Omit this field to resolve its inherited participation. An ARN from another account, Region, or partition returns ValidationException. A project that does not exist in the calling account returns ResourceNotFoundException.</p>",
+        "ListFoundationModelsRequest$projectIdentifier": "<p>The ID or Amazon Resource Name (ARN) of a project. Amazon Bedrock uses the project's trusted access program participation when determining which models to return. The project must belong to your account in the same AWS Region and partition as the request.</p> <p>If you omit this parameter or specify <code>default</code>, Amazon Bedrock uses your account's participation, including organization inheritance. A project that doesn't exist or is archived causes a <code>ValidationException</code>.</p>",
+        "ListInferenceProfilesRequest$projectIdentifier": "<p>The ID or Amazon Resource Name (ARN) of a project. Amazon Bedrock uses the project's trusted access program participation when determining which system-defined inference profiles to return. The project must belong to your account in the same AWS Region and partition as the request.</p> <p>If you omit this parameter or specify <code>default</code>, Amazon Bedrock uses your account's participation, including organization inheritance.</p> <p>A project that doesn't exist or is archived causes a <code>ValidationException</code>. Specifying a project other than <code>default</code> with <code>typeEquals</code> set to <code>APPLICATION</code> also causes a <code>ValidationException</code>. Omit <code>typeEquals</code> or set it to <code>SYSTEM_DEFINED</code> to list system-defined inference profiles for the project.</p>",
+        "ListTrustedAccessProgramsRequest$projectIdentifier": "<p>The ID or ARN of a named Bedrock project owned by the calling account in this Region. When omitted, resolves participation for the calling account, including participation inherited from its current organization. When specified, resolves participation for the project, including participation inherited from the account and its current organization. You cannot specify the default project. Omit this field to resolve its inherited participation. An ARN from another account, Region, or partition returns ValidationException. A project that does not exist in the calling account returns ResourceNotFoundException.</p>",
+        "PutProjectDataRetentionStorageRequest$projectIdentifier": "<p>The ID or ARN of a named project owned by the calling account in this AWS Region. The default project is not supported; use the account-level retention storage operations instead.</p>",
+        "PutTrustedAccessProgramProjectEnrollmentRequest$projectIdentifier": "<p>The id or ARN of the named Bedrock project. The default project is not supported; use PutTrustedAccessProgramAccountEnrollment for account-level enrollment. An ARN from another account, Region, or partition returns ValidationException. A project that does not exist in the calling account returns ResourceNotFoundException.</p>",
+        "StartTrustedAccessProgramProjectApplicationRequest$projectIdentifier": "<p>The id or ARN of the named Bedrock project. The default project is not supported; use StartTrustedAccessProgramAccountApplication for an account-level application. An ARN from another account, Region, or partition returns ValidationException. A project that does not exist in the calling account returns ResourceNotFoundException.</p>",
+        "UpdateProjectRequest$projectIdentifier": "<p>The id or ARN of the project to update.</p>"
+      }
+    },
+    "ProjectMaxResults": {
+      "base": "<p>The number of projects to request in one response. The value must be from 1 to 100.</p>",
+      "refs": {
+        "ListProjectsRequest$maxResults": "<p>The maximum number of projects to return in one response, from 1 to 100. The default is 20.</p>"
+      }
+    },
+    "ProjectName": {
+      "base": "<p>The display name you choose for a project. Project names do not have to be unique. Include at least one non-whitespace character. The length limit counts Unicode characters, not bytes.</p>",
+      "refs": {
+        "ArchiveProjectResponse$name": "<p>The project's display name. Project names do not have to be unique.</p>",
+        "CreateProjectRequest$name": "<p>The display name for the project. Project names do not have to be unique.</p>",
+        "CreateProjectResponse$name": "<p>The project's display name. Project names do not have to be unique.</p>",
+        "GetProjectResponse$name": "<p>The project's display name. Project names do not have to be unique.</p>",
+        "ProjectSummary$name": "<p>The project's display name. Project names do not have to be unique.</p>",
+        "UpdateProjectRequest$name": "<p>The project's new display name. Specify this field only when <code>dataRetention</code> is omitted. Project names do not have to be unique.</p>",
+        "UpdateProjectResponse$name": "<p>The project's display name. Project names do not have to be unique.</p>"
+      }
+    },
+    "ProjectResourceId": {
+      "base": "<p>The id of a project: <code>default</code> for the account's default project, or a created project's generated id (<code>proj_</code> followed by its suffix).</p>",
+      "refs": {
+        "ArchiveProjectResponse$id": "<p>The project ID. The account's default project uses <code>default</code>; a named project's generated ID starts with <code>proj_</code>.</p>",
+        "CreateProjectResponse$id": "<p>The project ID. The account's default project uses <code>default</code>; a named project's generated ID starts with <code>proj_</code>.</p>",
+        "GetProjectResponse$id": "<p>The project ID. The account's default project uses <code>default</code>; a named project's generated ID starts with <code>proj_</code>.</p>",
+        "ProjectSummary$id": "<p>The project ID. The account's default project uses <code>default</code>; a named project's generated ID starts with <code>proj_</code>.</p>",
+        "UpdateProjectResponse$id": "<p>The project ID. The account's default project uses <code>default</code>; a named project's generated ID starts with <code>proj_</code>.</p>"
+      }
+    },
+    "ProjectStatus": {
+      "base": "<p>The lifecycle status of a project. An <code>archived</code> project rejects new inference requests and mutations; its stored data remains readable until it expires. There is no delete: archive is the terminal state.</p>",
+      "refs": {
+        "ArchiveProjectResponse$status": "<p>The project's lifecycle status.</p>",
+        "CreateProjectResponse$status": "<p>The project's lifecycle status.</p>",
+        "GetProjectResponse$status": "<p>The project's lifecycle status.</p>",
+        "ListProjectsRequest$statusFilter": "<p>Returns only the projects in this lifecycle status. When absent, no status filtering is applied and every project is returned. New lifecycle states extend the <code>ProjectStatus</code> enum, and with it this filter, compatibly.</p>",
+        "ProjectSummary$status": "<p>The project's lifecycle status.</p>",
+        "UpdateProjectResponse$status": "<p>The project's lifecycle status.</p>"
+      }
+    },
+    "ProjectSummary": {
+      "base": "<p>A project. The same field set every project-returning operation uses: create, get, update, and archive all return the full project, and list returns one per project.</p>",
+      "refs": {
+        "ProjectSummaryList$member": "<p>A project's details and data retention setting.</p>"
+      }
+    },
+    "ProjectSummaryList": {
+      "base": "<p>A list of projects and their details.</p>",
+      "refs": {
+        "ListProjectsResponse$projectSummaries": "<p>The projects returned for this page, including their details and data retention settings.</p>"
       }
     },
     "PromptRouterArn": {
@@ -5104,6 +5438,14 @@
       "base": null,
       "refs": {}
     },
+    "PutAccountDataRetentionStorageRequest": {
+      "base": "<p>The model provider and retention storage destination to configure for the calling account.</p>",
+      "refs": {}
+    },
+    "PutAccountDataRetentionStorageResponse": {
+      "base": "<p>The stored configuration after the write.</p>",
+      "refs": {}
+    },
     "PutEnforcedGuardrailConfigurationRequest": {
       "base": null,
       "refs": {}
@@ -5120,12 +5462,52 @@
       "base": null,
       "refs": {}
     },
+    "PutOrganizationDataRetentionStorageRequest": {
+      "base": "<p>The model provider and retention storage destination to configure for the organization.</p>",
+      "refs": {}
+    },
+    "PutOrganizationDataRetentionStorageResponse": {
+      "base": "<p>The organization's stored retention storage configuration after the write.</p>",
+      "refs": {}
+    },
+    "PutProjectDataRetentionStorageRequest": {
+      "base": "<p>The project, model provider, and retention storage destination to configure.</p>",
+      "refs": {}
+    },
+    "PutProjectDataRetentionStorageResponse": {
+      "base": "<p>The project's stored retention storage configuration after the write.</p>",
+      "refs": {}
+    },
     "PutResourcePolicyRequest": {
       "base": null,
       "refs": {}
     },
     "PutResourcePolicyResponse": {
       "base": null,
+      "refs": {}
+    },
+    "PutTrustedAccessProgramAccountEnrollmentRequest": {
+      "base": "<p>The trusted access program and enrollment preference to save for the calling account.</p>",
+      "refs": {}
+    },
+    "PutTrustedAccessProgramAccountEnrollmentResponse": {
+      "base": "<p>The account's resulting stored enrollment setting. An initial inherit write creates a stored setting with updatedAt.</p>",
+      "refs": {}
+    },
+    "PutTrustedAccessProgramOrganizationEnrollmentRequest": {
+      "base": "<p>The trusted access program and enrollment preference to save for the organization.</p>",
+      "refs": {}
+    },
+    "PutTrustedAccessProgramOrganizationEnrollmentResponse": {
+      "base": "<p>The organization's resulting stored enrollment setting. An initial inherit write creates a stored setting with updatedAt.</p>",
+      "refs": {}
+    },
+    "PutTrustedAccessProgramProjectEnrollmentRequest": {
+      "base": "<p>The trusted access program, named project, and enrollment preference to save.</p>",
+      "refs": {}
+    },
+    "PutTrustedAccessProgramProjectEnrollmentResponse": {
+      "base": "<p>The project's resulting stored enrollment setting. An initial inherit write creates a stored setting with updatedAt.</p>",
       "refs": {}
     },
     "PutUseCaseForModelAccessRequest": {
@@ -5569,6 +5951,30 @@
       "base": null,
       "refs": {}
     },
+    "StartTrustedAccessProgramAccountApplicationRequest": {
+      "base": "<p>Identifies the trusted access program for which to prepare an account application handoff.</p>",
+      "refs": {}
+    },
+    "StartTrustedAccessProgramAccountApplicationResponse": {
+      "base": "<p>The information needed to continue the account's application with the provider.</p>",
+      "refs": {}
+    },
+    "StartTrustedAccessProgramOrganizationApplicationRequest": {
+      "base": "<p>Identifies the trusted access program for which to prepare an organization application handoff.</p>",
+      "refs": {}
+    },
+    "StartTrustedAccessProgramOrganizationApplicationResponse": {
+      "base": "<p>The information needed to continue the organization's application with the provider.</p>",
+      "refs": {}
+    },
+    "StartTrustedAccessProgramProjectApplicationRequest": {
+      "base": "<p>Identifies the trusted access program and named project for which to prepare an application handoff.</p>",
+      "refs": {}
+    },
+    "StartTrustedAccessProgramProjectApplicationResponse": {
+      "base": "<p>The information needed to continue the project's application with the provider.</p>",
+      "refs": {}
+    },
     "Status": {
       "base": null,
       "refs": {
@@ -5631,6 +6037,8 @@
         "DimensionalPriceRate$description": "<p>Description of the price rate.</p>",
         "DimensionalPriceRate$unit": "<p>Unit associated with the price.</p>",
         "GetImportedModelResponse$modelArchitecture": "<p>The architecture of the imported model.</p>",
+        "GetTrustedAccessProgramResponse$description": "<p>Description of the program and its effects on model access or data handling.</p>",
+        "GetTrustedAccessProgramResponse$statusReason": "<p>Nonempty explanation for requestable or revoked status. Omitted for other statuses.</p>",
         "LegalTerm$url": "<p>URL to the legal term document.</p>",
         "MarketplaceModelEndpoint$statusMessage": "<p>Additional information about the overall status, if available.</p>",
         "MarketplaceModelEndpoint$endpointStatus": "<p>The current status of the endpoint (e.g., Creating, InService, Updating, Failed).</p>",
@@ -5640,6 +6048,8 @@
         "ModelCustomizationHyperParameters$value": null,
         "PutEnforcedGuardrailConfigurationResponse$updatedBy": "<p>The ARN of the role used to update the configuration.</p>",
         "SupportTerm$refundPolicyDescription": "<p>Describes the refund policy.</p>",
+        "TrustedAccessProgramSummary$description": "<p>Description of the program and its effects on model access or data handling.</p>",
+        "TrustedAccessProgramSummary$statusReason": "<p>Nonempty explanation for requestable or revoked status. Omitted for other statuses.</p>",
         "ValidityTerm$agreementDuration": "<p>Describes the agreement duration.</p>"
       }
     },
@@ -5698,6 +6108,7 @@
         "CreateModelImportJobRequest$jobTags": "<p>Tags to attach to this import job. </p>",
         "CreateModelImportJobRequest$importedModelTags": "<p>Tags to attach to the imported model.</p>",
         "CreateModelInvocationJobRequest$tags": "<p>Any tags to associate with the batch inference job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tagging.html\">Tagging Amazon Bedrock resources</a>.</p>",
+        "CreateProjectRequest$tags": "<p>The tags to associate with the project.</p>",
         "CreatePromptRouterRequest$tags": "<p>An array of key-value pairs to apply to this resource as tags. You can use tags to categorize and manage your Amazon Web Services resources.</p>",
         "CreateProvisionedModelThroughputRequest$tags": "<p>Tags to associate with this Provisioned Throughput.</p>",
         "GetModelCopyJobResponse$targetModelTags": "<p>The tags associated with the copied model.</p>",
@@ -5776,6 +6187,8 @@
         "AccountEnforcedGuardrailOutputConfiguration$updatedAt": "<p>Timestamp.</p>",
         "AdvancedPromptOptimizationJobSummary$creationTime": "<p>The time at which the job was created.</p>",
         "AdvancedPromptOptimizationJobSummary$lastModifiedTime": "<p>The time at which the job was last modified.</p>",
+        "ArchiveProjectResponse$createdAt": "<p>The time the project was created.</p>",
+        "ArchiveProjectResponse$archivedAt": "<p>The time the project was archived.</p>",
         "AutomatedReasoningPolicyBuildWorkflowSummary$createdAt": "<p>The timestamp when the build workflow was created.</p>",
         "AutomatedReasoningPolicyBuildWorkflowSummary$updatedAt": "<p>The timestamp when the build workflow was last updated.</p>",
         "AutomatedReasoningPolicySummary$createdAt": "<p>The timestamp when the policy was created.</p>",
@@ -5787,6 +6200,8 @@
         "CreateAutomatedReasoningPolicyResponse$updatedAt": "<p>The timestamp when the policy was last updated.</p>",
         "CreateAutomatedReasoningPolicyVersionResponse$createdAt": "<p>The timestamp when the policy version was created.</p>",
         "CreateGuardrailResponse$createdAt": "<p>The time at which the guardrail was created.</p>",
+        "CreateProjectResponse$createdAt": "<p>The time the project was created.</p>",
+        "CreateProjectResponse$archivedAt": "<p>The time the project was archived.</p>",
         "CustomModelDeploymentSummary$createdAt": "<p>The date and time when the custom model deployment was created.</p>",
         "CustomModelDeploymentSummary$lastUpdatedAt": "<p>The date and time when the custom model deployment was last modified.</p>",
         "CustomModelSummary$creationTime": "<p>Creation time of the model.</p>",
@@ -5800,6 +6215,7 @@
         "FoundationModelLifecycle$legacyTime": "<p>Time when the model enters legacy state. Models in legacy state can still be used, but users should plan to transition to an Active model before the end of life time</p>",
         "FoundationModelLifecycle$publicExtendedAccessTime": "<p>Public extended access portion of the legacy period, when users should expect higher pricing</p>",
         "GetAccountDataRetentionResponse$updatedAt": "<p>The time at which the data retention mode was last updated.</p>",
+        "GetAccountDataRetentionStorageResponse$updatedAt": "<p>Time the stored record last changed.</p>",
         "GetAdvancedPromptOptimizationJobResponse$creationTime": "<p>The time at which the advanced prompt optimization job was created.</p>",
         "GetAdvancedPromptOptimizationJobResponse$lastModifiedTime": "<p>The time at which the advanced prompt optimization job was last modified.</p>",
         "GetAutomatedReasoningPolicyAnnotationsResponse$updatedAt": "<p>The timestamp when the annotations were last updated.</p>",
@@ -5828,11 +6244,19 @@
         "GetModelInvocationJobResponse$lastModifiedTime": "<p>The time at which the batch inference job was last modified.</p>",
         "GetModelInvocationJobResponse$endTime": "<p>The time at which the batch inference job ended.</p>",
         "GetModelInvocationJobResponse$jobExpirationTime": "<p>The time at which the batch inference job times or timed out.</p>",
+        "GetOrganizationDataRetentionStorageResponse$updatedAt": "<p>Time the stored record last changed.</p>",
+        "GetProjectDataRetentionStorageResponse$updatedAt": "<p>Time the stored record last changed.</p>",
+        "GetProjectResponse$createdAt": "<p>The time the project was created.</p>",
+        "GetProjectResponse$archivedAt": "<p>The time the project was archived.</p>",
         "GetPromptRouterResponse$createdAt": "<p>When the router was created.</p>",
         "GetPromptRouterResponse$updatedAt": "<p>When the router was updated.</p>",
         "GetProvisionedModelThroughputResponse$creationTime": "<p>The timestamp of the creation time for this Provisioned Throughput. </p>",
         "GetProvisionedModelThroughputResponse$lastModifiedTime": "<p>The timestamp of the last time that this Provisioned Throughput was modified. </p>",
         "GetProvisionedModelThroughputResponse$commitmentExpirationTime": "<p>The timestamp for when the commitment term for the Provisioned Throughput expires.</p>",
+        "GetTrustedAccessProgramAccountEnrollmentResponse$updatedAt": "<p>Last change to the stored enrollment. Present whenever a row exists, including an explicitly stored inherit setting.</p>",
+        "GetTrustedAccessProgramOrganizationEnrollmentResponse$updatedAt": "<p>Last change to the stored enrollment. Present whenever a row exists, including an explicitly stored inherit setting.</p>",
+        "GetTrustedAccessProgramProjectEnrollmentResponse$updatedAt": "<p>Last change to the stored enrollment. Present whenever a row exists, including an explicitly stored inherit setting.</p>",
+        "GetTrustedAccessProgramResponse$updatedAt": "<p>Last change to the enrollment supplying the resolved opt-in. Present for enabled or disabled, including while revoked; omitted for inherit.</p>",
         "GuardrailSummary$createdAt": "<p>The date and time at which the guardrail was created.</p>",
         "GuardrailSummary$updatedAt": "<p>The date and time at which the guardrail was last updated.</p>",
         "ImportedModelSummary$creationTime": "<p>Creation time of the imported model.</p>",
@@ -5871,19 +6295,31 @@
         "ModelInvocationJobSummary$lastModifiedTime": "<p>The time at which the batch inference job was last modified.</p>",
         "ModelInvocationJobSummary$endTime": "<p>The time at which the batch inference job ended.</p>",
         "ModelInvocationJobSummary$jobExpirationTime": "<p>The time at which the batch inference job times or timed out.</p>",
+        "ProjectSummary$createdAt": "<p>The time the project was created.</p>",
+        "ProjectSummary$archivedAt": "<p>The time the project was archived.</p>",
         "PromptRouterSummary$createdAt": "<p>When the router was created.</p>",
         "PromptRouterSummary$updatedAt": "<p>When the router was updated.</p>",
         "ProvisionedModelSummary$commitmentExpirationTime": "<p>The timestamp for when the commitment term of the Provisioned Throughput expires.</p>",
         "ProvisionedModelSummary$creationTime": "<p>The time that the Provisioned Throughput was created. </p>",
         "ProvisionedModelSummary$lastModifiedTime": "<p>The time that the Provisioned Throughput was last modified. </p>",
         "PutAccountDataRetentionResponse$updatedAt": "<p>The time at which the data retention mode was last updated.</p>",
+        "PutAccountDataRetentionStorageResponse$updatedAt": "<p>Time the stored record last changed.</p>",
         "PutEnforcedGuardrailConfigurationResponse$updatedAt": "<p>Timestamp.</p>",
+        "PutOrganizationDataRetentionStorageResponse$updatedAt": "<p>Time the stored record last changed.</p>",
+        "PutProjectDataRetentionStorageResponse$updatedAt": "<p>Time the stored record last changed.</p>",
+        "PutTrustedAccessProgramAccountEnrollmentResponse$updatedAt": "<p>The time the stored enrollment setting last changed.</p>",
+        "PutTrustedAccessProgramOrganizationEnrollmentResponse$updatedAt": "<p>The time the stored enrollment setting last changed.</p>",
+        "PutTrustedAccessProgramProjectEnrollmentResponse$updatedAt": "<p>The time the stored enrollment setting last changed.</p>",
         "TrainingDetails$creationTime": "<p>The start time of the training sub-task of the job.</p>",
         "TrainingDetails$lastModifiedTime": "<p>The latest update to the training sub-task of the job.</p>",
+        "TrustedAccessProgramProviderHandoff$applicationTokenExpiresAt": "<p>Deadline for the provider to accept the application context. Start another application handoff if the token expires before acceptance.</p>",
+        "TrustedAccessProgramSummary$updatedAt": "<p>Last change to the enrollment supplying the resolved opt-in. Present for enabled or disabled, including while revoked; omitted for inherit.</p>",
         "UpdateAutomatedReasoningPolicyAnnotationsResponse$updatedAt": "<p>The timestamp when the annotations were updated.</p>",
         "UpdateAutomatedReasoningPolicyResponse$updatedAt": "<p>The timestamp when the policy was last updated.</p>",
         "UpdateAutomatedReasoningPolicyTestCaseRequest$lastUpdatedAt": "<p>The timestamp when the test was last updated. This is used as a concurrency token to prevent conflicting modifications.</p>",
         "UpdateGuardrailResponse$updatedAt": "<p>The date and time at which the guardrail was updated.</p>",
+        "UpdateProjectResponse$createdAt": "<p>The time the project was created.</p>",
+        "UpdateProjectResponse$archivedAt": "<p>The time the project was archived.</p>",
         "ValidationDetails$creationTime": "<p>The start time of the validation sub-task of the job.</p>",
         "ValidationDetails$lastModifiedTime": "<p>The latest update to the validation sub-task of the job.</p>"
       }
@@ -5917,6 +6353,116 @@
       "refs": {
         "GetCustomModelResponse$trainingMetrics": "<p>Contains training metrics from the job creation.</p>",
         "GetModelCustomizationJobResponse$trainingMetrics": "<p>Contains training metrics from the job creation.</p>"
+      }
+    },
+    "TrustedAccessProgramApplicationResult": {
+      "base": "<p>Result of preparing an application. A provider handoff does not submit an application, grant eligibility, or change enrollment. Clients must tolerate unknown union members.</p>",
+      "refs": {
+        "StartTrustedAccessProgramAccountApplicationResponse$result": "<p>Provider handoff for the calling account.</p>",
+        "StartTrustedAccessProgramOrganizationApplicationResponse$result": "<p>Provider handoff for the calling account's current organization.</p>",
+        "StartTrustedAccessProgramProjectApplicationResponse$result": "<p>Provider handoff for the named project.</p>"
+      }
+    },
+    "TrustedAccessProgramApplicationToken": {
+      "base": "<p>Opaque application token to pass unchanged to the provider. Do not log this token.</p>",
+      "refs": {
+        "TrustedAccessProgramProviderHandoff$applicationToken": "<p>Opaque token binding the application to the authenticated customer, requested program, and scope.</p>"
+      }
+    },
+    "TrustedAccessProgramId": {
+      "base": "<p>Provider-prefixed identifier of a trusted access program. This is the final component of the program ARN.</p>",
+      "refs": {
+        "GetTrustedAccessProgramResponse$programId": "<p>Identifier of the trusted access program.</p>",
+        "TrustedAccessProgramSummary$programId": "<p>Identifier of the trusted access program.</p>"
+      }
+    },
+    "TrustedAccessProgramIdentifier": {
+      "base": "<p>A trusted access program ID or its system-owned global ARN, arn:&lt;partition&gt;:bedrock::aws:trusted-access-program/&lt;id&gt;. The program ID must contain 3 to 64 characters. An ARN must use this request's AWS partition.</p>",
+      "refs": {
+        "GetTrustedAccessProgramAccountEnrollmentRequest$programIdentifier": "<p>The identifier of the trusted access program.</p>",
+        "GetTrustedAccessProgramOrganizationEnrollmentRequest$programIdentifier": "<p>The identifier of the trusted access program.</p>",
+        "GetTrustedAccessProgramProjectEnrollmentRequest$programIdentifier": "<p>The identifier of the trusted access program.</p>",
+        "GetTrustedAccessProgramRequest$programIdentifier": "<p>Identifier of the trusted access program.</p>",
+        "PutTrustedAccessProgramAccountEnrollmentRequest$programIdentifier": "<p>The identifier of the trusted access program.</p>",
+        "PutTrustedAccessProgramOrganizationEnrollmentRequest$programIdentifier": "<p>The identifier of the trusted access program.</p>",
+        "PutTrustedAccessProgramProjectEnrollmentRequest$programIdentifier": "<p>The identifier of the trusted access program.</p>",
+        "StartTrustedAccessProgramAccountApplicationRequest$programIdentifier": "<p>Identifier of the trusted access program.</p>",
+        "StartTrustedAccessProgramOrganizationApplicationRequest$programIdentifier": "<p>Identifier of the trusted access program.</p>",
+        "StartTrustedAccessProgramProjectApplicationRequest$programIdentifier": "<p>Identifier of the trusted access program.</p>"
+      }
+    },
+    "TrustedAccessProgramName": {
+      "base": "<p>Display name of a trusted access program.</p>",
+      "refs": {
+        "GetTrustedAccessProgramResponse$name": "<p>Display name of the program.</p>",
+        "TrustedAccessProgramSummary$name": "<p>Display name of the program.</p>"
+      }
+    },
+    "TrustedAccessProgramOptIn": {
+      "base": "<p>Customer preference for a trusted access program. Clients must tolerate unknown values.</p>",
+      "refs": {
+        "GetTrustedAccessProgramAccountEnrollmentResponse$optIn": "<p>Stored preference at the addressed scope. A missing enrollment returns inherit without updatedAt.</p>",
+        "GetTrustedAccessProgramOrganizationEnrollmentResponse$optIn": "<p>Stored preference at the addressed scope. A missing enrollment returns inherit without updatedAt.</p>",
+        "GetTrustedAccessProgramProjectEnrollmentResponse$optIn": "<p>Stored preference at the addressed scope. A missing enrollment returns inherit without updatedAt.</p>",
+        "GetTrustedAccessProgramResponse$optIn": "<p>Resolved customer preference, preserved independently of eligibility, including while revoked.</p>",
+        "PutTrustedAccessProgramAccountEnrollmentRequest$optIn": "<p>The enrollment preference to store. A transition to enabled accepts the program's terms. Changing the preference records a new updatedAt. Repeating the same stored preference preserves updatedAt.</p>",
+        "PutTrustedAccessProgramAccountEnrollmentResponse$optIn": "<p>Stored preference at the addressed scope. A missing enrollment returns inherit without updatedAt.</p>",
+        "PutTrustedAccessProgramOrganizationEnrollmentRequest$optIn": "<p>The enrollment preference to store for the organization. A transition to enabled accepts the program's terms. Changing the preference records a new updatedAt. Repeating the same stored preference preserves updatedAt.</p>",
+        "PutTrustedAccessProgramOrganizationEnrollmentResponse$optIn": "<p>Stored preference at the addressed scope. A missing enrollment returns inherit without updatedAt.</p>",
+        "PutTrustedAccessProgramProjectEnrollmentRequest$optIn": "<p>The enrollment preference to store. A transition to enabled accepts the program's terms. Changing the preference records a new updatedAt. Repeating the same stored preference preserves updatedAt.</p>",
+        "PutTrustedAccessProgramProjectEnrollmentResponse$optIn": "<p>Stored preference at the addressed scope. A missing enrollment returns inherit without updatedAt.</p>",
+        "TrustedAccessProgramSummary$optIn": "<p>Resolved customer preference, preserved independently of eligibility, including while revoked.</p>"
+      }
+    },
+    "TrustedAccessProgramProviderHandoff": {
+      "base": "<p>Information needed to continue an application with the provider.</p>",
+      "refs": {
+        "TrustedAccessProgramApplicationResult$providerHandoff": "<p>Information for continuing the application with the provider.</p>"
+      }
+    },
+    "TrustedAccessProgramScope": {
+      "base": "<p>Scope supplying a trusted access decision. Clients must tolerate unknown values.</p>",
+      "refs": {
+        "GetTrustedAccessProgramResponse$source": "<p>Scope deciding the status. This can differ from the scope supplying the resolved opt-in preference and enrollment timestamps.</p>",
+        "GetTrustedAccessProgramResponse$eligibilityScope": "<p>Scope supplying the applicable approval or most-specific revocation. Omitted when no approval or revocation applies.</p>",
+        "TrustedAccessProgramSummary$source": "<p>Scope deciding the status. This can differ from the scope supplying the resolved opt-in preference and enrollment timestamps.</p>",
+        "TrustedAccessProgramSummary$eligibilityScope": "<p>Scope supplying the applicable approval or most-specific revocation. Omitted when no approval or revocation applies.</p>"
+      }
+    },
+    "TrustedAccessProgramStatus": {
+      "base": "<p>Resolved participation status for a trusted access program. Clients must tolerate unknown values.</p>",
+      "refs": {
+        "GetTrustedAccessProgramResponse$status": "<p>Participation status resolved for the account and optional project context.</p>",
+        "TrustedAccessProgramSummary$status": "<p>Participation status resolved for the account and optional project context.</p>"
+      }
+    },
+    "TrustedAccessProgramSummaries": {
+      "base": "<p>Visible programs, ordered by program ID. An empty array is returned when no programs are visible.</p>",
+      "refs": {
+        "ListTrustedAccessProgramsResponse$programSummaries": "<p>All visible programs with resolved participation, ordered by program ID. Always present, including an empty array when no programs are visible.</p>"
+      }
+    },
+    "TrustedAccessProgramSummary": {
+      "base": "<p>Program details and participation resolved for the calling account and optional named project.</p>",
+      "refs": {
+        "TrustedAccessProgramSummaries$member": "<p>A visible trusted access program and its resolved participation status.</p>"
+      }
+    },
+    "TrustedAccessProgramUrl": {
+      "base": "<p>HTTPS URL for trusted access program details or provider application intake.</p>",
+      "refs": {
+        "GetTrustedAccessProgramResponse$detailsUrl": "<p>URL with program details, terms, and instructions for obtaining access.</p>",
+        "GetTrustedAccessProgramResponse$enrollmentUrl": "<p>Provider application intake URL. Omitted when the program has no customer-facing intake URL.</p>",
+        "TrustedAccessProgramProviderHandoff$enrollmentUrl": "<p>Provider intake URL. When present, open it and paste the complete application token into the provider's token field. Omitted when the provider receives the application token through a separate integration.</p>",
+        "TrustedAccessProgramSummary$detailsUrl": "<p>URL with program details, terms, and instructions for obtaining access.</p>",
+        "TrustedAccessProgramSummary$enrollmentUrl": "<p>Provider application intake URL. Omitted when the program has no customer-facing intake URL.</p>"
+      }
+    },
+    "TrustedAccessResolutionContext": {
+      "base": "<p>Account and optional project context evaluated when resolving a trusted access program's status.</p>",
+      "refs": {
+        "GetTrustedAccessProgramResponse$resolvedFor": "<p>Account and optional project context for which participation was resolved.</p>",
+        "TrustedAccessProgramSummary$resolvedFor": "<p>Account and optional project context for which participation was resolved.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -5973,6 +6519,14 @@
     },
     "UpdateMarketplaceModelEndpointResponse": {
       "base": null,
+      "refs": {}
+    },
+    "UpdateProjectRequest": {
+      "base": "<p>Identifies the project and the field to update. Specify exactly one of <code>name</code> or <code>dataRetention</code>.</p>",
+      "refs": {}
+    },
+    "UpdateProjectResponse": {
+      "base": "<p>The project after the update.</p>",
       "refs": {}
     },
     "UpdateProvisionedModelThroughputRequest": {

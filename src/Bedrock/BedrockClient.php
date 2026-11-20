@@ -5,6 +5,10 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Bedrock** service.
+ * @method \Aws\Result archiveProject(array $args = [])
+ * @phpstan-method \Aws\Result archiveProject(array{projectIdentifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise archiveProjectAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise archiveProjectAsync(array{projectIdentifier?: string, ...} $args = [])
  * @method \Aws\Result batchDeleteAdvancedPromptOptimizationJob(array $args = [])
  * @phpstan-method \Aws\Result batchDeleteAdvancedPromptOptimizationJob(array{jobIdentifiers?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise batchDeleteAdvancedPromptOptimizationJobAsync(array $args = [])
@@ -407,6 +411,20 @@ use Aws\AwsClient;
  *     modelInvocationType?: 'Converse'|'InvokeModel',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createProject(array $args = [])
+ * @phpstan-method \Aws\Result createProject(array{
+ *     name?: string,
+ *     tags?: list<array{key?: string, value?: string, ...}>,
+ *     dataRetention?: array{mode?: 'aws_review'|'default'|'inherit'|'none'|'provider_data_share', ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createProjectAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createProjectAsync(array{
+ *     name?: string,
+ *     tags?: list<array{key?: string, value?: string, ...}>,
+ *     dataRetention?: array{mode?: 'aws_review'|'default'|'inherit'|'none'|'provider_data_share', ...},
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createPromptRouter(array $args = [])
  * @phpstan-method \Aws\Result createPromptRouter(array{
  *     clientRequestToken?: string,
@@ -449,6 +467,10 @@ use Aws\AwsClient;
  *     tags?: list<array{key?: string, value?: string, ...}>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result deleteAccountDataRetentionStorage(array $args = [])
+ * @phpstan-method \Aws\Result deleteAccountDataRetentionStorage(array{modelProvider?: 'anthropic'|'openai', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteAccountDataRetentionStorageAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteAccountDataRetentionStorageAsync(array{modelProvider?: 'anthropic'|'openai', ...} $args = [])
  * @method \Aws\Result deleteAutomatedReasoningPolicy(array $args = [])
  * @phpstan-method \Aws\Result deleteAutomatedReasoningPolicy(array{policyArn?: string, force?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAutomatedReasoningPolicyAsync(array $args = [])
@@ -497,6 +519,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteModelInvocationLoggingConfiguration(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteModelInvocationLoggingConfigurationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteModelInvocationLoggingConfigurationAsync(array{...} $args = [])
+ * @method \Aws\Result deleteOrganizationDataRetentionStorage(array $args = [])
+ * @phpstan-method \Aws\Result deleteOrganizationDataRetentionStorage(array{modelProvider?: 'anthropic'|'openai', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteOrganizationDataRetentionStorageAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteOrganizationDataRetentionStorageAsync(array{modelProvider?: 'anthropic'|'openai', ...} $args = [])
+ * @method \Aws\Result deleteProjectDataRetentionStorage(array $args = [])
+ * @phpstan-method \Aws\Result deleteProjectDataRetentionStorage(array{projectIdentifier?: string, modelProvider?: 'anthropic'|'openai', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteProjectDataRetentionStorageAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteProjectDataRetentionStorageAsync(array{projectIdentifier?: string, modelProvider?: 'anthropic'|'openai', ...} $args = [])
  * @method \Aws\Result deletePromptRouter(array $args = [])
  * @phpstan-method \Aws\Result deletePromptRouter(array{promptRouterArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deletePromptRouterAsync(array $args = [])
@@ -521,6 +551,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getAccountDataRetention(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getAccountDataRetentionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getAccountDataRetentionAsync(array{...} $args = [])
+ * @method \Aws\Result getAccountDataRetentionStorage(array $args = [])
+ * @phpstan-method \Aws\Result getAccountDataRetentionStorage(array{modelProvider?: 'anthropic'|'openai', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAccountDataRetentionStorageAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getAccountDataRetentionStorageAsync(array{modelProvider?: 'anthropic'|'openai', ...} $args = [])
  * @method \Aws\Result getAdvancedPromptOptimizationJob(array $args = [])
  * @phpstan-method \Aws\Result getAdvancedPromptOptimizationJob(array{jobIdentifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getAdvancedPromptOptimizationJobAsync(array $args = [])
@@ -578,9 +612,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getEvaluationJobAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getEvaluationJobAsync(array{jobIdentifier?: string, ...} $args = [])
  * @method \Aws\Result getFoundationModel(array $args = [])
- * @phpstan-method \Aws\Result getFoundationModel(array{modelIdentifier?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result getFoundationModel(array{modelIdentifier?: string, projectIdentifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getFoundationModelAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise getFoundationModelAsync(array{modelIdentifier?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getFoundationModelAsync(array{modelIdentifier?: string, projectIdentifier?: string, ...} $args = [])
  * @method \Aws\Result getFoundationModelAvailability(array $args = [])
  * @phpstan-method \Aws\Result getFoundationModelAvailability(array{modelId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getFoundationModelAvailabilityAsync(array $args = [])
@@ -594,9 +628,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getImportedModelAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getImportedModelAsync(array{modelIdentifier?: string, ...} $args = [])
  * @method \Aws\Result getInferenceProfile(array $args = [])
- * @phpstan-method \Aws\Result getInferenceProfile(array{inferenceProfileIdentifier?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result getInferenceProfile(array{inferenceProfileIdentifier?: string, projectIdentifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getInferenceProfileAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise getInferenceProfileAsync(array{inferenceProfileIdentifier?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getInferenceProfileAsync(array{inferenceProfileIdentifier?: string, projectIdentifier?: string, ...} $args = [])
  * @method \Aws\Result getMarketplaceModelEndpoint(array $args = [])
  * @phpstan-method \Aws\Result getMarketplaceModelEndpoint(array{endpointArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getMarketplaceModelEndpointAsync(array $args = [])
@@ -621,6 +655,18 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getModelInvocationLoggingConfiguration(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getModelInvocationLoggingConfigurationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getModelInvocationLoggingConfigurationAsync(array{...} $args = [])
+ * @method \Aws\Result getOrganizationDataRetentionStorage(array $args = [])
+ * @phpstan-method \Aws\Result getOrganizationDataRetentionStorage(array{modelProvider?: 'anthropic'|'openai', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getOrganizationDataRetentionStorageAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getOrganizationDataRetentionStorageAsync(array{modelProvider?: 'anthropic'|'openai', ...} $args = [])
+ * @method \Aws\Result getProject(array $args = [])
+ * @phpstan-method \Aws\Result getProject(array{projectIdentifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getProjectAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getProjectAsync(array{projectIdentifier?: string, ...} $args = [])
+ * @method \Aws\Result getProjectDataRetentionStorage(array $args = [])
+ * @phpstan-method \Aws\Result getProjectDataRetentionStorage(array{projectIdentifier?: string, modelProvider?: 'anthropic'|'openai', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getProjectDataRetentionStorageAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getProjectDataRetentionStorageAsync(array{projectIdentifier?: string, modelProvider?: 'anthropic'|'openai', ...} $args = [])
  * @method \Aws\Result getPromptRouter(array $args = [])
  * @phpstan-method \Aws\Result getPromptRouter(array{promptRouterArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getPromptRouterAsync(array $args = [])
@@ -633,6 +679,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result getResourcePolicy(array{resourceArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getResourcePolicyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getResourcePolicyAsync(array{resourceArn?: string, ...} $args = [])
+ * @method \Aws\Result getTrustedAccessProgram(array $args = [])
+ * @phpstan-method \Aws\Result getTrustedAccessProgram(array{programIdentifier?: string, projectIdentifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getTrustedAccessProgramAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getTrustedAccessProgramAsync(array{programIdentifier?: string, projectIdentifier?: string, ...} $args = [])
+ * @method \Aws\Result getTrustedAccessProgramAccountEnrollment(array $args = [])
+ * @phpstan-method \Aws\Result getTrustedAccessProgramAccountEnrollment(array{programIdentifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getTrustedAccessProgramAccountEnrollmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getTrustedAccessProgramAccountEnrollmentAsync(array{programIdentifier?: string, ...} $args = [])
+ * @method \Aws\Result getTrustedAccessProgramOrganizationEnrollment(array $args = [])
+ * @phpstan-method \Aws\Result getTrustedAccessProgramOrganizationEnrollment(array{programIdentifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getTrustedAccessProgramOrganizationEnrollmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getTrustedAccessProgramOrganizationEnrollmentAsync(array{programIdentifier?: string, ...} $args = [])
+ * @method \Aws\Result getTrustedAccessProgramProjectEnrollment(array $args = [])
+ * @phpstan-method \Aws\Result getTrustedAccessProgramProjectEnrollment(array{programIdentifier?: string, projectIdentifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getTrustedAccessProgramProjectEnrollmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getTrustedAccessProgramProjectEnrollmentAsync(array{programIdentifier?: string, projectIdentifier?: string, ...} $args = [])
  * @method \Aws\Result getUseCaseForModelAccess(array $args = [])
  * @phpstan-method \Aws\Result getUseCaseForModelAccess(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getUseCaseForModelAccessAsync(array $args = [])
@@ -765,6 +827,7 @@ use Aws\AwsClient;
  *     byCustomizationType?: 'CONTINUED_PRE_TRAINING'|'DISTILLATION'|'FINE_TUNING',
  *     byOutputModality?: 'EMBEDDING'|'IMAGE'|'TEXT',
  *     byInferenceType?: 'ON_DEMAND'|'PROVISIONED',
+ *     projectIdentifier?: string,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listFoundationModelsAsync(array $args = [])
@@ -773,6 +836,7 @@ use Aws\AwsClient;
  *     byCustomizationType?: 'CONTINUED_PRE_TRAINING'|'DISTILLATION'|'FINE_TUNING',
  *     byOutputModality?: 'EMBEDDING'|'IMAGE'|'TEXT',
  *     byInferenceType?: 'ON_DEMAND'|'PROVISIONED',
+ *     projectIdentifier?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listGuardrails(array $args = [])
@@ -802,9 +866,21 @@ use Aws\AwsClient;
  *     ...,
  * } $args = [])
  * @method \Aws\Result listInferenceProfiles(array $args = [])
- * @phpstan-method \Aws\Result listInferenceProfiles(array{maxResults?: int, nextToken?: string, typeEquals?: 'APPLICATION'|'SYSTEM_DEFINED', ...} $args = [])
+ * @phpstan-method \Aws\Result listInferenceProfiles(array{
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     typeEquals?: 'APPLICATION'|'SYSTEM_DEFINED',
+ *     projectIdentifier?: string,
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listInferenceProfilesAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise listInferenceProfilesAsync(array{maxResults?: int, nextToken?: string, typeEquals?: 'APPLICATION'|'SYSTEM_DEFINED', ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listInferenceProfilesAsync(array{
+ *     maxResults?: int,
+ *     nextToken?: string,
+ *     typeEquals?: 'APPLICATION'|'SYSTEM_DEFINED',
+ *     projectIdentifier?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listMarketplaceModelEndpoints(array $args = [])
  * @phpstan-method \Aws\Result listMarketplaceModelEndpoints(array{maxResults?: int, nextToken?: string, modelSourceEquals?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listMarketplaceModelEndpointsAsync(array $args = [])
@@ -909,6 +985,10 @@ use Aws\AwsClient;
  *     sortOrder?: 'Ascending'|'Descending',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result listProjects(array $args = [])
+ * @phpstan-method \Aws\Result listProjects(array{nextToken?: string, maxResults?: int, statusFilter?: 'active'|'archived', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listProjectsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listProjectsAsync(array{nextToken?: string, maxResults?: int, statusFilter?: 'active'|'archived', ...} $args = [])
  * @method \Aws\Result listPromptRouters(array $args = [])
  * @phpstan-method \Aws\Result listPromptRouters(array{maxResults?: int, nextToken?: string, type?: 'custom'|'default', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listPromptRoutersAsync(array $args = [])
@@ -943,10 +1023,28 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listTagsForResource(array{resourceARN?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array{resourceARN?: string, ...} $args = [])
+ * @method \Aws\Result listTrustedAccessPrograms(array $args = [])
+ * @phpstan-method \Aws\Result listTrustedAccessPrograms(array{projectIdentifier?: string, maxResults?: int, nextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTrustedAccessProgramsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listTrustedAccessProgramsAsync(array{projectIdentifier?: string, maxResults?: int, nextToken?: string, ...} $args = [])
  * @method \Aws\Result putAccountDataRetention(array $args = [])
  * @phpstan-method \Aws\Result putAccountDataRetention(array{mode?: 'aws_review'|'default'|'inherit'|'none'|'provider_data_share', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise putAccountDataRetentionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise putAccountDataRetentionAsync(array{mode?: 'aws_review'|'default'|'inherit'|'none'|'provider_data_share', ...} $args = [])
+ * @method \Aws\Result putAccountDataRetentionStorage(array $args = [])
+ * @phpstan-method \Aws\Result putAccountDataRetentionStorage(array{
+ *     modelProvider?: 'anthropic'|'openai',
+ *     storageDestination?: 'amazon_managed'|'customer_managed',
+ *     storageConfiguration?: array{kmsKeyArn?: string, s3BucketArn?: string, s3BucketOwner?: string, ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise putAccountDataRetentionStorageAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putAccountDataRetentionStorageAsync(array{
+ *     modelProvider?: 'anthropic'|'openai',
+ *     storageDestination?: 'amazon_managed'|'customer_managed',
+ *     storageConfiguration?: array{kmsKeyArn?: string, s3BucketArn?: string, s3BucketOwner?: string, ...},
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result putEnforcedGuardrailConfiguration(array $args = [])
  * @phpstan-method \Aws\Result putEnforcedGuardrailConfiguration(array{
  *     configId?: string,
@@ -999,10 +1097,52 @@ use Aws\AwsClient;
  *     },
  *     ...,
  * } $args = [])
+ * @method \Aws\Result putOrganizationDataRetentionStorage(array $args = [])
+ * @phpstan-method \Aws\Result putOrganizationDataRetentionStorage(array{
+ *     modelProvider?: 'anthropic'|'openai',
+ *     storageDestination?: 'amazon_managed'|'customer_managed',
+ *     storageConfiguration?: array{kmsKeyArn?: string, s3BucketArn?: string, s3BucketOwner?: string, ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise putOrganizationDataRetentionStorageAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putOrganizationDataRetentionStorageAsync(array{
+ *     modelProvider?: 'anthropic'|'openai',
+ *     storageDestination?: 'amazon_managed'|'customer_managed',
+ *     storageConfiguration?: array{kmsKeyArn?: string, s3BucketArn?: string, s3BucketOwner?: string, ...},
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result putProjectDataRetentionStorage(array $args = [])
+ * @phpstan-method \Aws\Result putProjectDataRetentionStorage(array{
+ *     projectIdentifier?: string,
+ *     modelProvider?: 'anthropic'|'openai',
+ *     storageDestination?: 'amazon_managed'|'customer_managed',
+ *     storageConfiguration?: array{kmsKeyArn?: string, s3BucketArn?: string, s3BucketOwner?: string, ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise putProjectDataRetentionStorageAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putProjectDataRetentionStorageAsync(array{
+ *     projectIdentifier?: string,
+ *     modelProvider?: 'anthropic'|'openai',
+ *     storageDestination?: 'amazon_managed'|'customer_managed',
+ *     storageConfiguration?: array{kmsKeyArn?: string, s3BucketArn?: string, s3BucketOwner?: string, ...},
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result putResourcePolicy(array $args = [])
  * @phpstan-method \Aws\Result putResourcePolicy(array{resourceArn?: string, resourcePolicy?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise putResourcePolicyAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise putResourcePolicyAsync(array{resourceArn?: string, resourcePolicy?: string, ...} $args = [])
+ * @method \Aws\Result putTrustedAccessProgramAccountEnrollment(array $args = [])
+ * @phpstan-method \Aws\Result putTrustedAccessProgramAccountEnrollment(array{programIdentifier?: string, optIn?: 'disabled'|'enabled'|'inherit', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise putTrustedAccessProgramAccountEnrollmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putTrustedAccessProgramAccountEnrollmentAsync(array{programIdentifier?: string, optIn?: 'disabled'|'enabled'|'inherit', ...} $args = [])
+ * @method \Aws\Result putTrustedAccessProgramOrganizationEnrollment(array $args = [])
+ * @phpstan-method \Aws\Result putTrustedAccessProgramOrganizationEnrollment(array{programIdentifier?: string, optIn?: 'disabled'|'enabled'|'inherit', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise putTrustedAccessProgramOrganizationEnrollmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putTrustedAccessProgramOrganizationEnrollmentAsync(array{programIdentifier?: string, optIn?: 'disabled'|'enabled'|'inherit', ...} $args = [])
+ * @method \Aws\Result putTrustedAccessProgramProjectEnrollment(array $args = [])
+ * @phpstan-method \Aws\Result putTrustedAccessProgramProjectEnrollment(array{programIdentifier?: string, projectIdentifier?: string, optIn?: 'disabled'|'enabled'|'inherit', ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise putTrustedAccessProgramProjectEnrollmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putTrustedAccessProgramProjectEnrollmentAsync(array{programIdentifier?: string, projectIdentifier?: string, optIn?: 'disabled'|'enabled'|'inherit', ...} $args = [])
  * @method \Aws\Result putUseCaseForModelAccess(array $args = [])
  * @phpstan-method \Aws\Result putUseCaseForModelAccess(array{formData?: string|resource|\Psr\Http\Message\StreamInterface, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise putUseCaseForModelAccessAsync(array $args = [])
@@ -1063,6 +1203,18 @@ use Aws\AwsClient;
  *     clientRequestToken?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result startTrustedAccessProgramAccountApplication(array $args = [])
+ * @phpstan-method \Aws\Result startTrustedAccessProgramAccountApplication(array{programIdentifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise startTrustedAccessProgramAccountApplicationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startTrustedAccessProgramAccountApplicationAsync(array{programIdentifier?: string, ...} $args = [])
+ * @method \Aws\Result startTrustedAccessProgramOrganizationApplication(array $args = [])
+ * @phpstan-method \Aws\Result startTrustedAccessProgramOrganizationApplication(array{programIdentifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise startTrustedAccessProgramOrganizationApplicationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startTrustedAccessProgramOrganizationApplicationAsync(array{programIdentifier?: string, ...} $args = [])
+ * @method \Aws\Result startTrustedAccessProgramProjectApplication(array $args = [])
+ * @phpstan-method \Aws\Result startTrustedAccessProgramProjectApplication(array{programIdentifier?: string, projectIdentifier?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise startTrustedAccessProgramProjectApplicationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise startTrustedAccessProgramProjectApplicationAsync(array{programIdentifier?: string, projectIdentifier?: string, ...} $args = [])
  * @method \Aws\Result stopAdvancedPromptOptimizationJob(array $args = [])
  * @phpstan-method \Aws\Result stopAdvancedPromptOptimizationJob(array{jobIdentifier?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise stopAdvancedPromptOptimizationJobAsync(array $args = [])
@@ -1243,6 +1395,20 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     clientRequestToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateProject(array $args = [])
+ * @phpstan-method \Aws\Result updateProject(array{
+ *     projectIdentifier?: string,
+ *     name?: string,
+ *     dataRetention?: array{mode?: 'aws_review'|'default'|'inherit'|'none'|'provider_data_share', ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateProjectAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateProjectAsync(array{
+ *     projectIdentifier?: string,
+ *     name?: string,
+ *     dataRetention?: array{mode?: 'aws_review'|'default'|'inherit'|'none'|'provider_data_share', ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateProvisionedModelThroughput(array $args = [])

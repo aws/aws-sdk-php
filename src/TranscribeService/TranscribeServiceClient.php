@@ -549,6 +549,56 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result tagResource(array{ResourceArn?: string, Tags?: list<array{Key?: string, Value?: string, ...}>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise tagResourceAsync(array{ResourceArn?: string, Tags?: list<array{Key?: string, Value?: string, ...}>, ...} $args = [])
+ * @method \Aws\Result transcribeAudio(array $args = [])
+ * @phpstan-method \Aws\Result transcribeAudio(array{
+ *     Media?: array{MediaBytes?: string|resource|\Psr\Http\Message\StreamInterface, MediaFileUri?: string, ...},
+ *     Language?: 'de'|'en'|'es'|'fr'|'it'|'ja'|'ko'|'pt'|'zh-CN'|'zh-HK'|'zh-TW',
+ *     LanguageDetectionMode?: 'IDENTIFY_LANGUAGE',
+ *     LanguageOptions?: list<'de'|'en'|'es'|'fr'|'it'|'ja'|'ko'|'pt'|'zh-CN'|'zh-HK'|'zh-TW'>,
+ *     ChannelIdentification?: bool,
+ *     ShowSpeakerLabels?: bool,
+ *     MaxSpeakerLabels?: int,
+ *     VocabularySettings?: list<array{
+ *         Language?: 'de'|'en'|'es'|'fr'|'it'|'ja'|'ko'|'pt'|'zh-CN'|'zh-HK'|'zh-TW',
+ *         VocabularyName?: string,
+ *         Phrases?: list<array>,
+ *         ...,
+ *     }>,
+ *     VocabularyFilterSettings?: array{VocabularyFilterMethod?: 'mask'|'remove'|'tag', Filters?: list<array>, ...},
+ *     ContentRedaction?: array{
+ *         RedactionType?: 'PII',
+ *         RedactionOutput?: 'redacted'|'redacted_and_unredacted',
+ *         PiiEntityTypes?: list<'ADDRESS'|'AGE'|'ALL'|'AWS_ACCESS_KEY'|'AWS_SECRET_KEY'|'BANK_ACCOUNT_NUMBER'|'BANK_ROUTING'|'CA_HEALTH_NUMBER'|'CA_SOCIAL_INSURANCE_NUMBER'|'CREDIT_DEBIT_CVV'|'CREDIT_DEBIT_EXPIRY'|'CREDIT_DEBIT_NUMBER'|'DATE_TIME'|'DRIVER_ID'|'EMAIL'|'INTERNATIONAL_BANK_ACCOUNT_NUMBER'|'IP_ADDRESS'|'LICENSE_PLATE'|'MAC_ADDRESS'|'NAME'|'PASSPORT_NUMBER'|'PASSWORD'|'PHONE'|'PIN'|'SSN'|'SWIFT_CODE'|'URL'|'USERNAME'|'US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER'|'VEHICLE_IDENTIFICATION_NUMBER'>,
+ *         ...,
+ *     },
+ *     OutputConfiguration?: array{OutputMediaFileUri?: string, ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise transcribeAudioAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise transcribeAudioAsync(array{
+ *     Media?: array{MediaBytes?: string|resource|\Psr\Http\Message\StreamInterface, MediaFileUri?: string, ...},
+ *     Language?: 'de'|'en'|'es'|'fr'|'it'|'ja'|'ko'|'pt'|'zh-CN'|'zh-HK'|'zh-TW',
+ *     LanguageDetectionMode?: 'IDENTIFY_LANGUAGE',
+ *     LanguageOptions?: list<'de'|'en'|'es'|'fr'|'it'|'ja'|'ko'|'pt'|'zh-CN'|'zh-HK'|'zh-TW'>,
+ *     ChannelIdentification?: bool,
+ *     ShowSpeakerLabels?: bool,
+ *     MaxSpeakerLabels?: int,
+ *     VocabularySettings?: list<array{
+ *         Language?: 'de'|'en'|'es'|'fr'|'it'|'ja'|'ko'|'pt'|'zh-CN'|'zh-HK'|'zh-TW',
+ *         VocabularyName?: string,
+ *         Phrases?: list<array>,
+ *         ...,
+ *     }>,
+ *     VocabularyFilterSettings?: array{VocabularyFilterMethod?: 'mask'|'remove'|'tag', Filters?: list<array>, ...},
+ *     ContentRedaction?: array{
+ *         RedactionType?: 'PII',
+ *         RedactionOutput?: 'redacted'|'redacted_and_unredacted',
+ *         PiiEntityTypes?: list<'ADDRESS'|'AGE'|'ALL'|'AWS_ACCESS_KEY'|'AWS_SECRET_KEY'|'BANK_ACCOUNT_NUMBER'|'BANK_ROUTING'|'CA_HEALTH_NUMBER'|'CA_SOCIAL_INSURANCE_NUMBER'|'CREDIT_DEBIT_CVV'|'CREDIT_DEBIT_EXPIRY'|'CREDIT_DEBIT_NUMBER'|'DATE_TIME'|'DRIVER_ID'|'EMAIL'|'INTERNATIONAL_BANK_ACCOUNT_NUMBER'|'IP_ADDRESS'|'LICENSE_PLATE'|'MAC_ADDRESS'|'NAME'|'PASSPORT_NUMBER'|'PASSWORD'|'PHONE'|'PIN'|'SSN'|'SWIFT_CODE'|'URL'|'USERNAME'|'US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER'|'VEHICLE_IDENTIFICATION_NUMBER'>,
+ *         ...,
+ *     },
+ *     OutputConfiguration?: array{OutputMediaFileUri?: string, ...},
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @phpstan-method \Aws\Result untagResource(array{ResourceArn?: string, TagKeys?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])

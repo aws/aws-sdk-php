@@ -8259,7 +8259,9 @@
       "members":{
         "interceptor":{"shape":"InterceptorConfiguration"},
         "interceptionPoints":{"shape":"GatewayInterceptionPoints"},
-        "inputConfiguration":{"shape":"InterceptorInputConfiguration"}
+        "inputConfiguration":{"shape":"InterceptorInputConfiguration"},
+        "responseInterceptionMode":{"shape":"ResponseInterceptionMode"},
+        "responseStreamingConfiguration":{"shape":"ResponseStreamingConfiguration"}
       }
     },
     "GatewayInterceptorConfigurations":{
@@ -12654,6 +12656,12 @@
       "member":{"shape":"MatchValueString"},
       "min":1
     },
+    "MaxEventsPerInvocation":{
+      "type":"integer",
+      "box":true,
+      "max":8192,
+      "min":1
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -14648,9 +14656,22 @@
         "CUSTOM"
       ]
     },
+    "ResponseInterceptionMode":{
+      "type":"string",
+      "enum":[
+        "BUFFERED",
+        "STREAM"
+      ]
+    },
     "ResponseListType":{
       "type":"list",
       "member":{"shape":"ResponseType"}
+    },
+    "ResponseStreamingConfiguration":{
+      "type":"structure",
+      "members":{
+        "maxEventsPerInvocation":{"shape":"MaxEventsPerInvocation"}
+      }
     },
     "ResponseType":{"type":"string"},
     "RestApiMethod":{

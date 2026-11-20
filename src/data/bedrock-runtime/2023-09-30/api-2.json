@@ -1096,6 +1096,9 @@
                 "guardrailConfig": {
                     "shape": "GuardrailConfiguration"
                 },
+                "projectIdentifier": {
+                    "shape": "ProjectIdentifier"
+                },
                 "additionalModelRequestFields": {
                     "shape": "Document"
                 },
@@ -1267,6 +1270,9 @@
                 },
                 "guardrailConfig": {
                     "shape": "GuardrailStreamConfiguration"
+                },
+                "projectIdentifier": {
+                    "shape": "ProjectIdentifier"
                 },
                 "additionalModelRequestFields": {
                     "shape": "Document"
@@ -3431,6 +3437,11 @@
                     "shape": "RequestMetadataJson",
                     "location": "header",
                     "locationName": "X-Amzn-Bedrock-Request-Metadata"
+                },
+                "projectIdentifier": {
+                    "shape": "ProjectIdentifier",
+                    "location": "header",
+                    "locationName": "X-Amzn-Bedrock-ProjectIdentifier"
                 }
             },
             "payload": "body"
@@ -3593,6 +3604,11 @@
                     "shape": "RequestMetadataJson",
                     "location": "header",
                     "locationName": "X-Amzn-Bedrock-Request-Metadata"
+                },
+                "projectIdentifier": {
+                    "shape": "ProjectIdentifier",
+                    "location": "header",
+                    "locationName": "X-Amzn-Bedrock-ProjectIdentifier"
                 }
             },
             "payload": "body"
@@ -3939,6 +3955,12 @@
                     "shape": "PerformanceConfigLatency"
                 }
             }
+        },
+        "ProjectIdentifier": {
+            "type": "string",
+            "max": 2048,
+            "min": 1,
+            "pattern": "([a-zA-Z0-9_-]+|arn:aws(|-us-gov|-cn|-iso|-iso-b|-iso-f|-eusc):bedrock:[0-9a-z-]{1,20}:[0-9]{12}:project\/[a-zA-Z0-9_-]+)"
         },
         "PromptRouterTrace": {
             "type": "structure",

@@ -568,6 +568,20 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "TranscribeAudio":{
+      "name":"TranscribeAudio",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TranscribeAudioRequest"},
+      "output":{"shape":"TranscribeAudioResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "UntagResource":{
       "name":"UntagResource",
       "http":{
@@ -678,10 +692,23 @@
     "BadRequestException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"FailureReason"}
+        "Message":{"shape":"FailureReason"},
+        "Reason":{"shape":"BadRequestExceptionReason"}
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "BadRequestExceptionReason":{
+      "type":"string",
+      "enum":[
+        "audioTooLong",
+        "audioTooShort",
+        "unsupportedAudioFormat",
+        "unsupportedChannelCount",
+        "invalidAudio",
+        "audioFileTooLarge",
+        "mediaDownloadFailed"
+      ]
     },
     "BaseModelName":{
       "type":"string",
@@ -1075,6 +1102,7 @@
         "LanguageModel":{"shape":"LanguageModel"}
       }
     },
+    "Double":{"type":"double"},
     "DurationInSeconds":{"type":"float"},
     "EncryptionConfiguration":{
       "type":"structure",
@@ -1245,6 +1273,7 @@
         "Negate":{"shape":"Boolean"}
       }
     },
+    "ItemId":{"type":"integer"},
     "JobExecutionSettings":{
       "type":"structure",
       "members":{
@@ -1397,6 +1426,10 @@
     "LanguageCodeList":{
       "type":"list",
       "member":{"shape":"LanguageCodeItem"}
+    },
+    "LanguageDetectionMode":{
+      "type":"string",
+      "enum":["IDENTIFY_LANGUAGE"]
     },
     "LanguageIdSettings":{
       "type":"structure",
@@ -1623,6 +1656,11 @@
         "MediaFileUri":{"shape":"Uri"},
         "RedactedMediaFileUri":{"shape":"Uri"}
       }
+    },
+    "MediaBytesBlob":{
+      "type":"blob",
+      "max":26214400,
+      "min":1
     },
     "MediaFormat":{
       "type":"string",
@@ -1885,6 +1923,8 @@
       "error":{"httpStatusCode":404},
       "exception":true
     },
+    "NumberOfChannels":{"type":"integer"},
+    "NumberOfSpeakers":{"type":"integer"},
     "OutputBucketName":{
       "type":"string",
       "max":64,
@@ -2227,6 +2267,110 @@
         "GenerateAbstractiveSummary":{"shape":"Boolean"}
       }
     },
+    "SyncItem":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"ItemId"},
+        "Content":{"shape":"String"},
+        "StartTime":{"shape":"Double"},
+        "EndTime":{"shape":"Double"},
+        "LanguageCode":{"shape":"SyncLanguageCode"},
+        "ChannelLabel":{"shape":"String"},
+        "SpeakerLabel":{"shape":"String"},
+        "VocabularyFilterMatch":{"shape":"Boolean"},
+        "Redactions":{"shape":"SyncRedactionList"}
+      }
+    },
+    "SyncItemList":{
+      "type":"list",
+      "member":{"shape":"SyncItem"}
+    },
+    "SyncLanguage":{
+      "type":"string",
+      "enum":[
+        "en",
+        "es",
+        "fr",
+        "it",
+        "de",
+        "ja",
+        "pt",
+        "ko",
+        "zh-CN",
+        "zh-TW",
+        "zh-HK"
+      ]
+    },
+    "SyncLanguageCode":{
+      "type":"string",
+      "enum":[
+        "en-US",
+        "en-AB",
+        "en-AU",
+        "en-GB",
+        "en-IE",
+        "en-IN",
+        "en-WL",
+        "en-ZA",
+        "en-NZ",
+        "es-US",
+        "es-ES",
+        "es-MX",
+        "fr-FR",
+        "fr-CA",
+        "it-IT",
+        "de-DE",
+        "de-CH",
+        "ja-JP",
+        "pt-BR",
+        "pt-PT",
+        "zh-CN",
+        "zh-TW",
+        "zh-HK",
+        "ko-KR"
+      ]
+    },
+    "SyncLanguageCodeItem":{
+      "type":"structure",
+      "members":{
+        "LanguageCode":{"shape":"SyncLanguageCode"},
+        "DurationInSeconds":{"shape":"DurationInSeconds"}
+      }
+    },
+    "SyncLanguageCodeList":{
+      "type":"list",
+      "member":{"shape":"SyncLanguageCodeItem"}
+    },
+    "SyncLanguageOptions":{
+      "type":"list",
+      "member":{"shape":"SyncLanguage"},
+      "min":1
+    },
+    "SyncMedia":{
+      "type":"structure",
+      "members":{
+        "MediaBytes":{"shape":"MediaBytesBlob"},
+        "MediaFileUri":{"shape":"Uri"}
+      },
+      "union":true
+    },
+    "SyncOutputConfiguration":{
+      "type":"structure",
+      "required":["OutputMediaFileUri"],
+      "members":{
+        "OutputMediaFileUri":{"shape":"Uri"}
+      }
+    },
+    "SyncRedaction":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"PiiEntityType"}
+      }
+    },
+    "SyncRedactionList":{
+      "type":"list",
+      "member":{"shape":"SyncRedaction"}
+    },
     "Tag":{
       "type":"structure",
       "required":[
@@ -2309,6 +2453,48 @@
       "min":1,
       "pattern":"arn:aws(-[^:]+)?:transcribe:[a-zA-Z0-9-]*:[0-9]{12}:[a-zA-Z-]*/[0-9a-zA-Z._-]+"
     },
+    "TranscribeAudioMetadata":{
+      "type":"structure",
+      "members":{
+        "LanguageCode":{"shape":"SyncLanguageCode"},
+        "LanguageCodes":{"shape":"SyncLanguageCodeList"},
+        "MediaFormat":{"shape":"MediaFormat"},
+        "MediaSampleRateHertz":{"shape":"MediaSampleRateHertz"},
+        "SpeakersCount":{"shape":"NumberOfSpeakers"},
+        "NumberOfChannels":{"shape":"NumberOfChannels"}
+      }
+    },
+    "TranscribeAudioRequest":{
+      "type":"structure",
+      "required":["Media"],
+      "members":{
+        "Media":{"shape":"SyncMedia"},
+        "Language":{"shape":"SyncLanguage"},
+        "LanguageDetectionMode":{"shape":"LanguageDetectionMode"},
+        "LanguageOptions":{"shape":"SyncLanguageOptions"},
+        "ChannelIdentification":{"shape":"Boolean"},
+        "ShowSpeakerLabels":{"shape":"Boolean"},
+        "MaxSpeakerLabels":{"shape":"MaxSpeakers"},
+        "VocabularySettings":{"shape":"VocabularySettingsList"},
+        "VocabularyFilterSettings":{"shape":"VocabularyFilterSettings"},
+        "ContentRedaction":{"shape":"ContentRedaction"},
+        "OutputConfiguration":{"shape":"SyncOutputConfiguration"}
+      }
+    },
+    "TranscribeAudioResponse":{
+      "type":"structure",
+      "members":{
+        "OutputConfiguration":{"shape":"SyncOutputConfiguration"},
+        "TranscriptResponse":{"shape":"TranscriptResponse"}
+      }
+    },
+    "TranscribeAudioResults":{
+      "type":"structure",
+      "members":{
+        "Transcript":{"shape":"String"},
+        "Items":{"shape":"SyncItemList"}
+      }
+    },
     "Transcript":{
       "type":"structure",
       "members":{
@@ -2334,6 +2520,14 @@
     "TranscriptFilterType":{
       "type":"string",
       "enum":["EXACT"]
+    },
+    "TranscriptResponse":{
+      "type":"structure",
+      "members":{
+        "Metadata":{"shape":"TranscribeAudioMetadata"},
+        "Results":{"shape":"TranscribeAudioResults"},
+        "RedactedResults":{"shape":"TranscribeAudioResults"}
+      }
     },
     "TranscriptionJob":{
       "type":"structure",
@@ -2535,6 +2729,21 @@
       "type":"list",
       "member":{"shape":"VocabularyInfo"}
     },
+    "VocabularyFilterEntry":{
+      "type":"structure",
+      "required":["Language"],
+      "members":{
+        "Language":{"shape":"SyncLanguage"},
+        "VocabularyFilterName":{"shape":"VocabularyFilterName"},
+        "Words":{"shape":"Words"}
+      }
+    },
+    "VocabularyFilterEntryList":{
+      "type":"list",
+      "member":{"shape":"VocabularyFilterEntry"},
+      "max":5,
+      "min":1
+    },
     "VocabularyFilterInfo":{
       "type":"structure",
       "members":{
@@ -2557,6 +2766,17 @@
       "min":1,
       "pattern":"^[0-9a-zA-Z._-]+"
     },
+    "VocabularyFilterSettings":{
+      "type":"structure",
+      "required":[
+        "VocabularyFilterMethod",
+        "Filters"
+      ],
+      "members":{
+        "VocabularyFilterMethod":{"shape":"VocabularyFilterMethod"},
+        "Filters":{"shape":"VocabularyFilterEntryList"}
+      }
+    },
     "VocabularyFilters":{
       "type":"list",
       "member":{"shape":"VocabularyFilterInfo"}
@@ -2576,6 +2796,35 @@
       "min":1,
       "pattern":"^[0-9a-zA-Z._-]+"
     },
+    "VocabularyPhrase":{
+      "type":"structure",
+      "required":["Text"],
+      "members":{
+        "Text":{"shape":"VocabularyText"},
+        "DisplayAs":{"shape":"VocabularyText"}
+      }
+    },
+    "VocabularyPhraseList":{
+      "type":"list",
+      "member":{"shape":"VocabularyPhrase"},
+      "max":100,
+      "min":1
+    },
+    "VocabularySettingsEntry":{
+      "type":"structure",
+      "required":["Language"],
+      "members":{
+        "Language":{"shape":"SyncLanguage"},
+        "VocabularyName":{"shape":"VocabularyName"},
+        "Phrases":{"shape":"VocabularyPhraseList"}
+      }
+    },
+    "VocabularySettingsList":{
+      "type":"list",
+      "member":{"shape":"VocabularySettingsEntry"},
+      "max":5,
+      "min":1
+    },
     "VocabularyState":{
       "type":"string",
       "enum":[
@@ -2583,6 +2832,11 @@
         "READY",
         "FAILED"
       ]
+    },
+    "VocabularyText":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "Word":{
       "type":"string",

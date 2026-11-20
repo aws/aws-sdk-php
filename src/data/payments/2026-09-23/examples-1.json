@@ -1,0 +1,277 @@
+{
+  "version": "1.0",
+  "examples": {
+    "BatchGetFinancialRecord": [
+      {
+        "input": {
+          "keys": [
+            {
+              "identifier": "INV-1234-5678-9012-3456"
+            },
+            {
+              "invoiceIdentifier": "999999999999"
+            }
+          ]
+        },
+        "output": {
+          "errors": [
+            {
+              "key": {
+                "invoiceIdentifier": "999999999999"
+              },
+              "code": "NOT_FOUND",
+              "message": "The requested resource was not found"
+            }
+          ],
+          "financialRecords": [
+            {
+              "type": "INVOICE",
+              "amount": {
+                "value": "1000.24",
+                "currency": "USD"
+              },
+              "balances": {
+                "canceled": {
+                  "value": "0.0",
+                  "currency": "USD"
+                },
+                "outstanding": {
+                  "value": "0.0",
+                  "currency": "USD"
+                },
+                "processing": {
+                  "value": "0.0",
+                  "currency": "USD"
+                },
+                "settled": {
+                  "value": "1000.24",
+                  "currency": "USD"
+                }
+              },
+              "businessUnit": {
+                "lineOfBusiness": "AWS_CLOUD_SERVICES",
+                "merchantOfRecord": "Amazon Web Services, Inc."
+              },
+              "closedAt": 1736208000,
+              "details": {
+                "invoiceDetails": {
+                  "billingPeriod": {
+                    "endDate": 1735689600,
+                    "startDate": 1733011200
+                  },
+                  "dueDate": 1738281600,
+                  "invoiceFrequency": "RECURRING",
+                  "invoiceId": "536462537364",
+                  "paymentTerms": "Net30"
+                }
+              },
+              "id": "INV-1234-5678-9012-3456",
+              "issuedAt": 1735689600,
+              "settlementStatus": "CLOSED",
+              "status": "SETTLED"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Invoke BatchGetFinancialRecord"
+      }
+    ],
+    "GetAccountBalance": [
+      {
+        "input": {
+          "balanceType": "INVOICES_PAST_DUE"
+        },
+        "output": {
+          "accountBalances": [
+            {
+              "amount": {
+                "value": "1250.00",
+                "currency": "USD"
+              },
+              "merchantOfRecord": "Amazon Web Services, Inc."
+            },
+            {
+              "amount": {
+                "value": "430.75",
+                "currency": "INR"
+              },
+              "merchantOfRecord": "Amazon Web Services India Private Limited"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Invoke GetAccountBalance"
+      }
+    ],
+    "GetFinancialRecord": [
+      {
+        "input": {
+          "identifier": "INV-1234-5678-9012-3456"
+        },
+        "output": {
+          "financialRecord": {
+            "type": "INVOICE",
+            "amount": {
+              "value": "1000.24",
+              "currency": "USD"
+            },
+            "balances": {
+              "canceled": {
+                "value": "0.0",
+                "currency": "USD"
+              },
+              "outstanding": {
+                "value": "0.0",
+                "currency": "USD"
+              },
+              "processing": {
+                "value": "0.0",
+                "currency": "USD"
+              },
+              "settled": {
+                "value": "1000.24",
+                "currency": "USD"
+              }
+            },
+            "businessUnit": {
+              "lineOfBusiness": "AWS_CLOUD_SERVICES",
+              "merchantOfRecord": "Amazon Web Services, Inc."
+            },
+            "closedAt": 1736208000,
+            "details": {
+              "invoiceDetails": {
+                "billingPeriod": {
+                  "endDate": 1735689600,
+                  "startDate": 1733011200
+                },
+                "dueDate": 1738281600,
+                "invoiceFrequency": "RECURRING",
+                "invoiceId": "536462537364",
+                "paymentTerms": "Net30"
+              }
+            },
+            "id": "INV-1234-5678-9012-3456",
+            "issuedAt": 1735689600,
+            "settlementStatus": "CLOSED",
+            "status": "SETTLED"
+          }
+        },
+        "id": "example-1",
+        "title": "Invoke GetFinancialRecord"
+      }
+    ],
+    "GetPaymentInstrument": [
+      {
+        "input": {
+          "identifier": "arn:aws:payments::123456789012:payment-instrument:1a2b3c4d-5e6f-7a8b-9c0d-111122223333"
+        },
+        "output": {
+          "paymentInstrument": {
+            "arn": "arn:aws:payments::123456789012:payment-instrument:1a2b3c4d-5e6f-7a8b-9c0d-111122223333",
+            "createdAt": 1735689600,
+            "details": {
+              "card": {
+                "brand": "VISA",
+                "cardType": "CREDIT",
+                "expirationMonth": 7,
+                "expirationYear": 2030,
+                "issuerCountry": "US",
+                "issuingBank": "Example Bank",
+                "last4": "1111"
+              }
+            },
+            "paymentMethod": "CARD",
+            "status": "ACTIVE",
+            "updatedAt": 1738368000
+          }
+        },
+        "id": "example-1",
+        "title": "Invoke GetPaymentInstrument"
+      }
+    ],
+    "ListFinancialRecords": [
+      {
+        "input": {
+          "maxResults": 5,
+          "settlementStatuses": [
+            "CLOSED"
+          ],
+          "sortBy": "ISSUED_AT",
+          "sortOrder": "DESCENDING",
+          "types": [
+            "INVOICE"
+          ]
+        },
+        "output": {
+          "financialRecordSummaries": [
+            {
+              "type": "INVOICE",
+              "amount": {
+                "value": "1000.24",
+                "currency": "USD"
+              },
+              "balances": {
+                "canceled": {
+                  "value": "0.0",
+                  "currency": "USD"
+                },
+                "outstanding": {
+                  "value": "0.0",
+                  "currency": "USD"
+                },
+                "processing": {
+                  "value": "0.0",
+                  "currency": "USD"
+                },
+                "settled": {
+                  "value": "1000.24",
+                  "currency": "USD"
+                }
+              },
+              "businessUnit": {
+                "lineOfBusiness": "AWS_CLOUD_SERVICES",
+                "merchantOfRecord": "Amazon Web Services, Inc."
+              },
+              "closedAt": 1736208000,
+              "id": "INV-1234-5678-9012-3456",
+              "issuedAt": 1735689600,
+              "settlementStatus": "CLOSED",
+              "status": "SETTLED"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Invoke ListFinancialRecords"
+      }
+    ],
+    "ListPaymentInstruments": [
+      {
+        "input": {
+          "maxResults": 5
+        },
+        "output": {
+          "paymentInstrumentSummaries": [
+            {
+              "arn": "arn:aws:payments::123456789012:payment-instrument:1a2b3c4d-5e6f-7a8b-9c0d-111122223333",
+              "createdAt": 1735689600,
+              "id": "1a2b3c4d-5e6f-7a8b-9c0d-111122223333",
+              "paymentMethod": "CARD",
+              "status": "ACTIVE",
+              "updatedAt": 1738368000
+            },
+            {
+              "arn": "arn:aws:payments::123456789012:payment-instrument:2b3c4d5e-6f7a-8b9c-0d1e-444455556666",
+              "createdAt": 1727740800,
+              "id": "2b3c4d5e-6f7a-8b9c-0d1e-444455556666",
+              "paymentMethod": "US_ACH_BANK_ACCOUNT",
+              "status": "ACTIVE",
+              "updatedAt": 1727740800
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Invoke ListPaymentInstruments"
+      }
+    ]
+  }
+}

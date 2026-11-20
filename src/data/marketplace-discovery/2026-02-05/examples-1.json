@@ -20,7 +20,12 @@
               }
             }
           ],
-          "badges": [],
+          "badges": [
+            {
+              "badgeType": "QUICK_LAUNCH",
+              "displayName": "Quick Launch"
+            }
+          ],
           "catalog": "AWSMarketplace",
           "categories": [
             {
@@ -73,6 +78,7 @@
             "displayName": "sample SaaS seller",
             "sellerProfileId": "seller-sampleSaasId"
           },
+          "purchaseIndicators": [],
           "resources": [
             {
               "value": "https://example.com/demo",
@@ -162,10 +168,6 @@
             {
               "badgeType": "DEPLOYED_ON_AWS",
               "displayName": "Deployed on AWS"
-            },
-            {
-              "badgeType": "QUICK_LAUNCH",
-              "displayName": "Quick Launch"
             }
           ],
           "catalog": "AWSMarketplace",
@@ -181,8 +183,8 @@
           ],
           "fulfillmentOptionSummaries": [
             {
-              "displayName": "SaaS",
-              "fulfillmentOptionType": "SAAS"
+              "displayName": "Amazon Machine Image",
+              "fulfillmentOptionType": "AMAZON_MACHINE_IMAGE"
             }
           ],
           "highlights": [
@@ -223,6 +225,7 @@
             "displayName": "sample AMI seller",
             "sellerProfileId": "seller-sampleAmiId"
           },
+          "purchaseIndicators": [],
           "resources": [
             {
               "value": "https://example.com/request-demo",
@@ -339,6 +342,7 @@
             "displayName": "sample multi-product seller",
             "sellerProfileId": "seller-sampleMultiProductId"
           },
+          "purchaseIndicators": [],
           "resources": [
             {
               "value": "https://developer.box.com/guides/box-mcp/remote/#amazon-quick-suite",
@@ -382,6 +386,166 @@
         },
         "id": "example-3",
         "title": "GetListing for multi-product listing"
+      },
+      {
+        "input": {
+          "listingId": "prodview-sampleNoSubscriptionId",
+          "locale": "en-US"
+        },
+        "output": {
+          "associatedEntities": [
+            {
+              "offer": {
+                "offerId": "offer-sampleNoSubscriptionId",
+                "sellerOfRecord": {
+                  "displayName": "sample operating system seller",
+                  "sellerProfileId": "seller-sampleNoSubscriptionId"
+                }
+              },
+              "product": {
+                "manufacturer": {
+                  "displayName": "sample operating system seller",
+                  "sellerProfileId": "seller-sampleNoSubscriptionId"
+                },
+                "productId": "prod-sampleNoSubscriptionId",
+                "productName": "sample operating system product"
+              }
+            }
+          ],
+          "badges": [
+            {
+              "badgeType": "DEPLOYED_ON_AWS",
+              "displayName": "Deployed on AWS"
+            },
+            {
+              "badgeType": "AWS_FREE_TIER",
+              "displayName": "AWS Free Tier"
+            }
+          ],
+          "catalog": "AWSMarketplace",
+          "categories": [
+            {
+              "categoryId": "operating-systems",
+              "displayName": "Operating Systems"
+            }
+          ],
+          "fulfillmentOptionSummaries": [
+            {
+              "displayName": "Amazon Machine Image",
+              "fulfillmentOptionType": "AMAZON_MACHINE_IMAGE"
+            }
+          ],
+          "highlights": [
+            "Enterprise Linux optimized for Amazon EC2"
+          ],
+          "listingId": "prodview-sampleNoSubscriptionId",
+          "listingName": "sample operating system listing",
+          "locale": "en-US",
+          "logoThumbnailUrl": "https://example.com/logos/sample-os-logo.png",
+          "longDescription": "A sample enterprise Linux operating system for development, test, and production workloads on Amazon EC2.",
+          "pricingModels": [
+            {
+              "displayName": "Free",
+              "pricingModelType": "FREE"
+            }
+          ],
+          "pricingUnits": [],
+          "promotionalMedia": [],
+          "publisher": {
+            "displayName": "sample operating system seller",
+            "sellerProfileId": "seller-sampleNoSubscriptionId"
+          },
+          "purchaseIndicators": [
+            {
+              "indicatorType": "AVAILABLE_FOR_USE_WITHOUT_SUBSCRIPTION"
+            }
+          ],
+          "resources": [
+            {
+              "value": "https://example.com/docs/getting-started",
+              "contentType": "LINK",
+              "displayName": "Getting started",
+              "resourceType": "MANUFACTURER_INSTRUCTIONS"
+            }
+          ],
+          "sellerEngagements": [],
+          "shortDescription": "A sample enterprise Linux image optimized for Amazon EC2.",
+          "useCases": []
+        },
+        "id": "example-4",
+        "title": "GetListing for listing available without a subscription"
+      },
+      {
+        "input": {
+          "listingId": "prodview-sampleUnavailableId",
+          "locale": "en-US"
+        },
+        "output": {
+          "associatedEntities": [
+            {
+              "product": {
+                "manufacturer": {
+                  "displayName": "sample network infrastructure seller",
+                  "sellerProfileId": "seller-sampleUnavailableId"
+                },
+                "productId": "prod-sampleUnavailableId",
+                "productName": "sample network infrastructure product"
+              }
+            }
+          ],
+          "badges": [
+            {
+              "badgeType": "DEPLOYED_ON_AWS",
+              "displayName": "Deployed on AWS"
+            }
+          ],
+          "catalog": "AWSMarketplace",
+          "categories": [
+            {
+              "categoryId": "network-infrastructure",
+              "displayName": "Network Infrastructure"
+            }
+          ],
+          "fulfillmentOptionSummaries": [
+            {
+              "displayName": "Helm",
+              "fulfillmentOptionType": "HELM"
+            }
+          ],
+          "highlights": [
+            "Secure application access across clouds"
+          ],
+          "listingId": "prodview-sampleUnavailableId",
+          "listingName": "sample network infrastructure listing",
+          "locale": "en-US",
+          "logoThumbnailUrl": "https://example.com/logos/sample-network-logo.png",
+          "longDescription": "A sample application networking platform that provides secure access and performance insights for applications that run across clouds.",
+          "pricingModels": [],
+          "pricingUnits": [],
+          "promotionalMedia": [],
+          "publisher": {
+            "displayName": "sample network infrastructure seller",
+            "sellerProfileId": "seller-sampleUnavailableId"
+          },
+          "purchaseIndicators": [
+            {
+              "indicatorType": "NOT_AVAILABLE_FOR_SUBSCRIPTION"
+            }
+          ],
+          "resources": [
+            {
+              "value": "Email support@example.com for technical support.",
+              "contentType": "OTHER",
+              "displayName": "Support",
+              "resourceType": "MANUFACTURER_SUPPORT"
+            }
+          ],
+          "sellerEngagements": [],
+          "shortDescription": "A sample application networking platform for multi-cloud environments.",
+          "useCases": []
+        },
+        "id": "example-5",
+        "title": "GetListing for listing not available for new subscriptions"
       }
     ],
     "GetOffer": [
@@ -745,6 +909,7 @@
                         ],
                         "displayName": "ml.m5.2xlarge Inference (Batch)",
                         "price": "2.00000000",
+                        "regionalPrices": [],
                         "unit": "HostHrs"
                       },
                       {
@@ -759,6 +924,7 @@
                         ],
                         "displayName": "ml.m5.2xlarge Inference (Real-Time)",
                         "price": "2.00000000",
+                        "regionalPrices": [],
                         "unit": "HostHrs"
                       },
                       {
@@ -773,6 +939,7 @@
                         ],
                         "displayName": "ml.m5.large Inference (Batch)",
                         "price": "2.00000000",
+                        "regionalPrices": [],
                         "unit": "HostHrs"
                       },
                       {
@@ -787,6 +954,7 @@
                         ],
                         "displayName": "ml.m5.large Inference (Real-Time)",
                         "price": "2.00000000",
+                        "regionalPrices": [],
                         "unit": "HostHrs"
                       }
                     ]
@@ -901,6 +1069,67 @@
       {
         "input": {
           "locale": "en-US",
+          "offerId": "offer-sampleRegionalPricingId"
+        },
+        "output": {
+          "locale": "en-US",
+          "offerTerms": [
+            {
+              "usageBasedPricingTerm": {
+                "type": "UsageBasedPricingTerm",
+                "currencyCode": "USD",
+                "id": "term-sampleRegionalUsageBasedPricingId",
+                "rateCards": [
+                  {
+                    "rateCard": [
+                      {
+                        "description": "Software usage on the t3.medium instance type",
+                        "dimensionKey": "t3.medium",
+                        "dimensionLabels": [],
+                        "displayName": "t3.medium",
+                        "price": "0.10000000",
+                        "regionalPrices": [
+                          {
+                            "displayName": "Europe (Ireland)",
+                            "price": "0.12000000",
+                            "region": "eu-west-1"
+                          },
+                          {
+                            "displayName": "Asia Pacific (Tokyo)",
+                            "price": "0.14000000",
+                            "region": "ap-northeast-1"
+                          }
+                        ],
+                        "unit": "Hrs"
+                      },
+                      {
+                        "description": "Software usage on the m5.large instance type",
+                        "dimensionKey": "m5.large",
+                        "dimensionLabels": [],
+                        "displayName": "m5.large",
+                        "price": "0.20000000",
+                        "regionalPrices": [
+                          {
+                            "displayName": "Europe (Ireland)",
+                            "price": "0.24000000",
+                            "region": "eu-west-1"
+                          }
+                        ],
+                        "unit": "Hrs"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "GetOfferTerms for Usage-based offer with regional pricing"
+      },
+      {
+        "input": {
+          "locale": "en-US",
           "offerId": "offer-sampleByolId"
         },
         "output": {
@@ -926,7 +1155,7 @@
             }
           ]
         },
-        "id": "example-2",
+        "id": "example-3",
         "title": "GetOfferTerms for BYOL offer"
       },
       {
@@ -950,29 +1179,31 @@
                     },
                     "rateCard": [
                       {
-                        "dimensionKey": "api_calls_us_east_1",
+                        "dimensionKey": "api_calls_batch",
                         "dimensionLabels": [
                           {
-                            "displayName": "US East (N. Virginia)",
-                            "labelType": "Region",
-                            "labelValue": "us-east-1"
+                            "displayName": "Model Batch Transform",
+                            "labelType": "SagemakerOption",
+                            "labelValue": "Model Batch Transform"
                           }
                         ],
-                        "displayName": "API Calls (US East)",
+                        "displayName": "API Calls (Batch)",
                         "price": "0.001",
+                        "regionalPrices": [],
                         "unit": "Requests"
                       },
                       {
-                        "dimensionKey": "api_calls_us_west_2",
+                        "dimensionKey": "api_calls_realtime",
                         "dimensionLabels": [
                           {
-                            "displayName": "US West (Oregon)",
-                            "labelType": "Region",
-                            "labelValue": "us-west-2"
+                            "displayName": "Model Real-Time Inference",
+                            "labelType": "SagemakerOption",
+                            "labelValue": "Model Real-Time Inference"
                           }
                         ],
-                        "displayName": "API Calls (US West)",
+                        "displayName": "API Calls (Real-Time)",
                         "price": "0.001",
+                        "regionalPrices": [],
                         "unit": "Requests"
                       }
                     ],
@@ -986,7 +1217,7 @@
             }
           ]
         },
-        "id": "example-3",
+        "id": "example-4",
         "title": "GetOfferTerms for configurable upfront pricing"
       },
       {
@@ -1021,7 +1252,7 @@
             }
           ]
         },
-        "id": "example-4",
+        "id": "example-5",
         "title": "GetOfferTerms for free trial offer"
       },
       {
@@ -1043,7 +1274,7 @@
             }
           ]
         },
-        "id": "example-5",
+        "id": "example-6",
         "title": "GetOfferTerms for recurring payment"
       },
       {
@@ -1064,7 +1295,7 @@
             }
           ]
         },
-        "id": "example-6",
+        "id": "example-7",
         "title": "GetOfferTerms for variable payment"
       },
       {
@@ -1115,7 +1346,7 @@
             }
           ]
         },
-        "id": "example-7",
+        "id": "example-8",
         "title": "GetOfferTerms for renewal term"
       },
       {
@@ -1141,7 +1372,7 @@
             }
           ]
         },
-        "id": "example-8",
+        "id": "example-9",
         "title": "GetOfferTerms for renewal term with fixed percentage"
       },
       {
@@ -1162,7 +1393,7 @@
             }
           ]
         },
-        "id": "example-9",
+        "id": "example-10",
         "title": "GetOfferTerms for renewal term with identical pricing (no price increase)"
       },
       {
@@ -1182,7 +1413,7 @@
             }
           ]
         },
-        "id": "example-10",
+        "id": "example-11",
         "title": "GetOfferTerms for support term"
       },
       {
@@ -1204,7 +1435,7 @@
             }
           ]
         },
-        "id": "example-11",
+        "id": "example-12",
         "title": "GetOfferTerms for validity term with dates"
       },
       {
@@ -1224,7 +1455,7 @@
             }
           ]
         },
-        "id": "example-12",
+        "id": "example-13",
         "title": "GetOfferTerms for net payment term"
       }
     ],
@@ -1279,6 +1510,7 @@
               }
             }
           ],
+          "purchaseIndicators": [],
           "resources": [
             {
               "value": "https://www.gitpod.io/blog",
@@ -1361,6 +1593,7 @@
               }
             }
           ],
+          "purchaseIndicators": [],
           "resources": [
             {
               "value": "+1-555-123-4567",
@@ -1437,6 +1670,7 @@
           "productId": "prod-sampleProServId",
           "productName": "sample professional services product",
           "promotionalMedia": [],
+          "purchaseIndicators": [],
           "resources": [
             {
               "value": "https://www.cloudexperts.example.com/docs",
@@ -1456,6 +1690,112 @@
         },
         "id": "example-3",
         "title": "GetProduct for professional services with NOT_APPLICABLE status"
+      },
+      {
+        "input": {
+          "locale": "en-US",
+          "productId": "prod-sampleNoSubscriptionId"
+        },
+        "output": {
+          "catalog": "AWSMarketplace",
+          "categories": [
+            {
+              "categoryId": "operating-systems",
+              "displayName": "Operating Systems"
+            }
+          ],
+          "deployedOnAws": "DEPLOYED",
+          "fulfillmentOptionSummaries": [
+            {
+              "displayName": "Amazon Machine Image",
+              "fulfillmentOptionType": "AMAZON_MACHINE_IMAGE"
+            }
+          ],
+          "highlights": [
+            "Enterprise Linux optimized for Amazon EC2"
+          ],
+          "listingId": "listing-sampleNoSubscriptionId",
+          "locale": "en-US",
+          "logoThumbnailUrl": "https://example.com/logos/sample-os-logo.png",
+          "longDescription": "A sample enterprise Linux operating system for development, test, and production workloads on Amazon EC2.",
+          "manufacturer": {
+            "displayName": "sample operating system seller",
+            "sellerProfileId": "seller-sampleNoSubscriptionId"
+          },
+          "productId": "prod-sampleNoSubscriptionId",
+          "productName": "sample operating system product",
+          "promotionalMedia": [],
+          "purchaseIndicators": [
+            {
+              "indicatorType": "AVAILABLE_FOR_USE_WITHOUT_SUBSCRIPTION"
+            }
+          ],
+          "resources": [
+            {
+              "value": "https://example.com/docs/getting-started",
+              "contentType": "LINK",
+              "displayName": "Getting started",
+              "resourceType": "MANUFACTURER_INSTRUCTIONS"
+            }
+          ],
+          "sellerEngagements": [],
+          "shortDescription": "A sample enterprise Linux image optimized for Amazon EC2."
+        },
+        "id": "example-4",
+        "title": "GetProduct for product available without a subscription"
+      },
+      {
+        "input": {
+          "locale": "en-US",
+          "productId": "prod-sampleUnavailableId"
+        },
+        "output": {
+          "catalog": "AWSMarketplace",
+          "categories": [
+            {
+              "categoryId": "network-infrastructure",
+              "displayName": "Network Infrastructure"
+            }
+          ],
+          "deployedOnAws": "DEPLOYED",
+          "fulfillmentOptionSummaries": [
+            {
+              "displayName": "Helm",
+              "fulfillmentOptionType": "HELM"
+            }
+          ],
+          "highlights": [
+            "Secure application access across clouds"
+          ],
+          "listingId": "listing-sampleUnavailableId",
+          "locale": "en-US",
+          "logoThumbnailUrl": "https://example.com/logos/sample-network-logo.png",
+          "longDescription": "A sample application networking platform that provides secure access and performance insights for applications that run across clouds.",
+          "manufacturer": {
+            "displayName": "sample network infrastructure seller",
+            "sellerProfileId": "seller-sampleUnavailableId"
+          },
+          "productId": "prod-sampleUnavailableId",
+          "productName": "sample network infrastructure product",
+          "promotionalMedia": [],
+          "purchaseIndicators": [
+            {
+              "indicatorType": "NOT_AVAILABLE_FOR_SUBSCRIPTION"
+            }
+          ],
+          "resources": [
+            {
+              "value": "Email support@example.com for technical support.",
+              "contentType": "OTHER",
+              "displayName": "Support",
+              "resourceType": "MANUFACTURER_SUPPORT"
+            }
+          ],
+          "sellerEngagements": [],
+          "shortDescription": "A sample application networking platform for multi-cloud environments."
+        },
+        "id": "example-5",
+        "title": "GetProduct for product not available for new subscriptions"
       }
     ],
     "ListFulfillmentOptions": [
@@ -1550,7 +1890,9 @@
           "fulfillmentOptions": [
             {
               "cloudFormationFulfillmentOption": {
+                "architectureDiagramUrl": "https://example.com/cft/architecture-diagram.png",
                 "availableFromTime": "2021-12-15T00:00:00Z",
+                "deploymentTemplateUrl": "https://example.com/cft/template.yaml",
                 "fulfillmentOptionDisplayName": "CloudFormation Template",
                 "fulfillmentOptionId": "fo-sampleCftId",
                 "fulfillmentOptionName": "Sophos Standalone Firewall for AWS",
@@ -1774,6 +2116,17 @@
             {
               "saasFulfillmentOption": {
                 "availableFromTime": "2018-08-07T00:00:00.000Z",
+                "deploymentTemplates": [
+                  {
+                    "cloudFormationDeploymentTemplate": {
+                      "defaultStackName": "example-saas-quick-launch",
+                      "description": "Deploys the IAM role that the product needs in your AWS account.",
+                      "iamPolicy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"example:Action\"],\"Resource\":[\"arn:aws:example:::EXAMPLE-RESOURCE\"]}]}",
+                      "templateName": "Primary deployment template",
+                      "templateUrl": "https://example.com/templates/primary.yaml"
+                    }
+                  }
+                ],
                 "fulfillmentOptionDisplayName": "SaaS",
                 "fulfillmentOptionId": "fo-sampleSaasId",
                 "fulfillmentOptionType": "SAAS",
@@ -1850,6 +2203,402 @@
         },
         "id": "example-12",
         "title": "List SageMaker Model Fulfillment Options"
+      }
+    ],
+    "ListListingAttributes": [
+      {
+        "input": {
+          "attributeTypes": [
+            "CASE_STUDY"
+          ],
+          "listingId": "prodview-sampleListingId",
+          "locale": "en-US"
+        },
+        "output": {
+          "listingAttributes": [
+            {
+              "caseStudy": {
+                "caseStudyId": "cs-sampleOne",
+                "caseStudyName": "Disaster recovery for a connected vehicle platform",
+                "challenge": "The customer needed a multi-region failover strategy without doubling steady-state infrastructure cost.",
+                "engagementDates": {
+                  "completionDate": "2025-06-30T00:00:00Z",
+                  "startDate": "2025-01-15T00:00:00Z"
+                },
+                "implementationApproach": "Delivered in three phases over six months: assessment, pilot region build-out, and full production cutover.",
+                "outcome": "Achieved a 5-minute RTO, passed a full regional failover audit, and reduced DR spend by 30%.",
+                "resolution": "Deployed a multi-region active-passive architecture with automated cross-Region failover.",
+                "resources": [
+                  {
+                    "value": "https://partner.example.com/case-studies/connected-vehicle-dr",
+                    "contentType": "LINK",
+                    "resourceType": "CASE_STUDY_WEBSITE"
+                  }
+                ],
+                "shortDescription": "Multi-region failover for a connected vehicle platform, cutting RTO to minutes."
+              }
+            },
+            {
+              "caseStudy": {
+                "caseStudyId": "cs-sampleTwo",
+                "caseStudyName": "Scaling analytics for a global retailer",
+                "resources": [
+                  {
+                    "value": "https://partner.example.com/case-studies/global-retail-analytics",
+                    "contentType": "LINK",
+                    "resourceType": "CASE_STUDY_WEBSITE"
+                  }
+                ],
+                "shortDescription": "Rebuilt a retailer's analytics pipeline to handle peak-season load at a fraction of the cost."
+              }
+            }
+          ],
+          "locale": "en-US"
+        },
+        "id": "example-1",
+        "title": "List case studies for a listing"
+      },
+      {
+        "input": {
+          "attributeTypes": [
+            "CASE_STUDY"
+          ],
+          "listingId": "prodview-sampleListingId",
+          "locale": "en-US",
+          "maxResults": 1
+        },
+        "output": {
+          "listingAttributes": [
+            {
+              "caseStudy": {
+                "caseStudyId": "cs-sampleOne",
+                "caseStudyName": "Disaster recovery for a connected vehicle platform",
+                "challenge": "The customer needed a multi-region failover strategy without doubling steady-state infrastructure cost.",
+                "engagementDates": {
+                  "completionDate": "2025-06-30T00:00:00Z",
+                  "startDate": "2025-01-15T00:00:00Z"
+                },
+                "implementationApproach": "Delivered in three phases over six months: assessment, pilot region build-out, and full production cutover.",
+                "outcome": "Achieved a 5-minute RTO, passed a full regional failover audit, and reduced DR spend by 30%.",
+                "resolution": "Deployed a multi-region active-passive architecture with automated cross-Region failover.",
+                "resources": [
+                  {
+                    "value": "https://partner.example.com/case-studies/connected-vehicle-dr",
+                    "contentType": "LINK",
+                    "resourceType": "CASE_STUDY_WEBSITE"
+                  }
+                ],
+                "shortDescription": "Multi-region failover for a connected vehicle platform, cutting RTO to minutes."
+              }
+            }
+          ],
+          "locale": "en-US",
+          "nextToken": "bW9jay10b2tlbg=="
+        },
+        "id": "example-2",
+        "title": "List case studies with pagination"
+      },
+      {
+        "input": {
+          "attributeTypes": [
+            "SPECIALIZATION_DETAIL"
+          ],
+          "listingId": "prodview-sampleListingId",
+          "locale": "en-US"
+        },
+        "output": {
+          "listingAttributes": [
+            {
+              "specializationDetail": {
+                "specialization": {
+                  "caseStudyIds": [
+                    "cs-sampleOne"
+                  ],
+                  "description": "Recognizes partners with validated expertise designing and operating storage solutions on AWS.",
+                  "specializationId": "spec-9d2f6h4j8k1m5n3p",
+                  "specializationName": "Storage Services Competency",
+                  "specializationTypes": [
+                    {
+                      "displayName": "Services",
+                      "specializationType": "SERVICES"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "specializationDetail": {
+                "specializationCategory": {
+                  "parentSpecializationId": "spec-9d2f6h4j8k1m5n3p",
+                  "specializationCategoryId": "spec-4k8n2p6x9m3q7w1z",
+                  "specializationCategoryName": "Data Migration"
+                }
+              }
+            },
+            {
+              "specializationDetail": {
+                "specializationCategory": {
+                  "parentSpecializationId": "spec-9d2f6h4j8k1m5n3p",
+                  "specializationCategoryId": "spec-7a3c5e1g9j2l6n4r",
+                  "specializationCategoryName": "Backup and Recovery"
+                }
+              }
+            }
+          ],
+          "locale": "en-US"
+        },
+        "id": "example-3",
+        "title": "List specializations for a listing"
+      },
+      {
+        "input": {
+          "attributeTypes": [
+            "TRUST_CENTER_SOURCE",
+            "TRUST_CENTER_CERTIFICATION",
+            "TRUST_CENTER_DOCUMENT"
+          ],
+          "listingId": "prodview-sampleListingId",
+          "locale": "en-US",
+          "maxResults": 25
+        },
+        "output": {
+          "listingAttributes": [
+            {
+              "trustCenterSource": {
+                "value": "https://trust.example.com/",
+                "contentType": "LINK",
+                "provider": "DRATA"
+              }
+            },
+            {
+              "trustCenterCertification": {
+                "certificationType": "SOC2_TYPE_2",
+                "displayName": "SOC 2 Type II",
+                "logoUrl": "https://assets.example.com/certifications/soc2.svg"
+              }
+            },
+            {
+              "trustCenterDocument": {
+                "value": "https://trust.example.com/documents/request-access",
+                "accessType": "REQUEST_ACCESS",
+                "contentType": "LINK",
+                "displayName": "Penetration Test Report",
+                "subjectArea": "Security"
+              }
+            }
+          ],
+          "locale": "en-US"
+        },
+        "id": "example-4",
+        "title": "Request multiple Trust Center attribute types"
+      },
+      {
+        "input": {
+          "attributeTypes": [
+            "TRUST_CENTER_CERTIFICATION"
+          ],
+          "listingId": "prodview-sampleListingId",
+          "locale": "en-US"
+        },
+        "output": {
+          "listingAttributes": [
+            {
+              "trustCenterCertification": {
+                "certificationType": "SOC2_TYPE_2",
+                "displayName": "SOC 2 Type II",
+                "logoUrl": "https://assets.example.com/certifications/soc2.svg"
+              }
+            }
+          ],
+          "locale": "en-US"
+        },
+        "id": "example-5",
+        "title": "List a Trust Center certification"
+      },
+      {
+        "input": {
+          "attributeTypes": [
+            "TRUST_CENTER_DOCUMENT"
+          ],
+          "listingId": "prodview-sampleListingId",
+          "locale": "en-US"
+        },
+        "output": {
+          "listingAttributes": [
+            {
+              "trustCenterDocument": {
+                "value": "https://trust.example.com/documents/request-access",
+                "accessType": "REQUEST_ACCESS",
+                "contentType": "LINK",
+                "displayName": "Penetration Test Report",
+                "subjectArea": "Security"
+              }
+            }
+          ],
+          "locale": "en-US"
+        },
+        "id": "example-6",
+        "title": "List a Trust Center document that requires access"
+      },
+      {
+        "input": {
+          "attributeTypes": [
+            "TRUST_CENTER_DOCUMENT"
+          ],
+          "listingId": "prodview-sampleListingId",
+          "locale": "en-US"
+        },
+        "output": {
+          "listingAttributes": [
+            {
+              "trustCenterDocument": {
+                "value": "https://trust.example.com/documents/privacy-policy",
+                "accessType": "VIEW",
+                "contentType": "LINK",
+                "displayName": "Privacy Policy",
+                "subjectArea": "Privacy"
+              }
+            }
+          ],
+          "locale": "en-US"
+        },
+        "id": "example-7",
+        "title": "List a view-only Trust Center document"
+      },
+      {
+        "input": {
+          "attributeTypes": [
+            "TRUST_CENTER_DOCUMENT"
+          ],
+          "listingId": "prodview-sampleListingId",
+          "locale": "en-US"
+        },
+        "output": {
+          "listingAttributes": [
+            {
+              "trustCenterDocument": {
+                "value": "https://trust.example.com/documents/soc2-report.pdf",
+                "accessType": "DOWNLOAD",
+                "contentType": "LINK",
+                "displayName": "SOC 2 Type II Report",
+                "subjectArea": "Compliance"
+              }
+            }
+          ],
+          "locale": "en-US"
+        },
+        "id": "example-8",
+        "title": "List a downloadable Trust Center document"
+      },
+      {
+        "input": {
+          "attributeTypes": [
+            "TRUST_CENTER_CONTROL"
+          ],
+          "listingId": "prodview-sampleListingId",
+          "locale": "en-US"
+        },
+        "output": {
+          "listingAttributes": [
+            {
+              "trustCenterControl": {
+                "name": "Data Access",
+                "domains": [
+                  "SECURITY"
+                ]
+              }
+            },
+            {
+              "trustCenterControl": {
+                "name": "Disaster Recovery Testing",
+                "description": "Disaster recovery testing is performed annually.",
+                "domains": [
+                  "RESILIENCE"
+                ]
+              }
+            },
+            {
+              "trustCenterControl": {
+                "name": "Customer Data Use",
+                "description": "Customer data is not used for model training.",
+                "domains": [
+                  "AI_GOVERNANCE"
+                ]
+              }
+            }
+          ],
+          "locale": "en-US"
+        },
+        "id": "example-9",
+        "title": "List Trust Center controls"
+      },
+      {
+        "input": {
+          "attributeTypes": [
+            "TRUST_CENTER_FAQ"
+          ],
+          "listingId": "prodview-sampleListingId",
+          "locale": "en-US"
+        },
+        "output": {
+          "listingAttributes": [
+            {
+              "trustCenterFaq": {
+                "answer": "Customer data is encrypted in transit and at rest.",
+                "question": "Is customer data encrypted?",
+                "subjectArea": "Privacy"
+              }
+            }
+          ],
+          "locale": "en-US"
+        },
+        "id": "example-10",
+        "title": "List a Trust Center frequently asked question"
+      },
+      {
+        "input": {
+          "attributeTypes": [
+            "TRUST_CENTER_UPDATE"
+          ],
+          "listingId": "prodview-sampleListingId",
+          "locale": "en-US"
+        },
+        "output": {
+          "listingAttributes": [
+            {
+              "trustCenterUpdate": {
+                "description": "The current SOC 2 Type II report is now available.",
+                "publishedTime": "2026-09-01T12:00:00Z",
+                "title": "SOC 2 report renewed"
+              }
+            },
+            {
+              "trustCenterUpdate": {
+                "description": "The previous SOC 2 Type II report remains available for reference.",
+                "publishedTime": "2026-09-01T12:00:00Z",
+                "title": "SOC 2 report renewed"
+              }
+            }
+          ],
+          "locale": "en-US"
+        },
+        "id": "example-11",
+        "title": "List Trust Center updates"
+      },
+      {
+        "input": {
+          "attributeTypes": [
+            "TRUST_CENTER_CERTIFICATION"
+          ],
+          "listingId": "prodview-sampleNonApplicableId",
+          "locale": "en-US"
+        },
+        "output": {
+          "listingAttributes": [],
+          "locale": "en-US"
+        },
+        "id": "example-12",
+        "title": "Valid attribute types that do not apply to the listing"
       }
     ],
     "ListPurchaseOptions": [
@@ -2115,6 +2864,114 @@
         "description": "Retrieve facets for security listings with ratings between 3.0 and 5.0 stars",
         "id": "example-2",
         "title": "Get facets with term and rating range filters"
+      },
+      {
+        "input": {
+          "facetTypes": [
+            "SPECIALIZATION",
+            "SPECIALIZATION_CATEGORY"
+          ],
+          "filters": [
+            {
+              "filterType": "SPECIALIZATION",
+              "filterValues": [
+                "spec-0ae8wm2xxde76e"
+              ]
+            }
+          ],
+          "locale": "en-US"
+        },
+        "output": {
+          "listingFacets": {
+            "SPECIALIZATION": [
+              {
+                "value": "spec-0ae8wm2xxde76e",
+                "count": 12,
+                "displayName": "Travel and Hospitality Services Competency"
+              },
+              {
+                "value": "spec-znwmf49a15h7a6",
+                "count": 3,
+                "displayName": "Migration and Modernization Software Competency"
+              }
+            ],
+            "SPECIALIZATION_CATEGORY": [
+              {
+                "value": "spec-4xtf39u7bve512",
+                "count": 9,
+                "displayName": "Digital Customer Engagement",
+                "parent": "spec-0ae8wm2xxde76e"
+              },
+              {
+                "value": "spec-avu0aodtdpco2t",
+                "count": 4,
+                "displayName": "Internet of Things",
+                "parent": "spec-0ae8wm2xxde76e"
+              },
+              {
+                "value": "spec-a9vn6mto0omjgr",
+                "count": 2,
+                "displayName": "Data Mobility",
+                "parent": "spec-znwmf49a15h7a6"
+              }
+            ]
+          },
+          "totalResults": 12
+        },
+        "description": "Retrieve specialization and specialization category facets for listings that earned the Travel and Hospitality Services Competency",
+        "id": "example-3",
+        "title": "Get specialization facets"
+      },
+      {
+        "input": {
+          "facetTypes": [
+            "CERTIFICATES"
+          ],
+          "locale": "en-US"
+        },
+        "output": {
+          "listingFacets": {
+            "CERTIFICATES": [
+              {
+                "value": "SOC2_TYPE_2",
+                "count": 80,
+                "displayName": "SOC 2 Type II"
+              },
+              {
+                "value": "ISO_27001",
+                "count": 65,
+                "displayName": "ISO 27001"
+              }
+            ]
+          },
+          "totalResults": 4500
+        },
+        "description": "Retrieve certification values available for filtering",
+        "id": "example-4",
+        "title": "Get certification facets"
+      },
+      {
+        "input": {
+          "facetTypes": [
+            "TRUST_CENTER"
+          ],
+          "locale": "en-US"
+        },
+        "output": {
+          "listingFacets": {
+            "TRUST_CENTER": [
+              {
+                "value": "HAS_TRUST_CENTER",
+                "count": 125,
+                "displayName": "Trust Center available"
+              }
+            ]
+          },
+          "totalResults": 4500
+        },
+        "description": "Retrieve Trust Center availability for filtering",
+        "id": "example-5",
+        "title": "Get Trust Center availability facets"
       }
     ],
     "SearchListings": [
@@ -2131,6 +2988,12 @@
               "filterType": "FULFILLMENT_OPTION_TYPE",
               "filterValues": [
                 "SAAS"
+              ]
+            },
+            {
+              "filterType": "CERTIFICATES",
+              "filterValues": [
+                "ISO_27001"
               ]
             }
           ],
@@ -2161,6 +3024,9 @@
                   "displayName": "Free Trial"
                 }
               ],
+              "caseStudiesSummary": {
+                "caseStudyCount": 7
+              },
               "catalog": "AWSMarketplace",
               "categories": [
                 {
@@ -2215,15 +3081,135 @@
                   }
                 ]
               },
-              "shortDescription": "Advanced computer vision solution for object detection and classification."
+              "sellerEngagements": [
+                {
+                  "value": "https://aws.amazon.com/marketplace/customer-connect/private-offer/prodview-sampleSearchId?campaignId=sampleCampaignId",
+                  "contentType": "LINK",
+                  "engagementType": "REQUEST_FOR_PRIVATE_OFFER"
+                },
+                {
+                  "value": "https://aws.amazon.com/marketplace/customer-connect/demo/prodview-sampleSearchId?campaignId=sampleCampaignId",
+                  "contentType": "LINK",
+                  "engagementType": "REQUEST_FOR_DEMO"
+                },
+                {
+                  "value": "https://aws.amazon.com/marketplace/epo/#/offer?productId=prod-sampleSearchId&listingId=prodview-sampleSearchId",
+                  "contentType": "LINK",
+                  "engagementType": "EXPRESS_PRIVATE_OFFER"
+                },
+                {
+                  "value": "https://aws.amazon.com/marketplace/procurement?productId=prod-sampleSearchId",
+                  "contentType": "LINK",
+                  "engagementType": "BUY_NOW"
+                },
+                {
+                  "value": "https://aws.amazon.com/marketplace/procurement?productId=prod-sampleSearchId&tryForFree=true",
+                  "contentType": "LINK",
+                  "engagementType": "TRY_FOR_FREE"
+                }
+              ],
+              "shortDescription": "Advanced computer vision solution for object detection and classification.",
+              "trustCenterSummary": {
+                "certificationSummaries": [
+                  {
+                    "certificationType": "SOC2_TYPE_2",
+                    "displayName": "SOC 2 Type II",
+                    "logoUrl": "https://awsmp-logos.s3.amazonaws.com/certification-logos/soc2.svg"
+                  },
+                  {
+                    "certificationType": "ISO_27001",
+                    "displayName": "ISO 27001",
+                    "logoUrl": "https://awsmp-logos.s3.amazonaws.com/certification-logos/iso27001.svg"
+                  }
+                ],
+                "sourceSummaries": [
+                  {
+                    "value": "https://trust.example.com/",
+                    "contentType": "LINK",
+                    "displayName": "Drata",
+                    "provider": "DRATA"
+                  }
+                ],
+                "totalCertificationCount": 2
+              },
+              "useCaseSummary": {
+                "useCases": [
+                  {
+                    "useCase": {
+                      "value": "CONTEXTUAL_ANALYSIS",
+                      "displayName": "Contextual Analysis"
+                    }
+                  }
+                ]
+              }
             }
           ],
           "nextToken": "eyJsYXN0RXZhbHVhdGVkS2V5Ijp7Imxpc3RpbmdJZCI6InByb2R2aWV3LXNhbXBsZVNlYXJjaElkIn19",
-          "totalResults": 1250
+          "totalResults": 42
         },
-        "description": "Search for SaaS listings in the machine learning category with sorting by relevance",
+        "description": "Search for ISO 27001 certified SaaS listings in the machine learning category, sorted by relevance",
         "id": "example-1",
         "title": "Search for machine learning listings"
+      },
+      {
+        "input": {
+          "filters": [
+            {
+              "filterType": "TRUST_CENTER",
+              "filterValues": [
+                "HAS_TRUST_CENTER"
+              ]
+            }
+          ],
+          "locale": "en-US",
+          "maxResults": 1,
+          "searchText": "security"
+        },
+        "output": {
+          "listingSummaries": [
+            {
+              "associatedEntities": [],
+              "badges": [],
+              "catalog": "AWSMarketplace",
+              "categories": [],
+              "fulfillmentOptionSummaries": [],
+              "listingId": "prodview-sourceOnlyId",
+              "listingName": "sample source-only listing",
+              "logoThumbnailUrl": "https://awsmp-logos.s3.amazonaws.com/product-logos/source-only.png",
+              "pricingModels": [],
+              "pricingUnits": [],
+              "publisher": {
+                "displayName": "sample source-only seller",
+                "sellerProfileId": "seller-sourceOnlyId"
+              },
+              "reviewSummary": {
+                "reviewSourceSummaries": []
+              },
+              "sellerEngagements": [],
+              "shortDescription": "Continuous cloud security posture monitoring with automated compliance checks.",
+              "trustCenterSummary": {
+                "certificationSummaries": [],
+                "sourceSummaries": [
+                  {
+                    "value": "https://example.com/trust-center",
+                    "contentType": "LINK",
+                    "displayName": "Example Trust Center",
+                    "provider": "OTHER"
+                  }
+                ],
+                "totalCertificationCount": 0
+              },
+              "useCaseSummary": {
+                "useCases": []
+              }
+            }
+          ],
+          "nextToken": "eyJsYXN0RXZhbHVhdGVkS2V5Ijp7Imxpc3RpbmdJZCI6InByb2R2aWV3LXNvdXJjZU9ubHlJZCJ9fQ==",
+          "totalResults": 38
+        },
+        "description": "Return Trust Center source information when no certifications are available",
+        "id": "example-2",
+        "title": "Search listings with a Trust Center source and no certifications"
       }
     ]
   }

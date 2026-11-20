@@ -1,0 +1,59 @@
+{
+  "version": "1.0",
+  "examples": {
+    "SearchPublicRecords": [
+      {
+        "input": {
+          "filters": {
+            "recordType": {
+              "$eq": "AGENT"
+            }
+          },
+          "maxResults": 1,
+          "searchQuery": "book a flight"
+        },
+        "output": {
+          "nextToken": "MQ",
+          "records": [
+            {
+              "createdAt": 1767225600,
+              "description": "Searches and books flights for a traveler.",
+              "descriptors": {
+                "a2aAgentCard": {
+                  "version": "0.3.0",
+                  "source": {
+                    "fromUrl": {
+                      "url": "https://example.com/.well-known/agent-card.json"
+                    }
+                  }
+                }
+              },
+              "displayName": "Flight Booking Agent",
+              "domain": "example.com",
+              "identifier": {
+                "uri": "urn:air:example.com:flight-booking:agent"
+              },
+              "recordType": "AGENT",
+              "recordVersion": "1.0.0",
+              "trustManifests": [
+                {
+                  "contributor": "did:web:agent-registry.global.api.aws",
+                  "provenance": [
+                    {
+                      "relation": "publishedFrom",
+                      "sourceId": "urn:air:example.com:flight-booking:agent"
+                    }
+                  ]
+                }
+              ],
+              "updatedAt": 1767225600
+            }
+          ]
+        },
+        "description": "The following example searches public records for flight booking agents and returns the first match.",
+        "id": "example-1",
+        "title": "To search for agents by keyword"
+      }
+    ]
+  }
+}

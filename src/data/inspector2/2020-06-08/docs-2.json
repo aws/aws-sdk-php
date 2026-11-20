@@ -3687,7 +3687,8 @@
     "MapComparison": {
       "base": null,
       "refs": {
-        "MapFilter$comparison": "<p>The operator to use when comparing values in the filter.</p>"
+        "MapFilter$comparison": "<p>The operator to use when comparing values in the filter.</p>",
+        "PurlQualifierFilter$comparison": "<p>The operator to use when comparing values in the filter.</p>"
       }
     },
     "MapFilter": {
@@ -3719,6 +3720,7 @@
       "refs": {
         "CisTagMap$value": null,
         "MapFilter$value": "<p>The tag value used in the filter.</p>",
+        "PurlQualifierFilter$value": "<p>The package URL (purl) qualifier value to filter on.</p>",
         "TagMap$value": null
       }
     },
@@ -4092,6 +4094,12 @@
         "ServerlessFunction$packageType": "<p>The package type of the serverless function.</p>"
       }
     },
+    "PackageUrl": {
+      "base": null,
+      "refs": {
+        "VulnerablePackage$purl": "<p>The package URL (purl) of the vulnerable package.</p>"
+      }
+    },
     "PackageVersion": {
       "base": null,
       "refs": {
@@ -4340,6 +4348,18 @@
         "RepositoryAggregationResponse$cloudRegion": "<p>The cloud Region associated with this repository aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>",
         "ServerlessFunctionAggregationResponse$cloudRegion": "<p>The cloud Region associated with this serverless function aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>",
         "VmInstanceAggregationResponse$cloudRegion": "<p>The cloud Region associated with this VM instance aggregation. The value format depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location, such as the region <code>us-central1</code> or the zone <code>us-central1-a</code>.</p> </li> </ul>"
+      }
+    },
+    "PurlQualifierFilter": {
+      "base": "<p>An object that describes the details of a package URL (purl) qualifier filter.</p>",
+      "refs": {
+        "PackageFilter$purlQualifier": "<p>An object that contains details on the package URL (purl) qualifier to filter on.</p>"
+      }
+    },
+    "PurlQualifierKey": {
+      "base": null,
+      "refs": {
+        "PurlQualifierFilter$key": "<p>The package URL (purl) qualifier key to filter on.</p>"
       }
     },
     "Reason": {
@@ -4629,6 +4649,39 @@
       "refs": {
         "AwsLambdaFunctionDetails$runtime": "<p>The runtime environment for the Amazon Web Services Lambda function.</p>",
         "LambdaFunctionMetadata$runtime": "<p>An Amazon Web Services Lambda function's runtime.</p>"
+      }
+    },
+    "RuntimeReachability": {
+      "base": null,
+      "refs": {
+        "RuntimeReachabilityFilter$value": "<p>The runtime reachability status to filter on.</p>",
+        "VulnerablePackage$runtimeReachability": "<p>The runtime reachability status of the vulnerable package. For more information, see <a href=\"https://docs.aws.amazon.com/inspector/latest/user/findings-understanding-runtime-reachability.html\">Understanding runtime reachability</a> in the Amazon Inspector user guide.</p>"
+      }
+    },
+    "RuntimeReachabilityComparison": {
+      "base": null,
+      "refs": {
+        "RuntimeReachabilityFilter$comparison": "<p>The operator to use when comparing values in the filter.</p>",
+        "RuntimeReachabilityReasonFilter$comparison": "<p>The operator to use when comparing values in the filter.</p>"
+      }
+    },
+    "RuntimeReachabilityFilter": {
+      "base": "<p>An object that describes the details of a runtime reachability filter.</p>",
+      "refs": {
+        "PackageFilter$runtimeReachability": "<p>An object that contains details on the runtime reachability status of the package to filter on. For more information, see <a href=\"https://docs.aws.amazon.com/inspector/latest/user/findings-understanding-runtime-reachability.html\">Understanding runtime reachability</a> in the Amazon Inspector user guide.</p>"
+      }
+    },
+    "RuntimeReachabilityReason": {
+      "base": null,
+      "refs": {
+        "RuntimeReachabilityReasonFilter$value": "<p>The runtime reachability reason to filter on.</p>",
+        "VulnerablePackage$runtimeReachabilityReason": "<p>The reason for the runtime reachability status of the vulnerable package. For more information, see <a href=\"https://docs.aws.amazon.com/inspector/latest/user/findings-understanding-runtime-reachability.html\">Understanding runtime reachability</a> in the Amazon Inspector user guide.</p>"
+      }
+    },
+    "RuntimeReachabilityReasonFilter": {
+      "base": "<p>An object that describes the details of a runtime reachability reason filter.</p>",
+      "refs": {
+        "PackageFilter$runtimeReachabilityReason": "<p>An object that contains details on the runtime reachability reason of the package to filter on. For more information, see <a href=\"https://docs.aws.amazon.com/inspector/latest/user/findings-understanding-runtime-reachability.html\">Understanding runtime reachability</a> in the Amazon Inspector user guide.</p>"
       }
     },
     "SbomReportFormat": {

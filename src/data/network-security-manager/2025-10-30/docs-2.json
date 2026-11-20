@@ -29,8 +29,10 @@
     "ListAggregateResourceSynchronizationStatuses": "<p>Lists the aggregated synchronization statuses of resources across the deployments in your administrator account. You can filter the results by synchronization status and page through them.</p>",
     "ListDeploymentSnapshots": "<p>Lists the snapshots of the specified deployment.</p>",
     "ListDeployments": "<p>Lists the deployments in the account. You can filter the results by status and page through them using <code>maxResults</code> and <code>nextToken</code>.</p>",
+    "ListEntityCoverages": "<p>Lists the protected resources that the specified Network Security Manager entity covers. You can filter the results to the resources owned by a single account and page through them. You must call this operation from the administrator account that owns the Network Security Manager entity.</p>",
     "ListPolicies": "<p>Lists the policies in the account. You can filter the results by status and page through them using <code>maxResults</code> and <code>nextToken</code>.</p>",
     "ListPolicySnapshots": "<p>Lists the snapshots of the specified policy.</p>",
+    "ListProtectedResourceCoverages": "<p>Lists the AWS Network Security Manager entities that cover the specified protected resource. You can filter the results by entity type and page through them. You must own the resource.</p>",
     "ListResourceAssociations": "<p>Lists the resources associated with the specified resource.</p>",
     "ListResourceSynchronizationStatuses": "<p>Lists the synchronization statuses of the resources covered by the specified deployment. You can filter the results by synchronization status and page through them.</p>",
     "ListRuleSnapshots": "<p>Lists the snapshots of the specified rule.</p>",
@@ -70,7 +72,9 @@
         "AdminAccountSummary$accountId": "<p>The AWS account ID.</p>",
         "DeleteAdminAccountRequest$accountId": "<p>The AWS account ID of the administrator account to remove.</p>",
         "GetAdminAccountRequest$accountId": "<p>The AWS account ID of the administrator account to retrieve.</p>",
+        "ListEntityCoveragesInput$resourceOwnerAccountId": "<p>Filters the results to the protected resources owned by the specified AWS account.</p>",
         "PutAdminAccountRequest$accountId": "<p>The AWS account ID to set as the AWS Network Security Manager administrator account.</p>",
+        "ResourceCoverageSummary$resourceOwnerAccountId": "<p>The AWS account ID that owns the protected resource. This can differ from the account that owns the entity.</p>",
         "ResourceSynchronizationStatusSummary$accountId": "<p>The AWS account ID that owns the resource.</p>"
       }
     },
@@ -192,10 +196,16 @@
     "Arn": {
       "base": null,
       "refs": {
+        "DeploymentArnSet$member": null,
+        "ListEntityCoveragesInput$entityArn": "<p>The Amazon Resource Name (ARN) of the Network Security Manager entity to list covered resources for. The ARN must not include a <code>:DRAFT</code> qualifier.</p>",
+        "ListProtectedResourceCoveragesInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the protected resource to list coverage for. You must own the resource.</p>",
         "ListTagsForResourceInput$resourceArn": "<p>The ARN of the resource to list tags for. The ARN must not include a <code>:DRAFT</code> qualifier.</p>",
         "ResourceArnList$member": null,
         "ResourceAssociation$arn": "<p>The ARN of the associated resource.</p>",
+        "ResourceCoverageSummary$resourceArn": "<p>The Amazon Resource Name (ARN) of the protected resource.</p>",
+        "ResourceCoverageSummary$entityArn": "<p>The Amazon Resource Name (ARN) of the entity that covers the resource.</p>",
         "ResourceSynchronizationStatusSummary$resourceArn": "<p>The ARN of the resource whose synchronization status is reported.</p>",
+        "SubnetConnectivityScopeArnList$member": null,
         "TagResourceInput$resourceArn": "<p>The ARN of the resource to tag. The ARN must not include a <code>:DRAFT</code> qualifier.</p>",
         "UntagResourceInput$resourceArn": "<p>The ARN of the resource to remove tags from. The ARN must not include a <code>:DRAFT</code> qualifier.</p>"
       }
@@ -287,6 +297,12 @@
     "ConflictException": {
       "base": "<p>The request conflicts with the current state of the resource. For example, the resource was modified concurrently, or it is in a state that does not allow the requested operation.</p>",
       "refs": {}
+    },
+    "CoverageStatus": {
+      "base": null,
+      "refs": {
+        "ResourceCoverageSummary$coverageStatus": "<p>Specifies whether the entity contributes to the effective configuration of the resource for its firewall type. For firewall types that combine policies, such as AWS WAF and AWS Shield Advanced, every policy that covers the resource is <code>IN_EFFECT</code>. For firewall types that apply a single policy, only the highest-priority policy is <code>IN_EFFECT</code> and the others are <code>SUPERSEDED</code>.</p>"
+      }
     },
     "CreateDeploymentInput": {
       "base": null,
@@ -388,6 +404,7 @@
         "GetScopeOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
         "GetTemplateOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
         "PolicySummary$updatedAt": "<p>The time when the resource was last updated. For a snapshot, this is the time when the snapshot was created.</p>",
+        "ResourceCoverageSummary$updatedAt": "<p>The time when AWS Network Security Manager last evaluated the coverage.</p>",
         "ResourceSynchronizationStatusSummary$updatedAt": "<p>The time when the resource was last updated.</p>",
         "ResourceSynchronizationStatusSummary$evaluatedAt": "<p>The time when the synchronization status was last evaluated.</p>",
         "RuleSummary$updatedAt": "<p>The time when the resource was last updated. For a snapshot, this is the time when the snapshot was created.</p>",
@@ -398,6 +415,12 @@
         "UpdateRuleOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
         "UpdateScopeOutput$updatedAt": "<p>The time when the resource was last updated.</p>",
         "UpdateTemplateOutput$updatedAt": "<p>The time when the resource was last updated.</p>"
+      }
+    },
+    "DefaultSubnetConnectivity": {
+      "base": null,
+      "refs": {
+        "IgwFirewallConfig$defaultSubnetConnectivity": "<p>The default internet connectivity treatment that AWS Network Security Manager applies to subnets in scope, unless a subnet connectivity override applies. Required for Network Firewall automated internet firewall policies. Valid values:</p> <ul> <li> <p> <code>flexible</code> – Sets the connectivity for each network interface in the subnet based on whether it is associated with a public IP address. A network interface with a public IP address gets bidirectional internet connectivity. A network interface without a public IP address gets outbound-only connectivity. All traffic is inspected against your firewall rules.</p> </li> <li> <p> <code>bidirectional</code> – Provides bidirectional internet connectivity to every network interface that has a public IP association. Any network interface without a public IP cannot communicate with the internet unless a NAT device is explicitly inserted in the path. All inbound and outbound traffic is inspected against your firewall rules.</p> </li> <li> <p> <code>outbound-only</code> – Provides egress-only connectivity for all network interfaces in the subnet. All outbound traffic and inbound responses are inspected against your firewall rules. Unsolicited inbound connections are dropped. For IPv4 traffic, the Network Firewall automated internet firewall performs NAT.</p> </li> </ul>"
       }
     },
     "DeleteAdminAccountRequest": {
@@ -433,6 +456,12 @@
         "GetDeploymentOutput$deploymentArn": "<p>The Amazon Resource Name (ARN) of the deployment.</p>",
         "ResourceSynchronizationStatusSummary$deploymentArn": "<p>The ARN of the deployment that the synchronization status is associated with. This is absent for aggregate (cross-deployment) statuses.</p>",
         "UpdateDeploymentOutput$deploymentArn": "<p>The Amazon Resource Name (ARN) of the deployment.</p>"
+      }
+    },
+    "DeploymentArnSet": {
+      "base": null,
+      "refs": {
+        "ResourceCoverageSummary$deploymentArns": "<p>The Amazon Resource Names (ARNs) of the deployments through which the entity covers the resource.</p>"
       }
     },
     "DeploymentConfiguration": {
@@ -649,7 +678,7 @@
       }
     },
     "FirewallSyncReason": {
-      "base": "<p>Describes why a firewall is out of sync. Exactly one of <code>missingFirewall</code> or <code>invalidFirewall</code> is set.</p>",
+      "base": "<p>Describes why a firewall is out of sync. Exactly one of <code>missingFirewall</code>, <code>invalidFirewall</code>, or <code>invalidResource</code> contains a value.</p>",
       "refs": {
         "OutOfSyncReasons$value": null
       }
@@ -785,6 +814,12 @@
         "UpdateTemplateInput$clientToken": "<p>A unique, case-sensitive token that you provide to ensure that the operation completes no more than one time. If you retry a request with the same client token and the same parameters, the service returns the result of the original successful request.</p>"
       }
     },
+    "IgwFirewallConfig": {
+      "base": "<p>Policy configuration settings for Network Firewall automated internet firewall policies.</p>",
+      "refs": {
+        "PolicyConfiguration$igwFirewallConfig": "<p>Policy settings for Network Firewall automated internet firewall policies. Specify these settings only for this policy type.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -800,6 +835,24 @@
       "base": "<p>Details about the ways in which a firewall's configuration differs from the intended configuration.</p>",
       "refs": {
         "FirewallSyncReason$invalidFirewall": "<p>Details about a firewall whose configuration does not match the intended configuration.</p>"
+      }
+    },
+    "InvalidResourceIssue": {
+      "base": "<p>Describes a single related resource whose configuration does not match the intended configuration.</p>",
+      "refs": {
+        "InvalidResourceIssueList$member": null
+      }
+    },
+    "InvalidResourceIssueList": {
+      "base": null,
+      "refs": {
+        "InvalidResourcesByType$value": null
+      }
+    },
+    "InvalidResourcesByType": {
+      "base": null,
+      "refs": {
+        "FirewallSyncReason$invalidResource": "<p>A map of related resources whose configuration does not match the intended configuration, grouped by resource type. Each entry lists the resources of that type that are out of sync. For example, subnets whose connectivity type differs from the connectivity type that the policy specifies.</p>"
       }
     },
     "IpAddressType": {
@@ -891,6 +944,14 @@
       "base": null,
       "refs": {}
     },
+    "ListEntityCoveragesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListEntityCoveragesOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListPoliciesInput": {
       "base": null,
       "refs": {}
@@ -904,6 +965,14 @@
       "refs": {}
     },
     "ListPolicySnapshotsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProtectedResourceCoveragesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProtectedResourceCoveragesOutput": {
       "base": null,
       "refs": {}
     },
@@ -986,8 +1055,10 @@
         "ListAggregateResourceSynchronizationStatusesInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
         "ListDeploymentSnapshotsInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
         "ListDeploymentsInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
+        "ListEntityCoveragesInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1–100. The default value is 100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
         "ListPoliciesInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
         "ListPolicySnapshotsInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
+        "ListProtectedResourceCoveragesInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1–100. The default value is 100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
         "ListResourceAssociationsInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
         "ListResourceSynchronizationStatusesInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
         "ListRuleSnapshotsInput$maxResults": "<p>The maximum number of results to return in a single call. Valid range: 1-100. To retrieve the remaining results, use the returned <code>nextToken</code> value in a subsequent call.</p>",
@@ -1009,10 +1080,14 @@
         "ListDeploymentSnapshotsOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
         "ListDeploymentsInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
         "ListDeploymentsOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListEntityCoveragesInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListEntityCoveragesOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
         "ListPoliciesInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
         "ListPoliciesOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
         "ListPolicySnapshotsInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
         "ListPolicySnapshotsOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListProtectedResourceCoveragesInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
+        "ListProtectedResourceCoveragesOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
         "ListResourceAssociationsInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
         "ListResourceAssociationsOutput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
         "ListResourceSynchronizationStatusesInput$nextToken": "<p>The token for the next page of results. To retrieve the next page, call the operation again and provide this value. When there are no more results, this value is null.</p>",
@@ -1123,6 +1198,7 @@
         "OutOfSyncReasons$key": null,
         "PolicySummary$firewallType": "<p>The firewall type associated with the resource.</p>",
         "RemediationIssues$key": null,
+        "ResourceCoverageSummary$firewallType": "<p>The firewall type of the policy that covers the resource. This is present when <code>entityType</code> is <code>Policy</code>.</p>",
         "UpdatePolicyOutput$firewallType": "<p>The firewall type associated with the resource.</p>"
       }
     },
@@ -1246,6 +1322,19 @@
         "ListResourceAssociationsOutput$resourceAssociations": "<p>The list of resource associations.</p>"
       }
     },
+    "ResourceCoverageSummary": {
+      "base": "<p>Describes how an AWS Network Security Manager entity covers a protected resource.</p>",
+      "refs": {
+        "ResourceCoverageSummaryList$member": null
+      }
+    },
+    "ResourceCoverageSummaryList": {
+      "base": null,
+      "refs": {
+        "ListEntityCoveragesOutput$resourceCoverages": "<p>The list of resource coverages for the Network Security Manager entity.</p>",
+        "ListProtectedResourceCoveragesOutput$resourceCoverages": "<p>The list of resource coverages for the protected resource.</p>"
+      }
+    },
     "ResourceCriteria": {
       "base": "<p>A leaf condition that matches resources by tag or by resource-type-specific configuration.</p>",
       "refs": {
@@ -1318,7 +1407,7 @@
     "ResourcesCleanUp": {
       "base": null,
       "refs": {
-        "PolicyConfiguration$resourcesCleanUp": "<p>Specifies whether AWS Network Security Manager automatically removes the resources it created when they are no longer needed. Default: <code>false</code>.</p>"
+        "PolicyConfiguration$resourcesCleanUp": "<p>Specifies whether AWS Network Security Manager automatically removes the resources it created when they are no longer needed. This member is required, and the only supported value is <code>true</code>.</p>"
       }
     },
     "RuleArn": {
@@ -1494,6 +1583,8 @@
       "base": null,
       "refs": {
         "DeploymentResourceTypeList$member": null,
+        "InvalidResourcesByType$key": null,
+        "ResourceCoverageSummary$resourceType": "<p>The type of the protected resource, in AWS CloudFormation format.</p>",
         "ResourceScopeMap$key": null
       }
     },
@@ -1541,12 +1632,25 @@
     "ServiceResourceType": {
       "base": null,
       "refs": {
-        "ResourceAssociation$resourceType": "<p>The type of the associated resource, such as <code>Policy</code>, <code>Template</code>, or <code>Deployment</code>.</p>"
+        "ListProtectedResourceCoveragesInput$entityType": "<p>Filters the results by the type of the entity that covers the resource. The only supported value is <code>Policy</code>.</p>",
+        "ResourceAssociation$resourceType": "<p>The type of the associated resource, such as <code>Policy</code>, <code>Template</code>, or <code>Deployment</code>.</p>",
+        "ResourceCoverageSummary$entityType": "<p>The type of the entity that covers the resource, such as <code>Policy</code>.</p>"
       }
     },
     "ServiceUnavailableException": {
       "base": "<p>The service is temporarily unavailable. This is a retryable error.</p>",
       "refs": {}
+    },
+    "SpecializedScopeType": {
+      "base": null,
+      "refs": {
+        "CreateScopeInput$specializedScopeType": "<p>The specialized type of the scope. Omit this value to create a standard scope that you can associate with a deployment. Set it to create a scope that is built for one specific purpose: a specialized scope can be used only for the purpose that its type defines, is validated against that use, and can't be associated with a deployment. This value is set when the scope is created and can't be changed.</p>",
+        "CreateScopeOutput$specializedScopeType": "<p>The specialized type of the scope, if the scope is built for one specific purpose. A scope with no <code>specializedScopeType</code> is a standard scope that you can associate with a deployment. A specialized scope can be used only for the purpose that its type defines and can't be associated with a deployment. This value is set when the scope is created and can't be changed.</p>",
+        "CreateScopeSnapshotOutput$specializedScopeType": "<p>The specialized type of the scope, if the scope is built for one specific purpose. A scope with no <code>specializedScopeType</code> is a standard scope that you can associate with a deployment. A specialized scope can be used only for the purpose that its type defines and can't be associated with a deployment. This value is set when the scope is created and can't be changed.</p>",
+        "GetScopeOutput$specializedScopeType": "<p>The specialized type of the scope, if the scope is built for one specific purpose. A scope with no <code>specializedScopeType</code> is a standard scope that you can associate with a deployment. A specialized scope can be used only for the purpose that its type defines and can't be associated with a deployment. This value is set when the scope is created and can't be changed.</p>",
+        "ScopeSummary$specializedScopeType": "<p>The specialized type of the scope, if the scope is built for one specific purpose. A scope with no <code>specializedScopeType</code> is a standard scope that you can associate with a deployment. A specialized scope can be used only for the purpose that its type defines and can't be associated with a deployment. This value is set when the scope is created and can't be changed.</p>",
+        "UpdateScopeOutput$specializedScopeType": "<p>The specialized type of the scope, if the scope is built for one specific purpose. A scope with no <code>specializedScopeType</code> is a standard scope that you can associate with a deployment. A specialized scope can be used only for the purpose that its type defines and can't be associated with a deployment. This value is set when the scope is created and can't be changed.</p>"
+      }
     },
     "String": {
       "base": null,
@@ -1563,6 +1667,9 @@
         "FirewallSyncReason$missingFirewall": "<p>Indicates that an expected firewall is missing. The value describes the missing firewall.</p>",
         "GenerateRuleConfigurationResponse$description": "<p>Reserved for a future human-readable description of the generated configuration. This field is currently not populated.</p>",
         "InternalServerException$message": null,
+        "InvalidResourceIssue$resourceId": "<p>The identifier of the resource, such as a subnet ARN.</p>",
+        "InvalidResourceIssue$expectedValue": "<p>The attribute value that the policy configuration requires, such as the connectivity type for a subnet.</p>",
+        "InvalidResourceIssue$actualValue": "<p>The current attribute value on the resource.</p>",
         "NotVisibleMarker$reason": "<p>The reason the details are not visible.</p>",
         "OrganizationalUnitReference$name": "<p>The display name of the organizational unit.</p>",
         "RemediationIssueDetails$issueType": "<p>The type of remediation issue.</p>",
@@ -1590,6 +1697,30 @@
       "base": null,
       "refs": {
         "ResourceCriteria$tags": "<p>Tag key-value pairs used to match resources.</p>"
+      }
+    },
+    "SubnetConnectivity": {
+      "base": null,
+      "refs": {
+        "SubnetConnectivityOverride$connectivityType": "<p>The connectivity treatment to apply to the selected subnets. You select both the override value as well as the subnets they apply to. The Network Firewall automated internet firewall applies the override value to the specified subnets, and applies the default connectivity to the rest of the subnets. Valid values:</p> <ul> <li> <p> <code>flexible</code> – Sets the connectivity for each network interface in the subnet based on whether it is associated with a public IP address. A network interface with a public IP address gets bidirectional internet connectivity. A network interface without a public IP address gets outbound-only connectivity. All traffic is inspected against your firewall rules.</p> </li> <li> <p> <code>bidirectional</code> – Provides bidirectional internet connectivity to every network interface that has a public IP association. Any network interface without a public IP cannot communicate with the internet unless a NAT device is explicitly inserted in the path. All inbound and outbound traffic is inspected against your firewall rules.</p> </li> <li> <p> <code>outbound-only</code> – Provides egress-only connectivity for all network interfaces in the subnet. All outbound traffic and inbound responses are inspected against your firewall rules. Unsolicited inbound connections are dropped. For IPv4 traffic, the Network Firewall automated internet firewall performs NAT.</p> </li> <li> <p> <code>exclude</code> – The Network Firewall automated internet firewall doesn't inspect traffic for the selected subnets. The subnets bypass the firewall entirely, and their traffic passes directly through the internet gateway. You can specify this value only in an override, not as the <code>defaultSubnetConnectivity</code>.</p> </li> </ul>"
+      }
+    },
+    "SubnetConnectivityOverride": {
+      "base": "<p>An override that applies a connectivity treatment to the subnets that a scope selects, instead of the policy's <code>defaultSubnetConnectivity</code>.</p>",
+      "refs": {
+        "SubnetConnectivityOverrideList$member": null
+      }
+    },
+    "SubnetConnectivityOverrideList": {
+      "base": null,
+      "refs": {
+        "IgwFirewallConfig$subnetConnectivityOverrides": "<p>An ordered list of overrides that apply a different connectivity treatment to the subnets that a scope selects. When a subnet matches more than one override, the first matching override in the list applies. You can specify at most one override for each connectivity type.</p>"
+      }
+    },
+    "SubnetConnectivityScopeArnList": {
+      "base": null,
+      "refs": {
+        "SubnetConnectivityOverride$scopes": "<p>A list that contains the Amazon Resource Name (ARN) of the scope that selects the subnets to override. The list must contain exactly one scope ARN. The deployment determines which accounts are in scope, and the referenced scope selects subnets within those accounts.</p>"
       }
     },
     "SynchronizationStatus": {
@@ -1713,6 +1844,13 @@
       "base": "<p>A reference to either a template or a rule in a create or update request. Set exactly one of <code>templateIdentifier</code> or <code>ruleIdentifier</code>.</p>",
       "refs": {
         "TemplateAndRuleReferenceList$member": null
+      }
+    },
+    "TemplateOwner": {
+      "base": null,
+      "refs": {
+        "ListTemplatesInput$templateOwner": "<p>Specifies which templates to list. The default is <code>CUSTOMER</code>. Valid values:</p> <ul> <li> <p> <code>CUSTOMER</code> – Lists the templates in your account.</p> </li> <li> <p> <code>AWS</code> – Lists the AWS managed templates.</p> </li> </ul>",
+        "TemplateSummary$templateOwner": "<p>The owner of the template. Valid values:</p> <ul> <li> <p> <code>CUSTOMER</code> – The template is in your account.</p> </li> <li> <p> <code>AWS</code> – The template is an AWS managed template.</p> </li> </ul>"
       }
     },
     "TemplateSummary": {

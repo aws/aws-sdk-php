@@ -1847,6 +1847,8 @@
         "AIFF",
         "AC3",
         "AC4",
+        "DTSX",
+        "DTSC",
         "EAC3",
         "EAC3_ATMOS",
         "VORBIS",
@@ -1877,6 +1879,14 @@
         "Codec": {
           "shape": "AudioCodec",
           "locationName": "codec"
+        },
+        "DtscSettings": {
+          "shape": "DtscSettings",
+          "locationName": "dtscSettings"
+        },
+        "DtsxSettings": {
+          "shape": "DtsxSettings",
+          "locationName": "dtsxSettings"
         },
         "Eac3AtmosSettings": {
           "shape": "Eac3AtmosSettings",
@@ -2256,6 +2266,7 @@
       "type": "string",
       "enum": [
         "OFF",
+        "AUTO",
         "LOW",
         "MEDIUM",
         "HIGH",
@@ -2268,6 +2279,13 @@
       "enum": [
         "BIT_8",
         "BIT_10"
+      ]
+    },
+    "Av1FastDecode": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
       ]
     },
     "Av1FilmGrainSynthesis": {
@@ -2291,6 +2309,13 @@
         "INTERPOLATE",
         "FRAMEFORMER",
         "MAINTAIN_FRAME_COUNT"
+      ]
+    },
+    "Av1GopSizeUnits": {
+      "type": "string",
+      "enum": [
+        "FRAMES",
+        "SECONDS"
       ]
     },
     "Av1QvbrSettings": {
@@ -2336,6 +2361,10 @@
           "shape": "__integerMin1000Max1152000000",
           "locationName": "bitrate"
         },
+        "FastDecode": {
+          "shape": "Av1FastDecode",
+          "locationName": "fastDecode"
+        },
         "FilmGrainSynthesis": {
           "shape": "Av1FilmGrainSynthesis",
           "locationName": "filmGrainSynthesis"
@@ -2359,6 +2388,10 @@
         "GopSize": {
           "shape": "__doubleMin0",
           "locationName": "gopSize"
+        },
+        "GopSizeUnits": {
+          "shape": "Av1GopSizeUnits",
+          "locationName": "gopSizeUnits"
         },
         "MaxBitrate": {
           "shape": "__integerMin1000Max1152000000",
@@ -2399,10 +2432,21 @@
         "SpatialAdaptiveQuantization": {
           "shape": "Av1SpatialAdaptiveQuantization",
           "locationName": "spatialAdaptiveQuantization"
+        },
+        "TemporalAdaptiveQuantization": {
+          "shape": "Av1TemporalAdaptiveQuantization",
+          "locationName": "temporalAdaptiveQuantization"
         }
       }
     },
     "Av1SpatialAdaptiveQuantization": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "Av1TemporalAdaptiveQuantization": {
       "type": "string",
       "enum": [
         "DISABLED",
@@ -4807,6 +4851,43 @@
         "ENABLED"
       ]
     },
+    "DtscSettings": {
+      "type": "structure",
+      "members": {
+        "Bitrate": {
+          "shape": "__integerMin768000Max768000",
+          "locationName": "bitrate"
+        },
+        "SampleRate": {
+          "shape": "__integerMin48000Max48000",
+          "locationName": "sampleRate"
+        }
+      }
+    },
+    "DtsxCodingMode": {
+      "type": "string",
+      "enum": [
+        "CODING_MODE_5_1",
+        "CODING_MODE_5_1_4"
+      ]
+    },
+    "DtsxSettings": {
+      "type": "structure",
+      "members": {
+        "Bitrate": {
+          "shape": "__integerMin160000Max448000",
+          "locationName": "bitrate"
+        },
+        "CodingMode": {
+          "shape": "DtsxCodingMode",
+          "locationName": "codingMode"
+        },
+        "SampleRate": {
+          "shape": "__integerMin48000Max48000",
+          "locationName": "sampleRate"
+        }
+      }
+    },
     "DurationControl": {
       "type": "structure",
       "members": {
@@ -5138,6 +5219,26 @@
       "enum": [
         "ALL_TRACKS",
         "LANGUAGE_CODE"
+      ]
+    },
+    "DynamicMultiviewSettings": {
+      "type": "structure",
+      "members": {
+        "Enabled": {
+          "shape": "DynamicMultiviewSettingsEnabled",
+          "locationName": "enabled"
+        },
+        "Regions": {
+          "shape": "__listOfRectangle",
+          "locationName": "regions"
+        }
+      }
+    },
+    "DynamicMultiviewSettingsEnabled": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
       ]
     },
     "Eac3AtmosBitstreamMode": {
@@ -12635,6 +12736,10 @@
           "shape": "DropFrameTimecode",
           "locationName": "dropFrameTimecode"
         },
+        "DynamicMultiviewSettings": {
+          "shape": "DynamicMultiviewSettings",
+          "locationName": "dynamicMultiviewSettings"
+        },
         "FixedAfd": {
           "shape": "__integerMin0Max15",
           "locationName": "fixedAfd"
@@ -13934,6 +14039,11 @@
       "min": 10,
       "max": 48
     },
+    "__integerMin160000Max448000": {
+      "type": "integer",
+      "min": 160000,
+      "max": 448000
+    },
     "__integerMin16000Max320000": {
       "type": "integer",
       "min": 16000,
@@ -14173,6 +14283,11 @@
       "type": "integer",
       "min": 6,
       "max": 16
+    },
+    "__integerMin768000Max768000": {
+      "type": "integer",
+      "min": 768000,
+      "max": 768000
     },
     "__integerMin8000Max192000": {
       "type": "integer",
@@ -14531,6 +14646,12 @@
       "type": "list",
       "member": {
         "shape": "QueueTransition"
+      }
+    },
+    "__listOfRectangle": {
+      "type": "list",
+      "member": {
+        "shape": "Rectangle"
       }
     },
     "__listOfServiceOverride": {

@@ -904,6 +904,7 @@ use Aws\AwsClient;
  *     projectProfileId?: string,
  *     userParameters?: list<array{
  *         environmentId?: string,
+ *         environmentBlueprintId?: string,
  *         environmentResolvedAccount?: array,
  *         environmentConfigurationName?: string,
  *         environmentParameters?: list<array>,
@@ -930,6 +931,7 @@ use Aws\AwsClient;
  *     projectProfileId?: string,
  *     userParameters?: list<array{
  *         environmentId?: string,
+ *         environmentBlueprintId?: string,
  *         environmentResolvedAccount?: array,
  *         environmentConfigurationName?: string,
  *         environmentParameters?: list<array>,
@@ -2785,6 +2787,22 @@ use Aws\AwsClient;
  *     },
  *     ...,
  * } $args = [])
+ * @method \Aws\Result updateAssetOwner(array $args = [])
+ * @phpstan-method \Aws\Result updateAssetOwner(array{
+ *     domainIdentifier?: string,
+ *     identifier?: string,
+ *     targetProjectIdentifier?: string,
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateAssetOwnerAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateAssetOwnerAsync(array{
+ *     domainIdentifier?: string,
+ *     identifier?: string,
+ *     targetProjectIdentifier?: string,
+ *     clientToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateConnection(array $args = [])
  * @phpstan-method \Aws\Result updateConnection(array{
  *     configurations?: list<array{classification?: string, properties?: array<string, string>, ...}>,
@@ -3193,12 +3211,14 @@ use Aws\AwsClient;
  *     },
  *     userParameters?: list<array{
  *         environmentId?: string,
+ *         environmentBlueprintId?: string,
  *         environmentResolvedAccount?: array,
  *         environmentConfigurationName?: string,
  *         environmentParameters?: list<array>,
  *         ...,
  *     }>,
  *     projectProfileVersion?: string,
+ *     projectProfileAction?: 'DISASSOCIATE',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateProjectAsync(array $args = [])
@@ -3217,12 +3237,14 @@ use Aws\AwsClient;
  *     },
  *     userParameters?: list<array{
  *         environmentId?: string,
+ *         environmentBlueprintId?: string,
  *         environmentResolvedAccount?: array,
  *         environmentConfigurationName?: string,
  *         environmentParameters?: list<array>,
  *         ...,
  *     }>,
  *     projectProfileVersion?: string,
+ *     projectProfileAction?: 'DISASSOCIATE',
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateProjectProfile(array $args = [])

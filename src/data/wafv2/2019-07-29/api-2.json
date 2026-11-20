@@ -382,6 +382,36 @@
         {"shape":"WAFInvalidResourceException"}
       ]
     },
+    "GetEvent":{
+      "name":"GetEvent",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetEventRequest"},
+      "output":{"shape":"GetEventResponse"},
+      "errors":[
+        {"shape":"WAFInternalErrorException"},
+        {"shape":"WAFInvalidParameterException"},
+        {"shape":"WAFNonexistentItemException"},
+        {"shape":"WAFInvalidOperationException"}
+      ]
+    },
+    "GetEventActor":{
+      "name":"GetEventActor",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetEventActorRequest"},
+      "output":{"shape":"GetEventActorResponse"},
+      "errors":[
+        {"shape":"WAFInternalErrorException"},
+        {"shape":"WAFInvalidParameterException"},
+        {"shape":"WAFNonexistentItemException"},
+        {"shape":"WAFInvalidOperationException"}
+      ]
+    },
     "GetIPSet":{
       "name":"GetIPSet",
       "http":{
@@ -649,6 +679,49 @@
       "errors":[
         {"shape":"WAFInternalErrorException"},
         {"shape":"WAFInvalidParameterException"},
+        {"shape":"WAFInvalidOperationException"}
+      ]
+    },
+    "ListEventActors":{
+      "name":"ListEventActors",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListEventActorsRequest"},
+      "output":{"shape":"ListEventActorsResponse"},
+      "errors":[
+        {"shape":"WAFInternalErrorException"},
+        {"shape":"WAFInvalidParameterException"},
+        {"shape":"WAFInvalidOperationException"}
+      ]
+    },
+    "ListEvents":{
+      "name":"ListEvents",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListEventsRequest"},
+      "output":{"shape":"ListEventsResponse"},
+      "errors":[
+        {"shape":"WAFInternalErrorException"},
+        {"shape":"WAFInvalidParameterException"},
+        {"shape":"WAFInvalidOperationException"}
+      ]
+    },
+    "ListEventsByWebACL":{
+      "name":"ListEventsByWebACL",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListEventsByWebACLRequest"},
+      "output":{"shape":"ListEventsByWebACLResponse"},
+      "errors":[
+        {"shape":"WAFInternalErrorException"},
+        {"shape":"WAFInvalidParameterException"},
+        {"shape":"WAFNonexistentItemException"},
         {"shape":"WAFInvalidOperationException"}
       ]
     },
@@ -1030,6 +1103,13 @@
         "EnableRegexInPath":{"shape":"Boolean"}
       }
     },
+    "AWSManagedRulesAISecurityRuleSet":{
+      "type":"structure",
+      "required":["BedrockGuardrails"],
+      "members":{
+        "BedrockGuardrails":{"shape":"BedrockGuardrails"}
+      }
+    },
     "AWSManagedRulesATPRuleSet":{
       "type":"structure",
       "required":["LoginPath"],
@@ -1122,6 +1202,51 @@
         "Statements":{"shape":"Statements"}
       }
     },
+    "ApiPattern":{
+      "type":"structure",
+      "members":{
+        "Method":{"shape":"HttpMethodString"},
+        "PathPattern":{"shape":"PathPatternString"},
+        "Port":{"shape":"PortNumber"},
+        "Domains":{"shape":"DomainList"}
+      }
+    },
+    "ApiPatternDomainList":{
+      "type":"list",
+      "member":{"shape":"DomainString"},
+      "max":10
+    },
+    "ApiPatternFilter":{
+      "type":"structure",
+      "members":{
+        "Method":{"shape":"HttpMethodString"},
+        "PathPattern":{"shape":"PathPatternString"},
+        "Port":{"shape":"PortNumber"},
+        "Domains":{"shape":"ApiPatternDomainList"}
+      }
+    },
+    "ApiPatternFilterList":{
+      "type":"list",
+      "member":{"shape":"ApiPatternFilter"},
+      "max":20,
+      "min":1
+    },
+    "ApiPatternList":{
+      "type":"list",
+      "member":{"shape":"ApiPattern"},
+      "max":20
+    },
+    "ApiSecurityEventDetail":{
+      "type":"structure",
+      "members":{
+        "Label":{"shape":"LabelName"},
+        "Category":{"shape":"CategoryString"},
+        "Confidence":{"shape":"Confidence"},
+        "ApiPatterns":{"shape":"ApiPatternList"},
+        "EventActors":{"shape":"EventActorReferenceList"},
+        "Timeline":{"shape":"EventTimelineEntryList"}
+      }
+    },
     "ApplicationAttribute":{
       "type":"structure",
       "members":{
@@ -1155,6 +1280,16 @@
         "ForwardedIPConfig":{"shape":"ForwardedIPConfig"}
       }
     },
+    "AsnOrganizationString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "AsnString":{
+      "type":"string",
+      "max":32,
+      "min":1
+    },
     "AssociateWebACLRequest":{
       "type":"structure",
       "required":[
@@ -1178,7 +1313,8 @@
         "COGNITO_USER_POOL",
         "APP_RUNNER_SERVICE",
         "VERIFIED_ACCESS_INSTANCE",
-        "AGENTCORE_GATEWAY"
+        "AGENTCORE_GATEWAY",
+        "APPLICATION_LOAD_BALANCER"
       ]
     },
     "AssociationConfig":{
@@ -1204,6 +1340,33 @@
       "member":{"shape":"AttributeValue"},
       "max":50,
       "min":1
+    },
+    "AuthFingerprintString":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "BedrockGuardrails":{
+      "type":"structure",
+      "members":{
+        "Disable":{"shape":"DisableBedrockGuardrails"},
+        "ProtectRequestOnly":{"shape":"BedrockGuardrailsRequestOnly"},
+        "ProtectRequestAndResponse":{"shape":"BedrockGuardrailsRequestAndResponse"}
+      }
+    },
+    "BedrockGuardrailsRequestAndResponse":{
+      "type":"structure",
+      "required":["RoleArn"],
+      "members":{
+        "RoleArn":{"shape":"IAMRoleArn"}
+      }
+    },
+    "BedrockGuardrailsRequestOnly":{
+      "type":"structure",
+      "required":["RoleArn"],
+      "members":{
+        "RoleArn":{"shape":"IAMRoleArn"}
+      }
     },
     "BlockAction":{
       "type":"structure",
@@ -1292,6 +1455,12 @@
         "FailureReason":{"shape":"FailureReason"}
       }
     },
+    "CategoryString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":".*\\S.*"
+    },
     "ChallengeAction":{
       "type":"structure",
       "members":{
@@ -1377,6 +1546,14 @@
       "type":"list",
       "member":{"shape":"Condition"},
       "min":1
+    },
+    "Confidence":{
+      "type":"string",
+      "enum":[
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
     },
     "ConnectedAccountArn":{
       "type":"string",
@@ -1484,6 +1661,10 @@
       "members":{
         "CustomRequestHandling":{"shape":"CustomRequestHandling"}
       }
+    },
+    "CountedValue":{
+      "type":"integer",
+      "min":0
     },
     "Country":{"type":"string"},
     "CountryCode":{
@@ -1744,6 +1925,11 @@
     "CountryCodes":{
       "type":"list",
       "member":{"shape":"CountryCode"},
+      "min":1
+    },
+    "CountryString":{
+      "type":"string",
+      "max":64,
       "min":1
     },
     "CreateAPIKeyRequest":{
@@ -2200,6 +2386,10 @@
         "ConsumedLabels":{"shape":"LabelSummaries"}
       }
     },
+    "DisableBedrockGuardrails":{
+      "type":"structure",
+      "members":{}
+    },
     "DisallowedFeature":{
       "type":"structure",
       "members":{
@@ -2222,6 +2412,16 @@
     "DisassociateWebACLResponse":{
       "type":"structure",
       "members":{}
+    },
+    "DomainList":{
+      "type":"list",
+      "member":{"shape":"DomainString"},
+      "max":100
+    },
+    "DomainString":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "DownloadUrl":{"type":"string"},
     "EmailField":{
@@ -2253,6 +2453,186 @@
     "ErrorMessage":{"type":"string"},
     "ErrorReason":{"type":"string"},
     "EvaluationWindowSec":{"type":"long"},
+    "EventActorChange":{
+      "type":"structure",
+      "members":{
+        "ChangeTime":{"shape":"Timestamp"},
+        "ClientIp":{"shape":"IpAddressString"},
+        "TlsFingerprint":{"shape":"TlsFingerprintString"},
+        "Asn":{"shape":"AsnString"},
+        "AsnOrganization":{"shape":"AsnOrganizationString"},
+        "Country":{"shape":"CountryString"}
+      }
+    },
+    "EventActorChangeList":{
+      "type":"list",
+      "member":{"shape":"EventActorChange"},
+      "max":20
+    },
+    "EventActorDetail":{
+      "type":"structure",
+      "required":["Summary"],
+      "members":{
+        "Summary":{"shape":"EventActorDetailSummary"},
+        "Events":{"shape":"RelatedEventList"},
+        "Changes":{"shape":"EventActorChangeList"}
+      }
+    },
+    "EventActorDetailSummary":{
+      "type":"structure",
+      "required":["EventActorId"],
+      "members":{
+        "EventActorId":{"shape":"EntityId"},
+        "ClientIp":{"shape":"IpAddressString"},
+        "TlsFingerprint":{"shape":"TlsFingerprintString"},
+        "Asn":{"shape":"AsnString"},
+        "AsnOrganization":{"shape":"AsnOrganizationString"},
+        "Country":{"shape":"CountryString"},
+        "AuthFingerprint":{"shape":"AuthFingerprintString"},
+        "CreatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "EventActorReference":{
+      "type":"structure",
+      "members":{
+        "EventActorId":{"shape":"EntityId"},
+        "EventActorValue":{"shape":"EventActorValueString"}
+      }
+    },
+    "EventActorReferenceList":{
+      "type":"list",
+      "member":{"shape":"EventActorReference"},
+      "max":20
+    },
+    "EventActorSortBy":{
+      "type":"string",
+      "enum":["EVENT_COUNT"]
+    },
+    "EventActorSummary":{
+      "type":"structure",
+      "required":["EventActorId"],
+      "members":{
+        "EventActorId":{"shape":"EntityId"},
+        "ClientIp":{"shape":"IpAddressString"},
+        "TlsFingerprint":{"shape":"TlsFingerprintString"},
+        "Asn":{"shape":"AsnString"},
+        "AsnOrganization":{"shape":"AsnOrganizationString"},
+        "Country":{"shape":"CountryString"},
+        "AuthFingerprint":{"shape":"AuthFingerprintString"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "EventCount":{"shape":"CountedValue"}
+      }
+    },
+    "EventActorSummaryList":{
+      "type":"list",
+      "member":{"shape":"EventActorSummary"},
+      "max":100
+    },
+    "EventActorValueString":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "EventCategory":{
+      "type":"string",
+      "enum":["API_SECURITY"]
+    },
+    "EventDetailSummary":{
+      "type":"structure",
+      "required":["EventId"],
+      "members":{
+        "EventId":{"shape":"EntityId"},
+        "EventStatus":{"shape":"EventStatus"},
+        "EventCategory":{"shape":"EventCategory"},
+        "StartTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "ResourceArn":{"shape":"ResourceArn"},
+        "WebAclArn":{"shape":"ResourceArn"},
+        "ApiSecurityEventDetail":{"shape":"ApiSecurityEventDetail"}
+      }
+    },
+    "EventDetailSummaryList":{
+      "type":"list",
+      "member":{"shape":"EventDetailSummary"},
+      "max":100
+    },
+    "EventFilter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Values"
+      ],
+      "members":{
+        "Name":{"shape":"EventFilterKey"},
+        "Values":{"shape":"FilterValueList"}
+      }
+    },
+    "EventFilterKey":{
+      "type":"string",
+      "enum":[
+        "EVENT_CATEGORY",
+        "RESOURCE_ARN"
+      ]
+    },
+    "EventFilterList":{
+      "type":"list",
+      "member":{"shape":"EventFilter"},
+      "max":8,
+      "min":1
+    },
+    "EventIncludeField":{
+      "type":"string",
+      "enum":["TIMELINE"]
+    },
+    "EventIncludeFieldList":{
+      "type":"list",
+      "member":{"shape":"EventIncludeField"},
+      "max":10,
+      "min":1
+    },
+    "EventNextMarker":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":".*\\S.*"
+    },
+    "EventPaginationLimit":{
+      "type":"integer",
+      "max":20,
+      "min":1
+    },
+    "EventSortBy":{
+      "type":"string",
+      "enum":[
+        "START_TIME",
+        "END_TIME",
+        "CONFIDENCE"
+      ]
+    },
+    "EventStatus":{
+      "type":"string",
+      "enum":[
+        "EVENT_STARTED",
+        "EVENT_IN_PROGRESS",
+        "EVENT_COMPLETED",
+        "EVENT_ENDED"
+      ]
+    },
+    "EventTimelineEntry":{
+      "type":"structure",
+      "members":{
+        "ChangeTime":{"shape":"Timestamp"},
+        "Label":{"shape":"LabelName"},
+        "Confidence":{"shape":"Confidence"},
+        "ApiPatterns":{"shape":"ApiPatternList"}
+      }
+    },
+    "EventTimelineEntryList":{
+      "type":"list",
+      "member":{"shape":"EventTimelineEntry"},
+      "max":32
+    },
     "ExcludedRule":{
       "type":"structure",
       "required":["Name"],
@@ -2393,6 +2773,17 @@
       "min":1,
       "pattern":".*\\S.*"
     },
+    "FilterValue":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "FilterValueList":{
+      "type":"list",
+      "member":{"shape":"FilterValue"},
+      "max":10,
+      "min":1
+    },
     "Filters":{
       "type":"list",
       "member":{"shape":"Filter"},
@@ -2491,6 +2882,42 @@
       "members":{
         "TokenDomains":{"shape":"TokenDomains"},
         "CreationTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "GetEventActorRequest":{
+      "type":"structure",
+      "required":[
+        "Scope",
+        "EventActorId"
+      ],
+      "members":{
+        "Scope":{"shape":"Scope"},
+        "EventActorId":{"shape":"EntityId"}
+      }
+    },
+    "GetEventActorResponse":{
+      "type":"structure",
+      "members":{
+        "EventActor":{"shape":"EventActorDetail"}
+      }
+    },
+    "GetEventRequest":{
+      "type":"structure",
+      "required":[
+        "Scope",
+        "EventId",
+        "WebAclArn"
+      ],
+      "members":{
+        "Scope":{"shape":"Scope"},
+        "EventId":{"shape":"EntityId"},
+        "WebAclArn":{"shape":"ResourceArn"}
+      }
+    },
+    "GetEventResponse":{
+      "type":"structure",
+      "members":{
+        "Event":{"shape":"EventDetailSummary"}
       }
     },
     "GetIPSetRequest":{
@@ -2874,6 +3301,17 @@
         "OversizeHandling":{"shape":"OversizeHandling"}
       }
     },
+    "HttpMethodString":{
+      "type":"string",
+      "max":16,
+      "min":1
+    },
+    "IAMRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-zA-Z-]*:iam::\\d{12}:role/(?:[\\x21-\\x7F]+/)?[\\w+=,.@-]+$"
+    },
     "IPAddress":{
       "type":"string",
       "max":50,
@@ -2967,6 +3405,11 @@
         "HOURLY",
         "DAILY"
       ]
+    },
+    "IpAddressString":{
+      "type":"string",
+      "max":64,
+      "min":1
     },
     "JA3Fingerprint":{
       "type":"structure",
@@ -3139,6 +3582,78 @@
       "members":{
         "NextMarker":{"shape":"NextMarker"},
         "ManagedRuleGroups":{"shape":"ManagedRuleGroupSummaries"}
+      }
+    },
+    "ListEventActorsRequest":{
+      "type":"structure",
+      "required":[
+        "Scope",
+        "TimeWindow"
+      ],
+      "members":{
+        "Scope":{"shape":"Scope"},
+        "TimeWindow":{"shape":"TimeWindow"},
+        "SortBy":{"shape":"EventActorSortBy"},
+        "Limit":{"shape":"PaginationLimit"},
+        "NextMarker":{"shape":"EventNextMarker"}
+      }
+    },
+    "ListEventActorsResponse":{
+      "type":"structure",
+      "required":["EventActors"],
+      "members":{
+        "EventActors":{"shape":"EventActorSummaryList"},
+        "NextMarker":{"shape":"EventNextMarker"}
+      }
+    },
+    "ListEventsByWebACLRequest":{
+      "type":"structure",
+      "required":[
+        "Scope",
+        "WebAclArn"
+      ],
+      "members":{
+        "Scope":{"shape":"Scope"},
+        "WebAclArn":{"shape":"ResourceArn"},
+        "TimeWindow":{"shape":"TimeWindow"},
+        "Filters":{"shape":"EventFilterList"},
+        "ApiPatternFilters":{"shape":"ApiPatternFilterList"},
+        "Limit":{"shape":"EventPaginationLimit"},
+        "NextMarker":{"shape":"EventNextMarker"},
+        "SortOrder":{"shape":"SortOrder"},
+        "SortBy":{"shape":"EventSortBy"},
+        "Include":{"shape":"EventIncludeFieldList"}
+      }
+    },
+    "ListEventsByWebACLResponse":{
+      "type":"structure",
+      "required":["Events"],
+      "members":{
+        "Events":{"shape":"EventDetailSummaryList"},
+        "NextMarker":{"shape":"EventNextMarker"}
+      }
+    },
+    "ListEventsRequest":{
+      "type":"structure",
+      "required":["Scope"],
+      "members":{
+        "Scope":{"shape":"Scope"},
+        "TimeWindow":{"shape":"TimeWindow"},
+        "Filters":{"shape":"EventFilterList"},
+        "ApiPatternFilters":{"shape":"ApiPatternFilterList"},
+        "Limit":{"shape":"EventPaginationLimit"},
+        "NextMarker":{"shape":"EventNextMarker"},
+        "SortOrder":{"shape":"SortOrder"},
+        "SortBy":{"shape":"EventSortBy"},
+        "Include":{"shape":"EventIncludeFieldList"}
+      }
+    },
+    "ListEventsResponse":{
+      "type":"structure",
+      "required":["Events"],
+      "members":{
+        "Events":{"shape":"EventDetailSummaryList"},
+        "NextMarker":{"shape":"EventNextMarker"}
       }
     },
     "ListIPSetsRequest":{
@@ -3426,7 +3941,8 @@
         "AWSManagedRulesBotControlRuleSet":{"shape":"AWSManagedRulesBotControlRuleSet"},
         "AWSManagedRulesATPRuleSet":{"shape":"AWSManagedRulesATPRuleSet"},
         "AWSManagedRulesACFPRuleSet":{"shape":"AWSManagedRulesACFPRuleSet"},
-        "AWSManagedRulesAntiDDoSRuleSet":{"shape":"AWSManagedRulesAntiDDoSRuleSet"}
+        "AWSManagedRulesAntiDDoSRuleSet":{"shape":"AWSManagedRulesAntiDDoSRuleSet"},
+        "AWSManagedRulesAISecurityRuleSet":{"shape":"AWSManagedRulesAISecurityRuleSet"}
       }
     },
     "ManagedRuleGroupConfigs":{
@@ -3733,7 +4249,9 @@
         "PRICE_AMOUNT",
         "PAYMENT_NETWORK",
         "PRE_PARSE_TEXT_TRANSFORMATION",
-        "CHALLENGE_JAVASCRIPT_SDK_INJECTION_CONFIG"
+        "CHALLENGE_JAVASCRIPT_SDK_INJECTION_CONFIG",
+        "BEDROCK_GUARDRAILS",
+        "ROLE_ARN"
       ]
     },
     "ParameterExceptionParameter":{
@@ -3746,6 +4264,11 @@
       "members":{
         "Identifier":{"shape":"FieldIdentifier"}
       }
+    },
+    "PathPatternString":{
+      "type":"string",
+      "max":512,
+      "min":1
     },
     "PathStatistics":{
       "type":"structure",
@@ -3832,6 +4355,11 @@
       "pattern":".*\\S.*"
     },
     "PopulationSize":{"type":"long"},
+    "PortNumber":{
+      "type":"integer",
+      "max":65535,
+      "min":0
+    },
     "PositionalConstraint":{
       "type":"string",
       "enum":[
@@ -4223,6 +4751,22 @@
     "RegularExpressionList":{
       "type":"list",
       "member":{"shape":"Regex"}
+    },
+    "RelatedEvent":{
+      "type":"structure",
+      "members":{
+        "EventId":{"shape":"EntityId"},
+        "StartTime":{"shape":"Timestamp"},
+        "Label":{"shape":"LabelName"},
+        "Category":{"shape":"CategoryString"},
+        "Confidence":{"shape":"Confidence"},
+        "ApiPatterns":{"shape":"ApiPatternList"}
+      }
+    },
+    "RelatedEventList":{
+      "type":"list",
+      "member":{"shape":"RelatedEvent"},
+      "max":20
     },
     "ReleaseNotes":{"type":"string"},
     "ReleaseSummaries":{
@@ -4742,6 +5286,7 @@
     "SizeInspectionLimit":{
       "type":"string",
       "enum":[
+        "KB_8",
         "KB_16",
         "KB_32",
         "KB_48",
@@ -4970,6 +5515,11 @@
       "min":60
     },
     "Timestamp":{"type":"timestamp"},
+    "TlsFingerprintString":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
     "TokenDomain":{
       "type":"string",
       "max":253,

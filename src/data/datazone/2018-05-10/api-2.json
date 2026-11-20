@@ -3376,6 +3376,27 @@
       ],
       "idempotent":true
     },
+    "UpdateAssetOwner":{
+      "name":"UpdateAssetOwner",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/v2/domains/{domainIdentifier}/assets/{identifier}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateAssetOwnerInput"},
+      "output":{"shape":"UpdateAssetOwnerOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "UpdateConnection":{
       "name":"UpdateConnection",
       "http":{
@@ -4399,6 +4420,29 @@
       "max":256,
       "min":1,
       "sensitive":true
+    },
+    "AssetOwnershipTransfer":{
+      "type":"structure",
+      "required":[
+        "status",
+        "sourceProjectId",
+        "targetProjectId"
+      ],
+      "members":{
+        "status":{"shape":"AssetOwnershipTransferStatus"},
+        "sourceProjectId":{"shape":"ProjectId"},
+        "targetProjectId":{"shape":"ProjectId"},
+        "startedAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "AssetOwnershipTransferStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "SUCCEEDED",
+        "FAILED"
+      ]
     },
     "AssetPermission":{
       "type":"structure",
@@ -8651,6 +8695,7 @@
       "type":"structure",
       "members":{
         "environmentId":{"shape":"EnvironmentId"},
+        "environmentBlueprintId":{"shape":"EnvironmentBlueprintId"},
         "environmentResolvedAccount":{"shape":"EnvironmentResolvedAccount"},
         "environmentConfigurationName":{"shape":"EnvironmentConfigurationName"},
         "environmentParameters":{"shape":"EnvironmentParametersList"}
@@ -9248,7 +9293,8 @@
         "listing":{"shape":"AssetListingDetails"},
         "formsOutput":{"shape":"FormOutputList"},
         "readOnlyFormsOutput":{"shape":"FormOutputList"},
-        "latestTimeSeriesDataPointFormsOutput":{"shape":"TimeSeriesDataPointSummaryFormOutputList"}
+        "latestTimeSeriesDataPointFormsOutput":{"shape":"TimeSeriesDataPointSummaryFormOutputList"},
+        "ownershipTransfer":{"shape":"AssetOwnershipTransfer"}
       }
     },
     "GetAssetOutputGovernedGlossaryTermsList":{
@@ -14897,6 +14943,10 @@
         "projectGrantFilter":{"shape":"ProjectGrantFilter"}
       }
     },
+    "ProjectProfileAction":{
+      "type":"string",
+      "enum":["DISASSOCIATE"]
+    },
     "ProjectProfileId":{
       "type":"string",
       "pattern":"[a-zA-Z0-9_-]{1,36}"
@@ -17996,6 +18046,44 @@
         "effectiveRowFilter":{"shape":"String"}
       }
     },
+    "UpdateAssetOwnerInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier",
+        "targetProjectIdentifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"AssetIdentifier",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "targetProjectIdentifier":{"shape":"ProjectId"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateAssetOwnerOutput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "revision",
+        "ownershipTransfer"
+      ],
+      "members":{
+        "id":{"shape":"AssetId"},
+        "revision":{"shape":"Revision"},
+        "ownershipTransfer":{"shape":"AssetOwnershipTransfer"}
+      }
+    },
     "UpdateConnectionInput":{
       "type":"structure",
       "required":[
@@ -18647,7 +18735,8 @@
         "domainUnitId":{"shape":"DomainUnitId"},
         "environmentDeploymentDetails":{"shape":"EnvironmentDeploymentDetails"},
         "userParameters":{"shape":"EnvironmentConfigurationUserParametersList"},
-        "projectProfileVersion":{"shape":"String"}
+        "projectProfileVersion":{"shape":"String"},
+        "projectProfileAction":{"shape":"ProjectProfileAction"}
       }
     },
     "UpdateProjectInputResourceTagsMap":{

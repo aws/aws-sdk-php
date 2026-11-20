@@ -618,6 +618,7 @@
         "additionalOsCapabilities":{"shape":"CapabilityList"},
         "hooks":{"shape":"Hooks"},
         "environmentVariables":{"shape":"EnvironmentVariableMap"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "name":{"shape":"ImageName"},
         "tags":{"shape":"Tags"},
         "clientToken":{
@@ -668,6 +669,7 @@
         "additionalOsCapabilities":{"shape":"CapabilityList"},
         "hooks":{"shape":"Hooks"},
         "environmentVariables":{"shape":"EnvironmentVariableMap"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "tags":{"shape":"Tags"},
         "updatedAt":{"shape":"Timestamp"},
         "imageVersion":{"shape":"NonBlankString"}
@@ -898,6 +900,7 @@
         "additionalOsCapabilities":{"shape":"CapabilityList"},
         "hooks":{"shape":"Hooks"},
         "environmentVariables":{"shape":"EnvironmentVariableMap"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "imageArn":{"shape":"NonBlankString"},
         "imageVersion":{"shape":"NonBlankString"},
         "state":{"shape":"MicrovmImageVersionState"},
@@ -948,6 +951,7 @@
         "startedAt":{"shape":"Timestamp"},
         "terminatedAt":{"shape":"Timestamp"},
         "stateReason":{"shape":"NonBlankString"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "ingressNetworkConnectors":{"shape":"NetworkConnectorList"},
         "egressNetworkConnectors":{"shape":"NetworkConnectorList"}
       }
@@ -1047,6 +1051,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "KmsKeyIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"(arn:aws[a-z-]*:kms:[a-z0-9-]+:[0-9]{12}:(key|alias)/[a-zA-Z0-9:/_-]+|alias/[a-zA-Z0-9:/_-]+|[a-zA-Z0-9-]+)"
     },
     "ListManagedMicrovmImageVersionsInput":{
       "type":"structure",
@@ -1541,6 +1551,7 @@
         "additionalOsCapabilities":{"shape":"CapabilityList"},
         "hooks":{"shape":"Hooks"},
         "environmentVariables":{"shape":"EnvironmentVariableMap"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "imageArn":{"shape":"NonBlankString"},
         "imageVersion":{"shape":"NonBlankString"},
         "state":{"shape":"MicrovmImageVersionState"},
@@ -1718,6 +1729,7 @@
         "executionRoleArn":{"shape":"RoleArn"},
         "idlePolicy":{"shape":"IdlePolicy"},
         "logging":{"shape":"Logging"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "runHookPayload":{"shape":"RunHookPayload"},
         "maximumDurationInSeconds":{"shape":"RunMicrovmRequestMaximumDurationInSecondsInteger"},
         "clientToken":{
@@ -1760,6 +1772,7 @@
         "startedAt":{"shape":"Timestamp"},
         "terminatedAt":{"shape":"Timestamp"},
         "stateReason":{"shape":"NonBlankString"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "ingressNetworkConnectors":{"shape":"NetworkConnectorList"},
         "egressNetworkConnectors":{"shape":"NetworkConnectorList"}
       }
@@ -1958,6 +1971,7 @@
         "additionalOsCapabilities":{"shape":"CapabilityList"},
         "hooks":{"shape":"Hooks"},
         "environmentVariables":{"shape":"EnvironmentVariableMap"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "imageIdentifier":{
           "shape":"MicrovmImageIdentifier",
           "location":"uri",
@@ -2012,6 +2026,7 @@
         "additionalOsCapabilities":{"shape":"CapabilityList"},
         "hooks":{"shape":"Hooks"},
         "environmentVariables":{"shape":"EnvironmentVariableMap"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "updatedAt":{"shape":"Timestamp"},
         "imageVersion":{"shape":"NonBlankString"}
       }
@@ -2068,6 +2083,7 @@
         "additionalOsCapabilities":{"shape":"CapabilityList"},
         "hooks":{"shape":"Hooks"},
         "environmentVariables":{"shape":"EnvironmentVariableMap"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "imageArn":{"shape":"NonBlankString"},
         "imageVersion":{"shape":"NonBlankString"},
         "state":{"shape":"MicrovmImageVersionState"},
