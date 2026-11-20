@@ -22,7 +22,7 @@ class TraceMiddleware
     private $config;
     /** @var Service */
     private $service;
-    /** @var array Memoized "operation:direction" => has sensitive data */
+    /** @var array Memoized per operation and direction: has sensitive data, and sensitive bindings */
     private $sensitiveOps = [];
 
     private static $authHeaders = [
@@ -113,7 +113,8 @@ class TraceMiddleware
                                 $this->operationShape(
                                     $command->getName(),
                                     'output'
-                                )
+                                ),
+                                $command->getName()
                             ),
                             'error'  => null
                         ]);
@@ -186,7 +187,11 @@ class TraceMiddleware
             : array_filter([
                 'instance' => spl_object_hash($request),
                 'method'   => $request->getMethod(),
-                'headers'  => $this->redactHeaders($request->getHeaders()),
+                'headers'  => $this->redactHeaders(
+                    $request->getHeaders(),
+                    $opName,
+                    'input'
+                ),
                 'body'     => $this->bodyStr(
                     $request->getBody(),
                     $opName,
@@ -194,8 +199,8 @@ class TraceMiddleware
                 ),
                 'scheme'   => $request->getUri()->getScheme(),
                 'port'     => $request->getUri()->getPort(),
-                'path'     => $request->getUri()->getPath(),
-                'query'    => $request->getUri()->getQuery(),
+                'path'     => $this->redactPath($request->getUri()->getPath(), $opName),
+                'query'    => $this->redactQuery($request->getUri()->getQuery(), $opName),
         ]);
     }
 
@@ -206,7 +211,11 @@ class TraceMiddleware
         return !$response ? [] : [
             'instance'   => spl_object_hash($response),
             'statusCode' => $response->getStatusCode(),
-            'headers'    => $this->redactHeaders($response->getHeaders()),
+            'headers'    => $this->redactHeaders(
+                $response->getHeaders(),
+                $opName,
+                'output'
+            ),
             'body'       => $this->bodyStr(
                 $response->getBody(),
                 $opName,
@@ -215,13 +224,25 @@ class TraceMiddleware
         ];
     }
 
-    private function resultArray($value, ?Shape $shape = null)
-    {
-        return $value instanceof ResultInterface
-            ? [
-                'instance' => spl_object_hash($value),
-                'data'     => $this->redactValue($value->toArray(), $shape)
-            ] : $value;
+    private function resultArray(
+        $value,
+        ?Shape $shape = null,
+        ?string $opName = null
+    ) {
+        if (!$value instanceof ResultInterface) {
+            return $value;
+        }
+
+        $data = $this->redactValue($value->toArray(), $shape);
+        $uri = $data['@metadata']['effectiveUri'] ?? null;
+        if (is_string($uri)) {
+            $data['@metadata']['effectiveUri'] = $this->redactUri($uri, $opName);
+        }
+
+        return [
+            'instance' => spl_object_hash($value),
+            'data'     => $data,
+        ];
     }
 
     private function exceptionArray($e)
@@ -248,7 +269,8 @@ class TraceMiddleware
                 'statusCode' => $e->getStatusCode(),
                 'result'     => $this->resultArray(
                     $e->getResult(),
-                    $e->getAwsErrorShape()
+                    $e->getAwsErrorShape(),
+                    $opName
                 ),
                 'request'    => $this->requestArray($e->getRequest(), $opName),
                 'response'   => $this->responseArray($e->getResponse(), $opName),
@@ -319,7 +341,10 @@ class TraceMiddleware
         if ($res = $command['@http']['debug'] ?? null) {
             if (is_resource($res)) {
                 rewind($res);
-                $this->write(stream_get_contents($res));
+                $this->write($this->redactWireHeaders(
+                    stream_get_contents($res),
+                    $command->getName()
+                ));
                 // Stream handlers retain this resource until the body closes.
                 if (!$deferClose) {
                     fclose($res);
@@ -346,13 +371,119 @@ class TraceMiddleware
         call_user_func($this->config['logfn'], $value);
     }
 
-    private function redactHeaders(array $headers)
-    {
+    private function redactHeaders(
+        array $headers,
+        ?string $opName = null,
+        string $direction = 'input'
+    ) {
         if ($this->config['scrub_auth']) {
             $headers = $this->config['auth_headers'] + $headers;
         }
 
+        $sensitive = $this->sensitiveBindings($opName, $direction)['header'];
+        foreach (array_keys($headers) as $name) {
+            $lower = strtolower($name);
+            if (isset($sensitive[$lower])) {
+                $headers[$name] = $sensitive[$lower];
+            }
+        }
+
         return $headers;
+    }
+
+    private function redactQuery(string $query, ?string $opName): string
+    {
+        $sensitive = $this->sensitiveBindings($opName, 'input')['querystring'];
+        if (!$sensitive || $query === '') {
+            return $query;
+        }
+
+        $parts = explode('&', $query);
+        foreach ($parts as $i => $part) {
+            $name = rawurldecode(explode('=', $part, 2)[0]);
+            if (isset($sensitive[$name])) {
+                $parts[$i] = explode('=', $part, 2)[0] . '=' . $sensitive[$name];
+            }
+        }
+
+        return implode('&', $parts);
+    }
+
+    private function redactPath(string $path, ?string $opName): string
+    {
+        return $this->sensitiveBindings($opName, 'input')['uri']
+            ? '[REDACTED path]'
+            : $path;
+    }
+
+    private function redactUri(string $uri, ?string $opName): string
+    {
+        $input = $this->sensitiveBindings($opName, 'input');
+        if (!$input['querystring'] && !$input['uri']) {
+            return $uri;
+        }
+
+        $parsed = new \GuzzleHttp\Psr7\Uri($uri);
+
+        return (string) $parsed
+            ->withPath($this->redactPath($parsed->getPath(), $opName))
+            ->withQuery($this->redactQuery($parsed->getQuery(), $opName));
+    }
+
+    /**
+     * Redacts sensitive header lines in the raw HTTP debug output.
+     */
+    private function redactWireHeaders(string $output, string $opName): string
+    {
+        $input = $this->sensitiveBindings($opName, 'input');
+        if ($input['querystring'] || $input['uri']) {
+            $output = preg_replace(
+                '/^> ([A-Z]+) \S+ (HTTP\/\S+)/m',
+                '> $1 [REDACTED target] $2',
+                $output
+            );
+        }
+        $headers = $input['header']
+            + $this->sensitiveBindings($opName, 'output')['header'];
+        foreach ($headers as $name => $placeholder) {
+            $output = preg_replace(
+                '/^([<>] )?(' . preg_quote($name, '/') . '):[^\r\n]*/mi',
+                '$1$2: ' . $placeholder,
+                $output
+            );
+        }
+
+        return $output;
+    }
+
+    /**
+     * Returns the operation's sensitive members bound to headers, query
+     * parameters and URI labels, keyed by the name sent on the wire, with
+     * their placeholders. Header names are lowercase.
+     */
+    private function sensitiveBindings(?string $opName, string $direction): array
+    {
+        $key = "{$opName}:{$direction}:bindings";
+        if (isset($this->sensitiveOps[$key])) {
+            return $this->sensitiveOps[$key];
+        }
+
+        $bindings = ['header' => [], 'querystring' => [], 'uri' => []];
+        $shape = $this->operationShape($opName, $direction);
+        if ($shape instanceof StructureShape) {
+            foreach ($shape->getMembers() as $name => $member) {
+                $location = $member['location'];
+                if (isset($bindings[$location]) && $this->isSensitive($member)) {
+                    $wireName = $member['locationName'] ?? $name;
+                    if ($location === 'header') {
+                        $wireName = strtolower($wireName);
+                    }
+                    $bindings[$location][$wireName] = $this->placeholder($member);
+                }
+            }
+        }
+
+        return $this->sensitiveOps[$key] = $bindings;
     }
 
     private function bodyStr(

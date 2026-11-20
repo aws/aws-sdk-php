@@ -2,6 +2,8 @@
 namespace Aws\Test;
 
 use Aws\Api\Service;
+use Aws\Backup\BackupClient;
+use Aws\BedrockAgentCoreControl\BedrockAgentCoreControlClient;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\Command;
 use Aws\EventBridge\EventBridgeClient;
@@ -9,6 +11,7 @@ use Aws\Exception\AwsException;
 use Aws\HandlerList;
 use Aws\MockHandler;
 use Aws\Result;
+use Aws\S3\S3Client;
 use Aws\TraceMiddleware;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\FnStream;
@@ -397,6 +400,88 @@ class TraceMiddlewareTest extends TestCase
             'Username' => 'alice',
             'Password' => $secret,
         ]);
+
+        return $str;
+    }
+
+    public function testRedactsSensitiveHeadersInTraceAndWireOutput()
+    {
+        $key = 'SseC-Leak-Marker-0123456789abcdef';
+        $str = $this->traceClientCall(S3Client::class, 'putObject', [
+            'Bucket' => 'bucket',
+            'Key' => 'key',
+            'Body' => 'x',
+            'SSECustomerAlgorithm' => 'AES256',
+            'SSECustomerKey' => $key,
+        ]);
+
+        $this->assertStringNotContainsString($key, $str);
+        $this->assertStringNotContainsString(base64_encode($key), $str);
+        $this->assertStringContainsString('[SSECustomerKey]', $str);
+        $this->assertStringContainsString(
+            '> x-amz-server-side-encryption-customer-key: [SSECustomerKey]',
+            $str
+        );
+    }
+
+    public function testRedactsSensitiveQueryParams()
+    {
+        $secret = 'Query-Leak-Marker-5e1d';
+        $str = $this->traceClientCall(
+            BackupClient::class,
+            'revokeRestoreAccessBackupVault',
+            [
+                'BackupVaultName' => 'vault',
+                'RestoreAccessBackupVaultArn' => 'arn',
+                'RequesterComment' => $secret,
+            ]
+        );
+
+        $this->assertStringNotContainsString($secret, $str);
+        $this->assertStringContainsString('requesterComment=[RequesterComment]', $str);
+        $this->assertStringContainsString('[REDACTED target]', $str);
+    }
+
+    public function testRedactsPathWithSensitiveLabels()
+    {
+        $endpoint = 'Path-Leak-Marker-9b2c';
+        $str = $this->traceClientCall(
+            BedrockAgentCoreControlClient::class,
+            'getAgentRuntimeEndpoint',
+            ['agentRuntimeId' => 'runtime', 'endpointName' => $endpoint]
+        );
+
+        $this->assertStringNotContainsString($endpoint, $str);
+        $this->assertStringContainsString('[REDACTED path]', $str);
+        $this->assertStringContainsString('[REDACTED target]', $str);
+    }
+
+    /**
+     * Calls a client with `http` debug on. Its HTTP handler writes
+     * curl-style request lines to the debug resource, as CURLOPT_VERBOSE
+     * does.
+     */
+    private function traceClientCall(string $class, string $method, array $args): string
+    {
+        $str = '';
+        $client = new $class([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'AKIAEXAMPLE', 'secret' => 'example'],
+            'http_handler' => function ($request, array $options) {
+                if (is_resource($options['debug'] ?? null)) {
+                    $lines = '> ' . $request->getMethod() . ' '
+                        . $request->getRequestTarget() . " HTTP/1.1\n";
+                    foreach ($request->getHeaders() as $name => $values) {
+                        $lines .= "> {$name}: " . implode(', ', $values) . "\n";
+                    }
+                    fwrite($options['debug'], $lines);
+                }
+                return Promise\Create::promiseFor(new Response(200));
+            },
+            'debug' => ['logfn' => function ($value) use (&$str) { $str .= $value; }],
+        ]);
+        $client->{$method}($args);
 
         return $str;
     }
