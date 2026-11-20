@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.407.0 - 2026-11-20
 
 * `Aws\` - Uses `spl_object_id()` instead of `spl_object_hash()`, which PHP 8.6 deprecates, to identify objects in `HandlerList` and `TraceMiddleware` debug output.
 * `Aws\` - `TraceMiddleware` now redacts sensitive values in command params, result data, headers, query params and path labels by walking the operation's input and output shapes, and masks request and response bodies for operations with sensitive data.
