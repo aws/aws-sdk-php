@@ -79,6 +79,42 @@ final class ConfigFileParserTest extends TestCase
         $this->assertSame(['svc' => ['s3' => ['endpoint_url' => 'u']]], $parsed['services']);
     }
 
+    public function testErrorNamesFileAndLineWithoutValues(): void
+    {
+        try {
+            ConfigFileParser::parse("[profile a]\nsecret_key = hunter2\nno equals sign here\n", '/home/u/.aws/config', true);
+            $this->fail('Expected a ConfigFileException.');
+        } catch (ConfigFileException $e) {
+            $this->assertStringContainsString('/home/u/.aws/config', $e->getMessage());
+            $this->assertStringContainsString('line 3', $e->getMessage());
+            $this->assertStringNotContainsString('hunter2', $e->getMessage());
+            $this->assertStringNotContainsString('no equals sign here', $e->getMessage());
+        }
+    }
+
+    public function testRedefinedPropertyDropsEarlierSubProperties(): void
+    {
+        $parsed = ConfigFileParser::parse(
+            "[profile a]\nsub =\n  x = 1\n[profile a]\nsub = plain\n",
+            'config',
+            true
+        );
+
+        $this->assertSame(['a' => ['sub' => 'plain']], $parsed['profiles']);
+        $this->assertSame([], $parsed['subProperties']);
+    }
+
+    public function testDuplicateServicesSectionsMergeWithLaterValueWinning(): void
+    {
+        $parsed = ConfigFileParser::parse(
+            "[services s]\ns3 =\n  endpoint_url = old\n  region = r\n[services s]\ns3 =\n  endpoint_url = new\n",
+            'config',
+            true
+        );
+
+        $this->assertSame(['s' => ['s3' => ['endpoint_url' => 'new']]], $parsed['services']);
+    }
+
     /**
      * Merge both files like AwsProfileFile: credentials file properties win.
      *
