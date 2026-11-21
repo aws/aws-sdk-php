@@ -21,7 +21,8 @@ final class RetryMetadataException extends \RuntimeException implements RetryInf
         public readonly bool $retryable,
         public readonly bool $throttling = false,
         public readonly ?float $retryAfterSeconds = null,
-    ) {
+    )
+    {
         parent::__construct($previous->getMessage(), 0, $previous);
     }
 
@@ -45,7 +46,8 @@ final class RetryMetadataException extends \RuntimeException implements RetryInf
         bool $retryable,
         bool $throttling = false,
         ?float $retryAfterSeconds = null,
-    ): self {
+    ): self
+    {
         if ($error instanceof self) {
             $mergedRetryable = $error->retryable || $retryable || $throttling;
             $mergedThrottling = $error->throttling || $throttling;

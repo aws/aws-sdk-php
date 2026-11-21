@@ -102,7 +102,8 @@ final class ConfigFileParser
         string $definition,
         string $source,
         int $lineNumber
-    ): array {
+    ): array
+    {
         $equals = \strpos($definition, '=');
         if ($equals === false) {
             throw ConfigFileException::atLine(
@@ -128,7 +129,8 @@ final class ConfigFileParser
         string $line,
         string $source,
         int $lineNumber
-    ): string {
+    ): string
+    {
         $commentStart = \strcspn($line, '#;');
         $definition = \rtrim(\substr($line, 0, $commentStart), " \t");
         if (!\str_ends_with($definition, ']')) {

@@ -38,7 +38,8 @@ final class ConfigFileLocation
         ?string $configured,
         array $env,
         ?bool $windows = null
-    ): ?string {
+    ): ?string
+    {
         return self::resolve(
             $configured,
             self::ENV_SHARED_CREDENTIALS_FILE,
@@ -57,7 +58,8 @@ final class ConfigFileLocation
         ?string $configured,
         array $env,
         ?bool $windows = null
-    ): ?string {
+    ): ?string
+    {
         return self::resolve(
             $configured,
             self::ENV_CONFIG_FILE,
@@ -105,7 +107,8 @@ final class ConfigFileLocation
         string $path,
         array $env,
         ?bool $windows = null
-    ): ?string {
+    ): ?string
+    {
         $windows ??= \PHP_OS_FAMILY === 'Windows';
         $isHomePath = $path === '~'
             || \str_starts_with($path, '~/')
@@ -128,7 +131,8 @@ final class ConfigFileLocation
         string $default,
         array $env,
         ?bool $windows
-    ): ?string {
+    ): ?string
+    {
         $path = $configured !== null && $configured !== ''
             ? $configured
             : self::value($env, $envName) ?? $default;

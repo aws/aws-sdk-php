@@ -22,7 +22,8 @@ final class ConfigFileException extends \RuntimeException
         string $source,
         int $lineNumber,
         string $reason
-    ): self {
+    ): self
+    {
         return new self(\sprintf(
             'Invalid AWS profile file %s: %s on line %d. See %s',
             $source,
