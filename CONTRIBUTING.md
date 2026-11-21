@@ -41,8 +41,10 @@ V4 API design feedback and real-world use cases. Include:
 - Framework, testing, deployment, concurrency, or static-analysis constraints.
 - A suggested alternative when possible.
 
-See [docs/feedback.md](docs/feedback.md) for the active design questions. Open
-an issue when the problem is an error or omission in the preview documentation.
+See
+[How to provide feedback](https://github.com/aws/aws-sdk-php/blob/docs-v4-preview/docs/feedback.md)
+for the active design questions. Open an issue when the problem is an error or
+omission in the preview documentation.
 
 ## Documentation contributions
 
