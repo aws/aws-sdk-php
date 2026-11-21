@@ -1,4 +1,4 @@
-name: CI
+name: Static Analysis
 
 on:
   pull_request:
@@ -12,12 +12,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: static-analysis-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  validate:
-    name: Composer validate
+  static-analysis:
+    name: Composer validate and PHPStan
     if: github.repository_owner == 'aws'
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -27,43 +27,21 @@ jobs:
         with:
           persist-credentials: false
 
+      # PHP 8.2 is the lowest supported version, so PHPStan flags code that
+      # newer-only syntax or APIs would break.
       - name: Setup PHP 8.2
         uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
           php-version: '8.2'
           coverage: none
           tools: composer:v2
+          extensions: curl, dom, mbstring, openssl, simplexml, xmlwriter, zlib
 
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
 
-  test:
-    name: PHPUnit and PHPStan (PHP ${{ matrix.php }})
-    if: github.repository_owner == 'aws'
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    strategy:
-      fail-fast: false
-      matrix:
-        php: ['8.2', '8.3', '8.4', '8.5']
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-
-      - name: Setup PHP ${{ matrix.php }}
-        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
-        with:
-          php-version: ${{ matrix.php }}
-          coverage: none
-          tools: composer:v2
-
       - name: Install Composer dependencies
         run: composer install --no-interaction --no-progress --prefer-dist
-
-      - name: Run PHPUnit
-        run: vendor/bin/phpunit
 
       - name: Run PHPStan
         run: composer static-analysis
