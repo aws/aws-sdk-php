@@ -1,0 +1,260 @@
+{
+  "description": "Config file parser cases from the configuration-file specification (File Loading, Critical Failure Cases, Comment Behavior, Whitespace Behavior, Property Behavior), transcribed from the specification text and the configuration-file cases as ported in aws-sdk-java-v2 ProfileFileTest.",
+  "tests": [
+    {
+      "name": "Empty files have no profiles.",
+      "input": {"configFile": ""},
+      "output": {"profiles": {}}
+    },
+    {
+      "name": "Empty profiles have no properties.",
+      "input": {"configFile": "[profile foo]"},
+      "output": {"profiles": {"foo": {}}}
+    },
+    {
+      "name": "Profile definitions must end with brackets.",
+      "input": {"configFile": "[profile foo"},
+      "output": {"errorContaining": "Section definition must end with ']' on line 1"}
+    },
+    {
+      "name": "Profile definitions must not have text after the closing bracket.",
+      "input": {"configFile": "[profile foo] junk"},
+      "output": {"errorContaining": "Section definition must end with ']'"}
+    },
+    {
+      "name": "SSO session definitions must end with brackets.",
+      "input": {"configFile": "[profile profile1]\nsso_session = sso-token1\n[sso-session sso-token1\nstart_url = startUrl1\n"},
+      "output": {"errorContaining": "Section definition must end with ']' on line 3"}
+    },
+    {
+      "name": "Profile names should be trimmed.",
+      "input": {"configFile": "[profile \tfoo \t]"},
+      "output": {"profiles": {"foo": {}}}
+    },
+    {
+      "name": "Tabs can separate profile names from profile prefix.",
+      "input": {"configFile": "[profile\tfoo]"},
+      "output": {"profiles": {"foo": {}}}
+    },
+    {
+      "name": "Whitespace is permitted around the profile prefix and name.",
+      "input": {"configFile": "[ \t profile \t my-profile \t ] \t"},
+      "output": {"profiles": {"my-profile": {}}}
+    },
+    {
+      "name": "Properties must be defined in a profile.",
+      "input": {"configFile": "name = value"},
+      "output": {"errorContaining": "Expected a profile definition on line 1"}
+    },
+    {
+      "name": "Profiles can contain properties.",
+      "input": {"configFile": "[profile foo]\nname = value"},
+      "output": {"profiles": {"foo": {"name": "value"}}}
+    },
+    {
+      "name": "Windows style line endings are supported.",
+      "input": {"configFile": "[profile foo]\r\nname = value"},
+      "output": {"profiles": {"foo": {"name": "value"}}}
+    },
+    {
+      "name": "Equals signs are supported in property values.",
+      "input": {"configFile": "[profile foo]\r\nname = val=ue"},
+      "output": {"profiles": {"foo": {"name": "val=ue"}}}
+    },
+    {
+      "name": "Unicode characters are supported in property values.",
+      "input": {"configFile": "[profile foo]\r\nname = \ud83d\ude02"},
+      "output": {"profiles": {"foo": {"name": "\ud83d\ude02"}}}
+    },
+    {
+      "name": "Profiles can contain multiple properties.",
+      "input": {"configFile": "[profile foo]\nname = value\nname2 = value2"},
+      "output": {"profiles": {"foo": {"name": "value", "name2": "value2"}}}
+    },
+    {
+      "name": "Property keys and values are trimmed.",
+      "input": {"configFile": "[profile foo]\nname \t=  \tvalue \t"},
+      "output": {"profiles": {"foo": {"name": "value"}}}
+    },
+    {
+      "name": "Property values can use minimal spacing.",
+      "input": {"configFile": "[profile foo]\nname=value"},
+      "output": {"profiles": {"foo": {"name": "value"}}}
+    },
+    {
+      "name": "Property values can be empty.",
+      "input": {"configFile": "[profile foo]\nname ="},
+      "output": {"profiles": {"foo": {"name": ""}}}
+    },
+    {
+      "name": "Property key cannot be empty.",
+      "input": {"configFile": "[profile foo]\n= value"},
+      "output": {"errorContaining": "Property did not have a name on line 2"}
+    },
+    {
+      "name": "Property definitions must contain an equals sign.",
+      "input": {"configFile": "[profile foo]\nkey : value"},
+      "output": {"errorContaining": "Expected an '=' sign defining a property on line 2"}
+    },
+    {
+      "name": "Multiple profiles can be empty.",
+      "input": {"configFile": "[profile foo]\n[profile bar]"},
+      "output": {"profiles": {"foo": {}, "bar": {}}}
+    },
+    {
+      "name": "Multiple profiles can have properties.",
+      "input": {"configFile": "[profile foo]\nname = value\n[profile bar]\nname2 = value2"},
+      "output": {"profiles": {"foo": {"name": "value"}, "bar": {"name2": "value2"}}}
+    },
+    {
+      "name": "Blank lines are ignored.",
+      "input": {"configFile": "\t \n[profile foo]\n\t\n \nname = value\n\t \n[profile bar]\n \t"},
+      "output": {"profiles": {"foo": {"name": "value"}, "bar": {}}}
+    },
+    {
+      "name": "Pound sign comments are ignored.",
+      "input": {"configFile": "# Comment\n[profile foo] # Comment\nname = value # Comment with # sign"},
+      "output": {"profiles": {"foo": {"name": "value"}}}
+    },
+    {
+      "name": "Semicolon sign comments are ignored.",
+      "input": {"configFile": "; Comment\n[profile foo] ; Comment\nname = value ; Comment with ; sign"},
+      "output": {"profiles": {"foo": {"name": "value"}}}
+    },
+    {
+      "name": "All comment types can be used together.",
+      "input": {"configFile": "# Comment\n[profile foo] ; Comment\nname = value # Comment with ; sign"},
+      "output": {"profiles": {"foo": {"name": "value"}}}
+    },
+    {
+      "name": "Comments can be empty.",
+      "input": {"configFile": ";\n[profile foo];\nname = value ;\n"},
+      "output": {"profiles": {"foo": {"name": "value"}}}
+    },
+    {
+      "name": "Comments can be adjacent to profile names.",
+      "input": {"configFile": "[profile foo]; Adjacent semicolons\n[profile bar]# Adjacent pound signs"},
+      "output": {"profiles": {"foo": {}, "bar": {}}}
+    },
+    {
+      "name": "Comments adjacent to values are included in the value.",
+      "input": {"configFile": "[profile foo]\nname = value; Adjacent semicolons\nname2 = value# Adjacent pound signs"},
+      "output": {"profiles": {"foo": {"name": "value; Adjacent semicolons", "name2": "value# Adjacent pound signs"}}}
+    },
+    {
+      "name": "Tab-separated comments are removed from values.",
+      "input": {"configFile": "[profile foo]\nname = value\t# Comment\nname2 = value2\t; Comment"},
+      "output": {"profiles": {"foo": {"name": "value", "name2": "value2"}}}
+    },
+    {
+      "name": "Property values can be continued on the next line.",
+      "input": {"configFile": "[profile foo]\nname = value\n -continued"},
+      "output": {"profiles": {"foo": {"name": "value\n-continued"}}}
+    },
+    {
+      "name": "Property values can be continued with multiple lines.",
+      "input": {"configFile": "[profile foo]\nname = value\n -continued\n -and-continued"},
+      "output": {"profiles": {"foo": {"name": "value\n-continued\n-and-continued"}}}
+    },
+    {
+      "name": "Continuations are trimmed.",
+      "input": {"configFile": "[profile foo]\nregion \t = \t us-\n \t west-2 \t"},
+      "output": {"profiles": {"foo": {"region": "us-\nwest-2"}}}
+    },
+    {
+      "name": "Continuation values include pound comments.",
+      "input": {"configFile": "[profile foo]\nname = value\n -continued # Comment"},
+      "output": {"profiles": {"foo": {"name": "value\n-continued # Comment"}}}
+    },
+    {
+      "name": "Continuation values include semicolon comments.",
+      "input": {"configFile": "[profile foo]\nname = value\n -continued ; Comment"},
+      "output": {"profiles": {"foo": {"name": "value\n-continued ; Comment"}}}
+    },
+    {
+      "name": "Blank lines are permitted between continuations.",
+      "input": {"configFile": "[profile foo]\nname = value\n\t \n -continued"},
+      "output": {"profiles": {"foo": {"name": "value\n-continued"}}}
+    },
+    {
+      "name": "Continuations cannot be used outside of a profile.",
+      "input": {"configFile": " -continued"},
+      "output": {"errorContaining": "Expected a profile or property definition on line 1"}
+    },
+    {
+      "name": "Continuations cannot be used outside of a property.",
+      "input": {"configFile": "[profile foo]\n -continued"},
+      "output": {"errorContaining": "Expected a profile or property definition on line 2"}
+    },
+    {
+      "name": "Continuations reset with profile definitions.",
+      "input": {"configFile": "[profile foo]\nname = value\n[profile foo]\n -continued"},
+      "output": {"errorContaining": "Expected a profile or property definition on line 4"}
+    },
+    {
+      "name": "Continuations reset with profile definitions separated by blank lines.",
+      "input": {"configFile": "[default]\nregion = us-\n\n[default]\n  west-1"},
+      "output": {"errorContaining": "Expected a profile or property definition on line 5"}
+    },
+    {
+      "name": "Properties can have sub-properties.",
+      "input": {"configFile": "[profile foo]\ns3 =\n name = value"},
+      "output": {"profiles": {"foo": {"s3": {"name": "value"}}}}
+    },
+    {
+      "name": "Invalid sub-properties cause an error.",
+      "input": {"configFile": "[profile foo]\ns3 =\n invalid"},
+      "output": {"errorContaining": "Expected an '=' sign defining a property on line 3"}
+    },
+    {
+      "name": "Sub-properties can have empty values.",
+      "input": {"configFile": "[profile foo]\ns3 =\n name ="},
+      "output": {"profiles": {"foo": {"s3": {"name": ""}}}}
+    },
+    {
+      "name": "Sub-properties cannot have empty names.",
+      "input": {"configFile": "[profile foo]\ns3 =\n = value"},
+      "output": {"errorContaining": "Property did not have a name on line 3"}
+    },
+    {
+      "name": "Sub-properties with invalid names are left out of the sub-property map.",
+      "input": {"configFile": "[profile foo]\ns3 =\n in valid = value"},
+      "output": {"profiles": {"foo": {"s3": "\nin valid = value"}}}
+    },
+    {
+      "name": "Sub-properties can have blank lines.",
+      "input": {"configFile": "[profile foo]\ns3 =\n name = value\n\t \n name2 = value2"},
+      "output": {"profiles": {"foo": {"s3": {"name": "value", "name2": "value2"}}}}
+    },
+    {
+      "name": "Sub-property comments are part of the value.",
+      "input": {"configFile": "[profile foo]\ns3 =\n max_concurrent_requests = 30 ; Failed Comment Attempt"},
+      "output": {"profiles": {"foo": {"s3": {"max_concurrent_requests": "30 ; Failed Comment Attempt"}}}}
+    },
+    {
+      "name": "Sub-properties can use extra whitespace.",
+      "input": {"configFile": "[profile foo]\ns3 \t = \t \n \t max_concurrent_requests \t = \t 30 \t"},
+      "output": {"profiles": {"foo": {"s3": {"max_concurrent_requests": "30"}}}}
+    },
+    {
+      "name": "Sub-properties can use minimal spacing.",
+      "input": {"configFile": "[profile foo]\ns3=\n max_concurrent_requests=30"},
+      "output": {"profiles": {"foo": {"s3": {"max_concurrent_requests": "30"}}}}
+    },
+    {
+      "name": "A property line ends a sub-property section.",
+      "input": {"configFile": "[profile foo]\ns3 =\n max_concurrent_requests = 30\n max_retries = 10\nregion = us-west-2"},
+      "output": {"profiles": {"foo": {"s3": {"max_concurrent_requests": "30", "max_retries": "10"}, "region": "us-west-2"}}}
+    },
+    {
+      "name": "A section can contain multiple sub-property sections.",
+      "input": {"configFile": "[profile foo]\ns3 =\n max_concurrent_requests = 30\ndynamodb =\n endpoint_url = https://localhost:1234"},
+      "output": {"profiles": {"foo": {"s3": {"max_concurrent_requests": "30"}, "dynamodb": {"endpoint_url": "https://localhost:1234"}}}}
+    },
+    {
+      "name": "Duplicate sub-properties use the later value.",
+      "input": {"configFile": "[profile foo]\ns3 =\n name = value\n name = value2"},
+      "output": {"profiles": {"foo": {"s3": {"name": "value2"}}}}
+    }
+  ]
+}
