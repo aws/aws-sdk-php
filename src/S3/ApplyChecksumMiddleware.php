@@ -189,6 +189,13 @@ class ApplyChecksumMiddleware
             return $request;
         }
 
+        if (!isset($command['@http']['decode_content'])
+            && !isset($command['@http']['sink'])
+        ) {
+            $command['@http']['decode_content'] = false;
+            $command['@context']['inflate_response_body'] = true;
+        }
+
         $validationMember = $operation->getInput()->getMember(
             $validationMemberName
         );
