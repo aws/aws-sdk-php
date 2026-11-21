@@ -1,0 +1,97 @@
+[
+    {
+        "documentation": "This assumes SDK's default checksum to be CRC32. Please update this test if the default checksum algorithm is different.",
+        "requestPayload": "Hello world",
+        "expectHeaders": {
+            "x-amz-request-algorithm": "CRC32",
+            "x-amz-checksum-crc32": "i9aeUg=="
+        }
+    },
+    {
+        "documentation": "CRC32 checksum calculation works.",
+        "requestPayload": "Hello world",
+        "checksumAlgorithm": "Crc32",
+        "expectHeaders": {
+            "x-amz-request-algorithm": "CRC32",
+            "x-amz-checksum-crc32": "i9aeUg=="
+        }
+    },
+    {
+        "documentation": "CRC32C checksum calculation works.",
+        "requestPayload": "Hello world",
+        "checksumAlgorithm": "Crc32C",
+        "expectHeaders": {
+            "x-amz-request-algorithm": "CRC32C",
+            "x-amz-checksum-crc32c": "crUfeA=="
+        }
+    },
+    {
+        "documentation": "CRC64NVME checksum calculation works.",
+        "requestPayload": "Hello world",
+        "checksumAlgorithm": "Crc64Nvme",
+        "expectHeaders": {
+            "x-amz-request-algorithm": "CRC64NVME",
+            "x-amz-checksum-crc64nvme": "OOJZ0D8xKts="
+        }
+    },
+    {
+        "documentation": "SHA1 checksum calculation works.",
+        "requestPayload": "Hello world",
+        "checksumAlgorithm": "Sha1",
+        "expectHeaders": {
+            "x-amz-request-algorithm": "SHA1",
+            "x-amz-checksum-sha1": "e1AsOh9IyGCa4hLN+2Od7jlnP14="
+        }
+    },
+    {
+        "documentation": "SHA256 checksum calculation works.",
+        "requestPayload": "Hello world",
+        "checksumAlgorithm": "Sha256",
+        "expectHeaders": {
+            "x-amz-request-algorithm": "SHA256",
+            "x-amz-checksum-sha256": "ZOyIygCyaOW6GjVnihtTFtIS9PNmskdyMlNKiuyjfzw="
+        }
+    },
+    {
+        "documentation": "SHA512 checksum calculation works.",
+        "requestPayload": "Hello world",
+        "checksumAlgorithm": "Sha512",
+        "expectHeaders": {
+            "x-amz-request-algorithm": "SHA512",
+            "x-amz-checksum-sha512": "t/eDuu2Cl/DbkXRiGE/08I5pwtXl95qUJgD5cl9Yzh8pwYE5v4CwbA//K900c4RS7PQMSIwip+PYDN9vnBwNRw=="
+        }
+    },
+    {
+        "documentation": "MD5 checksum calculation fails - unsupported algorithm.",
+        "requestPayload": "Hello world",
+        "checksumAlgorithm": "Md5",
+        "expectError": "UnsupportedChecksumAlgorithm"
+    },
+    {
+        "documentation": "XXHASH64 checksum calculation works.",
+        "requestPayload": "Hello world",
+        "checksumAlgorithm": "XxHash64",
+        "expectHeaders": {
+            "x-amz-request-algorithm": "XXHASH64",
+            "x-amz-checksum-xxhash64": "xQCwyRKzdtg="
+        }
+    },
+    {
+        "documentation": "XXHASH3 checksum calculation works.",
+        "requestPayload": "Hello world",
+        "checksumAlgorithm": "XxHash3",
+        "expectHeaders": {
+            "x-amz-request-algorithm": "XXHASH3",
+            "x-amz-checksum-xxhash3": "tqy52Eo4/3Q="
+        }
+    },
+    {
+        "documentation": "XXHASH128 checksum calculation works.",
+        "requestPayload": "Hello world",
+        "checksumAlgorithm": "XxHash128",
+        "expectHeaders": {
+            "x-amz-request-algorithm": "XXHASH128",
+            "x-amz-checksum-xxhash128": "c1H4mBL5c4K5HQWzHgTdfw=="
+        }
+    }
+]

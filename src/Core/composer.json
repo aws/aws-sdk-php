@@ -1,0 +1,24 @@
+{
+    "name": "aws/aws-sdk-php-core",
+    "description": "AWS SDK for PHP V4 - shared core (credentials, signing, endpoints, retry, checksums, AWS protocols).",
+    "type": "library",
+    "license": "Apache-2.0",
+    "require": {
+        "php": ">=8.2",
+        "smithy/auth": "^0.1@dev",
+        "smithy/client": "^0.1@dev",
+        "smithy/codec": "^0.1@dev",
+        "smithy/core": "^0.1@dev",
+        "smithy/http": "^0.1@dev",
+        "smithy/protocol": "^0.1@dev",
+        "smithy/protocol-aws": "^0.1@dev"
+    },
+    "suggest": {
+        "aws/aws-sdk-php-credentials": "Adds the service-backed credential providers (STS AssumeRole/WebIdentity, SSO session, legacy SSO) and the full standard credential chain. Core resolves the remaining sources on its own."
+    },
+    "autoload": {
+        "psr-4": {
+            "Aws\\Core\\": ""
+        }
+    }
+}

@@ -1,0 +1,200 @@
+{
+  "description": "Config file standardizer cases from the configuration-file specification (Silent Failure Cases, Duplication Handling, profile prefix rules, sso-session and services sections, case-insensitive keys), transcribed from the specification text and the configuration-file cases as ported in aws-sdk-java-v2 ProfileFileTest.",
+  "tests": [
+    {
+      "name": "Duplicate profiles in the same file merge properties.",
+      "input": {"configFile": "[profile foo]\nname = value\n[profile foo]\nname2 = value2"},
+      "output": {"profiles": {"foo": {"name": "value", "name2": "value2"}}}
+    },
+    {
+      "name": "Duplicate properties in a profile use the last one defined.",
+      "input": {"configFile": "[profile foo]\nname = value\nname = value2"},
+      "output": {"profiles": {"foo": {"name": "value2"}}}
+    },
+    {
+      "name": "Duplicate properties in duplicate profiles use the last one defined.",
+      "input": {"configFile": "[profile foo]\nname = value\n[profile foo]\nname = value2"},
+      "output": {"profiles": {"foo": {"name": "value2"}}}
+    },
+    {
+      "name": "Property keys are case-insensitive and stored lower-case.",
+      "input": {"configFile": "[default]\nREGION = us-east-1"},
+      "output": {"profiles": {"default": {"region": "us-east-1"}}}
+    },
+    {
+      "name": "Property keys differing only in case are duplicates.",
+      "input": {"configFile": "[default]\nregion = us-east-1\nRegion = us-east-2\nREGION = us-west-2"},
+      "output": {"profiles": {"default": {"region": "us-west-2"}}}
+    },
+    {
+      "name": "Property keys differing only in case are duplicates across duplicate profiles.",
+      "input": {"configFile": "[default]\nRegion = us-east-1\n\n[default]\nregion = us-west-2"},
+      "output": {"profiles": {"default": {"region": "us-west-2"}}}
+    },
+    {
+      "name": "Sub-property keys are stored lower-case.",
+      "input": {"configFile": "[default]\nS3 =\n Max_Concurrent_Requests = 20"},
+      "output": {"profiles": {"default": {"s3": {"max_concurrent_requests": "20"}}}}
+    },
+    {
+      "name": "Default profile with profile prefix overrides default profile without prefix when profile prefix is first.",
+      "input": {"configFile": "[profile default]\nname = value\n[default]\nname2 = value2"},
+      "output": {"profiles": {"default": {"name": "value"}}}
+    },
+    {
+      "name": "Default profile with profile prefix overrides default profile without prefix when profile prefix is last.",
+      "input": {"configFile": "[default]\nname2 = value2\n[profile default]\nname = value"},
+      "output": {"profiles": {"default": {"name": "value"}}}
+    },
+    {
+      "name": "Default profiles with mixed prefixes in the config file ignore the one without prefix when merging.",
+      "input": {"configFile": "[profile default]\nname = value\n[default]\nname2 = value2\n[profile default]\nname3 = value3"},
+      "output": {"profiles": {"default": {"name": "value", "name3": "value3"}}}
+    },
+    {
+      "name": "Specification duplicate profiles example 2.",
+      "input": {"configFile": "[default]\naws_access_key_id = ACCESS_KEY_0\naws_secret_access_key = SECRET_KEY_0\nregion = us-west-1\n\n[profile default]\naws_access_key_id = ACCESS_KEY_1\n\n[profile default]\naws_secret_access_key = SECRET_KEY_1\n\n[default]\nregion = us-west-1"},
+      "output": {"profiles": {"default": {"aws_access_key_id": "ACCESS_KEY_1", "aws_secret_access_key": "SECRET_KEY_1"}}}
+    },
+    {
+      "name": "Profile prefix wins over a bare name in the config file.",
+      "input": {"configFile": "[foo]\nname = value\n[profile foo]\nname2 = value2"},
+      "output": {"profiles": {"foo": {"name2": "value2"}}}
+    },
+    {
+      "name": "Default profile in the credentials file is used.",
+      "input": {"credentialsFile": "[default]\naws_access_key_id = ACCESS_KEY_0"},
+      "output": {"profiles": {"default": {"aws_access_key_id": "ACCESS_KEY_0"}}}
+    },
+    {
+      "name": "Invalid profile names are ignored.",
+      "input": {"configFile": "[profile in valid]\nname = value\n", "credentialsFile": "[in valid 2]\nname2 = value2"},
+      "output": {"profiles": {}}
+    },
+    {
+      "name": "Invalid property names are ignored.",
+      "input": {"configFile": "[profile foo]\nin valid = value"},
+      "output": {"profiles": {"foo": {}}}
+    },
+    {
+      "name": "All valid profile name characters are supported.",
+      "input": {"configFile": "[profile ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_./%@:+]"},
+      "output": {"profiles": {"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_./%@:+": {}}}
+    },
+    {
+      "name": "All valid property name characters are supported.",
+      "input": {"configFile": "[profile foo]\nABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_./%@:+ = value"},
+      "output": {"profiles": {"foo": {"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz0123456789-_./%@:+": "value"}}}
+    },
+    {
+      "name": "Profiles duplicated in multiple files are merged.",
+      "input": {"configFile": "[profile foo]\nname = value\n", "credentialsFile": "[foo]\nname2 = value2"},
+      "output": {"profiles": {"foo": {"name": "value", "name2": "value2"}}}
+    },
+    {
+      "name": "Duplicate properties between files use the credentials property.",
+      "input": {"configFile": "[profile foo]\nname = value", "credentialsFile": "[foo]\nname = value2"},
+      "output": {"profiles": {"foo": {"name": "value2"}}}
+    },
+    {
+      "name": "Case-differing properties between files use the credentials property.",
+      "input": {"configFile": "[profile foo]\nRegion = us-east-1", "credentialsFile": "[foo]\nREGION = us-west-2"},
+      "output": {"profiles": {"foo": {"region": "us-west-2"}}}
+    },
+    {
+      "name": "Specification duplicate profiles in different files example 1.",
+      "input": {"configFile": "[default]\naws_access_key_id = ACCESS_KEY_0\naws_secret_access_key = SECRET_KEY_0\nregion = us-west-1\n\n[profile default]\naws_access_key_id = ACCESS_KEY_1\nregion = us-east-1", "credentialsFile": "[default]\naws_access_key_id = ACCESS_KEY_2\naws_secret_access_key = SECRET_KEY_2"},
+      "output": {"profiles": {"default": {"aws_access_key_id": "ACCESS_KEY_2", "aws_secret_access_key": "SECRET_KEY_2", "region": "us-east-1"}}}
+    },
+    {
+      "name": "Config profiles without prefix are ignored.",
+      "input": {"configFile": "[foo]\nname = value"},
+      "output": {"profiles": {}}
+    },
+    {
+      "name": "Credentials profiles with prefix are ignored.",
+      "input": {"credentialsFile": "[profile foo]\nname = value"},
+      "output": {"profiles": {}}
+    },
+    {
+      "name": "Config profile prefix without a name is ignored.",
+      "input": {"configFile": "[profile]\nname = value\n[profile ]\nname2 = value2"},
+      "output": {"profiles": {}}
+    },
+    {
+      "name": "SSO session sections are parsed separately from profiles.",
+      "input": {"configFile": "[profile foo]\nsso_session = dev\n[sso-session dev]\nsso_region = us-east-1\nsso_start_url = https://example.awsapps.com/start"},
+      "output": {
+        "profiles": {"foo": {"sso_session": "dev"}},
+        "ssoSessions": {"dev": {"sso_region": "us-east-1", "sso_start_url": "https://example.awsapps.com/start"}}
+      }
+    },
+    {
+      "name": "SSO session sections accept extra whitespace and comments.",
+      "input": {"configFile": "[ \t sso-session \t my-session \t ] \t; Comment"},
+      "output": {"profiles": {}, "ssoSessions": {"my-session": {}}}
+    },
+    {
+      "name": "SSO session sections in the credentials file are ignored.",
+      "input": {"credentialsFile": "[test]\nregion = us-west-1\ncredential_source = Environment\nsso_session = session\nrole_arn = some_Arn\n[sso-session session]\nsso_region = us-west-1\nstart_url = someUrl\n"},
+      "output": {
+        "profiles": {"test": {"region": "us-west-1", "credential_source": "Environment", "sso_session": "session", "role_arn": "some_Arn"}},
+        "ssoSessions": {}
+      }
+    },
+    {
+      "name": "SSO session sections with invalid names are ignored.",
+      "input": {"configFile": "[profile section]\nsso_session = sso invalid\n[sso-session sso invalid]\nstart_url = url\n[sso-session validSso]\nstart_url = Valid-url\n"},
+      "output": {
+        "profiles": {"section": {"sso_session": "sso invalid"}},
+        "ssoSessions": {"validSso": {"start_url": "Valid-url"}}
+      }
+    },
+    {
+      "name": "SSO session sections without a name are ignored.",
+      "input": {"configFile": "[sso-session]\nstart_url = url\n[sso-session ]\nstart_url = url2"},
+      "output": {"profiles": {}, "ssoSessions": {}}
+    },
+    {
+      "name": "SSO session sections duplicated in a file are merged favoring the later definition.",
+      "input": {"configFile": "[sso-session dev]\nsso_region = us-east-1\nsso_start_url = https://one\n[sso-session dev]\nsso_start_url = https://two"},
+      "output": {"profiles": {}, "ssoSessions": {"dev": {"sso_region": "us-east-1", "sso_start_url": "https://two"}}}
+    },
+    {
+      "name": "SSO session sections do not need to be adjacent to profiles.",
+      "input": {"configFile": "[profile profile1]\nsso_session = sso-token1\n[profile profile2]\nregion  = us-west-2\n[default]\ndefault_property = property1\n[sso-session sso-token1]\nstart_url = startUrl1\n[profile profile3]\nregion = us-east-1\n"},
+      "output": {
+        "profiles": {
+          "profile1": {"sso_session": "sso-token1"},
+          "profile2": {"region": "us-west-2"},
+          "default": {"default_property": "property1"},
+          "profile3": {"region": "us-east-1"}
+        },
+        "ssoSessions": {"sso-token1": {"start_url": "startUrl1"}}
+      }
+    },
+    {
+      "name": "Services sections hold per-service sub-properties.",
+      "input": {"configFile": "[profile foo]\nservices = my-services\n[services my-services]\ns3 =\n endpoint_url = https://localhost:1234\ndynamodb =\n endpoint_url = https://localhost:5678"},
+      "output": {
+        "profiles": {"foo": {"services": "my-services"}},
+        "services": {"my-services": {"s3": {"endpoint_url": "https://localhost:1234"}, "dynamodb": {"endpoint_url": "https://localhost:5678"}}}
+      }
+    },
+    {
+      "name": "Services sections accept extra whitespace and comments.",
+      "input": {"configFile": "[ \t services \t my-services-config \t ] \t# Comment\ns3 =\n endpoint_url = https://localhost"},
+      "output": {"profiles": {}, "services": {"my-services-config": {"s3": {"endpoint_url": "https://localhost"}}}}
+    },
+    {
+      "name": "Services sections without a name are ignored.",
+      "input": {"configFile": "[services]\ns3 =\n endpoint_url = https://localhost\n[services ]\ns3 =\n endpoint_url = https://localhost"},
+      "output": {"profiles": {}, "services": {}}
+    },
+    {
+      "name": "Services sections in the credentials file are ignored.",
+      "input": {"credentialsFile": "[services my-services]\ns3 =\n endpoint_url = https://localhost"},
+      "output": {"profiles": {}, "services": {}}
+    }
+  ]
+}
