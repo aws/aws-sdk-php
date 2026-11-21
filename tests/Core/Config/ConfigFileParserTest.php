@@ -116,7 +116,7 @@ final class ConfigFileParserTest extends TestCase
     }
 
     /**
-     * Merge both files like AwsProfileFile: credentials file properties win.
+     * Merge both files like AwsConfigFile: credentials file properties win.
      *
      * @param array<string, mixed> $config
      * @param array<string, mixed> $credentials
