@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Aws\Tests\Core\Credentials;
+namespace Aws\Tests\Core\Credentials\Provider;
 
 use Aws\Core\Credentials\Provider\EnvCredentialProvider;
 use PHPUnit\Framework\TestCase;
