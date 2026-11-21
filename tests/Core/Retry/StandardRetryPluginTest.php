@@ -8,6 +8,7 @@ use Aws\Core\Client\AbstractAwsClient;
 use Aws\Core\Exception\AwsException;
 use Aws\Core\Retry\RetryMetadataException;
 use Aws\Core\Retry\StandardRetryInterceptor;
+use Aws\Tests\Utils\Http\RetryUploadServerFixture;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -53,7 +54,6 @@ use Smithy\Http\Client\Exception\HttpException;
 use Smithy\Http\Client\HttpRequestOptions;
 use Smithy\Protocol\ProtocolInterface;
 use Smithy\Tests\Utils\Http\MockHttpClient;
-use Smithy\Tests\Utils\Http\RetryUploadServerFixture;
 
 /**
  * Integration tests for standard retry metadata wiring.
