@@ -35,7 +35,9 @@ final class BoundContextCredentialProviderTest extends TestCase
 
             public function invalidate(
                 IdentityInterface $rejectedIdentity
-            ): void {}
+            ): void
+            {
+            }
         };
 
         $provider = new BoundContextCredentialProvider(
@@ -67,7 +69,9 @@ final class BoundContextCredentialProviderTest extends TestCase
 
             public function invalidate(
                 IdentityInterface $rejectedIdentity
-            ): void {}
+            ): void
+            {
+            }
         };
 
         $provider = new BoundContextCredentialProvider(
@@ -93,7 +97,9 @@ final class BoundContextCredentialProviderTest extends TestCase
 
             public function invalidate(
                 IdentityInterface $rejectedIdentity
-            ): void {}
+            ): void
+            {
+            }
         };
 
         $provider = new BoundContextCredentialProvider($inner, []);

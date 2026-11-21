@@ -42,7 +42,9 @@ final class ProfileCredentialProvider implements
      */
     public function __construct(
         private readonly ?int $refreshWindowSeconds = null
-    ) {}
+    )
+    {
+    }
 
     /**
      * Return the provider name.

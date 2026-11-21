@@ -26,7 +26,9 @@ final class AwsProfile
         public readonly string $name,
         public readonly array $properties,
         public readonly array $subProperties = []
-    ) {}
+    )
+    {
+    }
 
     /**
      * Check whether a property exists. Keys match case-insensitively.
