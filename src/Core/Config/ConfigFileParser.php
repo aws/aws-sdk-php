@@ -7,31 +7,64 @@ namespace Aws\Core\Config;
 /**
  * Parse the raw text of an AWS shared config or credentials file.
  *
- * This is the "config file parser" stage of the configuration-file specification. It
- * turns file text into an ordered list of raw sections, each holding its raw
- * header name and its properties. Property keys are stored lower-cased so
- * later stages see `REGION` and `region` as the same key. Profile prefixes,
- * name validation and merging belong to {@see ConfigFileStandardizer}.
+ * This is the "config file parser" and "config file standardizer" stages of
+ * the configuration-file specification, done in one pass over the lines.
+ * Each section header is classified as it is read. Config file sections are
+ * `[default]`, `[profile NAME]`, `[sso-session NAME]` and `[services NAME]`;
+ * credentials file sections are `[NAME]`. Sections with an invalid name are
+ * dropped, sections repeated in one file are merged (later properties win),
+ * and `[profile default]` takes precedence over `[default]`. Property keys
+ * are lower-cased, and properties with an invalid key are dropped.
  *
  * Supported line types: blank lines, `#` and `;` comment lines, section
  * definitions, property definitions, property continuations and
  * sub-properties (continuations of a property whose value is blank). Any
  * other line stops parsing with a {@see ConfigFileException} that names the
  * file and line number and leaves values out of the message.
+ *
+ * @phpstan-type Parsed array{
+ *     profiles: array<string, array<string, string>>,
+ *     subProperties: array<string, array<string, array<string, string>>>,
+ *     ssoSessions: array<string, array<string, string>>,
+ *     services: array<string, array<string, array<string, string>>>
+ * }
  */
 final class ConfigFileParser
 {
+    private const IDENTIFIER = '/^[A-Za-z0-9_\-\/.%@:+]+$/';
+    private const SECTION_PREFIX = '/^(profile|sso-session|services)[ \t]+(.*)$/s';
+
+    private const PROFILE = 'profile';
+    private const SSO_SESSION = 'sso-session';
+    private const SERVICES = 'services';
+
+    /** Result key holding each kind's properties. */
+    private const PROPERTIES = [
+        self::PROFILE => 'profiles',
+        self::SSO_SESSION => 'ssoSessions',
+    ];
+
+    /** Result key holding each kind's sub-properties. */
+    private const SUB_PROPERTIES = [
+        self::PROFILE => 'subProperties',
+        self::SERVICES => 'services',
+    ];
+
     /**
-     * Parse file text into raw sections in file order.
+     * Parse file text into standardized profiles and sections.
      *
-     * @return list<array{name: string, properties: array<string, string>}>
+     * @return Parsed
      */
-    public static function parse(string $contents, string $source): array
+    public static function parse(string $contents, string $source, bool $configFile): array
     {
-        $sections = [];
-        $current = null;
-        $property = null;
-        $subProperties = false;
+        $result = ['profiles' => [], 'subProperties' => [], 'ssoSessions' => [], 'services' => []];
+        $inSection = false;
+        $hasPrefixedDefault = false;
+        $kind = null;
+        $name = '';
+        $key = null;
+        $stored = false;
+        $blank = false;
         $lines = \preg_split('/\r\n|\n|\r/', $contents);
         $lineNumber = 0;
 
@@ -45,17 +78,30 @@ final class ConfigFileParser
             }
 
             if ($line[0] === '[') {
-                $sections[] = [
-                    'name' => self::parseSectionName($line, $source, $lineNumber),
-                    'properties' => [],
-                ];
-                $current = \array_key_last($sections);
-                $property = null;
+                $header = self::parseSectionName($line, $source, $lineNumber);
+                $inSection = true;
+                $key = null;
+                [$kind, $name, $prefixed] = $configFile
+                    ? self::classifyConfigSection($header)
+                    : self::classifyCredentialsSection($header);
+                if ($configFile && $kind === self::PROFILE && $name === 'default') {
+                    if ($prefixed && !$hasPrefixedDefault) {
+                        $hasPrefixedDefault = true;
+                        unset($result['profiles']['default'], $result['subProperties']['default']);
+                    } elseif (!$prefixed && $hasPrefixedDefault) {
+                        $kind = null;
+                    }
+                }
+                if ($kind === self::SERVICES) {
+                    $result['services'][$name] ??= [];
+                } elseif ($kind !== null) {
+                    $result[self::PROPERTIES[$kind]][$name] ??= [];
+                }
                 continue;
             }
 
             if ($line[0] === ' ' || $line[0] === "\t") {
-                if ($current === null || $property === null) {
+                if ($key === null) {
                     throw ConfigFileException::atLine(
                         $source,
                         $lineNumber,
@@ -64,14 +110,23 @@ final class ConfigFileParser
                 }
 
                 $value = \trim($line, " \t");
-                if ($subProperties) {
-                    self::splitProperty($value, $source, $lineNumber);
+                if ($blank) {
+                    [$subKey, $subValue] = self::splitProperty($value, $source, $lineNumber);
+                    $subKey = \strtolower($subKey);
+                    if ($stored
+                        && isset(self::SUB_PROPERTIES[$kind])
+                        && \preg_match(self::IDENTIFIER, $subKey) === 1
+                    ) {
+                        $result[self::SUB_PROPERTIES[$kind]][$name][$key][$subKey] = $subValue;
+                    }
                 }
-                $sections[$current]['properties'][$property] .= "\n" . $value;
+                if ($stored && $kind !== self::SERVICES) {
+                    $result[self::PROPERTIES[$kind]][$name][$key] .= "\n" . $value;
+                }
                 continue;
             }
 
-            if ($current === null) {
+            if (!$inSection) {
                 throw ConfigFileException::atLine(
                     $source,
                     $lineNumber,
@@ -85,12 +140,25 @@ final class ConfigFileParser
                 $lineNumber
             );
             $key = \strtolower($key);
-            $sections[$current]['properties'][$key] = $value;
-            $property = $key;
-            $subProperties = $value === '';
+            $blank = $value === '';
+            $stored = $kind !== null && \preg_match(self::IDENTIFIER, $key) === 1;
+            if (!$stored) {
+                continue;
+            }
+
+            if ($kind !== self::SERVICES) {
+                $result[self::PROPERTIES[$kind]][$name][$key] = $value;
+            }
+            if (isset(self::SUB_PROPERTIES[$kind])) {
+                $subs = self::SUB_PROPERTIES[$kind];
+                unset($result[$subs][$name][$key]);
+                if ($kind === self::PROFILE && ($result[$subs][$name] ?? null) === []) {
+                    unset($result[$subs][$name]);
+                }
+            }
         }
 
-        return $sections;
+        return $result;
     }
 
     /**
@@ -98,7 +166,7 @@ final class ConfigFileParser
      *
      * @return array{0: string, 1: string}
      */
-    public static function splitProperty(
+    private static function splitProperty(
         string $definition,
         string $source,
         int $lineNumber
@@ -154,5 +222,38 @@ final class ConfigFileParser
         }
 
         return $line;
+    }
+
+    /**
+     * Return the kind, name and whether the header carried a prefix.
+     * A dropped section has a null kind.
+     *
+     * @return array{0: ?string, 1: string, 2: bool}
+     */
+    private static function classifyConfigSection(string $header): array
+    {
+        if (\preg_match(self::SECTION_PREFIX, $header, $match) === 1) {
+            $name = \trim($match[2], " \t");
+
+            return \preg_match(self::IDENTIFIER, $name) === 1
+                ? [$match[1], $name, true]
+                : [null, '', false];
+        }
+
+        return $header === 'default' ? [self::PROFILE, 'default', false] : [null, '', false];
+    }
+
+    /**
+     * @return array{0: ?string, 1: string, 2: bool}
+     */
+    private static function classifyCredentialsSection(string $header): array
+    {
+        if (\preg_match('/^profile[ \t]/', $header) === 1
+            || \preg_match(self::IDENTIFIER, $header) !== 1
+        ) {
+            return [null, '', false];
+        }
+
+        return [self::PROFILE, $header, false];
     }
 }
