@@ -2,6 +2,6 @@
     {
         "type": "bugfix",
         "category": "S3",
-        "description": "Skips response checksum validation when the response body was transparently decoded based on its `Content-Encoding`."
+        "description": "Validates response checksums against the raw body of `Content-Encoding` encoded objects, then inflates gzip and deflate bodies for callers."
     }
 ]

@@ -9,8 +9,10 @@ use Aws\HandlerList;
 use Aws\HashingStream;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
+use Aws\S3\S3Client;
 use Aws\S3\Parser\ValidateResponseChecksumResultMutator;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
@@ -442,6 +444,63 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
         );
 
         $this->assertSame('CRC32', $result['ChecksumValidated']);
+    }
+
+    public function testValidatesRawBodyThenInflatesGzipResponse()
+    {
+        $compressed = gzencode('response body');
+        $checksum = base64_encode(hash('crc32b', $compressed, true));
+        $decodeContent = null;
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'http_handler' => function ($request, array $options) use (
+                $compressed,
+                $checksum,
+                &$decodeContent
+            ) {
+                $decodeContent = $options['decode_content'] ?? null;
+
+                return Promise\Create::promiseFor(new Response(
+                    200,
+                    [
+                        'Content-Encoding' => 'gzip',
+                        'x-amz-checksum-crc32' => $checksum
+                    ],
+                    $compressed
+                ));
+            },
+        ]);
+
+        $result = $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
+
+        $this->assertFalse($decodeContent);
+        $this->assertSame('CRC32', $result['ChecksumValidated']);
+        $this->assertSame('response body', (string) $result['Body']);
+    }
+
+    public function testThrowsWhenRawGzipResponseChecksumDoesNotMatch()
+    {
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'http_handler' => function () {
+                return Promise\Create::promiseFor(new Response(
+                    200,
+                    [
+                        'Content-Encoding' => 'gzip',
+                        'x-amz-checksum-crc32' => 'AAAAAA=='
+                    ],
+                    gzencode('response body')
+                ));
+            },
+        ]);
+
+        $this->expectException(S3Exception::class);
+        $this->expectExceptionMessage('Calculated response checksum did not match');
+        $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
     }
 
     /**

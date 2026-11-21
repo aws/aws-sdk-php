@@ -9,6 +9,7 @@ use Aws\PhpHash;
 use Aws\ResultInterface;
 use Aws\S3\CalculatesChecksumTrait;
 use Aws\S3\Exception\S3Exception;
+use GuzzleHttp\Psr7\InflateStream;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -50,6 +51,17 @@ final class ValidateResponseChecksumResultMutator implements S3ResultMutator
         ResultInterface $result,
         ?CommandInterface $command = null,
         ?ResponseInterface $response = null
+    ): ResultInterface
+    {
+        $result = $this->validate($result, $command, $response);
+
+        return $this->inflateBody($result, $command, $response);
+    }
+
+    private function validate(
+        ResultInterface $result,
+        CommandInterface $command,
+        ResponseInterface $response
     ): ResultInterface
     {
         $operation = $this->api->getOperation($command->getName());
@@ -134,6 +146,35 @@ final class ValidateResponseChecksumResultMutator implements S3ResultMutator
             );
         }
         $result['ChecksumValidated'] = $checksumToValidate;
+
+        return $result;
+    }
+
+    /**
+     * Wraps the validated raw body so callers still receive decoded content.
+     */
+    private function inflateBody(
+        ResultInterface $result,
+        CommandInterface $command,
+        ResponseInterface $response
+    ): ResultInterface
+    {
+        if (empty($command['@context']['inflate_response_body'])) {
+            return $result;
+        }
+
+        $encoding = strtolower(trim($response->getHeaderLine('Content-Encoding')));
+        if (!in_array($encoding, ['gzip', 'x-gzip', 'deflate'], true)) {
+            return $result;
+        }
+
+        $payloadMember = $this->api->getOperation($command->getName())
+            ->getOutput()['payload'] ?? null;
+        if ($payloadMember !== null
+            && $result[$payloadMember] instanceof StreamInterface
+        ) {
+            $result[$payloadMember] = new InflateStream($result[$payloadMember]);
+        }
 
         return $result;
     }
