@@ -1987,6 +1987,18 @@
         {"shape":"ResourceNotFound"}
       ]
     },
+    "DescribeCapacityReservation":{
+      "name":"DescribeCapacityReservation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCapacityReservationRequest"},
+      "output":{"shape":"DescribeCapacityReservationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
     "DescribeCluster":{
       "name":"DescribeCluster",
       "http":{
@@ -2659,6 +2671,18 @@
         {"shape":"ResourceNotFound"}
       ]
     },
+    "DescribeResourceAssociations":{
+      "name":"DescribeResourceAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeResourceAssociationsRequest"},
+      "output":{"shape":"DescribeResourceAssociationsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
     "DescribeSpace":{
       "name":"DescribeSpace",
       "http":{
@@ -2858,6 +2882,18 @@
       },
       "input":{"shape":"ExtendTrainingPlanRequest"},
       "output":{"shape":"ExtendTrainingPlanResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
+    "GetCapacityReservationUsage":{
+      "name":"GetCapacityReservationUsage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetCapacityReservationUsageRequest"},
+      "output":{"shape":"GetCapacityReservationUsageResponse"},
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
@@ -3070,6 +3106,15 @@
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
+    },
+    "ListCapacityReservations":{
+      "name":"ListCapacityReservations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListCapacityReservationsRequest"},
+      "output":{"shape":"ListCapacityReservationsResponse"}
     },
     "ListClusterEvents":{
       "name":"ListClusterEvents",
@@ -7961,9 +8006,226 @@
         "Type":{"shape":"CapacityReservationType"}
       }
     },
+    "CapacityReservationArn":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]+:[0-9]{12}:sm-capacity-reservation/smcr-[0-9a-z]{12}"
+    },
+    "CapacityReservationAvailabilityZoneId":{
+      "type":"string",
+      "max":32,
+      "min":1
+    },
+    "CapacityReservationDetail":{
+      "type":"structure",
+      "required":[
+        "SMCapacityReservationArn",
+        "SMCapacityReservationId",
+        "Owner",
+        "Status",
+        "InstanceType",
+        "AvailabilityZoneId",
+        "TotalInstanceCount",
+        "StartTime",
+        "CreationTime"
+      ],
+      "members":{
+        "SMCapacityReservationArn":{"shape":"CapacityReservationArn"},
+        "SMCapacityReservationId":{"shape":"SageMakerCapacityReservationId"},
+        "Owner":{"shape":"AccountId"},
+        "Status":{"shape":"CapacityReservationStatus"},
+        "InstanceType":{"shape":"CapacityReservationInstanceType"},
+        "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "AvailabilityZoneId":{"shape":"CapacityReservationAvailabilityZoneId"},
+        "TotalInstanceCount":{"shape":"TotalInstanceCount"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "CreationTime":{"shape":"Timestamp"}
+      }
+    },
+    "CapacityReservationEndpointSharing":{
+      "type":"string",
+      "enum":[
+        "SingleEndpoint",
+        "MultipleEndpoints"
+      ]
+    },
+    "CapacityReservationEndpointsAssociation":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "AssociatedTime"
+      ],
+      "members":{
+        "MlReservationId":{"shape":"CapacityReservationMlReservationId"},
+        "Status":{"shape":"CapacityReservationOptInStatus"},
+        "MatchCriteria":{"shape":"CapacityReservationMatchCriteria"},
+        "EndpointSharing":{"shape":"CapacityReservationEndpointSharing"},
+        "MlReservationArn":{"shape":"MlReservationArn"},
+        "FailureReason":{"shape":"FailureReason"},
+        "AssociatedTime":{"shape":"Timestamp"}
+      }
+    },
+    "CapacityReservationFilter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Values"
+      ],
+      "members":{
+        "Name":{"shape":"CapacityReservationFilterName"},
+        "Values":{"shape":"CapacityReservationFilterValues"}
+      }
+    },
+    "CapacityReservationFilterName":{
+      "type":"string",
+      "enum":["Status"]
+    },
+    "CapacityReservationFilterValue":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"(Scheduled|Active|Expired)"
+    },
+    "CapacityReservationFilterValues":{
+      "type":"list",
+      "member":{"shape":"CapacityReservationFilterValue"},
+      "max":10,
+      "min":1
+    },
+    "CapacityReservationFilters":{
+      "type":"list",
+      "member":{"shape":"CapacityReservationFilter"},
+      "max":1,
+      "min":1
+    },
+    "CapacityReservationHyperPodClustersAssociation":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "AssociatedTime"
+      ],
+      "members":{
+        "Status":{"shape":"CapacityReservationOptInStatus"},
+        "FailureReason":{"shape":"FailureReason"},
+        "AssociatedTime":{"shape":"Timestamp"}
+      }
+    },
+    "CapacityReservationInstanceType":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "CapacityReservationInstanceUsage":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "InUseInstanceCount",
+        "ResourcesUsage"
+      ],
+      "members":{
+        "AccountId":{"shape":"AccountId"},
+        "InUseInstanceCount":{"shape":"InUseInstanceCount"},
+        "ResourcesUsage":{"shape":"CapacityReservationResourceUsageSet"}
+      }
+    },
+    "CapacityReservationInstanceUsageSet":{
+      "type":"list",
+      "member":{"shape":"CapacityReservationInstanceUsage"}
+    },
+    "CapacityReservationMatchCriteria":{
+      "type":"string",
+      "enum":[
+        "Open",
+        "Targeted"
+      ]
+    },
+    "CapacityReservationMlReservationId":{"type":"string"},
+    "CapacityReservationOptInStatus":{
+      "type":"string",
+      "enum":[
+        "Pending",
+        "Active",
+        "Inactive"
+      ]
+    },
     "CapacityReservationPreference":{
       "type":"string",
       "enum":["capacity-reservations-only"]
+    },
+    "CapacityReservationResourceAssociation":{
+      "type":"structure",
+      "members":{
+        "HyperPodClusters":{"shape":"CapacityReservationHyperPodClustersAssociation"},
+        "Endpoints":{"shape":"CapacityReservationEndpointsAssociation"}
+      },
+      "union":true
+    },
+    "CapacityReservationResourceAssociations":{
+      "type":"list",
+      "member":{"shape":"CapacityReservationResourceAssociation"}
+    },
+    "CapacityReservationResourceType":{
+      "type":"string",
+      "enum":[
+        "HyperPodClusters",
+        "Endpoints"
+      ]
+    },
+    "CapacityReservationResourceUsage":{
+      "type":"structure",
+      "required":[
+        "ResourceType",
+        "InUseInstanceCount"
+      ],
+      "members":{
+        "ResourceType":{"shape":"CapacityReservationResourceType"},
+        "InUseInstanceCount":{"shape":"InUseInstanceCount"}
+      }
+    },
+    "CapacityReservationResourceUsageSet":{
+      "type":"list",
+      "member":{"shape":"CapacityReservationResourceUsage"}
+    },
+    "CapacityReservationStatus":{
+      "type":"string",
+      "enum":[
+        "Scheduled",
+        "Active",
+        "Expired"
+      ]
+    },
+    "CapacityReservationSummaries":{
+      "type":"list",
+      "member":{"shape":"CapacityReservationSummary"}
+    },
+    "CapacityReservationSummary":{
+      "type":"structure",
+      "required":[
+        "SMCapacityReservationArn",
+        "SMCapacityReservationId",
+        "Owner",
+        "Status",
+        "InstanceType",
+        "AvailabilityZoneId",
+        "TotalInstanceCount",
+        "StartTime",
+        "CreationTime"
+      ],
+      "members":{
+        "SMCapacityReservationArn":{"shape":"CapacityReservationArn"},
+        "SMCapacityReservationId":{"shape":"SageMakerCapacityReservationId"},
+        "Owner":{"shape":"AccountId"},
+        "Status":{"shape":"CapacityReservationStatus"},
+        "InstanceType":{"shape":"CapacityReservationInstanceType"},
+        "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "AvailabilityZoneId":{"shape":"CapacityReservationAvailabilityZoneId"},
+        "TotalInstanceCount":{"shape":"TotalInstanceCount"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "CreationTime":{"shape":"Timestamp"}
+      }
     },
     "CapacityReservationType":{
       "type":"string",
@@ -13941,6 +14203,20 @@
         "AutoMLComputeConfig":{"shape":"AutoMLComputeConfig"}
       }
     },
+    "DescribeCapacityReservationRequest":{
+      "type":"structure",
+      "required":["SMCapacityReservationArn"],
+      "members":{
+        "SMCapacityReservationArn":{"shape":"CapacityReservationArn"}
+      }
+    },
+    "DescribeCapacityReservationResponse":{
+      "type":"structure",
+      "required":["CapacityReservation"],
+      "members":{
+        "CapacityReservation":{"shape":"CapacityReservationDetail"}
+      }
+    },
     "DescribeClusterEventRequest":{
       "type":"structure",
       "required":[
@@ -15805,6 +16081,29 @@
         "AvailableInstanceCount":{"shape":"AvailableInstanceCount"},
         "InUseInstanceCount":{"shape":"InUseInstanceCount"},
         "UltraServerSummary":{"shape":"UltraServerSummary"}
+      }
+    },
+    "DescribeResourceAssociationsRequest":{
+      "type":"structure",
+      "required":["SMCapacityReservationArn"],
+      "members":{
+        "SMCapacityReservationArn":{"shape":"CapacityReservationArn"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeResourceAssociationsResponse":{
+      "type":"structure",
+      "required":[
+        "SMCapacityReservationArn",
+        "SMCapacityReservationId",
+        "ResourceAssociations"
+      ],
+      "members":{
+        "SMCapacityReservationArn":{"shape":"CapacityReservationArn"},
+        "SMCapacityReservationId":{"shape":"SageMakerCapacityReservationId"},
+        "ResourceAssociations":{"shape":"CapacityReservationResourceAssociations"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "DescribeSpaceRequest":{
@@ -18317,6 +18616,33 @@
       "type":"structure",
       "members":{
         "AmazonBedrockRoleArn":{"shape":"RoleArn"}
+      }
+    },
+    "GetCapacityReservationUsageRequest":{
+      "type":"structure",
+      "required":["SMCapacityReservationArn"],
+      "members":{
+        "SMCapacityReservationArn":{"shape":"CapacityReservationArn"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetCapacityReservationUsageResponse":{
+      "type":"structure",
+      "required":[
+        "SMCapacityReservationId",
+        "TotalInstanceCount",
+        "AvailableInstanceCount",
+        "LastRefreshTime",
+        "InstanceUsageSet"
+      ],
+      "members":{
+        "SMCapacityReservationId":{"shape":"SageMakerCapacityReservationId"},
+        "TotalInstanceCount":{"shape":"TotalInstanceCount"},
+        "AvailableInstanceCount":{"shape":"AvailableInstanceCount"},
+        "LastRefreshTime":{"shape":"Timestamp"},
+        "InstanceUsageSet":{"shape":"CapacityReservationInstanceUsageSet"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "GetDeviceFleetReportRequest":{
@@ -21894,6 +22220,22 @@
       "required":["Candidates"],
       "members":{
         "Candidates":{"shape":"AutoMLCandidates"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCapacityReservationsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "Filters":{"shape":"CapacityReservationFilters"}
+      }
+    },
+    "ListCapacityReservationsResponse":{
+      "type":"structure",
+      "required":["CapacityReservationSummaries"],
+      "members":{
+        "CapacityReservationSummaries":{"shape":"CapacityReservationSummaries"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -29972,6 +30314,10 @@
       "min":0,
       "pattern":"(https|s3)://([^/]+)/?(.*)"
     },
+    "SageMakerCapacityReservationId":{
+      "type":"string",
+      "pattern":"smcr-[0-9a-z]{12}"
+    },
     "SageMakerImageName":{
       "type":"string",
       "enum":["sagemaker_distribution"]
@@ -30569,7 +30915,8 @@
         "Succeeded",
         "Failed",
         "RollbackInProgress",
-        "RollbackComplete"
+        "RollbackComplete",
+        "PartiallySucceeded"
       ]
     },
     "SortActionsBy":{

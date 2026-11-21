@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SageMaker` - Amazon SageMaker AI adds APIs to view capacity reservations and their usage.
+* `Aws\QuickSight` - Quicksight public SDK release for November 20
+
 ## 3.407.0 - 2026-11-20
 
 * `Aws\` - Uses `spl_object_id()` instead of `spl_object_hash()`, which PHP 8.6 deprecates, to identify objects in `HandlerList` and `TraceMiddleware` debug output.

@@ -39,6 +39,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result batchDeleteKnowledgeBase(array{AwsAccountId?: string, KnowledgeBaseIds?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise batchDeleteKnowledgeBaseAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise batchDeleteKnowledgeBaseAsync(array{AwsAccountId?: string, KnowledgeBaseIds?: list<string>, ...} $args = [])
+ * @method \Aws\Result batchDeletePolicyAssignmentByPolicy(array $args = [])
+ * @phpstan-method \Aws\Result batchDeletePolicyAssignmentByPolicy(array{AccountId?: string, PolicyArn?: string, PrincipalArns?: list<string>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchDeletePolicyAssignmentByPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise batchDeletePolicyAssignmentByPolicyAsync(array{AccountId?: string, PolicyArn?: string, PrincipalArns?: list<string>, ...} $args = [])
  * @method \Aws\Result batchDeleteTopicReviewedAnswer(array $args = [])
  * @phpstan-method \Aws\Result batchDeleteTopicReviewedAnswer(array{AwsAccountId?: string, TopicId?: string, AnswerIds?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise batchDeleteTopicReviewedAnswerAsync(array $args = [])
@@ -57,10 +61,84 @@ use Aws\AwsClient;
  *     resourceTypes?: list<'AGENT_HOURS'|'INDEX_STORAGE'>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result batchPutPolicyAssignmentByPolicy(array $args = [])
+ * @phpstan-method \Aws\Result batchPutPolicyAssignmentByPolicy(array{
+ *     AccountId?: string,
+ *     PolicyArn?: string,
+ *     Assignments?: list<array{PrincipalArn?: string, ExistingPolicyArn?: string, Revision?: int, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchPutPolicyAssignmentByPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise batchPutPolicyAssignmentByPolicyAsync(array{
+ *     AccountId?: string,
+ *     PolicyArn?: string,
+ *     Assignments?: list<array{PrincipalArn?: string, ExistingPolicyArn?: string, Revision?: int, ...}>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result cancelIngestion(array $args = [])
  * @phpstan-method \Aws\Result cancelIngestion(array{AwsAccountId?: string, DataSetId?: string, IngestionId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelIngestionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise cancelIngestionAsync(array{AwsAccountId?: string, DataSetId?: string, IngestionId?: string, ...} $args = [])
+ * @method \Aws\Result createAccessControlApplication(array $args = [])
+ * @phpstan-method \Aws\Result createAccessControlApplication(array{
+ *     AwsAccountId?: string,
+ *     ApplicationId?: string,
+ *     Name?: string,
+ *     Description?: string,
+ *     Namespace?: string,
+ *     AuthenticationType?: 'OIDC',
+ *     IdpAuthorizingConfiguration?: array{
+ *         IdpAuthorizingType?: 'EXTERNAL_IDP_CONFIDENTIAL_AUTH_CODE'|'EXTERNAL_IDP_PUBLIC_AUTH_CODE'|'IDC_AUTH_CODE'|'QUICK_MANAGED_AUTH_CODE',
+ *         IdpAuthorizingConfigurationDetailInput?: array{ExternalIdpPublicAuthCode?: array, ExternalIdpConfidentialAuthCode?: array, ...},
+ *         IdcTrustedTokenIssuerConfiguration?: array{IdcTrustedTokenIssuerArn?: string, ...},
+ *         ...,
+ *     },
+ *     QuickAuthenticationConfiguration?: array{
+ *         QuickAuthenticationType?: 'QUICK_MANAGED_PUBLIC_AUTH_CODE',
+ *         QuickAuthenticationConfigurationDetailInput?: array{QuickManagedPublicAuthCode?: array, ...},
+ *         ...,
+ *     },
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createAccessControlApplicationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createAccessControlApplicationAsync(array{
+ *     AwsAccountId?: string,
+ *     ApplicationId?: string,
+ *     Name?: string,
+ *     Description?: string,
+ *     Namespace?: string,
+ *     AuthenticationType?: 'OIDC',
+ *     IdpAuthorizingConfiguration?: array{
+ *         IdpAuthorizingType?: 'EXTERNAL_IDP_CONFIDENTIAL_AUTH_CODE'|'EXTERNAL_IDP_PUBLIC_AUTH_CODE'|'IDC_AUTH_CODE'|'QUICK_MANAGED_AUTH_CODE',
+ *         IdpAuthorizingConfigurationDetailInput?: array{ExternalIdpPublicAuthCode?: array, ExternalIdpConfidentialAuthCode?: array, ...},
+ *         IdcTrustedTokenIssuerConfiguration?: array{IdcTrustedTokenIssuerArn?: string, ...},
+ *         ...,
+ *     },
+ *     QuickAuthenticationConfiguration?: array{
+ *         QuickAuthenticationType?: 'QUICK_MANAGED_PUBLIC_AUTH_CODE',
+ *         QuickAuthenticationConfigurationDetailInput?: array{QuickManagedPublicAuthCode?: array, ...},
+ *         ...,
+ *     },
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createAccessControlApplicationSecret(array $args = [])
+ * @phpstan-method \Aws\Result createAccessControlApplicationSecret(array{
+ *     AwsAccountId?: string,
+ *     ApplicationId?: string,
+ *     Description?: string,
+ *     ClientSecretConfiguration?: array{ClientSecretSourceType?: 'IDP_PROVIDED', ClientSecretConfigurationDetail?: array{Idp?: array, ...}, ...},
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createAccessControlApplicationSecretAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createAccessControlApplicationSecretAsync(array{
+ *     AwsAccountId?: string,
+ *     ApplicationId?: string,
+ *     Description?: string,
+ *     ClientSecretConfiguration?: array{ClientSecretSourceType?: 'IDP_PROVIDED', ClientSecretConfigurationDetail?: array{Idp?: array, ...}, ...},
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createAccountCustomization(array $args = [])
  * @phpstan-method \Aws\Result createAccountCustomization(array{
  *     AwsAccountId?: string,
@@ -322,8 +400,8 @@ use Aws\AwsClient;
  *     PolicyId?: string,
  *     Name?: string,
  *     Description?: string,
- *     Actions?: list<'SHARE'>,
- *     AssetTypes?: list<'AGENT'|'KNOWLEDGE_BASE'|'SPACE'>,
+ *     Actions?: list<'PUBLISH'|'SHARE'>,
+ *     AssetTypes?: list<'AGENT'|'FLOW'|'KNOWLEDGE_BASE'|'SPACE'>,
  *     ApplicableTo?: array{Type?: 'GROUP', GroupArns?: list<string>, ...},
  *     ApprovalGroups?: list<string>,
  *     ...,
@@ -333,8 +411,8 @@ use Aws\AwsClient;
  *     PolicyId?: string,
  *     Name?: string,
  *     Description?: string,
- *     Actions?: list<'SHARE'>,
- *     AssetTypes?: list<'AGENT'|'KNOWLEDGE_BASE'|'SPACE'>,
+ *     Actions?: list<'PUBLISH'|'SHARE'>,
+ *     AssetTypes?: list<'AGENT'|'FLOW'|'KNOWLEDGE_BASE'|'SPACE'>,
  *     ApplicableTo?: array{Type?: 'GROUP', GroupArns?: list<string>, ...},
  *     ApprovalGroups?: list<string>,
  *     ...,
@@ -569,6 +647,9 @@ use Aws\AwsClient;
  *         CreateAndUpdateMCPAction?: 'ALLOW'|'DENY',
  *         ShareMCPAction?: 'ALLOW'|'DENY',
  *         UseMCPAction?: 'ALLOW'|'DENY',
+ *         LocalMCPAction?: 'ALLOW'|'DENY',
+ *         CreateAndUpdateLocalMCPAction?: 'ALLOW'|'DENY',
+ *         UseLocalMCPAction?: 'ALLOW'|'DENY',
  *         OpenAPIAction?: 'ALLOW'|'DENY',
  *         CreateAndUpdateOpenAPIAction?: 'ALLOW'|'DENY',
  *         ShareOpenAPIAction?: 'ALLOW'|'DENY',
@@ -1155,6 +1236,9 @@ use Aws\AwsClient;
  *         CreateAndUpdateMCPAction?: 'ALLOW'|'DENY',
  *         ShareMCPAction?: 'ALLOW'|'DENY',
  *         UseMCPAction?: 'ALLOW'|'DENY',
+ *         LocalMCPAction?: 'ALLOW'|'DENY',
+ *         CreateAndUpdateLocalMCPAction?: 'ALLOW'|'DENY',
+ *         UseLocalMCPAction?: 'ALLOW'|'DENY',
  *         OpenAPIAction?: 'ALLOW'|'DENY',
  *         CreateAndUpdateOpenAPIAction?: 'ALLOW'|'DENY',
  *         ShareOpenAPIAction?: 'ALLOW'|'DENY',
@@ -1718,6 +1802,14 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     SemanticModelConfiguration?: array{TableMap?: array<string, array>, SemanticMetadata?: list<array>, ...},
+ *     UnmaterializedCalculatedColumns?: list<array{
+ *         ColumnId?: string,
+ *         ColumnName?: string,
+ *         Expression?: string,
+ *         Type?: 'DATETIME'|'DECIMAL'|'INTEGER'|'STRING',
+ *         SubType?: 'FIXED'|'FLOAT',
+ *         ...,
+ *     }>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createDataSetAsync(array $args = [])
@@ -1767,6 +1859,14 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     SemanticModelConfiguration?: array{TableMap?: array<string, array>, SemanticMetadata?: list<array>, ...},
+ *     UnmaterializedCalculatedColumns?: list<array{
+ *         ColumnId?: string,
+ *         ColumnName?: string,
+ *         Expression?: string,
+ *         Type?: 'DATETIME'|'DECIMAL'|'INTEGER'|'STRING',
+ *         SubType?: 'FIXED'|'FLOAT',
+ *         ...,
+ *     }>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result createDataSource(array $args = [])
@@ -1798,6 +1898,7 @@ use Aws\AwsClient;
  *             Host?: string,
  *             Port?: int,
  *             Database?: string,
+ *             FederatedCatalog?: string,
  *             ClusterId?: string,
  *             IAMParameters?: array,
  *             IdentityCenterConfiguration?: array,
@@ -1922,6 +2023,7 @@ use Aws\AwsClient;
  *             Host?: string,
  *             Port?: int,
  *             Database?: string,
+ *             FederatedCatalog?: string,
  *             ClusterId?: string,
  *             IAMParameters?: array,
  *             IdentityCenterConfiguration?: array,
@@ -2135,6 +2237,26 @@ use Aws\AwsClient;
  *     Namespace?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createInboundConnector(array $args = [])
+ * @phpstan-method \Aws\Result createInboundConnector(array{
+ *     AwsAccountId?: string,
+ *     InboundConnectorId?: string,
+ *     Name?: string,
+ *     Description?: string,
+ *     InboundConnectorConfiguration?: array{InboundConnectorType?: 'QUICK_DESKTOP', ...},
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createInboundConnectorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createInboundConnectorAsync(array{
+ *     AwsAccountId?: string,
+ *     InboundConnectorId?: string,
+ *     Name?: string,
+ *     Description?: string,
+ *     InboundConnectorConfiguration?: array{InboundConnectorType?: 'QUICK_DESKTOP', ...},
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createIngestion(array $args = [])
  * @phpstan-method \Aws\Result createIngestion(array{
  *     DataSetId?: string,
@@ -2197,6 +2319,42 @@ use Aws\AwsClient;
  *     AccessControlConfiguration?: array{isACLEnabled?: bool, ...},
  *     PrimaryOwnerArn?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createKnowledgeBaseRefreshSchedule(array $args = [])
+ * @phpstan-method \Aws\Result createKnowledgeBaseRefreshSchedule(array{
+ *     AwsAccountId?: string,
+ *     KnowledgeBaseId?: string,
+ *     ScheduleId?: string,
+ *     ScheduleFrequency?: array{
+ *         Interval?: 'DAILY'|'HOURLY'|'MONTHLY'|'WEEKLY',
+ *         RefreshOnDay?: array{
+ *             DayOfWeek?: 'FRIDAY'|'MONDAY'|'SATURDAY'|'SUNDAY'|'THURSDAY'|'TUESDAY'|'WEDNESDAY',
+ *             DayOfMonth?: string,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     StartTime?: int|string|\DateTimeInterface,
+ *     State?: 'DISABLED'|'ENABLED',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createKnowledgeBaseRefreshScheduleAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createKnowledgeBaseRefreshScheduleAsync(array{
+ *     AwsAccountId?: string,
+ *     KnowledgeBaseId?: string,
+ *     ScheduleId?: string,
+ *     ScheduleFrequency?: array{
+ *         Interval?: 'DAILY'|'HOURLY'|'MONTHLY'|'WEEKLY',
+ *         RefreshOnDay?: array{
+ *             DayOfWeek?: 'FRIDAY'|'MONDAY'|'SATURDAY'|'SUNDAY'|'THURSDAY'|'TUESDAY'|'WEDNESDAY',
+ *             DayOfMonth?: string,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     StartTime?: int|string|\DateTimeInterface,
+ *     State?: 'DISABLED'|'ENABLED',
  *     ...,
  * } $args = [])
  * @method \Aws\Result createLimitsProfile(array $args = [])
@@ -2617,6 +2775,14 @@ use Aws\AwsClient;
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result deleteAccessControlApplication(array $args = [])
+ * @phpstan-method \Aws\Result deleteAccessControlApplication(array{AwsAccountId?: string, ApplicationId?: string, IdcApplicationArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteAccessControlApplicationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteAccessControlApplicationAsync(array{AwsAccountId?: string, ApplicationId?: string, IdcApplicationArn?: string, ...} $args = [])
+ * @method \Aws\Result deleteAccessControlApplicationSecret(array $args = [])
+ * @phpstan-method \Aws\Result deleteAccessControlApplicationSecret(array{AwsAccountId?: string, ApplicationId?: string, ClientSecretId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteAccessControlApplicationSecretAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteAccessControlApplicationSecretAsync(array{AwsAccountId?: string, ApplicationId?: string, ClientSecretId?: string, ...} $args = [])
  * @method \Aws\Result deleteAccountCustomPermission(array $args = [])
  * @phpstan-method \Aws\Result deleteAccountCustomPermission(array{AwsAccountId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAccountCustomPermissionAsync(array $args = [])
@@ -2737,10 +2903,18 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteIdentityPropagationConfig(array{AwsAccountId?: string, Service?: 'ATHENA'|'GLUE_DATA_CATALOG'|'QBUSINESS'|'REDSHIFT', ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteIdentityPropagationConfigAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteIdentityPropagationConfigAsync(array{AwsAccountId?: string, Service?: 'ATHENA'|'GLUE_DATA_CATALOG'|'QBUSINESS'|'REDSHIFT', ...} $args = [])
+ * @method \Aws\Result deleteInboundConnector(array $args = [])
+ * @phpstan-method \Aws\Result deleteInboundConnector(array{AwsAccountId?: string, InboundConnectorId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteInboundConnectorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteInboundConnectorAsync(array{AwsAccountId?: string, InboundConnectorId?: string, ...} $args = [])
  * @method \Aws\Result deleteKnowledgeBase(array $args = [])
  * @phpstan-method \Aws\Result deleteKnowledgeBase(array{AwsAccountId?: string, KnowledgeBaseId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteKnowledgeBaseAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteKnowledgeBaseAsync(array{AwsAccountId?: string, KnowledgeBaseId?: string, ...} $args = [])
+ * @method \Aws\Result deleteKnowledgeBaseRefreshSchedule(array $args = [])
+ * @phpstan-method \Aws\Result deleteKnowledgeBaseRefreshSchedule(array{AwsAccountId?: string, KnowledgeBaseId?: string, ScheduleId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteKnowledgeBaseRefreshScheduleAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteKnowledgeBaseRefreshScheduleAsync(array{AwsAccountId?: string, KnowledgeBaseId?: string, ScheduleId?: string, ...} $args = [])
  * @method \Aws\Result deleteLimitsProfile(array $args = [])
  * @phpstan-method \Aws\Result deleteLimitsProfile(array{profileId?: string, accountId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteLimitsProfileAsync(array $args = [])
@@ -2753,6 +2927,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteOAuthClientApplication(array{AwsAccountId?: string, OAuthClientApplicationId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteOAuthClientApplicationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteOAuthClientApplicationAsync(array{AwsAccountId?: string, OAuthClientApplicationId?: string, ...} $args = [])
+ * @method \Aws\Result deletePolicyAssignment(array $args = [])
+ * @phpstan-method \Aws\Result deletePolicyAssignment(array{AccountId?: string, PolicyArn?: string, PrincipalArn?: string, Revision?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deletePolicyAssignmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deletePolicyAssignmentAsync(array{AccountId?: string, PolicyArn?: string, PrincipalArn?: string, Revision?: int, ...} $args = [])
  * @method \Aws\Result deleteRefreshSchedule(array $args = [])
  * @phpstan-method \Aws\Result deleteRefreshSchedule(array{DataSetId?: string, AwsAccountId?: string, ScheduleId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteRefreshScheduleAsync(array $args = [])
@@ -2835,6 +3013,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteVPCConnection(array{AwsAccountId?: string, VPCConnectionId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteVPCConnectionAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteVPCConnectionAsync(array{AwsAccountId?: string, VPCConnectionId?: string, ...} $args = [])
+ * @method \Aws\Result describeAccessControlApplication(array $args = [])
+ * @phpstan-method \Aws\Result describeAccessControlApplication(array{AwsAccountId?: string, ApplicationId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeAccessControlApplicationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeAccessControlApplicationAsync(array{AwsAccountId?: string, ApplicationId?: string, ...} $args = [])
  * @method \Aws\Result describeAccountCustomPermission(array $args = [])
  * @phpstan-method \Aws\Result describeAccountCustomPermission(array{AwsAccountId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeAccountCustomPermissionAsync(array $args = [])
@@ -3015,6 +3197,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeIAMPolicyAssignment(array{AwsAccountId?: string, AssignmentName?: string, Namespace?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeIAMPolicyAssignmentAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeIAMPolicyAssignmentAsync(array{AwsAccountId?: string, AssignmentName?: string, Namespace?: string, ...} $args = [])
+ * @method \Aws\Result describeInboundConnector(array $args = [])
+ * @phpstan-method \Aws\Result describeInboundConnector(array{AwsAccountId?: string, InboundConnectorId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeInboundConnectorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeInboundConnectorAsync(array{AwsAccountId?: string, InboundConnectorId?: string, ...} $args = [])
  * @method \Aws\Result describeIngestion(array $args = [])
  * @phpstan-method \Aws\Result describeIngestion(array{AwsAccountId?: string, DataSetId?: string, IngestionId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeIngestionAsync(array $args = [])
@@ -3035,6 +3221,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeKnowledgeBasePermissions(array{AwsAccountId?: string, KnowledgeBaseId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeKnowledgeBasePermissionsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeKnowledgeBasePermissionsAsync(array{AwsAccountId?: string, KnowledgeBaseId?: string, ...} $args = [])
+ * @method \Aws\Result describeKnowledgeBaseRefreshSchedule(array $args = [])
+ * @phpstan-method \Aws\Result describeKnowledgeBaseRefreshSchedule(array{AwsAccountId?: string, KnowledgeBaseId?: string, ScheduleId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeKnowledgeBaseRefreshScheduleAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeKnowledgeBaseRefreshScheduleAsync(array{AwsAccountId?: string, KnowledgeBaseId?: string, ScheduleId?: string, ...} $args = [])
  * @method \Aws\Result describeLimitsProfile(array $args = [])
  * @phpstan-method \Aws\Result describeLimitsProfile(array{profileId?: string, accountId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeLimitsProfileAsync(array $args = [])
@@ -3315,10 +3505,18 @@ use Aws\AwsClient;
  *     ContextRegion?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result getPolicyAssignment(array $args = [])
+ * @phpstan-method \Aws\Result getPolicyAssignment(array{AccountId?: string, PolicyType?: 'CUSTOM_PERMISSIONS'|'LIMITS_PROFILE', PrincipalArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getPolicyAssignmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getPolicyAssignmentAsync(array{AccountId?: string, PolicyType?: 'CUSTOM_PERMISSIONS'|'LIMITS_PROFILE', PrincipalArn?: string, ...} $args = [])
  * @method \Aws\Result getSessionEmbedUrl(array $args = [])
  * @phpstan-method \Aws\Result getSessionEmbedUrl(array{AwsAccountId?: string, EntryPoint?: string, SessionLifetimeInMinutes?: int, UserArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getSessionEmbedUrlAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise getSessionEmbedUrlAsync(array{AwsAccountId?: string, EntryPoint?: string, SessionLifetimeInMinutes?: int, UserArn?: string, ...} $args = [])
+ * @method \Aws\Result listAccessControlApplications(array $args = [])
+ * @phpstan-method \Aws\Result listAccessControlApplications(array{AwsAccountId?: string, Namespace?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAccessControlApplicationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listAccessControlApplicationsAsync(array{AwsAccountId?: string, Namespace?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \Aws\Result listActionConnectors(array $args = [])
  * @phpstan-method \Aws\Result listActionConnectors(array{AwsAccountId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listActionConnectorsAsync(array $args = [])
@@ -3439,10 +3637,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listIdentityPropagationConfigs(array{AwsAccountId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listIdentityPropagationConfigsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listIdentityPropagationConfigsAsync(array{AwsAccountId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result listInboundConnectorApplicationAssociations(array $args = [])
+ * @phpstan-method \Aws\Result listInboundConnectorApplicationAssociations(array{AwsAccountId?: string, InboundConnectorId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listInboundConnectorApplicationAssociationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listInboundConnectorApplicationAssociationsAsync(array{AwsAccountId?: string, InboundConnectorId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \Aws\Result listInboundConnectors(array $args = [])
+ * @phpstan-method \Aws\Result listInboundConnectors(array{AwsAccountId?: string, MaxResults?: int, NextToken?: string, Type?: list<'QUICK_DESKTOP'>, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listInboundConnectorsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listInboundConnectorsAsync(array{AwsAccountId?: string, MaxResults?: int, NextToken?: string, Type?: list<'QUICK_DESKTOP'>, ...} $args = [])
  * @method \Aws\Result listIngestions(array $args = [])
  * @phpstan-method \Aws\Result listIngestions(array{DataSetId?: string, NextToken?: string, AwsAccountId?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listIngestionsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listIngestionsAsync(array{DataSetId?: string, NextToken?: string, AwsAccountId?: string, MaxResults?: int, ...} $args = [])
+ * @method \Aws\Result listKnowledgeBaseRefreshSchedules(array $args = [])
+ * @phpstan-method \Aws\Result listKnowledgeBaseRefreshSchedules(array{AwsAccountId?: string, KnowledgeBaseId?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise listKnowledgeBaseRefreshSchedulesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listKnowledgeBaseRefreshSchedulesAsync(array{AwsAccountId?: string, KnowledgeBaseId?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \Aws\Result listKnowledgeBases(array $args = [])
  * @phpstan-method \Aws\Result listKnowledgeBases(array{AwsAccountId?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listKnowledgeBasesAsync(array $args = [])
@@ -3471,6 +3681,24 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result listOAuthClientApplications(array{AwsAccountId?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listOAuthClientApplicationsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listOAuthClientApplicationsAsync(array{AwsAccountId?: string, NextToken?: string, MaxResults?: int, ...} $args = [])
+ * @method \Aws\Result listPrincipalsForPolicy(array $args = [])
+ * @phpstan-method \Aws\Result listPrincipalsForPolicy(array{
+ *     AccountId?: string,
+ *     PolicyArn?: string,
+ *     PrincipalType?: 'ACCOUNT'|'GROUP'|'USER',
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listPrincipalsForPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listPrincipalsForPolicyAsync(array{
+ *     AccountId?: string,
+ *     PolicyArn?: string,
+ *     PrincipalType?: 'ACCOUNT'|'GROUP'|'USER',
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result listRefreshSchedules(array $args = [])
  * @phpstan-method \Aws\Result listRefreshSchedules(array{AwsAccountId?: string, DataSetId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise listRefreshSchedulesAsync(array $args = [])
@@ -3621,6 +3849,24 @@ use Aws\AwsClient;
  *         FailureConfiguration?: array{EmailAlert?: array, ...},
  *         ...,
  *     },
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result putPolicyAssignment(array $args = [])
+ * @phpstan-method \Aws\Result putPolicyAssignment(array{
+ *     AccountId?: string,
+ *     PolicyArn?: string,
+ *     PrincipalArn?: string,
+ *     ExistingPolicyArn?: string,
+ *     Revision?: int,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise putPolicyAssignmentAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise putPolicyAssignmentAsync(array{
+ *     AccountId?: string,
+ *     PolicyArn?: string,
+ *     PrincipalArn?: string,
+ *     ExistingPolicyArn?: string,
+ *     Revision?: int,
  *     ...,
  * } $args = [])
  * @method \Aws\Result registerUser(array $args = [])
@@ -4215,6 +4461,64 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result untagResource(array{ResourceArn?: string, TagKeys?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise untagResourceAsync(array{ResourceArn?: string, TagKeys?: list<string>, ...} $args = [])
+ * @method \Aws\Result updateAccessControlApplication(array $args = [])
+ * @phpstan-method \Aws\Result updateAccessControlApplication(array{
+ *     AwsAccountId?: string,
+ *     ApplicationId?: string,
+ *     Name?: string,
+ *     Description?: string,
+ *     IdpAuthorizingConfiguration?: array{
+ *         IdpAuthorizingType?: 'EXTERNAL_IDP_CONFIDENTIAL_AUTH_CODE'|'EXTERNAL_IDP_PUBLIC_AUTH_CODE'|'IDC_AUTH_CODE'|'QUICK_MANAGED_AUTH_CODE',
+ *         IdpAuthorizingConfigurationDetailInput?: array{ExternalIdpPublicAuthCode?: array, ExternalIdpConfidentialAuthCode?: array, ...},
+ *         IdcTrustedTokenIssuerConfiguration?: array{IdcTrustedTokenIssuerArn?: string, ...},
+ *         ...,
+ *     },
+ *     QuickAuthenticationConfiguration?: array{
+ *         QuickAuthenticationType?: 'QUICK_MANAGED_PUBLIC_AUTH_CODE',
+ *         QuickAuthenticationConfigurationDetailInput?: array{QuickManagedPublicAuthCode?: array, ...},
+ *         ...,
+ *     },
+ *     Status?: 'DISABLED'|'ENABLED',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateAccessControlApplicationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateAccessControlApplicationAsync(array{
+ *     AwsAccountId?: string,
+ *     ApplicationId?: string,
+ *     Name?: string,
+ *     Description?: string,
+ *     IdpAuthorizingConfiguration?: array{
+ *         IdpAuthorizingType?: 'EXTERNAL_IDP_CONFIDENTIAL_AUTH_CODE'|'EXTERNAL_IDP_PUBLIC_AUTH_CODE'|'IDC_AUTH_CODE'|'QUICK_MANAGED_AUTH_CODE',
+ *         IdpAuthorizingConfigurationDetailInput?: array{ExternalIdpPublicAuthCode?: array, ExternalIdpConfidentialAuthCode?: array, ...},
+ *         IdcTrustedTokenIssuerConfiguration?: array{IdcTrustedTokenIssuerArn?: string, ...},
+ *         ...,
+ *     },
+ *     QuickAuthenticationConfiguration?: array{
+ *         QuickAuthenticationType?: 'QUICK_MANAGED_PUBLIC_AUTH_CODE',
+ *         QuickAuthenticationConfigurationDetailInput?: array{QuickManagedPublicAuthCode?: array, ...},
+ *         ...,
+ *     },
+ *     Status?: 'DISABLED'|'ENABLED',
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateAccessControlApplicationSecret(array $args = [])
+ * @phpstan-method \Aws\Result updateAccessControlApplicationSecret(array{
+ *     AwsAccountId?: string,
+ *     ApplicationId?: string,
+ *     ClientSecretId?: string,
+ *     UpdateRegionalSecretManagerArns?: array<string, string>,
+ *     RemoveRegionalSecretManagerArns?: list<string>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateAccessControlApplicationSecretAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateAccessControlApplicationSecretAsync(array{
+ *     AwsAccountId?: string,
+ *     ApplicationId?: string,
+ *     ClientSecretId?: string,
+ *     UpdateRegionalSecretManagerArns?: array<string, string>,
+ *     RemoveRegionalSecretManagerArns?: list<string>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateAccountCustomPermission(array $args = [])
  * @phpstan-method \Aws\Result updateAccountCustomPermission(array{CustomPermissionsName?: string, AwsAccountId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAccountCustomPermissionAsync(array $args = [])
@@ -4508,8 +4812,8 @@ use Aws\AwsClient;
  *     PolicyId?: string,
  *     Name?: string,
  *     Description?: string,
- *     Actions?: list<'SHARE'>,
- *     AssetTypes?: list<'AGENT'|'KNOWLEDGE_BASE'|'SPACE'>,
+ *     Actions?: list<'PUBLISH'|'SHARE'>,
+ *     AssetTypes?: list<'AGENT'|'FLOW'|'KNOWLEDGE_BASE'|'SPACE'>,
  *     ApplicableTo?: array{Type?: 'GROUP', GroupArns?: list<string>, ...},
  *     ApprovalGroups?: list<string>,
  *     ...,
@@ -4519,8 +4823,8 @@ use Aws\AwsClient;
  *     PolicyId?: string,
  *     Name?: string,
  *     Description?: string,
- *     Actions?: list<'SHARE'>,
- *     AssetTypes?: list<'AGENT'|'KNOWLEDGE_BASE'|'SPACE'>,
+ *     Actions?: list<'PUBLISH'|'SHARE'>,
+ *     AssetTypes?: list<'AGENT'|'FLOW'|'KNOWLEDGE_BASE'|'SPACE'>,
  *     ApplicableTo?: array{Type?: 'GROUP', GroupArns?: list<string>, ...},
  *     ApprovalGroups?: list<string>,
  *     ...,
@@ -4761,6 +5065,9 @@ use Aws\AwsClient;
  *         CreateAndUpdateMCPAction?: 'ALLOW'|'DENY',
  *         ShareMCPAction?: 'ALLOW'|'DENY',
  *         UseMCPAction?: 'ALLOW'|'DENY',
+ *         LocalMCPAction?: 'ALLOW'|'DENY',
+ *         CreateAndUpdateLocalMCPAction?: 'ALLOW'|'DENY',
+ *         UseLocalMCPAction?: 'ALLOW'|'DENY',
  *         OpenAPIAction?: 'ALLOW'|'DENY',
  *         CreateAndUpdateOpenAPIAction?: 'ALLOW'|'DENY',
  *         ShareOpenAPIAction?: 'ALLOW'|'DENY',
@@ -5346,6 +5653,9 @@ use Aws\AwsClient;
  *         CreateAndUpdateMCPAction?: 'ALLOW'|'DENY',
  *         ShareMCPAction?: 'ALLOW'|'DENY',
  *         UseMCPAction?: 'ALLOW'|'DENY',
+ *         LocalMCPAction?: 'ALLOW'|'DENY',
+ *         CreateAndUpdateLocalMCPAction?: 'ALLOW'|'DENY',
+ *         UseLocalMCPAction?: 'ALLOW'|'DENY',
  *         OpenAPIAction?: 'ALLOW'|'DENY',
  *         CreateAndUpdateOpenAPIAction?: 'ALLOW'|'DENY',
  *         ShareOpenAPIAction?: 'ALLOW'|'DENY',
@@ -5926,6 +6236,14 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     SemanticModelConfiguration?: array{TableMap?: array<string, array>, SemanticMetadata?: list<array>, ...},
+ *     UnmaterializedCalculatedColumns?: list<array{
+ *         ColumnId?: string,
+ *         ColumnName?: string,
+ *         Expression?: string,
+ *         Type?: 'DATETIME'|'DECIMAL'|'INTEGER'|'STRING',
+ *         SubType?: 'FIXED'|'FLOAT',
+ *         ...,
+ *     }>,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDataSetAsync(array $args = [])
@@ -5971,6 +6289,14 @@ use Aws\AwsClient;
  *         ...,
  *     },
  *     SemanticModelConfiguration?: array{TableMap?: array<string, array>, SemanticMetadata?: list<array>, ...},
+ *     UnmaterializedCalculatedColumns?: list<array{
+ *         ColumnId?: string,
+ *         ColumnName?: string,
+ *         Expression?: string,
+ *         Type?: 'DATETIME'|'DECIMAL'|'INTEGER'|'STRING',
+ *         SubType?: 'FIXED'|'FLOAT',
+ *         ...,
+ *     }>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateDataSetPermissions(array $args = [])
@@ -6017,6 +6343,7 @@ use Aws\AwsClient;
  *             Host?: string,
  *             Port?: int,
  *             Database?: string,
+ *             FederatedCatalog?: string,
  *             ClusterId?: string,
  *             IAMParameters?: array,
  *             IdentityCenterConfiguration?: array,
@@ -6137,6 +6464,7 @@ use Aws\AwsClient;
  *             Host?: string,
  *             Port?: int,
  *             Database?: string,
+ *             FederatedCatalog?: string,
  *             ClusterId?: string,
  *             IAMParameters?: array,
  *             IdentityCenterConfiguration?: array,
@@ -6371,6 +6699,42 @@ use Aws\AwsClient;
  *     AuthorizedTargets?: list<string>,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result updateInboundConnector(array $args = [])
+ * @phpstan-method \Aws\Result updateInboundConnector(array{
+ *     AwsAccountId?: string,
+ *     InboundConnectorId?: string,
+ *     Name?: string,
+ *     Description?: string,
+ *     InboundConnectorConfiguration?: array{InboundConnectorType?: 'QUICK_DESKTOP', ...},
+ *     InboundConnectorStatus?: 'DISABLED'|'ENABLED',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateInboundConnectorAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateInboundConnectorAsync(array{
+ *     AwsAccountId?: string,
+ *     InboundConnectorId?: string,
+ *     Name?: string,
+ *     Description?: string,
+ *     InboundConnectorConfiguration?: array{InboundConnectorType?: 'QUICK_DESKTOP', ...},
+ *     InboundConnectorStatus?: 'DISABLED'|'ENABLED',
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateInboundConnectorApplicationAssociations(array $args = [])
+ * @phpstan-method \Aws\Result updateInboundConnectorApplicationAssociations(array{
+ *     AwsAccountId?: string,
+ *     InboundConnectorId?: string,
+ *     AssociateAccessControlApplications?: list<string>,
+ *     DisassociateAccessControlApplications?: list<string>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateInboundConnectorApplicationAssociationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateInboundConnectorApplicationAssociationsAsync(array{
+ *     AwsAccountId?: string,
+ *     InboundConnectorId?: string,
+ *     AssociateAccessControlApplications?: list<string>,
+ *     DisassociateAccessControlApplications?: list<string>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateIpRestriction(array $args = [])
  * @phpstan-method \Aws\Result updateIpRestriction(array{
  *     AwsAccountId?: string,
@@ -6449,6 +6813,42 @@ use Aws\AwsClient;
  *     KnowledgeBaseId?: string,
  *     GrantPermissions?: list<array{Principal?: string, Actions?: list<string>, ...}>,
  *     RevokePermissions?: list<array{Principal?: string, Actions?: list<string>, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateKnowledgeBaseRefreshSchedule(array $args = [])
+ * @phpstan-method \Aws\Result updateKnowledgeBaseRefreshSchedule(array{
+ *     AwsAccountId?: string,
+ *     KnowledgeBaseId?: string,
+ *     ScheduleId?: string,
+ *     ScheduleFrequency?: array{
+ *         Interval?: 'DAILY'|'HOURLY'|'MONTHLY'|'WEEKLY',
+ *         RefreshOnDay?: array{
+ *             DayOfWeek?: 'FRIDAY'|'MONDAY'|'SATURDAY'|'SUNDAY'|'THURSDAY'|'TUESDAY'|'WEDNESDAY',
+ *             DayOfMonth?: string,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     StartTime?: int|string|\DateTimeInterface,
+ *     State?: 'DISABLED'|'ENABLED',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateKnowledgeBaseRefreshScheduleAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateKnowledgeBaseRefreshScheduleAsync(array{
+ *     AwsAccountId?: string,
+ *     KnowledgeBaseId?: string,
+ *     ScheduleId?: string,
+ *     ScheduleFrequency?: array{
+ *         Interval?: 'DAILY'|'HOURLY'|'MONTHLY'|'WEEKLY',
+ *         RefreshOnDay?: array{
+ *             DayOfWeek?: 'FRIDAY'|'MONDAY'|'SATURDAY'|'SUNDAY'|'THURSDAY'|'TUESDAY'|'WEDNESDAY',
+ *             DayOfMonth?: string,
+ *             ...,
+ *         },
+ *         ...,
+ *     },
+ *     StartTime?: int|string|\DateTimeInterface,
+ *     State?: 'DISABLED'|'ENABLED',
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateLimitsProfile(array $args = [])

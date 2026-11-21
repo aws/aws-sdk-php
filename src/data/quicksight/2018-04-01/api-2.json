@@ -48,6 +48,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "BatchDeletePolicyAssignmentByPolicy":{
+      "name":"BatchDeletePolicyAssignmentByPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/governance-policy-mgmt/accounts/{AccountId}/policy-assignments/batch-delete",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchDeletePolicyAssignmentByPolicyRequest"},
+      "output":{"shape":"BatchDeletePolicyAssignmentByPolicyResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "BatchDeleteTopicReviewedAnswer":{
       "name":"BatchDeleteTopicReviewedAnswer",
       "http":{
@@ -81,6 +98,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "BatchPutPolicyAssignmentByPolicy":{
+      "name":"BatchPutPolicyAssignmentByPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/governance-policy-mgmt/accounts/{AccountId}/policy-assignments/batch-put",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchPutPolicyAssignmentByPolicyRequest"},
+      "output":{"shape":"BatchPutPolicyAssignmentByPolicyResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "CancelIngestion":{
       "name":"CancelIngestion",
       "http":{
@@ -96,6 +130,44 @@
         {"shape":"ThrottlingException"},
         {"shape":"ResourceExistsException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "CreateAccessControlApplication":{
+      "name":"CreateAccessControlApplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/access-control-applications",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateAccessControlApplicationRequest"},
+      "output":{"shape":"CreateAccessControlApplicationResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "CreateAccessControlApplicationSecret":{
+      "name":"CreateAccessControlApplicationSecret",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/access-control-applications/{ApplicationId}/client-secrets",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateAccessControlApplicationSecretRequest"},
+      "output":{"shape":"CreateAccessControlApplicationSecretResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
       ]
     },
     "CreateAccountCustomization":{
@@ -447,6 +519,25 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "CreateInboundConnector":{
+      "name":"CreateInboundConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/inbound-connectors",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateInboundConnectorRequest"},
+      "output":{"shape":"CreateInboundConnectorResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "CreateIngestion":{
       "name":"CreateIngestion",
       "http":{
@@ -477,6 +568,27 @@
       "errors":[
         {"shape":"ResourceExistsException"},
         {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "CreateKnowledgeBaseRefreshSchedule":{
+      "name":"CreateKnowledgeBaseRefreshSchedule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/accounts/{AwsAccountId}/knowledge-bases/{KnowledgeBaseId}/kb-refresh-schedules",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateKnowledgeBaseRefreshScheduleRequest"},
+      "output":{"shape":"CreateKnowledgeBaseRefreshScheduleResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceExistsException"},
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"InternalFailureException"},
@@ -753,6 +865,44 @@
         {"shape":"UnsupportedUserEditionException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "DeleteAccessControlApplication":{
+      "name":"DeleteAccessControlApplication",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/access-control-applications",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteAccessControlApplicationRequest"},
+      "output":{"shape":"DeleteAccessControlApplicationResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteAccessControlApplicationSecret":{
+      "name":"DeleteAccessControlApplicationSecret",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/access-control-applications/{ApplicationId}/client-secrets/{ClientSecretId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteAccessControlApplicationSecretRequest"},
+      "output":{"shape":"DeleteAccessControlApplicationSecretResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
     },
     "DeleteAccountCustomPermission":{
       "name":"DeleteAccountCustomPermission",
@@ -1181,6 +1331,25 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DeleteInboundConnector":{
+      "name":"DeleteInboundConnector",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/inbound-connectors/{InboundConnectorId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteInboundConnectorRequest"},
+      "output":{"shape":"DeleteInboundConnectorResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "DeleteKnowledgeBase":{
       "name":"DeleteKnowledgeBase",
       "http":{
@@ -1201,6 +1370,26 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"}
       ]
+    },
+    "DeleteKnowledgeBaseRefreshSchedule":{
+      "name":"DeleteKnowledgeBaseRefreshSchedule",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/accounts/{AwsAccountId}/knowledge-bases/{KnowledgeBaseId}/kb-refresh-schedules/{ScheduleId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteKnowledgeBaseRefreshScheduleRequest"},
+      "output":{"shape":"DeleteKnowledgeBaseRefreshScheduleResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
     },
     "DeleteLimitsProfile":{
       "name":"DeleteLimitsProfile",
@@ -1255,6 +1444,25 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "DeletePolicyAssignment":{
+      "name":"DeletePolicyAssignment",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/governance-policy-mgmt/accounts/{AccountId}/policy-assignments",
+        "responseCode":200
+      },
+      "input":{"shape":"DeletePolicyAssignmentRequest"},
+      "output":{"shape":"DeletePolicyAssignmentResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
     },
     "DeleteRefreshSchedule":{
       "name":"DeleteRefreshSchedule",
@@ -1521,6 +1729,24 @@
         {"shape":"UnsupportedUserEditionException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "DescribeAccessControlApplication":{
+      "name":"DescribeAccessControlApplication",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/access-control-applications/{ApplicationId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeAccessControlApplicationRequest"},
+      "output":{"shape":"DescribeAccessControlApplicationResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "DescribeAccountCustomPermission":{
       "name":"DescribeAccountCustomPermission",
@@ -2233,6 +2459,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DescribeInboundConnector":{
+      "name":"DescribeInboundConnector",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/inbound-connectors/{InboundConnectorId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeInboundConnectorRequest"},
+      "output":{"shape":"DescribeInboundConnectorResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "DescribeIngestion":{
       "name":"DescribeIngestion",
       "http":{
@@ -2311,6 +2555,27 @@
       },
       "input":{"shape":"DescribeKnowledgeBasePermissionsRequest"},
       "output":{"shape":"DescribeKnowledgeBasePermissionsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "DescribeKnowledgeBaseRefreshSchedule":{
+      "name":"DescribeKnowledgeBaseRefreshSchedule",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/accounts/{AwsAccountId}/knowledge-bases/{KnowledgeBaseId}/kb-refresh-schedules/{ScheduleId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeKnowledgeBaseRefreshScheduleRequest"},
+      "output":{"shape":"DescribeKnowledgeBaseRefreshScheduleResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"InvalidRequestException"},
@@ -2905,6 +3170,24 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "GetPolicyAssignment":{
+      "name":"GetPolicyAssignment",
+      "http":{
+        "method":"GET",
+        "requestUri":"/governance-policy-mgmt/accounts/{AccountId}/policy-assignments",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPolicyAssignmentRequest"},
+      "output":{"shape":"GetPolicyAssignmentResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
     "GetSessionEmbedUrl":{
       "name":"GetSessionEmbedUrl",
       "http":{
@@ -2924,6 +3207,24 @@
         {"shape":"UnsupportedUserEditionException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "ListAccessControlApplications":{
+      "name":"ListAccessControlApplications",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/access-control-applications",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAccessControlApplicationsRequest"},
+      "output":{"shape":"ListAccessControlApplicationsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "ListActionConnectors":{
       "name":"ListActionConnectors",
@@ -3321,6 +3622,42 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "ListInboundConnectorApplicationAssociations":{
+      "name":"ListInboundConnectorApplicationAssociations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/inbound-connectors/{InboundConnectorId}/associations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListInboundConnectorApplicationAssociationsRequest"},
+      "output":{"shape":"ListInboundConnectorApplicationAssociationsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListInboundConnectors":{
+      "name":"ListInboundConnectors",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/inbound-connectors",
+        "responseCode":200
+      },
+      "input":{"shape":"ListInboundConnectorsRequest"},
+      "output":{"shape":"ListInboundConnectorsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "ListIngestions":{
       "name":"ListIngestions",
       "http":{
@@ -3338,6 +3675,27 @@
         {"shape":"InvalidNextTokenException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "ListKnowledgeBaseRefreshSchedules":{
+      "name":"ListKnowledgeBaseRefreshSchedules",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/accounts/{AwsAccountId}/knowledge-bases/{KnowledgeBaseId}/kb-refresh-schedules",
+        "responseCode":200
+      },
+      "input":{"shape":"ListKnowledgeBaseRefreshSchedulesRequest"},
+      "output":{"shape":"ListKnowledgeBaseRefreshSchedulesResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "ListKnowledgeBases":{
       "name":"ListKnowledgeBases",
@@ -3410,6 +3768,24 @@
         {"shape":"InvalidNextTokenException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "ListPrincipalsForPolicy":{
+      "name":"ListPrincipalsForPolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/governance-policy-mgmt/accounts/{AccountId}/policy-assignments/by-policy",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPrincipalsForPolicyRequest"},
+      "output":{"shape":"ListPrincipalsForPolicyResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
     },
     "ListRefreshSchedules":{
       "name":"ListRefreshSchedules",
@@ -3796,6 +4172,25 @@
         {"shape":"ConflictException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "PutPolicyAssignment":{
+      "name":"PutPolicyAssignment",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/governance-policy-mgmt/accounts/{AccountId}/policy-assignments",
+        "responseCode":200
+      },
+      "input":{"shape":"PutPolicyAssignmentRequest"},
+      "output":{"shape":"PutPolicyAssignmentResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
     },
     "RegisterUser":{
       "name":"RegisterUser",
@@ -4208,6 +4603,44 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "UpdateAccessControlApplication":{
+      "name":"UpdateAccessControlApplication",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/accounts/{AwsAccountId}/access-control-applications/{ApplicationId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateAccessControlApplicationRequest"},
+      "output":{"shape":"UpdateAccessControlApplicationResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateAccessControlApplicationSecret":{
+      "name":"UpdateAccessControlApplicationSecret",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/access-control-applications/{ApplicationId}/client-secrets/{ClientSecretId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateAccessControlApplicationSecretRequest"},
+      "output":{"shape":"UpdateAccessControlApplicationSecretResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
     },
     "UpdateAccountCustomPermission":{
       "name":"UpdateAccountCustomPermission",
@@ -4830,6 +5263,45 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateInboundConnector":{
+      "name":"UpdateInboundConnector",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/accounts/{AwsAccountId}/inbound-connectors/{InboundConnectorId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateInboundConnectorRequest"},
+      "output":{"shape":"UpdateInboundConnectorResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateInboundConnectorApplicationAssociations":{
+      "name":"UpdateInboundConnectorApplicationAssociations",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/inbound-connectors/{InboundConnectorId}/associations",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateInboundConnectorApplicationAssociationsRequest"},
+      "output":{"shape":"UpdateInboundConnectorApplicationAssociationsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "UpdateIpRestriction":{
       "name":"UpdateIpRestriction",
       "http":{
@@ -4896,6 +5368,27 @@
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateKnowledgeBaseRefreshSchedule":{
+      "name":"UpdateKnowledgeBaseRefreshSchedule",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v1/accounts/{AwsAccountId}/knowledge-bases/{KnowledgeBaseId}/kb-refresh-schedules/{ScheduleId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateKnowledgeBaseRefreshScheduleRequest"},
+      "output":{"shape":"UpdateKnowledgeBaseRefreshScheduleResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"InternalFailureException"},
         {"shape":"PreconditionNotMetException"},
@@ -5439,6 +5932,90 @@
         "ApiKey":{"shape":"APIKey"},
         "Email":{"shape":"Email"}
       }
+    },
+    "AccessControlApplication":{
+      "type":"structure",
+      "required":[
+        "ApplicationId",
+        "Arn",
+        "Name",
+        "Namespace",
+        "AuthenticationType",
+        "Status",
+        "CreatedTime",
+        "LastUpdatedTime",
+        "TenantUrl"
+      ],
+      "members":{
+        "ApplicationId":{"shape":"ShortRestrictiveResourceId"},
+        "Arn":{"shape":"Arn"},
+        "Name":{"shape":"ResourceName"},
+        "Namespace":{"shape":"String"},
+        "AuthenticationType":{"shape":"AccessControlApplicationAuthenticationType"},
+        "Status":{"shape":"AccessControlApplicationStatus"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "TenantUrl":{"shape":"String"},
+        "Description":{"shape":"AccessControlApplicationDescription"},
+        "IdcApplicationArn":{"shape":"String"},
+        "IdpAuthorizingConfiguration":{"shape":"IdpAuthorizingConfig"},
+        "QuickAuthenticationConfiguration":{"shape":"QuickAuthenticationConfig"}
+      }
+    },
+    "AccessControlApplicationAuthenticationType":{
+      "type":"string",
+      "enum":["OIDC"]
+    },
+    "AccessControlApplicationDescription":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[A-Za-z0-9 _.,!?\\-]*"
+    },
+    "AccessControlApplicationSecretManagerArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):secretsmanager:[a-z0-9-]+:[0-9]{12}:secret:.+"
+    },
+    "AccessControlApplicationStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "AccessControlApplicationSummary":{
+      "type":"structure",
+      "required":[
+        "ApplicationId",
+        "Arn",
+        "Name",
+        "Namespace",
+        "AuthenticationType",
+        "Status",
+        "CreatedTime",
+        "LastUpdatedTime",
+        "TenantUrl"
+      ],
+      "members":{
+        "ApplicationId":{"shape":"ShortRestrictiveResourceId"},
+        "Arn":{"shape":"Arn"},
+        "Name":{"shape":"ResourceName"},
+        "Namespace":{"shape":"String"},
+        "AuthenticationType":{"shape":"AccessControlApplicationAuthenticationType"},
+        "Status":{"shape":"AccessControlApplicationStatus"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "TenantUrl":{"shape":"String"},
+        "IdpAuthorizingConfiguration":{"shape":"IdpAuthorizingConfigSummary"},
+        "QuickAuthenticationConfiguration":{"shape":"QuickAuthenticationConfig"},
+        "Description":{"shape":"AccessControlApplicationDescription"}
+      }
+    },
+    "AccessControlApplicationSummaryList":{
+      "type":"list",
+      "member":{"shape":"AccessControlApplicationSummary"}
     },
     "AccessControlConfiguration":{
       "type":"structure",
@@ -7387,7 +7964,8 @@
       "enum":[
         "AGENT",
         "SPACE",
-        "KNOWLEDGE_BASE"
+        "KNOWLEDGE_BASE",
+        "FLOW"
       ]
     },
     "AssetTypeList":{
@@ -7613,6 +8191,18 @@
       "members":{
         "DataSetName":{"shape":"DataSetName"}
       }
+    },
+    "AwsRegion":{
+      "type":"string",
+      "max":30,
+      "min":5,
+      "pattern":"[a-z]{2}(-[a-z]+)+-[0-9]+"
+    },
+    "AwsRegionList":{
+      "type":"list",
+      "member":{"shape":"AwsRegion"},
+      "max":10,
+      "min":0
     },
     "AxisBinding":{
       "type":"string",
@@ -7957,6 +8547,70 @@
       "type":"list",
       "member":{"shape":"BatchDeleteKnowledgeBaseSuccess"}
     },
+    "BatchDeletePolicyAssignmentByPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "PolicyArn",
+        "PrincipalArns"
+      ],
+      "members":{
+        "AccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AccountId"
+        },
+        "PolicyArn":{"shape":"PolicyArn"},
+        "PrincipalArns":{"shape":"BatchDeletePolicyAssignmentByPolicyRequestPrincipalArnsList"}
+      }
+    },
+    "BatchDeletePolicyAssignmentByPolicyRequestPrincipalArnsList":{
+      "type":"list",
+      "member":{"shape":"PrincipalArn"},
+      "max":50,
+      "min":1
+    },
+    "BatchDeletePolicyAssignmentByPolicyResponse":{
+      "type":"structure",
+      "required":[
+        "PolicyArn",
+        "Success",
+        "Errors"
+      ],
+      "members":{
+        "PolicyArn":{"shape":"PolicyArn"},
+        "Success":{"shape":"BatchDeletePolicyAssignmentSuccessList"},
+        "Errors":{"shape":"BatchDeletePolicyAssignmentErrorList"}
+      }
+    },
+    "BatchDeletePolicyAssignmentError":{
+      "type":"structure",
+      "required":[
+        "PrincipalArn",
+        "ErrorCode",
+        "ErrorMessage"
+      ],
+      "members":{
+        "PrincipalArn":{"shape":"PrincipalArn"},
+        "ErrorCode":{"shape":"String"},
+        "ErrorMessage":{"shape":"String"}
+      }
+    },
+    "BatchDeletePolicyAssignmentErrorList":{
+      "type":"list",
+      "member":{"shape":"BatchDeletePolicyAssignmentError"}
+    },
+    "BatchDeletePolicyAssignmentSuccess":{
+      "type":"structure",
+      "required":["PrincipalArn"],
+      "members":{
+        "PrincipalArn":{"shape":"PrincipalArn"}
+      }
+    },
+    "BatchDeletePolicyAssignmentSuccessList":{
+      "type":"list",
+      "member":{"shape":"BatchDeletePolicyAssignmentSuccess"}
+    },
     "BatchDeleteTopicReviewedAnswerRequest":{
       "type":"structure",
       "required":[
@@ -8038,6 +8692,75 @@
         "userLimits":{"shape":"UserLimitsList"},
         "errors":{"shape":"BatchDescribeUserLimitsErrorList"}
       }
+    },
+    "BatchPutPolicyAssignmentByPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "PolicyArn",
+        "Assignments"
+      ],
+      "members":{
+        "AccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AccountId"
+        },
+        "PolicyArn":{"shape":"PolicyArn"},
+        "Assignments":{"shape":"BatchPutPolicyAssignmentByPolicyRequestAssignmentsList"}
+      }
+    },
+    "BatchPutPolicyAssignmentByPolicyRequestAssignmentsList":{
+      "type":"list",
+      "member":{"shape":"PutAssignmentEntry"},
+      "max":50,
+      "min":1
+    },
+    "BatchPutPolicyAssignmentByPolicyResponse":{
+      "type":"structure",
+      "required":[
+        "PolicyArn",
+        "Success",
+        "Errors"
+      ],
+      "members":{
+        "PolicyArn":{"shape":"PolicyArn"},
+        "Success":{"shape":"BatchPutPolicyAssignmentSuccessList"},
+        "Errors":{"shape":"BatchPutPolicyAssignmentErrorList"}
+      }
+    },
+    "BatchPutPolicyAssignmentError":{
+      "type":"structure",
+      "required":[
+        "PrincipalArn",
+        "ErrorCode",
+        "ErrorMessage"
+      ],
+      "members":{
+        "PrincipalArn":{"shape":"PrincipalArn"},
+        "ErrorCode":{"shape":"String"},
+        "ErrorMessage":{"shape":"String"}
+      }
+    },
+    "BatchPutPolicyAssignmentErrorList":{
+      "type":"list",
+      "member":{"shape":"BatchPutPolicyAssignmentError"}
+    },
+    "BatchPutPolicyAssignmentSuccess":{
+      "type":"structure",
+      "required":[
+        "PrincipalArn",
+        "Revision"
+      ],
+      "members":{
+        "PrincipalArn":{"shape":"PrincipalArn"},
+        "ReplacedPolicyArn":{"shape":"PolicyArn"},
+        "Revision":{"shape":"Revision"}
+      }
+    },
+    "BatchPutPolicyAssignmentSuccessList":{
+      "type":"list",
+      "member":{"shape":"BatchPutPolicyAssignmentSuccess"}
     },
     "BigQueryParameters":{
       "type":"structure",
@@ -8656,6 +9379,9 @@
         "CreateAndUpdateMCPAction":{"shape":"CapabilityState"},
         "ShareMCPAction":{"shape":"CapabilityState"},
         "UseMCPAction":{"shape":"CapabilityState"},
+        "LocalMCPAction":{"shape":"CapabilityState"},
+        "CreateAndUpdateLocalMCPAction":{"shape":"CapabilityState"},
+        "UseLocalMCPAction":{"shape":"CapabilityState"},
         "OpenAPIAction":{"shape":"CapabilityState"},
         "CreateAndUpdateOpenAPIAction":{"shape":"CapabilityState"},
         "ShareOpenAPIAction":{"shape":"CapabilityState"},
@@ -9304,6 +10030,25 @@
       "min":0,
       "sensitive":true
     },
+    "ClientSecretConfiguration":{
+      "type":"structure",
+      "required":["ClientSecretSourceType"],
+      "members":{
+        "ClientSecretSourceType":{"shape":"ClientSecretSourceType"},
+        "ClientSecretConfigurationDetail":{"shape":"ClientSecretConfigurationDetail"}
+      }
+    },
+    "ClientSecretConfigurationDetail":{
+      "type":"structure",
+      "members":{
+        "Idp":{"shape":"IdpClientSecretInput"}
+      },
+      "union":true
+    },
+    "ClientSecretSourceType":{
+      "type":"string",
+      "enum":["IDP_PROVIDED"]
+    },
     "ClusterId":{
       "type":"string",
       "max":64,
@@ -9482,7 +10227,7 @@
     },
     "ColumnId":{
       "type":"string",
-      "max":64,
+      "max":256,
       "min":1
     },
     "ColumnIdentifier":{
@@ -10086,6 +10831,99 @@
       "type":"string",
       "pattern":"^arn:[-a-z0-9]*:quicksight:[-a-z0-9]*:[0-9]{12}:datasource/.+"
     },
+    "CreateAccessControlApplicationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ApplicationId",
+        "Name",
+        "Namespace",
+        "AuthenticationType",
+        "IdpAuthorizingConfiguration",
+        "QuickAuthenticationConfiguration"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ApplicationId":{"shape":"ShortRestrictiveResourceId"},
+        "Name":{"shape":"ResourceName"},
+        "Description":{"shape":"AccessControlApplicationDescription"},
+        "Namespace":{"shape":"Namespace"},
+        "AuthenticationType":{"shape":"AccessControlApplicationAuthenticationType"},
+        "IdpAuthorizingConfiguration":{"shape":"IdpAuthorizingConfigInput"},
+        "QuickAuthenticationConfiguration":{"shape":"QuickAuthenticationConfigInput"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateAccessControlApplicationResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId",
+        "ApplicationId",
+        "Arn",
+        "AccessControlApplicationStatus",
+        "CreatedTime",
+        "TenantUrl"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"},
+        "ApplicationId":{"shape":"String"},
+        "Arn":{"shape":"String"},
+        "AccessControlApplicationStatus":{"shape":"AccessControlApplicationStatus"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "TenantUrl":{"shape":"String"},
+        "IdcApplicationArn":{"shape":"String"},
+        "QuickAuthenticationConfiguration":{"shape":"QuickAuthenticationConfigCreateOutput"}
+      }
+    },
+    "CreateAccessControlApplicationSecretRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ApplicationId",
+        "ClientSecretConfiguration"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ApplicationId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"ApplicationId"
+        },
+        "Description":{"shape":"AccessControlApplicationDescription"},
+        "ClientSecretConfiguration":{"shape":"ClientSecretConfiguration"}
+      }
+    },
+    "CreateAccessControlApplicationSecretResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId",
+        "ClientSecretId",
+        "CreatedAt"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"},
+        "ClientSecretId":{"shape":"ShortRestrictiveResourceId"},
+        "CreatedAt":{"shape":"Timestamp"}
+      }
+    },
     "CreateAccountCustomizationRequest":{
       "type":"structure",
       "required":[
@@ -10485,7 +11323,8 @@
         "PerformanceConfiguration":{"shape":"PerformanceConfiguration"},
         "UseAs":{"shape":"DataSetUseAs"},
         "DataPrepConfiguration":{"shape":"DataPrepConfiguration"},
-        "SemanticModelConfiguration":{"shape":"SemanticModelConfiguration"}
+        "SemanticModelConfiguration":{"shape":"SemanticModelConfiguration"},
+        "UnmaterializedCalculatedColumns":{"shape":"UnmaterializedCalculatedColumnList"}
       }
     },
     "CreateDataSetResponse":{
@@ -10818,6 +11657,51 @@
         }
       }
     },
+    "CreateInboundConnectorRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "InboundConnectorId",
+        "Name",
+        "InboundConnectorConfiguration"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "InboundConnectorId":{"shape":"ShortRestrictiveResourceId"},
+        "Name":{"shape":"ResourceName"},
+        "Description":{"shape":"InboundConnectorDescription"},
+        "InboundConnectorConfiguration":{"shape":"InboundConnectorConfig"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateInboundConnectorResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId",
+        "InboundConnectorId",
+        "Arn",
+        "TenantUrl",
+        "InboundConnectorStatus",
+        "CreatedTime"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"},
+        "InboundConnectorId":{"shape":"String"},
+        "Arn":{"shape":"String"},
+        "TenantUrl":{"shape":"String"},
+        "InboundConnectorStatus":{"shape":"InboundConnectorStatus"},
+        "CreatedTime":{"shape":"Timestamp"}
+      }
+    },
     "CreateIngestionRequest":{
       "type":"structure",
       "required":[
@@ -10853,6 +11737,48 @@
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "CreateKnowledgeBaseRefreshScheduleRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "KnowledgeBaseId",
+        "ScheduleId",
+        "ScheduleFrequency"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"KbAwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "KnowledgeBaseId":{
+          "shape":"KnowledgeBaseId",
+          "location":"uri",
+          "locationName":"KnowledgeBaseId"
+        },
+        "ScheduleId":{"shape":"ScheduleId"},
+        "ScheduleFrequency":{"shape":"KnowledgeBaseRefreshFrequency"},
+        "StartTime":{"shape":"Timestamp"},
+        "State":{"shape":"ScheduleState"}
+      }
+    },
+    "CreateKnowledgeBaseRefreshScheduleResponse":{
+      "type":"structure",
+      "required":[
+        "ScheduleId",
+        "KnowledgeBaseArn"
+      ],
+      "members":{
+        "ScheduleId":{"shape":"ScheduleId"},
+        "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "box":true,
           "location":"statusCode"
         }
       }
@@ -11634,7 +12560,7 @@
     },
     "CustomInstructionsString":{
       "type":"string",
-      "max":5000,
+      "max":50000,
       "sensitive":true
     },
     "CustomLabel":{
@@ -12299,7 +13225,8 @@
         "PerformanceConfiguration":{"shape":"PerformanceConfiguration"},
         "UseAs":{"shape":"DataSetUseAs"},
         "DataPrepConfiguration":{"shape":"DataPrepConfiguration"},
-        "SemanticModelConfiguration":{"shape":"SemanticModelConfiguration"}
+        "SemanticModelConfiguration":{"shape":"SemanticModelConfiguration"},
+        "UnmaterializedCalculatedColumns":{"shape":"UnmaterializedCalculatedColumnList"}
       }
     },
     "DataSetArnsList":{
@@ -13501,6 +14428,81 @@
         "DisplayOptions":{"shape":"TextFieldControlDisplayOptions"}
       }
     },
+    "DeleteAccessControlApplicationRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ApplicationId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"querystring",
+          "locationName":"ApplicationId"
+        },
+        "IdcApplicationArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"IdcApplicationArn"
+        }
+      }
+    },
+    "DeleteAccessControlApplicationResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"},
+        "ApplicationId":{"shape":"String"}
+      }
+    },
+    "DeleteAccessControlApplicationSecretRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ApplicationId",
+        "ClientSecretId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ApplicationId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"ApplicationId"
+        },
+        "ClientSecretId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"ClientSecretId"
+        }
+      }
+    },
+    "DeleteAccessControlApplicationSecretResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
     "DeleteAccountCustomPermissionRequest":{
       "type":"structure",
       "required":["AwsAccountId"],
@@ -14196,6 +15198,83 @@
         }
       }
     },
+    "DeleteInboundConnectorRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "InboundConnectorId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "InboundConnectorId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"InboundConnectorId"
+        }
+      }
+    },
+    "DeleteInboundConnectorResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId",
+        "InboundConnectorId"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"},
+        "InboundConnectorId":{"shape":"String"}
+      }
+    },
+    "DeleteKnowledgeBaseRefreshScheduleRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "KnowledgeBaseId",
+        "ScheduleId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"KbAwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "KnowledgeBaseId":{
+          "shape":"KnowledgeBaseId",
+          "location":"uri",
+          "locationName":"KnowledgeBaseId"
+        },
+        "ScheduleId":{
+          "shape":"ScheduleId",
+          "location":"uri",
+          "locationName":"ScheduleId"
+        }
+      }
+    },
+    "DeleteKnowledgeBaseRefreshScheduleResponse":{
+      "type":"structure",
+      "required":[
+        "ScheduleId",
+        "KnowledgeBaseArn"
+      ],
+      "members":{
+        "ScheduleId":{"shape":"ScheduleId"},
+        "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "box":true,
+          "location":"statusCode"
+        }
+      }
+    },
     "DeleteKnowledgeBaseRequest":{
       "type":"structure",
       "required":[
@@ -14317,6 +15396,40 @@
           "location":"statusCode"
         }
       }
+    },
+    "DeletePolicyAssignmentRequest":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "PolicyArn",
+        "PrincipalArn"
+      ],
+      "members":{
+        "AccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AccountId"
+        },
+        "PolicyArn":{
+          "shape":"PolicyArn",
+          "location":"querystring",
+          "locationName":"PolicyArn"
+        },
+        "PrincipalArn":{
+          "shape":"PrincipalArn",
+          "location":"querystring",
+          "locationName":"PrincipalArn"
+        },
+        "Revision":{
+          "shape":"Revision",
+          "location":"querystring",
+          "locationName":"Revision"
+        }
+      }
+    },
+    "DeletePolicyAssignmentResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteRefreshScheduleRequest":{
       "type":"structure",
@@ -14846,6 +15959,41 @@
       "type":"string",
       "max":1,
       "min":1
+    },
+    "DescribeAccessControlApplicationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ApplicationId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ApplicationId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"ApplicationId"
+        }
+      }
+    },
+    "DescribeAccessControlApplicationResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId",
+        "AccessControlApplication"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"},
+        "AccessControlApplication":{"shape":"AccessControlApplication"}
+      }
     },
     "DescribeAccountCustomPermissionRequest":{
       "type":"structure",
@@ -16199,6 +17347,41 @@
         }
       }
     },
+    "DescribeInboundConnectorRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "InboundConnectorId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "InboundConnectorId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"InboundConnectorId"
+        }
+      }
+    },
+    "DescribeInboundConnectorResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId",
+        "InboundConnector"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"},
+        "InboundConnector":{"shape":"InboundConnector"}
+      }
+    },
     "DescribeIngestionRequest":{
       "type":"structure",
       "required":[
@@ -16316,6 +17499,48 @@
         "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
         "KnowledgeBaseId":{"shape":"KnowledgeBaseId"},
         "Permissions":{"shape":"ResourcePermissionList"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "box":true,
+          "location":"statusCode"
+        }
+      }
+    },
+    "DescribeKnowledgeBaseRefreshScheduleRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "KnowledgeBaseId",
+        "ScheduleId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"KbAwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "KnowledgeBaseId":{
+          "shape":"KnowledgeBaseId",
+          "location":"uri",
+          "locationName":"KnowledgeBaseId"
+        },
+        "ScheduleId":{
+          "shape":"ScheduleId",
+          "location":"uri",
+          "locationName":"ScheduleId"
+        }
+      }
+    },
+    "DescribeKnowledgeBaseRefreshScheduleResponse":{
+      "type":"structure",
+      "required":[
+        "Schedule",
+        "KnowledgeBaseArn"
+      ],
+      "members":{
+        "Schedule":{"shape":"KnowledgeBaseRefreshScheduleSummary"},
+        "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -17650,6 +18875,84 @@
       "min":1,
       "sensitive":true
     },
+    "ExternalIdpConfidentialAuthCodeAuthorizingConfig":{
+      "type":"structure",
+      "required":[
+        "ClientId",
+        "IssuerUrl"
+      ],
+      "members":{
+        "ClientId":{"shape":"OAuthApplicationClientId"},
+        "IssuerUrl":{"shape":"Uri"},
+        "ClientSecrets":{"shape":"ExternalIdpConfidentialClientSecretList"}
+      }
+    },
+    "ExternalIdpConfidentialAuthCodeAuthorizingConfigInput":{
+      "type":"structure",
+      "required":[
+        "ClientId",
+        "IssuerUrl",
+        "ClientSecret"
+      ],
+      "members":{
+        "ClientId":{"shape":"OAuthApplicationClientId"},
+        "IssuerUrl":{"shape":"Uri"},
+        "ClientSecret":{"shape":"IdpClientSecretInput"}
+      }
+    },
+    "ExternalIdpConfidentialAuthCodeAuthorizingConfigSummary":{
+      "type":"structure",
+      "required":[
+        "ClientId",
+        "IssuerUrl"
+      ],
+      "members":{
+        "ClientId":{"shape":"OAuthApplicationClientId"},
+        "IssuerUrl":{"shape":"Uri"}
+      }
+    },
+    "ExternalIdpConfidentialAuthCodeAuthorizingConfigUpdateInput":{
+      "type":"structure",
+      "required":[
+        "ClientId",
+        "IssuerUrl"
+      ],
+      "members":{
+        "ClientId":{"shape":"OAuthApplicationClientId"},
+        "IssuerUrl":{"shape":"Uri"}
+      }
+    },
+    "ExternalIdpConfidentialClientSecret":{
+      "type":"structure",
+      "required":[
+        "ClientSecretId",
+        "CreatedAt"
+      ],
+      "members":{
+        "ClientSecretId":{"shape":"ShortRestrictiveResourceId"},
+        "RegionalSecretManagerArns":{"shape":"RegionalSecretManagerArnMap"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "Description":{"shape":"AccessControlApplicationDescription"}
+      }
+    },
+    "ExternalIdpConfidentialClientSecretList":{
+      "type":"list",
+      "member":{"shape":"ExternalIdpConfidentialClientSecret"},
+      "max":2,
+      "min":1
+    },
+    "ExternalIdpPublicAuthCodeAuthorizingConfig":{
+      "type":"structure",
+      "required":[
+        "ClientId",
+        "IssuerUrl"
+      ],
+      "members":{
+        "ClientId":{"shape":"OAuthApplicationClientId"},
+        "IssuerUrl":{"shape":"Uri"}
+      }
+    },
     "FMKBKnowledgeBaseArn":{
       "type":"string",
       "max":128,
@@ -17709,6 +19012,11 @@
     "FailedToUpdateAssociationList":{
       "type":"list",
       "member":{"shape":"FailedToUpdateAssociation"}
+    },
+    "FederatedCatalog":{
+      "type":"string",
+      "max":127,
+      "min":0
     },
     "FieldBarSeriesItem":{
       "type":"structure",
@@ -19579,6 +20887,45 @@
         "Context":{"shape":"String"}
       }
     },
+    "GetPolicyAssignmentRequest":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "PolicyType",
+        "PrincipalArn"
+      ],
+      "members":{
+        "AccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AccountId"
+        },
+        "PolicyType":{
+          "shape":"PolicyType",
+          "location":"querystring",
+          "locationName":"PolicyType"
+        },
+        "PrincipalArn":{
+          "shape":"PrincipalArn",
+          "location":"querystring",
+          "locationName":"PrincipalArn"
+        }
+      }
+    },
+    "GetPolicyAssignmentResponse":{
+      "type":"structure",
+      "members":{
+        "PolicyArn":{"shape":"PolicyArn"},
+        "PolicyName":{"shape":"GetPolicyAssignmentResponsePolicyNameString"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "Revision":{"shape":"Revision"}
+      }
+    },
+    "GetPolicyAssignmentResponsePolicyNameString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "GetSessionEmbedUrlRequest":{
       "type":"structure",
       "required":["AwsAccountId"],
@@ -19642,7 +20989,10 @@
     },
     "GovernedAction":{
       "type":"string",
-      "enum":["SHARE"]
+      "enum":[
+        "SHARE",
+        "PUBLISH"
+      ]
     },
     "GovernedActionList":{
       "type":"list",
@@ -20231,6 +21581,19 @@
       "max":200,
       "min":1
     },
+    "IdcTrustedTokenIssuerArn":{
+      "type":"string",
+      "max":1284,
+      "min":20,
+      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::\\d{12}:trustedTokenIssuer/(sso)?ins-[a-zA-Z0-9-.]{16}/tti-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+    },
+    "IdcTrustedTokenIssuerConfig":{
+      "type":"structure",
+      "required":["IdcTrustedTokenIssuerArn"],
+      "members":{
+        "IdcTrustedTokenIssuerArn":{"shape":"IdcTrustedTokenIssuerArn"}
+      }
+    },
     "Identifier":{
       "type":"structure",
       "required":["Identity"],
@@ -20286,6 +21649,90 @@
       },
       "error":{"httpStatusCode":403},
       "exception":true
+    },
+    "IdpAuthorizingConfig":{
+      "type":"structure",
+      "required":["IdpAuthorizingType"],
+      "members":{
+        "IdpAuthorizingType":{"shape":"IdpAuthorizingType"},
+        "IdpAuthorizingConfigurationDetail":{"shape":"IdpAuthorizingConfigurationDetail"},
+        "IdcTrustedTokenIssuerConfiguration":{"shape":"IdcTrustedTokenIssuerConfig"}
+      }
+    },
+    "IdpAuthorizingConfigInput":{
+      "type":"structure",
+      "required":["IdpAuthorizingType"],
+      "members":{
+        "IdpAuthorizingType":{"shape":"IdpAuthorizingType"},
+        "IdpAuthorizingConfigurationDetailInput":{"shape":"IdpAuthorizingConfigurationDetailInput"},
+        "IdcTrustedTokenIssuerConfiguration":{"shape":"IdcTrustedTokenIssuerConfig"}
+      }
+    },
+    "IdpAuthorizingConfigSummary":{
+      "type":"structure",
+      "required":["IdpAuthorizingType"],
+      "members":{
+        "IdpAuthorizingType":{"shape":"IdpAuthorizingType"},
+        "IdpAuthorizingConfigurationSummaryDetail":{"shape":"IdpAuthorizingConfigurationSummaryDetail"},
+        "IdcTrustedTokenIssuerConfiguration":{"shape":"IdcTrustedTokenIssuerConfig"}
+      }
+    },
+    "IdpAuthorizingConfigUpdateInput":{
+      "type":"structure",
+      "required":["IdpAuthorizingType"],
+      "members":{
+        "IdpAuthorizingType":{"shape":"IdpAuthorizingType"},
+        "IdpAuthorizingConfigurationDetailInput":{"shape":"IdpAuthorizingConfigurationDetailUpdateInput"},
+        "IdcTrustedTokenIssuerConfiguration":{"shape":"IdcTrustedTokenIssuerConfig"}
+      }
+    },
+    "IdpAuthorizingConfigurationDetail":{
+      "type":"structure",
+      "members":{
+        "ExternalIdpPublicAuthCode":{"shape":"ExternalIdpPublicAuthCodeAuthorizingConfig"},
+        "ExternalIdpConfidentialAuthCode":{"shape":"ExternalIdpConfidentialAuthCodeAuthorizingConfig"}
+      },
+      "union":true
+    },
+    "IdpAuthorizingConfigurationDetailInput":{
+      "type":"structure",
+      "members":{
+        "ExternalIdpPublicAuthCode":{"shape":"ExternalIdpPublicAuthCodeAuthorizingConfig"},
+        "ExternalIdpConfidentialAuthCode":{"shape":"ExternalIdpConfidentialAuthCodeAuthorizingConfigInput"}
+      },
+      "union":true
+    },
+    "IdpAuthorizingConfigurationDetailUpdateInput":{
+      "type":"structure",
+      "members":{
+        "ExternalIdpPublicAuthCode":{"shape":"ExternalIdpPublicAuthCodeAuthorizingConfig"},
+        "ExternalIdpConfidentialAuthCode":{"shape":"ExternalIdpConfidentialAuthCodeAuthorizingConfigUpdateInput"}
+      },
+      "union":true
+    },
+    "IdpAuthorizingConfigurationSummaryDetail":{
+      "type":"structure",
+      "members":{
+        "ExternalIdpPublicAuthCode":{"shape":"ExternalIdpPublicAuthCodeAuthorizingConfig"},
+        "ExternalIdpConfidentialAuthCode":{"shape":"ExternalIdpConfidentialAuthCodeAuthorizingConfigSummary"}
+      },
+      "union":true
+    },
+    "IdpAuthorizingType":{
+      "type":"string",
+      "enum":[
+        "EXTERNAL_IDP_PUBLIC_AUTH_CODE",
+        "EXTERNAL_IDP_CONFIDENTIAL_AUTH_CODE",
+        "QUICK_MANAGED_AUTH_CODE",
+        "IDC_AUTH_CODE"
+      ]
+    },
+    "IdpClientSecretInput":{
+      "type":"structure",
+      "required":["RegionalSecretManagerArns"],
+      "members":{
+        "RegionalSecretManagerArns":{"shape":"RegionalSecretManagerArnMap"}
+      }
     },
     "Image":{
       "type":"structure",
@@ -20438,6 +21885,111 @@
         "SourceTableId":{"shape":"DataSetEntityResourceId"},
         "ColumnIdMappings":{"shape":"DataSetColumnIdMappingList"}
       }
+    },
+    "InboundConnector":{
+      "type":"structure",
+      "required":[
+        "InboundConnectorId",
+        "Arn",
+        "Name",
+        "Status",
+        "TenantUrl",
+        "CreatedTime",
+        "LastUpdatedTime",
+        "InboundConnectorConfiguration"
+      ],
+      "members":{
+        "InboundConnectorId":{"shape":"ShortRestrictiveResourceId"},
+        "Arn":{"shape":"Arn"},
+        "Name":{"shape":"ResourceName"},
+        "Status":{"shape":"InboundConnectorStatus"},
+        "TenantUrl":{"shape":"String"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "InboundConnectorConfiguration":{"shape":"InboundConnectorConfig"},
+        "Description":{"shape":"InboundConnectorDescription"}
+      }
+    },
+    "InboundConnectorApplicationAssociationSummary":{
+      "type":"structure",
+      "required":[
+        "AccessControlApplicationArn",
+        "CreatedTime"
+      ],
+      "members":{
+        "AccessControlApplicationArn":{"shape":"Arn"},
+        "CreatedTime":{"shape":"Timestamp"}
+      }
+    },
+    "InboundConnectorApplicationAssociationSummaryList":{
+      "type":"list",
+      "member":{"shape":"InboundConnectorApplicationAssociationSummary"},
+      "max":100,
+      "min":0
+    },
+    "InboundConnectorAssociationArnList":{
+      "type":"list",
+      "member":{"shape":"Arn"},
+      "max":20,
+      "min":1
+    },
+    "InboundConnectorConfig":{
+      "type":"structure",
+      "required":["InboundConnectorType"],
+      "members":{
+        "InboundConnectorType":{"shape":"InboundConnectorType"}
+      }
+    },
+    "InboundConnectorDescription":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[A-Za-z0-9 _.,!?\\-]*"
+    },
+    "InboundConnectorStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "InboundConnectorSummary":{
+      "type":"structure",
+      "required":[
+        "InboundConnectorId",
+        "Arn",
+        "Name",
+        "Status",
+        "CreatedTime",
+        "LastUpdatedTime",
+        "TenantUrl",
+        "InboundConnectorConfiguration"
+      ],
+      "members":{
+        "InboundConnectorId":{"shape":"ShortRestrictiveResourceId"},
+        "Arn":{"shape":"Arn"},
+        "Name":{"shape":"ResourceName"},
+        "Status":{"shape":"InboundConnectorStatus"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "TenantUrl":{"shape":"String"},
+        "InboundConnectorConfiguration":{"shape":"InboundConnectorConfig"},
+        "Description":{"shape":"InboundConnectorDescription"}
+      }
+    },
+    "InboundConnectorSummaryList":{
+      "type":"list",
+      "member":{"shape":"InboundConnectorSummary"}
+    },
+    "InboundConnectorType":{
+      "type":"string",
+      "enum":["QUICK_DESKTOP"]
+    },
+    "InboundConnectorTypeFilterList":{
+      "type":"list",
+      "member":{"shape":"InboundConnectorType"},
+      "max":1,
+      "min":1
     },
     "IncludeFolderMembers":{
       "type":"string",
@@ -21077,6 +22629,18 @@
       "min":12,
       "pattern":"[0-9]*"
     },
+    "KbDayOfWeek":{
+      "type":"string",
+      "enum":[
+        "SUNDAY",
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATURDAY"
+      ]
+    },
     "KbIngestionId":{
       "type":"string",
       "max":1024,
@@ -21094,6 +22658,15 @@
         "CANCELLED",
         "CANCELLING",
         "TIMEOUT"
+      ]
+    },
+    "KbRefreshInterval":{
+      "type":"string",
+      "enum":[
+        "DAILY",
+        "WEEKLY",
+        "MONTHLY",
+        "HOURLY"
       ]
     },
     "KbTemplate":{
@@ -21208,6 +22781,42 @@
       "max":128,
       "min":0,
       "pattern":"[\\p{L}\\p{N}][\\p{L}\\p{N} _\\-\\.]*"
+    },
+    "KnowledgeBaseRefreshFrequency":{
+      "type":"structure",
+      "required":["Interval"],
+      "members":{
+        "Interval":{"shape":"KbRefreshInterval"},
+        "RefreshOnDay":{"shape":"KnowledgeBaseScheduleRefreshOnEntity"}
+      }
+    },
+    "KnowledgeBaseRefreshScheduleList":{
+      "type":"list",
+      "member":{"shape":"KnowledgeBaseRefreshScheduleSummary"}
+    },
+    "KnowledgeBaseRefreshScheduleSummary":{
+      "type":"structure",
+      "required":[
+        "ScheduleId",
+        "ScheduleFrequency"
+      ],
+      "members":{
+        "ScheduleId":{"shape":"ScheduleId"},
+        "ScheduleFrequency":{"shape":"KnowledgeBaseRefreshFrequency"},
+        "StartTime":{"shape":"Timestamp"},
+        "State":{"shape":"ScheduleState"}
+      }
+    },
+    "KnowledgeBaseScheduleRefreshOnEntity":{
+      "type":"structure",
+      "members":{
+        "DayOfWeek":{"shape":"KbDayOfWeek"},
+        "DayOfMonth":{"shape":"KnowledgeBaseScheduleRefreshOnEntityDayOfMonthString"}
+      }
+    },
+    "KnowledgeBaseScheduleRefreshOnEntityDayOfMonthString":{
+      "type":"string",
+      "pattern":"(?:LAST_DAY_OF_MONTH|1[0-9]|2[0-8]|[12]|[3-9])"
     },
     "KnowledgeBaseSearchFilter":{
       "type":"structure",
@@ -21689,6 +23298,55 @@
       "member":{"shape":"LinkedDataSourceId"},
       "max":5,
       "min":0
+    },
+    "ListAccessControlApplicationsRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"querystring",
+          "locationName":"namespace"
+        },
+        "MaxResults":{
+          "shape":"ListAccessControlApplicationsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListAccessControlApplicationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListAccessControlApplicationsResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId",
+        "AccessControlApplications"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"},
+        "AccessControlApplications":{"shape":"AccessControlApplicationSummaryList"},
+        "NextToken":{"shape":"String"}
+      }
     },
     "ListActionConnectorsRequest":{
       "type":"structure",
@@ -22551,6 +24209,107 @@
       "max":10,
       "min":1
     },
+    "ListInboundConnectorApplicationAssociationsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "InboundConnectorId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "InboundConnectorId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"InboundConnectorId"
+        },
+        "MaxResults":{
+          "shape":"ListInboundConnectorApplicationAssociationsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListInboundConnectorApplicationAssociationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListInboundConnectorApplicationAssociationsResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId",
+        "ApplicationAssociations"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"},
+        "ApplicationAssociations":{"shape":"InboundConnectorApplicationAssociationSummaryList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListInboundConnectorsRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "MaxResults":{
+          "shape":"ListInboundConnectorsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "Type":{
+          "shape":"InboundConnectorTypeFilterList",
+          "location":"querystring",
+          "locationName":"type"
+        }
+      }
+    },
+    "ListInboundConnectorsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListInboundConnectorsResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId",
+        "InboundConnectorSummaries"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"},
+        "InboundConnectorSummaries":{"shape":"InboundConnectorSummaryList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "ListIngestionsRequest":{
       "type":"structure",
       "required":[
@@ -22589,6 +24348,54 @@
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "ListKnowledgeBaseRefreshSchedulesRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "KnowledgeBaseId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"KbAwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "KnowledgeBaseId":{
+          "shape":"KnowledgeBaseId",
+          "location":"uri",
+          "locationName":"KnowledgeBaseId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListKnowledgeBaseRefreshSchedulesResponse":{
+      "type":"structure",
+      "required":[
+        "ScheduleSummaries",
+        "KnowledgeBaseArn"
+      ],
+      "members":{
+        "ScheduleSummaries":{"shape":"KnowledgeBaseRefreshScheduleList"},
+        "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
+        "NextToken":{"shape":"NextToken"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "box":true,
           "location":"statusCode"
         }
       }
@@ -22736,6 +24543,64 @@
           "location":"statusCode"
         }
       }
+    },
+    "ListPrincipalsForPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "PolicyArn"
+      ],
+      "members":{
+        "AccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AccountId"
+        },
+        "PolicyArn":{
+          "shape":"PolicyArn",
+          "location":"querystring",
+          "locationName":"PolicyArn"
+        },
+        "PrincipalType":{
+          "shape":"PrincipalType",
+          "location":"querystring",
+          "locationName":"PrincipalType"
+        },
+        "MaxResults":{
+          "shape":"ListPrincipalsForPolicyRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"ListPrincipalsForPolicyRequestNextTokenString",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListPrincipalsForPolicyRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListPrincipalsForPolicyRequestNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ListPrincipalsForPolicyResponse":{
+      "type":"structure",
+      "required":["Principals"],
+      "members":{
+        "Principals":{"shape":"PolicyPrincipalList"},
+        "NextToken":{"shape":"ListPrincipalsForPolicyResponseNextTokenString"}
+      }
+    },
+    "ListPrincipalsForPolicyResponseNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":1
     },
     "ListRefreshSchedulesRequest":{
       "type":"structure",
@@ -24297,6 +26162,11 @@
         "FormatConfiguration":{"shape":"NumberFormatConfiguration"}
       }
     },
+    "OAuthApplicationClientId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "OAuthAuthorizationEndpointUrl":{
       "type":"string",
       "max":2048,
@@ -25387,6 +27257,12 @@
         "ItemsLimitConfiguration":{"shape":"PluginVisualItemsLimitConfiguration"}
       }
     },
+    "PolicyArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:[\\x21-\\x39\\x3b-\\x7e]+:[\\x21-\\x39\\x3b-\\x7e]+:[\\x21-\\x39\\x3b-\\x7e]*:[0-9]{12}:[\\x21-\\x7e]+"
+    },
     "PolicyDescription":{
       "type":"string",
       "max":1024,
@@ -25402,6 +27278,27 @@
       "type":"string",
       "max":256,
       "min":1
+    },
+    "PolicyPrincipal":{
+      "type":"structure",
+      "required":["PrincipalArn"],
+      "members":{
+        "PrincipalArn":{"shape":"PrincipalArn"},
+        "PrincipalType":{"shape":"PrincipalType"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "Revision":{"shape":"Revision"}
+      }
+    },
+    "PolicyPrincipalList":{
+      "type":"list",
+      "member":{"shape":"PolicyPrincipal"}
+    },
+    "PolicyType":{
+      "type":"string",
+      "enum":[
+        "LIMITS_PROFILE",
+        "CUSTOM_PERMISSIONS"
+      ]
     },
     "Port":{
       "type":"integer",
@@ -25523,11 +27420,25 @@
       "max":256,
       "min":1
     },
+    "PrincipalArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:.+"
+    },
     "PrincipalList":{
       "type":"list",
       "member":{"shape":"String"},
       "max":100,
       "min":1
+    },
+    "PrincipalType":{
+      "type":"string",
+      "enum":[
+        "USER",
+        "GROUP",
+        "ACCOUNT"
+      ]
     },
     "PrivateKey":{
       "type":"string",
@@ -25640,6 +27551,15 @@
         "AUTO_PURCHASE"
       ]
     },
+    "PutAssignmentEntry":{
+      "type":"structure",
+      "required":["PrincipalArn"],
+      "members":{
+        "PrincipalArn":{"shape":"PrincipalArn"},
+        "ExistingPolicyArn":{"shape":"PolicyArn"},
+        "Revision":{"shape":"Revision"}
+      }
+    },
     "PutDataSetRefreshPropertiesRequest":{
       "type":"structure",
       "required":[
@@ -25669,6 +27589,37 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "PutPolicyAssignmentRequest":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "PolicyArn",
+        "PrincipalArn"
+      ],
+      "members":{
+        "AccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AccountId"
+        },
+        "PolicyArn":{"shape":"PolicyArn"},
+        "PrincipalArn":{"shape":"PrincipalArn"},
+        "ExistingPolicyArn":{"shape":"PolicyArn"},
+        "Revision":{"shape":"Revision"}
+      }
+    },
+    "PutPolicyAssignmentResponse":{
+      "type":"structure",
+      "required":[
+        "PolicyArn",
+        "Revision"
+      ],
+      "members":{
+        "PolicyArn":{"shape":"PolicyArn"},
+        "ReplacedPolicyArn":{"shape":"PolicyArn"},
+        "Revision":{"shape":"Revision"}
       }
     },
     "QAQueryText":{
@@ -25771,6 +27722,73 @@
       "members":{
         "WaitingOnIngestion":{"shape":"String"},
         "QueuedIngestion":{"shape":"String"}
+      }
+    },
+    "QuickAuthenticationConfig":{
+      "type":"structure",
+      "required":["QuickAuthenticationType"],
+      "members":{
+        "QuickAuthenticationType":{"shape":"QuickAuthenticationType"},
+        "QuickAuthenticationConfigurationDetail":{"shape":"QuickAuthenticationConfigurationDetail"}
+      }
+    },
+    "QuickAuthenticationConfigCreateOutput":{
+      "type":"structure",
+      "required":["QuickAuthenticationType"],
+      "members":{
+        "QuickAuthenticationType":{"shape":"QuickAuthenticationType"},
+        "QuickAuthenticationConfigurationDetailCreateOutput":{"shape":"QuickAuthenticationConfigurationDetailCreateOutput"}
+      }
+    },
+    "QuickAuthenticationConfigInput":{
+      "type":"structure",
+      "required":["QuickAuthenticationType"],
+      "members":{
+        "QuickAuthenticationType":{"shape":"QuickAuthenticationType"},
+        "QuickAuthenticationConfigurationDetailInput":{"shape":"QuickAuthenticationConfigurationDetailInput"}
+      }
+    },
+    "QuickAuthenticationConfigurationDetail":{
+      "type":"structure",
+      "members":{
+        "QuickManagedPublicAuthCode":{"shape":"QuickManagedPublicAuthCodeQuickAuthenticationConfig"}
+      },
+      "union":true
+    },
+    "QuickAuthenticationConfigurationDetailCreateOutput":{
+      "type":"structure",
+      "members":{
+        "QuickManagedPublicAuthCode":{"shape":"QuickManagedPublicAuthCodeQuickAuthenticationConfig"}
+      },
+      "union":true
+    },
+    "QuickAuthenticationConfigurationDetailInput":{
+      "type":"structure",
+      "members":{
+        "QuickManagedPublicAuthCode":{"shape":"QuickManagedAuthCodeQuickAuthenticationConfigInput"}
+      },
+      "union":true
+    },
+    "QuickAuthenticationType":{
+      "type":"string",
+      "enum":["QUICK_MANAGED_PUBLIC_AUTH_CODE"]
+    },
+    "QuickManagedAuthCodeQuickAuthenticationConfigInput":{
+      "type":"structure",
+      "required":["RedirectUris"],
+      "members":{
+        "RedirectUris":{"shape":"RedirectUriList"}
+      }
+    },
+    "QuickManagedPublicAuthCodeQuickAuthenticationConfig":{
+      "type":"structure",
+      "required":[
+        "RedirectUris",
+        "ClientId"
+      ],
+      "members":{
+        "RedirectUris":{"shape":"RedirectUriList"},
+        "ClientId":{"shape":"OAuthApplicationClientId"}
       }
     },
     "QuickSightUserNotFoundException":{
@@ -26048,6 +28066,12 @@
       "max":30,
       "min":7
     },
+    "RedirectUriList":{
+      "type":"list",
+      "member":{"shape":"Uri"},
+      "max":10,
+      "min":1
+    },
     "RedshiftIAMParameters":{
       "type":"structure",
       "required":["RoleArn"],
@@ -26065,6 +28089,7 @@
         "Host":{"shape":"Host"},
         "Port":{"shape":"OptionalPort"},
         "Database":{"shape":"Database"},
+        "FederatedCatalog":{"shape":"FederatedCatalog"},
         "ClusterId":{"shape":"ClusterId"},
         "IAMParameters":{"shape":"RedshiftIAMParameters"},
         "IdentityCenterConfiguration":{"shape":"IdentityCenterConfiguration"}
@@ -26251,6 +28276,13 @@
     "Region":{
       "type":"string",
       "pattern":"[a-z]+-[a-z]+-[0-9]{1}"
+    },
+    "RegionalSecretManagerArnMap":{
+      "type":"map",
+      "key":{"shape":"AwsRegion"},
+      "value":{"shape":"AccessControlApplicationSecretManagerArn"},
+      "max":10,
+      "min":1
     },
     "RegisterUserRequest":{
       "type":"structure",
@@ -26645,6 +28677,11 @@
         "MISSING_REQUIRED_FIELDS"
       ]
     },
+    "Revision":{
+      "type":"long",
+      "box":true,
+      "min":1
+    },
     "Role":{
       "type":"string",
       "enum":[
@@ -26991,12 +29028,25 @@
         "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
+    "ScheduleId":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[0-9a-zA-Z_=-][0-9a-zA-Z_=.-]*"
+    },
     "ScheduleRefreshOnEntity":{
       "type":"structure",
       "members":{
         "DayOfWeek":{"shape":"DayOfWeek"},
         "DayOfMonth":{"shape":"DayOfMonth"}
       }
+    },
+    "ScheduleState":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "SchedulesConfigurations":{
       "type":"structure",
@@ -31469,7 +33519,9 @@
     },
     "UnicodeIcon":{
       "type":"string",
-      "pattern":"^[^\\u0000-\\u00FF]$"
+      "max":16,
+      "min":1,
+      "pattern":"^[^\\u0000-\\u00FF]+$"
     },
     "UniqueKey":{
       "type":"structure",
@@ -31500,6 +33552,27 @@
       }
     },
     "UnlimitedPixelLength":{"type":"string"},
+    "UnmaterializedCalculatedColumn":{
+      "type":"structure",
+      "required":[
+        "ColumnId",
+        "ColumnName",
+        "Expression"
+      ],
+      "members":{
+        "ColumnId":{"shape":"ColumnId"},
+        "ColumnName":{"shape":"ColumnName"},
+        "Expression":{"shape":"DataSetCalculatedFieldExpression"},
+        "Type":{"shape":"ColumnDataType"},
+        "SubType":{"shape":"ColumnDataSubType"}
+      }
+    },
+    "UnmaterializedCalculatedColumnList":{
+      "type":"list",
+      "member":{"shape":"UnmaterializedCalculatedColumn"},
+      "max":512,
+      "min":0
+    },
     "UnpivotOperation":{
       "type":"structure",
       "required":[
@@ -31577,6 +33650,99 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "UpdateAccessControlApplicationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ApplicationId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ApplicationId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"ApplicationId"
+        },
+        "Name":{"shape":"ResourceName"},
+        "Description":{"shape":"AccessControlApplicationDescription"},
+        "IdpAuthorizingConfiguration":{"shape":"IdpAuthorizingConfigUpdateInput"},
+        "QuickAuthenticationConfiguration":{"shape":"QuickAuthenticationConfigInput"},
+        "Status":{"shape":"AccessControlApplicationStatus"}
+      }
+    },
+    "UpdateAccessControlApplicationResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId",
+        "ApplicationId",
+        "Arn",
+        "AccessControlApplicationStatus",
+        "LastUpdatedTime"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"},
+        "ApplicationId":{"shape":"String"},
+        "Arn":{"shape":"String"},
+        "AccessControlApplicationStatus":{"shape":"AccessControlApplicationStatus"},
+        "LastUpdatedTime":{"shape":"Timestamp"}
+      }
+    },
+    "UpdateAccessControlApplicationSecretRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ApplicationId",
+        "ClientSecretId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ApplicationId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"ApplicationId"
+        },
+        "ClientSecretId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"ClientSecretId"
+        },
+        "UpdateRegionalSecretManagerArns":{"shape":"RegionalSecretManagerArnMap"},
+        "RemoveRegionalSecretManagerArns":{"shape":"AwsRegionList"}
+      }
+    },
+    "UpdateAccessControlApplicationSecretResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId",
+        "ClientSecretId",
+        "UpdatedAt",
+        "RegionalSecretManagerArns"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"},
+        "ClientSecretId":{"shape":"ShortRestrictiveResourceId"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "RegionalSecretManagerArns":{"shape":"RegionalSecretManagerArnMap"}
       }
     },
     "UpdateAccountCustomPermissionRequest":{
@@ -32370,7 +34536,8 @@
         "DatasetParameters":{"shape":"DatasetParameterList"},
         "PerformanceConfiguration":{"shape":"PerformanceConfiguration"},
         "DataPrepConfiguration":{"shape":"DataPrepConfiguration"},
-        "SemanticModelConfiguration":{"shape":"SemanticModelConfiguration"}
+        "SemanticModelConfiguration":{"shape":"SemanticModelConfiguration"},
+        "UnmaterializedCalculatedColumns":{"shape":"UnmaterializedCalculatedColumnList"}
       }
     },
     "UpdateDataSetResponse":{
@@ -32800,6 +34967,86 @@
         }
       }
     },
+    "UpdateInboundConnectorApplicationAssociationsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "InboundConnectorId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "InboundConnectorId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"InboundConnectorId"
+        },
+        "AssociateAccessControlApplications":{"shape":"InboundConnectorAssociationArnList"},
+        "DisassociateAccessControlApplications":{"shape":"InboundConnectorAssociationArnList"}
+      }
+    },
+    "UpdateInboundConnectorApplicationAssociationsResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "UpdateInboundConnectorRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "InboundConnectorId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "InboundConnectorId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"InboundConnectorId"
+        },
+        "Name":{"shape":"ResourceName"},
+        "Description":{"shape":"InboundConnectorDescription"},
+        "InboundConnectorConfiguration":{"shape":"InboundConnectorConfig"},
+        "InboundConnectorStatus":{"shape":"InboundConnectorStatus"}
+      }
+    },
+    "UpdateInboundConnectorResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId",
+        "InboundConnectorId",
+        "Arn",
+        "InboundConnectorStatus",
+        "LastUpdatedTime"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"},
+        "InboundConnectorId":{"shape":"String"},
+        "Arn":{"shape":"String"},
+        "InboundConnectorStatus":{"shape":"InboundConnectorStatus"},
+        "LastUpdatedTime":{"shape":"Timestamp"}
+      }
+    },
     "UpdateIpRestrictionRequest":{
       "type":"structure",
       "required":["AwsAccountId"],
@@ -32880,6 +35127,51 @@
         "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
         "KnowledgeBaseId":{"shape":"KnowledgeBaseId"},
         "Permissions":{"shape":"ResourcePermissionList"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "box":true,
+          "location":"statusCode"
+        }
+      }
+    },
+    "UpdateKnowledgeBaseRefreshScheduleRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "KnowledgeBaseId",
+        "ScheduleId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"KbAwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "KnowledgeBaseId":{
+          "shape":"KnowledgeBaseId",
+          "location":"uri",
+          "locationName":"KnowledgeBaseId"
+        },
+        "ScheduleId":{
+          "shape":"ScheduleId",
+          "location":"uri",
+          "locationName":"ScheduleId"
+        },
+        "ScheduleFrequency":{"shape":"KnowledgeBaseRefreshFrequency"},
+        "StartTime":{"shape":"Timestamp"},
+        "State":{"shape":"ScheduleState"}
+      }
+    },
+    "UpdateKnowledgeBaseRefreshScheduleResponse":{
+      "type":"structure",
+      "required":[
+        "ScheduleId",
+        "KnowledgeBaseArn"
+      ],
+      "members":{
+        "ScheduleId":{"shape":"ScheduleId"},
+        "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -33915,6 +36207,12 @@
       "max":127,
       "min":1
     },
+    "Uri":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"https?://[-a-zA-Z0-9+&@/%=~_|!:,.;]*[-a-zA-Z0-9+&@/%=~_|]"
+    },
     "User":{
       "type":"structure",
       "members":{
@@ -34108,6 +36406,32 @@
     "VPCConnectionSummaryList":{
       "type":"list",
       "member":{"shape":"VPCConnectionSummary"}
+    },
+    "ValidationException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"String"},
+        "RequestId":{"shape":"String"},
+        "FieldList":{"shape":"ValidationExceptionFieldList"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
+    "ValidationExceptionField":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Message"
+      ],
+      "members":{
+        "Name":{"shape":"String"},
+        "Message":{"shape":"String"}
+      }
+    },
+    "ValidationExceptionFieldList":{
+      "type":"list",
+      "member":{"shape":"ValidationExceptionField"}
     },
     "ValidationStrategy":{
       "type":"structure",

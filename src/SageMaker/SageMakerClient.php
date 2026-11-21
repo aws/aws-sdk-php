@@ -4397,6 +4397,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeAutoMLJobV2(array{AutoMLJobName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeAutoMLJobV2Async(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeAutoMLJobV2Async(array{AutoMLJobName?: string, ...} $args = [])
+ * @method \Aws\Result describeCapacityReservation(array $args = [])
+ * @phpstan-method \Aws\Result describeCapacityReservation(array{SMCapacityReservationArn?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeCapacityReservationAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeCapacityReservationAsync(array{SMCapacityReservationArn?: string, ...} $args = [])
  * @method \Aws\Result describeCluster(array $args = [])
  * @phpstan-method \Aws\Result describeCluster(array{ClusterName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeClusterAsync(array $args = [])
@@ -4657,6 +4661,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeReservedCapacity(array{ReservedCapacityArn?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeReservedCapacityAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeReservedCapacityAsync(array{ReservedCapacityArn?: string, ...} $args = [])
+ * @method \Aws\Result describeResourceAssociations(array $args = [])
+ * @phpstan-method \Aws\Result describeResourceAssociations(array{SMCapacityReservationArn?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeResourceAssociationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeResourceAssociationsAsync(array{SMCapacityReservationArn?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \Aws\Result describeSpace(array $args = [])
  * @phpstan-method \Aws\Result describeSpace(array{DomainId?: string, SpaceName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeSpaceAsync(array $args = [])
@@ -4729,6 +4737,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result extendTrainingPlan(array{TrainingPlanExtensionOfferingId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise extendTrainingPlanAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise extendTrainingPlanAsync(array{TrainingPlanExtensionOfferingId?: string, ...} $args = [])
+ * @method \Aws\Result getCapacityReservationUsage(array $args = [])
+ * @phpstan-method \Aws\Result getCapacityReservationUsage(array{SMCapacityReservationArn?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise getCapacityReservationUsageAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise getCapacityReservationUsageAsync(array{SMCapacityReservationArn?: string, MaxResults?: int, NextToken?: string, ...} $args = [])
  * @method \Aws\Result getDeviceFleetReport(array $args = [])
  * @phpstan-method \Aws\Result getDeviceFleetReport(array{DeviceFleetName?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise getDeviceFleetReportAsync(array $args = [])
@@ -5081,6 +5093,20 @@ use Aws\AwsClient;
  *     SortBy?: 'CreationTime'|'FinalObjectiveMetricValue'|'Status',
  *     MaxResults?: int,
  *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result listCapacityReservations(array $args = [])
+ * @phpstan-method \Aws\Result listCapacityReservations(array{
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     Filters?: list<array{Name?: 'Status', Values?: list<string>, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise listCapacityReservationsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise listCapacityReservationsAsync(array{
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     Filters?: list<array{Name?: 'Status', Values?: list<string>, ...}>,
  *     ...,
  * } $args = [])
  * @method \Aws\Result listClusterEvents(array $args = [])
