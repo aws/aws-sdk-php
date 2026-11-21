@@ -503,6 +503,53 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
     }
 
+    #[DataProvider('compositeChecksumProvider')]
+    public function testSkipsCompositeChecksumsAtRangeBounds(string $suffix)
+    {
+        $response = new Response(
+            200,
+            ['x-amz-checksum-sha1' => 'invalid' . $suffix],
+            'response body'
+        );
+        $command = new Command(
+            'GetObject',
+            ['ChecksumMode' => 'enabled'],
+            new HandlerList()
+        );
+        $result = $this->getValidateResponseChecksumMutator()(
+            new Result(),
+            $command,
+            $response
+        );
+
+        $this->assertNull($result['ChecksumValidated']);
+    }
+
+    public static function compositeChecksumProvider(): array
+    {
+        return [['-1'], ['-10000']];
+    }
+
+    public function testValidatesChecksumWithPartCountAboveRange()
+    {
+        $this->expectException(S3Exception::class);
+        $response = new Response(
+            200,
+            ['x-amz-checksum-sha1' => 'invalid-10001'],
+            'response body'
+        );
+        $command = new Command(
+            'GetObject',
+            ['ChecksumMode' => 'enabled'],
+            new HandlerList()
+        );
+        $this->getValidateResponseChecksumMutator()(
+            new Result(),
+            $command,
+            $response
+        );
+    }
+
     /**
      * Returns an instance of ValidateResponseChecksumResultMutator
      * for testing purposes.
