@@ -176,6 +176,29 @@ final class AwsCodegenIntegrationTest extends TestCase
         );
     }
 
+    public function testServiceShortNameUsesTheLastNamespaceSegment(): void
+    {
+        self::assertSame(
+            'SsoOidc',
+            AwsCodegenIntegration::serviceShortName(
+                new CodegenSettings(
+                    namespace: 'Aws\\SsoOidc',
+                    outputDir: '/tmp/out'
+                )
+            )
+        );
+    }
+
+    public function testServiceShortNameKeepsASingleSegmentNamespace(): void
+    {
+        self::assertSame(
+            'Example',
+            AwsCodegenIntegration::serviceShortName(
+                new CodegenSettings(namespace: 'Example', outputDir: '/tmp/out')
+            )
+        );
+    }
+
     /**
      * @return list<GeneratedFile>
      */

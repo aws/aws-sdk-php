@@ -323,6 +323,19 @@ final class AwsCodegenIntegration extends AbstractCodegenIntegration
     }
 
     /**
+     * Return the service short name generated class names start with: the
+     * last segment of the resolved client namespace.
+     */
+    public static function serviceShortName(CodegenSettings $settings): string
+    {
+        $separator = \strrpos($settings->namespace, '\\');
+
+        return $separator === false
+            ? $settings->namespace
+            : \substr($settings->namespace, $separator + 1);
+    }
+
+    /**
      * @return array{
      *     operationConstants: array<string, array<string, string>>,
      *     shapeConstants: array<string, array<string, string>>,

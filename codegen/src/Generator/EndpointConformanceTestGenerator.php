@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Aws\Codegen\Generator;
 
+use Aws\Codegen\AwsCodegenIntegration;
 use Smithy\Codegen\CodegenSettings;
 use Smithy\Codegen\Generator\GeneratedFile;
 use Smithy\Codegen\Model\SmithyModel;
@@ -53,7 +54,7 @@ final class EndpointConformanceTestGenerator
             return [];
         }
 
-        $shortName = $this->serviceShortName($serviceShapeId);
+        $shortName = AwsCodegenIntegration::serviceShortName($this->settings);
         $directory = $this->testsOutputDir
             . \DIRECTORY_SEPARATOR
             . $shortName
@@ -191,15 +192,5 @@ PHP;
         $lines[] = \str_repeat('    ', $indentLevel) . ']';
 
         return \implode("\n", $lines);
-    }
-
-    private function serviceShortName(string $serviceShapeId): string
-    {
-        $parts = \explode('\\', $this->settings->namespace);
-        $last = \end($parts);
-
-        return $last !== false && $last !== ''
-            ? $last
-            : SmithyModel::getShapeName($serviceShapeId);
     }
 }

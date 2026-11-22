@@ -77,12 +77,13 @@ final class AwsCodeGenerator
     public function generateAndWrite(): int
     {
         $sourceFiles = $this->generateSources();
+        $testFiles = $this->generateEndpointConformanceTests();
+        $this->assertUniquePaths([...$sourceFiles, ...$testFiles]);
+
         (new GeneratedOutputPublisher())->publish(
             $sourceFiles,
             $this->settings->outputDir
         );
-
-        $testFiles = $this->generateEndpointConformanceTests();
         foreach ($testFiles as $file) {
             $file->writeToDisk($this->testsOutputDir);
         }

@@ -300,6 +300,48 @@ final class AwsCodeGeneratorTest extends TestCase
         }
     }
 
+    public function testGenerateAndWriteRejectsDuplicatePathsBeforeWriting(): void
+    {
+        $data = \json_decode(
+            (string) \file_get_contents(
+                __DIR__ . '/fixtures/aws-query-model.json'
+            ),
+            true,
+            512,
+            \JSON_THROW_ON_ERROR
+        );
+        // Name the output shape after the conformance test so a flat
+        // source tree and the tests tree emit the same file.
+        $data['shapes']['example.aws#ExampleEndpointConformanceTest'] =
+            $data['shapes']['example.aws#DoThingOutput'];
+        unset($data['shapes']['example.aws#DoThingOutput']);
+        $data['shapes']['example.aws#DoThing']['output']['target'] =
+            'example.aws#ExampleEndpointConformanceTest';
+        $endpointDirectory = $this->outputDirectory
+            . \DIRECTORY_SEPARATOR
+            . 'Example'
+            . \DIRECTORY_SEPARATOR
+            . 'Endpoint';
+        $generator = new AwsCodeGenerator(
+            [
+                'namespace' => 'Aws\\Example',
+                'outputDir' => $endpointDirectory,
+                'organization' => 'flat',
+                'testsOutputDir' => $this->outputDirectory
+            ],
+            SmithyModel::fromArray($data)
+        );
+
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Multiple generators emitted');
+
+        try {
+            $generator->generateAndWrite();
+        } finally {
+            self::assertDirectoryDoesNotExist($this->outputDirectory);
+        }
+    }
+
     public function testAddsExtendedRequestIdToS3ServiceException(): void
     {
         $data = \json_decode(

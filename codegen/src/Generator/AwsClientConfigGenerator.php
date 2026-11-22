@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Aws\Codegen\Generator;
 
+use Aws\Codegen\AwsCodegenIntegration;
 use Aws\Core\Checksum\RequestChecksumCalculation;
 use Aws\Core\Checksum\ResponseChecksumValidation;
 use Aws\Core\Client\AbstractAwsClientConfig;
@@ -94,7 +95,7 @@ final class AwsClientConfigGenerator
             );
         }
 
-        $shortName = $this->serviceShortName($serviceShapeId);
+        $shortName = AwsCodegenIntegration::serviceShortName($this->settings);
         $className = $shortName . 'ClientConfig';
         $traits = $service['traits'] ?? [];
         $requiresPathPreservation = $this->requiresPathPreservation($traits);
@@ -469,8 +470,7 @@ final class AwsClientConfigGenerator
 
     private function writeCopyArgument(
         PhpCodeWriter $writer,
-        string $name,
-        bool $trailingComma = true
+        string $name
     ): void
     {
         $property = match ($name) {
@@ -483,9 +483,7 @@ final class AwsClientConfigGenerator
         );
         $writer->pushIndent();
         $writer->writeLine("? \$overrides['{$name}']");
-        $writer->writeLine(
-            ': $this->' . $property . ($trailingComma ? ',' : '')
-        );
+        $writer->writeLine(': $this->' . $property . ',');
         $writer->popIndent();
     }
 
@@ -880,16 +878,6 @@ final class AwsClientConfigGenerator
         }
 
         return false;
-    }
-
-    private function serviceShortName(string $serviceShapeId): string
-    {
-        $parts = \explode('\\', $this->settings->namespace);
-        $last = \end($parts);
-
-        return $last !== false && $last !== ''
-            ? $last
-            : SmithyModel::getShapeName($serviceShapeId);
     }
 
     private function normalizePropertyName(string $name): string
