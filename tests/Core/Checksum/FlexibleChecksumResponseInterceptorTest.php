@@ -212,6 +212,63 @@ final class FlexibleChecksumResponseInterceptorTest extends TestCase
         $this->assertNull($selection);
     }
 
+    public function testSkipsS3CompositeChecksum(): void
+    {
+        $operation = $this->client->operation('ResponseChecksum');
+        $input = $operation->createInputFromValue([]);
+        $interceptor = new FlexibleChecksumResponseInterceptor(
+            ResponseChecksumValidation::WHEN_SUPPORTED
+        );
+        $request = $interceptor->modifyBeforeRetryLoop(new RequestContext(
+            $operation,
+            $input,
+            $this->client->getConfig(),
+            new HttpTransportRequest(
+                new Request('GET', 'https://example.test')
+            )
+        ));
+        $response = new Response(
+            200,
+            ['x-amz-checksum-crc32' => 'i9aeUg==-10000'],
+            'Hello world'
+        );
+        $context = new ResponseContext(
+            $operation,
+            $input,
+            $this->client->getConfig(),
+            $request,
+            new HttpTransportResponse($response)
+        );
+
+        $this->assertNull(
+            $interceptor->selectResponseChecksum($context)
+        );
+        $this->assertSame(
+            $response,
+            HttpTransportResponse::expect(
+                $interceptor->modifyBeforeDeserialization($context)
+            )->response
+        );
+    }
+
+    public function testCompositeChecksumFallsBackToFullObjectChecksum(): void
+    {
+        $operation = $this->client->operation('ResponseChecksum');
+        $selection = $this->selectFor(
+            $operation,
+            $operation->createInputFromValue([]),
+            ResponseChecksumValidation::WHEN_SUPPORTED,
+            new Response(200, [
+                'x-amz-checksum-crc32c' => 'crUfeA==-1',
+                'x-amz-checksum-crc32' => 'i9aeUg==',
+            ])
+        );
+
+        $this->assertInstanceOf(ExpectedChecksum::class, $selection);
+        $this->assertSame(ChecksumAlgorithm::CRC32, $selection->algorithm);
+        $this->assertSame('i9aeUg==', $selection->base64Digest);
+    }
+
     public function testWrapsSelectedResponseBodyForValidation(): void
     {
         $body = $this->deserializedBody(
@@ -246,11 +303,34 @@ final class FlexibleChecksumResponseInterceptorTest extends TestCase
     }
 
     /**
+     * @param array<string, mixed> $case
+     */
+    #[DataProvider('s3CompositeValidationCases')]
+    public function testS3CompositeValidationCases(array $case): void
+    {
+        $this->assertValidationCase(
+            $case,
+            $this->client->operation('ResponseChecksum'),
+            null
+        );
+    }
+
+    /**
      * @return iterable<string, array{array<string, mixed>}>
      */
     public static function responseValidationCases(): iterable
     {
         return self::fixtureCases('test-response-checksum-validation.json');
+    }
+
+    /**
+     * @return iterable<string, array{array<string, mixed>}>
+     */
+    public static function s3CompositeValidationCases(): iterable
+    {
+        return self::fixtureCases(
+            'test-s3-customization-response-checksum-validation.json'
+        );
     }
 
     /**
