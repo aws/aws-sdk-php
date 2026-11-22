@@ -10,6 +10,8 @@ use Aws\Core\Client\AbstractAwsClientConfig;
 use Aws\Core\Client\AwsClientConfigResolver;
 use Aws\Core\Credentials\AwsCredentialChain;
 use Aws\Core\Credentials\AwsCredentialChainContext;
+use Aws\Core\Retry\RetryMetadataException;
+use Aws\Core\Retry\StandardRetryPlugin;
 use PHPUnit\Framework\TestCase;
 use Smithy\Auth\AnonymousIdentityResolver;
 use Smithy\Auth\Aws\AwsCredentialsIdentityInterface;
@@ -22,6 +24,7 @@ use Smithy\Client\Plugin\PluginState;
 use Smithy\Client\Plugin\RequestCompressionPlugin as CompressionPlugin;
 use Smithy\Client\Protocol\ProtocolResolverInterface;
 use Smithy\Client\Retry\RetryStrategyInterface;
+use Smithy\Client\Retry\StandardRetryStrategy;
 use Smithy\Core\Endpoint\Endpoint;
 use Smithy\Core\Shape\ServiceInterface;
 use Smithy\Core\Transport\TransportInterface;
@@ -254,6 +257,31 @@ final class AwsClientConfigResolverTest extends TestCase
             );
 
             $this->assertSame(0.025, $settings['baseDelay']);
+        });
+    }
+
+    public function testRetryPluginAppliesServiceBaseDelayAndMaxAttempts(): void
+    {
+        $this->withAwsEnv([], function (): void {
+            $config = StandardRetryPlugin::instance()->configure(
+                $this->createConfig(signingName: 'dynamodb')
+            );
+            $strategy = $config->retryStrategy;
+            $this->assertInstanceOf(StandardRetryStrategy::class, $strategy);
+            $this->assertSame(4, $strategy->maxAttempts());
+
+            // The first retry waits at most the base delay (25 ms).
+            for ($i = 0; $i < 50; ++$i) {
+                $state = $strategy->begin('dynamodb-' . $i);
+                $delay = $strategy->refresh(
+                    $state,
+                    RetryMetadataException::wrap(
+                        new \RuntimeException('boom'),
+                        true
+                    )
+                );
+                $this->assertLessThanOrEqual(0.025, $delay);
+            }
         });
     }
 

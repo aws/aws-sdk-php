@@ -1,0 +1,59 @@
+{
+    "smithy": "2.0",
+    "shapes": {
+        "aws.tests#RetryService": {
+            "type": "service",
+            "version": "2026-11-22",
+            "operations": [
+                { "target": "aws.tests#Ping" },
+                { "target": "aws.tests#ReceiveMessage" },
+                { "target": "aws.tests#GetActivityTask" },
+                { "target": "aws.tests#PollForActivityTask" },
+                { "target": "aws.tests#PollForDecisionTask" }
+            ],
+            "traits": {
+                "aws.protocols#restJson1": {}
+            }
+        },
+        "aws.tests#Ping": {
+            "type": "operation",
+            "input": { "target": "smithy.api#Unit" },
+            "output": { "target": "smithy.api#Unit" },
+            "traits": {
+                "smithy.api#http": { "method": "POST", "uri": "/ping" }
+            }
+        },
+        "aws.tests#ReceiveMessage": {
+            "type": "operation",
+            "input": { "target": "smithy.api#Unit" },
+            "output": { "target": "smithy.api#Unit" },
+            "traits": {
+                "smithy.api#http": { "method": "POST", "uri": "/receive" }
+            }
+        },
+        "aws.tests#GetActivityTask": {
+            "type": "operation",
+            "input": { "target": "smithy.api#Unit" },
+            "output": { "target": "smithy.api#Unit" },
+            "traits": {
+                "smithy.api#http": { "method": "POST", "uri": "/activity" }
+            }
+        },
+        "aws.tests#PollForActivityTask": {
+            "type": "operation",
+            "input": { "target": "smithy.api#Unit" },
+            "output": { "target": "smithy.api#Unit" },
+            "traits": {
+                "smithy.api#http": { "method": "POST", "uri": "/poll-activity" }
+            }
+        },
+        "aws.tests#PollForDecisionTask": {
+            "type": "operation",
+            "input": { "target": "smithy.api#Unit" },
+            "output": { "target": "smithy.api#Unit" },
+            "traits": {
+                "smithy.api#http": { "method": "POST", "uri": "/poll-decision" }
+            }
+        }
+    }
+}
