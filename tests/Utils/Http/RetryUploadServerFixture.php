@@ -154,6 +154,7 @@ final class RetryUploadServerFixture
 
         foreach ([
             $this->portFile,
+            $this->portFile . '.tmp',
             $this->captureFile,
             $this->captureFile . '.tmp',
             $this->scriptFile
@@ -179,7 +180,7 @@ final class RetryUploadServerFixture
     ): int
     {
         $deadline = \microtime(true) + 5.0;
-        while (!\file_exists($portFile)) {
+        while (($port = self::readPort($portFile)) === null) {
             $capture = self::readCapture($captureFile);
             if ($capture !== null && isset($capture['error'])) {
                 throw new \RuntimeException((string) $capture['error']);
@@ -193,6 +194,10 @@ final class RetryUploadServerFixture
                 );
             }
             if (\microtime(true) >= $deadline) {
+                if (\file_exists($portFile)) {
+                    throw new \RuntimeException('Invalid retry server port.');
+                }
+
                 throw new \RuntimeException(
                     'Timed out starting retry server.'
                 );
@@ -200,12 +205,28 @@ final class RetryUploadServerFixture
             \usleep(10000);
         }
 
-        $port = (int) \file_get_contents($portFile);
-        if ($port < 1) {
-            throw new \RuntimeException('Invalid retry server port.');
+        return $port;
+    }
+
+    /**
+     * Return the bound port, or null while the port file is missing or
+     * does not hold a valid port number.
+     */
+    private static function readPort(string $portFile): ?int
+    {
+        if (!\file_exists($portFile)) {
+            return null;
         }
 
-        return $port;
+        $port = \trim((string) \file_get_contents($portFile));
+        if (!\ctype_digit($port)
+            || (int) $port < 1
+            || (int) $port > 65535
+        ) {
+            return null;
+        }
+
+        return (int) $port;
     }
 
     /**
@@ -376,7 +397,9 @@ if ($server === false) {
 
 $address = stream_socket_get_name($server, false);
 $port = (int) substr(strrchr($address, ':'), 1);
-file_put_contents($portFile, (string) $port);
+// Rename into place so the reader never sees an empty or partial port.
+file_put_contents($portFile . '.tmp', (string) $port);
+rename($portFile . '.tmp', $portFile);
 
 $firstConnection = acceptConnection($server, $captureFile);
 $first = readRequestHead($firstConnection, $captureFile);
