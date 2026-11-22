@@ -1,0 +1,62 @@
+{
+    "smithy": "2.0",
+    "shapes": {
+        "example#ClientTest": {
+            "type": "service",
+            "version": "2020-01-01",
+            "operations": [
+                {
+                    "target": "example#Ping"
+                }
+            ],
+            "traits": {
+                "aws.api#service": {
+                    "sdkId": "Client Test"
+                },
+                "aws.protocols#restJson1": {}
+            }
+        },
+        "example#Ping": {
+            "type": "operation",
+            "input": {
+                "target": "example#PingInput"
+            },
+            "output": {
+                "target": "example#PingOutput"
+            },
+            "traits": {
+                "smithy.api#http": {
+                    "method": "POST",
+                    "uri": "/ping",
+                    "code": 200
+                },
+                "smithy.waiters#waitable": {
+                    "PingReady": {
+                        "acceptors": [
+                            {
+                                "state": "success",
+                                "matcher": {
+                                    "success": true
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "example#PingInput": {
+            "type": "structure",
+            "members": {},
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "example#PingOutput": {
+            "type": "structure",
+            "members": {},
+            "traits": {
+                "smithy.api#output": {}
+            }
+        }
+    }
+}
