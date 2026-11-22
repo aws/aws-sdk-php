@@ -7,16 +7,13 @@ namespace Aws\Tests\Core\Retry;
 use Aws\Core\Exception\AwsException;
 use Aws\Core\Retry\RetryMetadataException;
 use Aws\Core\Retry\StandardRetryInterceptor;
+use Aws\Tests\Core\Retry\Utils\ModeledRetryError;
 use Aws\Tests\Core\Retry\Utils\RetryTestClient;
+use Aws\Tests\Core\Retry\Utils\ThrottlingShapeError;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Smithy\Client\Interceptor\OutputContext;
 use Smithy\Core\Exception\ErrorFault;
-use Smithy\Core\Serde\Schema;
-use Smithy\Core\Serde\SerializableStructInterface;
-use Smithy\Core\Serde\ShapeSerializerInterface;
-use Smithy\Core\Shape\ShapeType;
-use Smithy\Core\Shape\WithMemberValueTrait;
 use Smithy\Http\Client\Exception\HttpException;
 use Smithy\Http\Message\{HttpTransportResponse, Request, Response, Uri};
 
@@ -339,47 +336,4 @@ final class StandardRetryInterceptorTest extends TestCase
 
         $this->fail('Expected exception was not thrown');
     }
-}
-
-final class ModeledRetryError extends \RuntimeException implements
-    SerializableStructInterface
-{
-    use WithMemberValueTrait;
-
-    public function __construct(private readonly bool|string $retryable)
-    {
-        parent::__construct('modeled');
-    }
-
-    public function getSchema(): Schema
-    {
-        return new Schema(
-            id: 'aws.tests#ModeledRetryError',
-            type: ShapeType::Structure,
-            traits: [Schema::T_RETRYABLE => $this->retryable]
-        );
-    }
-
-    public function serialize(
-        ShapeSerializerInterface $serializer,
-        int $idx
-    ): void
-    {
-    }
-
-    public function serializeMembers(
-        ShapeSerializerInterface $serializer
-    ): void
-    {
-    }
-
-    public function getMemberValue(Schema $member): mixed
-    {
-        return null;
-    }
-}
-
-final class ThrottlingShapeError extends \RuntimeException
-{
-    public const SHAPE_ID = 'aws.tests#ThrottlingException';
 }

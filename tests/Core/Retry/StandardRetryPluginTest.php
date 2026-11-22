@@ -10,10 +10,11 @@ use Aws\Core\Credentials\AwsConfigFile;
 use Aws\Core\Retry\RetryMetadataException;
 use Aws\Core\Retry\StandardRetryInterceptor;
 use Aws\Core\Retry\StandardRetryPlugin;
+use Aws\Tests\Core\Retry\Utils\FixedFlagResolver;
+use Aws\Tests\Core\Retry\Utils\RecordingRetryStrategy;
 use Aws\Tests\Core\Retry\Utils\RetryTestClient;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Smithy\Client\AbstractClientConfig;
 use Smithy\Client\ClientConfig;
 use Smithy\Client\Dynamic\DynamicClient;
 use Smithy\Client\Endpoint\StaticEndpointResolver;
@@ -21,13 +22,10 @@ use Smithy\Client\Plugin\PluginCollection;
 use Smithy\Client\Retry\{
     RetryRequestFlagResolverInterface,
     RetryRequestFlags,
-    RetryState,
     RetryStrategyInterface,
-    StandardRetryStrategy,
-    TokenAcquisitionFailedException
+    StandardRetryStrategy
 };
 use Smithy\Core\Endpoint\Endpoint;
-use Smithy\Core\Shape\OperationInterface;
 use Smithy\Http\Client\Exception\HttpException;
 use Smithy\Http\Client\HttpClientTransport;
 use Smithy\Http\Message\{Request, Response, Uri};
@@ -262,46 +260,5 @@ final class StandardRetryPluginTest extends TestCase
             $strategy,
             new PluginCollection(StandardRetryPlugin::instance())
         );
-    }
-}
-
-final class RecordingRetryStrategy implements RetryStrategyInterface
-{
-    public ?RetryMetadataException $seenError = null;
-
-    public function begin(string $scope, int $requestFlags = 0): RetryState
-    {
-        return new RetryState($scope, $requestFlags);
-    }
-
-    public function refresh(RetryState $state, \Throwable $error): float
-    {
-        if ($error instanceof RetryMetadataException) {
-            $this->seenError = $error;
-        }
-
-        throw new TokenAcquisitionFailedException(
-            'stop retries',
-            previous: $error,
-            state: $state
-        );
-    }
-
-    public function recordSuccess(RetryState $state): void {}
-
-    public function maxAttempts(): int
-    {
-        return 1;
-    }
-}
-
-final class FixedFlagResolver implements RetryRequestFlagResolverInterface
-{
-    public function resolve(
-        OperationInterface $operation,
-        AbstractClientConfig $config
-    ): int
-    {
-        return 0;
     }
 }
