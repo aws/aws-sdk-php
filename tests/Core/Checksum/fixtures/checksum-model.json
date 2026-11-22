@@ -1,0 +1,140 @@
+{
+    "smithy": "2.0",
+    "shapes": {
+        "aws.tests#ChecksumService": {
+            "type": "service",
+            "version": "2026-11-21",
+            "operations": [
+                { "target": "aws.tests#RequiredChecksum" },
+                { "target": "aws.tests#OptionalChecksum" },
+                { "target": "aws.tests#StreamingChecksum" },
+                { "target": "aws.tests#OptionalStreamingChecksum" },
+                { "target": "aws.tests#ResponseChecksum" }
+            ],
+            "traits": {
+                "aws.protocols#restJson1": {}
+            }
+        },
+        "aws.tests#RequiredChecksum": {
+            "type": "operation",
+            "input": { "target": "aws.tests#ChecksumInput" },
+            "output": { "target": "smithy.api#Unit" },
+            "traits": {
+                "smithy.api#http": { "method": "POST", "uri": "/required" },
+                "smithy.api#requestCompression": { "encodings": ["gzip"] },
+                "aws.protocols#httpChecksum": {
+                    "requestChecksumRequired": true,
+                    "requestAlgorithmMember": "ChecksumAlgorithm"
+                }
+            }
+        },
+        "aws.tests#OptionalChecksum": {
+            "type": "operation",
+            "input": { "target": "aws.tests#ChecksumInput" },
+            "output": { "target": "smithy.api#Unit" },
+            "traits": {
+                "smithy.api#http": { "method": "POST", "uri": "/optional" },
+                "aws.protocols#httpChecksum": {
+                    "requestAlgorithmMember": "ChecksumAlgorithm"
+                }
+            }
+        },
+        "aws.tests#StreamingChecksum": {
+            "type": "operation",
+            "input": { "target": "aws.tests#StreamingChecksumInput" },
+            "output": { "target": "smithy.api#Unit" },
+            "traits": {
+                "smithy.api#http": { "method": "POST", "uri": "/streaming" },
+                "aws.protocols#httpChecksum": {
+                    "requestChecksumRequired": true,
+                    "requestAlgorithmMember": "ChecksumAlgorithm"
+                }
+            }
+        },
+        "aws.tests#OptionalStreamingChecksum": {
+            "type": "operation",
+            "input": { "target": "aws.tests#StreamingChecksumInput" },
+            "output": { "target": "smithy.api#Unit" },
+            "traits": {
+                "smithy.api#http": {
+                    "method": "POST",
+                    "uri": "/optional-streaming"
+                },
+                "aws.protocols#httpChecksum": {
+                    "requestAlgorithmMember": "ChecksumAlgorithm"
+                }
+            }
+        },
+        "aws.tests#ResponseChecksum": {
+            "type": "operation",
+            "input": { "target": "aws.tests#ResponseChecksumInput" },
+            "output": { "target": "smithy.api#Unit" },
+            "traits": {
+                "smithy.api#http": { "method": "GET", "uri": "/response" },
+                "aws.protocols#httpChecksum": {
+                    "requestValidationModeMember": "ChecksumMode",
+                    "responseAlgorithms": [
+                        "CRC64NVME",
+                        "CRC32",
+                        "CRC32C",
+                        "SHA256",
+                        "SHA1",
+                        "SHA512",
+                        "MD5",
+                        "XXHASH64",
+                        "XXHASH3",
+                        "XXHASH128"
+                    ]
+                }
+            }
+        },
+        "aws.tests#ChecksumInput": {
+            "type": "structure",
+            "members": {
+                "ChecksumAlgorithm": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#httpHeader": "x-amz-request-algorithm"
+                    }
+                },
+                "Body": {
+                    "target": "smithy.api#Blob",
+                    "traits": { "smithy.api#httpPayload": {} }
+                }
+            },
+            "traits": { "smithy.api#input": {} }
+        },
+        "aws.tests#StreamingChecksumInput": {
+            "type": "structure",
+            "members": {
+                "ChecksumAlgorithm": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#httpHeader": "x-amz-request-algorithm"
+                    }
+                },
+                "Body": {
+                    "target": "aws.tests#StreamingBlob",
+                    "traits": { "smithy.api#httpPayload": {} }
+                }
+            },
+            "traits": { "smithy.api#input": {} }
+        },
+        "aws.tests#ResponseChecksumInput": {
+            "type": "structure",
+            "members": {
+                "ChecksumMode": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#httpHeader": "x-amz-checksum-mode"
+                    }
+                }
+            },
+            "traits": { "smithy.api#input": {} }
+        },
+        "aws.tests#StreamingBlob": {
+            "type": "blob",
+            "traits": { "smithy.api#streaming": {} }
+        }
+    }
+}

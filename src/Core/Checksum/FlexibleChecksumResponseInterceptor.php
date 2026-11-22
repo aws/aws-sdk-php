@@ -100,8 +100,8 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
     public function selectResponseChecksum(
         ResponseContext $ctx
     ): ?ExpectedChecksum {
-        $request = $ctx->getHttpRequest();
-        $response = $ctx->getHttpResponse();
+        $request = HttpTransportRequest::expect($ctx->request)->request;
+        $response = HttpTransportResponse::expect($ctx->response)->response;
         if (
             $response->getStatusCode() < 200
             || $response->getStatusCode() >= 300
@@ -212,7 +212,7 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
             \is_string($header)
             && $header !== ''
             && $this->requestEnablesValidation(
-                $ctx->getHttpRequest(),
+                HttpTransportRequest::expect($ctx->request)->request,
                 $header
             )
         ) {
