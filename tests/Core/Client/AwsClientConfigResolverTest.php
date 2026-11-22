@@ -854,7 +854,8 @@ final class ResolverTestAwsClientConfig extends AbstractAwsClientConfig
         ?string $protocolId = null,
         ?ServiceInterface $service = null,
         ?bool $protocolIsExplicit = null
-    ) {
+    )
+    {
         parent::__construct(
             region: $region,
             credentials: $credentials,

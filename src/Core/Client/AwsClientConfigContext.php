@@ -22,7 +22,9 @@ final class AwsClientConfigContext
         public readonly ?string $configFilePath,
         public readonly AwsConfigFile $profileFile,
         public readonly ?AwsProfile $profile
-    ) {}
+    )
+    {
+    }
 
     /**
      * Return one snapshotted env var.
