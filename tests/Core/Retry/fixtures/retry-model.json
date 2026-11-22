@@ -9,7 +9,9 @@
                 { "target": "aws.tests#ReceiveMessage" },
                 { "target": "aws.tests#GetActivityTask" },
                 { "target": "aws.tests#PollForActivityTask" },
-                { "target": "aws.tests#PollForDecisionTask" }
+                { "target": "aws.tests#PollForDecisionTask" },
+                { "target": "aws.tests#ReceiveQueueRecords" },
+                { "target": "aws.tests#ReceiveDeadLetterQueueRecords" }
             ],
             "traits": {
                 "aws.protocols#restJson1": {}
@@ -53,6 +55,25 @@
             "output": { "target": "smithy.api#Unit" },
             "traits": {
                 "smithy.api#http": { "method": "POST", "uri": "/poll-decision" }
+            }
+        },
+        "aws.tests#ReceiveQueueRecords": {
+            "type": "operation",
+            "input": { "target": "smithy.api#Unit" },
+            "output": { "target": "smithy.api#Unit" },
+            "traits": {
+                "smithy.api#http": { "method": "POST", "uri": "/queue-records" }
+            }
+        },
+        "aws.tests#ReceiveDeadLetterQueueRecords": {
+            "type": "operation",
+            "input": { "target": "smithy.api#Unit" },
+            "output": { "target": "smithy.api#Unit" },
+            "traits": {
+                "smithy.api#http": {
+                    "method": "POST",
+                    "uri": "/dead-letter-queue-records"
+                }
             }
         }
     }

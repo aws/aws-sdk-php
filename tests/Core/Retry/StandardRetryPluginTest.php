@@ -7,25 +7,31 @@ namespace Aws\Tests\Core\Retry;
 use Aws\Core\Client\AwsClientConfigContext;
 use Aws\Core\Client\AwsClientConfigResolver;
 use Aws\Core\Credentials\AwsConfigFile;
-use Aws\Core\Retry\AwsRetryRequestFlagResolver;
 use Aws\Core\Retry\RetryMetadataException;
 use Aws\Core\Retry\StandardRetryInterceptor;
 use Aws\Core\Retry\StandardRetryPlugin;
 use Aws\Tests\Core\Retry\Utils\RetryTestClient;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Smithy\Client\AbstractClientConfig;
+use Smithy\Client\ClientConfig;
 use Smithy\Client\Dynamic\DynamicClient;
+use Smithy\Client\Endpoint\StaticEndpointResolver;
 use Smithy\Client\Plugin\PluginCollection;
 use Smithy\Client\Retry\{
     RetryRequestFlagResolverInterface,
+    RetryRequestFlags,
     RetryState,
     RetryStrategyInterface,
     StandardRetryStrategy,
     TokenAcquisitionFailedException
 };
+use Smithy\Core\Endpoint\Endpoint;
 use Smithy\Core\Shape\OperationInterface;
 use Smithy\Http\Client\Exception\HttpException;
+use Smithy\Http\Client\HttpClientTransport;
 use Smithy\Http\Message\{Request, Response, Uri};
+use Smithy\Protocol\Aws\RestJsonProtocol;
 use Smithy\Tests\Utils\Http\MockHttpClient;
 
 final class StandardRetryPluginTest extends TestCase
@@ -40,8 +46,91 @@ final class StandardRetryPluginTest extends TestCase
             )
         );
         $this->assertSame(
-            AwsRetryRequestFlagResolver::instance(),
+            StandardRetryPlugin::instance(),
             $config->context[RetryRequestFlagResolverInterface::CONFIG_KEY]
+        );
+    }
+
+    /**
+     * @return array<string, array{string, string}>
+     */
+    public static function longPollingProvider(): array
+    {
+        return [
+            'sqs ReceiveMessage' => ['sqs', 'ReceiveMessage'],
+            'states GetActivityTask' => ['states', 'GetActivityTask'],
+            'swf PollForActivityTask' => ['swf', 'PollForActivityTask'],
+            'swf PollForDecisionTask' => ['swf', 'PollForDecisionTask'],
+            'kinesis ReceiveQueueRecords' => [
+                'kinesis',
+                'ReceiveQueueRecords'
+            ],
+            'kinesis ReceiveDeadLetterQueueRecords' => [
+                'kinesis',
+                'ReceiveDeadLetterQueueRecords'
+            ],
+        ];
+    }
+
+    #[DataProvider('longPollingProvider')]
+    public function testResolvesLongPollingOperations(
+        string $signingName,
+        string $operationName
+    ): void
+    {
+        $client = RetryTestClient::forModel($signingName);
+
+        $this->assertSame(
+            RetryRequestFlags::LONG_POLLING,
+            StandardRetryPlugin::instance()->resolve(
+                $client->operation($operationName),
+                $client->getConfig()
+            )
+        );
+    }
+
+    public function testResolvesZeroForOtherOperation(): void
+    {
+        $client = RetryTestClient::forModel('sqs');
+
+        $this->assertSame(
+            0,
+            StandardRetryPlugin::instance()->resolve(
+                $client->operation('Ping'),
+                $client->getConfig()
+            )
+        );
+    }
+
+    public function testResolvesZeroForLongPollingNameOnOtherService(): void
+    {
+        $client = RetryTestClient::forModel('s3');
+
+        $this->assertSame(
+            0,
+            StandardRetryPlugin::instance()->resolve(
+                $client->operation('ReceiveMessage'),
+                $client->getConfig()
+            )
+        );
+    }
+
+    public function testResolvesZeroForNonAwsConfig(): void
+    {
+        $config = new ClientConfig(
+            protocol: new RestJsonProtocol(),
+            transport: new HttpClientTransport(new MockHttpClient()),
+            endpointResolver: new StaticEndpointResolver(
+                new Endpoint('https://example.test')
+            )
+        );
+
+        $this->assertSame(
+            0,
+            StandardRetryPlugin::instance()->resolve(
+                RetryTestClient::forModel('sqs')->operation('ReceiveMessage'),
+                $config
+            )
         );
     }
 

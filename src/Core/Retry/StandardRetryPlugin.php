@@ -10,12 +10,19 @@ use Smithy\Client\AbstractClientConfig;
 use Smithy\Client\Plugin\AbstractPlugin;
 use Smithy\Client\Retry\NoRetryStrategy;
 use Smithy\Client\Retry\RetryRequestFlagResolverInterface;
+use Smithy\Client\Retry\RetryRequestFlags;
 use Smithy\Client\Retry\StandardRetryStrategy;
+use Smithy\Core\Shape\OperationInterface;
 
 /**
  * Register standard retry behavior for AWS clients.
+ *
+ * The plugin also resolves retry request flags. It marks the long-polling
+ * operations listed in the retry specification until `aws.api#longPoll`
+ * is available in generated operation schemas.
  */
 final class StandardRetryPlugin extends AbstractPlugin
+    implements RetryRequestFlagResolverInterface
 {
     private static ?self $instance = null;
 
@@ -61,7 +68,7 @@ final class StandardRetryPlugin extends AbstractPlugin
         if (!$retryRequestFlagResolver instanceof RetryRequestFlagResolverInterface) {
             $config = $config->withContext(
                 RetryRequestFlagResolverInterface::CONFIG_KEY,
-                AwsRetryRequestFlagResolver::instance()
+                $this
             );
         }
 
@@ -75,5 +82,38 @@ final class StandardRetryPlugin extends AbstractPlugin
         return $config->withPrependedInterceptor(
             StandardRetryInterceptor::instance()
         );
+    }
+
+    public function resolve(
+        OperationInterface $operation,
+        AbstractClientConfig $config
+    ): int
+    {
+        if (!$config instanceof AbstractAwsClientConfig) {
+            return 0;
+        }
+
+        return $this->isLongPolling($config->signingName, $operation->getName())
+            ? RetryRequestFlags::LONG_POLLING
+            : 0;
+    }
+
+    /**
+     * Return true when the operation is a long-polling operation.
+     */
+    private function isLongPolling(
+        string $signingName,
+        string $operationName
+    ): bool
+    {
+        return match ($signingName) {
+            'sqs' => $operationName === 'ReceiveMessage',
+            'states' => $operationName === 'GetActivityTask',
+            'swf' => $operationName === 'PollForActivityTask'
+                || $operationName === 'PollForDecisionTask',
+            'kinesis' => $operationName === 'ReceiveQueueRecords'
+                || $operationName === 'ReceiveDeadLetterQueueRecords',
+            default => false,
+        };
     }
 }
