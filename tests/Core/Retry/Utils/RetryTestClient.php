@@ -53,29 +53,6 @@ final class RetryTestClient extends DynamicClient
     }
 
     /**
-     * Create a Smithy dynamic client for the retry test model.
-     *
-     * shortcut: the locked smithy-php DynamicClient runs operations only
-     * with its own ClientConfig, so end-to-end cases use this client; move
-     * them to forModel() once AWS dynamic configs can execute operations.
-     */
-    public static function smithyClient(
-        HttpClientInterface $httpClient,
-        RetryStrategyInterface $retryStrategy,
-        PluginCollection $plugins
-    ): DynamicClient
-    {
-        return DynamicClient::create(
-            model: self::MODEL,
-            protocol: new RestJsonProtocol(),
-            httpClient: $httpClient,
-            endpoint: 'https://example.test',
-            retryStrategy: $retryStrategy,
-            plugins: $plugins
-        );
-    }
-
-    /**
      * Return a modeled operation by name.
      */
     public function operation(string $name): DynamicOperation
