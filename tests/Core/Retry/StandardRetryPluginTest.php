@@ -16,7 +16,6 @@ use Aws\Tests\Core\Retry\Utils\RetryTestClient;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Smithy\Client\ClientConfig;
-use Smithy\Client\Dynamic\DynamicClient;
 use Smithy\Client\Endpoint\StaticEndpointResolver;
 use Smithy\Client\Plugin\PluginCollection;
 use Smithy\Client\Retry\{
@@ -200,7 +199,7 @@ final class StandardRetryPluginTest extends TestCase
             'transport failed',
             new Request('POST', new Uri('https://example.test'))
         );
-        $client = $this->smithyClient(
+        $client = $this->awsClient(
             $strategy,
             (new MockHttpClient())->queueException($error)
         );
@@ -229,7 +228,7 @@ final class StandardRetryPluginTest extends TestCase
                 new Response(400, ['x-amz-retry-after' => '0'], '{}')
             )
             ->queueResponse(new Response(200, [], '{}'));
-        $client = $this->smithyClient(
+        $client = $this->awsClient(
             new StandardRetryStrategy(
                 baseDelay: 0.0,
                 throttlingBaseDelay: 0.0
@@ -250,15 +249,15 @@ final class StandardRetryPluginTest extends TestCase
         );
     }
 
-    private function smithyClient(
+    private function awsClient(
         RetryStrategyInterface $strategy,
         MockHttpClient $httpClient
-    ): DynamicClient
+    ): RetryTestClient
     {
-        return RetryTestClient::smithyClient(
-            $httpClient,
-            $strategy,
-            new PluginCollection(StandardRetryPlugin::instance())
+        return RetryTestClient::forModel(
+            httpClient: $httpClient,
+            retryStrategy: $strategy,
+            plugins: new PluginCollection(StandardRetryPlugin::instance())
         );
     }
 }
