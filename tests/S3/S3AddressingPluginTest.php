@@ -51,4 +51,92 @@ final class S3AddressingPluginTest extends TestCase
             S3TestClient::forModel()->getConfig()
         );
     }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function uriProvider(): iterable
+    {
+        yield 'bucket only' => ['/{Bucket}', ''];
+        yield 'bucket subresource' => ['/{Bucket}?acl', '?acl'];
+        yield 'bucket and key' => [
+            '/{Bucket}/{Key+}?x-id=GetObject',
+            '/{Key+}?x-id=GetObject'
+        ];
+        yield 'no bucket' => ['/?x-id=ListBuckets', '/?x-id=ListBuckets'];
+        yield 'longer label name' => ['/{BucketName}', '/{BucketName}'];
+        yield 'bucket later in path' => ['/v1/{Bucket}', '/v1/{Bucket}'];
+    }
+
+    #[DataProvider('uriProvider')]
+    public function testDropsTheLeadingBucketSegmentForS3(
+        string $uri,
+        string $expected
+    ): void
+    {
+        $shapes = S3AddressingPlugin::normalizeShapes(
+            self::shapes('S3', $uri)
+        );
+
+        self::assertSame(
+            $expected,
+            $shapes['example#Operation']['traits']['smithy.api#http']['uri']
+        );
+    }
+
+    public function testKeepsTheBucketHttpLabel(): void
+    {
+        $shapes = S3AddressingPlugin::normalizeShapes(
+            self::shapes('S3', '/{Bucket}')
+        );
+
+        self::assertSame(
+            ['smithy.api#httpLabel' => []],
+            $shapes['example#Input']['members']['Bucket']['traits']
+        );
+    }
+
+    public function testLeavesOtherServicesUnchanged(): void
+    {
+        $shapes = self::shapes('S3 Control', '/{Bucket}');
+
+        self::assertSame(
+            $shapes,
+            S3AddressingPlugin::normalizeShapes($shapes)
+        );
+    }
+
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    private static function shapes(string $sdkId, string $uri): array
+    {
+        return [
+            'example#Service' => [
+                'type' => 'service',
+                'operations' => [['target' => 'example#Operation']],
+                'traits' => ['aws.api#service' => ['sdkId' => $sdkId]]
+            ],
+            'example#Operation' => [
+                'type' => 'operation',
+                'input' => ['target' => 'example#Input'],
+                'traits' => [
+                    'smithy.api#http' => [
+                        'method' => 'GET',
+                        'uri' => $uri,
+                        'code' => 200
+                    ]
+                ]
+            ],
+            'example#Input' => [
+                'type' => 'structure',
+                'members' => [
+                    'Bucket' => [
+                        'target' => 'smithy.api#String',
+                        'traits' => ['smithy.api#httpLabel' => []]
+                    ]
+                ]
+            ]
+        ];
+    }
 }
