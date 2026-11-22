@@ -34,8 +34,7 @@ final class AwsCredentialChain implements IdentityChainInterface
     public function __construct(
         ?AwsCredentialProviderRegistry $registry = null,
         array $properties = []
-    )
-    {
+    ) {
         $this->registry = $registry ?? AwsCredentialProviderRegistry::standard();
         $this->inner = new IdentityChain(
             providers: $this->registry->providers(),

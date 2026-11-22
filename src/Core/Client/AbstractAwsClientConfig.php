@@ -203,8 +203,7 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
         ?string $protocolId = null,
         ?ServiceInterface $service = null,
         ?bool $protocolIsExplicit = null
-    )
-    {
+    ) {
         [$resolvedRegion, $context] = self::resolveRegionAndContext(
             $region,
             $context

@@ -31,8 +31,7 @@ class AwsException extends ApiException implements AwsErrorInterface
         private ?string $requestId = null,
         private ?int $httpStatusCode = null,
         ?\Throwable $previous = null,
-    )
-    {
+    ) {
         parent::__construct($message, $fault, $previous);
     }
 

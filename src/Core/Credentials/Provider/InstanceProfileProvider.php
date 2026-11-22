@@ -54,8 +54,7 @@ final class InstanceProfileProvider implements
     public function __construct(
         ?callable $clientFactory = null,
         private readonly ?int $refreshWindowSeconds = null,
-    )
-    {
+    ) {
         $this->clientFactory = $clientFactory;
     }
 

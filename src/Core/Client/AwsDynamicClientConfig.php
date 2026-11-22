@@ -70,8 +70,7 @@ final class AwsDynamicClientConfig extends AbstractAwsClientConfig
         ?TransportInterface $transport = null,
         ?ServiceInterface $service = null,
         ?bool $protocolIsExplicit = null
-    )
-    {
+    ) {
         if ($resolvedSigningName === '') {
             throw new \InvalidArgumentException(
                 'AWS signing name cannot be empty.'

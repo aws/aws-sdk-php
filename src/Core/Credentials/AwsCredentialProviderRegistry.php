@@ -42,8 +42,7 @@ final class AwsCredentialProviderRegistry
     public function __construct(
         private readonly array $providers = [],
         array $claimedSlots = []
-    )
-    {
+    ) {
         $this->claimedSlotNames = $this->normalizeClaimedSlots($claimedSlots);
     }
 

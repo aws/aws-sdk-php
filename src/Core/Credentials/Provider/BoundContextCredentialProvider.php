@@ -34,9 +34,7 @@ final class BoundContextCredentialProvider implements IdentityResolverInterface
     public function __construct(
         private readonly IdentityResolverInterface $inner,
         private readonly array $boundContext,
-    )
-    {
-    }
+    ) {}
 
     public function resolveIdentity(array $properties = []): IdentityResult
     {

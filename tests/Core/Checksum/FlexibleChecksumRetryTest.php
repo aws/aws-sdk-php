@@ -155,9 +155,7 @@ final class RetryChecksumProtocol implements ProtocolInterface
 
     public function __construct(
         private readonly MutableChecksumBody $body
-    )
-    {
-    }
+    ) {}
 
     public function serializeRequest(
         OperationInterface $operation,

@@ -21,8 +21,7 @@ final class RetryMetadataException extends \RuntimeException implements RetryInf
         public readonly bool $retryable,
         public readonly bool $throttling = false,
         public readonly ?float $retryAfterSeconds = null,
-    )
-    {
+    ) {
         parent::__construct($previous->getMessage(), 0, $previous);
     }
 

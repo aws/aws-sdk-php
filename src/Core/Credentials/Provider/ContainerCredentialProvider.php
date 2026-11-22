@@ -57,8 +57,7 @@ final class ContainerCredentialProvider implements
     public function __construct(
         ?HttpClientInterface $httpClient = null,
         private readonly ?int $refreshWindowSeconds = null,
-    )
-    {
+    ) {
         $this->httpClient = $httpClient;
     }
 

@@ -35,9 +35,7 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
 
     public function __construct(
         private readonly ResponseChecksumValidation $validationMode,
-    )
-    {
-    }
+    ) {}
 
     public function modifyBeforeRetryLoop(
         RequestContext $ctx,
