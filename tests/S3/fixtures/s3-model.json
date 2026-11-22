@@ -19,6 +19,9 @@
                 },
                 {
                     "target": "aws.tests#GetBucketPolicy"
+                },
+                {
+                    "target": "aws.tests#GetObjectAcl"
                 }
             ],
             "traits": {
@@ -83,6 +86,34 @@
                     "method": "POST",
                     "uri": "/bucket?delete"
                 }
+            }
+        },
+        "aws.tests#GetObjectAcl": {
+            "type": "operation",
+            "input": {
+                "target": "smithy.api#Unit"
+            },
+            "output": {
+                "target": "smithy.api#Unit"
+            },
+            "errors": [
+                {
+                    "target": "aws.tests#NoSuchKey"
+                }
+            ],
+            "traits": {
+                "smithy.api#http": {
+                    "method": "GET",
+                    "uri": "/bucket/key?acl"
+                }
+            }
+        },
+        "aws.tests#NoSuchKey": {
+            "type": "structure",
+            "members": {},
+            "traits": {
+                "smithy.api#error": "client",
+                "smithy.api#httpError": 404
             }
         },
         "aws.tests#GetBucketPolicy": {
