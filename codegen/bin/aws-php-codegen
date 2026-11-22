@@ -1,0 +1,29 @@
+#!/usr/bin/env php
+<?php
+
+/*
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+declare(strict_types=1);
+
+use Aws\Codegen\AwsCodegenApplication;
+
+$composerAutoloadPath = $GLOBALS['_composer_autoload_path'] ?? null;
+$autoloadPaths = [
+    \is_string($composerAutoloadPath) ? $composerAutoloadPath : '',
+    __DIR__ . '/../../vendor/autoload.php',
+    __DIR__ . '/../../../../autoload.php',
+    __DIR__ . '/../vendor/autoload.php'
+];
+
+foreach ($autoloadPaths as $autoloadPath) {
+    if ($autoloadPath !== '' && \is_file($autoloadPath)) {
+        require $autoloadPath;
+        exit((new AwsCodegenApplication())->run($argv));
+    }
+}
+
+\fwrite(STDERR, "Could not locate Composer autoloader.\n");
+exit(1);

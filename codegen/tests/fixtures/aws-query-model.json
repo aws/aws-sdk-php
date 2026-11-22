@@ -1,0 +1,115 @@
+{
+    "smithy": "2.0",
+    "shapes": {
+        "example.aws#ExampleService": {
+            "type": "service",
+            "version": "2024-01-01",
+            "operations": [
+                {
+                    "target": "example.aws#DoThing"
+                }
+            ],
+            "traits": {
+                "aws.api#service": {
+                    "sdkId": "Example"
+                },
+                "aws.auth#sigv4": {
+                    "name": "example"
+                },
+                "aws.protocols#awsQuery": {},
+                "smithy.rules#endpointBdd": {
+                    "version": "1.1",
+                    "parameters": {
+                        "Region": {
+                            "builtIn": "AWS::Region",
+                            "required": true,
+                            "type": "string"
+                        }
+                    },
+                    "conditions": [],
+                    "results": [
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://{Region}.example.com",
+                                "properties": [],
+                                "headers": []
+                            },
+                            "type": "endpoint"
+                        }
+                    ],
+                    "root": 100000001,
+                    "nodeCount": 0,
+                    "nodes": ""
+                },
+                "smithy.rules#endpointTests": {
+                    "testCases": [
+                        {
+                            "documentation": "resolves the regional endpoint",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://us-east-1.example.com"
+                                }
+                            },
+                            "operationInputs": [
+                                {
+                                    "builtInParams": {
+                                        "AWS::Region": "us-east-1"
+                                    },
+                                    "operationName": "DoThing",
+                                    "operationParams": {}
+                                }
+                            ],
+                            "params": {
+                                "Region": "us-east-1"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "example.aws#DoThing": {
+            "type": "operation",
+            "input": {
+                "target": "example.aws#DoThingInput"
+            },
+            "output": {
+                "target": "example.aws#DoThingOutput"
+            },
+            "errors": [
+                {
+                    "target": "example.aws#ExampleError"
+                }
+            ],
+            "traits": {
+                "aws.protocols#httpChecksum": {
+                    "requestAlgorithmMember": "checksumAlgorithm"
+                },
+                "aws.auth#unsignedPayload": {}
+            }
+        },
+        "example.aws#DoThingInput": {
+            "type": "structure",
+            "members": {}
+        },
+        "example.aws#DoThingOutput": {
+            "type": "structure",
+            "members": {}
+        },
+        "example.aws#ExampleError": {
+            "type": "structure",
+            "members": {
+                "message": {
+                    "target": "smithy.api#String"
+                }
+            },
+            "traits": {
+                "aws.protocols#awsQueryError": {
+                    "code": "Customized",
+                    "httpResponseCode": 400
+                },
+                "smithy.api#error": "client"
+            }
+        }
+    }
+}

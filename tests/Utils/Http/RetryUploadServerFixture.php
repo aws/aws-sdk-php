@@ -113,8 +113,14 @@ final class RetryUploadServerFixture
     public function capture(): array
     {
         $deadline = \microtime(true) + 5.0;
-        while (!\file_exists($this->captureFile)) {
+        while (($capture = self::readCapture($this->captureFile)) === null) {
             if (\microtime(true) >= $deadline) {
+                if (\file_exists($this->captureFile)) {
+                    throw new \RuntimeException(
+                        'Invalid retry upload capture.'
+                    );
+                }
+
                 throw new \RuntimeException(
                     'Timed out waiting for retry upload capture.'
                 );
@@ -122,13 +128,6 @@ final class RetryUploadServerFixture
             \usleep(10000);
         }
 
-        $json = \file_get_contents($this->captureFile);
-        $capture = \is_string($json)
-            ? \json_decode($json, true)
-            : null;
-        if (!\is_array($capture)) {
-            throw new \RuntimeException('Invalid retry upload capture.');
-        }
         if (isset($capture['error'])) {
             throw new \RuntimeException((string) $capture['error']);
         }
@@ -153,9 +152,12 @@ final class RetryUploadServerFixture
             }
         }
 
-        foreach ([$this->portFile, $this->captureFile, $this->scriptFile]
-            as $file
-        ) {
+        foreach ([
+            $this->portFile,
+            $this->captureFile,
+            $this->captureFile . '.tmp',
+            $this->scriptFile
+        ] as $file) {
             if (\file_exists($file)) {
                 \unlink($file);
             }
@@ -178,16 +180,9 @@ final class RetryUploadServerFixture
     {
         $deadline = \microtime(true) + 5.0;
         while (!\file_exists($portFile)) {
-            if (\file_exists($captureFile)) {
-                $capture = \json_decode(
-                    (string) \file_get_contents($captureFile),
-                    true
-                );
-                if (\is_array($capture) && isset($capture['error'])) {
-                    throw new \RuntimeException(
-                        (string) $capture['error']
-                    );
-                }
+            $capture = self::readCapture($captureFile);
+            if ($capture !== null && isset($capture['error'])) {
+                throw new \RuntimeException((string) $capture['error']);
             }
 
             $status = \proc_get_status($process);
@@ -213,6 +208,25 @@ final class RetryUploadServerFixture
         return $port;
     }
 
+    /**
+     * Return the decoded capture, or null while it is missing or incomplete.
+     *
+     * @return array<string, mixed>|null
+     */
+    private static function readCapture(string $captureFile): ?array
+    {
+        if (!\file_exists($captureFile)) {
+            return null;
+        }
+
+        $capture = \json_decode(
+            (string) \file_get_contents($captureFile),
+            true
+        );
+
+        return \is_array($capture) ? $capture : null;
+    }
+
     private static function serverScript(): string
     {
         return <<<'PHP'
@@ -224,9 +238,20 @@ $portFile = $argv[1];
 $captureFile = $argv[2];
 $firstAttemptBytes = (int) $argv[3];
 
+/**
+ * Write the capture to a temporary file and rename it into place, so the
+ * reader never sees an empty or partial file.
+ */
+function writeCapture(string $captureFile, array $capture): void
+{
+    $temporaryFile = $captureFile . '.tmp';
+    file_put_contents($temporaryFile, json_encode($capture));
+    rename($temporaryFile, $captureFile);
+}
+
 function fail(string $captureFile, string $message): never
 {
-    file_put_contents($captureFile, json_encode(['error' => $message]));
+    writeCapture($captureFile, ['error' => $message]);
     exit(1);
 }
 
@@ -384,7 +409,7 @@ fwrite(
 fclose($secondConnection);
 fclose($server);
 
-file_put_contents($captureFile, json_encode([
+writeCapture($captureFile, [
     'attempts' => [
         [
             'method' => $first['method'],
@@ -399,7 +424,7 @@ file_put_contents($captureFile, json_encode([
             'sha256' => hash('sha256', $secondBody)
         ]
     ]
-]));
+]);
 PHP;
     }
 }

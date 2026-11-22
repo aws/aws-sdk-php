@@ -4,7 +4,7 @@ LINT_JOBS ?= 8
 
 .DEFAULT_GOAL := help
 
-.PHONY: help install autoload test lint static-analysis license-check check clean
+.PHONY: help install autoload test lint static-analysis codegen license-check check clean
 .NOTPARALLEL: check
 
 help: ## List available targets
@@ -34,6 +34,9 @@ lint: ## Check PHP syntax
 
 static-analysis: ## Run PHPStan
 	$(COMPOSER) static-analysis $(if $(ARGS),-- $(ARGS))
+
+codegen: ## Run the code generator; pass options with ARGS
+	$(PHP) codegen/bin/aws-php-codegen $(ARGS)
 
 license-check: ## Check source license headers
 	$(PHP) tools/check-license-headers.php
