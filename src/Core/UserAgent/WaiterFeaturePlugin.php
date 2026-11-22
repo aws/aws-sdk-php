@@ -22,9 +22,7 @@ final class WaiterFeaturePlugin extends AbstractPlugin
         return self::$instance ??= new self();
     }
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     /** @inheritDoc */
     public function configure(AbstractClientConfig $config): AbstractClientConfig
