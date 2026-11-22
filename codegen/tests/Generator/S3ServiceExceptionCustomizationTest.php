@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Aws\Codegen\Tests\Generator;
 
-use Aws\Codegen\Generator\S3ServiceExceptionCustomizer;
+use Aws\Codegen\Generator\S3ServiceExceptionCustomization;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Smithy\Codegen\CodegenSettings;
@@ -17,8 +17,8 @@ use Smithy\Codegen\Generator\GeneratedFile;
 use Smithy\Codegen\Model\SmithyModel;
 use Smithy\Codegen\ShapeCategory;
 
-#[CoversClass(S3ServiceExceptionCustomizer::class)]
-final class S3ServiceExceptionCustomizerTest extends TestCase
+#[CoversClass(S3ServiceExceptionCustomization::class)]
+final class S3ServiceExceptionCustomizationTest extends TestCase
 {
     public function testLeavesFilesUnchangedForOtherServices(): void
     {
@@ -32,7 +32,7 @@ final class S3ServiceExceptionCustomizerTest extends TestCase
 
         self::assertSame(
             $files,
-            (new S3ServiceExceptionCustomizer(
+            (new S3ServiceExceptionCustomization(
                 $this->model('Example'),
                 $settings
             ))->apply($files)
@@ -84,7 +84,7 @@ final class S3ServiceExceptionCustomizerTest extends TestCase
         $settings = $this->settings();
         $other = new GeneratedFile('/tmp/aws-codegen-test/Other.php', 'x');
 
-        $files = (new S3ServiceExceptionCustomizer(
+        $files = (new S3ServiceExceptionCustomization(
             $this->model('S3'),
             $settings
         ))->apply([
@@ -111,7 +111,7 @@ final class S3ServiceExceptionCustomizerTest extends TestCase
     private function customize(string $source): string
     {
         $settings = $this->settings();
-        $files = (new S3ServiceExceptionCustomizer(
+        $files = (new S3ServiceExceptionCustomization(
             $this->model('S3'),
             $settings
         ))->apply([

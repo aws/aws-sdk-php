@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Aws\Codegen;
 
 use Aws\Codegen\Generator\EndpointConformanceTestGenerator;
-use Aws\Codegen\Generator\S3ServiceExceptionCustomizer;
+use Aws\Codegen\Generator\S3ServiceExceptionCustomization;
 use Smithy\Codegen\CodeGenerator;
 use Smithy\Codegen\CodegenSettings;
 use Smithy\Codegen\Generator\GeneratedFile;
@@ -96,7 +96,7 @@ final class AwsCodeGenerator
      */
     private function generateSources(): array
     {
-        return (new S3ServiceExceptionCustomizer(
+        return (new S3ServiceExceptionCustomization(
             $this->model,
             $this->settings
         ))->apply($this->generator->generate());

@@ -23,7 +23,7 @@ use Smithy\Protocol\Aws\AwsExtendedRequestIdInterface;
  * implements `AwsExtendedRequestIdInterface`, and the accessors are
  * populated by `Aws\Core\S3\S3ErrorInterceptor`.
  */
-final class S3ServiceExceptionCustomizer
+final class S3ServiceExceptionCustomization
 {
     private const IMPORT =
         'use ' . AwsExtendedRequestIdInterface::class . ';';
