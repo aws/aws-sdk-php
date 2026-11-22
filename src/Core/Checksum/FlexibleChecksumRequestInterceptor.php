@@ -39,11 +39,14 @@ final class FlexibleChecksumRequestInterceptor extends AbstractInterceptor
 
     public function __construct(
         private readonly RequestChecksumCalculation $calculationMode,
-    ) {}
+    )
+    {
+    }
 
     public function modifyBeforeRetryLoop(
         RequestContext $ctx,
-    ): TransportRequestInterface {
+    ): TransportRequestInterface
+    {
         $transportRequest = HttpTransportRequest::expect($ctx->request);
         $request = $transportRequest->request;
         $metadata = $this->metadata($ctx);
@@ -130,7 +133,8 @@ final class FlexibleChecksumRequestInterceptor extends AbstractInterceptor
     private function requestedAlgorithm(
         RequestContext $ctx,
         array $metadata
-    ): ?string {
+    ): ?string
+    {
         $index = $metadata['requestAlgorithmMemberIndex'] ?? null;
         if (!\is_int($index)) {
             return null;
@@ -155,7 +159,8 @@ final class FlexibleChecksumRequestInterceptor extends AbstractInterceptor
     private function inputMemberValue(
         RequestContext $ctx,
         Schema $member
-    ): mixed {
+    ): mixed
+    {
         return $ctx->input->getMemberValue($member);
     }
 
@@ -213,7 +218,8 @@ final class FlexibleChecksumRequestInterceptor extends AbstractInterceptor
     private function hashBody(
         StreamInterface $body,
         ChecksumAlgorithm $algorithm
-    ): string {
+    ): string
+    {
         $checksum = $algorithm->create();
         if (!$body->isSeekable()) {
             throw new \RuntimeException(

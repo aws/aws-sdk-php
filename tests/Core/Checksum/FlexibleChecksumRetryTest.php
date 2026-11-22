@@ -155,12 +155,15 @@ final class RetryChecksumProtocol implements ProtocolInterface
 
     public function __construct(
         private readonly MutableChecksumBody $body
-    ) {}
+    )
+    {
+    }
 
     public function serializeRequest(
         OperationInterface $operation,
         SerializableStructInterface $input
-    ): TransportRequestInterface {
+    ): TransportRequestInterface
+    {
         return new HttpTransportRequest(
             new Request('POST', new Uri('/'), [], $this->body)
         );
@@ -169,7 +172,8 @@ final class RetryChecksumProtocol implements ProtocolInterface
     public function setServiceEndpoint(
         TransportRequestInterface $request,
         Endpoint $endpoint
-    ): TransportRequestInterface {
+    ): TransportRequestInterface
+    {
         $request = HttpTransportRequest::expect($request);
 
         return $request->withRequest(
@@ -180,7 +184,8 @@ final class RetryChecksumProtocol implements ProtocolInterface
     public function deserializeResponse(
         OperationInterface $operation,
         TransportResponseInterface $response
-    ): SerializableStructInterface {
+    ): SerializableStructInterface
+    {
         $response = HttpTransportResponse::expect($response)->response;
         if ($response->getStatusCode() >= 500) {
             throw new \RuntimeException('retry');

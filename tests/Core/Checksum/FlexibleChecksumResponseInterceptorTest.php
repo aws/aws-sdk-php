@@ -270,8 +270,9 @@ final class FlexibleChecksumResponseInterceptorTest extends TestCase
     }
 
     /**
-     * Assert a specification case. Algorithms the runtime cannot compute (MD5,
-     * CRC64NVME) and S3 composite checksums skip validation.
+     * Assert a specification case. The runtime validates the algorithms it
+     * computes. It leaves the body unwrapped for MD5, CRC64NVME and S3
+     * composite checksums.
      *
      * @param array<string, mixed> $case
      */
@@ -279,7 +280,8 @@ final class FlexibleChecksumResponseInterceptorTest extends TestCase
         array $case,
         OperationInterface $operation,
         ?SerializableStructInterface $input
-    ): void {
+    ): void
+    {
         $algorithm = ChecksumAlgorithm::tryFromName(
             (string) $case['checksumAlgorithm']
         );
@@ -387,7 +389,8 @@ final class FlexibleChecksumResponseInterceptorTest extends TestCase
     private function select(
         ResponseChecksumValidation $mode,
         Response $response
-    ): ?ExpectedChecksum {
+    ): ?ExpectedChecksum
+    {
         $operation = $this->client->operation('ResponseChecksum');
 
         return $this->selectFor(
@@ -403,7 +406,8 @@ final class FlexibleChecksumResponseInterceptorTest extends TestCase
         SerializableStructInterface $input,
         ResponseChecksumValidation $mode,
         Response $response
-    ): ?ExpectedChecksum {
+    ): ?ExpectedChecksum
+    {
         $interceptor = new FlexibleChecksumResponseInterceptor($mode);
         $request = $interceptor->modifyBeforeRetryLoop(new RequestContext(
             $operation,

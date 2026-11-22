@@ -510,7 +510,8 @@ final class FlexibleChecksumRequestInterceptorTest extends TestCase
         array $case,
         callable $run,
         bool $streaming = false
-    ): void {
+    ): void
+    {
         $algorithm = \strtoupper((string) ($case['checksumAlgorithm'] ?? ''));
         $body = $streaming
             ? $this->nonSeekableBody($case['requestPayload'])
@@ -563,7 +564,8 @@ final class FlexibleChecksumRequestInterceptorTest extends TestCase
         array $case,
         string $operationName,
         RequestInterface $request
-    ): RequestInterface {
+    ): RequestInterface
+    {
         $algorithm = isset($case['checksumAlgorithm'])
             ? \strtoupper((string) $case['checksumAlgorithm'])
             : null;

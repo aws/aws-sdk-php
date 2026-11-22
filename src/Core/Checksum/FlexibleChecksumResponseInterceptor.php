@@ -35,11 +35,14 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
 
     public function __construct(
         private readonly ResponseChecksumValidation $validationMode,
-    ) {}
+    )
+    {
+    }
 
     public function modifyBeforeRetryLoop(
         RequestContext $ctx,
-    ): TransportRequestInterface {
+    ): TransportRequestInterface
+    {
         $transportRequest = HttpTransportRequest::expect($ctx->request);
         $request = $transportRequest->request;
         $metadata = $this->metadata($ctx->operation);
@@ -73,7 +76,8 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
 
     public function modifyBeforeDeserialization(
         ResponseContext $ctx
-    ): TransportResponseInterface {
+    ): TransportResponseInterface
+    {
         $selection = $this->selectResponseChecksum($ctx);
         if ($selection === null) {
             return $ctx->response;
@@ -98,7 +102,8 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
      */
     public function selectResponseChecksum(
         ResponseContext $ctx
-    ): ?ExpectedChecksum {
+    ): ?ExpectedChecksum
+    {
         $request = HttpTransportRequest::expect($ctx->request)->request;
         $response = HttpTransportResponse::expect($ctx->response)->response;
         if ($response->getStatusCode() < 200
@@ -154,7 +159,8 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
     private function isCompositeChecksum(
         string $operationId,
         string $checksum
-    ): bool {
+    ): bool
+    {
         if (!\str_starts_with($operationId, 'com.amazonaws.s3#')) {
             return false;
         }
@@ -203,7 +209,8 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
     private function validationEnabled(
         RequestContext $ctx,
         array $metadata
-    ): bool {
+    ): bool
+    {
         $header = $metadata['requestValidationModeHeader'] ?? null;
         if (\is_string($header)
             && $header !== ''
@@ -225,7 +232,8 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
     private function inputEnablesValidation(
         RequestContext|ResponseContext $ctx,
         array $metadata
-    ): bool {
+    ): bool
+    {
         $index = $metadata['requestValidationModeMemberIndex'] ?? null;
         if (!\is_int($index)) {
             return false;
@@ -248,7 +256,8 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
     private function requestEnablesValidation(
         RequestInterface $request,
         string $header
-    ): bool {
+    ): bool
+    {
         return \strtoupper(\trim($request->getHeaderLine($header)))
             === self::ENABLED;
     }
@@ -256,7 +265,8 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
     private function withValidationHeader(
         RequestInterface $request,
         string $header,
-    ): RequestInterface {
+    ): RequestInterface
+    {
         return $request instanceof Request
             ? $request->withNormalizedHeader(
                 \strtolower($header),
