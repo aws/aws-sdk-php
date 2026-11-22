@@ -322,6 +322,7 @@ final class AwsClientConfigGenerator
         ] as $name) {
             $writer->writeLine("{$name}: \${$name},");
         }
+        $writer->writeLine('endpoint: $endpoint');
         $writer->popIndent();
         $writer->writeLine(');');
         $writer->popIndent();
@@ -362,7 +363,8 @@ final class AwsClientConfigGenerator
             '?ProtocolResolverInterface $protocolResolver = null,',
             '?string $protocolId = null,',
             '?ServiceInterface $service = null,',
-            '?bool $protocolIsExplicit = null'
+            '?bool $protocolIsExplicit = null,',
+            '?string $endpoint = null'
         ];
     }
 

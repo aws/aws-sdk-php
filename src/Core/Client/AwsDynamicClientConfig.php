@@ -40,12 +40,20 @@ final class AwsDynamicClientConfig extends AbstractAwsClientConfig
      * @param TransportInterface|null $transport Transport implementation for
      *     serialized protocol messages.
      * @param array<string, mixed> $context Client context.
+     * @param EndpointResolverInterface|null $resolvedEndpointResolver
+     *     Resolver built from the modeled endpoint rules or supplied by the
+     *     caller. Set this or `$endpoint`.
+     * @param string|null $endpoint Endpoint URL for a service with no
+     *     modeled endpoint rules. Set this or `$resolvedEndpointResolver`.
+     *
+     * @throws \InvalidArgumentException When both or neither of
+     *     `$resolvedEndpointResolver` and `$endpoint` are set.
      */
     public function __construct(
         private readonly ?ProtocolInterface $resolvedProtocol,
         ProtocolResolverInterface $protocolResolver,
         ?string $protocolId,
-        private readonly EndpointResolverInterface $resolvedEndpointResolver,
+        private readonly ?EndpointResolverInterface $resolvedEndpointResolver,
         private readonly string $resolvedSigningName,
         private readonly bool $enableSigV4,
         ?string $region = null,
@@ -74,11 +82,20 @@ final class AwsDynamicClientConfig extends AbstractAwsClientConfig
         ?PluginState $pluginState = null,
         ?TransportInterface $transport = null,
         ?ServiceInterface $service = null,
-        ?bool $protocolIsExplicit = null
+        ?bool $protocolIsExplicit = null,
+        ?string $endpoint = null
     ) {
         if ($resolvedSigningName === '') {
             throw new \InvalidArgumentException(
                 'AWS signing name cannot be empty.'
+            );
+        }
+        // The dynamic factory passes the URL to the modeled rules itself, so
+        // a resolver with a URL here means the caller supplied both.
+        if ($resolvedEndpointResolver !== null && $endpoint !== null) {
+            throw new \InvalidArgumentException(
+                'Provide either an endpoint resolver or a static endpoint, '
+                . 'not both.'
             );
         }
 
@@ -124,7 +141,8 @@ final class AwsDynamicClientConfig extends AbstractAwsClientConfig
             protocolResolver: $protocolResolver,
             protocolId: $protocolId,
             service: $service,
-            protocolIsExplicit: $protocolIsExplicit
+            protocolIsExplicit: $protocolIsExplicit,
+            endpoint: $endpoint
         );
     }
 
@@ -146,7 +164,7 @@ final class AwsDynamicClientConfig extends AbstractAwsClientConfig
             resolvedEndpointResolver: \array_key_exists(
                 'endpointResolver',
                 $overrides
-            ) ? $overrides['endpointResolver'] : $this->resolvedEndpointResolver,
+            ) ? $overrides['endpointResolver'] : $this->endpointResolver,
             resolvedSigningName: $this->resolvedSigningName,
             enableSigV4: $this->enableSigV4,
             region: \array_key_exists('region', $overrides)
@@ -229,7 +247,7 @@ final class AwsDynamicClientConfig extends AbstractAwsClientConfig
         return new CurlClient();
     }
 
-    protected function getEndpointResolver(): EndpointResolverInterface
+    protected function getEndpointResolver(): ?EndpointResolverInterface
     {
         return $this->resolvedEndpointResolver;
     }

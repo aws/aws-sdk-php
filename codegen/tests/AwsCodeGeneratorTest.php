@@ -170,11 +170,6 @@ final class AwsCodeGeneratorTest extends TestCase
 
         self::assertNotEmpty($files);
         foreach ($files as $file) {
-            // shortcut: smithy-php's BytecodeSourceGenerator emits no license
-            // header yet; drop this skip once the locked smithy-php adds it.
-            if (\str_ends_with($file->path, 'EndpointBytecode.php')) {
-                continue;
-            }
             self::assertStringStartsWith(
                 "<?php\n\n/*\n"
                     . " * Copyright Amazon.com, Inc. or its affiliates."

@@ -13,6 +13,10 @@ use Aws\Core\Checksum\RequestChecksumCalculation;
 use Aws\Core\Checksum\ResponseChecksumValidation;
 use Aws\Core\Client\AwsDynamicClientConfig;
 use Aws\Core\Credentials\AwsCredentialChain;
+use Aws\Tests\Core\Integ\Retry\Utils\{
+    TestInput,
+    TestOperation
+};
 use PHPUnit\Framework\TestCase;
 use Smithy\Auth\AnonymousIdentityResolver;
 use Smithy\Auth\Aws\AwsCredentials;
@@ -215,6 +219,64 @@ final class AwsDynamicClientConfigTest extends TestCase
                 EndpointResolverInterface::CONTEXT_PARAMETERS
             ]
         );
+    }
+
+    public function testEndpointWithoutResolverBuildsStaticResolver(): void
+    {
+        $config = $this->configWith([
+            'resolvedEndpointResolver' => null,
+            'endpoint' => 'https://endpoint.test',
+        ]);
+
+        $this->assertInstanceOf(
+            StaticEndpointResolver::class,
+            $config->endpointResolver
+        );
+        $this->assertSame(
+            'https://endpoint.test',
+            $config->endpointResolver->resolveEndpoint(
+                TestOperation::instance(),
+                TestInput::create(),
+                $config
+            )->url
+        );
+        $this->assertArrayNotHasKey(
+            'Endpoint',
+            $config->context[EndpointResolverInterface::CONTEXT_PARAMETERS]
+        );
+    }
+
+    public function testCopyKeepsEndpointResolverBuiltFromEndpoint(): void
+    {
+        $config = $this->configWith([
+            'resolvedEndpointResolver' => null,
+            'endpoint' => 'https://endpoint.test',
+        ]);
+
+        $copy = $config->withRegion('eu-west-1');
+
+        $this->assertSame($config->endpointResolver, $copy->endpointResolver);
+    }
+
+    public function testRejectsEndpointWithEndpointResolver(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Provide either an endpoint resolver or a static endpoint, '
+            . 'not both.'
+        );
+
+        $this->configWith(['endpoint' => 'https://endpoint.test']);
+    }
+
+    public function testRequiresEndpointOrEndpointResolver(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Client config requires an endpoint resolver or endpoint.'
+        );
+
+        $this->configWith(['resolvedEndpointResolver' => null]);
     }
 
     public function testConstructorAcceptsProviderCredentials(): void

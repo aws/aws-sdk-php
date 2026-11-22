@@ -97,14 +97,15 @@ final class UserAgentTestClient extends DynamicClient
         ProtocolResolverInterface $protocolResolver,
         ?HttpClientInterface $httpClient,
         ?TransportInterface $transport,
-        EndpointResolverInterface $endpointResolver,
+        ?EndpointResolverInterface $endpointResolver,
         InterceptorChain $interceptors,
         array $supportedAuthSchemes,
         ?AuthSchemeResolverInterface $authSchemeResolver,
         ?array $authSchemePreference,
         ?RetryStrategyInterface $retryStrategy,
         string $retryScope,
-        array $context
+        array $context,
+        ?string $endpoint = null
     ): AbstractClientConfig
     {
         /** @var array<string, mixed> $settings */
@@ -128,6 +129,7 @@ final class UserAgentTestClient extends DynamicClient
             'context' => $context,
             'httpClient' => $httpClient,
             'transport' => $transport,
+            'endpoint' => $endpoint,
             ...$settings
         ]);
     }

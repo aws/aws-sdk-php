@@ -21,6 +21,10 @@ use PHPUnit\Framework\Attributes\{
 use PHPUnit\Framework\TestCase;
 use Smithy\Auth\Aws\AwsCredentials;
 use Smithy\Auth\StaticTokenProvider;
+use Smithy\Client\Endpoint\{
+    EndpointResolverInterface,
+    StaticEndpointResolver
+};
 use Smithy\Client\Retry\StandardRetryStrategy;
 use Smithy\Core\Model\SmithyModel;
 use Smithy\Protocol\Aws\{
@@ -317,6 +321,82 @@ final class AwsDynamicClientTest extends TestCase
 
         self::assertSame(
             'example.amazonaws.com',
+            $http->getLastRequest()?->getUri()->getHost()
+        );
+    }
+
+    public function testSendsToTheEndpointWithoutModeledRules(): void
+    {
+        $http = (new MockHttpClient())->willReturn('');
+        $client = AwsDynamicClient::create(
+            model: $this->model(RestJsonProtocol::ID),
+            endpoint: 'https://custom.example.test',
+            httpClient: $http,
+            region: 'us-west-2',
+            credentials: new AwsCredentials('AKID', 'SECRET')
+        );
+
+        $client->echo();
+
+        self::assertInstanceOf(
+            StaticEndpointResolver::class,
+            $client->getConfig()->endpointResolver
+        );
+        self::assertSame(
+            'custom.example.test',
+            $http->getLastRequest()?->getUri()->getHost()
+        );
+    }
+
+    public function testPassesTheEndpointToModeledRules(): void
+    {
+        $http = (new MockHttpClient())->willReturn('');
+        $client = AwsDynamicClient::create(
+            model: $this->model(
+                'aws.protocols#restJson1',
+                [
+                    'version' => '1.1',
+                    'parameters' => [
+                        'Region' => [
+                            'type' => 'String',
+                            'required' => true
+                        ],
+                        'Endpoint' => [
+                            'type' => 'String',
+                            'builtIn' => 'SDK::Endpoint'
+                        ]
+                    ],
+                    'conditions' => [],
+                    'results' => [
+                        [
+                            'type' => 'endpoint',
+                            'endpoint' => [
+                                'url' => 'https://rules.amazonaws.com',
+                                'properties' => []
+                            ]
+                        ]
+                    ],
+                    'nodes' => '',
+                    'nodeCount' => 0,
+                    'root' => 100_000_001
+                ]
+            ),
+            endpoint: 'https://custom.example.test',
+            httpClient: $http,
+            region: 'us-west-2',
+            credentials: new AwsCredentials('AKID', 'SECRET')
+        );
+
+        $client->echo();
+
+        self::assertSame(
+            'https://custom.example.test',
+            $client->getConfig()->context[
+                EndpointResolverInterface::CONTEXT_PARAMETERS
+            ]['Endpoint']
+        );
+        self::assertSame(
+            'rules.amazonaws.com',
             $http->getLastRequest()?->getUri()->getHost()
         );
     }

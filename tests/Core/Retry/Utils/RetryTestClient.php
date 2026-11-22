@@ -81,14 +81,15 @@ final class RetryTestClient extends DynamicClient
         ProtocolResolverInterface $protocolResolver,
         ?HttpClientInterface $httpClient,
         ?TransportInterface $transport,
-        EndpointResolverInterface $endpointResolver,
+        ?EndpointResolverInterface $endpointResolver,
         InterceptorChain $interceptors,
         array $supportedAuthSchemes,
         ?AuthSchemeResolverInterface $authSchemeResolver,
         ?array $authSchemePreference,
         ?RetryStrategyInterface $retryStrategy,
         string $retryScope,
-        array $context
+        array $context,
+        ?string $endpoint = null
     ): AbstractClientConfig
     {
         $signingName = $context[self::SIGNING_NAME] ?? 'retry';
@@ -113,7 +114,8 @@ final class RetryTestClient extends DynamicClient
             retryScope: $retryScope,
             context: $context,
             httpClient: $httpClient,
-            transport: $transport
+            transport: $transport,
+            endpoint: $endpoint
         );
     }
 }
