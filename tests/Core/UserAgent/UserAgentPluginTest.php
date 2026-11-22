@@ -149,11 +149,13 @@ final class UserAgentPluginTest extends TestCase
         );
     }
 
-    public function testStandardRetryModeMetricId(): void
+    public function testStandardRetryIdLeadsMetrics(): void
     {
-        \putenv('AWS_RETRY_MODE=standard');
-
         $this->assertStringContainsString(' m/E,', $this->callWith());
+        $this->assertStringContainsString(
+            ' m/E,',
+            $this->callWith(['retryMode' => 'standard'])
+        );
     }
 
     public function testChecksumModeMetricIdsForChecksumServices(): void

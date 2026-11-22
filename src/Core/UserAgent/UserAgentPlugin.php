@@ -7,7 +7,6 @@ namespace Aws\Core\UserAgent;
 use Aws\Core\Checksum\RequestChecksumCalculation;
 use Aws\Core\Checksum\ResponseChecksumValidation;
 use Aws\Core\Client\AbstractAwsClientConfig;
-use Aws\Core\Client\AwsClientConfigContext;
 use Aws\Core\Client\AwsClientConfigResolver;
 use Smithy\Auth\IdentityChainInterface;
 use Smithy\Client\AbstractClientConfig;
@@ -27,6 +26,9 @@ final class UserAgentPlugin extends AbstractPlugin
     public const MAX_APP_ID_LENGTH = 50;
 
     private const SERVICE_TRAIT = 'aws.api#service';
+
+    /** Metric ID for standard retry, the only supported retry mode. */
+    private const STANDARD_RETRY_ID = 'E';
 
     /**
      * @var array<string, string> Namespace segment to package suffix.
@@ -102,7 +104,7 @@ final class UserAgentPlugin extends AbstractPlugin
         return $config->withInterceptor(new UserAgentInterceptor(
             $prefix,
             $suffix,
-            $this->configIds($config, $context, $chain !== null),
+            $this->configIds($config, $chain !== null),
             $chain,
             $config->supportsFlexibleChecksums()
         ));
@@ -119,17 +121,10 @@ final class UserAgentPlugin extends AbstractPlugin
      */
     private function configIds(
         AbstractAwsClientConfig $config,
-        AwsClientConfigContext $context,
         bool $hasChain
     ): array
     {
-        $ids = [match (\strtolower(
-            $config->retryMode ?? $this->resolver->resolveRetryMode($context)
-        )) {
-            'legacy' => 'D',
-            'adaptive' => 'F',
-            default => 'E'
-        }];
+        $ids = [self::STANDARD_RETRY_ID];
 
         if ($config->supportsFlexibleChecksums()) {
             $ids[] = $config->requestChecksumCalculation
