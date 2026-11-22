@@ -345,6 +345,63 @@ final class UserAgentPluginTest extends TestCase
         );
     }
 
+    public function testSdkTokenUsesTokenCharactersAndStaysStable(): void
+    {
+        $pattern = '~^aws-sdk-php/[!#$%&\'*+\-.^_`|\~0-9A-Za-z/]+ ua/2\.1 ~';
+        $first = $this->callWith();
+
+        $this->assertMatchesRegularExpression($pattern, $first);
+        $this->assertSame(
+            \strtok($first, ' '),
+            \strtok($this->callWith(), ' ')
+        );
+    }
+
+    public function testExecEnvIllegalCharactersBecomeHyphens(): void
+    {
+        \putenv('AWS_EXECUTION_ENV=Java_HotSpot_(TM)_64-Bit');
+
+        $this->assertStringContainsString(
+            ' exec-env/Java_HotSpot_-TM-_64-Bit ',
+            $this->callWith()
+        );
+    }
+
+    public function testAppIdTokenCharactersAreKept(): void
+    {
+        $this->assertStringEndsWith(
+            ' app/1.0#a/b',
+            $this->callWith(['userAgentAppId' => '1.0#a/b'])
+        );
+    }
+
+    public function testPackageVersionReadsInstalledPackages(): void
+    {
+        $method = new \ReflectionMethod(
+            UserAgentPlugin::class,
+            'packageVersion'
+        );
+
+        $this->assertIsString($method->invoke(null, 'phpunit/phpunit'));
+        $this->assertNull(
+            $method->invoke(null, 'aws/aws-sdk-php-not-installed')
+        );
+    }
+
+    public function testServiceTokenLowercasesAndJoinsWords(): void
+    {
+        $method = new \ReflectionMethod(
+            UserAgentPlugin::class,
+            'serviceToken'
+        );
+
+        $this->assertSame('sso_oidc', $method->invoke(null, 'SSO OIDC'));
+        $this->assertSame(
+            'api_gateway',
+            $method->invoke(null, 'API Gateway')
+        );
+    }
+
     public function testClientWithoutPluginSendsNoSdkHeader(): void
     {
         $http = $this->httpClient();
