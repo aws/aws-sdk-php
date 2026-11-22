@@ -177,6 +177,9 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
      * @param string|null $protocolId Explicit modeled protocol shape ID.
      * @param ServiceInterface|null $service Runtime service metadata.
      * @param bool|null $protocolIsExplicit Internal protocol provenance.
+     * @param string|null $endpoint Endpoint URL. With endpoint rules, it is
+     *     the `Endpoint` rule input, kept in `context` so copies carry it.
+     *     With no endpoint rules, every operation goes to this URL.
      */
     public function __construct(
         ?string $region = null,
@@ -207,7 +210,8 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
         ?ProtocolResolverInterface $protocolResolver = null,
         ?string $protocolId = null,
         ?ServiceInterface $service = null,
-        ?bool $protocolIsExplicit = null
+        ?bool $protocolIsExplicit = null,
+        ?string $endpoint = null
     ) {
         [$resolvedRegion, $context] = self::resolveRegionAndContext(
             $region,
@@ -293,6 +297,13 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
         $endpointParameters['Region'] = $this->region;
         $endpointParameters['UseFIPS'] = $this->useFips;
         $endpointParameters['UseDualStack'] = $this->useDualStack;
+        $endpointResolver = $this->getEndpointResolver();
+        if ($endpointResolver !== null && $endpoint !== null) {
+            if ($endpoint !== '') {
+                $endpointParameters['Endpoint'] = $endpoint;
+            }
+            $endpoint = null;
+        }
         $context[EndpointResolverInterface::CONTEXT_PARAMETERS] =
             $endpointParameters;
         $context[SigV4AuthScheme::IDENTITY_CONTEXT_KEY] =
@@ -310,7 +321,7 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
 
         parent::__construct(
             transport: $transport,
-            endpointResolver: $this->getEndpointResolver(),
+            endpointResolver: $endpointResolver,
             protocol: $protocol,
             protocolResolver: $protocolResolver,
             protocolId: $protocolId,
@@ -326,7 +337,8 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
             ]),
             service: $service,
             pluginState: $pluginState,
-            protocolIsExplicit: $protocolIsExplicit
+            protocolIsExplicit: $protocolIsExplicit,
+            endpoint: $endpoint
         );
     }
 
@@ -350,8 +362,11 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
     /**
      * Endpoint rules engine for the target service. Hardcoded per
      * service (e.g., `S3EndpointResolver`).
+     *
+     * Returns `null` for a service with no endpoint rules; the config then
+     * sends every operation to the `endpoint` URL.
      */
-    abstract protected function getEndpointResolver(): EndpointResolverInterface;
+    abstract protected function getEndpointResolver(): ?EndpointResolverInterface;
 
     /**
      * Factory helper for the standard AWS wiring of

@@ -66,6 +66,16 @@ final class AwsClientConfigGeneratorTest extends TestCase
             $file->content
         );
         self::assertStringContainsString(
+            "?bool \$protocolIsExplicit = null,\n"
+                . "        ?string \$endpoint = null\n",
+            $file->content
+        );
+        self::assertStringContainsString(
+            "protocolIsExplicit: \$protocolIsExplicit,\n"
+                . "            endpoint: \$endpoint\n",
+            $file->content
+        );
+        self::assertStringContainsString(
             'use Smithy\Client\Interceptor\InterceptorChain;',
             $file->content
         );

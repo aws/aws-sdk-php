@@ -286,6 +286,8 @@ class AwsDynamicClient extends DynamicClient implements AwsClientInterface
      *     customer-preferred order.
      * @param TransportInterface|null $transport Resolved client transport.
      * @param array<string, mixed> $context Client context.
+     * @param string|null $endpoint Endpoint URL for a service with no
+     *     modeled endpoint rules.
      *
      * @internal Called by the shared dynamic client factory.
      */
@@ -297,14 +299,15 @@ class AwsDynamicClient extends DynamicClient implements AwsClientInterface
         ProtocolResolverInterface $protocolResolver,
         ?HttpClientInterface $httpClient,
         ?TransportInterface $transport,
-        EndpointResolverInterface $endpointResolver,
+        ?EndpointResolverInterface $endpointResolver,
         InterceptorChain $interceptors,
         array $supportedAuthSchemes,
         ?AuthSchemeResolverInterface $authSchemeResolver,
         ?array $authSchemePreference,
         ?RetryStrategyInterface $retryStrategy,
         string $retryScope,
-        array $context
+        array $context,
+        ?string $endpoint = null
     ): AwsDynamicClientConfig
     {
         $options = $context[self::CONFIG_OPTIONS] ?? [];
@@ -348,7 +351,8 @@ class AwsDynamicClient extends DynamicClient implements AwsClientInterface
             retryScope: $retryScope,
             context: $context,
             httpClient: $httpClient,
-            transport: $transport
+            transport: $transport,
+            endpoint: $endpoint
         );
     }
 
