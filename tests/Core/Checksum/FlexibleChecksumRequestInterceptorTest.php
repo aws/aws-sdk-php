@@ -522,8 +522,7 @@ final class FlexibleChecksumRequestInterceptorTest extends TestCase
             $body
         );
 
-        if (
-            isset($case['expectError'])
+        if (isset($case['expectError'])
             || $algorithm === 'CRC64NVME'
         ) {
             $this->expectException(\InvalidArgumentException::class);

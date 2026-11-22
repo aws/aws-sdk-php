@@ -43,8 +43,7 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
         $transportRequest = HttpTransportRequest::expect($ctx->request);
         $request = $transportRequest->request;
         $metadata = $this->metadata($ctx->operation);
-        if (
-            $metadata === null
+        if ($metadata === null
             || $this->supportedModeledAlgorithms($metadata) === []
         ) {
             return $ctx->request;
@@ -102,8 +101,7 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
     ): ?ExpectedChecksum {
         $request = HttpTransportRequest::expect($ctx->request)->request;
         $response = HttpTransportResponse::expect($ctx->response)->response;
-        if (
-            $response->getStatusCode() < 200
+        if ($response->getStatusCode() < 200
             || $response->getStatusCode() >= 300
         ) {
             return null;
@@ -167,8 +165,7 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
         }
 
         $partCount = \substr($checksum, $separator + 1);
-        if (
-            \strlen($partCount) > 5
+        if (\strlen($partCount) > 5
             || !\ctype_digit($partCount)
         ) {
             return false;
@@ -208,8 +205,7 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
         array $metadata
     ): bool {
         $header = $metadata['requestValidationModeHeader'] ?? null;
-        if (
-            \is_string($header)
+        if (\is_string($header)
             && $header !== ''
             && $this->requestEnablesValidation(
                 HttpTransportRequest::expect($ctx->request)->request,
@@ -283,8 +279,7 @@ final class FlexibleChecksumResponseInterceptor extends AbstractInterceptor
         }
 
         $memberName = $metadata['requestValidationModeMember'] ?? null;
-        if (
-            !\is_int(
+        if (!\is_int(
                 $metadata['requestValidationModeMemberIndex'] ?? null
             )
             && \is_string($memberName)

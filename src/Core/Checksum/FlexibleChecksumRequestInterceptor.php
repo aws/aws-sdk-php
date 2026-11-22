@@ -70,8 +70,7 @@ final class FlexibleChecksumRequestInterceptor extends AbstractInterceptor
         }
 
         $requestedAlgorithm = $this->requestedAlgorithm($ctx, $metadata);
-        if (
-            $requestedAlgorithm === null
+        if ($requestedAlgorithm === null
             && !$checksumRequired
             && $this->calculationMode
                 === RequestChecksumCalculation::WHEN_REQUIRED
@@ -85,8 +84,7 @@ final class FlexibleChecksumRequestInterceptor extends AbstractInterceptor
 
         $body = $request->getBody();
         $headers = [];
-        if (
-            $requestedAlgorithm === null
+        if ($requestedAlgorithm === null
             && \is_string($algorithmHeader)
             && $algorithmHeader !== ''
         ) {
@@ -96,8 +94,7 @@ final class FlexibleChecksumRequestInterceptor extends AbstractInterceptor
             ];
         }
 
-        if (
-            $ctx->operation->getInputStreamMember() !== null
+        if ($ctx->operation->getInputStreamMember() !== null
             && !$body->isSeekable()
         ) {
             foreach ($headers as [$name, $values]) {
@@ -168,8 +165,7 @@ final class FlexibleChecksumRequestInterceptor extends AbstractInterceptor
     {
         foreach ($request->getHeaders() as $name => $_) {
             $name = \strtolower($name);
-            if (
-                \str_starts_with($name, self::CHECKSUM_HEADER_PREFIX)
+            if (\str_starts_with($name, self::CHECKSUM_HEADER_PREFIX)
                 && !isset(self::CHECKSUM_PREFIX_EXCLUSIONS[$name])
             ) {
                 return true;
@@ -194,8 +190,7 @@ final class FlexibleChecksumRequestInterceptor extends AbstractInterceptor
         }
 
         $memberName = $metadata['requestAlgorithmMember'] ?? null;
-        if (
-            !\is_int($metadata['requestAlgorithmMemberIndex'] ?? null)
+        if (!\is_int($metadata['requestAlgorithmMemberIndex'] ?? null)
             && \is_string($memberName)
             && $memberName !== ''
         ) {
