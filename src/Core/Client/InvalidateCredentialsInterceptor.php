@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Aws\Core\Client;
 
-use Aws\Core\Exception\AwsException;
 use Aws\Core\Retry\RetryMetadataException;
 use Smithy\Client\Interceptor\AbstractInterceptor;
 use Smithy\Client\Interceptor\OutputContext;
+use Smithy\Protocol\Aws\AwsErrorInterface;
 
 /**
  * Invalidate credentials rejected by a target AWS service.
@@ -59,7 +59,7 @@ final class InvalidateCredentialsInterceptor extends AbstractInterceptor
     private static function errorCode(\Throwable $error): ?string
     {
         $error = RetryMetadataException::unwrap($error);
-        if ($error instanceof AwsException
+        if ($error instanceof AwsErrorInterface
             && $error->getAwsErrorCode() !== null
             && $error->getAwsErrorCode() !== ''
         ) {

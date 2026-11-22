@@ -14,9 +14,12 @@ use Aws\Tests\S3\Utils\S3TestClient;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Smithy\Client\Interceptor\OutputContext;
+use Smithy\Core\Exception\ApiException;
 use Smithy\Http\Message\HttpTransportResponse;
 use Smithy\Http\Message\Response;
-use Smithy\Protocol\Aws\AwsProtocolException;
+use Smithy\Protocol\Aws\AwsDocumentException;
+use Smithy\Protocol\Aws\AwsErrorInterface;
+use Smithy\Protocol\Aws\AwsExtendedRequestIdInterface;
 
 /**
  * Verify S3 status-based error inference and extended request IDs.
@@ -84,6 +87,25 @@ final class S3ErrorInterceptorTest extends TestCase
             $error->getMessage()
         );
         $this->assertSame('host-2', $error->getExtendedRequestId());
+    }
+
+    public function testModeledDynamicErrorGetsExtendedRequestId(): void
+    {
+        $error = $this->complete(
+            'GetObjectAcl',
+            new Response(
+                404,
+                [],
+                '<Error><Code>NoSuchKey</Code><Message>m</Message>'
+                    . '<RequestId>req-3</RequestId>'
+                    . '<HostId>host-3</HostId></Error>'
+            )
+        );
+
+        $this->assertInstanceOf(AwsDocumentException::class, $error);
+        $this->assertSame('NoSuchKey', $error->getAwsErrorCode());
+        $this->assertSame('req-3', $error->getAwsRequestId());
+        $this->assertSame('host-3', $error->getExtendedRequestId());
     }
 
     public function testErrorWithBodyKeepsItsCode(): void
@@ -155,7 +177,7 @@ final class S3ErrorInterceptorTest extends TestCase
     private function complete(
         string $operationName,
         Response $response
-    ): AwsProtocolException
+    ): AwsErrorInterface&AwsExtendedRequestIdInterface&ApiException
     {
         $operation = $this->client->operation($operationName);
         $input = $operation->createInputFromValue([]);
@@ -166,7 +188,7 @@ final class S3ErrorInterceptorTest extends TestCase
                 $transportResponse
             );
             $this->fail('Expected an error response.');
-        } catch (AwsProtocolException $error) {
+        } catch (ApiException $error) {
         }
 
         try {
@@ -181,7 +203,7 @@ final class S3ErrorInterceptorTest extends TestCase
                 ),
                 $error
             );
-        } catch (AwsProtocolException $completed) {
+        } catch (ApiException $completed) {
             return $completed;
         }
 

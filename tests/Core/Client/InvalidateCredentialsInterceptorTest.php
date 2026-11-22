@@ -23,9 +23,11 @@ use Smithy\Auth\IdentityResolverInterface;
 use Smithy\Client\ClientConfig;
 use Smithy\Client\Endpoint\EndpointResolverInterface;
 use Smithy\Client\Interceptor\OutputContext;
+use Smithy\Core\Exception\ErrorFault;
 use Smithy\Core\Serde\SerializableStructInterface;
 use Smithy\Core\Shape\OperationInterface;
 use Smithy\Http\Client\HttpClientTransport;
+use Smithy\Protocol\Aws\AwsDocumentException;
 use Smithy\Protocol\Aws\RestJsonProtocol;
 use Smithy\Tests\Utils\Http\MockHttpClient;
 
@@ -85,6 +87,16 @@ final class InvalidateCredentialsInterceptorTest extends TestCase
                 RetryMetadataException::wrap(
                     new AwsException('expired', awsErrorCode: 'ExpiredToken'),
                     retryable: false
+                )
+            ],
+            'dynamic modeled error' => [
+                AwsDocumentException::fromAwsError(
+                    'expired',
+                    ErrorFault::Client,
+                    null,
+                    'ExpiredToken',
+                    'req-1',
+                    400
                 )
             ],
             'query error code constant' => [new QueryCodeError('expired')],
