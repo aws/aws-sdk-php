@@ -56,9 +56,7 @@ final class AwsConfigFile
         private readonly array $services = [],
         public readonly ?string $credentialsFilePath = null,
         public readonly ?string $configFilePath = null
-    )
-    {
-    }
+    ) {}
 
     /**
      * Load profiles from the credentials and config files at these paths.

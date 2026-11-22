@@ -59,8 +59,7 @@ final class InstanceProfileClient
         ?AwsProfile $profile = null,
         ?callable $getEnv = null,
         ?HttpClientInterface $httpClient = null,
-    )
-    {
+    ) {
         $getEnv ??= static function (string $name): ?string {
             $value = $_ENV[$name] ?? getenv($name);
             if ($value === false || $value === null || $value === '') {

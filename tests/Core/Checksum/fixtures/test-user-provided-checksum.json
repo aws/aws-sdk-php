@@ -1,0 +1,112 @@
+[
+  {
+    "documentation": "CRC32 checksum provided by user.",
+    "requestPayload": "Hello world",
+    "checksumAlgorithm": "Crc32",
+    "checksumValue": "i9aeUg==",
+    "expectHeaders": {
+      "x-amz-checksum-crc32": "i9aeUg=="
+    },
+    "forbidHeaders": ["x-amz-request-algorithm"]
+  },
+  {
+    "documentation": "CRC32C checksum provided by user.",
+    "requestPayload": "Hello world",
+    "checksumAlgorithm": "Crc32C",
+    "checksumValue": "crUfeA==",
+    "expectHeaders": {
+      "x-amz-checksum-crc32c": "crUfeA=="
+    },
+    "forbidHeaders": ["x-amz-request-algorithm"]
+  },
+  {
+    "documentation": "CRC64NVME checksum provided by user.",
+    "requestPayload": "Hello world",
+    "checksumAlgorithm": "Crc64Nvme",
+    "checksumValue": "OOJZ0D8xKts=",
+    "expectHeaders": {
+      "x-amz-checksum-crc64nvme": "OOJZ0D8xKts="
+    },
+    "forbidHeaders": ["x-amz-request-algorithm"]
+  },
+  {
+    "documentation": "SHA1 checksum provided by user.",
+    "requestPayload": "Hello world",
+    "checksumAlgorithm": "Sha1",
+    "checksumValue": "e1AsOh9IyGCa4hLN+2Od7jlnP14=",
+    "expectHeaders": {
+      "x-amz-checksum-sha1": "e1AsOh9IyGCa4hLN+2Od7jlnP14="
+    },
+    "forbidHeaders": ["x-amz-request-algorithm"]
+  },
+  {
+    "documentation": "SHA256 checksum provided by user.",
+    "requestPayload": "Hello world",
+    "checksumAlgorithm": "Sha256",
+    "checksumValue": "ZOyIygCyaOW6GjVnihtTFtIS9PNmskdyMlNKiuyjfzw=",
+    "expectHeaders": {
+      "x-amz-checksum-sha256": "ZOyIygCyaOW6GjVnihtTFtIS9PNmskdyMlNKiuyjfzw="
+    },
+    "forbidHeaders": ["x-amz-request-algorithm"]
+  },
+  {
+    "documentation": "SHA512 checksum provided by user.",
+    "requestPayload": "Hello world",
+    "checksumAlgorithm": "Sha512",
+    "checksumValue": "t/eDuu2Cl/DbkXRiGE/08I5pwtXl95qUJgD5cl9Yzh8pwYE5v4CwbA//K900c4RS7PQMSIwip+PYDN9vnBwNRw==",
+    "expectHeaders": {
+      "x-amz-checksum-sha512": "t/eDuu2Cl/DbkXRiGE/08I5pwtXl95qUJgD5cl9Yzh8pwYE5v4CwbA//K900c4RS7PQMSIwip+PYDN9vnBwNRw=="
+    },
+    "forbidHeaders": ["x-amz-request-algorithm"]
+  },
+  {
+    "documentation": "MD5 checksum provided by user.",
+    "requestPayload": "Hello world",
+    "checksumAlgorithm": "Md5",
+    "checksumValue": "randomvalue",
+    "expectHeaders": {
+      "x-amz-checksum-md5": "randomvalue"
+    },
+    "forbidHeaders": ["x-amz-request-algorithm"]
+  },
+  {
+    "documentation": "XXHASH64 checksum provided by user.",
+    "requestPayload": "Hello world",
+    "checksumAlgorithm": "XxHash64",
+    "checksumValue": "randomvalue",
+    "expectHeaders": {
+      "x-amz-checksum-xxhash64": "randomvalue"
+    },
+    "forbidHeaders": ["x-amz-request-algorithm"]
+  },
+  {
+    "documentation": "XXHASH3 checksum provided by user.",
+    "requestPayload": "Hello world",
+    "checksumAlgorithm": "XxHash3",
+    "checksumValue": "randomvalue",
+    "expectHeaders": {
+      "x-amz-checksum-xxhash3": "randomvalue"
+    },
+    "forbidHeaders": ["x-amz-request-algorithm"]
+  },
+  {
+    "documentation": "XXHASH128 checksum provided by user.",
+    "requestPayload": "Hello world",
+    "checksumAlgorithm": "XxHash128",
+    "checksumValue": "randomvalue",
+    "expectHeaders": {
+      "x-amz-checksum-xxhash128": "randomvalue"
+    },
+    "forbidHeaders": ["x-amz-request-algorithm"]
+  },
+  {
+    "documentation": "Forwards compatibility, unmodeled checksum provided by user.",
+    "requestPayload": "Hello world",
+    "checksumAlgorithm": "Foo",
+    "checksumValue": "This-is-not-a-real-checksum",
+    "expectHeaders": {
+      "x-amz-checksum-foo": "This-is-not-a-real-checksum"
+    },
+    "forbidHeaders": ["x-amz-request-algorithm"]
+  }
+]

@@ -26,9 +26,7 @@ final class AwsProfile
         public readonly string $name,
         public readonly array $properties,
         public readonly array $subProperties = []
-    )
-    {
-    }
+    ) {}
 
     /**
      * Check whether a property exists. Keys match case-insensitively.
@@ -92,8 +90,7 @@ final class AwsProfile
                 : AwsCredentialSource::PROFILE_SESSION_KEYS;
         }
 
-        if (
-            $this->get('role_arn') !== null
+        if ($this->get('role_arn') !== null
             && (
                 $this->get('source_profile') !== null
                 || $this->get('credential_source') !== null

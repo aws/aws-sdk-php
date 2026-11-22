@@ -54,8 +54,7 @@ final class InstanceProfileProvider implements
     public function __construct(
         ?callable $clientFactory = null,
         private readonly ?int $refreshWindowSeconds = null,
-    )
-    {
+    ) {
         $this->clientFactory = $clientFactory;
     }
 
@@ -227,8 +226,7 @@ final class InstanceProfileProvider implements
 
         $accessKey = $data['AccessKeyId'] ?? null;
         $secretKey = $data['SecretAccessKey'] ?? null;
-        if (
-            !is_string($accessKey)
+        if (!is_string($accessKey)
             || $accessKey === ''
             || !is_string($secretKey)
             || $secretKey === ''
@@ -238,8 +236,7 @@ final class InstanceProfileProvider implements
 
         $sessionToken = isset($data['Token']) && is_string($data['Token']) ? $data['Token'] : null;
         $expiration = null;
-        if (
-            isset($data['Expiration'])
+        if (isset($data['Expiration'])
             && is_string($data['Expiration'])
             && $data['Expiration'] !== ''
         ) {
