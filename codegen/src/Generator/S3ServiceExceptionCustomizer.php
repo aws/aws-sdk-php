@@ -93,7 +93,8 @@ PHP;
                     . '(?: \{\}|\n\{\})$/m',
                 static fn(array $match): string => $match[1]
                     . ' implements AwsExtendedRequestIdInterface'
-                    . self::BODY,
+                    // A CRLF checkout must not leak into generated code.
+                    . \str_replace("\r\n", "\n", self::BODY),
                 $file->content,
                 1,
                 $classCount

@@ -142,6 +142,8 @@ declare(strict_types=1);
 
 return (static function (): \Generator {
 PHP;
+        // A CRLF checkout must not leak into generated code.
+        $source = \str_replace("\r\n", "\n", $source);
 
         foreach ($testCases as $index => $case) {
             $documentation = $case['documentation'] ?? "case {$index}";

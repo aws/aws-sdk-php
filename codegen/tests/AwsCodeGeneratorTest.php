@@ -242,7 +242,11 @@ final class AwsCodeGeneratorTest extends TestCase
 
         self::assertSame(
             $testsOutputDirectory
-                . '/Example/Endpoint/ExampleEndpointConformanceTest.php',
+                . \str_replace(
+                    '/',
+                    \DIRECTORY_SEPARATOR,
+                    '/Example/Endpoint/ExampleEndpointConformanceTest.php'
+                ),
             $this->file(
                 $files,
                 'ExampleEndpointConformanceTest.php'
@@ -250,7 +254,11 @@ final class AwsCodeGeneratorTest extends TestCase
         );
         self::assertSame(
             $testsOutputDirectory
-                . '/Example/Endpoint/fixtures/endpoint-tests.php',
+                . \str_replace(
+                    '/',
+                    \DIRECTORY_SEPARATOR,
+                    '/Example/Endpoint/fixtures/endpoint-tests.php'
+                ),
             $this->file($files, 'endpoint-tests.php')->path
         );
     }
