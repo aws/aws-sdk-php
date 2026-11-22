@@ -21,7 +21,8 @@ use Smithy\Http\Message\Request;
  * Everything known at client build time arrives pre-encoded in `$prefix`,
  * `$suffix`, and `$configIds`. Each request reads a fixed set of request
  * headers, one context key, and the credential chain's last resolved
- * metadata, then looks up the final header in a bounded memo.
+ * metadata, then looks up the final header in a memo that holds one entry
+ * per checksum/waiter combination.
  */
 final class UserAgentInterceptor extends AbstractInterceptor
 {
@@ -29,9 +30,6 @@ final class UserAgentInterceptor extends AbstractInterceptor
     public const WAITER_KEY = 'aws.userAgent.waiter';
 
     public const MAX_METRICS_BYTES = 1024;
-
-    /** Entries kept per memo slot before the slot resets. */
-    public const MEMO_LIMIT = 32;
 
     private const WAITER_ID = 'B';
     private const TRAILER_HEADER = 'x-amz-trailer';
@@ -153,9 +151,6 @@ final class UserAgentInterceptor extends AbstractInterceptor
         $header = $memo[$key] ?? null;
         if ($header === null) {
             $header = $this->build($algorithm, $waiter, $metadata);
-            if (\count($memo) >= self::MEMO_LIMIT) {
-                $memo = [];
-            }
             $memo[$key] = $header;
             if ($metadata === null) {
                 $this->plainMemo = $memo;
