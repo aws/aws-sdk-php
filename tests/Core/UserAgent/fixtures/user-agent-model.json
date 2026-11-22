@@ -1,0 +1,25 @@
+{
+    "smithy": "2.0",
+    "shapes": {
+        "aws.tests#UserAgentService": {
+            "type": "service",
+            "version": "2026-11-22",
+            "operations": [
+                { "target": "aws.tests#Ping" }
+            ],
+            "traits": {
+                "aws.api#service": { "sdkId": "User Agent" },
+                "aws.auth#sigv4": { "name": "useragent" },
+                "aws.protocols#restJson1": {}
+            }
+        },
+        "aws.tests#Ping": {
+            "type": "operation",
+            "input": { "target": "smithy.api#Unit" },
+            "output": { "target": "smithy.api#Unit" },
+            "traits": {
+                "smithy.api#http": { "method": "POST", "uri": "/ping" }
+            }
+        }
+    }
+}

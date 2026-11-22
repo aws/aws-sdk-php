@@ -36,6 +36,34 @@ final class ProfileCredentialProviderTest extends TestCase
         $this->assertSame('AKID', $identity->getAccessKeyId());
     }
 
+    public function testProfileWithoutStaticKeysOrProcessRegistersNothing(): void
+    {
+        $provider = new ProfileCredentialProvider();
+        $setup = new ChainSetup([
+            'aws.profile' => new AwsProfile('p', [
+                'region' => 'us-east-1',
+                'aws_access_key_id' => 'AKID'
+            ])
+        ]);
+        $setup->setCurrentProvider($provider);
+
+        $provider->setup($setup);
+
+        $this->assertSame([], $setup->registrations());
+    }
+
+    public function testRegistrationCarriesOnlyItsOwnFeatureId(): void
+    {
+        $this->assertSame(['n'], $this->registeredFeatureIds([
+            'aws_access_key_id' => 'A',
+            'aws_secret_access_key' => 'S'
+        ]));
+        $this->assertSame(
+            ['v'],
+            $this->registeredFeatureIds(['credential_process' => 'x'])
+        );
+    }
+
     public function testReturnsCredentialsFromCredentialProcessJsonOutput(): void
     {
         $script = $this->makeScript(<<<'PHP'
@@ -199,6 +227,22 @@ PHP);
         $path = sys_get_temp_dir() . '/profile-process-' . bin2hex(random_bytes(6)) . '.php';
         file_put_contents($path, $contents);
         return $path;
+    }
+
+    /**
+     * @param array<string, string> $values
+     * @return list<string>
+     */
+    private function registeredFeatureIds(array $values): array
+    {
+        $provider = new ProfileCredentialProvider();
+        $setup = new ChainSetup([
+            'aws.profile' => new AwsProfile('p', $values)
+        ]);
+        $setup->setCurrentProvider($provider);
+        $provider->setup($setup);
+
+        return $setup->registrations()[0]['metadata']->featureIds;
     }
 
     private function phpCommand(string $script): string
