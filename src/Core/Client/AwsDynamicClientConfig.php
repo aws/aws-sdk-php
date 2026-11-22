@@ -190,8 +190,6 @@ final class AwsDynamicClientConfig extends AbstractAwsClientConfig
             maxAttempts: \array_key_exists('maxAttempts', $overrides)
                 ? $overrides['maxAttempts']
                 : $this->maxAttempts,
-            requestChecksumCalculation: $this->requestChecksumCalculation,
-            responseChecksumValidation: $this->responseChecksumValidation,
             supportsFlexibleChecksums: $this->supportsFlexibleChecksums(),
             retryStrategy: \array_key_exists('retryStrategy', $overrides)
                 ? $overrides['retryStrategy']
