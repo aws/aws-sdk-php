@@ -166,8 +166,7 @@ final class ContainerCredentialProvider implements
 
         $accessKey = $data['AccessKeyId'] ?? null;
         $secretKey = $data['SecretAccessKey'] ?? null;
-        if (
-            !\is_string($accessKey)
+        if (!\is_string($accessKey)
             || $accessKey === ''
             || !\is_string($secretKey)
             || $secretKey === ''
@@ -186,8 +185,7 @@ final class ContainerCredentialProvider implements
             ? $data['AccountId']
             : null;
         $expiration = null;
-        if (
-            isset($data['Expiration'])
+        if (isset($data['Expiration'])
             && \is_string($data['Expiration'])
             && $data['Expiration'] !== ''
         ) {

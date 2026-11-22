@@ -81,8 +81,7 @@ final class AwsDynamicClientConfig extends AbstractAwsClientConfig
             $region,
             $context
         );
-        if (
-            $enableSigV4
+        if ($enableSigV4
             && !self::containsSigV4($supportedAuthSchemes)
         ) {
             $supportedAuthSchemes[] = new SigV4AuthScheme(
