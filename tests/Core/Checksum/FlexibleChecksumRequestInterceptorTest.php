@@ -99,6 +99,27 @@ final class FlexibleChecksumRequestInterceptorTest extends TestCase
         );
     }
 
+    public function testResolvesModeledRequestAlgorithmMetadata(): void
+    {
+        $operation = $this->client->operation('StreamingChecksum');
+        $updated = $this->intercept(
+            RequestChecksumCalculation::WHEN_SUPPORTED,
+            $operation,
+            $operation->createInputFromValue(['ChecksumAlgorithm' => 'SHA256']),
+            new Request(
+                'PUT',
+                'https://example.test/bucket/key',
+                [],
+                'Hello world'
+            )
+        );
+
+        $this->assertSame(
+            \base64_encode(\hash('sha256', 'Hello world', true)),
+            $updated->getHeaderLine('x-amz-checksum-sha256')
+        );
+    }
+
     public function testWhenRequiredSkipsOptionalChecksum(): void
     {
         $request = new Request(

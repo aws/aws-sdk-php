@@ -1,0 +1,57 @@
+[
+    {
+        "documentation": "Successful payload validation with CRC32 composite checksum.",
+        "responsePayload": "Hello world",
+        "checksumAlgorithm": "Crc32",
+        "responseHeaders": {
+            "x-amz-checksum-crc32": "rand-5"
+        },
+        "expect": {
+            "kind": "success"
+        }
+    },
+    {
+        "documentation": "Successful payload validation with CRC32C composite checksum.",
+        "responsePayload": "Hello world",
+        "checksumAlgorithm": "Crc32C",
+        "responseHeaders": {
+            "x-amz-checksum-crc32c": "rand-6"
+        },
+        "expect": {
+            "kind": "success"
+        }
+    },
+    {
+        "documentation": "Successful payload validation with CRC64NVME composite checksum.",
+        "responsePayload": "Hello world",
+        "checksumAlgorithm": "Crc64Nvme",
+        "responseHeaders": {
+            "x-amz-checksum-crc64nvme": "rand-8"
+        },
+        "expect": {
+            "kind": "success"
+        }
+    },
+    {
+        "documentation": "Successful payload validation with SHA1 composite checksum.",
+        "responsePayload": "Hello world",
+        "checksumAlgorithm": "Sha1",
+        "responseHeaders": {
+            "x-amz-checksum-sha1": "rand-9"
+        },
+        "expect": {
+            "kind": "success"
+        }
+    },
+    {
+        "documentation": "Successful payload validation with SHA256 composite checksum.",
+        "responsePayload": "Hello world",
+        "checksumAlgorithm": "Sha256",
+        "responseHeaders": {
+            "x-amz-checksum-sha256": "rand-10"
+        },
+        "expect": {
+            "kind": "success"
+        }
+    }
+]

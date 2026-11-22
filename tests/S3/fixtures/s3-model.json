@@ -1,0 +1,160 @@
+{
+    "smithy": "2.0",
+    "shapes": {
+        "aws.tests#S3": {
+            "type": "service",
+            "version": "2006-03-01",
+            "operations": [
+                {
+                    "target": "aws.tests#HeadObject"
+                },
+                {
+                    "target": "aws.tests#GetObject"
+                },
+                {
+                    "target": "aws.tests#ListObjectsV2"
+                },
+                {
+                    "target": "aws.tests#DeleteObjects"
+                },
+                {
+                    "target": "aws.tests#GetBucketPolicy"
+                }
+            ],
+            "traits": {
+                "aws.protocols#restXml": {}
+            }
+        },
+        "aws.tests#HeadObject": {
+            "type": "operation",
+            "input": {
+                "target": "smithy.api#Unit"
+            },
+            "output": {
+                "target": "smithy.api#Unit"
+            },
+            "traits": {
+                "smithy.api#http": {
+                    "method": "HEAD",
+                    "uri": "/bucket/key"
+                }
+            }
+        },
+        "aws.tests#GetObject": {
+            "type": "operation",
+            "input": {
+                "target": "smithy.api#Unit"
+            },
+            "output": {
+                "target": "aws.tests#GetObjectOutput"
+            },
+            "traits": {
+                "smithy.api#http": {
+                    "method": "GET",
+                    "uri": "/bucket/key"
+                }
+            }
+        },
+        "aws.tests#ListObjectsV2": {
+            "type": "operation",
+            "input": {
+                "target": "smithy.api#Unit"
+            },
+            "output": {
+                "target": "aws.tests#ListObjectsV2Output"
+            },
+            "traits": {
+                "smithy.api#http": {
+                    "method": "GET",
+                    "uri": "/bucket"
+                }
+            }
+        },
+        "aws.tests#DeleteObjects": {
+            "type": "operation",
+            "input": {
+                "target": "smithy.api#Unit"
+            },
+            "output": {
+                "target": "aws.tests#DeleteObjectsOutput"
+            },
+            "traits": {
+                "smithy.api#http": {
+                    "method": "POST",
+                    "uri": "/bucket?delete"
+                }
+            }
+        },
+        "aws.tests#GetBucketPolicy": {
+            "type": "operation",
+            "input": {
+                "target": "smithy.api#Unit"
+            },
+            "output": {
+                "target": "aws.tests#GetBucketPolicyOutput"
+            },
+            "traits": {
+                "smithy.api#http": {
+                    "method": "GET",
+                    "uri": "/bucket?policy"
+                }
+            }
+        },
+        "aws.tests#GetObjectOutput": {
+            "type": "structure",
+            "members": {
+                "Body": {
+                    "target": "aws.tests#StreamingBlob",
+                    "traits": {
+                        "smithy.api#httpPayload": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
+        "aws.tests#ListObjectsV2Output": {
+            "type": "structure",
+            "members": {
+                "Name": {
+                    "target": "smithy.api#String"
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
+        "aws.tests#DeleteObjectsOutput": {
+            "type": "structure",
+            "members": {
+                "Deleted": {
+                    "target": "smithy.api#String"
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
+        "aws.tests#GetBucketPolicyOutput": {
+            "type": "structure",
+            "members": {
+                "Policy": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#httpPayload": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
+        "aws.tests#StreamingBlob": {
+            "type": "blob",
+            "traits": {
+                "smithy.api#streaming": {}
+            }
+        }
+    }
+}
