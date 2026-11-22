@@ -4,7 +4,7 @@ LINT_JOBS ?= 8
 
 .DEFAULT_GOAL := help
 
-.PHONY: help install autoload test lint static-analysis check clean
+.PHONY: help install autoload test lint static-analysis license-check check clean
 .NOTPARALLEL: check
 
 help: ## List available targets
@@ -35,10 +35,14 @@ lint: ## Check PHP syntax
 static-analysis: ## Run PHPStan
 	$(COMPOSER) static-analysis $(if $(ARGS),-- $(ARGS))
 
+license-check: ## Check source license headers
+	$(PHP) tools/check-license-headers.php
+
 check: ## Run checks used by CI
 	$(MAKE) lint
 	$(MAKE) static-analysis ARGS=
 	$(MAKE) test ARGS=
+	$(MAKE) license-check
 
 clean: ## Remove generated build and test artifacts
 	rm -rf build .phpunit.cache

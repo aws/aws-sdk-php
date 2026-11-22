@@ -28,6 +28,7 @@
     },
     "scripts": {
         "test": "phpunit",
+        "license:check": "php tools/check-license-headers.php",
         "static-analysis": "sh -c 'if find src codegen/src -type f -name \"*.php\" 2>/dev/null | grep -q .; then phpstan analyse --no-progress; else echo \"static-analysis: no PHP source yet; skipping.\"; fi'"
     },
     "repositories": [
