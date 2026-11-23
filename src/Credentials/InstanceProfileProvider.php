@@ -279,7 +279,9 @@ class InstanceProfileProvider
                 }
                 $msg = $reason->getMessage();
                 throw new CredentialsException(
-                    $this->createErrorMessage($msg)
+                    $this->createErrorMessage($msg),
+                    0,
+                    $reason
                 );
             });
     }
@@ -299,7 +301,7 @@ class InstanceProfileProvider
         if ($isRetryable && $this->attempts < $this->retries) {
             sleep((int) pow(1.2, $this->attempts));
         } else {
-            throw new CredentialsException($message);
+            throw new CredentialsException($message, 0, $e);
         }
     }
 

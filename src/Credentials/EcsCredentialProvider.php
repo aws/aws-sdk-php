@@ -127,7 +127,9 @@ class EcsCredentialProvider
                         } else {
                             $msg = $exception instanceof \Throwable ? $exception->getMessage() : \Aws\describe_type($reason);
                             throw new CredentialsException(
-                                sprintf('Error retrieving credentials from container metadata after attempt %d/%d (%s)', $this->attempts, $this->retries, $msg)
+                                sprintf('Error retrieving credentials from container metadata after attempt %d/%d (%s)', $this->attempts, $this->retries, $msg),
+                                0,
+                                $exception instanceof \Throwable ? $exception : null
                             );
                         }
                     }));
