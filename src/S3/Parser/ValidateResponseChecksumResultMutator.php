@@ -296,8 +296,8 @@ final class ValidateResponseChecksumResultMutator implements S3ResultMutator
         $endOfChecksum = substr($headerValue, $lastDashPos + 1);
 
         return is_numeric($endOfChecksum)
-            && (int) $endOfChecksum > 1
-            && (int) $endOfChecksum < 10000;
+            && (int) $endOfChecksum >= 1
+            && (int) $endOfChecksum <= 10000;
     }
 
     /**
