@@ -28,15 +28,6 @@
     },
     "conditions": [
         {
-            "fn": "booleanEquals",
-            "argv": [
-                {
-                    "ref": "UseFIPS"
-                },
-                true
-            ]
-        },
-        {
             "fn": "isSet",
             "argv": [
                 {
@@ -127,6 +118,30 @@
             ]
         },
         {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "parsedArn"
+                        },
+                        "partition"
+                    ]
+                },
+                "aws-eusc"
+            ]
+        },
+        {
+            "fn": "booleanEquals",
+            "argv": [
+                {
+                    "ref": "UseFIPS"
+                },
+                true
+            ]
+        },
+        {
             "fn": "isSet",
             "argv": [
                 {
@@ -211,6 +226,11 @@
         },
         {
             "conditions": [],
+            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+            "type": "error"
+        },
+        {
+            "conditions": [],
             "endpoint": {
                 "url": "https://{parsedArn#accountId}.cloudfront-kvs.global.api.aws",
                 "properties": {
@@ -231,6 +251,35 @@
         {
             "conditions": [],
             "error": "Client was configured for partition `{partitionResult#name}` but Kvs ARN has `{parsedArn#partition}`",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "error": "A valid partition could not be determined",
+            "type": "error"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://{parsedArn#accountId}.cloudfront-kvs.global.api.amazonwebservices.eu",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4a",
+                            "signingName": "cloudfront-keyvaluestore",
+                            "signingRegionSet": [
+                                "*"
+                            ]
+                        }
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "error": "Invalid Configuration: FIPS is not supported with CloudFront-KeyValueStore.",
             "type": "error"
         },
         {
@@ -267,14 +316,9 @@
             "conditions": [],
             "error": "KVS ARN must be provided to use this service",
             "type": "error"
-        },
-        {
-            "conditions": [],
-            "error": "Invalid Configuration: FIPS is not supported with CloudFront-KeyValueStore.",
-            "type": "error"
         }
     ],
     "root": 2,
-    "nodeCount": 15,
-    "nodes": "/////wAAAAH/////AAAAAAX14QwAAAADAAAAAQAAAAQF9eELAAAAAgAAAAUF9eEKAAAAAwAAAAYF9eEJAAAABAAAAAcF9eEIAAAABQAAAAgF9eEHAAAABgX14QcAAAAJAAAABwAAAAoF9eEGAAAACAAAAAsF9eEFAAAACQAAAAwAAAAOAAAACgAAAA0AAAAOAAAACwAAAA4F9eEEAAAADAAAAA8F9eEDAAAADQX14QEF9eEC"
+    "nodeCount": 25,
+    "nodes": "/////wAAAAH/////AAAAAAAAAAMF9eEPAAAAAQAAAAQF9eEOAAAAAgAAAAUF9eENAAAAAwAAAAYF9eEMAAAABAAAAAcF9eELAAAABQX14QsAAAAIAAAABgAAAAkF9eEKAAAABwAAABAAAAAKAAAACAAAAAsF9eEJAAAACQX14QgAAAAMAAAACgAAAA0AAAAPAAAACwAAAA4F9eEGAAAADAAAAA8F9eEFAAAADQAAABUF9eEHAAAACQAAABYAAAARAAAACgAAABIAAAAUAAAACwAAABMF9eEGAAAADAAAABQF9eEFAAAADQAAABUF9eEEAAAADgX14QEF9eECAAAACgAAABcAAAAZAAAACwAAABgF9eEGAAAADAAAABkF9eEFAAAADQX14QMF9eEE"
 }

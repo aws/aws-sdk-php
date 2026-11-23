@@ -153,7 +153,7 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \Aws\Result createIntegration(array $args = [])
  * @phpstan-method \Aws\Result createIntegration(array{
- *     integrationType?: 'AWS_CONFIG_SLREC'|'AWS_INTEGRATION'|'EXTERNAL_AGENT'|'SLACK',
+ *     integrationType?: 'AWS_CONFIG_AZURE_SLREC'|'AWS_CONFIG_SLREC'|'AWS_INTEGRATION'|'EXTERNAL_AGENT'|'SLACK',
  *     name?: string,
  *     credential?: array{
  *         oauthCodeCredential?: array{authCode?: string, ...},
@@ -169,7 +169,7 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createIntegrationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise createIntegrationAsync(array{
- *     integrationType?: 'AWS_CONFIG_SLREC'|'AWS_INTEGRATION'|'EXTERNAL_AGENT'|'SLACK',
+ *     integrationType?: 'AWS_CONFIG_AZURE_SLREC'|'AWS_CONFIG_SLREC'|'AWS_INTEGRATION'|'EXTERNAL_AGENT'|'SLACK',
  *     name?: string,
  *     credential?: array{
  *         oauthCodeCredential?: array{authCode?: string, ...},
@@ -521,7 +521,7 @@ use Aws\AwsClient;
  * @phpstan-method \GuzzleHttp\Promise\Promise listDomainsAsync(array{nextToken?: string, maxResults?: int, ...} $args = [])
  * @method \Aws\Result listIntegrations(array $args = [])
  * @phpstan-method \Aws\Result listIntegrations(array{
- *     integrationType?: 'AWS_CONFIG_SLREC'|'AWS_INTEGRATION'|'EXTERNAL_AGENT'|'SLACK',
+ *     integrationType?: 'AWS_CONFIG_AZURE_SLREC'|'AWS_CONFIG_SLREC'|'AWS_INTEGRATION'|'EXTERNAL_AGENT'|'SLACK',
  *     status?: 'ACTIVE'|'DELETED'|'ERROR'|'FAILED'|'PENDING'|'PENDING_OAUTH',
  *     name?: string,
  *     nextToken?: string,
@@ -530,7 +530,7 @@ use Aws\AwsClient;
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listIntegrationsAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listIntegrationsAsync(array{
- *     integrationType?: 'AWS_CONFIG_SLREC'|'AWS_INTEGRATION'|'EXTERNAL_AGENT'|'SLACK',
+ *     integrationType?: 'AWS_CONFIG_AZURE_SLREC'|'AWS_CONFIG_SLREC'|'AWS_INTEGRATION'|'EXTERNAL_AGENT'|'SLACK',
  *     status?: 'ACTIVE'|'DELETED'|'ERROR'|'FAILED'|'PENDING'|'PENDING_OAUTH',
  *     name?: string,
  *     nextToken?: string,

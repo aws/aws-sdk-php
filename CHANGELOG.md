@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Validates response checksums against the raw body of `Content-Encoding` encoded objects, then inflates gzip and deflate bodies for callers.
+* `Aws\S3` - Skips `GetObject` response checksum validation for composite multipart checksums of objects with 1 or 10000 parts, which previously failed with a checksum mismatch.
+* `Aws\CloudFront` - Launch CloudFront in AWS European Sovereign Cloud.
+* `Aws\CloudWatchOmni` - Release of the new integration type in CreateIntegration API - Used to add Microsoft Azure resources to the Amazon CloudWatch Omni context graph through an AWS Config connector for your Azure tenant.
+* `Aws\FSx` - Adds support for new FSx for NetApp ONTAP resources
+* `Aws\CloudFrontKeyValueStore` - This release adds support for KVSHQ API in the AWS European Sovereign Cloud. Requests for key value stores in the aws-eusc partition are now routed to account-based endpoints under cloudfront-kvs.global.api.amazonwebservices.eu.
+
 ## 3.407.1 - 2026-11-21
 
 * `Aws\SageMaker` - Amazon SageMaker AI adds APIs to view capacity reservations and their usage.

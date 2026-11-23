@@ -95,6 +95,30 @@ use Aws\AwsClient;
  *     VolumeId?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createClusterPeer(array $args = [])
+ * @phpstan-method \Aws\Result createClusterPeer(array{
+ *     ClientRequestToken?: string,
+ *     FileSystemId?: string,
+ *     PeerAddresses?: list<string>,
+ *     PassphraseSecretArn?: string,
+ *     PeerClusterName?: string,
+ *     AllowedSvmMode?: 'ALL'|'NONE'|'SPECIFIED',
+ *     AllowedSvmIds?: list<string>,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createClusterPeerAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createClusterPeerAsync(array{
+ *     ClientRequestToken?: string,
+ *     FileSystemId?: string,
+ *     PeerAddresses?: list<string>,
+ *     PassphraseSecretArn?: string,
+ *     PeerClusterName?: string,
+ *     AllowedSvmMode?: 'ALL'|'NONE'|'SPECIFIED',
+ *     AllowedSvmIds?: list<string>,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createDataRepositoryAssociation(array $args = [])
  * @phpstan-method \Aws\Result createDataRepositoryAssociation(array{
  *     FileSystemId?: string,
@@ -597,12 +621,68 @@ use Aws\AwsClient;
  *     NetworkType?: 'DUAL'|'IPV4',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createSnapmirrorPolicy(array $args = [])
+ * @phpstan-method \Aws\Result createSnapmirrorPolicy(array{
+ *     ClientRequestToken?: string,
+ *     FileSystemId?: string,
+ *     StorageVirtualMachineId?: string,
+ *     Name?: string,
+ *     SnapshotCopyMode?: 'COPY_ALL_SOURCE_SNAPSHOTS'|'COPY_LATEST_SOURCE_SNAPSHOT'|'NO_CREATE_SNAPSHOT_ON_SOURCE',
+ *     RetentionRules?: list<array{Label?: string, Count?: int, CreationSchedule?: string, ...}>,
+ *     TransferSchedule?: string,
+ *     NetworkCompressionEnabled?: bool,
+ *     ThrottleInKbps?: int,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createSnapmirrorPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createSnapmirrorPolicyAsync(array{
+ *     ClientRequestToken?: string,
+ *     FileSystemId?: string,
+ *     StorageVirtualMachineId?: string,
+ *     Name?: string,
+ *     SnapshotCopyMode?: 'COPY_ALL_SOURCE_SNAPSHOTS'|'COPY_LATEST_SOURCE_SNAPSHOT'|'NO_CREATE_SNAPSHOT_ON_SOURCE',
+ *     RetentionRules?: list<array{Label?: string, Count?: int, CreationSchedule?: string, ...}>,
+ *     TransferSchedule?: string,
+ *     NetworkCompressionEnabled?: bool,
+ *     ThrottleInKbps?: int,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createSnapmirrorRelationship(array $args = [])
+ * @phpstan-method \Aws\Result createSnapmirrorRelationship(array{
+ *     ClientRequestToken?: string,
+ *     Source?: array{Path?: string, ...},
+ *     Destination?: array{VolumeId?: string, ...},
+ *     PolicyId?: string,
+ *     TransferSchedule?: string,
+ *     ThrottleInKbps?: int,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createSnapmirrorRelationshipAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createSnapmirrorRelationshipAsync(array{
+ *     ClientRequestToken?: string,
+ *     Source?: array{Path?: string, ...},
+ *     Destination?: array{VolumeId?: string, ...},
+ *     PolicyId?: string,
+ *     TransferSchedule?: string,
+ *     ThrottleInKbps?: int,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createSnapshot(array $args = [])
  * @phpstan-method \Aws\Result createSnapshot(array{
  *     ClientRequestToken?: string,
  *     Name?: string,
  *     VolumeId?: string,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     OntapConfiguration?: array{
+ *         SnapmirrorLabel?: string,
+ *         ExpiryTime?: int|string|\DateTimeInterface,
+ *         SnaplockExpiryTime?: int|string|\DateTimeInterface,
+ *         ...,
+ *     },
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createSnapshotAsync(array $args = [])
@@ -610,6 +690,34 @@ use Aws\AwsClient;
  *     ClientRequestToken?: string,
  *     Name?: string,
  *     VolumeId?: string,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     OntapConfiguration?: array{
+ *         SnapmirrorLabel?: string,
+ *         ExpiryTime?: int|string|\DateTimeInterface,
+ *         SnaplockExpiryTime?: int|string|\DateTimeInterface,
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result createSnapshotPolicy(array $args = [])
+ * @phpstan-method \Aws\Result createSnapshotPolicy(array{
+ *     ClientRequestToken?: string,
+ *     FileSystemId?: string,
+ *     StorageVirtualMachineId?: string,
+ *     Name?: string,
+ *     Enabled?: bool,
+ *     Schedules?: list<array{Name?: string, Count?: int, Prefix?: string, SnapmirrorLabel?: string, RetentionPeriod?: array, ...}>,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createSnapshotPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createSnapshotPolicyAsync(array{
+ *     ClientRequestToken?: string,
+ *     FileSystemId?: string,
+ *     StorageVirtualMachineId?: string,
+ *     Name?: string,
+ *     Enabled?: bool,
+ *     Schedules?: list<array{Name?: string, Count?: int, Prefix?: string, SnapmirrorLabel?: string, RetentionPeriod?: array, ...}>,
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
  *     ...,
  * } $args = [])
@@ -661,6 +769,28 @@ use Aws\AwsClient;
  *     RootVolumeSecurityStyle?: 'MIXED'|'NTFS'|'UNIX',
  *     ...,
  * } $args = [])
+ * @method \Aws\Result createStorageVirtualMachinePeer(array $args = [])
+ * @phpstan-method \Aws\Result createStorageVirtualMachinePeer(array{
+ *     ClientRequestToken?: string,
+ *     StorageVirtualMachineId?: string,
+ *     PeerSvmName?: string,
+ *     PeerClusterName?: string,
+ *     Applications?: list<'FILE_COPY'|'FLEXCACHE'|'LUN_COPY'|'SNAPMIRROR'>,
+ *     PeerSvmAlias?: string,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise createStorageVirtualMachinePeerAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise createStorageVirtualMachinePeerAsync(array{
+ *     ClientRequestToken?: string,
+ *     StorageVirtualMachineId?: string,
+ *     PeerSvmName?: string,
+ *     PeerClusterName?: string,
+ *     Applications?: list<'FILE_COPY'|'FLEXCACHE'|'LUN_COPY'|'SNAPMIRROR'>,
+ *     PeerSvmAlias?: string,
+ *     Tags?: list<array{Key?: string, Value?: string, ...}>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result createVolume(array $args = [])
  * @phpstan-method \Aws\Result createVolume(array{
  *     ClientRequestToken?: string,
@@ -688,6 +818,7 @@ use Aws\AwsClient;
  *         VolumeStyle?: 'FLEXGROUP'|'FLEXVOL',
  *         AggregateConfiguration?: array{Aggregates?: list<string>, ConstituentsPerAggregate?: int, ...},
  *         SizeInBytes?: int,
+ *         CloneConfiguration?: array{ParentVolumeId?: string, SnapshotId?: string, ...},
  *         ...,
  *     },
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
@@ -733,6 +864,7 @@ use Aws\AwsClient;
  *         VolumeStyle?: 'FLEXGROUP'|'FLEXVOL',
  *         AggregateConfiguration?: array{Aggregates?: list<string>, ConstituentsPerAggregate?: int, ...},
  *         SizeInBytes?: int,
+ *         CloneConfiguration?: array{ParentVolumeId?: string, SnapshotId?: string, ...},
  *         ...,
  *     },
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
@@ -778,6 +910,7 @@ use Aws\AwsClient;
  *         VolumeStyle?: 'FLEXGROUP'|'FLEXVOL',
  *         AggregateConfiguration?: array{Aggregates?: list<string>, ConstituentsPerAggregate?: int, ...},
  *         SizeInBytes?: int,
+ *         CloneConfiguration?: array{ParentVolumeId?: string, SnapshotId?: string, ...},
  *         ...,
  *     },
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
@@ -810,6 +943,7 @@ use Aws\AwsClient;
  *         VolumeStyle?: 'FLEXGROUP'|'FLEXVOL',
  *         AggregateConfiguration?: array{Aggregates?: list<string>, ConstituentsPerAggregate?: int, ...},
  *         SizeInBytes?: int,
+ *         CloneConfiguration?: array{ParentVolumeId?: string, SnapshotId?: string, ...},
  *         ...,
  *     },
  *     Tags?: list<array{Key?: string, Value?: string, ...}>,
@@ -819,6 +953,10 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result deleteBackup(array{BackupId?: string, ClientRequestToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBackupAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteBackupAsync(array{BackupId?: string, ClientRequestToken?: string, ...} $args = [])
+ * @method \Aws\Result deleteClusterPeer(array $args = [])
+ * @phpstan-method \Aws\Result deleteClusterPeer(array{ClientRequestToken?: string, ClusterPeerId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteClusterPeerAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteClusterPeerAsync(array{ClientRequestToken?: string, ClusterPeerId?: string, ...} $args = [])
  * @method \Aws\Result deleteDataRepositoryAssociation(array $args = [])
  * @phpstan-method \Aws\Result deleteDataRepositoryAssociation(array{AssociationId?: string, ClientRequestToken?: string, DeleteDataInFileSystem?: bool, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteDataRepositoryAssociationAsync(array $args = [])
@@ -855,14 +993,30 @@ use Aws\AwsClient;
  *     },
  *     ...,
  * } $args = [])
+ * @method \Aws\Result deleteSnapmirrorPolicy(array $args = [])
+ * @phpstan-method \Aws\Result deleteSnapmirrorPolicy(array{ClientRequestToken?: string, SnapmirrorPolicyId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteSnapmirrorPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteSnapmirrorPolicyAsync(array{ClientRequestToken?: string, SnapmirrorPolicyId?: string, ...} $args = [])
+ * @method \Aws\Result deleteSnapmirrorRelationship(array $args = [])
+ * @phpstan-method \Aws\Result deleteSnapmirrorRelationship(array{ClientRequestToken?: string, SnapmirrorRelationshipId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteSnapmirrorRelationshipAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteSnapmirrorRelationshipAsync(array{ClientRequestToken?: string, SnapmirrorRelationshipId?: string, ...} $args = [])
  * @method \Aws\Result deleteSnapshot(array $args = [])
  * @phpstan-method \Aws\Result deleteSnapshot(array{ClientRequestToken?: string, SnapshotId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteSnapshotAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteSnapshotAsync(array{ClientRequestToken?: string, SnapshotId?: string, ...} $args = [])
+ * @method \Aws\Result deleteSnapshotPolicy(array $args = [])
+ * @phpstan-method \Aws\Result deleteSnapshotPolicy(array{ClientRequestToken?: string, SnapshotPolicyId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteSnapshotPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteSnapshotPolicyAsync(array{ClientRequestToken?: string, SnapshotPolicyId?: string, ...} $args = [])
  * @method \Aws\Result deleteStorageVirtualMachine(array $args = [])
  * @phpstan-method \Aws\Result deleteStorageVirtualMachine(array{ClientRequestToken?: string, StorageVirtualMachineId?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteStorageVirtualMachineAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise deleteStorageVirtualMachineAsync(array{ClientRequestToken?: string, StorageVirtualMachineId?: string, ...} $args = [])
+ * @method \Aws\Result deleteStorageVirtualMachinePeer(array $args = [])
+ * @phpstan-method \Aws\Result deleteStorageVirtualMachinePeer(array{ClientRequestToken?: string, StorageVirtualMachinePeerId?: string, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteStorageVirtualMachinePeerAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise deleteStorageVirtualMachinePeerAsync(array{ClientRequestToken?: string, StorageVirtualMachinePeerId?: string, ...} $args = [])
  * @method \Aws\Result deleteVolume(array $args = [])
  * @phpstan-method \Aws\Result deleteVolume(array{
  *     ClientRequestToken?: string,
@@ -899,6 +1053,22 @@ use Aws\AwsClient;
  *         Values?: list<string>,
  *         ...,
  *     }>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result describeClusterPeers(array $args = [])
+ * @phpstan-method \Aws\Result describeClusterPeers(array{
+ *     ClusterPeerIds?: list<string>,
+ *     Filters?: list<array{Name?: 'file-system-id', Values?: list<string>, ...}>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeClusterPeersAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeClusterPeersAsync(array{
+ *     ClusterPeerIds?: list<string>,
+ *     Filters?: list<array{Name?: 'file-system-id', Values?: list<string>, ...}>,
  *     MaxResults?: int,
  *     NextToken?: string,
  *     ...,
@@ -983,6 +1153,54 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result describeSharedVpcConfiguration(array{...} $args = [])
  * @method \GuzzleHttp\Promise\Promise describeSharedVpcConfigurationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise describeSharedVpcConfigurationAsync(array{...} $args = [])
+ * @method \Aws\Result describeSnapmirrorPolicies(array $args = [])
+ * @phpstan-method \Aws\Result describeSnapmirrorPolicies(array{
+ *     SnapmirrorPolicyIds?: list<string>,
+ *     Filters?: list<array{Name?: 'file-system-id'|'storage-virtual-machine-id', Values?: list<string>, ...}>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeSnapmirrorPoliciesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeSnapmirrorPoliciesAsync(array{
+ *     SnapmirrorPolicyIds?: list<string>,
+ *     Filters?: list<array{Name?: 'file-system-id'|'storage-virtual-machine-id', Values?: list<string>, ...}>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result describeSnapmirrorRelationships(array $args = [])
+ * @phpstan-method \Aws\Result describeSnapmirrorRelationships(array{
+ *     SnapmirrorRelationshipIds?: list<string>,
+ *     Filters?: list<array{Name?: 'destination-volume-id'|'file-system-id', Values?: list<string>, ...}>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeSnapmirrorRelationshipsAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeSnapmirrorRelationshipsAsync(array{
+ *     SnapmirrorRelationshipIds?: list<string>,
+ *     Filters?: list<array{Name?: 'destination-volume-id'|'file-system-id', Values?: list<string>, ...}>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result describeSnapshotPolicies(array $args = [])
+ * @phpstan-method \Aws\Result describeSnapshotPolicies(array{
+ *     SnapshotPolicyIds?: list<string>,
+ *     Filters?: list<array{Name?: 'file-system-id'|'storage-virtual-machine-id', Values?: list<string>, ...}>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeSnapshotPoliciesAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeSnapshotPoliciesAsync(array{
+ *     SnapshotPolicyIds?: list<string>,
+ *     Filters?: list<array{Name?: 'file-system-id'|'storage-virtual-machine-id', Values?: list<string>, ...}>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result describeSnapshots(array $args = [])
  * @phpstan-method \Aws\Result describeSnapshots(array{
  *     SnapshotIds?: list<string>,
@@ -999,6 +1217,22 @@ use Aws\AwsClient;
  *     MaxResults?: int,
  *     NextToken?: string,
  *     IncludeShared?: bool,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result describeStorageVirtualMachinePeers(array $args = [])
+ * @phpstan-method \Aws\Result describeStorageVirtualMachinePeers(array{
+ *     StorageVirtualMachinePeerIds?: list<string>,
+ *     Filters?: list<array{Name?: 'file-system-id'|'storage-virtual-machine-id', Values?: list<string>, ...}>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeStorageVirtualMachinePeersAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise describeStorageVirtualMachinePeersAsync(array{
+ *     StorageVirtualMachinePeerIds?: list<string>,
+ *     Filters?: list<array{Name?: 'file-system-id'|'storage-virtual-machine-id', Values?: list<string>, ...}>,
+ *     MaxResults?: int,
+ *     NextToken?: string,
  *     ...,
  * } $args = [])
  * @method \Aws\Result describeStorageVirtualMachines(array $args = [])
@@ -1077,6 +1311,22 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result untagResource(array{ResourceARN?: string, TagKeys?: list<string>, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise untagResourceAsync(array{ResourceARN?: string, TagKeys?: list<string>, ...} $args = [])
+ * @method \Aws\Result updateClusterPeer(array $args = [])
+ * @phpstan-method \Aws\Result updateClusterPeer(array{
+ *     ClientRequestToken?: string,
+ *     ClusterPeerId?: string,
+ *     PeerClusterName?: string,
+ *     PeerAddresses?: list<string>,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateClusterPeerAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateClusterPeerAsync(array{
+ *     ClientRequestToken?: string,
+ *     ClusterPeerId?: string,
+ *     PeerClusterName?: string,
+ *     PeerAddresses?: list<string>,
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateDataRepositoryAssociation(array $args = [])
  * @phpstan-method \Aws\Result updateDataRepositoryAssociation(array{
  *     AssociationId?: string,
@@ -1273,10 +1523,76 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateSharedVpcConfiguration(array{EnableFsxRouteTableUpdatesFromParticipantAccounts?: string, ClientRequestToken?: string, ...} $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSharedVpcConfigurationAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateSharedVpcConfigurationAsync(array{EnableFsxRouteTableUpdatesFromParticipantAccounts?: string, ClientRequestToken?: string, ...} $args = [])
+ * @method \Aws\Result updateSnapmirrorPolicy(array $args = [])
+ * @phpstan-method \Aws\Result updateSnapmirrorPolicy(array{
+ *     ClientRequestToken?: string,
+ *     SnapmirrorPolicyId?: string,
+ *     RetentionRules?: list<array{Label?: string, Count?: int, CreationSchedule?: string, ...}>,
+ *     TransferSchedule?: string,
+ *     NetworkCompressionEnabled?: bool,
+ *     ThrottleInKbps?: int,
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateSnapmirrorPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateSnapmirrorPolicyAsync(array{
+ *     ClientRequestToken?: string,
+ *     SnapmirrorPolicyId?: string,
+ *     RetentionRules?: list<array{Label?: string, Count?: int, CreationSchedule?: string, ...}>,
+ *     TransferSchedule?: string,
+ *     NetworkCompressionEnabled?: bool,
+ *     ThrottleInKbps?: int,
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateSnapmirrorRelationship(array $args = [])
+ * @phpstan-method \Aws\Result updateSnapmirrorRelationship(array{
+ *     ClientRequestToken?: string,
+ *     SnapmirrorRelationshipId?: string,
+ *     PolicyId?: string,
+ *     TransferSchedule?: string,
+ *     ThrottleInKbps?: int,
+ *     State?: 'BROKEN_OFF'|'PAUSED'|'SNAPMIRRORED',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateSnapmirrorRelationshipAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateSnapmirrorRelationshipAsync(array{
+ *     ClientRequestToken?: string,
+ *     SnapmirrorRelationshipId?: string,
+ *     PolicyId?: string,
+ *     TransferSchedule?: string,
+ *     ThrottleInKbps?: int,
+ *     State?: 'BROKEN_OFF'|'PAUSED'|'SNAPMIRRORED',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateSnapshot(array $args = [])
- * @phpstan-method \Aws\Result updateSnapshot(array{ClientRequestToken?: string, Name?: string, SnapshotId?: string, ...} $args = [])
+ * @phpstan-method \Aws\Result updateSnapshot(array{
+ *     ClientRequestToken?: string,
+ *     Name?: string,
+ *     SnapshotId?: string,
+ *     OntapConfiguration?: array{
+ *         SnapmirrorLabel?: string,
+ *         ExpiryTime?: int|string|\DateTimeInterface,
+ *         SnaplockExpiryTime?: int|string|\DateTimeInterface,
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSnapshotAsync(array $args = [])
- * @phpstan-method \GuzzleHttp\Promise\Promise updateSnapshotAsync(array{ClientRequestToken?: string, Name?: string, SnapshotId?: string, ...} $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateSnapshotAsync(array{
+ *     ClientRequestToken?: string,
+ *     Name?: string,
+ *     SnapshotId?: string,
+ *     OntapConfiguration?: array{
+ *         SnapmirrorLabel?: string,
+ *         ExpiryTime?: int|string|\DateTimeInterface,
+ *         SnaplockExpiryTime?: int|string|\DateTimeInterface,
+ *         ...,
+ *     },
+ *     ...,
+ * } $args = [])
+ * @method \Aws\Result updateSnapshotPolicy(array $args = [])
+ * @phpstan-method \Aws\Result updateSnapshotPolicy(array{ClientRequestToken?: string, SnapshotPolicyId?: string, Enabled?: bool, ...} $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateSnapshotPolicyAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateSnapshotPolicyAsync(array{ClientRequestToken?: string, SnapshotPolicyId?: string, Enabled?: bool, ...} $args = [])
  * @method \Aws\Result updateStorageVirtualMachine(array $args = [])
  * @phpstan-method \Aws\Result updateStorageVirtualMachine(array{
  *     ActiveDirectoryConfiguration?: array{
@@ -1319,6 +1635,24 @@ use Aws\AwsClient;
  *     SvmAdminPassword?: string,
  *     ...,
  * } $args = [])
+ * @method \Aws\Result updateStorageVirtualMachinePeer(array $args = [])
+ * @phpstan-method \Aws\Result updateStorageVirtualMachinePeer(array{
+ *     ClientRequestToken?: string,
+ *     StorageVirtualMachinePeerId?: string,
+ *     Applications?: list<'FILE_COPY'|'FLEXCACHE'|'LUN_COPY'|'SNAPMIRROR'>,
+ *     PeerSvmAlias?: string,
+ *     State?: 'PEERED'|'REJECTED'|'SUSPENDED',
+ *     ...,
+ * } $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateStorageVirtualMachinePeerAsync(array $args = [])
+ * @phpstan-method \GuzzleHttp\Promise\Promise updateStorageVirtualMachinePeerAsync(array{
+ *     ClientRequestToken?: string,
+ *     StorageVirtualMachinePeerId?: string,
+ *     Applications?: list<'FILE_COPY'|'FLEXCACHE'|'LUN_COPY'|'SNAPMIRROR'>,
+ *     PeerSvmAlias?: string,
+ *     State?: 'PEERED'|'REJECTED'|'SUSPENDED',
+ *     ...,
+ * } $args = [])
  * @method \Aws\Result updateVolume(array $args = [])
  * @phpstan-method \Aws\Result updateVolume(array{
  *     ClientRequestToken?: string,
@@ -1340,6 +1674,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         SizeInBytes?: int,
+ *         CloneConfiguration?: array{SplitAction?: 'START', ...},
  *         ...,
  *     },
  *     Name?: string,
@@ -1376,6 +1711,7 @@ use Aws\AwsClient;
  *             ...,
  *         },
  *         SizeInBytes?: int,
+ *         CloneConfiguration?: array{SplitAction?: 'START', ...},
  *         ...,
  *     },
  *     Name?: string,

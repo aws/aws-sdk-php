@@ -8,23 +8,34 @@
     "CopySnapshotAndUpdateVolume": "<p>Updates an existing volume by using a snapshot from another Amazon FSx for OpenZFS file system. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/on-demand-replication.html\">on-demand data replication</a> in the Amazon FSx for OpenZFS User Guide.</p>",
     "CreateAndAttachS3AccessPoint": "<p>Creates an S3 access point and attaches it to an Amazon FSx volume. For FSx for OpenZFS file systems, the volume must be hosted on a high-availability file system, either Single-AZ or Multi-AZ. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/s3accesspoints-for-FSx.html\">Accessing your data using Amazon S3 access points</a> in the Amazon FSx for OpenZFS User Guide. For FSx for ONTAP file systems, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/s3-access-points.html\">Accessing data using Amazon S3 access points</a> in the Amazon FSx for NetApp ONTAP User Guide. </p> <p>The requester requires the following permissions to perform these actions:</p> <ul> <li> <p> <code>fsx:CreateAndAttachS3AccessPoint</code> </p> </li> <li> <p> <code>s3:CreateAccessPoint</code> </p> </li> <li> <p> <code>s3:GetAccessPoint</code> </p> </li> <li> <p> <code>s3:PutAccessPointPolicy</code> </p> </li> <li> <p> <code>s3:DeleteAccessPoint</code> </p> </li> </ul> <p>The following actions are related to <code>CreateAndAttachS3AccessPoint</code>:</p> <ul> <li> <p> <a>DescribeS3AccessPointAttachments</a> </p> </li> <li> <p> <a>DetachAndDeleteS3AccessPoint</a> </p> </li> </ul>",
     "CreateBackup": "<p>Creates a backup of an existing Amazon FSx for Windows File Server file system, Amazon FSx for Lustre file system, Amazon FSx for NetApp ONTAP volume, or Amazon FSx for OpenZFS file system. We recommend creating regular backups so that you can restore a file system or volume from a backup if an issue arises with the original file system or volume.</p> <p>For Amazon FSx for Lustre file systems, you can create a backup only for file systems that have the following configuration:</p> <ul> <li> <p>A Persistent deployment type</p> </li> <li> <p>Are <i>not</i> linked to a data repository</p> </li> </ul> <p>For more information about backups, see the following:</p> <ul> <li> <p>For Amazon FSx for Lustre, see <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/using-backups-fsx.html\">Working with FSx for Lustre backups</a>.</p> </li> <li> <p>For Amazon FSx for Windows, see <a href=\"https://docs.aws.amazon.com/fsx/latest/WindowsGuide/using-backups.html\">Working with FSx for Windows backups</a>.</p> </li> <li> <p>For Amazon FSx for NetApp ONTAP, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/using-backups.html\">Working with FSx for NetApp ONTAP backups</a>.</p> </li> <li> <p>For Amazon FSx for OpenZFS, see <a href=\"https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/using-backups.html\">Working with FSx for OpenZFS backups</a>.</p> </li> </ul> <p>If a backup with the specified client request token exists and the parameters match, this operation returns the description of the existing backup. If a backup with the specified client request token exists and the parameters don't match, this operation returns <code>IncompatibleParameterError</code>. If a backup with the specified client request token doesn't exist, <code>CreateBackup</code> does the following: </p> <ul> <li> <p>Creates a new Amazon FSx backup with an assigned ID, and an initial lifecycle state of <code>CREATING</code>.</p> </li> <li> <p>Returns the description of the backup.</p> </li> </ul> <p>By using the idempotent operation, you can retry a <code>CreateBackup</code> operation without the risk of creating an extra backup. This approach can be useful when an initial call fails in a way that makes it unclear whether a backup was created. If you use the same client request token and the initial call created a backup, the operation returns a successful result because all the parameters are the same.</p> <p>The <code>CreateBackup</code> operation returns while the backup's lifecycle state is still <code>CREATING</code>. You can check the backup creation status by calling the <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_DescribeBackups.html\">DescribeBackups</a> operation, which returns the backup state along with other information.</p>",
+    "CreateClusterPeer": "<p>Creates a cluster peer relationship between an Amazon FSx for NetApp ONTAP file system and another ONTAP cluster.</p> <p>The <code>CreateClusterPeer</code> operation returns while the cluster peer's lifecycle state is still <code>CREATING</code>. You can check the cluster peer creation status by calling the DescribeClusterPeers operation.</p>",
     "CreateDataRepositoryAssociation": "<p>Creates an Amazon FSx for Lustre data repository association (DRA). A data repository association is a link between a directory on the file system and an Amazon S3 bucket or prefix. You can have a maximum of 8 data repository associations on a file system. Data repository associations are supported on all FSx for Lustre 2.12 and 2.15 file systems, excluding <code>scratch_1</code> deployment type.</p> <p>Each data repository association must have a unique Amazon FSx file system directory and a unique S3 bucket or prefix associated with it. You can configure a data repository association for automatic import only, for automatic export only, or for both. To learn more about linking a data repository to your file system, see <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/create-dra-linked-data-repo.html\">Linking your file system to an S3 bucket</a>.</p> <note> <p> <code>CreateDataRepositoryAssociation</code> isn't supported on Amazon File Cache resources. To create a DRA on Amazon File Cache, use the <code>CreateFileCache</code> operation.</p> </note>",
     "CreateDataRepositoryTask": "<p>Creates an Amazon FSx for Lustre data repository task. A <code>CreateDataRepositoryTask</code> operation will fail if a data repository is not linked to the FSx file system.</p> <p>You use import and export data repository tasks to perform bulk operations between your FSx for Lustre file system and its linked data repositories. An example of a data repository task is exporting any data and metadata changes, including POSIX metadata, to files, directories, and symbolic links (symlinks) from your FSx file system to a linked data repository.</p> <p>You use release data repository tasks to release data from your file system for files that are exported to S3. The metadata of released files remains on the file system so users or applications can still access released files by reading the files again, which will restore data from Amazon S3 to the FSx for Lustre file system.</p> <p>To learn more about data repository tasks, see <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-repository-tasks.html\">Data Repository Tasks</a>. To learn more about linking a data repository to your file system, see <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/create-dra-linked-data-repo.html\">Linking your file system to an S3 bucket</a>.</p>",
     "CreateFileCache": "<p>Creates a new Amazon File Cache resource.</p> <p>You can use this operation with a client request token in the request that Amazon File Cache uses to ensure idempotent creation. If a cache with the specified client request token exists and the parameters match, <code>CreateFileCache</code> returns the description of the existing cache. If a cache with the specified client request token exists and the parameters don't match, this call returns <code>IncompatibleParameterError</code>. If a file cache with the specified client request token doesn't exist, <code>CreateFileCache</code> does the following: </p> <ul> <li> <p>Creates a new, empty Amazon File Cache resource with an assigned ID, and an initial lifecycle state of <code>CREATING</code>.</p> </li> <li> <p>Returns the description of the cache in JSON format.</p> </li> </ul> <note> <p>The <code>CreateFileCache</code> call returns while the cache's lifecycle state is still <code>CREATING</code>. You can check the cache creation status by calling the <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_DescribeFileCaches.html\">DescribeFileCaches</a> operation, which returns the cache state along with other information.</p> </note>",
     "CreateFileSystem": "<p>Creates a new, empty Amazon FSx file system. You can create the following supported Amazon FSx file systems using the <code>CreateFileSystem</code> API operation:</p> <ul> <li> <p>Amazon FSx for Lustre</p> </li> <li> <p>Amazon FSx for NetApp ONTAP</p> </li> <li> <p>Amazon FSx for OpenZFS</p> </li> <li> <p>Amazon FSx for Windows File Server</p> </li> </ul> <p>This operation requires a client request token in the request that Amazon FSx uses to ensure idempotent creation. This means that calling the operation multiple times with the same client request token has no effect. By using the idempotent operation, you can retry a <code>CreateFileSystem</code> operation without the risk of creating an extra file system. This approach can be useful when an initial call fails in a way that makes it unclear whether a file system was created. Examples are if a transport level timeout occurred, or your connection was reset. If you use the same client request token and the initial call created a file system, the client receives success as long as the parameters are the same.</p> <p>If a file system with the specified client request token exists and the parameters match, <code>CreateFileSystem</code> returns the description of the existing file system. If a file system with the specified client request token exists and the parameters don't match, this call returns <code>IncompatibleParameterError</code>. If a file system with the specified client request token doesn't exist, <code>CreateFileSystem</code> does the following:</p> <ul> <li> <p>Creates a new, empty Amazon FSx file system with an assigned ID, and an initial lifecycle state of <code>CREATING</code>.</p> </li> <li> <p>Returns the description of the file system in JSON format.</p> </li> </ul> <note> <p>The <code>CreateFileSystem</code> call returns while the file system's lifecycle state is still <code>CREATING</code>. You can check the file-system creation status by calling the <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_DescribeFileSystems.html\">DescribeFileSystems</a> operation, which returns the file system state along with other information.</p> </note>",
     "CreateFileSystemFromBackup": "<p>Creates a new Amazon FSx for Lustre, Amazon FSx for Windows File Server, or Amazon FSx for OpenZFS file system from an existing Amazon FSx backup.</p> <p>If a file system with the specified client request token exists and the parameters match, this operation returns the description of the file system. If a file system with the specified client request token exists but the parameters don't match, this call returns <code>IncompatibleParameterError</code>. If a file system with the specified client request token doesn't exist, this operation does the following:</p> <ul> <li> <p>Creates a new Amazon FSx file system from backup with an assigned ID, and an initial lifecycle state of <code>CREATING</code>.</p> </li> <li> <p>Returns the description of the file system.</p> </li> </ul> <p>Parameters like the Active Directory, default share name, automatic backup, and backup settings default to the parameters of the file system that was backed up, unless overridden. You can explicitly supply other settings.</p> <p>By using the idempotent operation, you can retry a <code>CreateFileSystemFromBackup</code> call without the risk of creating an extra file system. This approach can be useful when an initial call fails in a way that makes it unclear whether a file system was created. Examples are if a transport level timeout occurred, or your connection was reset. If you use the same client request token and the initial call created a file system, the client receives a success message as long as the parameters are the same.</p> <note> <p>The <code>CreateFileSystemFromBackup</code> call returns while the file system's lifecycle state is still <code>CREATING</code>. You can check the file-system creation status by calling the <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_DescribeFileSystems.html\"> DescribeFileSystems</a> operation, which returns the file system state along with other information.</p> </note>",
-    "CreateSnapshot": "<p>Creates a snapshot of an existing Amazon FSx for OpenZFS volume. With snapshots, you can easily undo file changes and compare file versions by restoring the volume to a previous version.</p> <p>If a snapshot with the specified client request token exists, and the parameters match, this operation returns the description of the existing snapshot. If a snapshot with the specified client request token exists, and the parameters don't match, this operation returns <code>IncompatibleParameterError</code>. If a snapshot with the specified client request token doesn't exist, <code>CreateSnapshot</code> does the following:</p> <ul> <li> <p>Creates a new OpenZFS snapshot with an assigned ID, and an initial lifecycle state of <code>CREATING</code>.</p> </li> <li> <p>Returns the description of the snapshot.</p> </li> </ul> <p>By using the idempotent operation, you can retry a <code>CreateSnapshot</code> operation without the risk of creating an extra snapshot. This approach can be useful when an initial call fails in a way that makes it unclear whether a snapshot was created. If you use the same client request token and the initial call created a snapshot, the operation returns a successful result because all the parameters are the same.</p> <p>The <code>CreateSnapshot</code> operation returns while the snapshot's lifecycle state is still <code>CREATING</code>. You can check the snapshot creation status by calling the <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_DescribeSnapshots.html\">DescribeSnapshots</a> operation, which returns the snapshot state along with other information.</p>",
+    "CreateSnapmirrorPolicy": "<p>Creates a SnapMirror policy for an Amazon FSx for NetApp ONTAP file system or storage virtual machine (SVM). A SnapMirror policy defines how the SnapMirror relationships that use the policy replicate data, including which snapshots to transfer, the maximum number of snapshots to retain on the destination volume, and when to transfer data.</p> <p>The <code>CreateSnapmirrorPolicy</code> operation returns while the SnapMirror policy's lifecycle state is still <code>CREATING</code>. You can check the SnapMirror policy creation status by calling the DescribeSnapmirrorPolicies operation.</p>",
+    "CreateSnapmirrorRelationship": "<p>Creates a SnapMirror relationship that replicates data from a source volume to a destination volume on an Amazon FSx for NetApp ONTAP file system.</p> <p>The <code>CreateSnapmirrorRelationship</code> operation returns while the SnapMirror relationship's lifecycle state is still <code>CREATING</code>. You can check the SnapMirror relationship creation status by calling the DescribeSnapmirrorRelationships operation.</p>",
+    "CreateSnapshot": "<p>Creates a snapshot of an existing Amazon FSx for OpenZFS or Amazon FSx for NetApp ONTAP volume. With snapshots, you can easily undo file changes and compare file versions by restoring the volume to a previous version.</p> <p>If a snapshot with the specified client request token exists, and the parameters match, this operation returns the description of the existing snapshot. If a snapshot with the specified client request token exists, and the parameters don't match, this operation returns <code>IncompatibleParameterError</code>. If a snapshot with the specified client request token doesn't exist, <code>CreateSnapshot</code> does the following:</p> <ul> <li> <p>Creates a new snapshot with an assigned ID, and an initial lifecycle state of <code>CREATING</code>.</p> </li> <li> <p>Returns the description of the snapshot.</p> </li> </ul> <p>By using the idempotent operation, you can retry a <code>CreateSnapshot</code> operation without the risk of creating an extra snapshot. This approach can be useful when an initial call fails in a way that makes it unclear whether a snapshot was created. If you use the same client request token and the initial call created a snapshot, the operation returns a successful result because all the parameters are the same.</p> <p>The <code>CreateSnapshot</code> operation returns while the snapshot's lifecycle state is still <code>CREATING</code>. You can check the snapshot creation status by calling the <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_DescribeSnapshots.html\">DescribeSnapshots</a> operation, which returns the snapshot state along with other information.</p>",
+    "CreateSnapshotPolicy": "<p>Creates a snapshot policy for an Amazon FSx for NetApp ONTAP file system or storage virtual machine (SVM). A snapshot policy defines the schedules on which ONTAP automatically creates snapshots of the volumes that use the policy, and the maximum number of snapshots to retain for each schedule.</p> <p>The <code>CreateSnapshotPolicy</code> operation returns while the snapshot policy's lifecycle state is still <code>CREATING</code>. You can check the snapshot policy creation status by calling the DescribeSnapshotPolicies operation.</p>",
     "CreateStorageVirtualMachine": "<p>Creates a storage virtual machine (SVM) for an Amazon FSx for ONTAP file system.</p>",
+    "CreateStorageVirtualMachinePeer": "<p>Creates a storage virtual machine (SVM) peer relationship between an SVM on an Amazon FSx for NetApp ONTAP file system and another SVM.</p> <p>The <code>CreateStorageVirtualMachinePeer</code> operation returns while the SVM peer's lifecycle state is still <code>CREATING</code>. You can check the SVM peer creation status by calling the DescribeStorageVirtualMachinePeers operation.</p>",
     "CreateVolume": "<p>Creates an FSx for ONTAP or Amazon FSx for OpenZFS storage volume.</p>",
     "CreateVolumeFromBackup": "<p>Creates a new Amazon FSx for NetApp ONTAP volume from an existing Amazon FSx volume backup.</p>",
     "DeleteBackup": "<p>Deletes an Amazon FSx backup. After deletion, the backup no longer exists, and its data is gone.</p> <p>The <code>DeleteBackup</code> call returns instantly. The backup won't show up in later <code>DescribeBackups</code> calls.</p> <important> <p>The data in a deleted backup is also deleted and can't be recovered by any means.</p> </important>",
+    "DeleteClusterPeer": "<p>Deletes an Amazon FSx for NetApp ONTAP cluster peer relationship.</p>",
     "DeleteDataRepositoryAssociation": "<p>Deletes a data repository association on an Amazon FSx for Lustre file system. Deleting the data repository association unlinks the file system from the Amazon S3 bucket. When deleting a data repository association, you have the option of deleting the data in the file system that corresponds to the data repository association. Data repository associations are supported on all FSx for Lustre 2.12 and 2.15 file systems, excluding <code>scratch_1</code> deployment type.</p>",
     "DeleteFileCache": "<p>Deletes an Amazon File Cache resource. After deletion, the cache no longer exists, and its data is gone.</p> <p>The <code>DeleteFileCache</code> operation returns while the cache has the <code>DELETING</code> status. You can check the cache deletion status by calling the <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_DescribeFileCaches.html\">DescribeFileCaches</a> operation, which returns a list of caches in your account. If you pass the cache ID for a deleted cache, the <code>DescribeFileCaches</code> operation returns a <code>FileCacheNotFound</code> error.</p> <important> <p>The data in a deleted cache is also deleted and can't be recovered by any means.</p> </important>",
     "DeleteFileSystem": "<p>Deletes a file system. After deletion, the file system no longer exists, and its data is gone. Any existing automatic backups and snapshots are also deleted.</p> <p>To delete an Amazon FSx for NetApp ONTAP file system, first delete all the volumes and storage virtual machines (SVMs) on the file system. Then provide a <code>FileSystemId</code> value to the <code>DeleteFileSystem</code> operation.</p> <p>Before deleting an Amazon FSx for OpenZFS file system, make sure that there aren't any Amazon S3 access points attached to any volume. For more information on how to list S3 access points that are attached to volumes, see <a href=\"https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/access-points-list.html\">Listing S3 access point attachments</a>. For more information on how to delete S3 access points, see <a href=\"https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/delete-access-point.html\">Deleting an S3 access point attachment</a>.</p> <p>By default, when you delete an Amazon FSx for Windows File Server file system, a final backup is created upon deletion. This final backup isn't subject to the file system's retention policy, and must be manually deleted.</p> <p>To delete an Amazon FSx for Lustre file system, first <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/unmounting-fs.html\">unmount</a> it from every connected Amazon EC2 instance, then provide a <code>FileSystemId</code> value to the <code>DeleteFileSystem</code> operation. By default, Amazon FSx will not take a final backup when the <code>DeleteFileSystem</code> operation is invoked. On file systems not linked to an Amazon S3 bucket, set <code>SkipFinalBackup</code> to <code>false</code> to take a final backup of the file system you are deleting. Backups cannot be enabled on S3-linked file systems. To ensure all of your data is written back to S3 before deleting your file system, you can either monitor for the <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/monitoring-cloudwatch.html#auto-import-export-metrics\">AgeOfOldestQueuedMessage</a> metric to be zero (if using automatic export) or you can run an <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/export-data-repo-task-dra.html\">export data repository task</a>. If you have automatic export enabled and want to use an export data repository task, you have to disable automatic export before executing the export data repository task.</p> <p>The <code>DeleteFileSystem</code> operation returns while the file system has the <code>DELETING</code> status. You can check the file system deletion status by calling the <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_DescribeFileSystems.html\">DescribeFileSystems</a> operation, which returns a list of file systems in your account. If you pass the file system ID for a deleted file system, the <code>DescribeFileSystems</code> operation returns a <code>FileSystemNotFound</code> error.</p> <note> <p>If a data repository task is in a <code>PENDING</code> or <code>EXECUTING</code> state, deleting an Amazon FSx for Lustre file system will fail with an HTTP status code 400 (Bad Request).</p> </note> <important> <p>The data in a deleted file system is also deleted and can't be recovered by any means.</p> </important>",
-    "DeleteSnapshot": "<p>Deletes an Amazon FSx for OpenZFS snapshot. After deletion, the snapshot no longer exists, and its data is gone. Deleting a snapshot doesn't affect snapshots stored in a file system backup. </p> <p>The <code>DeleteSnapshot</code> operation returns instantly. The snapshot appears with the lifecycle status of <code>DELETING</code> until the deletion is complete.</p>",
+    "DeleteSnapmirrorPolicy": "<p>Deletes an Amazon FSx for NetApp ONTAP SnapMirror policy.</p>",
+    "DeleteSnapmirrorRelationship": "<p>Deletes an Amazon FSx for NetApp ONTAP SnapMirror relationship.</p>",
+    "DeleteSnapshot": "<p>Deletes an Amazon FSx for OpenZFS or Amazon FSx for NetApp ONTAP snapshot. After deletion, the snapshot no longer exists, and its data is gone. Deleting a snapshot doesn't affect snapshots stored in a file system backup.</p> <p>The <code>DeleteSnapshot</code> operation returns instantly. The snapshot appears with the lifecycle status of <code>DELETING</code> until the deletion is complete.</p>",
+    "DeleteSnapshotPolicy": "<p>Deletes an Amazon FSx for NetApp ONTAP snapshot policy.</p>",
     "DeleteStorageVirtualMachine": "<p>Deletes an existing Amazon FSx for ONTAP storage virtual machine (SVM). Prior to deleting an SVM, you must delete all non-root volumes in the SVM, otherwise the operation will fail.</p>",
+    "DeleteStorageVirtualMachinePeer": "<p>Deletes an Amazon FSx for NetApp ONTAP storage virtual machine (SVM) peer relationship.</p>",
     "DeleteVolume": "<p>Deletes an Amazon FSx for NetApp ONTAP or Amazon FSx for OpenZFS volume.</p>",
     "DescribeBackups": "<p>Returns the description of a specific Amazon FSx backup, if a <code>BackupIds</code> value is provided for that backup. Otherwise, it returns all backups owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.</p> <p>When retrieving all backups, you can optionally specify the <code>MaxResults</code> parameter to limit the number of backups in a response. If more backups remain, Amazon FSx returns a <code>NextToken</code> value in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of the <code>NextToken</code> value from the last response.</p> <p>This operation is used in an iterative process to retrieve a list of your backups. <code>DescribeBackups</code> is called first without a <code>NextToken</code> value. Then the operation continues to be called with the <code>NextToken</code> parameter set to the value of the last <code>NextToken</code> value until a response has no <code>NextToken</code> value.</p> <p>When using this operation, keep the following in mind:</p> <ul> <li> <p>The operation might return fewer than the <code>MaxResults</code> value of backup descriptions while still including a <code>NextToken</code> value.</p> </li> <li> <p>The order of the backups returned in the response of one <code>DescribeBackups</code> call and the order of the backups returned across the responses of a multi-call iteration is unspecified.</p> </li> </ul>",
+    "DescribeClusterPeers": "<p>Returns the description of specific Amazon FSx for NetApp ONTAP cluster peers, if a <code>ClusterPeerIds</code> value is provided. Otherwise, this operation returns all cluster peers owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.</p> <p>When retrieving all cluster peers, you can optionally specify the <code>MaxResults</code> parameter to limit the number of cluster peers in a response. If more cluster peers remain, Amazon FSx returns a <code>NextToken</code> value in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of <code>NextToken</code> from the last response.</p>",
     "DescribeDataRepositoryAssociations": "<p>Returns the description of specific Amazon FSx for Lustre or Amazon File Cache data repository associations, if one or more <code>AssociationIds</code> values are provided in the request, or if filters are used in the request. Data repository associations are supported on Amazon File Cache resources and all FSx for Lustre 2.12 and 2,15 file systems, excluding <code>scratch_1</code> deployment type.</p> <p>You can use filters to narrow the response to include just data repository associations for specific file systems (use the <code>file-system-id</code> filter with the ID of the file system) or caches (use the <code>file-cache-id</code> filter with the ID of the cache), or data repository associations for a specific repository type (use the <code>data-repository-type</code> filter with a value of <code>S3</code> or <code>NFS</code>). If you don't use filters, the response returns all data repository associations owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.</p> <p>When retrieving all data repository associations, you can paginate the response by using the optional <code>MaxResults</code> parameter to limit the number of data repository associations returned in a response. If more data repository associations remain, a <code>NextToken</code> value is returned in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of <code>NextToken</code> from the last response.</p>",
     "DescribeDataRepositoryTasks": "<p>Returns the description of specific Amazon FSx for Lustre or Amazon File Cache data repository tasks, if one or more <code>TaskIds</code> values are provided in the request, or if filters are used in the request. You can use filters to narrow the response to include just tasks for specific file systems or caches, or tasks in a specific lifecycle state. Otherwise, it returns all data repository tasks owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.</p> <p>When retrieving all tasks, you can paginate the response by using the optional <code>MaxResults</code> parameter to limit the number of tasks returned in a response. If more tasks remain, a <code>NextToken</code> value is returned in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of <code>NextToken</code> from the last response.</p>",
     "DescribeFileCaches": "<p>Returns the description of a specific Amazon File Cache resource, if a <code>FileCacheIds</code> value is provided for that cache. Otherwise, it returns descriptions of all caches owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.</p> <p>When retrieving all cache descriptions, you can optionally specify the <code>MaxResults</code> parameter to limit the number of descriptions in a response. If more cache descriptions remain, the operation returns a <code>NextToken</code> value in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of <code>NextToken</code> from the last response.</p> <p>This operation is used in an iterative process to retrieve a list of your cache descriptions. <code>DescribeFileCaches</code> is called first without a <code>NextToken</code>value. Then the operation continues to be called with the <code>NextToken</code> parameter set to the value of the last <code>NextToken</code> value until a response has no <code>NextToken</code>.</p> <p>When using this operation, keep the following in mind:</p> <ul> <li> <p>The implementation might return fewer than <code>MaxResults</code> cache descriptions while still including a <code>NextToken</code> value.</p> </li> <li> <p>The order of caches returned in the response of one <code>DescribeFileCaches</code> call and the order of caches returned across the responses of a multicall iteration is unspecified.</p> </li> </ul>",
@@ -32,7 +43,11 @@
     "DescribeFileSystems": "<p>Returns the description of specific Amazon FSx file systems, if a <code>FileSystemIds</code> value is provided for that file system. Otherwise, it returns descriptions of all file systems owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.</p> <p>When retrieving all file system descriptions, you can optionally specify the <code>MaxResults</code> parameter to limit the number of descriptions in a response. If more file system descriptions remain, Amazon FSx returns a <code>NextToken</code> value in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of <code>NextToken</code> from the last response.</p> <p>This operation is used in an iterative process to retrieve a list of your file system descriptions. <code>DescribeFileSystems</code> is called first without a <code>NextToken</code>value. Then the operation continues to be called with the <code>NextToken</code> parameter set to the value of the last <code>NextToken</code> value until a response has no <code>NextToken</code>.</p> <p>When using this operation, keep the following in mind:</p> <ul> <li> <p>The implementation might return fewer than <code>MaxResults</code> file system descriptions while still including a <code>NextToken</code> value.</p> </li> <li> <p>The order of file systems returned in the response of one <code>DescribeFileSystems</code> call and the order of file systems returned across the responses of a multicall iteration is unspecified.</p> </li> </ul>",
     "DescribeS3AccessPointAttachments": "<p>Describes one or more S3 access points attached to Amazon FSx volumes.</p> <p>The requester requires the following permission to perform this action:</p> <ul> <li> <p> <code>fsx:DescribeS3AccessPointAttachments</code> </p> </li> </ul>",
     "DescribeSharedVpcConfiguration": "<p>Indicates whether participant accounts in your organization can create Amazon FSx for NetApp ONTAP Multi-AZ file systems in subnets that are shared by a virtual private cloud (VPC) owner. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/creating-file-systems.html#fsxn-vpc-shared-subnets\">Creating FSx for ONTAP file systems in shared subnets</a>. </p>",
-    "DescribeSnapshots": "<p>Returns the description of specific Amazon FSx for OpenZFS snapshots, if a <code>SnapshotIds</code> value is provided. Otherwise, this operation returns all snapshots owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.</p> <p>When retrieving all snapshots, you can optionally specify the <code>MaxResults</code> parameter to limit the number of snapshots in a response. If more snapshots remain, Amazon FSx returns a <code>NextToken</code> value in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of <code>NextToken</code> from the last response. </p> <p>Use this operation in an iterative process to retrieve a list of your snapshots. <code>DescribeSnapshots</code> is called first without a <code>NextToken</code> value. Then the operation continues to be called with the <code>NextToken</code> parameter set to the value of the last <code>NextToken</code> value until a response has no <code>NextToken</code> value.</p> <p>When using this operation, keep the following in mind:</p> <ul> <li> <p>The operation might return fewer than the <code>MaxResults</code> value of snapshot descriptions while still including a <code>NextToken</code> value.</p> </li> <li> <p>The order of snapshots returned in the response of one <code>DescribeSnapshots</code> call and the order of snapshots returned across the responses of a multi-call iteration is unspecified. </p> </li> </ul>",
+    "DescribeSnapmirrorPolicies": "<p>Returns the description of specific Amazon FSx for NetApp ONTAP SnapMirror policies, if a <code>SnapmirrorPolicyIds</code> value is provided. Otherwise, this operation returns all SnapMirror policies owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.</p> <p>When retrieving all SnapMirror policies, you can optionally specify the <code>MaxResults</code> parameter to limit the number of SnapMirror policies in a response. If more SnapMirror policies remain, Amazon FSx returns a <code>NextToken</code> value in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of <code>NextToken</code> from the last response.</p>",
+    "DescribeSnapmirrorRelationships": "<p>Returns the description of specific Amazon FSx for NetApp ONTAP SnapMirror relationships, if a <code>SnapmirrorRelationshipIds</code> value is provided. Otherwise, this operation returns all SnapMirror relationships owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.</p> <p>When retrieving all SnapMirror relationships, you can optionally specify the <code>MaxResults</code> parameter to limit the number of SnapMirror relationships in a response. If more SnapMirror relationships remain, Amazon FSx returns a <code>NextToken</code> value in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of <code>NextToken</code> from the last response.</p>",
+    "DescribeSnapshotPolicies": "<p>Returns the description of specific Amazon FSx for NetApp ONTAP snapshot policies, if a <code>SnapshotPolicyIds</code> value is provided. Otherwise, this operation returns all snapshot policies owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.</p> <p>When retrieving all snapshot policies, you can optionally specify the <code>MaxResults</code> parameter to limit the number of snapshot policies in a response. If more snapshot policies remain, Amazon FSx returns a <code>NextToken</code> value in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of <code>NextToken</code> from the last response.</p>",
+    "DescribeSnapshots": "<p>Returns the description of specific Amazon FSx for OpenZFS and Amazon FSx for NetApp ONTAP snapshots, if a <code>SnapshotIds</code> value is provided. Otherwise, this operation returns all snapshots owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.</p> <p>When retrieving all snapshots, you can optionally specify the <code>MaxResults</code> parameter to limit the number of snapshots in a response. If more snapshots remain, Amazon FSx returns a <code>NextToken</code> value in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of <code>NextToken</code> from the last response. </p> <p>Use this operation in an iterative process to retrieve a list of your snapshots. <code>DescribeSnapshots</code> is called first without a <code>NextToken</code> value. Then the operation continues to be called with the <code>NextToken</code> parameter set to the value of the last <code>NextToken</code> value until a response has no <code>NextToken</code> value.</p> <p>When using this operation, keep the following in mind:</p> <ul> <li> <p>The operation might return fewer than the <code>MaxResults</code> value of snapshot descriptions while still including a <code>NextToken</code> value.</p> </li> <li> <p>The order of snapshots returned in the response of one <code>DescribeSnapshots</code> call and the order of snapshots returned across the responses of a multi-call iteration is unspecified. </p> </li> </ul>",
+    "DescribeStorageVirtualMachinePeers": "<p>Returns the description of specific Amazon FSx for NetApp ONTAP storage virtual machine (SVM) peers, if a <code>StorageVirtualMachinePeerIds</code> value is provided. Otherwise, this operation returns all SVM peers owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.</p> <p>When retrieving all SVM peers, you can optionally specify the <code>MaxResults</code> parameter to limit the number of SVM peers in a response. If more SVM peers remain, Amazon FSx returns a <code>NextToken</code> value in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of <code>NextToken</code> from the last response.</p>",
     "DescribeStorageVirtualMachines": "<p>Describes one or more Amazon FSx for NetApp ONTAP storage virtual machines (SVMs).</p>",
     "DescribeVolumes": "<p>Describes one or more Amazon FSx for NetApp ONTAP or Amazon FSx for OpenZFS volumes.</p>",
     "DetachAndDeleteS3AccessPoint": "<p>Detaches an S3 access point from an Amazon FSx volume and deletes the S3 access point.</p> <p>The requester requires the following permission to perform this action:</p> <ul> <li> <p> <code>fsx:DetachAndDeleteS3AccessPoint</code> </p> </li> <li> <p> <code>s3:DeleteAccessPoint</code> </p> </li> </ul>",
@@ -43,12 +58,17 @@
     "StartMisconfiguredStateRecovery": "<p>After performing steps to repair the Active Directory configuration of an FSx for Windows File Server file system, use this action to initiate the process of Amazon FSx attempting to reconnect to the file system.</p>",
     "TagResource": "<p>Tags an Amazon FSx resource.</p>",
     "UntagResource": "<p>This action removes a tag from an Amazon FSx resource.</p>",
+    "UpdateClusterPeer": "<p>Updates an Amazon FSx for NetApp ONTAP cluster peer relationship.</p>",
     "UpdateDataRepositoryAssociation": "<p>Updates the configuration of an existing data repository association on an Amazon FSx for Lustre file system. Data repository associations are supported on all FSx for Lustre 2.12 and 2.15 file systems, excluding <code>scratch_1</code> deployment type.</p>",
     "UpdateFileCache": "<p>Updates the configuration of an existing Amazon File Cache resource. You can update multiple properties in a single request.</p>",
     "UpdateFileSystem": "<p>Use this operation to update the configuration of an existing Amazon FSx file system. You can update multiple properties in a single request.</p> <p>For FSx for Windows File Server file systems, you can update the following properties:</p> <ul> <li> <p> <code>AuditLogConfiguration</code> </p> </li> <li> <p> <code>AutomaticBackupRetentionDays</code> </p> </li> <li> <p> <code>DailyAutomaticBackupStartTime</code> </p> </li> <li> <p> <code>DiskIopsConfiguration</code> </p> </li> <li> <p> <code>SelfManagedActiveDirectoryConfiguration</code> </p> </li> <li> <p> <code>StorageCapacity</code> </p> </li> <li> <p> <code>StorageType</code> </p> </li> <li> <p> <code>ThroughputCapacity</code> </p> </li> <li> <p> <code>WeeklyMaintenanceStartTime</code> </p> </li> </ul> <p>For FSx for Lustre file systems, you can update the following properties:</p> <ul> <li> <p> <code>AutoImportPolicy</code> </p> </li> <li> <p> <code>AutomaticBackupRetentionDays</code> </p> </li> <li> <p> <code>DailyAutomaticBackupStartTime</code> </p> </li> <li> <p> <code>DataCompressionType</code> </p> </li> <li> <p> <code>FileSystemTypeVersion</code> </p> </li> <li> <p> <code>LogConfiguration</code> </p> </li> <li> <p> <code>LustreReadCacheConfiguration</code> </p> </li> <li> <p> <code>LustreRootSquashConfiguration</code> </p> </li> <li> <p> <code>MetadataConfiguration</code> </p> </li> <li> <p> <code>PerUnitStorageThroughput</code> </p> </li> <li> <p> <code>StorageCapacity</code> </p> </li> <li> <p> <code>ThroughputCapacity</code> </p> </li> <li> <p> <code>WeeklyMaintenanceStartTime</code> </p> </li> </ul> <p>For FSx for ONTAP file systems, you can update the following properties:</p> <ul> <li> <p> <code>AddRouteTableIds</code> </p> </li> <li> <p> <code>AutomaticBackupRetentionDays</code> </p> </li> <li> <p> <code>DailyAutomaticBackupStartTime</code> </p> </li> <li> <p> <code>DiskIopsConfiguration</code> </p> </li> <li> <p> <code>EndpointIpv6AddressRange</code> </p> </li> <li> <p> <code>FsxAdminPassword</code> </p> </li> <li> <p> <code>HAPairs</code> </p> </li> <li> <p> <code>RemoveRouteTableIds</code> </p> </li> <li> <p> <code>StorageCapacity</code> </p> </li> <li> <p> <code>ThroughputCapacity</code> </p> </li> <li> <p> <code>ThroughputCapacityPerHAPair</code> </p> </li> <li> <p> <code>WeeklyMaintenanceStartTime</code> </p> </li> </ul> <p>For FSx for OpenZFS file systems, you can update the following properties:</p> <ul> <li> <p> <code>AddRouteTableIds</code> </p> </li> <li> <p> <code>AutomaticBackupRetentionDays</code> </p> </li> <li> <p> <code>CopyTagsToBackups</code> </p> </li> <li> <p> <code>CopyTagsToVolumes</code> </p> </li> <li> <p> <code>DailyAutomaticBackupStartTime</code> </p> </li> <li> <p> <code>DiskIopsConfiguration</code> </p> </li> <li> <p> <code>EndpointIpv6AddressRange</code> </p> </li> <li> <p> <code>ReadCacheConfiguration</code> </p> </li> <li> <p> <code>RemoveRouteTableIds</code> </p> </li> <li> <p> <code>StorageCapacity</code> </p> </li> <li> <p> <code>ThroughputCapacity</code> </p> </li> <li> <p> <code>WeeklyMaintenanceStartTime</code> </p> </li> </ul>",
     "UpdateSharedVpcConfiguration": "<p>Configures whether participant accounts in your organization can create Amazon FSx for NetApp ONTAP Multi-AZ file systems in subnets that are shared by a virtual private cloud (VPC) owner. For more information, see the <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/maz-shared-vpc.html\">Amazon FSx for NetApp ONTAP User Guide</a>.</p> <note> <p>We strongly recommend that participant-created Multi-AZ file systems in the shared VPC are deleted before you disable this feature. Once the feature is disabled, these file systems will enter a <code>MISCONFIGURED</code> state and behave like Single-AZ file systems. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/maz-shared-vpc.html#disabling-maz-vpc-sharing\">Important considerations before disabling shared VPC support for Multi-AZ file systems</a>.</p> </note>",
-    "UpdateSnapshot": "<p>Updates the name of an Amazon FSx for OpenZFS snapshot.</p>",
+    "UpdateSnapmirrorPolicy": "<p>Updates an Amazon FSx for NetApp ONTAP SnapMirror policy.</p>",
+    "UpdateSnapmirrorRelationship": "<p>Updates an Amazon FSx for NetApp ONTAP SnapMirror relationship.</p>",
+    "UpdateSnapshot": "<p>Updates an Amazon FSx for OpenZFS or Amazon FSx for NetApp ONTAP snapshot.</p> <p>For Amazon FSx for OpenZFS snapshots, you can update only the name. For Amazon FSx for NetApp ONTAP snapshots, you can update the name and the properties in <code>OntapConfiguration</code>.</p>",
+    "UpdateSnapshotPolicy": "<p>Updates an Amazon FSx for NetApp ONTAP snapshot policy. You can enable or disable the snapshot policy.</p>",
     "UpdateStorageVirtualMachine": "<p>Updates an FSx for ONTAP storage virtual machine (SVM).</p>",
+    "UpdateStorageVirtualMachinePeer": "<p>Updates an Amazon FSx for NetApp ONTAP storage virtual machine (SVM) peer relationship.</p>",
     "UpdateVolume": "<p>Updates the configuration of an Amazon FSx for NetApp ONTAP or Amazon FSx for OpenZFS volume.</p>"
   },
   "shapes": {
@@ -119,7 +139,7 @@
       }
     },
     "AdministrativeActionType": {
-      "base": "<p>Describes the type of administrative action, as follows:</p> <ul> <li> <p> <code>FILE_SYSTEM_UPDATE</code> - A file system update administrative action initiated from the Amazon FSx console, API (<code>UpdateFileSystem</code>), or CLI (<code>update-file-system</code>).</p> </li> <li> <p> <code>THROUGHPUT_OPTIMIZATION</code> - After the <code>FILE_SYSTEM_UPDATE</code> task to increase a file system's throughput capacity has been completed successfully, a <code>THROUGHPUT_OPTIMIZATION</code> task starts.</p> <p>You can track the storage-optimization progress using the <code>ProgressPercent</code> property. When <code>THROUGHPUT_OPTIMIZATION</code> has been completed successfully, the parent <code>FILE_SYSTEM_UPDATE</code> action status changes to <code>COMPLETED</code>. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-throughput-capacity.html\">Managing throughput capacity</a> in the <i>Amazon FSx for Windows File Server User Guide</i>.</p> </li> <li> <p> <code>STORAGE_OPTIMIZATION</code> - After the <code>FILE_SYSTEM_UPDATE</code> task to increase a file system's storage capacity has completed successfully, a <code>STORAGE_OPTIMIZATION</code> task starts. </p> <ul> <li> <p>For Windows and ONTAP, storage optimization is the process of migrating the file system data to newer larger disks.</p> </li> <li> <p>For Lustre, storage optimization consists of rebalancing the data across the existing and newly added file servers.</p> </li> </ul> <p>You can track the storage-optimization progress using the <code>ProgressPercent</code> property. When <code>STORAGE_OPTIMIZATION</code> has been completed successfully, the parent <code>FILE_SYSTEM_UPDATE</code> action status changes to <code>COMPLETED</code>. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-storage-capacity.html\">Managing storage capacity</a> in the <i>Amazon FSx for Windows File Server User Guide</i>, <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/managing-storage-capacity.html\">Managing storage capacity</a> in the <i>Amazon FSx for Lustre User Guide</i>, and <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/managing-storage-capacity.html\">Managing storage capacity and provisioned IOPS</a> in the <i>Amazon FSx for NetApp ONTAP User Guide</i>.</p> </li> <li> <p> <code>FILE_SYSTEM_ALIAS_ASSOCIATION</code> - A file system update to associate a new Domain Name System (DNS) alias with the file system. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_AssociateFileSystemAliases.html\"> AssociateFileSystemAliases</a>.</p> </li> <li> <p> <code>FILE_SYSTEM_ALIAS_DISASSOCIATION</code> - A file system update to disassociate a DNS alias from the file system. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_DisassociateFileSystemAliases.html\">DisassociateFileSystemAliases</a>.</p> </li> <li> <p> <code>IOPS_OPTIMIZATION</code> - After the <code>FILE_SYSTEM_UPDATE</code> task to increase a file system's throughput capacity has been completed successfully, a <code>IOPS_OPTIMIZATION</code> task starts.</p> <p>You can track the storage-optimization progress using the <code>ProgressPercent</code> property. When <code>IOPS_OPTIMIZATION</code> has been completed successfully, the parent <code>FILE_SYSTEM_UPDATE</code> action status changes to <code>COMPLETED</code>. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-provisioned-ssd-iops.html\">Managing provisioned SSD IOPS</a> in the Amazon FSx for Windows File Server User Guide.</p> </li> <li> <p> <code>STORAGE_TYPE_OPTIMIZATION</code> - After the <code>FILE_SYSTEM_UPDATE</code> task to increase a file system's throughput capacity has been completed successfully, a <code>STORAGE_TYPE_OPTIMIZATION</code> task starts.</p> <p>You can track the storage-optimization progress using the <code>ProgressPercent</code> property. When <code>STORAGE_TYPE_OPTIMIZATION</code> has been completed successfully, the parent <code>FILE_SYSTEM_UPDATE</code> action status changes to <code>COMPLETED</code>.</p> </li> <li> <p> <code>VOLUME_UPDATE</code> - A volume update to an Amazon FSx for OpenZFS volume initiated from the Amazon FSx console, API (<code>UpdateVolume</code>), or CLI (<code>update-volume</code>).</p> </li> <li> <p> <code>VOLUME_RESTORE</code> - An Amazon FSx for OpenZFS volume is returned to the state saved by the specified snapshot, initiated from an API (<code>RestoreVolumeFromSnapshot</code>) or CLI (<code>restore-volume-from-snapshot</code>).</p> </li> <li> <p> <code>SNAPSHOT_UPDATE</code> - A snapshot update to an Amazon FSx for OpenZFS volume initiated from the Amazon FSx console, API (<code>UpdateSnapshot</code>), or CLI (<code>update-snapshot</code>).</p> </li> <li> <p> <code>RELEASE_NFS_V3_LOCKS</code> - Tracks the release of Network File System (NFS) V3 locks on an Amazon FSx for OpenZFS file system.</p> </li> <li> <p> <code>DOWNLOAD_DATA_FROM_BACKUP</code> - An FSx for ONTAP backup is being restored to a new volume on a second-generation or third-generation file system. Once the all the file metadata is loaded onto the volume, you can mount the volume with read-only access. during this process.</p> </li> <li> <p> <code>VOLUME_INITIALIZE_WITH_SNAPSHOT</code> - A volume is being created from a snapshot on a different FSx for OpenZFS file system. You can initiate this from the Amazon FSx console, API (<code>CreateVolume</code>), or CLI (<code>create-volume</code>) when using the using the <code>FULL_COPY</code> strategy.</p> </li> <li> <p> <code>VOLUME_UPDATE_WITH_SNAPSHOT</code> - A volume is being updated from a snapshot on a different FSx for OpenZFS file system. You can initiate this from the Amazon FSx console, API (<code>CopySnapshotAndUpdateVolume</code>), or CLI (<code>copy-snapshot-and-update-volume</code>).</p> </li> </ul>",
+      "base": "<p>Describes the type of administrative action, as follows:</p> <ul> <li> <p> <code>FILE_SYSTEM_UPDATE</code> - A file system update administrative action initiated from the Amazon FSx console, API (<code>UpdateFileSystem</code>), or CLI (<code>update-file-system</code>).</p> </li> <li> <p> <code>THROUGHPUT_OPTIMIZATION</code> - After the <code>FILE_SYSTEM_UPDATE</code> task to increase a file system's throughput capacity has been completed successfully, a <code>THROUGHPUT_OPTIMIZATION</code> task starts.</p> <p>You can track the storage-optimization progress using the <code>ProgressPercent</code> property. When <code>THROUGHPUT_OPTIMIZATION</code> has been completed successfully, the parent <code>FILE_SYSTEM_UPDATE</code> action status changes to <code>COMPLETED</code>. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-throughput-capacity.html\">Managing throughput capacity</a> in the <i>Amazon FSx for Windows File Server User Guide</i>.</p> </li> <li> <p> <code>STORAGE_OPTIMIZATION</code> - After the <code>FILE_SYSTEM_UPDATE</code> task to increase a file system's storage capacity has completed successfully, a <code>STORAGE_OPTIMIZATION</code> task starts. </p> <ul> <li> <p>For Windows and ONTAP, storage optimization is the process of migrating the file system data to newer larger disks.</p> </li> <li> <p>For Lustre, storage optimization consists of rebalancing the data across the existing and newly added file servers.</p> </li> </ul> <p>You can track the storage-optimization progress using the <code>ProgressPercent</code> property. When <code>STORAGE_OPTIMIZATION</code> has been completed successfully, the parent <code>FILE_SYSTEM_UPDATE</code> action status changes to <code>COMPLETED</code>. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-storage-capacity.html\">Managing storage capacity</a> in the <i>Amazon FSx for Windows File Server User Guide</i>, <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/managing-storage-capacity.html\">Managing storage capacity</a> in the <i>Amazon FSx for Lustre User Guide</i>, and <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/managing-storage-capacity.html\">Managing storage capacity and provisioned IOPS</a> in the <i>Amazon FSx for NetApp ONTAP User Guide</i>.</p> </li> <li> <p> <code>FILE_SYSTEM_ALIAS_ASSOCIATION</code> - A file system update to associate a new Domain Name System (DNS) alias with the file system. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_AssociateFileSystemAliases.html\"> AssociateFileSystemAliases</a>.</p> </li> <li> <p> <code>FILE_SYSTEM_ALIAS_DISASSOCIATION</code> - A file system update to disassociate a DNS alias from the file system. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_DisassociateFileSystemAliases.html\">DisassociateFileSystemAliases</a>.</p> </li> <li> <p> <code>IOPS_OPTIMIZATION</code> - After the <code>FILE_SYSTEM_UPDATE</code> task to increase a file system's throughput capacity has been completed successfully, a <code>IOPS_OPTIMIZATION</code> task starts.</p> <p>You can track the storage-optimization progress using the <code>ProgressPercent</code> property. When <code>IOPS_OPTIMIZATION</code> has been completed successfully, the parent <code>FILE_SYSTEM_UPDATE</code> action status changes to <code>COMPLETED</code>. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-provisioned-ssd-iops.html\">Managing provisioned SSD IOPS</a> in the Amazon FSx for Windows File Server User Guide.</p> </li> <li> <p> <code>STORAGE_TYPE_OPTIMIZATION</code> - After the <code>FILE_SYSTEM_UPDATE</code> task to increase a file system's throughput capacity has been completed successfully, a <code>STORAGE_TYPE_OPTIMIZATION</code> task starts.</p> <p>You can track the storage-optimization progress using the <code>ProgressPercent</code> property. When <code>STORAGE_TYPE_OPTIMIZATION</code> has been completed successfully, the parent <code>FILE_SYSTEM_UPDATE</code> action status changes to <code>COMPLETED</code>.</p> </li> <li> <p> <code>VOLUME_UPDATE</code> - A volume update to an Amazon FSx for OpenZFS volume initiated from the Amazon FSx console, API (<code>UpdateVolume</code>), or CLI (<code>update-volume</code>).</p> </li> <li> <p> <code>VOLUME_RESTORE</code> - An Amazon FSx for OpenZFS volume is returned to the state saved by the specified snapshot, initiated from an API (<code>RestoreVolumeFromSnapshot</code>) or CLI (<code>restore-volume-from-snapshot</code>).</p> </li> <li> <p> <code>SNAPSHOT_UPDATE</code> - A snapshot update to an Amazon FSx for OpenZFS volume initiated from the Amazon FSx console, API (<code>UpdateSnapshot</code>), or CLI (<code>update-snapshot</code>).</p> </li> <li> <p> <code>RELEASE_NFS_V3_LOCKS</code> - Tracks the release of Network File System (NFS) V3 locks on an Amazon FSx for OpenZFS file system.</p> </li> <li> <p> <code>DOWNLOAD_DATA_FROM_BACKUP</code> - An FSx for ONTAP backup is being restored to a new volume on a second-generation or third-generation file system. Once the all the file metadata is loaded onto the volume, you can mount the volume with read-only access. during this process.</p> </li> <li> <p> <code>VOLUME_INITIALIZE_WITH_SNAPSHOT</code> - A volume is being created from a snapshot on a different FSx for OpenZFS file system. You can initiate this from the Amazon FSx console, API (<code>CreateVolume</code>), or CLI (<code>create-volume</code>) when using the using the <code>FULL_COPY</code> strategy.</p> </li> <li> <p> <code>VOLUME_UPDATE_WITH_SNAPSHOT</code> - A volume is being updated from a snapshot on a different FSx for OpenZFS file system. You can initiate this from the Amazon FSx console, API (<code>CopySnapshotAndUpdateVolume</code>), or CLI (<code>copy-snapshot-and-update-volume</code>).</p> </li> <li> <p> <code>VOLUME_CLONE_SPLIT</code> - An FSx for ONTAP volume clone is being split from its parent volume. You can initiate this from the Amazon FSx console, Amazon FSx API (<code>UpdateVolume</code>) or CLI (<code>update-volume</code>) by setting <code>SplitAction</code> to <code>START</code> in the volume's <code>CloneConfiguration</code>.</p> </li> </ul>",
       "refs": {
         "AdministrativeAction$AdministrativeActionType": null
       }
@@ -178,6 +198,20 @@
         "DescribeFileSystemAliasesResponse$Aliases": "<p>An array of one or more DNS aliases currently associated with the specified file system.</p>",
         "DisassociateFileSystemAliasesResponse$Aliases": "<p>An array of one or more DNS aliases that Amazon FSx is attempting to disassociate from the file system.</p>",
         "WindowsFileSystemConfiguration$Aliases": null
+      }
+    },
+    "AllowedSvmIds": {
+      "base": null,
+      "refs": {
+        "ClusterPeer$AllowedSvmIds": "<p>The IDs of the SVMs on the file system that are preauthorized for SVM peering with the peer cluster, if <code>AllowedSvmMode</code> is <code>SPECIFIED</code>.</p>",
+        "CreateClusterPeerRequest$AllowedSvmIds": "<p>Specifies the IDs of the SVMs on the file system that are preauthorized for SVM peering with the peer cluster. You can specify <code>AllowedSvmIds</code> only when <code>AllowedSvmMode</code> is <code>SPECIFIED</code>.</p>"
+      }
+    },
+    "AllowedSvmMode": {
+      "base": null,
+      "refs": {
+        "ClusterPeer$AllowedSvmMode": "<p>Indicates which SVMs on the file system are preauthorized for SVM peering with the peer cluster.</p>",
+        "CreateClusterPeerRequest$AllowedSvmMode": "<p>Specifies which SVMs on the file system are preauthorized for SVM peering with the peer cluster.</p> <ul> <li> <p> <code>ALL</code> – All SVMs on the file system are preauthorized. You can't specify <code>AllowedSvmIds</code> along with this property.</p> </li> <li> <p> <code>NONE</code> – No SVMs on the file system are preauthorized. You can't specify <code>AllowedSvmIds</code> along with this property.</p> </li> <li> <p> <code>SPECIFIED</code> – Only the SVMs in <code>AllowedSvmIds</code> are preauthorized. You must specify <code>AllowedSvmIds</code> along with this property.</p> </li> </ul>"
       }
     },
     "AlternateDNSName": {
@@ -381,20 +415,30 @@
         "CopySnapshotAndUpdateVolumeRequest$ClientRequestToken": null,
         "CreateAndAttachS3AccessPointRequest$ClientRequestToken": null,
         "CreateBackupRequest$ClientRequestToken": "<p>(Optional) A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent creation. This string is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.</p>",
+        "CreateClusterPeerRequest$ClientRequestToken": null,
         "CreateDataRepositoryAssociationRequest$ClientRequestToken": null,
         "CreateDataRepositoryTaskRequest$ClientRequestToken": null,
         "CreateFileCacheRequest$ClientRequestToken": "<p>An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.</p> <p>By using the idempotent operation, you can retry a <code>CreateFileCache</code> operation without the risk of creating an extra cache. This approach can be useful when an initial call fails in a way that makes it unclear whether a cache was created. Examples are if a transport level timeout occurred, or your connection was reset. If you use the same client request token and the initial call created a cache, the client receives success as long as the parameters are the same.</p>",
         "CreateFileSystemFromBackupRequest$ClientRequestToken": "<p>A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent creation. This string is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.</p>",
         "CreateFileSystemRequest$ClientRequestToken": "<p>A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent creation. This string is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.</p>",
+        "CreateSnapmirrorPolicyRequest$ClientRequestToken": null,
+        "CreateSnapmirrorRelationshipRequest$ClientRequestToken": null,
+        "CreateSnapshotPolicyRequest$ClientRequestToken": null,
         "CreateSnapshotRequest$ClientRequestToken": null,
+        "CreateStorageVirtualMachinePeerRequest$ClientRequestToken": null,
         "CreateStorageVirtualMachineRequest$ClientRequestToken": null,
         "CreateVolumeFromBackupRequest$ClientRequestToken": null,
         "CreateVolumeRequest$ClientRequestToken": null,
         "DeleteBackupRequest$ClientRequestToken": "<p>A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent deletion. This parameter is automatically filled on your behalf when using the CLI or SDK.</p>",
+        "DeleteClusterPeerRequest$ClientRequestToken": null,
         "DeleteDataRepositoryAssociationRequest$ClientRequestToken": null,
         "DeleteFileCacheRequest$ClientRequestToken": null,
         "DeleteFileSystemRequest$ClientRequestToken": "<p>A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent deletion. This token is automatically filled on your behalf when using the Command Line Interface (CLI) or an Amazon Web Services SDK.</p>",
+        "DeleteSnapmirrorPolicyRequest$ClientRequestToken": null,
+        "DeleteSnapmirrorRelationshipRequest$ClientRequestToken": null,
+        "DeleteSnapshotPolicyRequest$ClientRequestToken": null,
         "DeleteSnapshotRequest$ClientRequestToken": null,
+        "DeleteStorageVirtualMachinePeerRequest$ClientRequestToken": null,
         "DeleteStorageVirtualMachineRequest$ClientRequestToken": null,
         "DeleteVolumeRequest$ClientRequestToken": null,
         "DescribeFileSystemAliasesRequest$ClientRequestToken": null,
@@ -403,13 +447,125 @@
         "ReleaseFileSystemNfsV3LocksRequest$ClientRequestToken": null,
         "RestoreVolumeFromSnapshotRequest$ClientRequestToken": null,
         "StartMisconfiguredStateRecoveryRequest$ClientRequestToken": null,
+        "UpdateClusterPeerRequest$ClientRequestToken": null,
         "UpdateDataRepositoryAssociationRequest$ClientRequestToken": null,
         "UpdateFileCacheRequest$ClientRequestToken": null,
         "UpdateFileSystemRequest$ClientRequestToken": "<p>A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent updates. This string is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.</p>",
         "UpdateSharedVpcConfigurationRequest$ClientRequestToken": null,
+        "UpdateSnapmirrorPolicyRequest$ClientRequestToken": null,
+        "UpdateSnapmirrorRelationshipRequest$ClientRequestToken": null,
+        "UpdateSnapshotPolicyRequest$ClientRequestToken": null,
         "UpdateSnapshotRequest$ClientRequestToken": null,
+        "UpdateStorageVirtualMachinePeerRequest$ClientRequestToken": null,
         "UpdateStorageVirtualMachineRequest$ClientRequestToken": null,
         "UpdateVolumeRequest$ClientRequestToken": null
+      }
+    },
+    "CloneConfiguration": {
+      "base": "<p>Describes the parent volume, and the snapshot if one was specified, that an FSx for ONTAP volume clone was created from.</p>",
+      "refs": {
+        "OntapVolumeConfiguration$CloneConfiguration": "<p>The clone configuration of the volume, if the volume is a clone. This property doesn't appear for a volume that isn't a clone, or for a clone that has been split from its parent volume.</p>"
+      }
+    },
+    "CloneSplitAction": {
+      "base": null,
+      "refs": {
+        "UpdateCloneConfiguration$SplitAction": "<p>Set to <code>START</code> to split the clone from its parent volume. Splitting copies the data that the clone shares with the parent volume, so that the clone becomes an independent volume that no longer depends on the parent. After the split, the volume uses storage for all of its data.</p> <p>When you split a clone, keep the following in mind:</p> <ul> <li> <p> <code>SplitAction</code> must be the only property that you change in the <code>UpdateVolume</code> request.</p> </li> <li> <p>You can't split a data protection (<code>DP</code>) clone.</p> </li> <li> <p>The split fails if the clone has locked snapshots, such as snapshots that a SnapMirror relationship uses or that a retention period protects, or if a backup of the clone is in progress. To allow the split, Amazon FSx deletes the snapshots that it created for backups of the clone, so the next backup transfers more data. Amazon FSx doesn't delete snapshots that you created.</p> </li> </ul> <p>The split runs in the background. To monitor its progress, use the <code>VOLUME_CLONE_SPLIT</code> administrative action in the volume's <code>AdministrativeActions</code>. When the split completes, the volume no longer has a <code>CloneConfiguration</code>.</p>"
+      }
+    },
+    "ClusterPeer": {
+      "base": "<p>Describes an Amazon FSx for NetApp ONTAP cluster peer relationship.</p>",
+      "refs": {
+        "ClusterPeers$member": null,
+        "CreateClusterPeerResponse$ClusterPeer": "<p>A description of the cluster peer.</p>",
+        "UpdateClusterPeerResponse$ClusterPeer": "<p>A description of the cluster peer that was just updated.</p>"
+      }
+    },
+    "ClusterPeerAuthenticationInUse": {
+      "base": null,
+      "refs": {
+        "ClusterPeerAuthenticationStatus$InUse": "<p>The status of the authentication that the cluster peer relationship is using.</p>"
+      }
+    },
+    "ClusterPeerAuthenticationState": {
+      "base": null,
+      "refs": {
+        "ClusterPeerAuthenticationStatus$State": "<p>The authentication state of the cluster peer relationship.</p>"
+      }
+    },
+    "ClusterPeerAuthenticationStatus": {
+      "base": "<p>Describes the authentication status of an Amazon FSx for NetApp ONTAP cluster peer relationship.</p>",
+      "refs": {
+        "ClusterPeer$AuthenticationStatus": "<p>The authentication status of the cluster peer relationship.</p>"
+      }
+    },
+    "ClusterPeerFilter": {
+      "base": "<p>A filter used to restrict the results of describe calls for Amazon FSx for NetApp ONTAP cluster peers.</p>",
+      "refs": {
+        "ClusterPeerFilters$member": null
+      }
+    },
+    "ClusterPeerFilterName": {
+      "base": null,
+      "refs": {
+        "ClusterPeerFilter$Name": "<p>The name for this filter.</p>"
+      }
+    },
+    "ClusterPeerFilterValue": {
+      "base": null,
+      "refs": {
+        "ClusterPeerFilterValues$member": null
+      }
+    },
+    "ClusterPeerFilterValues": {
+      "base": null,
+      "refs": {
+        "ClusterPeerFilter$Values": "<p>The values of the filter. These are all the values for any of the applied filters.</p>"
+      }
+    },
+    "ClusterPeerFilters": {
+      "base": null,
+      "refs": {
+        "DescribeClusterPeersRequest$Filters": "<p>The filters structure. The supported name is <code>file-system-id</code>.</p>"
+      }
+    },
+    "ClusterPeerId": {
+      "base": null,
+      "refs": {
+        "ClusterPeer$ClusterPeerId": "<p>The system-generated, unique ID of the cluster peer.</p>",
+        "ClusterPeerIds$member": null,
+        "DeleteClusterPeerRequest$ClusterPeerId": "<p>The ID of the cluster peer that you are deleting.</p>",
+        "DeleteClusterPeerResponse$ClusterPeerId": "<p>The ID of the cluster peer that's being deleted.</p>",
+        "UpdateClusterPeerRequest$ClusterPeerId": "<p>The ID of the cluster peer that you want to update.</p>"
+      }
+    },
+    "ClusterPeerIds": {
+      "base": null,
+      "refs": {
+        "DescribeClusterPeersRequest$ClusterPeerIds": "<p>The IDs of the cluster peers that you want to retrieve. If you also specify <code>Filters</code>, only cluster peers that match both the IDs and the filters are returned. If any IDs aren't found, or if a filter excludes any of them, a <code>ClusterPeerNotFound</code> error occurs.</p>"
+      }
+    },
+    "ClusterPeerLifecycle": {
+      "base": null,
+      "refs": {
+        "ClusterPeer$Lifecycle": "<p>The lifecycle status of the cluster peer can be one of the following:</p> <ul> <li> <p> <code>CREATED</code> – The cluster peer is fully available for use.</p> </li> <li> <p> <code>CREATING</code> – Amazon FSx is creating the cluster peer.</p> </li> <li> <p> <code>DELETING</code> – Amazon FSx is deleting the cluster peer.</p> </li> <li> <p> <code>FAILED</code> – Amazon FSx was unable to create the cluster peer.</p> </li> </ul>",
+        "DeleteClusterPeerResponse$Lifecycle": "<p>The lifecycle state of the cluster peer being deleted. If the <code>DeleteClusterPeer</code> operation is successful, this value is <code>DELETING</code>.</p>"
+      }
+    },
+    "ClusterPeerNotFound": {
+      "base": "<p>No Amazon FSx cluster peers were found based on the supplied parameters.</p>",
+      "refs": {}
+    },
+    "ClusterPeerStatus": {
+      "base": null,
+      "refs": {
+        "ClusterPeer$Status": "<p>The status of the connection to the peer cluster.</p>"
+      }
+    },
+    "ClusterPeers": {
+      "base": null,
+      "refs": {
+        "DescribeClusterPeersResponse$ClusterPeers": "<p>Describes each cluster peer returned by the <code>DescribeClusterPeers</code> operation.</p>"
       }
     },
     "CompletionReport": {
@@ -486,6 +642,20 @@
     },
     "CreateBackupResponse": {
       "base": "<p>The response object for the <code>CreateBackup</code> operation.</p>",
+      "refs": {}
+    },
+    "CreateCloneConfiguration": {
+      "base": "<p>Specifies the parent volume, and optionally the snapshot, that an FSx for ONTAP volume clone is created from.</p>",
+      "refs": {
+        "CreateOntapVolumeConfiguration$CloneConfiguration": "<p>Specifies the configuration to use when creating the volume as a clone of another FSx for ONTAP volume. A clone is a writable, point-in-time copy of its parent volume.</p>"
+      }
+    },
+    "CreateClusterPeerRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateClusterPeerResponse": {
+      "base": null,
       "refs": {}
     },
     "CreateDataRepositoryAssociationRequest": {
@@ -573,6 +743,12 @@
         "CreateFileSystemRequest$WindowsConfiguration": "<p>The Microsoft Windows configuration for the file system that's being created.</p>"
       }
     },
+    "CreateOntapSnapshotConfiguration": {
+      "base": "<p>Specifies the configuration of the ONTAP snapshot that you are creating.</p>",
+      "refs": {
+        "CreateSnapshotRequest$OntapConfiguration": "<p>Specifies the configuration to use when creating the ONTAP snapshot.</p>"
+      }
+    },
     "CreateOntapVolumeConfiguration": {
       "base": "<p>Specifies the configuration of the ONTAP volume that you are creating.</p>",
       "refs": {
@@ -598,11 +774,55 @@
         "CreateOntapVolumeConfiguration$SnaplockConfiguration": "<p>Specifies the SnapLock configuration for an FSx for ONTAP volume. </p>"
       }
     },
+    "CreateSnapmirrorDestination": {
+      "base": "<p>Specifies the destination endpoint of the Amazon FSx for NetApp ONTAP SnapMirror relationship that you are creating.</p>",
+      "refs": {
+        "CreateSnapmirrorRelationshipRequest$Destination": "<p>Specifies the destination endpoint of the SnapMirror relationship.</p>"
+      }
+    },
+    "CreateSnapmirrorPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSnapmirrorPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSnapmirrorRelationshipRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSnapmirrorRelationshipResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSnapmirrorSource": {
+      "base": "<p>Specifies the source endpoint of the Amazon FSx for NetApp ONTAP SnapMirror relationship that you are creating.</p>",
+      "refs": {
+        "CreateSnapmirrorRelationshipRequest$Source": "<p>Specifies the source endpoint of the SnapMirror relationship.</p>"
+      }
+    },
+    "CreateSnapshotPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSnapshotPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateSnapshotRequest": {
       "base": null,
       "refs": {}
     },
     "CreateSnapshotResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateStorageVirtualMachinePeerRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateStorageVirtualMachinePeerResponse": {
       "base": null,
       "refs": {}
     },
@@ -646,6 +866,7 @@
         "FileCacheCreating$CreationTime": null,
         "FileSystem$CreationTime": "<p>The time that the file system was created, in seconds (since 1970-01-01T00:00:00Z), also known as Unix time.</p>",
         "S3AccessPointAttachment$CreationTime": null,
+        "SnapmirrorTransferState$EndTime": "<p>The time that the transfer ended.</p>",
         "Snapshot$CreationTime": null,
         "StorageVirtualMachine$CreationTime": null,
         "Volume$CreationTime": null
@@ -654,6 +875,8 @@
     "CustomerSecretsManagerARN": {
       "base": null,
       "refs": {
+        "ClusterPeer$PassphraseSecretArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret containing the cluster peering passphrase.</p>",
+        "CreateClusterPeerRequest$PassphraseSecretArn": "<p>Specifies the Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret containing the cluster peering passphrase. Store the passphrase as a plaintext secret value, not as a key-value pair. The secret must be in the same Amazon Web Services Region as the file system. You must use the same passphrase when you create the cluster peer relationship on the peer cluster.</p>",
         "SelfManagedActiveDirectoryAttributes$DomainJoinServiceAccountSecret": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret containing the service account credentials used to join the file system to your self-managed Active Directory domain.</p>",
         "SelfManagedActiveDirectoryConfiguration$DomainJoinServiceAccountSecret": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret containing the self-managed Active Directory domain join service account credentials. When provided, Amazon FSx uses the credentials stored in this secret to join the file system to your self-managed Active Directory domain.</p> <p>The secret must contain two key-value pairs:</p> <ul> <li> <p> <code>CUSTOMER_MANAGED_ACTIVE_DIRECTORY_USERNAME</code> - The username for the service account</p> </li> <li> <p> <code>CUSTOMER_MANAGED_ACTIVE_DIRECTORY_PASSWORD</code> - The password for the service account</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/WindowsGuide/self-manage-prereqs.html\"> Using Amazon FSx for Windows with your self-managed Microsoft Active Directory</a> or <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/self-manage-prereqs.html\"> Using Amazon FSx for ONTAP with your self-managed Microsoft Active Directory</a>.</p>",
         "SelfManagedActiveDirectoryConfigurationUpdates$DomainJoinServiceAccountSecret": "<p>Specifies the updated Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret containing the self-managed Active Directory domain join service account credentials. Amazon FSx uses this account to join to your self-managed Active Directory domain.</p>"
@@ -854,6 +1077,14 @@
       "base": "<p>The response object for the <code>DeleteBackup</code> operation.</p>",
       "refs": {}
     },
+    "DeleteClusterPeerRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteClusterPeerResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteDataInFileSystem": {
       "base": null,
       "refs": {
@@ -945,11 +1176,43 @@
         "DeleteVolumeOpenZFSConfiguration$Options": "<p>To delete the volume's child volumes, snapshots, and clones, use the string <code>DELETE_CHILD_VOLUMES_AND_SNAPSHOTS</code>.</p>"
       }
     },
+    "DeleteSnapmirrorPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSnapmirrorPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSnapmirrorRelationshipRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSnapmirrorRelationshipResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSnapshotPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSnapshotPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteSnapshotRequest": {
       "base": null,
       "refs": {}
     },
     "DeleteSnapshotResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteStorageVirtualMachinePeerRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteStorageVirtualMachinePeerResponse": {
       "base": null,
       "refs": {}
     },
@@ -993,6 +1256,14 @@
     },
     "DescribeBackupsResponse": {
       "base": "<p>Response object for the <code>DescribeBackups</code> operation.</p>",
+      "refs": {}
+    },
+    "DescribeClusterPeersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeClusterPeersResponse": {
+      "base": null,
       "refs": {}
     },
     "DescribeDataRepositoryAssociationsRequest": {
@@ -1051,11 +1322,43 @@
       "base": null,
       "refs": {}
     },
+    "DescribeSnapmirrorPoliciesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeSnapmirrorPoliciesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeSnapmirrorRelationshipsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeSnapmirrorRelationshipsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeSnapshotPoliciesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeSnapshotPoliciesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeSnapshotsRequest": {
       "base": null,
       "refs": {}
     },
     "DescribeSnapshotsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeStorageVirtualMachinePeersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeStorageVirtualMachinePeersResponse": {
       "base": null,
       "refs": {}
     },
@@ -1168,6 +1471,7 @@
         "AccessPointAlreadyOwnedByYou$ErrorCode": "<p>An error code indicating that an access point with that name already exists in the Amazon Web Services Region in your Amazon Web Services account.</p>",
         "InvalidAccessPoint$ErrorCode": "<p>An error code indicating that the access point specified doesn't exist.</p>",
         "InvalidRequest$ErrorCode": "<p>An error code indicating that the action or operation requested is invalid.</p>",
+        "OntapError$Code": "<p>The error code returned by ONTAP.</p>",
         "TooManyAccessPoints$ErrorCode": "<p>An error code indicating that you have reached the maximum number of S3 access points attachments allowed for your account in this Amazon Web Services Region, or for the file system.</p>"
       }
     },
@@ -1184,6 +1488,7 @@
         "BackupNotFound$Message": null,
         "BackupRestoring$Message": null,
         "BadRequest$Message": null,
+        "ClusterPeerNotFound$Message": null,
         "DataRepositoryAssociationNotFound$Message": null,
         "DataRepositoryFailureDetails$Message": null,
         "DataRepositoryTaskEnded$Message": null,
@@ -1212,13 +1517,18 @@
         "MissingFileSystemConfiguration$Message": null,
         "MissingVolumeConfiguration$Message": null,
         "NotServiceResourceError$Message": null,
+        "OntapError$Message": "<p>The error message returned by ONTAP.</p>",
         "ResourceDoesNotSupportTagging$Message": null,
         "ResourceNotFound$Message": null,
         "S3AccessPointAttachmentNotFound$Message": null,
         "ServiceLimitExceeded$Message": null,
+        "SnapmirrorPolicyNotFound$Message": null,
+        "SnapmirrorRelationshipNotFound$Message": null,
         "SnapshotNotFound$Message": null,
+        "SnapshotPolicyNotFound$Message": null,
         "SourceBackupUnavailable$Message": null,
         "StorageVirtualMachineNotFound$Message": null,
+        "StorageVirtualMachinePeerNotFound$Message": null,
         "TooManyAccessPoints$Message": null,
         "UnsupportedOperation$Message": null,
         "VolumeNotFound$Message": null
@@ -1235,6 +1545,14 @@
       "refs": {
         "AutoExportPolicy$Events": "<p>The <code>AutoExportPolicy</code> can have the following event values:</p> <ul> <li> <p> <code>NEW</code> - New files and directories are automatically exported to the data repository as they are added to the file system.</p> </li> <li> <p> <code>CHANGED</code> - Changes to files and directories on the file system are automatically exported to the data repository.</p> </li> <li> <p> <code>DELETED</code> - Files and directories are automatically deleted on the data repository when they are deleted on the file system.</p> </li> </ul> <p>You can define any combination of event types for your <code>AutoExportPolicy</code>.</p>",
         "AutoImportPolicy$Events": "<p>The <code>AutoImportPolicy</code> can have the following event values:</p> <ul> <li> <p> <code>NEW</code> - Amazon FSx automatically imports metadata of files added to the linked S3 bucket that do not currently exist in the FSx file system.</p> </li> <li> <p> <code>CHANGED</code> - Amazon FSx automatically updates file metadata and invalidates existing file content on the file system as files change in the data repository.</p> </li> <li> <p> <code>DELETED</code> - Amazon FSx automatically deletes files on the file system as corresponding files are deleted in the data repository.</p> </li> </ul> <p>You can define any combination of event types for your <code>AutoImportPolicy</code>.</p>"
+      }
+    },
+    "ExpiryTime": {
+      "base": null,
+      "refs": {
+        "CreateOntapSnapshotConfiguration$ExpiryTime": "<p>Specifies the date and time when the snapshot expires. You can't delete the snapshot before this time.</p>",
+        "OntapSnapshotConfiguration$ExpiryTime": "<p>The date and time when the snapshot expires. You can't delete the snapshot before this time.</p>",
+        "UpdateOntapSnapshotConfiguration$ExpiryTime": "<p>Specifies the date and time when the snapshot expires. You can't delete the snapshot before this time.</p>"
       }
     },
     "FailedCount": {
@@ -1393,9 +1711,13 @@
       "refs": {
         "AssociateFileSystemAliasesRequest$FileSystemId": "<p>Specifies the file system with which you want to associate one or more DNS aliases.</p>",
         "BackupRestoring$FileSystemId": "<p>The ID of a file system being restored from the backup.</p>",
+        "ClusterPeer$FileSystemId": "<p>The globally unique ID of the file system, assigned by Amazon FSx.</p>",
         "CreateBackupRequest$FileSystemId": "<p>The ID of the file system to back up.</p>",
+        "CreateClusterPeerRequest$FileSystemId": "<p>Specifies the ID of the Amazon FSx for NetApp ONTAP file system on which to create the cluster peer relationship.</p>",
         "CreateDataRepositoryAssociationRequest$FileSystemId": null,
         "CreateDataRepositoryTaskRequest$FileSystemId": null,
+        "CreateSnapmirrorPolicyRequest$FileSystemId": "<p>Specifies the ID of the Amazon FSx for NetApp ONTAP file system on which to create the SnapMirror policy. You must specify either a <code>FileSystemId</code> or a <code>StorageVirtualMachineId</code>, but not both.</p>",
+        "CreateSnapshotPolicyRequest$FileSystemId": "<p>Specifies the ID of the Amazon FSx for NetApp ONTAP file system on which to create the snapshot policy. You must specify either a <code>FileSystemId</code> or a <code>StorageVirtualMachineId</code>, but not both.</p>",
         "CreateStorageVirtualMachineRequest$FileSystemId": null,
         "DataRepositoryAssociation$FileSystemId": null,
         "DataRepositoryTask$FileSystemId": "<p>The globally unique ID of the file system.</p>",
@@ -1406,8 +1728,12 @@
         "FileSystem$FileSystemId": "<p>The system-generated, unique 17-digit ID of the file system.</p>",
         "FileSystemIds$member": null,
         "ReleaseFileSystemNfsV3LocksRequest$FileSystemId": null,
+        "SnapmirrorPolicy$FileSystemId": "<p>The globally unique ID of the file system, assigned by Amazon FSx.</p>",
+        "SnapmirrorRelationship$FileSystemId": "<p>The globally unique ID of the file system that the destination volume is on, assigned by Amazon FSx.</p>",
+        "SnapshotPolicy$FileSystemId": "<p>The globally unique ID of the file system, assigned by Amazon FSx.</p>",
         "StartMisconfiguredStateRecoveryRequest$FileSystemId": null,
         "StorageVirtualMachine$FileSystemId": null,
+        "StorageVirtualMachinePeer$FileSystemId": "<p>The globally unique ID of the file system, assigned by Amazon FSx.</p>",
         "UpdateFileSystemRequest$FileSystemId": "<p>The ID of the file system that you are updating.</p>",
         "Volume$FileSystemId": null
       }
@@ -1530,6 +1856,8 @@
         "CreateOpenZFSVolumeConfiguration$CopyTagsToSnapshots": "<p>A Boolean value indicating whether tags for the volume should be copied to snapshots. This value defaults to <code>false</code>. If this value is set to <code>true</code>, and you do not specify any tags, all tags for the original volume are copied over to snapshots. If this value is set to <code>true</code>, and you do specify one or more tags, only the specified tags for the original volume are copied over to snapshots. If you specify one or more tags when creating a new snapshot, no tags are copied over from the original volume, regardless of this value. </p>",
         "CreateSnaplockConfiguration$AuditLogVolume": "<p>Enables or disables the audit log volume for an FSx for ONTAP SnapLock volume. The default value is <code>false</code>. If you set <code>AuditLogVolume</code> to <code>true</code>, the SnapLock volume is created as an audit log volume. The minimum retention period for an audit log volume is six months. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/how-snaplock-works.html#snaplock-audit-log-volume\"> SnapLock audit log volumes</a>. </p>",
         "CreateSnaplockConfiguration$VolumeAppendModeEnabled": "<p>Enables or disables volume-append mode on an FSx for ONTAP SnapLock volume. Volume-append mode allows you to create WORM-appendable files and write data to them incrementally. The default value is <code>false</code>. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/worm-state.html#worm-state-append\">Volume-append mode</a>. </p>",
+        "CreateSnapmirrorPolicyRequest$NetworkCompressionEnabled": "<p>Specifies whether SnapMirror compresses data when it transfers the data over the network. This value defaults to <code>false</code>.</p>",
+        "CreateSnapshotPolicyRequest$Enabled": "<p>Specifies whether the snapshot policy is enabled. This value defaults to <code>true</code>.</p>",
         "DeleteFileSystemLustreConfiguration$SkipFinalBackup": "<p>Set <code>SkipFinalBackup</code> to false if you want to take a final backup of the file system you are deleting. By default, Amazon FSx will not take a final backup on your behalf when the <code>DeleteFileSystem</code> operation is invoked. (Default = true)</p> <note> <p>The <code>fsx:CreateBackup</code> permission is required if you set <code>SkipFinalBackup</code> to <code>false</code> in order to delete the file system and take a final backup.</p> </note>",
         "DeleteFileSystemOpenZFSConfiguration$SkipFinalBackup": "<p>By default, Amazon FSx for OpenZFS takes a final backup on your behalf when the <code>DeleteFileSystem</code> operation is invoked. Doing this helps protect you from data loss, and we highly recommend taking the final backup. If you want to skip taking a final backup, set this value to <code>true</code>.</p>",
         "DeleteFileSystemWindowsConfiguration$SkipFinalBackup": "<p>By default, Amazon FSx for Windows takes a final backup on your behalf when the <code>DeleteFileSystem</code> operation is invoked. Doing this helps protect you from data loss, and we highly recommend taking the final backup. If you want to skip this backup, use this flag to do so.</p>",
@@ -1549,12 +1877,16 @@
         "OpenZFSVolumeConfiguration$DeleteIntermediateData": "<p>A Boolean value indicating whether snapshot data that differs between the current state and the specified snapshot should be overwritten when a volume is restored from a snapshot.</p>",
         "SnaplockConfiguration$AuditLogVolume": "<p>Enables or disables the audit log volume for an FSx for ONTAP SnapLock volume. The default value is <code>false</code>. If you set <code>AuditLogVolume</code> to <code>true</code>, the SnapLock volume is created as an audit log volume. The minimum retention period for an audit log volume is six months. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/how-snaplock-works.html#snaplock-audit-log-volume\"> SnapLock audit log volumes</a>. </p>",
         "SnaplockConfiguration$VolumeAppendModeEnabled": "<p>Enables or disables volume-append mode on an FSx for ONTAP SnapLock volume. Volume-append mode allows you to create WORM-appendable files and write data to them incrementally. The default value is <code>false</code>. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/worm-state.html#worm-state-append\">Volume-append mode</a>. </p>",
+        "SnapmirrorPolicy$NetworkCompressionEnabled": "<p>Specifies whether SnapMirror compresses data when it transfers the data over the network. This value defaults to <code>false</code>.</p>",
+        "SnapshotPolicy$Enabled": "<p>Specifies whether the snapshot policy is enabled. This value defaults to <code>true</code>.</p>",
         "UpdateFileSystemOpenZFSConfiguration$CopyTagsToBackups": "<p>A Boolean value indicating whether tags for the file system should be copied to backups. This value defaults to <code>false</code>. If it's set to <code>true</code>, all tags for the file system are copied to all automatic and user-initiated backups where the user doesn't specify tags. If this value is <code>true</code> and you specify one or more tags, only the specified tags are copied to backups. If you specify one or more tags when creating a user-initiated backup, no tags are copied from the file system, regardless of this value.</p>",
         "UpdateFileSystemOpenZFSConfiguration$CopyTagsToVolumes": "<p>A Boolean value indicating whether tags for the volume should be copied to snapshots. This value defaults to <code>false</code>. If it's set to <code>true</code>, all tags for the volume are copied to snapshots where the user doesn't specify tags. If this value is <code>true</code> and you specify one or more tags, only the specified tags are copied to snapshots. If you specify one or more tags when creating the snapshot, no tags are copied from the volume, regardless of this value.</p>",
         "UpdateOntapVolumeConfiguration$StorageEfficiencyEnabled": "<p>Default is <code>false</code>. Set to true to enable the deduplication, compression, and compaction storage efficiency features on the volume.</p>",
         "UpdateOntapVolumeConfiguration$CopyTagsToBackups": "<p>A boolean flag indicating whether tags for the volume should be copied to backups. This value defaults to false. If it's set to true, all tags for the volume are copied to all automatic and user-initiated backups where the user doesn't specify tags. If this value is true, and you specify one or more tags, only the specified tags are copied to backups. If you specify one or more tags when creating a user-initiated backup, no tags are copied from the volume, regardless of this value.</p>",
         "UpdateSnaplockConfiguration$AuditLogVolume": "<p>Enables or disables the audit log volume for an FSx for ONTAP SnapLock volume. The default value is <code>false</code>. If you set <code>AuditLogVolume</code> to <code>true</code>, the SnapLock volume is created as an audit log volume. The minimum retention period for an audit log volume is six months. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/how-snaplock-works.html#snaplock-audit-log-volume\"> SnapLock audit log volumes</a>. </p>",
         "UpdateSnaplockConfiguration$VolumeAppendModeEnabled": "<p>Enables or disables volume-append mode on an FSx for ONTAP SnapLock volume. Volume-append mode allows you to create WORM-appendable files and write data to them incrementally. The default value is <code>false</code>. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/worm-state.html#worm-state-append\">Volume-append mode</a>. </p>",
+        "UpdateSnapmirrorPolicyRequest$NetworkCompressionEnabled": "<p>Specifies whether SnapMirror compresses data when it transfers the data over the network.</p>",
+        "UpdateSnapshotPolicyRequest$Enabled": "<p>Specifies whether the snapshot policy is enabled.</p>",
         "WindowsFileSystemConfiguration$CopyTagsToBackups": "<p>A boolean flag indicating whether tags on the file system should be copied to backups. This value defaults to false. If it's set to true, all tags on the file system are copied to all automatic backups and any user-initiated backups where the user doesn't specify any tags. If this value is true, and you specify one or more tags, only the specified tags are copied to backups. If you specify one or more tags when creating a user-initiated backup, no tags are copied from the file system, regardless of this value.</p>",
         "WindowsFsrmConfiguration$FsrmServiceEnabled": "<p>Specifies whether FSRM is enabled or disabled on the file system. When <code>TRUE</code>, the FSRM service is enabled and monitor file operations according to configured policies. When <code>FALSE</code> or omitted, FSRM is disabled. The default value is <code>FALSE</code>. </p>"
       }
@@ -1688,6 +2020,7 @@
         "OntapEndpointIpAddresses$member": null,
         "OpenZFSFileSystemConfiguration$EndpointIpAddress": "<p>The IPv4 address of the endpoint that is used to access data or to manage the file system.</p>",
         "OpenZFSFileSystemConfiguration$EndpointIpv6Address": "<p>The IPv6 address of the endpoint that is used to access data or to manage the file system.</p>",
+        "PeerAddresses$member": null,
         "RepositoryDnsIps$member": null,
         "WindowsFileSystemConfiguration$PreferredFileServerIp": "<p>For <code>MULTI_AZ_1</code> deployment types, the IPv4 address of the primary, or preferred, file server.</p> <p>Use this IP address when mounting the file system on Linux SMB clients or Windows SMB clients that are not joined to a Microsoft Active Directory. Applicable for all Windows file system deployment types. This IPv4 address is temporarily unavailable when the file system is undergoing maintenance. For Linux and Windows SMB clients that are joined to an Active Directory, use the file system's DNSName instead. For more information on mapping and mounting file shares, see <a href=\"https://docs.aws.amazon.com/fsx/latest/WindowsGuide/using-file-shares.html\">Accessing data using file shares</a>.</p>",
         "WindowsFileSystemConfiguration$PreferredFileServerIpv6": "<p>For MULTI_AZ_1 deployment types, the IPv6 address of the primary, or preferred, file server. Use this IP address when mounting the file system on Linux SMB clients or Windows SMB clients that are not joined to a Microsoft Active Directory. Applicable for all Windows file system deployment types. This IPv6 address is temporarily unavailable when the file system is undergoing maintenance. For Linux and Windows SMB clients that are joined to an Active Directory, use the file system's DNSName instead.</p>"
@@ -1734,6 +2067,12 @@
         "FileSystem$KmsKeyId": "<p>The ID of the Key Management Service (KMS) key used to encrypt Amazon FSx file system data. Used as follows with Amazon FSx file system types:</p> <ul> <li> <p>Amazon FSx for Lustre <code>PERSISTENT_1</code> and <code>PERSISTENT_2</code> deployment types only.</p> <p> <code>SCRATCH_1</code> and <code>SCRATCH_2</code> types are encrypted using the Amazon FSx service KMS key for your account.</p> </li> <li> <p>Amazon FSx for NetApp ONTAP</p> </li> <li> <p>Amazon FSx for OpenZFS</p> </li> <li> <p>Amazon FSx for Windows File Server</p> </li> </ul>"
       }
     },
+    "LagTimeInMinutes": {
+      "base": null,
+      "refs": {
+        "SnapmirrorRelationship$LagTimeInMinutes": "<p>The time, in minutes, since ONTAP created the latest snapshot that SnapMirror transferred to the destination volume.</p>"
+      }
+    },
     "LastUpdatedTime": {
       "base": null,
       "refs": {
@@ -1743,9 +2082,14 @@
     "LifecycleTransitionReason": {
       "base": "<p>Describes why a resource lifecycle state changed.</p>",
       "refs": {
+        "ClusterPeer$LifecycleTransitionReason": "<p>The reason why the cluster peer lifecycle status changed.</p>",
         "S3AccessPointAttachment$LifecycleTransitionReason": null,
-        "Snapshot$LifecycleTransitionReason": null,
+        "SnapmirrorPolicy$LifecycleTransitionReason": "<p>The reason why the SnapMirror policy lifecycle status changed.</p>",
+        "SnapmirrorRelationship$LifecycleTransitionReason": "<p>The reason why the SnapMirror relationship lifecycle status changed.</p>",
+        "Snapshot$LifecycleTransitionReason": "<p>The reason why the snapshot lifecycle status changed.</p>",
+        "SnapshotPolicy$LifecycleTransitionReason": "<p>The reason why the snapshot policy lifecycle status changed.</p>",
         "StorageVirtualMachine$LifecycleTransitionReason": "<p>Describes why the SVM lifecycle state changed.</p>",
+        "StorageVirtualMachinePeer$LifecycleTransitionReason": "<p>The reason why the SVM peer lifecycle status changed.</p>",
         "Volume$LifecycleTransitionReason": "<p>The reason why the volume lifecycle status changed.</p>"
       }
     },
@@ -1848,12 +2192,17 @@
       "base": "<p>The maximum number of resources to return in the response. This value must be an integer greater than zero.</p>",
       "refs": {
         "DescribeBackupsRequest$MaxResults": "<p>Maximum number of backups to return in the response. This parameter value must be greater than 0. The number of items that Amazon FSx returns is the minimum of the <code>MaxResults</code> parameter specified in the request and the service's internal maximum number of items per page.</p>",
+        "DescribeClusterPeersRequest$MaxResults": null,
         "DescribeDataRepositoryTasksRequest$MaxResults": null,
         "DescribeFileCachesRequest$MaxResults": null,
         "DescribeFileSystemAliasesRequest$MaxResults": "<p>Maximum number of DNS aliases to return in the response (integer). This parameter value must be greater than 0. The number of items that Amazon FSx returns is the minimum of the <code>MaxResults</code> parameter specified in the request and the service's internal maximum number of items per page.</p>",
         "DescribeFileSystemsRequest$MaxResults": "<p>Maximum number of file systems to return in the response (integer). This parameter value must be greater than 0. The number of items that Amazon FSx returns is the minimum of the <code>MaxResults</code> parameter specified in the request and the service's internal maximum number of items per page.</p>",
         "DescribeS3AccessPointAttachmentsRequest$MaxResults": null,
+        "DescribeSnapmirrorPoliciesRequest$MaxResults": null,
+        "DescribeSnapmirrorRelationshipsRequest$MaxResults": null,
+        "DescribeSnapshotPoliciesRequest$MaxResults": null,
         "DescribeSnapshotsRequest$MaxResults": null,
+        "DescribeStorageVirtualMachinePeersRequest$MaxResults": null,
         "DescribeStorageVirtualMachinesRequest$MaxResults": null,
         "DescribeVolumesRequest$MaxResults": null,
         "ListTagsForResourceRequest$MaxResults": "<p>Maximum number of tags to return in the response (integer). This parameter value must be greater than 0. The number of items that Amazon FSx returns is the minimum of the <code>MaxResults</code> parameter specified in the request and the service's internal maximum number of items per page.</p>"
@@ -1969,6 +2318,8 @@
       "refs": {
         "DescribeBackupsRequest$NextToken": "<p>An opaque pagination token returned from a previous <code>DescribeBackups</code> operation. If a token is present, the operation continues the list from where the returning call left off.</p>",
         "DescribeBackupsResponse$NextToken": "<p>A <code>NextToken</code> value is present if there are more backups than returned in the response. You can use the <code>NextToken</code> value in the subsequent request to fetch the backups. </p>",
+        "DescribeClusterPeersRequest$NextToken": null,
+        "DescribeClusterPeersResponse$NextToken": null,
         "DescribeDataRepositoryAssociationsRequest$NextToken": null,
         "DescribeDataRepositoryAssociationsResponse$NextToken": null,
         "DescribeDataRepositoryTasksRequest$NextToken": null,
@@ -1981,8 +2332,16 @@
         "DescribeFileSystemsResponse$NextToken": "<p>Present if there are more file systems than returned in the response (String). You can use the <code>NextToken</code> value in the later request to fetch the descriptions. </p>",
         "DescribeS3AccessPointAttachmentsRequest$NextToken": null,
         "DescribeS3AccessPointAttachmentsResponse$NextToken": null,
+        "DescribeSnapmirrorPoliciesRequest$NextToken": null,
+        "DescribeSnapmirrorPoliciesResponse$NextToken": null,
+        "DescribeSnapmirrorRelationshipsRequest$NextToken": null,
+        "DescribeSnapmirrorRelationshipsResponse$NextToken": null,
+        "DescribeSnapshotPoliciesRequest$NextToken": null,
+        "DescribeSnapshotPoliciesResponse$NextToken": null,
         "DescribeSnapshotsRequest$NextToken": null,
         "DescribeSnapshotsResponse$NextToken": null,
+        "DescribeStorageVirtualMachinePeersRequest$NextToken": null,
+        "DescribeStorageVirtualMachinePeersResponse$NextToken": null,
         "DescribeStorageVirtualMachinesRequest$NextToken": null,
         "DescribeStorageVirtualMachinesResponse$NextToken": null,
         "DescribeVolumesRequest$NextToken": null,
@@ -2018,6 +2377,12 @@
         "SvmEndpoint$Ipv6Addresses": "<p>The SVM endpoint's IPv6 addresses.</p>"
       }
     },
+    "OntapError": {
+      "base": "<p>An error returned by ONTAP for an operation on an Amazon FSx for NetApp ONTAP resource.</p>",
+      "refs": {
+        "LifecycleTransitionReason$OntapError": "<p>The error returned by ONTAP when an operation on the resource fails. Returned only for certain FSx for ONTAP resources.</p>"
+      }
+    },
     "OntapFileSystemConfiguration": {
       "base": "<p>Configuration for the FSx for NetApp ONTAP file system.</p>",
       "refs": {
@@ -2042,6 +2407,12 @@
       "base": null,
       "refs": {
         "OntapFileSystemIdentity$Type": "<p>Specifies the FSx for ONTAP user identity type. Valid values are <code>UNIX</code> and <code>WINDOWS</code>.</p>"
+      }
+    },
+    "OntapSnapshotConfiguration": {
+      "base": "<p>The configuration of an Amazon FSx for NetApp ONTAP snapshot.</p>",
+      "refs": {
+        "Snapshot$OntapConfiguration": "<p>The configuration of an Amazon FSx for NetApp ONTAP snapshot.</p>"
       }
     },
     "OntapUnixFileSystemUser": {
@@ -2230,6 +2601,39 @@
         "IncompatibleParameterError$Parameter": "<p>A parameter that is incompatible with the earlier request.</p>"
       }
     },
+    "PeerAddresses": {
+      "base": null,
+      "refs": {
+        "ClusterPeer$PeerAddresses": "<p>The IP addresses of the intercluster logical interfaces (LIFs) on the peer cluster.</p>",
+        "CreateClusterPeerRequest$PeerAddresses": "<p>Specifies the IP addresses of the intercluster logical interfaces (LIFs) on the peer cluster.</p>",
+        "UpdateClusterPeerRequest$PeerAddresses": "<p>Specifies the IP addresses of the intercluster logical interfaces (LIFs) on the peer cluster. The addresses that you specify replace the existing peer addresses.</p>"
+      }
+    },
+    "PeerClusterName": {
+      "base": null,
+      "refs": {
+        "ClusterPeer$PeerClusterName": "<p>The name that the file system uses to identify the peer cluster.</p>",
+        "CreateClusterPeerRequest$PeerClusterName": "<p>Specifies the name that the file system uses to identify the peer cluster.</p>",
+        "CreateStorageVirtualMachinePeerRequest$PeerClusterName": "<p>Specifies the name of the peer cluster that the peer SVM is on.</p>",
+        "StorageVirtualMachinePeer$PeerClusterName": "<p>The name of the peer cluster that the peer SVM is on.</p>",
+        "UpdateClusterPeerRequest$PeerClusterName": "<p>Specifies the name that the file system uses to identify the peer cluster.</p>"
+      }
+    },
+    "PeerSvmAlias": {
+      "base": null,
+      "refs": {
+        "CreateStorageVirtualMachinePeerRequest$PeerSvmAlias": "<p>Specifies the name that the local cluster uses to identify the peer SVM.</p>",
+        "StorageVirtualMachinePeer$PeerSvmAlias": "<p>The name that the local cluster uses to identify the peer SVM.</p>",
+        "UpdateStorageVirtualMachinePeerRequest$PeerSvmAlias": "<p>Specifies the name that the local cluster uses to identify the peer SVM.</p>"
+      }
+    },
+    "PeerSvmName": {
+      "base": null,
+      "refs": {
+        "CreateStorageVirtualMachinePeerRequest$PeerSvmName": "<p>Specifies the name of the SVM to peer with.</p>",
+        "StorageVirtualMachinePeer$PeerSvmName": "<p>The name of the SVM on the peer cluster.</p>"
+      }
+    },
     "PerUnitStorageThroughput": {
       "base": null,
       "refs": {
@@ -2251,7 +2655,7 @@
     "ProgressPercent": {
       "base": "<p>Displays the current percent of progress of an asynchronous task.</p>",
       "refs": {
-        "AdministrativeAction$ProgressPercent": "<p>The percentage-complete status of a <code>STORAGE_OPTIMIZATION</code> or <code>DOWNLOAD_DATA_FROM_BACKUP</code> administrative action. Does not apply to any other administrative action type.</p>",
+        "AdministrativeAction$ProgressPercent": "<p>The percentage-complete status of a <code>STORAGE_OPTIMIZATION</code>, <code>DOWNLOAD_DATA_FROM_BACKUP</code>, or <code>VOLUME_CLONE_SPLIT</code> administrative action. Does not apply to any other administrative action type.</p>",
         "Backup$ProgressPercent": null
       }
     },
@@ -2328,6 +2732,7 @@
       "refs": {
         "ActiveDirectoryBackupAttributes$ResourceARN": null,
         "Backup$ResourceARN": "<p>The Amazon Resource Name (ARN) for the backup resource.</p>",
+        "ClusterPeer$ResourceARN": null,
         "CopySnapshotAndUpdateVolumeRequest$SourceSnapshotARN": null,
         "CreateOpenZFSOriginSnapshotConfiguration$SnapshotARN": null,
         "DataRepositoryAssociation$ResourceARN": null,
@@ -2341,8 +2746,12 @@
         "OpenZFSVolumeConfiguration$SourceSnapshotARN": null,
         "ResourceDoesNotSupportTagging$ResourceARN": "<p>The Amazon Resource Name (ARN) of the resource that doesn't support tagging.</p>",
         "ResourceNotFound$ResourceARN": "<p>The resource ARN of the resource that can't be found.</p>",
+        "SnapmirrorPolicy$ResourceARN": null,
+        "SnapmirrorRelationship$ResourceARN": null,
         "Snapshot$ResourceARN": null,
+        "SnapshotPolicy$ResourceARN": null,
         "StorageVirtualMachine$ResourceARN": null,
+        "StorageVirtualMachinePeer$ResourceARN": null,
         "TagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the Amazon FSx resource that you want to tag.</p>",
         "UntagResourceRequest$ResourceARN": "<p>The ARN of the Amazon FSx resource to untag.</p>",
         "Volume$ResourceARN": null
@@ -2604,6 +3013,14 @@
         "OntapVolumeConfiguration$SnaplockConfiguration": "<p>The SnapLock configuration object for an FSx for ONTAP SnapLock volume. </p>"
       }
     },
+    "SnaplockExpiryTime": {
+      "base": null,
+      "refs": {
+        "CreateOntapSnapshotConfiguration$SnaplockExpiryTime": "<p>Specifies the date and time until which the snapshot is locked. This setting takes effect only if snapshot locking is enabled on the volume. Snapshot locking is separate from SnapLock, and enabling SnapLock on a volume doesn't enable snapshot locking. You can't delete the snapshot before this time.</p>",
+        "OntapSnapshotConfiguration$SnaplockExpiryTime": "<p>The date and time until which the snapshot is locked. This setting takes effect only if snapshot locking is enabled on the volume. Snapshot locking is separate from SnapLock, and enabling SnapLock on a volume doesn't enable snapshot locking. You can't delete the snapshot before this time.</p>",
+        "UpdateOntapSnapshotConfiguration$SnaplockExpiryTime": "<p>Specifies the date and time until which the snapshot is locked. This setting takes effect only if snapshot locking is enabled on the volume. Snapshot locking is separate from SnapLock, and enabling SnapLock on a volume doesn't enable snapshot locking. You can't delete the snapshot before this time.</p>"
+      }
+    },
     "SnaplockRetentionPeriod": {
       "base": "<p>The configuration to set the retention period of an FSx for ONTAP SnapLock volume. The retention period includes default, maximum, and minimum settings. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/snaplock-retention.html\">Working with the retention period in SnapLock</a>. </p>",
       "refs": {
@@ -2619,8 +3036,307 @@
         "SnaplockConfiguration$SnaplockType": "<p>Specifies the retention mode of an FSx for ONTAP SnapLock volume. After it is set, it can't be changed. You can choose one of the following retention modes: </p> <ul> <li> <p> <code>COMPLIANCE</code>: Files transitioned to write once, read many (WORM) on a Compliance volume can't be deleted until their retention periods expire. This retention mode is used to address government or industry-specific mandates or to protect against ransomware attacks. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/snaplock-compliance.html\">SnapLock Compliance</a>. </p> </li> <li> <p> <code>ENTERPRISE</code>: Files transitioned to WORM on an Enterprise volume can be deleted by authorized users before their retention periods expire using privileged delete. This retention mode is used to advance an organization's data integrity and internal compliance or to test retention settings before using SnapLock Compliance. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/snaplock-enterprise.html\">SnapLock Enterprise</a>. </p> </li> </ul>"
       }
     },
+    "SnapmirrorDestination": {
+      "base": "<p>Describes the destination endpoint of an Amazon FSx for NetApp ONTAP SnapMirror relationship. The destination volume is always an Amazon FSx for NetApp ONTAP volume.</p>",
+      "refs": {
+        "SnapmirrorRelationship$Destination": "<p>The destination endpoint of the SnapMirror relationship.</p>"
+      }
+    },
+    "SnapmirrorExportedSnapshot": {
+      "base": "<p>Describes the latest snapshot that SnapMirror transferred to the destination volume of an Amazon FSx for NetApp ONTAP SnapMirror relationship.</p>",
+      "refs": {
+        "SnapmirrorRelationship$ExportedSnapshot": "<p>The latest snapshot that SnapMirror transferred to the destination volume.</p>"
+      }
+    },
+    "SnapmirrorExportedSnapshotName": {
+      "base": null,
+      "refs": {
+        "SnapmirrorExportedSnapshot$SnapshotName": "<p>The name of the snapshot in ONTAP.</p>"
+      }
+    },
+    "SnapmirrorHealthy": {
+      "base": null,
+      "refs": {
+        "SnapmirrorRelationship$Healthy": "<p>Indicates whether ONTAP reports the SnapMirror relationship as healthy.</p>"
+      }
+    },
+    "SnapmirrorLabel": {
+      "base": null,
+      "refs": {
+        "CreateOntapSnapshotConfiguration$SnapmirrorLabel": "<p>Specifies the SnapMirror label to assign to the snapshot. SnapMirror policies use labels to select which snapshots to replicate to a destination volume.</p>",
+        "OntapSnapshotConfiguration$SnapmirrorLabel": "<p>The SnapMirror label of the snapshot. SnapMirror policies use labels to select which snapshots to replicate to a destination volume.</p>",
+        "SnapmirrorPolicyRetentionRule$Label": "<p>The SnapMirror label of the snapshots that the rule applies to.</p>",
+        "SnapshotPolicySchedule$SnapmirrorLabel": "<p>The SnapMirror label to assign to the snapshots that the schedule creates. SnapMirror policies use labels to select which snapshots to replicate to a destination volume.</p>",
+        "UpdateOntapSnapshotConfiguration$SnapmirrorLabel": "<p>Specifies the SnapMirror label for the snapshot. SnapMirror policies use labels to select which snapshots to replicate to a destination volume.</p>"
+      }
+    },
+    "SnapmirrorPath": {
+      "base": null,
+      "refs": {
+        "CreateSnapmirrorSource$Path": "<p>Specifies the path of the source volume, in the format <code>svm_name:volume_name</code>.</p>",
+        "SnapmirrorDestination$Path": "<p>The path of the destination volume, in the format <code>svm_name:volume_name</code>.</p>",
+        "SnapmirrorSource$Path": "<p>The path of the source volume, in the format <code>svm_name:volume_name</code>.</p>"
+      }
+    },
+    "SnapmirrorPolicies": {
+      "base": null,
+      "refs": {
+        "DescribeSnapmirrorPoliciesResponse$SnapmirrorPolicies": "<p>Describes each SnapMirror policy returned by the <code>DescribeSnapmirrorPolicies</code> operation.</p>"
+      }
+    },
+    "SnapmirrorPolicy": {
+      "base": "<p>Describes an Amazon FSx for NetApp ONTAP SnapMirror policy.</p>",
+      "refs": {
+        "CreateSnapmirrorPolicyResponse$SnapmirrorPolicy": "<p>A description of the SnapMirror policy.</p>",
+        "SnapmirrorPolicies$member": null,
+        "UpdateSnapmirrorPolicyResponse$SnapmirrorPolicy": "<p>A description of the SnapMirror policy that was just updated.</p>"
+      }
+    },
+    "SnapmirrorPolicyCreationScheduleName": {
+      "base": null,
+      "refs": {
+        "SnapmirrorPolicyRetentionRule$CreationSchedule": "<p>The name of the ONTAP schedule on which SnapMirror creates snapshots with the label directly on the destination volume.</p>"
+      }
+    },
+    "SnapmirrorPolicyFilter": {
+      "base": "<p>A filter used to restrict the results of describe calls for Amazon FSx for NetApp ONTAP SnapMirror policies.</p>",
+      "refs": {
+        "SnapmirrorPolicyFilters$member": null
+      }
+    },
+    "SnapmirrorPolicyFilterName": {
+      "base": null,
+      "refs": {
+        "SnapmirrorPolicyFilter$Name": "<p>The name for this filter.</p>"
+      }
+    },
+    "SnapmirrorPolicyFilterValue": {
+      "base": null,
+      "refs": {
+        "SnapmirrorPolicyFilterValues$member": null
+      }
+    },
+    "SnapmirrorPolicyFilterValues": {
+      "base": null,
+      "refs": {
+        "SnapmirrorPolicyFilter$Values": "<p>The values of the filter. These are all the values for any of the applied filters.</p>"
+      }
+    },
+    "SnapmirrorPolicyFilters": {
+      "base": null,
+      "refs": {
+        "DescribeSnapmirrorPoliciesRequest$Filters": "<p>The filters structure. The supported names are <code>file-system-id</code> or <code>storage-virtual-machine-id</code>.</p>"
+      }
+    },
+    "SnapmirrorPolicyId": {
+      "base": null,
+      "refs": {
+        "CreateSnapmirrorRelationshipRequest$PolicyId": "<p>Specifies the ID of the SnapMirror policy that the SnapMirror relationship uses.</p>",
+        "DeleteSnapmirrorPolicyRequest$SnapmirrorPolicyId": "<p>The ID of the SnapMirror policy that you are deleting.</p>",
+        "DeleteSnapmirrorPolicyResponse$SnapmirrorPolicyId": "<p>The ID of the SnapMirror policy that's being deleted.</p>",
+        "SnapmirrorPolicy$SnapmirrorPolicyId": "<p>The system-generated, unique ID of the SnapMirror policy.</p>",
+        "SnapmirrorPolicyIds$member": null,
+        "SnapmirrorRelationshipPolicy$PolicyId": "<p>The ID of the SnapMirror policy.</p>",
+        "UpdateSnapmirrorPolicyRequest$SnapmirrorPolicyId": "<p>The ID of the SnapMirror policy that you want to update.</p>",
+        "UpdateSnapmirrorRelationshipRequest$PolicyId": "<p>Specifies the ID of the SnapMirror policy that the SnapMirror relationship uses.</p>"
+      }
+    },
+    "SnapmirrorPolicyIds": {
+      "base": null,
+      "refs": {
+        "DescribeSnapmirrorPoliciesRequest$SnapmirrorPolicyIds": "<p>The IDs of the SnapMirror policies that you want to retrieve. If you also specify <code>Filters</code>, only SnapMirror policies that match both the IDs and the filters are returned. If any IDs aren't found, or if a filter excludes any of them, a <code>SnapmirrorPolicyNotFound</code> error occurs.</p>"
+      }
+    },
+    "SnapmirrorPolicyLifecycle": {
+      "base": null,
+      "refs": {
+        "DeleteSnapmirrorPolicyResponse$Lifecycle": "<p>The lifecycle state of the SnapMirror policy being deleted. If the <code>DeleteSnapmirrorPolicy</code> operation is successful, this value is <code>DELETING</code>.</p>",
+        "SnapmirrorPolicy$Lifecycle": "<p>The lifecycle status of the SnapMirror policy can be one of the following:</p> <ul> <li> <p> <code>CREATED</code> – The SnapMirror policy is fully available for use.</p> </li> <li> <p> <code>CREATING</code> – Amazon FSx is creating the SnapMirror policy.</p> </li> <li> <p> <code>DELETING</code> – Amazon FSx is deleting the SnapMirror policy.</p> </li> <li> <p> <code>FAILED</code> – Amazon FSx was unable to create the SnapMirror policy.</p> </li> </ul>"
+      }
+    },
+    "SnapmirrorPolicyName": {
+      "base": null,
+      "refs": {
+        "CreateSnapmirrorPolicyRequest$Name": "<p>Specifies the name of the SnapMirror policy.</p>",
+        "SnapmirrorPolicy$Name": "<p>The name of the SnapMirror policy.</p>",
+        "SnapmirrorRelationshipPolicy$PolicyName": "<p>The name of the SnapMirror policy in ONTAP.</p>"
+      }
+    },
+    "SnapmirrorPolicyNotFound": {
+      "base": "<p>No Amazon FSx SnapMirror policies were found based on the supplied parameters.</p>",
+      "refs": {}
+    },
+    "SnapmirrorPolicyRetentionCount": {
+      "base": null,
+      "refs": {
+        "SnapmirrorPolicyRetentionRule$Count": "<p>The number of snapshots with the label to retain on the destination volume.</p>"
+      }
+    },
+    "SnapmirrorPolicyRetentionRule": {
+      "base": "<p>Specifies a snapshot retention rule for an Amazon FSx for NetApp ONTAP SnapMirror policy.</p>",
+      "refs": {
+        "SnapmirrorPolicyRetentionRules$member": null
+      }
+    },
+    "SnapmirrorPolicyRetentionRules": {
+      "base": null,
+      "refs": {
+        "CreateSnapmirrorPolicyRequest$RetentionRules": "<p>Specifies the rules that determine which snapshots SnapMirror retains on the destination volume, based on their SnapMirror labels.</p>",
+        "SnapmirrorPolicy$RetentionRules": "<p>The rules that determine which snapshots SnapMirror retains on the destination volume.</p>",
+        "UpdateSnapmirrorPolicyRequest$RetentionRules": "<p>Specifies the rules that determine which snapshots SnapMirror retains on the destination volume, based on their SnapMirror labels. The rules that you specify replace all the SnapMirror policy's existing retention rules. To keep an existing rule, include it in the list. To remove all retention rules, specify an empty list.</p>"
+      }
+    },
+    "SnapmirrorPolicyScope": {
+      "base": null,
+      "refs": {
+        "SnapmirrorPolicy$Scope": "<p>The scope of the SnapMirror policy can be one of the following:</p> <ul> <li> <p> <code>FILESYSTEM</code> – The SnapMirror policy was created on the file system.</p> </li> <li> <p> <code>SVM</code> – The SnapMirror policy was created on an SVM.</p> </li> </ul>"
+      }
+    },
+    "SnapmirrorPolicySnapshotCopyMode": {
+      "base": null,
+      "refs": {
+        "CreateSnapmirrorPolicyRequest$SnapshotCopyMode": "<p>Specifies which snapshots SnapMirror transfers to the destination volume:</p> <ul> <li> <p> <code>COPY_ALL_SOURCE_SNAPSHOTS</code> – SnapMirror copies all snapshots of the source volume to the destination volume on a transfer. You can't specify <code>RetentionRules</code> along with this property.</p> </li> <li> <p> <code>COPY_LATEST_SOURCE_SNAPSHOT</code> – SnapMirror copies the latest snapshot of the source volume to the destination volume on a transfer. You can't specify <code>RetentionRules</code> along with this property.</p> </li> <li> <p> <code>NO_CREATE_SNAPSHOT_ON_SOURCE</code> – SnapMirror doesn't create a snapshot on the source volume at beginning of an update or resync operation. You must specify <code>RetentionRules</code> along with this property.</p> </li> </ul> <p>If you don't specify a <code>SnapshotCopyMode</code>, SnapMirror creates a new snapshot of the source volume and copies it, along with any snapshots that match <code>RetentionRules</code>, to the destination volume on a transfer. <code>RetentionRules</code> is optional.</p>",
+        "SnapmirrorPolicy$SnapshotCopyMode": "<p>The snapshot copy mode of the SnapMirror policy, which determines which snapshots SnapMirror transfers to the destination volume.</p>"
+      }
+    },
+    "SnapmirrorRelationship": {
+      "base": "<p>Describes an Amazon FSx for NetApp ONTAP SnapMirror relationship.</p>",
+      "refs": {
+        "CreateSnapmirrorRelationshipResponse$SnapmirrorRelationship": "<p>A description of the SnapMirror relationship.</p>",
+        "SnapmirrorRelationships$member": null,
+        "UpdateSnapmirrorRelationshipResponse$SnapmirrorRelationship": "<p>A description of the SnapMirror relationship that was just updated.</p>"
+      }
+    },
+    "SnapmirrorRelationshipFilter": {
+      "base": "<p>A filter used to restrict the results of describe calls for Amazon FSx for NetApp ONTAP SnapMirror relationships.</p>",
+      "refs": {
+        "SnapmirrorRelationshipFilters$member": null
+      }
+    },
+    "SnapmirrorRelationshipFilterName": {
+      "base": null,
+      "refs": {
+        "SnapmirrorRelationshipFilter$Name": "<p>The name for this filter.</p>"
+      }
+    },
+    "SnapmirrorRelationshipFilterValue": {
+      "base": null,
+      "refs": {
+        "SnapmirrorRelationshipFilterValues$member": null
+      }
+    },
+    "SnapmirrorRelationshipFilterValues": {
+      "base": null,
+      "refs": {
+        "SnapmirrorRelationshipFilter$Values": "<p>The values of the filter. These are all the values for any of the applied filters.</p>"
+      }
+    },
+    "SnapmirrorRelationshipFilters": {
+      "base": null,
+      "refs": {
+        "DescribeSnapmirrorRelationshipsRequest$Filters": "<p>The filters structure. The supported names are <code>file-system-id</code> or <code>destination-volume-id</code>.</p>"
+      }
+    },
+    "SnapmirrorRelationshipId": {
+      "base": null,
+      "refs": {
+        "DeleteSnapmirrorRelationshipRequest$SnapmirrorRelationshipId": "<p>The ID of the SnapMirror relationship that you are deleting.</p>",
+        "DeleteSnapmirrorRelationshipResponse$SnapmirrorRelationshipId": "<p>The ID of the SnapMirror relationship that's being deleted.</p>",
+        "SnapmirrorRelationship$SnapmirrorRelationshipId": "<p>The system-generated, unique ID of the SnapMirror relationship.</p>",
+        "SnapmirrorRelationshipIds$member": null,
+        "UpdateSnapmirrorRelationshipRequest$SnapmirrorRelationshipId": "<p>The ID of the SnapMirror relationship that you want to update.</p>"
+      }
+    },
+    "SnapmirrorRelationshipIds": {
+      "base": null,
+      "refs": {
+        "DescribeSnapmirrorRelationshipsRequest$SnapmirrorRelationshipIds": "<p>The IDs of the SnapMirror relationships that you want to retrieve. If you also specify <code>Filters</code>, only SnapMirror relationships that match both the IDs and the filters are returned. If any IDs aren't found, or if a filter excludes any of them, a <code>SnapmirrorRelationshipNotFound</code> error occurs.</p>"
+      }
+    },
+    "SnapmirrorRelationshipLifecycle": {
+      "base": null,
+      "refs": {
+        "DeleteSnapmirrorRelationshipResponse$Lifecycle": "<p>The lifecycle state of the SnapMirror relationship being deleted. If the <code>DeleteSnapmirrorRelationship</code> operation is successful, this value is <code>DELETING</code>.</p>",
+        "SnapmirrorRelationship$Lifecycle": "<p>The lifecycle status of the SnapMirror relationship can be one of the following:</p> <ul> <li> <p> <code>CREATED</code> – The SnapMirror relationship is fully available for use.</p> </li> <li> <p> <code>CREATING</code> – Amazon FSx is creating the SnapMirror relationship.</p> </li> <li> <p> <code>DELETING</code> – Amazon FSx is deleting the SnapMirror relationship.</p> </li> <li> <p> <code>FAILED</code> – Amazon FSx was unable to create the SnapMirror relationship.</p> </li> </ul>"
+      }
+    },
+    "SnapmirrorRelationshipNotFound": {
+      "base": "<p>No Amazon FSx SnapMirror relationships were found based on the supplied parameters.</p>",
+      "refs": {}
+    },
+    "SnapmirrorRelationshipPolicy": {
+      "base": "<p>Describes the SnapMirror policy that an Amazon FSx for NetApp ONTAP SnapMirror relationship uses.</p>",
+      "refs": {
+        "SnapmirrorRelationship$SnapmirrorPolicy": "<p>The SnapMirror policy that the SnapMirror relationship uses.</p>"
+      }
+    },
+    "SnapmirrorRelationshipState": {
+      "base": null,
+      "refs": {
+        "SnapmirrorRelationship$State": "<p>The state of the SnapMirror relationship in ONTAP can be one of the following:</p> <ul> <li> <p> <code>UNINITIALIZED</code> – SnapMirror hasn't transferred the baseline copy of the source volume to the destination volume.</p> </li> <li> <p> <code>TRANSFERRING</code> – SnapMirror is transferring data to the destination volume.</p> </li> <li> <p> <code>SNAPMIRRORED</code> – SnapMirror transferred the baseline copy, and the destination volume receives updates from the source volume.</p> </li> <li> <p> <code>PAUSED</code> – SnapMirror transfers for the relationship are paused.</p> </li> <li> <p> <code>BROKEN_OFF</code> – The relationship is broken off, and the destination volume is writable. SnapMirror doesn't transfer data to the destination volume.</p> </li> </ul>"
+      }
+    },
+    "SnapmirrorRelationships": {
+      "base": null,
+      "refs": {
+        "DescribeSnapmirrorRelationshipsResponse$SnapmirrorRelationships": "<p>Describes each SnapMirror relationship returned by the <code>DescribeSnapmirrorRelationships</code> operation.</p>"
+      }
+    },
+    "SnapmirrorSource": {
+      "base": "<p>Describes the source endpoint of an Amazon FSx for NetApp ONTAP SnapMirror relationship. The source volume can be on an Amazon FSx for NetApp ONTAP file system or on another ONTAP cluster.</p>",
+      "refs": {
+        "SnapmirrorRelationship$Source": "<p>The source endpoint of the SnapMirror relationship.</p>"
+      }
+    },
+    "SnapmirrorTransferBytes": {
+      "base": null,
+      "refs": {
+        "SnapmirrorTransferState$BytesTransferred": "<p>The number of bytes that the transfer transferred.</p>"
+      }
+    },
+    "SnapmirrorTransferDuration": {
+      "base": null,
+      "refs": {
+        "SnapmirrorTransferState$Duration": "<p>The duration of the transfer, in ISO 8601 duration format.</p>"
+      }
+    },
+    "SnapmirrorTransferScheduleName": {
+      "base": null,
+      "refs": {
+        "CreateSnapmirrorPolicyRequest$TransferSchedule": "<p>Specifies the name of the ONTAP schedule that determines when SnapMirror transfers data.</p>",
+        "CreateSnapmirrorRelationshipRequest$TransferSchedule": "<p>Specifies the name of the ONTAP schedule that determines when SnapMirror transfers data for the relationship. This schedule overrides the transfer schedule of the SnapMirror policy.</p>",
+        "SnapmirrorPolicy$TransferSchedule": "<p>The name of the ONTAP schedule that determines when SnapMirror transfers data.</p>",
+        "SnapmirrorRelationship$TransferSchedule": "<p>The name of the ONTAP schedule that determines when SnapMirror transfers data for the relationship. This schedule overrides the transfer schedule of the SnapMirror policy.</p>",
+        "UpdateSnapmirrorPolicyRequest$TransferSchedule": "<p>Specifies the name of the ONTAP schedule that determines when SnapMirror transfers data. To remove the transfer schedule, specify an empty string.</p>",
+        "UpdateSnapmirrorRelationshipRequest$TransferSchedule": "<p>Specifies the name of the ONTAP schedule that determines when SnapMirror transfers data for the relationship. This schedule overrides the transfer schedule of the SnapMirror policy.</p>"
+      }
+    },
+    "SnapmirrorTransferState": {
+      "base": "<p>Describes the latest transfer of an Amazon FSx for NetApp ONTAP SnapMirror relationship.</p>",
+      "refs": {
+        "SnapmirrorRelationship$TransferState": "<p>The latest SnapMirror transfer for the relationship. If a transfer is in progress, this is the in-progress transfer. Otherwise, it's the most recently completed transfer.</p>"
+      }
+    },
+    "SnapmirrorTransferStatus": {
+      "base": null,
+      "refs": {
+        "SnapmirrorTransferState$State": "<p>The state of the transfer that ONTAP reports.</p>"
+      }
+    },
+    "SnapmirrorTransferType": {
+      "base": null,
+      "refs": {
+        "SnapmirrorTransferState$Type": "<p>The type of the transfer that ONTAP reports.</p>"
+      }
+    },
+    "SnapmirrorUnhealthyReason": {
+      "base": null,
+      "refs": {
+        "SnapmirrorRelationship$UnhealthyReason": "<p>The reason that ONTAP reports for why the SnapMirror relationship is unhealthy, if <code>Healthy</code> is <code>false</code>.</p>"
+      }
+    },
     "Snapshot": {
-      "base": "<p>A snapshot of an Amazon FSx for OpenZFS volume.</p>",
+      "base": "<p>A snapshot of an Amazon FSx for OpenZFS or Amazon FSx for NetApp ONTAP volume.</p>",
       "refs": {
         "AdministrativeAction$TargetSnapshotValues": null,
         "CreateSnapshotResponse$Snapshot": "<p>A description of the snapshot.</p>",
@@ -2661,11 +3377,14 @@
     "SnapshotId": {
       "base": null,
       "refs": {
+        "CloneConfiguration$SnapshotId": "<p>The ID of the snapshot of the parent volume that the clone was created from, if you specified one when you created the clone.</p>",
+        "CreateCloneConfiguration$SnapshotId": "<p>Specifies the ID of a snapshot of the parent volume to create the clone from. The snapshot's lifecycle state must be <code>AVAILABLE</code>. If you don't specify a snapshot, ONTAP creates a new snapshot of the parent volume and creates the clone from it.</p>",
         "DeleteSnapshotRequest$SnapshotId": "<p>The ID of the snapshot that you want to delete.</p>",
         "DeleteSnapshotResponse$SnapshotId": "<p>The ID of the deleted snapshot.</p>",
         "OpenZFSVolumeConfiguration$RestoreToSnapshot": "<p>Specifies the ID of the snapshot to which the volume was restored.</p>",
         "OpenZFSVolumeConfiguration$DestinationSnapshot": "<p>The ID of the snapshot that's being copied or was most recently copied to the destination volume.</p>",
         "RestoreVolumeFromSnapshotRequest$SnapshotId": "<p>The ID of the source snapshot. Specifies the snapshot that you are restoring from.</p>",
+        "SnapmirrorExportedSnapshot$SnapshotId": "<p>The ID of the snapshot, if Amazon FSx manages the snapshot.</p>",
         "Snapshot$SnapshotId": "<p>The ID of the snapshot.</p>",
         "SnapshotIds$member": null,
         "UpdateSnapshotRequest$SnapshotId": "<p>The ID of the snapshot that you want to update, in the format <code>fsvolsnap-0123456789abcdef0</code>.</p>"
@@ -2674,14 +3393,14 @@
     "SnapshotIds": {
       "base": null,
       "refs": {
-        "DescribeSnapshotsRequest$SnapshotIds": "<p>The IDs of the snapshots that you want to retrieve. This parameter value overrides any filters. If any IDs aren't found, a <code>SnapshotNotFound</code> error occurs.</p>"
+        "DescribeSnapshotsRequest$SnapshotIds": "<p>The IDs of the snapshots that you want to retrieve. You can include snapshots of Amazon FSx for OpenZFS and Amazon FSx for NetApp ONTAP volumes in the same request. If you also specify <code>Filters</code>, only snapshots that match both the IDs and the filters are returned. If any IDs aren't found, or if a filter excludes any of them, a <code>SnapshotNotFound</code> error occurs.</p>"
       }
     },
     "SnapshotLifecycle": {
       "base": null,
       "refs": {
         "DeleteSnapshotResponse$Lifecycle": "<p>The lifecycle status of the snapshot. If the <code>DeleteSnapshot</code> operation is successful, this status is <code>DELETING</code>.</p>",
-        "Snapshot$Lifecycle": "<p>The lifecycle status of the snapshot.</p> <ul> <li> <p> <code>PENDING</code> - Amazon FSx hasn't started creating the snapshot.</p> </li> <li> <p> <code>CREATING</code> - Amazon FSx is creating the snapshot.</p> </li> <li> <p> <code>DELETING</code> - Amazon FSx is deleting the snapshot.</p> </li> <li> <p> <code>AVAILABLE</code> - The snapshot is fully available.</p> </li> </ul>"
+        "Snapshot$Lifecycle": "<p>The lifecycle status of the snapshot.</p> <ul> <li> <p> <code>PENDING</code> - Amazon FSx hasn't started creating the snapshot.</p> </li> <li> <p> <code>CREATING</code> - Amazon FSx is creating the snapshot.</p> </li> <li> <p> <code>DELETING</code> - Amazon FSx is deleting the snapshot.</p> </li> <li> <p> <code>AVAILABLE</code> - The snapshot is fully available.</p> </li> <li> <p> <code>FAILED</code> - Amazon FSx was unable to create the snapshot.</p> </li> </ul>"
       }
     },
     "SnapshotName": {
@@ -2696,12 +3415,152 @@
       "base": "<p>No Amazon FSx snapshots were found based on the supplied parameters.</p>",
       "refs": {}
     },
+    "SnapshotPolicies": {
+      "base": null,
+      "refs": {
+        "DescribeSnapshotPoliciesResponse$SnapshotPolicies": "<p>Describes each snapshot policy returned by the <code>DescribeSnapshotPolicies</code> operation.</p>"
+      }
+    },
     "SnapshotPolicy": {
+      "base": "<p>Describes an Amazon FSx for NetApp ONTAP snapshot policy.</p>",
+      "refs": {
+        "CreateSnapshotPolicyResponse$SnapshotPolicy": "<p>A description of the snapshot policy.</p>",
+        "SnapshotPolicies$member": null,
+        "UpdateSnapshotPolicyResponse$SnapshotPolicy": "<p>A description of the snapshot policy that was just updated.</p>"
+      }
+    },
+    "SnapshotPolicyFilter": {
+      "base": "<p>A filter used to restrict the results of describe calls for Amazon FSx for NetApp ONTAP snapshot policies.</p>",
+      "refs": {
+        "SnapshotPolicyFilters$member": null
+      }
+    },
+    "SnapshotPolicyFilterName": {
+      "base": null,
+      "refs": {
+        "SnapshotPolicyFilter$Name": "<p>The name for this filter.</p>"
+      }
+    },
+    "SnapshotPolicyFilterValue": {
+      "base": null,
+      "refs": {
+        "SnapshotPolicyFilterValues$member": null
+      }
+    },
+    "SnapshotPolicyFilterValues": {
+      "base": null,
+      "refs": {
+        "SnapshotPolicyFilter$Values": "<p>The values of the filter. These are all the values for any of the applied filters.</p>"
+      }
+    },
+    "SnapshotPolicyFilters": {
+      "base": null,
+      "refs": {
+        "DescribeSnapshotPoliciesRequest$Filters": "<p>The filters structure. The supported names are <code>file-system-id</code> or <code>storage-virtual-machine-id</code>.</p>"
+      }
+    },
+    "SnapshotPolicyId": {
+      "base": null,
+      "refs": {
+        "DeleteSnapshotPolicyRequest$SnapshotPolicyId": "<p>The ID of the snapshot policy that you are deleting.</p>",
+        "DeleteSnapshotPolicyResponse$SnapshotPolicyId": "<p>The ID of the snapshot policy that's being deleted.</p>",
+        "SnapshotPolicy$SnapshotPolicyId": "<p>The system-generated, unique ID of the snapshot policy.</p>",
+        "SnapshotPolicyIds$member": null,
+        "UpdateSnapshotPolicyRequest$SnapshotPolicyId": "<p>The ID of the snapshot policy that you want to update.</p>"
+      }
+    },
+    "SnapshotPolicyIds": {
+      "base": null,
+      "refs": {
+        "DescribeSnapshotPoliciesRequest$SnapshotPolicyIds": "<p>The IDs of the snapshot policies that you want to retrieve. If you also specify <code>Filters</code>, only snapshot policies that match both the IDs and the filters are returned. If any IDs aren't found, or if a filter excludes any of them, a <code>SnapshotPolicyNotFound</code> error occurs.</p>"
+      }
+    },
+    "SnapshotPolicyLifecycle": {
+      "base": null,
+      "refs": {
+        "DeleteSnapshotPolicyResponse$Lifecycle": "<p>The lifecycle state of the snapshot policy being deleted. If the <code>DeleteSnapshotPolicy</code> operation is successful, this value is <code>DELETING</code>.</p>",
+        "SnapshotPolicy$Lifecycle": "<p>The lifecycle status of the snapshot policy can be one of the following:</p> <ul> <li> <p> <code>CREATED</code> – The snapshot policy is fully available for use.</p> </li> <li> <p> <code>CREATING</code> – Amazon FSx is creating the snapshot policy.</p> </li> <li> <p> <code>DELETING</code> – Amazon FSx is deleting the snapshot policy.</p> </li> <li> <p> <code>FAILED</code> – Amazon FSx was unable to create the snapshot policy.</p> </li> </ul>"
+      }
+    },
+    "SnapshotPolicyName": {
       "base": null,
       "refs": {
         "CreateOntapVolumeConfiguration$SnapshotPolicy": "<p>Specifies the snapshot policy for the volume. There are three built-in snapshot policies:</p> <ul> <li> <p> <code>default</code>: This is the default policy. A maximum of six hourly snapshots taken five minutes past the hour. A maximum of two daily snapshots taken Monday through Saturday at 10 minutes after midnight. A maximum of two weekly snapshots taken every Sunday at 15 minutes after midnight.</p> </li> <li> <p> <code>default-1weekly</code>: This policy is the same as the <code>default</code> policy except that it only retains one snapshot from the weekly schedule.</p> </li> <li> <p> <code>none</code>: This policy does not take any snapshots. This policy can be assigned to volumes to prevent automatic snapshots from being taken.</p> </li> </ul> <p>You can also provide the name of a custom policy that you created with the ONTAP CLI or REST API.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/snapshots-ontap.html#snapshot-policies\">Snapshot policies</a> in the Amazon FSx for NetApp ONTAP User Guide.</p>",
+        "CreateSnapshotPolicyRequest$Name": "<p>Specifies the name of the snapshot policy.</p>",
         "OntapVolumeConfiguration$SnapshotPolicy": "<p>Specifies the snapshot policy for the volume. There are three built-in snapshot policies:</p> <ul> <li> <p> <code>default</code>: This is the default policy. A maximum of six hourly snapshots taken five minutes past the hour. A maximum of two daily snapshots taken Monday through Saturday at 10 minutes after midnight. A maximum of two weekly snapshots taken every Sunday at 15 minutes after midnight.</p> </li> <li> <p> <code>default-1weekly</code>: This policy is the same as the <code>default</code> policy except that it only retains one snapshot from the weekly schedule.</p> </li> <li> <p> <code>none</code>: This policy does not take any snapshots. This policy can be assigned to volumes to prevent automatic snapshots from being taken.</p> </li> </ul> <p>You can also provide the name of a custom policy that you created with the ONTAP CLI or REST API.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/snapshots-ontap.html#snapshot-policies\">Snapshot policies</a> in the Amazon FSx for NetApp ONTAP User Guide.</p>",
+        "SnapshotPolicy$Name": "<p>The name of the snapshot policy.</p>",
         "UpdateOntapVolumeConfiguration$SnapshotPolicy": "<p>Specifies the snapshot policy for the volume. There are three built-in snapshot policies:</p> <ul> <li> <p> <code>default</code>: This is the default policy. A maximum of six hourly snapshots taken five minutes past the hour. A maximum of two daily snapshots taken Monday through Saturday at 10 minutes after midnight. A maximum of two weekly snapshots taken every Sunday at 15 minutes after midnight.</p> </li> <li> <p> <code>default-1weekly</code>: This policy is the same as the <code>default</code> policy except that it only retains one snapshot from the weekly schedule.</p> </li> <li> <p> <code>none</code>: This policy does not take any snapshots. This policy can be assigned to volumes to prevent automatic snapshots from being taken.</p> </li> </ul> <p>You can also provide the name of a custom policy that you created with the ONTAP CLI or REST API.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/snapshots-ontap.html#snapshot-policies\">Snapshot policies</a> in the <i>Amazon FSx for NetApp ONTAP User Guide</i>.</p>"
+      }
+    },
+    "SnapshotPolicyNotFound": {
+      "base": "<p>No Amazon FSx snapshot policies were found based on the supplied parameters.</p>",
+      "refs": {}
+    },
+    "SnapshotPolicyRetentionPeriod": {
+      "base": "<p>The length of time that snapshots created by this schedule are locked. This setting applies only to volumes that have snapshot locking enabled.</p>",
+      "refs": {
+        "SnapshotPolicySchedule$RetentionPeriod": "<p>The length of time that the snapshots that the schedule creates are locked. This setting applies only to volumes that have snapshot locking enabled.</p>"
+      }
+    },
+    "SnapshotPolicyRetentionPeriodType": {
+      "base": null,
+      "refs": {
+        "SnapshotPolicyRetentionPeriod$Type": "<p>The unit of time for the retention period. If you set it to <code>INFINITE</code>, the snapshots are retained forever.</p>"
+      }
+    },
+    "SnapshotPolicyRetentionPeriodValue": {
+      "base": null,
+      "refs": {
+        "SnapshotPolicyRetentionPeriod$Value": "<p>Defines the amount of time for the retention period. You can't set a value for <code>INFINITE</code>.</p>"
+      }
+    },
+    "SnapshotPolicySchedule": {
+      "base": "<p>Specifies a schedule for an Amazon FSx for NetApp ONTAP snapshot policy.</p>",
+      "refs": {
+        "SnapshotPolicyScheduleList$member": null
+      }
+    },
+    "SnapshotPolicyScheduleCount": {
+      "base": null,
+      "refs": {
+        "SnapshotPolicySchedule$Count": "<p>The number of snapshots to retain for the schedule.</p>"
+      }
+    },
+    "SnapshotPolicyScheduleList": {
+      "base": null,
+      "refs": {
+        "CreateSnapshotPolicyRequest$Schedules": "<p>Specifies the schedules on which ONTAP creates snapshots for the snapshot policy.</p>",
+        "SnapshotPolicy$Schedules": "<p>The schedules on which ONTAP creates snapshots for the snapshot policy.</p>"
+      }
+    },
+    "SnapshotPolicyScheduleName": {
+      "base": null,
+      "refs": {
+        "SnapshotPolicySchedule$Name": "<p>The name of the ONTAP schedule that determines when snapshots are created.</p>"
+      }
+    },
+    "SnapshotPolicySchedulePrefix": {
+      "base": null,
+      "refs": {
+        "SnapshotPolicySchedule$Prefix": "<p>The prefix for the schedule to use when creating snapshots.</p>"
+      }
+    },
+    "SnapshotPolicyScope": {
+      "base": null,
+      "refs": {
+        "SnapshotPolicy$Scope": "<p>The scope of the snapshot policy can be one of the following:</p> <ul> <li> <p> <code>FILESYSTEM</code> – The snapshot policy was created on the file system.</p> </li> <li> <p> <code>SVM</code> – The snapshot policy was created on an SVM.</p> </li> </ul>"
+      }
+    },
+    "SnapshotSizeInMegabytes": {
+      "base": null,
+      "refs": {
+        "OntapSnapshotConfiguration$SizeInMegabytes": "<p>The configured size of the snapshot, in megabytes (MBs).</p>"
+      }
+    },
+    "SnapshotType": {
+      "base": null,
+      "refs": {
+        "Snapshot$SnapshotType": "<p>The type of the snapshot.</p>"
       }
     },
     "Snapshots": {
@@ -2804,12 +3663,19 @@
     "StorageVirtualMachineId": {
       "base": null,
       "refs": {
+        "AllowedSvmIds$member": null,
         "CreateOntapVolumeConfiguration$StorageVirtualMachineId": "<p>Specifies the ONTAP SVM in which to create the volume.</p>",
+        "CreateSnapmirrorPolicyRequest$StorageVirtualMachineId": "<p>Specifies the ID of the SVM on which to create the SnapMirror policy. You must specify either a <code>FileSystemId</code> or a <code>StorageVirtualMachineId</code>, but not both.</p>",
+        "CreateSnapshotPolicyRequest$StorageVirtualMachineId": "<p>Specifies the ID of the SVM on which to create the snapshot policy. You must specify either a <code>FileSystemId</code> or a <code>StorageVirtualMachineId</code>, but not both.</p>",
+        "CreateStorageVirtualMachinePeerRequest$StorageVirtualMachineId": "<p>Specifies the ID of the SVM on which to create the SVM peer relationship.</p>",
         "DeleteStorageVirtualMachineRequest$StorageVirtualMachineId": "<p>The ID of the SVM that you want to delete.</p>",
         "DeleteStorageVirtualMachineResponse$StorageVirtualMachineId": "<p>The ID of the SVM Amazon FSx is deleting.</p>",
         "OntapVolumeConfiguration$StorageVirtualMachineId": "<p>The ID of the volume's storage virtual machine.</p>",
+        "SnapmirrorPolicy$StorageVirtualMachineId": "<p>The ID of the SnapMirror policy's storage virtual machine, if you created the SnapMirror policy on a storage virtual machine.</p>",
+        "SnapshotPolicy$StorageVirtualMachineId": "<p>The ID of the snapshot policy's storage virtual machine, if you created the snapshot policy on a storage virtual machine.</p>",
         "StorageVirtualMachine$StorageVirtualMachineId": "<p>The SVM's system generated unique ID.</p>",
         "StorageVirtualMachineIds$member": null,
+        "StorageVirtualMachinePeer$StorageVirtualMachineId": "<p>The ID of the SVM on the file system that the SVM peer relationship belongs to.</p>",
         "UpdateStorageVirtualMachineRequest$StorageVirtualMachineId": "<p>The ID of the SVM that you want to update, in the format <code>svm-0123456789abcdef0</code>.</p>"
       }
     },
@@ -2836,6 +3702,103 @@
     "StorageVirtualMachineNotFound": {
       "base": "<p>No FSx for ONTAP SVMs were found based upon the supplied parameters.</p>",
       "refs": {}
+    },
+    "StorageVirtualMachinePeer": {
+      "base": "<p>Describes an Amazon FSx for NetApp ONTAP storage virtual machine (SVM) peer relationship.</p>",
+      "refs": {
+        "CreateStorageVirtualMachinePeerResponse$StorageVirtualMachinePeer": "<p>A description of the SVM peer.</p>",
+        "StorageVirtualMachinePeers$member": null,
+        "UpdateStorageVirtualMachinePeerResponse$StorageVirtualMachinePeer": "<p>A description of the SVM peer that was just updated.</p>"
+      }
+    },
+    "StorageVirtualMachinePeerApplication": {
+      "base": null,
+      "refs": {
+        "StorageVirtualMachinePeerApplications$member": null
+      }
+    },
+    "StorageVirtualMachinePeerApplications": {
+      "base": null,
+      "refs": {
+        "CreateStorageVirtualMachinePeerRequest$Applications": "<p>Specifies the applications that the SVM peer relationship authorizes.</p>",
+        "StorageVirtualMachinePeer$Applications": "<p>The applications that the SVM peer relationship authorizes. The applications can be one or more of the following:</p> <ul> <li> <p> <code>SNAPMIRROR</code> – SnapMirror replication.</p> </li> <li> <p> <code>FILE_COPY</code> – File copy.</p> </li> <li> <p> <code>LUN_COPY</code> – LUN copy.</p> </li> <li> <p> <code>FLEXCACHE</code> – FlexCache.</p> </li> </ul>",
+        "UpdateStorageVirtualMachinePeerRequest$Applications": "<p>Specifies the applications that the SVM peer relationship authorizes. The applications that you specify replace the existing applications.</p>"
+      }
+    },
+    "StorageVirtualMachinePeerFilter": {
+      "base": "<p>A filter used to restrict the results of describe calls for Amazon FSx for NetApp ONTAP storage virtual machine (SVM) peers.</p>",
+      "refs": {
+        "StorageVirtualMachinePeerFilters$member": null
+      }
+    },
+    "StorageVirtualMachinePeerFilterName": {
+      "base": null,
+      "refs": {
+        "StorageVirtualMachinePeerFilter$Name": "<p>The name for this filter.</p>"
+      }
+    },
+    "StorageVirtualMachinePeerFilterValue": {
+      "base": null,
+      "refs": {
+        "StorageVirtualMachinePeerFilterValues$member": null
+      }
+    },
+    "StorageVirtualMachinePeerFilterValues": {
+      "base": null,
+      "refs": {
+        "StorageVirtualMachinePeerFilter$Values": "<p>The values of the filter. These are all the values for any of the applied filters.</p>"
+      }
+    },
+    "StorageVirtualMachinePeerFilters": {
+      "base": null,
+      "refs": {
+        "DescribeStorageVirtualMachinePeersRequest$Filters": "<p>The filters structure. The supported names are <code>file-system-id</code> or <code>storage-virtual-machine-id</code>.</p>"
+      }
+    },
+    "StorageVirtualMachinePeerId": {
+      "base": null,
+      "refs": {
+        "DeleteStorageVirtualMachinePeerRequest$StorageVirtualMachinePeerId": "<p>The ID of the SVM peer that you are deleting.</p>",
+        "DeleteStorageVirtualMachinePeerResponse$StorageVirtualMachinePeerId": "<p>The ID of the SVM peer that's being deleted.</p>",
+        "StorageVirtualMachinePeer$StorageVirtualMachinePeerId": "<p>The system-generated, unique ID of the SVM peer.</p>",
+        "StorageVirtualMachinePeerIds$member": null,
+        "UpdateStorageVirtualMachinePeerRequest$StorageVirtualMachinePeerId": "<p>The ID of the SVM peer that you want to update.</p>"
+      }
+    },
+    "StorageVirtualMachinePeerIds": {
+      "base": null,
+      "refs": {
+        "DescribeStorageVirtualMachinePeersRequest$StorageVirtualMachinePeerIds": "<p>The IDs of the SVM peers that you want to retrieve. If you also specify <code>Filters</code>, only SVM peers that match both the IDs and the filters are returned. If any IDs aren't found, or if a filter excludes any of them, a <code>StorageVirtualMachinePeerNotFound</code> error occurs.</p>"
+      }
+    },
+    "StorageVirtualMachinePeerLifecycle": {
+      "base": null,
+      "refs": {
+        "DeleteStorageVirtualMachinePeerResponse$Lifecycle": "<p>The lifecycle state of the SVM peer being deleted. If the <code>DeleteStorageVirtualMachinePeer</code> operation is successful, this value is <code>DELETING</code>.</p>",
+        "StorageVirtualMachinePeer$Lifecycle": "<p>The lifecycle status of the SVM peer can be one of the following:</p> <ul> <li> <p> <code>CREATED</code> – The SVM peer is fully available for use.</p> </li> <li> <p> <code>CREATING</code> – Amazon FSx is creating the SVM peer.</p> </li> <li> <p> <code>DELETING</code> – Amazon FSx is deleting the SVM peer.</p> </li> <li> <p> <code>FAILED</code> – Amazon FSx was unable to create the SVM peer.</p> </li> </ul>"
+      }
+    },
+    "StorageVirtualMachinePeerNotFound": {
+      "base": "<p>No Amazon FSx storage virtual machine (SVM) peers were found based on the supplied parameters.</p>",
+      "refs": {}
+    },
+    "StorageVirtualMachinePeerState": {
+      "base": null,
+      "refs": {
+        "StorageVirtualMachinePeer$State": "<p>The state of the SVM peer relationship in ONTAP can be one of the following:</p> <ul> <li> <p> <code>PEERED</code> – The SVM peer relationship is established.</p> </li> <li> <p> <code>INITIATED</code> – The local cluster sent a peering request to the peer SVM.</p> </li> <li> <p> <code>PENDING</code> – A peering request from the peer SVM is waiting for acceptance.</p> </li> <li> <p> <code>INITIALIZING</code> – ONTAP is setting up the SVM peer relationship.</p> </li> <li> <p> <code>SUSPENDED</code> – The SVM peer relationship is suspended.</p> </li> <li> <p> <code>REJECTED</code> – The peering request was rejected.</p> </li> </ul>"
+      }
+    },
+    "StorageVirtualMachinePeerUpdateState": {
+      "base": null,
+      "refs": {
+        "UpdateStorageVirtualMachinePeerRequest$State": "<p>Specifies the state to set for the SVM peer relationship:</p> <ul> <li> <p> <code>PEERED</code> – Accepts a pending peering request, or resumes a suspended SVM peer relationship.</p> </li> <li> <p> <code>SUSPENDED</code> – Suspends the SVM peer relationship.</p> </li> <li> <p> <code>REJECTED</code> – Rejects a pending peering request.</p> </li> </ul>"
+      }
+    },
+    "StorageVirtualMachinePeers": {
+      "base": null,
+      "refs": {
+        "DescribeStorageVirtualMachinePeersResponse$StorageVirtualMachinePeers": "<p>Describes each SVM peer returned by the <code>DescribeStorageVirtualMachinePeers</code> operation.</p>"
+      }
     },
     "StorageVirtualMachineRootVolumeSecurityStyle": {
       "base": null,
@@ -2951,14 +3914,20 @@
       "base": "<p>A list of <code>Tag</code> values, with a maximum of 50 elements.</p>",
       "refs": {
         "Backup$Tags": "<p>The tags associated with a particular file system.</p>",
+        "ClusterPeer$Tags": null,
         "CopyBackupRequest$Tags": null,
         "CreateBackupRequest$Tags": "<p>(Optional) The tags to apply to the backup at backup creation. The key value of the <code>Name</code> tag appears in the console as the backup name. If you have set <code>CopyTagsToBackups</code> to <code>true</code>, and you specify one or more tags using the <code>CreateBackup</code> operation, no existing file system tags are copied from the file system to the backup.</p>",
+        "CreateClusterPeerRequest$Tags": null,
         "CreateDataRepositoryAssociationRequest$Tags": null,
         "CreateDataRepositoryTaskRequest$Tags": null,
         "CreateFileCacheRequest$Tags": null,
         "CreateFileSystemFromBackupRequest$Tags": "<p>The tags to be applied to the file system at file system creation. The key value of the <code>Name</code> tag appears in the console as the file system name.</p>",
         "CreateFileSystemRequest$Tags": "<p>The tags to apply to the file system that's being created. The key value of the <code>Name</code> tag appears in the console as the file system name.</p>",
+        "CreateSnapmirrorPolicyRequest$Tags": null,
+        "CreateSnapmirrorRelationshipRequest$Tags": null,
+        "CreateSnapshotPolicyRequest$Tags": null,
         "CreateSnapshotRequest$Tags": null,
+        "CreateStorageVirtualMachinePeerRequest$Tags": null,
         "CreateStorageVirtualMachineRequest$Tags": null,
         "CreateVolumeFromBackupRequest$Tags": null,
         "CreateVolumeRequest$Tags": null,
@@ -2975,8 +3944,12 @@
         "FileCacheCreating$Tags": null,
         "FileSystem$Tags": "<p>The tags to associate with the file system. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/tag-resources.html\">Tagging your Amazon FSx resources</a> in the <i>Amazon FSx for Lustre User Guide</i>.</p>",
         "ListTagsForResourceResponse$Tags": "<p>A list of tags on the resource.</p>",
+        "SnapmirrorPolicy$Tags": null,
+        "SnapmirrorRelationship$Tags": null,
         "Snapshot$Tags": null,
+        "SnapshotPolicy$Tags": null,
         "StorageVirtualMachine$Tags": null,
+        "StorageVirtualMachinePeer$Tags": null,
         "TagResourceRequest$Tags": "<p>A list of tags for the resource. If a tag with a given key already exists, the value is replaced by the one specified in this parameter.</p>",
         "Volume$Tags": null
       }
@@ -2994,6 +3967,17 @@
       "base": null,
       "refs": {
         "DescribeDataRepositoryTasksRequest$TaskIds": "<p>(Optional) IDs of the tasks whose descriptions you want to retrieve (String).</p>"
+      }
+    },
+    "ThrottleInKbps": {
+      "base": null,
+      "refs": {
+        "CreateSnapmirrorPolicyRequest$ThrottleInKbps": "<p>Specifies the maximum bandwidth, in kilobytes per second (KBps), that SnapMirror uses to transfer data. A value of <code>0</code> means that the bandwidth is unlimited.</p>",
+        "CreateSnapmirrorRelationshipRequest$ThrottleInKbps": "<p>Specifies the maximum bandwidth, in kilobytes per second (KBps), that SnapMirror uses to transfer data for the relationship. A value of <code>0</code> means that the bandwidth is unlimited. This value overrides the throttle of the SnapMirror policy.</p>",
+        "SnapmirrorPolicy$ThrottleInKbps": "<p>The maximum bandwidth, in kilobytes per second (KBps), that SnapMirror uses to transfer data. A value of <code>0</code> means that the bandwidth is unlimited.</p>",
+        "SnapmirrorRelationship$ThrottleInKbps": "<p>The maximum bandwidth, in kilobytes per second (KBps), that SnapMirror uses to transfer data for the relationship. A value of <code>0</code> means that the bandwidth is unlimited. This value overrides the throttle of the SnapMirror policy.</p>",
+        "UpdateSnapmirrorPolicyRequest$ThrottleInKbps": "<p>Specifies the maximum bandwidth, in kilobytes per second (KBps), that SnapMirror uses to transfer data. A value of <code>0</code> means that the bandwidth is unlimited.</p>",
+        "UpdateSnapmirrorRelationshipRequest$ThrottleInKbps": "<p>Specifies the maximum bandwidth, in kilobytes per second (KBps), that SnapMirror uses to transfer data for the relationship. A value of <code>0</code> means that the bandwidth is unlimited. This value overrides the throttle of the SnapMirror policy.</p>"
       }
     },
     "ThroughputCapacityMbps": {
@@ -3051,8 +4035,14 @@
     "UUID": {
       "base": null,
       "refs": {
+        "ClusterPeer$UUID": "<p>The cluster peer's universally unique identifier (UUID).</p>",
+        "OntapSnapshotConfiguration$UUID": "<p>The snapshot's universally unique identifier (UUID).</p>",
         "OntapVolumeConfiguration$UUID": "<p>The volume's universally unique identifier (UUID).</p>",
-        "StorageVirtualMachine$UUID": "<p>The SVM's UUID (universally unique identifier).</p>"
+        "SnapmirrorPolicy$UUID": "<p>The SnapMirror policy's universally unique identifier (UUID).</p>",
+        "SnapmirrorRelationship$UUID": "<p>The SnapMirror relationship's universally unique identifier (UUID).</p>",
+        "SnapshotPolicy$UUID": "<p>The snapshot policy's universally unique identifier (UUID).</p>",
+        "StorageVirtualMachine$UUID": "<p>The SVM's UUID (universally unique identifier).</p>",
+        "StorageVirtualMachinePeer$UUID": "<p>The SVM peer's universally unique identifier (UUID).</p>"
       }
     },
     "Unit": {
@@ -3071,6 +4061,26 @@
     },
     "UntagResourceResponse": {
       "base": "<p>The response object for <code>UntagResource</code> action.</p>",
+      "refs": {}
+    },
+    "UpdatableSnapmirrorRelationshipState": {
+      "base": null,
+      "refs": {
+        "UpdateSnapmirrorRelationshipRequest$State": "<p>Specifies the state to set for the SnapMirror relationship:</p> <ul> <li> <p> <code>SNAPMIRRORED</code> – Resumes a paused SnapMirror relationship, or resynchronizes a broken-off SnapMirror relationship.</p> </li> <li> <p> <code>PAUSED</code> – Pauses SnapMirror transfers for the relationship.</p> </li> <li> <p> <code>BROKEN_OFF</code> – Breaks off the SnapMirror relationship, which makes the destination volume writable.</p> </li> </ul> <important> <p>Setting <code>State</code> to <code>SNAPMIRRORED</code> on a relationship that is <code>BROKEN_OFF</code> might resynchronize the relationship. A resync overwrites the destination volume with data from the source volume, and discards any data written to the destination volume that isn't present on the source volume. Use caution when you resynchronize a relationship.</p> </important>"
+      }
+    },
+    "UpdateCloneConfiguration": {
+      "base": "<p>Specifies changes to the clone configuration of an FSx for ONTAP volume.</p>",
+      "refs": {
+        "UpdateOntapVolumeConfiguration$CloneConfiguration": "<p>Specifies the clone configuration changes to make to the volume. Use this property to split a clone from its parent volume.</p>"
+      }
+    },
+    "UpdateClusterPeerRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateClusterPeerResponse": {
+      "base": null,
       "refs": {}
     },
     "UpdateDataRepositoryAssociationRequest": {
@@ -3133,6 +4143,12 @@
         "UpdateFileSystemRequest$WindowsConfiguration": "<p>The configuration updates for an Amazon FSx for Windows File Server file system.</p>"
       }
     },
+    "UpdateOntapSnapshotConfiguration": {
+      "base": "<p>Used to specify changes to the ONTAP configuration for the snapshot you are updating.</p>",
+      "refs": {
+        "UpdateSnapshotRequest$OntapConfiguration": "<p>The configuration of the ONTAP snapshot that you are updating.</p>"
+      }
+    },
     "UpdateOntapVolumeConfiguration": {
       "base": "<p>Used to specify changes to the ONTAP configuration for the volume you are updating.</p>",
       "refs": {
@@ -3171,11 +4187,43 @@
         "UpdateOntapVolumeConfiguration$SnaplockConfiguration": "<p>The configuration object for updating the SnapLock configuration of an FSx for ONTAP SnapLock volume. </p>"
       }
     },
+    "UpdateSnapmirrorPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSnapmirrorPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSnapmirrorRelationshipRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSnapmirrorRelationshipResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSnapshotPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSnapshotPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateSnapshotRequest": {
       "base": null,
       "refs": {}
     },
     "UpdateSnapshotResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateStorageVirtualMachinePeerRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateStorageVirtualMachinePeerResponse": {
       "base": null,
       "refs": {}
     },
@@ -3275,12 +4323,15 @@
     "VolumeId": {
       "base": null,
       "refs": {
+        "CloneConfiguration$ParentVolumeId": "<p>The ID of the parent volume that the clone was created from.</p>",
         "CopySnapshotAndUpdateVolumeRequest$VolumeId": "<p>Specifies the ID of the volume that you are copying the snapshot to.</p>",
         "CopySnapshotAndUpdateVolumeResponse$VolumeId": "<p>The ID of the volume that you copied the snapshot to.</p>",
         "CreateAndAttachS3AccessPointOntapConfiguration$VolumeId": "<p>The ID of the FSx for ONTAP volume to which you want the S3 access point attached.</p>",
         "CreateAndAttachS3AccessPointOpenZFSConfiguration$VolumeId": "<p>The ID of the FSx for OpenZFS volume to which you want the S3 access point attached.</p>",
         "CreateBackupRequest$VolumeId": "<p>(Optional) The ID of the FSx for ONTAP volume to back up.</p>",
+        "CreateCloneConfiguration$ParentVolumeId": "<p>Specifies the ID of the volume to clone.</p>",
         "CreateOpenZFSVolumeConfiguration$ParentVolumeId": "<p>The ID of the volume to use as the parent volume of the volume that you are creating.</p>",
+        "CreateSnapmirrorDestination$VolumeId": "<p>Specifies the ID of the destination volume.</p>",
         "CreateSnapshotRequest$VolumeId": "<p>The ID of the volume that you are taking a snapshot of.</p>",
         "DeleteVolumeRequest$VolumeId": "<p>The ID of the volume that you are deleting.</p>",
         "DeleteVolumeResponse$VolumeId": "<p>The ID of the volume that's being deleted.</p>",
@@ -3290,6 +4341,7 @@
         "RestoreVolumeFromSnapshotResponse$VolumeId": "<p>The ID of the volume that you restored.</p>",
         "S3AccessPointOntapConfiguration$VolumeId": "<p>The ID of the FSx for ONTAP volume that the S3 access point is attached to.</p>",
         "S3AccessPointOpenZFSConfiguration$VolumeId": "<p>The ID of the FSx for OpenZFS volume that the S3 access point is attached to.</p>",
+        "SnapmirrorDestination$VolumeId": "<p>The ID of the destination volume.</p>",
         "Snapshot$VolumeId": "<p>The ID of the volume that the snapshot is of.</p>",
         "UpdateVolumeRequest$VolumeId": "<p>The ID of the volume that you want to update, in the format <code>fsvol-0123456789abcdef0</code>.</p>",
         "Volume$VolumeId": "<p>The system-generated, unique ID of the volume.</p>",

@@ -125,6 +125,24 @@
       ],
       "idempotent":true
     },
+    "CreateClusterPeer":{
+      "name":"CreateClusterPeer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateClusterPeerRequest"},
+      "output":{"shape":"CreateClusterPeerResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"FileSystemNotFound"},
+        {"shape":"IncompatibleParameterError"},
+        {"shape":"InternalServerError"},
+        {"shape":"ServiceLimitExceeded"},
+        {"shape":"UnsupportedOperation"}
+      ],
+      "idempotent":true
+    },
     "CreateDataRepositoryAssociation":{
       "name":"CreateDataRepositoryAssociation",
       "http":{
@@ -222,6 +240,42 @@
         {"shape":"MissingFileSystemConfiguration"}
       ]
     },
+    "CreateSnapmirrorPolicy":{
+      "name":"CreateSnapmirrorPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateSnapmirrorPolicyRequest"},
+      "output":{"shape":"CreateSnapmirrorPolicyResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"FileSystemNotFound"},
+        {"shape":"StorageVirtualMachineNotFound"},
+        {"shape":"ServiceLimitExceeded"},
+        {"shape":"InternalServerError"},
+        {"shape":"IncompatibleParameterError"}
+      ],
+      "idempotent":true
+    },
+    "CreateSnapmirrorRelationship":{
+      "name":"CreateSnapmirrorRelationship",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateSnapmirrorRelationshipRequest"},
+      "output":{"shape":"CreateSnapmirrorRelationshipResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"VolumeNotFound"},
+        {"shape":"IncompatibleParameterError"},
+        {"shape":"InternalServerError"},
+        {"shape":"ServiceLimitExceeded"},
+        {"shape":"UnsupportedOperation"}
+      ],
+      "idempotent":true
+    },
     "CreateSnapshot":{
       "name":"CreateSnapshot",
       "http":{
@@ -234,7 +288,26 @@
         {"shape":"BadRequest"},
         {"shape":"VolumeNotFound"},
         {"shape":"ServiceLimitExceeded"},
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"IncompatibleParameterError"}
+      ],
+      "idempotent":true
+    },
+    "CreateSnapshotPolicy":{
+      "name":"CreateSnapshotPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateSnapshotPolicyRequest"},
+      "output":{"shape":"CreateSnapshotPolicyResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"FileSystemNotFound"},
+        {"shape":"StorageVirtualMachineNotFound"},
+        {"shape":"ServiceLimitExceeded"},
+        {"shape":"InternalServerError"},
+        {"shape":"IncompatibleParameterError"}
       ],
       "idempotent":true
     },
@@ -256,6 +329,24 @@
         {"shape":"UnsupportedOperation"}
       ]
     },
+    "CreateStorageVirtualMachinePeer":{
+      "name":"CreateStorageVirtualMachinePeer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateStorageVirtualMachinePeerRequest"},
+      "output":{"shape":"CreateStorageVirtualMachinePeerResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"StorageVirtualMachineNotFound"},
+        {"shape":"IncompatibleParameterError"},
+        {"shape":"InternalServerError"},
+        {"shape":"ServiceLimitExceeded"},
+        {"shape":"UnsupportedOperation"}
+      ],
+      "idempotent":true
+    },
     "CreateVolume":{
       "name":"CreateVolume",
       "http":{
@@ -272,7 +363,8 @@
         {"shape":"MissingVolumeConfiguration"},
         {"shape":"ServiceLimitExceeded"},
         {"shape":"StorageVirtualMachineNotFound"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"UnsupportedOperation"},
+        {"shape":"VolumeNotFound"}
       ]
     },
     "CreateVolumeFromBackup":{
@@ -310,6 +402,22 @@
         {"shape":"IncompatibleParameterError"},
         {"shape":"InternalServerError"},
         {"shape":"BackupBeingCopied"}
+      ],
+      "idempotent":true
+    },
+    "DeleteClusterPeer":{
+      "name":"DeleteClusterPeer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteClusterPeerRequest"},
+      "output":{"shape":"DeleteClusterPeerResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"ClusterPeerNotFound"},
+        {"shape":"IncompatibleParameterError"},
+        {"shape":"InternalServerError"}
       ],
       "idempotent":true
     },
@@ -364,6 +472,38 @@
       ],
       "idempotent":true
     },
+    "DeleteSnapmirrorPolicy":{
+      "name":"DeleteSnapmirrorPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteSnapmirrorPolicyRequest"},
+      "output":{"shape":"DeleteSnapmirrorPolicyResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"InternalServerError"},
+        {"shape":"SnapmirrorPolicyNotFound"},
+        {"shape":"IncompatibleParameterError"}
+      ],
+      "idempotent":true
+    },
+    "DeleteSnapmirrorRelationship":{
+      "name":"DeleteSnapmirrorRelationship",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteSnapmirrorRelationshipRequest"},
+      "output":{"shape":"DeleteSnapmirrorRelationshipResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"SnapmirrorRelationshipNotFound"},
+        {"shape":"IncompatibleParameterError"},
+        {"shape":"InternalServerError"}
+      ],
+      "idempotent":true
+    },
     "DeleteSnapshot":{
       "name":"DeleteSnapshot",
       "http":{
@@ -375,7 +515,24 @@
       "errors":[
         {"shape":"BadRequest"},
         {"shape":"InternalServerError"},
-        {"shape":"SnapshotNotFound"}
+        {"shape":"SnapshotNotFound"},
+        {"shape":"IncompatibleParameterError"}
+      ],
+      "idempotent":true
+    },
+    "DeleteSnapshotPolicy":{
+      "name":"DeleteSnapshotPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteSnapshotPolicyRequest"},
+      "output":{"shape":"DeleteSnapshotPolicyResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"InternalServerError"},
+        {"shape":"SnapshotPolicyNotFound"},
+        {"shape":"IncompatibleParameterError"}
       ],
       "idempotent":true
     },
@@ -393,6 +550,22 @@
         {"shape":"InternalServerError"},
         {"shape":"StorageVirtualMachineNotFound"}
       ]
+    },
+    "DeleteStorageVirtualMachinePeer":{
+      "name":"DeleteStorageVirtualMachinePeer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteStorageVirtualMachinePeerRequest"},
+      "output":{"shape":"DeleteStorageVirtualMachinePeerResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"StorageVirtualMachinePeerNotFound"},
+        {"shape":"IncompatibleParameterError"},
+        {"shape":"InternalServerError"}
+      ],
+      "idempotent":true
     },
     "DeleteVolume":{
       "name":"DeleteVolume",
@@ -423,6 +596,21 @@
         {"shape":"FileSystemNotFound"},
         {"shape":"VolumeNotFound"},
         {"shape":"BackupNotFound"},
+        {"shape":"InternalServerError"}
+      ]
+    },
+    "DescribeClusterPeers":{
+      "name":"DescribeClusterPeers",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeClusterPeersRequest"},
+      "output":{"shape":"DescribeClusterPeersResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"ClusterPeerNotFound"},
+        {"shape":"FileSystemNotFound"},
         {"shape":"InternalServerError"}
       ]
     },
@@ -529,6 +717,49 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "DescribeSnapmirrorPolicies":{
+      "name":"DescribeSnapmirrorPolicies",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSnapmirrorPoliciesRequest"},
+      "output":{"shape":"DescribeSnapmirrorPoliciesResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"InternalServerError"},
+        {"shape":"SnapmirrorPolicyNotFound"}
+      ]
+    },
+    "DescribeSnapmirrorRelationships":{
+      "name":"DescribeSnapmirrorRelationships",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSnapmirrorRelationshipsRequest"},
+      "output":{"shape":"DescribeSnapmirrorRelationshipsResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"SnapmirrorRelationshipNotFound"},
+        {"shape":"VolumeNotFound"},
+        {"shape":"InternalServerError"}
+      ]
+    },
+    "DescribeSnapshotPolicies":{
+      "name":"DescribeSnapshotPolicies",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSnapshotPoliciesRequest"},
+      "output":{"shape":"DescribeSnapshotPoliciesResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"InternalServerError"},
+        {"shape":"SnapshotPolicyNotFound"}
+      ]
+    },
     "DescribeSnapshots":{
       "name":"DescribeSnapshots",
       "http":{
@@ -541,6 +772,22 @@
         {"shape":"BadRequest"},
         {"shape":"InternalServerError"},
         {"shape":"SnapshotNotFound"}
+      ]
+    },
+    "DescribeStorageVirtualMachinePeers":{
+      "name":"DescribeStorageVirtualMachinePeers",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeStorageVirtualMachinePeersRequest"},
+      "output":{"shape":"DescribeStorageVirtualMachinePeersResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"StorageVirtualMachinePeerNotFound"},
+        {"shape":"StorageVirtualMachineNotFound"},
+        {"shape":"FileSystemNotFound"},
+        {"shape":"InternalServerError"}
       ]
     },
     "DescribeStorageVirtualMachines":{
@@ -697,6 +944,22 @@
       ],
       "idempotent":true
     },
+    "UpdateClusterPeer":{
+      "name":"UpdateClusterPeer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateClusterPeerRequest"},
+      "output":{"shape":"UpdateClusterPeerResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"ClusterPeerNotFound"},
+        {"shape":"IncompatibleParameterError"},
+        {"shape":"InternalServerError"}
+      ],
+      "idempotent":true
+    },
     "UpdateDataRepositoryAssociation":{
       "name":"UpdateDataRepositoryAssociation",
       "http":{
@@ -766,6 +1029,38 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "UpdateSnapmirrorPolicy":{
+      "name":"UpdateSnapmirrorPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateSnapmirrorPolicyRequest"},
+      "output":{"shape":"UpdateSnapmirrorPolicyResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"SnapmirrorPolicyNotFound"},
+        {"shape":"InternalServerError"},
+        {"shape":"IncompatibleParameterError"}
+      ],
+      "idempotent":true
+    },
+    "UpdateSnapmirrorRelationship":{
+      "name":"UpdateSnapmirrorRelationship",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateSnapmirrorRelationshipRequest"},
+      "output":{"shape":"UpdateSnapmirrorRelationshipResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"SnapmirrorRelationshipNotFound"},
+        {"shape":"IncompatibleParameterError"},
+        {"shape":"InternalServerError"}
+      ],
+      "idempotent":true
+    },
     "UpdateSnapshot":{
       "name":"UpdateSnapshot",
       "http":{
@@ -777,7 +1072,24 @@
       "errors":[
         {"shape":"BadRequest"},
         {"shape":"SnapshotNotFound"},
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"IncompatibleParameterError"}
+      ],
+      "idempotent":true
+    },
+    "UpdateSnapshotPolicy":{
+      "name":"UpdateSnapshotPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateSnapshotPolicyRequest"},
+      "output":{"shape":"UpdateSnapshotPolicyResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"SnapshotPolicyNotFound"},
+        {"shape":"InternalServerError"},
+        {"shape":"IncompatibleParameterError"}
       ],
       "idempotent":true
     },
@@ -796,6 +1108,22 @@
         {"shape":"StorageVirtualMachineNotFound"},
         {"shape":"UnsupportedOperation"}
       ]
+    },
+    "UpdateStorageVirtualMachinePeer":{
+      "name":"UpdateStorageVirtualMachinePeer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateStorageVirtualMachinePeerRequest"},
+      "output":{"shape":"UpdateStorageVirtualMachinePeerResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"StorageVirtualMachinePeerNotFound"},
+        {"shape":"IncompatibleParameterError"},
+        {"shape":"InternalServerError"}
+      ],
+      "idempotent":true
     },
     "UpdateVolume":{
       "name":"UpdateVolume",
@@ -914,7 +1242,8 @@
         "MISCONFIGURED_STATE_RECOVERY",
         "VOLUME_UPDATE_WITH_SNAPSHOT",
         "VOLUME_INITIALIZE_WITH_SNAPSHOT",
-        "DOWNLOAD_DATA_FROM_BACKUP"
+        "DOWNLOAD_DATA_FROM_BACKUP",
+        "VOLUME_CLONE_SPLIT"
       ]
     },
     "AdministrativeActions":{
@@ -966,6 +1295,19 @@
       "type":"list",
       "member":{"shape":"Alias"},
       "max":50
+    },
+    "AllowedSvmIds":{
+      "type":"list",
+      "member":{"shape":"StorageVirtualMachineId"},
+      "max":24
+    },
+    "AllowedSvmMode":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "NONE",
+        "SPECIFIED"
+      ]
     },
     "AlternateDNSName":{
       "type":"string",
@@ -1189,6 +1531,115 @@
       "min":1,
       "pattern":"[A-za-z0-9_.-]{0,63}$"
     },
+    "CloneConfiguration":{
+      "type":"structure",
+      "members":{
+        "ParentVolumeId":{"shape":"VolumeId"},
+        "SnapshotId":{"shape":"SnapshotId"}
+      }
+    },
+    "CloneSplitAction":{
+      "type":"string",
+      "enum":["START"]
+    },
+    "ClusterPeer":{
+      "type":"structure",
+      "members":{
+        "ResourceARN":{"shape":"ResourceARN"},
+        "ClusterPeerId":{"shape":"ClusterPeerId"},
+        "FileSystemId":{"shape":"FileSystemId"},
+        "Lifecycle":{"shape":"ClusterPeerLifecycle"},
+        "LifecycleTransitionReason":{"shape":"LifecycleTransitionReason"},
+        "Tags":{"shape":"Tags"},
+        "PeerAddresses":{"shape":"PeerAddresses"},
+        "PeerClusterName":{"shape":"PeerClusterName"},
+        "PassphraseSecretArn":{"shape":"CustomerSecretsManagerARN"},
+        "AllowedSvmMode":{"shape":"AllowedSvmMode"},
+        "AllowedSvmIds":{"shape":"AllowedSvmIds"},
+        "Status":{"shape":"ClusterPeerStatus"},
+        "UUID":{"shape":"UUID"},
+        "AuthenticationStatus":{"shape":"ClusterPeerAuthenticationStatus"}
+      }
+    },
+    "ClusterPeerAuthenticationInUse":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "ClusterPeerAuthenticationState":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "ClusterPeerAuthenticationStatus":{
+      "type":"structure",
+      "members":{
+        "State":{"shape":"ClusterPeerAuthenticationState"},
+        "InUse":{"shape":"ClusterPeerAuthenticationInUse"}
+      }
+    },
+    "ClusterPeerFilter":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"ClusterPeerFilterName"},
+        "Values":{"shape":"ClusterPeerFilterValues"}
+      }
+    },
+    "ClusterPeerFilterName":{
+      "type":"string",
+      "enum":["file-system-id"]
+    },
+    "ClusterPeerFilterValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z\\*\\.\\\\/\\?\\-\\_]*$"
+    },
+    "ClusterPeerFilterValues":{
+      "type":"list",
+      "member":{"shape":"ClusterPeerFilterValue"},
+      "max":20
+    },
+    "ClusterPeerFilters":{
+      "type":"list",
+      "member":{"shape":"ClusterPeerFilter"},
+      "max":1
+    },
+    "ClusterPeerId":{
+      "type":"string",
+      "pattern":"^(clusterpeer-[0-9a-f]{17})$"
+    },
+    "ClusterPeerIds":{
+      "type":"list",
+      "member":{"shape":"ClusterPeerId"},
+      "max":50
+    },
+    "ClusterPeerLifecycle":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATED",
+        "DELETING",
+        "FAILED"
+      ]
+    },
+    "ClusterPeerNotFound":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "ClusterPeerStatus":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "ClusterPeers":{
+      "type":"list",
+      "member":{"shape":"ClusterPeer"},
+      "max":50
+    },
     "CompletionReport":{
       "type":"structure",
       "required":["Enabled"],
@@ -1327,6 +1778,42 @@
       "type":"structure",
       "members":{
         "Backup":{"shape":"Backup"}
+      }
+    },
+    "CreateCloneConfiguration":{
+      "type":"structure",
+      "required":["ParentVolumeId"],
+      "members":{
+        "ParentVolumeId":{"shape":"VolumeId"},
+        "SnapshotId":{"shape":"SnapshotId"}
+      }
+    },
+    "CreateClusterPeerRequest":{
+      "type":"structure",
+      "required":[
+        "FileSystemId",
+        "PeerAddresses",
+        "PassphraseSecretArn",
+        "AllowedSvmMode"
+      ],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "FileSystemId":{"shape":"FileSystemId"},
+        "PeerAddresses":{"shape":"PeerAddresses"},
+        "PassphraseSecretArn":{"shape":"CustomerSecretsManagerARN"},
+        "PeerClusterName":{"shape":"PeerClusterName"},
+        "AllowedSvmMode":{"shape":"AllowedSvmMode"},
+        "AllowedSvmIds":{"shape":"AllowedSvmIds"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "CreateClusterPeerResponse":{
+      "type":"structure",
+      "members":{
+        "ClusterPeer":{"shape":"ClusterPeer"}
       }
     },
     "CreateDataRepositoryAssociationRequest":{
@@ -1587,6 +2074,14 @@
         "FsrmConfiguration":{"shape":"WindowsFsrmConfiguration"}
       }
     },
+    "CreateOntapSnapshotConfiguration":{
+      "type":"structure",
+      "members":{
+        "SnapmirrorLabel":{"shape":"SnapmirrorLabel"},
+        "ExpiryTime":{"shape":"ExpiryTime"},
+        "SnaplockExpiryTime":{"shape":"SnaplockExpiryTime"}
+      }
+    },
     "CreateOntapVolumeConfiguration":{
       "type":"structure",
       "required":["StorageVirtualMachineId"],
@@ -1602,12 +2097,13 @@
         "StorageVirtualMachineId":{"shape":"StorageVirtualMachineId"},
         "TieringPolicy":{"shape":"TieringPolicy"},
         "OntapVolumeType":{"shape":"InputOntapVolumeType"},
-        "SnapshotPolicy":{"shape":"SnapshotPolicy"},
+        "SnapshotPolicy":{"shape":"SnapshotPolicyName"},
         "CopyTagsToBackups":{"shape":"Flag"},
         "SnaplockConfiguration":{"shape":"CreateSnaplockConfiguration"},
         "VolumeStyle":{"shape":"VolumeStyle"},
         "AggregateConfiguration":{"shape":"CreateAggregateConfiguration"},
-        "SizeInBytes":{"shape":"VolumeCapacityBytes"}
+        "SizeInBytes":{"shape":"VolumeCapacityBytes"},
+        "CloneConfiguration":{"shape":"CreateCloneConfiguration"}
       }
     },
     "CreateOpenZFSOriginSnapshotConfiguration":{
@@ -1649,6 +2145,95 @@
         "VolumeAppendModeEnabled":{"shape":"Flag"}
       }
     },
+    "CreateSnapmirrorDestination":{
+      "type":"structure",
+      "required":["VolumeId"],
+      "members":{
+        "VolumeId":{"shape":"VolumeId"}
+      }
+    },
+    "CreateSnapmirrorPolicyRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "FileSystemId":{"shape":"FileSystemId"},
+        "StorageVirtualMachineId":{"shape":"StorageVirtualMachineId"},
+        "Name":{"shape":"SnapmirrorPolicyName"},
+        "SnapshotCopyMode":{"shape":"SnapmirrorPolicySnapshotCopyMode"},
+        "RetentionRules":{"shape":"SnapmirrorPolicyRetentionRules"},
+        "TransferSchedule":{"shape":"SnapmirrorTransferScheduleName"},
+        "NetworkCompressionEnabled":{"shape":"Flag"},
+        "ThrottleInKbps":{"shape":"ThrottleInKbps"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "CreateSnapmirrorPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "SnapmirrorPolicy":{"shape":"SnapmirrorPolicy"}
+      }
+    },
+    "CreateSnapmirrorRelationshipRequest":{
+      "type":"structure",
+      "required":[
+        "Source",
+        "Destination"
+      ],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "Source":{"shape":"CreateSnapmirrorSource"},
+        "Destination":{"shape":"CreateSnapmirrorDestination"},
+        "PolicyId":{"shape":"SnapmirrorPolicyId"},
+        "TransferSchedule":{"shape":"SnapmirrorTransferScheduleName"},
+        "ThrottleInKbps":{"shape":"ThrottleInKbps"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "CreateSnapmirrorRelationshipResponse":{
+      "type":"structure",
+      "members":{
+        "SnapmirrorRelationship":{"shape":"SnapmirrorRelationship"}
+      }
+    },
+    "CreateSnapmirrorSource":{
+      "type":"structure",
+      "required":["Path"],
+      "members":{
+        "Path":{"shape":"SnapmirrorPath"}
+      }
+    },
+    "CreateSnapshotPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Schedules"
+      ],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "FileSystemId":{"shape":"FileSystemId"},
+        "StorageVirtualMachineId":{"shape":"StorageVirtualMachineId"},
+        "Name":{"shape":"SnapshotPolicyName"},
+        "Enabled":{"shape":"Flag"},
+        "Schedules":{"shape":"SnapshotPolicyScheduleList"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "CreateSnapshotPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "SnapshotPolicy":{"shape":"SnapshotPolicy"}
+      }
+    },
     "CreateSnapshotRequest":{
       "type":"structure",
       "required":[
@@ -1662,13 +2247,40 @@
         },
         "Name":{"shape":"SnapshotName"},
         "VolumeId":{"shape":"VolumeId"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "OntapConfiguration":{"shape":"CreateOntapSnapshotConfiguration"}
       }
     },
     "CreateSnapshotResponse":{
       "type":"structure",
       "members":{
         "Snapshot":{"shape":"Snapshot"}
+      }
+    },
+    "CreateStorageVirtualMachinePeerRequest":{
+      "type":"structure",
+      "required":[
+        "StorageVirtualMachineId",
+        "PeerSvmName",
+        "Applications"
+      ],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "StorageVirtualMachineId":{"shape":"StorageVirtualMachineId"},
+        "PeerSvmName":{"shape":"PeerSvmName"},
+        "PeerClusterName":{"shape":"PeerClusterName"},
+        "Applications":{"shape":"StorageVirtualMachinePeerApplications"},
+        "PeerSvmAlias":{"shape":"PeerSvmAlias"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "CreateStorageVirtualMachinePeerResponse":{
+      "type":"structure",
+      "members":{
+        "StorageVirtualMachinePeer":{"shape":"StorageVirtualMachinePeer"}
       }
     },
     "CreateStorageVirtualMachineRequest":{
@@ -1999,6 +2611,24 @@
         "Lifecycle":{"shape":"BackupLifecycle"}
       }
     },
+    "DeleteClusterPeerRequest":{
+      "type":"structure",
+      "required":["ClusterPeerId"],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "ClusterPeerId":{"shape":"ClusterPeerId"}
+      }
+    },
+    "DeleteClusterPeerResponse":{
+      "type":"structure",
+      "members":{
+        "ClusterPeerId":{"shape":"ClusterPeerId"},
+        "Lifecycle":{"shape":"ClusterPeerLifecycle"}
+      }
+    },
     "DeleteDataInFileSystem":{"type":"boolean"},
     "DeleteDataRepositoryAssociationRequest":{
       "type":"structure",
@@ -2123,6 +2753,60 @@
       "member":{"shape":"DeleteOpenZFSVolumeOption"},
       "max":1
     },
+    "DeleteSnapmirrorPolicyRequest":{
+      "type":"structure",
+      "required":["SnapmirrorPolicyId"],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "SnapmirrorPolicyId":{"shape":"SnapmirrorPolicyId"}
+      }
+    },
+    "DeleteSnapmirrorPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "SnapmirrorPolicyId":{"shape":"SnapmirrorPolicyId"},
+        "Lifecycle":{"shape":"SnapmirrorPolicyLifecycle"}
+      }
+    },
+    "DeleteSnapmirrorRelationshipRequest":{
+      "type":"structure",
+      "required":["SnapmirrorRelationshipId"],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "SnapmirrorRelationshipId":{"shape":"SnapmirrorRelationshipId"}
+      }
+    },
+    "DeleteSnapmirrorRelationshipResponse":{
+      "type":"structure",
+      "members":{
+        "SnapmirrorRelationshipId":{"shape":"SnapmirrorRelationshipId"},
+        "Lifecycle":{"shape":"SnapmirrorRelationshipLifecycle"}
+      }
+    },
+    "DeleteSnapshotPolicyRequest":{
+      "type":"structure",
+      "required":["SnapshotPolicyId"],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "SnapshotPolicyId":{"shape":"SnapshotPolicyId"}
+      }
+    },
+    "DeleteSnapshotPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "SnapshotPolicyId":{"shape":"SnapshotPolicyId"},
+        "Lifecycle":{"shape":"SnapshotPolicyLifecycle"}
+      }
+    },
     "DeleteSnapshotRequest":{
       "type":"structure",
       "required":["SnapshotId"],
@@ -2139,6 +2823,24 @@
       "members":{
         "SnapshotId":{"shape":"SnapshotId"},
         "Lifecycle":{"shape":"SnapshotLifecycle"}
+      }
+    },
+    "DeleteStorageVirtualMachinePeerRequest":{
+      "type":"structure",
+      "required":["StorageVirtualMachinePeerId"],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "StorageVirtualMachinePeerId":{"shape":"StorageVirtualMachinePeerId"}
+      }
+    },
+    "DeleteStorageVirtualMachinePeerResponse":{
+      "type":"structure",
+      "members":{
+        "StorageVirtualMachinePeerId":{"shape":"StorageVirtualMachinePeerId"},
+        "Lifecycle":{"shape":"StorageVirtualMachinePeerLifecycle"}
       }
     },
     "DeleteStorageVirtualMachineRequest":{
@@ -2214,6 +2916,22 @@
       "type":"structure",
       "members":{
         "Backups":{"shape":"Backups"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeClusterPeersRequest":{
+      "type":"structure",
+      "members":{
+        "ClusterPeerIds":{"shape":"ClusterPeerIds"},
+        "Filters":{"shape":"ClusterPeerFilters"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeClusterPeersResponse":{
+      "type":"structure",
+      "members":{
+        "ClusterPeers":{"shape":"ClusterPeers"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -2325,6 +3043,54 @@
         "EnableFsxRouteTableUpdatesFromParticipantAccounts":{"shape":"VerboseFlag"}
       }
     },
+    "DescribeSnapmirrorPoliciesRequest":{
+      "type":"structure",
+      "members":{
+        "SnapmirrorPolicyIds":{"shape":"SnapmirrorPolicyIds"},
+        "Filters":{"shape":"SnapmirrorPolicyFilters"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeSnapmirrorPoliciesResponse":{
+      "type":"structure",
+      "members":{
+        "SnapmirrorPolicies":{"shape":"SnapmirrorPolicies"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeSnapmirrorRelationshipsRequest":{
+      "type":"structure",
+      "members":{
+        "SnapmirrorRelationshipIds":{"shape":"SnapmirrorRelationshipIds"},
+        "Filters":{"shape":"SnapmirrorRelationshipFilters"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeSnapmirrorRelationshipsResponse":{
+      "type":"structure",
+      "members":{
+        "SnapmirrorRelationships":{"shape":"SnapmirrorRelationships"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeSnapshotPoliciesRequest":{
+      "type":"structure",
+      "members":{
+        "SnapshotPolicyIds":{"shape":"SnapshotPolicyIds"},
+        "Filters":{"shape":"SnapshotPolicyFilters"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeSnapshotPoliciesResponse":{
+      "type":"structure",
+      "members":{
+        "SnapshotPolicies":{"shape":"SnapshotPolicies"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "DescribeSnapshotsRequest":{
       "type":"structure",
       "members":{
@@ -2339,6 +3105,22 @@
       "type":"structure",
       "members":{
         "Snapshots":{"shape":"Snapshots"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeStorageVirtualMachinePeersRequest":{
+      "type":"structure",
+      "members":{
+        "StorageVirtualMachinePeerIds":{"shape":"StorageVirtualMachinePeerIds"},
+        "Filters":{"shape":"StorageVirtualMachinePeerFilters"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeStorageVirtualMachinePeersResponse":{
+      "type":"structure",
+      "members":{
+        "StorageVirtualMachinePeers":{"shape":"StorageVirtualMachinePeers"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -2490,6 +3272,7 @@
       "member":{"shape":"EventType"},
       "max":3
     },
+    "ExpiryTime":{"type":"timestamp"},
     "FailedCount":{"type":"long"},
     "FileCache":{
       "type":"structure",
@@ -2972,11 +3755,16 @@
       "min":1,
       "pattern":"^.{1,2048}$"
     },
+    "LagTimeInMinutes":{
+      "type":"long",
+      "min":0
+    },
     "LastUpdatedTime":{"type":"timestamp"},
     "LifecycleTransitionReason":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"ErrorMessage"}
+        "Message":{"shape":"ErrorMessage"},
+        "OntapError":{"shape":"OntapError"}
       }
     },
     "LimitedMaxResults":{
@@ -3228,6 +4016,13 @@
       "max":24,
       "min":1
     },
+    "OntapError":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"},
+        "Code":{"shape":"ErrorCode"}
+      }
+    },
     "OntapFileSystemConfiguration":{
       "type":"structure",
       "members":{
@@ -3269,6 +4064,16 @@
         "WINDOWS"
       ]
     },
+    "OntapSnapshotConfiguration":{
+      "type":"structure",
+      "members":{
+        "SizeInMegabytes":{"shape":"SnapshotSizeInMegabytes"},
+        "SnapmirrorLabel":{"shape":"SnapmirrorLabel"},
+        "ExpiryTime":{"shape":"ExpiryTime"},
+        "SnaplockExpiryTime":{"shape":"SnaplockExpiryTime"},
+        "UUID":{"shape":"UUID"}
+      }
+    },
     "OntapUnixFileSystemUser":{
       "type":"structure",
       "required":["Name"],
@@ -3289,12 +4094,13 @@
         "TieringPolicy":{"shape":"TieringPolicy"},
         "UUID":{"shape":"UUID"},
         "OntapVolumeType":{"shape":"OntapVolumeType"},
-        "SnapshotPolicy":{"shape":"SnapshotPolicy"},
+        "SnapshotPolicy":{"shape":"SnapshotPolicyName"},
         "CopyTagsToBackups":{"shape":"Flag"},
         "SnaplockConfiguration":{"shape":"SnaplockConfiguration"},
         "VolumeStyle":{"shape":"VolumeStyle"},
         "AggregateConfiguration":{"shape":"AggregateConfiguration"},
-        "SizeInBytes":{"shape":"VolumeCapacityBytes"}
+        "SizeInBytes":{"shape":"VolumeCapacityBytes"},
+        "CloneConfiguration":{"shape":"CloneConfiguration"}
       }
     },
     "OntapVolumeType":{
@@ -3519,6 +4325,30 @@
     "Parameter":{
       "type":"string",
       "min":1
+    },
+    "PeerAddresses":{
+      "type":"list",
+      "member":{"shape":"IpAddress"},
+      "max":288,
+      "min":1
+    },
+    "PeerClusterName":{
+      "type":"string",
+      "max":44,
+      "min":1,
+      "pattern":"^[^\\u0000\\u0085\\u2028\\u2029\\r\\n]{1,44}$"
+    },
+    "PeerSvmAlias":{
+      "type":"string",
+      "max":41,
+      "min":1,
+      "pattern":"^[^\\u0000\\u0085\\u2028\\u2029\\r\\n]{1,41}$"
+    },
+    "PeerSvmName":{
+      "type":"string",
+      "max":47,
+      "min":1,
+      "pattern":"^[^\\u0000\\u0085\\u2028\\u2029\\r\\n]{1,47}$"
     },
     "PerUnitStorageThroughput":{
       "type":"integer",
@@ -3914,6 +4744,7 @@
         "VolumeAppendModeEnabled":{"shape":"Flag"}
       }
     },
+    "SnaplockExpiryTime":{"type":"timestamp"},
     "SnaplockRetentionPeriod":{
       "type":"structure",
       "required":[
@@ -3934,6 +4765,311 @@
         "ENTERPRISE"
       ]
     },
+    "SnapmirrorDestination":{
+      "type":"structure",
+      "members":{
+        "Path":{"shape":"SnapmirrorPath"},
+        "VolumeId":{"shape":"VolumeId"}
+      }
+    },
+    "SnapmirrorExportedSnapshot":{
+      "type":"structure",
+      "members":{
+        "SnapshotId":{"shape":"SnapshotId"},
+        "SnapshotName":{"shape":"SnapmirrorExportedSnapshotName"}
+      }
+    },
+    "SnapmirrorExportedSnapshotName":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
+    "SnapmirrorHealthy":{"type":"boolean"},
+    "SnapmirrorLabel":{
+      "type":"string",
+      "max":31,
+      "min":0
+    },
+    "SnapmirrorPath":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"^[^\\u0000\\u0085\\u2028\\u2029\\r\\n]{1,512}$"
+    },
+    "SnapmirrorPolicies":{
+      "type":"list",
+      "member":{"shape":"SnapmirrorPolicy"},
+      "max":50
+    },
+    "SnapmirrorPolicy":{
+      "type":"structure",
+      "members":{
+        "ResourceARN":{"shape":"ResourceARN"},
+        "SnapmirrorPolicyId":{"shape":"SnapmirrorPolicyId"},
+        "FileSystemId":{"shape":"FileSystemId"},
+        "StorageVirtualMachineId":{"shape":"StorageVirtualMachineId"},
+        "Name":{"shape":"SnapmirrorPolicyName"},
+        "SnapshotCopyMode":{"shape":"SnapmirrorPolicySnapshotCopyMode"},
+        "RetentionRules":{"shape":"SnapmirrorPolicyRetentionRules"},
+        "TransferSchedule":{"shape":"SnapmirrorTransferScheduleName"},
+        "NetworkCompressionEnabled":{"shape":"Flag"},
+        "ThrottleInKbps":{"shape":"ThrottleInKbps"},
+        "Scope":{"shape":"SnapmirrorPolicyScope"},
+        "Lifecycle":{"shape":"SnapmirrorPolicyLifecycle"},
+        "UUID":{"shape":"UUID"},
+        "LifecycleTransitionReason":{"shape":"LifecycleTransitionReason"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "SnapmirrorPolicyCreationScheduleName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_:.-]{1,256}$"
+    },
+    "SnapmirrorPolicyFilter":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"SnapmirrorPolicyFilterName"},
+        "Values":{"shape":"SnapmirrorPolicyFilterValues"}
+      }
+    },
+    "SnapmirrorPolicyFilterName":{
+      "type":"string",
+      "enum":[
+        "file-system-id",
+        "storage-virtual-machine-id"
+      ]
+    },
+    "SnapmirrorPolicyFilterValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z\\*\\.\\\\/\\?\\-\\_]*$"
+    },
+    "SnapmirrorPolicyFilterValues":{
+      "type":"list",
+      "member":{"shape":"SnapmirrorPolicyFilterValue"},
+      "max":20
+    },
+    "SnapmirrorPolicyFilters":{
+      "type":"list",
+      "member":{"shape":"SnapmirrorPolicyFilter"},
+      "max":1
+    },
+    "SnapmirrorPolicyId":{
+      "type":"string",
+      "pattern":"^(snapmirrorpol-[0-9a-f]{17})$"
+    },
+    "SnapmirrorPolicyIds":{
+      "type":"list",
+      "member":{"shape":"SnapmirrorPolicyId"},
+      "max":50
+    },
+    "SnapmirrorPolicyLifecycle":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATED",
+        "DELETING",
+        "FAILED"
+      ]
+    },
+    "SnapmirrorPolicyName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "SnapmirrorPolicyNotFound":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "SnapmirrorPolicyRetentionCount":{
+      "type":"integer",
+      "max":1019,
+      "min":1
+    },
+    "SnapmirrorPolicyRetentionRule":{
+      "type":"structure",
+      "required":[
+        "Label",
+        "Count"
+      ],
+      "members":{
+        "Label":{"shape":"SnapmirrorLabel"},
+        "Count":{"shape":"SnapmirrorPolicyRetentionCount"},
+        "CreationSchedule":{"shape":"SnapmirrorPolicyCreationScheduleName"}
+      }
+    },
+    "SnapmirrorPolicyRetentionRules":{
+      "type":"list",
+      "member":{"shape":"SnapmirrorPolicyRetentionRule"},
+      "max":10
+    },
+    "SnapmirrorPolicyScope":{
+      "type":"string",
+      "enum":[
+        "FILESYSTEM",
+        "SVM"
+      ]
+    },
+    "SnapmirrorPolicySnapshotCopyMode":{
+      "type":"string",
+      "enum":[
+        "COPY_ALL_SOURCE_SNAPSHOTS",
+        "COPY_LATEST_SOURCE_SNAPSHOT",
+        "NO_CREATE_SNAPSHOT_ON_SOURCE"
+      ]
+    },
+    "SnapmirrorRelationship":{
+      "type":"structure",
+      "members":{
+        "ResourceARN":{"shape":"ResourceARN"},
+        "SnapmirrorRelationshipId":{"shape":"SnapmirrorRelationshipId"},
+        "FileSystemId":{"shape":"FileSystemId"},
+        "Lifecycle":{"shape":"SnapmirrorRelationshipLifecycle"},
+        "LifecycleTransitionReason":{"shape":"LifecycleTransitionReason"},
+        "Tags":{"shape":"Tags"},
+        "Source":{"shape":"SnapmirrorSource"},
+        "Destination":{"shape":"SnapmirrorDestination"},
+        "SnapmirrorPolicy":{"shape":"SnapmirrorRelationshipPolicy"},
+        "TransferSchedule":{"shape":"SnapmirrorTransferScheduleName"},
+        "ThrottleInKbps":{"shape":"ThrottleInKbps"},
+        "State":{"shape":"SnapmirrorRelationshipState"},
+        "Healthy":{"shape":"SnapmirrorHealthy"},
+        "UnhealthyReason":{"shape":"SnapmirrorUnhealthyReason"},
+        "LagTimeInMinutes":{"shape":"LagTimeInMinutes"},
+        "ExportedSnapshot":{"shape":"SnapmirrorExportedSnapshot"},
+        "TransferState":{"shape":"SnapmirrorTransferState"},
+        "UUID":{"shape":"UUID"}
+      }
+    },
+    "SnapmirrorRelationshipFilter":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"SnapmirrorRelationshipFilterName"},
+        "Values":{"shape":"SnapmirrorRelationshipFilterValues"}
+      }
+    },
+    "SnapmirrorRelationshipFilterName":{
+      "type":"string",
+      "enum":[
+        "file-system-id",
+        "destination-volume-id"
+      ]
+    },
+    "SnapmirrorRelationshipFilterValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z\\*\\.\\\\/\\?\\-\\_]*$"
+    },
+    "SnapmirrorRelationshipFilterValues":{
+      "type":"list",
+      "member":{"shape":"SnapmirrorRelationshipFilterValue"},
+      "max":20
+    },
+    "SnapmirrorRelationshipFilters":{
+      "type":"list",
+      "member":{"shape":"SnapmirrorRelationshipFilter"},
+      "max":1
+    },
+    "SnapmirrorRelationshipId":{
+      "type":"string",
+      "pattern":"^(snapmirror-[0-9a-f]{17})$"
+    },
+    "SnapmirrorRelationshipIds":{
+      "type":"list",
+      "member":{"shape":"SnapmirrorRelationshipId"},
+      "max":50
+    },
+    "SnapmirrorRelationshipLifecycle":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATED",
+        "DELETING",
+        "FAILED"
+      ]
+    },
+    "SnapmirrorRelationshipNotFound":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "SnapmirrorRelationshipPolicy":{
+      "type":"structure",
+      "members":{
+        "PolicyId":{"shape":"SnapmirrorPolicyId"},
+        "PolicyName":{"shape":"SnapmirrorPolicyName"}
+      }
+    },
+    "SnapmirrorRelationshipState":{
+      "type":"string",
+      "enum":[
+        "UNINITIALIZED",
+        "TRANSFERRING",
+        "SNAPMIRRORED",
+        "PAUSED",
+        "BROKEN_OFF"
+      ]
+    },
+    "SnapmirrorRelationships":{
+      "type":"list",
+      "member":{"shape":"SnapmirrorRelationship"},
+      "max":50
+    },
+    "SnapmirrorSource":{
+      "type":"structure",
+      "members":{
+        "Path":{"shape":"SnapmirrorPath"}
+      }
+    },
+    "SnapmirrorTransferBytes":{
+      "type":"long",
+      "min":0
+    },
+    "SnapmirrorTransferDuration":{
+      "type":"string",
+      "max":64,
+      "min":0
+    },
+    "SnapmirrorTransferScheduleName":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"^[a-zA-Z0-9_:.-]{0,256}$"
+    },
+    "SnapmirrorTransferState":{
+      "type":"structure",
+      "members":{
+        "State":{"shape":"SnapmirrorTransferStatus"},
+        "Type":{"shape":"SnapmirrorTransferType"},
+        "BytesTransferred":{"shape":"SnapmirrorTransferBytes"},
+        "Duration":{"shape":"SnapmirrorTransferDuration"},
+        "EndTime":{"shape":"CreationTime"}
+      }
+    },
+    "SnapmirrorTransferStatus":{
+      "type":"string",
+      "max":64,
+      "min":0
+    },
+    "SnapmirrorTransferType":{
+      "type":"string",
+      "max":64,
+      "min":0
+    },
+    "SnapmirrorUnhealthyReason":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
     "Snapshot":{
       "type":"structure",
       "members":{
@@ -3943,9 +5079,11 @@
         "VolumeId":{"shape":"VolumeId"},
         "CreationTime":{"shape":"CreationTime"},
         "Lifecycle":{"shape":"SnapshotLifecycle"},
+        "SnapshotType":{"shape":"SnapshotType"},
         "LifecycleTransitionReason":{"shape":"LifecycleTransitionReason"},
         "Tags":{"shape":"Tags"},
-        "AdministrativeActions":{"shape":"AdministrativeActions"}
+        "AdministrativeActions":{"shape":"AdministrativeActions"},
+        "OntapConfiguration":{"shape":"OntapSnapshotConfiguration"}
       }
     },
     "SnapshotFilter":{
@@ -3995,7 +5133,8 @@
         "PENDING",
         "CREATING",
         "DELETING",
-        "AVAILABLE"
+        "AVAILABLE",
+        "FAILED"
       ]
     },
     "SnapshotName":{
@@ -4011,10 +5150,167 @@
       },
       "exception":true
     },
+    "SnapshotPolicies":{
+      "type":"list",
+      "member":{"shape":"SnapshotPolicy"},
+      "max":50
+    },
     "SnapshotPolicy":{
+      "type":"structure",
+      "members":{
+        "ResourceARN":{"shape":"ResourceARN"},
+        "SnapshotPolicyId":{"shape":"SnapshotPolicyId"},
+        "FileSystemId":{"shape":"FileSystemId"},
+        "StorageVirtualMachineId":{"shape":"StorageVirtualMachineId"},
+        "Name":{"shape":"SnapshotPolicyName"},
+        "Enabled":{"shape":"Flag"},
+        "Schedules":{"shape":"SnapshotPolicyScheduleList"},
+        "Scope":{"shape":"SnapshotPolicyScope"},
+        "Lifecycle":{"shape":"SnapshotPolicyLifecycle"},
+        "UUID":{"shape":"UUID"},
+        "LifecycleTransitionReason":{"shape":"LifecycleTransitionReason"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "SnapshotPolicyFilter":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"SnapshotPolicyFilterName"},
+        "Values":{"shape":"SnapshotPolicyFilterValues"}
+      }
+    },
+    "SnapshotPolicyFilterName":{
+      "type":"string",
+      "enum":[
+        "file-system-id",
+        "storage-virtual-machine-id"
+      ]
+    },
+    "SnapshotPolicyFilterValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z\\*\\.\\\\/\\?\\-\\_]*$"
+    },
+    "SnapshotPolicyFilterValues":{
+      "type":"list",
+      "member":{"shape":"SnapshotPolicyFilterValue"},
+      "max":20
+    },
+    "SnapshotPolicyFilters":{
+      "type":"list",
+      "member":{"shape":"SnapshotPolicyFilter"},
+      "max":1
+    },
+    "SnapshotPolicyId":{
+      "type":"string",
+      "max":29,
+      "min":29,
+      "pattern":"^snapshotpol-[0-9a-f]{17}$"
+    },
+    "SnapshotPolicyIds":{
+      "type":"list",
+      "member":{"shape":"SnapshotPolicyId"},
+      "max":50
+    },
+    "SnapshotPolicyLifecycle":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATED",
+        "DELETING",
+        "FAILED"
+      ]
+    },
+    "SnapshotPolicyName":{
       "type":"string",
       "max":255,
       "min":1
+    },
+    "SnapshotPolicyNotFound":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "SnapshotPolicyRetentionPeriod":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"SnapshotPolicyRetentionPeriodType"},
+        "Value":{"shape":"SnapshotPolicyRetentionPeriodValue"}
+      }
+    },
+    "SnapshotPolicyRetentionPeriodType":{
+      "type":"string",
+      "enum":[
+        "SECONDS",
+        "MINUTES",
+        "HOURS",
+        "DAYS",
+        "MONTHS",
+        "YEARS",
+        "INFINITE"
+      ]
+    },
+    "SnapshotPolicyRetentionPeriodValue":{
+      "type":"integer",
+      "max":65535,
+      "min":0
+    },
+    "SnapshotPolicySchedule":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Count"
+      ],
+      "members":{
+        "Name":{"shape":"SnapshotPolicyScheduleName"},
+        "Count":{"shape":"SnapshotPolicyScheduleCount"},
+        "Prefix":{"shape":"SnapshotPolicySchedulePrefix"},
+        "SnapmirrorLabel":{"shape":"SnapmirrorLabel"},
+        "RetentionPeriod":{"shape":"SnapshotPolicyRetentionPeriod"}
+      }
+    },
+    "SnapshotPolicyScheduleCount":{
+      "type":"integer",
+      "max":1023,
+      "min":0
+    },
+    "SnapshotPolicyScheduleList":{
+      "type":"list",
+      "member":{"shape":"SnapshotPolicySchedule"},
+      "max":5,
+      "min":1
+    },
+    "SnapshotPolicyScheduleName":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "SnapshotPolicySchedulePrefix":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "SnapshotPolicyScope":{
+      "type":"string",
+      "enum":[
+        "FILESYSTEM",
+        "SVM"
+      ]
+    },
+    "SnapshotSizeInMegabytes":{
+      "type":"long",
+      "min":0
+    },
+    "SnapshotType":{
+      "type":"string",
+      "enum":[
+        "ONTAP",
+        "OPENZFS"
+      ]
     },
     "Snapshots":{
       "type":"list",
@@ -4159,6 +5455,118 @@
       },
       "exception":true
     },
+    "StorageVirtualMachinePeer":{
+      "type":"structure",
+      "members":{
+        "ResourceARN":{"shape":"ResourceARN"},
+        "StorageVirtualMachinePeerId":{"shape":"StorageVirtualMachinePeerId"},
+        "StorageVirtualMachineId":{"shape":"StorageVirtualMachineId"},
+        "FileSystemId":{"shape":"FileSystemId"},
+        "Lifecycle":{"shape":"StorageVirtualMachinePeerLifecycle"},
+        "LifecycleTransitionReason":{"shape":"LifecycleTransitionReason"},
+        "Tags":{"shape":"Tags"},
+        "PeerSvmName":{"shape":"PeerSvmName"},
+        "PeerSvmAlias":{"shape":"PeerSvmAlias"},
+        "PeerClusterName":{"shape":"PeerClusterName"},
+        "Applications":{"shape":"StorageVirtualMachinePeerApplications"},
+        "State":{"shape":"StorageVirtualMachinePeerState"},
+        "UUID":{"shape":"UUID"}
+      }
+    },
+    "StorageVirtualMachinePeerApplication":{
+      "type":"string",
+      "enum":[
+        "SNAPMIRROR",
+        "FILE_COPY",
+        "LUN_COPY",
+        "FLEXCACHE"
+      ]
+    },
+    "StorageVirtualMachinePeerApplications":{
+      "type":"list",
+      "member":{"shape":"StorageVirtualMachinePeerApplication"},
+      "max":4,
+      "min":1
+    },
+    "StorageVirtualMachinePeerFilter":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"StorageVirtualMachinePeerFilterName"},
+        "Values":{"shape":"StorageVirtualMachinePeerFilterValues"}
+      }
+    },
+    "StorageVirtualMachinePeerFilterName":{
+      "type":"string",
+      "enum":[
+        "file-system-id",
+        "storage-virtual-machine-id"
+      ]
+    },
+    "StorageVirtualMachinePeerFilterValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z\\*\\.\\\\/\\?\\-\\_]*$"
+    },
+    "StorageVirtualMachinePeerFilterValues":{
+      "type":"list",
+      "member":{"shape":"StorageVirtualMachinePeerFilterValue"},
+      "max":20
+    },
+    "StorageVirtualMachinePeerFilters":{
+      "type":"list",
+      "member":{"shape":"StorageVirtualMachinePeerFilter"},
+      "max":1
+    },
+    "StorageVirtualMachinePeerId":{
+      "type":"string",
+      "pattern":"^(svmpeer-[0-9a-f]{17})$"
+    },
+    "StorageVirtualMachinePeerIds":{
+      "type":"list",
+      "member":{"shape":"StorageVirtualMachinePeerId"},
+      "max":50
+    },
+    "StorageVirtualMachinePeerLifecycle":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATED",
+        "DELETING",
+        "FAILED"
+      ]
+    },
+    "StorageVirtualMachinePeerNotFound":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "StorageVirtualMachinePeerState":{
+      "type":"string",
+      "enum":[
+        "PEERED",
+        "REJECTED",
+        "SUSPENDED",
+        "INITIATED",
+        "PENDING",
+        "INITIALIZING"
+      ]
+    },
+    "StorageVirtualMachinePeerUpdateState":{
+      "type":"string",
+      "enum":[
+        "PEERED",
+        "REJECTED",
+        "SUSPENDED"
+      ]
+    },
+    "StorageVirtualMachinePeers":{
+      "type":"list",
+      "member":{"shape":"StorageVirtualMachinePeer"},
+      "max":50
+    },
     "StorageVirtualMachineRootVolumeSecurityStyle":{
       "type":"string",
       "enum":[
@@ -4283,6 +5691,10 @@
       "member":{"shape":"TaskId"},
       "max":50
     },
+    "ThrottleInKbps":{
+      "type":"long",
+      "min":0
+    },
     "ThroughputCapacityMbps":{
       "type":"integer",
       "max":2000000,
@@ -4357,6 +5769,39 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{}
+    },
+    "UpdatableSnapmirrorRelationshipState":{
+      "type":"string",
+      "enum":[
+        "SNAPMIRRORED",
+        "PAUSED",
+        "BROKEN_OFF"
+      ]
+    },
+    "UpdateCloneConfiguration":{
+      "type":"structure",
+      "members":{
+        "SplitAction":{"shape":"CloneSplitAction"}
+      }
+    },
+    "UpdateClusterPeerRequest":{
+      "type":"structure",
+      "required":["ClusterPeerId"],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "ClusterPeerId":{"shape":"ClusterPeerId"},
+        "PeerClusterName":{"shape":"PeerClusterName"},
+        "PeerAddresses":{"shape":"PeerAddresses"}
+      }
+    },
+    "UpdateClusterPeerResponse":{
+      "type":"structure",
+      "members":{
+        "ClusterPeer":{"shape":"ClusterPeer"}
+      }
     },
     "UpdateDataRepositoryAssociationRequest":{
       "type":"structure",
@@ -4494,6 +5939,14 @@
         "FsrmConfiguration":{"shape":"WindowsFsrmConfiguration"}
       }
     },
+    "UpdateOntapSnapshotConfiguration":{
+      "type":"structure",
+      "members":{
+        "SnapmirrorLabel":{"shape":"SnapmirrorLabel"},
+        "ExpiryTime":{"shape":"ExpiryTime"},
+        "SnaplockExpiryTime":{"shape":"SnaplockExpiryTime"}
+      }
+    },
     "UpdateOntapVolumeConfiguration":{
       "type":"structure",
       "members":{
@@ -4502,10 +5955,11 @@
         "SizeInMegabytes":{"shape":"VolumeCapacity"},
         "StorageEfficiencyEnabled":{"shape":"Flag"},
         "TieringPolicy":{"shape":"TieringPolicy"},
-        "SnapshotPolicy":{"shape":"SnapshotPolicy"},
+        "SnapshotPolicy":{"shape":"SnapshotPolicyName"},
         "CopyTagsToBackups":{"shape":"Flag"},
         "SnaplockConfiguration":{"shape":"UpdateSnaplockConfiguration"},
-        "SizeInBytes":{"shape":"VolumeCapacityBytes"}
+        "SizeInBytes":{"shape":"VolumeCapacityBytes"},
+        "CloneConfiguration":{"shape":"UpdateCloneConfiguration"}
       }
     },
     "UpdateOpenZFSVolumeConfiguration":{
@@ -4558,25 +6012,103 @@
         "VolumeAppendModeEnabled":{"shape":"Flag"}
       }
     },
+    "UpdateSnapmirrorPolicyRequest":{
+      "type":"structure",
+      "required":["SnapmirrorPolicyId"],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "SnapmirrorPolicyId":{"shape":"SnapmirrorPolicyId"},
+        "RetentionRules":{"shape":"SnapmirrorPolicyRetentionRules"},
+        "TransferSchedule":{"shape":"SnapmirrorTransferScheduleName"},
+        "NetworkCompressionEnabled":{"shape":"Flag"},
+        "ThrottleInKbps":{"shape":"ThrottleInKbps"}
+      }
+    },
+    "UpdateSnapmirrorPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "SnapmirrorPolicy":{"shape":"SnapmirrorPolicy"}
+      }
+    },
+    "UpdateSnapmirrorRelationshipRequest":{
+      "type":"structure",
+      "required":["SnapmirrorRelationshipId"],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "SnapmirrorRelationshipId":{"shape":"SnapmirrorRelationshipId"},
+        "PolicyId":{"shape":"SnapmirrorPolicyId"},
+        "TransferSchedule":{"shape":"SnapmirrorTransferScheduleName"},
+        "ThrottleInKbps":{"shape":"ThrottleInKbps"},
+        "State":{"shape":"UpdatableSnapmirrorRelationshipState"}
+      }
+    },
+    "UpdateSnapmirrorRelationshipResponse":{
+      "type":"structure",
+      "members":{
+        "SnapmirrorRelationship":{"shape":"SnapmirrorRelationship"}
+      }
+    },
+    "UpdateSnapshotPolicyRequest":{
+      "type":"structure",
+      "required":["SnapshotPolicyId"],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "SnapshotPolicyId":{"shape":"SnapshotPolicyId"},
+        "Enabled":{"shape":"Flag"}
+      }
+    },
+    "UpdateSnapshotPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "SnapshotPolicy":{"shape":"SnapshotPolicy"}
+      }
+    },
     "UpdateSnapshotRequest":{
       "type":"structure",
-      "required":[
-        "Name",
-        "SnapshotId"
-      ],
+      "required":["SnapshotId"],
       "members":{
         "ClientRequestToken":{
           "shape":"ClientRequestToken",
           "idempotencyToken":true
         },
         "Name":{"shape":"SnapshotName"},
-        "SnapshotId":{"shape":"SnapshotId"}
+        "SnapshotId":{"shape":"SnapshotId"},
+        "OntapConfiguration":{"shape":"UpdateOntapSnapshotConfiguration"}
       }
     },
     "UpdateSnapshotResponse":{
       "type":"structure",
       "members":{
         "Snapshot":{"shape":"Snapshot"}
+      }
+    },
+    "UpdateStorageVirtualMachinePeerRequest":{
+      "type":"structure",
+      "required":["StorageVirtualMachinePeerId"],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "StorageVirtualMachinePeerId":{"shape":"StorageVirtualMachinePeerId"},
+        "Applications":{"shape":"StorageVirtualMachinePeerApplications"},
+        "PeerSvmAlias":{"shape":"PeerSvmAlias"},
+        "State":{"shape":"StorageVirtualMachinePeerUpdateState"}
+      }
+    },
+    "UpdateStorageVirtualMachinePeerResponse":{
+      "type":"structure",
+      "members":{
+        "StorageVirtualMachinePeer":{"shape":"StorageVirtualMachinePeer"}
       }
     },
     "UpdateStorageVirtualMachineRequest":{

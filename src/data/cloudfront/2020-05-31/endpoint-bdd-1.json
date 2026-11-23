@@ -103,6 +103,21 @@
             ]
         },
         {
+            "fn": "stringEquals",
+            "argv": [
+                {
+                    "fn": "getAttr",
+                    "argv": [
+                        {
+                            "ref": "PartitionResult"
+                        },
+                        "name"
+                    ]
+                },
+                "aws-eusc"
+            ]
+        },
+        {
             "fn": "booleanEquals",
             "argv": [
                 {
@@ -111,7 +126,7 @@
                         {
                             "ref": "PartitionResult"
                         },
-                        "supportsDualStack"
+                        "supportsFIPS"
                     ]
                 },
                 true
@@ -126,7 +141,7 @@
                         {
                             "ref": "PartitionResult"
                         },
-                        "supportsFIPS"
+                        "supportsDualStack"
                     ]
                 },
                 true
@@ -222,6 +237,38 @@
         {
             "conditions": [],
             "endpoint": {
+                "url": "https://cloudfront.amazonaws.eu",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4",
+                            "signingRegion": "eusc-de-east-1"
+                        }
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
+                "url": "https://cloudfront.global.api.amazonwebservices.eu",
+                "properties": {
+                    "authSchemes": [
+                        {
+                            "name": "sigv4",
+                            "signingRegion": "eusc-de-east-1"
+                        }
+                    ]
+                },
+                "headers": {}
+            },
+            "type": "endpoint"
+        },
+        {
+            "conditions": [],
+            "endpoint": {
                 "url": "https://cloudfront-fips.{PartitionResult#dualStackDnsSuffix}",
                 "properties": {
                     "authSchemes": [
@@ -305,6 +352,6 @@
         }
     ],
     "root": 2,
-    "nodeCount": 17,
-    "nodes": "/////wAAAAH/////AAAAAAAAABAAAAADAAAAAQAAAAQF9eEPAAAAAgAAAAUF9eEPAAAAAwAAAAoAAAAGAAAABAAAAAgAAAAHAAAABgX14QYF9eEOAAAABQX14QQAAAAJAAAABwX14QwF9eENAAAABAAAAA0AAAALAAAABgX14QcAAAAMAAAACAX14QoF9eELAAAABQX14QUAAAAOAAAABwAAAA8F9eEJAAAACAX14QgF9eEJAAAAAwX14QEAAAARAAAABAX14QIF9eED"
+    "nodeCount": 19,
+    "nodes": "/////wAAAAH/////AAAAAAAAABIAAAADAAAAAQAAAAQF9eERAAAAAgAAAAUF9eERAAAAAwAAAAwAAAAGAAAABAAAAAkAAAAHAAAABgX14QYAAAAIAAAABwX14QgF9eEQAAAABQX14QQAAAAKAAAABwX14QkAAAALAAAACQX14Q4F9eEPAAAABAAAAA8AAAANAAAABgX14QcAAAAOAAAACAX14QwF9eENAAAABQX14QUAAAAQAAAACAAAABEF9eELAAAACQX14QoF9eELAAAAAwX14QEAAAATAAAABAX14QIF9eED"
 }

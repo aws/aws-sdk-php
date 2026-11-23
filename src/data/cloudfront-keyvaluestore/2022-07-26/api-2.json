@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2022-07-26",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"cloudfront-keyvaluestore",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon CloudFront KeyValueStore",
     "serviceId":"CloudFront KeyValueStore",
     "signatureVersion":"v4",
@@ -45,7 +46,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetKey":{
       "name":"GetKey",
@@ -61,7 +63,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListKeys":{
       "name":"ListKeys",
@@ -78,7 +81,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutKey":{
       "name":"PutKey",

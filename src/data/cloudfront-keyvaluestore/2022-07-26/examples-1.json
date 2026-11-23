@@ -1,5 +1,219 @@
 {
   "version": "1.0",
   "examples": {
+    "DeleteKey": [
+      {
+        "input": {
+          "IfMatch": "KV0AB12C3DEF456",
+          "Key": "key1",
+          "KvsARN": "arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58"
+        },
+        "output": {
+          "ETag": "KV7XY89Z0ABC012",
+          "ItemCount": 3,
+          "TotalSizeInBytes": 5
+        },
+        "id": "example-1",
+        "title": "Delete 'key1' from the key value store with ARN 'arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58'"
+      }
+    ],
+    "DescribeKeyValueStore": [
+      {
+        "input": {
+          "KvsARN": "arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58"
+        },
+        "output": {
+          "Created": "2023-11-01T22:18:46Z",
+          "ETag": "KV7XY89Z0ABC012",
+          "FailureReason": "Datasource size exceeds the allowed limit",
+          "ItemCount": 0,
+          "KvsARN": "arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58",
+          "LastModified": "2023-11-01T14:28:17Z",
+          "Status": "IMPORT_FAILURE",
+          "TotalSizeInBytes": 0
+        },
+        "id": "example-1",
+        "title": "Describe the key value store with ARN 'arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58'"
+      },
+      {
+        "input": {
+          "KvsARN": "arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-1234a9d35678"
+        },
+        "output": {
+          "Created": "2023-11-01T22:18:46Z",
+          "ETag": "KV7XY89Z0ABC012",
+          "ItemCount": 4,
+          "KvsARN": "arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-1234a9d35678",
+          "LastModified": "2023-11-01T14:28:17Z",
+          "Status": "READY",
+          "TotalSizeInBytes": 15
+        },
+        "id": "example-2",
+        "title": "Describe the key value store with ARN 'arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-1234a9d35678'"
+      }
+    ],
+    "GetKey": [
+      {
+        "input": {
+          "Key": "key1",
+          "KvsARN": "arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58"
+        },
+        "output": {
+          "ItemCount": 4,
+          "Key": "key1",
+          "TotalSizeInBytes": 15,
+          "Value": "value1"
+        },
+        "id": "example-1",
+        "title": "Get 'key1' from the key value store with ARN 'arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58'"
+      }
+    ],
+    "ListKeys": [
+      {
+        "input": {
+          "KvsARN": "arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58",
+          "MaxResults": 3
+        },
+        "output": {
+          "Items": [
+            {
+              "Key": "key1",
+              "Value": "value1"
+            },
+            {
+              "Key": "key2",
+              "Value": "value2"
+            },
+            {
+              "Key": "key3",
+              "Value": "value3"
+            }
+          ],
+          "NextToken": "hVTTZndkpBZ0VRZ0R1RF"
+        },
+        "id": "example-1",
+        "title": "List keys in the key value store with ARN 'arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58'"
+      },
+      {
+        "input": {
+          "KvsARN": "arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58",
+          "MaxResults": 3,
+          "NextToken": "hVTTZndkpBZ0VRZ0R1RF"
+        },
+        "output": {
+          "Items": [
+            {
+              "Key": "key4",
+              "Value": "value4"
+            },
+            {
+              "Key": "key5",
+              "Value": "value5"
+            },
+            {
+              "Key": "key6",
+              "Value": "value6"
+            }
+          ],
+          "NextToken": "hQTlB5YmM5UFNoFQvMk"
+        },
+        "id": "example-2",
+        "title": "List the next page in the key value store with ARN 'arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58'"
+      }
+    ],
+    "PutKey": [
+      {
+        "input": {
+          "IfMatch": "KV0AB12C3DEF456",
+          "Key": "key1",
+          "KvsARN": "arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58",
+          "Value": "value1"
+        },
+        "output": {
+          "ETag": "KV7XY89Z0ABC012",
+          "ItemCount": 4,
+          "TotalSizeInBytes": 15
+        },
+        "id": "example-1",
+        "title": "Put 'key1' with 'value1' into the key value store with ARN 'arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58'"
+      }
+    ],
+    "UpdateKeys": [
+      {
+        "input": {
+          "IfMatch": "KV0AB12C3DEF456",
+          "KvsARN": "arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58",
+          "Puts": [
+            {
+              "Key": "key1",
+              "Value": "value1"
+            },
+            {
+              "Key": "key2",
+              "Value": "value2"
+            }
+          ]
+        },
+        "output": {
+          "ETag": "KV7XY89Z0ABC012",
+          "ItemCount": 4,
+          "TotalSizeInBytes": 15
+        },
+        "id": "example-1",
+        "title": "Put 2 keys into the key value store with ARN 'arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58'"
+      },
+      {
+        "input": {
+          "Deletes": [
+            {
+              "Key": "key1"
+            },
+            {
+              "Key": "key2"
+            }
+          ],
+          "IfMatch": "KV0AB12C3DEF456",
+          "KvsARN": "arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58"
+        },
+        "output": {
+          "ETag": "KV7XY89Z0ABC012",
+          "ItemCount": 4,
+          "TotalSizeInBytes": 15
+        },
+        "id": "example-2",
+        "title": "Delete 2 keys from the key value store with ARN 'arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58'"
+      },
+      {
+        "input": {
+          "Deletes": [
+            {
+              "Key": "key3"
+            },
+            {
+              "Key": "key4"
+            }
+          ],
+          "IfMatch": "KV0AB12C3DEF456",
+          "KvsARN": "arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58",
+          "Puts": [
+            {
+              "Key": "key1",
+              "Value": "value1"
+            },
+            {
+              "Key": "key2",
+              "Value": "value2"
+            }
+          ]
+        },
+        "output": {
+          "ETag": "KV7XY89Z0ABC012",
+          "ItemCount": 4,
+          "TotalSizeInBytes": 15
+        },
+        "id": "example-3",
+        "title": "Put 2 keys into and delete 1 key from the key value store with ARN 'arn:aws:cloudfront::123456789012:key-value-store/327284aa-bcd5-499f-a3ff-26b9a9d31b58'"
+      }
+    ]
   }
 }
