@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.407.2 - 2026-11-23
 
 * `Aws\S3` - Validates response checksums against the raw body of `Content-Encoding` encoded objects, then inflates gzip and deflate bodies for callers.
 * `Aws\S3` - Skips `GetObject` response checksum validation for composite multipart checksums of objects with 1 or 10000 parts, which previously failed with a checksum mismatch.
