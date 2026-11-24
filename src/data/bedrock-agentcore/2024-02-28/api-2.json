@@ -6309,7 +6309,8 @@
         },
         "searchQuery":{"shape":"InvokeWebSearchInputSearchQueryString"},
         "maxResults":{"shape":"InvokeWebSearchInputMaxResultsInteger"},
-        "filters":{"shape":"WebSearchFilters"}
+        "filters":{"shape":"WebSearchFilters"},
+        "userLocation":{"shape":"WebSearchUserLocation"}
       }
     },
     "InvokeWebSearchInputMaxResultsInteger":{
@@ -10320,6 +10321,12 @@
       "max":3840,
       "min":320
     },
+    "WebSearchCountryCode":{
+      "type":"string",
+      "max":2,
+      "min":2,
+      "pattern":"[A-Za-z]{2}"
+    },
     "WebSearchFilters":{
       "type":"structure",
       "members":{
@@ -10346,6 +10353,12 @@
     "WebSearchResultList":{
       "type":"list",
       "member":{"shape":"WebSearchResult"}
+    },
+    "WebSearchUserLocation":{
+      "type":"structure",
+      "members":{
+        "country":{"shape":"WebSearchCountryCode"}
+      }
     },
     "WorkloadIdentityNameType":{
       "type":"string",

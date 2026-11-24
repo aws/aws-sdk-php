@@ -755,6 +755,7 @@ use Aws\AwsClient;
  *         publishedDateFilter?: array{publishedAfter?: int|string|\DateTimeInterface, publishedBefore?: int|string|\DateTimeInterface, ...},
  *         ...,
  *     },
+ *     userLocation?: array{country?: string, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise invokeWebSearchAsync(array $args = [])
@@ -767,6 +768,7 @@ use Aws\AwsClient;
  *         publishedDateFilter?: array{publishedAfter?: int|string|\DateTimeInterface, publishedBefore?: int|string|\DateTimeInterface, ...},
  *         ...,
  *     },
+ *     userLocation?: array{country?: string, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result listABTests(array $args = [])

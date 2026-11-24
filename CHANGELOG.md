@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - `EcsCredentialProvider` and `InstanceProfileProvider` now set the original error as the previous exception of the `CredentialsException` they throw.
+* `Aws\BedrockAgentCore` - Adds the optional userLocation parameter to InvokeWebSearch. Specify a two-letter ISO 3166-1 alpha-2 country code to refine web search results for that country. InvokeWebSearch also accepts search queries in languages other than English.
+* `Aws\GlobalAccelerator` - AWS Global Accelerator supports Client IP Preservation for NLBs with TLS Listener endpoints.
+
 ## 3.407.2 - 2026-11-23
 
 * `Aws\S3` - Validates response checksums against the raw body of `Content-Encoding` encoded objects, then inflates gzip and deflate bodies for callers.

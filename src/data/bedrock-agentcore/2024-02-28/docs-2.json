@@ -6439,6 +6439,12 @@
         "ViewPort$width": "<p>The width of the viewport in pixels. This value determines the horizontal dimension of the visible area. Valid values range from 800 to 1920 pixels.</p>"
       }
     },
+    "WebSearchCountryCode": {
+      "base": "<p>A two-letter ISO 3166-1 alpha-2 country code.</p>",
+      "refs": {
+        "WebSearchUserLocation$country": "<p>The two-letter ISO 3166-1 alpha-2 country code. The code is case-insensitive.</p>"
+      }
+    },
     "WebSearchFilters": {
       "base": "<p>The filters to apply to a web search.</p>",
       "refs": {
@@ -6461,6 +6467,12 @@
       "base": "<p>A list of web search results, in ranked order.</p>",
       "refs": {
         "InvokeWebSearchOutput$results": "<p>The search results, in ranked order.</p>"
+      }
+    },
+    "WebSearchUserLocation": {
+      "base": "<p>The geographic location to use for the web search.</p>",
+      "refs": {
+        "InvokeWebSearchInput$userLocation": "<p> <code>userLocation</code> may allow for Web Search results to be refined for that location. This is done by supplying a <code>country</code>. The field is optional.</p> <p>The value is checked against assigned ISO 3166-1 alpha-2 codes, so unassigned and user-assigned codes such as <code>UK</code> and <code>XK</code>, empty or whitespace-only values are rejected. An omitted value is treated as absent. Without location, as a fallback Web Search may use your query to localize results or default to <code>en_US</code>.</p>"
       }
     },
     "WorkloadIdentityNameType": {
