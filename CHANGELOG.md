@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.407.3 - 2026-11-24
 
 * `Aws\Credentials` - `EcsCredentialProvider` and `InstanceProfileProvider` now set the original error as the previous exception of the `CredentialsException` they throw.
 * `Aws\BedrockAgentCore` - Adds the optional userLocation parameter to InvokeWebSearch. Specify a two-letter ISO 3166-1 alpha-2 country code to refine web search results for that country. InvokeWebSearch also accepts search queries in languages other than English.
