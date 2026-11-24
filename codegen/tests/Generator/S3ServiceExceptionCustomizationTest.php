@@ -124,9 +124,9 @@ final class S3ServiceExceptionCustomizationTest extends TestCase
     private function settings(): CodegenSettings
     {
         return CodegenSettings::fromArray([
-            'namespace' => 'Aws\\S3',
+            'namespace' => 'Aws\\Services\\S3',
             'outputDir' => '/tmp/aws-codegen-test',
-            'serviceExceptionClass' => 'Aws\\S3\\Exception\\S3Exception'
+            'serviceExceptionClass' => 'Aws\\Services\\S3\\Exception\\S3Exception'
         ]);
     }
 
@@ -139,7 +139,7 @@ final class S3ServiceExceptionCustomizationTest extends TestCase
 
     private function exceptionSource(string $className, string $body): string
     {
-        return "<?php\n\nnamespace Aws\\S3\\Exception;\n\n"
+        return "<?php\n\nnamespace Aws\\Services\\S3\\Exception;\n\n"
             . "use Aws\\Core\\Exception\\AwsException;\n\n"
             . "class {$className} extends AwsException{$body}\n";
     }

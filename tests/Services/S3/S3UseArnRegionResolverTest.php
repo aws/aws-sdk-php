@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Aws\Tests\S3;
+namespace Aws\Tests\Services\S3;
 
 use Aws\Core\Client\AwsClientConfigContext;
 use Aws\Core\Client\AwsClientConfigResolver;

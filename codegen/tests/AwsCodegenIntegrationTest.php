@@ -182,7 +182,7 @@ final class AwsCodegenIntegrationTest extends TestCase
             'SsoOidc',
             AwsCodegenIntegration::serviceShortName(
                 new CodegenSettings(
-                    namespace: 'Aws\\SsoOidc',
+                    namespace: 'Aws\\Services\\SsoOidc',
                     outputDir: '/tmp/out'
                 )
             )

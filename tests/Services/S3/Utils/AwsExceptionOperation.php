@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Aws\Tests\S3\Utils;
+namespace Aws\Tests\Services\S3\Utils;
 
 use Smithy\Core\Serde\Schema;
 use Smithy\Core\Serde\SerializableStructInterface;

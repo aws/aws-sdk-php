@@ -404,14 +404,14 @@ final class AwsCodeGeneratorTest extends TestCase
             [
                 // The configured namespace segment is intentionally not the
                 // sdkId transform; the integration must override it.
-                'namespace' => 'Aws\\SSOOIDC',
+                'namespace' => 'Aws\\Services\\SSOOIDC',
                 'outputDir' => '/tmp/aws-codegen-test'
             ],
             SmithyModel::fromArray($data)
         ))->generate();
 
         $client = $this->content($files, 'SsoOidcClient.php');
-        self::assertStringContainsString('namespace Aws\\SsoOidc;', $client);
+        self::assertStringContainsString('namespace Aws\\Services\\SsoOidc;', $client);
         self::assertStringContainsString(
             'final class SsoOidcClient extends AbstractAwsClient '
                 . 'implements SsoOidcClientInterface',

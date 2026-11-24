@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace Aws\Tests\S3;
+namespace Aws\Tests\Services\S3;
 
 use Aws\Core\S3\S3UseArnRegionPlugin;
-use Aws\Tests\S3\Utils\S3TestClient;
+use Aws\Tests\Services\S3\Utils\S3TestClient;
 use Aws\Tests\Utils\TemporaryAwsEnvironment;
 use PHPUnit\Framework\TestCase;
 use Smithy\Client\Endpoint\EndpointResolverInterface;
