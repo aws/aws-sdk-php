@@ -210,6 +210,78 @@ PHP);
         }
     }
 
+    public function testCredentialProcessWinsOverStaticKeysInTheSameFile(): void
+    {
+        $profile = new AwsProfile('default', [
+            'aws_access_key_id' => 'KEYS',
+            'aws_secret_access_key' => 'SECRET',
+            'credential_process' => $this->processCommand('PROC'),
+        ]);
+
+        $this->assertSame('PROC', $this->resolveKey($profile));
+        $this->assertSame(['v'], $this->registeredFeatureIds($profile->properties));
+    }
+
+    public function testCredentialsFileKeysWinOverConfigFileProcess(): void
+    {
+        $profile = new AwsProfile(
+            'default',
+            [
+                'aws_access_key_id' => 'KEYS',
+                'aws_secret_access_key' => 'SECRET',
+                'credential_process' => $this->processCommand('PROC'),
+            ],
+            [],
+            ['aws_access_key_id' => 'KEYS', 'aws_secret_access_key' => 'SECRET']
+        );
+
+        $this->assertSame('KEYS', $this->resolveKey($profile));
+        $this->assertSame(['n'], $this->registeredFeatureIds(
+            $profile->properties,
+            $profile->credentialsFileProperties
+        ));
+    }
+
+    public function testCredentialsFileProcessWinsOverCredentialsFileKeys(): void
+    {
+        $values = [
+            'aws_access_key_id' => 'KEYS',
+            'aws_secret_access_key' => 'SECRET',
+            'credential_process' => $this->processCommand('PROC'),
+        ];
+        $profile = new AwsProfile('default', $values, [], $values);
+
+        $this->assertSame('PROC', $this->resolveKey($profile));
+    }
+
+    public function testConfigFileProcessWinsOverConfigFileKeys(): void
+    {
+        $profile = new AwsProfile(
+            'default',
+            [
+                'aws_access_key_id' => 'KEYS',
+                'aws_secret_access_key' => 'SECRET',
+                'credential_process' => $this->processCommand('PROC'),
+            ],
+            [],
+            ['region' => 'us-west-2']
+        );
+
+        $this->assertSame('PROC', $this->resolveKey($profile));
+    }
+
+    private function resolveKey(AwsProfile $profile): string
+    {
+        return $this->providerForProfile($profile)->resolveIdentity()->unwrap()->getAccessKeyId();
+    }
+
+    private function processCommand(string $accessKey): string
+    {
+        return $this->phpCommand($this->makeScript(
+            "<?php echo json_encode(['Version' => 1, 'AccessKeyId' => '{$accessKey}', 'SecretAccessKey' => 'SECRET']);"
+        ));
+    }
+
     private function providerForProfile(
         AwsProfile $profile,
         int $refreshWindowSeconds = 300
@@ -236,13 +308,14 @@ PHP);
 
     /**
      * @param array<string, string> $values
+     * @param array<string, string> $credentialsFileValues
      * @return list<string>
      */
-    private function registeredFeatureIds(array $values): array
+    private function registeredFeatureIds(array $values, array $credentialsFileValues = []): array
     {
         $provider = new ProfileCredentialProvider();
         $setup = new ChainSetup([
-            'aws.profile' => new AwsProfile('p', $values)
+            'aws.profile' => new AwsProfile('p', $values, [], $credentialsFileValues)
         ]);
         $setup->setCurrentProvider($provider);
         $provider->setup($setup);

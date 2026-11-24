@@ -32,6 +32,19 @@ final class AwsProfileTest extends TestCase
         $this->assertSame(['s3' => ['addressing_style' => 'path']], $profile->subProperties);
     }
 
+    public function testExposesCredentialsFileProperties(): void
+    {
+        $profile = new AwsProfile(
+            'dev',
+            ['region' => 'us-west-2', 'aws_access_key_id' => 'AKID'],
+            [],
+            ['aws_access_key_id' => 'AKID']
+        );
+
+        $this->assertSame(['aws_access_key_id' => 'AKID'], $profile->credentialsFileProperties);
+        $this->assertSame([], (new AwsProfile('dev', []))->credentialsFileProperties);
+    }
+
     public function testHasMatchesKeysCaseInsensitively(): void
     {
         $profile = new AwsProfile('default', ['region' => 'us-west-2', 'output' => '']);
