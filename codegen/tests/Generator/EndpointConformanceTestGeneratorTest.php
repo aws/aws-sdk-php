@@ -63,7 +63,7 @@ final class EndpointConformanceTestGeneratorTest extends TestCase
         $test = $this->file($files, 'ExampleEndpointConformanceTest.php');
         $fixture = $this->file($files, 'endpoint-tests.php');
         self::assertStringContainsString(
-            'namespace Aws\\Tests\\Example\\Endpoint;',
+            'namespace Aws\\Tests\\Services\\Example\\Endpoint;',
             $test->content
         );
         self::assertStringContainsString(

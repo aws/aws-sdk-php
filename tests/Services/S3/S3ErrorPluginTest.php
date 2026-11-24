@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Aws\Tests\S3;
+namespace Aws\Tests\Services\S3;
 
 use Aws\Core\S3\S3ErrorInterceptor;
 use Aws\Core\S3\S3ErrorPlugin;
 use Aws\Core\S3\S3Http200ErrorInterceptor;
-use Aws\Tests\S3\Utils\S3TestClient;
+use Aws\Tests\Services\S3\Utils\S3TestClient;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Smithy\Client\Plugin\PluginCollection;

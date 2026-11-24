@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Aws\Tests\S3\Utils;
+namespace Aws\Tests\Services\S3\Utils;
 
 use Aws\Core\Client\AwsDynamicClientConfig;
 use Aws\Tests\Utils\Http\MockHttpClient;

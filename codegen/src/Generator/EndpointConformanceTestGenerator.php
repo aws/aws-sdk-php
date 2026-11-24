@@ -82,7 +82,7 @@ final class EndpointConformanceTestGenerator
 
     private function testClass(string $shortName): string
     {
-        $namespace = 'Aws\\Tests\\' . $shortName . '\\Endpoint';
+        $namespace = 'Aws\\Tests\\Services\\' . $shortName . '\\Endpoint';
         $className = $shortName . 'EndpointConformanceTest';
         $bytecodeClass = $shortName . 'EndpointBytecode';
         $writer = new PhpCodeWriter($namespace);
