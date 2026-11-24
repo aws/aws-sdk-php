@@ -17,6 +17,7 @@ use Aws\Tests\Core\Integ\Retry\Utils\TestOperation;
 use Aws\Tests\Core\Integ\Retry\Utils\TestOutput;
 use Aws\Tests\Core\Integ\Retry\Utils\TestRetryAwsClientConfig;
 use Aws\Tests\Core\Integ\Retry\Utils\TestRetryProtocol;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use Aws\Tests\Utils\Http\RetryUploadServerFixture;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -39,7 +40,6 @@ use Smithy\Http\Message\{
     Uri
 };
 use Smithy\Protocol\ProtocolInterface;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 /**
  * End-to-end tests for request body replay across AWS retries.

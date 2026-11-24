@@ -12,13 +12,13 @@ namespace Aws\Tests\Core\UserAgent;
 use Aws\Core\Checksum\{RequestChecksumCalculation, ResponseChecksumValidation};
 use Aws\Core\UserAgent\{UserAgentInterceptor, UserAgentPlugin};
 use Aws\Tests\Core\UserAgent\Utils\UserAgentTestClient;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use PHPUnit\Framework\TestCase;
 use Smithy\Client\Dynamic\DynamicClient;
 use Smithy\Client\Endpoint\EndpointResolverInterface;
 use Smithy\Client\Plugin\{PluginCollection, PluginPhase};
 use Smithy\Client\Retry\StandardRetryStrategy;
 use Smithy\Protocol\Aws\RestJsonProtocol;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 final class UserAgentPluginTest extends TestCase
 {

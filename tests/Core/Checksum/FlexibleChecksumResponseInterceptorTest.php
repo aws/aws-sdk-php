@@ -13,6 +13,7 @@ use Aws\Core\Checksum\FlexibleChecksumPlugin;
 use Aws\Core\Checksum\FlexibleChecksumResponseInterceptor;
 use Aws\Core\Checksum\ResponseChecksumValidation;
 use Aws\Tests\Core\Checksum\Utils\ChecksumTestClient;
+use Aws\Tests\Utils\Http\GenericPsrRequest;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -29,7 +30,6 @@ use Smithy\Http\Message\HttpTransportRequest;
 use Smithy\Http\Message\HttpTransportResponse;
 use Smithy\Http\Message\Request;
 use Smithy\Http\Message\Response;
-use Smithy\Tests\Utils\Http\GenericPsrRequest;
 
 final class FlexibleChecksumResponseInterceptorTest extends TestCase
 {

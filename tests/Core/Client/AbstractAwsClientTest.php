@@ -29,6 +29,7 @@ use Aws\Tests\Core\Client\Utils\CountingPlugin;
 use Aws\Tests\Core\Client\Utils\ExplicitClientRetryStrategy;
 use Aws\Tests\Core\Client\Utils\NoopAwsClient;
 use Aws\Tests\Core\Client\Utils\TestAbstractAwsClientConfigForClient;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use PHPUnit\Framework\TestCase;
 use Smithy\Auth\AnonymousIdentityResolver;
 use Smithy\Client\ClientInterface;
@@ -42,7 +43,6 @@ use Smithy\Core\Endpoint\Endpoint;
 use Smithy\Core\Model\SmithyModel;
 use Smithy\Http\Client\HttpClientTransport;
 use Smithy\Protocol\Aws\RestJsonProtocol;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 /**
  * Behavioural tests for {@see AbstractAwsClient}.

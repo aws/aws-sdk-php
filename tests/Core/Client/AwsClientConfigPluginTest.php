@@ -24,6 +24,7 @@ use Aws\Core\Credentials\{
     AwsProfile
 };
 use Aws\Tests\Core\Client\Utils\TestAbstractAwsClientConfigForClient;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use Aws\Tests\Utils\TemporaryAwsEnvironment;
 use PHPUnit\Framework\TestCase;
 use Smithy\Auth\AnonymousIdentityResolver;
@@ -32,7 +33,6 @@ use Smithy\Client\Endpoint\StaticEndpointResolver;
 use Smithy\Core\Endpoint\Endpoint;
 use Smithy\Http\Client\HttpClientTransport;
 use Smithy\Protocol\Aws\RestJsonProtocol;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 final class AwsClientConfigPluginTest extends TestCase
 {

@@ -17,6 +17,7 @@ use Aws\Tests\Core\Integ\Retry\Utils\{
     TestInput,
     TestOperation
 };
+use Aws\Tests\Utils\Http\MockHttpClient;
 use PHPUnit\Framework\TestCase;
 use Smithy\Auth\AnonymousIdentityResolver;
 use Smithy\Auth\Aws\AwsCredentials;
@@ -36,7 +37,6 @@ use Smithy\Http\Client\CurlClient;
 use Smithy\Http\Client\HttpClientTransport;
 use Smithy\Protocol\Aws\RestJsonProtocol;
 use Smithy\Protocol\ProtocolInterface;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 final class AwsDynamicClientConfigTest extends TestCase
 {
