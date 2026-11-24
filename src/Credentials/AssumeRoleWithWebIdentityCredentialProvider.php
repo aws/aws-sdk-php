@@ -81,7 +81,7 @@ class AssumeRoleWithWebIdentityCredentialProvider
                 ?? getEnv(CredentialProvider::ENV_REGION)
                 ?: null;
 
-            $this->client = $this->createDefaultStsClient($region);
+            $this->client = self::createDefaultStsClient($region);
         }
 
         $this->source = $config['source']
@@ -170,11 +170,13 @@ class AssumeRoleWithWebIdentityCredentialProvider
     }
 
     /**
+     * @internal
+     *
      * @param string|null $region
      *
      * @return StsClient
      */
-    private function createDefaultStsClient(
+    public static function createDefaultStsClient(
         ?string $region
     ): StsClient
     {

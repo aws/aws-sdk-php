@@ -1147,28 +1147,21 @@ class CredentialProvider
 
     /**
      * Reuses one default STS client per region across credential refreshes.
-     * Returns null when no region is resolvable, leaving the region fallback
-     * to AssumeRoleWithWebIdentityCredentialProvider.
      *
      * @param string|null $region
      * @param StsClient[] $clients
      *
-     * @return StsClient|null
+     * @return StsClient
      */
     private static function reusableWebIdentityStsClient(
         ?string $region,
         array &$clients
-    ): ?StsClient
+    ): StsClient
     {
-        $region = $region ?: getenv(self::ENV_REGION);
-        if (empty($region)) {
-            return null;
-        }
+        $region = $region ?: getenv(self::ENV_REGION) ?: null;
 
-        return $clients[$region] ??= new StsClient([
-            'credentials' => false,
-            'region' => $region
-        ]);
+        return $clients[$region ?? self::FALLBACK_REGION]
+            ??= AssumeRoleWithWebIdentityCredentialProvider::createDefaultStsClient($region);
     }
 
     /**
