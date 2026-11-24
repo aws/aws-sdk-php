@@ -47,6 +47,20 @@ final class AwsConfigFileTest extends TestCase
         $this->assertSame('AKID', $profiles->getProfile('default')?->get('aws_access_key_id'));
     }
 
+    public function testProfileRemembersWhichPropertiesCameFromTheCredentialsFile(): void
+    {
+        $dir = $this->makeTempDir();
+        $credentials = $dir . '/credentials';
+        $config = $dir . '/config';
+
+        file_put_contents($credentials, "[testing]\naws_access_key_id = AKID\n");
+        file_put_contents($config, "[profile testing]\nregion = us-west-2\ncredential_process = demo\n");
+
+        $profile = AwsConfigFile::fromFiles($credentials, $config)->getProfile('testing');
+
+        $this->assertSame(['aws_access_key_id' => 'AKID'], $profile?->credentialsFileProperties);
+    }
+
     public function testMissingFilesYieldEmptyProfileFile(): void
     {
         $profiles = AwsConfigFile::fromFiles('/no/such/credentials', '/no/such/config');

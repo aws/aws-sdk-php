@@ -93,7 +93,8 @@ final class AwsConfigFile
                 \array_replace(
                     $configSubProperties,
                     $credentials['subProperties'][$name] ?? []
-                )
+                ),
+                $credentials['profiles'][$name] ?? []
             );
         }
 

@@ -249,17 +249,25 @@ final class UserAgentPluginTest extends TestCase
         );
     }
 
-    public function testStaticKeysWinOverCredentialProcess(): void
+    public function testCredentialProcessWinsOverStaticKeys(): void
     {
+        $script = $this->dir . '/process.php';
+        \file_put_contents(
+            $script,
+            '<?php echo json_encode(["Version" => 1, '
+                . '"AccessKeyId" => "A", "SecretAccessKey" => "S"]);'
+        );
         \file_put_contents(
             $this->dir . '/credentials',
             "[default]\naws_access_key_id = AKID\n"
                 . "aws_secret_access_key = SECRET\n"
-                . "credential_process = unused\n"
+                . "credential_process = "
+                . \escapeshellarg(\PHP_BINARY) . ' '
+                . \escapeshellarg($script) . "\n"
         );
 
         $this->assertMatchesRegularExpression(
-            '# m/E,n$#',
+            '# m/E,v$#',
             $this->callWith(['credentials' => null])
         );
     }

@@ -14,24 +14,27 @@ use Aws\Core\Credentials\Provider\EnvCredentialProvider;
 /**
  * Define the canonical credential-chain slots.
  *
- * The enum case order is the AWS credential precedence order used when the
- * chain is assembled. Each slot also carries its canonical provider name and,
- * when applicable, the install hint for a missing provider module.
+ * The enum case order is the AWS credential precedence order, the same as the
+ * AWS SDK for PHP v3 default chain: environment keys, web identity, then the
+ * selected shared-config profile (SSO, login, `credential_process`, assume
+ * role, static and session keys), then ECS, then EC2 instance metadata. Each
+ * slot also carries its canonical provider name and, when applicable, the
+ * install hint for a missing provider module.
  */
 enum AwsCredentialSource: string
 {
     case SYSTEM_PROPERTIES = 'SYSTEM_PROPERTIES';
     case ENVIRONMENT = 'ENVIRONMENT';
     case WEB_IDENTITY_TOKEN_ENV = 'WEB_IDENTITY_TOKEN_ENV';
-    case SHARED_CONFIG = 'SHARED_CONFIG';
-    case PROFILE_STATIC_KEYS = 'PROFILE_STATIC_KEYS';
-    case PROFILE_SESSION_KEYS = 'PROFILE_SESSION_KEYS';
-    case PROFILE_ASSUME_ROLE = 'PROFILE_ASSUME_ROLE';
     case PROFILE_WEB_IDENTITY = 'PROFILE_WEB_IDENTITY';
+    case SHARED_CONFIG = 'SHARED_CONFIG';
     case PROFILE_SSO_SESSION = 'PROFILE_SSO_SESSION';
     case PROFILE_LEGACY_SSO = 'PROFILE_LEGACY_SSO';
     case PROFILE_LOGIN = 'PROFILE_LOGIN';
     case PROFILE_CREDENTIAL_PROCESS = 'PROFILE_CREDENTIAL_PROCESS';
+    case PROFILE_ASSUME_ROLE = 'PROFILE_ASSUME_ROLE';
+    case PROFILE_STATIC_KEYS = 'PROFILE_STATIC_KEYS';
+    case PROFILE_SESSION_KEYS = 'PROFILE_SESSION_KEYS';
     case ECS_CONTAINER = 'ECS_CONTAINER';
     case EC2_INSTANCE_METADATA = 'EC2_INSTANCE_METADATA';
 

@@ -160,6 +160,72 @@ PHP);
         $this->assertSame('Profile', $chain->getLastResolvedMetadata()?->providerName);
     }
 
+    public function testEnvironmentKeysWinOverEveryProfileSource(): void
+    {
+        $dir = $this->makeTempDir();
+        file_put_contents(
+            $dir . '/credentials',
+            "[default]\naws_access_key_id = FILE\naws_secret_access_key = SECRET\ncredential_process = "
+                . $this->processCommand('PROC') . "\n"
+        );
+        putenv('AWS_ACCESS_KEY_ID=ENV');
+        putenv('AWS_SECRET_ACCESS_KEY=SECRET');
+
+        $chain = $this->fileChain($dir);
+
+        $this->assertSame('ENV', $chain->resolveIdentity()->unwrap()->getAccessKeyId());
+        $this->assertSame('Environment', $chain->getLastResolvedMetadata()?->providerName);
+    }
+
+    public function testCredentialProcessWinsOverStaticKeysInTheSameProfile(): void
+    {
+        $dir = $this->makeTempDir();
+        file_put_contents(
+            $dir . '/credentials',
+            "[default]\naws_access_key_id = FILE\naws_secret_access_key = SECRET\ncredential_process = "
+                . $this->processCommand('PROC') . "\n"
+        );
+
+        $this->assertSame('PROC', $this->fileChain($dir)->resolveIdentity()->unwrap()->getAccessKeyId());
+    }
+
+    public function testCredentialsFileKeysWinOverConfigFileKeysAndProcess(): void
+    {
+        $dir = $this->makeTempDir();
+        file_put_contents(
+            $dir . '/credentials',
+            "[default]\naws_access_key_id = CREDS\naws_secret_access_key = SECRET\n"
+        );
+        file_put_contents(
+            $dir . '/config',
+            "[default]\naws_access_key_id = CONFIG\naws_secret_access_key = SECRET\ncredential_process = "
+                . $this->processCommand('PROC') . "\n"
+        );
+
+        $this->assertSame('CREDS', $this->fileChain($dir)->resolveIdentity()->unwrap()->getAccessKeyId());
+    }
+
+    public function testCredentialsFileProcessWinsOverConfigFileProcess(): void
+    {
+        $dir = $this->makeTempDir();
+        file_put_contents($dir . '/credentials', "[default]\ncredential_process = " . $this->processCommand('CREDS') . "\n");
+        file_put_contents($dir . '/config', "[default]\ncredential_process = " . $this->processCommand('CONFIG') . "\n");
+
+        $this->assertSame('CREDS', $this->fileChain($dir)->resolveIdentity()->unwrap()->getAccessKeyId());
+    }
+
+    public function testConfigFileProcessWinsOverConfigFileKeys(): void
+    {
+        $dir = $this->makeTempDir();
+        file_put_contents(
+            $dir . '/config',
+            "[default]\naws_access_key_id = CONFIG\naws_secret_access_key = SECRET\ncredential_process = "
+                . $this->processCommand('PROC') . "\n"
+        );
+
+        $this->assertSame('PROC', $this->fileChain($dir)->resolveIdentity()->unwrap()->getAccessKeyId());
+    }
+
     public function testExplicitRegistryCanInstallCustomProviders(): void
     {
         $registry = (new AwsCredentialProviderRegistry())->withProvider(
@@ -307,6 +373,23 @@ PHP);
         $this->assertSame($first, $chain->resolveIdentity()->unwrap());
         $this->assertSame($first, $chain->resolveIdentity()->unwrap());
         $this->assertSame(2, $httpClient->sendCallCount);
+    }
+
+    private function fileChain(string $dir): AwsCredentialChain
+    {
+        return new AwsCredentialChain(properties: [
+            AwsCredentialChainContext::CREDENTIALS_FILE_PATH => $dir . '/credentials',
+            AwsCredentialChainContext::CONFIG_FILE_PATH => $dir . '/config',
+        ]);
+    }
+
+    private function processCommand(string $accessKey): string
+    {
+        $script = $this->makeProcessScript(
+            "<?php echo json_encode(['Version' => 1, 'AccessKeyId' => '{$accessKey}', 'SecretAccessKey' => 'SECRET']);"
+        );
+
+        return escapeshellarg(PHP_BINARY) . ' ' . escapeshellarg($script);
     }
 
     private function makeTempDir(): string

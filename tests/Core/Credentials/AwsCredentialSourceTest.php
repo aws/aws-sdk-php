@@ -22,6 +22,29 @@ final class AwsCredentialSourceTest extends TestCase
         );
     }
 
+    public function testSlotOrderFollowsTheV3DefaultChain(): void
+    {
+        $this->assertSame(
+            [
+                'SYSTEM_PROPERTIES',
+                'ENVIRONMENT',
+                'WEB_IDENTITY_TOKEN_ENV',
+                'PROFILE_WEB_IDENTITY',
+                'SHARED_CONFIG',
+                'PROFILE_SSO_SESSION',
+                'PROFILE_LEGACY_SSO',
+                'PROFILE_LOGIN',
+                'PROFILE_CREDENTIAL_PROCESS',
+                'PROFILE_ASSUME_ROLE',
+                'PROFILE_STATIC_KEYS',
+                'PROFILE_SESSION_KEYS',
+                'ECS_CONTAINER',
+                'EC2_INSTANCE_METADATA',
+            ],
+            AwsCredentialSource::slotOrder(),
+        );
+    }
+
     public function testEnvironmentDetectionRequiresAccessAndSecret(): void
     {
         $lookup = static fn (string $name): ?string => match ($name) {

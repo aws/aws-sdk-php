@@ -26,9 +26,10 @@ use Smithy\Auth\OrderingConstraint;
 /**
  * Resolve credentials from the selected shared-config profile.
  *
- * This provider handles the profile-backed sources that resolve locally. It
- * resolves static keys first, then session keys, then
- * `credential_process` as defined by the profile configuration.
+ * This provider handles the profile-backed sources that resolve locally, in
+ * the order the AWS SDK for PHP v3 uses: `credential_process` from the
+ * credentials file, static or session keys from the credentials file,
+ * `credential_process` from the config file, then keys from the config file.
  *
  * @implements ChainIdentityProviderInterface<AwsCredentialsIdentityInterface>
  * @implements IdentityResolverInterface<AwsCredentialsIdentityInterface>
@@ -117,16 +118,18 @@ final class ProfileCredentialProvider implements
             );
         }
 
-        $staticCredentials = $this->resolveStaticCredentials($profile);
-        if ($staticCredentials instanceof AwsCredentials) {
-            return IdentityResult::success($staticCredentials);
-        }
+        foreach (self::sources($profile) as $source) {
+            $command = $source->get('credential_process');
+            if ($command !== null) {
+                return IdentityResult::success(
+                    $this->resolveCredentialProcessCommand($command)
+                );
+            }
 
-        $command = $profile->get('credential_process');
-        if ($command !== null) {
-            return IdentityResult::success(
-                $this->resolveCredentialProcessCommand($command)
-            );
+            $staticCredentials = $this->resolveStaticCredentials($source);
+            if ($staticCredentials instanceof AwsCredentials) {
+                return IdentityResult::success($staticCredentials);
+            }
         }
 
         return IdentityResult::notFound(
@@ -146,23 +149,45 @@ final class ProfileCredentialProvider implements
     }
 
     /**
+     * Return the profile views to read, in precedence order.
+     *
+     * The credentials file comes first, then the merged view that adds the
+     * config file. Each view is checked for `credential_process`, then keys.
+     *
+     * @return list<AwsProfile>
+     */
+    private static function sources(AwsProfile $profile): array
+    {
+        return [
+            new AwsProfile($profile->name, $profile->credentialsFileProperties),
+            $profile
+        ];
+    }
+
+    /**
      * Return the feature IDs for the credential kind the profile resolves.
      *
-     * Static keys (`n`) win over `credential_process` (`v`), matching
-     * {@see resolveIdentity()}. A profile with neither kind returns an empty
-     * list.
+     * The first view with `credential_process` (`v`) or static keys (`n`)
+     * wins, matching {@see resolveIdentity()}. A profile with neither kind
+     * returns an empty list.
      *
      * @return list<string>
      */
     private static function profileFeatureIds(AwsProfile $profile): array
     {
-        if ($profile->get('aws_access_key_id') !== null
-            && $profile->get('aws_secret_access_key') !== null
-        ) {
-            return ['n'];
+        foreach (self::sources($profile) as $source) {
+            if ($source->get('credential_process') !== null) {
+                return ['v'];
+            }
+
+            if ($source->get('aws_access_key_id') !== null
+                && $source->get('aws_secret_access_key') !== null
+            ) {
+                return ['n'];
+            }
         }
 
-        return $profile->get('credential_process') !== null ? ['v'] : [];
+        return [];
     }
 
     private function resolveStaticCredentials(AwsProfile $profile): ?AwsCredentials

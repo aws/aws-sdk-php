@@ -26,11 +26,16 @@ final class AwsProfile
      * @param array<string, string> $properties
      * @param array<string, array<string, string>> $subProperties
      *     Sub-properties keyed by their parent property, e.g. `s3`.
+     * @param array<string, string> $credentialsFileProperties The properties
+     *     that came from the shared credentials file. Credential providers
+     *     read these before the merged view, so the credentials file takes
+     *     precedence over the config file.
      */
     public function __construct(
         public readonly string $name,
         public readonly array $properties,
-        public readonly array $subProperties = []
+        public readonly array $subProperties = [],
+        public readonly array $credentialsFileProperties = []
     ) {}
 
     /**
