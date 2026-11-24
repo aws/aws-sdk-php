@@ -72,7 +72,9 @@ enum AwsCredentialSource: string
     }
 
     /**
-     * Return the module name that implements this slot.
+     * Return the Composer package that implements this slot.
+     *
+     * Return an empty string when no package provides the slot yet.
      */
     public function moduleSuggestion(): string
     {
@@ -82,15 +84,15 @@ enum AwsCredentialSource: string
             self::SHARED_CONFIG,
             self::PROFILE_STATIC_KEYS,
             self::PROFILE_SESSION_KEYS,
-            self::PROFILE_CREDENTIAL_PROCESS => 'aws-credentials-core',
+            self::PROFILE_CREDENTIAL_PROCESS,
+            self::ECS_CONTAINER,
+            self::EC2_INSTANCE_METADATA => 'aws/aws-sdk-php-core',
             self::WEB_IDENTITY_TOKEN_ENV,
             self::PROFILE_ASSUME_ROLE,
             self::PROFILE_WEB_IDENTITY => 'aws/aws-sdk-php-credentials',
             self::PROFILE_SSO_SESSION,
             self::PROFILE_LEGACY_SSO => 'aws/aws-sdk-php-credentials',
-            self::PROFILE_LOGIN => 'aws-credentials-login',
-            self::ECS_CONTAINER => 'aws-credentials-ecs',
-            self::EC2_INSTANCE_METADATA => 'aws-credentials-imds',
+            self::PROFILE_LOGIN => '',
         };
     }
 

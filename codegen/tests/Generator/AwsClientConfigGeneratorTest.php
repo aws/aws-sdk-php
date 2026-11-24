@@ -66,13 +66,17 @@ final class AwsClientConfigGeneratorTest extends TestCase
             $file->content
         );
         self::assertStringContainsString(
-            "?bool \$protocolIsExplicit = null,\n"
-                . "        ?string \$endpoint = null\n",
+            "?string \$endpoint = null,\n"
+                . "        ?EndpointResolverInterface \$endpointResolver = null\n",
             $file->content
         );
         self::assertStringContainsString(
-            "protocolIsExplicit: \$protocolIsExplicit,\n"
-                . "            endpoint: \$endpoint\n",
+            "endpoint: \$endpoint,\n"
+                . "            endpointResolver: \$endpointResolver\n",
+            $file->content
+        );
+        self::assertStringContainsString(
+            'endpointResolver: $this->endpointResolverForCopy($overrides)',
             $file->content
         );
         self::assertStringContainsString(

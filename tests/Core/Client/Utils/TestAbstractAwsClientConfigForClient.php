@@ -91,7 +91,8 @@ final class TestAbstractAwsClientConfigForClient extends AbstractAwsClientConfig
                 : $this->protocolId,
             service: $overrides['service'] ?? $this->service,
             protocolIsExplicit: $overrides['protocolIsExplicit']
-                ?? $this->hasExplicitProtocol()
+                ?? $this->hasExplicitProtocol(),
+            endpointResolver: $this->endpointResolverForCopy($overrides)
         );
     }
 }

@@ -13,6 +13,7 @@ use Aws\Core\Credentials\AwsCredentialChain;
 use Aws\Core\Credentials\AwsCredentialChainContext;
 use Aws\Core\Credentials\AwsCredentialProviderRegistry;
 use Aws\Core\Credentials\Provider\ContainerCredentialProvider;
+use Aws\Tests\Core\Credentials\Utils\MissingChainProvider;
 use Aws\Tests\Utils\Http\MockHttpClient;
 use PHPUnit\Framework\TestCase;
 use Smithy\Auth\Aws\AwsCredentials;
@@ -194,6 +195,47 @@ PHP);
 
         $this->assertSame('CUSTOM', $identity->getAccessKeyId());
         $this->assertSame('custom', $chain->getLastResolvedMetadata()?->providerName);
+    }
+
+    public function testNoCredentialsErrorNamesEachSourceTriedWithItsReason(): void
+    {
+        $chain = new AwsCredentialChain(new AwsCredentialProviderRegistry([
+            new MissingChainProvider('first', 'ENVIRONMENT', 'variables are not set'),
+            new MissingChainProvider('second', 'EC2_INSTANCE_METADATA', 'host is unreachable'),
+        ]));
+
+        $result = $chain->resolveIdentity();
+
+        $this->assertNull($result->identity);
+        $this->assertSame(
+            'No AWS credentials were found. Sources tried: '
+                . 'first: variables are not set; second: host is unreachable.',
+            $result->error
+        );
+    }
+
+    public function testNoCredentialsErrorSaysWhenADetectedSourceIsNotSupported(): void
+    {
+        $chain = new AwsCredentialChain(new AwsCredentialProviderRegistry([
+            new MissingChainProvider('profile', 'SHARED_CONFIG', 'no keys', 'PROFILE_LOGIN'),
+        ]));
+
+        $this->assertSame(
+            'No AWS credentials were found. Sources tried: profile: no keys.'
+                . ' Detected PROFILE_LOGIN credentials; this source is not supported in this version.',
+            $chain->resolveIdentity()->error
+        );
+    }
+
+    public function testNoCredentialsErrorWithoutSourcesSaysNoneWereAvailable(): void
+    {
+        $result = (new AwsCredentialChain(new AwsCredentialProviderRegistry()))
+            ->resolveIdentity();
+
+        $this->assertSame(
+            'No AWS credentials were found. No credential sources were available.',
+            $result->error
+        );
     }
 
     public function testInvalidateRefreshesMatchingAccessKeyAndRetainsMetadata(): void

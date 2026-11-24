@@ -243,6 +243,39 @@ final class InstanceProfileProviderTest extends TestCase
         ], $calls);
     }
 
+    public function testResolveIdentityReportsUnreachableMetadataServiceAsNotFound(): void
+    {
+        $provider = new InstanceProfileProvider(
+            clientFactory: static fn (array $options, ?AwsProfile $profile): object => new class {
+                public function get(string $path): string
+                {
+                    throw new \RuntimeException('connection refused');
+                }
+            },
+        );
+
+        $result = $provider->resolveIdentity();
+
+        $this->assertNull($result->identity);
+        $this->assertSame(
+            'Failed to discover IMDS instance profile name: connection refused',
+            $result->error
+        );
+    }
+
+    public function testSetupRegistersANonTerminalResolver(): void
+    {
+        $provider = new InstanceProfileProvider(
+            clientFactory: static fn (array $options, ?AwsProfile $profile): object => new \stdClass(),
+        );
+        $setup = new ChainSetup([]);
+        $setup->setCurrentProvider($provider);
+
+        $provider->setup($setup);
+
+        $this->assertFalse($setup->registrations()[0]['terminal']);
+    }
+
     public function testResolveIdentityRejectsDirectCallsWhenDisabledByProperty(): void
     {
         $provider = new InstanceProfileProvider(

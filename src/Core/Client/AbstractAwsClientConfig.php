@@ -88,6 +88,7 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
     ];
 
     private readonly bool $transportIsExplicit;
+    private readonly ?EndpointResolverInterface $customEndpointResolver;
 
     public readonly string $region;
     public readonly IdentityResolverInterface $credentials;
@@ -180,6 +181,9 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
      * @param string|null $endpoint Endpoint URL. With endpoint rules, it is
      *     the `Endpoint` rule input, kept in `context` so copies carry it.
      *     With no endpoint rules, every operation goes to this URL.
+     * @param EndpointResolverInterface|null $endpointResolver Resolver that
+     *     replaces the service's built-in endpoint rules. Copies keep it.
+     *     Do not combine it with `$endpoint`.
      */
     public function __construct(
         ?string $region = null,
@@ -211,7 +215,8 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
         ?string $protocolId = null,
         ?ServiceInterface $service = null,
         ?bool $protocolIsExplicit = null,
-        ?string $endpoint = null
+        ?string $endpoint = null,
+        ?EndpointResolverInterface $endpointResolver = null
     ) {
         [$resolvedRegion, $context] = self::resolveRegionAndContext(
             $region,
@@ -297,8 +302,12 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
         $endpointParameters['Region'] = $this->region;
         $endpointParameters['UseFIPS'] = $this->useFips;
         $endpointParameters['UseDualStack'] = $this->useDualStack;
-        $endpointResolver = $this->getEndpointResolver();
-        if ($endpointResolver !== null && $endpoint !== null) {
+        $this->customEndpointResolver = $endpointResolver;
+        $endpointResolver ??= $this->getEndpointResolver();
+        if ($this->customEndpointResolver === null
+            && $endpointResolver !== null
+            && $endpoint !== null
+        ) {
             if ($endpoint !== '') {
                 $endpointParameters['Endpoint'] = $endpoint;
             }
@@ -669,6 +678,23 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
             && $this->transport instanceof HttpClientTransport
             ? $this->transport->httpClient
             : null;
+    }
+
+    /**
+     * Select the endpoint resolver constructor argument for a config copy.
+     *
+     * Keep a resolver set by the caller. Otherwise return null so the copy
+     * rebuilds the built-in resolver from its own settings.
+     *
+     * @param array<string, mixed> $overrides
+     */
+    protected function endpointResolverForCopy(
+        array $overrides
+    ): ?EndpointResolverInterface
+    {
+        return \array_key_exists('endpointResolver', $overrides)
+            ? $overrides['endpointResolver']
+            : $this->customEndpointResolver;
     }
 
     /**
