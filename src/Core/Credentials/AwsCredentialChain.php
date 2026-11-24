@@ -76,14 +76,11 @@ final class AwsCredentialChain implements IdentityChainInterface
             return $result;
         }
 
-        $hints = $this->detectedButMissingHints();
-
-        return $hints === ''
-            ? $result
-            : IdentityResult::notFound(
-                self::class,
-                $result->error . $hints
-            );
+        return IdentityResult::notFound(
+            self::class,
+            self::noCredentialsMessage($result->error)
+                . $this->detectedButMissingHints()
+        );
     }
 
     /** @inheritDoc */
@@ -110,6 +107,21 @@ final class AwsCredentialChain implements IdentityChainInterface
         return $this->inner;
     }
 
+    /**
+     * Describe a failed chain run: each source tried, with its reason.
+     */
+    private static function noCredentialsMessage(?string $chainError): string
+    {
+        $prefix = 'Unable to resolve identity from any provider in the chain. Tried: ';
+        if ($chainError === null || !str_starts_with($chainError, $prefix)) {
+            return 'No AWS credentials were found. No credential sources were available.';
+        }
+
+        return 'No AWS credentials were found. Sources tried: '
+            . rtrim(substr($chainError, \strlen($prefix)), '. ')
+            . '.';
+    }
+
     private function detectedButMissingHints(): string
     {
         $claimed = $this->registry->claimedSlotNames();
@@ -117,10 +129,6 @@ final class AwsCredentialChain implements IdentityChainInterface
         $hints = [];
 
         foreach (AwsCredentialSource::cases() as $slot) {
-            if ($slot->moduleSuggestion() === '') {
-                continue;
-            }
-
             if (isset($claimed[$slot->value])) {
                 continue;
             }
@@ -129,11 +137,17 @@ final class AwsCredentialChain implements IdentityChainInterface
                 continue;
             }
 
-            $hints[] = sprintf(
-                "Detected %s credentials; add '%s' to your dependencies.",
-                $slot->value,
-                $slot->moduleSuggestion()
-            );
+            $package = $slot->moduleSuggestion();
+            $hints[] = $package === ''
+                ? sprintf(
+                    'Detected %s credentials; this source is not supported in this version.',
+                    $slot->value
+                )
+                : sprintf(
+                    "Detected %s credentials; add '%s' to your dependencies.",
+                    $slot->value,
+                    $package
+                );
         }
 
         if ($hints === []) {

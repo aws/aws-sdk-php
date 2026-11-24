@@ -65,10 +65,11 @@ final class AwsCredentialSourceTest extends TestCase
 
     public function testModuleSuggestionsMatchExpectedFamilies(): void
     {
-        $this->assertSame('aws-credentials-core', AwsCredentialSource::ENVIRONMENT->moduleSuggestion());
+        $this->assertSame('aws/aws-sdk-php-core', AwsCredentialSource::ENVIRONMENT->moduleSuggestion());
         $this->assertSame('aws/aws-sdk-php-credentials', AwsCredentialSource::PROFILE_ASSUME_ROLE->moduleSuggestion());
         $this->assertSame('aws/aws-sdk-php-credentials', AwsCredentialSource::PROFILE_SSO_SESSION->moduleSuggestion());
-        $this->assertSame('aws-credentials-ecs', AwsCredentialSource::ECS_CONTAINER->moduleSuggestion());
-        $this->assertSame('aws-credentials-imds', AwsCredentialSource::EC2_INSTANCE_METADATA->moduleSuggestion());
+        $this->assertSame('aws/aws-sdk-php-core', AwsCredentialSource::ECS_CONTAINER->moduleSuggestion());
+        $this->assertSame('aws/aws-sdk-php-core', AwsCredentialSource::EC2_INSTANCE_METADATA->moduleSuggestion());
+        $this->assertSame('', AwsCredentialSource::PROFILE_LOGIN->moduleSuggestion());
     }
 }

@@ -126,7 +126,7 @@ final class InstanceProfileProvider implements
             return;
         }
 
-        $setup->addTerminalResolver(new CachingIdentityResolver(
+        $setup->addResolver(new CachingIdentityResolver(
             $resolver,
             $this->refreshWindowSeconds,
             AwsCredentialChain::sameCredential(...)
@@ -166,10 +166,10 @@ final class InstanceProfileProvider implements
                     return $this->resolveIdentity($properties);
                 }
 
-                throw new \RuntimeException(
+                return IdentityResult::notFound(
+                    self::class,
                     'Failed to discover IMDS instance profile name: '
-                    . $e->getMessage(),
-                    previous: $e,
+                    . $e->getMessage()
                 );
             }
         }
@@ -197,9 +197,9 @@ final class InstanceProfileProvider implements
                 );
             }
 
-            throw new \RuntimeException(
-                'Failed to fetch credentials from IMDS: ' . $e->getMessage(),
-                previous: $e,
+            return IdentityResult::notFound(
+                self::class,
+                'Failed to fetch credentials from IMDS: ' . $e->getMessage()
             );
         }
 

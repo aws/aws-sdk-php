@@ -1,10 +1,13 @@
 PHP ?= php
 COMPOSER ?= composer
 LINT_JOBS ?= 8
+MODELS_DIR ?= ../aws-models
+FRESH ?=
+PREVIEW_SERVICES ?= s3:S3 sts:Sts lambda:Lambda ec2:Ec2 sso:Sso sso-oidc:SsoOidc
 
 .DEFAULT_GOAL := help
 
-.PHONY: help install autoload test lint static-analysis codegen license-check check clean
+.PHONY: help install autoload test lint static-analysis codegen generate-services license-check check clean
 .NOTPARALLEL: check
 
 help: ## List available targets
@@ -37,6 +40,21 @@ static-analysis: ## Run PHPStan
 
 codegen: ## Run the code generator; pass options with ARGS
 	$(PHP) codegen/bin/aws-php-codegen $(ARGS)
+
+generate-services: ## Regenerate the preview services; MODELS_DIR=<dir>, FRESH=1 deletes old output first
+	@set -e; \
+	for entry in $(PREVIEW_SERVICES); do \
+		model="$(MODELS_DIR)/$${entry%%:*}/smithy/model.json"; \
+		name="$${entry##*:}"; \
+		[ -f "$$model" ] || { printf 'Model not found: %s\n' "$$model" >&2; exit 1; }; \
+		if [ -n "$(FRESH)" ]; then rm -rf "src/Services/$$name" "tests/Services/$$name/Endpoint"; fi; \
+		printf 'Generating %s\n' "$$name"; \
+		$(PHP) codegen/bin/aws-php-codegen "$$model" \
+			"--namespace=Aws\\Services\\$$name" \
+			"--output=src/Services/$$name" \
+			"--tests-output=tests/Services/$$name/Endpoint" \
+			--array-access=output --array-serialization=all; \
+	done
 
 license-check: ## Check source license headers
 	$(PHP) tools/check-license-headers.php

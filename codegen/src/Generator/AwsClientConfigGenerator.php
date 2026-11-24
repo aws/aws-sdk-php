@@ -322,7 +322,8 @@ final class AwsClientConfigGenerator
         ] as $name) {
             $writer->writeLine("{$name}: \${$name},");
         }
-        $writer->writeLine('endpoint: $endpoint');
+        $writer->writeLine('endpoint: $endpoint,');
+        $writer->writeLine('endpointResolver: $endpointResolver');
         $writer->popIndent();
         $writer->writeLine(');');
         $writer->popIndent();
@@ -364,7 +365,8 @@ final class AwsClientConfigGenerator
             '?string $protocolId = null,',
             '?ServiceInterface $service = null,',
             '?bool $protocolIsExplicit = null,',
-            '?string $endpoint = null'
+            '?string $endpoint = null,',
+            '?EndpointResolverInterface $endpointResolver = null'
         ];
     }
 
@@ -463,8 +465,11 @@ final class AwsClientConfigGenerator
             'protocolIsExplicit: $overrides[\'protocolIsExplicit\']'
         );
         $writer->pushIndent();
-        $writer->writeLine('?? $this->hasExplicitProtocol()');
+        $writer->writeLine('?? $this->hasExplicitProtocol(),');
         $writer->popIndent();
+        $writer->writeLine(
+            'endpointResolver: $this->endpointResolverForCopy($overrides)'
+        );
         $writer->popIndent();
         $writer->writeLine(');');
         $writer->closeBlock();
