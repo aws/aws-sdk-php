@@ -14,6 +14,7 @@ use Aws\Tests\Core\Integ\Retry\Generated\Protocol\RetryFixtureProtocol;
 use Aws\Tests\Core\Integ\Retry\Generated\RetryFixtureClient;
 use Aws\Tests\Core\Integ\Retry\Generated\RetryFixtureClientConfig;
 use Aws\Tests\Core\Integ\Retry\Utils\IntegEventLoop;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use PHPUnit\Framework\TestCase;
 use Smithy\Async\Async;
 use Smithy\Async\EventLoopInterface;
@@ -22,7 +23,6 @@ use Smithy\Client\Endpoint\StaticEndpointResolver;
 use Smithy\Client\Retry\StandardRetryStrategy;
 use Smithy\Core\Endpoint\Endpoint;
 use Smithy\Http\Message\Response;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 final class StandardRetryStrategyTest extends TestCase
 {

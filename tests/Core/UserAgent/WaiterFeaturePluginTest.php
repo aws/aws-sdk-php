@@ -11,9 +11,9 @@ namespace Aws\Tests\Core\UserAgent;
 
 use Aws\Core\UserAgent\{UserAgentInterceptor, WaiterFeaturePlugin};
 use Aws\Tests\Core\UserAgent\Utils\UserAgentTestClient;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use PHPUnit\Framework\TestCase;
 use Smithy\Client\RequestOverrideConfig;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 final class WaiterFeaturePluginTest extends TestCase
 {

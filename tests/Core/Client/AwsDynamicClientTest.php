@@ -14,6 +14,7 @@ use Aws\Core\Client\{
     AwsDynamicClientConfig
 };
 use Aws\Core\S3\S3ErrorInterceptor;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use PHPUnit\Framework\Attributes\{
     CoversClass,
     DataProvider
@@ -36,7 +37,6 @@ use Smithy\Protocol\Aws\{
     RestJsonProtocol,
     RestXmlProtocol
 };
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 #[CoversClass(AwsDynamicClient::class)]
 #[CoversClass(AwsDynamicClientConfig::class)]

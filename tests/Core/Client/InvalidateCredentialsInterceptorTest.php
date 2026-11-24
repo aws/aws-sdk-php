@@ -16,6 +16,7 @@ use Aws\Tests\Core\Client\Utils\{
     QueryCodeError,
     ShapeIdError
 };
+use Aws\Tests\Utils\Http\MockHttpClient;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Smithy\Auth\Aws\AwsCredentials;
@@ -29,7 +30,6 @@ use Smithy\Core\Shape\OperationInterface;
 use Smithy\Http\Client\HttpClientTransport;
 use Smithy\Protocol\Aws\AwsDocumentException;
 use Smithy\Protocol\Aws\RestJsonProtocol;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 final class InvalidateCredentialsInterceptorTest extends TestCase
 {

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Aws\Tests\Core\Credentials\Provider;
 
 use Aws\Core\Credentials\Provider\ContainerCredentialProvider;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Smithy\Auth\ChainSetup;
@@ -17,7 +18,6 @@ use Smithy\Auth\IdentityResolverInterface;
 use Smithy\Auth\NonRecoverableIdentityException;
 use Smithy\Http\Client\HttpRequestOptions;
 use Smithy\Http\Message\Response;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 final class ContainerCredentialProviderTest extends TestCase
 {

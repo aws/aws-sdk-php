@@ -13,6 +13,7 @@ use Aws\Core\Checksum\FlexibleChecksumPlugin;
 use Aws\Core\Checksum\FlexibleChecksumRequestInterceptor;
 use Aws\Core\Checksum\FlexibleChecksumResponseInterceptor;
 use Aws\Tests\Core\Checksum\Utils\ChecksumTestClient;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use PHPUnit\Framework\TestCase;
 use Smithy\Client\ClientConfig;
 use Smithy\Client\Endpoint\StaticEndpointResolver;
@@ -20,7 +21,6 @@ use Smithy\Client\Plugin\PluginCollection;
 use Smithy\Core\Endpoint\Endpoint;
 use Smithy\Http\Client\HttpClientTransport;
 use Smithy\Protocol\Aws\RestJsonProtocol;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 final class FlexibleChecksumPluginTest extends TestCase
 {

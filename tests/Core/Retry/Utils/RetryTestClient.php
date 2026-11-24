@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Aws\Tests\Core\Retry\Utils;
 
 use Aws\Core\Client\AwsDynamicClientConfig;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use Smithy\Auth\AnonymousIdentityResolver;
 use Smithy\Client\AbstractClientConfig;
 use Smithy\Client\Auth\AuthSchemeResolverInterface;
@@ -25,7 +26,6 @@ use Smithy\Core\Transport\TransportInterface;
 use Smithy\Http\Client\HttpClientInterface;
 use Smithy\Protocol\Aws\RestJsonProtocol;
 use Smithy\Protocol\ProtocolInterface;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 /**
  * Dynamic client for the retry test model, built on the AWS client config.

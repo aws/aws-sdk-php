@@ -13,6 +13,7 @@ use Aws\Core\Credentials\AwsCredentialChain;
 use Aws\Core\Credentials\AwsCredentialChainContext;
 use Aws\Core\Credentials\AwsCredentialProviderRegistry;
 use Aws\Core\Credentials\Provider\ContainerCredentialProvider;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use PHPUnit\Framework\TestCase;
 use Smithy\Auth\Aws\AwsCredentials;
 use Smithy\Auth\Aws\AwsCredentialsIdentityInterface;
@@ -22,7 +23,6 @@ use Smithy\Auth\IdentityResolverInterface;
 use Smithy\Auth\IdentityResult;
 use Smithy\Auth\OrderingConstraint;
 use Smithy\Http\Message\Response;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 final class AwsCredentialChainTest extends TestCase
 {

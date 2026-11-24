@@ -18,6 +18,7 @@ use Aws\Core\Retry\StandardRetryPlugin;
 use Aws\Tests\Core\Retry\Utils\FixedFlagResolver;
 use Aws\Tests\Core\Retry\Utils\RecordingRetryStrategy;
 use Aws\Tests\Core\Retry\Utils\RetryTestClient;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Smithy\Client\ClientConfig;
@@ -34,7 +35,6 @@ use Smithy\Http\Client\Exception\HttpException;
 use Smithy\Http\Client\HttpClientTransport;
 use Smithy\Http\Message\{Request, Response, Uri};
 use Smithy\Protocol\Aws\RestJsonProtocol;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 final class StandardRetryPluginTest extends TestCase
 {

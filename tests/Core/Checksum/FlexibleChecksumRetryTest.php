@@ -17,6 +17,7 @@ use Aws\Tests\Core\Checksum\Utils\RetryFlexibleChecksumInput;
 use Aws\Tests\Core\Checksum\Utils\RetryFlexibleChecksumOperation;
 use Aws\Tests\Core\Checksum\Utils\RetryFlexibleChecksumService;
 use Aws\Tests\Core\Checksum\Utils\RetryOnceStrategy;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use PHPUnit\Framework\TestCase;
 use Smithy\Client\AbstractClient;
 use Smithy\Client\ClientConfig;
@@ -25,7 +26,6 @@ use Smithy\Client\Interceptor\InterceptorChain;
 use Smithy\Core\Endpoint\Endpoint;
 use Smithy\Http\Client\HttpClientTransport;
 use Smithy\Http\Message\Response;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 final class FlexibleChecksumRetryTest extends TestCase
 {

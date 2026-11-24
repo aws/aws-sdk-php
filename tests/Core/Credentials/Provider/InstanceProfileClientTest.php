@@ -11,11 +11,11 @@ namespace Aws\Tests\Core\Credentials\Provider;
 
 use Aws\Core\Credentials\AwsProfile;
 use Aws\Core\Credentials\Provider\InstanceProfileClient;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Smithy\Http\Client\HttpRequestOptions;
 use Smithy\Http\Message\Response;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 final class InstanceProfileClientTest extends TestCase
 {

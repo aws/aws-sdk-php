@@ -11,6 +11,7 @@ namespace Aws\Tests\Core\UserAgent\Utils;
 
 use Aws\Core\Client\AwsDynamicClientConfig;
 use Aws\Core\UserAgent\UserAgentPlugin;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use Smithy\Auth\Aws\AwsCredentials;
 use Smithy\Client\AbstractClientConfig;
 use Smithy\Client\Auth\AuthSchemeResolverInterface;
@@ -26,7 +27,6 @@ use Smithy\Core\Transport\TransportInterface;
 use Smithy\Http\Client\HttpClientInterface;
 use Smithy\Protocol\Aws\RestJsonProtocol;
 use Smithy\Protocol\ProtocolInterface;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 /**
  * Dynamic client for the user agent test model, built on a SigV4 AWS

@@ -12,6 +12,7 @@ namespace Aws\Tests\Core\Client\Utils;
 use Aws\Core\Checksum\RequestChecksumCalculation;
 use Aws\Core\Checksum\ResponseChecksumValidation;
 use Aws\Core\Client\AbstractAwsClientConfig;
+use Aws\Tests\Utils\Http\MockHttpClient;
 use Smithy\Auth\IdentityResolverInterface;
 use Smithy\Client\Auth\AuthSchemeResolverInterface;
 use Smithy\Client\Endpoint\EndpointResolverInterface;
@@ -26,7 +27,6 @@ use Smithy\Core\Transport\TransportInterface;
 use Smithy\Http\Client\HttpClientInterface;
 use Smithy\Protocol\Aws\RestJsonProtocol;
 use Smithy\Protocol\ProtocolInterface;
-use Smithy\Tests\Utils\Http\MockHttpClient;
 
 /**
  * AWS client config with a configurable signing name for resolver tests.

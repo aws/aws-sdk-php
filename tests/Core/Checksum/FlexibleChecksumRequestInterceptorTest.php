@@ -14,6 +14,7 @@ use Aws\Core\Checksum\FlexibleChecksumRequestInterceptor;
 use Aws\Core\Checksum\FlexibleChecksumResponseInterceptor;
 use Aws\Core\Checksum\RequestChecksumCalculation;
 use Aws\Tests\Core\Checksum\Utils\ChecksumTestClient;
+use Aws\Tests\Utils\Http\GenericPsrRequest;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -25,7 +26,6 @@ use Smithy\Core\Shape\OperationInterface;
 use Smithy\Http\Message\HttpTransportRequest;
 use Smithy\Http\Message\Request;
 use Smithy\Http\Message\ResourceRequestStream;
-use Smithy\Tests\Utils\Http\GenericPsrRequest;
 
 final class FlexibleChecksumRequestInterceptorTest extends TestCase
 {
