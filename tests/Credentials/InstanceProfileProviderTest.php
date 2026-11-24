@@ -6,11 +6,13 @@ use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\InstanceProfileProvider;
 use Aws\Exception\CredentialsException;
+use Aws\Handler\Guzzle\GuzzleHandler;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Sdk;
 use Aws\Test\CreatesGuzzleExceptionsTrait;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
@@ -950,6 +952,49 @@ class InstanceProfileProviderTest extends TestCase
     public function testDoesNotRequireConfig()
     {
         new InstanceProfileProvider();
+    }
+
+    public function testChainsCauseWhenRequestIsCancelled()
+    {
+        $provider = new InstanceProfileProvider([
+            'client' => new GuzzleHandler(new Client([
+                'handler' => function () {
+                    $promise = new Promise\Promise();
+                    $promise->cancel();
+                    return $promise;
+                },
+            ])),
+            'retries' => 0,
+        ]);
+
+        try {
+            $provider()->wait();
+            $this->fail('Expected a CredentialsException.');
+        } catch (CredentialsException $e) {
+            $this->assertInstanceOf(
+                Promise\CancellationException::class,
+                $e->getPrevious()
+            );
+        }
+    }
+
+    public function testChainsCauseAfterRetriesAreExhausted()
+    {
+        $provider = new InstanceProfileProvider([
+            'client' => function (RequestInterface $request) {
+                return Promise\Create::rejectionFor([
+                    'exception' => new ConnectException('down', $request),
+                ]);
+            },
+            'retries' => 0,
+        ]);
+
+        try {
+            $provider()->wait();
+            $this->fail('Expected a CredentialsException.');
+        } catch (CredentialsException $e) {
+            $this->assertInstanceOf(ConnectException::class, $e->getPrevious());
+        }
     }
 
     public function testNormalizesConfiguredTimeout()

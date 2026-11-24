@@ -92,6 +92,30 @@ class EcsCredentialProviderTest extends TestCase
         )->wait();
     }
 
+    public function testChainsCauseWhenRequestIsCancelled()
+    {
+        $provider = new EcsCredentialProvider([
+            'client' => new GuzzleHandler(new Client([
+                'handler' => function () {
+                    $promise = new Promise\Promise();
+                    $promise->cancel();
+                    return $promise;
+                },
+            ])),
+            'retries' => 0,
+        ]);
+
+        try {
+            $provider()->wait();
+            $this->fail('Expected a CredentialsException.');
+        } catch (CredentialsException $e) {
+            $this->assertInstanceOf(
+                Promise\CancellationException::class,
+                $e->getPrevious()
+            );
+        }
+    }
+
     public function testLoadsCredentialsAndProfile()
     {
         $t = time() + 1000;
