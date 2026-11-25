@@ -13,13 +13,18 @@ use Aws\Codegen\AwsCodegenIntegration;
 use Aws\Core\Client\AbstractAwsClient;
 use Aws\Core\Client\AbstractAwsClientConfig;
 use Aws\Core\Client\AwsClientInterface;
+use Aws\Core\Exception\AwsException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Smithy\Codec\Xml\XmlCodec;
 use Smithy\Codegen\CodeGenerator;
 use Smithy\Codegen\CodegenSettings;
 use Smithy\Codegen\Generator\GeneratedFile;
 use Smithy\Codegen\Model\SmithyModel;
+use Smithy\Core\Shape\OperationInterface;
+use Smithy\Http\Message\Response;
+use Smithy\Protocol\Aws\AwsXmlErrorDeserializer;
 
 #[CoversClass(AwsCodegenIntegration::class)]
 final class AwsCodegenIntegrationTest extends TestCase
@@ -75,6 +80,34 @@ final class AwsCodegenIntegrationTest extends TestCase
             [],
             (new AwsCodegenIntegration())->serviceExceptionMembers($settings)
         );
+    }
+
+    public function testUnmodeledErrorKeepsTheGeneratedServiceException(): void
+    {
+        $files = $this->generate(new AwsCodegenIntegration(), $this->model());
+        $source = $this->content($files, 'ExampleException.php');
+        \preg_match('/^namespace ([^;]+);/m', $source, $match);
+        $serviceException = $match[1] . '\\ExampleException';
+        if (!\class_exists($serviceException, false)) {
+            eval(\substr($source, \strlen('<?php')));
+        }
+        $operation = $this->createStub(OperationInterface::class);
+        $operation->method('getServiceExceptionClass')
+            ->willReturn($serviceException);
+        $operation->method('resolveErrorSchema')->willReturn(null);
+
+        $error = (new AwsXmlErrorDeserializer(new XmlCodec()))->deserialize(
+            $operation,
+            new Response(400, [], '<ErrorResponse><Error><Code>NoSuchThing'
+                . '</Code><Message>Nope</Message></Error>'
+                . '<RequestId>req-1</RequestId></ErrorResponse>')
+        );
+
+        self::assertSame($serviceException, $error::class);
+        self::assertInstanceOf(AwsException::class, $error);
+        self::assertSame('NoSuchThing', $error->getAwsErrorCode());
+        self::assertSame('req-1', $error->getAwsRequestId());
+        self::assertSame(400, $error->getHttpStatusCode());
     }
 
     public function testSkipsTheClientConfigWhenDisabled(): void
