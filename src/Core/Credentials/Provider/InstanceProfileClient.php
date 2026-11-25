@@ -25,7 +25,7 @@ use Smithy\Http\Message\Request;
  * resolution, and retry behavior are handled internally per the IMDS client
  * specification.
  */
-final class InstanceProfileClient
+final class InstanceProfileClient implements InstanceProfileClientInterface
 {
     private const DEFAULT_ENDPOINT_IPV4 = 'http://169.254.169.254';
     private const DEFAULT_ENDPOINT_IPV6 = 'http://[fd00:ec2::254]';
@@ -91,9 +91,7 @@ final class InstanceProfileClient
         $this->httpClient = $httpClient;
     }
 
-    /**
-     * Fetch metadata from IMDS.
-     */
+    /** @inheritDoc */
     public function get(string $path): string
     {
         $path = '/' . ltrim($path, '/');

@@ -180,8 +180,9 @@ final class UserAgentInterceptor extends AbstractInterceptor
     ): string
     {
         $ids = $this->configIds;
-        if ($algorithm !== self::NO_ALGORITHM) {
-            $ids[] = self::CHECKSUM_IDS[$algorithm];
+        $checksumId = self::CHECKSUM_IDS[$algorithm] ?? null;
+        if ($checksumId !== null) {
+            $ids[] = $checksumId;
         }
         foreach ($metadata->featureIds ?? [] as $id) {
             if (\preg_match('/^[A-Za-z0-9+\-]+$/', $id) === 1) {

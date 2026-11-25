@@ -66,6 +66,7 @@ final class ConfigFileParser
         $inSection = false;
         $hasPrefixedDefault = false;
         $kind = null;
+        $propertyKey = null;
         $name = '';
         $key = null;
         $stored = false;
@@ -97,10 +98,11 @@ final class ConfigFileParser
                         $kind = null;
                     }
                 }
+                $propertyKey = self::PROPERTIES[$kind] ?? null;
                 if ($kind === self::SERVICES) {
                     $result['services'][$name] ??= [];
-                } elseif ($kind !== null) {
-                    $result[self::PROPERTIES[$kind]][$name] ??= [];
+                } elseif ($propertyKey !== null) {
+                    $result[$propertyKey][$name] ??= [];
                 }
                 continue;
             }
@@ -125,8 +127,8 @@ final class ConfigFileParser
                         $result[self::SUB_PROPERTIES[$kind]][$name][$key][$subKey] = $subValue;
                     }
                 }
-                if ($stored && $kind !== self::SERVICES) {
-                    $result[self::PROPERTIES[$kind]][$name][$key] .= "\n" . $value;
+                if ($stored && $propertyKey !== null) {
+                    $result[$propertyKey][$name][$key] .= "\n" . $value;
                 }
                 continue;
             }
@@ -151,8 +153,8 @@ final class ConfigFileParser
                 continue;
             }
 
-            if ($kind !== self::SERVICES) {
-                $result[self::PROPERTIES[$kind]][$name][$key] = $value;
+            if ($propertyKey !== null) {
+                $result[$propertyKey][$name][$key] = $value;
             }
             if (isset(self::SUB_PROPERTIES[$kind])) {
                 $subs = self::SUB_PROPERTIES[$kind];

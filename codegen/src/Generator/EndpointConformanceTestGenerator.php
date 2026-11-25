@@ -54,6 +54,16 @@ final class EndpointConformanceTestGenerator
             return [];
         }
 
+        $cases = [];
+        foreach ($testCases as $case) {
+            if (!\is_array($case)) {
+                throw new \InvalidArgumentException(
+                    "Shape {$serviceShapeId} has an endpoint test case that is not an object"
+                );
+            }
+            $cases[] = $case;
+        }
+
         $shortName = AwsCodegenIntegration::serviceShortName($this->settings);
         $directory = $this->testsOutputDir
             . \DIRECTORY_SEPARATOR
@@ -75,7 +85,7 @@ final class EndpointConformanceTestGenerator
                     . 'fixtures'
                     . \DIRECTORY_SEPARATOR
                     . 'endpoint-tests.php',
-                $this->fixture($testCases)
+                $this->fixture($cases)
             )
         ];
     }

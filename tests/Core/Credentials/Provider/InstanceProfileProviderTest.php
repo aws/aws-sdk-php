@@ -12,6 +12,7 @@ namespace Aws\Tests\Core\Credentials\Provider;
 use Aws\Core\Credentials\AwsConfigFile;
 use Aws\Core\Credentials\AwsCredentialChainContext;
 use Aws\Core\Credentials\AwsProfile;
+use Aws\Core\Credentials\Provider\InstanceProfileClientInterface;
 use Aws\Core\Credentials\Provider\InstanceProfileProvider;
 use PHPUnit\Framework\TestCase;
 use Smithy\Auth\ChainSetup;
@@ -82,8 +83,8 @@ final class InstanceProfileProviderTest extends TestCase
     {
         $calls = [];
         $provider = new InstanceProfileProvider(
-            clientFactory: static function (array $options, ?AwsProfile $profile) use (&$calls): object {
-                return new class ($calls) {
+            clientFactory: static function (array $options, ?AwsProfile $profile) use (&$calls): InstanceProfileClientInterface {
+                return new class ($calls) implements InstanceProfileClientInterface {
                     private array $calls;
 
                     public function __construct(array &$calls)
@@ -125,8 +126,8 @@ final class InstanceProfileProviderTest extends TestCase
     {
         $calls = [];
         $provider = new InstanceProfileProvider(
-            clientFactory: static function (array $options, ?AwsProfile $profile) use (&$calls): object {
-                return new class ($calls) {
+            clientFactory: static function (array $options, ?AwsProfile $profile) use (&$calls): InstanceProfileClientInterface {
+                return new class ($calls) implements InstanceProfileClientInterface {
                     private array $calls;
 
                     public function __construct(array &$calls)
@@ -163,12 +164,23 @@ final class InstanceProfileProviderTest extends TestCase
         ], $calls);
     }
 
+    public function testResolveIdentityRejectsClientFactoryResultWithoutGet(): void
+    {
+        $provider = new InstanceProfileProvider(
+            clientFactory: static fn (array $options, ?AwsProfile $profile): object => new \stdClass(),
+        );
+
+        $this->expectException(\TypeError::class);
+
+        $provider->resolveIdentity();
+    }
+
     public function testResolveIdentityUsesExplicitProfileNameFromProperty(): void
     {
         $provider = $this->providerWithSetupProperties([
             AwsCredentialChainContext::EC2_INSTANCE_PROFILE_NAME => 'fixed-profile',
-        ], static function (array $options, ?AwsProfile $profile): object {
-            return new class {
+        ], static function (array $options, ?AwsProfile $profile): InstanceProfileClientInterface {
+            return new class implements InstanceProfileClientInterface {
                 public function get(string $path): string
                 {
                     if ($path !== '/latest/meta-data/iam/security-credentials-extended/fixed-profile') {
@@ -196,8 +208,8 @@ final class InstanceProfileProviderTest extends TestCase
     {
         $calls = [];
         $provider = new InstanceProfileProvider(
-            clientFactory: static function (array $options, ?AwsProfile $profile) use (&$calls): object {
-                return new class ($calls) {
+            clientFactory: static function (array $options, ?AwsProfile $profile) use (&$calls): InstanceProfileClientInterface {
+                return new class ($calls) implements InstanceProfileClientInterface {
                     private array $calls;
                     private int $discoveries = 0;
 
@@ -246,7 +258,7 @@ final class InstanceProfileProviderTest extends TestCase
     public function testResolveIdentityReportsUnreachableMetadataServiceAsNotFound(): void
     {
         $provider = new InstanceProfileProvider(
-            clientFactory: static fn (array $options, ?AwsProfile $profile): object => new class {
+            clientFactory: static fn (array $options, ?AwsProfile $profile): InstanceProfileClientInterface => new class implements InstanceProfileClientInterface {
                 public function get(string $path): string
                 {
                     throw new \RuntimeException('connection refused');
@@ -279,7 +291,7 @@ final class InstanceProfileProviderTest extends TestCase
     public function testResolveIdentityRejectsDirectCallsWhenDisabledByProperty(): void
     {
         $provider = new InstanceProfileProvider(
-            clientFactory: static function (array $options, ?AwsProfile $profile): object {
+            clientFactory: static function (array $options, ?AwsProfile $profile): InstanceProfileClientInterface {
                 throw new \LogicException('IMDS client should not be created when disabled');
             },
         );
