@@ -346,6 +346,9 @@ final class InstanceProfileProvider implements
         return $config !== null && $this->toBool($config);
     }
 
+    /**
+     * @param ChainSetup<AwsCredentialsIdentityInterface> $setup
+     */
     private function resolveProfileFromSetup(ChainSetup $setup): ?AwsProfile
     {
         $profile = $setup->getProperty(AwsCredentialChainContext::PROFILE);

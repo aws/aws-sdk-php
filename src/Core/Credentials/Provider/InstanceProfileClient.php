@@ -310,6 +310,8 @@ final class InstanceProfileClient
     }
 
     /**
+     * @param array<string, string> $headers
+     *
      * @return array{status:int, body:string, headers:array<string, string>}
      */
     private function sendRequest(string $method, string $url, array $headers): array
