@@ -22,8 +22,6 @@ use Smithy\Protocol\Aws\AwsErrorRetryTrait;
  * (e.g., StsException) extend this class.
  *
  * @todo Move to Aws\Exception\AwsException in the SDK package
- *
- * @phpstan-consistent-constructor
  */
 class AwsException extends ApiException implements AwsErrorInterface
 {
@@ -64,6 +62,13 @@ class AwsException extends ApiException implements AwsErrorInterface
         return $this->httpStatusCode;
     }
 
+    /**
+     * Create an error without modeled members from response metadata.
+     *
+     * Call this on classes that keep this constructor, such as the generated
+     * service base exceptions. Modeled errors take their members from
+     * `fromMembers()` and receive metadata through `setAwsErrorMetadata()`.
+     */
     public static function fromAwsError(
         string $message,
         ErrorFault $fault,
@@ -73,7 +78,9 @@ class AwsException extends ApiException implements AwsErrorInterface
         ?int $httpStatusCode
     ): static
     {
-        return new static($message, $fault, $awsErrorCode, $requestId, $httpStatusCode, $previous);
+        $class = static::class;
+
+        return new $class($message, $fault, $awsErrorCode, $requestId, $httpStatusCode, $previous);
     }
 
     public function setAwsErrorMetadata(
