@@ -13,8 +13,10 @@ use Aws\Core\S3\S3ErrorInterceptor;
 use Aws\Core\S3\S3Http200ErrorInterceptor;
 use Aws\Tests\Services\S3\Utils\AwsExceptionOperation;
 use Aws\Tests\Services\S3\Utils\S3TestClient;
+use Aws\Tests\Services\S3\Utils\StreamedResponseBody;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
 use Smithy\Client\Interceptor\OutputContext;
 use Smithy\Client\Interceptor\ResponseContext;
 use Smithy\Core\Exception\ApiException;
@@ -137,12 +139,10 @@ final class S3Http200ErrorInterceptorTest extends TestCase
         $operation = $this->client->operation('ListObjectsV2');
 
         try {
-            (new S3Http200ErrorInterceptor())->readBeforeDeserialization(
-                $this->responseContext(
-                    $operation,
-                    new Response(200, [], self::SLOW_DOWN_BODY)
-                )
-            );
+            $this->runHooks($this->responseContext(
+                $operation,
+                new Response(200, [], self::SLOW_DOWN_BODY)
+            ));
             $this->fail('Expected a 200-with-error to raise an error.');
         } catch (ApiException $error) {
             $this->assertSame(ApiException::class, $error::class);
@@ -254,8 +254,79 @@ final class S3Http200ErrorInterceptorTest extends TestCase
         );
     }
 
+    public function testStreamedStructuredBodyStaysReadable(): void
+    {
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>'
+            . '<ListBucketResult><Name>b</Name></ListBucketResult>';
+
+        $response = $this->runHooks($this->responseContext(
+            $this->client->operation('ListObjectsV2'),
+            new Response(200, [], StreamedResponseBody::of($xml))
+        ));
+
+        $this->assertSame($xml, $response->getBody()->getContents());
+    }
+
+    public function testStreamedErrorBodyBecomesRetryableError(): void
+    {
+        $error = $this->raise(
+            'ListObjectsV2',
+            new Response(
+                200,
+                [],
+                StreamedResponseBody::of(self::INTERNAL_ERROR_BODY)
+            )
+        );
+
+        $this->assertSame('InternalError', $error->getAwsErrorCode());
+        $this->assertSame(RetrySafety::Yes, $error->getRetrySafety());
+    }
+
+    public function testStreamingOperationBodyIsLeftUnread(): void
+    {
+        $body = StreamedResponseBody::of('object bytes');
+
+        $response = $this->runHooks($this->responseContext(
+            $this->client->operation('GetObject'),
+            new Response(200, [], $body)
+        ));
+
+        $this->assertSame($body, $response->getBody());
+        $this->assertFalse($body->started());
+    }
+
+    public function testStreamedBodyReadFailureIsRaised(): void
+    {
+        $failure = new \RuntimeException('Response read failed.');
+
+        $raised = null;
+        try {
+            $this->runHooks($this->responseContext(
+                $this->client->operation('ListObjectsV2'),
+                new Response(200, [], StreamedResponseBody::failed($failure))
+            ));
+        } catch (\RuntimeException $error) {
+            $raised = $error;
+        }
+
+        $this->assertSame($failure, $raised);
+    }
+
     /**
-     * Run `readBeforeDeserialization` and return the raised AWS error.
+     * Run the response hooks in pipeline order and return the response
+     * that deserialization receives.
+     */
+    private function runHooks(ResponseContext $ctx): ResponseInterface
+    {
+        $interceptor = new S3Http200ErrorInterceptor();
+        $ctx->replaceResponse($interceptor->modifyBeforeDeserialization($ctx));
+        $interceptor->readBeforeDeserialization($ctx);
+
+        return HttpTransportResponse::expect($ctx->response)->response;
+    }
+
+    /**
+     * Run the response hooks and return the raised AWS error.
      */
     private function raise(
         string $operationName,
@@ -266,9 +337,7 @@ final class S3Http200ErrorInterceptorTest extends TestCase
             $this->client->operation($operationName)
         );
         try {
-            (new S3Http200ErrorInterceptor())->readBeforeDeserialization(
-                $this->responseContext($operation, $response)
-            );
+            $this->runHooks($this->responseContext($operation, $response));
         } catch (AwsProtocolException $error) {
             $this->decorateExtendedRequestId($operation, $response, $error);
 
@@ -279,7 +348,7 @@ final class S3Http200ErrorInterceptorTest extends TestCase
     }
 
     /**
-     * Assert that `readBeforeDeserialization` raises nothing for `$response`.
+     * Assert that the response hooks raise nothing for `$response`.
      *
      * @return void
      */
@@ -288,12 +357,10 @@ final class S3Http200ErrorInterceptorTest extends TestCase
         Response $response
     ): void
     {
-        (new S3Http200ErrorInterceptor())->readBeforeDeserialization(
-            $this->responseContext(
-                $this->client->operation($operationName),
-                $response
-            )
-        );
+        $this->runHooks($this->responseContext(
+            $this->client->operation($operationName),
+            $response
+        ));
 
         $this->addToAssertionCount(1);
     }
