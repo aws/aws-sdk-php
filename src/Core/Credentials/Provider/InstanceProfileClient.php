@@ -25,7 +25,7 @@ use Smithy\Http\Message\Request;
  * resolution, and retry behavior are handled internally per the IMDS client
  * specification.
  */
-final class InstanceProfileClient
+final class InstanceProfileClient implements InstanceProfileClientInterface
 {
     private const DEFAULT_ENDPOINT_IPV4 = 'http://169.254.169.254';
     private const DEFAULT_ENDPOINT_IPV6 = 'http://[fd00:ec2::254]';
@@ -67,7 +67,7 @@ final class InstanceProfileClient
     ) {
         $getEnv ??= static function (string $name): ?string {
             $value = $_ENV[$name] ?? getenv($name);
-            if ($value === false || $value === null || $value === '') {
+            if ($value === false || $value === '') {
                 return null;
             }
 
@@ -91,9 +91,7 @@ final class InstanceProfileClient
         $this->httpClient = $httpClient;
     }
 
-    /**
-     * Fetch metadata from IMDS.
-     */
+    /** @inheritDoc */
     public function get(string $path): string
     {
         $path = '/' . ltrim($path, '/');
@@ -145,8 +143,9 @@ final class InstanceProfileClient
 
     private function getToken(): string
     {
-        if ($this->hasFreshToken()) {
-            return $this->cachedToken;
+        $token = $this->freshToken();
+        if ($token !== null) {
+            return $token;
         }
 
         $lastError = null;
@@ -198,11 +197,12 @@ final class InstanceProfileClient
         throw $lastError;
     }
 
-    private function hasFreshToken(): bool
+    private function freshToken(): ?string
     {
-        return $this->cachedToken !== null
-            && $this->tokenExpiry !== null
-            && $this->tokenExpiry > microtime(true);
+        return $this->tokenExpiry !== null
+            && $this->tokenExpiry > microtime(true)
+                ? $this->cachedToken
+                : null;
     }
 
     /**
@@ -243,7 +243,7 @@ final class InstanceProfileClient
             throw new \InvalidArgumentException('IMDS endpoint must include a URI scheme');
         }
 
-        $port = isset($options['port']) && $options['port'] !== null
+        $port = isset($options['port'])
             ? (int) $options['port']
             : (isset($parts['port']) ? (int) $parts['port'] : null);
 
@@ -281,7 +281,12 @@ final class InstanceProfileClient
 
         return static function (int $attempt) use ($backoff): void {
             $suspension = Revolt::getSuspension();
-            Revolt::delay($backoff, static fn (): mixed => $suspension->resume());
+            Revolt::delay(
+                $backoff,
+                static function () use ($suspension): void {
+                    $suspension->resume();
+                },
+            );
             $suspension->suspend();
         };
     }
@@ -295,11 +300,18 @@ final class InstanceProfileClient
 
         $delay = 0.1 * (2 ** $attempt);
         $suspension = Revolt::getSuspension();
-        Revolt::delay($delay, static fn (): mixed => $suspension->resume());
+        Revolt::delay(
+            $delay,
+            static function () use ($suspension): void {
+                $suspension->resume();
+            },
+        );
         $suspension->suspend();
     }
 
     /**
+     * @param array<string, string> $headers
+     *
      * @return array{status:int, body:string, headers:array<string, string>}
      */
     private function sendRequest(string $method, string $url, array $headers): array

@@ -17,6 +17,7 @@ use Aws\Core\Endpoint\Bytecode\AwsOpcodeHandler;
 use Smithy\Auth\Aws\AwsCredentialsIdentityInterface;
 use Smithy\Auth\Aws\SigV4AuthScheme;
 use Smithy\Auth\Aws\StaticCredentialProvider;
+use Smithy\Auth\BearerToken;
 use Smithy\Auth\CachingIdentityResolver;
 use Smithy\Auth\HttpBearerAuthScheme;
 use Smithy\Auth\IdentityChainInterface;
@@ -91,7 +92,9 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
     private readonly ?EndpointResolverInterface $customEndpointResolver;
 
     public readonly string $region;
+    /** @var IdentityResolverInterface<AwsCredentialsIdentityInterface> */
     public readonly IdentityResolverInterface $credentials;
+    /** @var IdentityResolverInterface<BearerToken>|null */
     public readonly ?IdentityResolverInterface $tokenProvider;
     public readonly ?string $signingRegion;
     public readonly bool $useDualStack;
@@ -112,6 +115,8 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
      * subclass) to assemble the chain through the config class.
      *
      * @param array<string, mixed> $properties Shared chain assembly state.
+     *
+     * @return IdentityChainInterface<AwsCredentialsIdentityInterface>
      */
     public static function defaultCredentials(
         ?AwsCredentialProviderRegistry $registry = null,
@@ -125,7 +130,7 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
      * @param string|null $region AWS region (e.g. "us-east-1"). When null,
      *     the constructor resolves the region from env and the selected
      *     shared-config profile.
-     * @param IdentityResolverInterface|AwsCredentialsIdentityInterface|null $credentials
+     * @param IdentityResolverInterface<AwsCredentialsIdentityInterface>|AwsCredentialsIdentityInterface|null $credentials
      *     Either a credential provider (chained resolution) or a
      *     raw {@see AwsCredentialsIdentityInterface} value. Null resolves the
      *     standard AWS credential chain from the snapshotted shared config
@@ -135,7 +140,7 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
      *     decorated with one so per-request `resolveIdentity()` calls hit a
      *     hash-slot read once the identity is warm — see the resolver docblock
      *     for the refresh-window policy.
-     * @param IdentityResolverInterface|null $tokenProvider Bearer-token
+     * @param IdentityResolverInterface<BearerToken>|null $tokenProvider Bearer-token
      *     provider used by `smithy.api#httpBearerAuth`. When configured,
      *     the matching auth scheme is registered automatically.
      * @param string|null $signingRegion Override for the signing region;
@@ -319,7 +324,7 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
             $this->getIdentityContext();
 
         $this->transportIsExplicit = $transport !== null;
-        if (!$this->transportIsExplicit) {
+        if ($transport === null) {
             $resolvedClient = $httpClient
                 ?? $this->getHttpClient();
             $transport = new HttpClientTransport($resolvedClient);
@@ -475,6 +480,8 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
      * Replace the credentials. Accepts either a provider or a raw
      * {@see AwsCredentialsIdentityInterface} value. The raw form is wrapped
      * in a {@see StaticCredentialProvider} at the boundary.
+     *
+     * @param IdentityResolverInterface<AwsCredentialsIdentityInterface>|AwsCredentialsIdentityInterface $credentials
      */
     public function withCredentials(
         IdentityResolverInterface|AwsCredentialsIdentityInterface $credentials
@@ -796,6 +803,13 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
         return $normalized;
     }
 
+    /**
+     * @template TIdentity of IdentityInterface
+     *
+     * @param IdentityResolverInterface<TIdentity> $resolver
+     *
+     * @return IdentityResolverInterface<TIdentity>
+     */
     private static function cacheIdentityResolver(
         IdentityResolverInterface $resolver
     ): IdentityResolverInterface

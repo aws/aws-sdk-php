@@ -99,7 +99,7 @@ final class AwsCodeGenerator
         return (new S3ServiceExceptionCustomization(
             $this->model,
             $this->settings
-        ))->apply($this->generator->generate());
+        ))->apply(\array_values($this->generator->generate()));
     }
 
     /**

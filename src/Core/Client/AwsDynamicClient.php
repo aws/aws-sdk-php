@@ -27,6 +27,7 @@ use Aws\Core\UserAgent\{
 };
 use Smithy\Auth\{
     AuthSchemeInterface,
+    BearerToken,
     IdentityResolverInterface
 };
 use Smithy\Auth\Aws\AwsCredentialsIdentityInterface;
@@ -124,6 +125,10 @@ class AwsDynamicClient extends DynamicClient implements AwsClientInterface
      * @param array<string, mixed> $endpointParameters Client endpoint
      *     parameter values.
      * @param array<string, mixed> $context Client context.
+     * @param IdentityResolverInterface<AwsCredentialsIdentityInterface>|AwsCredentialsIdentityInterface|null $credentials
+     *     Credential provider or raw credentials.
+     * @param IdentityResolverInterface<BearerToken>|null $tokenProvider
+     *     Bearer-token provider.
      */
     public static function create(
         SmithyModel|string $model,
@@ -365,7 +370,7 @@ class AwsDynamicClient extends DynamicClient implements AwsClientInterface
         ?WaiterConfig $config = null
     ): Waiter
     {
-        $overrides = $config?->requestOverrides
+        $overrides = $config->requestOverrides
             ?? RequestOverrideConfig::fromArray([]);
 
         return parent::createWaiter(

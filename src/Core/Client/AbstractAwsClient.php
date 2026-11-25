@@ -67,7 +67,7 @@ abstract class AbstractAwsClient extends AbstractClient implements AwsClientInte
         ?WaiterConfig $config = null
     ): Waiter
     {
-        $overrides = $config?->requestOverrides
+        $overrides = $config->requestOverrides
             ?? RequestOverrideConfig::fromArray([]);
 
         return parent::createWaiter(

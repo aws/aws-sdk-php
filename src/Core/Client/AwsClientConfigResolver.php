@@ -17,6 +17,7 @@ use Aws\Core\Credentials\AwsCredentialChainContext;
 use Aws\Core\Credentials\AwsCredentialProviderRegistry;
 use Aws\Core\Credentials\AwsProfile;
 use Aws\Core\Credentials\Provider\SharedConfigProvider;
+use Smithy\Auth\Aws\AwsCredentialsIdentityInterface;
 use Smithy\Auth\IdentityChainInterface;
 use Smithy\Client\Plugin\RequestCompressionPlugin as CompressionPlugin;
 use Smithy\Client\Retry\StandardRetryStrategy;
@@ -46,6 +47,8 @@ final class AwsClientConfigResolver
 
     /**
      * Build the AWS config context for one client.
+     *
+     * @param array<string, mixed> $context
      */
     public function buildContext(array $context): AwsClientConfigContext
     {
@@ -71,6 +74,8 @@ final class AwsClientConfigResolver
 
     /**
      * Build default credentials from the resolved AWS context.
+     *
+     * @return IdentityChainInterface<AwsCredentialsIdentityInterface>
      */
     public function resolveCredentials(
         AwsClientConfigContext $context,
@@ -408,6 +413,7 @@ final class AwsClientConfigResolver
     }
 
     /**
+     * @param array<string, mixed> $context
      * @param array<string, ?string> $env
      */
     private function resolveProfileName(
@@ -426,6 +432,7 @@ final class AwsClientConfigResolver
     }
 
     /**
+     * @param array<string, mixed> $context
      * @param array<string, ?string> $env
      */
     private function resolveProfileFile(
@@ -450,6 +457,9 @@ final class AwsClientConfigResolver
         );
     }
 
+    /**
+     * @param array<string, mixed> $context
+     */
     private function resolveProfile(
         array $context,
         AwsConfigFile $profileFile,
@@ -572,18 +582,13 @@ final class AwsClientConfigResolver
     private function snapshotEnv(): array
     {
         $resolved = [];
-        $system = getenv();
-        if (is_array($system)) {
-            foreach ($system as $name => $value) {
-                if (!is_string($name)
-                    || !is_string($value)
-                    || $value === ''
-                ) {
-                    continue;
-                }
-
-                $resolved[$name] = $value;
+        foreach (getenv() as $name => $value) {
+            if ($value === '') {
+                continue;
             }
+
+            // PHP turns numeric variable names into int keys.
+            $resolved[(string) $name] = $value;
         }
 
         foreach ($_ENV as $name => $value) {

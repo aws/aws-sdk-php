@@ -92,6 +92,9 @@ final class SharedConfigProvider implements ChainIdentityProviderInterface
         return AwsConfigFile::fromEnvironment(self::locationEnv(), $credentialsFile, $configFile);
     }
 
+    /**
+     * @param ChainSetup<AwsCredentialsIdentityInterface> $setup
+     */
     private function resolveProfileFile(ChainSetup $setup): AwsConfigFile
     {
         $profileFile = $setup->getProperty(AwsCredentialChainContext::PROFILE_FILE);
@@ -110,6 +113,9 @@ final class SharedConfigProvider implements ChainIdentityProviderInterface
         return $resolved;
     }
 
+    /**
+     * @param ChainSetup<AwsCredentialsIdentityInterface> $setup
+     */
     private function resolveProfileName(ChainSetup $setup): string
     {
         $profileName = $setup->getProperty(
@@ -122,6 +128,9 @@ final class SharedConfigProvider implements ChainIdentityProviderInterface
         return self::readEnv(self::ENV_PROFILE) ?? 'default';
     }
 
+    /**
+     * @param ChainSetup<AwsCredentialsIdentityInterface> $setup
+     */
     private function markDetectedSources(
         ChainSetup $setup,
         AwsProfile $profile
@@ -153,7 +162,7 @@ final class SharedConfigProvider implements ChainIdentityProviderInterface
     private static function readEnv(string $name): ?string
     {
         $value = $_ENV[$name] ?? getenv($name);
-        if ($value === false || $value === null || $value === '') {
+        if ($value === false || $value === '') {
             return null;
         }
 

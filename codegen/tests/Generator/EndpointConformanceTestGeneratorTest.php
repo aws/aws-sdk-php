@@ -101,8 +101,25 @@ final class EndpointConformanceTestGeneratorTest extends TestCase
         );
     }
 
+    public function testRejectsEndpointTestCaseThatIsNotAnObject(): void
+    {
+        $generator = new EndpointConformanceTestGenerator(
+            $this->model(['not a test case']),
+            new CodegenSettings(
+                namespace: 'Aws\\Example',
+                outputDir: '/tmp/aws-codegen-test'
+            ),
+            $this->testsOutputDirectory
+        );
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('example.aws#ExampleService');
+
+        $generator->generate('example.aws#ExampleService');
+    }
+
     /**
-     * @param list<array<string, mixed>> $testCases
+     * @param list<mixed> $testCases
      */
     private function model(array $testCases): SmithyModel
     {

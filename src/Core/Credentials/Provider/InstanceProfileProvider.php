@@ -39,8 +39,8 @@ final class InstanceProfileProvider implements
     ChainIdentityProviderInterface,
     IdentityResolverInterface
 {
-    /** @var null|callable(array<string, mixed>, ?AwsProfile):object */
-    private readonly mixed $clientFactory;
+    /** @var \Closure(array<string, mixed>, ?AwsProfile): InstanceProfileClientInterface */
+    private readonly \Closure $clientFactory;
     private ?AwsProfile $profile = null;
     private ?AwsConfigFile $profileFile = null;
     private ?string $profileNameOverride = null;
@@ -48,19 +48,22 @@ final class InstanceProfileProvider implements
     private ?string $configFilePath = null;
     private ?string $resolvedProfile = null;
     private string $apiVersion = 'unknown';
-    private ?object $client = null;
+    private ?InstanceProfileClientInterface $client = null;
 
     /**
      * Create an instance-profile credential provider.
      *
-     * @param null|callable(array<string, mixed>, ?AwsProfile):object $clientFactory
+     * @param null|callable(array<string, mixed>, ?AwsProfile): InstanceProfileClientInterface $clientFactory
      *     Create IMDS clients for resolved config.
      */
     public function __construct(
         ?callable $clientFactory = null,
         private readonly ?int $refreshWindowSeconds = null,
     ) {
-        $this->clientFactory = $clientFactory;
+        $this->clientFactory = $clientFactory === null
+            ? static fn (array $options, ?AwsProfile $profile): InstanceProfileClientInterface
+                => new InstanceProfileClient($options, $profile)
+            : $clientFactory(...);
     }
 
     /**
@@ -287,7 +290,7 @@ final class InstanceProfileProvider implements
     /**
      * @param array<string, mixed> $properties
      */
-    private function getClient(array $properties): object
+    private function getClient(array $properties): InstanceProfileClientInterface
     {
         if ($this->client !== null) {
             return $this->client;
@@ -296,9 +299,7 @@ final class InstanceProfileProvider implements
         $profile = $this->loadProfile() ?? $this->profile;
         $options = $this->clientOptions($properties);
 
-        $this->client = $this->clientFactory !== null
-            ? ($this->clientFactory)($options, $profile)
-            : new InstanceProfileClient($options, $profile);
+        $this->client = ($this->clientFactory)($options, $profile);
 
         return $this->client;
     }
@@ -346,6 +347,9 @@ final class InstanceProfileProvider implements
         return $config !== null && $this->toBool($config);
     }
 
+    /**
+     * @param ChainSetup<AwsCredentialsIdentityInterface> $setup
+     */
     private function resolveProfileFromSetup(ChainSetup $setup): ?AwsProfile
     {
         $profile = $setup->getProperty(AwsCredentialChainContext::PROFILE);
@@ -415,7 +419,7 @@ final class InstanceProfileProvider implements
     private static function readEnv(string $name): ?string
     {
         $value = $_ENV[$name] ?? getenv($name);
-        if ($value === false || $value === null || $value === '') {
+        if ($value === false || $value === '') {
             return null;
         }
 
