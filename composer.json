@@ -3,15 +3,22 @@
     "description": "AWS SDK for PHP V4",
     "type": "library",
     "license": "Apache-2.0",
-    "minimum-stability": "dev",
+    "minimum-stability": "RC",
     "prefer-stable": true,
     "require": {
         "php": ">=8.2",
-        "smithy/smithy-php": "dev-main as 0.1.x-dev"
+        "smithy/auth": "^0.1",
+        "smithy/client": "^0.1",
+        "smithy/core": "^0.1",
+        "smithy/http": "^0.1",
+        "smithy/protocol": "^0.1",
+        "smithy/protocol-aws": "^0.1"
     },
     "require-dev": {
         "phpstan/phpstan": "^2.3",
-        "phpunit/phpunit": "^11.0"
+        "phpunit/phpunit": "^11.0",
+        "smithy/async": "^0.1",
+        "smithy/codegen": "^0.1"
     },
     "autoload": {
         "psr-4": {
@@ -33,11 +40,5 @@
         "test": "phpunit",
         "license:check": "php tools/check-license-headers.php",
         "static-analysis": "sh -c 'if find src codegen/src -type f -name \"*.php\" 2>/dev/null | grep -q .; then phpstan analyse --no-progress; else echo \"static-analysis: no PHP source yet; skipping.\"; fi'"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/smithy-lang/smithy-php"
-        }
-    ]
+    }
 }
