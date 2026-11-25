@@ -18,6 +18,7 @@ use Smithy\Core\Shape\OperationInterface;
 use Smithy\Http\Message\HttpTransportResponse;
 use Smithy\Protocol\Aws\AwsErrorInterface;
 use Smithy\Protocol\Aws\AwsExtendedRequestIdInterface;
+use Smithy\Protocol\Aws\AwsProtocolException;
 
 /**
  * Apply S3 error response customizations to an attempt's error.
@@ -100,14 +101,25 @@ final class S3ErrorInterceptor extends AbstractInterceptor
                 404
             );
         } else {
-            $inferred = $error::fromAwsError(
-                $message,
-                $error->fault,
-                $error->getPrevious(),
-                self::NOT_FOUND_CODE,
-                $error->getAwsRequestId(),
-                404
-            );
+            $serviceClass = $operation->getServiceExceptionClass();
+            if ($serviceClass === ApiException::class) {
+                $serviceClass = AwsProtocolException::class;
+            }
+            $inferred = \is_a($serviceClass, AwsErrorInterface::class, true)
+                ? $serviceClass::fromAwsError(
+                    $message,
+                    $error->fault,
+                    $error->getPrevious(),
+                    self::NOT_FOUND_CODE,
+                    $error->getAwsRequestId(),
+                    404
+                )
+                : null;
+            if (!$inferred instanceof AwsExtendedRequestIdInterface
+                || !$inferred instanceof ApiException
+            ) {
+                return $error;
+            }
         }
         $inferred->setRetryAfter($error->getRetryAfter());
 

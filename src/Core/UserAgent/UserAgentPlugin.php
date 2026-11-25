@@ -38,7 +38,7 @@ final class UserAgentPlugin extends AbstractPlugin
     private const STANDARD_RETRY_ID = 'E';
 
     private const CORE_PACKAGE = 'aws/aws-sdk-php-core';
-    private const ROOT_PACKAGE = 'aws/aws-sdk-php-v4';
+    private const ROOT_PACKAGE = 'aws/aws-sdk-php';
     private const FALLBACK_VERSION = '4.0.0-dev';
     private const ILLEGAL = '/[^!#$%&\'*+\-.^_`|~0-9A-Za-z\/]/';
 
