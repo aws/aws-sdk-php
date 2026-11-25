@@ -324,7 +324,7 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
             $this->getIdentityContext();
 
         $this->transportIsExplicit = $transport !== null;
-        if (!$this->transportIsExplicit) {
+        if ($transport === null) {
             $resolvedClient = $httpClient
                 ?? $this->getHttpClient();
             $transport = new HttpClientTransport($resolvedClient);

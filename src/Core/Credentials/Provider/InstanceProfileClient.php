@@ -143,8 +143,9 @@ final class InstanceProfileClient implements InstanceProfileClientInterface
 
     private function getToken(): string
     {
-        if ($this->hasFreshToken()) {
-            return $this->cachedToken;
+        $token = $this->freshToken();
+        if ($token !== null) {
+            return $token;
         }
 
         $lastError = null;
@@ -196,11 +197,12 @@ final class InstanceProfileClient implements InstanceProfileClientInterface
         throw $lastError;
     }
 
-    private function hasFreshToken(): bool
+    private function freshToken(): ?string
     {
-        return $this->cachedToken !== null
-            && $this->tokenExpiry !== null
-            && $this->tokenExpiry > microtime(true);
+        return $this->tokenExpiry !== null
+            && $this->tokenExpiry > microtime(true)
+                ? $this->cachedToken
+                : null;
     }
 
     /**
