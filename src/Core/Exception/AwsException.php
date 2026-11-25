@@ -78,9 +78,8 @@ class AwsException extends ApiException implements AwsErrorInterface
         ?int $httpStatusCode
     ): static
     {
-        $class = static::class;
-
-        return new $class($message, $fault, $awsErrorCode, $requestId, $httpStatusCode, $previous);
+        // @phpstan-ignore new.static
+        return new static($message, $fault, $awsErrorCode, $requestId, $httpStatusCode, $previous);
     }
 
     public function setAwsErrorMetadata(
