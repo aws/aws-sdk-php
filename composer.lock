@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f543b8518c8b0949dd9e784816b3be1",
+    "content-hash": "9884b4ee1d697fbfe40ec3d312a92165",
     "packages": [
         {
             "name": "mtdowling/jmespath.php",
@@ -245,115 +245,323 @@
             "time": "2026-11-14T19:05:53+00:00"
         },
         {
-            "name": "smithy/smithy-php",
-            "version": "dev-main",
+            "name": "smithy/async",
+            "version": "0.1.0-RC.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/smithy-lang/smithy-php.git",
-                "reference": "a1c4272720463ab40e6c99ec211adc6e23ec09dc"
+                "url": "https://github.com/smithy-lang/smithy-php-async.git",
+                "reference": "04ba38efb84ae2ba0a07163ce43f52dff2422e60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smithy-lang/smithy-php/zipball/a1c4272720463ab40e6c99ec211adc6e23ec09dc",
-                "reference": "a1c4272720463ab40e6c99ec211adc6e23ec09dc",
+                "url": "https://api.github.com/repos/smithy-lang/smithy-php-async/zipball/04ba38efb84ae2ba0a07163ce43f52dff2422e60",
+                "reference": "04ba38efb84ae2ba0a07163ce43f52dff2422e60",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "revolt/event-loop": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Smithy\\Async\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Fiber-based concurrency helpers and an event-loop contract for Smithy PHP clients.",
+            "homepage": "https://github.com/smithy-lang/smithy-php",
+            "support": {
+                "issues": "https://github.com/smithy-lang/smithy-php/issues",
+                "source": "https://github.com/smithy-lang/smithy-php"
+            },
+            "time": "2026-11-24T21:55:06+00:00"
+        },
+        {
+            "name": "smithy/auth",
+            "version": "0.1.0-RC.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smithy-lang/smithy-php-auth.git",
+                "reference": "89a8c07bf7e9f787e15b88fd28d940a0fe4ea888"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smithy-lang/smithy-php-auth/zipball/89a8c07bf7e9f787e15b88fd28d940a0fe4ea888",
+                "reference": "89a8c07bf7e9f787e15b88fd28d940a0fe4ea888",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "smithy/core": "self.version",
+                "smithy/http": "self.version"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Smithy\\Auth\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Authentication schemes, identities, and signers for Smithy PHP.",
+            "homepage": "https://github.com/smithy-lang/smithy-php",
+            "support": {
+                "issues": "https://github.com/smithy-lang/smithy-php/issues",
+                "source": "https://github.com/smithy-lang/smithy-php"
+            },
+            "time": "2026-11-24T21:55:06+00:00"
+        },
+        {
+            "name": "smithy/client",
+            "version": "0.1.0-RC.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smithy-lang/smithy-php-client.git",
+                "reference": "6320da77b3daf84c410220ae5256d1628bf07658"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smithy-lang/smithy-php-client/zipball/6320da77b3daf84c410220ae5256d1628bf07658",
+                "reference": "6320da77b3daf84c410220ae5256d1628bf07658",
                 "shasum": ""
             },
             "require": {
                 "ext-ctype": "*",
                 "ext-filter": "*",
-                "ext-hash": "*",
-                "ext-libxml": "*",
-                "ext-simplexml": "*",
-                "ext-tokenizer": "*",
-                "ext-xmlwriter": "*",
                 "mtdowling/jmespath.php": "^2.9.1",
                 "php": ">=8.2",
-                "psr/http-client": "^1.0",
                 "psr/http-message": "^2.0",
-                "revolt/event-loop": "^1.0"
-            },
-            "replace": {
                 "smithy/async": "self.version",
                 "smithy/auth": "self.version",
-                "smithy/client": "self.version",
-                "smithy/codec": "self.version",
-                "smithy/codegen": "self.version",
                 "smithy/core": "self.version",
                 "smithy/http": "self.version",
-                "smithy/protocol": "self.version",
-                "smithy/protocol-aws": "self.version"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "^2.3",
-                "phpunit/phpunit": "^11.0"
+                "smithy/protocol": "self.version"
             },
             "suggest": {
-                "ext-curl": "Required by smithy/http's cURL transport.",
                 "ext-zlib": "Enables gzip request compression."
             },
-            "default-branch": true,
-            "bin": [
-                "bin/smithy-php-codegen"
-            ],
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Smithy\\Async\\": "src/Async/",
-                    "Smithy\\Auth\\": "src/Auth/",
-                    "Smithy\\Codegen\\": "src/Codegen/",
-                    "Smithy\\Core\\": "src/Core/",
-                    "Smithy\\Client\\": "src/Client/",
-                    "Smithy\\Protocol\\": "src/Protocol/",
-                    "Smithy\\Protocol\\Aws\\": "src/ProtocolAws/",
-                    "Smithy\\Http\\": "src/Http/",
-                    "Smithy\\Codec\\": "src/Codec/"
+                    "Smithy\\Client\\": ""
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Smithy\\ProtocolTests\\AwsJson1_0\\": "codegen-output/aws-json-1-0/src/",
-                    "Smithy\\ProtocolTests\\AwsJson1_1\\": "codegen-output/aws-json-1-1/src/",
-                    "Smithy\\ProtocolTests\\AwsQuery\\": "codegen-output/aws-query/src/",
-                    "Smithy\\ProtocolTests\\Ec2Query\\": "codegen-output/ec2-query/src/",
-                    "Smithy\\ProtocolTests\\RpcV2Cbor\\": "codegen-output/rpcv2-cbor/src/",
-                    "Smithy\\ProtocolTests\\RpcV2Json\\": "codegen-output/rpcv2-json/src/",
-                    "Smithy\\ProtocolTests\\RestJson\\": "codegen-output/rest-json/src/",
-                    "Smithy\\ProtocolTests\\RestXml\\": "codegen-output/rest-xml/src/",
-                    "Smithy\\Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "phpunit"
-                ],
-                "static-analysis": [
-                    "phpstan analyse --no-progress"
-                ],
-                "codegen": [
-                    "php bin/smithy-php-codegen"
-                ],
-                "codegen-output": [
-                    "php tools/codegen-output/generate.php"
-                ],
-                "codegen-output:check": [
-                    "php tools/codegen-output/generate.php --check"
-                ],
-                "license:check": [
-                    "php tools/check-license-headers.php"
-                ],
-                "package-manifests:check": [
-                    "php tools/package-manifests/check.php"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
-            "description": "Smithy runtime and code generator for PHP",
+            "description": "Schema-driven client runtime for generated and runtime-loaded Smithy services.",
+            "homepage": "https://github.com/smithy-lang/smithy-php",
             "support": {
-                "source": "https://github.com/smithy-lang/smithy-php/tree/main",
-                "issues": "https://github.com/smithy-lang/smithy-php/issues"
+                "issues": "https://github.com/smithy-lang/smithy-php/issues",
+                "source": "https://github.com/smithy-lang/smithy-php"
             },
-            "time": "2026-11-22T21:16:59+00:00"
+            "time": "2026-11-24T21:55:06+00:00"
+        },
+        {
+            "name": "smithy/codec",
+            "version": "0.1.0-RC.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smithy-lang/smithy-php-codec.git",
+                "reference": "3880a6b4d733dc1f6f164d6609ab0d20d5ebc546"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smithy-lang/smithy-php-codec/zipball/3880a6b4d733dc1f6f164d6609ab0d20d5ebc546",
+                "reference": "3880a6b4d733dc1f6f164d6609ab0d20d5ebc546",
+                "shasum": ""
+            },
+            "require": {
+                "ext-libxml": "*",
+                "ext-simplexml": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=8.2",
+                "psr/http-message": "^2.0",
+                "smithy/core": "self.version"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Smithy\\Codec\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Schema-driven serializers and deserializers for Smithy wire formats.",
+            "homepage": "https://github.com/smithy-lang/smithy-php",
+            "support": {
+                "issues": "https://github.com/smithy-lang/smithy-php/issues",
+                "source": "https://github.com/smithy-lang/smithy-php"
+            },
+            "time": "2026-11-24T23:54:03+00:00"
+        },
+        {
+            "name": "smithy/core",
+            "version": "0.1.0-RC.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smithy-lang/smithy-php-core.git",
+                "reference": "b36d4b25450dc6ced36fabb156df4749ae82bbfa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smithy-lang/smithy-php-core/zipball/b36d4b25450dc6ced36fabb156df4749ae82bbfa",
+                "reference": "b36d4b25450dc6ced36fabb156df4749ae82bbfa",
+                "shasum": ""
+            },
+            "require": {
+                "ext-hash": "*",
+                "php": ">=8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Smithy\\Core\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Runtime schemas, shape contracts, document values, and model conversion for Smithy PHP.",
+            "homepage": "https://github.com/smithy-lang/smithy-php",
+            "support": {
+                "issues": "https://github.com/smithy-lang/smithy-php/issues",
+                "source": "https://github.com/smithy-lang/smithy-php"
+            },
+            "time": "2026-11-24T21:55:06+00:00"
+        },
+        {
+            "name": "smithy/http",
+            "version": "0.1.0-RC.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smithy-lang/smithy-php-http.git",
+                "reference": "ff2cc40484f097940f6097cdcdfd08e0e9260b73"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smithy-lang/smithy-php-http/zipball/ff2cc40484f097940f6097cdcdfd08e0e9260b73",
+                "reference": "ff2cc40484f097940f6097cdcdfd08e0e9260b73",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-curl": "*",
+                "ext-hash": "*",
+                "php": ">=8.2",
+                "psr/http-client": "^1.0",
+                "psr/http-message": "^2.0",
+                "smithy/async": "self.version",
+                "smithy/core": "self.version"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Smithy\\Http\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "PSR-7 HTTP messages and a PSR-18 cURL client for Smithy PHP.",
+            "homepage": "https://github.com/smithy-lang/smithy-php",
+            "support": {
+                "issues": "https://github.com/smithy-lang/smithy-php/issues",
+                "source": "https://github.com/smithy-lang/smithy-php"
+            },
+            "time": "2026-11-24T21:55:06+00:00"
+        },
+        {
+            "name": "smithy/protocol",
+            "version": "0.1.0-RC.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smithy-lang/smithy-php-protocol.git",
+                "reference": "055e3a19e7c5b22cb77b00a00a6e1ca9e6a8e759"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smithy-lang/smithy-php-protocol/zipball/055e3a19e7c5b22cb77b00a00a6e1ca9e6a8e759",
+                "reference": "055e3a19e7c5b22cb77b00a00a6e1ca9e6a8e759",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "psr/http-message": "^2.0",
+                "smithy/codec": "self.version",
+                "smithy/core": "self.version",
+                "smithy/http": "self.version"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Smithy\\Protocol\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Converts Smithy operations and shapes to HTTP requests and responses.",
+            "homepage": "https://github.com/smithy-lang/smithy-php",
+            "support": {
+                "issues": "https://github.com/smithy-lang/smithy-php/issues",
+                "source": "https://github.com/smithy-lang/smithy-php"
+            },
+            "time": "2026-11-24T21:55:06+00:00"
+        },
+        {
+            "name": "smithy/protocol-aws",
+            "version": "0.1.0-RC.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smithy-lang/smithy-php-protocol-aws.git",
+                "reference": "edfc79acbe4f48882b3fb155a455742ad18292fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smithy-lang/smithy-php-protocol-aws/zipball/edfc79acbe4f48882b3fb155a455742ad18292fe",
+                "reference": "edfc79acbe4f48882b3fb155a455742ad18292fe",
+                "shasum": ""
+            },
+            "require": {
+                "ext-libxml": "*",
+                "ext-simplexml": "*",
+                "php": ">=8.2",
+                "psr/http-message": "^2.0",
+                "smithy/codec": "self.version",
+                "smithy/core": "self.version",
+                "smithy/http": "self.version",
+                "smithy/protocol": "self.version"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Smithy\\Protocol\\Aws\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "AWS protocol implementations (JSON 1.0/1.1, REST JSON, REST XML, Query, EC2 Query) for Smithy PHP.",
+            "homepage": "https://github.com/smithy-lang/smithy-php",
+            "support": {
+                "issues": "https://github.com/smithy-lang/smithy-php/issues",
+                "source": "https://github.com/smithy-lang/smithy-php"
+            },
+            "time": "2026-11-24T21:55:06+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2169,6 +2377,48 @@
             "time": "2024-10-09T05:16:32+00:00"
         },
         {
+            "name": "smithy/codegen",
+            "version": "0.1.0-RC.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smithy-lang/smithy-php-codegen.git",
+                "reference": "1ec53ce283729274c57de994842f7ee62dae7521"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smithy-lang/smithy-php-codegen/zipball/1ec53ce283729274c57de994842f7ee62dae7521",
+                "reference": "1ec53ce283729274c57de994842f7ee62dae7521",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-tokenizer": "*",
+                "php": ">=8.2",
+                "smithy/client": "self.version",
+                "smithy/core": "self.version"
+            },
+            "bin": [
+                "bin/smithy-php-codegen"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Smithy\\Codegen\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Generates PHP clients, shapes, operation metadata, and runtime schemas from a Smithy JSON AST.",
+            "homepage": "https://github.com/smithy-lang/smithy-php",
+            "support": {
+                "issues": "https://github.com/smithy-lang/smithy-php/issues",
+                "source": "https://github.com/smithy-lang/smithy-php"
+            },
+            "time": "2026-11-24T23:54:03+00:00"
+        },
+        {
             "name": "staabm/side-effects-detector",
             "version": "1.0.5",
             "source": {
@@ -2271,18 +2521,9 @@
             "time": "2025-11-17T20:03:58+00:00"
         }
     ],
-    "aliases": [
-        {
-            "package": "smithy/smithy-php",
-            "version": "dev-main",
-            "alias": "0.1.x-dev",
-            "alias_normalized": "0.1.9999999.9999999-dev"
-        }
-    ],
-    "minimum-stability": "dev",
-    "stability-flags": {
-        "smithy/smithy-php": 20
-    },
+    "aliases": [],
+    "minimum-stability": "RC",
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
