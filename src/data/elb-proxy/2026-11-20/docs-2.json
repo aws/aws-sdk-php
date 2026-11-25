@@ -1,0 +1,795 @@
+{
+  "version": "2.0",
+  "service": "<p>Elastic Load Balancing for Envoy is a fully managed service that runs the open-source Envoy proxy on your behalf. You bring your Envoy configuration, and AWS provisions the proxy, scales it, upgrades the Envoy version, patches the operating system, and monitors its health. The proxy runs on Amazon EC2 instances inside your own virtual private cloud (VPC), so you keep full control of your network, security groups, and IAM.</p>",
+  "operations": {
+    "AssociateCertificate": "<p>Associates an ACM certificate with the specified Proxy.</p>",
+    "CreateProxy": "<p>Creates a proxy. A proxy is a fully managed, Envoy-based proxy that runs your Envoy configuration on Amazon EC2 instances inside your own virtual private cloud (VPC). AWS provisions and scales the proxy, upgrades the Envoy version, patches the operating system, and monitors its health.</p>",
+    "DeleteProxy": "<p>Deletes a proxy.</p>",
+    "DisassociateCertificate": "<p>Disassociates an ACM certificate from the specified proxy.</p>",
+    "GetProxy": "<p>Retrieves information about the specified proxy.</p>",
+    "GetProxyAttributes": "<p>Retrieves the attributes for the specified proxy.</p>",
+    "GetProxyConfigurationContents": "<p>Retrieves the configuration file, the configuration archive, or both for the specified proxy. This operation is separate from GetProxy so that you can grant access to proxy metadata without granting access to the configuration content.</p>",
+    "GetProxyUpdate": "<p>Retrieves information about the specified proxy update.</p>",
+    "ListCertificateAssociations": "<p>Lists the ACM certificate associations for the specified proxy.</p>",
+    "ListProxies": "<p>Lists the proxies owned by the caller account.</p>",
+    "ListProxyUpdates": "<p>Lists the updates for the specified proxy, most recently submitted first.</p>",
+    "ListProxyVersions": "<p>Lists the available proxy versions.</p>",
+    "ListTagsForResource": "<p>Lists the tags for the specified resource.</p>",
+    "TagResource": "<p>Adds the specified tags to the specified resource.</p>",
+    "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
+    "UpdateProxyAttributes": "<p>Updates the attributes for the specified proxy.</p>",
+    "UpdateProxyConfiguration": "<p>Updates the configuration for the specified proxy. You can update the configuration file, the configuration archive, or both.</p>",
+    "UpdateProxyNetworkConfiguration": "<p>Updates the network configuration for the specified proxy.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>The user does not have sufficient access to perform this action.</p>",
+      "refs": {}
+    },
+    "AmazonResourceName": {
+      "base": "<p>An Amazon Resource Name (ARN) that uniquely identifies an AWS resource.</p>",
+      "refs": {
+        "CreateProxyResponse$arn": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "DeleteProxyResponse$arn": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "GetProxyResponse$arn": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "GetProxyUpdateResponse$proxyArn": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "ListTagsForResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "ProxySummary$arn": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "TagResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "UntagResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "UpdateProxyNetworkConfigurationResponse$arn": "<p>The Amazon Resource Name (ARN) of the proxy.</p>"
+      }
+    },
+    "AssociateCertificateRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateCertificateResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Attribute": {
+      "base": "<p>A key-value attribute for a proxy.</p>",
+      "refs": {
+        "ProxyAttributeList$member": null
+      }
+    },
+    "AttributeDetails": {
+      "base": "<p>A key-value attribute for a proxy, including its default value.</p>",
+      "refs": {
+        "ProxyAttributeDetailsList$member": null
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "GetProxyConfigurationContentsRequest$includeConfigFile": "<p>Indicates whether to include the configuration file contents in the response. The default is <code>false</code>.</p>",
+        "GetProxyConfigurationContentsRequest$includeConfigArchive": "<p>Indicates whether to include the configuration archive contents in the response. The default is <code>false</code>.</p>",
+        "UpdateProxyConfigurationRequest$resetConfigurationArchive": "<p>Indicates whether to remove the configuration archive from the proxy.</p>",
+        "UpdateProxyConfigurationRequest$resetCustomerKmsKeyArn": "<p>Indicates whether to remove the customer managed KMS key from the proxy and use the default service-owned key.</p>"
+      }
+    },
+    "CertificateArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of an ACM certificate.</p>",
+      "refs": {
+        "CertificateAssociation$certificateArn": "<p>The Amazon Resource Name (ARN) of the ACM certificate.</p>"
+      }
+    },
+    "CertificateAssociation": {
+      "base": "<p>An association between an ACM certificate and a proxy.</p>",
+      "refs": {
+        "AssociateCertificateResponse$certificateAssociation": "<p>The certificate association.</p>",
+        "CertificateAssociationList$member": null,
+        "DisassociateCertificateResponse$certificateAssociation": "<p>The certificate association.</p>"
+      }
+    },
+    "CertificateAssociationList": {
+      "base": "<p>A list of certificate associations.</p>",
+      "refs": {
+        "ListCertificateAssociationsResponse$items": "<p>Information about the certificate associations.</p>"
+      }
+    },
+    "CertificateAssociationStatus": {
+      "base": "<p>The status of a certificate association.</p>",
+      "refs": {
+        "CertificateAssociation$status": "<p>The status of the association.</p>"
+      }
+    },
+    "CertificateAssociationStatusCode": {
+      "base": "<p>The status code of a certificate association.</p>",
+      "refs": {
+        "CertificateAssociationStatus$code": "<p>The status code of the association.</p>"
+      }
+    },
+    "CertificateAssociationStatusReason": {
+      "base": "<p>A reason for the current status of a certificate association.</p>",
+      "refs": {
+        "CertificateAssociationStatusReasonList$member": null
+      }
+    },
+    "CertificateAssociationStatusReasonList": {
+      "base": "<p>A list of certificate association status reasons.</p>",
+      "refs": {
+        "CertificateAssociationStatus$reasons": "<p>The reasons for the current status of the association.</p>"
+      }
+    },
+    "CertificateIdentifier": {
+      "base": "<p>The Amazon Resource Name (ARN) of an ACM certificate.</p>",
+      "refs": {
+        "AssociateCertificateRequest$certificateIdentifier": "<p>The Amazon Resource Name (ARN) of the ACM certificate.</p>",
+        "DisassociateCertificateRequest$certificateIdentifier": "<p>The Amazon Resource Name (ARN) of the ACM certificate.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": "<p>A unique, case-sensitive identifier used to make a create request idempotent.</p>",
+      "refs": {
+        "CreateProxyRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+      }
+    },
+    "ConfigurationArchive": {
+      "base": "<p>The configuration archive for a proxy. This is a bundle of the files referenced by the configuration file.</p>",
+      "refs": {
+        "ProxyConfiguration$configurationArchive": "<p>The configuration archive for the proxy. This is a bundle of the files referenced by the configuration file.</p>",
+        "UpdateProxyConfigurationRequest$configurationArchive": "<p>The updated configuration archive for the proxy. If you don't specify a value, the existing configuration archive is unchanged.</p>"
+      }
+    },
+    "ConfigurationArchiveBytes": {
+      "base": "<p>The contents of the configuration archive.</p>",
+      "refs": {
+        "ConfigurationArchive$configurationBytes": "<p>The contents of the configuration archive.</p>",
+        "GetProxyConfigurationContentsResponse$configurationArchiveContents": "<p>The configuration archive contents. Populated only if <code>includeConfigArchive</code> was <code>true</code>.</p>"
+      }
+    },
+    "ConfigurationFile": {
+      "base": "<p>The configuration file for a proxy.</p>",
+      "refs": {
+        "ProxyConfiguration$configurationFile": "<p>The configuration file for the proxy.</p>",
+        "UpdateProxyConfigurationRequest$configurationFile": "<p>The updated configuration file for the proxy. If you don't specify a value, the existing configuration file is unchanged.</p>"
+      }
+    },
+    "ConfigurationFileBytes": {
+      "base": "<p>The contents of the configuration file.</p>",
+      "refs": {
+        "ConfigurationFile$configurationBytes": "<p>The contents of the configuration file.</p>",
+        "GetProxyConfigurationContentsResponse$configurationFileContents": "<p>The configuration file contents. Populated only if <code>includeConfigFile</code> was <code>true</code>.</p>"
+      }
+    },
+    "ConfigurationMetadata": {
+      "base": "<p>The configuration metadata for a proxy.</p>",
+      "refs": {
+        "CreateProxyResponse$configurationMetadata": "<p>The configuration metadata for the proxy.</p>",
+        "GetProxyConfigurationContentsResponse$configurationMetadata": "<p>The configuration metadata for the proxy.</p>",
+        "GetProxyResponse$configurationMetadata": "<p>The configuration metadata for the proxy.</p>",
+        "ProxyConfigurationUpdateDetails$newConfigurationMetadata": "<p>The configuration metadata for the configuration that was submitted with this update.</p>",
+        "UpdateProxyConfigurationResponse$configurationMetadata": "<p>The configuration metadata for the proxy after the update.</p>",
+        "UpdateProxyNetworkConfigurationResponse$configurationMetadata": "<p>The configuration metadata for the proxy.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request conflicts with the current state of the resource.</p>",
+      "refs": {}
+    },
+    "CreateProxyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateProxyResponse": {
+      "base": "<p>Common Proxy details response mixin</p>",
+      "refs": {}
+    },
+    "CustomerKmsKeyArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of the customer managed KMS key used to encrypt the proxy's configuration content.</p>",
+      "refs": {
+        "CreateProxyRequest$customerKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer managed KMS key used to encrypt the proxy's configuration content. If you don't specify a key, the default service-owned key is used.</p>",
+        "CreateProxyResponse$customerKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer managed KMS key used to encrypt the proxy's configuration content. This value is absent when the proxy uses the default service-owned key.</p>",
+        "GetProxyConfigurationContentsResponse$customerKmsKeyArn": "<p>CMK ARN used to encrypt the proxy's configuration content</p>",
+        "GetProxyResponse$customerKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer managed KMS key used to encrypt the proxy's configuration content. This value is absent when the proxy uses the default service-owned key.</p>",
+        "UpdateProxyConfigurationRequest$customerKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer managed KMS key used to encrypt the proxy's configuration content. Specify a new ARN to set or rotate the key. If you don't specify a value, the existing key is unchanged.</p>",
+        "UpdateProxyConfigurationResponse$customerKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer managed KMS key used to encrypt the proxy's configuration content after the update. This value is absent when the proxy uses the default service-owned key.</p>",
+        "UpdateProxyNetworkConfigurationResponse$customerKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer managed KMS key used to encrypt the proxy's configuration content. This value is absent when the proxy uses the default service-owned key.</p>"
+      }
+    },
+    "DeleteProxyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteProxyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateCertificateRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateCertificateResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProxyAttributesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProxyAttributesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProxyConfigurationContentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProxyConfigurationContentsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProxyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProxyResponse": {
+      "base": "<p>Common Proxy details response mixin</p>",
+      "refs": {}
+    },
+    "GetProxyUpdateRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProxyUpdateResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "IamRoleArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of an IAM role.</p>",
+      "refs": {
+        "CreateProxyRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions to the code that your Envoy configuration runs on the proxy, such as filters and extensions. These are the permissions that this code needs when it calls AWS services.</p>",
+        "CreateProxyResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions to the code that your Envoy configuration runs on the proxy, such as filters and extensions. These are the permissions that this code needs when it calls AWS services.</p>",
+        "GetProxyResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions to the code that your Envoy configuration runs on the proxy, such as filters and extensions. These are the permissions that this code needs when it calls AWS services.</p>",
+        "UpdateProxyNetworkConfigurationResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions to the code that your Envoy configuration runs on the proxy, such as filters and extensions. These are the permissions that this code needs when it calls AWS services.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>An unexpected error occurred while processing the request.</p>",
+      "refs": {}
+    },
+    "ListCertificateAssociationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCertificateAssociationsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListCertificateAssociationsRequest$maxResults": "<p>The maximum number of results to return.</p>"
+      }
+    },
+    "ListCertificateAssociationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProxiesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProxiesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListProxiesRequest$maxResults": "<p>The maximum number of results to return.</p>"
+      }
+    },
+    "ListProxiesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProxyUpdatesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProxyUpdatesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListProxyUpdatesRequest$maxResults": "<p>The maximum number of results to return.</p>"
+      }
+    },
+    "ListProxyUpdatesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProxyVersionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProxyVersionsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListProxyVersionsRequest$maxResults": "<p>The maximum number of results to return.</p>"
+      }
+    },
+    "ListProxyVersionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "NextToken": {
+      "base": "<p>A pagination token for the next page of results.</p>",
+      "refs": {
+        "ListCertificateAssociationsRequest$nextToken": "<p>A pagination token for the next page of results.</p>",
+        "ListCertificateAssociationsResponse$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
+        "ListProxiesRequest$nextToken": "<p>A pagination token for the next page of results.</p>",
+        "ListProxiesResponse$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
+        "ListProxyUpdatesRequest$nextToken": "<p>A pagination token for the next page of results.</p>",
+        "ListProxyUpdatesResponse$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
+        "ListProxyVersionsRequest$nextToken": "<p>A pagination token for the next page of results.</p>",
+        "ListProxyVersionsResponse$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>"
+      }
+    },
+    "OperationNotPermittedException": {
+      "base": "<p>The requested operation is not permitted.</p>",
+      "refs": {}
+    },
+    "PriorRequestNotCompletedException": {
+      "base": "<p>The request could not be completed because a prior request has not yet completed.</p>",
+      "refs": {}
+    },
+    "ProxyAttributeDetailsList": {
+      "base": "<p>A list of proxy attributes, including their default values.</p>",
+      "refs": {
+        "GetProxyAttributesResponse$attributes": "<p>The attributes for the proxy.</p>",
+        "UpdateProxyAttributesResponse$attributes": "<p>The attributes for the proxy after the update.</p>"
+      }
+    },
+    "ProxyAttributeKey": {
+      "base": "<p>The key of a proxy attribute.</p>",
+      "refs": {
+        "Attribute$key": "<p>The key of the attribute.</p>",
+        "AttributeDetails$key": "<p>The key of the attribute.</p>"
+      }
+    },
+    "ProxyAttributeList": {
+      "base": "<p>A list of proxy attributes.</p>",
+      "refs": {
+        "CreateProxyRequest$attributes": "<p>The attributes for the proxy. Attributes can be changed after creation. Attributes that you don't specify are set to their default values.</p>",
+        "UpdateProxyAttributesRequest$attributes": "<p>The attributes to update. Attributes that you don't specify are unchanged.</p>"
+      }
+    },
+    "ProxyAttributeValue": {
+      "base": "<p>The value of a proxy attribute.</p>",
+      "refs": {
+        "Attribute$value": "<p>The value of the attribute.</p>",
+        "AttributeDetails$value": "<p>The value of the attribute.</p>",
+        "AttributeDetails$defaultValue": "<p>The default value of the attribute.</p>"
+      }
+    },
+    "ProxyConfiguration": {
+      "base": "<p>The configuration for a proxy.</p>",
+      "refs": {
+        "CreateProxyRequest$configuration": "<p>The configuration for the proxy.</p>"
+      }
+    },
+    "ProxyConfigurationUpdateDetails": {
+      "base": "<p>Details about an update to a proxy's configuration.</p>",
+      "refs": {
+        "ProxyUpdateDetails$configuration": "<p>Details about an update to the proxy's configuration.</p>"
+      }
+    },
+    "ProxyIdentifier": {
+      "base": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+      "refs": {
+        "AssociateCertificateRequest$proxyIdentifier": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "DeleteProxyRequest$proxyIdentifier": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "DisassociateCertificateRequest$proxyIdentifier": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "GetProxyAttributesRequest$proxyIdentifier": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "GetProxyConfigurationContentsRequest$proxyIdentifier": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "GetProxyRequest$proxyIdentifier": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "GetProxyUpdateRequest$proxyIdentifier": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "ListCertificateAssociationsRequest$proxyIdentifier": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "ListProxyUpdatesRequest$proxyIdentifier": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "UpdateProxyAttributesRequest$proxyIdentifier": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "UpdateProxyConfigurationRequest$proxyIdentifier": "<p>The Amazon Resource Name (ARN) of the proxy.</p>",
+        "UpdateProxyNetworkConfigurationRequest$proxyIdentifier": "<p>The Amazon Resource Name (ARN) of the proxy.</p>"
+      }
+    },
+    "ProxyIpAddressingConfiguration": {
+      "base": "<p>The IP addressing configuration for a proxy.</p>",
+      "refs": {
+        "ProxyIpConfiguration$ipAddressingConfiguration": "<p>The IP addressing configuration for the proxy.</p>"
+      }
+    },
+    "ProxyIpConfiguration": {
+      "base": "<p>The IP configuration for a proxy.</p>",
+      "refs": {
+        "ProxyNetworkConfiguration$ipConfiguration": "<p>The IP configuration for the proxy.</p>",
+        "ProxyNetworkUserConfiguration$ipConfiguration": "<p>The IP configuration for the proxy.</p>"
+      }
+    },
+    "ProxyIpv4Addressability": {
+      "base": "<p>The IPv4 addressability setting for a proxy.</p>",
+      "refs": {
+        "ProxyIpAddressingConfiguration$ipv4Addressability": "<p>The IPv4 addressability setting for the proxy.</p>"
+      }
+    },
+    "ProxyIpv6Addressability": {
+      "base": "<p>The IPv6 addressability setting for a proxy.</p>",
+      "refs": {
+        "ProxyIpAddressingConfiguration$ipv6Addressability": "<p>The IPv6 addressability setting for the proxy.</p>"
+      }
+    },
+    "ProxyName": {
+      "base": "<p>The name of the proxy. The name must be unique within your account for the Region. The valid characters are a-z, 0-9, and hyphens (-). You can't use a hyphen as the first or last character.</p>",
+      "refs": {
+        "CreateProxyRequest$name": "<p>The name of the proxy. The name must be unique within your account for the Region. The valid characters are a-z, 0-9, and hyphens (-). You can't use a hyphen as the first or last character.</p>",
+        "CreateProxyResponse$name": "<p>The name of the proxy.</p>",
+        "DeleteProxyResponse$name": "<p>The name of the proxy.</p>",
+        "GetProxyResponse$name": "<p>The name of the proxy.</p>",
+        "ProxySummary$name": "<p>The name of the proxy.</p>",
+        "UpdateProxyNetworkConfigurationResponse$name": "<p>The name of the proxy.</p>"
+      }
+    },
+    "ProxyNetworkConfiguration": {
+      "base": "<p>The network configuration for a proxy.</p>",
+      "refs": {
+        "CreateProxyResponse$networkConfiguration": "<p>The network configuration for the proxy.</p>",
+        "GetProxyResponse$networkConfiguration": "<p>The network configuration for the proxy.</p>",
+        "UpdateProxyNetworkConfigurationResponse$networkConfiguration": "<p>The network configuration for the proxy.</p>"
+      }
+    },
+    "ProxyNetworkUserConfiguration": {
+      "base": "<p>The network configuration for a proxy, used by mutating operations.</p>",
+      "refs": {
+        "CreateProxyRequest$networkConfiguration": "<p>The network configuration for the proxy.</p>"
+      }
+    },
+    "ProxyStatus": {
+      "base": "<p>The status of a proxy.</p>",
+      "refs": {
+        "CreateProxyResponse$status": "<p>The status of the proxy.</p>",
+        "DeleteProxyResponse$status": "<p>The status of the proxy.</p>",
+        "GetProxyResponse$status": "<p>The status of the proxy.</p>",
+        "ProxySummary$status": "<p>The status of the proxy.</p>",
+        "UpdateProxyNetworkConfigurationResponse$status": "<p>The status of the proxy.</p>"
+      }
+    },
+    "ProxyStatusCode": {
+      "base": "<p>The status code of a proxy.</p>",
+      "refs": {
+        "ProxyStatus$code": "<p>The status code of the proxy.</p>"
+      }
+    },
+    "ProxyStatusReason": {
+      "base": "<p>A reason for the current status of a proxy.</p>",
+      "refs": {
+        "ProxyStatusReasonList$member": null
+      }
+    },
+    "ProxyStatusReasonList": {
+      "base": "<p>A list of proxy status reasons.</p>",
+      "refs": {
+        "ProxyStatus$reasons": "<p>The reasons for the current status of the proxy.</p>"
+      }
+    },
+    "ProxySummary": {
+      "base": "<p>Summary information about a proxy.</p>",
+      "refs": {
+        "ProxySummaryList$member": null
+      }
+    },
+    "ProxySummaryList": {
+      "base": "<p>A list of proxy summaries.</p>",
+      "refs": {
+        "ListProxiesResponse$items": "<p>Information about the proxies.</p>"
+      }
+    },
+    "ProxyType": {
+      "base": "<p>The type of proxy.</p>",
+      "refs": {
+        "CreateProxyRequest$type": "<p>The type of proxy.</p>",
+        "CreateProxyResponse$type": "<p>The type of proxy.</p>",
+        "GetProxyResponse$type": "<p>The type of proxy.</p>",
+        "ListProxyVersionsRequest$type": "<p>The type of proxy.</p>",
+        "ProxySummary$type": "<p>The type of proxy.</p>",
+        "ProxyVersionSummary$type": "<p>The type of proxy.</p>",
+        "UpdateProxyNetworkConfigurationResponse$type": "<p>The type of proxy.</p>"
+      }
+    },
+    "ProxyUpdateDetails": {
+      "base": "<p>Details about a proxy update.</p>",
+      "refs": {
+        "GetProxyUpdateResponse$details": "<p>Details about the update.</p>"
+      }
+    },
+    "ProxyUpdateIdentifier": {
+      "base": "<p>The ID of a proxy update.</p>",
+      "refs": {
+        "GetProxyUpdateRequest$updateIdentifier": "<p>The ID of the update.</p>",
+        "GetProxyUpdateResponse$updateId": "<p>The ID of the update.</p>",
+        "ProxyUpdateSummary$updateId": "<p>The ID of the update.</p>",
+        "UpdateProxyConfigurationResponse$updateId": "<p>The ID of the update that was submitted.</p>"
+      }
+    },
+    "ProxyUpdatePropagationStatus": {
+      "base": "<p>Whether the configuration submitted with a proxy update was applied to all proxy nodes.</p>",
+      "refs": {
+        "ProxyUpdateState$propagationStatus": "<p>Whether the configuration submitted with the update was applied to all proxy nodes.</p>",
+        "ProxyUpdateSummary$propagationStatus": "<p>Whether the configuration submitted with the update was applied to all proxy nodes.</p>"
+      }
+    },
+    "ProxyUpdateState": {
+      "base": "<p>The state of a proxy update.</p>",
+      "refs": {
+        "GetProxyUpdateResponse$state": "<p>The state of the update.</p>"
+      }
+    },
+    "ProxyUpdateStateReason": {
+      "base": "<p>A reason for the current state of a proxy update.</p>",
+      "refs": {
+        "ProxyUpdateStateReasonList$member": null
+      }
+    },
+    "ProxyUpdateStateReasonList": {
+      "base": "<p>A list of proxy update state reasons.</p>",
+      "refs": {
+        "ProxyUpdateState$reasons": "<p>The reasons for the current state of the update.</p>"
+      }
+    },
+    "ProxyUpdateSummary": {
+      "base": "<p>Summary information about a proxy update.</p>",
+      "refs": {
+        "ProxyUpdateSummaryList$member": null
+      }
+    },
+    "ProxyUpdateSummaryList": {
+      "base": "<p>A list of proxy update summaries.</p>",
+      "refs": {
+        "ListProxyUpdatesResponse$items": "<p>Information about the updates for the proxy.</p>"
+      }
+    },
+    "ProxyUpdateType": {
+      "base": "<p>The type of a proxy update.</p>",
+      "refs": {
+        "ProxyUpdateSummary$type": "<p>The type of the update.</p>"
+      }
+    },
+    "ProxyUpdateValidationStatus": {
+      "base": "<p>Whether the configuration submitted with a proxy update works.</p>",
+      "refs": {
+        "ProxyUpdateState$validationStatus": "<p>Whether the configuration submitted with the update works. An update is valid once it is successfully applied to at least one proxy node.</p>",
+        "ProxyUpdateSummary$validationStatus": "<p>Whether the configuration submitted with the update works.</p>"
+      }
+    },
+    "ProxyVersion": {
+      "base": "<p>The version of the proxy software, in <code>major.minor</code> format (for example, <code>1.37</code>).</p>",
+      "refs": {
+        "CreateProxyRequest$proxyVersion": "<p>The version of the proxy software, in <code>major.minor</code> format.</p>",
+        "CreateProxyResponse$proxyVersion": "<p>The version of the proxy software.</p>",
+        "GetProxyResponse$proxyVersion": "<p>The version of the proxy software.</p>",
+        "ProxyVersionSummary$version": "<p>The version of the proxy software, in <code>major.minor</code> format.</p>",
+        "UpdateProxyNetworkConfigurationResponse$proxyVersion": "<p>The version of the proxy software.</p>"
+      }
+    },
+    "ProxyVersionSummary": {
+      "base": "<p>Information about a proxy version.</p>",
+      "refs": {
+        "ProxyVersionSummaryList$member": null
+      }
+    },
+    "ProxyVersionSummaryList": {
+      "base": "<p>A list of proxy versions.</p>",
+      "refs": {
+        "ListProxyVersionsResponse$items": "<p>Information about the proxy versions.</p>"
+      }
+    },
+    "ProxyVpcConfiguration": {
+      "base": "<p>The VPC configuration for a proxy.</p>",
+      "refs": {
+        "ProxyNetworkConfiguration$vpcConfiguration": "<p>The VPC configuration for the proxy.</p>"
+      }
+    },
+    "ProxyVpcUserConfiguration": {
+      "base": "<p>The VPC configuration for a proxy, used by mutating operations.</p>",
+      "refs": {
+        "ProxyNetworkUserConfiguration$vpcConfiguration": "<p>The VPC configuration for the proxy.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The request references a resource that does not exist.</p>",
+      "refs": {}
+    },
+    "SecurityGroupDetails": {
+      "base": "<p>The details of a security group.</p>",
+      "refs": {
+        "SecurityGroupDetailsList$member": null
+      }
+    },
+    "SecurityGroupDetailsList": {
+      "base": "<p>A list of security group details.</p>",
+      "refs": {
+        "ProxyVpcConfiguration$securityGroups": "<p>The security groups used by the proxy.</p>",
+        "ProxyVpcUserConfiguration$securityGroups": "<p>The security groups used by the proxy.</p>",
+        "UpdateProxyVpcConfiguration$securityGroups": "<p>The updated security groups for the proxy.</p>"
+      }
+    },
+    "SecurityGroupId": {
+      "base": "<p>The ID of an EC2 security group.</p>",
+      "refs": {
+        "SecurityGroupDetails$securityGroupId": "<p>The ID of the security group.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request would cause a service quota to be exceeded.</p>",
+      "refs": {}
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": "<p>Description of the error</p>",
+        "CertificateAssociationStatusReason$code": "<p>The status reason code.</p>",
+        "CertificateAssociationStatusReason$message": "<p>The status reason message.</p>",
+        "ConfigurationMetadata$configFileHash": "<p>The SHA-256 hash of the configuration file.</p>",
+        "ConfigurationMetadata$configArchiveHash": "<p>The SHA-256 hash of the configuration archive. This value is absent when the proxy does not have a configuration archive.</p>",
+        "ConflictException$message": "<p>Description of the error</p>",
+        "CreateProxyResponse$dnsName": "<p>The DNS name of the proxy.</p>",
+        "GetProxyResponse$dnsName": "<p>The DNS name of the proxy.</p>",
+        "InternalServerException$message": "<p>Description of the error</p>",
+        "OperationNotPermittedException$message": "<p>Description of the error</p>",
+        "PriorRequestNotCompletedException$message": "<p>Description of the error</p>",
+        "ProxyStatusReason$code": "<p>The status reason code.</p>",
+        "ProxyStatusReason$target": "<p>The target resource of the status reason.</p>",
+        "ProxyStatusReason$message": "<p>The status reason message.</p>",
+        "ProxySummary$dnsName": "<p>The DNS name of the proxy.</p>",
+        "ProxySummary$vpcId": "<p>The ID of the VPC.</p>",
+        "ProxyVpcConfiguration$vpcId": "<p>The ID of the VPC.</p>",
+        "ResourceNotFoundException$message": "<p>Description of the error</p>",
+        "ServiceQuotaExceededException$message": "<p>Description of the error</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>The ID of the service quota that was exceeded.</p>",
+        "ServiceQuotaExceededException$resourceId": "<p>The ID of the resource that caused the service quota to be exceeded.</p>",
+        "ServiceQuotaExceededException$resourceType": "<p>The type of the resource that caused the service quota to be exceeded.</p>",
+        "ServiceQuotaExceededException$serviceCode": "<p>The code of the service associated with the exceeded quota.</p>",
+        "SubnetAndZone$zoneId": "<p>The ID of the Availability Zone.</p>",
+        "SubnetAndZone$zoneName": "<p>The name of the Availability Zone (for example, <code>us-east-1a</code>).</p>",
+        "ThrottlingException$message": "<p>Description of the error</p>",
+        "UpdateProxyNetworkConfigurationResponse$dnsName": "<p>The DNS name of the proxy.</p>"
+      }
+    },
+    "SubnetAndZone": {
+      "base": "<p>A subnet and its associated Availability Zone.</p>",
+      "refs": {
+        "SubnetAndZoneList$member": null
+      }
+    },
+    "SubnetAndZoneList": {
+      "base": "<p>A list of subnets and their associated Availability Zones.</p>",
+      "refs": {
+        "ProxyVpcConfiguration$availabilityZones": "<p>The Availability Zones used by the proxy.</p>"
+      }
+    },
+    "SubnetDetails": {
+      "base": "<p>The details of a subnet.</p>",
+      "refs": {
+        "SubnetDetailsList$member": null
+      }
+    },
+    "SubnetDetailsList": {
+      "base": "<p>A list of subnet details.</p>",
+      "refs": {
+        "ProxyVpcUserConfiguration$subnets": "<p>The subnets used by the proxy.</p>",
+        "UpdateProxyVpcConfiguration$subnets": "<p>The updated subnets for the proxy.</p>"
+      }
+    },
+    "SubnetId": {
+      "base": "<p>The ID of an EC2 subnet.</p>",
+      "refs": {
+        "SubnetAndZone$subnetId": "<p>The ID of the subnet.</p>",
+        "SubnetDetails$subnetId": "<p>The ID of the subnet.</p>"
+      }
+    },
+    "TagKey": {
+      "base": "<p>The key of a tag.</p>",
+      "refs": {
+        "TagKeyList$member": null,
+        "TagMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": "<p>A list of tag keys.</p>",
+      "refs": {
+        "UntagResourceInput$tagKeys": "<p>The tag keys of the tags to remove.</p>"
+      }
+    },
+    "TagMap": {
+      "base": "<p>The tags for a resource, as a map of tag keys to tag values.</p>",
+      "refs": {
+        "CreateProxyRequest$tags": "<p>The tags for the proxy.</p>",
+        "ListTagsForResourceOutput$tags": "<p>The tags for the resource.</p>",
+        "TagResourceInput$tags": "<p>The tags for the resource.</p>"
+      }
+    },
+    "TagResourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": "<p>The value of a tag.</p>",
+      "refs": {
+        "TagMap$value": null
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The limit on the number of requests per second was exceeded.</p>",
+      "refs": {}
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "CertificateAssociation$createdAt": "<p>The date and time that the association was created.</p>",
+        "ConfigurationMetadata$configFileLastUpdatedAt": "<p>The date and time that the configuration file was last updated.</p>",
+        "ConfigurationMetadata$configArchiveLastUpdatedAt": "<p>The date and time that the configuration archive was last updated.</p>",
+        "CreateProxyResponse$createdAt": "<p>The date and time that the proxy was created.</p>",
+        "GetProxyResponse$createdAt": "<p>The date and time that the proxy was created.</p>",
+        "GetProxyUpdateResponse$submittedAt": "<p>The date and time that the update was submitted.</p>",
+        "GetProxyUpdateResponse$validatedAt": "<p>The date and time that the update was first successfully applied to a proxy node. This value is absent until the update is valid.</p>",
+        "GetProxyUpdateResponse$completedAt": "<p>The date and time that the update's propagation status became <code>complete</code>, <code>failed</code>, or <code>cancelled</code>. This value is absent while the update is <code>in-progress</code> or <code>skipped</code>.</p>",
+        "ProxySummary$createdAt": "<p>The date and time that the proxy was created.</p>",
+        "ProxyUpdateSummary$submittedAt": "<p>The date and time that the update was submitted.</p>",
+        "ProxyUpdateSummary$validatedAt": "<p>The date and time that the update was first successfully applied to a proxy node. This value is absent until the update is valid.</p>",
+        "ProxyUpdateSummary$completedAt": "<p>The date and time that the update's propagation status became <code>complete</code>, <code>failed</code>, or <code>cancelled</code>. This value is absent while the update is <code>in-progress</code> or <code>skipped</code>.</p>",
+        "UpdateProxyNetworkConfigurationResponse$createdAt": "<p>The date and time that the proxy was created.</p>"
+      }
+    },
+    "UntagResourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProxyAttributesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProxyAttributesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProxyConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProxyConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProxyNetworkConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProxyNetworkConfigurationResponse": {
+      "base": "<p>Common Proxy details response mixin</p>",
+      "refs": {}
+    },
+    "UpdateProxyVpcConfiguration": {
+      "base": "<p>The updated VPC configuration for a proxy. You must provide at least one of <code>subnets</code> or <code>securityGroups</code>.</p>",
+      "refs": {
+        "UpdateProxyNetworkConfigurationRequest$vpcConfiguration": "<p>The updated VPC configuration for the proxy.</p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The input does not satisfy the constraints specified by an AWS service.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionMessage": {
+      "base": null,
+      "refs": {
+        "ValidationException$message": null
+      }
+    }
+  }
+}

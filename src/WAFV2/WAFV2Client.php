@@ -604,13 +604,13 @@ use Aws\AwsClient;
  * @method \Aws\Result listResourcesForWebACL(array $args = [])
  * @phpstan-method \Aws\Result listResourcesForWebACL(array{
  *     WebACLArn?: string,
- *     ResourceType?: 'AGENTCORE_GATEWAY'|'AMPLIFY'|'API_GATEWAY'|'APPLICATION_LOAD_BALANCER'|'APPSYNC'|'APP_RUNNER_SERVICE'|'COGNITO_USER_POOL'|'VERIFIED_ACCESS_INSTANCE',
+ *     ResourceType?: 'AGENTCORE_GATEWAY'|'AMPLIFY'|'API_GATEWAY'|'APPLICATION_LOAD_BALANCER'|'APPSYNC'|'APP_RUNNER_SERVICE'|'COGNITO_USER_POOL'|'ELB_PROXY'|'VERIFIED_ACCESS_INSTANCE',
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise listResourcesForWebACLAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise listResourcesForWebACLAsync(array{
  *     WebACLArn?: string,
- *     ResourceType?: 'AGENTCORE_GATEWAY'|'AMPLIFY'|'API_GATEWAY'|'APPLICATION_LOAD_BALANCER'|'APPSYNC'|'APP_RUNNER_SERVICE'|'COGNITO_USER_POOL'|'VERIFIED_ACCESS_INSTANCE',
+ *     ResourceType?: 'AGENTCORE_GATEWAY'|'AMPLIFY'|'API_GATEWAY'|'APPLICATION_LOAD_BALANCER'|'APPSYNC'|'APP_RUNNER_SERVICE'|'COGNITO_USER_POOL'|'ELB_PROXY'|'VERIFIED_ACCESS_INSTANCE',
  *     ...,
  * } $args = [])
  * @method \Aws\Result listRuleGroups(array $args = [])

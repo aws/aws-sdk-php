@@ -1,0 +1,711 @@
+{
+  "version": "1.0",
+  "examples": {
+    "AssociateCertificate": [
+      {
+        "input": {
+          "certificateIdentifier": "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012",
+          "proxyIdentifier": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef"
+        },
+        "output": {
+          "certificateAssociation": {
+            "certificateArn": "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012",
+            "createdAt": 1795195800,
+            "status": {
+              "code": "associate-in-progress",
+              "reasons": []
+            }
+          }
+        },
+        "description": "The following example associates the specified ACM certificate with the specified proxy.",
+        "id": "example-1",
+        "title": "To associate a certificate with a proxy"
+      }
+    ],
+    "CreateProxy": [
+      {
+        "input": {
+          "name": "my-proxy",
+          "type": "envoy",
+          "attributes": [
+            {
+              "key": "deletion_protection.enabled",
+              "value": "true"
+            }
+          ],
+          "configuration": {
+            "configurationFile": {
+              "configurationBytes": "c3RhdGljX3Jlc291cmNlczoge30K"
+            }
+          },
+          "networkConfiguration": {
+            "ipConfiguration": {
+              "ipAddressingConfiguration": {
+                "ipv4Addressability": "internet-facing",
+                "ipv6Addressability": "off"
+              }
+            },
+            "vpcConfiguration": {
+              "securityGroups": [
+                {
+                  "securityGroupId": "sg-903004f8"
+                }
+              ],
+              "subnets": [
+                {
+                  "subnetId": "subnet-8360a9e7"
+                },
+                {
+                  "subnetId": "subnet-b7d581c0"
+                }
+              ]
+            }
+          },
+          "proxyVersion": "1.40",
+          "roleArn": "arn:aws:iam::123456789012:role/my-proxy-role",
+          "tags": {
+            "Environment": "production"
+          }
+        },
+        "output": {
+          "name": "my-proxy",
+          "type": "envoy",
+          "arn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef",
+          "configurationMetadata": {
+            "configFileHash": "6b9dfd96fbb077f7e4cabcb5c1be57761b474afc18499d77b6bd49cfb03b3466",
+            "configFileLastUpdatedAt": 1795194000
+          },
+          "createdAt": 1795194000,
+          "dnsName": "my-proxy-1234567890.elb-proxy.us-east-1.on.aws",
+          "networkConfiguration": {
+            "ipConfiguration": {
+              "ipAddressingConfiguration": {
+                "ipv4Addressability": "internet-facing",
+                "ipv6Addressability": "off"
+              }
+            },
+            "vpcConfiguration": {
+              "availabilityZones": [
+                {
+                  "subnetId": "subnet-8360a9e7",
+                  "zoneId": "use1-az1",
+                  "zoneName": "us-east-1a"
+                },
+                {
+                  "subnetId": "subnet-b7d581c0",
+                  "zoneId": "use1-az2",
+                  "zoneName": "us-east-1b"
+                }
+              ],
+              "securityGroups": [
+                {
+                  "securityGroupId": "sg-903004f8"
+                }
+              ],
+              "vpcId": "vpc-1a2b3c4d"
+            }
+          },
+          "proxyVersion": "1.40",
+          "roleArn": "arn:aws:iam::123456789012:role/my-proxy-role",
+          "status": {
+            "code": "create-in-progress",
+            "reasons": []
+          }
+        },
+        "description": "The following example creates a proxy with the specified name, Envoy version, IAM role, and configuration file. The proxy is internet-facing over IPv4, runs in the specified subnets with the specified security group, and has deletion protection enabled.",
+        "id": "example-1",
+        "title": "To create a proxy"
+      }
+    ],
+    "DeleteProxy": [
+      {
+        "input": {
+          "proxyIdentifier": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef"
+        },
+        "output": {
+          "name": "my-proxy",
+          "arn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef",
+          "status": {
+            "code": "delete-in-progress",
+            "reasons": []
+          }
+        },
+        "description": "The following example deletes the specified proxy. You must turn off deletion protection before you can delete a proxy.",
+        "id": "example-1",
+        "title": "To delete a proxy"
+      }
+    ],
+    "DisassociateCertificate": [
+      {
+        "input": {
+          "certificateIdentifier": "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012",
+          "proxyIdentifier": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef"
+        },
+        "output": {
+          "certificateAssociation": {
+            "certificateArn": "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012",
+            "createdAt": 1795195800,
+            "status": {
+              "code": "disassociate-in-progress",
+              "reasons": []
+            }
+          }
+        },
+        "description": "The following example disassociates the specified ACM certificate from the specified proxy.",
+        "id": "example-1",
+        "title": "To disassociate a certificate from a proxy"
+      }
+    ],
+    "GetProxy": [
+      {
+        "input": {
+          "proxyIdentifier": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef"
+        },
+        "output": {
+          "name": "my-proxy",
+          "type": "envoy",
+          "arn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef",
+          "configurationMetadata": {
+            "configFileHash": "6b9dfd96fbb077f7e4cabcb5c1be57761b474afc18499d77b6bd49cfb03b3466",
+            "configFileLastUpdatedAt": 1795194000
+          },
+          "createdAt": 1795194000,
+          "dnsName": "my-proxy-1234567890.elb-proxy.us-east-1.on.aws",
+          "networkConfiguration": {
+            "ipConfiguration": {
+              "ipAddressingConfiguration": {
+                "ipv4Addressability": "internet-facing",
+                "ipv6Addressability": "off"
+              }
+            },
+            "vpcConfiguration": {
+              "availabilityZones": [
+                {
+                  "subnetId": "subnet-8360a9e7",
+                  "zoneId": "use1-az1",
+                  "zoneName": "us-east-1a"
+                },
+                {
+                  "subnetId": "subnet-b7d581c0",
+                  "zoneId": "use1-az2",
+                  "zoneName": "us-east-1b"
+                }
+              ],
+              "securityGroups": [
+                {
+                  "securityGroupId": "sg-903004f8"
+                }
+              ],
+              "vpcId": "vpc-1a2b3c4d"
+            }
+          },
+          "proxyVersion": "1.40",
+          "roleArn": "arn:aws:iam::123456789012:role/my-proxy-role",
+          "status": {
+            "code": "active",
+            "reasons": []
+          }
+        },
+        "description": "The following example gets information about the specified proxy.",
+        "id": "example-1",
+        "title": "To get information about a proxy"
+      }
+    ],
+    "GetProxyAttributes": [
+      {
+        "input": {
+          "proxyIdentifier": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef"
+        },
+        "output": {
+          "attributes": [
+            {
+              "key": "ddos_protection.syn_cookie.mode",
+              "value": "reactive",
+              "defaultValue": "reactive"
+            },
+            {
+              "key": "deletion_protection.enabled",
+              "value": "true",
+              "defaultValue": "false"
+            },
+            {
+              "key": "envoy.component_log_level",
+              "value": "",
+              "defaultValue": ""
+            },
+            {
+              "key": "envoy.log_level",
+              "value": "warn",
+              "defaultValue": "warn"
+            },
+            {
+              "key": "waf.fail_open.enabled",
+              "value": "false",
+              "defaultValue": "false"
+            },
+            {
+              "key": "waf.web_acl_arn",
+              "value": ""
+            }
+          ]
+        },
+        "description": "The following example gets the attributes for the specified proxy. The output includes the default value of each attribute that you can update.",
+        "id": "example-1",
+        "title": "To get the attributes for a proxy"
+      }
+    ],
+    "GetProxyConfigurationContents": [
+      {
+        "input": {
+          "includeConfigArchive": false,
+          "includeConfigFile": true,
+          "proxyIdentifier": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef"
+        },
+        "output": {
+          "configurationFileContents": "c3RhdGljX3Jlc291cmNlczoKICBsaXN0ZW5lcnM6IFtdCg==",
+          "configurationMetadata": {
+            "configFileHash": "29a5eb3bdf714ff29cc52e1a3723894b9f746416e1e541fddfad0a3963aed98c",
+            "configFileLastUpdatedAt": 1795197600
+          }
+        },
+        "description": "The following example gets the configuration file for the specified proxy. The configuration archive isn't included.",
+        "id": "example-1",
+        "title": "To get the configuration for a proxy"
+      }
+    ],
+    "GetProxyUpdate": [
+      {
+        "input": {
+          "proxyIdentifier": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef",
+          "updateIdentifier": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111"
+        },
+        "output": {
+          "completedAt": 1795197720,
+          "details": {
+            "configuration": {
+              "newConfigurationMetadata": {
+                "configFileHash": "29a5eb3bdf714ff29cc52e1a3723894b9f746416e1e541fddfad0a3963aed98c",
+                "configFileLastUpdatedAt": 1795197600
+              }
+            }
+          },
+          "proxyArn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef",
+          "state": {
+            "propagationStatus": "complete",
+            "validationStatus": "valid"
+          },
+          "submittedAt": 1795197600,
+          "updateId": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+          "validatedAt": 1795197660
+        },
+        "description": "The following example gets information about the specified update for the specified proxy. The configuration is valid and was applied to all proxy nodes.",
+        "id": "example-1",
+        "title": "To get information about a proxy update"
+      }
+    ],
+    "ListCertificateAssociations": [
+      {
+        "input": {
+          "proxyIdentifier": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef"
+        },
+        "output": {
+          "items": [
+            {
+              "certificateArn": "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012",
+              "createdAt": 1795195800,
+              "status": {
+                "code": "active",
+                "reasons": []
+              }
+            }
+          ]
+        },
+        "description": "The following example lists the ACM certificates associated with the specified proxy.",
+        "id": "example-1",
+        "title": "To list the certificate associations for a proxy"
+      }
+    ],
+    "ListProxies": [
+      {
+        "input": {},
+        "output": {
+          "items": [
+            {
+              "name": "my-proxy",
+              "type": "envoy",
+              "arn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef",
+              "createdAt": 1795194000,
+              "dnsName": "my-proxy-1234567890.elb-proxy.us-east-1.on.aws",
+              "status": {
+                "code": "active",
+                "reasons": []
+              },
+              "vpcId": "vpc-1a2b3c4d"
+            }
+          ]
+        },
+        "description": "The following example lists the proxies owned by the calling account.",
+        "id": "example-1",
+        "title": "To list your proxies"
+      }
+    ],
+    "ListProxyUpdates": [
+      {
+        "input": {
+          "proxyIdentifier": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef"
+        },
+        "output": {
+          "items": [
+            {
+              "type": "update-proxy-configuration",
+              "completedAt": 1795197720,
+              "propagationStatus": "complete",
+              "submittedAt": 1795197600,
+              "updateId": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+              "validatedAt": 1795197660,
+              "validationStatus": "valid"
+            }
+          ]
+        },
+        "description": "The following example lists the updates for the specified proxy.",
+        "id": "example-1",
+        "title": "To list the updates for a proxy"
+      }
+    ],
+    "ListProxyVersions": [
+      {
+        "input": {
+          "type": "envoy"
+        },
+        "output": {
+          "items": [
+            {
+              "version": "1.40",
+              "type": "envoy"
+            },
+            {
+              "version": "1.41",
+              "type": "envoy"
+            }
+          ]
+        },
+        "description": "The following example lists the Envoy versions that you can specify when you create a proxy or update its version.",
+        "id": "example-1",
+        "title": "To list the proxy versions"
+      }
+    ],
+    "ListTagsForResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef"
+        },
+        "output": {
+          "tags": {
+            "Environment": "production",
+            "Team": "networking"
+          }
+        },
+        "description": "The following example lists the tags for the specified proxy.",
+        "id": "example-1",
+        "title": "To list the tags for a proxy"
+      }
+    ],
+    "TagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef",
+          "tags": {
+            "Environment": "production",
+            "Team": "networking"
+          }
+        },
+        "output": {},
+        "description": "The following example adds the specified tags to the specified proxy.",
+        "id": "example-1",
+        "title": "To add tags to a proxy"
+      }
+    ],
+    "UntagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef",
+          "tagKeys": [
+            "Team"
+          ]
+        },
+        "output": {},
+        "description": "The following example removes the specified tags from the specified proxy.",
+        "id": "example-1",
+        "title": "To remove tags from a proxy"
+      }
+    ],
+    "UpdateProxyAttributes": [
+      {
+        "input": {
+          "attributes": [
+            {
+              "key": "deletion_protection.enabled",
+              "value": "true"
+            }
+          ],
+          "proxyIdentifier": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef"
+        },
+        "output": {
+          "attributes": [
+            {
+              "key": "ddos_protection.syn_cookie.mode",
+              "value": "reactive",
+              "defaultValue": "reactive"
+            },
+            {
+              "key": "deletion_protection.enabled",
+              "value": "true",
+              "defaultValue": "false"
+            },
+            {
+              "key": "envoy.component_log_level",
+              "value": "",
+              "defaultValue": ""
+            },
+            {
+              "key": "envoy.log_level",
+              "value": "warn",
+              "defaultValue": "warn"
+            },
+            {
+              "key": "waf.fail_open.enabled",
+              "value": "false",
+              "defaultValue": "false"
+            },
+            {
+              "key": "waf.web_acl_arn",
+              "value": ""
+            }
+          ]
+        },
+        "description": "The following example enables deletion protection for the specified proxy.",
+        "id": "example-1",
+        "title": "To enable deletion protection"
+      },
+      {
+        "input": {
+          "attributes": [
+            {
+              "key": "envoy.log_level",
+              "value": "debug"
+            }
+          ],
+          "proxyIdentifier": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef"
+        },
+        "output": {
+          "attributes": [
+            {
+              "key": "ddos_protection.syn_cookie.mode",
+              "value": "reactive",
+              "defaultValue": "reactive"
+            },
+            {
+              "key": "deletion_protection.enabled",
+              "value": "false",
+              "defaultValue": "false"
+            },
+            {
+              "key": "envoy.component_log_level",
+              "value": "",
+              "defaultValue": ""
+            },
+            {
+              "key": "envoy.log_level",
+              "value": "debug",
+              "defaultValue": "warn"
+            },
+            {
+              "key": "waf.fail_open.enabled",
+              "value": "false",
+              "defaultValue": "false"
+            },
+            {
+              "key": "waf.web_acl_arn",
+              "value": ""
+            }
+          ]
+        },
+        "description": "The following example changes the Envoy log level for the specified proxy to debug.",
+        "id": "example-2",
+        "title": "To change the Envoy log level"
+      },
+      {
+        "input": {
+          "attributes": [
+            {
+              "key": "envoy.component_log_level",
+              "value": "http:debug,router:debug"
+            }
+          ],
+          "proxyIdentifier": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef"
+        },
+        "output": {
+          "attributes": [
+            {
+              "key": "ddos_protection.syn_cookie.mode",
+              "value": "reactive",
+              "defaultValue": "reactive"
+            },
+            {
+              "key": "deletion_protection.enabled",
+              "value": "false",
+              "defaultValue": "false"
+            },
+            {
+              "key": "envoy.component_log_level",
+              "value": "http:debug,router:debug",
+              "defaultValue": ""
+            },
+            {
+              "key": "envoy.log_level",
+              "value": "warn",
+              "defaultValue": "warn"
+            },
+            {
+              "key": "waf.fail_open.enabled",
+              "value": "false",
+              "defaultValue": "false"
+            },
+            {
+              "key": "waf.web_acl_arn",
+              "value": ""
+            }
+          ]
+        },
+        "description": "The following example changes the log level for the http and router Envoy components on the specified proxy to debug. Components that aren't specified use the log level set by envoy.log_level.",
+        "id": "example-3",
+        "title": "To change the log level for specific Envoy components"
+      },
+      {
+        "input": {
+          "attributes": [
+            {
+              "key": "waf.fail_open.enabled",
+              "value": "true"
+            }
+          ],
+          "proxyIdentifier": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef"
+        },
+        "output": {
+          "attributes": [
+            {
+              "key": "ddos_protection.syn_cookie.mode",
+              "value": "reactive",
+              "defaultValue": "reactive"
+            },
+            {
+              "key": "deletion_protection.enabled",
+              "value": "false",
+              "defaultValue": "false"
+            },
+            {
+              "key": "envoy.component_log_level",
+              "value": "",
+              "defaultValue": ""
+            },
+            {
+              "key": "envoy.log_level",
+              "value": "warn",
+              "defaultValue": "warn"
+            },
+            {
+              "key": "waf.fail_open.enabled",
+              "value": "true",
+              "defaultValue": "false"
+            },
+            {
+              "key": "waf.web_acl_arn",
+              "value": ""
+            }
+          ]
+        },
+        "description": "The following example enables AWS WAF fail open for the specified proxy.",
+        "id": "example-4",
+        "title": "To enable AWS WAF fail open"
+      }
+    ],
+    "UpdateProxyConfiguration": [
+      {
+        "input": {
+          "configurationFile": {
+            "configurationBytes": "c3RhdGljX3Jlc291cmNlczoKICBsaXN0ZW5lcnM6IFtdCg=="
+          },
+          "proxyIdentifier": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef"
+        },
+        "output": {
+          "configurationMetadata": {
+            "configFileHash": "29a5eb3bdf714ff29cc52e1a3723894b9f746416e1e541fddfad0a3963aed98c",
+            "configFileLastUpdatedAt": 1795197600
+          },
+          "updateId": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111"
+        },
+        "description": "The following example replaces the configuration file for the specified proxy. You can use the update ID in the output to track the progress of the update.",
+        "id": "example-1",
+        "title": "To update the configuration for a proxy"
+      }
+    ],
+    "UpdateProxyNetworkConfiguration": [
+      {
+        "input": {
+          "proxyIdentifier": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef",
+          "vpcConfiguration": {
+            "securityGroups": [
+              {
+                "securityGroupId": "sg-1a2b3c4d"
+              }
+            ]
+          }
+        },
+        "output": {
+          "name": "my-proxy",
+          "type": "envoy",
+          "arn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:proxy/my-proxy:0123456789abcdef",
+          "createdAt": 1795194000,
+          "dnsName": "my-proxy-1234567890.elb-proxy.us-east-1.on.aws",
+          "networkConfiguration": {
+            "ipConfiguration": {
+              "ipAddressingConfiguration": {
+                "ipv4Addressability": "internet-facing",
+                "ipv6Addressability": "off"
+              }
+            },
+            "vpcConfiguration": {
+              "availabilityZones": [
+                {
+                  "subnetId": "subnet-8360a9e7",
+                  "zoneId": "use1-az1",
+                  "zoneName": "us-east-1a"
+                },
+                {
+                  "subnetId": "subnet-b7d581c0",
+                  "zoneId": "use1-az2",
+                  "zoneName": "us-east-1b"
+                }
+              ],
+              "securityGroups": [
+                {
+                  "securityGroupId": "sg-1a2b3c4d"
+                }
+              ],
+              "vpcId": "vpc-1a2b3c4d"
+            }
+          },
+          "proxyVersion": "1.40",
+          "roleArn": "arn:aws:iam::123456789012:role/my-proxy-role",
+          "status": {
+            "code": "active",
+            "reasons": []
+          }
+        },
+        "description": "The following example replaces the security groups for the specified proxy. The subnets don't change.",
+        "id": "example-1",
+        "title": "To update the network configuration for a proxy"
+      }
+    ]
+  }
+}

@@ -1,0 +1,3 @@
+<?php
+// This file was auto-generated from sdk-root/src/data/elb-proxy/2026-11-20/paginators-1.json
+return [ 'pagination' => [ 'ListCertificateAssociations' => [ 'input_token' => 'nextToken', 'output_token' => 'nextToken', 'limit_key' => 'maxResults', 'result_key' => 'items', ], 'ListProxies' => [ 'input_token' => 'nextToken', 'output_token' => 'nextToken', 'limit_key' => 'maxResults', 'result_key' => 'items', ], 'ListProxyUpdates' => [ 'input_token' => 'nextToken', 'output_token' => 'nextToken', 'limit_key' => 'maxResults', 'result_key' => 'items', ], 'ListProxyVersions' => [ 'input_token' => 'nextToken', 'output_token' => 'nextToken', 'limit_key' => 'maxResults', 'result_key' => 'items', ], ],];

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ELBProxy` - Introducing Elastic Load Balancing for Envoy. Run your existing Envoy configurations with AWS integrations, managed scaling, and automatic patching.
+* `Aws\WAFV2` - AWS WAF added support for associating AWS WAF web ACLs with Elastic Load Balancing proxies. You can now use AssociateWebACL, DisassociateWebACL, GetWebACLForResource, and ListResourcesForWebACL with the ELB PROXY resource type to protect your proxies with AWS WAF
+
 ## 3.407.3 - 2026-11-24
 
 * `Aws\Credentials` - `EcsCredentialProvider` and `InstanceProfileProvider` now set the original error as the previous exception of the `CredentialsException` they throw.

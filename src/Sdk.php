@@ -302,6 +302,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionEKS(array $args = [])
  * @method \Aws\EKSAuth\EKSAuthClient createEKSAuth(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionEKSAuth(array $args = [])
+ * @method \Aws\ELBProxy\ELBProxyClient createELBProxy(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionELBProxy(array $args = [])
  * @method \Aws\EMRContainers\EMRContainersClient createEMRContainers(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionEMRContainers(array $args = [])
  * @method \Aws\EMRServerless\EMRServerlessClient createEMRServerless(array $args = [])
