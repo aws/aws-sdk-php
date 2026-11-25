@@ -40,8 +40,7 @@ final class AwsCredentialProviderRegistry
     /**
      * Create a provider registry.
      *
-     * @param list<ChainIdentityProviderInterface<AwsCredentialsIdentityInterface>>
-     *     $providers
+     * @param list<ChainIdentityProviderInterface<AwsCredentialsIdentityInterface>> $providers
      * @param list<AwsCredentialSource> $claimedSlots
      */
     public function __construct(
@@ -62,8 +61,7 @@ final class AwsCredentialProviderRegistry
     /**
      * Return a registry extended with one provider.
      *
-     * @param ChainIdentityProviderInterface<AwsCredentialsIdentityInterface>
-     *     $provider
+     * @param ChainIdentityProviderInterface<AwsCredentialsIdentityInterface> $provider
      * @param list<AwsCredentialSource> $claimedSlots
      */
     public function withProvider(
@@ -133,8 +131,7 @@ final class AwsCredentialProviderRegistry
     }
 
     /**
-     * @param ChainIdentityProviderInterface<AwsCredentialsIdentityInterface>
-     *     $provider
+     * @param ChainIdentityProviderInterface<AwsCredentialsIdentityInterface> $provider
      * @return list<AwsCredentialSource>
      */
     private static function inferClaimedSlots(

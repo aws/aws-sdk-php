@@ -53,8 +53,8 @@ final class InstanceProfileProvider implements
     /**
      * Create an instance-profile credential provider.
      *
-     * @param null|callable(array<string, mixed>, ?AwsProfile):object
-     *     $clientFactory Create IMDS clients for resolved config.
+     * @param null|callable(array<string, mixed>, ?AwsProfile):object $clientFactory
+     *     Create IMDS clients for resolved config.
      */
     public function __construct(
         ?callable $clientFactory = null,

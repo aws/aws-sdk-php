@@ -125,8 +125,8 @@ abstract class AbstractAwsClientConfig extends AbstractClientConfig
      * @param string|null $region AWS region (e.g. "us-east-1"). When null,
      *     the constructor resolves the region from env and the selected
      *     shared-config profile.
-     * @param IdentityResolverInterface|AwsCredentialsIdentityInterface|null
-     *     $credentials Either a credential provider (chained resolution) or a
+     * @param IdentityResolverInterface|AwsCredentialsIdentityInterface|null $credentials
+     *     Either a credential provider (chained resolution) or a
      *     raw {@see AwsCredentialsIdentityInterface} value. Null resolves the
      *     standard AWS credential chain from the snapshotted shared config
      *     context. The raw form is wrapped in a {@see StaticCredentialProvider}

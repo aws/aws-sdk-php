@@ -33,8 +33,8 @@ final class AwsDynamicClientConfig extends AbstractAwsClientConfig
 {
     /**
      * @param InterceptorChain $interceptors Client interceptors.
-     * @param list<\Smithy\Auth\AuthSchemeInterface>
-     *     $supportedAuthSchemes Available authentication schemes.
+     * @param list<\Smithy\Auth\AuthSchemeInterface> $supportedAuthSchemes
+     *     Available authentication schemes.
      * @param list<string>|null $authSchemePreference Auth scheme names in
      *     customer-preferred order.
      * @param TransportInterface|null $transport Transport implementation for
