@@ -16,7 +16,9 @@ use Smithy\Core\Exception\ErrorFault;
 use Smithy\Core\Serde\Schema;
 use Smithy\Core\Shape\OperationInterface;
 use Smithy\Core\Shape\ShapeType;
+use Smithy\Core\Transport\TransportResponseInterface;
 use Smithy\Http\Message\HttpTransportResponse;
+use Smithy\Http\Message\StringResponseStream;
 use Smithy\Protocol\Aws\AwsErrorInterface;
 use Smithy\Protocol\Aws\AwsExtendedRequestIdInterface;
 
@@ -25,11 +27,16 @@ use Smithy\Protocol\Aws\AwsExtendedRequestIdInterface;
  *
  * S3 can answer with HTTP 200 OK while the XML payload is an error envelope
  * whose root element is named `Error`. This interceptor runs in
- * `readBeforeDeserialization`: on a 200 response whose body is an XML
+ * `modifyBeforeDeserialization`: on a 200 response whose body is an XML
  * document with an `Error` root element, it deserializes that element into an
  * AWS error and throws it, so the pipeline treats the attempt as a failure
- * and the retry strategy classifies it. On any other response it returns and
- * lets normal deserialization continue.
+ * and the retry strategy classifies it. On any other response it lets normal
+ * deserialization continue.
+ *
+ * The transport can stream a chunked or large body as a non-seekable stream
+ * that can be read once. The interceptor reads the body once and hands
+ * deserialization a buffered copy of the same bytes, so the deserializer
+ * still sees the full document.
  *
  * The check applies only to operations whose response carries a structured
  * XML body. It skips an operation whose output has a streaming response (an
@@ -70,30 +77,37 @@ final class S3Http200ErrorInterceptor extends AbstractInterceptor
     /**
      * @inheritDoc
      *
-     * @throws \Throwable The error deserialized from a 200-with-error body.
-     *
-     * @return void
+     * @throws \Throwable The error deserialized from a 200-with-error body,
+     *     or the transport failure raised while the body is read.
      */
-    public function readBeforeDeserialization(ResponseContext $ctx): void
+    public function modifyBeforeDeserialization(
+        ResponseContext $ctx
+    ): TransportResponseInterface
     {
         if (!$ctx->response instanceof HttpTransportResponse) {
-            return;
+            return $ctx->response;
         }
         $response = $ctx->response->response;
         if ($response->getStatusCode() !== self::HTTP_OK
             || $ctx->operation->getOutputStreamMember() !== null
             || self::hasUnstructuredPayload($ctx->operation)
         ) {
-            return;
+            return $ctx->response;
         }
 
-        $error = self::errorFromBody(
-            $ctx->operation,
-            (string) $response->getBody()
-        );
+        $body = $response->getBody();
+        if ($body->isSeekable()) {
+            $body->rewind();
+        }
+        $contents = $body->getContents();
+        $error = self::errorFromBody($ctx->operation, $contents);
         if ($error !== null) {
             throw $error;
         }
+
+        return $ctx->response->withResponse(
+            $response->withBody(new StringResponseStream($contents))
+        );
     }
 
     /**
