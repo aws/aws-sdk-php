@@ -169,8 +169,8 @@ final class Partitions
     }
 
     /**
-     * Resolve a region name to its partition record. Returns `null` when
-     * the region does not match any known partition.
+     * Resolve a region name to its partition record. Regions that match no
+     * known partition resolve to the default `aws` partition.
      *
      * @return array{
      *     name: string,
@@ -179,9 +179,9 @@ final class Partitions
      *     supportsFIPS: bool,
      *     supportsDualStack: bool,
      *     implicitGlobalRegion: string,
-     * }|null
+     * }
      */
-    public static function resolve(string $region): ?array
+    public static function resolve(string $region): array
     {
         // Exact-region lookup uses a flat map built once. Hits every
         // enumerated region (which is nearly every real-world call) in

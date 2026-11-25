@@ -365,7 +365,7 @@ class AwsDynamicClient extends DynamicClient implements AwsClientInterface
         ?WaiterConfig $config = null
     ): Waiter
     {
-        $overrides = $config?->requestOverrides
+        $overrides = $config->requestOverrides
             ?? RequestOverrideConfig::fromArray([]);
 
         return parent::createWaiter(

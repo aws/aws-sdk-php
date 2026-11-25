@@ -67,7 +67,7 @@ final class InstanceProfileClient
     ) {
         $getEnv ??= static function (string $name): ?string {
             $value = $_ENV[$name] ?? getenv($name);
-            if ($value === false || $value === null || $value === '') {
+            if ($value === false || $value === '') {
                 return null;
             }
 
@@ -243,7 +243,7 @@ final class InstanceProfileClient
             throw new \InvalidArgumentException('IMDS endpoint must include a URI scheme');
         }
 
-        $port = isset($options['port']) && $options['port'] !== null
+        $port = isset($options['port'])
             ? (int) $options['port']
             : (isset($parts['port']) ? (int) $parts['port'] : null);
 

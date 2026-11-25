@@ -415,7 +415,7 @@ final class InstanceProfileProvider implements
     private static function readEnv(string $name): ?string
     {
         $value = $_ENV[$name] ?? getenv($name);
-        if ($value === false || $value === null || $value === '') {
+        if ($value === false || $value === '') {
             return null;
         }
 

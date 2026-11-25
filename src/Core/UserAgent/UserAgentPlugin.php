@@ -232,8 +232,7 @@ final class UserAgentPlugin extends AbstractPlugin
         }
 
         if ($package === self::ROOT_PACKAGE && $version === null) {
-            $version = InstalledVersions::getRootPackage()['pretty_version']
-                ?? null;
+            $version = InstalledVersions::getRootPackage()['pretty_version'];
         }
 
         return self::$packageVersions[$package] = $version;

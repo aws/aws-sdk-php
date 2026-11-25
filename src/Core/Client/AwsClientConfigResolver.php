@@ -572,18 +572,13 @@ final class AwsClientConfigResolver
     private function snapshotEnv(): array
     {
         $resolved = [];
-        $system = getenv();
-        if (is_array($system)) {
-            foreach ($system as $name => $value) {
-                if (!is_string($name)
-                    || !is_string($value)
-                    || $value === ''
-                ) {
-                    continue;
-                }
-
-                $resolved[$name] = $value;
+        foreach (getenv() as $name => $value) {
+            if ($value === '') {
+                continue;
             }
+
+            // PHP turns numeric variable names into int keys.
+            $resolved[(string) $name] = $value;
         }
 
         foreach ($_ENV as $name => $value) {
