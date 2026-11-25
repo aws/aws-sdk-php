@@ -281,7 +281,12 @@ final class InstanceProfileClient
 
         return static function (int $attempt) use ($backoff): void {
             $suspension = Revolt::getSuspension();
-            Revolt::delay($backoff, static fn (): mixed => $suspension->resume());
+            Revolt::delay(
+                $backoff,
+                static function () use ($suspension): void {
+                    $suspension->resume();
+                },
+            );
             $suspension->suspend();
         };
     }
@@ -295,7 +300,12 @@ final class InstanceProfileClient
 
         $delay = 0.1 * (2 ** $attempt);
         $suspension = Revolt::getSuspension();
-        Revolt::delay($delay, static fn (): mixed => $suspension->resume());
+        Revolt::delay(
+            $delay,
+            static function () use ($suspension): void {
+                $suspension->resume();
+            },
+        );
         $suspension->suspend();
     }
 

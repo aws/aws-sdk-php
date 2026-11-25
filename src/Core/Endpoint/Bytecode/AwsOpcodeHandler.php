@@ -41,6 +41,10 @@ use Smithy\Client\Endpoint\Bytecode\RulesEvaluationException;
  */
 final class AwsOpcodeHandler implements OpcodeHandlerInterface
 {
+    /**
+     * @param array<int, mixed> $stack Interpreter stack. Slots are
+     *     overwritten in place by offset, so the array is not kept as a list.
+     */
     public function handle(
         int $op,
         array $code,
