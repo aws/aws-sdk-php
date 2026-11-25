@@ -12,6 +12,6 @@ namespace Aws\Tests\Core\Exception\Utils;
 use Aws\Core\Exception\AwsException;
 
 /**
- * Service base exception that keeps the AwsException constructor.
+ * Test fixture: a subclass that keeps the AwsException constructor.
  */
 class ServiceBaseException extends AwsException {}

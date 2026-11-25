@@ -63,11 +63,10 @@ class AwsException extends ApiException implements AwsErrorInterface
     }
 
     /**
-     * Create an error without modeled members from response metadata.
+     * Create an AWS error without modeled members from response metadata.
      *
-     * Call this on classes that keep this constructor, such as the generated
-     * service base exceptions. Modeled errors take their members from
-     * `fromMembers()` and receive metadata through `setAwsErrorMetadata()`.
+     * Each generated service base exception declares this factory again, so
+     * unmodeled errors keep the service type.
      */
     public static function fromAwsError(
         string $message,
@@ -76,10 +75,9 @@ class AwsException extends ApiException implements AwsErrorInterface
         ?string $awsErrorCode,
         ?string $requestId,
         ?int $httpStatusCode
-    ): static
+    ): self
     {
-        // @phpstan-ignore new.static
-        return new static($message, $fault, $awsErrorCode, $requestId, $httpStatusCode, $previous);
+        return new self($message, $fault, $awsErrorCode, $requestId, $httpStatusCode, $previous);
     }
 
     public function setAwsErrorMetadata(

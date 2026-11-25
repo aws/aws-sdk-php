@@ -38,7 +38,7 @@ final class AwsExceptionTest extends TestCase
         $this->assertSame($previous, $error->getPrevious());
     }
 
-    public function testFromAwsErrorBuildsCalledSubclass(): void
+    public function testFromAwsErrorOnSubclassBuildsAwsException(): void
     {
         $error = ServiceBaseException::fromAwsError(
             'denied',
@@ -49,7 +49,7 @@ final class AwsExceptionTest extends TestCase
             403
         );
 
-        $this->assertSame(ServiceBaseException::class, $error::class);
+        $this->assertSame(AwsException::class, $error::class);
         $this->assertSame('denied', $error->getMessage());
         $this->assertSame(ErrorFault::Client, $error->fault);
         $this->assertSame('AccessDenied', $error->getAwsErrorCode());

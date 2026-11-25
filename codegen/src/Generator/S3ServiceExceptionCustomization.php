@@ -90,11 +90,10 @@ PHP;
             $importCount = 0;
             $customized = \preg_replace_callback(
                 '/^(class ' . \preg_quote($shortName, '/') . ' extends \S+)'
-                    . '(?: \{\}|\n\{\})$/m',
+                    . '(?: \{\}$|\n\{\}$|\n\{\n)/m',
                 static fn(array $match): string => $match[1]
                     . ' implements AwsExtendedRequestIdInterface'
-                    // A CRLF checkout must not leak into generated code.
-                    . \str_replace("\r\n", "\n", self::BODY),
+                    . self::body(\str_ends_with($match[0], "{\n")),
                 $file->content,
                 1,
                 $classCount
@@ -122,6 +121,18 @@ PHP;
         }
 
         return $files;
+    }
+
+    /**
+     * Return the class body; an open body keeps the generated members after
+     * the accessors.
+     */
+    private static function body(bool $open): string
+    {
+        // A CRLF checkout must not leak into generated code.
+        $body = \str_replace("\r\n", "\n", self::BODY);
+
+        return $open ? \substr($body, 0, -1) . "\n" : $body;
     }
 
     private function isS3(): bool

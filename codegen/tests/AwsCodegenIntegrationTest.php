@@ -47,6 +47,36 @@ final class AwsCodegenIntegrationTest extends TestCase
         );
     }
 
+    public function testGivesTheServiceExceptionAnErrorFactory(): void
+    {
+        $files = $this->generate(new AwsCodegenIntegration(), $this->model());
+        $content = $this->content($files, 'ExampleException.php');
+
+        self::assertStringContainsString(
+            "class ExampleException extends AwsException\n{\n",
+            $content
+        );
+        self::assertStringContainsString(
+            "    ): self\n    {\n        return new self(\n"
+                . "            message: \$message,\n",
+            $content
+        );
+    }
+
+    public function testSkipsTheErrorFactoryForANonAwsBase(): void
+    {
+        $settings = new CodegenSettings(
+            namespace: 'Aws\\Generated\\Example',
+            outputDir: '/tmp/aws-codegen-test',
+            baseServiceException: \RuntimeException::class
+        );
+
+        self::assertSame(
+            [],
+            (new AwsCodegenIntegration())->serviceExceptionMembers($settings)
+        );
+    }
+
     public function testSkipsTheClientConfigWhenDisabled(): void
     {
         $files = $this->generate(

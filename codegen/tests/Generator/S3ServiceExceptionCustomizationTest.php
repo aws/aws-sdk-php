@@ -79,6 +79,29 @@ final class S3ServiceExceptionCustomizationTest extends TestCase
         );
     }
 
+    public function testKeepsExistingMembersAfterTheAccessors(): void
+    {
+        $content = $this->customize(
+            $this->exceptionSource(
+                'S3Exception',
+                "\n{\n    public const EXISTING = true;\n}"
+            )
+        );
+
+        self::assertStringContainsString(
+            'class S3Exception extends AwsException implements '
+                . "AwsExtendedRequestIdInterface\n{\n"
+                . "    private ?string \$extendedRequestId = null;\n",
+            $content
+        );
+        self::assertStringContainsString(
+            "        \$this->extendedRequestId = \$extendedRequestId;\n"
+                . "    }\n\n"
+                . "    public const EXISTING = true;\n}\n",
+            $content
+        );
+    }
+
     public function testLeavesOtherGeneratedFilesUnchanged(): void
     {
         $settings = $this->settings();
