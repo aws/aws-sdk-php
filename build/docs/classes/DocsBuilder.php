@@ -274,6 +274,10 @@ object to call the described operations. This documentation is specific to the
 {$service->version} API version of the service.
 EOT;
         $html->elem('p', null, $desc);
+        if ($serviceDocs = $service->docs->getServiceDocs()) {
+            $html->elem('h2', null, 'Service Description');
+            $html->elem('div', 'service-description', $serviceDocs);
+        }
         $html->elem('h2', null, 'Operation Summary');
         $desc = <<<EOT
 Each of the following operations can be created from a client using
