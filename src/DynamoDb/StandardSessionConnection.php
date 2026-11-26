@@ -25,22 +25,40 @@ class StandardSessionConnection implements SessionConnectionInterface
 
     public function read($id)
     {
-        $item = [];
         try {
-            // Execute a GetItem command to retrieve the item.
-            $result = $this->client->getItem([
-                 'TableName'      => $this->getTableName(),
-                 'Key'            => $this->formatKey($id),
-                 'ConsistentRead' => $this->isConsistentRead(),
-             ]);
-
-            // Get the item values
-            $result = isset($result['Item']) ? $result['Item'] : [];
-            foreach ($result as $key => $value) {
-                $item[$key] = current($value);
-            }
+            return $this->readWithoutLock($id);
         } catch (DynamoDbException $e) {
             // Could not retrieve item, so return nothing.
+            return [];
+        }
+    }
+
+    /**
+     * Retrieve the session item with a GetItem request. Unlike read() on the
+     * locking connection, this never acquires the session lock, so it can be
+     * used to check whether a session exists.
+     *
+     * @param string    $id             Session ID.
+     * @param bool|null $consistentRead Overrides the consistent_read option.
+     *
+     * @return array The session item, or an empty array if not found.
+     * @throws DynamoDbException If the item could not be retrieved.
+     */
+    public function readWithoutLock($id, $consistentRead = null)
+    {
+        $item = [];
+
+        // Execute a GetItem command to retrieve the item.
+        $result = $this->client->getItem([
+             'TableName'      => $this->getTableName(),
+             'Key'            => $this->formatKey($id),
+             'ConsistentRead' => $consistentRead ?? $this->isConsistentRead(),
+         ]);
+
+        // Get the item values
+        $result = isset($result['Item']) ? $result['Item'] : [];
+        foreach ($result as $key => $value) {
+            $item[$key] = current($value);
         }
 
         return $item;
