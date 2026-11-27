@@ -1,0 +1,400 @@
+<?php
+
+/*
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+declare(strict_types=1);
+
+namespace Aws\Services\S3\Output;
+
+use Aws\Services\S3\Schemas;
+use Aws\Services\S3\Shape\ChecksumType;
+use Aws\Services\S3\Shape\RequestCharged;
+use Aws\Services\S3\Shape\ServerSideEncryption;
+use JsonSerializable;
+use Smithy\Core\Serde\Schema;
+use Smithy\Core\Serde\SerializableStructInterface;
+use Smithy\Core\Serde\ShapeSerializerInterface;
+use Smithy\Core\Shape\ArraySerializableTrait;
+use Smithy\Core\Shape\FromMembersTrait;
+use Smithy\Core\Shape\ReadonlyArrayAccessTrait;
+use Smithy\Core\Shape\SensitiveStringableTrait;
+
+/**
+ * @implements \ArrayAccess<string, mixed>
+ */
+final class PutObjectOutput implements SerializableStructInterface, \ArrayAccess, JsonSerializable
+{
+    use ReadonlyArrayAccessTrait;
+    use ArraySerializableTrait;
+    use SensitiveStringableTrait;
+    use FromMembersTrait;
+
+    public const SHAPE_ID = 'com.amazonaws.s3#PutObjectOutput';
+
+    private static Schema $SCHEMA;
+    private static Schema $SCHEMA_EXPIRATION;
+    private static Schema $SCHEMA_E_TAG;
+    private static Schema $SCHEMA_CHECKSUM_CRC32;
+    private static Schema $SCHEMA_CHECKSUM_CRC32_C;
+    private static Schema $SCHEMA_CHECKSUM_CRC64_NVME;
+    private static Schema $SCHEMA_CHECKSUM_SHA1;
+    private static Schema $SCHEMA_CHECKSUM_SHA256;
+    private static Schema $SCHEMA_CHECKSUM_SHA512;
+    private static Schema $SCHEMA_CHECKSUM_MD5;
+    private static Schema $SCHEMA_CHECKSUM_XXHASH64;
+    private static Schema $SCHEMA_CHECKSUM_XXHASH3;
+    private static Schema $SCHEMA_CHECKSUM_XXHASH128;
+    private static Schema $SCHEMA_CHECKSUM_TYPE;
+    private static Schema $SCHEMA_SERVER_SIDE_ENCRYPTION;
+    private static Schema $SCHEMA_VERSION_ID;
+    private static Schema $SCHEMA_SSE_CUSTOMER_ALGORITHM;
+    private static Schema $SCHEMA_SSE_CUSTOMER_KEY_MD5;
+    private static Schema $SCHEMA_SSEKMS_KEY_ID;
+    private static Schema $SCHEMA_SSEKMS_ENCRYPTION_CONTEXT;
+    private static Schema $SCHEMA_BUCKET_KEY_ENABLED;
+    private static Schema $SCHEMA_SIZE;
+    private static Schema $SCHEMA_REQUEST_CHARGED;
+
+    public readonly ?ChecksumType $checksumType;
+    public readonly ?ServerSideEncryption $serverSideEncryption;
+    public readonly ?RequestCharged $requestCharged;
+
+    /**
+     * @param ?string $expiration If the expiration is configured for the object (see PutBucketLifecycleConfiguration) in
+     *        the Amazon S3 User Guide, the response includes this header. It includes the expiry-date and rule-id key-value
+     * pairs
+     *        that provide information about object expiration. The value of the rule-id is URL-encoded. Object expiration
+     *        information is not returned in directory buckets and this header returns the value "NotImplemented" in all
+     * responses
+     *        for directory buckets.
+     * @param ?string $eTag Entity tag for the uploaded object. General purpose buckets - To ensure that data is not
+     *        corrupted traversing the network, for objects where the ETag is the MD5 digest of the object, you can
+     * calculate the
+     *        MD5 while putting an object to Amazon S3 and compare the returned ETag to the calculated MD5 value. Directory
+     * buckets
+     *        - The ETag for the object in a directory bucket isn't the MD5 digest of the object.
+     * @param ?string $checksumCRC32 The Base64 encoded, 32-bit CRC32 checksum of the object. This checksum is only present
+     *        if the checksum was uploaded with the object. When you use an API operation on an object that was uploaded
+     * using
+     *        multipart uploads, this value may not be a direct checksum value of the full object. Instead, it's a
+     * calculation
+     *        based on the checksum values of each individual part. For more information about how checksums are calculated
+     * with
+     *        multipart uploads, see Checking object integrity in the Amazon S3 User Guide.
+     * @param ?string $checksumCRC32C The Base64 encoded, 32-bit CRC32C checksum of the object. This checksum is only
+     *        present if the checksum was uploaded with the object. When you use an API operation on an object that was
+     * uploaded
+     *        using multipart uploads, this value may not be a direct checksum value of the full object. Instead, it's a
+     *        calculation based on the checksum values of each individual part. For more information about how checksums are
+     *        calculated with multipart uploads, see Checking object integrity in the Amazon S3 User Guide.
+     * @param ?string $checksumCRC64NVME The Base64 encoded, 64-bit CRC64NVME checksum of the object. This header is present
+     *        if the object was uploaded with the CRC64NVME checksum algorithm, or if it was uploaded without a checksum
+     * (and
+     *        Amazon S3 added the default checksum, CRC64NVME, to the uploaded object). For more information about how
+     * checksums
+     *        are calculated with multipart uploads, see Checking object integrity in the Amazon S3 User Guide.
+     * @param ?string $checksumSHA1 The Base64 encoded, 160-bit SHA1 digest of the object. This checksum is only present if
+     *        the checksum was uploaded with the object. When you use the API operation on an object that was uploaded using
+     *        multipart uploads, this value may not be a direct checksum value of the full object. Instead, it's a
+     * calculation
+     *        based on the checksum values of each individual part. For more information about how checksums are calculated
+     * with
+     *        multipart uploads, see Checking object integrity in the Amazon S3 User Guide.
+     * @param ?string $checksumSHA256 The Base64 encoded, 256-bit SHA256 digest of the object. This checksum is only present
+     *        if the checksum was uploaded with the object. When you use an API operation on an object that was uploaded
+     * using
+     *        multipart uploads, this value may not be a direct checksum value of the full object. Instead, it's a
+     * calculation
+     *        based on the checksum values of each individual part. For more information about how checksums are calculated
+     * with
+     *        multipart uploads, see Checking object integrity in the Amazon S3 User Guide.
+     * @param ?string $checksumSHA512 The Base64 encoded, 512-bit SHA512 digest of the object. This header is present if the
+     *        object was uploaded with the SHA512 checksum algorithm. For more information, see Checking object integrity in
+     * the
+     *        Amazon S3 User Guide.
+     * @param ?string $checksumMD5 The Base64 encoded, 128-bit MD5 digest of the object. This header is present if the
+     *        object was uploaded with the MD5 checksum algorithm. For more information, see Checking object integrity in
+     * the
+     *        Amazon S3 User Guide.
+     * @param ?string $checksumXXHASH64 The Base64 encoded, 64-bit XXHASH64 checksum of the object. This header is present
+     *        if the object was uploaded with the XXHASH64 checksum algorithm. For more information, see Checking object
+     * integrity
+     *        in the Amazon S3 User Guide.
+     * @param ?string $checksumXXHASH3 The Base64 encoded, 64-bit XXHASH3 checksum of the object. This header is present if
+     *        the object was uploaded with the XXHASH3 checksum algorithm. For more information, see Checking object
+     * integrity in
+     *        the Amazon S3 User Guide.
+     * @param ?string $checksumXXHASH128 The Base64 encoded, 128-bit XXHASH128 checksum of the object. This header is
+     *        present if the object was uploaded with the XXHASH128 checksum algorithm. For more information, see Checking
+     * object
+     *        integrity in the Amazon S3 User Guide.
+     * @param ?ChecksumType $checksumType This header specifies the checksum type of the object, which determines how
+     *        part-level checksums are combined to create an object-level checksum for multipart objects. For PutObject
+     * uploads,
+     *        the checksum type is always FULL_OBJECT. You can use this header as a data integrity check to verify that the
+     *        checksum type that is received is the same checksum that was specified. For more information, see Checking
+     * object
+     *        integrity in the Amazon S3 User Guide.
+     * @param ?ServerSideEncryption $serverSideEncryption The server-side encryption algorithm used when you store this
+     *        object in Amazon S3 or Amazon FSx. When accessing data stored in Amazon FSx file systems using S3 access
+     * points, the
+     *        only valid server side encryption option is aws:fsx.
+     * @param ?string $versionId Version ID of the object. If you enable versioning for a bucket, Amazon S3 automatically
+     *        generates a unique version ID for the object being stored. Amazon S3 returns this ID in the response. When you
+     * enable
+     *        versioning for a bucket, if Amazon S3 receives multiple write requests for the same object simultaneously, it
+     * stores
+     *        all of the objects. For more information about versioning, see Adding Objects to Versioning-Enabled Buckets in
+     * the
+     *        Amazon S3 User Guide. For information about returning the versioning state of a bucket, see
+     * GetBucketVersioning. This
+     *        functionality is not supported for directory buckets.
+     * @param ?string $sSECustomerAlgorithm If server-side encryption with a customer-provided encryption key was requested,
+     *        the response will include this header to confirm the encryption algorithm that's used. This functionality is
+     * not
+     *        supported for directory buckets.
+     * @param ?string $sSECustomerKeyMD5 If server-side encryption with a customer-provided encryption key was requested,
+     *        the response will include this header to provide the round-trip message integrity verification of the
+     *        customer-provided encryption key. This functionality is not supported for directory buckets.
+     * @param ?string $sSEKMSKeyId If present, indicates the ID of the KMS key that was used for object encryption.
+     * @param ?string $sSEKMSEncryptionContext If present, indicates the Amazon Web Services KMS Encryption Context to use
+     *        for object encryption. The value of this header is a Base64 encoded string of a UTF-8 encoded JSON, which
+     * contains
+     *        the encryption context as key-value pairs. This value is stored as object metadata and automatically gets
+     * passed on
+     *        to Amazon Web Services KMS for future GetObject operations on this object.
+     * @param ?bool $bucketKeyEnabled Indicates whether the uploaded object uses an S3 Bucket Key for server-side encryption
+     *        with Key Management Service (KMS) keys (SSE-KMS).
+     * @param ?int $size The size of the object in bytes. This value is only be present if you append to an object. This
+     *        functionality is only supported for objects in the Amazon S3 Express One Zone storage class in directory
+     * buckets.
+     */
+    public function __construct(
+        public readonly ?string $expiration = null,
+        public readonly ?string $eTag = null,
+        public readonly ?string $checksumCRC32 = null,
+        public readonly ?string $checksumCRC32C = null,
+        public readonly ?string $checksumCRC64NVME = null,
+        public readonly ?string $checksumSHA1 = null,
+        public readonly ?string $checksumSHA256 = null,
+        public readonly ?string $checksumSHA512 = null,
+        public readonly ?string $checksumMD5 = null,
+        public readonly ?string $checksumXXHASH64 = null,
+        public readonly ?string $checksumXXHASH3 = null,
+        public readonly ?string $checksumXXHASH128 = null,
+        ChecksumType|string|null $checksumType = null,
+        ServerSideEncryption|string|null $serverSideEncryption = null,
+        public readonly ?string $versionId = null,
+        public readonly ?string $sSECustomerAlgorithm = null,
+        public readonly ?string $sSECustomerKeyMD5 = null,
+        /** @sensitive */
+        public readonly ?string $sSEKMSKeyId = null,
+        /** @sensitive */
+        public readonly ?string $sSEKMSEncryptionContext = null,
+        public readonly ?bool $bucketKeyEnabled = null,
+        public readonly ?int $size = null,
+        RequestCharged|string|null $requestCharged = null
+    ) {
+        $this->checksumType = $checksumType === null || $checksumType instanceof ChecksumType ? $checksumType : ChecksumType::fromValue($checksumType);
+        $this->serverSideEncryption = $serverSideEncryption === null || $serverSideEncryption instanceof ServerSideEncryption ? $serverSideEncryption : ServerSideEncryption::fromValue($serverSideEncryption);
+        $this->requestCharged = $requestCharged === null || $requestCharged instanceof RequestCharged ? $requestCharged : RequestCharged::fromValue($requestCharged);
+    }
+
+    /**
+     * Get the shape schema.
+     */
+    public static function schema(): Schema
+    {
+        if (isset(self::$SCHEMA)) {
+            return self::$SCHEMA;
+        }
+        $s = Schemas::putObjectOutput();
+        $m = $s->getMembersByIndex();
+        self::$SCHEMA_EXPIRATION = $m[0];
+        self::$SCHEMA_E_TAG = $m[1];
+        self::$SCHEMA_CHECKSUM_CRC32 = $m[2];
+        self::$SCHEMA_CHECKSUM_CRC32_C = $m[3];
+        self::$SCHEMA_CHECKSUM_CRC64_NVME = $m[4];
+        self::$SCHEMA_CHECKSUM_SHA1 = $m[5];
+        self::$SCHEMA_CHECKSUM_SHA256 = $m[6];
+        self::$SCHEMA_CHECKSUM_SHA512 = $m[7];
+        self::$SCHEMA_CHECKSUM_MD5 = $m[8];
+        self::$SCHEMA_CHECKSUM_XXHASH64 = $m[9];
+        self::$SCHEMA_CHECKSUM_XXHASH3 = $m[10];
+        self::$SCHEMA_CHECKSUM_XXHASH128 = $m[11];
+        self::$SCHEMA_CHECKSUM_TYPE = $m[12];
+        self::$SCHEMA_SERVER_SIDE_ENCRYPTION = $m[13];
+        self::$SCHEMA_VERSION_ID = $m[14];
+        self::$SCHEMA_SSE_CUSTOMER_ALGORITHM = $m[15];
+        self::$SCHEMA_SSE_CUSTOMER_KEY_MD5 = $m[16];
+        self::$SCHEMA_SSEKMS_KEY_ID = $m[17];
+        self::$SCHEMA_SSEKMS_ENCRYPTION_CONTEXT = $m[18];
+        self::$SCHEMA_BUCKET_KEY_ENABLED = $m[19];
+        self::$SCHEMA_SIZE = $m[20];
+        self::$SCHEMA_REQUEST_CHARGED = $m[21];
+        return self::$SCHEMA = $s;
+    }
+
+    /**
+     * Get the shape schema for this instance.
+     */
+    public function getSchema(): Schema
+    {
+        return self::schema();
+    }
+
+    /**
+     * Serialize the shape to the desired wire format.
+     *
+     * @return void
+     */
+    public function serialize(ShapeSerializerInterface $serializer, int $idx): void
+    {
+        $serializer->serializeStruct(self::schema(), $this, $idx);
+    }
+
+    /**
+     * Serialize the shape members to the desired wire format.
+     *
+     * @return void
+     */
+    public function serializeMembers(ShapeSerializerInterface $serializer): void
+    {
+        if (isset($this->expiration)) {
+            $serializer->serializeString(self::$SCHEMA_EXPIRATION, $this->expiration, 0);
+        }
+        if (isset($this->eTag)) {
+            $serializer->serializeString(self::$SCHEMA_E_TAG, $this->eTag, 1);
+        }
+        if (isset($this->checksumCRC32)) {
+            $serializer->serializeString(self::$SCHEMA_CHECKSUM_CRC32, $this->checksumCRC32, 2);
+        }
+        if (isset($this->checksumCRC32C)) {
+            $serializer->serializeString(self::$SCHEMA_CHECKSUM_CRC32_C, $this->checksumCRC32C, 3);
+        }
+        if (isset($this->checksumCRC64NVME)) {
+            $serializer->serializeString(self::$SCHEMA_CHECKSUM_CRC64_NVME, $this->checksumCRC64NVME, 4);
+        }
+        if (isset($this->checksumSHA1)) {
+            $serializer->serializeString(self::$SCHEMA_CHECKSUM_SHA1, $this->checksumSHA1, 5);
+        }
+        if (isset($this->checksumSHA256)) {
+            $serializer->serializeString(self::$SCHEMA_CHECKSUM_SHA256, $this->checksumSHA256, 6);
+        }
+        if (isset($this->checksumSHA512)) {
+            $serializer->serializeString(self::$SCHEMA_CHECKSUM_SHA512, $this->checksumSHA512, 7);
+        }
+        if (isset($this->checksumMD5)) {
+            $serializer->serializeString(self::$SCHEMA_CHECKSUM_MD5, $this->checksumMD5, 8);
+        }
+        if (isset($this->checksumXXHASH64)) {
+            $serializer->serializeString(self::$SCHEMA_CHECKSUM_XXHASH64, $this->checksumXXHASH64, 9);
+        }
+        if (isset($this->checksumXXHASH3)) {
+            $serializer->serializeString(self::$SCHEMA_CHECKSUM_XXHASH3, $this->checksumXXHASH3, 10);
+        }
+        if (isset($this->checksumXXHASH128)) {
+            $serializer->serializeString(self::$SCHEMA_CHECKSUM_XXHASH128, $this->checksumXXHASH128, 11);
+        }
+        if (isset($this->checksumType)) {
+            $serializer->serializeString(self::$SCHEMA_CHECKSUM_TYPE, $this->checksumType->value, 12);
+        }
+        if (isset($this->serverSideEncryption)) {
+            $serializer->serializeString(self::$SCHEMA_SERVER_SIDE_ENCRYPTION, $this->serverSideEncryption->value, 13);
+        }
+        if (isset($this->versionId)) {
+            $serializer->serializeString(self::$SCHEMA_VERSION_ID, $this->versionId, 14);
+        }
+        if (isset($this->sSECustomerAlgorithm)) {
+            $serializer->serializeString(self::$SCHEMA_SSE_CUSTOMER_ALGORITHM, $this->sSECustomerAlgorithm, 15);
+        }
+        if (isset($this->sSECustomerKeyMD5)) {
+            $serializer->serializeString(self::$SCHEMA_SSE_CUSTOMER_KEY_MD5, $this->sSECustomerKeyMD5, 16);
+        }
+        if (isset($this->sSEKMSKeyId)) {
+            $serializer->serializeString(self::$SCHEMA_SSEKMS_KEY_ID, $this->sSEKMSKeyId, 17);
+        }
+        if (isset($this->sSEKMSEncryptionContext)) {
+            $serializer->serializeString(self::$SCHEMA_SSEKMS_ENCRYPTION_CONTEXT, $this->sSEKMSEncryptionContext, 18);
+        }
+        if (isset($this->bucketKeyEnabled)) {
+            $serializer->serializeBoolean(self::$SCHEMA_BUCKET_KEY_ENABLED, $this->bucketKeyEnabled, 19);
+        }
+        if (isset($this->size)) {
+            $serializer->serializeInteger(self::$SCHEMA_SIZE, $this->size, 20);
+        }
+        if (isset($this->requestCharged)) {
+            $serializer->serializeString(self::$SCHEMA_REQUEST_CHARGED, $this->requestCharged->value, 21);
+        }
+    }
+
+    /**
+     * Get a modeled member value.
+     */
+    public function getMemberValue(Schema $member): mixed
+    {
+        return match ($member->memberIndex) {
+            0 => $this->expiration,
+            1 => $this->eTag,
+            2 => $this->checksumCRC32,
+            3 => $this->checksumCRC32C,
+            4 => $this->checksumCRC64NVME,
+            5 => $this->checksumSHA1,
+            6 => $this->checksumSHA256,
+            7 => $this->checksumSHA512,
+            8 => $this->checksumMD5,
+            9 => $this->checksumXXHASH64,
+            10 => $this->checksumXXHASH3,
+            11 => $this->checksumXXHASH128,
+            12 => $this->checksumType,
+            13 => $this->serverSideEncryption,
+            14 => $this->versionId,
+            15 => $this->sSECustomerAlgorithm,
+            16 => $this->sSECustomerKeyMD5,
+            17 => $this->sSEKMSKeyId,
+            18 => $this->sSEKMSEncryptionContext,
+            19 => $this->bucketKeyEnabled,
+            20 => $this->size,
+            21 => $this->requestCharged,
+            default => null,
+        };
+    }
+
+    /**
+     * Return a copy with one member replaced.
+     */
+    public function withMemberValue(Schema $member, mixed $value): static
+    {
+        $members = [
+            $this->expiration,
+            $this->eTag,
+            $this->checksumCRC32,
+            $this->checksumCRC32C,
+            $this->checksumCRC64NVME,
+            $this->checksumSHA1,
+            $this->checksumSHA256,
+            $this->checksumSHA512,
+            $this->checksumMD5,
+            $this->checksumXXHASH64,
+            $this->checksumXXHASH3,
+            $this->checksumXXHASH128,
+            $this->checksumType,
+            $this->serverSideEncryption,
+            $this->versionId,
+            $this->sSECustomerAlgorithm,
+            $this->sSECustomerKeyMD5,
+            $this->sSEKMSKeyId,
+            $this->sSEKMSEncryptionContext,
+            $this->bucketKeyEnabled,
+            $this->size,
+            $this->requestCharged
+        ];
+        $members[$member->memberIndex] = $value;
+
+        return new self(...$members);
+    }
+
+}
