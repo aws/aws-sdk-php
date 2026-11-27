@@ -31,6 +31,8 @@ use Smithy\Client\Retry\{
     StandardRetryStrategy
 };
 use Smithy\Core\Endpoint\Endpoint;
+use Smithy\Core\Exception\ApiException;
+use Smithy\Core\Retry\RetrySafety;
 use Smithy\Http\Client\Exception\HttpException;
 use Smithy\Http\Client\HttpClientTransport;
 use Smithy\Http\Message\{Request, Response, Uri};
@@ -244,6 +246,38 @@ final class StandardRetryPluginTest extends TestCase
         $client->call('Ping');
 
         $this->assertSame(2, $httpClient->sendCallCount);
+    }
+
+    public function testRetrySafetyInterceptorClassifiesRetryableError(): void
+    {
+        $httpClient = new MockHttpClient();
+        for ($attempt = 0; $attempt < 2; ++$attempt) {
+            $httpClient->queueResponse(
+                new Response(
+                    400,
+                    ['x-amzn-errortype' => 'ThrottledError'],
+                    '{}'
+                )
+            );
+        }
+        $client = $this->awsClient(
+            new StandardRetryStrategy(
+                maxAttempts: 2,
+                baseDelay: 0.0,
+                throttlingBaseDelay: 0.0
+            ),
+            $httpClient
+        );
+
+        try {
+            $client->call('Throttle');
+            $this->fail('Expected exception was not thrown');
+        } catch (ApiException $thrown) {
+        }
+
+        $this->assertSame(2, $httpClient->sendCallCount);
+        $this->assertSame(RetrySafety::Yes, $thrown->getRetrySafety());
+        $this->assertTrue($thrown->isThrottle());
     }
 
     private function client(RetryStrategyInterface $strategy): RetryTestClient

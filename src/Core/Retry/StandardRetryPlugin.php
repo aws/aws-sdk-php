@@ -22,6 +22,10 @@ use Smithy\Core\Shape\OperationInterface;
 /**
  * Register standard retry behavior for AWS clients.
  *
+ * The retry interceptor joins the end of the interceptor chain, so service
+ * error interceptors and retry safety classification shape an attempt error
+ * before the retry decision wraps it.
+ *
  * The plugin also resolves retry request flags. It marks the long-polling
  * operations listed in the retry specification until `aws.api#longPoll`
  * is available in generated operation schemas.
@@ -84,9 +88,7 @@ final class StandardRetryPlugin extends AbstractPlugin
             return $config;
         }
 
-        return $config->withPrependedInterceptor(
-            StandardRetryInterceptor::instance()
-        );
+        return $config->withInterceptor(StandardRetryInterceptor::instance());
     }
 
     public function resolve(

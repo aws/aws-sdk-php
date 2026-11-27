@@ -260,13 +260,13 @@ class AwsDynamicClient extends DynamicClient implements AwsClientInterface
         if ($config->supportsFlexibleChecksums()) {
             $plugins = $plugins->add(new FlexibleChecksumPlugin());
         }
-        $plugins = $plugins->add(StandardRetryPlugin::instance());
         if (self::isS3(
             $model,
             self::resolveServiceId($model, $serviceId)
         )) {
             $plugins = $plugins->add(new S3ErrorPlugin());
         }
+        $plugins = $plugins->add(StandardRetryPlugin::instance());
         $plugins = $plugins->add(UserAgentPlugin::instance());
 
         parent::__construct(
