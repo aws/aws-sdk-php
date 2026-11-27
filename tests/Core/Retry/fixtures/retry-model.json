@@ -6,6 +6,7 @@
             "version": "2026-11-22",
             "operations": [
                 { "target": "aws.tests#Ping" },
+                { "target": "aws.tests#Throttle" },
                 { "target": "aws.tests#ReceiveMessage" },
                 { "target": "aws.tests#GetActivityTask" },
                 { "target": "aws.tests#PollForActivityTask" },
@@ -23,6 +24,23 @@
             "output": { "target": "smithy.api#Unit" },
             "traits": {
                 "smithy.api#http": { "method": "POST", "uri": "/ping" }
+            }
+        },
+        "aws.tests#Throttle": {
+            "type": "operation",
+            "input": { "target": "smithy.api#Unit" },
+            "output": { "target": "smithy.api#Unit" },
+            "errors": [{ "target": "aws.tests#ThrottledError" }],
+            "traits": {
+                "smithy.api#http": { "method": "POST", "uri": "/throttle" }
+            }
+        },
+        "aws.tests#ThrottledError": {
+            "type": "structure",
+            "members": {},
+            "traits": {
+                "smithy.api#error": "client",
+                "smithy.api#retryable": { "throttling": true }
             }
         },
         "aws.tests#ReceiveMessage": {
