@@ -7,7 +7,7 @@ PREVIEW_SERVICES ?= s3:S3 sts:Sts lambda:Lambda ec2:Ec2 sso:Sso sso-oidc:SsoOidc
 
 .DEFAULT_GOAL := help
 
-.PHONY: help install autoload test lint static-analysis codegen generate-services license-check check clean
+.PHONY: help install autoload test integ lint static-analysis codegen generate-services license-check check clean
 .NOTPARALLEL: check
 
 help: ## List available targets
@@ -21,6 +21,9 @@ autoload: ## Regenerate Composer autoload files
 
 test: ## Run the test suite
 	$(PHP) vendor/bin/phpunit $(ARGS)
+
+integ: ## Run integration tests against real AWS (needs credentials; not run in CI)
+	$(PHP) vendor/bin/phpunit --testsuite integ $(ARGS)
 
 lint: ## Check PHP syntax
 	@set -e; \
