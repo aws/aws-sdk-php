@@ -4,6 +4,7 @@ namespace Aws\Credentials;
 use Aws;
 use Aws\Api\DateTimeResult;
 use Aws\CacheInterface;
+use Aws\Exception\CredentialDaemonException;
 use Aws\Exception\CredentialsException;
 use Aws\Sts\StsClient;
 use GuzzleHttp\Promise;
@@ -61,6 +62,8 @@ class CredentialProvider
      * Create a default credential provider that
      * first checks for environment variables,
      * then checks for assumed role via web identity,
+     * then checks for a credential daemon when the profile in ~/.aws/config
+     * sets `daemon_credential` (a credential daemon error ends the chain),
      * then checks for cached SSO credentials from the CLI,
      * then check for credential_process in the "default" profile in ~/.aws/credentials,
      * then checks for the "default" profile in ~/.aws/credentials,
@@ -74,7 +77,10 @@ class CredentialProvider
      * previously provided credentials.
      *
      * @param array $config Optional array of ecs/instance profile credentials
-     *                      provider options.
+     *                      provider options. Also takes
+     *                      `credential_daemon_connect_timeout` and
+     *                      `credential_daemon_timeout`, in seconds, for the
+     *                      credential daemon provider (defaults 1 and 5).
      *
      * @return callable
      */
@@ -99,6 +105,20 @@ class CredentialProvider
         if (!isset($config['use_aws_shared_config_files'])
             || $config['use_aws_shared_config_files'] !== false
         ) {
+            $daemonTimeouts = self::credentialDaemonTimeouts($config);
+            $defaultChain['credential_daemon'] = self::credentialDaemon(
+                ['profile' => $profileName]
+                + self::credentialDaemonProviderOptions($daemonTimeouts)
+            );
+            if (isset($config['credentials'])
+                && $config['credentials'] instanceof CacheInterface
+            ) {
+                $defaultChain['credential_daemon'] = self::cacheCredentialDaemon(
+                    $defaultChain['credential_daemon'],
+                    $config['credentials'],
+                    $profileName
+                );
+            }
             $defaultChain['sso'] = self::sso(
                 $profileName,
                 self::getConfigFileName(),
@@ -113,7 +133,8 @@ class CredentialProvider
             );
             $defaultChain['ini_config'] = self::ini(
                 'profile ' . $profileName,
-                self::getConfigFileName()
+                self::getConfigFileName(),
+                $daemonTimeouts
             );
         }
 
@@ -180,15 +201,21 @@ class CredentialProvider
             $parent = array_shift($links);
             $promise = $parent();
             while ($next = array_shift($links)) {
-                if ($next instanceof InstanceProfileProvider
-                    && $previousCreds instanceof Credentials
-                ) {
-                    $promise = $promise->otherwise(
-                        function () use ($next, $previousCreds) {return $next($previousCreds);}
-                    );
-                } else {
-                    $promise = $promise->otherwise($next);
-                }
+                $promise = $promise->otherwise(
+                    function ($reason) use ($next, $previousCreds) {
+                        // A credential daemon error ends the chain.
+                        if ($reason instanceof CredentialDaemonException) {
+                            return Promise\Create::rejectionFor($reason);
+                        }
+                        if ($next instanceof InstanceProfileProvider
+                            && $previousCreds instanceof Credentials
+                        ) {
+                            return $next($previousCreds);
+                        }
+
+                        return $next($reason);
+                    }
+                );
             }
             return $promise;
         };
@@ -337,6 +364,21 @@ class CredentialProvider
     }
 
     /**
+     * Credential provider that gets credentials from a local credential
+     * daemon for a profile in the shared config file that sets
+     * `daemon_credential`.
+     *
+     * @param array $config Array of configuration data.
+     *
+     * @return CredentialDaemonProvider
+     * @see Aws\Credentials\CredentialDaemonProvider for $config details.
+     */
+    public static function credentialDaemon(array $config = [])
+    {
+        return new CredentialDaemonProvider($config);
+    }
+
+    /**
      * Credential provider that retrieves cached SSO credentials from the CLI
      *
      * @return callable
@@ -450,6 +492,13 @@ class CredentialProvider
                 if (isset($profile['web_identity_token_file'])
                     && isset($profile['role_arn'])
                 ) {
+                    // A credential daemon profile is left to the credential
+                    // daemon provider, which reports the conflicting settings.
+                    if (CredentialDaemonProvider::profileUsesDaemon($profileName)) {
+                        return self::reject(
+                            "Profile {$profileName} uses a credential daemon"
+                        );
+                    }
                     $sessionName = isset($profile['role_session_name'])
                         ? $profile['role_session_name']
                         : null;
@@ -521,6 +570,26 @@ class CredentialProvider
             );
             if (!isset($data[$profile])) {
                 return self::reject("'$profile' not found in credentials file");
+            }
+
+            // A config file profile that uses a credential daemon gets its
+            // credentials only from the credential daemon.
+            if ($useProfileFallback
+                && is_array($data[$profile])
+                && CredentialDaemonProvider::sectionUsesDaemon($data[$profile])
+            ) {
+                $daemon = new CredentialDaemonProvider(
+                    self::credentialDaemonProviderOptions($config)
+                );
+
+                return $daemon->fetchForSection(
+                    $data[$profile],
+                    $profile,
+                    $filename
+                );
+            }
+            if (!$useProfileFallback && self::usesCredentialDaemon($profile)) {
+                return self::reject("Profile '$profile' uses a credential daemon");
             }
 
             /*
@@ -614,6 +683,9 @@ class CredentialProvider
             );
             if (!isset($data[$profile])) {
                 return self::reject("'$profile' not found in credentials file");
+            }
+            if (self::usesCredentialDaemon($profile)) {
+                return self::reject("Profile '$profile' uses a credential daemon");
             }
             if (!isset($data[$profile]['credential_process'])) {
                 return self::reject("No credential_process present in INI profile "
@@ -723,6 +795,9 @@ class CredentialProvider
         $resolvedProfile = $profileName ?? getenv(self::ENV_PROFILE) ?: 'default';
 
         return static function () use ($resolvedProfile, $config) {
+            if (self::usesCredentialDaemon($resolvedProfile)) {
+                return self::reject("Profile '$resolvedProfile' uses a credential daemon");
+            }
             try {
                 $provider = new LoginCredentialProvider(
                     $resolvedProfile,
@@ -765,6 +840,10 @@ class CredentialProvider
         }
 
         $sourceProfileName = "";
+        // `daemon_credential` is read only from the shared config file, so a
+        // daemon source profile need not be in the file the role is in.
+        $daemonSource = !empty($roleProfile['source_profile'])
+            && CredentialDaemonProvider::profileUsesDaemon($roleProfile['source_profile']);
         if (!empty($roleProfile['source_profile'])) {
             $sourceProfileName = $roleProfile['source_profile'];
             if (!isset($profiles[$sourceProfileName])
@@ -772,7 +851,7 @@ class CredentialProvider
             ) {
                 $sourceProfileName = 'profile ' . $sourceProfileName;
             }
-            if (!isset($profiles[$sourceProfileName])) {
+            if (!$daemonSource && !isset($profiles[$sourceProfileName])) {
                 return self::reject("source_profile " . $sourceProfileName
                     . " using profile " . $profileName . " does not exist"
                 );
@@ -792,12 +871,17 @@ class CredentialProvider
             }
         }
 
+        $sourceCredentials = null;
         if (empty($stsClient)) {
             $config['preferStaticCredentials'] = true;
-            $sourceCredentials = null;
             if (!empty($roleProfile['source_profile'])){
-                $source = $profiles[$sourceProfileName];
+                $source = $profiles[$sourceProfileName] ?? [];
                 $sourceProvider = match (true) {
+                    // A daemon profile can also set SSO keys, so check it first.
+                    $daemonSource => self::credentialDaemon(
+                        ['profile' => $roleProfile['source_profile']]
+                        + self::credentialDaemonProviderOptions($config)
+                    ),
                     isset($source['aws_access_key_id']),
                     isset($source['role_arn']) => self::ini($sourceProfileName, $filename, $config),
                     isset($source['credential_process']) => self::process($sourceProfileName, $filename),
@@ -830,9 +914,18 @@ class CredentialProvider
             'RoleArn' => $roleArn,
             'RoleSessionName' => $roleSessionName
         ]);
+        // Requests signed with the assumed role still report that the
+        // credentials came from a credential daemon.
+        $fromDaemon = $sourceCredentials instanceof CredentialsInterface
+            && in_array($sourceCredentials->getSource(), [
+                CredentialSources::CREDENTIAL_DAEMON,
+                CredentialSources::STS_ASSUME_ROLE_CREDENTIAL_DAEMON,
+            ], true);
         $credentials = $stsClient->createCredentials(
             $result,
-            CredentialSources::STS_ASSUME_ROLE
+            $fromDaemon
+                ? CredentialSources::STS_ASSUME_ROLE_CREDENTIAL_DAEMON
+                : CredentialSources::STS_ASSUME_ROLE
         );
 
         return Promise\Create::promiseFor($credentials);
@@ -949,6 +1042,71 @@ class CredentialProvider
         return function () use ($credentialsResult) {
             return Promise\Create::promiseFor($credentialsResult);
         };
+    }
+
+    /**
+     * Wraps the default chain's credential daemon provider in a cache.
+     */
+    private static function cacheCredentialDaemon(
+        callable $provider,
+        CacheInterface $cache,
+        string $profileName
+    ): callable
+    {
+        return function () use ($provider, $cache, $profileName) {
+            // The cache is read before the provider reads the profile, so its
+            // credentials must apply only to this profile and config file,
+            // and only while the profile still uses a credential daemon.
+            $file = self::getConfigFileName();
+            if (!CredentialDaemonProvider::profileUsesDaemon($profileName, $file)) {
+                return self::reject("Profile {$profileName} does not use a credential daemon");
+            }
+            $cacheKey = 'aws_cached_credential_daemon_credentials_'
+                . sha1($file . "\0" . $profileName);
+
+            return self::cache($provider, $cache, $cacheKey)();
+        };
+    }
+
+    /**
+     * Returns true when the shared config file gives the profile a credential
+     * daemon. Then the profile's other credential settings, in either file,
+     * must not be used.
+     */
+    private static function usesCredentialDaemon(string $profile): bool
+    {
+        if (strpos($profile, 'profile ') === 0) {
+            $profile = substr($profile, strlen('profile '));
+        }
+
+        return CredentialDaemonProvider::profileUsesDaemon($profile);
+    }
+
+    /**
+     * Returns the credential daemon timeouts of a defaultProvider config.
+     */
+    private static function credentialDaemonTimeouts(array $config): array
+    {
+        return array_intersect_key($config, [
+            'credential_daemon_connect_timeout' => true,
+            'credential_daemon_timeout' => true,
+        ]);
+    }
+
+    /**
+     * Maps credential daemon timeouts to CredentialDaemonProvider options.
+     */
+    private static function credentialDaemonProviderOptions(array $config): array
+    {
+        $options = [];
+        if (isset($config['credential_daemon_connect_timeout'])) {
+            $options['connect_timeout'] = $config['credential_daemon_connect_timeout'];
+        }
+        if (isset($config['credential_daemon_timeout'])) {
+            $options['timeout'] = $config['credential_daemon_timeout'];
+        }
+
+        return $options;
     }
 
     private static function reject($msg)

@@ -166,6 +166,59 @@ EOT;
         }
     }
 
+    public function testThrowsExceptionForCredentialDaemonProfile()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[profile test]
+daemon_credential = dev
+sso_session = admin
+sso_account_id = 111122223333
+sso_role_name = Admin
+[sso-session admin]
+sso_start_url = https://d-abc123.awsapps.com/start
+sso_region = us-east-2
+EOT;
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, $ini);
+        putenv('HOME=' . dirname($dir));
+
+        $this->expectException(TokenException::class);
+        $this->expectExceptionMessage(
+            "Profile `test` in {$configFilename} gets its SSO session from a credential daemon,"
+        );
+        try {
+            $tokenProvider = new SsoTokenProvider('test', $configFilename);
+            $tokenProvider()->wait();
+        } finally {
+            unlink($configFilename);
+        }
+    }
+
+    public function testCredentialDaemonSsoProfileWithoutAccountAndRoleIsUnchanged()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[profile test]
+daemon_credential = dev
+sso_session = admin
+[sso-session admin]
+sso_region = us-east-2
+EOT;
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, $ini);
+        putenv('HOME=' . dirname($dir));
+
+        $this->expectException(TokenException::class);
+        $this->expectExceptionMessage("is missing the required property `sso_start_url`");
+        try {
+            $tokenProvider = new SsoTokenProvider('test', $configFilename);
+            $tokenProvider()->wait();
+        } finally {
+            unlink($configFilename);
+        }
+    }
+
     public function testThrowsExceptionWithNonExistingSession()
     {
         $dir = $this->clearEnv();
