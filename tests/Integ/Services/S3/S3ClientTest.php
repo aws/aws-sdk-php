@@ -12,6 +12,7 @@ namespace Aws\Tests\Integ\Services\S3;
 use Aws\Services\S3\Exception\NoSuchBucketException;
 use Aws\Services\S3\Exception\NoSuchKeyException;
 use Aws\Services\S3\Exception\NotFoundException;
+use Aws\Services\S3\Exception\S3Exception;
 use Aws\Services\S3\Input\AbortMultipartUploadRequest;
 use Aws\Services\S3\Input\CompleteMultipartUploadRequest;
 use Aws\Services\S3\Input\CreateBucketRequest;
@@ -361,10 +362,23 @@ final class S3ClientTest extends TestCase
     {
         $this->expectException(NoSuchBucketException::class);
 
-        self::client()->getObject(new GetObjectRequest(
-            bucket: IntegEnvironment::bucketName(),
-            key: 'any.txt'
+        self::client()->listObjectsV2(new ListObjectsV2Request(
+            bucket: IntegEnvironment::bucketName()
         ));
+    }
+
+    public function testMissingBucketOnGetObjectHasErrorCode(): void
+    {
+        try {
+            self::client()->getObject(new GetObjectRequest(
+                bucket: IntegEnvironment::bucketName(),
+                key: 'any.txt'
+            ));
+            self::fail('GetObject on a missing bucket should fail.');
+        } catch (S3Exception $e) {
+            self::assertSame('NoSuchBucket', $e->getAwsErrorCode());
+            self::assertSame(404, $e->getHttpStatusCode());
+        }
     }
 
     private static function client(
