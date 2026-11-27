@@ -1,6 +1,8 @@
 <?php
 namespace Aws\DynamoDb;
 
+use Aws\DynamoDb\Exception\DynamoDbException;
+
 /**
  * Provides an interface for using Amazon DynamoDB as a session store by hooking
  * into PHP's session handler hooks. Once registered, You may use the native
@@ -37,6 +39,9 @@ class SessionHandler implements \SessionHandlerInterface
 
     /** @var bool Keeps track of whether the session has been written. */
     private $sessionWritten = false;
+
+    /** @var string|null ID returned by create_sid() that PHP has not used yet. */
+    private $generatedSessionId;
 
     /**
      * Creates a new DynamoDB Session Handler.
@@ -106,6 +111,7 @@ class SessionHandler implements \SessionHandlerInterface
     {
         $this->savePath = $savePath;
         $this->sessionName = $sessionName;
+        $this->generatedSessionId = null;
 
         return true;
     }
@@ -118,6 +124,7 @@ class SessionHandler implements \SessionHandlerInterface
      #[\ReturnTypeWillChange]
     public function close()
     {
+        $this->generatedSessionId = null;
         $id = session_id();
         // Make sure the session is unlocked and the expiration time is updated,
         // even if the write did not occur
@@ -139,6 +146,7 @@ class SessionHandler implements \SessionHandlerInterface
      #[\ReturnTypeWillChange]
     public function read($id)
     {
+        $this->generatedSessionId = null;
         $this->openSessionId = $id;
         // PHP expects an empty string to be returned from this method if no
         // data is retrieved
@@ -200,6 +208,67 @@ class SessionHandler implements \SessionHandlerInterface
             = $this->connection->delete($this->formatId($id));
 
         return $this->sessionWritten;
+    }
+
+    /**
+     * Create a new session ID. Triggered by session_start(),
+     * session_regenerate_id() and session_create_id().
+     *
+     * Uses PHP's own session ID generator, the same one PHP uses when a
+     * handler does not define this method.
+     *
+     * @return string|false The new session ID.
+     */
+    #[\ReturnTypeWillChange]
+    // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps -- name defined by PHP
+    public function create_sid()
+    {
+        return $this->generatedSessionId = session_create_id();
+    }
+
+    /**
+     * Check whether a session ID is in use. Triggered by session_start() when
+     * session.use_strict_mode is enabled, and after create_sid() so PHP does
+     * not hand out an ID that is already taken.
+     *
+     * The lookup is a strongly consistent GetItem that never acquires the
+     * session lock, also when locking is enabled. With locking, an item that
+     * holds the lock counts as in use, even before its first write.
+     *
+     * Connections that do not extend StandardSessionConnection cannot be
+     * checked, so they accept every ID PHP received, as PHP does when a
+     * handler does not define this method. The same applies when the lookup
+     * fails, leaving the error to read() as before.
+     *
+     * @param string $id Session ID.
+     *
+     * @return bool Whether the session exists and has not expired.
+     */
+    #[\ReturnTypeWillChange]
+    public function validateId($id)
+    {
+        $isGenerated = $id === $this->generatedSessionId;
+
+        if (!$this->connection instanceof StandardSessionConnection) {
+            return !$isGenerated;
+        }
+
+        try {
+            $item = $this->connection->readWithoutLock($this->formatId($id), true);
+        } catch (DynamoDbException $e) {
+            return !$isGenerated;
+        }
+
+        if ($this->connection instanceof LockingSessionConnection
+            && isset($item['lock'])
+        ) {
+            return true;
+        }
+
+        $sessionLifetimeAttribute = $this->connection->getSessionLifetimeAttribute();
+
+        return isset($item[$sessionLifetimeAttribute])
+            && $item[$sessionLifetimeAttribute] > time();
     }
 
     /**
