@@ -1246,6 +1246,7 @@
       "type":"list",
       "member":{"shape":"PartialFailure"}
     },
+    "Boolean":{"type":"boolean"},
     "ComparisonOperator":{
       "type":"string",
       "enum":[
@@ -2139,7 +2140,11 @@
         "IncludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
         "ExcludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
         "CreatedAt":{"shape":"Timestamp"},
-        "UpdatedAt":{"shape":"Timestamp"}
+        "UpdatedAt":{"shape":"Timestamp"},
+        "EnableTagEnrichment":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "GetResourceMetricsConfigurationInput":{
@@ -3614,7 +3619,11 @@
       "type":"structure",
       "members":{
         "IncludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
-        "ExcludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"}
+        "ExcludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
+        "EnableTagEnrichment":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "StartOTelEnrichmentOutput":{
@@ -3623,7 +3632,11 @@
         "IncludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
         "ExcludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
         "CreatedAt":{"shape":"Timestamp"},
-        "UpdatedAt":{"shape":"Timestamp"}
+        "UpdatedAt":{"shape":"Timestamp"},
+        "EnableTagEnrichment":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "StartTimeOffset":{
@@ -3801,7 +3814,11 @@
       "type":"structure",
       "members":{
         "IncludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
-        "ExcludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"}
+        "ExcludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
+        "EnableTagEnrichment":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "UpdateOTelEnrichmentOutput":{
@@ -3810,7 +3827,11 @@
         "IncludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
         "ExcludeFilters":{"shape":"OTelEnrichmentMetricSelectorList"},
         "CreatedAt":{"shape":"Timestamp"},
-        "UpdatedAt":{"shape":"Timestamp"}
+        "UpdatedAt":{"shape":"Timestamp"},
+        "EnableTagEnrichment":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "UpdateResourceMetricsConfigurationInput":{

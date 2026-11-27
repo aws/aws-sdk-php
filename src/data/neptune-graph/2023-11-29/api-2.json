@@ -830,6 +830,14 @@
         }
       }
     },
+    "ComputeConfiguration":{
+      "type":"structure",
+      "members":{
+        "provisionedGraph":{"shape":"ProvisionedGraphConfiguration"},
+        "graphSession":{"shape":"GraphSessionConfiguration"}
+      },
+      "union":true
+    },
     "ConflictException":{
       "type":"structure",
       "required":["message"],
@@ -849,10 +857,7 @@
     },
     "CreateGraphInput":{
       "type":"structure",
-      "required":[
-        "graphName",
-        "provisionedMemory"
-      ],
+      "required":["graphName"],
       "members":{
         "graphName":{"shape":"GraphName"},
         "tags":{"shape":"TagMap"},
@@ -861,7 +866,13 @@
         "vectorSearchConfiguration":{"shape":"VectorSearchConfiguration"},
         "replicaCount":{"shape":"ReplicaCount"},
         "deletionProtection":{"shape":"Boolean"},
-        "provisionedMemory":{"shape":"ProvisionedMemory"}
+        "provisionedMemory":{
+          "shape":"ProvisionedMemory",
+          "deprecated":true,
+          "deprecatedMessage":"ProvisionedMemory is deprecated. Use ComputeConfiguration instead.",
+          "deprecatedSince":"2026-11-25"
+        },
+        "computeConfiguration":{"shape":"ComputeConfiguration"}
       }
     },
     "CreateGraphOutput":{
@@ -878,7 +889,13 @@
         "status":{"shape":"GraphStatus"},
         "statusReason":{"shape":"String"},
         "createTime":{"shape":"Timestamp"},
-        "provisionedMemory":{"shape":"ProvisionedMemory"},
+        "provisionedMemory":{
+          "shape":"ProvisionedMemory",
+          "deprecated":true,
+          "deprecatedMessage":"ProvisionedMemory is deprecated. Refer to ComputeConfiguration instead.",
+          "deprecatedSince":"2026-11-25"
+        },
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
         "endpoint":{"shape":"String"},
         "publicConnectivity":{"shape":"Boolean"},
         "vectorSearchConfiguration":{"shape":"VectorSearchConfiguration"},
@@ -1024,7 +1041,13 @@
         "status":{"shape":"GraphStatus"},
         "statusReason":{"shape":"String"},
         "createTime":{"shape":"Timestamp"},
-        "provisionedMemory":{"shape":"ProvisionedMemory"},
+        "provisionedMemory":{
+          "shape":"ProvisionedMemory",
+          "deprecated":true,
+          "deprecatedMessage":"ProvisionedMemory is deprecated. Refer to ComputeConfiguration instead.",
+          "deprecatedSince":"2026-11-25"
+        },
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
         "endpoint":{"shape":"String"},
         "publicConnectivity":{"shape":"Boolean"},
         "vectorSearchConfiguration":{"shape":"VectorSearchConfiguration"},
@@ -1364,7 +1387,13 @@
         "status":{"shape":"GraphStatus"},
         "statusReason":{"shape":"String"},
         "createTime":{"shape":"Timestamp"},
-        "provisionedMemory":{"shape":"ProvisionedMemory"},
+        "provisionedMemory":{
+          "shape":"ProvisionedMemory",
+          "deprecated":true,
+          "deprecatedMessage":"ProvisionedMemory is deprecated. Refer to ComputeConfiguration instead.",
+          "deprecatedSince":"2026-11-25"
+        },
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
         "endpoint":{"shape":"String"},
         "publicConnectivity":{"shape":"Boolean"},
         "vectorSearchConfiguration":{"shape":"VectorSearchConfiguration"},
@@ -1557,6 +1586,18 @@
       "min":1,
       "pattern":"(?!g-)[a-z][a-z0-9]*(-[a-z0-9]+)*"
     },
+    "GraphSessionConfiguration":{
+      "type":"structure",
+      "members":{
+        "minMemory":{"shape":"GraphSessionMemory"}
+      }
+    },
+    "GraphSessionMemory":{
+      "type":"integer",
+      "box":true,
+      "max":8,
+      "min":4
+    },
     "GraphSnapshotSummary":{
       "type":"structure",
       "required":[
@@ -1606,12 +1647,18 @@
         "name":{"shape":"GraphName"},
         "arn":{"shape":"String"},
         "status":{"shape":"GraphStatus"},
-        "provisionedMemory":{"shape":"ProvisionedMemory"},
+        "provisionedMemory":{
+          "shape":"ProvisionedMemory",
+          "deprecated":true,
+          "deprecatedMessage":"ProvisionedMemory is deprecated. Refer to ComputeConfiguration instead.",
+          "deprecatedSince":"2026-11-25"
+        },
         "publicConnectivity":{"shape":"Boolean"},
         "endpoint":{"shape":"String"},
         "replicaCount":{"shape":"ReplicaCount"},
         "kmsKeyIdentifier":{"shape":"String"},
-        "deletionProtection":{"shape":"Boolean"}
+        "deletionProtection":{"shape":"Boolean"},
+        "computeConfiguration":{"shape":"ComputeConfiguration"}
       }
     },
     "GraphSummaryList":{
@@ -2015,11 +2062,18 @@
       "type":"list",
       "member":{"shape":"PrivateGraphEndpointSummary"}
     },
+    "ProvisionedGraphConfiguration":{
+      "type":"structure",
+      "required":["memory"],
+      "members":{
+        "memory":{"shape":"ProvisionedMemory"}
+      }
+    },
     "ProvisionedMemory":{
       "type":"integer",
       "box":true,
       "max":24576,
-      "min":16
+      "min":1
     },
     "QueryLanguage":{
       "type":"string",
@@ -2095,7 +2149,13 @@
         "status":{"shape":"GraphStatus"},
         "statusReason":{"shape":"String"},
         "createTime":{"shape":"Timestamp"},
-        "provisionedMemory":{"shape":"ProvisionedMemory"},
+        "provisionedMemory":{
+          "shape":"ProvisionedMemory",
+          "deprecated":true,
+          "deprecatedMessage":"ProvisionedMemory is deprecated. Refer to ComputeConfiguration instead.",
+          "deprecatedSince":"2026-11-25"
+        },
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
         "endpoint":{"shape":"String"},
         "publicConnectivity":{"shape":"Boolean"},
         "vectorSearchConfiguration":{"shape":"VectorSearchConfiguration"},
@@ -2131,7 +2191,13 @@
           "locationName":"snapshotIdentifier"
         },
         "graphName":{"shape":"GraphName"},
-        "provisionedMemory":{"shape":"ProvisionedMemory"},
+        "provisionedMemory":{
+          "shape":"ProvisionedMemory",
+          "deprecated":true,
+          "deprecatedMessage":"ProvisionedMemory is deprecated. Use ComputeConfiguration instead.",
+          "deprecatedSince":"2026-11-25"
+        },
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
         "deletionProtection":{"shape":"Boolean"},
         "tags":{"shape":"TagMap"},
         "replicaCount":{"shape":"ReplicaCount"},
@@ -2152,7 +2218,13 @@
         "status":{"shape":"GraphStatus"},
         "statusReason":{"shape":"String"},
         "createTime":{"shape":"Timestamp"},
-        "provisionedMemory":{"shape":"ProvisionedMemory"},
+        "provisionedMemory":{
+          "shape":"ProvisionedMemory",
+          "deprecated":true,
+          "deprecatedMessage":"ProvisionedMemory is deprecated. Refer to ComputeConfiguration instead.",
+          "deprecatedSince":"2026-11-25"
+        },
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
         "endpoint":{"shape":"String"},
         "publicConnectivity":{"shape":"Boolean"},
         "vectorSearchConfiguration":{"shape":"VectorSearchConfiguration"},
@@ -2295,7 +2367,13 @@
         "status":{"shape":"GraphStatus"},
         "statusReason":{"shape":"String"},
         "createTime":{"shape":"Timestamp"},
-        "provisionedMemory":{"shape":"ProvisionedMemory"},
+        "provisionedMemory":{
+          "shape":"ProvisionedMemory",
+          "deprecated":true,
+          "deprecatedMessage":"ProvisionedMemory is deprecated. Refer to ComputeConfiguration instead.",
+          "deprecatedSince":"2026-11-25"
+        },
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
         "endpoint":{"shape":"String"},
         "publicConnectivity":{"shape":"Boolean"},
         "vectorSearchConfiguration":{"shape":"VectorSearchConfiguration"},
@@ -2372,7 +2450,13 @@
         "status":{"shape":"GraphStatus"},
         "statusReason":{"shape":"String"},
         "createTime":{"shape":"Timestamp"},
-        "provisionedMemory":{"shape":"ProvisionedMemory"},
+        "provisionedMemory":{
+          "shape":"ProvisionedMemory",
+          "deprecated":true,
+          "deprecatedMessage":"ProvisionedMemory is deprecated. Refer to ComputeConfiguration instead.",
+          "deprecatedSince":"2026-11-25"
+        },
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
         "endpoint":{"shape":"String"},
         "publicConnectivity":{"shape":"Boolean"},
         "vectorSearchConfiguration":{"shape":"VectorSearchConfiguration"},
@@ -2518,7 +2602,13 @@
           "locationName":"graphIdentifier"
         },
         "publicConnectivity":{"shape":"Boolean"},
-        "provisionedMemory":{"shape":"ProvisionedMemory"},
+        "provisionedMemory":{
+          "shape":"ProvisionedMemory",
+          "deprecated":true,
+          "deprecatedMessage":"ProvisionedMemory is deprecated. Use ComputeConfiguration instead.",
+          "deprecatedSince":"2026-11-25"
+        },
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
         "deletionProtection":{"shape":"Boolean"}
       }
     },
@@ -2536,7 +2626,13 @@
         "status":{"shape":"GraphStatus"},
         "statusReason":{"shape":"String"},
         "createTime":{"shape":"Timestamp"},
-        "provisionedMemory":{"shape":"ProvisionedMemory"},
+        "provisionedMemory":{
+          "shape":"ProvisionedMemory",
+          "deprecated":true,
+          "deprecatedMessage":"ProvisionedMemory is deprecated. Refer to ComputeConfiguration instead.",
+          "deprecatedSince":"2026-11-25"
+        },
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
         "endpoint":{"shape":"String"},
         "publicConnectivity":{"shape":"Boolean"},
         "vectorSearchConfiguration":{"shape":"VectorSearchConfiguration"},

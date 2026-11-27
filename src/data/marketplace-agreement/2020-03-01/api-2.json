@@ -624,6 +624,12 @@
       "min":12,
       "pattern":"[0-9]+"
     },
+    "AWSRegion":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"[a-z]{2,3}(-[a-z]+)+-\\d+"
+    },
     "AcceptAgreementApprovalInput":{
       "type":"structure",
       "members":{
@@ -2826,7 +2832,8 @@
       "type":"structure",
       "members":{
         "dimensionKey":{"shape":"BoundedString"},
-        "price":{"shape":"BoundedString"}
+        "price":{"shape":"BoundedString"},
+        "regionalPrices":{"shape":"RegionalPriceList"}
       }
     },
     "RateCardList":{
@@ -2842,6 +2849,23 @@
         "billingPeriod":{"shape":"BoundedString"},
         "price":{"shape":"BoundedString"}
       }
+    },
+    "RegionalPrice":{
+      "type":"structure",
+      "required":[
+        "region",
+        "price"
+      ],
+      "members":{
+        "region":{"shape":"AWSRegion"},
+        "price":{"shape":"BoundedString"}
+      }
+    },
+    "RegionalPriceList":{
+      "type":"list",
+      "member":{"shape":"RegionalPrice"},
+      "max":50,
+      "min":1
     },
     "RegistrationToken":{
       "type":"string",

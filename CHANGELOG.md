@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DynamoDb` - Adds `create_sid()` and `validateId()` to the DynamoDB `SessionHandler`, so PHP 8.6 no longer warns about them and strict session mode rejects unknown or expired session IDs. With strict mode on (the default in PHP 8.6), each resumed session makes one additional `GetItem` request, and the locking connection now also needs the `dynamodb:GetItem` permission.
+* `Aws\` - Reuse the default STS client across refreshes in `CredentialProvider::assumeRoleWithWebIdentityCredentialProvider()` to stop memory growth in long-running processes.
+* `Aws\NeptuneGraph` - Adds support for Graph Sessions, a new offering backed by on-demand ephemeral compute.
+* `Aws\RDS` - Aurora PostgreSQL and Aurora MySQL now let you delete a DB cluster and all its instances in a single API call or console action, without deleting each instance first. Cluster deletion also completes faster.
+* `Aws\OpenSearchService` - Catalog APIs for Optimized engine domains
+* `Aws\ElasticsearchService` - Catalog APIs for Optimized engine domains
+* `Aws\CloudWatch` - CloudWatch OTel enrichment supports a free basic option and a paid tag enrichment option, using the EnableTagEnrichment flag. Set it to true (default) to enrich vended metrics with resource ARN and tag labels for PromQL queries. Set it to false to get the free basic option without resource tags.
+* `Aws\MarketplaceAgreement` - This release adds per-Region pricing to AWS Marketplace usage-based pricing terms. Rate card items can now include Region-specific price overrides. When a Regional price is present for an AWS Region, it replaces the default price for that dimension.
+
 ## 3.408.0 - 2026-11-25
 
 * `Aws\ELBProxy` - Introducing Elastic Load Balancing for Envoy. Run your existing Envoy configurations with AWS integrations, managed scaling, and automatic patching.

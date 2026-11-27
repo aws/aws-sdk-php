@@ -784,12 +784,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result startOTelEnrichment(array{
  *     IncludeFilters?: list<array{Namespace?: string, MetricNames?: list<string>, ...}>,
  *     ExcludeFilters?: list<array{Namespace?: string, MetricNames?: list<string>, ...}>,
+ *     EnableTagEnrichment?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise startOTelEnrichmentAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise startOTelEnrichmentAsync(array{
  *     IncludeFilters?: list<array{Namespace?: string, MetricNames?: list<string>, ...}>,
  *     ExcludeFilters?: list<array{Namespace?: string, MetricNames?: list<string>, ...}>,
+ *     EnableTagEnrichment?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result stopMetricStreams(array $args = [])
@@ -812,12 +814,14 @@ use Aws\AwsClient;
  * @phpstan-method \Aws\Result updateOTelEnrichment(array{
  *     IncludeFilters?: list<array{Namespace?: string, MetricNames?: list<string>, ...}>,
  *     ExcludeFilters?: list<array{Namespace?: string, MetricNames?: list<string>, ...}>,
+ *     EnableTagEnrichment?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise updateOTelEnrichmentAsync(array $args = [])
  * @phpstan-method \GuzzleHttp\Promise\Promise updateOTelEnrichmentAsync(array{
  *     IncludeFilters?: list<array{Namespace?: string, MetricNames?: list<string>, ...}>,
  *     ExcludeFilters?: list<array{Namespace?: string, MetricNames?: list<string>, ...}>,
+ *     EnableTagEnrichment?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result updateResourceMetricsConfiguration(array $args = [])

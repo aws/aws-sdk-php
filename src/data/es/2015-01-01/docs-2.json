@@ -303,6 +303,7 @@
         "AutoTuneStatus$PendingDeletion": "<p>Indicates whether the Elasticsearch domain is being deleted.</p>",
         "AutomatedSnapshotPauseOptions$Enabled": "<p>Whether automated snapshot pause is enabled for the domain.</p>",
         "AutomatedSnapshotPauseRequestOptions$Enabled": "<p>Whether to enable or disable automated snapshot pause for the domain.</p>",
+        "CatalogOptions$Enabled": "<p>Whether the domain publishes data to the catalog. Accepted values true or false</p>",
         "CognitoOptions$Enabled": "<p>Specifies the option to enable Cognito for Kibana authentication.</p>",
         "ColdStorageOptions$Enabled": "<p>Enable cold storage option. Accepted values true or false</p>",
         "DomainEndpointOptions$EnforceHTTPS": "<p>Specify if only HTTPS endpoint should be enabled for the Elasticsearch domain.</p>",
@@ -319,6 +320,7 @@
         "LogPublishingOption$Enabled": "<p> Specifies whether given log publishing option is enabled or not.</p>",
         "NodeToNodeEncryptionOptions$Enabled": "<p>Specify true to enable node-to-node encryption.</p>",
         "OptionStatus$PendingDeletion": "<p>Indicates whether the Elasticsearch domain is being deleted.</p>",
+        "S3TablesEncryptionConfiguration$Enabled": "<p>Whether to encrypt the tables with the AWS KMS key specified in <code>KmsKeyArn</code>. Accepted values true or false</p>",
         "SAMLOptionsInput$Enabled": "<p>True if SAML is enabled.</p>",
         "SAMLOptionsOutput$Enabled": "<p>True if SAML is enabled.</p>",
         "ServiceSoftwareOptions$UpdateAvailable": "<p><code>True</code> if you are able to update you service software version. <code>False</code> if you are not able to update your service software version. </p>",
@@ -354,6 +356,27 @@
       "base": null,
       "refs": {
         "CancelDomainConfigChangeResponse$CancelledChangeProperties": "<p>The domain change properties that were cancelled.</p>"
+      }
+    },
+    "CatalogConfiguration": {
+      "base": "<p>The catalog that a domain publishes to. Specify exactly one catalog type.</p>",
+      "refs": {
+        "CatalogOptions$Catalog": "<p>The catalog that the domain publishes to.</p>"
+      }
+    },
+    "CatalogOptions": {
+      "base": "<p>Specifies the configuration for integrating the domain with a data catalog, so that the domain can publish its data as tables. The only supported catalog is an Amazon S3 Tables catalog that the service creates and manages for the domain.</p>",
+      "refs": {
+        "CatalogOptionsStatus$Options": "<p>The catalog options configured for the domain.</p>",
+        "CreateElasticsearchDomainRequest$CatalogOptions": "<p>Options for publishing the domain's data to a data catalog, such as a service-managed Amazon S3 Tables catalog.</p>",
+        "ElasticsearchDomainStatus$CatalogOptions": "<p>The catalog options for the given domain.</p>",
+        "UpdateElasticsearchDomainConfigRequest$CatalogOptions": "<p>Options for publishing the domain's data to a data catalog, such as a service-managed Amazon S3 Tables catalog.</p>"
+      }
+    },
+    "CatalogOptionsStatus": {
+      "base": "<p>The configured catalog options for the domain and their current status.</p>",
+      "refs": {
+        "ElasticsearchDomainConfig$CatalogOptions": "<p>The catalog options configured for the given domain and their current status.</p>"
       }
     },
     "ChangeProgressDetails": {
@@ -1340,6 +1363,12 @@
         "UpgradeStepItem$Issues": "<p>A list of strings containing detailed information about the errors encountered in a particular step.</p>"
       }
     },
+    "KmsKeyArn": {
+      "base": null,
+      "refs": {
+        "S3TablesEncryptionConfiguration$KmsKeyArn": "<p>The ARN of the AWS KMS key to encrypt the tables with. Takes the form <code>arn:aws:kms:region:account-id:key/key-id</code>.</p>"
+      }
+    },
     "KmsKeyId": {
       "base": null,
       "refs": {
@@ -1608,6 +1637,7 @@
         "AdvancedOptionsStatus$Status": "<p> Specifies the status of <code>OptionStatus</code> for advanced options for the specified Elasticsearch domain.</p>",
         "AdvancedSecurityOptionsStatus$Status": "<p> Status of the advanced security options for the specified Elasticsearch domain.</p>",
         "AutomatedSnapshotPauseOptionsStatus$Status": "<p>The current status of the automated snapshot pause options for the specified Elasticsearch domain.</p>",
+        "CatalogOptionsStatus$Status": "<p>The status of the catalog options for the domain.</p>",
         "CognitoOptionsStatus$Status": "<p>Specifies the status of the Cognito options for the specified Elasticsearch domain.</p>",
         "DeploymentStrategyOptionsStatus$Status": "<p>Specifies the status of the deployment strategy options for the specified Elasticsearch domain.</p>",
         "DomainEndpointOptionsStatus$Status": "<p>The status of the endpoint options for the Elasticsearch domain. See <code>OptionStatus</code> for the status information that's included. </p>",
@@ -1918,6 +1948,12 @@
         "PackageSource$S3Key": "<p>Key (file name) of the package.</p>"
       }
     },
+    "S3TablesEncryptionConfiguration": {
+      "base": "<p>Specifies the encryption settings for the tables in a service-managed Amazon S3 Tables catalog.</p>",
+      "refs": {
+        "ServiceManagedS3TablesCatalog$EncryptionConfiguration": "<p>Encryption settings for the tables in the catalog.</p>"
+      }
+    },
     "SAMLEntityId": {
       "base": null,
       "refs": {
@@ -1971,6 +2007,12 @@
       "base": "<p>Specifies Auto-Tune action severity. Valid values are LOW, MEDIUM and HIGH. </p>",
       "refs": {
         "ScheduledAutoTuneDetails$Severity": "<p>Specifies Auto-Tune action severity. Valid values are LOW, MEDIUM and HIGH. </p>"
+      }
+    },
+    "ServiceManagedS3TablesCatalog": {
+      "base": "<p>Specifies the configuration for an Amazon S3 Tables catalog that the service creates and manages for the domain.</p>",
+      "refs": {
+        "CatalogConfiguration$ServiceManagedS3Tables": "<p>An Amazon S3 Tables catalog that the service creates and manages for the domain.</p>"
       }
     },
     "ServiceSoftwareOptions": {

@@ -49,6 +49,12 @@
         "Proposer$accountId": "<p>The AWS account ID of the proposer.</p>"
       }
     },
+    "AWSRegion": {
+      "base": null,
+      "refs": {
+        "RegionalPrice$region": "<p>The AWS Region that the price override applies to.</p>"
+      }
+    },
     "AcceptAgreementApprovalInput": {
       "base": null,
       "refs": {}
@@ -762,6 +768,7 @@
         "RateCardItem$price": "<p>Per unit price for the product dimension that's used for calculating the amount to be charged.</p>",
         "RecurringPaymentTerm$billingPeriod": "<p>Defines the recurrence at which buyers are charged.</p>",
         "RecurringPaymentTerm$price": "<p>Amount charged to the buyer every billing period.</p>",
+        "RegionalPrice$price": "<p>The per unit price for the product dimension in the specified AWS Region.</p>",
         "ScheduleItem$chargeAmount": "<p>The price that the customer would pay on the scheduled date (chargeDate).</p>",
         "Selector$type": "<p>Category of selector.</p>",
         "Selector$value": "<p>Contract duration. This field supports the ISO 8601 format. </p>",
@@ -1848,6 +1855,18 @@
       "refs": {
         "AcceptedTerm$recurringPaymentTerm": "<p>Defines a pricing model where customers are charged a fixed recurring price at the end of each billing period.</p>",
         "AgreementRequestTerm$recurringPaymentTerm": "<p>Defines a pricing model where customers are charged a fixed recurring price at the end of each billing period.</p>"
+      }
+    },
+    "RegionalPrice": {
+      "base": "<p>A per-Region price override for a product dimension in a rate card.</p>",
+      "refs": {
+        "RegionalPriceList$member": null
+      }
+    },
+    "RegionalPriceList": {
+      "base": null,
+      "refs": {
+        "RateCardItem$regionalPrices": "<p>The per-Region price overrides for the product dimension. When a Regional price is present for an AWS Region, it replaces the default <code>price</code>. This field is absent when the offer doesn't define regional price overrides.</p>"
       }
     },
     "RegistrationToken": {

@@ -601,6 +601,7 @@
         "AutoTuneStatus$PendingDeletion": "<p>Indicates whether the domain is being deleted.</p>",
         "AutomatedSnapshotPauseOptions$Enabled": "<p>Whether automated snapshot pause is enabled for the domain.</p>",
         "AutomatedSnapshotPauseRequestOptions$Enabled": "<p>Whether to enable or disable automated snapshot pause for the domain.</p>",
+        "CatalogOptions$Enabled": "<p>Whether the domain publishes data to the catalog.</p>",
         "CategoryDiffResult$Truncated": "<p>Whether <code>Items</code> omits some differences because the category contained more than the response can carry. The counts remain complete when this is <code>true</code>.</p>",
         "ClusterConfig$DedicatedMasterEnabled": "<p>Indicates whether dedicated master nodes are enabled for the cluster.<code>True</code> if the cluster will use a dedicated master node.<code>False</code> if the cluster will not.</p>",
         "ClusterConfig$ZoneAwarenessEnabled": "<p>Indicates whether multiple Availability Zones are enabled. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-multiaz.html\">Configuring a multi-AZ domain in Amazon OpenSearch Service</a>.</p>",
@@ -648,6 +649,7 @@
         "PackageVendingOptions$VendingEnabled": "<p>Indicates whether the package vending feature is enabled, allowing the package to be used by other users.</p>",
         "PutDefaultApplicationSettingRequest$setAsDefault": "<p>Set to true to set the specified ARN as the default application. Set to false to clear the default application.</p>",
         "RollbackServiceSoftwareOptions$RollbackAvailable": "<p>Whether a service software rollback is available for the domain.</p>",
+        "S3TablesEncryptionConfiguration$Enabled": "<p>Whether to encrypt the tables with the AWS KMS key specified in <code>KmsKeyArn</code>.</p>",
         "S3VectorsEngine$Enabled": "<p>Enables S3 vectors engine features.</p>",
         "SAMLOptionsInput$Enabled": "<p>True to enable SAML authentication for a domain.</p>",
         "SAMLOptionsOutput$Enabled": "<p>True if SAML is enabled.</p>",
@@ -751,6 +753,27 @@
         "DeregisterCapabilityResponse$status": "<p>The status of the deregistration operation. Returns <code>deleting</code> when the capability is being removed.</p>",
         "GetCapabilityResponse$status": "<p>The current status of the capability. Possible values: <code>creating</code>, <code>create_failed</code>, <code>active</code>, <code>updating</code>, <code>update_failed</code>, <code>deleting</code>, <code>delete_failed</code>.</p>",
         "RegisterCapabilityResponse$status": "<p>The current status of the capability. Possible values: <code>creating</code>, <code>create_failed</code>, <code>active</code>, <code>updating</code>, <code>update_failed</code>, <code>deleting</code>, <code>delete_failed</code>.</p>"
+      }
+    },
+    "CatalogConfiguration": {
+      "base": "<p>The catalog that a domain publishes to. Specify exactly one catalog type.</p>",
+      "refs": {
+        "CatalogOptions$Catalog": "<p>The catalog that the domain publishes to.</p>"
+      }
+    },
+    "CatalogOptions": {
+      "base": "<p>Container for the parameters that configure the domain's integration with a data catalog, so that the domain can publish its data as tables. The only supported catalog is an Amazon S3 Tables catalog that OpenSearch Service creates and manages for the domain.</p>",
+      "refs": {
+        "CatalogOptionsStatus$Options": "<p>The catalog options configured for the domain.</p>",
+        "CreateDomainRequest$CatalogOptions": "<p>Options for publishing the domain's data to a data catalog, such as a service-managed Amazon S3 Tables catalog.</p>",
+        "DomainStatus$CatalogOptions": "<p>The catalog options for the domain.</p>",
+        "UpdateDomainConfigRequest$CatalogOptions": "<p>Options for publishing the domain's data to a data catalog, such as a service-managed Amazon S3 Tables catalog.</p>"
+      }
+    },
+    "CatalogOptionsStatus": {
+      "base": "<p>The configured catalog options for the domain and their current status.</p>",
+      "refs": {
+        "DomainConfig$CatalogOptions": "<p>The catalog options configured for the domain and their current status.</p>"
       }
     },
     "CategoryDiffResult": {
@@ -2614,7 +2637,8 @@
       "refs": {
         "CreateApplicationRequest$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the application's data at rest. If provided, the application uses your customer-managed key for encryption. If omitted, the application uses an AWS-managed key. The KMS key must be in the same region as the application.</p>",
         "CreateApplicationResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the application's data at rest.</p>",
-        "GetApplicationResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the application's data at rest.</p>"
+        "GetApplicationResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the application's data at rest.</p>",
+        "S3TablesEncryptionConfiguration$KmsKeyArn": "<p>The ARN of the AWS KMS key to encrypt the tables with. Takes the form <code>arn:aws:kms:region:account-id:key/key-id</code>.</p>"
       }
     },
     "KmsKeyId": {
@@ -3200,6 +3224,7 @@
         "AdvancedOptionsStatus$Status": "<p>The status of advanced options for the specified domain.</p>",
         "AdvancedSecurityOptionsStatus$Status": "<p>Status of the fine-grained access control settings for a domain.</p>",
         "AutomatedSnapshotPauseOptionsStatus$Status": "<p>The current status of the automated snapshot pause options for the domain.</p>",
+        "CatalogOptionsStatus$Status": "<p>The status of the catalog options for the domain.</p>",
         "ClusterConfigStatus$Status": "<p>The status of cluster configuration options for the specified domain.</p>",
         "CognitoOptionsStatus$Status": "<p>The status of the Cognito options for the specified domain.</p>",
         "DeploymentStrategyOptionsStatus$Status": "<p>The current status of the deployment strategy options for the domain.</p>",
@@ -3759,6 +3784,12 @@
         "PackageSource$S3Key": "<p>Key (file name) of the package.</p>"
       }
     },
+    "S3TablesEncryptionConfiguration": {
+      "base": "<p>Encryption settings for the tables in a service-managed Amazon S3 Tables catalog.</p>",
+      "refs": {
+        "ServiceManagedS3TablesCatalog$EncryptionConfiguration": "<p>Encryption settings for the tables in the catalog.</p>"
+      }
+    },
     "S3VectorsEngine": {
       "base": "<p>Options for enabling S3 vectors engine features on the specified domain.</p>",
       "refs": {
@@ -3870,6 +3901,12 @@
       "refs": {
         "AIMLOptionsInput$ServerlessVectorAcceleration": "<p>Specifies whether to enable serverless vector acceleration for the domain. When enabled, provides <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/gpu-acceleration-vector-index.html\">GPU-accelerated</a> vector search capabilities for improved performance on vector workloads.</p>",
         "AIMLOptionsOutput$ServerlessVectorAcceleration": "<p>The current serverless vector acceleration configuration for the domain.</p>"
+      }
+    },
+    "ServiceManagedS3TablesCatalog": {
+      "base": "<p>Configuration for an Amazon S3 Tables catalog that OpenSearch Service creates and manages for the domain.</p>",
+      "refs": {
+        "CatalogConfiguration$ServiceManagedS3Tables": "<p>An Amazon S3 Tables catalog that OpenSearch Service creates and manages for the domain.</p>"
       }
     },
     "ServiceOptions": {

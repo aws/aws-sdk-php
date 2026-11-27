@@ -5,9 +5,9 @@
     "CancelExportTask": "<p>Cancel the specified export task.</p>",
     "CancelImportTask": "<p>Deletes the specified import task.</p>",
     "CancelQuery": "<p>Cancels a specified query.</p>",
-    "CreateGraph": "<p>Creates a new Neptune Analytics graph.</p>",
+    "CreateGraph": "<p>Creates a new Neptune Analytics graph.</p> <p>Neptune Analytics supports two types of graphs, selected using <code>computeConfiguration</code>:</p> <ul> <li> <p> <i>Provisioned graphs</i> use dedicated compute that is always available. Use provisioned graphs for workloads that require higher memory or predictable latency.</p> </li> <li> <p> <i>Graph sessions</i> use ephemeral compute that is bootstrapped when a query is sent to the graph. The compute is automatically stopped after a few minutes with no traffic. The next query sent to the graph bootstraps the compute again, so queries that bootstrap the compute are subject to cold start latency.</p> </li> </ul>",
     "CreateGraphSnapshot": "<p>Creates a snapshot of the specific graph.</p>",
-    "CreateGraphUsingImportTask": "<p>Creates a new Neptune Analytics graph and imports data into it, either from Amazon Simple Storage Service (S3) or from a Neptune database or a Neptune database snapshot.</p> <p>The data can be loaded from files in S3 that in either the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
+    "CreateGraphUsingImportTask": "<p>Creates a new Neptune Analytics graph and imports data into it, either from Amazon Simple Storage Service (S3) or from a Neptune database or a Neptune database snapshot.</p> <p>The data can be loaded from files in S3 that in either the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p> <note> <p>Graph session cannot be created using this API. Create an empty Graph Session using <a href=\"https://docs.aws.amazon.com/neptune-analytics/latest/apiref/API_CreateGraph.html\">CreateGraph</a> or restore a snapshot as Graph Session using <a href=\"https://docs.aws.amazon.com/neptune-analytics/latest/apiref/API_RestoreGraphFromSnapshot.html\">RestoreGraphFromSnapshot</a> and use <a href=\"https://docs.aws.amazon.com/neptune-analytics/latest/userguide/batch-load.html\">neptune.load CALL procedure</a> to load data into the Graph Session instead.</p> </note>",
     "CreatePrivateGraphEndpoint": "<p>Create a private graph endpoint to allow private access to the graph from within a VPC. You can attach security groups to the private graph endpoint.</p> <note> <p>VPC endpoint charges apply.</p> </note>",
     "DeleteGraph": "<p>Deletes the specified graph. Graphs cannot be deleted if delete-protection is enabled.</p>",
     "DeleteGraphSnapshot": "<p>Deletes the specified graph snapshot.</p>",
@@ -30,9 +30,9 @@
     "ResetGraph": "<p>Empties the data from a specified Neptune Analytics graph.</p>",
     "RestoreGraphFromSnapshot": "<p>Restores a graph from a snapshot.</p>",
     "StartExportTask": "<p>Export data from an existing Neptune Analytics graph to Amazon S3. The graph state should be <code>AVAILABLE</code>.</p>",
-    "StartGraph": "<p>Starts the specific graph.</p>",
-    "StartImportTask": "<p>Import data into existing Neptune Analytics graph from Amazon Simple Storage Service (S3). The graph needs to be empty and in the AVAILABLE state.</p>",
-    "StopGraph": "<p>Stops the specific graph.</p>",
+    "StartGraph": "<p>Starts the specific graph.</p> <note> <p>Graph sessions are started automatically when a query is sent to the graph. While this API is supported for graph sessions, it isn't required.</p> </note>",
+    "StartImportTask": "<p>Import data into existing Neptune Analytics graph from Amazon Simple Storage Service (S3). The graph needs to be empty and in the AVAILABLE state.</p> <note> <p>Graph sessions don't support this API. Use <a href=\"https://docs.aws.amazon.com/neptune-analytics/latest/userguide/batch-load.html\">neptune.load CALL procedure</a> to load data into the Graph Session instead.</p> </note>",
+    "StopGraph": "<p>Stops the specific graph.</p> <note> <p>Graph sessions are stopped automatically after a few minutes with no traffic. While this API is supported for graph sessions, it isn't required.</p> </note>",
     "TagResource": "<p>Adds tags to the specified resource.</p>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
     "UpdateGraph": "<p>Updates the configuration of a specified Neptune Analytics graph</p>"
@@ -119,6 +119,23 @@
     "CancelQueryInput": {
       "base": null,
       "refs": {}
+    },
+    "ComputeConfiguration": {
+      "base": "<p>The compute configuration of a graph. A graph is either a provisioned graph or a graph session.</p>",
+      "refs": {
+        "CreateGraphInput$computeConfiguration": "<p>The compute configuration for the new graph. Specify <code>provisionedGraph</code> to create a provisioned graph with dedicated, always-available compute, or <code>graphSession</code> to create a graph session that uses ephemeral compute bootstrapped on demand when a query is sent, and is subject to cold start latency.</p>",
+        "CreateGraphOutput$computeConfiguration": "<p>The compute configuration of the graph: either a provisioned graph or a graph session.</p>",
+        "DeleteGraphOutput$computeConfiguration": "<p>The compute configuration of the graph: either a provisioned graph or a graph session.</p>",
+        "GetGraphOutput$computeConfiguration": "<p>The compute configuration of the graph: either a provisioned graph or a graph session.</p>",
+        "GraphSummary$computeConfiguration": "<p>The compute configuration of the graph: either a provisioned graph or a graph session.</p>",
+        "ResetGraphOutput$computeConfiguration": "<p>The compute configuration of the graph: either a provisioned graph or a graph session.</p>",
+        "RestoreGraphFromSnapshotInput$computeConfiguration": "<p>The compute configuration for the restored graph. A snapshot can be restored into either a provisioned graph or a graph session, regardless of the compute type of the source graph. A snapshot taken from a provisioned graph can be restored into a graph session as long as the data in the snapshot fits within the graph session.</p>",
+        "RestoreGraphFromSnapshotOutput$computeConfiguration": "<p>The compute configuration of the graph: either a provisioned graph or a graph session.</p>",
+        "StartGraphOutput$computeConfiguration": "<p>The compute configuration of the graph: either a provisioned graph or a graph session.</p>",
+        "StopGraphOutput$computeConfiguration": "<p>The compute configuration of the graph: either a provisioned graph or a graph session.</p>",
+        "UpdateGraphInput$computeConfiguration": "<p>The updated compute configuration for the graph. A graph session can be scaled up to a provisioned graph, and a provisioned graph can be scaled down to a graph session, as long as the data in the graph fits within the graph session.</p>",
+        "UpdateGraphOutput$computeConfiguration": "<p>The compute configuration of the graph: either a provisioned graph or a graph session.</p>"
+      }
     },
     "ConflictException": {
       "base": "<p>Raised when a conflict is encountered.</p>",
@@ -497,6 +514,18 @@
         "UpdateGraphOutput$name": "<p>The name of the graph.</p>"
       }
     },
+    "GraphSessionConfiguration": {
+      "base": "<p>The compute configuration for a graph session.</p>",
+      "refs": {
+        "ComputeConfiguration$graphSession": "<p>Configuration for a graph session. A graph session uses ephemeral compute that is bootstrapped when a query is sent to the graph. The compute is automatically stopped after a few minutes with no traffic; the next query bootstraps the compute again. Queries that bootstrap the compute are subject to cold start latency.</p>"
+      }
+    },
+    "GraphSessionMemory": {
+      "base": null,
+      "refs": {
+        "GraphSessionConfiguration$minMemory": "<p>The minimum Session Neptune Capacity Units (s-NCUs) available to the graph session.</p> <p>A graph session can burst up to 2x the configured min memory. For example, a <code>minMemory</code> of 4 can burst up to 8 s-NCUs, and a <code>minMemory</code> of 8 can burst up to 16 s-NCUs.</p>"
+      }
+    },
     "GraphSnapshotSummary": {
       "base": "<p>Details about a graph snapshot.</p>",
       "refs": {
@@ -547,8 +576,8 @@
         "CreateGraphUsingImportTaskInput$importOptions": "<p>Contains options for controlling the import process. For example, if the <code>failOnError</code> key is set to <code>false</code>, the import skips problem data and attempts to continue (whereas if set to <code>true</code>, the default, or if omitted, the import operation halts immediately when an error is encountered.</p>",
         "CreateGraphUsingImportTaskOutput$importOptions": "<p>Contains options for controlling the import process. For example, if the <code>failOnError</code> key is set to <code>false</code>, the import skips problem data and attempts to continue (whereas if set to <code>true</code>, the default, or if omitted, the import operation halts immediately when an error is encountered.</p>",
         "GetImportTaskOutput$importOptions": "<p>Contains options for controlling the import process. For example, if the <code>failOnError</code> key is set to <code>false</code>, the import skips problem data and attempts to continue (whereas if set to <code>true</code>, the default, or if omitted, the import operation halts immediately when an error is encountered.</p>",
-        "StartImportTaskInput$importOptions": null,
-        "StartImportTaskOutput$importOptions": null
+        "StartImportTaskInput$importOptions": "<p>Contains options for controlling the import process. For example, if the <code>failOnError</code> key is set to <code>false</code>, the import skips problem data and attempts to continue (whereas if set to <code>true</code>, the default, or if omitted, the import operation halts immediately when an error is encountered.</p>",
+        "StartImportTaskOutput$importOptions": "<p>Contains options for controlling the import process. For example, if the <code>failOnError</code> key is set to <code>false</code>, the import skips problem data and attempts to continue (whereas if set to <code>true</code>, the default, or if omitted, the import operation halts immediately when an error is encountered.</p>"
       }
     },
     "ImportTaskDetails": {
@@ -836,23 +865,30 @@
         "ListPrivateGraphEndpointsOutput$privateGraphEndpoints": "<p>A list of private endpoints for the specified Neptune Analytics graph.</p>"
       }
     },
+    "ProvisionedGraphConfiguration": {
+      "base": "<p>The compute configuration for a provisioned graph.</p>",
+      "refs": {
+        "ComputeConfiguration$provisionedGraph": "<p>Configuration for a provisioned graph. A provisioned graph uses dedicated compute that is always available. Use provisioned graphs for workloads that require higher memory or predictable latency.</p>"
+      }
+    },
     "ProvisionedMemory": {
       "base": null,
       "refs": {
-        "CreateGraphInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Min = 16</p>",
-        "CreateGraphOutput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 16</p>",
+        "CreateGraphInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Min = 16</p> <note> <p>This field is deprecated. We recommend using <code>computeConfiguration</code> instead.</p> </note>",
+        "CreateGraphOutput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 16</p> <note> <p>This field is deprecated. For backward compatibility, it returns <code>memory</code> for a <code>provisionedGraph</code> and <code>minMemory</code> for a <code>graphSession</code>. Use <code>computeConfiguration</code> instead.</p> </note>",
         "CreateGraphUsingImportTaskInput$maxProvisionedMemory": "<p>The maximum provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Default: 1024, or the approved upper limit for your account.</p> <p> If both the minimum and maximum values are specified, the final <code>provisioned-memory</code> will be chosen per the actual size of your imported data. If neither value is specified, 128 m-NCUs are used.</p>",
         "CreateGraphUsingImportTaskInput$minProvisionedMemory": "<p>The minimum provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Default: 16</p>",
-        "DeleteGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
-        "GetGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
-        "GraphSummary$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
-        "ResetGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
-        "RestoreGraphFromSnapshotInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 16</p>",
-        "RestoreGraphFromSnapshotOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
-        "StartGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
-        "StopGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
-        "UpdateGraphInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 16</p>",
-        "UpdateGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>"
+        "DeleteGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p> <note> <p>This field is deprecated. For backward compatibility, it returns <code>memory</code> for a <code>provisionedGraph</code> and <code>minMemory</code> for a <code>graphSession</code>. Use <code>computeConfiguration</code> instead.</p> </note>",
+        "GetGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p> <note> <p>This field is deprecated. For backward compatibility, it returns <code>memory</code> for a <code>provisionedGraph</code> and <code>minMemory</code> for a <code>graphSession</code>. Use <code>computeConfiguration</code> instead.</p> </note>",
+        "GraphSummary$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p> <note> <p>This field is deprecated. For backward compatibility, it returns <code>memory</code> for a <code>provisionedGraph</code> and <code>minMemory</code> for a <code>graphSession</code>. Use <code>computeConfiguration</code> instead.</p> </note>",
+        "ProvisionedGraphConfiguration$memory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p>",
+        "ResetGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p> <note> <p>This field is deprecated. For backward compatibility, it returns <code>memory</code> for a <code>provisionedGraph</code> and <code>minMemory</code> for a <code>graphSession</code>. Use <code>computeConfiguration</code> instead.</p> </note>",
+        "RestoreGraphFromSnapshotInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 16</p> <note> <p>This field is deprecated. We recommend using <code>computeConfiguration</code> instead.</p> </note>",
+        "RestoreGraphFromSnapshotOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p> <note> <p>This field is deprecated. For backward compatibility, it returns <code>memory</code> for a <code>provisionedGraph</code> and <code>minMemory</code> for a <code>graphSession</code>. Use <code>computeConfiguration</code> instead.</p> </note>",
+        "StartGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p> <note> <p>This field is deprecated. For backward compatibility, it returns <code>memory</code> for a <code>provisionedGraph</code> and <code>minMemory</code> for a <code>graphSession</code>. Use <code>computeConfiguration</code> instead.</p> </note>",
+        "StopGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p> <note> <p>This field is deprecated. For backward compatibility, it returns <code>memory</code> for a <code>provisionedGraph</code> and <code>minMemory</code> for a <code>graphSession</code>. Use <code>computeConfiguration</code> instead.</p> </note>",
+        "UpdateGraphInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 16</p> <note> <p>This field is deprecated. We recommend using <code>computeConfiguration</code> instead.</p> </note>",
+        "UpdateGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p> <note> <p>This field is deprecated. For backward compatibility, it returns <code>memory</code> for a <code>provisionedGraph</code> and <code>minMemory</code> for a <code>graphSession</code>. Use <code>computeConfiguration</code> instead.</p> </note>"
       }
     },
     "QueryLanguage": {
@@ -1110,7 +1146,7 @@
         "RestoreGraphFromSnapshotOutput$statusReason": "<p>The reason that the graph has this status.</p>",
         "RestoreGraphFromSnapshotOutput$endpoint": "<p>The graph endpoint.</p>",
         "RestoreGraphFromSnapshotOutput$buildNumber": "<p>The build number of the graph.</p>",
-        "ServiceQuotaExceededException$message": null,
+        "ServiceQuotaExceededException$message": "<p>A message describing the problem.</p>",
         "ServiceQuotaExceededException$resourceId": "<p>The identifier of the resource that exceeded quota.</p>",
         "ServiceQuotaExceededException$resourceType": "<p>The type of the resource that exceeded quota. Ex: Graph, Snapshot</p>",
         "ServiceQuotaExceededException$serviceCode": "<p>The service code that exceeded quota.</p>",
@@ -1127,7 +1163,7 @@
         "StopGraphOutput$endpoint": "<p>The graph endpoint.</p>",
         "StopGraphOutput$buildNumber": "<p>The build number of the graph.</p>",
         "ThrottlingException$message": "<p>A message describing the problem.</p>",
-        "UnprocessableException$message": null,
+        "UnprocessableException$message": "<p>A message describing the problem.</p>",
         "UpdateGraphOutput$arn": "<p>The ARN associated with the graph.</p>",
         "UpdateGraphOutput$statusReason": "<p>The reason that the graph has this status.</p>",
         "UpdateGraphOutput$endpoint": "<p>The graph endpoint.</p>",
@@ -1273,13 +1309,13 @@
         "CreateGraphInput$vectorSearchConfiguration": "<p>Specifies the number of dimensions for vector embeddings that will be loaded into the graph. The value is specified as <code>dimension=</code>value. Max = 65,535</p>",
         "CreateGraphOutput$vectorSearchConfiguration": "<p>The vector-search configuration for the graph, which specifies the vector dimension to use in the vector index, if any.</p>",
         "CreateGraphUsingImportTaskInput$vectorSearchConfiguration": "<p>Specifies the number of dimensions for vector embeddings that will be loaded into the graph. The value is specified as <code>dimension=</code>value. Max = 65,535 </p>",
-        "DeleteGraphOutput$vectorSearchConfiguration": null,
-        "GetGraphOutput$vectorSearchConfiguration": null,
-        "ResetGraphOutput$vectorSearchConfiguration": null,
-        "RestoreGraphFromSnapshotOutput$vectorSearchConfiguration": null,
-        "StartGraphOutput$vectorSearchConfiguration": null,
-        "StopGraphOutput$vectorSearchConfiguration": null,
-        "UpdateGraphOutput$vectorSearchConfiguration": null
+        "DeleteGraphOutput$vectorSearchConfiguration": "<p>The vector-search configuration for the graph, which specifies the vector dimension to use in the vector index, if any.</p>",
+        "GetGraphOutput$vectorSearchConfiguration": "<p>The vector-search configuration for the graph, which specifies the vector dimension to use in the vector index, if any.</p>",
+        "ResetGraphOutput$vectorSearchConfiguration": "<p>The vector-search configuration for the graph, which specifies the vector dimension to use in the vector index, if any.</p>",
+        "RestoreGraphFromSnapshotOutput$vectorSearchConfiguration": "<p>The vector-search configuration for the graph, which specifies the vector dimension to use in the vector index, if any.</p>",
+        "StartGraphOutput$vectorSearchConfiguration": "<p>The vector-search configuration for the graph, which specifies the vector dimension to use in the vector index, if any.</p>",
+        "StopGraphOutput$vectorSearchConfiguration": "<p>The vector-search configuration for the graph, which specifies the vector dimension to use in the vector index, if any.</p>",
+        "UpdateGraphOutput$vectorSearchConfiguration": "<p>The vector-search configuration for the graph, which specifies the vector dimension to use in the vector index, if any.</p>"
       }
     },
     "VectorSearchDimension": {

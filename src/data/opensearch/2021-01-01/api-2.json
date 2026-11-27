@@ -2380,6 +2380,28 @@
         "delete_failed"
       ]
     },
+    "CatalogConfiguration":{
+      "type":"structure",
+      "members":{
+        "ServiceManagedS3Tables":{"shape":"ServiceManagedS3TablesCatalog"}
+      },
+      "union":true
+    },
+    "CatalogOptions":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "Catalog":{"shape":"CatalogConfiguration"}
+      }
+    },
+    "CatalogOptionsStatus":{
+      "type":"structure",
+      "members":{
+        "Options":{"shape":"CatalogOptions"},
+        "Status":{"shape":"OptionStatus"}
+      }
+    },
     "CategoryDiffResult":{
       "type":"structure",
       "members":{
@@ -2681,6 +2703,7 @@
         "NodeToNodeEncryptionOptions":{"shape":"NodeToNodeEncryptionOptions"},
         "AdvancedOptions":{"shape":"AdvancedOptions"},
         "LogPublishingOptions":{"shape":"LogPublishingOptions"},
+        "CatalogOptions":{"shape":"CatalogOptions"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsInput"},
         "IdentityCenterOptions":{"shape":"IdentityCenterOptionsInput"},
@@ -3773,6 +3796,7 @@
         "NodeToNodeEncryptionOptions":{"shape":"NodeToNodeEncryptionOptionsStatus"},
         "AdvancedOptions":{"shape":"AdvancedOptionsStatus"},
         "LogPublishingOptions":{"shape":"LogPublishingOptionsStatus"},
+        "CatalogOptions":{"shape":"CatalogOptionsStatus"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptionsStatus"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsStatus"},
         "IdentityCenterOptions":{"shape":"IdentityCenterOptionsStatus"},
@@ -3972,6 +3996,7 @@
         "NodeToNodeEncryptionOptions":{"shape":"NodeToNodeEncryptionOptions"},
         "AdvancedOptions":{"shape":"AdvancedOptions"},
         "LogPublishingOptions":{"shape":"LogPublishingOptions"},
+        "CatalogOptions":{"shape":"CatalogOptions"},
         "ServiceSoftwareOptions":{"shape":"ServiceSoftwareOptions"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptions"},
@@ -6473,6 +6498,13 @@
       "max":1024,
       "min":1
     },
+    "S3TablesEncryptionConfiguration":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
     "S3VectorsEngine":{
       "type":"structure",
       "members":{
@@ -6612,6 +6644,12 @@
       "type":"structure",
       "members":{
         "Enabled":{"shape":"Boolean"}
+      }
+    },
+    "ServiceManagedS3TablesCatalog":{
+      "type":"structure",
+      "members":{
+        "EncryptionConfiguration":{"shape":"S3TablesEncryptionConfiguration"}
       }
     },
     "ServiceOptions":{
@@ -7055,6 +7093,7 @@
         "AccessPolicies":{"shape":"PolicyDocument"},
         "IPAddressType":{"shape":"IPAddressType"},
         "LogPublishingOptions":{"shape":"LogPublishingOptions"},
+        "CatalogOptions":{"shape":"CatalogOptions"},
         "EncryptionAtRestOptions":{"shape":"EncryptionAtRestOptions"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "NodeToNodeEncryptionOptions":{"shape":"NodeToNodeEncryptionOptions"},

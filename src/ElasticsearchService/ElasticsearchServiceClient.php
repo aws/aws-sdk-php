@@ -64,6 +64,7 @@ use Aws\AwsClient;
  *     NodeToNodeEncryptionOptions?: array{Enabled?: bool, ...},
  *     AdvancedOptions?: array<string, string>,
  *     LogPublishingOptions?: array<string, array{CloudWatchLogsLogGroupArn?: string, Enabled?: bool, ...}>,
+ *     CatalogOptions?: array{Enabled?: bool, Catalog?: array{ServiceManagedS3Tables?: array, ...}, ...},
  *     DomainEndpointOptions?: array{
  *         EnforceHTTPS?: bool,
  *         TLSSecurityPolicy?: 'Policy-Min-TLS-1-0-2019-07'|'Policy-Min-TLS-1-2-2019-07'|'Policy-Min-TLS-1-2-PFS-2023-10'|'Policy-Min-TLS-1-2-RFC9151-FIPS-2024-08',
@@ -131,6 +132,7 @@ use Aws\AwsClient;
  *     NodeToNodeEncryptionOptions?: array{Enabled?: bool, ...},
  *     AdvancedOptions?: array<string, string>,
  *     LogPublishingOptions?: array<string, array{CloudWatchLogsLogGroupArn?: string, Enabled?: bool, ...}>,
+ *     CatalogOptions?: array{Enabled?: bool, Catalog?: array{ServiceManagedS3Tables?: array, ...}, ...},
  *     DomainEndpointOptions?: array{
  *         EnforceHTTPS?: bool,
  *         TLSSecurityPolicy?: 'Policy-Min-TLS-1-0-2019-07'|'Policy-Min-TLS-1-2-2019-07'|'Policy-Min-TLS-1-2-PFS-2023-10'|'Policy-Min-TLS-1-2-RFC9151-FIPS-2024-08',
@@ -443,6 +445,7 @@ use Aws\AwsClient;
  *     AdvancedOptions?: array<string, string>,
  *     AccessPolicies?: string,
  *     LogPublishingOptions?: array<string, array{CloudWatchLogsLogGroupArn?: string, Enabled?: bool, ...}>,
+ *     CatalogOptions?: array{Enabled?: bool, Catalog?: array{ServiceManagedS3Tables?: array, ...}, ...},
  *     DomainEndpointOptions?: array{
  *         EnforceHTTPS?: bool,
  *         TLSSecurityPolicy?: 'Policy-Min-TLS-1-0-2019-07'|'Policy-Min-TLS-1-2-2019-07'|'Policy-Min-TLS-1-2-PFS-2023-10'|'Policy-Min-TLS-1-2-RFC9151-FIPS-2024-08',
@@ -514,6 +517,7 @@ use Aws\AwsClient;
  *     AdvancedOptions?: array<string, string>,
  *     AccessPolicies?: string,
  *     LogPublishingOptions?: array<string, array{CloudWatchLogsLogGroupArn?: string, Enabled?: bool, ...}>,
+ *     CatalogOptions?: array{Enabled?: bool, Catalog?: array{ServiceManagedS3Tables?: array, ...}, ...},
  *     DomainEndpointOptions?: array{
  *         EnforceHTTPS?: bool,
  *         TLSSecurityPolicy?: 'Policy-Min-TLS-1-0-2019-07'|'Policy-Min-TLS-1-2-2019-07'|'Policy-Min-TLS-1-2-PFS-2023-10'|'Policy-Min-TLS-1-2-RFC9151-FIPS-2024-08',

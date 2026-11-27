@@ -1507,6 +1507,80 @@
         "description": "The following example deletes the DB cluster named mycluster and takes a final snapshot named mycluster-final-snapshot. The status of the DB cluster is available while the snapshot is being taken. ",
         "id": "example-1",
         "title": "To delete a DB cluster"
+      },
+      {
+        "input": {
+          "DBClusterIdentifier": "sample-cluster",
+          "DeleteDBInstances": true,
+          "SkipFinalSnapshot": true
+        },
+        "output": {
+          "DBCluster": {
+            "AllocatedStorage": 1,
+            "AssociatedRoles": [],
+            "AutoMinorVersionUpgrade": true,
+            "AvailabilityZones": [
+              "us-east-1a",
+              "us-east-1d",
+              "us-east-1c"
+            ],
+            "BackupRetentionPeriod": 7,
+            "ClusterCreateTime": "2026-10-24T05:19:14.105Z",
+            "CopyTagsToSnapshot": false,
+            "CrossAccountClone": false,
+            "DBClusterArn": "arn:aws:rds:us-east-1:123456789012:cluster:sample-cluster",
+            "DBClusterIdentifier": "sample-cluster",
+            "DBClusterMembers": [
+              {
+                "DBClusterParameterGroupStatus": "in-sync",
+                "DBInstanceIdentifier": "sample-cluster-instance-1",
+                "IsClusterWriter": true,
+                "PromotionTier": 1
+              }
+            ],
+            "DBClusterParameterGroup": "default.aurora-postgresql17",
+            "DatabaseInsightsMode": "standard",
+            "DbClusterResourceId": "cluster-EXAMPLE123456789",
+            "DeletionProtection": false,
+            "DomainMemberships": [],
+            "EarliestRestorableTime": "2026-10-24T05:19:19.661Z",
+            "Endpoint": "sample-cluster.cluster-############.us-east-1.rds.amazonaws.com",
+            "Engine": "aurora-postgresql",
+            "EngineLifecycleSupport": "open-source-rds-extended-support",
+            "EngineMode": "provisioned",
+            "EngineVersion": "17.9",
+            "HostedZoneId": "Z1RLNU0EXAMPLE",
+            "HttpEndpointEnabled": false,
+            "IAMDatabaseAuthenticationEnabled": true,
+            "InternetAccessGatewayEnabled": true,
+            "LatestRestorableTime": "2026-10-24T05:19:19.661Z",
+            "LocalWriteForwardingStatus": "disabled",
+            "MasterUsername": "postgres",
+            "MultiAZ": false,
+            "PerformanceInsightsEnabled": false,
+            "Port": 5432,
+            "PreferredBackupWindow": "05:05-05:35",
+            "PreferredMaintenanceWindow": "wed:09:32-wed:10:02",
+            "ReadReplicaIdentifiers": [],
+            "ReaderEndpoint": "sample-cluster.cluster-ro-############.us-east-1.rds.amazonaws.com",
+            "ServerlessV2PlatformVersion": "4",
+            "ServerlessV2ScalingConfiguration": {
+              "MaxCapacity": 16.0,
+              "MinCapacity": 0.0,
+              "SecondsUntilAutoPause": 300
+            },
+            "Status": "deleting",
+            "StorageEncrypted": false,
+            "StorageEncryptionType": "sse-rds",
+            "TagList": [],
+            "UpgradeRolloutOrder": "second",
+            "VPCNetworkingEnabled": false,
+            "VpcSecurityGroups": []
+          }
+        },
+        "description": "The following example deletes the Aurora DB cluster named sample-cluster and all of the DB instances in it in a single call.",
+        "id": "example-2",
+        "title": "To delete a DB cluster and all of its DB instances"
       }
     ],
     "DeleteDBClusterEndpoint": [

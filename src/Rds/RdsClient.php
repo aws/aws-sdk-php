@@ -2034,6 +2034,7 @@ use Aws\PresignUrlMiddleware;
  *     SkipFinalSnapshot?: bool,
  *     FinalDBSnapshotIdentifier?: string,
  *     DeleteAutomatedBackups?: bool,
+ *     DeleteDBInstances?: bool,
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteDBClusterAsync(array $args = []) (supported in versions 2014-10-31)
@@ -2042,6 +2043,7 @@ use Aws\PresignUrlMiddleware;
  *     SkipFinalSnapshot?: bool,
  *     FinalDBSnapshotIdentifier?: string,
  *     DeleteAutomatedBackups?: bool,
+ *     DeleteDBInstances?: bool,
  *     ...,
  * } $args = [])
  * @method \Aws\Result deleteDBClusterAutomatedBackup(array $args = []) (supported in versions 2014-10-31)

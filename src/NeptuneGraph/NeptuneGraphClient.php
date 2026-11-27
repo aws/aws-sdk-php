@@ -27,6 +27,7 @@ use Aws\AwsClient;
  *     replicaCount?: int,
  *     deletionProtection?: bool,
  *     provisionedMemory?: int,
+ *     computeConfiguration?: array{provisionedGraph?: array{memory?: int, ...}, graphSession?: array{minMemory?: int, ...}, ...},
  *     ...,
  * } $args = [])
  * @method \GuzzleHttp\Promise\Promise createGraphAsync(array $args = [])
@@ -39,6 +40,7 @@ use Aws\AwsClient;
  *     replicaCount?: int,
  *     deletionProtection?: bool,
  *     provisionedMemory?: int,
+ *     computeConfiguration?: array{provisionedGraph?: array{memory?: int, ...}, graphSession?: array{minMemory?: int, ...}, ...},
  *     ...,
  * } $args = [])
  * @method \Aws\Result createGraphSnapshot(array $args = [])
@@ -218,6 +220,7 @@ use Aws\AwsClient;
  *     snapshotIdentifier?: string,
  *     graphName?: string,
  *     provisionedMemory?: int,
+ *     computeConfiguration?: array{provisionedGraph?: array{memory?: int, ...}, graphSession?: array{minMemory?: int, ...}, ...},
  *     deletionProtection?: bool,
  *     tags?: array<string, string>,
  *     replicaCount?: int,
@@ -229,6 +232,7 @@ use Aws\AwsClient;
  *     snapshotIdentifier?: string,
  *     graphName?: string,
  *     provisionedMemory?: int,
+ *     computeConfiguration?: array{provisionedGraph?: array{memory?: int, ...}, graphSession?: array{minMemory?: int, ...}, ...},
  *     deletionProtection?: bool,
  *     tags?: array<string, string>,
  *     replicaCount?: int,
@@ -322,6 +326,7 @@ use Aws\AwsClient;
  *     graphIdentifier?: string,
  *     publicConnectivity?: bool,
  *     provisionedMemory?: int,
+ *     computeConfiguration?: array{provisionedGraph?: array{memory?: int, ...}, graphSession?: array{minMemory?: int, ...}, ...},
  *     deletionProtection?: bool,
  *     ...,
  * } $args = [])
@@ -330,6 +335,7 @@ use Aws\AwsClient;
  *     graphIdentifier?: string,
  *     publicConnectivity?: bool,
  *     provisionedMemory?: int,
+ *     computeConfiguration?: array{provisionedGraph?: array{memory?: int, ...}, graphSession?: array{minMemory?: int, ...}, ...},
  *     deletionProtection?: bool,
  *     ...,
  * } $args = [])

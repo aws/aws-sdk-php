@@ -1166,6 +1166,28 @@
       "type":"list",
       "member":{"shape":"CancelledChangeProperty"}
     },
+    "CatalogConfiguration":{
+      "type":"structure",
+      "members":{
+        "ServiceManagedS3Tables":{"shape":"ServiceManagedS3TablesCatalog"}
+      },
+      "union":true
+    },
+    "CatalogOptions":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "Catalog":{"shape":"CatalogConfiguration"}
+      }
+    },
+    "CatalogOptionsStatus":{
+      "type":"structure",
+      "members":{
+        "Options":{"shape":"CatalogOptions"},
+        "Status":{"shape":"OptionStatus"}
+      }
+    },
     "ChangeProgressDetails":{
       "type":"structure",
       "members":{
@@ -1331,6 +1353,7 @@
         "NodeToNodeEncryptionOptions":{"shape":"NodeToNodeEncryptionOptions"},
         "AdvancedOptions":{"shape":"AdvancedOptions"},
         "LogPublishingOptions":{"shape":"LogPublishingOptions"},
+        "CatalogOptions":{"shape":"CatalogOptions"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsInput"},
         "AutoTuneOptions":{"shape":"AutoTuneOptionsInput"},
@@ -2169,6 +2192,7 @@
         "NodeToNodeEncryptionOptions":{"shape":"NodeToNodeEncryptionOptionsStatus"},
         "AdvancedOptions":{"shape":"AdvancedOptionsStatus"},
         "LogPublishingOptions":{"shape":"LogPublishingOptionsStatus"},
+        "CatalogOptions":{"shape":"CatalogOptionsStatus"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptionsStatus"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsStatus"},
         "AutoTuneOptions":{"shape":"AutoTuneOptionsStatus"},
@@ -2209,6 +2233,7 @@
         "NodeToNodeEncryptionOptions":{"shape":"NodeToNodeEncryptionOptions"},
         "AdvancedOptions":{"shape":"AdvancedOptions"},
         "LogPublishingOptions":{"shape":"LogPublishingOptions"},
+        "CatalogOptions":{"shape":"CatalogOptions"},
         "ServiceSoftwareOptions":{"shape":"ServiceSoftwareOptions"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptions"},
@@ -2500,6 +2525,12 @@
     "Issues":{
       "type":"list",
       "member":{"shape":"Issue"}
+    },
+    "KmsKeyArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-zA-Z-]*:kms:[a-z0-9-]+:[0-9]{12}:key/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
     },
     "KmsKeyId":{
       "type":"string",
@@ -3175,6 +3206,13 @@
       "min":3
     },
     "S3Key":{"type":"string"},
+    "S3TablesEncryptionConfiguration":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
     "SAMLEntityId":{
       "type":"string",
       "max":512,
@@ -3242,6 +3280,12 @@
         "MEDIUM",
         "HIGH"
       ]
+    },
+    "ServiceManagedS3TablesCatalog":{
+      "type":"structure",
+      "members":{
+        "EncryptionConfiguration":{"shape":"S3TablesEncryptionConfiguration"}
+      }
     },
     "ServiceSoftwareOptions":{
       "type":"structure",
@@ -3459,6 +3503,7 @@
         "AdvancedOptions":{"shape":"AdvancedOptions"},
         "AccessPolicies":{"shape":"PolicyDocument"},
         "LogPublishingOptions":{"shape":"LogPublishingOptions"},
+        "CatalogOptions":{"shape":"CatalogOptions"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsInput"},
         "NodeToNodeEncryptionOptions":{"shape":"NodeToNodeEncryptionOptions"},
