@@ -409,7 +409,9 @@ class CredentialProvider
      */
     public static function assumeRoleWithWebIdentityCredentialProvider(array $config = [])
     {
-        return function () use ($config) {
+        $defaultStsClients = [];
+
+        return function () use ($config, &$defaultStsClients) {
             $arnFromEnv = getenv(self::ENV_ARN);
             $tokenFromEnv = getenv(self::ENV_TOKEN_FILE);
             $stsClient = isset($config['stsClient'])
@@ -427,7 +429,8 @@ class CredentialProvider
                     'RoleArn' => $arnFromEnv,
                     'WebIdentityTokenFile' => $tokenFromEnv,
                     'SessionName' => $sessionName,
-                    'client' => $stsClient,
+                    'client' => $stsClient
+                        ?? self::reusableWebIdentityStsClient($region, $defaultStsClients),
                     'region' => $region,
                     'source' => CredentialSources::ENVIRONMENT_STS_WEB_ID_TOKEN
                 ]);
@@ -457,7 +460,8 @@ class CredentialProvider
                         'RoleArn' => $profile['role_arn'],
                         'WebIdentityTokenFile' => $profile['web_identity_token_file'],
                         'SessionName' => $sessionName,
-                        'client' => $stsClient,
+                        'client' => $stsClient
+                            ?? self::reusableWebIdentityStsClient($region, $defaultStsClients),
                         'region' => $region,
                         'source' => CredentialSources::PROFILE_STS_WEB_ID_TOKEN
                     ]);
@@ -1139,6 +1143,25 @@ class CredentialProvider
 
         $ssoCredentials = $ssoResponse['roleCredentials'];
         return $ssoCredentials;
+    }
+
+    /**
+     * Reuses one default STS client per region across credential refreshes.
+     *
+     * @param string|null $region
+     * @param StsClient[] $clients
+     *
+     * @return StsClient
+     */
+    private static function reusableWebIdentityStsClient(
+        ?string $region,
+        array &$clients
+    ): StsClient
+    {
+        $region = $region ?: getenv(self::ENV_REGION) ?: null;
+
+        return $clients[$region ?? self::FALLBACK_REGION]
+            ??= AssumeRoleWithWebIdentityCredentialProvider::createDefaultStsClient($region);
     }
 
     /**

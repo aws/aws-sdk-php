@@ -48,6 +48,8 @@ EOT;
      */
     private const ENV_VARS_TO_TRACK = [
         'HOME',
+        'AWS_ENDPOINT_URL_STS',
+        'AWS_MAX_ATTEMPTS',
         'HOMEDRIVE',
         'HOMEPATH',
         CredentialProvider::ENV_KEY,
@@ -1709,6 +1711,63 @@ EOT;
         $this->assertNull($creds->getSecurityToken());
         $this->assertIsInt($creds->getExpiration());
         $this->assertFalse($creds->isExpired());
+    }
+
+    #[DataProvider('webIdentityRegionProvider')]
+    public function testAssumeRoleWebIdentityReusesDefaultStsClientAcrossRefreshes(
+        array $config,
+        string $cacheKey,
+        int $expectedNotices
+    ): void
+    {
+        $awsDir = $this->createAwsHome();
+        $tokenPath = $awsDir . '/token';
+        file_put_contents($tokenPath, 'token');
+        putenv('AWS_WEB_IDENTITY_TOKEN_FILE=' . $tokenPath);
+        putenv('AWS_ROLE_ARN=arn:aws:iam::012345678910:role/role_name');
+        // Make the first STS call fail fast and offline.
+        putenv('AWS_ENDPOINT_URL_STS=http://127.0.0.1:1');
+        putenv('AWS_MAX_ATTEMPTS=1');
+
+        $notices = 0;
+        set_error_handler(function () use (&$notices) {
+            $notices++;
+            return true;
+        }, E_USER_NOTICE);
+        try {
+            $provider = CredentialProvider::assumeRoleWithWebIdentityCredentialProvider($config);
+            $provider();
+            $sts = (new \ReflectionFunction($provider))
+                ->getClosureUsedVariables()['defaultStsClients'][$cacheKey];
+            $this->addMockResults($sts, [[
+                'Credentials' => [
+                    'AccessKeyId' => 'foo',
+                    'SecretAccessKey' => 'assumedSecret',
+                    'SessionToken' => null,
+                    'Expiration' => DateTimeResult::fromEpoch(time() + 10)
+                ],
+            ]]);
+
+            $creds = $provider()->wait();
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertSame(
+            $sts,
+            (new \ReflectionFunction($provider))
+                ->getClosureUsedVariables()['defaultStsClients'][$cacheKey]
+        );
+        $this->assertSame($expectedNotices, $notices);
+    }
+
+    public static function webIdentityRegionProvider(): array
+    {
+        return [
+            'configured region' => [['region' => 'us-west-2'], 'us-west-2', 0],
+            'fallback region' => [[], CredentialProvider::FALLBACK_REGION, 1],
+        ];
     }
 
     public function testAssumeRoleWebIdentityFromFilename(): void
