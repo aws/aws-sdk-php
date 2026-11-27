@@ -3,6 +3,7 @@ namespace Aws\Credentials;
 
 use Aws\Exception\AwsException;
 use Aws\Exception\CredentialsException;
+use Aws\Exception\NonRecoverableCredentialsException;
 use Aws\Result;
 use Aws\Sts\StsClient;
 use GuzzleHttp\Promise;
@@ -15,6 +16,17 @@ class AssumeRoleWithWebIdentityCredentialProvider
 {
     const ERROR_MSG = "Missing required 'AssumeRoleWithWebIdentityCredentialProvider' configuration option: ";
     const ENV_RETRIES = 'AWS_METADATA_SERVICE_NUM_ATTEMPTS';
+
+    /**
+     * STS error codes for an expired web identity token. The token file may
+     * already hold a newer token, so the provider re-reads it and retries.
+     * STS sends `ExpiredTokenException` for this case, and the spec names it
+     * `ExpiredToken`, so both are listed.
+     */
+    private const RETRYABLE_STS_ERROR_CODES = [
+        'ExpiredToken',
+        'ExpiredTokenException',
+    ];
 
     /** @var string */
     private $tokenFile;
@@ -30,9 +42,6 @@ class AssumeRoleWithWebIdentityCredentialProvider
 
     /** @var integer */
     private $retries;
-
-    /** @var integer */
-    private $authenticationAttempts;
 
     /** @var integer */
     private $tokenFileReadAttempts;
@@ -69,7 +78,6 @@ class AssumeRoleWithWebIdentityCredentialProvider
         }
 
         $this->retries = (int) getenv(self::ENV_RETRIES) ?: (isset($config['retries']) ? $config['retries'] : 3);
-        $this->authenticationAttempts = 0;
         $this->tokenFileReadAttempts = 0;
         $this->session = $config['SessionName']
             ?? 'aws-sdk-php-' . round(microtime(true) * 1000);
@@ -98,6 +106,8 @@ class AssumeRoleWithWebIdentityCredentialProvider
         return Promise\Coroutine::of(function () {
             $client = $this->client;
             $result = null;
+            // Counted per call, so each refresh gets its own retries.
+            $stsRetries = 0;
             while ($result == null) {
                 try {
                     $token = @file_get_contents($this->tokenFile);
@@ -138,28 +148,42 @@ class AssumeRoleWithWebIdentityCredentialProvider
                 try {
                     $result = $client->assumeRoleWithWebIdentity($assumeParams);
                 } catch (AwsException $e) {
-                    if ($e->getAwsErrorCode() == 'InvalidIdentityToken') {
-                        if ($this->authenticationAttempts < $this->retries) {
-                            sleep((int) pow(1.2, $this->authenticationAttempts));
-                        } else {
-                            throw new CredentialsException(
-                                "InvalidIdentityToken, retries exhausted"
-                            );
-                        }
-                    } else {
-                        throw new CredentialsException(
+                    // The token file may have been rotated since it was read.
+                    $isRetryable = in_array(
+                        $e->getAwsErrorCode(),
+                        self::RETRYABLE_STS_ERROR_CODES,
+                        true
+                    );
+                    if ($isRetryable && $stsRetries < $this->retries) {
+                        sleep((int) pow(1.2, $stsRetries));
+                        $stsRetries++;
+                        continue;
+                    }
+
+                    $isNonRecoverable = in_array(
+                        $e->getAwsErrorCode(),
+                        NonRecoverableCredentialsException::STS_NON_RECOVERABLE_ERROR_CODES,
+                        true
+                    );
+                    if ($isNonRecoverable) {
+                        throw new NonRecoverableCredentialsException(
                             "Error assuming role from web identity credentials",
                             0,
                             $e
                         );
                     }
+
+                    throw new CredentialsException(
+                        "Error assuming role from web identity credentials",
+                        0,
+                        $e
+                    );
                 } catch (\Exception $e) {
                     throw new CredentialsException(
                         "Error retrieving web identity credentials: " . $e->getMessage()
                         . " (" . $e->getCode() . ")"
                     );
                 }
-                $this->authenticationAttempts++;
             }
 
             yield $this->client->createCredentials(
@@ -197,7 +221,8 @@ class AssumeRoleWithWebIdentityCredentialProvider
 
         return new StsClient([
             'credentials' => false,
-            'region' => $region
+            'region' => $region,
+            'http' => CredentialsUtils::withSourceClientTimeouts(),
         ]);
     }
 }

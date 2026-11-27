@@ -20,4 +20,5 @@ final class CredentialSources
     const PROFILE_SSO_LEGACY = 'profile_sso_legacy';
     const PROFILE_PROCESS = 'profile_process';
     const PROFILE_LOGIN = 'profile_login';
+    const COGNITO_IDENTITY = 'cognito_identity';
 }

@@ -63,6 +63,9 @@ class InstanceProfileProvider
     /** @var array */
     private $config;
 
+    /** @var bool */
+    private $legacyStaticStability = true;
+
     /**
      * The constructor accepts the following options:
      *
@@ -98,6 +101,21 @@ class InstanceProfileProvider
     }
 
     /**
+     * Returns a copy without the provider's own static stability, for use under
+     * memoize(). The copy doesn't reuse previous credentials or extend expired
+     * ones. memoize() keeps the cached credentials and backs off instead.
+     *
+     * @internal
+     */
+    public function withRefreshLifecycle(): self
+    {
+        $provider = clone $this;
+        $provider->legacyStaticStability = false;
+
+        return $provider;
+    }
+
+    /**
      * Loads instance profile credentials.
      *
      * @return PromiseInterface
@@ -105,6 +123,12 @@ class InstanceProfileProvider
     public function __invoke($previousCredentials = null)
     {
         $this->attempts = 0;
+        // In defaultProvider(), memoize() keeps the previous credentials,
+        // so this provider doesn't fall back to them.
+        if (!$this->legacyStaticStability) {
+            $previousCredentials = null;
+        }
+
         return Promise\Coroutine::of(function () use ($previousCredentials) {
 
             // Retrieve token or switch out of secure mode
@@ -198,14 +222,15 @@ class InstanceProfileProvider
                         )
                     );
                 } catch (TransferException $e) {
-                    // 401 indicates insecure flow not supported, switch to
-                    // attempting secure mode for subsequent calls
                     if (($this->getExceptionStatusCode($e) === 500
                             || strpos($e->getMessage(), "cURL error 28") !== false)
                         && $previousCredentials instanceof Credentials
                     ) {
                         goto generateCredentials;
-                    } elseif (!empty($this->getExceptionStatusCode($e))
+                    }
+                    // A 401 indicates the insecure flow is not supported, so
+                    // switch to secure mode for subsequent calls.
+                    if (!empty($this->getExceptionStatusCode($e))
                         && $this->getExceptionStatusCode($e) === 401
                     ) {
                         $this->secureMode = true;
@@ -233,7 +258,9 @@ class InstanceProfileProvider
                 );
             }
 
-            if ($credentials->isExpired()) {
+            // Used directly, extend expired credentials as before. Under
+            // defaultProvider(), memoize() handles this.
+            if ($this->legacyStaticStability && $credentials->isExpired()) {
                 $credentials->extendExpiration();
             }
 

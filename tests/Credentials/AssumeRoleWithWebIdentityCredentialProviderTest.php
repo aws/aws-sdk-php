@@ -249,151 +249,241 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         }
     }
 
-    public function testRetryInvalidIdentityToken()
+    #[\PHPUnit\Framework\Attributes\DataProvider('stsErrorCodeProvider')]
+    public function testClassifiesStsErrorCodes(string $code, bool $nonRecoverable)
     {
         $dir = $this->clearEnv();
-        $result = [
-            'Credentials' => [
-                'AccessKeyId'     => 'foo',
-                'SecretAccessKey' => 'bar',
-                'SessionToken'    => 'baz',
-                'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
-            ],
-        ];
-        $retries = 1;
-
         $sts = new StsClient([
             'region' => 'us-west-2',
             'version' => 'latest',
             'credentials' => false,
-            'handler' => function () use (&$retries, $result) {
-                if (0 === $retries--) {
-                    return Promise\Create::promiseFor(new Result($result));
-                }
-
+            'retries' => 0,
+            'handler' => function () use ($code) {
                 return new StsException(
-                    "foo",
-                    new Command("foo"),
-                    ['code' => 'InvalidIdentityToken']
+                    'sts failure',
+                    new Command('AssumeRoleWithWebIdentity'),
+                    ['code' => $code]
                 );
             }
         ]);
-
         $tokenPath = $dir . '/my-token.jwt';
         file_put_contents($tokenPath, 'token');
 
-        $args['client'] = $sts;
-        $args['RoleArn'] = self::SAMPLE_ROLE_ARN;
-        $args['WebIdentityTokenFile'] = $tokenPath;
-        $provider = new AssumeRoleWithWebIdentityCredentialProvider($args);
-        $creds = $provider()->wait();
-        try {
-            $this->assertSame('foo', $creds->getAccessKeyId());
-            $this->assertSame('bar', $creds->getSecretKey());
-            $this->assertSame('baz', $creds->getSecurityToken());
-            $this->assertIsInt($creds->getExpiration());
-            $this->assertFalse($creds->isExpired());
-        } catch (\Exception $e) {
-            throw $e;
-        } finally {
-            unlink($tokenPath);
-        }
-    }
-
-    public function testThrowsExceptionWhenInvalidIdentityTokenRetriesExhausted()
-    {
-        $this->expectExceptionMessage("InvalidIdentityToken, retries exhausted");
-        $this->expectException(\Aws\Exception\CredentialsException::class);
-        $dir = $this->clearEnv();
-        $result = [
-            'Credentials' => [
-                'AccessKeyId'     => 'foo',
-                'SecretAccessKey' => 'bar',
-                'SessionToken'    => 'baz',
-                'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
-            ],
-        ];
-        $retries = 4;
-
-        $sts = new StsClient([
-            'region' => 'us-west-2',
-            'version' => 'latest',
-            'credentials' => false,
-            'handler' => function () use (&$retries, $result) {
-                if (0 === $retries--) {
-                    return Promise\Create::promiseFor(new Result($result));
-                }
-
-                return new StsException(
-                    "foo",
-                    new Command("foo"),
-                    ['code' => 'InvalidIdentityToken']
-                );
-            }
-        ]);
-
-        $tokenPath = $dir . '/my-token.jwt';
-        file_put_contents($tokenPath, 'token');
-
-        $args['client'] = $sts;
-        $args['RoleArn'] = self::SAMPLE_ROLE_ARN;
-        $args['WebIdentityTokenFile'] = $tokenPath;
-        $provider = new AssumeRoleWithWebIdentityCredentialProvider($args);
-        try {
-            $provider()->wait();
-        } catch (\Exception $e) {
-            throw $e;
-        } finally {
-            unlink($tokenPath);
-        }
-    }
-
-    public function testCanDisableInvalidIdentityTokenRetries()
-    {
-        $this->expectExceptionMessage("InvalidIdentityToken, retries exhausted");
-        $this->expectException(\Aws\Exception\CredentialsException::class);
-        $dir = $this->clearEnv();
-        $result = [
-            'Credentials' => [
-                'AccessKeyId'     => 'foo',
-                'SecretAccessKey' => 'bar',
-                'SessionToken'    => 'baz',
-                'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
-            ],
-        ];
-        $retries = 1;
-
-        $sts = new StsClient([
-            'region' => 'us-west-2',
-            'version' => 'latest',
-            'credentials' => false,
-            'handler' => function () use (&$retries, $result) {
-                if (0 === $retries--) {
-                    return Promise\Create::promiseFor(new Result($result));
-                }
-
-                return new StsException(
-                    "foo",
-                    new Command("foo"),
-                    ['code' => 'InvalidIdentityToken']
-                );
-            }
-        ]);
-
-        $tokenPath = $dir . '/my-token.jwt';
-        file_put_contents($tokenPath, 'token');
-
-        $args = [
+        $provider = new AssumeRoleWithWebIdentityCredentialProvider([
             'client' => $sts,
             'RoleArn' => self::SAMPLE_ROLE_ARN,
             'WebIdentityTokenFile' => $tokenPath,
-            'retries' => 0
+        ]);
+
+        try {
+            $provider()->wait();
+            $this->fail('Expected an exception.');
+        } catch (\Aws\Exception\NonRecoverableCredentialsException $e) {
+            $this->assertTrue($nonRecoverable, "$code must be recoverable");
+        } catch (\Exception $e) {
+            $this->assertFalse($nonRecoverable, "$code must be non-recoverable");
+        } finally {
+            unlink($tokenPath);
+        }
+    }
+
+    public static function stsErrorCodeProvider(): array
+    {
+        return [
+            'AccessDenied' => ['AccessDenied', true],
+            'IDPRejectedClaim' => ['IDPRejectedClaim', true],
+            'InvalidIdentityToken' => ['InvalidIdentityToken', true],
+            'MalformedPolicyDocument' => ['MalformedPolicyDocument', true],
+            'PackedPolicyTooLarge' => ['PackedPolicyTooLarge', true],
+            'RegionDisabledException' => ['RegionDisabledException', true],
+            'ServiceUnavailable' => ['ServiceUnavailable', false],
+            'ExpiredToken' => ['ExpiredToken', false],
         ];
+    }
+
+    public function testInvalidIdentityTokenIsNonRecoverableAndNotRetried()
+    {
+        $dir = $this->clearEnv();
+        $calls = 0;
+
+        $sts = new StsClient([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => false,
+            'handler' => function () use (&$calls) {
+                $calls++;
+
+                return new StsException(
+                    "foo",
+                    new Command("foo"),
+                    ['code' => 'InvalidIdentityToken']
+                );
+            }
+        ]);
+
+        $tokenPath = $dir . '/my-token.jwt';
+        file_put_contents($tokenPath, 'token');
+
+        $args['client'] = $sts;
+        $args['RoleArn'] = self::SAMPLE_ROLE_ARN;
+        $args['WebIdentityTokenFile'] = $tokenPath;
         $provider = new AssumeRoleWithWebIdentityCredentialProvider($args);
         try {
             $provider()->wait();
-        } catch (\Exception $e) {
-            throw $e;
+            $this->fail('Expected a NonRecoverableCredentialsException.');
+        } catch (\Aws\Exception\NonRecoverableCredentialsException $e) {
+            // Per the Assume Role Web Identity specification, InvalidIdentityToken is
+            // non-retryable, it surfaces immediately and is not retried.
+            $this->assertSame(
+                'Error assuming role from web identity credentials',
+                $e->getMessage()
+            );
+            $this->assertSame(1, $calls, 'InvalidIdentityToken must not be retried');
+        } finally {
+            unlink($tokenPath);
+        }
+    }
+
+    public static function retryableStsErrorProvider(): array
+    {
+        return [
+            'expired web identity token (wire code)' => ['ExpiredTokenException'],
+            'expired web identity token (SEP code)' => ['ExpiredToken'],
+        ];
+    }
+
+    #[DataProvider('retryableStsErrorProvider')]
+    public function testRetriesRetryableStsErrorsAndRereadsToken(string $code)
+    {
+        $dir = $this->clearEnv();
+        $tokenPath = $dir . '/my-token.jwt';
+        file_put_contents($tokenPath, 'token-1');
+        $calls = 0;
+        $tokensSent = [];
+
+        $sts = new StsClient([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => false,
+            'handler' => function ($command) use (&$calls, &$tokensSent, $code, $tokenPath) {
+                $calls++;
+                $tokensSent[] = $command['WebIdentityToken'];
+                if ($calls === 1) {
+                    // Rotate the token file before the retry.
+                    file_put_contents($tokenPath, 'token-2');
+                    return new StsException('foo', new Command('foo'), ['code' => $code]);
+                }
+                return Promise\Create::promiseFor(new Result([
+                    'Credentials' => [
+                        'AccessKeyId' => 'foo',
+                        'SecretAccessKey' => 'bar',
+                        'SessionToken' => 'baz',
+                        'Expiration' => DateTimeResult::fromEpoch(time() + 900),
+                    ],
+                    'AssumedRoleUser' => [
+                        'AssumedRoleId' => 'test_user_621903f1f21f5.01530789',
+                        'Arn' => self::SAMPLE_ROLE_ARN,
+                    ],
+                ]));
+            }
+        ]);
+
+        $provider = new AssumeRoleWithWebIdentityCredentialProvider([
+            'client' => $sts,
+            'RoleArn' => self::SAMPLE_ROLE_ARN,
+            'WebIdentityTokenFile' => $tokenPath,
+            'retries' => 1,
+        ]);
+        try {
+            $creds = $provider()->wait();
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame(2, $calls);
+            $this->assertSame(['token-1', 'token-2'], $tokensSent);
+        } finally {
+            unlink($tokenPath);
+        }
+    }
+
+    public function testIdpCommunicationErrorIsRetriedOnlyByTheStsClient()
+    {
+        $dir = $this->clearEnv();
+        $tokenPath = $dir . '/my-token.jwt';
+        file_put_contents($tokenPath, 'token');
+        $calls = 0;
+
+        $sts = new StsClient([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => false,
+            'retries' => 2,
+            'handler' => function () use (&$calls) {
+                $calls++;
+                return new StsException(
+                    'foo',
+                    new Command('foo'),
+                    ['code' => 'IDPCommunicationError']
+                );
+            }
+        ]);
+
+        $provider = new AssumeRoleWithWebIdentityCredentialProvider([
+            'client' => $sts,
+            'RoleArn' => self::SAMPLE_ROLE_ARN,
+            'WebIdentityTokenFile' => $tokenPath,
+            'retries' => 3,
+        ]);
+        try {
+            $provider()->wait();
+            $this->fail('Expected a CredentialsException.');
+        } catch (\Aws\Exception\CredentialsException $e) {
+            $this->assertNotInstanceOf(
+                \Aws\Exception\NonRecoverableCredentialsExceptionInterface::class,
+                $e
+            );
+            // 1 attempt plus 2 STS client retries. The provider adds none.
+            $this->assertSame(3, $calls);
+        } finally {
+            unlink($tokenPath);
+        }
+    }
+
+    public function testExpiredWebIdentityTokenIsRecoverableOnceRetriesAreExhausted()
+    {
+        $dir = $this->clearEnv();
+        $tokenPath = $dir . '/my-token.jwt';
+        file_put_contents($tokenPath, 'token');
+        $calls = 0;
+
+        $sts = new StsClient([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => false,
+            'handler' => function () use (&$calls) {
+                $calls++;
+                return new StsException(
+                    'foo',
+                    new Command('foo'),
+                    ['code' => 'ExpiredTokenException']
+                );
+            }
+        ]);
+
+        $provider = new AssumeRoleWithWebIdentityCredentialProvider([
+            'client' => $sts,
+            'RoleArn' => self::SAMPLE_ROLE_ARN,
+            'WebIdentityTokenFile' => $tokenPath,
+            'retries' => 1,
+        ]);
+        try {
+            $provider()->wait();
+            $this->fail('Expected a CredentialsException.');
+        } catch (\Aws\Exception\CredentialsException $e) {
+            // Recoverable, so memoize() backs off and returns the cached credentials.
+            $this->assertNotInstanceOf(
+                \Aws\Exception\NonRecoverableCredentialsExceptionInterface::class,
+                $e
+            );
+            $this->assertSame(2, $calls);
         } finally {
             unlink($tokenPath);
         }

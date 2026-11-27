@@ -131,8 +131,9 @@ class Credentials extends AwsCredentialIdentity implements
     }
 
     /**
-     * Internal-only. Used when IMDS is unreachable
-     * or returns expires credentials.
+     * Internal-only. Used when IMDS is unreachable or returns expired
+     * credentials and InstanceProfileProvider is used directly, not through
+     * CredentialProvider::defaultProvider().
      *
      * @internal
      */
