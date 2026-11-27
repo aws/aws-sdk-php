@@ -4,6 +4,7 @@
          bootstrap="vendor/autoload.php"
          colors="true"
          failOnEmptyTestSuite="false"
+         defaultTestSuite="Codegen Tests,SDK Tests"
          cacheDirectory=".phpunit.cache">
     <testsuites>
         <testsuite name="Codegen Tests">
@@ -11,6 +12,10 @@
         </testsuite>
         <testsuite name="SDK Tests">
             <directory>tests</directory>
+            <exclude>tests/Integ</exclude>
+        </testsuite>
+        <testsuite name="integ">
+            <directory>tests/Integ</directory>
         </testsuite>
     </testsuites>
 </phpunit>
