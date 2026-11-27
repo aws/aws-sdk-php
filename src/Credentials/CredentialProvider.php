@@ -403,8 +403,19 @@ class CredentialProvider
             ) {
                 $now = time();
 
-                // Constant credentials: cache and return as-is.
+                // The source returned credentials without an expiration. If the
+                // cached credentials have one, treat this as a failed refresh.
+                // Otherwise, cache the credentials as constant.
                 if (!$creds->getExpiration()) {
+                    if (!$isInitial && !$isLegacy && $cached->getExpiration()) {
+                        $backoff = self::refreshBackoff($cached, $now);
+                        $nextRefreshAllowedAt = $now + $backoff;
+                        self::warnRefreshFailed(
+                            'Credential source returned credentials without an expiration',
+                            $backoff
+                        );
+                        return $cached;
+                    }
                     $isConstant = true;
                     $cached = $creds;
                     $cachedError = null;
@@ -1544,8 +1555,12 @@ class CredentialProvider
             $config
         );
 
-        //Expiration value is returned in epoch milliseconds. Conversion to seconds
-        $expiration = intdiv($ssoCredentials['expiration'], 1000);
+        // Expiration is returned in epoch milliseconds. It is optional in the
+        // SSO model, so a missing or 0 value means no expiration.
+        $expirationMs = $ssoCredentials['expiration'] ?? null;
+        $expiration = is_numeric($expirationMs) && $expirationMs > 0
+            ? intdiv((int) $expirationMs, 1000)
+            : null;
         return Promise\Create::promiseFor(
             new Credentials(
                 $ssoCredentials['accessKeyId'],

@@ -1678,6 +1678,71 @@ EOT;
         $this->assertEquals($creds->getExpiration(), $expiration);
     }
 
+    public static function ssoMissingExpirationProvider(): array
+    {
+        return [
+            'missing' => [[]],
+            'zero' => [['expiration' => 0]],
+        ];
+    }
+
+    /**
+     * SSO GetRoleCredentials marks expiration as optional. A missing or 0
+     * value gives credentials without an expiration, with no PHP warning.
+     */
+    #[DataProvider('ssoMissingExpirationProvider')]
+    public function testSsoProfileProviderTreatsMissingOrZeroExpirationAsNone(
+        array $expirationField
+    ): void {
+        $awsDir = $this->createAwsHome();
+        file_put_contents($awsDir . '/config', <<<EOT
+[default]
+sso_account_id = 12345
+sso_session = session-name
+sso_role_name = roleName
+
+[sso-session session-name]
+sso_start_url = url.co.uk
+sso_region = us-west-2
+EOT);
+        $tokenLocation = SsoTokenProvider::getTokenLocation('session-name');
+        if (!is_dir(dirname($tokenLocation))) {
+            mkdir(dirname($tokenLocation), 0777, true);
+        }
+        file_put_contents($tokenLocation, json_encode([
+            'startUrl' => 'https://d-123.awsapps.com/start',
+            'region' => 'us-west-2',
+            'accessToken' => 'token',
+            'expiresAt' => '2500-12-25T21:30:00Z',
+        ]));
+
+        $sso = $this->getTestClient('Sso', ['credentials' => false]);
+        $this->addMockResults($sso, [new Result([
+            'roleCredentials' => [
+                'accessKeyId' => 'foo',
+                'secretAccessKey' => 'assumedSecret',
+                'sessionToken' => null,
+            ] + $expirationField,
+        ])]);
+
+        $warnings = [];
+        set_error_handler(function ($errno, $errstr) use (&$warnings) {
+            $warnings[] = $errstr;
+            return true;
+        });
+        try {
+            $creds = call_user_func(
+                CredentialProvider::sso('default', $awsDir . '/config', ['ssoClient' => $sso])
+            )->wait();
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertNull($creds->getExpiration());
+        $this->assertSame([], $warnings);
+    }
+
     public function testSsoProfileProviderAddedToDefaultChain(): void
     {
         $awsDir = $this->createAwsHome();
@@ -2524,6 +2589,74 @@ EOT;
         $this->assertStringContainsString('expired credentials', $warning);
 
         unset($_SERVER['aws_time']);
+    }
+
+    /**
+     * A refresh that returns credentials without an expiration is a failed
+     * refresh when the cached credentials have one. The cached credentials are
+     * kept, the backoff applies, and the source is retried after it.
+     */
+    public function testMemoizeRefreshWithoutExpirationKeepsCachedCredentials(): void
+    {
+        $now = 1000000000;
+        $_SERVER['aws_time'] = $now;
+
+        $initial = new Credentials('AKID1', 'secret1', null, $now + 3600, null, CredentialSources::IMDS);
+        $noExpiry = new Credentials('AKID2', 'secret2', null, null, null, CredentialSources::IMDS);
+        $fresh = new Credentials('AKID3', 'secret3', null, $now + 7200, null, CredentialSources::IMDS);
+
+        $calls = 0;
+        $f = static function () use (&$calls, $initial, $noExpiry, $fresh) {
+            $calls++;
+            return Create::promiseFor([1 => $initial, 2 => $noExpiry][$calls] ?? $fresh);
+        };
+        $p = CredentialProvider::memoize($f);
+        $this->assertSame($initial, $p()->wait());
+
+        $warning = null;
+        set_error_handler(static function ($errno, $errstr) use (&$warning) {
+            $warning = $errstr;
+            return true;
+        }, E_USER_WARNING);
+        try {
+            // Mandatory window: the refresh returns no expiration.
+            $_SERVER['aws_time'] = $now + 3600 - 30;
+            $this->assertSame($initial, $p()->wait());
+            $this->assertSame(2, $calls);
+            $this->assertStringContainsString('without an expiration', $warning);
+
+            // During the backoff the source is not called again.
+            $this->assertSame($initial, $p()->wait());
+            $this->assertSame(2, $calls);
+
+            // After the backoff (at most 90 seconds this close to expiry) the
+            // source is called again and its credentials are adopted.
+            $_SERVER['aws_time'] = $now + 3600 - 30 + 91;
+            $this->assertSame($fresh, $p()->wait());
+            $this->assertSame(3, $calls);
+        } finally {
+            restore_error_handler();
+            unset($_SERVER['aws_time']);
+        }
+    }
+
+    /**
+     * Credentials without an expiration on the initial fetch are constant, as
+     * before. The source is not called again.
+     */
+    public function testMemoizeInitialFetchWithoutExpirationIsConstant(): void
+    {
+        $noExpiry = new Credentials('AKID1', 'secret1', null, null, null, CredentialSources::IMDS);
+        $calls = 0;
+        $f = static function () use (&$calls, $noExpiry) {
+            $calls++;
+            return Create::promiseFor($noExpiry);
+        };
+        $p = CredentialProvider::memoize($f);
+
+        $this->assertSame($noExpiry, $p()->wait());
+        $this->assertSame($noExpiry, $p()->wait());
+        $this->assertSame(1, $calls);
     }
 
     /**
