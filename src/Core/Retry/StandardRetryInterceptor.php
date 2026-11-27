@@ -72,7 +72,7 @@ final class StandardRetryInterceptor extends AbstractInterceptor
     ): SerializableStructInterface
     {
         if ($error === null) {
-            return $ctx->output;
+            return $ctx->getOutput();
         }
 
         $retryAfterSeconds = self::retryAfterSeconds($ctx->response);
@@ -109,7 +109,7 @@ final class StandardRetryInterceptor extends AbstractInterceptor
             throw $error;
         }
 
-        return $ctx->output;
+        return $ctx->getOutput();
     }
 
     private static function isThrottling(
