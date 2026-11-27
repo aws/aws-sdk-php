@@ -42,6 +42,12 @@ use Smithy\Protocol\Aws\{
 #[CoversClass(AwsDynamicClientConfig::class)]
 final class AwsDynamicClientTest extends TestCase
 {
+    /** Request ID headers S3 sends on every response. */
+    private const S3_ERROR_HEADERS = [
+        'x-amz-request-id' => 'req-1',
+        'x-amz-id-2' => 'host-1'
+    ];
+
     /**
      * @param class-string $protocolClass
      */
@@ -473,6 +479,75 @@ final class AwsDynamicClientTest extends TestCase
         self::assertSame('host-2', $error->getExtendedRequestId());
     }
 
+    public function testS3ClientRecordsExtendedRequestIdOnNonRetryableError(): void
+    {
+        $http = self::s3ErrorResponses(
+            '<Error><Code>AccessDenied</Code>'
+                . '<Message>Access Denied</Message></Error>',
+            403
+        );
+
+        try {
+            $this->s3Client($http, self::noDelayRetries())->headObject();
+            self::fail('Expected an AccessDenied error.');
+        } catch (AwsProtocolException $error) {
+        }
+
+        self::assertSame(1, $http->sendCallCount);
+        self::assertSame('AccessDenied', $error->getAwsErrorCode());
+        self::assertSame('req-1', $error->getAwsRequestId());
+        self::assertSame('host-1', $error->getExtendedRequestId());
+    }
+
+    /**
+     * @return list<array{string, int}>
+     */
+    public static function s3RetryableErrors(): array
+    {
+        return [
+            'SlowDown 503' => ['SlowDown', 503],
+            'InternalError 500' => ['InternalError', 500]
+        ];
+    }
+
+    #[DataProvider('s3RetryableErrors')]
+    public function testS3ClientRecordsExtendedRequestIdAfterRetriesRunOut(
+        string $code,
+        int $status
+    ): void
+    {
+        $http = self::s3ErrorResponses(
+            "<Error><Code>{$code}</Code><Message>m</Message></Error>",
+            $status
+        );
+
+        try {
+            $this->s3Client($http, self::noDelayRetries())->headObject();
+            self::fail("Expected a {$code} error.");
+        } catch (AwsProtocolException $error) {
+        }
+
+        self::assertSame(3, $http->sendCallCount);
+        self::assertSame($code, $error->getAwsErrorCode());
+        self::assertSame('req-1', $error->getAwsRequestId());
+        self::assertSame('host-1', $error->getExtendedRequestId());
+    }
+
+    public function testS3ClientSucceedsAfterRetryableError(): void
+    {
+        $http = (new MockHttpClient())
+            ->queueResponse(
+                '<Error><Code>SlowDown</Code><Message>m</Message></Error>',
+                503,
+                self::S3_ERROR_HEADERS
+            )
+            ->fallbackResponse('', 200, self::S3_ERROR_HEADERS);
+
+        $this->s3Client($http, self::noDelayRetries())->headObject();
+
+        self::assertSame(2, $http->sendCallCount);
+    }
+
     public function testS3ClientLeavesTheBucketToTheEndpoint(): void
     {
         $http = (new MockHttpClient())->willReturn('');
@@ -635,9 +710,43 @@ final class AwsDynamicClientTest extends TestCase
         );
     }
 
-    private function s3Client(MockHttpClient $http): AwsDynamicClient
+    /**
+     * Create an HTTP client that answers three attempts with the same S3
+     * error, each with a fresh body stream and the S3 request ID headers.
+     */
+    private static function s3ErrorResponses(
+        string $body,
+        int $status
+    ): MockHttpClient
+    {
+        $http = new MockHttpClient();
+        for ($attempt = 0; $attempt < 3; ++$attempt) {
+            $http->queueResponse($body, $status, self::S3_ERROR_HEADERS);
+        }
+
+        return $http;
+    }
+
+    /**
+     * Create a three-attempt standard retry strategy that never waits.
+     */
+    private static function noDelayRetries(): StandardRetryStrategy
+    {
+        return new StandardRetryStrategy(
+            maxAttempts: 3,
+            baseDelay: 0.0,
+            throttlingBaseDelay: 0.0,
+            maxBackoff: 0.0
+        );
+    }
+
+    private function s3Client(
+        MockHttpClient $http,
+        ?StandardRetryStrategy $retryStrategy = null
+    ): AwsDynamicClient
     {
         return AwsDynamicClient::create(
+            retryStrategy: $retryStrategy,
             model: SmithyModel::fromArray([
                 'smithy' => '2.0',
                 'shapes' => [
