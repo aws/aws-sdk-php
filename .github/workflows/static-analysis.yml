@@ -37,7 +37,7 @@ jobs:
           tools: composer:v2
           extensions: curl, dom, mbstring, openssl, simplexml, xmlwriter, zlib
 
-      - name: Validate composer.json and composer.lock
+      - name: Validate composer.json
         run: composer validate --strict
 
       - name: Install Composer dependencies
