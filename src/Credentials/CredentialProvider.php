@@ -150,7 +150,8 @@ class CredentialProvider
         if (self::shouldUseEcs()) {
             $defaultChain['ecs'] = self::ecsCredentials($config);
         } else {
-            $defaultChain['instance'] = self::instanceProfile($config);
+            $defaultChain['instance'] = self::instanceProfile($config)
+                ->withRefreshLifecycle();
         }
 
         if (isset($config['credentials'])

@@ -1088,19 +1088,18 @@ class InstanceProfileProviderTest extends TestCase
     }
 
     /**
-     * IMDS can return credentials that are already expired (for example when
-     * HOSM pushed the last credentials and is now unreachable). The provider
-     * returns them as-is. Static stability is owned by the caching layer, not
-     * this provider, so there is no expiration extension and no warning.
+     * Under the refresh lifecycle, the provider returns expired IMDS
+     * credentials as-is. memoize() decides what to do with them, so there is
+     * no expiration extension and no warning.
      *
      * @param $client
      */
     #[DataProvider('returnsExpiredCredsProvider')]
-    public function testReturnsExpiredCredentialsWhenImdsYieldsExpiredCreds($client)
+    public function testRefreshLifecycleReturnsExpiredCredentialsAsIs($client)
     {
-        $provider = new InstanceProfileProvider([
+        $provider = (new InstanceProfileProvider([
             'client' => $client
-        ]);
+        ]))->withRefreshLifecycle();
         $creds = $provider()->wait();
 
         $this->assertSame('foo', $creds->getAccessKeyId());
@@ -1110,6 +1109,39 @@ class InstanceProfileProviderTest extends TestCase
             'the provider returns IMDS credentials as-is, without extending them'
         );
         $this->assertLessThanOrEqual(3, $this->getPropertyValue($provider, 'attempts'));
+    }
+
+    /**
+     * Called directly, the provider is the only static stability, so it
+     * extends expired IMDS credentials and warns, as before.
+     *
+     * @param $client
+     */
+    #[DataProvider('returnsExpiredCredsProvider')]
+    public function testDirectCallExtendsExpiredCredentials($client)
+    {
+        $warnings = [];
+        set_error_handler(function ($errno, $errstr) use (&$warnings) {
+            $warnings[] = $errstr;
+            return true;
+        }, E_USER_WARNING);
+        try {
+            $provider = new InstanceProfileProvider([
+                'client' => $client
+            ]);
+            $creds = $provider()->wait();
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertSame('baz', $creds->getSecretKey());
+        $this->assertFalse($creds->isExpired());
+        $this->assertCount(1, $warnings);
+        $this->assertStringContainsString(
+            'Attempting credential expiration extension',
+            $warnings[0]
+        );
     }
 
     public static function returnsExpiredCredsProvider(): array
@@ -1153,16 +1185,15 @@ class InstanceProfileProviderTest extends TestCase
     }
 
     /**
-     * When IMDS is unavailable (500 or a read timeout), the provider rejects
-     * rather than fabricating credentials from a previous set. The caching
-     * layer (memoize) is responsible for retaining cached credentials and
-     * applying the refresh backoff. `retries` is 0 so the failure surfaces
-     * without the retry backoff sleeps.
+     * Under the refresh lifecycle, an IMDS outage (500 or a read timeout)
+     * rejects even when previous credentials are passed in. memoize() keeps
+     * the cached credentials and applies the refresh backoff. `retries` is 0
+     * so the failure surfaces without the retry backoff sleeps.
      *
      * @param $client
      */
     #[DataProvider('imdsUnavailableProvider')]
-    public function testThrowsWhenImdsUnavailable($client)
+    public function testRefreshLifecycleThrowsWhenImdsUnavailable($client)
     {
         $this->expectException(\Aws\Exception\CredentialsException::class);
 
@@ -1172,11 +1203,11 @@ class InstanceProfileProviderTest extends TestCase
         $originalRetries = getenv(InstanceProfileProvider::ENV_RETRIES);
         putenv(InstanceProfileProvider::ENV_RETRIES);
         try {
-            $provider = new InstanceProfileProvider([
+            $provider = (new InstanceProfileProvider([
                 'client' => $client,
                 'retries' => 0
-            ]);
-            $provider()->wait();
+            ]))->withRefreshLifecycle();
+            $provider(new Credentials('foo', 'baz', null, time() - 1000))->wait();
         } finally {
             if ($originalRetries !== false) {
                 putenv(InstanceProfileProvider::ENV_RETRIES . '=' . $originalRetries);
@@ -1184,6 +1215,40 @@ class InstanceProfileProviderTest extends TestCase
                 putenv(InstanceProfileProvider::ENV_RETRIES);
             }
         }
+    }
+
+    /**
+     * Called directly with previous credentials, an IMDS outage (500 or a
+     * read timeout) returns the previous credentials with an extended
+     * expiration and a warning, as before.
+     *
+     * @param $client
+     */
+    #[DataProvider('imdsUnavailableProvider')]
+    public function testDirectCallReusesPreviousCredentialsWhenImdsUnavailable($client)
+    {
+        $previous = new Credentials('foo', 'baz', null, time() - 1000);
+        $warnings = [];
+        set_error_handler(function ($errno, $errstr) use (&$warnings) {
+            $warnings[] = $errstr;
+            return true;
+        }, E_USER_WARNING);
+        try {
+            $provider = new InstanceProfileProvider([
+                'client' => $client
+            ]);
+            $creds = $provider($previous)->wait();
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertSame($previous, $creds);
+        $this->assertFalse($creds->isExpired());
+        $this->assertCount(1, $warnings);
+        $this->assertStringContainsString(
+            'Attempting credential expiration extension',
+            $warnings[0]
+        );
     }
 
     public static function imdsUnavailableProvider()

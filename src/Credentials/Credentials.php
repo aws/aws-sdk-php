@@ -131,13 +131,11 @@ class Credentials extends AwsCredentialIdentity implements
     }
 
     /**
-     * Internal-only. Previously used when IMDS was unreachable
-     * or returned expired credentials.
+     * Internal-only. Used when IMDS is unreachable or returns expired
+     * credentials and InstanceProfileProvider is used directly, not through
+     * CredentialProvider::defaultProvider().
      *
      * @internal
-     * @deprecated Static stability is now owned by the caching layer
-     *   (CredentialProvider::memoize), which retains cached credentials and
-     *   applies the refresh backoff on failure.
      */
     public function extendExpiration() {
         $extension = mt_rand(5, 10);

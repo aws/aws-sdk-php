@@ -1027,6 +1027,26 @@ EOT;
     {
         $p = CredentialProvider::instanceProfile();
         $this->assertInstanceOf(InstanceProfileProvider::class, $p);
+        $this->assertTrue(
+            $this->getPropertyValue($p, 'legacyStaticStability'),
+            'a directly created IMDS provider keeps its own static stability'
+        );
+    }
+
+    public function testDefaultProviderLeavesImdsStaticStabilityToMemoize(): void
+    {
+        $memoized = CredentialProvider::defaultProvider([
+            'use_aws_shared_config_files' => false,
+        ]);
+        $chain = (new \ReflectionFunction($memoized))->getStaticVariables()['provider'];
+        $links = (new \ReflectionFunction($chain))->getStaticVariables()['links'];
+        $imds = array_values(array_filter(
+            $links,
+            fn($link) => $link instanceof InstanceProfileProvider
+        ));
+
+        $this->assertCount(1, $imds);
+        $this->assertFalse($this->getPropertyValue($imds[0], 'legacyStaticStability'));
     }
 
     public function testCreatesFromEcsCredentialProvider(): void
