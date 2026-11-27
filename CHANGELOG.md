@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.408.1 - 2026-11-27
 
 * `Aws\DynamoDb` - Adds `create_sid()` and `validateId()` to the DynamoDB `SessionHandler`, so PHP 8.6 no longer warns about them and strict session mode rejects unknown or expired session IDs. With strict mode on (the default in PHP 8.6), each resumed session makes one additional `GetItem` request, and the locking connection now also needs the `dynamodb:GetItem` permission.
 * `Aws\` - Reuse the default STS client across refreshes in `CredentialProvider::assumeRoleWithWebIdentityCredentialProvider()` to stop memory growth in long-running processes.
