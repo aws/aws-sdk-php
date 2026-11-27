@@ -299,6 +299,31 @@ final class S3ClientTest extends TestCase
         self::assertSame($expected, $name === 'crc32' ? $get->checksumCRC32 : $get->checksumSHA256);
     }
 
+    public function testDefaultPutObjectStoresCrc32(): void
+    {
+        $client = self::client();
+        $key = 'checksum/default.txt';
+        $body = 'default checksum body';
+        $expected = \base64_encode(\pack('N', \crc32($body)));
+
+        $client->putObject(new PutObjectRequest(bucket: self::$bucket, key: $key, body: $body));
+
+        $head = $client->headObject(new HeadObjectRequest(
+            bucket: self::$bucket,
+            key: $key,
+            checksumMode: ChecksumMode::enabled()
+        ));
+        self::assertSame($expected, $head->checksumCRC32);
+
+        $get = $client->getObject(new GetObjectRequest(
+            bucket: self::$bucket,
+            key: $key,
+            checksumMode: ChecksumMode::enabled()
+        ));
+        self::assertSame($body, (string) $get->body);
+        self::assertSame($expected, $get->checksumCRC32);
+    }
+
     public function testVirtualHostStyleAddressing(): void
     {
         $http = new RecordingHttpClient();
